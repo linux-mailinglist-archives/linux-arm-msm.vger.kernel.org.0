@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F2136CC66D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 17:32:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2A816CC677
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 17:35:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233019AbjC1Pct (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 11:32:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60546 "EHLO
+        id S232672AbjC1PfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 11:35:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233014AbjC1Pca (ORCPT
+        with ESMTP id S229861AbjC1PfO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 11:32:30 -0400
+        Tue, 28 Mar 2023 11:35:14 -0400
 Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D7EEEF8D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 08:32:10 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id h11so9370766lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 08:32:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 662C79C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 08:35:13 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id c29so16374604lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 08:35:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680017529;
+        d=linaro.org; s=google; t=1680017711;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6kpJPb5YFzFq3dKnHkW0EYm3cbKljFaAKRN09G45xkk=;
-        b=GFMyUty6jLFErND7rsuicmJVe+fKzEZclYqmm6ULU9RQq7ey5SI2H/+uELoaFpPM4E
-         bexYbMx5kMxNlPdqdeuM9r04QTPLizjPYjRNdlIfrAqKgBfaezGVqGFzzpwyYe1Pa7SR
-         Y0QASB4hZzeXKhpp/3ay0txNteuTICoeTli0O4uH2sx6IYX6plROtHCix6N/DkHMeIFV
-         G0ZTwTgiFcajiE9QHYGkiAvIneLjaABEHo/uM5xEGQV8tLaNKtfZHoFpK10PSDb0U5kr
-         A4Z2KWa97JsHJFNhBO6VHwm0Q9BTxaFr1Q3i51Q/sJL1PPERVSYeErHn0BEaq824qlM0
-         Eakw==
+        bh=3N8h1DChvaLnm2TUkq7RCFOUn72LEkPBuvQVgji2prc=;
+        b=MWTvY67pF8MEgiGs0jD2F1Vba+LhJPWz/XGiFuofZNJLlEA3NardYys19LQAJ2Nutk
+         m0Fo1FrI6Hi+fJuGrEHQ+pTH1mPbkH11n2Poeu7kSgO6C1LbRjccfRcMXT61KZUorXQe
+         AmuQnfQHrzT2QoYg91RCtwoqwkCgFVd3st/0qc28pr8D04tbsuDjbWUFdABzBDZFoJ0p
+         k4x21jaRhb7KwdYmVywi5vlO/jlQgqOGHQiJzsSwCkOYO10V3g1/BRKivvz0L52A7gM1
+         zJSYmHOo+yIicNDz6RQFY1UmNKvO71ygggA9+Aj8sGVBFeyY6guMH8GWq3Ba3KTpnHi2
+         E6RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680017529;
+        d=1e100.net; s=20210112; t=1680017711;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6kpJPb5YFzFq3dKnHkW0EYm3cbKljFaAKRN09G45xkk=;
-        b=I7L+NxlhR+36lEkEpes0q6c3C/e54Phh4Sdi4Y+/JVCP4OPSIR5CsvyxLn0dsJDGR6
-         jbBXqwUQXhEKVWW2nN63xxDb9se0gdBMgD1LPggi/Kufr5cR3GTceLPLaxrDrSsH+7kz
-         MaKw77Qj8otniX5W4LieX+3gQNf3SXXyA6DgBBwWEn6IViIQBE99EZitbCnl6jw7CoTe
-         ZZwNzf9j+at8hHzU1vDoKPn61SsmNpTlyJZla55cgGUzThMJHhwOQ9BZDtazzCVVNVYG
-         4rx5L7+0cJ3hWDZznZWpyxCOdqYZEbMSUx9KlLWh9xb+usIBh/+iYLg76ROKmhTwKm2Z
-         csoA==
-X-Gm-Message-State: AAQBX9fI/dwjQm6QWZ9TtcBs6DdFdLIcO6l6YMIH24aG8yAPxn9fCS+R
-        VPzHTs2FxPFzejPBYkzWqOJ75g==
-X-Google-Smtp-Source: AKy350bTy8RE9QqIMjHPeexUwuLburZ3vMaCr3DV7vct3bL7+xdnv1gnc/gwwp0QNcPHuRwUpKkyww==
-X-Received: by 2002:a05:6512:910:b0:4dd:9a38:1b9c with SMTP id e16-20020a056512091000b004dd9a381b9cmr4670977lft.20.1680017528925;
-        Tue, 28 Mar 2023 08:32:08 -0700 (PDT)
+        bh=3N8h1DChvaLnm2TUkq7RCFOUn72LEkPBuvQVgji2prc=;
+        b=qDqEB5+FRzK3h5fSwXD1L/Md+xkOCUMSJlIeRRTHNITWjW4DKzriQJP7zDabNwdUQG
+         qBxB3DsvXOU/LheLPxyrF5SWoGcr5Ry0VvSW7lsP9XwRfk6wYN5rc5Fq6+tNZUrhW54n
+         gBJ3rDex0C2/mkjBKzXJ+89/oTxw1DaV4VN4/OR9dUPxwLWnZOtwz0AMSiTH665rE4rv
+         cJtczp9Lvz3OfJ0HzfWakhSkEuLqW1t+bmOK5ZdybcBWoG9bhe7lySY+gn0ispKivzgq
+         Vu88xaBnumBqlsWCOQgOhj6xsjkgsOSzxvARwsV/XKbYJknhg2MpO/KBzP21ga2eXBCn
+         lJTA==
+X-Gm-Message-State: AAQBX9dVuZKS9xrPBn7kD1QwEugCWVwsZ3wmr0ajVk8nZLgzJPphtUdH
+        3I7q1WwvVYaP5YTj05C5syG7BA==
+X-Google-Smtp-Source: AKy350aVn3vQwYsmxvtq+7/O1t34Z5xIpUuSNYCnORBUR752Ec2avam/4Q48gjVlzD+IBjLDYgwZ7w==
+X-Received: by 2002:ac2:51a1:0:b0:4df:830d:4a3a with SMTP id f1-20020ac251a1000000b004df830d4a3amr5009867lfk.23.1680017711678;
+        Tue, 28 Mar 2023 08:35:11 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id x18-20020ac24892000000b004eae73a0530sm3352354lfc.39.2023.03.28.08.32.08
+        by smtp.gmail.com with ESMTPSA id m10-20020ac2428a000000b004b6f00832cesm5086017lfh.166.2023.03.28.08.35.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 08:32:08 -0700 (PDT)
-Message-ID: <06251057-59a4-e24e-cb18-c0095232622c@linaro.org>
-Date:   Tue, 28 Mar 2023 18:32:07 +0300
+        Tue, 28 Mar 2023 08:35:11 -0700 (PDT)
+Message-ID: <2b0506b7-1a3a-b45a-8514-42066231d2ea@linaro.org>
+Date:   Tue, 28 Mar 2023 18:35:10 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v4 14/14] drm/msm/a6xx: Add A610 speedbin support
+Subject: Re: [PATCH v4 06/14] drm/msm/a6xx: Remove both GBIF and RBBM GBIF
+ halt on hw init
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -72,9 +73,9 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
         Marijn Suijten <marijn.suijten@somainline.org>
 References: <20230223-topic-gmuwrapper-v4-0-e987eb79d03f@linaro.org>
- <20230223-topic-gmuwrapper-v4-14-e987eb79d03f@linaro.org>
+ <20230223-topic-gmuwrapper-v4-6-e987eb79d03f@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230223-topic-gmuwrapper-v4-14-e987eb79d03f@linaro.org>
+In-Reply-To: <20230223-topic-gmuwrapper-v4-6-e987eb79d03f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -88,17 +89,18 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/03/2023 17:28, Konrad Dybcio wrote:
-> A610 is implemented on at least three SoCs: SM6115 (bengal), SM6125
-> (trinket) and SM6225 (khaje). Trinket does not support speed binning
-> (only a single SKU exists) and we don't yet support khaje upstream.
-> Hence, add a fuse mapping table for bengal to allow for per-chip
-> frequency limiting.
+> Currently we're only deasserting REG_A6XX_RBBM_GBIF_HALT, but we also
+> need REG_A6XX_GBIF_HALT to be set to 0. For GMU-equipped GPUs this is
+> done in a6xx_bus_clear_pending_transactions(), but for the GMU-less
+> ones we have to do it *somewhere*. Unhalting both side by side sounds
+> like a good plan and it won't cause any issues if it's unnecessary.
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Also, add a memory barrier to ensure it's gone through.
+> 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++++++++++
->   1 file changed, 27 insertions(+)
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
