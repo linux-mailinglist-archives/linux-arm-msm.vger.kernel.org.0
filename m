@@ -2,138 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B82E16CCACC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 21:37:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 859B96CCC3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 23:47:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229762AbjC1Tg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 15:36:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50438 "EHLO
+        id S229887AbjC1VrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 17:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbjC1Tgw (ORCPT
+        with ESMTP id S229886AbjC1VrX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 15:36:52 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B883C0D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 12:36:48 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id p34so7605584wms.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 12:36:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1680032208;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MnMzj7ZL79LUqbUVPGQil7x2FOJbb8kWmQlz9dfo7dA=;
-        b=xWi7Hv9NpattlAgLrE5n4/25XF6YG9IMjnz6bom/kF+tMy3RnLf1pW5INeMugCkSyw
-         SASbBVXtYrWuX/fXcxoapxKAcIZPYh8hsfbHEclxV4iUj41b1SkVQ2/XFO3NMWQTa7BJ
-         2OxTiaEye4sH0t2nUGfqsBJZt++ifJ84wbpfejsSuhlsIrsbvmeOhh3TpDgaJn8Fj45a
-         xmsGaRLSyvqkpUYmnR14iw26U5+TFs+ZyWwTUvIwle0pv+IR+viJ/D3//quffnFzGBBI
-         uo7v2+7FNCqAEdRLMg72+rOAKHDZVtbgaW7YZIcNhIsVwextLdSL0Sr7OiNFtaRBsT8Z
-         iOxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680032208;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MnMzj7ZL79LUqbUVPGQil7x2FOJbb8kWmQlz9dfo7dA=;
-        b=L/Q3p6jwDX9o7y5WVmJFvbG/hSl4mmXrXvApgURdLVZZbFBXbF2DD5Hbf9XdvDTPnG
-         ud/mINEnhiE2S67pSxz3OrAGT0cNDXY6NQVDK1MC2oiVndJPA9r/W6+Z5lnaNpYRPLy2
-         yHOI8zdVbIWTvAK8E18wnRKvBxqzgsFZGqqXAvX+h2XrLrdvuQWWxrr39kMQHbdrLtgU
-         /vXVF/QuY+PG8lns+KPbpiEbEmOrhKk01hr35ofBMfhUWJhoYCKd4gDcPoVLtIBW2rqd
-         qQ85OWp7MElrimJ+8z+a6uiE9/hfgPr2R+wzgmu4ynrW+aqTfIRb2Za6DT71tc1Rf9dD
-         7e3A==
-X-Gm-Message-State: AO0yUKXeZufxIR7jUgdsuu7XqDKQFNcx5pD5Wf7ZjO/VOLfEdXrnLcpd
-        6jV2Zo7t6xGmNsXSe/hXpXkWig==
-X-Google-Smtp-Source: AK7set/amkAAst5aN5iawLGDEAZKdW/QVQ5cwY3lBH30XnzTf2CTyiV7lWHVjHV2Dk6mjnns57wW9g==
-X-Received: by 2002:a7b:cb81:0:b0:3ee:1a70:7ea2 with SMTP id m1-20020a7bcb81000000b003ee1a707ea2mr12434106wmi.3.1680032208496;
-        Tue, 28 Mar 2023 12:36:48 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:7b39:552d:b2f1:d7e8])
-        by smtp.gmail.com with ESMTPSA id g23-20020a7bc4d7000000b003eb5ce1b734sm18060544wmk.7.2023.03.28.12.36.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 12:36:48 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
+        Tue, 28 Mar 2023 17:47:23 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9407E1712;
+        Tue, 28 Mar 2023 14:47:22 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32SLk3bA028355;
+        Tue, 28 Mar 2023 21:47:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=97HkTGkP+49pu84+BG+8H7hINr3Abp4pN8nG7dY6Ur0=;
+ b=PclG0TZdHGd4JMdCMSevJVZGa8U4n3fIiVp9Heo2gSq8Yd1gihfg0D4uWJ9Yu/yT/kpb
+ x2bjuEp0e0Jf1mQHByJX8faopG6zIeVmVYzIb/quUPN5lHf0EKneFPk1oIUbZCnuTbrS
+ hr718t8akDFLHUvAbO5nZVBGunhCPE7P2G7hkauSNqyDUDXSmdIIqqo/jV2j7jpFmEgu
+ r8Bc7OyEDF5RDPKB66cutRG07vURKoANKk1ZFSN6DEHAr0oMcJLcskHqaQt3aQfVJx0L
+ h5qXUqD30OV4z3MflhYnvwAjcc4U0vN/tQjWoG4gG65g6BQAovwtDEzHWJYy6pgZmbMt ag== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pm7hcg46t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 21:47:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32SLlIUe006482
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Mar 2023 21:47:18 GMT
+Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Tue, 28 Mar 2023 14:47:17 -0700
+From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 7/7] arm64: dts: qcom: sa8775p: add the GPU IOMMU node
-Date:   Tue, 28 Mar 2023 21:36:32 +0200
-Message-Id: <20230328193632.226095-8-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20230328193632.226095-1-brgl@bgdev.pl>
-References: <20230328193632.226095-1-brgl@bgdev.pl>
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Elliot Berman" <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: [PATCH v1 1/1] dt-bindings: firmware: qcom: scm: Updating VMID list
+Date:   Tue, 28 Mar 2023 14:47:03 -0700
+Message-ID: <20230328214703.12093-1-quic_gokukris@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vSbroPq3JbgYj7cmvv-mdz_ihCZK6FRz
+X-Proofpoint-GUID: vSbroPq3JbgYj7cmvv-mdz_ihCZK6FRz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-24_11,2023-03-28_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ suspectscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=815 spamscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303280168
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Adding the full list of VMID's, which are used by different clients to
+pass to the secure world.
 
-Add the GPU IOMMU for sa8775p-based platforms.
-
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 29 +++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ include/dt-bindings/firmware/qcom,scm.h | 31 +++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 4c45ad1cc7ff..de5e8449397c 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
-+#include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
- #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-@@ -603,6 +604,34 @@ gpucc: clock-controller@3d90000 {
- 			#power-domain-cells = <1>;
- 		};
+diff --git a/include/dt-bindings/firmware/qcom,scm.h b/include/dt-bindings/firmware/qcom,scm.h
+index 1a4e68fa0744..703b6f1750f4 100644
+--- a/include/dt-bindings/firmware/qcom,scm.h
++++ b/include/dt-bindings/firmware/qcom,scm.h
+@@ -2,15 +2,36 @@
+ /*
+  * Copyright (c) 2010-2015, 2018-2019 The Linux Foundation. All rights reserved.
+  * Copyright (C) 2015 Linaro Ltd.
++ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
-+		kgsl_smmu: iommu@3da0000 {
-+			compatible = "qcom,sa8775p-smmu-500", "qcom,smmu-500", "arm,mmu-500";
-+			reg = <0x0 0x03da0000 0x0 0x20000>;
-+			#iommu-cells = <2>;
-+			#global-interrupts = <2>;
-+			dma-coherent;
-+			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-+			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-+				 <&gpucc GPU_CC_AHB_CLK>,
-+				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-+				 <&gpucc GPU_CC_CX_GMU_CLK>,
-+				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-+				 <&gpucc GPU_CC_HUB_AON_CLK>;
-+			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
- 			reg = <0x0 0x0b220000 0x0 0x30000>,
+ #ifndef _DT_BINDINGS_FIRMWARE_QCOM_SCM_H
+ #define _DT_BINDINGS_FIRMWARE_QCOM_SCM_H
+ 
+-#define QCOM_SCM_VMID_HLOS		0x3
+-#define QCOM_SCM_VMID_MSS_MSA		0xF
+-#define QCOM_SCM_VMID_WLAN		0x18
+-#define QCOM_SCM_VMID_WLAN_CE		0x19
+-#define QCOM_SCM_VMID_NAV		0x2B
++#define QCOM_SCM_VMID_TZ			0x1
++#define QCOM_SCM_VMID_HLOS			0x3
++#define QCOM_SCM_VMID_CP_TOUCH			0x8
++#define QCOM_SCM_VMID_CP_BITSTREAM		0x9
++#define QCOM_SCM_VMID_CP_PIXEL			0xA
++#define QCOM_SCM_VMID_CP_NON_PIXEL		0xB
++#define QCOM_SCM_VMID_CP_CAMERA			0xD
++#define QCOM_SCM_VMID_HLOS_FREE			0xE
++#define QCOM_SCM_VMID_MSS_MSA			0xF
++#define QCOM_SCM_VMID_MSS_NONMSA		0x10
++#define QCOM_SCM_VMID_CP_SEC_DISPLAY		0x11
++#define QCOM_SCM_VMID_CP_APP			0x12
++#define QCOM_SCM_VMID_LPASS			0x16
++#define QCOM_SCM_VMID_WLAN			0x18
++#define QCOM_SCM_VMID_WLAN_CE			0x19
++#define QCOM_SCM_VMID_CP_SPSS_SP		0x1A
++#define QCOM_SCM_VMID_CP_CAMERA_PREVIEW		0x1D
++#define QCOM_SCM_VMID_CDSP			0x1E
++#define QCOM_SCM_VMID_CP_SPSS_SP_SHARED		0x22
++#define QCOM_SCM_VMID_CP_SPSS_HLOS_SHARED	0x24
++#define QCOM_SCM_VMID_ADSP_HEAP			0x25
++#define QCOM_SCM_VMID_CP_CDSP			0x2A
++#define QCOM_SCM_VMID_NAV			0x2B
++#define QCOM_SCM_VMID_TVM			0x2D
++#define QCOM_SCM_VMID_OEMVM			0x31
+ 
+ #endif
 -- 
-2.37.2
+2.39.2
 
