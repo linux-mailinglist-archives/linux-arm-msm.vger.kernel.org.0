@@ -2,160 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DB9D6CBA4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 11:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D9E56CBA66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 11:23:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230520AbjC1JQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 05:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42680 "EHLO
+        id S231934AbjC1JXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 05:23:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230505AbjC1JQx (ORCPT
+        with ESMTP id S230425AbjC1JX3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 05:16:53 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA4775B9F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:16:27 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id q16so14880052lfe.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 02:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679994985;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XVwy6Dnb1d+DxS2wedB653Zz7EIqv+1P84qFWsC+sSs=;
-        b=mDauaQS3w38Xc7B6Ss93Tz3UOLHXtwf60Xxh4cr4AR/0m7KoARwRsl9vVw2BbEBBtI
-         p/fcDiIYyu7tbm+HKw4o6uSBNFrbxXVBm/sVe1KUsLgxeRRY957NSFNwrpo8lom4eqX7
-         c1QQTNiiinOXq5VxUgKrKIs1x+oeMDH/Ny7oQUsH5JLykbp4zxn/DLJVq34qHa2yLyQu
-         z16AeKmTs5SsMfYV+G0fvPqKUafXA5pKCpcyht78pBZbSFIHCEV/OE+lo3xxgJFMxJiw
-         r3Pw3s+BpyV6pj41CwcSur2GC7u98gCr5UfPz/uqsyNCHH9x/vv/WG1sPw8rTGNSfqNy
-         EtRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679994985;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XVwy6Dnb1d+DxS2wedB653Zz7EIqv+1P84qFWsC+sSs=;
-        b=WJBX9r+tDDW0b8mCM26ewBi2vLRR/K9qvqywglFwl+PsqxwTi155lQJPGaAi81RE6r
-         EbHZGY+lKlzw1ZDOJ85jj2jD2wP4T2d3GicJm+JjwbXdrkYK4RhfcrHrWQ1GNet/SFcF
-         pFsYr8E/DT9/VMeaIW/ja1p3jbUnU7VqwabUqC+6NxZf3PR3Hu3BtquLVbQ0sxnNCGvu
-         D+NQqU+0CbluB25BYmFAegLzFqoA9+fmB6gk0pZanMXdvPc/uGSiEjN2foydDVpnDC12
-         60sy0jVrSA2pc+tF/nsK9AB9jx9xB7y9n4KQbVGIaCfdLgFzpgEnrnD8s4wfPCU3vEby
-         /Rog==
-X-Gm-Message-State: AAQBX9e0JDeyJz9u8LX2sY7hdYBFHfvAZSp+YpRACGStlr2AxhszKV+B
-        P2Gyp4xKxzbtGkv0GqsjXWIp0g==
-X-Google-Smtp-Source: AKy350bdf1KNzCyrReTbNqKzhAVBsSk6fMUzecRQMv7NRU6ovRmnLiWyq4XiEyJNsSJUC2nFSeuvnw==
-X-Received: by 2002:ac2:5551:0:b0:4dd:cef0:c27c with SMTP id l17-20020ac25551000000b004ddcef0c27cmr3951959lfk.33.1679994985154;
-        Tue, 28 Mar 2023 02:16:25 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id h8-20020a05651211c800b004db0a7ce483sm4973167lfr.162.2023.03.28.02.16.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 02:16:24 -0700 (PDT)
-Message-ID: <b3630bb5-a2a9-6f38-c70a-eb4b8ea1630d@linaro.org>
-Date:   Tue, 28 Mar 2023 11:16:23 +0200
+        Tue, 28 Mar 2023 05:23:29 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8DA6423A;
+        Tue, 28 Mar 2023 02:23:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 3A39AB81BD0;
+        Tue, 28 Mar 2023 09:23:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D266AC433EF;
+        Tue, 28 Mar 2023 09:23:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1679995401;
+        bh=V73OwOijyghiIZHH02OXNarVU22urwxS1fjmBBDAzFE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SUDWsY3a4lZHcPsvDQsE/TxGVASbGPvYzkKAsr/+sqDuFyRmeOy9oN5x62QhrmVup
+         j3sh23QeLFmkHZvtqRyTTk+b5y944fMtpouwaf9ryPMMotEksqj3idhl0G3HkyQWgf
+         oJ9xi/0mI8+2Sc5JlE96UHcVTgiE/R6TMxWlunz0WAIzbBTZcE9wLNCpuAvC8/fNme
+         Dt04rlnezRXM2vQRhWPnn3GdIC5lKoqXgGBHXrq7uFfOwhk7jPTUfKSSZgxitwOras
+         R2c72tfrKbU03/cVvQp0bzeeaDDVgURY9jG+KXfDXY0JF+b/ZxQSrGqKxS0s95f+vQ
+         jkb2E8GpWCF1w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ph5YC-0004C0-V1; Tue, 28 Mar 2023 11:23:33 +0200
+Date:   Tue, 28 Mar 2023 11:23:32 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
+        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/5] usb: dwc3: qcom: Fix null ptr access during
+ runtime_suspend()
+Message-ID: <ZCKyFEc087xoypdo@hovoldconsulting.com>
+References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
+ <20230325165217.31069-4-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 15/18] arm64: dts: qcom: sa8775p-ride: set
- gpio-line-names for PMIC GPIOs
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230327125316.210812-1-brgl@bgdev.pl>
- <20230327125316.210812-16-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230327125316.210812-16-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230325165217.31069-4-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Mar 25, 2023 at 10:22:15PM +0530, Manivannan Sadhasivam wrote:
+> When runtime PM is enabled during probe, the PM core suspends this driver
+> before probing the dwc3 driver. Due to this, the dwc3_qcom_is_host()
+> function dereferences the driver data of the dwc platform device which
+> will only be set if the dwc driver has been probed. This causes null
+> pointer dereference during boot time.
 
+So this does not really appear to be an issue before your later patch
+which enables runtime PM at probe.
 
-On 27.03.2023 14:53, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+But the layering violations we have in this driver are indeed fragile
+and should be fixed properly at some point.
+
+> So let's add a check for dwc drvdata in the callers of dwc3_qcom_is_host()
+> such as dwc3_qcom_suspend() and dwc3_qcom_resume() functions. There is no
+> need to add the same check in another caller dwc3_qcom_resume_irq() as the
+> wakeup IRQs will only be enabled at the end of dwc3_qcom_suspend().
 > 
-> Set line names for GPIO lines exposed by PMICs on sa8775p-ride.
+> Note that the check should not be added to dwc3_qcom_is_host() function
+> itself, as there is no provision to pass the context to callers.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Fixes: a872ab303d5d ("usb: dwc3: qcom: fix use-after-free on runtime-PM wakeup")
+
+This is not the right fixes tag in any case as this layering violation
+was first added by:
+
+6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+
+which started accessing the dwc3 platform data and xhci host data from
+the glue driver (and broke gadget mode).
+
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 51 +++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
+>  drivers/usb/dwc3/dwc3-qcom.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index b7ee4cc676b5..a0d2024a69df 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -32,6 +32,57 @@ &i2c18 {
->  	status = "okay";
->  };
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 959fc925ca7c..bbf67f705d0d 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -411,10 +411,11 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
 >  
-> +&pmm8654au_0_gpios {
-> +	gpio-line-names = "DS_EN",
-> +			  "POFF_COMPLETE",
-> +			  "UFS0_VER_ID",
-> +			  "FAST_POFF",
-> +			  "DBU1_PON_DONE",
-> +			  "AOSS_SLEEP",
-> +			  "CAM_DES0_EN",
-> +			  "CAM_DES1_EN",
-> +			  "CAM_DES2_EN",
-> +			  "CAM_DES3_EN",
-> +			  "UEFI",
-> +			  "ANALOG_PON_OPT";
-> +};
-> +
-> +&pmm8654au_1_gpios {
-> +	gpio-line-names = "PMIC_C_ID0",
-> +			  "PMIC_C_ID1",
-> +			  "UFS1_VER_ID",
-> +			  "IPA_PWR",
-> +			  "",
-> +			  "WLAN_DBU4_EN",
-> +			  "WLAN_EN",
-> +			  "BT_EN",
-> +			  "USB2_PWR_EN",
-> +			  "USB2_FAULT";
-> +};
-> +
-> +&pmm8654au_2_gpios {
-> +	gpio-line-names = "PMIC_E_ID0",
-> +			  "PMIC_E_ID1",
-> +			  "USB0_PWR_EN",
-> +			  "USB0_FAULT",
-> +			  "SENSOR_IRQ_1",
-> +			  "SENSOR_IRQ_2",
-> +			  "SENSOR_RST",
-> +			  "SGMIIO0_RST",
-> +			  "SGMIIO1_RST",
-> +			  "USB1_PWR_ENABLE",
-> +			  "USB1_FAULT",
-> +			  "VMON_SPX8";
-> +};
-> +
-> +&pmm8654au_3_gpios {
-> +	gpio-line-names = "PMIC_G_ID0",
-> +			  "PMIC_G_ID1",
-> +			  "GNSS_RST",
-> +			  "GNSS_EN",
-> +			  "GNSS_BOOT_MODE";
-> +};
-> +
->  &qupv3_id_1 {
->  	status = "okay";
->  };
+>  static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+>  {
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+>  	u32 val;
+>  	int i, ret;
+>  
+> -	if (qcom->is_suspended)
+> +	if (qcom->is_suspended || !dwc)
+>  		return 0;
+
+I think we should try to keep the layering violations confined to the
+helper functions. So how about amending dwc3_qcom_is_host() and check
+for NULL before dereferencing the xhci pointer?
+
+If the dwc3 driver hasn't probed yet, we're clearly not in host mode
+either...
+
+Johan
