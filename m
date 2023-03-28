@@ -2,68 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2008A6CC0B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 15:25:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7400A6CC0C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Mar 2023 15:29:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233116AbjC1NZl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 09:25:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45094 "EHLO
+        id S230269AbjC1N3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 09:29:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232647AbjC1NZf (ORCPT
+        with ESMTP id S229532AbjC1N3G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 09:25:35 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54AE18A62
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:25:26 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id h9so12556299ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:25:26 -0700 (PDT)
+        Tue, 28 Mar 2023 09:29:06 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 453359778
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:29:04 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id o20so9635570ljp.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 06:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680009924;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1680010142;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AtatUZ8zMgD/XQ1ZuMgdjShOsET7bYNRpq4MenkepiM=;
-        b=YZxwemXUx0a8jxmJrQWJfX9wDWhvcZ128QSZYYHg2AWBI/PdEzm7KbHkiw+MZkSo+o
-         kt/YYp5Su7wsBCQmesSyuFw8AC23S7iiFPZczkLY+aZlj2RPGp2Ry5klUQILeK+UW+VR
-         oQJZfDtl/bXxP7cC1HWVbzoj9f8v8NSJrUSKZgZ5jpRseWegNYQJG08J2d8AWgX5KXby
-         7VKcgz+BHaV1nPaGo23an6LaS0GD1ENQXcG44KYQnA1N8han3ToSd9pWg0qDV+jz0oP8
-         KN77t2Dc0ckJH1EHG9V8wRr2tNJecbksvYjQnxQ6HYImoOdB9TCjzOXSi/rglOrlArJA
-         AgXA==
+        bh=AYY5Dr1Z1I9hb8CrXHC9U6DlzlFB2ypBISlRnxmPY3I=;
+        b=LSUtWT/AWGybRwLerH/91aATgi4rurZprloou1LoGbGck955eT2qPbsBESu3GGovM1
+         Ef82KFLSrfncXdZPa+HO0VHz6/FWeQDOYPZtXTBvOcftd29V/kbshbm89jeOhdgNv72z
+         tIBltFQthZyxbP6DnlXHUCQvj7zsXrtmWMZmNso1w1Vz49P7zG/ASg7HQ7r4ifogj/ws
+         eRl3o9x5JWVcUPqx5/Wt8dKS6a6guAPmnjP/QFyjmsxcN542w9RqBqdCOFTBbSRGNeMg
+         tJ/FR4tWEHOoOd6iME5heju7i64W4GuYfqI6w2KVY5O6997+lc7nztRn7DyHHjQcYCvg
+         3g2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680009924;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20210112; t=1680010142;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AtatUZ8zMgD/XQ1ZuMgdjShOsET7bYNRpq4MenkepiM=;
-        b=Jf0Sldao4ngaGHAQmX0fvUGjBOEmqRi4+Vu5bZS9hR4T4Kpo/J9SBFfzqYyMWXfzBN
-         KfgKsxny87ksVWrWdGB5pPBMJpGQhEFpk+JgVmhJGl2qRas8Sx1ArDNCuWj3YTqqaG3B
-         C6qT4jZorpdkLHPmoknY6pEeWY8nZTzVuUyl65Ds0VrwnZckUC/oEpvwHonOsneIivQN
-         ZbXuBVcEMv1/4bWEhN2DV9jT55xFbmszSzLrqH1W8PQQ6P5RGm2ffrYwJXskznMMNgjk
-         V8KgehV0cWRPB63BnzNfLZwh2UKJpmTqgbLnwrDLXkRIH7wj8wCa7RwMtz3lpFk4euPc
-         z8ag==
-X-Gm-Message-State: AAQBX9fQ+q/RN18Yw87sdwqLqKAc0Y8Zj6CoR+4p8fl/CpRqkxvEeYWK
-        0Zsbzvr9wc/CRZkRRfi7Oyi1Mw==
-X-Google-Smtp-Source: AKy350ZP8pG5H47p7GqVZ5Gicx2oRFeRu5fXTXxAzE0CvqpcKIvp6gcMnnedqSA/hZENl+jG1kHWcg==
-X-Received: by 2002:a2e:82d7:0:b0:298:9e64:c916 with SMTP id n23-20020a2e82d7000000b002989e64c916mr4428993ljh.17.1680009924615;
-        Tue, 28 Mar 2023 06:25:24 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u2-20020a056512040200b004dc807b904bsm5099510lfk.120.2023.03.28.06.25.24
+        bh=AYY5Dr1Z1I9hb8CrXHC9U6DlzlFB2ypBISlRnxmPY3I=;
+        b=xuBvBTNan3jfDRwf8zhq5j5y4Czoml3ncIo6CYALkQWgvgvtcpHnGDDwTiyWXmAR8J
+         MYrz0RLOqCqPk0nsbKSHJQcSlRbcozEP8Q6MjmpDKHU8CoXzGpsJONh9O9o+MJ83vx8f
+         Jvdr4pHuDt0QixOOg6kzhh6+tT8sMgGWIB8e0UkURohCTAguDt3rCKrAHTjBTEk/fDeK
+         fVs8QyaUHmVY5+fUS8/fwC2rB/hTyt9S9u1BLpsU98cNKRcEWbYIq4TcuiHBctwXZ6pl
+         73VxzXh1ZPwJuJFkXBSdv1Wfjn7iZz3vL0sjEOJ/ugXcS57ck2RSDbROWa/i5ylwLfYs
+         eNhw==
+X-Gm-Message-State: AAQBX9cgE417ieHF9GeJgmsWsQbZtHd9hmxBfI+Nn6rbD3uk67M2OeNL
+        QAhhy2PI2CiNIjZGxTNCVjlwfA==
+X-Google-Smtp-Source: AKy350YAExXR6RZ2krFV7pgEcgdlDZBlWD13Eq4CYLuYxlMIcsU/t+DkcS1rzXhKdXibAB8k4462cA==
+X-Received: by 2002:a2e:9a8e:0:b0:2a0:7d07:edba with SMTP id p14-20020a2e9a8e000000b002a07d07edbamr5228469lji.43.1680010142574;
+        Tue, 28 Mar 2023 06:29:02 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id n12-20020a2e904c000000b00299f0194108sm5049811ljg.31.2023.03.28.06.29.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 06:25:24 -0700 (PDT)
-Message-ID: <4aab8fb9-8da5-389b-bbd4-db9ae835e93c@linaro.org>
-Date:   Tue, 28 Mar 2023 16:25:23 +0300
+        Tue, 28 Mar 2023 06:29:02 -0700 (PDT)
+Message-ID: <76c5b46c-82d6-847c-aaca-7380d310d012@linaro.org>
+Date:   Tue, 28 Mar 2023 15:29:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2] drm/msm/dpu: Add support for AR30 format
-Content-Language: en-GB
-To:     Leonard Lausen <leonard@lausen.nl>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-References: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <6f33219dc848ccd7122bce6933338033aa18c33c@lausen.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 2/5] ARM: dts: qcom: sdx65: Add support for PCIe PHY
+Content-Language: en-US
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lee@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mani@kernel.org,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+References: <1679036039-27157-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1679036039-27157-3-git-send-email-quic_rohiagar@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1679036039-27157-3-git-send-email-quic_rohiagar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -75,28 +80,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/03/2023 04:58, Leonard Lausen wrote:
-> Commit da7716a249b699978fb5 ("drm/msm/dpu: Add support for XR30 format") enabled
-> support for the 10-bit XR30 color format but missed enabling support for the
-> corresponding per-pixel alpha-blending AR30 color format.
+
+
+On 17.03.2023 07:53, Rohit Agarwal wrote:
+> Add devicetree support for PCIe PHY used in SDX65 platform. This PHY is
+> used by the PCIe EP controller.
 > 
-> Declaring only XR30 but not AR30 color format support can trigger bugs in
-> userspace. KDE KWin compositor versions prior to 5.27.3 for example prefer
-> 10-bit color formats, rendering a 1cm^2 black box around the cursor due to
-> missing per-pixel alpha-blending.
-> 
-> Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    | 11 +++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  2 ++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      |  1 +
->   3 files changed, 14 insertions(+)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Your patch doesn't apply as all tabs seems to be expanded to spaces. I 
-have fixed this while applying as not to delay it further. Please use 
-git-send-email when sending further patches.
-
--- 
-With best wishes
-Dmitry
-
+Konrad
+>  arch/arm/boot/dts/qcom-sdx65.dtsi | 31 +++++++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-sdx65.dtsi b/arch/arm/boot/dts/qcom-sdx65.dtsi
+> index 192f9f9..084daf8 100644
+> --- a/arch/arm/boot/dts/qcom-sdx65.dtsi
+> +++ b/arch/arm/boot/dts/qcom-sdx65.dtsi
+> @@ -293,6 +293,37 @@
+>  			status = "disabled";
+>  		};
+>  
+> +		pcie_phy: phy@1c06000 {
+> +			compatible = "qcom,sdx65-qmp-gen4x2-pcie-phy";
+> +			reg = <0x01c06000 0x2000>;
+> +
+> +			clocks = <&gcc GCC_PCIE_AUX_PHY_CLK_SRC>,
+> +				 <&gcc GCC_PCIE_CFG_AHB_CLK>,
+> +				 <&gcc GCC_PCIE_0_CLKREF_EN>,
+> +				 <&gcc GCC_PCIE_RCHNG_PHY_CLK>,
+> +				 <&gcc GCC_PCIE_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "cfg_ahb",
+> +				      "ref",
+> +				      "rchng",
+> +				      "pipe";
+> +
+> +			resets = <&gcc GCC_PCIE_PHY_BCR>;
+> +			reset-names = "phy";
+> +
+> +			assigned-clocks = <&gcc GCC_PCIE_RCHNG_PHY_CLK>;
+> +			assigned-clock-rates = <100000000>;
+> +
+> +			power-domains = <&gcc PCIE_GDSC>;
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "pcie_pipe_clk";
+> +
+> +			#phy-cells = <0>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+>  		tcsr_mutex: hwlock@1f40000 {
+>  			compatible = "qcom,tcsr-mutex";
+>  			reg = <0x01f40000 0x40000>;
