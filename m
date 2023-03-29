@@ -2,178 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C50D96CF38A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 21:46:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45BE76CF3A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 21:50:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231200AbjC2Tqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 15:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57820 "EHLO
+        id S230349AbjC2Tue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 15:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230434AbjC2TqX (ORCPT
+        with ESMTP id S230362AbjC2Tub (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 15:46:23 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C1A56A44
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:46:04 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id p204so20806530ybc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:46:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680119164;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uw+Hse+KJzv0y2FSFqFqsApOoihx38C1GEdX++8T4mU=;
-        b=Ls7zjQJXIsTIXK8xa12UAtG31viT2wzMU0YcliPrqQwfiS28W+VSdxEZCOHXi+RobD
-         XJ9KXSPw5B0DaQod948Mcm4Qe5V/oKODzQN0VNyyLUo34I+uIejSXd7Yil7OLKaWM3Ic
-         mDCDMu1lQm16AhfKyfawdB1xpJL3jxmlF2mcmnpp67Oe1PKzWojDN94zz1dBnpaD/F8n
-         73x1wO5Vu7TyBgqnybHaJwRlqGhN+FyoVNHwCokw5NLLun+bYLCaC9NxH5xxs6OuvGfj
-         eKXowAHQQsuzG8s8sypYOTlw9Ob3IXxmPcPDbdi07zqSSX5gApCeN57e0aEDnXq8mZNE
-         yCnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680119164;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Uw+Hse+KJzv0y2FSFqFqsApOoihx38C1GEdX++8T4mU=;
-        b=eDGQpP/5tP7rDseUFB7Wex+nuSd0rgU8+DiT1qcj1QXSPyndII9fMhpNRa6hE/ayXw
-         0OnyIhFm9NwOZD2AbxGc11dVTM7EwGIug3B9Add2qPyybSLHyj56jR0dFu4sKu2ntIp7
-         +jqVK6ySeFgbP/SV52KWzzngEhdeQ0EYei0wxbKwl56g6/RqDgVQ5kQF4nxuHtQ7q2QP
-         mDLpcFM9ObmljgqYHvz7XqistgiKyYCSaPPcJ+m1S0MNLY75jHaCXyfFT6sy9m3PqXou
-         tASHtssAto6eHdaX6t5GZU/Gs67pbQuGp2q51J6gG9BSB28f4kkM9etDImjSjDFhBHjq
-         qmwg==
-X-Gm-Message-State: AAQBX9fOinhoWdfCQCLOaEO0VqtAoN6qNDFlNfe7lS2Zw/qhyeJDvdTL
-        mQv7qbSLhR4kPhoDE7lU5YGKmN/thPTisli1SiT3Vg==
-X-Google-Smtp-Source: AKy350Ylj3nNZ+UsrhOAFg1PNOleWiB7Ukh6l+gs8gz1nByk+hbUAS4yZ4upJ6ElCZNHNv03bHuKs6bpr3HesgeAprk=
-X-Received: by 2002:a05:6902:a8c:b0:b7b:fb15:8685 with SMTP id
- cd12-20020a0569020a8c00b00b7bfb158685mr7538197ybb.9.1680119163802; Wed, 29
- Mar 2023 12:46:03 -0700 (PDT)
+        Wed, 29 Mar 2023 15:50:31 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D247E5FC4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:50:01 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl [83.9.3.225])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DEF463EF48;
+        Wed, 29 Mar 2023 21:49:03 +0200 (CEST)
+Message-ID: <8ebea3bc-6f1f-e5f9-40a1-827a0b22a1ea@somainline.org>
+Date:   Wed, 29 Mar 2023 21:49:02 +0200
 MIME-Version: 1.0
-References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
- <ZCRNFitcrAeH27Pn@hovoldconsulting.com> <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
-In-Reply-To: <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 29 Mar 2023 22:45:52 +0300
-Message-ID: <CAA8EJpohEo+kMw7fx5112m+z7JHSLDmsqOL4T7hmyvr2fPP8vQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
- idle() on load error
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, agross@kernel.org,
-        marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [v2,15/50] drm/msm/dpu: constify DSC data structures
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        David Airlie <airlied@gmail.com>
+References: <20230211231259.1308718-16-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+In-Reply-To: <20230211231259.1308718-16-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.0 required=5.0 tests=NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 29 Mar 2023 at 18:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
->
->
-> On 29.03.2023 16:37, Johan Hovold wrote:
-> > On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
-> >> If we fail to initialize the GPU for whatever reason (say we don't
-> >> embed the GPU firmware files in the initrd), the error path involves
-> >> pm_runtime_put_sync() which then calls idle() instead of suspend().
-> >>
-> >> This is suboptimal, as it means that we're not going through the
-> >> clean shutdown sequence. With at least A619_holi, this makes the GPU
-> >> not wake up until it goes through at least one more start-fail-stop
-> >> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
-> >> shutdown.
-> >
-> > This does not sound right. If pm_runtime_put_sync() fails to suspend the
-> > device when the usage count drops to zero, then you have a bug somewhere
-> > else.
-> I was surprised to see that it was not called as well, but I wasn't able
-> to track it down before..
-
-Could you please check that it's autosuspend who kicks in? In other
-words, if we disable autosuspend, the pm_runtime_put_sync is enough()?
-
-That would probably mean that we lack some kind of reset in the hw_init path.
-
-On the other hand, I do not know how the device will react to the
-error-in-the-middle state. Modems for example, can enter the state
-where you can not properly turn it off once it starts the boot
-process.
-
-And if we remember the efforts that Akhil has put into making sure
-that the GPU is properly reset in case of an _error_, it might be
-nearly impossible to shut it down in a proper way.
-
-Thus said, I think that unless there is an obvious way to restart the
-init process, Korad's pm_runtime_put_sync_suspend() looks like a
-correct fix to me.
-
-> > Also since commit 2c087a336676 ("drm/msm/adreno: Load the firmware
-> > before bringing up the hardware") the firmware is loaded before even
-> > hitting these paths so the above description does not sound right in
-> > that respect either (or is missing some details).
-> ..but I did some more digging and I found that the precise "firmware"
-> that fails is the ZAP blob, which is not checked like SQE in the
-> commit you mentioned!
->
-> Now I don't think that we can easily check for it as-is since
-> zap_shader_load_mdt() does the entire find-load-authenticate
-> dance which is required with secure assets, but it's obviously
-> possible to rip out the find-load part of that and go on from
-> there.
-
-Yes, I think we should load all firmware early. ZAP shader is a bit
-unique since the DT can override the name, but it might be nice to
-check for its presence earlier.
-
-At the same time it probably should not stop us from fixing the idle()
-vs suspend() bug.
-
->
-> Do you think that would be a better solution?
->
-> Konrad
->
-> >
-> >> Test cases:
-> >> 1. firmware baked into kernel
-> >> 2. error loading fw in initrd -> load from rootfs at DE start
-> >>
-> >> Both succeed on A619_holi (SM6375) and A630 (SDM845).
-> >>
-> >> Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> >>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >> index f61896629be6..59f3302e8167 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >> @@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
-> >>      return gpu;
-> >>
-> >>  err_put_rpm:
-> >> -    pm_runtime_put_sync(&pdev->dev);
-> >> +    pm_runtime_put_sync_suspend(&pdev->dev);
-> >>  err_disable_rpm:
-> >>      pm_runtime_disable(&pdev->dev);
-> >
-> > Johan
 
 
+On 12.02.2023 00:12, Dmitry Baryshkov wrote:
+> DSC hw catalog data is not supposed to be changed, so mark it as const
+> data.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
--- 
-With best wishes
-Dmitry
+Konrad
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c     | 4 ++--
+>  3 files changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 2d53ed92de85..54d706dfdbec 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -1829,14 +1829,14 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
+>  	.features = _features, \
+>  	}
+>  
+> -static struct dpu_dsc_cfg sdm845_dsc[] = {
+> +static const struct dpu_dsc_cfg sdm845_dsc[] = {
+>  	DSC_BLK("dsc_0", DSC_0, 0x80000, 0),
+>  	DSC_BLK("dsc_1", DSC_1, 0x80400, 0),
+>  	DSC_BLK("dsc_2", DSC_2, 0x80800, 0),
+>  	DSC_BLK("dsc_3", DSC_3, 0x80c00, 0),
+>  };
+>  
+> -static struct dpu_dsc_cfg sm8150_dsc[] = {
+> +static const struct dpu_dsc_cfg sm8150_dsc[] = {
+>  	DSC_BLK("dsc_0", DSC_0, 0x80000, BIT(DPU_DSC_OUTPUT_CTRL)),
+>  	DSC_BLK("dsc_1", DSC_1, 0x80400, BIT(DPU_DSC_OUTPUT_CTRL)),
+>  	DSC_BLK("dsc_2", DSC_2, 0x80800, BIT(DPU_DSC_OUTPUT_CTRL)),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index e6590302b3bf..a56581b34ddf 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -867,7 +867,7 @@ struct dpu_mdss_cfg {
+>  	const struct dpu_merge_3d_cfg *merge_3d;
+>  
+>  	u32 dsc_count;
+> -	struct dpu_dsc_cfg *dsc;
+> +	const struct dpu_dsc_cfg *dsc;
+>  
+>  	u32 intf_count;
+>  	const struct dpu_intf_cfg *intf;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> index 619926da1441..4e1396575e6a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> @@ -175,7 +175,7 @@ static void dpu_hw_dsc_bind_pingpong_blk(
+>  	DPU_REG_WRITE(c, dsc_ctl_offset, mux_cfg);
+>  }
+>  
+> -static struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+> +static const struct dpu_dsc_cfg *_dsc_offset(enum dpu_dsc dsc,
+>  				       const struct dpu_mdss_cfg *m,
+>  				       void __iomem *addr,
+>  				       struct dpu_hw_blk_reg_map *b)
+> @@ -207,7 +207,7 @@ struct dpu_hw_dsc *dpu_hw_dsc_init(enum dpu_dsc idx, void __iomem *addr,
+>  				   const struct dpu_mdss_cfg *m)
+>  {
+>  	struct dpu_hw_dsc *c;
+> -	struct dpu_dsc_cfg *cfg;
+> +	const struct dpu_dsc_cfg *cfg;
+>  
+>  	c = kzalloc(sizeof(*c), GFP_KERNEL);
+>  	if (!c)
