@@ -2,124 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14DBC6CEFCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 18:50:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E7786CF0D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:16:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230376AbjC2Qux (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 12:50:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60538 "EHLO
+        id S231240AbjC2RQS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 13:16:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230390AbjC2Quw (ORCPT
+        with ESMTP id S231238AbjC2RQR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 12:50:52 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29CA35FF2;
-        Wed, 29 Mar 2023 09:50:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CCB21B823D8;
-        Wed, 29 Mar 2023 16:50:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C88FC4339C;
-        Wed, 29 Mar 2023 16:50:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680108647;
-        bh=CKOyZDv3JQWgNTEg9VeWLRnaO9byzwy9arbDVJ5dC3w=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=Bhs4Pi2/PPGsfONY6o5af/Sz8FfzQTQ6DdoLP78cTkekzpSYQ7Jp+kb/d5smuOi1w
-         OP31cZhs6hUvo4olsJ2a1mwoY6hE72ke+3B326NZWbqb3IZdRDGZ9ihQ0MP8jg/1vW
-         6DM3YOzl8B0Omyrtta2sirtNrP7S5Rzs96iyrJNj8gMiWAqKbl8V0JViuXMEshZNps
-         qk5msvzc343cjRR1yIt1G7E413aThAqe3T4TD/2/C9zukHMTAUsBP5UrnqwNhb4x+9
-         1F58WP58KT9wyMKIh+OTda9p+vApAxbjlTb7wyGMwzfjJB2bByTMDgu33phbU/r0qr
-         TA8wwPfuLREZg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Patrick Lai <quic_plai@quicinc.com>
-In-Reply-To: <20230327132254.147975-1-krzysztof.kozlowski@linaro.org>
-References: <20230327132254.147975-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 00/10] ASoC: add audio digital codecs for Qualcomm
- SM8550
-Message-Id: <168010864198.3244592.2114017565664183933.b4-ty@kernel.org>
-Date:   Wed, 29 Mar 2023 17:50:41 +0100
+        Wed, 29 Mar 2023 13:16:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94977126;
+        Wed, 29 Mar 2023 10:16:16 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32TH9PMQ002570;
+        Wed, 29 Mar 2023 17:16:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=WQsg8jYGYlS5jR6si9qHdD85lJZwt9IDNgaN2IZ7IrM=;
+ b=RZShClF2ep127YRedE//sd/nrcCpcgob5bGDU/P25+wqgAwq0SPWAs8WDDe+EyLjejYp
+ jHPu2V3WGY/BvsKnxxvuk8u7Q/SsbuTlX58HHqCQ9Yv8fCkIOSm+OF95TFcc1KP8Tj8D
+ aW62llXIINVwLylCw1Q7cN2g1UfgU7z9HrXruNDoWZ/t9hkU6hi9rNCtPwhjUFTtBjuM
+ uapFOwO6mUEoFAM6zjFbEqlwN8QD5GTPeU1azyaw8aAJjovenVg/SdeFeevvBJB40dnS
+ jHdAbSFW+ysGBTNW5atCTU/SjDd+UxcQkvxHzsajS4CJRRedJTHy0zPh24y/K3OksG4V sw== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pmq1v8g33-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 29 Mar 2023 17:16:12 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32THGBTB029070
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 29 Mar 2023 17:16:11 GMT
+Received: from [10.216.23.227] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 29 Mar
+ 2023 10:16:07 -0700
+Message-ID: <b2e16887-bc35-c933-2107-6e8faa439770@quicinc.com>
+Date:   Wed, 29 Mar 2023 22:45:56 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-2eb1a
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v4] venus: Enable sufficient sequence change support for
+ sc7180 and fix for Decoder STOP command issue.
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stanimir.k.varbanov@gmail.com>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>
+CC:     <quic_dikshita@quicinc.com>,
+        Viswanath Boma <quic_vboma@quicinc.com>
+References: <20230323130153.8229-1-quic_vboma@quicinc.com>
+ <c611c390-2cf3-2abe-82aa-67538b823d62@linaro.org>
+ <9f5bce7e-2b8a-0b71-3a80-0b4f86d9f908@quicinc.com>
+ <E98548DB-5085-4036-9F6C-DC22A604A0C2@linaro.org>
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <E98548DB-5085-4036-9F6C-DC22A604A0C2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NoIfbNaPMCKyW2bdaBKpz2BbE5yelsdc
+X-Proofpoint-ORIG-GUID: NoIfbNaPMCKyW2bdaBKpz2BbE5yelsdc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-29_10,2023-03-28_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0
+ suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2303290135
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Mar 2023 15:22:44 +0200, Krzysztof Kozlowski wrote:
-> This patchset can be merged as is - no dependencies.
-> 
-> Changes since v2
-> ================
-> 1. Rebase.
-> 2. New patch: ASoC: dt-bindings: qcom,lpass-va-macro: Add missing NPL clock.
-> 3. Add Rb tags.
-> 
-> [...]
 
-Applied to
+On 3/29/2023 7:06 PM, Dmitry Baryshkov wrote:
+> 29 марта 2023 г. 10:48:23 GMT+03:00, Vikash Garodia <quic_vgarodia@quicinc.com> пишет:
+>> On 3/29/2023 3:49 AM, Dmitry Baryshkov wrote:
+>>> On 23/03/2023 15:01, Viswanath Boma wrote:
+>>>> For VP9 bitstreams, there could be a change in resolution at interframe,
+>>>> for driver to get notified of such resolution change,
+>>>> enable the property in video firmware.
+>>>> Also, EOS handling is now made same in video firmware across all V6 SOCs,
+>>>> hence above a certain firmware version, the driver handling is
+>>>> made generic for all V6s
+>>> Having "Do abc. Also do defgh." is a clear sign that this patch should be split into two.
+>> I agree, it could have split into patches. The patch introduces way to store venus firmware
+>>
+>> version and take some decision for various version. For ex. here STOP handling and enabling
+>>
+>> DRC event for specific firmware revision and onwards. Since both the handling was primarily
+>>
+>> dependent of firmware version, and since the handlings were smaller, it was combined as single
+>>
+>> patch. Let me know, if you have any further review comments, else, will raise a new version with
+>>
+>> 2 patches probably.
+> Thanks!
+>
+>>>> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+>>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+>>>> Tested-by: Nathan Hebert <nhebert@chromium.org>
+>>>> ---
+>>>> Since v3 : Addressed comments to rectify email address.
+>>>>
+>>>>    drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
+>>>>    drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+>>>>    drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+>>>>    drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+>>>>    drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
+>>>>    5 files changed, 41 insertions(+), 3 deletions(-)
+>>>>
+> (Skipped)
+>
+>
+>
+>>>> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_inst *inst)
+>>>>                return ret;
+>>>>        }
+>>>>    +    /* Enabling sufficient sequence change support for VP9 */
+>>>> +    if (of_device_is_compatible(inst->core->dev->of_node, "qcom,sc7180-venus")) {
+>>> Let me repeat my question from v3:
+>>>
+>>> Is it really specific just to sc7180 or will it be applicable to any
+>>> other platform using venus-5.4 firmware?
+>> The HFI "HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT" is implemented
+>>
+>> only for sc7180. Calling this for any other venus-5.4 would error out the session with error as
+>>
+>> unsupported property from firmware.
+>
+> How can we be sure that other platforms do not end up using sc7180 firmware? Or that sc7180 didn't end up using some other firmware?
+>
+> I see generic  qcom/venus-5.4/venus.mbn in Linux firmware. It's version is VIDEO.VE.5.4-00053-PROD-1. It can be used with any unfused device which uses firmware 5.4
 
-   broonie/sound.git for-6.4
+Driver defines resources for every platforms and there it specifies the 
+firmware to be used for that platform. For ex, for sc7180, the firmware 
+is specified at [1].
 
-Thanks!
+The various firmware supported by different platforms are also available 
+in linux firmware.
 
-[01/10] ASoC: dt-bindings: qcom,lpass-rx-macro: narrow clocks per variants
-        commit: e4cf7805f084772cccf2094b634a16bccf2f444f
-[02/10] ASoC: dt-bindings: qcom,lpass-rx-macro: Add SM8550 RX macro
-        commit: 0fc109f875721f9cef29bb68095f50d67343b4b7
-[03/10] ASoC: codecs: lpass-rx-macro: add support for SM8550
-        commit: 492fe974fed0754f7076580e069e1e182e7b3603
-[04/10] ASoC: dt-bindings: qcom,lpass-tx-macro: narrow clocks per variants
-        commit: bf4afbf950938d42cf0df1ecd915affeb26f4d76
-[05/10] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM8550 TX macro
-        commit: 050578c6f18c28e95f9659493a52a67b68b4b667
-[06/10] ASoC: codecs: lpass-tx-macro: add support for SM8550
-        commit: 5faf6a1c5256559af98c998b7416e4db8fb09b75
-[07/10] ASoC: dt-bindings: qcom,lpass-va-macro: Add missing NPL clock
-        (no commit info)
-[08/10] ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8550 VA macro
-        commit: f769fcefa683e150456555e2a280668509d834df
-[09/10] ASoC: dt-bindings: qcom,lpass-wsa-macro: Add SM8550 WSA macro
-        commit: c1bda22bd2f382f9c3b27fb7a899f8804d92f897
-[10/10] ASoC: codecs: lpass-wsa-macro: add support for SM8550
-        commit: 6b004b836ced4d9ce655b5f1c810833c1a880369
+[1] 
+https://elixir.bootlin.com/linux/v6.3-rc4/source/drivers/media/platform/qcom/venus/core.c#L765 
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+>>>> +        if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+>>>> +            ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+>>>> +            ret = hfi_session_set_property(inst, ptype, &en);
+>>>> +            if (ret)
+>>>> +                return ret;
+>>>> +        }
+>>>> +    }
+>>>> +
+>>>>        ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+>>>>        conceal = ctr->conceal_color & 0xffff;
+>>>>        conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
