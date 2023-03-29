@@ -2,256 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3480A6CF0EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:21:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8849B6CF112
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:30:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbjC2RVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 13:21:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47626 "EHLO
+        id S229567AbjC2Ra5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 13:30:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230038AbjC2RVT (ORCPT
+        with ESMTP id S229436AbjC2Ra4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 13:21:19 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC2424EC1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:21:10 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id bt19so10774967pfb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:21:10 -0700 (PDT)
+        Wed, 29 Mar 2023 13:30:56 -0400
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E31F49FA;
+        Wed, 29 Mar 2023 10:30:55 -0700 (PDT)
+Received: by mail-oo1-xc2c.google.com with SMTP id l7-20020a4abe07000000b0053e1205c84bso2189032oop.9;
+        Wed, 29 Mar 2023 10:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680110470;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gutUdfZnZGJz80FqANIFD9947ke4IDEKtmrilCP9Asg=;
-        b=uoDbG/Rpr227AQzHfgKoRhIFdGyFDgE38i3QuNOHy1nfld7wbGPfRr9WuTb7JUFFRv
-         5S6IUx5xo+jHf4HvuW37VUeU6CjeSxv7fJ3Xu1nDh3LyiSPOzXMvxx0JIjwsnbFpR5AC
-         h/Z91+pEymRNAWpDcf4quLxfLPS/ZppPxHBsPd6hfixrDpFQxADA7OvslGVMam2HYR1T
-         0nFVVFHIHCF83Qv5QPd7b/P0qCSfQK+pmpvJ/1puEeX934QmJKrQHP2Z5Zao9n2DUn2L
-         gkMFCIk+VFJN3pd6/P7u1g6lhw+g3t5dv0cnLwPs3L7zuHEKDj2kEBENZazXqqiHwvYq
-         f/Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680110470;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1680111054;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gutUdfZnZGJz80FqANIFD9947ke4IDEKtmrilCP9Asg=;
-        b=VZYQuNFu/Pd5jEE+I9FgHfZHwFP04wWLWPy2Y6DA/D3cuyM0PnlJL5Q6uRNJ/eyEm8
-         5aTQMuZ5EXb/HcQiTq9u2UnJpcvOs8fq80XcN59n3SKEpvRt2SNB04SewKRRpW9L6ARe
-         Hr2LnjLFhImc8Dup0iuM+Pha+tS9C22sMMwKnoEsKjRqVf1chTqgbZf9zxET+cu1uzYV
-         FkVDSFOXfPqMtKTwiDpXRDcwvuXZAbwBndHL56TmTHPh68jG9z9ibF+rkxhq5a1lL3Zg
-         lIaQ56QRM8YFgHmENKDEJWqkR6RIHJKq7+czUWW2+0+tzA2o4LZM6K6fwCE2Hk3vz3lX
-         skvw==
-X-Gm-Message-State: AAQBX9com385C0IUYwcuQu0LBXSjWtcOEZB+HO8bq2XDa65YQg8Z05Qz
-        S6GB09Q2TO4k43dGxoZxgRMZoA==
-X-Google-Smtp-Source: AKy350Y9SAYyqMx62p9jKSnHqyG110Q69ooC4fMXn9Wpn/gCEjRcEAoPcOxIkdsN6Ap4ln7XX1StRw==
-X-Received: by 2002:aa7:99d2:0:b0:626:7c43:7cb8 with SMTP id v18-20020aa799d2000000b006267c437cb8mr19386468pfi.20.1680110470163;
-        Wed, 29 Mar 2023 10:21:10 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:6b79:83ab:5e33:50a5])
-        by smtp.gmail.com with ESMTPSA id v3-20020a632f03000000b00502e6bfedc0sm21950243pgv.0.2023.03.29.10.21.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 10:21:09 -0700 (PDT)
-Date:   Wed, 29 Mar 2023 11:21:06 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH] dt-bindings: remoteproc: Drop unneeded quotes
-Message-ID: <20230329172106.GA3374270@p14s>
-References: <20230327170114.4102315-1-robh@kernel.org>
+        bh=t2IPudqLQnBF6M0Cb+sHJqpiyOjjt5yWTuSQtgO57oM=;
+        b=Q8+YeanEpf/SrDNg8nrGpxL7PTrLvQEfhSFAYYcuKvNSKqKuqGWknevyESHXx0I5Z/
+         GMYJZY7b7Hug1vmkBmhqrFJe1N3TqVTi+7ReyDwouTGpW8X0Oi/abMeHBBLvNdHamwM5
+         f8nKWOzxYcb4rvHJY91frT56FbwjrPAsdTJr/qkjlaLUoLD+bu8yN5rM2bm5Aao3ceJE
+         iEAiGYsJ9e6i+O8NIHv+FzGB5U9TgTB3N3hUmRfhn0GLUtQ28aUKr5CoKv4H4/Lt6zJ2
+         ZK4uXM4edeOazX08ps4D+8nSbotnxdQgEiQ1DjIJWCpKVF+dIDkRvH5rgSFufM1WHs2k
+         GtTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680111054;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t2IPudqLQnBF6M0Cb+sHJqpiyOjjt5yWTuSQtgO57oM=;
+        b=bEgY9AbgP8I0dIZiQ22bKE2kCrgZUNINv46qGDHf111fP02EOoxZQKDGI40CfYcyGz
+         fwMnDEBzHDjcnOAO/CTk35VH8L92G0FwhAcdUe3d7uSMA7ylNFm058AySourXpoHgSL8
+         TKiPxyEVgC40iLgDxO+Vy4V0Z4PJQ/atg2EmW7TXUIB2aujVf3pFTAl8YR09O4iEbUet
+         JLFpWw4Yo6uoqeZfKP2Bvow1BOZOQpECv6g7q7jYd+CkaaaYZS4k1kBgWbjjqoiaIkBj
+         UYt9U/Lmy/xhU91OCeWIIu5wKX+HRe6g/Ec2fIguOkbmHmEscGJhqMSVcLbKRv+SARtI
+         REFw==
+X-Gm-Message-State: AO0yUKULUdyyOjUpLLM1fm/14Q8lPpPaQhsmxo+bMSXKyZc2vTNtfr0t
+        XAa0Fa9yAsR5lMIxRIi6Neiiaz6ySwxqd0jDvAc=
+X-Google-Smtp-Source: AK7set/PYDGb/qktpF5+p6KZzT9FAS8IXhgUr0yK9clidh9mIEJ0n7X2fd4eNmJxGIBD6hMIGDshYwZ32Q4NpJTf6vU=
+X-Received: by 2002:a4a:d0d4:0:b0:53b:57cf:d23c with SMTP id
+ u20-20020a4ad0d4000000b0053b57cfd23cmr7236916oor.1.1680111054642; Wed, 29 Mar
+ 2023 10:30:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230327170114.4102315-1-robh@kernel.org>
+References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
+ <ZCRNFitcrAeH27Pn@hovoldconsulting.com> <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
+In-Reply-To: <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 29 Mar 2023 10:30:43 -0700
+Message-ID: <CAF6AEGsYimELcEAs8hdkYqdMzteMwzhPFavvmEUiEFsO01RrrQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
+ idle() on load error
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        andersson@kernel.org, agross@kernel.org,
+        marijn.suijten@somainline.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 12:01:13PM -0500, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../remoteproc/amlogic,meson-mx-ao-arc.yaml        |  4 ++--
->  .../bindings/remoteproc/fsl,imx-rproc.yaml         |  4 ++--
->  .../bindings/remoteproc/ingenic,vpu.yaml           |  4 ++--
->  .../bindings/remoteproc/qcom,glink-edge.yaml       |  2 +-
->  .../bindings/remoteproc/qcom,smd-edge.yaml         |  2 +-
->  .../bindings/remoteproc/renesas,rcar-rproc.yaml    |  4 ++--
->  .../bindings/remoteproc/st,stm32-rproc.yaml        | 14 +++++++-------
->  7 files changed, 17 insertions(+), 17 deletions(-)
+On Wed, Mar 29, 2023 at 8:48=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
 >
+>
+>
+> On 29.03.2023 16:37, Johan Hovold wrote:
+> > On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
+> >> If we fail to initialize the GPU for whatever reason (say we don't
+> >> embed the GPU firmware files in the initrd), the error path involves
+> >> pm_runtime_put_sync() which then calls idle() instead of suspend().
+> >>
+> >> This is suboptimal, as it means that we're not going through the
+> >> clean shutdown sequence. With at least A619_holi, this makes the GPU
+> >> not wake up until it goes through at least one more start-fail-stop
+> >> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
+> >> shutdown.
+> >
+> > This does not sound right. If pm_runtime_put_sync() fails to suspend th=
+e
+> > device when the usage count drops to zero, then you have a bug somewher=
+e
+> > else.
+> I was surprised to see that it was not called as well, but I wasn't able
+> to track it down before..
+>
+> >
+> > Also since commit 2c087a336676 ("drm/msm/adreno: Load the firmware
+> > before bringing up the hardware") the firmware is loaded before even
+> > hitting these paths so the above description does not sound right in
+> > that respect either (or is missing some details).
+> ..but I did some more digging and I found that the precise "firmware"
+> that fails is the ZAP blob, which is not checked like SQE in the
+> commit you mentioned!
+>
+> Now I don't think that we can easily check for it as-is since
+> zap_shader_load_mdt() does the entire find-load-authenticate
+> dance which is required with secure assets, but it's obviously
+> possible to rip out the find-load part of that and go on from
+> there.
+>
+> Do you think that would be a better solution?
 
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Hmm, to hit this it sounds like you'd need all the fw _except_ the zap
+in the initrd?
 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml b/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
-> index 11cb42a3fdd1..3100cb870170 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
-> @@ -1,8 +1,8 @@
->  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->  %YAML 1.2
->  ---
-> -$id: "http://devicetree.org/schemas/remoteproc/amlogic,meson-mx-ao-arc.yaml#"
-> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +$id: http://devicetree.org/schemas/remoteproc/amlogic,meson-mx-ao-arc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->  
->  title: Amlogic Meson AO ARC Remote Processor
->  
-> diff --git a/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
-> index ae2eab4452dd..0c3910f152d1 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
-> @@ -1,8 +1,8 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->  %YAML 1.2
->  ---
-> -$id: "http://devicetree.org/schemas/remoteproc/fsl,imx-rproc.yaml#"
-> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +$id: http://devicetree.org/schemas/remoteproc/fsl,imx-rproc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->  
->  title: NXP i.MX Co-Processor
->  
-> diff --git a/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml b/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
-> index 85b1e43cab08..8b55dbd909b0 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
-> @@ -1,8 +1,8 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->  %YAML 1.2
->  ---
-> -$id: "http://devicetree.org/schemas/remoteproc/ingenic,vpu.yaml#"
-> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +$id: http://devicetree.org/schemas/remoteproc/ingenic,vpu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->  
->  title: Ingenic Video Processing Unit
->  
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-> index 15e6851e1ff8..7b43ad3daa56 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
-> @@ -15,7 +15,7 @@ description:
->  
->  properties:
->    $nodename:
-> -    const: "glink-edge"
-> +    const: glink-edge
->  
->    apr:
->      $ref: /schemas/soc/qcom/qcom,apr.yaml#
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
-> index 7ec8a6b6682c..02c85b420c1a 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
-> @@ -21,7 +21,7 @@ description:
->  
->  properties:
->    $nodename:
-> -    const: "smd-edge"
-> +    const: smd-edge
->  
->    apr:
->      $ref: /schemas/soc/qcom/qcom,apr.yaml#
-> diff --git a/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
-> index 7e0275d31a3c..4bea679a0f61 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
-> @@ -1,8 +1,8 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->  %YAML 1.2
->  ---
-> -$id: "http://devicetree.org/schemas/remoteproc/renesas,rcar-rproc.yaml#"
-> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +$id: http://devicetree.org/schemas/remoteproc/renesas,rcar-rproc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->  
->  title: Renesas R-Car remote processor controller
->  
-> diff --git a/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
-> index 66b1e3efdaa3..37c0d7b4ceef 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
-> @@ -1,8 +1,8 @@
->  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->  %YAML 1.2
->  ---
-> -$id: "http://devicetree.org/schemas/remoteproc/st,stm32-rproc.yaml#"
-> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +$id: http://devicetree.org/schemas/remoteproc/st,stm32-rproc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->  
->  title: STMicroelectronics STM32 remote processor controller
->  
-> @@ -29,7 +29,7 @@ properties:
->  
->    st,syscfg-holdboot:
->      description: remote processor reset hold boot
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      items:
->        - items:
->            - description: Phandle of syscon block
-> @@ -39,7 +39,7 @@ properties:
->    st,syscfg-tz:
->      description:
->        Reference to the system configuration which holds the RCC trust zone mode
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      items:
->        - items:
->            - description: Phandle of syscon block
-> @@ -95,7 +95,7 @@ properties:
->        (see ../reserved-memory/reserved-memory.txt)
->  
->    st,syscfg-pdds:
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      description: |
->        Reference to the system configuration which holds the remote
->      items:
-> @@ -105,7 +105,7 @@ properties:
->            - description: The field mask of the PDDS selection
->  
->    st,syscfg-m4-state:
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      description: |
->        Reference to the tamp register which exposes the Cortex-M4 state.
->      items:
-> @@ -115,7 +115,7 @@ properties:
->            - description: The field mask of the Cortex-M4 state
->  
->    st,syscfg-rsc-tbl:
-> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->      description: |
->        Reference to the tamp register which references the Cortex-M4
->        resource table address.
-> -- 
-> 2.39.2
-> 
+BR,
+-R
+
+> Konrad
+>
+> >
+> >> Test cases:
+> >> 1. firmware baked into kernel
+> >> 2. error loading fw in initrd -> load from rootfs at DE start
+> >>
+> >> Both succeed on A619_holi (SM6375) and A630 (SDM845).
+> >>
+> >> Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu =
+load")
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/=
+drm/msm/adreno/adreno_device.c
+> >> index f61896629be6..59f3302e8167 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> @@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device =
+*dev)
+> >>      return gpu;
+> >>
+> >>  err_put_rpm:
+> >> -    pm_runtime_put_sync(&pdev->dev);
+> >> +    pm_runtime_put_sync_suspend(&pdev->dev);
+> >>  err_disable_rpm:
+> >>      pm_runtime_disable(&pdev->dev);
+> >
+> > Johan
