@@ -2,174 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAE536CDAE1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 280766CDAF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:36:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229981AbjC2Nac (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 09:30:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35114 "EHLO
+        id S230357AbjC2Ng5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 09:36:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230298AbjC2Nab (ORCPT
+        with ESMTP id S229741AbjC2Ng4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 09:30:31 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E08F849F6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:30:15 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id c9so9793764lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:30:15 -0700 (PDT)
+        Wed, 29 Mar 2023 09:36:56 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFDEA49EC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:36:53 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id bi9so20225716lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680096614;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NjuPm2mnbTK4XjKrE2sdkQecVnaXZRj+WhShzlmnGhc=;
-        b=tFm2sy55mBAQSuwvYStOo5KMYrTb8Sbnf0UoBhGJkL9dy6gVNAumLOf26Ff6p4uHqj
-         zNOGUNXvN14va+oiMqT3tJuambtiXRy/hJLcOczfaE9qC+1YOVpdpU0aDj51qalRPDEE
-         yOeRJx9yfdgM05ia30m2g9IDrKk9VS8+iJrf9JZ2N2nBJksaml6U5lQS5qOkp9tzBNDv
-         WKU//0Dq/7c+pA788vXMn+BYzRPX/rdkPW09JeS5hZeAVo9ZfiQwv84Ttb4DXjd4h6CO
-         uuw7bSiq4Vvbxrpn4QnKtVfKykWRUIzD1x3IPNRfKHFIcWwVfjF/Ny31RtvT1028Ca3l
-         2bXA==
+        d=linaro.org; s=google; t=1680097012;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9t0Oxs5o529jLZnGAk7kSGCT9H5QuX2QCpk9jCjT158=;
+        b=rv53BqeDOYXL7QYjJYKIRjaH0bQg0DOtF/1I57jYuJG/Ca7GKv6aAEc2CpLgBKDoHe
+         FpZ66fx/5eM8XjTukY7b5gg3+mwxNq6NKxZ1cveygQhNLw/aQL/FmqADoy/nXQiYX5Kj
+         abX2ZxB9qySnRzLNqDNPUFfXfQNVqHT7Mu2JBgns07RHXOXs/X/g0Yss0ru66IUYKlUo
+         xIqjl5VHGJRYxVW2sLvAU2V90/RV0vYxakbXC/HzbEq9RmuvP+vWOLVJppC8v2Dg7r61
+         kIWK5BE3ZeLX2v2GWqvXrSflFxVRnAgct+XD3zIuIAV76vEUIQF0BVhJiHIML6SK2Fmj
+         eDew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680096614;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NjuPm2mnbTK4XjKrE2sdkQecVnaXZRj+WhShzlmnGhc=;
-        b=nhgQwQ6+SxhzU6GDki9UmgEcK1ucRHmWZCFCaSDTH1VDBJTYiZ5NgBcg+HElK3bCD3
-         3kRuM2fZyflxBEbUGlb2Ym3ftBzFPA+cjmDn5N3r8yiszoahokoENvuCjr9KW/6kB5w8
-         jhepzyfGkh7RFK8wp0orKaknZvqi+HE+IKjoG4LBb/4DIe5yWzHL9dPyK6OYENG6jkuO
-         ckyLKwdIHlW0SA7JzZ3/xebhNYV77zGvfUz6lrkQgCQDxeM4SKEen5t18F5xcxfufSU4
-         J9BZyjMGXDsi6ix5TQDGVcppXaa9TOo/WnK7PwE2/eacIeOnVrFcVodHGHgPzqtDuw1C
-         peGQ==
-X-Gm-Message-State: AAQBX9c4Ouvlh2RZ2UP7runQLLsxOqHLIcw2gmoEBMD7Nim5GJPzhSZ/
-        p/TdnVpza3iAwSy6uJ+ymqhM2g==
-X-Google-Smtp-Source: AKy350aoyTtS/rfk9MywnHnFJ22ChXQCdc5JvkG5n8NAzfDYplkFaClSJPr3YxYLGEdevzoA3wvh6g==
-X-Received: by 2002:ac2:4c36:0:b0:4ea:fdcf:8f60 with SMTP id u22-20020ac24c36000000b004eafdcf8f60mr5581702lfq.3.1680096614120;
-        Wed, 29 Mar 2023 06:30:14 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id d7-20020ac25ec7000000b004e887fd71acsm5395938lfq.236.2023.03.29.06.30.13
+        d=1e100.net; s=20210112; t=1680097012;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9t0Oxs5o529jLZnGAk7kSGCT9H5QuX2QCpk9jCjT158=;
+        b=vP5ykvzlOe2+gXxLY16kf3z+q6mJIWrCHjOyWF6IdcOt8D4yxB5q+3Eh4cIVDZwj48
+         SsFhHHO00vFdJy6QWo7aWia4GQgTzWZiPXwboE4hfYgRShrnsJJbmuURV8YkqWogkfRO
+         xVTlU+tDLuORvbS1h4F9OtPeWg6Zzt+FlgGJAEy9G/3P/KairY7iXOfr7WSMr7skZBEX
+         iLvYTjgArcR9JUSz29tgpWlx3sBXYNc9ECo1naQBFHNpTx1Us7ZVY1/NuoZIWhiSMkl+
+         li8hKXxj9YOM/r6BqhuihveLo1jFR+GfsBEKQydqF3u1uOoR4ZQja06l6VThLse547i6
+         l6hg==
+X-Gm-Message-State: AAQBX9fmxup6dRC/DRDwG7B2tmI5KWKKEfRbR5U20d3vwPBBT6c3broS
+        uNiIKA5wypBc7S7wKGibGDNCDw==
+X-Google-Smtp-Source: AKy350aSNBnWsSycc2KOVvgOy7wVZZLhaPHIPkPzHRi2UrpSTxgIJtY+yHTb2NgmVQCqFs6+D1Miow==
+X-Received: by 2002:a19:c50c:0:b0:4dd:840d:462 with SMTP id w12-20020a19c50c000000b004dd840d0462mr765030lfe.21.1680097012016;
+        Wed, 29 Mar 2023 06:36:52 -0700 (PDT)
+Received: from [127.0.0.1] (85-76-160-246-nat.elisa-mobile.fi. [85.76.160.246])
+        by smtp.gmail.com with ESMTPSA id f24-20020ac251b8000000b004eb15952669sm737164lfk.141.2023.03.29.06.36.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 06:30:13 -0700 (PDT)
-Message-ID: <14350eba-edb6-0243-5451-2e2b7d1bd3fd@linaro.org>
-Date:   Wed, 29 Mar 2023 15:30:12 +0200
+        Wed, 29 Mar 2023 06:36:51 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 16:36:45 +0300
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        andersson@kernel.org, konrad.dybcio@linaro.org
+CC:     quic_dikshita@quicinc.com, Viswanath Boma <quic_vboma@quicinc.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4=5D_venus=3A_Enable?= =?US-ASCII?Q?_sufficient_sequence_change_s?= =?US-ASCII?Q?upport_for_sc7180_and_fix_for_Decoder_STOP_command_issue=2E?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <9f5bce7e-2b8a-0b71-3a80-0b4f86d9f908@quicinc.com>
+References: <20230323130153.8229-1-quic_vboma@quicinc.com> <c611c390-2cf3-2abe-82aa-67538b823d62@linaro.org> <9f5bce7e-2b8a-0b71-3a80-0b4f86d9f908@quicinc.com>
+Message-ID: <E98548DB-5085-4036-9F6C-DC22A604A0C2@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
- SRAM as reg space
-Content-Language: en-US
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
- <20230328-topic-msgram_mpm-v1-2-1b788a5f5a33@linaro.org>
- <20230329034958.GC3554086@dragon>
- <c42b8c24-2159-64ae-d36c-92c69274f24f@linaro.org>
- <20230329132819.GA3590215@dragon>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230329132819.GA3590215@dragon>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+29 =D0=BC=D0=B0=D1=80=D1=82=D0=B0 2023 =D0=B3=2E 10:48:23 GMT+03:00, Vikash=
+ Garodia <quic_vgarodia@quicinc=2Ecom> =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+>On 3/29/2023 3:49 AM, Dmitry Baryshkov wrote:
+>> On 23/03/2023 15:01, Viswanath Boma wrote:
+>>> For VP9 bitstreams, there could be a change in resolution at interfram=
+e,
+>>> for driver to get notified of such resolution change,
+>>> enable the property in video firmware=2E
+>>> Also, EOS handling is now made same in video firmware across all V6 SO=
+Cs,
+>>> hence above a certain firmware version, the driver handling is
+>>> made generic for all V6s
+>>=20
+>> Having "Do abc=2E Also do defgh=2E" is a clear sign that this patch sho=
+uld be split into two=2E
+>
+>I agree, it could have split into patches=2E The patch introduces way to =
+store venus firmware
+>
+>version and take some decision for various version=2E For ex=2E here STOP=
+ handling and enabling
+>
+>DRC event for specific firmware revision and onwards=2E Since both the ha=
+ndling was primarily
+>
+>dependent of firmware version, and since the handlings were smaller, it w=
+as combined as single
+>
+>patch=2E Let me know, if you have any further review comments, else, will=
+ raise a new version with
+>
+>2 patches probably=2E
+
+Thanks!
+
+>
+>>>=20
+>>> Signed-off-by: Vikash Garodia <vgarodia@qti=2Equalcomm=2Ecom>
+>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc=2Ecom>
+>>> Tested-by: Nathan Hebert <nhebert@chromium=2Eorg>
+>>> ---
+>>> Since v3 : Addressed comments to rectify email address=2E
+>>>=20
+>>> =C2=A0 drivers/media/platform/qcom/venus/core=2Eh=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 18 ++++++++++++++++++
+>>> =C2=A0 drivers/media/platform/qcom/venus/hfi_cmds=2Ec=C2=A0=C2=A0 |=C2=
+=A0 1 +
+>>> =C2=A0 drivers/media/platform/qcom/venus/hfi_helper=2Eh |=C2=A0 2 ++
+>>> =C2=A0 drivers/media/platform/qcom/venus/hfi_msgs=2Ec=C2=A0=C2=A0 | 11=
+ +++++++++--
+>>> =C2=A0 drivers/media/platform/qcom/venus/vdec=2Ec=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 12 +++++++++++-
+>>> =C2=A0 5 files changed, 41 insertions(+), 3 deletions(-)
+>>>=20
+
+(Skipped)
 
 
-On 29.03.2023 15:28, Shawn Guo wrote:
-> On Wed, Mar 29, 2023 at 01:06:11PM +0200, Konrad Dybcio wrote:
->>
->>
->> On 29.03.2023 05:49, Shawn Guo wrote:
->>> On Tue, Mar 28, 2023 at 12:02:53PM +0200, Konrad Dybcio wrote:
->>>> The MPM hardware is accessible to us from the ARM CPUs through a shared
->>>> memory region (RPM MSG RAM) that's also concurrently accessed by other
->>>> kinds of cores on the system (like modem, ADSP etc.). Modeling this
->>>> relation in a (somewhat) sane manner in the device tree basically
->>>> requires us to either present the MPM as a child of said memory region
->>>> (which makes little sense, as a mapped memory carveout is not a bus),
->>>> define nodes which bleed their register spaces into one another, or
->>>> passing their slice of the MSG RAM through some kind of a property.
->>>>
->>>> Go with the third option and add a way to map a region passed through
->>>> the "qcom,rpm-msg-ram" property as our register space.
->>>>
->>>> The current way of using 'reg' is preserved for ABI reasons.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>  drivers/irqchip/irq-qcom-mpm.c | 30 +++++++++++++++++++++++++-----
->>>>  1 file changed, 25 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
->>>> index d30614661eea..6fe59f4deef4 100644
->>>> --- a/drivers/irqchip/irq-qcom-mpm.c
->>>> +++ b/drivers/irqchip/irq-qcom-mpm.c
->>>> @@ -14,6 +14,7 @@
->>>>  #include <linux/mailbox_client.h>
->>>>  #include <linux/module.h>
->>>>  #include <linux/of.h>
->>>> +#include <linux/of_address.h>
->>>>  #include <linux/of_device.h>
->>>>  #include <linux/platform_device.h>
->>>>  #include <linux/pm_domain.h>
->>>> @@ -322,8 +323,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
->>>>  	struct device *dev = &pdev->dev;
->>>>  	struct irq_domain *parent_domain;
->>>>  	struct generic_pm_domain *genpd;
->>>> +	struct device_node *msgram_np;
->>>>  	struct qcom_mpm_priv *priv;
->>>>  	unsigned int pin_cnt;
->>>> +	struct resource res;
->>>>  	int i, irq;
->>>>  	int ret;
->>>>  
->>>> @@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
->>>>  
->>>>  	raw_spin_lock_init(&priv->lock);
->>>>  
->>>> -	priv->base = devm_platform_ioremap_resource(pdev, 0);
->>>> -	if (IS_ERR(priv->base))
->>>> -		return PTR_ERR(priv->base);
->>>> +	/* If we have a handle to an RPM message ram partition, use it. */
->>>> +	msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
->>>> +	if (msgram_np) {
->>>> +		ret = of_address_to_resource(msgram_np, 0, &res);
->>>> +		/* Don't use devm_ioremap_resource, as we're accessing a shared region. */
->>>> +		priv->base = ioremap(res.start, resource_size(&res));
->>>
->>> Are you suggesting that other cores/drivers will also need to access
->>> the mpm slice below?
->>>
->>> 	apss_mpm: sram@1b8 {
->>> 		reg = <0x1b8 0x48>;
->>> 	};
->> Yes, the RPM M3 core. Other slices may be accessed
->> by any core at any time.
-> 
-> Hmm, let me reword my question.  Other than irq-qcom-mpm, is there any
-> other Linux drivers that also need to request this slice region?
-No.
 
-> Otherwise, I do not understand why devm_ioremap_resource() cannot be
-> used.
-drivers/rpmsg/qcom_glink_rpm.c calls devm_ioremap on the entire
-RPM MSG RAM.
+>>> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_inst =
+*inst)
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 return ret;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> =C2=A0 +=C2=A0=C2=A0=C2=A0 /* Enabling sufficient sequence change supp=
+ort for VP9 */
+>>> +=C2=A0=C2=A0=C2=A0 if (of_device_is_compatible(inst->core->dev->of_no=
+de, "qcom,sc7180-venus")) {
+>>=20
+>> Let me repeat my question from v3:
+>>=20
+>> Is it really specific just to sc7180 or will it be applicable to any
+>> other platform using venus-5=2E4 firmware?
+>
+>The HFI "HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT" is im=
+plemented
+>
+>only for sc7180=2E Calling this for any other venus-5=2E4 would error out=
+ the session with error as
+>
+>unsupported property from firmware=2E
 
-Konrad
 
-> 
-> Shawn
+How can we be sure that other platforms do not end up using sc7180 firmwar=
+e? Or that sc7180 didn't end up using some other firmware?
+
+I see generic  qcom/venus-5=2E4/venus=2Embn in Linux firmware=2E It's vers=
+ion is VIDEO=2EVE=2E5=2E4-00053-PROD-1=2E It can be used with any unfused d=
+evice which uses firmware 5=2E4
+
+>
+>>=20
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (is_fw_rev_or_newer(ins=
+t->core, 5, 4, 51)) {
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pt=
+ype =3D HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 re=
+t =3D hfi_session_set_property(inst, ptype, &en);
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
+ (ret)
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 return ret;
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> +=C2=A0=C2=A0=C2=A0 }
+>>> +
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ptype =3D HFI_PROPERTY_PARAM_VDEC_CONCE=
+AL_COLOR;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 conceal =3D ctr->conceal_color & 0xffff=
+;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 conceal |=3D ((ctr->conceal_color >> 16=
+) & 0xffff) << 10;
+>>=20
+
