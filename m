@@ -2,155 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EDB76CED57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 17:49:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D3856CEDA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 17:53:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbjC2PtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 11:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35778 "EHLO
+        id S231135AbjC2PxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 11:53:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbjC2PtA (ORCPT
+        with ESMTP id S230451AbjC2Pwy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 11:49:00 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84CEA4487
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 08:48:59 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id a21so9449444ljq.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 08:48:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680104938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8jD8NVqtsPudciwhm8Tk75NT4wlLoElkTtYals9Zh3s=;
-        b=PKp8ZyPYUiw16H1l/Agu1Uq/X0RhJ79mp3NP7m0jlPV/StUndLoQ357goARYFgOX4F
-         QrlJRI8G2izmMQ/gHL21qr1I6bKibkBLgoNaNcIIJveQRYu5Xq5R/mgu+zTeA2ztD5G5
-         6JSm8iy20Z5prXFolUXL8ZOsMtmdGrbabURIklMpJVYndk6txmfVSk4Ov2XBQ99X+iiB
-         1CGIqAzaO7+S1XY2n4JMrmnp3vhjhroT6PX081yUUnqBul8g0L3mxoK0nzg8HhbfLsFg
-         5MQEtKVlHQrk+luDabREpnLgOI/CLsO9jH96uEt2pTty3ZacA54NZi89k0HSzMYtKbvJ
-         jPAw==
+        Wed, 29 Mar 2023 11:52:54 -0400
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2430F4699;
+        Wed, 29 Mar 2023 08:52:48 -0700 (PDT)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-177ca271cb8so16672938fac.2;
+        Wed, 29 Mar 2023 08:52:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680104938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8jD8NVqtsPudciwhm8Tk75NT4wlLoElkTtYals9Zh3s=;
-        b=TEuVvUM+wZbDY/8Kw9DXFqbhopiS6UTRK6w7y4gM7GWQeQvreHX6Eu286X+CZeisXE
-         wtD+g0gAXo6lSPRzU0GCOc261cL3xiDF2CJ+0siAyMMRls6U0tmZXtQBqNdlBDgjT3vP
-         7XdZWNyTV1YMLUqIbNdtkd6qNEciO4NFoP9Q/t1tznLlY6qAtI4kDPWvhZuFgkE6Nx0I
-         RXFvR0nAAOoDcynIte2rX0tXE73WZt62hPGoX8P5zGQBh6QEP09V8Kq4lazeluAYdKlU
-         AR4CvBk/trNJOaiiuGqyNnPsm7IU0Kwyj7hIHLpNXIZ3Q/BEhj4bxIH1rkXygPBmztr8
-         CcCQ==
-X-Gm-Message-State: AAQBX9fYQ0Whnaq/78/ksYANfHbol9swyjos9bitLFfNCzKB6SlaXlzK
-        qz/SyVZfTDE+iBusb9zVqams+A==
-X-Google-Smtp-Source: AKy350bZwb0nN1eKm+plrJvvRh6qWAf4xzfzhIpDrFsv1Xnvma4OkZ7P9lJEitJzajVJLNdExNnbaw==
-X-Received: by 2002:a2e:8604:0:b0:290:5166:7c28 with SMTP id a4-20020a2e8604000000b0029051667c28mr7077535lji.20.1680104937770;
-        Wed, 29 Mar 2023 08:48:57 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id u14-20020a2e854e000000b00299ab2475ebsm5546763ljj.1.2023.03.29.08.48.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 08:48:57 -0700 (PDT)
-Message-ID: <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
-Date:   Wed, 29 Mar 2023 17:48:55 +0200
+        d=1e100.net; s=20210112; t=1680105167;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=myNahkzgyzJXsmSpdQrVTovV/3CgUWg7sSEu7RQwjG0=;
+        b=ngkOe9Z72mD8HC3/d2+1lk6z5+1V3QH4z5Irmiw976IM9bZPBQplBzSPx7vlr2paUY
+         Clgj2oaSX5WoSz/FJwpGektZCJMLkk8f6m6mfApZl8ZCzVGHkQO+HPE6qcNLhWap3pxw
+         KVRIkh/+fBn/VQDZbHTZjV8exMsuEsUQoSQ7AMQaqlAyKJlE2GSbJ0X9f1zkGZkWLp38
+         o7ZyJ87yM6sBSTpvbVNoA9Xod9aa7ER/8aRt2r2FREwn0ep2Ad/gn24mkEgrqJ6rqNJv
+         24y5hhgMPM33ytXJo1uiC4wz/ujfuTYToh6t/sc+HX0C03pxr8RV0uZwDz3rUTY0IBqg
+         wwiQ==
+X-Gm-Message-State: AAQBX9fiK+xxJYUIlNLZJ3aJ0ZLOqsKxq9STe1oLv4TSHb4uIiMhWKpo
+        Y17BHifALbbc2iEB7vxMGw==
+X-Google-Smtp-Source: AK7set9u04Mn8XGtckt02xXgvmDdYPAodmqaRmO7QbQsn4pMne9ZnJvBTvxw9bjwWx1vNoyCfeyKQg==
+X-Received: by 2002:a05:6870:eca0:b0:177:baf4:5b10 with SMTP id eo32-20020a056870eca000b00177baf45b10mr12821109oab.31.1680105167283;
+        Wed, 29 Mar 2023 08:52:47 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id hv12-20020a056870f98c00b00176209a6d6asm11896178oab.10.2023.03.29.08.52.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 08:52:46 -0700 (PDT)
+Received: (nullmailer pid 3198060 invoked by uid 1000);
+        Wed, 29 Mar 2023 15:52:45 -0000
+From:   Rob Herring <robh@kernel.org>
+Subject: [PATCH 00/19] DT header disentangling, part 1
+Date:   Wed, 29 Mar 2023 10:51:57 -0500
+Message-Id: <20230329-dt-cpu-header-cleanups-v1-0-581e2605fe47@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
- idle() on load error
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, marijn.suijten@somainline.org,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
- <ZCRNFitcrAeH27Pn@hovoldconsulting.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZCRNFitcrAeH27Pn@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAJ1eJGQC/x2NywoCMQwAf2XJ2UBtER+/Ih7SNNpCqaWxi7Dsv
+ xs8zsAwG6iMIgq3ZYMha9HybgbHwwKcqb0ESzIG73xwwV8xfZD7xCyUZCBXoTa7Ip+jpAu7GE4
+ eLI6kgnFQ42x5m7Wa7EOe5fu/3R/7/gPTb5swfQAAAA==
+To:     "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Amit Daniel Kachhap <amit.kachhap@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Anup Patel <anup@brainfault.org>,
+        Huacai Chen <chenhuacai@kernel.org>,
+        Jiaxun Yang <jiaxun.yang@flygoat.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     sparclinux@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-riscv@lists.infradead.org,
+        linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linuxppc-dev@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org
+X-Mailer: b4 0.13-dev
+X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is the first of a series of clean-ups to disentangle the DT 
+includes. There's a decade plus old comment in of_device.h:
 
+ #include <linux/of_platform.h> /* temporary until merge */
 
-On 29.03.2023 16:37, Johan Hovold wrote:
-> On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
->> If we fail to initialize the GPU for whatever reason (say we don't
->> embed the GPU firmware files in the initrd), the error path involves
->> pm_runtime_put_sync() which then calls idle() instead of suspend().
->>
->> This is suboptimal, as it means that we're not going through the
->> clean shutdown sequence. With at least A619_holi, this makes the GPU
->> not wake up until it goes through at least one more start-fail-stop
->> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
->> shutdown.
-> 
-> This does not sound right. If pm_runtime_put_sync() fails to suspend the
-> device when the usage count drops to zero, then you have a bug somewhere
-> else.
-I was surprised to see that it was not called as well, but I wasn't able
-to track it down before..
+Who's this Grant person that wrote this? ;)
 
-> 
-> Also since commit 2c087a336676 ("drm/msm/adreno: Load the firmware
-> before bringing up the hardware") the firmware is loaded before even
-> hitting these paths so the above description does not sound right in
-> that respect either (or is missing some details).
-..but I did some more digging and I found that the precise "firmware"
-that fails is the ZAP blob, which is not checked like SQE in the
-commit you mentioned!
+It gets better. of_device.h also pulls in of.h, and of_platform.h 
+includes of_device.h. So naturally, drivers include all combinations of 
+those 3 headers and sometimes they actually need them. 
 
-Now I don't think that we can easily check for it as-is since
-zap_shader_load_mdt() does the entire find-load-authenticate
-dance which is required with secure assets, but it's obviously
-possible to rip out the find-load part of that and go on from
-there.
+I started on fixing this years ago, but just dropping the circular 
+includes and fixing all the fallout was massive and didn't sit well. 
+Pulling in of_device.h in all the drivers that happen to call only
+of_device_get_match_data/of_match_device didn't seem great when the rest 
+of of_device.h would never be needed. of_device.h being everything that 
+works on a struct device is not a great split because several types of 
+users deal with struct device. The better split seems to be by user 
+(subsys driver vs. consumer) which several subsystems now do. For 
+of_device.h, the users can primarily be split between bus 
+implementations and device drivers. Device drivers also typically need 
+of.h to read properties. So let's move of_device.h towards just bus 
+related functions and move device driver related functions to of.h.
 
-Do you think that would be a better solution?
+This series is just the first step. It makes a couple of clean-ups to 
+replace some includes with forward declarations. It moves 
+of_device_get_match_data() and of_cpu_device_node_get() to of.h. The 
+former move is transparent for now and preparation for the next series.
+The last part of the series updates drivers using 
+of_cpu_device_node_get() and/or relying on the implicit cpu.h include 
+which is removed in the last patch.
 
-Konrad
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+Rob Herring (19):
+      of: Make devtree_lock declaration private
+      of: Move of_device_(add|register|unregister) to of_platform.h
+      of: Move of_device_get_match_data() declaration
+      of: Move CPU node related functions to their own file
+      of: Drop unnecessary includes in headers
+      ARM: sunxi: Drop of_device.h include
+      ARM: cpuidle: Drop of_device.h include
+      riscv: Add explicit include for cpu.h
+      riscv: cacheinfo: Adjust includes to remove of_device.h
+      cacheinfo: Adjust includes to remove of_device.h
+      clocksource: ingenic: Add explicit include for cpuhotplug.h
+      thermal: cpuidle_cooling: Adjust includes to remove of_device.h
+      soc: mediatek: mtk-svs: Add explicit include for cpu.h
+      cpufreq: Adjust includes to remove of_device.h
+      cpufreq: sun50i: Add explicit include for cpu.h
+      cpuidle: Adjust includes to remove of_device.h
+      irqchip: loongson-eiointc: Add explicit include for cpuhotplug.h
+      OPP: Adjust includes to remove of_device.h
+      of: Drop cpu.h include from of_device.h
 
-> 
->> Test cases:
->> 1. firmware baked into kernel
->> 2. error loading fw in initrd -> load from rootfs at DE start
->>
->> Both succeed on A619_holi (SM6375) and A630 (SDM845).
->>
->> Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
->> index f61896629be6..59f3302e8167 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->> @@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
->>  	return gpu;
->>  
->>  err_put_rpm:
->> -	pm_runtime_put_sync(&pdev->dev);
->> +	pm_runtime_put_sync_suspend(&pdev->dev);
->>  err_disable_rpm:
->>  	pm_runtime_disable(&pdev->dev);
-> 
-> Johan
+ arch/arm/kernel/cpuidle.c              |   1 -
+ arch/arm/mach-sunxi/mc_smp.c           |   1 -
+ arch/riscv/kernel/cacheinfo.c          |   1 -
+ arch/riscv/kernel/setup.c              |   2 +-
+ arch/sparc/include/asm/prom.h          |   3 +
+ drivers/base/cacheinfo.c               |   2 +-
+ drivers/clocksource/ingenic-timer.c    |   3 +-
+ drivers/cpufreq/cpufreq-dt-platdev.c   |   1 -
+ drivers/cpufreq/kirkwood-cpufreq.c     |   2 +-
+ drivers/cpufreq/maple-cpufreq.c        |   2 +-
+ drivers/cpufreq/pmac32-cpufreq.c       |   2 +-
+ drivers/cpufreq/pmac64-cpufreq.c       |   2 +-
+ drivers/cpufreq/qcom-cpufreq-hw.c      |   4 +-
+ drivers/cpufreq/spear-cpufreq.c        |   2 +-
+ drivers/cpufreq/sun50i-cpufreq-nvmem.c |   3 +-
+ drivers/cpufreq/tegra124-cpufreq.c     |   1 -
+ drivers/cpufreq/tegra20-cpufreq.c      |   2 +-
+ drivers/cpuidle/cpuidle-psci.c         |   1 -
+ drivers/cpuidle/cpuidle-qcom-spm.c     |   3 +-
+ drivers/cpuidle/cpuidle-riscv-sbi.c    |   2 +-
+ drivers/cpuidle/dt_idle_states.c       |   1 -
+ drivers/irqchip/irq-loongson-eiointc.c |   5 +-
+ drivers/of/Makefile                    |   2 +-
+ drivers/of/base.c                      | 187 -----------------------------
+ drivers/of/cpu.c                       | 210 +++++++++++++++++++++++++++++++++
+ drivers/of/of_private.h                |   1 +
+ drivers/opp/of.c                       |   2 +-
+ drivers/soc/mediatek/mtk-svs.c         |   1 +
+ drivers/thermal/cpuidle_cooling.c      |   3 +-
+ include/linux/cpufreq.h                |   1 -
+ include/linux/of.h                     |  28 +++--
+ include/linux/of_device.h              |  24 +---
+ include/linux/of_platform.h            |  10 +-
+ 33 files changed, 261 insertions(+), 254 deletions(-)
+---
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+change-id: 20230329-dt-cpu-header-cleanups-c7bed8c0b352
+
+Best regards,
+-- 
+Rob Herring <robh@kernel.org>
+
