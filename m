@@ -2,269 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27DF46CD9E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 902086CDA17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:08:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjC2NER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 09:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49144 "EHLO
+        id S229815AbjC2NIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 09:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbjC2NEQ (ORCPT
+        with ESMTP id S230095AbjC2NID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 09:04:16 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09711D2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:04:14 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id x20so16014258ljq.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:04:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680095052;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gK6jCpWS6XZzlwCBse9a1W1MSJWJSORYpFBcbQQ1ryM=;
-        b=ObzUHix/WjxC5bQHVz7xyD1NBSbC4zo49uWu6QPiVZ7UtnZfWb5nkb5lMS0iV+5ku2
-         LLNlJmq5Qs7R/GFGebZ5QpON/BhCjAYrT0WyYY40IEjicb/EvwKRJMIbZAudrRP4OyvI
-         CMiDupUrEtE7wTQ4xRnUEIpf6cG4pSgWU5x7HB8XlN2pENAU2A/AcVYtlRufwLOwSg2i
-         kdAqP5LZiUM9i8N5NmOv4hXYuvNrj/g7o7oj8ROeWLNp8tYkCg/7nKATBLbNjLpUTfov
-         ZsDOzEf4P8ehqnJyUmMFivv/mgyBjRdWI37V77tT9c1jss9nYhBn3CUWLvSk0hO9zSlP
-         ibtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680095052;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gK6jCpWS6XZzlwCBse9a1W1MSJWJSORYpFBcbQQ1ryM=;
-        b=U7xpYe+51wa+9aOEoWP8QBybsJI7enKfXMSQJOpEG9Umgu6MsFvRECHY5lar9PeWkX
-         lbkwL10qYJUAWvhr/SIRrazGVckoR3ctDL+F1thRKe8j9p68pUyNDzVB7plIBCztgUVw
-         PPDwjaSQz1rgDRByitBXPhWDrzlKFhbWjrL8/PWChNlqwm3m6itsvAv9778AAVBecA7O
-         4+qbrZpx40mJPjjAtWgCK6uP4QCQiT0fW2RXSYx9zh87V9zCMV4awYzMmhQIXI6Bi6p/
-         rHmAtVqBaJQQWBsGtfCQfzE1pXabgiwbXPCO0gnMU2j9jkKjsHyUYKmJzBP2lzN/TfBn
-         XJ9w==
-X-Gm-Message-State: AAQBX9cnYb2RHP98fQ5FtZ+vkFbuIJoGWESDzFAmF0n7WA8JcEySey7w
-        648gjb6gBJHlmeNQ0YbDcQwAhQ==
-X-Google-Smtp-Source: AKy350ZDSe2usqvbDxH0GB/1U1JaD7v7CuKSwNu6clb8QTqhBF3xT0WcREkdQgAOd0io9ri98s2gWw==
-X-Received: by 2002:a2e:320a:0:b0:298:b03d:5715 with SMTP id y10-20020a2e320a000000b00298b03d5715mr6306176ljy.25.1680095052252;
-        Wed, 29 Mar 2023 06:04:12 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id a18-20020a05651c011200b002a483f01d9csm1929207ljb.85.2023.03.29.06.04.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 06:04:11 -0700 (PDT)
-Message-ID: <4518f47f-fde7-be87-6cc0-a034d76e886c@linaro.org>
-Date:   Wed, 29 Mar 2023 15:04:10 +0200
+        Wed, 29 Mar 2023 09:08:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F14DD2;
+        Wed, 29 Mar 2023 06:07:53 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32TCf6lM030891;
+        Wed, 29 Mar 2023 13:07:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
+ : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ukV2puvT6Yb9ovva4Gb5MV+nAbKsW5aWmpTLdH48Cqs=;
+ b=d9Toxc4oMkQthJt0ZHb4DdRIokLJyIOeloP8/zLa1eMM84Ae9GsZmRHMbFrQbJDPF8bI
+ mnbceBeZ+F9nPa/H9bU/pguFOlLWwGMp0ojgticSwOYSShwRutH2pXe29p7de/nrFpkg
+ 2X6sTqcXQ2b8D1NYMcYe/QQXEHvXOPBDONQXMg7t8jkZDS2X0bpfYzB3Y5K/5o1EsbMv
+ 3mdOBu0uq14H/o6gtq1N8bgksUDW/2eOkjdgccMeTU8mhylW3hJJl8xWlGO4bWh8qhRs
+ okFrKJhClz450Lrm6oehabpdw7+o4Kz6oG4Ssr+Usjn67R3laEtqoPSgY8nsmEYRlHew vw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkx4tbha9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 29 Mar 2023 13:07:44 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32TD7hUN014868
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 29 Mar 2023 13:07:43 GMT
+Received: from srichara-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 29 Mar 2023 06:07:39 -0700
+From:   Sricharan R <quic_srichara@quicinc.com>
+To:     <mani@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] net: qrtr: Do not do DEL_SERVER broadcast after DEL_CLIENT
+Date:   Wed, 29 Mar 2023 18:37:30 +0530
+Message-ID: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [EXT] [PATCH v3 1/1] PCI: qcom: Add support for system suspend
- and resume
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Frank Li <frank.li@nxp.com>
-Cc:     "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
-        "kw@linux.com" <kw@linux.com>, "robh@kernel.org" <robh@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "bhelgaas@google.com" <bhelgaas@google.com>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "quic_krichai@quicinc.com" <quic_krichai@quicinc.com>,
-        "johan+linaro@kernel.org" <johan+linaro@kernel.org>,
-        "steev@kali.org" <steev@kali.org>,
-        "mka@chromium.org" <mka@chromium.org>, Dhruva Gole <d-gole@ti.com>
-References: <20230327133824.29136-1-manivannan.sadhasivam@linaro.org>
- <20230327133824.29136-2-manivannan.sadhasivam@linaro.org>
- <AM6PR04MB4838C84574BE534DDB0428D0888B9@AM6PR04MB4838.eurprd04.prod.outlook.com>
- <20230329130237.GC5575@thinkpad>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230329130237.GC5575@thinkpad>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ---nnJxp7NfEzLz4spvnc47KXR4gg8Zd
+X-Proofpoint-ORIG-GUID: ---nnJxp7NfEzLz4spvnc47KXR4gg8Zd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-29_06,2023-03-28_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
+ spamscore=0 bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303290105
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+When the qrtr socket is released, qrtr_port_remove gets called, which
+broadcasts a DEL_CLIENT. After this DEL_SERVER is also additionally
+broadcasted, which becomes NOP, but triggers the below error msg.
 
+"failed while handling packet from 2:-2", since remote node already
+acted upon on receiving the DEL_CLIENT, once again when it receives
+the DEL_SERVER, it returns -ENOENT.
 
-On 29.03.2023 15:02, Manivannan Sadhasivam wrote:
-> On Mon, Mar 27, 2023 at 03:29:54PM +0000, Frank Li wrote:
->>
->>
->>> -----Original Message-----
->>> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> Sent: Monday, March 27, 2023 8:38 AM
->>> To: lpieralisi@kernel.org; kw@linux.com; robh@kernel.org
->>> Cc: andersson@kernel.org; konrad.dybcio@linaro.org;
->>> bhelgaas@google.com; linux-pci@vger.kernel.org; linux-arm-
->>> msm@vger.kernel.org; linux-kernel@vger.kernel.org;
->>> quic_krichai@quicinc.com; johan+linaro@kernel.org; steev@kali.org;
->>> mka@chromium.org; Manivannan Sadhasivam
->>> <manivannan.sadhasivam@linaro.org>; Dhruva Gole <d-gole@ti.com>
->>> Subject: [EXT] [PATCH v3 1/1] PCI: qcom: Add support for system suspend
->>> and resume
->>>
->>> Caution: EXT Email
->>>
->>> During the system suspend, vote for minimal interconnect bandwidth and
->>> also turn OFF the resources like clock and PHY if there are no active
->>> devices connected to the controller. For the controllers with active
->>> devices, the resources are kept ON as removing the resources will
->>> trigger access violation during the late end of suspend cycle as kernel
->>> tries to access the config space of PCIe devices to mask the MSIs.
->>
->> I remember I met similar problem before. It is relate ASPM settings of NVME.
->> NVME try to use L1.2 at suspend to save restore time. 
->>
->> It should be user decided if PCI enter L1.2( for better resume time) or L2
->> For batter power saving.  If NVME disable ASPM,  NVME driver will free
->> Msi irq before enter suspend,  so not issue access config space by MSI
->> Irq disable function. 
->>
-> 
-> The NVMe driver will only shutdown the device if ASPM is completely disabled in
-> the kernel. They also take powerdown path for some Intel platforms though. For
-> others, they keep the device in power on state and expect power saving with
-> ASPM.
-> 
->> This is just general comment. It is not specific for this patches.  Many platform
->> Will face the similar problem.  Maybe need better solution to handle
->> L2/L3 for better power saving in future. 
->>
-> 
-> The only argument I hear from them is that, when the NVMe device gets powered
-> down during suspend, then it may detoriate the life time of it as the suspend
-> cycle is going to be high.
-I think I asked that question before, but.. Do we know what Windows/macOS do?
+Fixing it by not sending a 'DEL_SERVER' to remote when a 'DEL_CLIENT'
+was sent for that port.
 
-Konrad
-> 
-> - Mani
-> 
->> Frank Li
->>  
->>>
->>> Also, it is not desirable to put the link into L2/L3 state as that
->>> implies VDD supply will be removed and the devices may go into powerdown
->>> state. This will affect the lifetime of storage devices like NVMe.
->>>
->>> And finally, during resume, turn ON the resources if the controller was
->>> truly suspended (resources OFF) and update the interconnect bandwidth
->>> based on PCIe Gen speed.
->>>
->>> Suggested-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>> Acked-by: Dhruva Gole <d-gole@ti.com>
->>> Signed-off-by: Manivannan Sadhasivam
->>> <manivannan.sadhasivam@linaro.org>
->>> ---
->>>  drivers/pci/controller/dwc/pcie-qcom.c | 62 ++++++++++++++++++++++++++
->>>  1 file changed, 62 insertions(+)
->>>
->>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
->>> b/drivers/pci/controller/dwc/pcie-qcom.c
->>> index a232b04af048..f33df536d9be 100644
->>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->>> @@ -227,6 +227,7 @@ struct qcom_pcie {
->>>         struct gpio_desc *reset;
->>>         struct icc_path *icc_mem;
->>>         const struct qcom_pcie_cfg *cfg;
->>> +       bool suspended;
->>>  };
->>>
->>>  #define to_qcom_pcie(x)                dev_get_drvdata((x)->dev)
->>> @@ -1820,6 +1821,62 @@ static int qcom_pcie_probe(struct
->>> platform_device *pdev)
->>>         return ret;
->>>  }
->>>
->>> +static int qcom_pcie_suspend_noirq(struct device *dev)
->>> +{
->>> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
->>> +       int ret;
->>> +
->>> +       /*
->>> +        * Set minimum bandwidth required to keep data path functional during
->>> +        * suspend.
->>> +        */
->>> +       ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
->>> +       if (ret) {
->>> +               dev_err(dev, "Failed to set interconnect bandwidth: %d\n", ret);
->>> +               return ret;
->>> +       }
->>> +
->>> +       /*
->>> +        * Turn OFF the resources only for controllers without active PCIe
->>> +        * devices. For controllers with active devices, the resources are kept
->>> +        * ON and the link is expected to be in L0/L1 (sub)states.
->>> +        *
->>> +        * Turning OFF the resources for controllers with active PCIe devices
->>> +        * will trigger access violation during the end of the suspend cycle,
->>> +        * as kernel tries to access the PCIe devices config space for masking
->>> +        * MSIs.
->>> +        *
->>> +        * Also, it is not desirable to put the link into L2/L3 state as that
->>> +        * implies VDD supply will be removed and the devices may go into
->>> +        * powerdown state. This will affect the lifetime of the storage devices
->>> +        * like NVMe.
->>> +        */
->>> +       if (!dw_pcie_link_up(pcie->pci)) {
->>> +               qcom_pcie_host_deinit(&pcie->pci->pp);
->>> +               pcie->suspended = true;
->>> +       }
->>> +
->>> +       return 0;
->>> +}
->>> +
->>> +static int qcom_pcie_resume_noirq(struct device *dev)
->>> +{
->>> +       struct qcom_pcie *pcie = dev_get_drvdata(dev);
->>> +       int ret;
->>> +
->>> +       if (pcie->suspended) {
->>> +               ret = qcom_pcie_host_init(&pcie->pci->pp);
->>> +               if (ret)
->>> +                       return ret;
->>> +
->>> +               pcie->suspended = false;
->>> +       }
->>> +
->>> +       qcom_pcie_icc_update(pcie);
->>> +
->>> +       return 0;
->>> +}
->>> +
->>>  static const struct of_device_id qcom_pcie_match[] = {
->>>         { .compatible = "qcom,pcie-apq8064", .data = &cfg_2_1_0 },
->>>         { .compatible = "qcom,pcie-apq8084", .data = &cfg_1_0_0 },
->>> @@ -1856,12 +1913,17 @@
->>> DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x0302,
->>> qcom_fixup_class);
->>>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1000,
->>> qcom_fixup_class);
->>>  DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_QCOM, 0x1001,
->>> qcom_fixup_class);
->>>
->>> +static const struct dev_pm_ops qcom_pcie_pm_ops = {
->>> +       NOIRQ_SYSTEM_SLEEP_PM_OPS(qcom_pcie_suspend_noirq,
->>> qcom_pcie_resume_noirq)
->>> +};
->>> +
->>>  static struct platform_driver qcom_pcie_driver = {
->>>         .probe = qcom_pcie_probe,
->>>         .driver = {
->>>                 .name = "qcom-pcie",
->>>                 .suppress_bind_attrs = true,
->>>                 .of_match_table = qcom_pcie_match,
->>> +               .pm = &qcom_pcie_pm_ops,
->>>         },
->>>  };
->>>  builtin_platform_driver(qcom_pcie_driver);
->>> --
->>> 2.25.1
->>
-> 
+Signed-off-by: Ram Kumar D <quic_ramd@quicinc.com>
+Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+---
+Note: Functionally tested on 5.4 kernel and compile tested on 6.3 TOT
+
+ net/qrtr/ns.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index 722936f..6fbb195 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -274,7 +274,7 @@ static struct qrtr_server *server_add(unsigned int service,
+ 	return NULL;
+ }
+ 
+-static int server_del(struct qrtr_node *node, unsigned int port)
++static int server_del(struct qrtr_node *node, unsigned int port, bool del_server)
+ {
+ 	struct qrtr_lookup *lookup;
+ 	struct qrtr_server *srv;
+@@ -287,7 +287,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
+ 	radix_tree_delete(&node->servers, port);
+ 
+ 	/* Broadcast the removal of local servers */
+-	if (srv->node == qrtr_ns.local_node)
++	if (srv->node == qrtr_ns.local_node && del_server)
+ 		service_announce_del(&qrtr_ns.bcast_sq, srv);
+ 
+ 	/* Announce the service's disappearance to observers */
+@@ -373,7 +373,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
+ 		}
+ 		slot = radix_tree_iter_resume(slot, &iter);
+ 		rcu_read_unlock();
+-		server_del(node, srv->port);
++		server_del(node, srv->port, true);
+ 		rcu_read_lock();
+ 	}
+ 	rcu_read_unlock();
+@@ -459,10 +459,14 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
+ 		kfree(lookup);
+ 	}
+ 
+-	/* Remove the server belonging to this port */
++	/* Remove the server belonging to this port
++	 * Given that DEL_CLIENT is already broadcasted
++	 * by port_remove, no need to send DEL_SERVER for
++	 * the same port to remote
++	 */
+ 	node = node_get(node_id);
+ 	if (node)
+-		server_del(node, port);
++		server_del(node, port, false);
+ 
+ 	/* Advertise the removal of this client to all local servers */
+ 	local_node = node_get(qrtr_ns.local_node);
+@@ -567,7 +571,7 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
+ 	if (!node)
+ 		return -ENOENT;
+ 
+-	return server_del(node, port);
++	return server_del(node, port, true);
+ }
+ 
+ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
+-- 
+2.7.4
+
