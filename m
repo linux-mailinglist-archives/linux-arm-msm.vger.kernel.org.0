@@ -2,110 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77EF26CD27B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 09:05:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61C0F6CD2DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 09:23:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229728AbjC2HF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 03:05:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37080 "EHLO
+        id S229753AbjC2HXT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 03:23:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbjC2HFv (ORCPT
+        with ESMTP id S229500AbjC2HXS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 03:05:51 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302C02D44;
-        Wed, 29 Mar 2023 00:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680073549; x=1711609549;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9u41v9H8aOWFtd7PdN4yDSmbe6IszEMQdg0W0+HYDCM=;
-  b=M0P19S5tTtnYMzy4NSp6ttL3yIr10yNcq5jObB/uSNN7sh5D8LhWaost
-   H1tNsgpTZ8JdNZzT/z4INDD33LP8gH6LuJx7IK7HuEdhkV+PVXwYdgxCF
-   MgOTUwkjE82pgneq13ZRUHLO/JTZpWl8irdCrHgU4SvkbeqoD1/VDAqGC
-   S5sSOcBn2BJCQMuTa7i2q6/ah1e2daZpXmKuGZdgNVPMpWnt1YxxdFaZX
-   KI1GpqepNUM6TN5apakcAA2iQ6y+jnqOhSOXr05vt6dWdYh66apyKx1xt
-   J2xw4aOsJEeiUwLS611T2l6L2QcYZSpvEs0d8TUIZ6+mzodhDRPRMCni2
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10663"; a="321195501"
-X-IronPort-AV: E=Sophos;i="5.98,300,1673942400"; 
-   d="scan'208";a="321195501"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2023 00:05:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10663"; a="1013903268"
-X-IronPort-AV: E=Sophos;i="5.98,300,1673942400"; 
-   d="scan'208";a="1013903268"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 29 Mar 2023 00:05:45 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1phPsJ-000JIG-1d;
-        Wed, 29 Mar 2023 07:05:39 +0000
-Date:   Wed, 29 Mar 2023 15:04:46 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Minghao Zhang <quic_minghao@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        linus.walleij@linaro.or
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Minghao Zhang <quic_minghao@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_satyap@quicinc.com,
-        quic_tsoni@quicinc.com
-Subject: Re: [PATCH] pinctrl: qcom: Add support to log pin status before
- suspend for TLMM
-Message-ID: <202303291448.tIbGIbqh-lkp@intel.com>
-References: <1680004791-4216-1-git-send-email-quic_minghao@quicinc.com>
+        Wed, 29 Mar 2023 03:23:18 -0400
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.198])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 99E051BF6;
+        Wed, 29 Mar 2023 00:23:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=k1+81
+        /LRc+QPaXuwviz1ZmJdBJ9jC4z0SLIYlLcZv/k=; b=Q3Uk9BKqp9bm4WreWBohS
+        3UY8tW52mSI2m0XIzrh4xHhEO7e2msTRdPViif9KUd3UALF07sfOMTOKWIji5gWm
+        nR6y/r9LK5UXkOxuX+tlrxUDwX25v2aj5pkAEbWl/+AInzV9sDoaFcBOJPP+0eCJ
+        ynQdZfOL9hxWPqfKfifmnk=
+Received: from VM-0-27-ubuntu.. (unknown [43.134.191.38])
+        by zwqz-smtp-mta-g1-3 (Coremail) with SMTP id _____wA3TzdD5yNk5z4EAA--.1365S2;
+        Wed, 29 Mar 2023 15:22:45 +0800 (CST)
+From:   Slark Xiao <slark_xiao@163.com>
+To:     mani@kernel.org
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH] bus: mhi: pci_generic: Add Foxconn T99W510
+Date:   Wed, 29 Mar 2023 15:22:39 +0800
+Message-Id: <20230329072239.93632-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1680004791-4216-1-git-send-email-quic_minghao@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wA3TzdD5yNk5z4EAA--.1365S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7uw1UZr1DCw1Duw1DWFWxJFb_yoW8CF1UpF
+        savryUta1kJFWYkFsrJrWDXas8JanxCry3KFn7Gw1Y9r4vyayYqrs7Gry29Fy3Kas8Xr43
+        tFy8uFWUW3WqyF7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pEgAwnUUUUU=
+X-Originating-IP: [43.134.191.38]
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNQlBZGI0cAnPYAABsY
+X-Spam-Status: No, score=1.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_VALIDITY_RPBL,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Minghao,
+The Foxconn T99W510 device is designed based on Qualcomm
+SDX24. Add 3 variants for different potential customer.
 
-Thank you for the patch! Yet something to improve:
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-[auto build test ERROR on linusw-pinctrl/devel]
-[also build test ERROR on linusw-pinctrl/for-next linus/master v6.3-rc4 next-20230328]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Minghao-Zhang/pinctrl-qcom-Add-support-to-log-pin-status-before-suspend-for-TLMM/20230328-200200
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
-patch link:    https://lore.kernel.org/r/1680004791-4216-1-git-send-email-quic_minghao%40quicinc.com
-patch subject: [PATCH] pinctrl: qcom: Add support to log pin status before suspend for TLMM
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20230329/202303291448.tIbGIbqh-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/5a98341ba812869812018e6f72274e57343aa893
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Minghao-Zhang/pinctrl-qcom-Add-support-to-log-pin-status-before-suspend-for-TLMM/20230328-200200
-        git checkout 5a98341ba812869812018e6f72274e57343aa893
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303291448.tIbGIbqh-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "_printk_deferred" [drivers/pinctrl/qcom/pinctrl-msm.ko] undefined!
-
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 91d02f84ba21..db0a0b062d8e 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -363,6 +363,15 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
+ 	.event_cfg = mhi_foxconn_sdx55_events,
+ };
+ 
++static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
++	.name = "foxconn-sdx24",
++	.config = &modem_foxconn_sdx55_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.mru_default = 32768,
++	.sideband_wake = false,
++};
++
+ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+ 	.name = "foxconn-sdx55",
+ 	.fw = "qcom/sdx55m/sbl1.mbn",
+@@ -587,6 +596,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* T99W373 (sdx62) */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0d9),
+ 		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
++	/* T99W510 (sdx24), variant 1 */
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f0),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
++	/* T99W510 (sdx24), variant 2 */
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f1),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
++	/* T99W510 (sdx24), variant 3 */
++	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f2),
++		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
+ 	/* MV31-W (Cinterion) */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
+ 		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+2.34.1
+
