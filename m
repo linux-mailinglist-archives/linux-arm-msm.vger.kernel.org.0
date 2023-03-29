@@ -2,166 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE8A06CF6D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 01:19:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07E436CF709
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 01:26:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbjC2XTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 19:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56140 "EHLO
+        id S231233AbjC2X0V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 19:26:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbjC2XTe (ORCPT
+        with ESMTP id S230434AbjC2X0U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 19:19:34 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF885B88
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 16:19:31 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32TMxF7B024056;
-        Wed, 29 Mar 2023 23:19:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=K17Q7rSKZF9USZpVPpiuudz2rOUWy3tz7SPwEQOW6CM=;
- b=lnM9tRpyw8pfp4+6Ckz5Kq8bWnDmQV4FGEyeGR6n52xGverLzBX3fkRb4u7emF+Ba8MU
- NKJU/WSJYzwKylBk5tK7V7/LajSRpEzgu6LGOUlC9G0qJVCYXTGvjIYTGiU3XuV5mJLa
- yVlY+KMYi/ZgN4f1ceDLwqesfTfbN1oaFqdHq/D8dbtwqobay9pp5tZWTcsOr0loJr/V
- Cuj+Bvl9qJtxH94lfGvzPyDmGfOUg09J25XseRPOqLxS4zHvt9Pl/X5D8joP8VR9+ulR
- OQNW1tYSGac92W6g2SqfxMEVUz8nOIeriLA+cZaSlGRCkZ6PvXWIvAjN4kD2udz2zVWl IQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pmbs8axk9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 23:19:26 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32TNJPhq001027
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 23:19:25 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 29 Mar 2023 16:19:24 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-Date:   Wed, 29 Mar 2023 16:18:50 -0700
-Subject: [PATCH RFC 5/5] drm/msm/dsi: Use MSM and DRM DSC helper methods
+        Wed, 29 Mar 2023 19:26:20 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C4C5FE8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 16:26:01 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id bi9so22272538lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 16:26:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680132360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HrgPNT8vzPgQfrpIpJG+pXuTkcdwWxfDZq0A5XIC43w=;
+        b=q8k49qJU9m8XCnmMDtVciJmUbVI10H2PqO1DXt4bc6K2LXAMROmIMd23Ir7FHAmGiT
+         4Di2wyGhrzgcmxdI9pm1T+F/BvvAeyheVfJuePL9BbBYuMNGNlUL3QoP5CmTn6egjlZ8
+         X8evZqxkEQ69VtU7hbg/h6xhS6YIPzBcHRxvHs3u/JkI09qS9/nLLbBOTDeW3u383rvH
+         Oz3KAI0M6EtufgQOSAsqYz+ftzJKQoj3o1cBrrXETty4vOHV2f6KvnwCxP7Flmk3z5Qs
+         jLWCWtOnyRC4RL3I9i23+CB/0DF8SaByURmjiADLZLeBTKZ9N9sWO+pOaih/OJk2MpJB
+         ec+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680132360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HrgPNT8vzPgQfrpIpJG+pXuTkcdwWxfDZq0A5XIC43w=;
+        b=CKCem3a3GwWGoESU+2QHXXEPxVBrO5+TWkvD5ygSnRsLZetUD+BnAPAIWiJh1ZPU0a
+         uu7hcBMLlUVoT+qs2sm1fyaj2VBpwUoPMNWkMEZs6pFpEtUPU0MiIrPuRWU3TJjR+KmU
+         TEvkjnTBesw8ppPtu0kO3zSJsZuBhqJyJTy0zUQDyPpMP/Xh4aE/Ddu7Q1gN17ojHOv6
+         Ph90uBM5qRb0wMrGAmma7IIgMC7vF/EdvUT+c7oQawZ3Xafcvs0bnqa9xCd1dB3jaJTC
+         qXmP7hqpu50ksdvcARi6jI8wAudxLdUwxcshTHJmtBgsakeYRJWXVfwoZjLtRfE9zEmB
+         zM5Q==
+X-Gm-Message-State: AAQBX9dSJb1ARy8yix2W68oDpyl3WAVnGA63b8LIp7rthZmuATrnTb6b
+        BwJZPoxSIyT7q6Hk8hd1MsiXPA==
+X-Google-Smtp-Source: AKy350aWfx48MdELFtnKoYiqNxo1Jjx9WbSr8n1W41BsOzi4FHGCOKjapoWwP3MLzuSzpcy5e7g8Ug==
+X-Received: by 2002:ac2:42cc:0:b0:4b5:649a:9105 with SMTP id n12-20020ac242cc000000b004b5649a9105mr5557062lfl.65.1680132360103;
+        Wed, 29 Mar 2023 16:26:00 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id m19-20020a195213000000b004eaf393dc46sm3454696lfb.249.2023.03.29.16.25.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Mar 2023 16:25:59 -0700 (PDT)
+Message-ID: <5b713a38-2f3c-05b4-b243-6d9c0bd9e728@linaro.org>
+Date:   Thu, 30 Mar 2023 02:25:59 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230329-rfc-msm-dsc-helper-v1-5-f3e479f59b6d@quicinc.com>
-References: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH RFC 1/5] drm/display/dsc: Add flatness and initial scale
+ value calculations
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Jessica Zhang" <quic_jesszhan@quicinc.com>
-X-Mailer: b4 0.13-dev-00303
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680131963; l=2616;
- i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=xG8XY4p+9sFuZ8VS88BsiwokXrujL45jZTipBXd/wvk=;
- b=yGo90Rh1uJuG9Kx42aciP2HeHa7QELQufwSogDlIuBpZRPEUR96UNeFoqIgekbvkfktbpv+QB
- z96j45GCIBUA0ty4D60dp9yRMeTCFUle5crSsvozq9xFk2ZZs7Kcyof
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1NEiBEXsOL0vyW1QztdmwpQtOyfrXS5A
-X-Proofpoint-GUID: 1NEiBEXsOL0vyW1QztdmwpQtOyfrXS5A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-29_14,2023-03-28_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=981 clxscore=1015 priorityscore=1501 mlxscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2303290174
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v1-1-f3e479f59b6d@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v1-1-f3e479f59b6d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use MSM and DRM DSC helper methods.
+On 30/03/2023 02:18, Jessica Zhang wrote:
+> Add helpers to calculate det_thresh_flatness and initial_scale_value as
+> these calculations are defined within the DSC spec.
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>   include/drm/display/drm_dsc_helper.h | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+> index 4448c482b092..63175650a45e 100644
+> --- a/include/drm/display/drm_dsc_helper.h
+> +++ b/include/drm/display/drm_dsc_helper.h
+> @@ -17,6 +17,16 @@ enum drm_dsc_params_kind {
+>   	DRM_DSC_1_2_420,
+>   };
+>   
+> +static inline int drm_dsc_calculate_initial_scale_value(struct drm_dsc_config *dsc)
+> +{
+> +	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+Just set this in drm_dsc_config, like other functions do.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 74d38f90398a..7419fe58a941 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -31,6 +31,7 @@
- #include "msm_kms.h"
- #include "msm_gem.h"
- #include "phy/dsi_phy.h"
-+#include "disp/msm_dsc_helper.h"
- 
- #define DSI_RESET_TOGGLE_DELAY_MS 20
- 
-@@ -841,14 +842,14 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- {
- 	struct drm_dsc_config *dsc = msm_host->dsc;
- 	u32 reg, reg_ctrl, reg_ctrl2;
--	u32 slice_per_intf, total_bytes_per_intf;
-+	u32 slice_per_intf;
- 	u32 pkt_per_line;
- 	u32 eol_byte_num;
- 
- 	/* first calculate dsc parameters and then program
- 	 * compress mode registers
- 	 */
--	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
-+	slice_per_intf = msm_dsc_get_slice_per_intf(dsc, hdisplay);
- 
- 	/*
- 	 * If slice_count is greater than slice_per_intf
-@@ -858,10 +859,10 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	if (dsc->slice_count > slice_per_intf)
- 		dsc->slice_count = 1;
- 
--	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
-+	eol_byte_num = msm_dsc_get_eol_byte_num(msm_host->dsc, hdisplay,
-+			dsi_get_bpp(msm_host->format));
- 
--	eol_byte_num = total_bytes_per_intf % 3;
--	pkt_per_line = slice_per_intf / dsc->slice_count;
-+	pkt_per_line = slice_per_intf / MSM_DSC_SLICE_PER_PKT;
- 
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-@@ -911,6 +912,11 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 
- 	DBG("");
- 
-+	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
-+		/* Default widebus_en to false for now. */
-+		hdisplay = msm_dsc_get_pclk_per_line(msm_host->dsc, mode->hdisplay,
-+				dsi_get_bpp(msm_host->format));
-+
- 	/*
- 	 * For bonded DSI mode, the current DRM mode has
- 	 * the complete width of the panel. Since, the complete
-@@ -1759,7 +1765,7 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
- 		return ret;
- 	}
- 
--	dsc->initial_scale_value = 32;
-+	dsc->initial_scale_value = drm_dsc_calculate_initial_scale_value(dsc);
- 	dsc->line_buf_depth = dsc->bits_per_component + 1;
- 
- 	return drm_dsc_compute_rc_parameters(dsc);
+> +}
+> +
+> +static inline int drm_dsc_calculate_det_thresh_flatness(struct drm_dsc_config *dsc)
+> +{
+> +	return 2 << (dsc->bits_per_component - 8);
+> +}
+
+this is flatness_det_thresh, per the standard.
+
+Otherwise LGTM
+
+> +
+>   void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
+>   int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
+>   void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+> 
 
 -- 
-2.39.2
+With best wishes
+Dmitry
 
