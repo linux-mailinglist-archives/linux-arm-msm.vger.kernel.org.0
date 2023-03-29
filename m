@@ -2,116 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB8B6CEBF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:43:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CC7D6CEC04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:45:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229875AbjC2Onn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 10:43:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40960 "EHLO
+        id S229962AbjC2OpD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 10:45:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229960AbjC2OnQ (ORCPT
+        with ESMTP id S230296AbjC2Oom (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 10:43:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE38C728C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:39:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680100783;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=eOGvCBK3xTc7UhN8iQW8f99rBt5fCj0lar0/GGKSAUo=;
-        b=H1gL32Xd8l9r+stE1zqaSSIkEvool+TK9K3ywF5RPyJqZ4sgmRtPTgRVYnmlMTGYU/8nou
-        8Olg5i+vH8R7M1uuLjxAiD5odE14uqNlBNiK7W8L7rnAQzOAyH6DFlZh0/s476DBoVL3yC
-        XRVleiX1YtKOUEaKP7JcDg7WRS3eQ6M=
-Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
- [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-586-OX_M3mnhOyOLIjTwhOpgsw-1; Wed, 29 Mar 2023 10:39:40 -0400
-X-MC-Unique: OX_M3mnhOyOLIjTwhOpgsw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com [10.11.54.6])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        Wed, 29 Mar 2023 10:44:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C2C06A69;
+        Wed, 29 Mar 2023 07:42:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 52F783C10ED2;
-        Wed, 29 Mar 2023 14:39:38 +0000 (UTC)
-Received: from warthog.procyon.org.uk (unknown [10.33.36.18])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 900FA2166B33;
-        Wed, 29 Mar 2023 14:39:34 +0000 (UTC)
-Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
-        Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
-        Kingdom.
-        Registered in England and Wales under Company Registration No. 3798903
-From:   David Howells <dhowells@redhat.com>
-In-Reply-To: <e128356a-f56f-4c02-7437-dfea38e4194b@suse.de>
-References: <e128356a-f56f-4c02-7437-dfea38e4194b@suse.de> <20230329141354.516864-1-dhowells@redhat.com> <20230329141354.516864-49-dhowells@redhat.com>
-To:     Hannes Reinecke <hare@suse.de>
-cc:     David Howells <dhowells@redhat.com>,
-        Matthew Wilcox <willy@infradead.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, linux-doc@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
-        linux-sctp@vger.kernel.org, linux-afs@lists.infradead.org,
-        rds-devel@oss.oracle.com, linux-x25@vger.kernel.org,
-        dccp@vger.kernel.org, linux-rdma@vger.kernel.org,
-        Christoph Hellwig <hch@infradead.org>,
-        linux-wpan@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
-        Al Viro <viro@zeniv.linux.org.uk>, linux-hams@vger.kernel.org,
-        mptcp@lists.linux.dev, Jens Axboe <axboe@kernel.dk>,
-        Christian Brauner <brauner@kernel.org>, netdev@vger.kernel.org,
-        Jeff Layton <jlayton@kernel.org>, linux-kernel@vger.kernel.org,
-        Chuck Lever III <chuck.lever@oracle.com>,
-        tipc-discussion@lists.sourceforge.net,
-        linux-crypto@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        bpf@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH v2 48/48] sock: Remove ->sendpage*() in favour of sendmsg(MSG_SPLICE_PAGES)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7915A61D5E;
+        Wed, 29 Mar 2023 14:42:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C937FC433D2;
+        Wed, 29 Mar 2023 14:42:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680100927;
+        bh=v/O9YnUMjPsVXWpIvJiLm+MGovZMWi2Z/gPhfkk/A5Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mxCDPI71R9uZSTNmXhHxF8t85mkSE2zNX8BxQOayZqdHIxTYDozMlZs910xqJ7t76
+         4rjKaBL7ySfmJpbJf6G/nXvgdGev1Z8MpqM5wBbIdTmRWYoXoZ4sHqCkR8/3j+Avg+
+         hAEEyLL8Aou5GtO1fpAAIL8dDjlxkVTD35PDVcSs+VZOw3VDoUNd/vLMCiv+yvuss+
+         DROArO+SXXTk7V95PMzcb/Bf5/h7g6cYbjfWCzuHVs5v+u5XyMNJezWXK6WfbBAsYl
+         YVCI2stvveX76scNavgqFs7D67bKizILe0SdbIy4veKKSJjTiwadD1Hb0/hCUn9nWb
+         zYW/mMTXd08ZA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1phX0J-0000NB-QL; Wed, 29 Mar 2023 16:42:23 +0200
+Date:   Wed, 29 Mar 2023 16:42:23 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
+        mka@chromium.org, Dhruva Gole <d-gole@ti.com>
+Subject: Re: [PATCH v3 1/1] PCI: qcom: Add support for system suspend and
+ resume
+Message-ID: <ZCROTyuxZ+dkrnx8@hovoldconsulting.com>
+References: <20230327133824.29136-1-manivannan.sadhasivam@linaro.org>
+ <20230327133824.29136-2-manivannan.sadhasivam@linaro.org>
+ <ZCQLWzqKPrusMro+@hovoldconsulting.com>
+ <20230329125232.GB5575@thinkpad>
+ <ZCQ69xyQ4mwTow1W@hovoldconsulting.com>
+ <20230329140150.GE5575@thinkpad>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <518630.1680100773.1@warthog.procyon.org.uk>
-Date:   Wed, 29 Mar 2023 15:39:33 +0100
-Message-ID: <518631.1680100773@warthog.procyon.org.uk>
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.6
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329140150.GE5575@thinkpad>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hannes Reinecke <hare@suse.de> wrote:
+On Wed, Mar 29, 2023 at 07:31:50PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Mar 29, 2023 at 03:19:51PM +0200, Johan Hovold wrote:
+> > On Wed, Mar 29, 2023 at 06:22:32PM +0530, Manivannan Sadhasivam wrote:
 
-> > [!] Note: This is a work in progress.  At the moment, some things won't
-> >      build if this patch is applied.  nvme, kcm, smc, tls.
-
-Actually, that needs updating.  nvme and smc now build.
-
-> Weelll ... what happens to consumers of kernel_sendpage()?
-> (Let's call them nvme ...)
-> Should they be moved over, too?
-
-Patch 42 should address NVMe, I think.  I can't test it, though, as I don't
-have hardware.
-
-There should be no callers of kernel_sendmsg() by the end of this patchset,
-and the only remaining implementors of sendpage are Chelsio-TLS, AF_TLS and
-AF_KCM, which as stated in the cover, aren't yet converted and won't build.
-
-> Or what is the general consensus here?
+> > Why would you need PCIe gen1 speed during suspend?
 > 
-> (And what do we do with TLS? It does have a ->sendpage() version, too ...)
+> That's what the suggestion I got from Qcom PCIe team. But I didn't compare the
+> value you added during icc support patch with downstream. More below...
+> 
+> > These numbers are already somewhat random as, for example, the vendor
+> > driver is requesting 500 kBps (800 peak) during runtime, while we are
+> > now requesting five times that during suspend (the vendor driver gets a
+> > away with 0).
+> 
+> Hmm, then I should've asked you this question when you added icc support.
+> I thought you inherited those values from downstream but apparently not.
+> Even in downstream they are using different bw votes for different platforms.
+> I will touch base with PCIe and ICC teams to find out the actual value that
+> needs to be used.
 
-I know.  There are three things left that I need to tackle, but I'd like to
-get opinions on some of the other bits and I might need some help with AF_TLS
-and AF_KCM.
+We discussed things at length at the time, but perhaps it was before you
+joined to project. As I alluded to above, we should not play the game of
+using arbitrary numbers but instead fix the interconnect driver so that
+it can map the interconnect values in kBps to something that makes sense
+for the Qualcomm hardware. Anything else is not acceptable for upstream.
 
-That said, should I just remove tls_sw_do_sendpage() since presumably the data
-is going to get copied(?) and encrypted and the source pages aren't going to
-be held onto?
-
-David
-
+Johan
