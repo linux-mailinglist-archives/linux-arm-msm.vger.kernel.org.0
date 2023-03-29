@@ -2,149 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A26B26CD3C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 09:54:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 168F06CD48D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 10:27:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230152AbjC2Hyp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 03:54:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42638 "EHLO
+        id S229817AbjC2I1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 04:27:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230164AbjC2HyL (ORCPT
+        with ESMTP id S229491AbjC2I1p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 03:54:11 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB06040D3;
-        Wed, 29 Mar 2023 00:53:45 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32T5JFCb031953;
-        Wed, 29 Mar 2023 07:53:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=CL1TfgIn5mWmZvuQXOw27pSAanwvirATqAb9RcthhBc=;
- b=jgyBMisg65Xe9mKsVsGa6s9ItaDNB+ciFgiJy5E3YDpASPlre708e+Eje5Jtn/JDra2W
- +E8KRUObRR7gtkc8tbKtRkCPjoiU/Wg1so83z0La4uf4eUASGQqqQz9HZ/n6H8iFgour
- Z87usUrs9Pq55xcCof4cczv9zh+iLPdMiW4ojw/7XHjY9PbUCVl1jbMa9A+x/6Wz+wvW
- pfVc7MZfYdPqtY6JIuU+C7g8HQhmtr/aTaReQfwpd8vEAoeZTevA4qpY6JDJT+CM3WZk
- f7BSJzYtzxpPypFag5p/bGHVxEi/6pbpYoy+1ZIECGWwezeeVxBb/NiUc4jREomGYQoH /g== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pkv45k52h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 07:53:28 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32T7rRsQ005962
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 07:53:27 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 29 Mar
- 2023 00:53:24 -0700
-Message-ID: <99ffb047-cae0-baf3-1d8e-8be1367bd0d1@quicinc.com>
-Date:   Wed, 29 Mar 2023 13:23:21 +0530
+        Wed, 29 Mar 2023 04:27:45 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF138B2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 01:27:43 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id h25so19107195lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 01:27:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680078462;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Wbhe9hg1I6LvxpxedrR12rYja/vRqqHKoCKBslpfp1I=;
+        b=FWR3HQIOrf/IQsG4evaTwNexMPVEA5BU/WcbyN4YYLGt/tyOnnRpl9O3xWbq8QKlDN
+         xXif2VfhN4Qbg+HKfohY8nGZ9/Rhe4/uHFQo+WAo2bS0fDqKkPLnrLYZu3dZBsbsO57B
+         1d1cbmG3SUZ3pFkObae4yzZPMgjWPnfWjmaVXLl/i0Tmfidx/SX7qXg/ZsN5o5/cc7U9
+         icyny4yBjvBpa8DILyBBv3Q7QDJxrI9I6nalMlHnVFOCnwBG96GARhv9trGyyzFgsIHm
+         zTIpINrI0wRz4k+WCwFcUZPCIqBN+ZO1dztBHHpb6sVd3b4zU9cj0Peeiu9Iz5bY+VAp
+         pO0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680078462;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wbhe9hg1I6LvxpxedrR12rYja/vRqqHKoCKBslpfp1I=;
+        b=5trW6LrtKe658PNgvctZ9tUMYj8tr3EQVV83NfOwMC43LgodgRiZ9/JimcAVEgAe69
+         nkHuPKN39w3671cq546wVEZIteiEbDgmAkwuUVUI87OyovI8cHziqgxldMO36YQVKEpq
+         GeAWJAEOUm5MM606/oWymRoJHOP1d1sBhkAU/hsEltCBs7pPWiy4G9Z/IyJ0xlRTw0Uw
+         XC664nQVPJ4KD1glyexSqtWseDv0LPalmYmQFiAWf7+Yk8xcwKmynzZ+WKCr7KpSVtMH
+         LYWVrG3z0y0AJOaD9F0BE3/D4FNbZ6bEyrth+mwBQs3iAZeZoTnzjsKSqS+U1aDiHgh0
+         bJTA==
+X-Gm-Message-State: AAQBX9c5vKTZRVAwzmDgaFHP14DIui76vB71KJeoMJlpILSOUBmN8Wl2
+        F/IKsloMRSq0G7uHF/V9m1VOHw==
+X-Google-Smtp-Source: AKy350bjG3/pXSTDfNanMwnVXqyNAwWDXddDh6/IiFo/cOEiwPPzTDmeuhEA6XNsF0m8TUTKQnOpiQ==
+X-Received: by 2002:ac2:5a0a:0:b0:4d9:8773:7d76 with SMTP id q10-20020ac25a0a000000b004d987737d76mr5116478lfn.11.1680078462268;
+        Wed, 29 Mar 2023 01:27:42 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id f24-20020ac25338000000b004e8448de1c0sm5430462lfh.10.2023.03.29.01.27.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Mar 2023 01:27:41 -0700 (PDT)
+Message-ID: <863d5a85-3399-5a43-b755-1316e3adcfec@linaro.org>
+Date:   Wed, 29 Mar 2023 10:27:40 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 0/5] Refactor to support multiple download mode
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 1/2] dt-bindings: interrupt-controller: mpm: Allow passing
+ reg through phandle
 Content-Language: en-US
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>
-References: <1680017869-22421-1-git-send-email-quic_mojha@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1680017869-22421-1-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
+ <20230328-topic-msgram_mpm-v1-1-1b788a5f5a33@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230328-topic-msgram_mpm-v1-1-1b788a5f5a33@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lc0CZfAV8THGoSnm3Vx3OvC6qURHLBvJ
-X-Proofpoint-ORIG-GUID: lc0CZfAV8THGoSnm3Vx3OvC6qURHLBvJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-29_02,2023-03-28_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
- suspectscore=0 bulkscore=0 impostorscore=0 clxscore=1015 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303290063
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please ignore this series as i have sent v6.
+On 28/03/2023 12:02, Konrad Dybcio wrote:
+> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
+> use 'reg' to point to the MPM's slice of Message RAM without cutting into
+> an already-defined RPM MSG RAM node used for GLINK and SMEM.
+> 
+> Document passing the register space as a slice of SRAM through the
+> qcom,rpm-msg-ram property. This also makes 'reg' no longer required.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml          | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+> index 509d20c091af..77fe5e0b378f 100644
+> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
+> @@ -30,6 +30,11 @@ properties:
+>      description:
+>        Specifies the base address and size of vMPM registers in RPM MSG RAM.
+>  
+> +  qcom,rpm-msg-ram:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description:
+> +      Phandle to the APSS MPM slice of the RPM Message RAM
+> +
+>    interrupts:
+>      maxItems: 1
+>      description:
+> @@ -64,7 +69,6 @@ properties:
+>  
+>  required:
+>    - compatible
+> -  - reg
 
-https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+Either:
+1. make reg deprecated and require qcom,rpm-msg-ram
+or
+2. you need oneOf:required for reg and qcom,rpm-msg-ram
 
--Mukesh
+>    - interrupts
+>    - mboxes
+>    - interrupt-controller
+> 
 
-On 3/28/2023 9:07 PM, Mukesh Ojha wrote:
-> Intention of this series to support multiple download mode and
-> only modify the required bits during setting tcsr register.
-> 
-> Other download modes are minidump, bothdump (full dump + minidump).
-> 
-> Latest minidump kernel driver patches has been sent here
-> https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
-> 
-> Also, this series should be applied on
-> https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
-> 
-> Changes in v5:
->    - Tried to fix the issue reported by kernel test robot
->      https://lore.kernel.org/lkml/202303280535.acb66sQT-lkp@intel.com/
-> 
->    - Applied some of the improvement suggested by [Bjorn.andersson]
->   
->      . Dropped 'both' instead support full,mini or mini,full for setting download
->      mode to collect both minidump and full dump.
->      
->      . logging improvement.
->      
-> 
-> Changes in v4: https://lore.kernel.org/lkml/1679935281-18445-1-git-send-email-quic_mojha@quicinc.com/
->    - val should be shifted within the function [srinivas.kandagatla]
->      i.e new = (old & ~mask) | (val << ffs(mask) - 1);
->    - Added Acked-by [linus.walleij] on pinctrl change.
-> 
-> Changes in v3 : https://lore.kernel.org/lkml/1679070482-8391-1-git-send-email-quic_mojha@quicinc.com/
->   - Removed [1] from the series and sent as a separate patch[2], although this series
->     should be applied on top [2].
->    [1] https://lore.kernel.org/lkml/1677664555-30191-2-git-send-email-quic_mojha@quicinc.com/
->    [2] https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
->   - Introduce new exported symbol on suggestion from [srinivas.kandagatla]
->   - Use the symbol from drivers/pinctrl/qcom/pinctrl-msm.c.
->   - Addressed comment given by [dmitry.baryshkov]
->   - Converted non-standard Originally-by to Signed-off-by.
-> 
-> Changes in v2: https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
->   - Addressed comment made by [bjorn]
->   - Added download mask.
->   - Passed download mode as parameter
->   - Accept human accepatable download mode string.
->   - enable = !!dload_mode
->   - Shifted module param callback to somewhere down in
->     the file so that it no longer need to know the
->     prototype of qcom_scm_set_download_mode()
->   - updated commit text.
-> 
-> Mukesh Ojha (5):
->    firmware: qcom_scm: provide a read-modify-write function
->    pinctrl: qcom: Use qcom_scm_io_update_field()
->    firmware: scm: Modify only the download bits in TCSR register
->    firmware: qcom_scm: Refactor code to support multiple download mode
->    firmware: qcom_scm: Add multiple download mode support
-> 
->   drivers/firmware/Kconfig               | 11 -----
->   drivers/firmware/qcom_scm.c            | 89 +++++++++++++++++++++++++++++++---
->   drivers/pinctrl/qcom/pinctrl-msm.c     | 11 ++---
->   include/linux/firmware/qcom/qcom_scm.h |  2 +
->   4 files changed, 87 insertions(+), 26 deletions(-)
-> 
+Best regards,
+Krzysztof
+
