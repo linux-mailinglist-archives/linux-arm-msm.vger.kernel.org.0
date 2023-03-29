@@ -2,101 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 694906CF185
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:57:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8735B6CF1F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 20:15:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbjC2R5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 13:57:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51284 "EHLO
+        id S229886AbjC2SPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 14:15:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjC2R5i (ORCPT
+        with ESMTP id S229806AbjC2SPP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 13:57:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C7C5A6;
-        Wed, 29 Mar 2023 10:57:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8584761D60;
-        Wed, 29 Mar 2023 17:57:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B73C433EF;
-        Wed, 29 Mar 2023 17:57:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680112656;
-        bh=BMoNbmsfNfOkhi4yfXSxjV/u4Ku/ne70lJ45WdOhIak=;
-        h=In-Reply-To:References:Subject:From:To:Date:From;
-        b=tPxX9AwvmGxPoycDrTNASDSW2TYQKIfoY3al4wIpwboHI/R/TPM2nfBUDbtTLl6JT
-         i3WucSNoU9cAJ59zceMPQMlOkilhk5QsY3nB1XIgA6Ba7/Dp/CU7N4qDxZ8xuWBQDy
-         PQHhNkXUmKj+tavQ0hvXdWZwPJVnxmWNVwrYTix2ywq/MNJHl/VYQSNGx9+uF1K02L
-         JNm2Uy+9bGxJDcARduByqbWQbt2xBM1QU6yUNtRoRa0A0kM2nrKTt7i5OCg65pD/JL
-         vZqH2I5M42SztBj6lsOqfdkVOqlgXUgsQN+CwDlsQ4GdnxSdGm1HfHUO52xqPTrUgI
-         cNnnmbCoUxp6w==
-Message-ID: <1125013051e5f6578fde8aa006c9bcbd.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Wed, 29 Mar 2023 14:15:15 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id CB5595B92;
+        Wed, 29 Mar 2023 11:15:06 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B965B2F4;
+        Wed, 29 Mar 2023 11:15:50 -0700 (PDT)
+Received: from bogus (unknown [10.57.52.160])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5F9453F6C4;
+        Wed, 29 Mar 2023 11:14:57 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 19:14:23 +0100
+From:   Sudeep Holla <sudeep.holla@arm.com>
+To:     Rob Herring <robh@kernel.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Amit Daniel Kachhap <amit.kachhap@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Anup Patel <anup@brainfault.org>,
+        Huacai Chen <chenhuacai@kernel.org>,
+        Jiaxun Yang <jiaxun.yang@flygoat.com>,
+        Marc Zyngier <maz@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, sparclinux@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-riscv@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-mips@vger.kernel.org
+Subject: Re: [PATCH 04/19] of: Move CPU node related functions to their own
+ file
+Message-ID: <20230329181423.6e2z2giwkgdvhshn@bogus>
+References: <20230329-dt-cpu-header-cleanups-v1-0-581e2605fe47@kernel.org>
+ <20230329-dt-cpu-header-cleanups-v1-4-581e2605fe47@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <41d84c24-a363-7f73-1590-c23cc2ecbdc5@quicinc.com>
-References: <20230327163249.1081824-1-quic_mohs@quicinc.com> <20230327163249.1081824-5-quic_mohs@quicinc.com> <f2fa0b0813b26c0eb1893ef4c4c4c672.sboyd@kernel.org> <41d84c24-a363-7f73-1590-c23cc2ecbdc5@quicinc.com>
-Subject: Re: [PATCH v1 4/4] clk: qcom: lpasscc-sc7280: Remove qdsp6ss clock registration
-From:   Stephen Boyd <sboyd@kernel.org>
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, broonie@kernel.org,
-        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        quic_visr@quicinc.com, robh+dt@kernel.org, swboyd@chromium.org
-Date:   Wed, 29 Mar 2023 10:57:34 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230329-dt-cpu-header-cleanups-v1-4-581e2605fe47@kernel.org>
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Mohammad Rafi Shaik (2023-03-29 02:24:43)
->=20
-> The main issue with sc7280.dtsi file.
->=20
-> Required to upstream remoteproc_adsp node for audioreach adsp based=20
-> solution.
-> The base address for remoteproc_adsp dts node is 0x3000000.
->=20
-> Please refer below link audioreach dts patch:
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1675700201-12890=
--4-git-send-email-quic_srivasam@quicinc.com/
->=20
-> remoteproc_adsp: remoteproc@3000000 {
->  =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 compatible =3D =
-"qcom,sc7280-adsp-pil";
->  =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 reg =3D <0 0x03=
-000000 0 0x5000>, <0 0x0355b000 0 0x10>;
->  =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 reg-names =3D "=
-qdsp6ss_base", "lpass_efuse";
->=20
-> and in sc7280.dtsi lpasscc node base address also same.
->=20
-> lpasscc: lpasscc@3000000 {
->  =C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 compatible =3D =
-"qcom,sc7280-lpasscc";
->  =C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 reg =3D <0 0x03=
-000000 0 0x40>,
->  =C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <0 0x03c04000 0 0x4>,
->=20
-> In single dtsi file should not have same physical address node.
-> Required to sort the nodes based on physical address.
+On Wed, Mar 29, 2023 at 10:52:01AM -0500, Rob Herring wrote:
+> drivers/of/base.c is quite long and we've accumulated a number of CPU
+> node functions. Let's move them to a new file, cpu.c, along with the
+> lone of_cpu_device_node_get() in of_device.h. Moving the declaration has
+> no effect yet as of.h is included by of_device.h. This serves as
+> preparation to disentangle the includes in of_device.h and
+> of_platform.h.
+>
 
-Yes the same address shouldn't be used twice, but it still compiles,
-right? The node name is different, remoteproc vs. clock-controller, so
-it should work for the interim while the qcom,sc7280-lpasscc-2 binding
-is written that only has one reg property.
+Makes sense to have its own file for CPUs, I am sure there will be more
+additions 😉.
 
-I'm suggesting you don't change the existing binding. Instead, deprecate
-the compatible and add a new compatible for the binding that omits the
-second reg property. Then the driver patch can work with old and new dts
-files.
+FWIW,
+
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+
+-- 
+Regards,
+Sudeep
