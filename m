@@ -2,78 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3B346CF3FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 22:01:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C78CD6CF42E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 22:13:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbjC2UBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 16:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
+        id S229963AbjC2UNm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 16:13:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbjC2UBI (ORCPT
+        with ESMTP id S229905AbjC2UNk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 16:01:08 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 655EC126
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 13:01:04 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id c9so11294236lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 13:01:04 -0700 (PDT)
+        Wed, 29 Mar 2023 16:13:40 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50E754EE3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 13:13:37 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id q16so21744689lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 13:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680120062;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=linaro.org; s=google; t=1680120815;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QOz2LnBeoR0UsX1ajFY+JsP7ZZvmsV9hCjLXu958Cw4=;
-        b=bvnD+S2+ONOEkOKYd9Sua4486Us6nUvXP1T7Av/0SNOnmG5sC9rX7LYqJQH4aFbIIk
-         d16Igh19Bdy1nRd8FXa7wbVzZIHgH0efIYEa55zZOI1lubyzPRv0SYYv/irQsNR9P35R
-         PU5x23FQMlg2MCg+1WsA3JdRBa3sgcSivfFTuSBXOb+ktYK8TplB0tG3pq6E1Pyfk/8n
-         /FS9JII8RSU3T3+BL7K9tkXYiYWwJDjJJHlyatB1TRYbis9K51clA5Ayr0FSwev9wtAa
-         lTJ0G9zwkQ4a80pZg4bDROA6+wNOwGxUEolcG+HhVkY+DFsDkXLtaDfLgj4ya8H8vGqT
-         phyQ==
+        bh=zQCrJvIAi8d5vr9Rmgb3GfKwe2GYjnRcMdwIw2E9S1Q=;
+        b=PBm+HevLzaANAiaOKuKR9wz5q1jaq2klVC3G7CGePfsI7ciPdEvadZ/5ugn9pPydb0
+         pNDZpqc06g+MopXZNlylyBEpMaYKY28YTsUkw92aGyY6ja2bQ/Q+J9M+ufP/UMVjkCxm
+         b4yNpJ9yS52MpUN10wk7Ov2b1BIVxTky08nCz+k9D6osa5WWprSxkr9G2CpgJDzzcKvd
+         wPp6nNA2zSQ1wNO/Hd38HMRKJc17t9ASWPVNjbub4COwB1sbNRnC6M6g6dxhSCE9yMBq
+         Bpp61bKCtEk5V2PRtjf8ROQ+u2U8Z3zLbszk47VsZYuAAW89YJCx7wdPC6uSIvruvxOG
+         9qRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680120062;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+        d=1e100.net; s=20210112; t=1680120815;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QOz2LnBeoR0UsX1ajFY+JsP7ZZvmsV9hCjLXu958Cw4=;
-        b=NMkoxcLsBePmqS9MoCkyL0nfUDF2Ife7hJRLsOvvVUzxDmHSmZY+54JSI4MtGx+0Ya
-         q3jfxwo6MGTZrrGUvKfKZEsflfWs0UVOTwvacHVL73v/Xt2lGnBZxRbmDOuj59jhk0En
-         08MHz4Kc7LlsXQOl1n7YKKgU8UtWLZhng1jU6JWQAKsUuJ1BgCXhP9QmYzYkiaWOXJ5K
-         WETnDnKnvgL+e3LpylBFm5TM125WNyAkxF1EtficrhCIjBpCA+DUjzhfmKROzzZfbBbX
-         AaTgE0dY+/8aGmJEKj37smO6RbykTFtVpH1AWhR5J1Xcf0Hz/ZEHYPvKWJPuW5SMMiz8
-         KB+w==
-X-Gm-Message-State: AAQBX9d5dFCfdP9FQw8iqtpXFbAw2gkNPJcyvO9lpPID4hmXcOTP2kPg
-        Rfoc+4zutOhgrw/pi5M2cy4A7g==
-X-Google-Smtp-Source: AKy350bhm+8M87yTF9xXkPrCxrIC+ScPXmtLGPFwZX0Q9oEVNcpmxE6UwcLGLVfQlyHI7IY27XqsUw==
-X-Received: by 2002:ac2:5969:0:b0:4b5:2cf4:cc1d with SMTP id h9-20020ac25969000000b004b52cf4cc1dmr6002100lfp.68.1680120062582;
-        Wed, 29 Mar 2023 13:01:02 -0700 (PDT)
+        bh=zQCrJvIAi8d5vr9Rmgb3GfKwe2GYjnRcMdwIw2E9S1Q=;
+        b=W/dcdJEA7Ys7ei8IsOFSuxP/1/Apjs7Qg0bhyBdWNEi5hdKZvjlz6DU5BhIGQ8Hv+4
+         Q1nEgBtwUEpWOclBWf8F8Hifb2dYJhD0/ulcVP2IDwLxtdCBkaSlHRGbaemV1obI8bJK
+         LTqqA8yQ/gxFbA138q+CzBriESoOkB9P404QE9LvvoIuLLqWBA8SjUePJlUDVXdEts0K
+         acienUOespbx9A9jpuT0rGH1QUkTKc7Wa6IpYJjTt+bGsh+FmrMEVVhRE4qqM3kZTiq7
+         1iCnUR8S6gasyrJrE6hR3fGWP6ad2H/AKGrFVqBt9dDGLqXMgjPjJyxPUDEXX+PQV4AP
+         Nx1Q==
+X-Gm-Message-State: AAQBX9ffJ3Xtx3VS74bE4QgNaeveNQFoXz5USyNvKzKgfugL6fnf9Waf
+        GdYoDZO5LK9WuBGGj3BETqvB2g==
+X-Google-Smtp-Source: AKy350bqFBR1/bLn2+h5C96CNiXHrwe4VeVDilWwnXSAsd4PHM96EcS8ugCMls5mi4Wc9S4QapkSIQ==
+X-Received: by 2002:a19:ad48:0:b0:4ea:f6ad:2975 with SMTP id s8-20020a19ad48000000b004eaf6ad2975mr5918334lfd.60.1680120815483;
+        Wed, 29 Mar 2023 13:13:35 -0700 (PDT)
 Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l17-20020ac25551000000b004cc9042c9cfsm5545322lfk.158.2023.03.29.13.01.01
+        by smtp.gmail.com with ESMTPSA id h18-20020a197012000000b004e95a1aca1bsm5581253lfc.87.2023.03.29.13.13.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 13:01:02 -0700 (PDT)
-Message-ID: <9fbda2ac-d611-ed3a-bbd5-4fa58f39c713@linaro.org>
-Date:   Wed, 29 Mar 2023 23:01:01 +0300
+        Wed, 29 Mar 2023 13:13:35 -0700 (PDT)
+Message-ID: <420b5400-844f-4ca9-a4e3-1f5f6536f7a2@linaro.org>
+Date:   Wed, 29 Mar 2023 23:13:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 14/50] drm/msm/dpu: Allow variable SSPP/INTF_BLK size
+Subject: Re: [PATCH v3 0/7] drm/msm: add support for SM8550
 Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230211231259.1308718-1-dmitry.baryshkov@linaro.org>
- <20230211231259.1308718-15-dmitry.baryshkov@linaro.org>
- <f0cc19ec-83ee-151d-e4d2-83a2cd5dc7f7@linaro.org>
- <526734f4-d2a6-b8b3-d300-dbf0bcfde91f@linaro.org>
-In-Reply-To: <526734f4-d2a6-b8b3-d300-dbf0bcfde91f@linaro.org>
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20230103-topic-sm8550-upstream-mdss-dsi-v3-0-660c3bcb127f@linaro.org>
+ <168004255469.1060915.1800625604847213121.b4-ty@linaro.org>
+ <CAL_Jsq+VoBkpCT_iUD1Nq_SazCVDa49rn0qtX3Qnm1KBB3gkcg@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAL_Jsq+VoBkpCT_iUD1Nq_SazCVDa49rn0qtX3Qnm1KBB3gkcg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -84,34 +86,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/02/2023 13:18, Dmitry Baryshkov wrote:
-> On 13/02/2023 13:01, Konrad Dybcio wrote:
+On 29/03/2023 22:52, Rob Herring wrote:
+> On Tue, Mar 28, 2023 at 5:38 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 >>
 >>
->> On 12.02.2023 00:12, Dmitry Baryshkov wrote:
->>> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> On Mon, 09 Jan 2023 11:15:17 +0100, Neil Armstrong wrote:
+>>> This adds support for the MDSS/DPU/DSI on the Qualcomm SM8550 platform.
 >>>
->>> These blocks are of variable length on different SoCs. Set the
->>> correct values where I was able to retrieve it from downstream
->>> DTs and leave the old defaults (0x1c8 for sspp and 0x280 for
->>> intf) otherwise.
+>>> This patchset is based on the SM8450 display support serie at [1].
 >>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> [DB: fixed some of lengths]
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->> Oh you fixed it quicker than I could respond!
-> 
-> Yes, I wanted to include it into this patchset, so I had to fix it.
-> 
+>>> In order to work, the following patchsets are required:
+>>> - PM8550 LDO fix at [2]
+>>> - DISPCC driver at [3]
+>>>
+>>> [...]
 >>
->> Still, I think the 8280 sspp size should not be
->> 2x the norm..
+>> Applied, thanks!
+>>
+>> [2/7] dt-bindings: display/msm: document DPU on SM8550
+>>        https://gitlab.freedesktop.org/lumag/msm/-/commit/4557e40338d2
+>> [3/7] dt-bindings: display/msm: document MDSS on SM8550
+>>        https://gitlab.freedesktop.org/lumag/msm/-/commit/0e4205eb8663
 > 
-> Let's doublecheck this with somebody having access to docs.
+> And now failing on linux-next just as my bot reported:
+> 
+> Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.example.dts:24:18:
+> fatal error: dt-bindings/interconnect/qcom,sm8550.h: No such file or
+> directory
+>     24 |         #include <dt-bindings/interconnect/qcom,sm8550.h>
+>        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> make[1]: *** [scripts/Makefile.lib:419:
+> Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.example.dtb]
+> Error 1
+> Documentation/devicetree/bindings/display/msm/qcom,sm8550-mdss.example.dts:25:18:
+> fatal error: dt-bindings/interconnect/qcom,sm8550.h: No such file or
+> directory
+>     25 |         #include <dt-bindings/interconnect/qcom,sm8550.h>
+>        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> 
+> Please fix. And quickly please. Fixes in the DRM tree seem to take
+> forever to get in...
 
-The additional research shows that all of us were wrong here. I'll 
-update it to 0x2ac for the next revision of the patchset.
+I pushed the fix, so it will arrive in linux-next tomorrow or the day 
+after tomorrow. Please excuse me for breaking it again. I checked that 
+the patches were merged, but didn't notice that the header name was 
+changed in the process. Mea culpa.
 
 -- 
 With best wishes
