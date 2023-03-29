@@ -2,88 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 311846CD753
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 12:09:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3A146CD7EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 12:52:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbjC2KJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 06:09:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47532 "EHLO
+        id S229479AbjC2KwJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 06:52:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbjC2KJs (ORCPT
+        with ESMTP id S229470AbjC2KwI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 06:09:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5AAFDE;
-        Wed, 29 Mar 2023 03:09:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3F0AC61C27;
-        Wed, 29 Mar 2023 10:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2075AC433EF;
-        Wed, 29 Mar 2023 10:09:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1680084586;
-        bh=w809a55v4vcQohpdyf5Egn5InyKp6z0v44dJrseoAoY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=xzT3hnifD7adIi9OAR9RZf/6fHxeVYu4gY84oA0vOZQxfuM1DBOKDFOY3VdCxB/r6
-         ZnRfn/LB6h85OxjEsZJusXaJd9lsqa6DCjEHEMCnm52vdB3N82vDHUQ2NvgojTR4PG
-         bXWWLS6o7ZsBvzQL6HiIW/t0BOMSqZEsBFj2jACI=
-Date:   Wed, 29 Mar 2023 12:09:44 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, bkumar@qti.qualcomm.com,
-        fastrpc.upstream@qti.qualcomm.com, stable <stable@kernel.org>
-Subject: Re: [PATCH v1] misc: fastrpc: Reassign memory ownership only for
- remote heap
-Message-ID: <ZCQOaMcObl0vYqlg@kroah.com>
-References: <1679394100-27119-1-git-send-email-quic_ekangupt@quicinc.com>
- <17185edd-aa6f-386b-4252-0c6eac1ddcfc@linaro.org>
+        Wed, 29 Mar 2023 06:52:08 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3E01FDA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 03:52:07 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id k17so18685455ybm.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 03:52:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680087126;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pYv9M7coslMJJF9TLVoPr0zt34O6GZ1VxBOMD5WWM8g=;
+        b=SikfAN/1ZbiBGg+zmydA9bfihedbZQOop+X5LZrPAALXv6NwuPk8ZorNDnOhtCveb/
+         VrxXg+bB4RdVp+HwYWjDKX9BDmtPOp8fORYDewtQxM5kJvcgV4wxAQA53766Y9WQ0mE7
+         WxCsZStIPbyVp3OBw9fcD/KNnwfgpIlyCgV0AylycYH1hRhehXOtO0z9yMF9EPZd4cIf
+         5nwGp3OA/yNlyF8Jiin8lCt4HKPfH9J+PGLogFZWUek+WZoRClvUtAqZ7Kvx12HKewHN
+         dGGsn0HBZcRu6kZYew1Y+C1nLZFEIcqOllG4Ljuk7mNJe8cnRI90wH94xN1ZF1qh46Z8
+         LRag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680087126;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pYv9M7coslMJJF9TLVoPr0zt34O6GZ1VxBOMD5WWM8g=;
+        b=fST8a9bRUnHjOYwf+L4lw8/6mzD5AsNjRR5Kze2IFpMTQq3qEKmrrLVFPWyCdcKSjC
+         LQ6jZQGBDwHxfzX/CtCzZu/21hdDM1GebTq0957IPOY1GDQBAdInGFEXVzGtQaKkDmiV
+         2Kq4wYyLmrMoFCkUo0XLuCpQA51sqMGgnrUZq0sAhQ2PEnKTykg0nS431rnQi949tVNL
+         QSVtrYfBuOQvy3i4MFeHyXGe9zY81AyhL9SrGu1MsbjCc01M8b8pwreLmJPccU27wOmZ
+         FFmvYvN4DUV/I+9dgztJCfdzQVW7T6BX/WWYvtnjupeXsKWJ5zins4d/u1yl+DNSJgLz
+         VFxQ==
+X-Gm-Message-State: AAQBX9cMBt9Hira4qHMx4V42u5chBs6yHwmxgZCfaYaolztPIgXRdUEn
+        ijtwrDyjCZz8jUeCgD13N8GE8+NLM69icOIPzNcuTA==
+X-Google-Smtp-Source: AKy350b9UYOLX6PmwVyIWe5dGiWYyVV1F8d9u3fYOjbsXwVN0hv3JrowfI+/bMUSRJSpvSpbWHcaVAPuE6pPb/O3G64=
+X-Received: by 2002:a05:6902:1549:b0:b77:be38:6406 with SMTP id
+ r9-20020a056902154900b00b77be386406mr9547201ybu.9.1680087126218; Wed, 29 Mar
+ 2023 03:52:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <17185edd-aa6f-386b-4252-0c6eac1ddcfc@linaro.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230329000833.2507594-1-dmitry.baryshkov@linaro.org>
+ <20230329000833.2507594-5-dmitry.baryshkov@linaro.org> <281c27da-a0a9-b866-b156-50db681cd656@linaro.org>
+In-Reply-To: <281c27da-a0a9-b866-b156-50db681cd656@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 29 Mar 2023 13:51:55 +0300
+Message-ID: <CAA8EJpoD_8tUO+QmwJtfAPqYAjMUD=hkGORxJEdUByYM0xc0Zg@mail.gmail.com>
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: pm8350: include SID into labels
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        devicetree@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 08:53:33PM +0000, Srinivas Kandagatla wrote:
-> 
-> 
-> On 21/03/2023 10:21, Ekansh Gupta wrote:
-> > The userspace map request for remote heap allocates CMA memory.
-> > The ownership of this memory needs to be reassigned to proper
-> > owners to allow access from the protection domain running on
-> > DSP. This reassigning of ownership is not correct if done for
-> > any other supported flags.
-> > 
-> > When any other flag is requested from userspace, fastrpc is
-> > trying to reassign the ownership of memory and this reassignment
-> > is getting skipped for remote heap request which is incorrect.
-> > Add proper flag check to reassign the memory only if remote heap
-> > is requested.
-> > 
-> > Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
-> > Cc: stable <stable@kernel.org>
-> > Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> 
-> Thanks for fixing this,  without this fix the code inside if condition was a
-> dead code.
-> 
-> 
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Wed, 29 Mar 2023 at 03:33, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 29.03.2023 02:08, Dmitry Baryshkov wrote:
+> > The platform can use several instances of PM8350 PMIC. Include SID into
+> > all the labels to simplify such platforms configuration.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/pm8350.dtsi          | 31 +++++++++++++------
+> >  .../dts/qcom/sm8350-sony-xperia-sagami.dtsi   |  4 +--
+> >  .../dts/qcom/sm8450-sony-xperia-nagara.dtsi   |  4 +--
+> >  3 files changed, 26 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/pm8350.dtsi b/arch/arm64/boot/dts/qcom/pm8350.dtsi
+> > index 2dfeb99300d7..f1ef242760f2 100644
+> > --- a/arch/arm64/boot/dts/qcom/pm8350.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/pm8350.dtsi
+> > @@ -6,21 +6,30 @@
+> >  #include <dt-bindings/interrupt-controller/irq.h>
+> >  #include <dt-bindings/spmi/spmi.h>
+> >
+> > +/* (Sadly) this PMIC can be configured to be at different SIDs */
+> > +#ifndef PM8350_SID
+> > +     #define PM8350_SID 1
+> > +#endif
+> > +
+> > +#define __LABEL(pmic, sid, name) pmic ## _ ## sid ## _ ## name
+> > +#define _LABEL(pmic, sid, name) __LABEL(pmic, sid, name)
+> Perhaps that should go to some Qcom PMIC-common include now!
 
-Are you going to be collecting these and sending them on?  If not,
-please do.
+I usually prefer to have a "second case" before generalizing things. I
+think we might have it with sa8540p-pmics (which includes 4 instances
+of pmm8540). However I didn't dare to touch that as I do not know if
+they are really the same PMICs or there are some differences, etc.
 
-thanks,
+> Also, at one point, an idea came up to stop writing so much dt, I'm
+> not necessarily a fan of creating .dtsc (like ACPI-C sources), but
+> perhaps we could explore having e.g. a "gen_dt.py" which would take
+> in some data and generate device trees based on that.. Not very
+> related to this patch, but I'm just throwing it in the open
 
-greg k-h
+Standard issue: one has to find a balance between the generated source
+and the actual code. Given that most of the blocks are more or less
+standard, we might be able to create a DSL for describing PMICs. But
+then we have all kinds of strange nodes (like Type-C handler), which
+do not follow the reset.
+
+>
+>
+> Konrad
+> > +#define LABEL(name) _LABEL(pm8350, PM8350_SID, name)
+> > +
+> >  / {
+> >       thermal-zones {
+> > -             pm8350_thermal: pm8350c-thermal {
+> > +             LABEL(thermal): pm8350c-thermal {
+> >                       polling-delay-passive = <100>;
+> >                       polling-delay = <0>;
+> > -                     thermal-sensors = <&pm8350_temp_alarm>;
+> > +                     thermal-sensors = <&LABEL(temp_alarm)>;
+> >
+> >                       trips {
+> > -                             pm8350_trip0: trip0 {
+> > +                             LABEL(trip0): trip0 {
+> >                                       temperature = <95000>;
+> >                                       hysteresis = <0>;
+> >                                       type = "passive";
+> >                               };
+> >
+> > -                             pm8350_crit: pm8350c-crit {
+> > +                             LABEL(crit): pm8350c-crit {
+> >                                       temperature = <115000>;
+> >                                       hysteresis = <0>;
+> >                                       type = "critical";
+> > @@ -33,25 +42,29 @@ pm8350_crit: pm8350c-crit {
+> >  &spmi_bus {
+> >       pm8350: pmic@1 {
+> >               compatible = "qcom,pm8350", "qcom,spmi-pmic";
+> > -             reg = <0x1 SPMI_USID>;
+> > +             reg = <PM8350_SID SPMI_USID>;
+> >               #address-cells = <1>;
+> >               #size-cells = <0>;
+> >
+> > -             pm8350_temp_alarm: temp-alarm@a00 {
+> > +             LABEL(temp_alarm): temp-alarm@a00 {
+> >                       compatible = "qcom,spmi-temp-alarm";
+> >                       reg = <0xa00>;
+> > -                     interrupts = <0x1 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+> > +                     interrupts = <PM8350_SID 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
+> >                       #thermal-sensor-cells = <0>;
+> >               };
+> >
+> > -             pm8350_gpios: gpio@8800 {
+> > +             LABEL(gpios): gpio@8800 {
+> >                       compatible = "qcom,pm8350-gpio", "qcom,spmi-gpio";
+> >                       reg = <0x8800>;
+> >                       gpio-controller;
+> > -                     gpio-ranges = <&pm8350_gpios 0 0 10>;
+> > +                     gpio-ranges = <&LABEL(gpios) 0 0 10>;
+> >                       #gpio-cells = <2>;
+> >                       interrupt-controller;
+> >                       #interrupt-cells = <2>;
+> >               };
+> >       };
+> >  };
+> > +
+> > +#undef LABEL
+> > +#undef _LABEL
+> > +#undef __LABEL
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> > index e28f49e31b9f..5c09b1d8881b 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
+> > @@ -72,7 +72,7 @@ key-camera-snapshot {
+> >
+> >               key-google-assist {
+> >                       label = "Google Assistant Key";
+> > -                     gpios = <&pm8350_gpios 9 GPIO_ACTIVE_LOW>;
+> > +                     gpios = <&pm8350_1_gpios 9 GPIO_ACTIVE_LOW>;
+> >                       linux,code = <KEY_LEFTMETA>;
+> >                       debounce-interval = <15>;
+> >                       linux,can-disable;
+> > @@ -564,7 +564,7 @@ &mpss {
+> >       firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
+> >  };
+> >
+> > -&pm8350_gpios {
+> > +&pm8350_1_gpios {
+> >       gpio-line-names = "ASSIGN1_THERM", /* GPIO_1 */
+> >                         "LCD_ID",
+> >                         "SDR_MMW_THERM",
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+> > index 99e9b776b93d..d90e3fedb742 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
+> > @@ -56,7 +56,7 @@ key-camera-snapshot {
+> >               key-volume-down {
+> >                       label = "Volume Down";
+> >                       linux,code = <KEY_VOLUMEDOWN>;
+> > -                     gpios = <&pm8350_gpios 6 GPIO_ACTIVE_LOW>;
+> > +                     gpios = <&pm8350_1_gpios 6 GPIO_ACTIVE_LOW>;
+> >                       debounce-interval = <15>;
+> >                       linux,can-disable;
+> >                       wakeup-source;
+> > @@ -622,7 +622,7 @@ &pcie0_phy {
+> >       status = "okay";
+> >  };
+> >
+> > -&pm8350_gpios {
+> > +&pm8350_1_gpios {
+> >       gpio-line-names = "ASSIGN1_THERM", /* GPIO_1 */
+> >                         "LCD_ID",
+> >                         "SDR_MMW_THERM",
+
+
+
+-- 
+With best wishes
+Dmitry
