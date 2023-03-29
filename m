@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF3226CDB5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:02:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA5E6CDB80
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:06:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjC2OCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 10:02:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36712 "EHLO
+        id S229817AbjC2OGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 10:06:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjC2OCV (ORCPT
+        with ESMTP id S229825AbjC2OGD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 10:02:21 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D64FE4C05
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:59 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id l7so14128637pjg.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:59 -0700 (PDT)
+        Wed, 29 Mar 2023 10:06:03 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B9649EA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:04:56 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id q16so20346127lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680098519;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+t+rqepYDiPCeucRwMGif55QGbm9o8+zPctzSfAB80U=;
-        b=i86veqBnDoigJJiVx28C2dy2G9XN+6v4XIy8vWr19qwezqy4lmNfvb+M35MDPFXpe8
-         VsEXhCWWC5nFZKYf/n4mL+fXaPtb9lEc7RtQ6k4gra8g48qjyn+2ha7fa9FDXhCDN6hi
-         x3YdNPXWQRHms6ouL0kgVgslYOVsdr6fKKdnCsZG7NmiPhXAhFRXWRAhAcRJaOXaB5zv
-         QvuP7Av6kK8z6yYIEV70DY07BrglUWW+Ep11oOTS5+dvAYOqS4KXfc/pICdhDDN4g3L+
-         Kah4r38GUt6ptCnbFgMf3lDtM9s6pH5yR0HmPWxVkcDDPxjiU2eHpdyOYgo4yrN6OfxR
-         nr5g==
+        d=linaro.org; s=google; t=1680098688;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RHJ0WvwFhiwkNTXEVFAcPy6OADOzAA2uvcs+k52iD3M=;
+        b=BVWxz02BP62xHNvQqVawNsr8/34+J8NWKHuzN6MPcgZdTfCDdxWgtB/bRHjQHDLYpa
+         8y4U3Ktra2AcImTgh7g9x+808EFuitW3L2kKfw8kqmdWNc58ySzVoa83d6wEY8VHio6E
+         AqxwvtzXiD9jvDp4f59y8HlrK2tnynYGSvhH0TfOndIdBF4oX1yloBovV8Ml5qk4tyNm
+         Juq82SBIFpKv0zlGiuT5fCdOiA8689mtzuGQOrFi+gzImO6l0ZJA8c4IoQQyUb72dPG0
+         M97dP58+YmQcnKNItNAho3iXUafJ6//KvH0pFgRgFa0nxfPM/ysTmv9Y2HZ05jm2RsoN
+         C+oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680098519;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+t+rqepYDiPCeucRwMGif55QGbm9o8+zPctzSfAB80U=;
-        b=4B0BnfGCLoUYiPvynCJj8Vk7kYGGgj7BEobMQRlVGPvQ+SQF1gRQnMuoTTGAajCYZG
-         PGV2gsejkjC4SqZvJ3KpBmH0MjO4GoPcy7mmy9iAV6SqA+XKaViP/HkryXCv3Tw/h+i7
-         GckUmNTA+XQ2KtHl3OblnEnciYGJ/uPqr0lDalWYaOAadnpbCfwR3nQDN//kIYtiJYYG
-         8eAQMnN7m1LuViLNLpTNT+lz/xEfF+hB3GCkqLzwpze8A35q0h3l7UynxzPfhpoHwdsf
-         4k/Hq6MG553Mwm8qwBYdteGR+GjbWf1fRwG7Yj2VlmR+zXwmdYQFY4WWLHKNV8rPfEPl
-         LBxA==
-X-Gm-Message-State: AO0yUKW1dqKE0l62mf4c5OInLqLzMoijWCqyCJ4zRSB0YA47W23fRnPq
-        McmtL8ME1Nwessd8kDoWx+eQ
-X-Google-Smtp-Source: AK7set9wQikTSV1pgs3dy6STodYlwf25gv+l3pyiPdbF2QYVGcKDUJ3vgqvGI1rALG4VDgx9tbdNeA==
-X-Received: by 2002:a05:6a20:b29f:b0:cc:a8d7:ad7e with SMTP id ei31-20020a056a20b29f00b000cca8d7ad7emr15656875pzb.60.1680098518618;
-        Wed, 29 Mar 2023 07:01:58 -0700 (PDT)
-Received: from thinkpad ([117.216.120.213])
-        by smtp.gmail.com with ESMTPSA id 16-20020aa79250000000b005e4d8c6168csm23034693pfp.210.2023.03.29.07.01.54
+        d=1e100.net; s=20210112; t=1680098688;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RHJ0WvwFhiwkNTXEVFAcPy6OADOzAA2uvcs+k52iD3M=;
+        b=PZXbjsmOnHYQvQQ0/XCCeGjtlKhkPULJIN9gThY9N9Jg28E1muSiL65QrLakcNALkh
+         XPQvy8Yv6jPnn4tnOuzOLPU0WYCECTNqkE3xdPYB48Zi5nTc/Ql4Sdf+Fongxw8fWtnc
+         yrlfN6Q2Twr6QvWxslkZxlY50UdX3cZ50mUszR1nWEpgsiyWgxPuZP0a6fkcr9C12fJl
+         26TyFdlJoXr17TrruFF7PtF9TEU1rcM1gBt0aSTyjFSBX4PPSKFBcl7UNnbzYRBL1ekv
+         QpW53b9JpeLeTssJJSdjxXiYYaZCigfjcqezcjefK4XOQAms+BmH5yUn5GYNRjdwohmh
+         UIJA==
+X-Gm-Message-State: AAQBX9fu+NuypN7/+Qi2mRugWOgU0oBF3UBE04znMHPS0xI6zm4kfvmo
+        ZjoPNeRwyuaaYrr7AYkwTXWwuP1FXwh1QoAY434=
+X-Google-Smtp-Source: AKy350bZjIkvOV30egQBp76DByMuaZbSmTJ1/6zX+9+rZEZvIkolNPlHLICPA3fsY5DWKnVOqEqpzg==
+X-Received: by 2002:ac2:4889:0:b0:4e0:61a6:c158 with SMTP id x9-20020ac24889000000b004e061a6c158mr5775860lfc.36.1680098688469;
+        Wed, 29 Mar 2023 07:04:48 -0700 (PDT)
+Received: from localhost.localdomain (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id f21-20020ac251b5000000b004eaf2207a33sm3501083lfk.223.2023.03.29.07.04.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 07:01:58 -0700 (PDT)
-Date:   Wed, 29 Mar 2023 19:31:50 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
-        mka@chromium.org, Dhruva Gole <d-gole@ti.com>
-Subject: Re: [PATCH v3 1/1] PCI: qcom: Add support for system suspend and
- resume
-Message-ID: <20230329140150.GE5575@thinkpad>
-References: <20230327133824.29136-1-manivannan.sadhasivam@linaro.org>
- <20230327133824.29136-2-manivannan.sadhasivam@linaro.org>
- <ZCQLWzqKPrusMro+@hovoldconsulting.com>
- <20230329125232.GB5575@thinkpad>
- <ZCQ69xyQ4mwTow1W@hovoldconsulting.com>
+        Wed, 29 Mar 2023 07:04:48 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of idle() on load error
+Date:   Wed, 29 Mar 2023 16:04:44 +0200
+Message-Id: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZCQ69xyQ4mwTow1W@hovoldconsulting.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -81,69 +80,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 03:19:51PM +0200, Johan Hovold wrote:
-> On Wed, Mar 29, 2023 at 06:22:32PM +0530, Manivannan Sadhasivam wrote:
-> > On Wed, Mar 29, 2023 at 11:56:43AM +0200, Johan Hovold wrote:
-> > > On Mon, Mar 27, 2023 at 07:08:24PM +0530, Manivannan Sadhasivam wrote:
->  
-> > > > +static int qcom_pcie_suspend_noirq(struct device *dev)
-> > > > +{
-> > > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
-> > > > +	int ret;
-> > > > +
-> > > > +	/*
-> > > > +	 * Set minimum bandwidth required to keep data path functional during
-> > > > +	 * suspend.
-> > > > +	 */
-> > > > +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
-> > > 
-> > > This isn't really the minimum bandwidth you're setting here.
-> > > 
-> > > I think you said off list that you didn't see real impact reducing the
-> > > bandwidth, but have you tried requesting the real minimum which would be
-> > > kBps_to_icc(1)?
-> > > 
-> > > Doing so works fine here with both the CRD and X13s and may result in
-> > > some further power savings.
-> > > 
-> > 
-> > No, we shouldn't be setting random value as the bandwidth. Reason is, these
-> > values are computed by the bus team based on the requirement of the interconnect
-> > paths (clock, voltage etc...) with actual PCIe Gen speeds. I don't know about
-> > the potential implication even if it happens to work.
-> 
-> Why would you need PCIe gen1 speed during suspend?
-> 
+If we fail to initialize the GPU for whatever reason (say we don't
+embed the GPU firmware files in the initrd), the error path involves
+pm_runtime_put_sync() which then calls idle() instead of suspend().
 
-That's what the suggestion I got from Qcom PCIe team. But I didn't compare the
-value you added during icc support patch with downstream. More below...
+This is suboptimal, as it means that we're not going through the
+clean shutdown sequence. With at least A619_holi, this makes the GPU
+not wake up until it goes through at least one more start-fail-stop
+cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
+shutdown.
 
-> These numbers are already somewhat random as, for example, the vendor
-> driver is requesting 500 kBps (800 peak) during runtime, while we are
-> now requesting five times that during suspend (the vendor driver gets a
-> away with 0).
-> 
+Test cases:
+1. firmware baked into kernel
+2. error loading fw in initrd -> load from rootfs at DE start
 
-Hmm, then I should've asked you this question when you added icc support.
-I thought you inherited those values from downstream but apparently not.
-Even in downstream they are using different bw votes for different platforms.
-I will touch base with PCIe and ICC teams to find out the actual value that
-needs to be used.
+Both succeed on A619_holi (SM6375) and A630 (SDM845).
 
-Regarding 0 icc vote, downstream puts all the devices in D3Cold (poweroff)
-state during suspend. So for them 0 icc vote will work but not for us as we need
-to keep the device and link intact.
+Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-- Mani
-
-> Sure, this indicates that the interconnect driver is broken and we
-> should indeed be using values that at least makes some sense (and
-> eventually fix the interconnect driver).
-> 
-> Just not sure that you need to request that much bandwidth during
-> suspend (e.g. for just a couple of register accesses).
-> 
-> Johan
-
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index f61896629be6..59f3302e8167 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
+ 	return gpu;
+ 
+ err_put_rpm:
+-	pm_runtime_put_sync(&pdev->dev);
++	pm_runtime_put_sync_suspend(&pdev->dev);
+ err_disable_rpm:
+ 	pm_runtime_disable(&pdev->dev);
+ 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.40.0
+
