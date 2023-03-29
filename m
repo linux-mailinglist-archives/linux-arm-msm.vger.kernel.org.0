@@ -2,87 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F9286CD526
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 10:49:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A05E06CD534
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 10:51:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231319AbjC2ItB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 04:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36200 "EHLO
+        id S231314AbjC2IvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 04:51:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230371AbjC2Ish (ORCPT
+        with ESMTP id S230384AbjC2IvL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 04:48:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E5843C3B;
-        Wed, 29 Mar 2023 01:48:29 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32SNpbU7008579;
-        Wed, 29 Mar 2023 08:48:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=OFlfjRYANz+Cqp4MQubmPGGlSaQQl2KTHyWywJDQfNU=;
- b=McijSEUeV0lrgmWH7bXMe7go7pauLFxxbnmHYFKuJOeSkjcOMqyUxIzGiBhuZdr8yHdz
- s0IGrkVGQTGE2+R4Zhu3ZO1v2cfv56BsdxFeQv/NzxqskIccf5eT4iFleEvN6c7TfVnJ
- ZNI2PBIcSjU/erB6Hluvmc5wenVEpCESqYH+dJtNgsa6WgqKzvXi/lvdBGFuBsYOwhEO
- PqzLf7pwgFWVxrKaS6EQNhkZJ7NnWPJbuUql3YI8Q/d1ijAgbCvG7Chhot6gLSQn1GJS
- tkkY8d3M4pU2x/D6IVJ7CaCp/YKGAFxFGPUTnrvvQRQjZCpTnDBdO5wExvBYc64CRuG+ 2Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pky0xavuh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 08:48:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32T8lxwR023421
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 08:47:59 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.41; Wed, 29 Mar 2023 01:47:58 -0700
-From:   Mao Jinlong <quic_jinlmao@quicinc.com>
-To:     Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-Subject: [PATCH v1 8/8] dt-bindings: arm: Add support for TPDM CMB element size
-Date:   Wed, 29 Mar 2023 01:47:44 -0700
-Message-ID: <20230329084744.5705-9-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230329084744.5705-1-quic_jinlmao@quicinc.com>
-References: <20230329084744.5705-1-quic_jinlmao@quicinc.com>
+        Wed, 29 Mar 2023 04:51:11 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C49F30D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 01:50:50 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54601d90118so125137487b3.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 01:50:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680079845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B/cLIW46SmIRvY4RiouMRQ/RQJOiGzxyqmPyutTg+zA=;
+        b=QhOBzkThcCEEP2ZCg5zliykwCig0tej4mEtO5cAaTlCJE7r/I4bMQ4iBSSpjrhnae0
+         L2LF5rs7cU1RatgupQufqFqIBeFvIlZv+NuT+sHNQjGGOFQ+1hgE49sNPzLCJxCdOSUP
+         3GiHOBNJ4kNxbuv07uuvTShV166HoyO9x4tjK8dsgQhMHDuFGpYKNYzU6v85fOH0nA8N
+         BTRDzTAcMumMh174PCFF3cgm5M/IFBYKvPVZzaqtHkv13p8pYzObR23/QK9kSAbFoS1V
+         agkIoyxZgi5fPU94wcu6PdvvGt682AWB+XwG0s6houGBOcUHyk/TLJjCvaFXua8JDf+Q
+         vvdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680079845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B/cLIW46SmIRvY4RiouMRQ/RQJOiGzxyqmPyutTg+zA=;
+        b=B7UfP/Xnc+0bVbjey/eBQ7uv5rD1iJGbyKFjKU74UHfrjgXeA2I9GPP3jeJV6XZ1+A
+         +5YR69NdZXvhGeA/91ZEEx4z645uW5loAIqurcnlukzYkRX2VggMSpe7j93eW8VG7EWa
+         cqSHrJbZqymH/92vy4jFU9Zs0R8/ZK5qL1j1UTPjQ7GScZaRmmgHdCNGfHm66tNiPDPT
+         GrkBbFdDO8tQCmjDQeW0n+DNRPMPfOQ+MlvoAOiBUD3qWfArqQlUWcwY8W82g37d3AU+
+         HglBjh6ibeAOI8QhG2q/iVsWDff0/Jha00HD6EUkBuFgi2fkg45cVDTtxiaMEsqLbY93
+         ZDFA==
+X-Gm-Message-State: AAQBX9ceZQ0rwTdeVu2+BPGmDyDY12e1FbNDQps4bNwvM4c4fe+Iy8OC
+        3nC0RfgCnSJZ+XzV+38u5xxDcI6MD7jZy5486/uUnA==
+X-Google-Smtp-Source: AKy350YTOjcMWaqS3odZ4BorOYs3mIxmhScLtgIMGEm9pyUKhYrReflkix3snorSrRrckz5gmqV7SwVJyJWO3XKBcJ8=
+X-Received: by 2002:a81:a709:0:b0:545:4133:fc40 with SMTP id
+ e9-20020a81a709000000b005454133fc40mr8817132ywh.9.1680079845742; Wed, 29 Mar
+ 2023 01:50:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GLsgeYYQQ4AB4XtBOcZqp0R4KauqzKhs
-X-Proofpoint-ORIG-GUID: GLsgeYYQQ4AB4XtBOcZqp0R4KauqzKhs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-29_02,2023-03-28_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=831
- impostorscore=0 phishscore=0 mlxscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303290071
+References: <20230323173019.3706069-1-dianders@chromium.org>
+ <CACRpkdaGpaiOVjEN6Ftq5=-yuAyD0xb7OcvtEsoqbTzias-xxw@mail.gmail.com> <CAD=FV=W6QKfQxGcSrQdgp4VHYxfk7aYZOkYx4ve7QSpoZ-LM=A@mail.gmail.com>
+In-Reply-To: <CAD=FV=W6QKfQxGcSrQdgp4VHYxfk7aYZOkYx4ve7QSpoZ-LM=A@mail.gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 29 Mar 2023 10:50:34 +0200
+Message-ID: <CACRpkdaUZbyEfkcHsNuQ=KhyuiKpunZJgvrnq90kQK8Z2V4jtg@mail.gmail.com>
+Subject: Re: [PATCH 00/14] Control Quad SPI pinctrl better on Qualcomm Chromebooks
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rajesh Patil <rajpat@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,56 +80,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add property "qcom,cmb-elem-size" to support CMB element for TPDM.
-The associated aggregator will read this size before it is enabled.
-CMB element size currently only supports 8-bit, 32-bit and 64-bit.
+On Mon, Mar 27, 2023 at 11:51=E2=80=AFPM Doug Anderson <dianders@chromium.o=
+rg> wrote:
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- .../bindings/arm/qcom,coresight-tpdm.yaml        | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+> 1. Mark could land the SPI patch at any time, assuming he's OK with
+> it. It can land totally independently.
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-index 283dfb39d46f..c5169de81e58 100644
---- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
-@@ -53,6 +53,14 @@ properties:
-     minimum: 32
-     maximum: 64
- 
-+  qcom,cmb-element-size:
-+    description:
-+      Specifies the CMB (Continuous multi-bit) element size supported by
-+      the monitor. The associated aggregator will read this size before it
-+      is enabled. CMB element size currently supports 8-bit, 32-bit, 64-bit.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    enum: [8, 32, 64]
-+
-   qcom,dsb_msr_num:
-     description:
-       Specifies the number of DSB(Discrete Single Bit) MSR(mux select register)
-@@ -95,6 +103,12 @@ required:
-   - clocks
-   - clock-names
- 
-+anyOf:
-+  - required:
-+      - qcom,dsb_msr_num
-+  - required:
-+      - qcom,cmb-msr-num
-+
- additionalProperties: false
- 
- examples:
-@@ -105,6 +119,8 @@ examples:
-       reg = <0x0684c000 0x1000>;
- 
-       qcom,dsb-element-size = <32>;
-+      qcom,cmb-element-size = <32>;
-+
-       qcom,dsb_msr_num = <16>;
-       qcom,cmb-msr-num = <6>;
- 
--- 
-2.39.0
+OK this happened.
 
+> Option A:
+>
+> 3. You land the pinctrl and binding patches in an immutable branch and
+> merge into pinctrl.
+>
+> 4. Bjorn merges the immutable branch into the Qulacomm tree and places
+> the last 3 dts patches atop.
+
+Looks most appetizing.
+
+I have applied patches 6,7,8 to this immutable branch:
+https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git/lo=
+g/?h=3Dib-qcom-quad-spi
+
+and I merged that into my "devel" branch for v6.4.
+
+Bjorn can grab the branch if he wants it.
+
+Yours,
+Linus Walleij
