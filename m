@@ -2,134 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C19D06CF327
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 21:30:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68C936CF354
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 21:42:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230317AbjC2TaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 15:30:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39560 "EHLO
+        id S229448AbjC2TmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 15:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230254AbjC2TaB (ORCPT
+        with ESMTP id S229462AbjC2Tlu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 15:30:01 -0400
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3566E134;
-        Wed, 29 Mar 2023 12:30:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id A10CCCE2502;
-        Wed, 29 Mar 2023 19:29:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28172C433D2;
-        Wed, 29 Mar 2023 19:29:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680118197;
-        bh=SS/jbk54VmrEOwURrr56BUHIiEK0pT0Kcy1MuoBHTI0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kb/n4qAYhIUyOBdzzpNs4ykgQjGEAVdRdGcvbna374EyEQRq4Fms13V8tlObKv9N+
-         JFzO2KXkJ0PYwdK5PL29w1caHjZsa1sUSotKtthT82S4SSUxpWmT3UvgtEIjYHpDKV
-         Q6jtZlKYvi6E2VVLMP02coNICSqLYhw9H6STwTvz8emV18IqzBmNr7Va4EkVF3s7vi
-         +6KiSdGG1+uH5TiOqmptekIU9tDzTHScpEOlcIHN+qG6r2Bu6fxzwcWi4v+qLF9Rxr
-         j9BQuQW48H/FK5Mseig+6cAkA63RpagAms39dCA8i+S6xlz/nVP3XuTw01sKYbwOpI
-         UJN6D3Nhju5zg==
-Date:   Wed, 29 Mar 2023 21:29:53 +0200
-From:   Wolfram Sang <wsa@kernel.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Peter Rosin <peda@axentia.se>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH] dt-bindings: i2c: Drop unneeded quotes
-Message-ID: <ZCSRsWEXIqcV0xC4@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Peter Rosin <peda@axentia.se>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com
-References: <20230322173530.3971676-1-robh@kernel.org>
+        Wed, 29 Mar 2023 15:41:50 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB217AA2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:41:31 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id k37so21706938lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680118890;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cbt8RYRsNXhKllEm2l6/c935b1na6Cv5pr1oMZejEYk=;
+        b=KhLdI9Au0OcebER4ZU5rq4XlGeI89RYyfLhrCHjSFyGHdxItZaKqMD32y2oZwO6yeX
+         vmTgj7IZElzl7aQ9hvY+b4mvUuhYX5rppPS2UT9nVZDJGM462queAt7cHtRmPMjoRWWN
+         tLNSrZlqht0VGQKX/cNw/fgJKAskYkMMDuzHpnv5YbCP5ykkofXLeRzO6t3Tzcj681CI
+         Vw3GtCMROp2+MM/KOHNLN71DutQFlT38bGI1LnGRP3JpxSH4I12q7+NfK5aDnWkvvbCv
+         +cjhnqb0yn6oKgcNArilmgUgAEsWPy4BhudjMRi/k68PWi9xTxcOBXZAobd4yh2EmKBL
+         qPug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680118890;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cbt8RYRsNXhKllEm2l6/c935b1na6Cv5pr1oMZejEYk=;
+        b=kXzVeMugRLd8xINhM8AwTkNEwq0fuQfZ5BfoWdnlnbGWbxvJ+Xksk1NliYZu4ZXoso
+         Ty+BHVNvnrzhULBOTqAnFwR+Tu6Gv7+45kAzMTq8xdAPh3t+BviijEKTj7ulrOBKH9xa
+         E+xhzEZvbLe+kD/WQtmWJ01Vp+C7NF55o8P5Wv1U4ab7dwmyQA5NiTU28yde/M9W1q4g
+         Jerw+fuwshj3b7bX1aknhXa4ijYYr8VFVai0+o859muS9cugM9S/3ViPE6bSBJGnyB2d
+         +vaB0O+D6XwnNLw0LFTb7LStq7ki13yQ8KiDnLd9Xm6qbpEIF3iIarzx13LFeCDqXWyX
+         s8PQ==
+X-Gm-Message-State: AAQBX9cvzK3cUZOmuB4u3TQ+vQZ+Xz+cHXJyG3WVnbCRWKHBCU8f9ci3
+        JLblJ+Sm08qyMc2lQGgLKtjpVQ==
+X-Google-Smtp-Source: AKy350ZKgmPGGLfaVshnM25rJBESXaQ7TB/BO1HogkxbQYLi/glHQpFHiSzC4tr5WMZAhM/TbgGXtg==
+X-Received: by 2002:a05:6512:312c:b0:4db:25bb:ff0b with SMTP id p12-20020a056512312c00b004db25bbff0bmr1224944lfd.2.1680118889820;
+        Wed, 29 Mar 2023 12:41:29 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id q22-20020ac25296000000b004eae672e96bsm3955048lfm.255.2023.03.29.12.41.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 12:41:29 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v3 0/6] Sony SDM845 panel and remoteproc enablement
+Date:   Wed, 29 Mar 2023 21:41:17 +0200
+Message-Id: <20230313-topic-tama_disp-v3-0-2b1567c039d7@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3/7x2pzW7P4Mq4zG"
-Content-Disposition: inline
-In-Reply-To: <20230322173530.3971676-1-robh@kernel.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAF2UJGQC/3WNQQ6CMBAAv0L27JrSqhhP/MMQs5QtbIItaZFoC
+ H+3cvc4k0xmhcRROMGtWCHyIkmCz2AOBdiBfM8oXWbQShtlSoNzmMTiTE96dJImdOZKZXlxZ90
+ 5yFVLibGN5O2QO/8axyynyE7e++beZB4kzSF+9uuif/b/YNGo0FRs2bqTqSpVj+IphmOIPTTbt
+ n0BUMVii8QAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680118888; l=2208;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=jy9fJvfWwS1V31GRDu+r4uQToIEw/SFIAP+9psSKVdk=;
+ b=e/OgvB58S/2sqwVed4d/Hfrk8pbcXFiUhuPX2d5w/8Is/ymPSZOwBGp/vKiVNLlDsWHJO69X5ldH
+ xvz52o35BIP4RAKCKZIJ+2b4hYJQmZ/0eFffc9mtwfX4egfNJJ1f
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+v2 -> v3:
+- Fix pinctrl-n / -names ordering [1/6], [2/6]
+- Drop unnecessary #-cells [1/6]
+- Drop GPIO52 (it's apparently some LCD mode, single vs dual port,
+  not sure how real it is considering it came from messy downstream
+  code and not touching it at all does not seem to break anything) [1/6]
+- Use interrupts-extended instead of interrupt-parent+interrupts [2/6]
 
---3/7x2pzW7P4Mq4zG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+2/6 is still a total OF abuse and very RFC-ish, pending comments or ideas!
 
-On Wed, Mar 22, 2023 at 12:35:29PM -0500, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
->=20
-> Signed-off-by: Rob Herring <robh@kernel.org>
+v2: https://lore.kernel.org/r/20230313-topic-tama_disp-v2-0-37ececf43770@linaro.org
 
-Applied to for-next, thanks!
+v1 -> v2:
+- Drop akatsuki touch panel as Marijn figures out some sleep-related
+  things
+- No more dependencies, the panel driver has been merged into drm-misc
+  next
+- "*-pin" { -> "*-pins {"
+- treset-gpios -> touch-reset-gpios
+- Drop "Don't use 0x in unit address" (solved)
+- Drop IPA & modem, this keeps crashing for some reason..
 
+2/7 is a total OF abuse and very RFC-ish..
 
---3/7x2pzW7P4Mq4zG
-Content-Type: application/pgp-signature; name="signature.asc"
+v1: https://lore.kernel.org/lkml/20220930191049.123256-2-konrad.dybcio@somainline.org/
 
------BEGIN PGP SIGNATURE-----
+This series enables display and touch panel on XZ2/XZ2c devices
+equipped with a JDI panel with a TD4353 driver IC and just
+touch panel for all XZ3 phones. It also enables the remote
+processors, GPU&GMU and GPI DMA on all Tama devices.
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmQkka0ACgkQFA3kzBSg
-KbZ7QQ//TjhlV9gpnzQf1R+my8YacgB2isHXPlTUphtT1RhFuCtww7h9lGyoh2iz
-msnIcykv8xVr+nJ1zkALk9reiZQP7DdXSjVYHsCpd7XZyHXwm4PrfBlhoQi6rkeY
-DUDY8mQ5QpFbhG2bbJDFfelYwkc1fwCW/FLew0P7kRudkeb3OVjQq/ABaWVXHZYY
-lF1SUIZKC+bsfeoidJ2oA3DcQ+jeML1BV81SZwDJ1TIbaQLRdcx37l+OlMwYLMXA
-wOdrZmOH3spf3jWoEEKPH5hO48W4AvMujWAqWiShgcCH8S37g34eXxQ7fUOaQrA5
-CupkQ8LBcNbnzLZjsN0nNFZkDYasCLA/aHsAjhhsU+UvR0KWTrp3VOZkQh/YL6Yv
-BWG8K2DDl986q2YZWHdyoALr9aK/PkvqcxH+Bsgu5kAOOOBjaSmCG80jIGUz99XF
-qwthYFsQbNU0W5D2D1bOCesL0ZXWjYHAob8OD65Jdup6IAcfkFbEsFlhFhtEXurD
-QfHepyLM5x4qENtV7M9bGGGaAZwtgW7qYeQgLTKBPQeXy+ZiW10F5t/3y4lfBJ1U
-KFLGQankiD98qmHEwQpVxS8sWNUUTIg1XQlGnoOiiZDKd3NEYSj+Ivu2gt2mEkJq
-Ra3yRf6q1yETdTaNA2ltFSh0wvup3LOQaEFr84Iq9GXiFPTdNec=
-=95C4
------END PGP SIGNATURE-----
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (6):
+      arm64: dts: qcom: sdm845-tama: Add display nodes
+      [RFC] arm64: dts: qcom: sdm845-tama: Add Synaptics Touchscreen
+      arm64: dts: qcom: sdm845-tama: Add regulator-system-load to l14a/l28a
+      arm64: dts: qcom: sdm845-tama: Enable remoteprocs
+      arm64: dts: qcom: sdm845-tama: Enable GPU
+      arm64: dts: qcom: sdm845-tama: Enable GPI_DMA0/1
 
---3/7x2pzW7P4Mq4zG--
+ .../dts/qcom/sdm845-sony-xperia-tama-akari.dts     |   4 +
+ .../dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts  |  47 ++++-
+ .../dts/qcom/sdm845-sony-xperia-tama-apollo.dts    |   6 +
+ .../boot/dts/qcom/sdm845-sony-xperia-tama.dtsi     | 199 ++++++++++++++++++++-
+ 4 files changed, 253 insertions(+), 3 deletions(-)
+---
+base-commit: 198925fae644b0099b66fac1d972721e6e563b17
+change-id: 20230313-topic-tama_disp-f38a116f52df
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
