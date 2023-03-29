@@ -2,76 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C8F96CDAAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:24:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC49C6CDACF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:28:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230345AbjC2NYF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 09:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52262 "EHLO
+        id S230014AbjC2N2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 09:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbjC2NX4 (ORCPT
+        with ESMTP id S229837AbjC2N2a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 09:23:56 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43210525C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:23:51 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id r7-20020a17090b050700b002404be7920aso14512739pjz.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:23:51 -0700 (PDT)
+        Wed, 29 Mar 2023 09:28:30 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A762D170F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:28:28 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id o2so14912968plg.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 06:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680096231;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FCUGbgE2LvNcR7hLPqcrIx6jkWOTrrbsJMaWnGrYcZ4=;
-        b=KOcZAsDTxZl7koKyj6wYIlCsU6ulFQUfwnmbNVoN9FKVwVCSKoe3HauI0NUqCmMrIL
-         NFiVp/FgPcd3DpbvHxDD6Ka9Rvw+t4iQGO/foZVud5a9L1mBMOYDCO6fV832Rp6aR1Po
-         2W0mIUYKldNX0sdCy7nuawQ5Ke/Lt0DcFnCh9+wZD2CCM7ZpAc4WKkZB93ZqcudJLK9Z
-         YaAoEjRhcjcA/uUpXnTfJaqpHANKcQoZUbrWpfO1MV7C16ZBktngQNLB3hqSiYM0MYOI
-         lRiQB3uTaYWtMcX25ZgK2+fD7n0GR6TAtchS6oZFtVD75ICQ/aFME3UuBwP3lENXxJXU
-         3k+Q==
+        d=linaro.org; s=google; t=1680096508;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XO9PMGgyv7xlqOFpmdl/UFzdqhUbqRNV9CPyu+R+Ji0=;
+        b=MkWqzUtq79Ugx9ENsPBsqoWiluHKABfzOBjJ3rgd5SE7hPKt4Wejem3mCOKuXnZMr+
+         ueYUNOslkFWoiYsDPro/Lmr25V9LIG8ow5WVqmVCgtE+d6C1Qdk72eLeUXQ7w238kBNM
+         jNIF9ZbbM9yFoxEpDIOhA9FWzeAXHKEuO77YfPGvieWnBLsCfj4aJzza6mLjZY+Pq/yP
+         eAJftMxXfxoioUbhVLqA+adr+/pjglEWBZeTotFLUra1MXptMxle96LHwVWHFR15fYdm
+         b/QduyQ0jP36bZcXabmodoJOm17Rd+RJlAgZZLqsH176NE5Marmwz9jcVZywPnSeo/5q
+         uo/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680096231;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FCUGbgE2LvNcR7hLPqcrIx6jkWOTrrbsJMaWnGrYcZ4=;
-        b=SmAipRO1Xx5j2xdywQkATNcbU0ZiWRRiEpHzVvctEH27V5GM28LEneDG4pnh+yAfpF
-         UWl6+3nX8ViRtDIjExi84b3CUdTMUKCSsZDP70OA2+ePaJzeyvRxdvpLQ1TL4hq5tqlI
-         mBV8PwiaPZreclffuvCgoBGY0Q/RavMbJZ7LM+uK5OUlnH1WCvP5fTYP34DHfEosg92i
-         nI8UvspQD3jwEP/72x5y92EGjRGjKeJPDvzNYXFK9a8ufCOmhoRsM6tm31zCH8ddvZ3p
-         TBPRHEPndXNZJG+WDyESf5j/lR+je+DkG17ONDbGlLgiBa9MvymQqzamtNP31eborLj/
-         ztuQ==
-X-Gm-Message-State: AO0yUKVijQsnmZgvqwezowPJbkcJxplA4E2Rlqk3aTriQQod3upv5zpv
-        etpKVFisG6okwvo9SRiBew+4
-X-Google-Smtp-Source: AK7set9i8PpqmejhrZD8QpXUtYVJK4X7NibCw11JissA18lCRfqRt0POdmynhT5zRtEgfPgNAtN61g==
-X-Received: by 2002:a05:6a20:b288:b0:dd:9848:a1a8 with SMTP id ei8-20020a056a20b28800b000dd9848a1a8mr16627275pzb.16.1680096230581;
-        Wed, 29 Mar 2023 06:23:50 -0700 (PDT)
-Received: from thinkpad ([117.216.120.213])
-        by smtp.gmail.com with ESMTPSA id g7-20020aa78187000000b0062d8107b3c8sm6140226pfi.42.2023.03.29.06.23.46
+        d=1e100.net; s=20210112; t=1680096508;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XO9PMGgyv7xlqOFpmdl/UFzdqhUbqRNV9CPyu+R+Ji0=;
+        b=WawtGo38Li2vzxipAUtA672+C+/KkaAi46StNqXnhTbdqVjcqjnFZgI9fH9V/dk405
+         6gHFSYjucrwjRtqgdySv7uA8T346ReZdn0CqpK7mt4CWrWXcio/394yMF6klp2Y7KtfJ
+         9t5NbDg4YipFbIqWSzuAj1cHCwWge+HgMgtSjx4slGAH47bQxHplXdPfzd1zFCO4ist3
+         pkdkDaKW+eGWJdIQELNjwq92fd5CmDHeBCOPGeDXjy/APFcxTgqGYOXi3DZFurWTzhco
+         26R2yLWhqIFhKFFfc16k7A9Q7b4vmfh/dOmh6ysZH3nkDqd/ZZn1jrBg9o3mjKoux0M/
+         G8aQ==
+X-Gm-Message-State: AAQBX9eh6OJgeRZtceXbGMNdZN6j7a9FS63mYloiT0LM0w/b4D/tQQkh
+        +LAKsy5zdez8b4E9XtUlzIe6QQ==
+X-Google-Smtp-Source: AKy350arSJgZHcU4mFfCt2qojdNxJymORNH3nNOpqEYXNeDYs2Yg68qaCVOOBIoZXOZOppAzYTujqQ==
+X-Received: by 2002:a17:90b:1b49:b0:23d:1fc0:dd20 with SMTP id nv9-20020a17090b1b4900b0023d1fc0dd20mr20241188pjb.17.1680096508109;
+        Wed, 29 Mar 2023 06:28:28 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id m3-20020a170902bb8300b0019a7d58e595sm22979348pls.143.2023.03.29.06.28.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 06:23:50 -0700 (PDT)
-Date:   Wed, 29 Mar 2023 18:53:43 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
-        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
-Message-ID: <20230329132343.GD5575@thinkpad>
-References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
- <20230325165217.31069-2-manivannan.sadhasivam@linaro.org>
- <ZCKrXZn7Eu/jvdpG@hovoldconsulting.com>
- <20230328093853.GA5695@thinkpad>
- <20230329052600.GA5575@thinkpad>
- <ZCP4MHe+9M24S4nJ@hovoldconsulting.com>
+        Wed, 29 Mar 2023 06:28:27 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 21:28:19 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
+ SRAM as reg space
+Message-ID: <20230329132819.GA3590215@dragon>
+References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
+ <20230328-topic-msgram_mpm-v1-2-1b788a5f5a33@linaro.org>
+ <20230329034958.GC3554086@dragon>
+ <c42b8c24-2159-64ae-d36c-92c69274f24f@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZCP4MHe+9M24S4nJ@hovoldconsulting.com>
+In-Reply-To: <c42b8c24-2159-64ae-d36c-92c69274f24f@linaro.org>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -81,145 +81,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 10:34:56AM +0200, Johan Hovold wrote:
-> On Wed, Mar 29, 2023 at 10:56:00AM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Mar 28, 2023 at 03:09:03PM +0530, Manivannan Sadhasivam wrote:
-> > > On Tue, Mar 28, 2023 at 10:54:53AM +0200, Johan Hovold wrote:
-> > > > On Sat, Mar 25, 2023 at 10:22:13PM +0530, Manivannan Sadhasivam wrote:
-> > > > > Add missing quirks for the USB DWC3 IP.
-> > > > 
-> > > > This is not an acceptable commit message generally and certainly not for
-> > > > something that you have tagged for stable.
-> > > > 
-> > > > At a minimum, you need to describe why these are needed and what the
-> > > > impact is.
-> > > > 
-> > > 
-> > > I can certainly improve the commit message. But usually the quirks are copied
-> > > from the downstream devicetree where qualcomm engineers would've added them
-> > > based on the platform requirements.
-> > > 
-> > > > Also, why are you sending as part of a series purporting to enable
-> > > > runtime PM when it appears to be all about optimising specific gadget
-> > > > applications?
-> > > > 
-> > > 
-> > > It's not related to this series I agree but just wanted to group it with a
-> > > series touching usb so that it won't get lost.
-> > > 
-> > > I could respin it separately though in v2.
+On Wed, Mar 29, 2023 at 01:06:11PM +0200, Konrad Dybcio wrote:
 > 
-> That's also generally best for USB patches as Greg expects series to be
-> merged through a single tree.
 > 
-
-Ok, good to know.
-
-> > > > Did you confirm that the below makes any sense or has this just been
-> > > > copied verbatim from the vendor devicetree (it looks like that)?
-> > > > 
-> > > 
-> > > As you've mentioned, most of the quirks are for gadget mode which is not
-> > > supported by the upstream supported boards. So I haven't really tested them but
-> > > for I assumed that Qcom engineers did.
-> > > 
-> > > > The fact that almost none of the qcom SoCs sets these also indicates
-> > > > that something is not right here.
-> > > > 
-> > > > > Cc: stable@vger.kernel.org # 5.20
-> > > > > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-> > > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
-> > > > >  1 file changed, 14 insertions(+)
-> > > > > 
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > > index 0d02599d8867..266a94c712aa 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > > @@ -3040,6 +3040,13 @@ usb_0_dwc3: usb@a600000 {
-> > > > >  				iommus = <&apps_smmu 0x820 0x0>;
-> > > > >  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
-> > > > >  				phy-names = "usb2-phy", "usb3-phy";
-> > > > > +				snps,hird-threshold = /bits/ 8 <0x0>;
-> > > > > +				snps,usb2-gadget-lpm-disable;
-> > > > 
-> > > > Here you are disabling LPM for gadget mode, which makes most of the
-> > > > other properties entirely pointless.
+> On 29.03.2023 05:49, Shawn Guo wrote:
+> > On Tue, Mar 28, 2023 at 12:02:53PM +0200, Konrad Dybcio wrote:
+> >> The MPM hardware is accessible to us from the ARM CPUs through a shared
+> >> memory region (RPM MSG RAM) that's also concurrently accessed by other
+> >> kinds of cores on the system (like modem, ADSP etc.). Modeling this
+> >> relation in a (somewhat) sane manner in the device tree basically
+> >> requires us to either present the MPM as a child of said memory region
+> >> (which makes little sense, as a mapped memory carveout is not a bus),
+> >> define nodes which bleed their register spaces into one another, or
+> >> passing their slice of the MSG RAM through some kind of a property.
+> >>
+> >> Go with the third option and add a way to map a region passed through
+> >> the "qcom,rpm-msg-ram" property as our register space.
+> >>
+> >> The current way of using 'reg' is preserved for ABI reasons.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>  drivers/irqchip/irq-qcom-mpm.c | 30 +++++++++++++++++++++++++-----
+> >>  1 file changed, 25 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
+> >> index d30614661eea..6fe59f4deef4 100644
+> >> --- a/drivers/irqchip/irq-qcom-mpm.c
+> >> +++ b/drivers/irqchip/irq-qcom-mpm.c
+> >> @@ -14,6 +14,7 @@
+> >>  #include <linux/mailbox_client.h>
+> >>  #include <linux/module.h>
+> >>  #include <linux/of.h>
+> >> +#include <linux/of_address.h>
+> >>  #include <linux/of_device.h>
+> >>  #include <linux/platform_device.h>
+> >>  #include <linux/pm_domain.h>
+> >> @@ -322,8 +323,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+> >>  	struct device *dev = &pdev->dev;
+> >>  	struct irq_domain *parent_domain;
+> >>  	struct generic_pm_domain *genpd;
+> >> +	struct device_node *msgram_np;
+> >>  	struct qcom_mpm_priv *priv;
+> >>  	unsigned int pin_cnt;
+> >> +	struct resource res;
+> >>  	int i, irq;
+> >>  	int ret;
+> >>  
+> >> @@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+> >>  
+> >>  	raw_spin_lock_init(&priv->lock);
+> >>  
+> >> -	priv->base = devm_platform_ioremap_resource(pdev, 0);
+> >> -	if (IS_ERR(priv->base))
+> >> -		return PTR_ERR(priv->base);
+> >> +	/* If we have a handle to an RPM message ram partition, use it. */
+> >> +	msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
+> >> +	if (msgram_np) {
+> >> +		ret = of_address_to_resource(msgram_np, 0, &res);
+> >> +		/* Don't use devm_ioremap_resource, as we're accessing a shared region. */
+> >> +		priv->base = ioremap(res.start, resource_size(&res));
 > > 
-> > Checked with Qcom on these quirks. So this one is just disabling lpm for USB2
-> > and rest of the quirks below are for SS/SSP modes.
-> 
-> No, snps,hird-threshold is for USB2 LPM and so is
-> snps,is-utmi-l1-suspend and snps,has-lpm-erratum as you'll see if you
-> look at the implementation.
-> 
-
-Correct me if I'm wrong. When I look into the code, "snps,is-utmi-l1-suspend"
-and "snps,hird-threshold" are used independently of the LPM mode atleast in one
-place:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/dwc3/gadget.c#n2867
-
-But I could be completely wrong here as my understanding of the usb stack is not
-that great.
-
-> > > > > +				snps,is-utmi-l1-suspend;
-> > > > > +				snps,dis-u1-entry-quirk;
-> > > > > +				snps,dis-u2-entry-quirk;
-> > > > 
-> > > > These appear to be used to optimise certain gadget application and
-> > > > likely not something that should be set in a dtsi.
-> > > > 
-> > > 
-> > > I will cross check these with Qcom and respin accordingly.
-> > > 
+> > Are you suggesting that other cores/drivers will also need to access
+> > the mpm slice below?
 > > 
-> > These quirks are needed as per the DWC IP integration with this SoC it seems.
-> > But I got the point that these don't add any values for host only
-> > configurations. At the same time, these quirks still hold true for the SoC even
-> > if not exercised.
-> > 
-> > So I think we should keep these in the dtsi itself.
-> 
-> Please take a closer look at the quirks you're enabling first. Commit
-> 729dcffd1ed3 ("usb: dwc3: gadget: Add support for disabling U1 and U2
-> entries") which added 
-> 
-> > > > > +				snps,dis-u1-entry-quirk;
-> > > > > +				snps,dis-u2-entry-quirk;
-> 
-> explicitly mentions
-> 
-> 	Gadget applications may have a requirement to disable the U1 and U2
-> 	entry based on the usecase.
-> 
-> which sounds like something that needs to be done in a per board dts at
-> least.
-> 
+> > 	apss_mpm: sram@1b8 {
+> > 		reg = <0x1b8 0x48>;
+> > 	};
+> Yes, the RPM M3 core. Other slices may be accessed
+> by any core at any time.
 
-Going by this commit message it sounds like it. But...
+Hmm, let me reword my question.  Other than irq-qcom-mpm, is there any
+other Linux drivers that also need to request this slice region?
+Otherwise, I do not understand why devm_ioremap_resource() cannot be
+used.
 
-> Perhaps keeping all of these in in the dtsi is correct, but that's going
-> to need some more motivation than simply that some vendor does so (as
-> they often do all sorts of things they should not).
-> 
-
-If you read my last reply one more time, I didn't reason it based on the vendor
-code.
-
-But I hear a contradict reply from Qcom saying that these properties are
-required as a part of the DWC3 IP integration with the SoC. I need to recheck
-with them again tomorrow.
-
-Also, if these properties are application specific then they shouldn't be in
-devicetree atleast :/
-
-- Mani
-
-- Mani
-
-> Johan
-
--- 
-மணிவண்ணன் சதாசிவம்
+Shawn
