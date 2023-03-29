@@ -2,172 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E7786CF0D4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3480A6CF0EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231240AbjC2RQS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 13:16:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42080 "EHLO
+        id S231360AbjC2RVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 13:21:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231238AbjC2RQR (ORCPT
+        with ESMTP id S230038AbjC2RVT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 13:16:17 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94977126;
-        Wed, 29 Mar 2023 10:16:16 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32TH9PMQ002570;
-        Wed, 29 Mar 2023 17:16:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=WQsg8jYGYlS5jR6si9qHdD85lJZwt9IDNgaN2IZ7IrM=;
- b=RZShClF2ep127YRedE//sd/nrcCpcgob5bGDU/P25+wqgAwq0SPWAs8WDDe+EyLjejYp
- jHPu2V3WGY/BvsKnxxvuk8u7Q/SsbuTlX58HHqCQ9Yv8fCkIOSm+OF95TFcc1KP8Tj8D
- aW62llXIINVwLylCw1Q7cN2g1UfgU7z9HrXruNDoWZ/t9hkU6hi9rNCtPwhjUFTtBjuM
- uapFOwO6mUEoFAM6zjFbEqlwN8QD5GTPeU1azyaw8aAJjovenVg/SdeFeevvBJB40dnS
- jHdAbSFW+ysGBTNW5atCTU/SjDd+UxcQkvxHzsajS4CJRRedJTHy0zPh24y/K3OksG4V sw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pmq1v8g33-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 17:16:12 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32THGBTB029070
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 17:16:11 GMT
-Received: from [10.216.23.227] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 29 Mar
- 2023 10:16:07 -0700
-Message-ID: <b2e16887-bc35-c933-2107-6e8faa439770@quicinc.com>
-Date:   Wed, 29 Mar 2023 22:45:56 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v4] venus: Enable sufficient sequence change support for
- sc7180 and fix for Decoder STOP command issue.
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Wed, 29 Mar 2023 13:21:19 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC2424EC1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:21:10 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id bt19so10774967pfb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680110470;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gutUdfZnZGJz80FqANIFD9947ke4IDEKtmrilCP9Asg=;
+        b=uoDbG/Rpr227AQzHfgKoRhIFdGyFDgE38i3QuNOHy1nfld7wbGPfRr9WuTb7JUFFRv
+         5S6IUx5xo+jHf4HvuW37VUeU6CjeSxv7fJ3Xu1nDh3LyiSPOzXMvxx0JIjwsnbFpR5AC
+         h/Z91+pEymRNAWpDcf4quLxfLPS/ZppPxHBsPd6hfixrDpFQxADA7OvslGVMam2HYR1T
+         0nFVVFHIHCF83Qv5QPd7b/P0qCSfQK+pmpvJ/1puEeX934QmJKrQHP2Z5Zao9n2DUn2L
+         gkMFCIk+VFJN3pd6/P7u1g6lhw+g3t5dv0cnLwPs3L7zuHEKDj2kEBENZazXqqiHwvYq
+         f/Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680110470;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gutUdfZnZGJz80FqANIFD9947ke4IDEKtmrilCP9Asg=;
+        b=VZYQuNFu/Pd5jEE+I9FgHfZHwFP04wWLWPy2Y6DA/D3cuyM0PnlJL5Q6uRNJ/eyEm8
+         5aTQMuZ5EXb/HcQiTq9u2UnJpcvOs8fq80XcN59n3SKEpvRt2SNB04SewKRRpW9L6ARe
+         Hr2LnjLFhImc8Dup0iuM+Pha+tS9C22sMMwKnoEsKjRqVf1chTqgbZf9zxET+cu1uzYV
+         FkVDSFOXfPqMtKTwiDpXRDcwvuXZAbwBndHL56TmTHPh68jG9z9ibF+rkxhq5a1lL3Zg
+         lIaQ56QRM8YFgHmENKDEJWqkR6RIHJKq7+czUWW2+0+tzA2o4LZM6K6fwCE2Hk3vz3lX
+         skvw==
+X-Gm-Message-State: AAQBX9com385C0IUYwcuQu0LBXSjWtcOEZB+HO8bq2XDa65YQg8Z05Qz
+        S6GB09Q2TO4k43dGxoZxgRMZoA==
+X-Google-Smtp-Source: AKy350Y9SAYyqMx62p9jKSnHqyG110Q69ooC4fMXn9Wpn/gCEjRcEAoPcOxIkdsN6Ap4ln7XX1StRw==
+X-Received: by 2002:aa7:99d2:0:b0:626:7c43:7cb8 with SMTP id v18-20020aa799d2000000b006267c437cb8mr19386468pfi.20.1680110470163;
+        Wed, 29 Mar 2023 10:21:10 -0700 (PDT)
+Received: from p14s ([2604:3d09:148c:c800:6b79:83ab:5e33:50a5])
+        by smtp.gmail.com with ESMTPSA id v3-20020a632f03000000b00502e6bfedc0sm21950243pgv.0.2023.03.29.10.21.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 10:21:09 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 11:21:06 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Andy Gross <agross@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stanimir.k.varbanov@gmail.com>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>
-CC:     <quic_dikshita@quicinc.com>,
-        Viswanath Boma <quic_vboma@quicinc.com>
-References: <20230323130153.8229-1-quic_vboma@quicinc.com>
- <c611c390-2cf3-2abe-82aa-67538b823d62@linaro.org>
- <9f5bce7e-2b8a-0b71-3a80-0b4f86d9f908@quicinc.com>
- <E98548DB-5085-4036-9F6C-DC22A604A0C2@linaro.org>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <E98548DB-5085-4036-9F6C-DC22A604A0C2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NoIfbNaPMCKyW2bdaBKpz2BbE5yelsdc
-X-Proofpoint-ORIG-GUID: NoIfbNaPMCKyW2bdaBKpz2BbE5yelsdc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-29_10,2023-03-28_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2303290135
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH] dt-bindings: remoteproc: Drop unneeded quotes
+Message-ID: <20230329172106.GA3374270@p14s>
+References: <20230327170114.4102315-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230327170114.4102315-1-robh@kernel.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 3/29/2023 7:06 PM, Dmitry Baryshkov wrote:
-> 29 марта 2023 г. 10:48:23 GMT+03:00, Vikash Garodia <quic_vgarodia@quicinc.com> пишет:
->> On 3/29/2023 3:49 AM, Dmitry Baryshkov wrote:
->>> On 23/03/2023 15:01, Viswanath Boma wrote:
->>>> For VP9 bitstreams, there could be a change in resolution at interframe,
->>>> for driver to get notified of such resolution change,
->>>> enable the property in video firmware.
->>>> Also, EOS handling is now made same in video firmware across all V6 SOCs,
->>>> hence above a certain firmware version, the driver handling is
->>>> made generic for all V6s
->>> Having "Do abc. Also do defgh." is a clear sign that this patch should be split into two.
->> I agree, it could have split into patches. The patch introduces way to store venus firmware
->>
->> version and take some decision for various version. For ex. here STOP handling and enabling
->>
->> DRC event for specific firmware revision and onwards. Since both the handling was primarily
->>
->> dependent of firmware version, and since the handlings were smaller, it was combined as single
->>
->> patch. Let me know, if you have any further review comments, else, will raise a new version with
->>
->> 2 patches probably.
-> Thanks!
+On Mon, Mar 27, 2023 at 12:01:13PM -0500, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  .../remoteproc/amlogic,meson-mx-ao-arc.yaml        |  4 ++--
+>  .../bindings/remoteproc/fsl,imx-rproc.yaml         |  4 ++--
+>  .../bindings/remoteproc/ingenic,vpu.yaml           |  4 ++--
+>  .../bindings/remoteproc/qcom,glink-edge.yaml       |  2 +-
+>  .../bindings/remoteproc/qcom,smd-edge.yaml         |  2 +-
+>  .../bindings/remoteproc/renesas,rcar-rproc.yaml    |  4 ++--
+>  .../bindings/remoteproc/st,stm32-rproc.yaml        | 14 +++++++-------
+>  7 files changed, 17 insertions(+), 17 deletions(-)
 >
->>>> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
->>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
->>>> Tested-by: Nathan Hebert <nhebert@chromium.org>
->>>> ---
->>>> Since v3 : Addressed comments to rectify email address.
->>>>
->>>>    drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
->>>>    drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
->>>>    drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
->>>>    drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
->>>>    drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
->>>>    5 files changed, 41 insertions(+), 3 deletions(-)
->>>>
-> (Skipped)
->
->
->
->>>> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_inst *inst)
->>>>                return ret;
->>>>        }
->>>>    +    /* Enabling sufficient sequence change support for VP9 */
->>>> +    if (of_device_is_compatible(inst->core->dev->of_node, "qcom,sc7180-venus")) {
->>> Let me repeat my question from v3:
->>>
->>> Is it really specific just to sc7180 or will it be applicable to any
->>> other platform using venus-5.4 firmware?
->> The HFI "HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT" is implemented
->>
->> only for sc7180. Calling this for any other venus-5.4 would error out the session with error as
->>
->> unsupported property from firmware.
->
-> How can we be sure that other platforms do not end up using sc7180 firmware? Or that sc7180 didn't end up using some other firmware?
->
-> I see generic  qcom/venus-5.4/venus.mbn in Linux firmware. It's version is VIDEO.VE.5.4-00053-PROD-1. It can be used with any unfused device which uses firmware 5.4
 
-Driver defines resources for every platforms and there it specifies the 
-firmware to be used for that platform. For ex, for sc7180, the firmware 
-is specified at [1].
+Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-The various firmware supported by different platforms are also available 
-in linux firmware.
-
-[1] 
-https://elixir.bootlin.com/linux/v6.3-rc4/source/drivers/media/platform/qcom/venus/core.c#L765 
-
-
->>>> +        if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
->>>> +            ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
->>>> +            ret = hfi_session_set_property(inst, ptype, &en);
->>>> +            if (ret)
->>>> +                return ret;
->>>> +        }
->>>> +    }
->>>> +
->>>>        ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
->>>>        conceal = ctr->conceal_color & 0xffff;
->>>>        conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
+> diff --git a/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml b/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
+> index 11cb42a3fdd1..3100cb870170 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/amlogic,meson-mx-ao-arc.yaml
+> @@ -1,8 +1,8 @@
+>  # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: "http://devicetree.org/schemas/remoteproc/amlogic,meson-mx-ao-arc.yaml#"
+> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/remoteproc/amlogic,meson-mx-ao-arc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+>  title: Amlogic Meson AO ARC Remote Processor
+>  
+> diff --git a/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
+> index ae2eab4452dd..0c3910f152d1 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/fsl,imx-rproc.yaml
+> @@ -1,8 +1,8 @@
+>  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: "http://devicetree.org/schemas/remoteproc/fsl,imx-rproc.yaml#"
+> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/remoteproc/fsl,imx-rproc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+>  title: NXP i.MX Co-Processor
+>  
+> diff --git a/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml b/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
+> index 85b1e43cab08..8b55dbd909b0 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/ingenic,vpu.yaml
+> @@ -1,8 +1,8 @@
+>  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: "http://devicetree.org/schemas/remoteproc/ingenic,vpu.yaml#"
+> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/remoteproc/ingenic,vpu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+>  title: Ingenic Video Processing Unit
+>  
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+> index 15e6851e1ff8..7b43ad3daa56 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,glink-edge.yaml
+> @@ -15,7 +15,7 @@ description:
+>  
+>  properties:
+>    $nodename:
+> -    const: "glink-edge"
+> +    const: glink-edge
+>  
+>    apr:
+>      $ref: /schemas/soc/qcom/qcom,apr.yaml#
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+> index 7ec8a6b6682c..02c85b420c1a 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,smd-edge.yaml
+> @@ -21,7 +21,7 @@ description:
+>  
+>  properties:
+>    $nodename:
+> -    const: "smd-edge"
+> +    const: smd-edge
+>  
+>    apr:
+>      $ref: /schemas/soc/qcom/qcom,apr.yaml#
+> diff --git a/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
+> index 7e0275d31a3c..4bea679a0f61 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/renesas,rcar-rproc.yaml
+> @@ -1,8 +1,8 @@
+>  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: "http://devicetree.org/schemas/remoteproc/renesas,rcar-rproc.yaml#"
+> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/remoteproc/renesas,rcar-rproc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+>  title: Renesas R-Car remote processor controller
+>  
+> diff --git a/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml b/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
+> index 66b1e3efdaa3..37c0d7b4ceef 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/st,stm32-rproc.yaml
+> @@ -1,8 +1,8 @@
+>  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: "http://devicetree.org/schemas/remoteproc/st,stm32-rproc.yaml#"
+> -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/remoteproc/st,stm32-rproc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+>  title: STMicroelectronics STM32 remote processor controller
+>  
+> @@ -29,7 +29,7 @@ properties:
+>  
+>    st,syscfg-holdboot:
+>      description: remote processor reset hold boot
+> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>      items:
+>        - items:
+>            - description: Phandle of syscon block
+> @@ -39,7 +39,7 @@ properties:
+>    st,syscfg-tz:
+>      description:
+>        Reference to the system configuration which holds the RCC trust zone mode
+> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>      items:
+>        - items:
+>            - description: Phandle of syscon block
+> @@ -95,7 +95,7 @@ properties:
+>        (see ../reserved-memory/reserved-memory.txt)
+>  
+>    st,syscfg-pdds:
+> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>      description: |
+>        Reference to the system configuration which holds the remote
+>      items:
+> @@ -105,7 +105,7 @@ properties:
+>            - description: The field mask of the PDDS selection
+>  
+>    st,syscfg-m4-state:
+> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>      description: |
+>        Reference to the tamp register which exposes the Cortex-M4 state.
+>      items:
+> @@ -115,7 +115,7 @@ properties:
+>            - description: The field mask of the Cortex-M4 state
+>  
+>    st,syscfg-rsc-tbl:
+> -    $ref: "/schemas/types.yaml#/definitions/phandle-array"
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>      description: |
+>        Reference to the tamp register which references the Cortex-M4
+>        resource table address.
+> -- 
+> 2.39.2
+> 
