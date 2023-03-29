@@ -2,137 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB9F86CCED7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 02:35:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCC216CCEDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 02:37:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbjC2Afy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 20:35:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36888 "EHLO
+        id S229695AbjC2AhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 20:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjC2Afx (ORCPT
+        with ESMTP id S229644AbjC2AhO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 20:35:53 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B98C1BC0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 17:35:52 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id e21so14404097ljn.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 17:35:52 -0700 (PDT)
+        Tue, 28 Mar 2023 20:37:14 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 506DB1BCA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 17:37:13 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id e21so14406302ljn.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 17:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680050150;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FlQYroGfkrEESXavEKCaYfu6GvJdtSQOh+xRf0smNE4=;
-        b=N3vwMyYU8eoftb6iewXuC5jlROewgubnGUApSf6LzmZET5yS1tb8CoTF4kmTKhPOJa
-         tOMyqjwmnH2iAzdq/DFOb6O/ymtQZyIUPJrqYcnIH4rBllg9f5j+cSaMOg8YS7j0HN7M
-         xwYvIWXer2g7Z4keDMsy+W9CmYCaE134NFb5pkL/bXPyBbWlEgcxYn47AyAy5trSZbkM
-         hK6vBP7hAjXW7M+ucqSNQAkw7HaIu1aXRs3FMLzU23VOu9HFpX3AG1ig3cIchm3BYiF4
-         JMDoRnA5AnpuBOi2q0zbWeWHaRP6nlC6+8b7UbnPi2xje4mPDKIdRFTA6etJ3stRUq6H
-         Ymzw==
+        d=linaro.org; s=google; t=1680050231;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BoN+U4KTTFxXWQmwg13Yxlkx1E7Pohg3WEKsSIowviU=;
+        b=uKWAwoxBzBWP0lm4jboJdDtbdnJQFPCUPy64D25rIUT6v7Iw2HVipwvHwuZBBIA3nd
+         lDbGgXUvGX5TLQH367xV+SpRrOzokAqVyK8x52/0933V4EM7LdPupCFkQuYUwkIT2b4w
+         Vem8bKb2NLTOsfHs0ULO+Sgy1KGBX3UyGpJzWlofXfJg2T6r5TeHLViHEVefh6optPpr
+         +eBOo/spXoY3XSCqTkumK8CI9tqgizGBXI0kOuhYpM9EOFqbRtd9bdKqbf1saQVaZ54/
+         6vQ40EgFMFDgqwKDzyqF0Lsm8Npz9On5Phvkp7ut0jiDQKnIHxIkNpFdW9j11p7bE2yh
+         Ty6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680050150;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FlQYroGfkrEESXavEKCaYfu6GvJdtSQOh+xRf0smNE4=;
-        b=NgsdsZkU7xdziySmzTDw7aps3ct7azol+XdmkxSGe4ktAjZ6auxmzNivTYEXZNncjy
-         EYKxfQ3SNbZYwVUDNuVSaOgKsgkChGOaaZ5bCxowZFQNFBg1Lof6FVnrI7rdsnKFUZ+3
-         R4AzLgtpfdKCp3vy+ysJzzcrn6TJamdthbm0Ilt8cpD/bFhvEQ01fgqPFGbKCrW6Q2zH
-         VoHfZnYxwd5/jqSYq6t1FnouXc2PToRQzN6Eh1UPwLt6WQN86p0hT/+yMS/vHi61fIop
-         aFkD8kN8XmdtFKVSZM3orrUCPNXfaM0T0GLVdAztcqyYDjpAZw+7tXSvGtZVQrXgEYTD
-         aqiw==
-X-Gm-Message-State: AAQBX9f3uNzdXWBNjvaqNJPpq3kGMjFv+/NBJ057kNCxlMyO4o2JVH3v
-        3RKtyEsvkkMt5lNrtHYEP2UHww==
-X-Google-Smtp-Source: AKy350a7O6hcne230BIOILTxthjZzxnWjCcu/dZ0N0zGTJTZemqKU1izaOIrF1FYX+/9+byL9nKKDQ==
-X-Received: by 2002:a2e:9f0a:0:b0:29a:3a61:bbd4 with SMTP id u10-20020a2e9f0a000000b0029a3a61bbd4mr5352546ljk.48.1680050150637;
-        Tue, 28 Mar 2023 17:35:50 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id r2-20020a2e80c2000000b0028b6e922ba1sm5261581ljg.30.2023.03.28.17.35.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 17:35:50 -0700 (PDT)
-Message-ID: <09b97204-514e-1262-04ee-3536a11e7ffc@linaro.org>
-Date:   Wed, 29 Mar 2023 02:35:48 +0200
+        d=1e100.net; s=20210112; t=1680050231;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BoN+U4KTTFxXWQmwg13Yxlkx1E7Pohg3WEKsSIowviU=;
+        b=ybtxX0D/4AHUsPaqSSqLrWP4FFXNs08Zj5cxVMFpCYiQAEmaBgYOYfGYxEDBfH7CJx
+         BBwl5hpRqXYL2UoT/5I2EnCERXZt3KsrXD6pbYlrPBH31HShYdFrqtj8E6heOsECJL0e
+         GGebhcz0MjQ2XPCT+uPdzBQk3fp2NZDtrsieZwUxqLW6RAcbEaZYDc3IgIWfqwr+FlV8
+         maAiSNApWgT63SC2nKJuPRsMQXMcgCoYDvLGFke/VKpVNlQwwLmAP+NF0eyNpjoiiRDf
+         4wNvZCErj22O5NoGFGNRAu+y+2PKeq9TJ4fJZGfXGIhroDIMoBa87KAD7baCR4NMQN6N
+         1D/g==
+X-Gm-Message-State: AAQBX9dM2W59juu/lGmCWyvCyvbUPYmWbFEHBjH1BBBauwx0NqeE2Qux
+        a5n9DDCP0RD5QoNm1Ql90chJbw==
+X-Google-Smtp-Source: AKy350a2RS08zoZZOG+BWubmWseK/rNgE24Z6x1MnkaDt3fQcNspibs70tW9EreTz3AVcoQITjjJIg==
+X-Received: by 2002:a2e:910e:0:b0:29a:fe9:3b2 with SMTP id m14-20020a2e910e000000b0029a0fe903b2mr5273444ljg.36.1680050231542;
+        Tue, 28 Mar 2023 17:37:11 -0700 (PDT)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id y3-20020ac24463000000b004db00b4c671sm5254138lfl.7.2023.03.28.17.37.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 17:37:11 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v3 00/10] drm/i915: move DSC RC tables to drm_dsc_helper.c
+Date:   Wed, 29 Mar 2023 03:37:00 +0300
+Message-Id: <20230329003710.1073261-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: use main pmk8350.dtsi for sc8280xp
- platform
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        devicetree@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-References: <20230329000833.2507594-1-dmitry.baryshkov@linaro.org>
- <20230329000833.2507594-4-dmitry.baryshkov@linaro.org>
- <9746792b-fd4a-6808-0c6b-4834ffc9c059@linaro.org>
- <195dddb5-25f7-ac8c-8609-776ed6724650@linaro.org>
-In-Reply-To: <195dddb5-25f7-ac8c-8609-776ed6724650@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Other platforms (msm) will benefit from sharing the DSC config setup
+functions. This series moves parts of static DSC config data from the
+i915 driver to the common helpers to be used by other drivers.
 
+Note: the RC parameters were cross-checked against config files found in
+DSC model 2021062, 20161212 (and 20150914). The first patch modifies
+tables according to those config files, while preserving parameter
+values using the code. I have not changed one of the values in the
+pre-SCR config file as it clearly looks like a typo in the config file,
+considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
 
-On 29.03.2023 02:29, Konrad Dybcio wrote:
-> 
-> 
-> On 29.03.2023 02:27, Konrad Dybcio wrote:
->>
->>
->> On 29.03.2023 02:08, Dmitry Baryshkov wrote:
->>> Employ existing PMK8350_SID and switch sc8280xp-pmics to use
->>> pmk8350.dtsi to reduce duplication and possible discrepancies.
->>>
->>> For example, this changes sc8280xp platforms to use qcom,pmk8350-pon
->>> for the pon device compatibility rather than the incorrect
->>> qcom,pm8998-pon.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->> Bit of a loaded patch..
->>
->> This could probably go like:
->>
->> 1. outer join 8280 on pmk8350 (for feature parity)
->> 2. rename all labels in 8280 to 8350 (for 3.)
->> 3. switch over to the actual 8350 file, remove 8280 (with Fixes:)
->>
->> [...]
->>
->>> +#define PMK8350_SID 0
->>> +#include "pmk8350.dtsi"
->>> +#undef PMK8350_SID
->> Not sure if this undef is necessary
-> It looks like it would be for multiple instances though
-> 
-> Konrad
-Also, it'd be a good idea to use interrupt-parent, as:
+Chances since v2:
+- Rebased on top of drm-intel-next
 
-1) it would be a regression for OpenBSD and friends to remove it
-2) the interrupts=<> is dangerously long with SPMI
+Chances since v1:
+- Made drm_dsc_rc_buf_thresh static rather than exporting it
+- Switched drm_dsc_rc_buf_thresh loop to use ARRAY_SIZE. Added
+  BUILD_BUG_ON's to be sure that array sizes are correct
+- Fixed rc_parameters_data indentation to be logical and tidy
+- Fixed drm_dsc_setup_rc_params() kerneldoc
+- Added a clause to drm_dsc_setup_rc_params() to verify bpp and bpc
+  being set.
+- Fixed range_bpg_offset programming in calculate_rc_params()
+- Fixed bpp vs bpc bug in intel_dsc_compute_params()
+- Added FIXME comment next to the customizations in
+  intel_dsc_compute_params().
 
-Konrad
->>
->> With or without all that though, the goal lgtm..
->>
->> Konrad
->>
->>>  
->>> +&spmi_bus {
->>>  	pmc8280_1: pmic@1 {
->>>  		compatible = "qcom,pm8350", "qcom,spmi-pmic";
->>>  		reg = <0x1 SPMI_USID>;
+Dmitry Baryshkov (10):
+  drm/i915/dsc: change DSC param tables to follow the DSC model
+  drm/i915/dsc: move rc_buf_thresh values to common helper
+  drm/i915/dsc: move DSC tables to DRM DSC helper
+  drm/i915/dsc: stop using interim structure for calculated params
+  drm/display/dsc: use flat array for rc_parameters lookup
+  drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
+  drm/display/dsc: include the rest of pre-SCR parameters
+  drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
+  drm/display/dsc: add helper to set semi-const parameters
+  drm/msm/dsi: use new helpers for DSC setup
+
+ drivers/gpu/drm/display/drm_dsc_helper.c  | 1007 +++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_vdsc.c |  443 +--------
+ drivers/gpu/drm/msm/dsi/dsi_host.c        |   61 +-
+ include/drm/display/drm_dsc_helper.h      |   10 +
+ 4 files changed, 1072 insertions(+), 449 deletions(-)
+
+-- 
+2.39.2
+
