@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DFE86CD851
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 13:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC9556CD863
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 13:24:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbjC2LTG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 07:19:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49842 "EHLO
+        id S229718AbjC2LYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 07:24:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbjC2LTC (ORCPT
+        with ESMTP id S229786AbjC2LYd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 07:19:02 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F56448A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:18:49 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id o20so12736930ljp.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:18:49 -0700 (PDT)
+        Wed, 29 Mar 2023 07:24:33 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7599940CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:24:30 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id j11so19632268lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:24:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680088728;
+        d=linaro.org; s=google; t=1680089069;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aumpSLpdIfLau4SMf/sV4ChK4mZM2lEguzptioMGQ4U=;
-        b=uFwVrsI6SSC2d9PykTW4cU7uDFJl43V+qNoP5Mu9QsCHu21y6cgb5yiaCUIA8gcaE6
-         jjUixrJNaWA1Cj+Nmuvxm26mz/COosJGIcydHRU5IXxvq7hB8lFlte0K+AiRc89sH5vZ
-         R7KEWf9G/LC/tLe122uw/eB1mbeS+uaBQFi1yCdDM+apYT2Z7ca2ENnNyIBDDQIAE8JV
-         +lxiLDOGiQZqygnP33zQAp+4hlaecddzfea4juzVcxvG1X54WucAwLCDvYYRKgoa7K3N
-         3ZTvWzmgYW5m9I2iOHEy8Qy6GVl9d2U3LtxcOGI8AlkIeKPyeVHUmiJA2pj46nT0rvPP
-         jrTw==
+        bh=bqRvDrf+LQjYdWpmaqzz2Gtf9PBY/+z/KX3/Flqh8zo=;
+        b=J15yimuSbI/QHHkde0jQbkLiVnMFJ0pwJ3jsJ8A+gTcf10SptIjTp8duoBMmP64HOE
+         Re4DDS3AYZnNGELgZjvkQUZMsmXxbbaM+fWzGPZy7ChVuvDEfeVcBsPZte9rhXzCF5Yv
+         /49CrCfCE7Sc1igVj+4i71jQdLBt+ULPTz7adSUo/tEr2JEE19fwi+g5TOH/u7J4m7tW
+         k348HcGAaoa5JnY6BiT1yTVEV+9A7FxfjXadtcqyFjlCAG7omZ7kEt+ROUJQv4UGaHxk
+         BPYzCGkuIxc8EAoCN6WkeKcYeNRrSlzSU9g4bIFJ4wqwXetX81gEoWUOyKTuKjkJhyJX
+         e0yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680088728;
+        d=1e100.net; s=20210112; t=1680089069;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aumpSLpdIfLau4SMf/sV4ChK4mZM2lEguzptioMGQ4U=;
-        b=dhfQdMcmf0ahMkA31zBcjlqTpZRJ6RamD6MUjGmJlz8Ci7tlboGGKkwFS4JmroltF/
-         65t7nFIM9xJ52MYkM6cZBBhaUmKtJl6v6VCB9CZbZrmhNVnZ4dZpUyEyhVXZxOrXLCrA
-         ChvNKgSghVfWsfvORC4MNOMOjKTDROiIiVoobDe5XKIjDZbpEzfIUl7CV2L9alEdgcKJ
-         Hj1apAJKYliv00G8NvWsgTv1fhgShXd8rXWxp4FMUSi56g2INjJFiv52wiW1hbsltxbS
-         hY7yj19gJq2KG9zZqYdZcctLvI0aDHPBK9nRvPlz7nK8iA0XJekxKFimFkpPWTJcCCel
-         m7Tw==
-X-Gm-Message-State: AAQBX9c9fQEcmfGkmyLuB0wERX3DdtQY+NgiDymOTrkb8VPp2t7Gn6ub
-        od+5TZn3PTqukGsB4+T2ozV6OQ==
-X-Google-Smtp-Source: AKy350Y+FUEY3T5G6lVTIZU60xd7NyIE28Cebhu9hQFEyNetn4hH5Q2gpXeT36vTCVqan1zZiOD9Tw==
-X-Received: by 2002:a2e:3011:0:b0:298:b338:f5db with SMTP id w17-20020a2e3011000000b00298b338f5dbmr5451392ljw.52.1680088728062;
-        Wed, 29 Mar 2023 04:18:48 -0700 (PDT)
+        bh=bqRvDrf+LQjYdWpmaqzz2Gtf9PBY/+z/KX3/Flqh8zo=;
+        b=tZ7BpSzD9aNfrvcHH+lHd7/wKT299/XR6fbHQBxBtoA5GTGm8gwjS3nJvp/HB7CNPO
+         gpewdm/7TvFLnbgRnnvglfKk8ugnr+fyrspiGA/i5HccH3eQfsDA47JtW0hsJKpc9pHu
+         jyTFdoFMlA2QT6tl+SlkIe/+48OlXAHc5C/P2fMB1t7YAs+zZ4wV6gHLqtId52SregCd
+         1jWcAuALqXxAZxGtmyS82n6hx9P9rfQzEguVbBdTgRIX0MkHdswkla25j6+3wlJNhAyP
+         je2oZXGwEZc98sRsKhZFJn9h5DX4VQBiqJ5W2qN79345/Lvz+NeKL/ML4adRuyqRrsMO
+         oesA==
+X-Gm-Message-State: AAQBX9cOmro6saq84PHuWMj52ypMelA7M2Yrg/Fx499E+WF+jlqq0TJ9
+        l+quMYUOiR7JXAkNp2UE3bmgHQ==
+X-Google-Smtp-Source: AKy350bYzEOoUSw6cqkGqFLbQhDHA1c4SLLhwVXtXFCwCzlrfCjvVgQhuWXvohm9l2QUOfhgtgfNNw==
+X-Received: by 2002:a19:550b:0:b0:4e9:c627:195d with SMTP id n11-20020a19550b000000b004e9c627195dmr5339617lfe.57.1680089068735;
+        Wed, 29 Mar 2023 04:24:28 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id u9-20020a2e8449000000b00293534d9760sm5490627ljh.127.2023.03.29.04.18.46
+        by smtp.gmail.com with ESMTPSA id m22-20020a195216000000b004db4936c866sm5407496lfb.38.2023.03.29.04.24.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 04:18:47 -0700 (PDT)
-Message-ID: <09f50ca6-3480-0c8d-9494-35893393d205@linaro.org>
-Date:   Wed, 29 Mar 2023 13:18:46 +0200
+        Wed, 29 Mar 2023 04:24:28 -0700 (PDT)
+Message-ID: <a35bd0e2-b54e-ffa7-e54b-468a3cf77703@linaro.org>
+Date:   Wed, 29 Mar 2023 13:24:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] dt-bindings: interrupt-controller: mpm: Allow passing
- reg through phandle
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Shawn Guo <shawn.guo@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
- <20230328-topic-msgram_mpm-v1-1-1b788a5f5a33@linaro.org>
- <863d5a85-3399-5a43-b755-1316e3adcfec@linaro.org>
+To:     Johan Hovold <johan@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
+        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
+ <20230325165217.31069-2-manivannan.sadhasivam@linaro.org>
+ <ZCKrXZn7Eu/jvdpG@hovoldconsulting.com> <20230328093853.GA5695@thinkpad>
+ <20230329052600.GA5575@thinkpad> <ZCP4MHe+9M24S4nJ@hovoldconsulting.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <863d5a85-3399-5a43-b755-1316e3adcfec@linaro.org>
+In-Reply-To: <ZCP4MHe+9M24S4nJ@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -88,55 +85,117 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 29.03.2023 10:27, Krzysztof Kozlowski wrote:
-> On 28/03/2023 12:02, Konrad Dybcio wrote:
->> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
->> use 'reg' to point to the MPM's slice of Message RAM without cutting into
->> an already-defined RPM MSG RAM node used for GLINK and SMEM.
->>
->> Document passing the register space as a slice of SRAM through the
->> qcom,rpm-msg-ram property. This also makes 'reg' no longer required.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml          | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->> index 509d20c091af..77fe5e0b378f 100644
->> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
->> @@ -30,6 +30,11 @@ properties:
->>      description:
->>        Specifies the base address and size of vMPM registers in RPM MSG RAM.
->>  
->> +  qcom,rpm-msg-ram:
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +    description:
->> +      Phandle to the APSS MPM slice of the RPM Message RAM
->> +
->>    interrupts:
->>      maxItems: 1
->>      description:
->> @@ -64,7 +69,6 @@ properties:
->>  
->>  required:
->>    - compatible
->> -  - reg
+On 29.03.2023 10:34, Johan Hovold wrote:
+> On Wed, Mar 29, 2023 at 10:56:00AM +0530, Manivannan Sadhasivam wrote:
+>> On Tue, Mar 28, 2023 at 03:09:03PM +0530, Manivannan Sadhasivam wrote:
+>>> On Tue, Mar 28, 2023 at 10:54:53AM +0200, Johan Hovold wrote:
+>>>> On Sat, Mar 25, 2023 at 10:22:13PM +0530, Manivannan Sadhasivam wrote:
+>>>>> Add missing quirks for the USB DWC3 IP.
+>>>>
+>>>> This is not an acceptable commit message generally and certainly not for
+>>>> something that you have tagged for stable.
+>>>>
+>>>> At a minimum, you need to describe why these are needed and what the
+>>>> impact is.
+>>>>
+>>>
+>>> I can certainly improve the commit message. But usually the quirks are copied
+>>> from the downstream devicetree where qualcomm engineers would've added them
+>>> based on the platform requirements.
+>>>
+>>>> Also, why are you sending as part of a series purporting to enable
+>>>> runtime PM when it appears to be all about optimising specific gadget
+>>>> applications?
+>>>>
+>>>
+>>> It's not related to this series I agree but just wanted to group it with a
+>>> series touching usb so that it won't get lost.
+>>>
+>>> I could respin it separately though in v2.
 > 
-> Either:
-> 1. make reg deprecated and require qcom,rpm-msg-ram
-> or
-> 2. you need oneOf:required for reg and qcom,rpm-msg-ram
-Right, let's go with 1.
+> That's also generally best for USB patches as Greg expects series to be
+> merged through a single tree.
+> 
+>>>> Did you confirm that the below makes any sense or has this just been
+>>>> copied verbatim from the vendor devicetree (it looks like that)?
+>>>>
+>>>
+>>> As you've mentioned, most of the quirks are for gadget mode which is not
+>>> supported by the upstream supported boards. So I haven't really tested them but
+>>> for I assumed that Qcom engineers did.
+>>>
+>>>> The fact that almost none of the qcom SoCs sets these also indicates
+>>>> that something is not right here.
+>>>>
+>>>>> Cc: stable@vger.kernel.org # 5.20
+>>>>> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+>>>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>>>> ---
+>>>>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
+>>>>>  1 file changed, 14 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>>> index 0d02599d8867..266a94c712aa 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>>> @@ -3040,6 +3040,13 @@ usb_0_dwc3: usb@a600000 {
+>>>>>  				iommus = <&apps_smmu 0x820 0x0>;
+>>>>>  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
+>>>>>  				phy-names = "usb2-phy", "usb3-phy";
+>>>>> +				snps,hird-threshold = /bits/ 8 <0x0>;
+>>>>> +				snps,usb2-gadget-lpm-disable;
+>>>>
+>>>> Here you are disabling LPM for gadget mode, which makes most of the
+>>>> other properties entirely pointless.
+>>
+>> Checked with Qcom on these quirks. So this one is just disabling lpm for USB2
+>> and rest of the quirks below are for SS/SSP modes.
+> 
+> No, snps,hird-threshold is for USB2 LPM and so is
+> snps,is-utmi-l1-suspend and snps,has-lpm-erratum as you'll see if you
+> look at the implementation.
+> 
+>>>>> +				snps,is-utmi-l1-suspend;
+>>>>> +				snps,dis-u1-entry-quirk;
+>>>>> +				snps,dis-u2-entry-quirk;
+>>>>
+>>>> These appear to be used to optimise certain gadget application and
+>>>> likely not something that should be set in a dtsi.
+>>>>
+>>>
+>>> I will cross check these with Qcom and respin accordingly.
+>>>
+>>
+>> These quirks are needed as per the DWC IP integration with this SoC it seems.
+>> But I got the point that these don't add any values for host only
+>> configurations. At the same time, these quirks still hold true for the SoC even
+>> if not exercised.
+>>
+>> So I think we should keep these in the dtsi itself.
+> 
+> Please take a closer look at the quirks you're enabling first. Commit
+> 729dcffd1ed3 ("usb: dwc3: gadget: Add support for disabling U1 and U2
+> entries") which added 
+> 
+>>>>> +				snps,dis-u1-entry-quirk;
+>>>>> +				snps,dis-u2-entry-quirk;
+> 
+> explicitly mentions
+> 
+> 	Gadget applications may have a requirement to disable the U1 and U2
+> 	entry based on the usecase.
+> 
+> which sounds like something that needs to be done in a per board dts at
+> least.
+> 
+> Perhaps keeping all of these in in the dtsi is correct, but that's going
+> to need some more motivation than simply that some vendor does so (as
+> they often do all sorts of things they should not).
+I'm looking at the DWC3 code and admittedly I don't understand much,
+but is there any harm to keeping them? What if somebody decides to
+plug in a laptop as a gadget device?
 
 Konrad
+
 > 
->>    - interrupts
->>    - mboxes
->>    - interrupt-controller
->>
-> 
-> Best regards,
-> Krzysztof
-> 
+> Johan
