@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61C856CF65A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 00:25:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0344D6CF65D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 00:25:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbjC2WZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 18:25:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45660 "EHLO
+        id S229570AbjC2WZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 18:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230004AbjC2WZF (ORCPT
+        with ESMTP id S230246AbjC2WZH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 18:25:05 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DC51BF0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 15:25:04 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id h25so22133474lfv.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 15:25:04 -0700 (PDT)
+        Wed, 29 Mar 2023 18:25:07 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A361FFB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 15:25:05 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id y15so22132523lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 15:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680128702;
+        d=linaro.org; s=google; t=1680128703;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XvOicm7FSZsvoLM+I7eZyYxaJPBR6NHXblQQPNco0kQ=;
-        b=wMNTntBtw3JbTujEgRlvIK1ugsDeViUl3qgk6tzLyCNzeOSCIpPdJlk4I4ZNDMthb/
-         AOX3vvAr8/YUaGuvgou1JQShkvM+HTeh9Dlk5BK99T5N5VIENL0fP9By1KEgWziqA4N7
-         JzOSptsOGmJwUe+TJyqdNisp45Z9JFoy8z0Vn6BhsVitIrn2STBQY8Rq93pOEjuJo/Mi
-         MwxqYbpUW1uhvQ1a5R7vzHPBs0M49qyPDg0l8xTcotdc/jupwSQuhWwVs+POh5EOJYbP
-         /TRYVXC7ToT1tP301fMTyzCk7qgy6AFW1JNDonwO9hyngBswFUUaooNEich/MQxDijYx
-         v5kQ==
+        bh=QEueJb8wxFS51D5H+YQGZcmoJREAPX/3P/EgTv1KRmQ=;
+        b=lRUgCTj8FbwxUykPzPj+tXrYXzquUMA2SE3l2V7o5HuwDGblXGkm5u3lUL3x/myZo8
+         GSEGBQAQ+ti9lfTG9xS3ZbCuS7pIgHc9qpQ+c7c35los6UTyTjRQE4WrUaNhEBVxQJqb
+         tnq5+OBi2/9rJ4P/COOh2QjYcTX3fq0W2OIFW/fgIUTSh9M7djIZXioLdhD7WKOxHdPp
+         V4hxBsrHLOTINBXq6err0YTWXfThPMLIZrrYekvrBQ/o0BJrDPf5rPku8cboAJr+vWBV
+         c8AX5APP22S5qZ/3G/y2i7ecgg+hzcAJhbTxQ9+6rp0ibWKYX11Vzhyuhm3weNzRw14k
+         jUdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680128702;
+        d=1e100.net; s=20210112; t=1680128703;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XvOicm7FSZsvoLM+I7eZyYxaJPBR6NHXblQQPNco0kQ=;
-        b=fu/t0Tfo4HyMs50TmI4ut5FnvWepgG1w2GZUd3DwI+8uZTH1UNWmQJWay+qP7xKi4I
-         nSVMRhgIzgk5Rnn4RPop7TW4k2f8R3xb+PYVi2U5pjZMSdswiSltpEf5anGIWR4eeApm
-         5BOsKFehtB6X+fEsWWiL18VI1pXQRZZYcwF4oLTMcnr0H7gAFAMT2U7I55laCTfJwgqv
-         ze8EiMf4WvRxckvf40mZDDpWBUrpTV5sLnzJxgM225I3677oRgjTc8Rt5Abe7W+tmS+r
-         PyhfRyjRNvSjytzl22oJgSNXsTRaQbnddUGyj4nkjWDXTz/+CHrEYELnjINUfpQdfQkn
-         lE+Q==
-X-Gm-Message-State: AAQBX9ctFzO6gHdxggSnZf6auvwDNXTIqYZXHBjtKEZwo1JlBT6B4rUG
-        Spg0jx/+xFw6f754oS8t0MN5jA==
-X-Google-Smtp-Source: AKy350Yafz+44RhjayuM2tQER3bgUHCtIb4t+86yGSe52bNOnaGogVbbHxOlWGD5ykjwJGQWJoEEYg==
-X-Received: by 2002:ac2:46d4:0:b0:4e8:200:132b with SMTP id p20-20020ac246d4000000b004e80200132bmr6084675lfo.62.1680128702692;
-        Wed, 29 Mar 2023 15:25:02 -0700 (PDT)
+        bh=QEueJb8wxFS51D5H+YQGZcmoJREAPX/3P/EgTv1KRmQ=;
+        b=NWyIUbtxCCzobx2mAPoKHqxOElad1L2yT+D2CE5xTEN7SegV6r0Rh48eLIWMXz1viQ
+         uwew1UtnUe/5qvTejNmFLnsEPyFybhlpcvp8TWVf8eY83z1jjIeSZb9FoAqSUM7tKyMG
+         D1n6tPzQcs9gUxjQFqMM8RI2gryq76OZ9vk2OhEUjyZMUemYWFp6k5Yost53ekaKJkcg
+         MlgGlG0dAC7+7HtE3rHTv8ypxtHF2uliHMVIxw0LHNYezQ2+zW0fPf90oaWolb0U+Gcw
+         B7TIBWERaNiZKxgkzhkLnyq7TlOh1u4AqpVMwP8k/XVOhZvmprHG20P8p1eOAAOsCizc
+         oKNQ==
+X-Gm-Message-State: AAQBX9fvx/drMDxshN0vp8ohmrZ06GlFH5o+7ln+3FBahPwxBRfy+VyG
+        +leLVxxGT4mP0lC7OEGK9wQiTQ==
+X-Google-Smtp-Source: AKy350auET5GfqVeLoBe8QXogMU0qUTo2PHB76nYRpaWXwMAGBCpKiFuj5I23ncL6OK5zEWUTpjDSA==
+X-Received: by 2002:ac2:4c26:0:b0:4e9:a16f:a176 with SMTP id u6-20020ac24c26000000b004e9a16fa176mr6731039lfq.36.1680128703439;
+        Wed, 29 Mar 2023 15:25:03 -0700 (PDT)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id y26-20020ac255ba000000b004e9b307d2c8sm4724226lfg.238.2023.03.29.15.25.01
+        by smtp.gmail.com with ESMTPSA id y26-20020ac255ba000000b004e9b307d2c8sm4724226lfg.238.2023.03.29.15.25.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 15:25:02 -0700 (PDT)
+        Wed, 29 Mar 2023 15:25:03 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -63,9 +63,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [RFC PATCH 2/3] drm/msm/a5xx: scale MX domain following the frequncy changes
-Date:   Thu, 30 Mar 2023 01:24:59 +0300
-Message-Id: <20230329222500.1131836-3-dmitry.baryshkov@linaro.org>
+Subject: [RFC PATCH 3/3] arm64: dts: qcom: specify power domains for the GPU
+Date:   Thu, 30 Mar 2023 01:25:00 +0300
+Message-Id: <20230329222500.1131836-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
 References: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
@@ -80,128 +80,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-For some a5xx Adrenos we have to specify both GX and MX power domains.
-GX is used to power up the GPU clocks and logic. MX is used for scaling
-voltage of memory cells.
-
-In case the DT specifies several (GX, MX) power domains, none will be
-bound by the core. We have to manage GX manually. Also make sure that
-the MX domain is resumed and scaled to the proper performance state
-following the desired frequency.
+The GPU on msm8996 is powered on by several power domains. Add
+configuration for the GFX CPR and MX domains.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 52 +++++++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a5xx_gpu.h |  3 ++
- 2 files changed, 55 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index 0372f8908202..36b3d11dd5b0 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -8,6 +8,7 @@
- #include <linux/firmware/qcom/qcom_scm.h>
- #include <linux/pm_opp.h>
- #include <linux/nvmem-consumer.h>
-+#include <linux/pm_domain.h>
- #include <linux/slab.h>
- #include "msm_gem.h"
- #include "msm_mmu.h"
-@@ -1053,6 +1054,13 @@ static void a5xx_destroy(struct msm_gpu *gpu)
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 905678e7175d..ff4fb30f9075 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -521,6 +521,10 @@ rpmpd_opp5: opp5 {
+ 					rpmpd_opp6: opp6 {
+ 						opp-level = <6>;
+ 					};
++
++					rpmpd_opp7: opp7 {
++						opp-level = <7>;
++					};
+ 				};
+ 			};
+ 		};
+@@ -1228,7 +1232,8 @@ gpu: gpu@b00000 {
+ 			interconnects = <&bimc MASTER_GRAPHICS_3D &bimc SLAVE_EBI_CH0>;
+ 			interconnect-names = "gfx-mem";
  
- 	adreno_gpu_cleanup(adreno_gpu);
-+
-+	if (a5xx_gpu->mx_link)
-+		device_link_del(a5xx_gpu->mx_link);
-+
-+	if (a5xx_gpu->gxpd)
-+		dev_pm_domain_detach(a5xx_gpu->gxpd, true);
-+
- 	kfree(a5xx_gpu);
- }
+-			power-domains = <&mmcc GPU_GX_GDSC>;
++			power-domains = <&mmcc GPU_GX_GDSC>, <&rpmpd MSM8996_VDDMX>;
++			power-domain-names = "gx", "mx";
+ 			iommus = <&adreno_smmu 0>;
  
-@@ -1339,8 +1347,15 @@ static void a5xx_dump(struct msm_gpu *gpu)
- static int a5xx_pm_resume(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
- 	int ret;
+ 			nvmem-cells = <&speedbin_efuse>;
+@@ -1251,30 +1256,37 @@ gpu_opp_table: opp-table {
+ 				opp-624000000 {
+ 					opp-hz = /bits/ 64 <624000000>;
+ 					opp-supported-hw = <0x09>;
++					required-opps = <&rpmpd_opp7>;
+ 				};
+ 				opp-560000000 {
+ 					opp-hz = /bits/ 64 <560000000>;
+ 					opp-supported-hw = <0x0d>;
++					required-opps = <&rpmpd_opp7>;
+ 				};
+ 				opp-510000000 {
+ 					opp-hz = /bits/ 64 <510000000>;
+ 					opp-supported-hw = <0xff>;
++					required-opps = <&rpmpd_opp5>;
+ 				};
+ 				opp-401800000 {
+ 					opp-hz = /bits/ 64 <401800000>;
+ 					opp-supported-hw = <0xff>;
++					required-opps = <&rpmpd_opp5>;
+ 				};
+ 				opp-315000000 {
+ 					opp-hz = /bits/ 64 <315000000>;
+ 					opp-supported-hw = <0xff>;
++					required-opps = <&rpmpd_opp4>;
+ 				};
+ 				opp-214000000 {
+ 					opp-hz = /bits/ 64 <214000000>;
+ 					opp-supported-hw = <0xff>;
++					required-opps = <&rpmpd_opp4>;
+ 				};
+ 				opp-133000000 {
+ 					opp-hz = /bits/ 64 <133000000>;
+ 					opp-supported-hw = <0xff>;
++					required-opps = <&rpmpd_opp4>;
+ 				};
+ 			};
  
-+	if (a5xx_gpu->gxpd) {
-+		ret = pm_runtime_resume_and_get(a5xx_gpu->gxpd);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	/* Turn on the core power */
- 	ret = msm_gpu_pm_resume(gpu);
- 	if (ret)
-@@ -1414,6 +1429,9 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
- 	if (ret)
- 		return ret;
- 
-+	if (a5xx_gpu->gxpd)
-+		pm_runtime_put(a5xx_gpu->gxpd);
-+
- 	if (a5xx_gpu->has_whereami)
- 		for (i = 0; i < gpu->nr_rings; i++)
- 			a5xx_gpu->shadow[i] = 0;
-@@ -1762,6 +1780,40 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
- 
- 	a5xx_gpu->lm_leakage = 0x4E001A;
- 
-+	/*
-+	 * If the device has several power domain (gx and mx), none are attached by the core.
-+	 */
-+	if (!pdev->dev.pm_domain) {
-+		struct device **opp_virt_dev;
-+		struct device *pd;
-+
-+		/* FIXME: add cpr once it is supported */
-+		static const char *genpd_names[] = { "mx", NULL };
-+
-+		pd = dev_pm_domain_attach_by_name(&pdev->dev, "gx");
-+		if (IS_ERR(pd))
-+			return ERR_CAST(pd);
-+
-+		/* GX is required for GPU to function */
-+		if (pd == NULL)
-+			return ERR_PTR(-EINVAL);
-+
-+		a5xx_gpu->gxpd = pd;
-+
-+		ret = devm_pm_opp_attach_genpd(&pdev->dev, genpd_names, &opp_virt_dev);
-+		if (ret) {
-+			dev_pm_domain_detach(a5xx_gpu->gxpd, true);
-+			return ERR_PTR(ret);
-+		}
-+
-+		a5xx_gpu->mx_link = device_link_add(&pdev->dev, opp_virt_dev[0],
-+						    DL_FLAG_RPM_ACTIVE |
-+						    DL_FLAG_PM_RUNTIME |
-+						    DL_FLAG_STATELESS);
-+		if (!a5xx_gpu->mx_link)
-+			return ERR_PTR(-ENODEV);
-+	}
-+
- 	check_speed_bin(&pdev->dev);
- 
- 	nr_rings = 4;
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-index c7187bcc5e90..36e910397c14 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
-@@ -44,6 +44,9 @@ struct a5xx_gpu {
- 
- 	/* True if the microcode supports the WHERE_AM_I opcode */
- 	bool has_whereami;
-+
-+	struct device *gxpd;
-+	struct device_link *mx_link;
- };
- 
- #define to_a5xx_gpu(x) container_of(x, struct a5xx_gpu, base)
 -- 
 2.39.2
 
