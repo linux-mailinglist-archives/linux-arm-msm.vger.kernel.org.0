@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 458946CD0C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 05:41:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34A976CD0DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 05:50:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjC2Dlv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Mar 2023 23:41:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34964 "EHLO
+        id S229436AbjC2DuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Mar 2023 23:50:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjC2Dlv (ORCPT
+        with ESMTP id S229451AbjC2DuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Mar 2023 23:41:51 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32DA270D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 20:41:49 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso14818286pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 20:41:49 -0700 (PDT)
+        Tue, 28 Mar 2023 23:50:06 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC70A2D56
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 20:50:05 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id j13so12869130pjd.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Mar 2023 20:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680061309;
+        d=linaro.org; s=google; t=1680061805;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zWa7wOxAFG7tdLlil0NzPbk6K8fs9R4JDMItxPB89Zk=;
-        b=FLF2hx/aelGWFy3MQVxuI78e6bOjKUK0lDvmENJJpmng1+jiJwkepTsA6xcZ7bgyJL
-         DmUnAcpXeCosXu57J8rd/T5bW2vQu2R18QhdAcLfCAYqBZYTe7ZOpng9pfU6q3pZLZWy
-         bZ0xYsmqIJh9d+pDd+SvQtG1AcdGk5PjZL7mr06iuDiGUN2YyXXOWbosx+9jl89gm15+
-         tAhoQzr7B/nPPEHzzERhQigxMSOza9THTNsE4XgiryPRfsIjMZtlHOGDNlCN8/gDXP2k
-         tUVI0zXENIL+47cZxozxrhKUktrd2ctQyctmqqGPMag5wvF1b81ZzC62uflLkKA237Jl
-         jhFA==
+        bh=wC/Ye1bpw03sXj/B+KMS+XtSXrPtzZfQh7aSp7cQCRc=;
+        b=PZ5/DAXdhhrlw/3i5XEyyJ/3ggz4/Ow3xqBgKMIBuhgdKKdl3erVoiLam8XCz2CaYR
+         zYUZ6/CDxEo+dTM0DB8Xo7XPyuoLNzuf4ovD6JNO2OpiM3HEwUaj0cXXOCm1yaUpfsaQ
+         AwbVzC1T8E9goDtTQGtkBo5P3tZ2EuQm+3mLYytxoUsVDlkEvDlCA54umtbAVdqE5hDB
+         Z0CoXuj3djCLkCxjdZx2kv/8dSI1viBYneknRYPii+01coTRFPnw9NUlg2MOoj6/4ICT
+         8qNZnsLmgv5Gy0+DowXt2rfgou8VP0NWun2dG+KKPJgxPH0KPtpblpbtgLK63qe2G02H
+         ZahQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680061309;
+        d=1e100.net; s=20210112; t=1680061805;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zWa7wOxAFG7tdLlil0NzPbk6K8fs9R4JDMItxPB89Zk=;
-        b=MK2AKdMmkPbqSivAxjrBzgdfGO1II8yOwDxeyjVGmAPECvpLMGzjJGVHkfFk+HokUJ
-         jUsaSpWaBPHjDnZahhcY24/b8fXMjgcSqlvz66oDIaP6T0YMiSzhpijBx8/r4/lhMUXV
-         l5yZ7RE7lKxeZk5oxMTp/NN7+9GxF9lnuxlGeFTtZSgDnzL5e0SGxiZmcSXKFBSw8ipu
-         apRU8d/j0a5o0Om7iWKbEsTY7BqznH7+1eQWlZwuXYvdHhcrAJffZxTETBOXqeKifqbN
-         RqbR+keueCAxIj0BRm0zd18kKOWkMHg7u0od384bTsXGTqb+ppXQbSSLsxd0TPM6clAg
-         M46w==
-X-Gm-Message-State: AAQBX9dfuYWBk6fYQd/4EDRITyoHgaZfm6T0wd+mRqV6zV1c1nmIakAk
-        Gc/VopDfN4k13eGVwlngnd1qjA==
-X-Google-Smtp-Source: AKy350Z9qGLrPtkmUBr4ckTpyxUSYvNDmeQ5iMJn6z0y5G7PURan5PkPuuuHsPMHlcFFJYajoaXeSw==
-X-Received: by 2002:a17:90b:4c0c:b0:233:d12f:f43a with SMTP id na12-20020a17090b4c0c00b00233d12ff43amr17346852pjb.1.1680061309170;
-        Tue, 28 Mar 2023 20:41:49 -0700 (PDT)
+        bh=wC/Ye1bpw03sXj/B+KMS+XtSXrPtzZfQh7aSp7cQCRc=;
+        b=4JhIa9wkpCtA0zftWrZSotwI7E+Fn6X5ax8OjzplijiAQFUKKJ+O1aGZ6RoNXOnX5W
+         Ie86KmfuWG+4hIeHIRntsQRi61DX4uXDtGul3+6k+UlS+Y9e7SNoq+boj5Acf0if3vYx
+         G7mvwkcoP4AuZwlpilpgSA6KUCa1EMq1RzuRRsckfFRNXCdkS0ITQRksRxf4NogLmc3T
+         Zm47GBEWHlUIMnV7rbDccP+RVbNpAHoMrCTfgIXtvwH5rW5hcnnFjaLrCefHhtdtwzE6
+         aay5xOdh0N7kaDZ08kE8sJQcI7OgrDroHifi+kZBaaoyjR56gpjClLakaHZR3U4VGyJ9
+         ZQUQ==
+X-Gm-Message-State: AAQBX9ciN1YgUchhGqcqRwfx8dlJt9rp/ST570d56G666RCAV6F05QuG
+        jw21q5332sRxjWeCgjDbUNhjAa0/npWveiScvD8=
+X-Google-Smtp-Source: AKy350asoNwJSTgVvdCnbLiJmekNA9xGSrJQiNP2xLCGbZyD2WlY7AMonNPxHcu6inb+DhvgyMLWjw==
+X-Received: by 2002:a17:90b:3b90:b0:23d:500f:e826 with SMTP id pc16-20020a17090b3b9000b0023d500fe826mr18967833pjb.14.1680061805127;
+        Tue, 28 Mar 2023 20:50:05 -0700 (PDT)
 Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id fh5-20020a17090b034500b0023b5566f744sm311482pjb.39.2023.03.28.20.41.45
+        by smtp.gmail.com with ESMTPSA id g11-20020a17090a300b00b0023fcece8067sm341124pjb.2.2023.03.28.20.50.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 20:41:48 -0700 (PDT)
-Date:   Wed, 29 Mar 2023 11:41:41 +0800
+        Tue, 28 Mar 2023 20:50:04 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 11:49:58 +0800
 From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -61,15 +61,15 @@ Cc:     Andy Gross <agross@kernel.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: interrupt-controller: mpm: Allow
- passing reg through phandle
-Message-ID: <20230329034141.GB3554086@dragon>
+Subject: Re: [PATCH 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
+ SRAM as reg space
+Message-ID: <20230329034958.GC3554086@dragon>
 References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
- <20230328-topic-msgram_mpm-v1-1-1b788a5f5a33@linaro.org>
+ <20230328-topic-msgram_mpm-v1-2-1b788a5f5a33@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230328-topic-msgram_mpm-v1-1-1b788a5f5a33@linaro.org>
+In-Reply-To: <20230328-topic-msgram_mpm-v1-2-1b788a5f5a33@linaro.org>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -79,50 +79,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 28, 2023 at 12:02:52PM +0200, Konrad Dybcio wrote:
-> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
-> use 'reg' to point to the MPM's slice of Message RAM without cutting into
-> an already-defined RPM MSG RAM node used for GLINK and SMEM.
+On Tue, Mar 28, 2023 at 12:02:53PM +0200, Konrad Dybcio wrote:
+> The MPM hardware is accessible to us from the ARM CPUs through a shared
+> memory region (RPM MSG RAM) that's also concurrently accessed by other
+> kinds of cores on the system (like modem, ADSP etc.). Modeling this
+> relation in a (somewhat) sane manner in the device tree basically
+> requires us to either present the MPM as a child of said memory region
+> (which makes little sense, as a mapped memory carveout is not a bus),
+> define nodes which bleed their register spaces into one another, or
+> passing their slice of the MSG RAM through some kind of a property.
 > 
-> Document passing the register space as a slice of SRAM through the
-> qcom,rpm-msg-ram property. This also makes 'reg' no longer required.
+> Go with the third option and add a way to map a region passed through
+> the "qcom,rpm-msg-ram" property as our register space.
+> 
+> The current way of using 'reg' is preserved for ABI reasons.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml          | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  drivers/irqchip/irq-qcom-mpm.c | 30 +++++++++++++++++++++++++-----
+>  1 file changed, 25 insertions(+), 5 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
-> index 509d20c091af..77fe5e0b378f 100644
-> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
-> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.yaml
-> @@ -30,6 +30,11 @@ properties:
->      description:
->        Specifies the base address and size of vMPM registers in RPM MSG RAM.
+> diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
+> index d30614661eea..6fe59f4deef4 100644
+> --- a/drivers/irqchip/irq-qcom-mpm.c
+> +++ b/drivers/irqchip/irq-qcom-mpm.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/mailbox_client.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> +#include <linux/of_address.h>
+>  #include <linux/of_device.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_domain.h>
+> @@ -322,8 +323,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+>  	struct device *dev = &pdev->dev;
+>  	struct irq_domain *parent_domain;
+>  	struct generic_pm_domain *genpd;
+> +	struct device_node *msgram_np;
+>  	struct qcom_mpm_priv *priv;
+>  	unsigned int pin_cnt;
+> +	struct resource res;
+>  	int i, irq;
+>  	int ret;
 >  
-> +  qcom,rpm-msg-ram:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description:
-> +      Phandle to the APSS MPM slice of the RPM Message RAM
-> +
->    interrupts:
->      maxItems: 1
->      description:
-> @@ -64,7 +69,6 @@ properties:
+> @@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
 >  
->  required:
->    - compatible
-> -  - reg
+>  	raw_spin_lock_init(&priv->lock);
+>  
+> -	priv->base = devm_platform_ioremap_resource(pdev, 0);
+> -	if (IS_ERR(priv->base))
+> -		return PTR_ERR(priv->base);
+> +	/* If we have a handle to an RPM message ram partition, use it. */
+> +	msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
+> +	if (msgram_np) {
+> +		ret = of_address_to_resource(msgram_np, 0, &res);
+> +		/* Don't use devm_ioremap_resource, as we're accessing a shared region. */
+> +		priv->base = ioremap(res.start, resource_size(&res));
 
-It's not my call, but I wonder if we need to maintain the 'reg' ABI
-at all, as there is no DTS landed so far.  In either case, I suggest
-we update the example to adopt the new way.
+Are you suggesting that other cores/drivers will also need to access
+the mpm slice below?
+
+	apss_mpm: sram@1b8 {
+		reg = <0x1b8 0x48>;
+	};
 
 Shawn
 
->    - interrupts
->    - mboxes
->    - interrupt-controller
+> +		of_node_put(msgram_np);
+> +		if (IS_ERR(priv->base))
+> +			return PTR_ERR(priv->base);
+> +	} else {
+> +		/* Otherwise, fall back to simple MMIO. */
+> +		priv->base = devm_platform_ioremap_resource(pdev, 0);
+> +		if (IS_ERR(priv->base))
+> +			return PTR_ERR(priv->base);
+> +	}
+>  
+>  	for (i = 0; i < priv->reg_stride; i++) {
+>  		qcom_mpm_write(priv, MPM_REG_ENABLE, i, 0);
+> @@ -387,8 +402,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+>  	}
+>  
+>  	irq = platform_get_irq(pdev, 0);
+> -	if (irq < 0)
+> -		return irq;
+> +	if (irq < 0) {
+> +		ret = irq;
+> +		goto unmap_base;
+> +	}
+>  
+>  	genpd = &priv->genpd;
+>  	genpd->flags = GENPD_FLAG_IRQ_SAFE;
+> @@ -451,6 +468,9 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+>  	mbox_free_channel(priv->mbox_chan);
+>  remove_genpd:
+>  	pm_genpd_remove(genpd);
+> +unmap_base:
+> +	if (res.start)
+> +		iounmap(priv->base);
+>  	return ret;
+>  }
+>  
 > 
 > -- 
 > 2.40.0
