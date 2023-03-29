@@ -2,171 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB7736CF122
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:31:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A9C6CF133
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 19:34:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbjC2Rbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 13:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55302 "EHLO
+        id S229691AbjC2ReK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 13:34:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbjC2Rbk (ORCPT
+        with ESMTP id S229800AbjC2ReI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 13:31:40 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 062DD5FEC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:31:27 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id j11so21180386lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:31:26 -0700 (PDT)
+        Wed, 29 Mar 2023 13:34:08 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D774ED9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:34:06 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-536af432ee5so307082707b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 10:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680111085;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zKUp8oQT2937+iLDgPVmHMrXn9AJqcS/Qo7VP4VGSrc=;
-        b=N4TvfqSwMCVjbDDxy2dbivFCv1ns9kOMPlc9B5Kmc25WwSGhOCDHi0l9gd4u5UHtNZ
-         3FOuQEgFMv1Mi5d75fnCo4VAWlojeZM2kOHCZnunlNdRQ81oxa1c501aYr8JtvPyRpxr
-         5Q2sl7FdhTbqEnoza6Fhrm0UgcZAzrEyp1PuwPJruTiTMhCLLL4zUihCmOgX46SQF7JR
-         yStG0DDIVsfLX+VjLaDsGScIDjSYqMZzCGteWYlOrgpc6X1BRgbdopXFCbYjF5jwl3N7
-         hoDQ1jh4Tl21Bqwb6hNIwyu+GXx1PdxaFXtVLMwYwjYrpAPQJcH4zzdVqJbQbtg1vrBa
-         zW2w==
+        d=linaro.org; s=google; t=1680111245;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FkhSHYXGUkelGLddLL9XxpvQOEW/tExrcv6+2UzDYDE=;
+        b=n0OywWT13KnixyTrL6xWwL/YCYs3pAn4NIXv/vJLeUEmB3MmVqpKHPXmlGZf5ULv3L
+         4umQgIlsCE9BnmxT4CA8x5UxyVE40FaJTiIQ1mK4hrBleVL8KsAKqXYcbsIMA06Tfb5w
+         Lp8g8rSiPxmM11mj5lF9khSmyGA4JDw/Oq9STyD6GWTic2wFUFvWnk8jCGuUCkWDe+27
+         MTo3xPt/5+Vsy/t222qaUVtwNi4NmL3uENWpQWMYlAgDIx8a02YgrPG5V6tvRoztj67b
+         ssIKQtr4wdBqYDQLGbaQE6pE/wr8zK9fAYYKgUK8yFswZB4D465oyCgzA7EYe4cFWjJL
+         0Rag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680111085;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zKUp8oQT2937+iLDgPVmHMrXn9AJqcS/Qo7VP4VGSrc=;
-        b=3b5bLTmbJgZeGaygd/en/jUtK/tHlQWpPdsYfdN5Fv6VKseZoe2sQfp5/Lr/2bvWWr
-         wQLCs0VBTGdnq/HNFlin/1ya+SWxtveZGUk6lmcTGoCLFxfp0tucyukzh6qUTZWvZ/Ed
-         zm552zogTGVUD84kv8AL6G3S6mMDyYImgi7dU9EELekiB8a88aPIU8xMf5ddouAHhaqB
-         6UyTQuRNqte8OM47UYs5jc2nEYdmIhvhfLd5RMBkHE0LjfE+CmgFng5W/yzjKepH7Mf0
-         m2lhrdKgoyfzLQbOp4XMLSw2iY3ZvMvhqewxKk8PPOBmaQ+ZXoSutTieWoA0DDirYTxA
-         OwFw==
-X-Gm-Message-State: AAQBX9fMMArMGU4hFQRfcVbhMjOCbxQ7Tr26FtWY8j/sVjal7ugXUNek
-        uKw7BseJpfMDDHRAhf+Et0bzow==
-X-Google-Smtp-Source: AKy350aB0j3c+eGT0mY6Ft1GQFoC5DsZuQx4Y3sE2T8yMJTGK8FwE7Y4b3VTXhlfEqTak5pPqZGpgw==
-X-Received: by 2002:a05:6512:971:b0:4e9:a75b:cccb with SMTP id v17-20020a056512097100b004e9a75bcccbmr5072963lft.28.1680111084835;
-        Wed, 29 Mar 2023 10:31:24 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id m10-20020ac2428a000000b004b6f00832cesm5510541lfh.166.2023.03.29.10.31.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 10:31:24 -0700 (PDT)
-Message-ID: <bc0961f3-5608-eab9-0937-462d498bd6e6@linaro.org>
-Date:   Wed, 29 Mar 2023 19:31:22 +0200
+        d=1e100.net; s=20210112; t=1680111245;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FkhSHYXGUkelGLddLL9XxpvQOEW/tExrcv6+2UzDYDE=;
+        b=dCzK6Au6I7JC8CCt1nfsiUu7Gccmes2WwyPGktJ8tsOCYijBNvRZJYO/YdnEt35AdM
+         qowK6LlNsfVT8OixIexZMI6NUP8Qasw5Tjisop53DIpRLWO5EwLDctgyn1qF9PSEe9bg
+         VOGHTrTD3vpdg69bMTEnOY5sUG03NyEjmI7AayPOxga5XkU6/fznosvSNCjDs9z/Fe91
+         qXJ33WXVjcxDJ2pkIml4f7SM9dN1QVCndunbk4dRWEceIe2Sk1LiOY4XEcutnyvlcyws
+         FB9VxaH/jJCIizMnDAsOOBi8QTb/i+1HoSXQGGD8kaI1Ufa/1E/Nh73IzoPgJcO5aHZn
+         aSeg==
+X-Gm-Message-State: AAQBX9elXEhNq1D3+xlN0vbf/fdV3+rnxKPhnFMiq6MtYoIDu7Y4Sbap
+        gihmm0P5MpQyJZQaKhSyfasisjv9G5C/Ri4u6iw5ZA==
+X-Google-Smtp-Source: AKy350YSAiJVafWtSYuOVU/LPqdMmXdDZ6HnyVg9UY77oBkynTdOACK4jIBqjOvpQYqYtA8u/oBQ0c6lKWosKHziNRw=
+X-Received: by 2002:a05:690c:b94:b0:541:698b:7bdb with SMTP id
+ ck20-20020a05690c0b9400b00541698b7bdbmr1851456ywb.2.1680111245693; Wed, 29
+ Mar 2023 10:34:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
- idle() on load error
-Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, agross@kernel.org,
-        marijn.suijten@somainline.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
- <ZCRNFitcrAeH27Pn@hovoldconsulting.com>
- <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
- <CAF6AEGsYimELcEAs8hdkYqdMzteMwzhPFavvmEUiEFsO01RrrQ@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAF6AEGsYimELcEAs8hdkYqdMzteMwzhPFavvmEUiEFsO01RrrQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20230323130153.8229-1-quic_vboma@quicinc.com> <c611c390-2cf3-2abe-82aa-67538b823d62@linaro.org>
+ <9f5bce7e-2b8a-0b71-3a80-0b4f86d9f908@quicinc.com> <E98548DB-5085-4036-9F6C-DC22A604A0C2@linaro.org>
+ <b2e16887-bc35-c933-2107-6e8faa439770@quicinc.com>
+In-Reply-To: <b2e16887-bc35-c933-2107-6e8faa439770@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 29 Mar 2023 20:33:54 +0300
+Message-ID: <CAA8EJpotBtz8Dw9QsLX5Li2ON=QuxWFGZkaiYw9Ac-XerNEEag@mail.gmail.com>
+Subject: Re: [PATCH v4] venus: Enable sufficient sequence change support for
+ sc7180 and fix for Decoder STOP command issue.
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        quic_dikshita@quicinc.com, Viswanath Boma <quic_vboma@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 29 Mar 2023 at 20:16, Vikash Garodia <quic_vgarodia@quicinc.com> wr=
+ote:
+>
+>
+> On 3/29/2023 7:06 PM, Dmitry Baryshkov wrote:
+> > 29 =D0=BC=D0=B0=D1=80=D1=82=D0=B0 2023 =D0=B3. 10:48:23 GMT+03:00, Vika=
+sh Garodia <quic_vgarodia@quicinc.com> =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+> >> On 3/29/2023 3:49 AM, Dmitry Baryshkov wrote:
+> >>> On 23/03/2023 15:01, Viswanath Boma wrote:
+> >>>> For VP9 bitstreams, there could be a change in resolution at interfr=
+ame,
+> >>>> for driver to get notified of such resolution change,
+> >>>> enable the property in video firmware.
+> >>>> Also, EOS handling is now made same in video firmware across all V6 =
+SOCs,
+> >>>> hence above a certain firmware version, the driver handling is
+> >>>> made generic for all V6s
+> >>> Having "Do abc. Also do defgh." is a clear sign that this patch shoul=
+d be split into two.
+> >> I agree, it could have split into patches. The patch introduces way to=
+ store venus firmware
+> >>
+> >> version and take some decision for various version. For ex. here STOP =
+handling and enabling
+> >>
+> >> DRC event for specific firmware revision and onwards. Since both the h=
+andling was primarily
+> >>
+> >> dependent of firmware version, and since the handlings were smaller, i=
+t was combined as single
+> >>
+> >> patch. Let me know, if you have any further review comments, else, wil=
+l raise a new version with
+> >>
+> >> 2 patches probably.
+> > Thanks!
+> >
+> >>>> Signed-off-by: Vikash Garodia <vgarodia@qti.qualcomm.com>
+> >>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> >>>> Tested-by: Nathan Hebert <nhebert@chromium.org>
+> >>>> ---
+> >>>> Since v3 : Addressed comments to rectify email address.
+> >>>>
+> >>>>    drivers/media/platform/qcom/venus/core.h       | 18 +++++++++++++=
++++++
+> >>>>    drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+> >>>>    drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+> >>>>    drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+> >>>>    drivers/media/platform/qcom/venus/vdec.c       | 12 +++++++++++-
+> >>>>    5 files changed, 41 insertions(+), 3 deletions(-)
+> >>>>
+> > (Skipped)
+> >
+> >
+> >
+> >>>> @@ -671,6 +671,16 @@ static int vdec_set_properties(struct venus_ins=
+t *inst)
+> >>>>                return ret;
+> >>>>        }
+> >>>>    +    /* Enabling sufficient sequence change support for VP9 */
+> >>>> +    if (of_device_is_compatible(inst->core->dev->of_node, "qcom,sc7=
+180-venus")) {
+> >>> Let me repeat my question from v3:
+> >>>
+> >>> Is it really specific just to sc7180 or will it be applicable to any
+> >>> other platform using venus-5.4 firmware?
+> >> The HFI "HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT" is=
+ implemented
+> >>
+> >> only for sc7180. Calling this for any other venus-5.4 would error out =
+the session with error as
+> >>
+> >> unsupported property from firmware.
+> >
+> > How can we be sure that other platforms do not end up using sc7180 firm=
+ware? Or that sc7180 didn't end up using some other firmware?
+> >
+> > I see generic  qcom/venus-5.4/venus.mbn in Linux firmware. It's version=
+ is VIDEO.VE.5.4-00053-PROD-1. It can be used with any unfused device which=
+ uses firmware 5.4
+>
+> Driver defines resources for every platforms and there it specifies the
+> firmware to be used for that platform. For ex, for sc7180, the firmware
+> is specified at [1].
+
+And note that the firmware doesn't have an SoC name in it. This file
+will be used by all unfused devices that use 5.4 firmware family.
+
+> The various firmware supported by different platforms are also available
+> in linux firmware.
+>
+> [1]
+> https://elixir.bootlin.com/linux/v6.3-rc4/source/drivers/media/platform/q=
+com/venus/core.c#L765
+
+And in that file sc7180 is the only platform having firmware 5.4.
+
+I think that the check for sc7180 is redundant. Just check that the
+firmware is from 5.4 family and it is 5.4.51 or newer.
+
+> >>>> +        if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+> >>>> +            ptype =3D HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQ=
+CHANGE_EVENT;
+> >>>> +            ret =3D hfi_session_set_property(inst, ptype, &en);
+> >>>> +            if (ret)
+> >>>> +                return ret;
+> >>>> +        }
+> >>>> +    }
+> >>>> +
+> >>>>        ptype =3D HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+> >>>>        conceal =3D ctr->conceal_color & 0xffff;
+> >>>>        conceal |=3D ((ctr->conceal_color >> 16) & 0xffff) << 10;
 
 
-On 29.03.2023 19:30, Rob Clark wrote:
-> On Wed, Mar 29, 2023 at 8:48 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 29.03.2023 16:37, Johan Hovold wrote:
->>> On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
->>>> If we fail to initialize the GPU for whatever reason (say we don't
->>>> embed the GPU firmware files in the initrd), the error path involves
->>>> pm_runtime_put_sync() which then calls idle() instead of suspend().
->>>>
->>>> This is suboptimal, as it means that we're not going through the
->>>> clean shutdown sequence. With at least A619_holi, this makes the GPU
->>>> not wake up until it goes through at least one more start-fail-stop
->>>> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
->>>> shutdown.
->>>
->>> This does not sound right. If pm_runtime_put_sync() fails to suspend the
->>> device when the usage count drops to zero, then you have a bug somewhere
->>> else.
->> I was surprised to see that it was not called as well, but I wasn't able
->> to track it down before..
->>
->>>
->>> Also since commit 2c087a336676 ("drm/msm/adreno: Load the firmware
->>> before bringing up the hardware") the firmware is loaded before even
->>> hitting these paths so the above description does not sound right in
->>> that respect either (or is missing some details).
->> ..but I did some more digging and I found that the precise "firmware"
->> that fails is the ZAP blob, which is not checked like SQE in the
->> commit you mentioned!
->>
->> Now I don't think that we can easily check for it as-is since
->> zap_shader_load_mdt() does the entire find-load-authenticate
->> dance which is required with secure assets, but it's obviously
->> possible to rip out the find-load part of that and go on from
->> there.
->>
->> Do you think that would be a better solution?
-> 
-> Hmm, to hit this it sounds like you'd need all the fw _except_ the zap
-> in the initrd?
-Correct.
 
-Konrad
-> 
-> BR,
-> -R
-> 
->> Konrad
->>
->>>
->>>> Test cases:
->>>> 1. firmware baked into kernel
->>>> 2. error loading fw in initrd -> load from rootfs at DE start
->>>>
->>>> Both succeed on A619_holi (SM6375) and A630 (SDM845).
->>>>
->>>> Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
->>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> index f61896629be6..59f3302e8167 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->>>> @@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
->>>>      return gpu;
->>>>
->>>>  err_put_rpm:
->>>> -    pm_runtime_put_sync(&pdev->dev);
->>>> +    pm_runtime_put_sync_suspend(&pdev->dev);
->>>>  err_disable_rpm:
->>>>      pm_runtime_disable(&pdev->dev);
->>>
->>> Johan
+--=20
+With best wishes
+Dmitry
