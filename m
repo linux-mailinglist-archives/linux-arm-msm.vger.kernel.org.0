@@ -2,84 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2E7C6CD651
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 11:25:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9A776CD66E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 11:30:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230399AbjC2JZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 05:25:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57684 "EHLO
+        id S230055AbjC2Jab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 05:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbjC2JZH (ORCPT
+        with ESMTP id S229449AbjC2Jaa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 05:25:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFBFF30D8;
-        Wed, 29 Mar 2023 02:25:05 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32T9IH3g023884;
-        Wed, 29 Mar 2023 09:24:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FnliORwFo6RM4w2NuP/huI2taPY0SuqrkgBObjK8CWw=;
- b=HowNSw1YjDkLIMi+qs5WO8p3X7h9orncq8r6Vcs8H9Q5O09yOmhi/yzPTdbJE4+Ur4kW
- k52xk1BvYtoCxwaAxV7CKGvZrpw60QLDzoNJ30/rCG5e7ffMtI6mcyHNDsioGyu6icut
- nRhflyT1MmfrpI5ZlF3Iz1bDzQNWiF1uhAqnFRx+XjIbAmoej1TRKGpEsYMVDjcxLMhy
- gaHjOFpng5tyU7969DsR9NOFtQzKObqKmgBuh88fQs5/oSN2e8I3g2WBaBePY9xuWyt/
- hLXx6dq5beUuuU4b2p7216vv08yu21XpkUN6/tIbaTpPLBLCeTsgFMv/k3waWlVaoqLb oA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pm5v1smhj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 09:24:52 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32T9OpHt011030
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 29 Mar 2023 09:24:51 GMT
-Received: from [10.216.46.184] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 29 Mar
- 2023 02:24:46 -0700
-Message-ID: <41d84c24-a363-7f73-1590-c23cc2ecbdc5@quicinc.com>
-Date:   Wed, 29 Mar 2023 14:54:43 +0530
+        Wed, 29 Mar 2023 05:30:30 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8731E19A4;
+        Wed, 29 Mar 2023 02:30:29 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id d11-20020a05600c3acb00b003ef6e6754c5so5572757wms.5;
+        Wed, 29 Mar 2023 02:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680082228;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1lEaDc8be8FkWi1HX0iSofPQaKiEa8pAZUfrsxxjcSw=;
+        b=FCR79EhyW0vJpHBYVKlPW8vXWhRAihkRSI0u4tf7VDEIDF7RSF3B2bJXqAywT69v72
+         meKdvUnF+HCW5+Bqf/2fqch6RTAdmaRS8grsaLPzlZ/RbhskfugKDh7RtxikBZmCQQGF
+         Z6DaRvzRiaDxk3OSWzx/ArjH9MqFrNhMiiIeOiEgQ7XI7VmML6U5HqK6/F4ZPg43Q2fD
+         gSMO+OWlcHYoGlBwUpXakZ/yUVg1C1SJWkSt0Txi+jHvcAEGMXsT2BJwybKYUAbqHlXN
+         EAh+UxqQCU1/CzGu1fGjNRBu7r0QGULKp/iDtEtAAVkPqDmVe9tA9rNEeypYzinW8MJk
+         Bi/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680082228;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1lEaDc8be8FkWi1HX0iSofPQaKiEa8pAZUfrsxxjcSw=;
+        b=2cu5oXdlQ4ABJiO7bkXjHUo6T1k8er/kyuPrxy7oMqHjAtdFucfl8l1lvb6X3GXB7B
+         Lw1tvME25Ic3QAqWPIgy+C1hPYoxJiZsg2dFd9jWxXQggEqx2SamvUgtUfmU86oufnf5
+         rs3rWj7LXKcFiAdbR2GdRRvuShgXT9RPn7nVak95qnaIjAGjBWXMRVsapRBy+GNo8pwq
+         3WPHXAsIbou27O67J56JB6yyN3ff8tzreXGKaKzqbmg6JXQjcX8mby81TY16Fxz9C8H+
+         +y/yywe/K8PtNgs+DUGgwun7q3OXIUtu/nxoo0Z8O+va6jTZX5g+WkftyMbqC1pHaOLW
+         6pfw==
+X-Gm-Message-State: AO0yUKXYxiOpQ8RUHJSD9VANMvIa0axiUytWyTUUTkoKdqulqZKpWLsP
+        4HA8T3Dc2/+i2cSQLQsMlOc=
+X-Google-Smtp-Source: AK7set8icXlaIt2CvY3lleghHnnb5TGOj1bkw4TJVx7xOyJ8D/nA/R6NaqroGfmG6xJJgjVkcL3yJg==
+X-Received: by 2002:a1c:4c0d:0:b0:3eb:2e32:72c3 with SMTP id z13-20020a1c4c0d000000b003eb2e3272c3mr15711230wmf.22.1680082227927;
+        Wed, 29 Mar 2023 02:30:27 -0700 (PDT)
+Received: from localhost (cpc154979-craw9-2-0-cust193.16-3.cable.virginm.net. [80.193.200.194])
+        by smtp.gmail.com with ESMTPSA id a13-20020a05600c224d00b003edef091b17sm1573356wmm.37.2023.03.29.02.30.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 02:30:27 -0700 (PDT)
+From:   Colin Ian King <colin.i.king@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH][next] drm/msm/mdss: Fix spelling mistake "Unuspported" -> "Unsupported"
+Date:   Wed, 29 Mar 2023 10:30:26 +0100
+Message-Id: <20230329093026.418847-1-colin.i.king@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH v1 4/4] clk: qcom: lpasscc-sc7280: Remove qdsp6ss clock
- registration
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <broonie@kernel.org>,
-        <konrad.dybcio@somainline.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>,
-        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
-        <quic_visr@quicinc.com>, <robh+dt@kernel.org>,
-        <swboyd@chromium.org>
-References: <20230327163249.1081824-1-quic_mohs@quicinc.com>
- <20230327163249.1081824-5-quic_mohs@quicinc.com>
- <f2fa0b0813b26c0eb1893ef4c4c4c672.sboyd@kernel.org>
-From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-In-Reply-To: <f2fa0b0813b26c0eb1893ef4c4c4c672.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jC5ZuTD7YUZz5u_kg7swU-UawilAtR4t
-X-Proofpoint-ORIG-GUID: jC5ZuTD7YUZz5u_kg7swU-UawilAtR4t
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-29_03,2023-03-28_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- bulkscore=0 mlxscore=0 impostorscore=0 spamscore=0 adultscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303290077
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,61 +74,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+There is a spelling mistake in a dev_error message. Fix it.
 
-On 3/29/2023 8:41 AM, Stephen Boyd wrote:
-> Quoting Mohammad Rafi Shaik (2023-03-27 09:32:49)
->> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
->> index 48432010ce24..4719e3fa8b05 100644
->> --- a/drivers/clk/qcom/lpasscc-sc7280.c
->> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
->> @@ -121,17 +67,10 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
->>                  goto destroy_pm_clk;
->>          }
->>   
->> -       lpass_regmap_config.name = "qdsp6ss";
->> -       desc = &lpass_qdsp6ss_sc7280_desc;
->> -
->> -       ret = qcom_cc_probe_by_index(pdev, 0, desc);
->> -       if (ret)
->> -               goto destroy_pm_clk;
->> -
->>          lpass_regmap_config.name = "top_cc";
->>          desc = &lpass_cc_top_sc7280_desc;
->>   
->> -       ret = qcom_cc_probe_by_index(pdev, 1, desc);
->> +       ret = qcom_cc_probe_by_index(pdev, 0, desc);
-> Instead of changing the binding, it may be better to leave it as is and
-> ignore the first reg property in the driver. Then you don't need any DTS
-> patch or binding patch. You can just have this one patch. After that you
-> can introduce a new compatible string for the proper design and make it
-> have only a single reg property and deprecate the old binding. The
-> driver can then pick index 0 if the new compatible is present.
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_mdss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks for comment,
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index c15d1e2dc718..7cb301854e64 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -274,7 +274,7 @@ static int msm_mdss_enable(struct msm_mdss *msm_mdss)
+ 		msm_mdss_setup_ubwc_dec_40(msm_mdss);
+ 		break;
+ 	default:
+-		dev_err(msm_mdss->dev, "Unuspported UBWC decoder version %x\n",
++		dev_err(msm_mdss->dev, "Unsupported UBWC decoder version %x\n",
+ 			msm_mdss->mdss_data->ubwc_dec_version);
+ 		dev_err(msm_mdss->dev, "HW_REV: 0x%x\n",
+ 			readl_relaxed(msm_mdss->mmio + HW_REV));
+-- 
+2.30.2
 
-The main issue with sc7280.dtsi file.
-
-Required to upstream remoteproc_adsp node for audioreach adsp based 
-solution.
-The base address for remoteproc_adsp dts node is 0x3000000.
-
-Please refer below link audioreach dts patch:
-https://patchwork.kernel.org/project/linux-arm-msm/patch/1675700201-12890-4-git-send-email-quic_srivasam@quicinc.com/
-
-remoteproc_adsp: remoteproc@3000000 {
-             compatible = "qcom,sc7280-adsp-pil";
-             reg = <0 0x03000000 0 0x5000>, <0 0x0355b000 0 0x10>;
-             reg-names = "qdsp6ss_base", "lpass_efuse";
-
-and in sc7280.dtsi lpasscc node base address also same.
-
-lpasscc: lpasscc@3000000 {
-             compatible = "qcom,sc7280-lpasscc";
-             reg = <0 0x03000000 0 0x40>,
-                       <0 0x03c04000 0 0x4>,
-
-In single dtsi file should not have same physical address node.
-Required to sort the nodes based on physical address.
-
-As the qdsp6ss clocks are being enabled in remoteproc driver,
-removing the qdsp6ss reg region from lpasscc in sc7280.dtsi.
