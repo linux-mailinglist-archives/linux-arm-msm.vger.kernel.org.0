@@ -2,140 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B15E6CDB1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 15:48:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C735E6CDB5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:01:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbjC2Nr7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 09:47:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51352 "EHLO
+        id S229451AbjC2OBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 10:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbjC2Nr6 (ORCPT
+        with ESMTP id S230370AbjC2OBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 09:47:58 -0400
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97FA32D44;
-        Wed, 29 Mar 2023 06:47:47 -0700 (PDT)
-Received: from canpemm500006.china.huawei.com (unknown [172.30.72.56])
-        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4Pmnqk0gG5zKwMp;
-        Wed, 29 Mar 2023 21:45:22 +0800 (CST)
-Received: from [10.174.179.200] (10.174.179.200) by
- canpemm500006.china.huawei.com (7.192.105.130) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Wed, 29 Mar 2023 21:47:44 +0800
-Subject: Re: [syzbot] [arm-msm?] [net?] WARNING: refcount bug in qrtr_recvmsg
- (2)
-To:     syzbot <syzbot+a7492efaa5d61b51db23@syzkaller.appspotmail.com>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <mani@kernel.org>, <netdev@vger.kernel.org>, <pabeni@redhat.com>,
-        <syzkaller-bugs@googlegroups.com>
-References: <000000000000e3e09c05f78683a6@google.com>
-From:   "Ziyang Xuan (William)" <william.xuanziyang@huawei.com>
-Message-ID: <e4b73e85-d8e5-e785-7062-38a3a24d4d9f@huawei.com>
-Date:   Wed, 29 Mar 2023 21:47:44 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Wed, 29 Mar 2023 10:01:46 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE1B448D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:40 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id y15so20340926lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680098498;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OhTgON0dpxaPIhYp4g9uF92+QxjyZ+xguuLpohTAKmg=;
+        b=Wq54+Cc+T37WaDD5ViDJJfCLih1P8ghtEFm+JK1BlYhNcjOePgW88UhvHRmjx5/RAl
+         B+Ay1hNAolar1G7lAeqYARt8W4wseQimTn1W7EXv0qiyXRhhms8s2nyKymUmt6FCThvq
+         LSBI0Mx24/3ZP9zFH+B6kfpGoF5qw0E1hJG0BmgnhN7FE/Na77S4PAiE+0TFyL4lAstq
+         eXiQeaK90rcoqXUJBi8MB4R4dwFTXK7NzSZuPywYRdfAw5PZNxNtOmHppt8cjz3OeAn5
+         PT8WWYAUBEJQtzyaPNwMmGmc8bv3yXVWE8N2qN+5/VWW/zlfA8MgAQsbYhfyWj0y3KGu
+         pZ8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680098498;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OhTgON0dpxaPIhYp4g9uF92+QxjyZ+xguuLpohTAKmg=;
+        b=p7vMYe4siGUX3ceXIxOkenZ+3zvzV8/v//9oT6dD/x/zysAB0sHQgu2SGKy26VIebI
+         YnoSoJt5pgsKcV8ia71SzH9lkJeT1D/+BDHfbLt9ZxnOMu//Jv1W0wJEMdVminQR6YPi
+         MhDn+v2fWsErsxmPSAcjD3vaKzWn/GtX1Vm1O1ycg/JxwLI6HcWoscexRdL1InUWaaBP
+         TAQlxU0Wd5ntQaJZ0P/zZ0fmlUkEh5swX5H+2J7wLDMgOU9zxUIy89erEjasXVkZXnIZ
+         Qp0BzXZsHsNegjbgTs/ZD073/baHtmlG9K9fBWWYEZ888zbM+W98Edm9ViArBGNab8gp
+         zD6A==
+X-Gm-Message-State: AAQBX9fQ2MiYLAfFe+iydL70W7MHaIWya8/6fyyCr52nPWK5J0F4rD14
+        aC1NYazP4hF3xGP6WywoMfAE4DjJk88Jqwpo+dM=
+X-Google-Smtp-Source: AKy350ZNTKzZtKddMtavq1i1b8KNqFHuir9cjj6n6vuYljnvf66eJhkvpodYJQTkAmrMpveW6iW6pQ==
+X-Received: by 2002:ac2:5ddb:0:b0:4ea:d6c7:c897 with SMTP id x27-20020ac25ddb000000b004ead6c7c897mr5782374lfq.31.1680098498119;
+        Wed, 29 Mar 2023 07:01:38 -0700 (PDT)
+Received: from localhost.localdomain (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id f25-20020ac251b9000000b004d4d7fb0e07sm5511340lfk.216.2023.03.29.07.01.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 07:01:37 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org
+Cc:     marijn.suijten@somainline.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: gpucc-sm6375: Configure CX_GDSC disable wait value
+Date:   Wed, 29 Mar 2023 16:01:35 +0200
+Message-Id: <20230329140135.2178957-1-konrad.dybcio@linaro.org>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-In-Reply-To: <000000000000e3e09c05f78683a6@google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.174.179.200]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- canpemm500006.china.huawei.com (7.192.105.130)
-X-CFilter-Loop: Reflected
-X-Spam-Status: No, score=0.2 required=5.0 tests=NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Hello,
-> 
-> syzbot found the following issue on:
-> 
-> HEAD commit:    9c1bec9c0b08 Merge tag 'linux-kselftest-fixes-6.3-rc3' of ..
-> git tree:       upstream
-> console output: https://syzkaller.appspot.com/x/log.txt?x=17285724c80000
-> kernel config:  https://syzkaller.appspot.com/x/.config?x=6c84f77790aba2eb
-> dashboard link: https://syzkaller.appspot.com/bug?extid=a7492efaa5d61b51db23
-> compiler:       gcc (Debian 10.2.1-6) 10.2.1 20210110, GNU ld (GNU Binutils for Debian) 2.35.2
-> syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=13c9f8a4c80000
-> C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=10e8fe2cc80000
-> 
-> Downloadable assets:
-> disk image: https://storage.googleapis.com/syzbot-assets/eee5724f97b4/disk-9c1bec9c.raw.xz
-> vmlinux: https://storage.googleapis.com/syzbot-assets/00ee10c4bc28/vmlinux-9c1bec9c.xz
-> kernel image: https://storage.googleapis.com/syzbot-assets/42cf9c3e67cd/bzImage-9c1bec9c.xz
-> 
-> IMPORTANT: if you fix the issue, please add the following tag to the commit:
-> Reported-by: syzbot+a7492efaa5d61b51db23@syzkaller.appspotmail.com
-> 
-> ------------[ cut here ]------------
-> refcount_t: addition on 0; use-after-free.
-> WARNING: CPU: 0 PID: 46 at lib/refcount.c:25 refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-> Modules linked in:
-> CPU: 0 PID: 46 Comm: kworker/u4:3 Not tainted 6.3.0-rc2-syzkaller-00050-g9c1bec9c0b08 #0
-> Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/02/2023
-> Workqueue: qrtr_ns_handler qrtr_ns_worker
-> RIP: 0010:refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-> Code: 0a 31 ff 89 de e8 64 17 73 fd 84 db 0f 85 2e ff ff ff e8 47 1b 73 fd 48 c7 c7 e0 6a a6 8a c6 05 5d 73 52 0a 01 e8 e4 94 3b fd <0f> 0b e9 0f ff ff ff e8 28 1b 73 fd 0f b6 1d 47 73 52 0a 31 ff 89
-> RSP: 0018:ffffc90000b779d8 EFLAGS: 00010086
-> RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-> RDX: ffff888017d61d40 RSI: ffffffff814b6037 RDI: 0000000000000001
-> RBP: ffff88802717ec98 R08: 0000000000000001 R09: 0000000000000000
-> R10: 0000000000000000 R11: 0000000000000000 R12: ffff888145178000
-> R13: ffff88802717ec00 R14: ffff8880280b1030 R15: ffff8880280b1034
-> FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> CR2: 00007ffdb2009388 CR3: 0000000029dad000 CR4: 00000000003506f0
-> DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-> DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-> Call Trace:
->  <TASK>
->  __refcount_add include/linux/refcount.h:199 [inline]
->  __refcount_inc include/linux/refcount.h:250 [inline]
->  refcount_inc include/linux/refcount.h:267 [inline]
->  kref_get include/linux/kref.h:45 [inline]
->  qrtr_node_acquire net/qrtr/af_qrtr.c:202 [inline]
->  qrtr_node_lookup net/qrtr/af_qrtr.c:398 [inline]
->  qrtr_send_resume_tx net/qrtr/af_qrtr.c:1003 [inline]
->  qrtr_recvmsg+0x85f/0x990 net/qrtr/af_qrtr.c:1070
->  sock_recvmsg_nosec net/socket.c:1017 [inline]
->  sock_recvmsg+0xe2/0x160 net/socket.c:1038
->  qrtr_ns_worker+0x170/0x1700 net/qrtr/ns.c:688
->  process_one_work+0x991/0x15c0 kernel/workqueue.c:2390
->  worker_thread+0x669/0x1090 kernel/workqueue.c:2537
->  kthread+0x2e8/0x3a0 kernel/kthread.c:376
->  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
->  </TASK>
-> 
-It occurs in the concurrent scenario of qrtr_recvmsg() and
-qrtr_endpoint_unregister() as following:
+Configure the disable wait value on the CX GDSC to ensure we don't get
+any undefined behavior. This was omitted when first adding the driver.
 
-    cpu0                                        cpu1
-qrtr_recvmsg                            qrtr_endpoint_unregister
-qrtr_send_resume_tx                     qrtr_node_release
-qrtr_node_lookup                        mutex_lock(&qrtr_node_lock)
-spin_lock_irqsave(&qrtr_nodes_lock, )   refcount_dec_and_test(&node->ref) [node->ref == 0]
-qrtr_node_acquire [node != NULL]        spin_lock_irqsave(&qrtr_nodes_lock, )
-kref_get(&node->ref) [WARNING]          __qrtr_node_release
-                                        mutex_unlock(&qrtr_node_lock)
+Fixes: 8397e24278b3 ("clk: qcom: Add GPU clock controller driver for SM6375")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/clk/qcom/gpucc-sm6375.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-and I will give a fix later.
+diff --git a/drivers/clk/qcom/gpucc-sm6375.c b/drivers/clk/qcom/gpucc-sm6375.c
+index d8f4c4b59f1b..d3620344a009 100644
+--- a/drivers/clk/qcom/gpucc-sm6375.c
++++ b/drivers/clk/qcom/gpucc-sm6375.c
+@@ -358,6 +358,7 @@ static struct clk_branch gpucc_sleep_clk = {
+ static struct gdsc gpu_cx_gdsc = {
+ 	.gdscr = 0x106c,
+ 	.gds_hw_ctrl = 0x1540,
++	.clk_dis_wait_val = 8,
+ 	.pd = {
+ 		.name = "gpu_cx_gdsc",
+ 	},
+-- 
+2.40.0
 
-> 
-> ---
-> This report is generated by a bot. It may contain errors.
-> See https://goo.gl/tpsmEJ for more information about syzbot.
-> syzbot engineers can be reached at syzkaller@googlegroups.com.
-> 
-> syzbot will keep track of this issue. See:
-> https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-> syzbot can test patches for this issue, for details see:
-> https://goo.gl/tpsmEJ#testing-patches
-> .
-> 
