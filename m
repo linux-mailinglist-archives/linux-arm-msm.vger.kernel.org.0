@@ -2,80 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E2426CF365
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 21:43:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C50D96CF38A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 21:46:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbjC2Tm5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 15:42:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49368 "EHLO
+        id S231200AbjC2Tqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 15:46:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbjC2Tm3 (ORCPT
+        with ESMTP id S230434AbjC2TqX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 15:42:29 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23815BAE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:42:00 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id j11so21620003lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:42:00 -0700 (PDT)
+        Wed, 29 Mar 2023 15:46:23 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C1A56A44
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:46:04 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id p204so20806530ybc.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 12:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680118896;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XoOd+U1Vnod8w61xeHS5daG+82mqAqim0JIX10yOYbE=;
-        b=qrxTbeXaNejCw05f80MhPPTqgP9xg3w/ngbanNIGEExxljc9G81Ss24aMelZSyRiK7
-         En0pi02ofPIsOJA6Nj7oykClDfXg5VvWyh3znXbTEwPNivuHlF5CCkJ689ByQefg1By6
-         BhmkHNxqVqs90UaZ68RrTmeQW8VdjqBgkn1XOVkpqSpP4sxRt+j4IxfssT3KDj/Shzmn
-         m8bBT1zGhXVFFHAtvQbZdRcnoqV45FVHjfW5dK+7YeWCVzMnRA7n3PPZ1ZOi5yS4uycn
-         fzSZr+h1oCXFSvOi/MmFXXQManP9QtqnK1jMOnVORruXjtsLKtuBo2KmmpE9KwGFzkUq
-         v2RA==
+        d=linaro.org; s=google; t=1680119164;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uw+Hse+KJzv0y2FSFqFqsApOoihx38C1GEdX++8T4mU=;
+        b=Ls7zjQJXIsTIXK8xa12UAtG31viT2wzMU0YcliPrqQwfiS28W+VSdxEZCOHXi+RobD
+         XJ9KXSPw5B0DaQod948Mcm4Qe5V/oKODzQN0VNyyLUo34I+uIejSXd7Yil7OLKaWM3Ic
+         mDCDMu1lQm16AhfKyfawdB1xpJL3jxmlF2mcmnpp67Oe1PKzWojDN94zz1dBnpaD/F8n
+         73x1wO5Vu7TyBgqnybHaJwRlqGhN+FyoVNHwCokw5NLLun+bYLCaC9NxH5xxs6OuvGfj
+         eKXowAHQQsuzG8s8sypYOTlw9Ob3IXxmPcPDbdi07zqSSX5gApCeN57e0aEDnXq8mZNE
+         yCnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680118896;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XoOd+U1Vnod8w61xeHS5daG+82mqAqim0JIX10yOYbE=;
-        b=ColLsfafwtQszchCqcxOqXAD0cbgXjgG9RkmcJSrU8Fwkss26ZKPiyiueo0Ahz3nh6
-         fl5ASoOciRVVflkIY1e0pyHuADmOWoRysY1tEPFoC9dwRhfAiTPN3nmILlXgp86EJgpT
-         ztDiJ+JXdS+gnzKA37URy6Vzpc5FYqoHKRKl7e2mrPldbWz6ECo6XzuJzQa8Ur2xKzbt
-         jDGV6eRXPt65mRLti3Ne3lGiGEEsPsosVuEAGZjibFUHKHzcSk9aWrZoftaulFWJ8qR6
-         Fnsejr8OnDlYSvEeuVWU7kw/oLF7coIC6btTfSBhI0WqaAXGMi9E4OP7Z6u1et3q0U0+
-         4hQg==
-X-Gm-Message-State: AAQBX9cwC8vV5aLDgohzprmsQGirMSjasaAAdMpc0dXdfkNCoLMILU5+
-        LGJWm94CrwLMQ1FA4xPpyls69w==
-X-Google-Smtp-Source: AKy350ZOIqhChJeHbre7LCxZ4XhUlzWlnGO7rGw684OFWj0jIvaiWTtt6lY+YO+Ju5W8rrEetvRt1w==
-X-Received: by 2002:ac2:4884:0:b0:4ea:e628:356f with SMTP id x4-20020ac24884000000b004eae628356fmr6313819lfc.48.1680118896446;
-        Wed, 29 Mar 2023 12:41:36 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id q22-20020ac25296000000b004eae672e96bsm3955048lfm.255.2023.03.29.12.41.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 12:41:36 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 29 Mar 2023 21:41:23 +0200
-Subject: [PATCH v3 6/6] arm64: dts: qcom: sdm845-tama: Enable GPI_DMA0/1
+        d=1e100.net; s=20210112; t=1680119164;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Uw+Hse+KJzv0y2FSFqFqsApOoihx38C1GEdX++8T4mU=;
+        b=eDGQpP/5tP7rDseUFB7Wex+nuSd0rgU8+DiT1qcj1QXSPyndII9fMhpNRa6hE/ayXw
+         0OnyIhFm9NwOZD2AbxGc11dVTM7EwGIug3B9Add2qPyybSLHyj56jR0dFu4sKu2ntIp7
+         +jqVK6ySeFgbP/SV52KWzzngEhdeQ0EYei0wxbKwl56g6/RqDgVQ5kQF4nxuHtQ7q2QP
+         mDLpcFM9ObmljgqYHvz7XqistgiKyYCSaPPcJ+m1S0MNLY75jHaCXyfFT6sy9m3PqXou
+         tASHtssAto6eHdaX6t5GZU/Gs67pbQuGp2q51J6gG9BSB28f4kkM9etDImjSjDFhBHjq
+         qmwg==
+X-Gm-Message-State: AAQBX9fOinhoWdfCQCLOaEO0VqtAoN6qNDFlNfe7lS2Zw/qhyeJDvdTL
+        mQv7qbSLhR4kPhoDE7lU5YGKmN/thPTisli1SiT3Vg==
+X-Google-Smtp-Source: AKy350Ylj3nNZ+UsrhOAFg1PNOleWiB7Ukh6l+gs8gz1nByk+hbUAS4yZ4upJ6ElCZNHNv03bHuKs6bpr3HesgeAprk=
+X-Received: by 2002:a05:6902:a8c:b0:b7b:fb15:8685 with SMTP id
+ cd12-20020a0569020a8c00b00b7bfb158685mr7538197ybb.9.1680119163802; Wed, 29
+ Mar 2023 12:46:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230313-topic-tama_disp-v3-6-2b1567c039d7@linaro.org>
-References: <20230313-topic-tama_disp-v3-0-2b1567c039d7@linaro.org>
-In-Reply-To: <20230313-topic-tama_disp-v3-0-2b1567c039d7@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680118888; l=728;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=58eaqsVsaQNX+LDPe2xQAD3dX825ROO6GCnfX9zNSQw=;
- b=ZnyuLFOGLb23C+WDrAPS7HPoY+m2HlNaJlhdQgZNPAxji2Psk3F8DUJNHOb47oAqJ74yCVGjI+oc
- ROrTbHQCBML0EFG5Fs7fMtXX5FYmPET2iD47WcK217wqsckoyaNd
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
+ <ZCRNFitcrAeH27Pn@hovoldconsulting.com> <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
+In-Reply-To: <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 29 Mar 2023 22:45:52 +0300
+Message-ID: <CAA8EJpohEo+kMw7fx5112m+z7JHSLDmsqOL4T7hmyvr2fPP8vQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
+ idle() on load error
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        andersson@kernel.org, agross@kernel.org,
+        marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -85,36 +78,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
+On Wed, 29 Mar 2023 at 18:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 29.03.2023 16:37, Johan Hovold wrote:
+> > On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
+> >> If we fail to initialize the GPU for whatever reason (say we don't
+> >> embed the GPU firmware files in the initrd), the error path involves
+> >> pm_runtime_put_sync() which then calls idle() instead of suspend().
+> >>
+> >> This is suboptimal, as it means that we're not going through the
+> >> clean shutdown sequence. With at least A619_holi, this makes the GPU
+> >> not wake up until it goes through at least one more start-fail-stop
+> >> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
+> >> shutdown.
+> >
+> > This does not sound right. If pm_runtime_put_sync() fails to suspend the
+> > device when the usage count drops to zero, then you have a bug somewhere
+> > else.
+> I was surprised to see that it was not called as well, but I wasn't able
+> to track it down before..
 
-Enable both GPI DMAs.
+Could you please check that it's autosuspend who kicks in? In other
+words, if we disable autosuspend, the pm_runtime_put_sync is enough()?
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+That would probably mean that we lack some kind of reset in the hw_init path.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-index df8dd6e45a38..420ffede3e80 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-@@ -417,6 +417,14 @@ &gmu {
- 	status = "okay";
- };
- 
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
- &gpu {
- 	status = "okay";
- 
+On the other hand, I do not know how the device will react to the
+error-in-the-middle state. Modems for example, can enter the state
+where you can not properly turn it off once it starts the boot
+process.
+
+And if we remember the efforts that Akhil has put into making sure
+that the GPU is properly reset in case of an _error_, it might be
+nearly impossible to shut it down in a proper way.
+
+Thus said, I think that unless there is an obvious way to restart the
+init process, Korad's pm_runtime_put_sync_suspend() looks like a
+correct fix to me.
+
+> > Also since commit 2c087a336676 ("drm/msm/adreno: Load the firmware
+> > before bringing up the hardware") the firmware is loaded before even
+> > hitting these paths so the above description does not sound right in
+> > that respect either (or is missing some details).
+> ..but I did some more digging and I found that the precise "firmware"
+> that fails is the ZAP blob, which is not checked like SQE in the
+> commit you mentioned!
+>
+> Now I don't think that we can easily check for it as-is since
+> zap_shader_load_mdt() does the entire find-load-authenticate
+> dance which is required with secure assets, but it's obviously
+> possible to rip out the find-load part of that and go on from
+> there.
+
+Yes, I think we should load all firmware early. ZAP shader is a bit
+unique since the DT can override the name, but it might be nice to
+check for its presence earlier.
+
+At the same time it probably should not stop us from fixing the idle()
+vs suspend() bug.
+
+>
+> Do you think that would be a better solution?
+>
+> Konrad
+>
+> >
+> >> Test cases:
+> >> 1. firmware baked into kernel
+> >> 2. error loading fw in initrd -> load from rootfs at DE start
+> >>
+> >> Both succeed on A619_holi (SM6375) and A630 (SDM845).
+> >>
+> >> Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> index f61896629be6..59f3302e8167 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> >> @@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
+> >>      return gpu;
+> >>
+> >>  err_put_rpm:
+> >> -    pm_runtime_put_sync(&pdev->dev);
+> >> +    pm_runtime_put_sync_suspend(&pdev->dev);
+> >>  err_disable_rpm:
+> >>      pm_runtime_disable(&pdev->dev);
+> >
+> > Johan
+
+
 
 -- 
-2.40.0
-
+With best wishes
+Dmitry
