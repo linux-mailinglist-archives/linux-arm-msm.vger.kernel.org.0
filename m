@@ -2,197 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38E5E6CDCAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:35:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6DA46CEBD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:40:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230014AbjC2Ofp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 10:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59184 "EHLO
+        id S229989AbjC2OkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 10:40:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbjC2OfY (ORCPT
+        with ESMTP id S229925AbjC2Oj5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 10:35:24 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 818E46A48;
-        Wed, 29 Mar 2023 07:31:27 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        Wed, 29 Mar 2023 10:39:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1AABC;
+        Wed, 29 Mar 2023 07:36:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id C8D9E1FDD7;
-        Wed, 29 Mar 2023 14:23:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1680099832; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=JgAqhks0C3IN4+lfZvuY0gbFhTkXdOVc3wNxYkO+XwE=;
-        b=VHJy/t4VnSzbZ4tzrhebOifyuC6pGjl5TQIz/eVAhtxXjcdr04nTTT8d+loIHlGU27b+2j
-        CSu6s44u+410mCUI1AS93mzHeTuhgDd5WeETx5FLlNVkwySfxchYWlJ1RLdkFjFZotLzG/
-        coolDxdnh26L8KxKvBfdG8ioSVVkkIQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1680099832;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=JgAqhks0C3IN4+lfZvuY0gbFhTkXdOVc3wNxYkO+XwE=;
-        b=47xCWD44CmYf+Mf1uCacEcx5m0liEJt4VEk696Atou5kYSzLvIRfiSd0oiNW0K9PV3jU3L
-        lxDHHZyHaPhoaJCw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 63D1E138FF;
-        Wed, 29 Mar 2023 14:23:52 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id vQXSFvhJJGTPMwAAMHmgww
-        (envelope-from <hare@suse.de>); Wed, 29 Mar 2023 14:23:52 +0000
-Message-ID: <e128356a-f56f-4c02-7437-dfea38e4194b@suse.de>
-Date:   Wed, 29 Mar 2023 16:23:51 +0200
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 484A061D4E;
+        Wed, 29 Mar 2023 14:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A314CC433D2;
+        Wed, 29 Mar 2023 14:36:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680100614;
+        bh=XTkKPvBNieDl9RE+ktDyCOV9yI/ueyrxbrxjm76EYQs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TctY+jPB/3xa2j7YZCroyr0fotSU9F7EJu8GC3R392Ync5I4rrZRahdVOad6ww3dz
+         oCt3oX3wF/WpVf0vQciRPn0n8IEXZXM5T/4aPsYr+PQyIu2saPvtgacdyRVLGe9HBo
+         HVHj88QnuWdkEjelE2lXTl8g76BJ069LVtPt0vSnph+xeYBXgxS5Lh9O93haYsiacE
+         UHEfIqlt2ei0/z02iEpUzZY8HWBLA2xbduECCwEGLoBLrR6HnP1/eITY4anzJfY4XU
+         yCtFfIn3t0zp/YCLmCiHAVFWq/TrXnaBwEe7ZBr4LhQrxayuwrz0Y35Xl6AdmA0We9
+         YVtw0leYx9a6g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1phWvG-0000IY-4t; Wed, 29 Mar 2023 16:37:10 +0200
+Date:   Wed, 29 Mar 2023 16:37:10 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, marijn.suijten@somainline.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
+ idle() on load error
+Message-ID: <ZCRNFitcrAeH27Pn@hovoldconsulting.com>
+References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [RFC PATCH v2 48/48] sock: Remove ->sendpage*() in favour of
- sendmsg(MSG_SPLICE_PAGES)
-To:     David Howells <dhowells@redhat.com>,
-        Matthew Wilcox <willy@infradead.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>
-Cc:     linux-doc@vger.kernel.org,
-        virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
-        linux-sctp@vger.kernel.org, linux-afs@lists.infradead.org,
-        rds-devel@oss.oracle.com, linux-x25@vger.kernel.org,
-        dccp@vger.kernel.org, linux-rdma@vger.kernel.org,
-        Christoph Hellwig <hch@infradead.org>,
-        linux-wpan@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
-        Al Viro <viro@zeniv.linux.org.uk>, linux-hams@vger.kernel.org,
-        mptcp@lists.linux.dev, Jens Axboe <axboe@kernel.dk>,
-        Christian Brauner <brauner@kernel.org>, netdev@vger.kernel.org,
-        Jeff Layton <jlayton@kernel.org>, linux-kernel@vger.kernel.org,
-        Chuck Lever III <chuck.lever@oracle.com>,
-        tipc-discussion@lists.sourceforge.net,
-        linux-crypto@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-        bpf@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-References: <20230329141354.516864-1-dhowells@redhat.com>
- <20230329141354.516864-49-dhowells@redhat.com>
-Content-Language: en-US
-From:   Hannes Reinecke <hare@suse.de>
-In-Reply-To: <20230329141354.516864-49-dhowells@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/29/23 16:13, David Howells wrote:
-> [!] Note: This is a work in progress.  At the moment, some things won't
->      build if this patch is applied.  nvme, kcm, smc, tls.
+On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
+> If we fail to initialize the GPU for whatever reason (say we don't
+> embed the GPU firmware files in the initrd), the error path involves
+> pm_runtime_put_sync() which then calls idle() instead of suspend().
 > 
-> Remove ->sendpage() and ->sendpage_locked().  sendmsg() with
-> MSG_SPLICE_PAGES should be used instead.  This allows multiple pages and
-> multipage folios to be passed through.
+> This is suboptimal, as it means that we're not going through the
+> clean shutdown sequence. With at least A619_holi, this makes the GPU
+> not wake up until it goes through at least one more start-fail-stop
+> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
+> shutdown.
+
+This does not sound right. If pm_runtime_put_sync() fails to suspend the
+device when the usage count drops to zero, then you have a bug somewhere
+else.
+
+Also since commit 2c087a336676 ("drm/msm/adreno: Load the firmware
+before bringing up the hardware") the firmware is loaded before even
+hitting these paths so the above description does not sound right in
+that respect either (or is missing some details).
+
+> Test cases:
+> 1. firmware baked into kernel
+> 2. error loading fw in initrd -> load from rootfs at DE start
 > 
-> Signed-off-by: David Howells <dhowells@redhat.com>
-> Acked-by: Marc Kleine-Budde <mkl@pengutronix.de> # for net/can
-> cc: "David S. Miller" <davem@davemloft.net>
-> cc: Eric Dumazet <edumazet@google.com>
-> cc: Jakub Kicinski <kuba@kernel.org>
-> cc: Paolo Abeni <pabeni@redhat.com>
-> cc: Jens Axboe <axboe@kernel.dk>
-> cc: Matthew Wilcox <willy@infradead.org>
-> cc: bpf@vger.kernel.org
-> cc: dccp@vger.kernel.org
-> cc: linux-afs@lists.infradead.org
-> cc: linux-arm-msm@vger.kernel.org
-> cc: linux-can@vger.kernel.org
-> cc: linux-crypto@vger.kernel.org
-> cc: linux-doc@vger.kernel.org
-> cc: linux-hams@vger.kernel.org
-> cc: linux-kernel@vger.kernel.org
-> cc: linux-rdma@vger.kernel.org
-> cc: linux-sctp@vger.kernel.org
-> cc: linux-wpan@vger.kernel.org
-> cc: linux-x25@vger.kernel.org
-> cc: mptcp@lists.linux.dev
-> cc: netdev@vger.kernel.org
-> cc: rds-devel@oss.oracle.com
-> cc: tipc-discussion@lists.sourceforge.net
-> cc: virtualization@lists.linux-foundation.org
+> Both succeed on A619_holi (SM6375) and A630 (SDM845).
+> 
+> Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   Documentation/networking/scaling.rst |   4 +-
->   crypto/af_alg.c                      |  29 ------
->   crypto/algif_aead.c                  |  22 +----
->   crypto/algif_rng.c                   |   2 -
->   crypto/algif_skcipher.c              |  14 ---
->   include/linux/net.h                  |   8 --
->   include/net/inet_common.h            |   2 -
->   include/net/sock.h                   |   6 --
->   net/appletalk/ddp.c                  |   1 -
->   net/atm/pvc.c                        |   1 -
->   net/atm/svc.c                        |   1 -
->   net/ax25/af_ax25.c                   |   1 -
->   net/caif/caif_socket.c               |   2 -
->   net/can/bcm.c                        |   1 -
->   net/can/isotp.c                      |   1 -
->   net/can/j1939/socket.c               |   1 -
->   net/can/raw.c                        |   1 -
->   net/core/sock.c                      |  35 +------
->   net/dccp/ipv4.c                      |   1 -
->   net/dccp/ipv6.c                      |   1 -
->   net/ieee802154/socket.c              |   2 -
->   net/ipv4/af_inet.c                   |  21 ----
->   net/ipv4/tcp.c                       |  34 -------
->   net/ipv4/tcp_bpf.c                   |  21 +---
->   net/ipv4/tcp_ipv4.c                  |   1 -
->   net/ipv4/udp.c                       |  22 -----
->   net/ipv4/udp_impl.h                  |   2 -
->   net/ipv4/udplite.c                   |   1 -
->   net/ipv6/af_inet6.c                  |   3 -
->   net/ipv6/raw.c                       |   1 -
->   net/ipv6/tcp_ipv6.c                  |   1 -
->   net/key/af_key.c                     |   1 -
->   net/l2tp/l2tp_ip.c                   |   1 -
->   net/l2tp/l2tp_ip6.c                  |   1 -
->   net/llc/af_llc.c                     |   1 -
->   net/mctp/af_mctp.c                   |   1 -
->   net/mptcp/protocol.c                 |   2 -
->   net/netlink/af_netlink.c             |   1 -
->   net/netrom/af_netrom.c               |   1 -
->   net/packet/af_packet.c               |   2 -
->   net/phonet/socket.c                  |   2 -
->   net/qrtr/af_qrtr.c                   |   1 -
->   net/rds/af_rds.c                     |   1 -
->   net/rose/af_rose.c                   |   1 -
->   net/rxrpc/af_rxrpc.c                 |   1 -
->   net/sctp/protocol.c                  |   1 -
->   net/socket.c                         |  48 ---------
->   net/tipc/socket.c                    |   3 -
->   net/unix/af_unix.c                   | 139 ---------------------------
->   net/vmw_vsock/af_vsock.c             |   3 -
->   net/x25/af_x25.c                     |   1 -
->   net/xdp/xsk.c                        |   1 -
->   52 files changed, 9 insertions(+), 447 deletions(-)
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-Weelll ... what happens to consumers of kernel_sendpage()?
-(Let's call them nvme ...)
-Should they be moved over, too?
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index f61896629be6..59f3302e8167 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -477,7 +477,7 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
+>  	return gpu;
+>  
+>  err_put_rpm:
+> -	pm_runtime_put_sync(&pdev->dev);
+> +	pm_runtime_put_sync_suspend(&pdev->dev);
+>  err_disable_rpm:
+>  	pm_runtime_disable(&pdev->dev);
 
-Or what is the general consensus here?
-
-(And what do we do with TLS? It does have a ->sendpage() version, too ...)
-
-Cheers,
-
-Hannes
-
+Johan
