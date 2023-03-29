@@ -2,68 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C735E6CDB5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:01:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF3226CDB5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 16:02:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbjC2OBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 10:01:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36022 "EHLO
+        id S230133AbjC2OCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 10:02:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230370AbjC2OBq (ORCPT
+        with ESMTP id S229575AbjC2OCV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 10:01:46 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE1B448D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:40 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id y15so20340926lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:40 -0700 (PDT)
+        Wed, 29 Mar 2023 10:02:21 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D64FE4C05
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:59 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id l7so14128637pjg.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 07:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680098498;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OhTgON0dpxaPIhYp4g9uF92+QxjyZ+xguuLpohTAKmg=;
-        b=Wq54+Cc+T37WaDD5ViDJJfCLih1P8ghtEFm+JK1BlYhNcjOePgW88UhvHRmjx5/RAl
-         B+Ay1hNAolar1G7lAeqYARt8W4wseQimTn1W7EXv0qiyXRhhms8s2nyKymUmt6FCThvq
-         LSBI0Mx24/3ZP9zFH+B6kfpGoF5qw0E1hJG0BmgnhN7FE/Na77S4PAiE+0TFyL4lAstq
-         eXiQeaK90rcoqXUJBi8MB4R4dwFTXK7NzSZuPywYRdfAw5PZNxNtOmHppt8cjz3OeAn5
-         PT8WWYAUBEJQtzyaPNwMmGmc8bv3yXVWE8N2qN+5/VWW/zlfA8MgAQsbYhfyWj0y3KGu
-         pZ8A==
+        d=linaro.org; s=google; t=1680098519;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+t+rqepYDiPCeucRwMGif55QGbm9o8+zPctzSfAB80U=;
+        b=i86veqBnDoigJJiVx28C2dy2G9XN+6v4XIy8vWr19qwezqy4lmNfvb+M35MDPFXpe8
+         VsEXhCWWC5nFZKYf/n4mL+fXaPtb9lEc7RtQ6k4gra8g48qjyn+2ha7fa9FDXhCDN6hi
+         x3YdNPXWQRHms6ouL0kgVgslYOVsdr6fKKdnCsZG7NmiPhXAhFRXWRAhAcRJaOXaB5zv
+         QvuP7Av6kK8z6yYIEV70DY07BrglUWW+Ep11oOTS5+dvAYOqS4KXfc/pICdhDDN4g3L+
+         Kah4r38GUt6ptCnbFgMf3lDtM9s6pH5yR0HmPWxVkcDDPxjiU2eHpdyOYgo4yrN6OfxR
+         nr5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680098498;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OhTgON0dpxaPIhYp4g9uF92+QxjyZ+xguuLpohTAKmg=;
-        b=p7vMYe4siGUX3ceXIxOkenZ+3zvzV8/v//9oT6dD/x/zysAB0sHQgu2SGKy26VIebI
-         YnoSoJt5pgsKcV8ia71SzH9lkJeT1D/+BDHfbLt9ZxnOMu//Jv1W0wJEMdVminQR6YPi
-         MhDn+v2fWsErsxmPSAcjD3vaKzWn/GtX1Vm1O1ycg/JxwLI6HcWoscexRdL1InUWaaBP
-         TAQlxU0Wd5ntQaJZ0P/zZ0fmlUkEh5swX5H+2J7wLDMgOU9zxUIy89erEjasXVkZXnIZ
-         Qp0BzXZsHsNegjbgTs/ZD073/baHtmlG9K9fBWWYEZ888zbM+W98Edm9ViArBGNab8gp
-         zD6A==
-X-Gm-Message-State: AAQBX9fQ2MiYLAfFe+iydL70W7MHaIWya8/6fyyCr52nPWK5J0F4rD14
-        aC1NYazP4hF3xGP6WywoMfAE4DjJk88Jqwpo+dM=
-X-Google-Smtp-Source: AKy350ZNTKzZtKddMtavq1i1b8KNqFHuir9cjj6n6vuYljnvf66eJhkvpodYJQTkAmrMpveW6iW6pQ==
-X-Received: by 2002:ac2:5ddb:0:b0:4ea:d6c7:c897 with SMTP id x27-20020ac25ddb000000b004ead6c7c897mr5782374lfq.31.1680098498119;
-        Wed, 29 Mar 2023 07:01:38 -0700 (PDT)
-Received: from localhost.localdomain (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id f25-20020ac251b9000000b004d4d7fb0e07sm5511340lfk.216.2023.03.29.07.01.36
+        d=1e100.net; s=20210112; t=1680098519;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+t+rqepYDiPCeucRwMGif55QGbm9o8+zPctzSfAB80U=;
+        b=4B0BnfGCLoUYiPvynCJj8Vk7kYGGgj7BEobMQRlVGPvQ+SQF1gRQnMuoTTGAajCYZG
+         PGV2gsejkjC4SqZvJ3KpBmH0MjO4GoPcy7mmy9iAV6SqA+XKaViP/HkryXCv3Tw/h+i7
+         GckUmNTA+XQ2KtHl3OblnEnciYGJ/uPqr0lDalWYaOAadnpbCfwR3nQDN//kIYtiJYYG
+         8eAQMnN7m1LuViLNLpTNT+lz/xEfF+hB3GCkqLzwpze8A35q0h3l7UynxzPfhpoHwdsf
+         4k/Hq6MG553Mwm8qwBYdteGR+GjbWf1fRwG7Yj2VlmR+zXwmdYQFY4WWLHKNV8rPfEPl
+         LBxA==
+X-Gm-Message-State: AO0yUKW1dqKE0l62mf4c5OInLqLzMoijWCqyCJ4zRSB0YA47W23fRnPq
+        McmtL8ME1Nwessd8kDoWx+eQ
+X-Google-Smtp-Source: AK7set9wQikTSV1pgs3dy6STodYlwf25gv+l3pyiPdbF2QYVGcKDUJ3vgqvGI1rALG4VDgx9tbdNeA==
+X-Received: by 2002:a05:6a20:b29f:b0:cc:a8d7:ad7e with SMTP id ei31-20020a056a20b29f00b000cca8d7ad7emr15656875pzb.60.1680098518618;
+        Wed, 29 Mar 2023 07:01:58 -0700 (PDT)
+Received: from thinkpad ([117.216.120.213])
+        by smtp.gmail.com with ESMTPSA id 16-20020aa79250000000b005e4d8c6168csm23034693pfp.210.2023.03.29.07.01.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 07:01:37 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: gpucc-sm6375: Configure CX_GDSC disable wait value
-Date:   Wed, 29 Mar 2023 16:01:35 +0200
-Message-Id: <20230329140135.2178957-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.40.0
+        Wed, 29 Mar 2023 07:01:58 -0700 (PDT)
+Date:   Wed, 29 Mar 2023 19:31:50 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
+        mka@chromium.org, Dhruva Gole <d-gole@ti.com>
+Subject: Re: [PATCH v3 1/1] PCI: qcom: Add support for system suspend and
+ resume
+Message-ID: <20230329140150.GE5575@thinkpad>
+References: <20230327133824.29136-1-manivannan.sadhasivam@linaro.org>
+ <20230327133824.29136-2-manivannan.sadhasivam@linaro.org>
+ <ZCQLWzqKPrusMro+@hovoldconsulting.com>
+ <20230329125232.GB5575@thinkpad>
+ <ZCQ69xyQ4mwTow1W@hovoldconsulting.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZCQ69xyQ4mwTow1W@hovoldconsulting.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -73,27 +81,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Configure the disable wait value on the CX GDSC to ensure we don't get
-any undefined behavior. This was omitted when first adding the driver.
+On Wed, Mar 29, 2023 at 03:19:51PM +0200, Johan Hovold wrote:
+> On Wed, Mar 29, 2023 at 06:22:32PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Mar 29, 2023 at 11:56:43AM +0200, Johan Hovold wrote:
+> > > On Mon, Mar 27, 2023 at 07:08:24PM +0530, Manivannan Sadhasivam wrote:
+>  
+> > > > +static int qcom_pcie_suspend_noirq(struct device *dev)
+> > > > +{
+> > > > +	struct qcom_pcie *pcie = dev_get_drvdata(dev);
+> > > > +	int ret;
+> > > > +
+> > > > +	/*
+> > > > +	 * Set minimum bandwidth required to keep data path functional during
+> > > > +	 * suspend.
+> > > > +	 */
+> > > > +	ret = icc_set_bw(pcie->icc_mem, 0, MBps_to_icc(250));
+> > > 
+> > > This isn't really the minimum bandwidth you're setting here.
+> > > 
+> > > I think you said off list that you didn't see real impact reducing the
+> > > bandwidth, but have you tried requesting the real minimum which would be
+> > > kBps_to_icc(1)?
+> > > 
+> > > Doing so works fine here with both the CRD and X13s and may result in
+> > > some further power savings.
+> > > 
+> > 
+> > No, we shouldn't be setting random value as the bandwidth. Reason is, these
+> > values are computed by the bus team based on the requirement of the interconnect
+> > paths (clock, voltage etc...) with actual PCIe Gen speeds. I don't know about
+> > the potential implication even if it happens to work.
+> 
+> Why would you need PCIe gen1 speed during suspend?
+> 
 
-Fixes: 8397e24278b3 ("clk: qcom: Add GPU clock controller driver for SM6375")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gpucc-sm6375.c | 1 +
- 1 file changed, 1 insertion(+)
+That's what the suggestion I got from Qcom PCIe team. But I didn't compare the
+value you added during icc support patch with downstream. More below...
 
-diff --git a/drivers/clk/qcom/gpucc-sm6375.c b/drivers/clk/qcom/gpucc-sm6375.c
-index d8f4c4b59f1b..d3620344a009 100644
---- a/drivers/clk/qcom/gpucc-sm6375.c
-+++ b/drivers/clk/qcom/gpucc-sm6375.c
-@@ -358,6 +358,7 @@ static struct clk_branch gpucc_sleep_clk = {
- static struct gdsc gpu_cx_gdsc = {
- 	.gdscr = 0x106c,
- 	.gds_hw_ctrl = 0x1540,
-+	.clk_dis_wait_val = 8,
- 	.pd = {
- 		.name = "gpu_cx_gdsc",
- 	},
+> These numbers are already somewhat random as, for example, the vendor
+> driver is requesting 500 kBps (800 peak) during runtime, while we are
+> now requesting five times that during suspend (the vendor driver gets a
+> away with 0).
+> 
+
+Hmm, then I should've asked you this question when you added icc support.
+I thought you inherited those values from downstream but apparently not.
+Even in downstream they are using different bw votes for different platforms.
+I will touch base with PCIe and ICC teams to find out the actual value that
+needs to be used.
+
+Regarding 0 icc vote, downstream puts all the devices in D3Cold (poweroff)
+state during suspend. So for them 0 icc vote will work but not for us as we need
+to keep the device and link intact.
+
+- Mani
+
+> Sure, this indicates that the interconnect driver is broken and we
+> should indeed be using values that at least makes some sense (and
+> eventually fix the interconnect driver).
+> 
+> Just not sure that you need to request that much bandwidth during
+> suspend (e.g. for just a couple of register accesses).
+> 
+> Johan
+
 -- 
-2.40.0
-
+மணிவண்ணன் சதாசிவம்
