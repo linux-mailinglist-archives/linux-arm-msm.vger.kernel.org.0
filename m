@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 747D86CD878
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 13:30:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B70C6CD87C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Mar 2023 13:32:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229564AbjC2La5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 07:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60418 "EHLO
+        id S229842AbjC2LcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 07:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbjC2La4 (ORCPT
+        with ESMTP id S229829AbjC2LcE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 07:30:56 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BFD240CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:30:53 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id h25so19679985lfv.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:30:53 -0700 (PDT)
+        Wed, 29 Mar 2023 07:32:04 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16D2840CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:32:02 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id q14so15692743ljm.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 04:32:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680089451;
+        d=linaro.org; s=google; t=1680089520;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZbkStHhS8RicbgIIuIIrnClWQyhU0ssY7587G4EgzNw=;
-        b=AezqGCBKF8JxwLe6ttFT/yFnOh4FBegYDojNt8VAclL2tZXfcP5EuORMusgm6F5p1U
-         k6b8hqZWPiDnAT0h0AtwvdWXD3jrKt6ckoMP1Ho76vTn0j96UmjyE262J3GoQMUHYTcn
-         REWSxM3kV4aocy28gjxwsvMxIGJffiMp3JmKhfgEZFAwm85IOpbFys8Af0RXC98TQ+YP
-         MM9QFXxzLvogsuF2VLGva0zOlqbUJA4M09v5rQhf/asxYm1Mu+vWzH8OtyNfzaq+vyJX
-         6HPzqBBQ2Vl/h7b2dYJJ8Zo/yTcrujJYgCss6d5aX3f5m1kX/A1hlVqsbjWCYeRCt4YU
-         HkSQ==
+        bh=2+DmZREGJLvaG78XJWbtpreueoMcEnxDx6Pkz53TmMI=;
+        b=HBGugAGCH0yFGhYG/IU6OtOsjloJCctl2WSqcVIi4FVXDRDmRXKgXpFd/o5uub0NlM
+         TEcIdA0+m1OLMdYGUeG/Vm4YRYD+GP7YsBCSmdURJ8cvkSGJEec9M0qHEAfyrYL0iM5l
+         5Ra88t81JFGoQElR1kPZWszDrF6VfW1wiz6GHv3VDzbtUvo18jrBF9gw7SIZcfvJkLoI
+         PSHWQLIKEqN538/iuldEzqxpP31Ty4REom33rt8oOEMg7t18TsE0r1sqA+g8IQAJrf+N
+         DlM3Iit9oDWTBLeIUuFC1HyzodoZeUDju2yBGviTF8ZQ/SgAjSjc6D9v+5yTlvjNKX47
+         QIgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680089451;
+        d=1e100.net; s=20210112; t=1680089520;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZbkStHhS8RicbgIIuIIrnClWQyhU0ssY7587G4EgzNw=;
-        b=VtofhlMXDaZ+3JQOYXlkyCHBRHxtYJKJfSHYnrVV5kBUodCOz/pHSHKWeUKYnNYE+X
-         mUNFE0spJ7NbmJc5pbqv+agJB9fl7kT/u4Q4fHT0+4yRfykc5WVTZA+lFVE1hq1mU4H8
-         bq/SEe+jwdrtg9+LStpnLcCJY7lBebl2VMaCvfg6HSz3VEIw2D02X2/HlVXRDeMLo8pI
-         /d7dthnJkYuYUmQavW8DwOAyc9QlEfl91JaPvEDEDPVKkkf/LZEdUMVG97BJOTPlorGX
-         1eenqUnNuuAlm3SSwAcQsPixFrRetUyYUbk3AqsLKELVJPPFnwPQlKXgH7GG2fk6YEri
-         UABg==
-X-Gm-Message-State: AAQBX9dpUnJ4rI70AhxSpXpdSC9jQ1Jl780RUPo1370r+iUhS9LBdJs8
-        Nb1lByIMqNzTzhw3gRvxKmOZVf4kFfjeJ20AIxI=
-X-Google-Smtp-Source: AKy350ZV6sDKOCTXP7mZPDivoS4M7xj7kfUle01CK32kBixoCg2P75PVeoCzYNaj3NW9WtiXMPPxQw==
-X-Received: by 2002:ac2:596f:0:b0:4eb:e03:9e6c with SMTP id h15-20020ac2596f000000b004eb0e039e6cmr599912lfp.33.1680089451646;
-        Wed, 29 Mar 2023 04:30:51 -0700 (PDT)
+        bh=2+DmZREGJLvaG78XJWbtpreueoMcEnxDx6Pkz53TmMI=;
+        b=qanSoEkmgePzx+ffapwO3K3If3sAhvbqKr560f2DNALTxiJ+GLXtq3JsHi1E/J2Dbg
+         HnIFtZd8FxUP7PVDsp+w0pFEldHmcWOoALqNPmGhNMFNvK0rGYx/yFP0kuPBf2DBe+5T
+         t7E6BAflzrmH08YL2LSMcCfBdk1umYc59NCLovY4R3O5oi/Q+T5V3HfsTXcCvK1VDu0x
+         fIeB43f4biH4UpcNNQkjsuV7DdbMGdFnK2WbOyM8DOxogZ6133AN9MEsPPj075s4pd1q
+         KSmx6SyQXF3iwnoPvsO2IqsMdUctlJBXvX6XHJV8VksHmuTGWGXumaC7G5MKg8XkgEA/
+         r8hg==
+X-Gm-Message-State: AAQBX9eNHeTcSEFHqegTkG38VVA++Rh7PiljFW4oMpivifWdv9roJVWL
+        26JqRGbUqKNb78LXHKXRNcJJ7Q==
+X-Google-Smtp-Source: AKy350YE88S5jvIQZVnuVpOQq2nScq3LFKtzJGssAQyWtRjo20ViDGBKbgJ3z8i5HVZH0KqvlDK8+A==
+X-Received: by 2002:a2e:b162:0:b0:299:d0b5:cdce with SMTP id a2-20020a2eb162000000b00299d0b5cdcemr6524373ljm.44.1680089520380;
+        Wed, 29 Mar 2023 04:32:00 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id u3-20020a056512040300b0048b365176d9sm5467581lfk.286.2023.03.29.04.30.50
+        by smtp.gmail.com with ESMTPSA id y26-20020a2e321a000000b002934febffe4sm5454811ljy.128.2023.03.29.04.31.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 04:30:51 -0700 (PDT)
-Message-ID: <95b4bd56-b307-6c72-494f-e9b190df8d74@linaro.org>
-Date:   Wed, 29 Mar 2023 13:30:49 +0200
+        Wed, 29 Mar 2023 04:32:00 -0700 (PDT)
+Message-ID: <ab09d5eb-b303-bfa4-4f35-283ab30ffed2@linaro.org>
+Date:   Wed, 29 Mar 2023 13:31:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 2/7] clk: qcom: add the GPUCC driver for sa8775p
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sa8775p: add the GPU clock
+ controller node
 Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
@@ -66,14 +67,11 @@ To:     Bartosz Golaszewski <brgl@bgdev.pl>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20230328193632.226095-1-brgl@bgdev.pl>
- <20230328193632.226095-3-brgl@bgdev.pl>
+ <20230328193632.226095-7-brgl@bgdev.pl>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230328193632.226095-3-brgl@bgdev.pl>
+In-Reply-To: <20230328193632.226095-7-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -89,68 +87,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 28.03.2023 21:36, Bartosz Golaszewski wrote:
-> From: Shazad Hussain <quic_shazhuss@quicinc.com>
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add the clock driver for the Qualcomm Graphics Clock control module.
+> Add the GPUCC node for sa8775p platforms.
 > 
-> Cc: Stephen Boyd <sboyd@kernel.org>
-> Cc: Michael Turquette <mturquette@baylibre.com>
-> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
-> [Bartosz: make ready for upstream]
-> Co-authored-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
-[...]
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 9ab630c7d81b..4c45ad1cc7ff 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -591,6 +591,18 @@ tcsr_mutex: hwlock@1f40000 {
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		gpucc: clock-controller@3d90000 {
+> +			compatible = "qcom,sa8775p-gpucc";
+> +			reg = <0x0 0x03d90000 0x0 0xa000>;
+> +			clocks = <&gcc GCC_GPU_CFG_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+Without the first clock, as pointed out in the clk review:
 
-> +/* Need to match the order of clocks in DT binding */
-> +enum {
-> +	DT_IFACE,
-I think it's never used?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[...]
-
-> +static int gpu_cc_sa8775p_probe(struct platform_device *pdev)
-> +{
-> +	struct regmap *regmap;
-> +
-> +	regmap = qcom_cc_map(pdev, &gpu_cc_sa8775p_desc);
-> +	if (IS_ERR(regmap))
-> +		return PTR_ERR(regmap);
-> +
-> +	clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
-> +	clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
-> +
-> +	/*
-> +	 * Keep the clocks always-ON
-> +	 * GPU_CC_CB_CLK
-> +	 */
-> +	regmap_update_bits(regmap, 0x93a4, BIT(0), BIT(0));
-You set it as CRITICAL, this should be unnecessary now.
+(that also makes it compatible with the generic gpucc bindings!)
 
 Konrad
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
 > +
-> +	return qcom_cc_really_probe(pdev, &gpu_cc_sa8775p_desc, regmap);
-> +}
-> +
-> +static struct platform_driver gpu_cc_sa8775p_driver = {
-> +	.probe = gpu_cc_sa8775p_probe,
-> +	.driver = {
-> +		.name = "gpu_cc-sa8775p",
-> +		.of_match_table = gpu_cc_sa8775p_match_table,
-> +	},
-> +};
-> +
-> +static int __init gpu_cc_sa8775p_init(void)
-> +{
-> +	return platform_driver_register(&gpu_cc_sa8775p_driver);
-> +}
-> +subsys_initcall(gpu_cc_sa8775p_init);
-> +
-> +static void __exit gpu_cc_sa8775p_exit(void)
-> +{
-> +	platform_driver_unregister(&gpu_cc_sa8775p_driver);
-> +}
-> +module_exit(gpu_cc_sa8775p_exit);
-> +
-> +MODULE_DESCRIPTION("SA8775P GPUCC driver");
-> +MODULE_LICENSE("GPL");
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
+>  			reg = <0x0 0x0b220000 0x0 0x30000>,
