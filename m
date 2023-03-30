@@ -2,68 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C1956D0EE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 21:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90B546D0F1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 21:44:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231613AbjC3TdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 15:33:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38344 "EHLO
+        id S229694AbjC3ToQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 15:44:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231796AbjC3TdO (ORCPT
+        with ESMTP id S229584AbjC3ToP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 15:33:14 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA80EB52
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 12:33:13 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso6765555pjc.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 12:33:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680204792;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=i6JuvYmYJCj0w3cmFeh/1DSQl/9BrhvO1sQcJl2DJ6s=;
-        b=rD6xqSmuN7f9T3bBAcfIeecEZ8zbF3WWnbD5MUeXkuHYRZ1Ot/MHFdY0+NMMDnxXVF
-         nI7XP3eNwfIgLdGyisNIC84I/8r2vuxUwN13fcAxUTvBKIjCvU+Ozt34RI4ksIYxp/QW
-         kcg4EGKgP+Md5xXYasUjAC9BYHjRJPfcGgeqYy5ipvUIG+KquXJg3TND+cm0Ci2WHqrU
-         u/XKg+4vUDWVgfstcU2oGNjdFEPhBi0FZ5csQiMmZJSzIUY7cS51NisBo7zOOdDZXu6I
-         xG+PgPJeIly6xYLRgab8GK2FaX1LFTrdjcKOJua9hI2B+mvxQbBIbq9WqBSuU7kQYAXY
-         r+Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680204792;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i6JuvYmYJCj0w3cmFeh/1DSQl/9BrhvO1sQcJl2DJ6s=;
-        b=GUT6RaGAgwduShk1/wgWWw1gNSN9w1iym/YoSUcOmOtmHWXVCkiplypdhLNoTqm3xH
-         tMttEqdUm8I4RnFoOR/1M3hL0/lM8wznZ0pfCiq5NABWs8P1zvDvNAkg7O/XcpK8N4VK
-         8+lIz49Uv3uAl4D9Trb3YelODsW834GloG5VlVbwInhIwFS2dYMTSI4eV8LfB/uHNGG1
-         Ol4tAIMCX2aH7MH2TF019xIwB7TkuqIuU2PxTfHeM4EwDE3xWD2kWI/lnSKA9h1rFzX2
-         x4JiLSHkG6O6msIwtog5eBhGTKn8Lpsou56g4/c1VsLEmG3BWz0FAqnkgsdOMg3ywTe6
-         i0Rg==
-X-Gm-Message-State: AAQBX9ds4cKnwXnrLK5Av4LWy2jxoSm6U1ya7jTdUASVbNGRObmSetPG
-        kRISyH86Dhip2577jnRHnr8sHjB4wAf2D49602I=
-X-Google-Smtp-Source: AKy350bwnzSO1atdK4SjssSFu51Ce4F/E0AWt/J5nDUy29uUaW4L6CMPp5W/74N+w4A8cEqTVe/zlg==
-X-Received: by 2002:a17:90b:1c8b:b0:234:d78:9b4c with SMTP id oo11-20020a17090b1c8b00b002340d789b4cmr26470010pjb.18.1680204792371;
-        Thu, 30 Mar 2023 12:33:12 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c5e:53ce:1f39:30a5:d20f:f205])
-        by smtp.gmail.com with ESMTPSA id g3-20020a170902934300b0019e8c3cd3f4sm84616plp.201.2023.03.30.12.33.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 12:33:12 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, andersson@kernel.org,
-        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org
-Subject: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU idle-states
-Date:   Fri, 31 Mar 2023 01:03:03 +0530
-Message-Id: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
+        Thu, 30 Mar 2023 15:44:15 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1C9EFB2;
+        Thu, 30 Mar 2023 12:44:14 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32UCRDk6012211;
+        Thu, 30 Mar 2023 19:44:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cqQmgaIu3tZ+F9OvZEHmpqKHsX7ixNOJ/m95ok1vMM8=;
+ b=Up+PS7Uiny/Em6fX83QTfkoXSUJa1dAAhEEXlNRZXb0d1hMpSxU01jJDNExGvbhjdM0f
+ iJB2XkZR3AuhokGk6YTwb4fXCpZTGXkmelN19od4ygoMWMMyIOZ/wBuIZ+x62YvZnMZ6
+ FmV8fGiKKfeVsInT4PF2mULZil37wOQqsr5gPjlJAOmr6D0JK6zDFPH8sgzEhvMg5jHW
+ 5Wan8Ysiyb0SNUPmw25twfbbrQIs9RjOe6RsvgHckB6yMgfbLyVxi9Gd+/wLv+pUlPtm
+ H1cZRPbCsPO13reIo3t6CCEKqEnWWf3xFlbTMieZ6RIJ4r2X8w+841jteRuhJCD6hIO/ ow== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn1a9tnve-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 19:44:06 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32UJhqvq013247
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 19:43:52 GMT
+Received: from [10.216.46.49] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
+ 2023 12:43:49 -0700
+Message-ID: <fe19a934-979f-6925-fefe-a650570e68b3@quicinc.com>
+Date:   Fri, 31 Mar 2023 01:13:46 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH] net: qrtr: Do not do DEL_SERVER broadcast after
+ DEL_CLIENT
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <manivannan.sadhasivam@linaro.org>, <davem@davemloft.net>,
+        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
+ <20230330112716.GA84386@thinkpad>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <20230330112716.GA84386@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cDdKCeOiOxm3LWQuSMCAiGnggPnIImfX
+X-Proofpoint-GUID: cDdKCeOiOxm3LWQuSMCAiGnggPnIImfX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-30_12,2023-03-30_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 malwarescore=0 mlxlogscore=999 lowpriorityscore=0
+ suspectscore=0 adultscore=0 spamscore=0 impostorscore=0 clxscore=1015
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303300155
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,228 +82,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
-Changes since v1:
-- v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
-- Addressed Konrad's comments on v1 and added GDHS and Power Collapse
-  cluster power states.
 
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
- 1 file changed, 136 insertions(+)
+On 3/30/2023 6:09 PM, Manivannan Sadhasivam wrote:
+> On Wed, Mar 29, 2023 at 06:37:30PM +0530, Sricharan R wrote:
+>> When the qrtr socket is released, qrtr_port_remove gets called, which
+>> broadcasts a DEL_CLIENT. After this DEL_SERVER is also additionally
+>> broadcasted, which becomes NOP, but triggers the below error msg.
+>>
+>> "failed while handling packet from 2:-2", since remote node already
+>> acted upon on receiving the DEL_CLIENT, once again when it receives
+>> the DEL_SERVER, it returns -ENOENT.
+>>
+>> Fixing it by not sending a 'DEL_SERVER' to remote when a 'DEL_CLIENT'
+>> was sent for that port.
+>>
+> 
+> How about:
+> 
+> "On the remote side, when QRTR socket is removed, af_qrtr will call
+> qrtr_port_remove() which broadcasts the DEL_CLIENT packet to all neighbours
+> including local NS. NS upon receiving the DEL_CLIENT packet, will remove
+> the lookups associated with the node:port and broadcasts the DEL_SERVER
+> packet.
+> 
+> But on the host side, due to the arrival of the DEL_CLIENT packet, the NS
+> would've already deleted the server belonging to that port. So when the
+> remote's NS again broadcasts the DEL_SERVER for that port, it throws below
+> error message on the host:
+> 
+> "failed while handling packet from 2:-2"
+> 
+> So fix this error by not broadcasting the DEL_SERVER packet when the
+> DEL_CLIENT packet gets processed."
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 2a51c938bbcb..b63395d476ed 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -45,6 +45,8 @@ CPU0: cpu@0 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -61,6 +63,8 @@ CPU1: cpu@1 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -73,6 +77,8 @@ CPU2: cpu@2 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -85,6 +91,8 @@ CPU3: cpu@3 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU4: cpu@100 {
-@@ -97,6 +105,8 @@ CPU4: cpu@100 {
- 			dynamic-power-coefficient = <282>;
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			power-domains = <&CPU_PD4>;
-+			power-domain-names = "psci";
- 			L2_1: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -113,6 +123,8 @@ CPU5: cpu@101 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			power-domains = <&CPU_PD5>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU6: cpu@102 {
-@@ -125,6 +137,8 @@ CPU6: cpu@102 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			power-domains = <&CPU_PD6>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU7: cpu@103 {
-@@ -137,6 +151,8 @@ CPU7: cpu@103 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			power-domains = <&CPU_PD7>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu-map {
-@@ -176,6 +192,68 @@ core3 {
- 				};
- 			};
- 		};
-+
-+		idle-states {
-+			entry-method = "psci";
-+
-+			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-+				compatible = "arm,idle-state";
-+				idle-state-name = "silver-rail-power-collapse";
-+				arm,psci-suspend-param = <0x40000003>;
-+				entry-latency-us = <290>;
-+				exit-latency-us = <376>;
-+				min-residency-us = <1182>;
-+				local-timer-stop;
-+			};
-+
-+			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-+				compatible = "arm,idle-state";
-+				idle-state-name = "gold-rail-power-collapse";
-+				arm,psci-suspend-param = <0x40000003>;
-+				entry-latency-us = <297>;
-+				exit-latency-us = <324>;
-+				min-residency-us = <1110>;
-+				local-timer-stop;
-+			};
-+		};
-+
-+		domain-idle-states {
-+			CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
-+				/* GDHS */
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x40000022>;
-+				entry-latency-us = <360>;
-+				exit-latency-us = <421>;
-+				min-residency-us = <782>;
-+			};
-+
-+			CLUSTER_0_SLEEP_1: cluster-sleep-0-1 {
-+				/* Power Collapse */
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000044>;
-+				entry-latency-us = <800>;
-+				exit-latency-us = <2118>;
-+				min-residency-us = <7376>;
-+			};
-+
-+			CLUSTER_1_SLEEP_0: cluster-sleep-1-0 {
-+				/* GDHS */
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x40000042>;
-+				entry-latency-us = <314>;
-+				exit-latency-us = <345>;
-+				min-residency-us = <660>;
-+			};
-+
-+			CLUSTER_1_SLEEP_1: cluster-sleep-1-1 {
-+				/* Power Collapse */
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x41000044>;
-+				entry-latency-us = <640>;
-+				exit-latency-us = <1654>;
-+				min-residency-us = <8094>;
-+			};
-+		};
- 	};
- 
- 	firmware {
-@@ -199,6 +277,64 @@ pmu {
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+
-+		CPU_PD0: power-domain-cpu0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_0_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD1: power-domain-cpu1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_0_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD2: power-domain-cpu2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_0_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD3: power-domain-cpu3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_0_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD4: power-domain-cpu4 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_1_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD5: power-domain-cpu5 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_1_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD6: power-domain-cpu6 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_1_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+		};
-+
-+		CPU_PD7: power-domain-cpu7 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_1_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+		};
-+
-+		CLUSTER_0_PD: power-domain-cpu-cluster0 {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_0_SLEEP_0>, <&CLUSTER_0_SLEEP_1>;
-+		};
-+
-+		CLUSTER_1_PD: power-domain-cpu-cluster1 {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_1_SLEEP_0>, <&CLUSTER_1_SLEEP_1>;
-+		};
- 	};
- 
- 	reserved_memory: reserved-memory {
--- 
-2.38.1
+   Sure, sounds good. Will change this up and send V2.
 
+>> Signed-off-by: Ram Kumar D <quic_ramd@quicinc.com>
+>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>> ---
+>> Note: Functionally tested on 5.4 kernel and compile tested on 6.3 TOT
+>>
+
+  <...>
+
+>>   
+>> -	/* Remove the server belonging to this port */
+>> +	/* Remove the server belonging to this port
+>> +	 * Given that DEL_CLIENT is already broadcasted
+>> +	 * by port_remove, no need to send DEL_SERVER for
+>> +	 * the same port to remote
+>> +	 */
+> 
+> 	/*
+>   	 * Remove the server belonging to this port but don't broadcast
+> 	 * DEL_SERVER. Neighbours would've already removed the server belonging
+> 	 * to this port due to the DEL_CLIENT broadcast from qrtr_port_remove().
+> 	 */
+
+    Sure, would reword it like above in V2. Thanks.
+
+Regards,
+  Sricharan
