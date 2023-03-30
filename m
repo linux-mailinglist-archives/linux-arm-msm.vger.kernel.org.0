@@ -2,79 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89A6E6D12C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 01:03:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F6BD6D12D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 01:06:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231452AbjC3XDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 19:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37392 "EHLO
+        id S231492AbjC3XGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 19:06:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231418AbjC3XDl (ORCPT
+        with ESMTP id S231501AbjC3XGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 19:03:41 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D0B710410
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 16:03:33 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id g19so13494532lfr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 16:03:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680217411;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WZn4tyYY9BCk7s1Po6/aemP10gDlKI2Kq9xH5VdIvl8=;
-        b=aKcdq2Z5swALULKu0fcI6Tg/BGE3/u0bz80ty7vwu0t4w9Vmt+kLbOGEpgw2lGj1T7
-         6JmOB94VEVARY30TRkoquGGMi0Zt2u8p6wbwebhBBNgcQII9v+cRRgiQNBcCXQ/nRcGa
-         MZh8yedvaUtp1mOlMrv/6+aq8fUTh9oF1nPoY0dVOx7Eby+VoUIvmtaHHcOjjhOcCHM5
-         mcwWEk/TrmO5b9wJIMx2C0FmVWJisimMbl65cKCyniTFets+GwE9FOAMpFHlgFMIY0dZ
-         Yhja6m1+RuERXKcEO+8qIO3STt9QVXuF35zOl8K0Kkyf7DtbVTqe58RM4q0MmJG/U3jg
-         Sw2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680217411;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WZn4tyYY9BCk7s1Po6/aemP10gDlKI2Kq9xH5VdIvl8=;
-        b=HQCWFCpU4KTOg30mubuAH2NHSvfNdiVAQOj8cQZiRm1YDnfTqLlgijhrVZdeBzdYhR
-         oPBZ1A5Rvardy6t4xjyGH54ATjJXmICzY0zW4Ft5Iy0IpRyU1VCPHS5pd8VC2XANKHWl
-         XHfWevn2vKIcqNv78EtQKo3PCTMm41HXnc2tQkCoGqdelPsvXFTdSc3mrjMwkXFUUaXH
-         na/2JO87gsgKnVgXJhEyj/kNnFto51UpdOY9wYnLo0UN9pK7apq4oeWqdSETyWXMLKnJ
-         Pe42hNKc1IZ9S6KsPeKfdK6VplNJaRVToofMnnyMkkuJKvRX5+166EVPjSL76O5162ws
-         t0nw==
-X-Gm-Message-State: AAQBX9fnmFGgRmDZ5DdZDHD41y12WQTY2vJ2yvYv5Ki4uAS79uVMRZ7c
-        NU+D631vjNr2yS2WDl49ip7G/w==
-X-Google-Smtp-Source: AKy350YRKh/QIHzo45/fUtf7azJj4YT7oA/lSCOramU1kvawSFT12Tm6ZdnXLF+sBh2OXuUdGLIErA==
-X-Received: by 2002:a19:ae17:0:b0:4eb:2529:cbb2 with SMTP id f23-20020a19ae17000000b004eb2529cbb2mr1958614lfc.49.1680217411529;
-        Thu, 30 Mar 2023 16:03:31 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id s5-20020a19ad45000000b004e845b49d81sm122275lfd.140.2023.03.30.16.03.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 16:03:31 -0700 (PDT)
-Message-ID: <39058df7-6080-b38a-f4a8-0a4015982ca6@linaro.org>
-Date:   Fri, 31 Mar 2023 01:03:29 +0200
+        Thu, 30 Mar 2023 19:06:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1D4C1041F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 16:06:35 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32UMmvmE002366;
+        Thu, 30 Mar 2023 23:06:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KA5QS3Uas5RwJJmqsHyH05GRhmeGft4J5luuRhbk1yA=;
+ b=fSSjxbqX2QD1nxZ2TrvI+535MaphVIMM1DsT8PJ3WIYjHYr0H343Fcoa6vtR1p6Qpdf9
+ WErnjYhEciKPJTB6c7BXUCgRqhjW7C1M7wGiHjYooO0n7HU8gtJ2dUNL1bEMK6LhZVQb
+ 0lHKJw1Qx+Z+EFjcmESFoj96TJEGD1FHNKSRgV645v0LDOtsgs27liwe+SAVkFp0+/st
+ Bsus05dLNNkMcSC3ozH23VedQtV6EbXAaMxB5xSfk/zbvYEFOvQm8pAPoTMeF2Bbwy9r
+ 9N6XyJmpABy0uyYW9Z6vqrGzQv0uqznDNeUybJoDtbVm+A+RDJ6ku7ap2IJMF6OkoNsk 9A== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn7m3hxpj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 23:06:28 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32UN6StQ011366
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 23:06:28 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
+ 2023 16:06:27 -0700
+Message-ID: <c8de2c5b-94e7-1f68-90f9-f817689a779f@quicinc.com>
+Date:   Thu, 30 Mar 2023 16:06:27 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 3/3] remoteproc: qcom: pas: add SDM845 SLPI compatible
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [Freedreno] [PATCH RFC 2/5] drm/msm: Add MSM-specific DSC helper
+ methods
 Content-Language: en-US
-To:     Dylan Van Assche <me@dylanvanassche.be>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230330164633.117335-1-me@dylanvanassche.be>
- <20230330164633.117335-4-me@dylanvanassche.be>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230330164633.117335-4-me@dylanvanassche.be>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>
+References: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v1-2-f3e479f59b6d@quicinc.com>
+ <02a1e227-3aff-1b05-8171-2aa2f3872596@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <02a1e227-3aff-1b05-8171-2aa2f3872596@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WycoloqI2HQCPlBsToKl-iW0mtTe-fCl
+X-Proofpoint-GUID: WycoloqI2HQCPlBsToKl-iW0mtTe-fCl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-30_13,2023-03-30_04,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=901
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303300181
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,28 +91,224 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 30.03.2023 18:46, Dylan Van Assche wrote:
-> Add a compatible for the SDM845 SLPI to the Qualcomm remoteproc q6v5_pas
-> driver. The SLPI is the same as in SM8150, SM8250, SM8350, and SM8450,
-> so use the same resource in the driver.
+On 3/29/2023 5:40 PM, Dmitry Baryshkov wrote:
+> On 30/03/2023 02:18, Jessica Zhang wrote:
+>> Introduce MSM-specific DSC helper methods, as some calculations are
+>> common between DP and DSC.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/Makefile              |  1 +
+>>   drivers/gpu/drm/msm/disp/msm_dsc_helper.c | 74 
+>> +++++++++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/disp/msm_dsc_helper.h | 28 ++++++++++++
+>>   3 files changed, 103 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+>> index 7274c41228ed..897a5b1c88f6 100644
+>> --- a/drivers/gpu/drm/msm/Makefile
+>> +++ b/drivers/gpu/drm/msm/Makefile
+>> @@ -90,6 +90,7 @@ msm-y += \
+>>       disp/mdp_kms.o \
+>>       disp/msm_disp_snapshot.o \
+>>       disp/msm_disp_snapshot_util.o \
+>> +    disp/msm_dsc_helper.o \
+>>       msm_atomic.o \
+>>       msm_atomic_tracepoints.o \
+>>       msm_debugfs.o \
+>> diff --git a/drivers/gpu/drm/msm/disp/msm_dsc_helper.c 
+>> b/drivers/gpu/drm/msm/disp/msm_dsc_helper.c
+>> new file mode 100644
+>> index 000000000000..ec15c0d829e8
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/msm_dsc_helper.c
+>> @@ -0,0 +1,74 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>> reserved
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/errno.h>
+>> +#include <drm/drm_fixed.h>
+>> +
+>> +#include "msm_drv.h"
+>> +#include "msm_dsc_helper.h"
+>> +
+>> +static int get_comp_ratio(struct drm_dsc_config *dsc, u32 src_bpp)
+>> +{
+>> +    return mult_frac(100, src_bpp, DSC_BPP(*dsc));
+>> +}
+>> +
+>> +static s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc, int 
+>> intf_width, int comp_ratio)
+>> +{
+>> +    s64 comp_ratio_fp, num_bits_fp;
+>> +    s64 numerator_fp, denominator_fp;
+>> +
+>> +    comp_ratio_fp = drm_fixp_from_fraction(comp_ratio, 100);
 > 
-> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Please inline comp_ration calculation here. Don't use mult_frac().
+> 
+>> +    num_bits_fp = drm_fixp_from_fraction(8, 1);
+> 
+> drm_int2fixp
+> 
+>> +
+>> +    numerator_fp = drm_fixp_from_fraction(dsc->slice_width * 
+>> dsc->bits_per_component * 3, 1);
+> 
+> And here too.
+> 
+>> +    denominator_fp = drm_fixp_mul(comp_ratio_fp, num_bits_fp);
+> 
+> And num_bits_fp can be inlined too.
+> denominator_fp = drm_fixp_from_fraction(src_bpp * 8, DSC_BPP)
+> 
+>> +
+>> +    return drm_fixp_div(numerator_fp, denominator_fp);
+> 
+> dsc->slice_width * bpc * 3 / (8 * src_bpp / DSC_BPP), thus:
+> 
+> drm_fixp_from_fraction(dsc->slice_width * bpc * 3 * DSC_BPP, 8 * src_bpp)
+> 
+> but I will not insist on this one.
+> 
+>> +}
+>> +
+>> +u32 msm_dsc_get_eol_byte_num(struct drm_dsc_config *dsc, int 
+>> intf_width, u32 src_bpp)
+>> +{
+>> +    u32 bytes_per_ss, extra_eol_bytes, bytes_per_intf;
+>> +    s64 bytes_per_ss_fp;
+>> +    int slice_per_intf = msm_dsc_get_slice_per_intf(dsc, intf_width);
+>> +    int comp_ratio = get_comp_ratio(dsc, src_bpp);
+>> +
+>> +    bytes_per_ss_fp = get_bytes_per_soft_slice(dsc, intf_width, 
+>> comp_ratio);
+>> +    bytes_per_ss = drm_fixp2int_ceil(bytes_per_ss_fp);
+> 
+> s/_ss/_soft_slice/g
+> 
+>> +
+>> +    bytes_per_intf = bytes_per_ss * slice_per_intf;
+>> +    extra_eol_bytes = bytes_per_intf % 3;
+>> +    if (extra_eol_bytes != 0)
+>> +        extra_eol_bytes = 3 - extra_eol_bytes;
+>> +
+>> +    return extra_eol_bytes;
+>> +}
+>> +
+>> +u32 msm_dsc_get_dce_bytes_per_line(struct drm_dsc_config *dsc, int 
+>> intf_width)
+>> +{
+>> +    u32 bpp;
+>> +    u32 dce_bytes_per_line;
+>> +
+>> +    bpp = DSC_BPP(*dsc);
+> 
+> Didn't this cause a warning on the unused-but-set variable?
+> 
+>> +    dce_bytes_per_line = DIV_ROUND_UP(dsc->bits_per_pixel * 
+>> intf_width, 8);
+>> +
+>> +    return dce_bytes_per_line;
+>> +}
+> 
+> If you have msm_dsc_get_slice_per_intf() as a static inline, this 
+> function can be a static inline too. Nothing more than a single 
+> DIV_ROUND_UP.
+> 
+>> +
+>> +int msm_dsc_get_pclk_per_line(struct drm_dsc_config *dsc, int 
+>> intf_width, u32 src_bpp)
+>> +{
+>> +    s64 data_width;
+>> +    int comp_ratio = get_comp_ratio(dsc, src_bpp);
+>> +
+>> +    if (!dsc->slice_width || (intf_width < dsc->slice_width))
+>> +        return -EINVAL;
+>> +
+>> +    data_width = get_bytes_per_soft_slice(dsc, intf_width, comp_ratio);
+>> +    data_width = drm_fixp_mul(dsc->slice_count, data_width);
+>> +    data_width = drm_fixp_from_fraction(data_width, 3);
+> 
+> Reusing a variable is a nice trick, but it can be confusing. Not to 
+> mention that the last call should probably be drm_fixp_div()
+> 
 
-Konrad
->  drivers/remoteproc/qcom_q6v5_pas.c | 1 +
->  1 file changed, 1 insertion(+)
+Hi Dmitry,
+
+Acked (for all the comments here).
+
+Planning to move the last divide by 3 out of this method (as the value 
+that uncompressed pclk is divided by depends on DSI/DP and if widebus is 
+enabled), so I'll merge the get_bytes_per_soft_slice call with the 2nd line.
+
+Thanks,
+
+Jessica Zhang
+
+>> +
+>> +    return drm_fixp2int_ceil(data_width);
+>> +}
+>> diff --git a/drivers/gpu/drm/msm/disp/msm_dsc_helper.h 
+>> b/drivers/gpu/drm/msm/disp/msm_dsc_helper.h
+>> new file mode 100644
+>> index 000000000000..308069b2b5a4
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/msm_dsc_helper.h
+>> @@ -0,0 +1,28 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>> reserved
+>> + */
+>> +
+>> +#ifndef MSM_DSC_HELPER_H_
+>> +#define MSM_DSC_HELPER_H_
+>> +
+>> +#include <drm/display/drm_dsc_helper.h>
+>> +#include <drm/drm_modes.h>
+>> +
+>> +/*
+>> + * Helper methods for MSM specific DSC calculations that are common 
+>> between timing engine,
+>> + * DSI, and DP.
+>> + */
+>> +
+>> +#define MSM_DSC_SLICE_PER_PKT 1
+>> +#define DSC_BPP(config) ((config).bits_per_pixel >> 4)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index b96020c93e58..f3a7ae503bd1 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -1169,6 +1169,7 @@ static const struct of_device_id adsp_of_match[] = {
->  	{ .compatible = "qcom,sdm660-adsp-pas", .data = &adsp_resource_init},
->  	{ .compatible = "qcom,sdm845-adsp-pas", .data = &sdm845_adsp_resource_init},
->  	{ .compatible = "qcom,sdm845-cdsp-pas", .data = &sdm845_cdsp_resource_init},
-> +	{ .compatible = "qcom,sdm845-slpi-pas", .data = &sdm845_slpi_resource_init},
->  	{ .compatible = "qcom,sdx55-mpss-pas", .data = &sdx55_mpss_resource},
->  	{ .compatible = "qcom,sm6115-adsp-pas", .data = &adsp_resource_init},
->  	{ .compatible = "qcom,sm6115-cdsp-pas", .data = &cdsp_resource_init},
+> Oh. Please. If you have used (config)->bits_per_pixel here, you wouldn't 
+> have to use clumsy DSC_BPP(*dsc). It might make sense to add:
+> 
+> static inline drm_dsc_get_bpp_int(struct drm_dsc_config *dsc)
+> {
+>      // most probably WARN_ON_ONCE is enough.
+>      WARN_ON(dsc->bits_per_fixel & 0xf);
+> 
+>      return dsc->bits_per_pixel >> 4;
+> }
+> 
+>> +
+>> +static inline int msm_dsc_get_slice_per_intf(struct drm_dsc_config 
+>> *dsc, int intf_width)
+>> +{
+>> +    return DIV_ROUND_UP(intf_width, dsc->slice_width);
+>> +}
+>> +
+>> +u32 msm_dsc_get_eol_byte_num(struct drm_dsc_config *dsc, int 
+>> intf_width, u32 src_bpp);
+>> +u32 msm_dsc_get_dce_bytes_per_line(struct drm_dsc_config *dsc, int 
+>> intf_width);
+>> +int msm_dsc_get_pclk_per_line(struct drm_dsc_config *dsc, int 
+>> intf_width, u32 src_bpp);
+>> +#endif /* MSM_DSC_HELPER_H_ */
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
