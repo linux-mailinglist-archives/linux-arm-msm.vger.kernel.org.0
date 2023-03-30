@@ -2,78 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C336CF85C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 02:49:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 887246CF8A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 03:25:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbjC3AtU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Mar 2023 20:49:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56744 "EHLO
+        id S229517AbjC3BZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Mar 2023 21:25:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjC3AtT (ORCPT
+        with ESMTP id S229475AbjC3BZj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Mar 2023 20:49:19 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6F940FE
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 17:49:18 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id c29so22511279lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 17:49:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680137357;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V8vjA8lbodRgcB4Q/hUrG14t5OddrbjhZVGGzITsMb4=;
-        b=IC9zj+TOQPPmMngvTh4eZy7PYExWZjwodsiYNOX7Mn7zr6eneR9puI7guYjpz39RGM
-         bqbmbJXvIzwiwMSfTLFpD2vesAcJSZm2Iz7WONBaKMRHrKi4jjqeRKUDjBjWVZ3GTbUK
-         6i41GOpRQKHgCus7xYmEx12GOufydh9Cc66D46+M0NB63iJljy0a503BeIYBNEed6jzP
-         L9pj7BahNU8nsv6bOwcCz08piLoMEjaRU6b1t8ew9uXomyUh2VMCZ32YyrnP3Lw2BmY/
-         MYdcwI8x/UmrzK3DGf1BI29mdlG0jrdMpzpUncx747qfB3CAC+ji5yz6SYWT7+D/HGtd
-         UrUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680137357;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V8vjA8lbodRgcB4Q/hUrG14t5OddrbjhZVGGzITsMb4=;
-        b=Cv0OvXETzzSRO8EMc3b/mndfTIjfnwXbVuOYhWMOr5UaT+yiWvrllHOVZqP0BPYDPv
-         oOdoU1mx8s8WNorphs1gvEca9hy2T1g5VAxdiOIK8qBKdn9MHF8/n20jvff8gLQQDuaM
-         v6G8jxeHe0ASwkrIbruiR0Go8l6E0O1E8G0NEXZFWTXcsi9liPQU+/qttIR5UmCe4c5+
-         O7QsPcn8QCCn2jWV5wcVkqWWqeZfUX39yjW1zqRY9yE0vyQrRTrxbpyJqRCT2JyrB3is
-         T9PtWmk989Z10PLs4rmDuyfKOmxZWZScZZAV51FXtfeOZgPdIStSM6X4V27yOyoKmQju
-         Uq3g==
-X-Gm-Message-State: AAQBX9cQvFCdW7vMeAJRZjj6vccTS91At5uOXJRUJgJhgAMLf+w2gEAe
-        RZG2gwR5aSlbRgkFaNpUqHt7ag==
-X-Google-Smtp-Source: AKy350bVhhnR5UQqwdGHQ+qnkmSkADQU6XN82L8kOZOZr/06EYKeF6QjbVXOpru2aUC2UJGYmPvnfA==
-X-Received: by 2002:a19:c202:0:b0:4db:2cdf:4c11 with SMTP id l2-20020a19c202000000b004db2cdf4c11mr5706512lfc.62.1680137356877;
-        Wed, 29 Mar 2023 17:49:16 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w19-20020ac24433000000b004eb00c0d417sm2846884lfl.130.2023.03.29.17.49.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Mar 2023 17:49:16 -0700 (PDT)
-Message-ID: <c15a7b64-50a0-1093-1d35-0a308ffbcea0@linaro.org>
-Date:   Thu, 30 Mar 2023 03:49:15 +0300
+        Wed, 29 Mar 2023 21:25:39 -0400
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FF4A4ECD;
+        Wed, 29 Mar 2023 18:25:38 -0700 (PDT)
+Received: from canpemm500006.china.huawei.com (unknown [172.30.72.56])
+        by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4Pn5M62mk7zKnsL;
+        Thu, 30 Mar 2023 09:25:06 +0800 (CST)
+Received: from localhost.localdomain (10.175.104.82) by
+ canpemm500006.china.huawei.com (7.192.105.130) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Thu, 30 Mar 2023 09:25:35 +0800
+From:   Ziyang Xuan <william.xuanziyang@huawei.com>
+To:     <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
+        <kuba@kernel.org>, <pabeni@redhat.com>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>
+CC:     <andersson@kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH net] net: qrtr: Fix a refcount bug in qrtr_recvmsg()
+Date:   Thu, 30 Mar 2023 09:25:32 +0800
+Message-ID: <20230330012532.1065159-1-william.xuanziyang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH RFC 2/5] drm/msm: Add MSM-specific DSC helper methods
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v1-2-f3e479f59b6d@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v1-2-f3e479f59b6d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.104.82]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ canpemm500006.china.huawei.com (7.192.105.130)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,22 +47,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2023 02:18, Jessica Zhang wrote:
-> Introduce MSM-specific DSC helper methods, as some calculations are
-> common between DP and DSC.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/Makefile              |  1 +
->   drivers/gpu/drm/msm/disp/msm_dsc_helper.c | 74 +++++++++++++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/msm_dsc_helper.h | 28 ++++++++++++
+Syzbot reported a bug as following:
 
-Also: outside of disp, please.
+refcount_t: addition on 0; use-after-free.
+...
+RIP: 0010:refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
+...
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:199 [inline]
+ __refcount_inc include/linux/refcount.h:250 [inline]
+ refcount_inc include/linux/refcount.h:267 [inline]
+ kref_get include/linux/kref.h:45 [inline]
+ qrtr_node_acquire net/qrtr/af_qrtr.c:202 [inline]
+ qrtr_node_lookup net/qrtr/af_qrtr.c:398 [inline]
+ qrtr_send_resume_tx net/qrtr/af_qrtr.c:1003 [inline]
+ qrtr_recvmsg+0x85f/0x990 net/qrtr/af_qrtr.c:1070
+ sock_recvmsg_nosec net/socket.c:1017 [inline]
+ sock_recvmsg+0xe2/0x160 net/socket.c:1038
+ qrtr_ns_worker+0x170/0x1700 net/qrtr/ns.c:688
+ process_one_work+0x991/0x15c0 kernel/workqueue.c:2390
+ worker_thread+0x669/0x1090 kernel/workqueue.c:2537
 
->   3 files changed, 103 insertions(+)
-> 
+It occurs in the concurrent scenario of qrtr_recvmsg() and
+qrtr_endpoint_unregister() as following:
 
+	cpu0					cpu1
+qrtr_recvmsg				qrtr_endpoint_unregister
+qrtr_send_resume_tx			qrtr_node_release
+qrtr_node_lookup			mutex_lock(&qrtr_node_lock)
+spin_lock_irqsave(&qrtr_nodes_lock, )	refcount_dec_and_test(&node->ref) [node->ref == 0]
+radix_tree_lookup [node != NULL]	__qrtr_node_release
+qrtr_node_acquire			spin_lock_irqsave(&qrtr_nodes_lock, )
+kref_get(&node->ref) [WARNING]		...
+					mutex_unlock(&qrtr_node_lock)
+
+Use qrtr_node_lock to protect qrtr_node_lookup() implementation, this
+is actually improving the protection of node reference.
+
+Fixes: 0a7e0d0ef054 ("net: qrtr: Migrate node lookup tree to spinlock")
+Reported-by: syzbot+a7492efaa5d61b51db23@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=a7492efaa5d61b51db23
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+---
+ net/qrtr/af_qrtr.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 5c2fb992803b..3a70255c8d02 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -393,10 +393,12 @@ static struct qrtr_node *qrtr_node_lookup(unsigned int nid)
+ 	struct qrtr_node *node;
+ 	unsigned long flags;
+ 
++	mutex_lock(&qrtr_node_lock);
+ 	spin_lock_irqsave(&qrtr_nodes_lock, flags);
+ 	node = radix_tree_lookup(&qrtr_nodes, nid);
+ 	node = qrtr_node_acquire(node);
+ 	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
++	mutex_unlock(&qrtr_node_lock);
+ 
+ 	return node;
+ }
 -- 
-With best wishes
-Dmitry
+2.25.1
 
