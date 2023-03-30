@@ -2,66 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE8AF6D1090
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 23:12:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8C156D10E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 23:32:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229625AbjC3VLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 17:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38690 "EHLO
+        id S230098AbjC3Vcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 17:32:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjC3VLd (ORCPT
+        with ESMTP id S229508AbjC3Vcc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 17:11:33 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030DFE072
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:11:32 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso21174212pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:11:31 -0700 (PDT)
+        Thu, 30 Mar 2023 17:32:32 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF43CC38
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:32:31 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id x17so26328109lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680210691;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ts/+7LQ/a90MvbSUsF1wWZw6aBmGhxvSMeOp9K0n6B4=;
-        b=OA+qXoJPXeplznwBkYYzDfj3rlnWfYKi9SSiS1c3UEoZPKGOu/MfTcJGHYlitYfJij
-         Kx9b6usnN3Ay4rlLsCO9CMxZorkqibXar+hxVnABKEPiPL+gVXPLNKz8UiAGp3bVw2Kx
-         4i4xt0Rx9F6lk44/U++iK1hflPnxClyGgeuzs=
+        d=linaro.org; s=google; t=1680211949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aTqJwL7oBiO+i/ddIgWkEiFhacs+3OCWtKXm1Tp67Cs=;
+        b=OVuKVEb7pgKQF3vr0EZSfol5Mig2ns7Yk/XprlTV1hA7JdOoQY9G+bTWfz06E6sbp3
+         1Tlz81N4K6++tgWAQo1Ca1WD1NRidQBpa01VzgKDXWxjjF0UKLI1WZ8mV1RBaG5ybUSQ
+         SgmZGPPbIcz5acSGalsZEsWxzVUbo/h7wkZCh+RC+LruyquKXLnhgNuPstIwU9wlhZzb
+         g6ZNjqO+xKWjuPZmqIQ2/GJS4o0CjyW49TWoL9XDvrv/YIeZvWed0sM2IRjeDqErplSX
+         eQo+8GaQXobpVk7AWl2UK6CjOIKnbEYp6w5STq2Vk6Av/Dfq5Z0bkHKthJgAjxyu7TaB
+         a5Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680210691;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ts/+7LQ/a90MvbSUsF1wWZw6aBmGhxvSMeOp9K0n6B4=;
-        b=5VqhFwuZYXkoxT9JQ9aiYKs6AlVL826Oy2BcGwvCsVCAzAGUC4wKU0/DedxARuB8UD
-         g+v84g4ieCMbAFBH3vMI8b6Qkx4aoZ9eGDAKDKD2Ad+EASAg87qci6F5RFnHy0EK9aZq
-         s/h78QEl9lH/UBeFb1bFcNIlckf2rzp5WN2TndedDWIuo84Or1GnHEsQ/KnTn72qoFu2
-         YrNOOFCHPZcVGKCepnNd7udNLisZ8YCdhg5dQ6zF7MjTomyERlz0AMvQdEfTQ3p8LdEE
-         b0QcpwvO+/Y9mrlIv32FAXA1aaXWdGD7k20Aruv8c3HaE6Pj+BdV4f+2UycsxOQz7Z1i
-         aPbA==
-X-Gm-Message-State: AAQBX9duwF/d4ZH4MBEvl+zHYTvQ7OyrSHIX3K3jgmtyXYK+SUdtF/ip
-        t9bR/X/7YHjveUQB/67lAvyGRw==
-X-Google-Smtp-Source: AKy350aKbPAA/imN45S5d9F5KqLZwNk8NkRnjAxPmVE/Yxy548Sm0c6CEhdWYp6rXcp9Q3vwR/VLTw==
-X-Received: by 2002:a17:903:70f:b0:19e:bc8e:6421 with SMTP id kk15-20020a170903070f00b0019ebc8e6421mr20352821plb.47.1680210691365;
-        Thu, 30 Mar 2023 14:11:31 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:ba73:62df:d346:fc37])
-        by smtp.gmail.com with ESMTPSA id c20-20020a170902b69400b0019f1027f88bsm123897pls.307.2023.03.30.14.11.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 14:11:30 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] MAINTAINERS: qcom: Add reviewer for Qualcomm Chromebooks
-Date:   Thu, 30 Mar 2023 14:11:00 -0700
-Message-Id: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
-X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
+        d=1e100.net; s=20210112; t=1680211949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aTqJwL7oBiO+i/ddIgWkEiFhacs+3OCWtKXm1Tp67Cs=;
+        b=JbcqOBD2V6oQJ15swKvMWj5zCNdNuY2SJ2ZFhK0qI/B27CAVKltTIM72OSo2bxHSAl
+         XS6XhDu0AYuHgi0OHOwCiA4bIr0ng1kGl9IqnHbRrtNSCWOpDaI8syt9lFYg8e+MEYON
+         78bYZpxqE9ZTWiLnxFTNpSmtxAss+uSjoM7eqNpPyEzlyw5Ja3QzKsAiNO7ayEj23lF6
+         nFq6SnR1/So8LG55CTDGdYOfIv4kd1h+8Q3XFnq0TTmjG71i2J6gcHBgFsibiJRuEBRm
+         vkEIYs1/80uS5iOx8hY6qLEgu8sQpg0d2efHamSCciNxWSdn4AUzMYTxUlPRor7k6+gj
+         AvmQ==
+X-Gm-Message-State: AAQBX9d1d3b1kohiZlHcqNAOFToElr19Hby9ox98B0cUUuboZchaOhaB
+        Y6AD2iKzQX0SZ3uiU/rgcTBtdw==
+X-Google-Smtp-Source: AKy350ZGflQvaIlYJPAclGpHbzprCG3zHk+Wm/YCGsHyvM4odrKaN0sSrPL+HGoNMk0vnKUo3BdjQA==
+X-Received: by 2002:a19:2d1c:0:b0:4d8:86c1:4785 with SMTP id k28-20020a192d1c000000b004d886c14785mr2188004lfj.26.1680211949367;
+        Thu, 30 Mar 2023 14:32:29 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id r25-20020ac25a59000000b004cb45148027sm94871lfn.203.2023.03.30.14.32.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 14:32:29 -0700 (PDT)
+Message-ID: <63fd5b75-e4a4-0d15-db9e-461a8f4a1cd9@linaro.org>
+Date:   Fri, 31 Mar 2023 00:32:28 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [v2,37/50] drm/msm/dpu: enable DPU_CTL_SPLIT_DISPLAY for sc8280xp
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20230211231259.1308718-38-dmitry.baryshkov@linaro.org>
+ <6ca39767-09c7-3323-bde3-52824d81ca41@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <6ca39767-09c7-3323-bde3-52824d81ca41@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -70,53 +82,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Developers on the ChromeOS team generally want to be notified to
-review changes that affect Chromebook device tree files. While we
-could individually add developers, the set of developers and the time
-each one has available to review patches will change over time. Let's
-try adding a group list as a reviewer and see if that's an effective
-way to manage things.
+On 30/03/2023 15:29, Konrad Dybcio wrote:
+> 
+> 
+> On 12.02.2023 00:12, Dmitry Baryshkov wrote:
+>> Theoretically since sm8150 we should be using a single CTL for the
+>> source split case, but since we do not support it for now, fallback to
+>> DPU_CTL_SPLIT_DISPLAY.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+> Hmm.. so is it a software construct? E.g. "pass half of the data to
+> each of the INTFs and tell them to cooperate"?
 
-A few notes:
-* Though this email address is actually backed by a mailing list, I'm
-  adding it as "R"eviewer and not "L"ist since it's not a publicly
-  readable mailing list and it's intended just to have a few people on
-  it. This also hopefully conveys a little more responisbility for the
-  people that are part of this group.
-* I've added all sc7180 and sc7280 files here. At the moment I'm not
-  aware of any non-Chromebooks being supported that use these
-  chips. If later something shows up then we can try to narrow down.
-* I've added "sdm845-cheza" to this list but not the rest of
-  "sdm845". Cheza never shipped but some developers still find the old
-  developer boards useful and thus it continues to get minimal
-  maintenance. Most sdm845 device tree work, however, seems to be for
-  non-Chromebooks.
+It is not a fully software construct, if I understand correctly. You 
+have to program either a single CTL or two CTLs for a flush.
 
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
+> 
+> Apart from that, since it's temporary, I think it deserves a comment
+> reminding us to fix it eventually™
 
- MAINTAINERS | 6 ++++++
- 1 file changed, 6 insertions(+)
+Sure, this is, I think, a next item on my plate after getting all of 
+wide planes and catalog in: to rework CTL support for sm8150+.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8d5bc223f305..b4e9c5bda234 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2604,6 +2604,12 @@ F:	include/dt-bindings/*/qcom*
- F:	include/linux/*/qcom*
- F:	include/linux/soc/qcom/
- 
-+ARM/QUALCOMM CHROMEBOOK SUPPORT
-+R:	cros-qcom-dts-watchers@chromium.org
-+F:	arch/arm64/boot/dts/qcom/sc7180*
-+F:	arch/arm64/boot/dts/qcom/sc7280*
-+F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
-+
- ARM/RDA MICRO ARCHITECTURE
- M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
- L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+> 
+> Konrad
+>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>> index a3a79d908451..094876b1019b 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>> @@ -47,13 +47,13 @@ static const struct dpu_ctl_cfg sc8280xp_ctl[] = {
+>>   	{
+>>   	.name = "ctl_0", .id = CTL_0,
+>>   	.base = 0x15000, .len = 0x204,
+>> -	.features = CTL_SC7280_MASK,
+>> +	.features = BIT(DPU_CTL_SPLIT_DISPLAY) | CTL_SC7280_MASK,
+>>   	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
+>>   	},
+>>   	{
+>>   	.name = "ctl_1", .id = CTL_1,
+>>   	.base = 0x16000, .len = 0x204,
+>> -	.features = CTL_SC7280_MASK,
+>> +	.features = BIT(DPU_CTL_SPLIT_DISPLAY) | CTL_SC7280_MASK,
+>>   	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
+>>   	},
+>>   	{
+
 -- 
-2.40.0.348.gf938b09366-goog
+With best wishes
+Dmitry
 
