@@ -2,171 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CFDE6D00A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:05:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D6CE6D00B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230234AbjC3KFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 06:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46532 "EHLO
+        id S229847AbjC3KKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 06:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231171AbjC3KFl (ORCPT
+        with ESMTP id S231190AbjC3KKq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 06:05:41 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C157DB2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:05:30 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id n125so22733465ybg.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680170729;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WgoKuCIBwgckhU5BejJJvSWb2GJbmr7RiOOAd94YUdI=;
-        b=ag1ZcK0+OFBcxgjI+fRJFjlY/GQ96iAeX/H8l3sgMulu4IkZjsFGuCjMItmFk0bnuT
-         dRP2YrCnbGrvI3a2iS0900ToZZ2DZZH40LZGQIvUqI1WRBDT19EyiGu/Pcv9ZMeDzUS9
-         37x5rght4u+Fmc/wzsF05sSMndMFL1qDPKZ6kfmOEvGvCmh3GB/ogemvpEvv/ca+1Wif
-         2lva36DCMhHqFfxRwaNqLp/OMr9VUfQvbzI1fTi+x8VwMZ/ZWctUmADBPTPBM78qW6Uu
-         Ki549T8+Ny2y5iBEB2kZ1F9WCYuRtBXLHh27LPLhE+X5D9ylcFl5KJGVsVLmh2bmOM8h
-         0JrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680170729;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WgoKuCIBwgckhU5BejJJvSWb2GJbmr7RiOOAd94YUdI=;
-        b=Jv8sSgbyE5dS/PSv9PdK/cNe4r8RbrSJWDhsaOLtliSrCE9YxLYd0n9wH2yQtwgBkW
-         SNO+ARTBMzO+bvnujA/SEES0aeyIb9cvr73ShwOiTuS/jiq19fpVNFLbpaDwwkaD6IJr
-         A9mHFCcESRf1Ot957JGv19IOZI2kASVnm3njbpD0P/Orw+bvntmJzxFtXUzjZpnE1WSQ
-         kOZrITTy4enmdkdglDxd+Y6tHVizHJCsyYUbPobyGgznm9k6HfeAJFFLlVpUJlwqTuD6
-         XM0m6PtymLlMsAz+4sh5muAKd3i0yj08WL+lwAcA4kGAbm8vpFzae+phVBf3TsvzJA9g
-         HXgA==
-X-Gm-Message-State: AAQBX9ccfM/KZm+TywabEzKyz8PBYG3jO9guvFO3gc09vWHW3NvwI6Kc
-        jcLtXH8mrYn1oNeOsMO+4tiJrRYz0jkp1CkyuSB72g==
-X-Google-Smtp-Source: AKy350ZipAZcOkTjtM8Tf0YDGNmJgPaAsrxIL1oh8fvqdo2Gaqh00PpDJqjToaaRqtiHvVoYDF6PBqnJqmYASCGNMLk=
-X-Received: by 2002:a05:6902:1549:b0:b77:be38:6406 with SMTP id
- r9-20020a056902154900b00b77be386406mr11733804ybu.9.1680170729341; Thu, 30 Mar
- 2023 03:05:29 -0700 (PDT)
+        Thu, 30 Mar 2023 06:10:46 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 518E27DB2;
+        Thu, 30 Mar 2023 03:10:43 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id C8298B8258A;
+        Thu, 30 Mar 2023 10:10:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD83C433D2;
+        Thu, 30 Mar 2023 10:10:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680171040;
+        bh=NXNwGsAYLBsQY9dA06ZnOE2S68dF14Wy6ldja64Ce0w=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=P8RuF43lX0HN67shTTXKZj0DzpruL+7nrAV5z1JxfN3TdehDEFeD/FFubfbzgAIMN
+         0CSG41hSJrtylhO0ylPmwChpwgZ/bYgPtIHg5JTzOeNmFzXug2qVqCMymMi7HVYQfn
+         WNwi6X1b07GeWa8wW3ckdJTxMB1CHYJPwXnt412g1H+I9k/pQlUz2uriJ7Sva+3/d5
+         /H1R1B3jxtHGoTksEpxFbnvMartPgwkxXuy/pLE0yih+nDS4o+0kGPnd+nlg7KoWia
+         w+ch6UaCfYtjygcofaFXx5BH0bAwdOiWcwbk3rc4SOeiHicb7OUPJCij8pp54JseeV
+         EdjwFWJsIES+w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1phpFC-0005NY-Gj; Thu, 30 Mar 2023 12:10:58 +0200
+Date:   Thu, 30 Mar 2023 12:10:58 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Steev Klimaszewski <steev@kali.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>,
+        Tim Jiang <quic_tjiang@quicinc.com>
+Subject: Re: [PATCH v8 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
+ chip wcn6855
+Message-ID: <ZCVgMuSdyMQhf/Ko@hovoldconsulting.com>
+References: <20230326233812.28058-1-steev@kali.org>
+ <20230326233812.28058-3-steev@kali.org>
 MIME-Version: 1.0
-References: <20230330074150.7637-1-tzimmermann@suse.de> <20230330074150.7637-6-tzimmermann@suse.de>
-In-Reply-To: <20230330074150.7637-6-tzimmermann@suse.de>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 30 Mar 2023 13:05:18 +0300
-Message-ID: <CAA8EJpookZF4nQjYtZjaK8FcF1iy7EJrj18UNOjhyfGDuOoBag@mail.gmail.com>
-Subject: Re: [PATCH 5/6] drm/msm: Initialize fbdev DRM client
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        javierm@redhat.com, airlied@gmail.com, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230326233812.28058-3-steev@kali.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Mar 2023 at 10:41, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->
-> Initialize the fbdev client in the fbdev code with empty helper
-> functions. Also clean up the client. The helpers will later
-> implement various functionality of the DRM client. No functional
-> changes.
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+On Sun, Mar 26, 2023 at 06:38:10PM -0500, Steev Klimaszewski wrote:
+> Add regulators, GPIOs and changes required to power on/off wcn6855.
+> Add support for firmware download for wcn6855 which is in the
+> linux-firmware repository as hpbtfw21.tlv and hpnv21.bin.
+> 
+> Based on the assumption that this is similar to the wcn6750
+> 
+> Tested-on: BTFW.HSP.2.1.0-00538-VER_PATCHZ-1
+> 
+> Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Tested-by: Bjorn Andersson <andersson@kernel.org>
 > ---
->  drivers/gpu/drm/msm/msm_fbdev.c | 38 +++++++++++++++++++++++++++++++--
->  1 file changed, 36 insertions(+), 2 deletions(-)
+> Changes since v7:
+>  * None
 
-With the nit below fixed:
+Only noticed now when Luiz applied the patches, but why did you drop my
+reviewed-by and tested-by tags from this patch when submitting v8?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+For the record:
 
->
-> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-> index 95b193a5e0d5..6c3665c5f4f6 100644
-> --- a/drivers/gpu/drm/msm/msm_fbdev.c
-> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
-> @@ -119,6 +119,30 @@ static const struct drm_fb_helper_funcs msm_fb_helper_funcs = {
->         .fb_probe = msm_fbdev_create,
->  };
->
-> +/*
-> + * struct drm_client
-> + */
-> +
-> +static void msm_fbdev_client_unregister(struct drm_client_dev *client)
-> +{ }
-> +
-> +static int msm_fbdev_client_restore(struct drm_client_dev *client)
-> +{
-> +       return 0;
-> +}
-> +
-> +static int msm_fbdev_client_hotplug(struct drm_client_dev *client)
-> +{
-> +       return 0;
-> +}
-> +
-> +static const struct drm_client_funcs msm_fbdev_client_funcs = {
-> +       .owner          = THIS_MODULE,
-> +       .unregister     = msm_fbdev_client_unregister,
-> +       .restore        = msm_fbdev_client_restore,
-> +       .hotplug        = msm_fbdev_client_hotplug,
-> +};
-> +
->  /* initialize fbdev helper */
->  struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
->  {
-> @@ -131,10 +155,16 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
->
->         drm_fb_helper_prepare(dev, helper, 32, &msm_fb_helper_funcs);
->
-> +       ret = drm_client_init(dev, &helper->client, "fbdev", &msm_fbdev_client_funcs);
-> +       if (ret) {
-> +               drm_err(dev, "Failed to register client: %d\n", ret);
-> +               goto err_drm_fb_helper_unprepare;
-> +       }
-> +
->         ret = drm_fb_helper_init(dev, helper);
->         if (ret) {
->                 DRM_DEV_ERROR(dev->dev, "could not init fbdev: ret=%d\n", ret);
-> -               goto fail;
-> +               goto err_drm_client_release;
->         }
->
->         ret = drm_fb_helper_initial_config(helper);
-> @@ -145,8 +175,11 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
->
->  fini:
->         drm_fb_helper_fini(helper);
-> -fail:
-> +err_drm_client_release:
-> +       drm_client_release(&helper->client);
-> +err_drm_fb_helper_unprepare:
->         drm_fb_helper_unprepare(helper);
-> +       kfree(helper);
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+ 
+> Changes since v6:
+>  * Update commit message.
+>  * Add Johan's R-b and T-b.
+> 
+> Changes since v5:
+>  * Revert Set qcadev->initspeed since 6855 doesn't use it, don't touch.
+>  * Convert get_fw_build_info to a switch statement
+>  * Add poweroff handling
+>  * Fix up line alignments
+>  * Drop from microsoft extensions check since I don't actually know if we need
+> 
+> Changes since v4:
+>  * Remove unused firmware check because we don't have mbn firmware.
+>  * Set qcadev->init_speed if it hasn't been set.
+> 
+> Changes since v3:
+>  * drop unused regulators
+> 
+> Changes since v2:
+>  * drop unnecessary commit info
+> 
+> Changes since v1:
+>  * None
 
-This one should go to the patch 3
-
->         return NULL;
->  }
->
-> @@ -168,6 +201,7 @@ void msm_fbdev_free(struct drm_device *dev)
->                 drm_framebuffer_remove(fb);
->         }
->
-> +       drm_client_release(&helper->client);
->         drm_fb_helper_unprepare(helper);
->         kfree(helper);
->
-> --
-> 2.40.0
->
-
-
--- 
-With best wishes
-Dmitry
+Johan
