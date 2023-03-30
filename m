@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A5B6D04AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:28:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 624B36D04AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbjC3M2A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 08:28:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54758 "EHLO
+        id S229901AbjC3M2V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 08:28:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjC3M17 (ORCPT
+        with ESMTP id S229436AbjC3M2U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 08:27:59 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4ADF46B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:27:57 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id g19so11164452lfr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:27:57 -0700 (PDT)
+        Thu, 30 Mar 2023 08:28:20 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400164C2B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:28:19 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id g17so24299212lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680179276;
+        d=linaro.org; s=google; t=1680179297;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gvEbveK1uWCeCDd1RWXdS2lL6JVQ6l3y8DwliRMNQDc=;
-        b=VUbl0GXZMqbt696T8nIZrxZJtcgX/q3qblDeghahOHqODqM2mNOrJGK5sym+faqrq2
-         Tc5Z6717oVrFBXrLYQPOOAlsOLq+FGK6c74GfVr7r50SplJh2lFHqfp9kHOqN4TFN7yN
-         NsPqcBYHXtO/Yr4AGClDN8vtDqPRXwhYnDix3bP5kz5w7O2bWq3cxVqVxrQracHg2b1b
-         fXp0MvIIqqxMzMwQ29yYVR8D5waFAbcbvV3tqp1mA8CW5CDU/E/EbJlwyAgna1JZ69bL
-         usRUlqRoLI4T8lB1qkk8fukyU80C8HfLJPXta9bkxI3ZG9N0SD8pj/UHB+alnUtyNg+1
-         SaLQ==
+        bh=OO+mjrMk1jZSB5RM1FlT3sMsdz1umFcmSSqhyUDz4Y0=;
+        b=kYQ74xgu/wl6ASnsXCk6xcovXMJDtmH4WRlniuba2ED2fd4LE7rIRGInVeHrH1g0H6
+         Bjf2mntZUZeXXJPV/et1JruvbOaywFG5qBIs7BaQcrgfLyZRwMnEH61TVX2xFM16RH7g
+         Artj6zsJch6go+uWHcgoCTrxkl/hdyYStdsI7q9a7MThqBcKuz/bETKCGs1U/ohIgvp2
+         ix+vsSMgjV6Mzdh6R+4P0icdjL3+OHukeZzWFG9tKvmcQf2ytN+epVFqc+jA6VMgbR/V
+         QtKvksf/AzGJxCSH2fp5f2CX4u2mpSRo1C9K2WDYCxqAWobOtPWI1kHdSmLxT8w8CXwb
+         Eq0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680179276;
+        d=1e100.net; s=20210112; t=1680179297;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gvEbveK1uWCeCDd1RWXdS2lL6JVQ6l3y8DwliRMNQDc=;
-        b=yxZl2IPmVp0zisM3Q7a0sMB3RW5fjjGmiKlz4GgFaWzoKGdfx+T1h7SVlsaPL73YYW
-         Xyy9ABlXPNRq6m8WOujOzQGz7g09zAu4dIdFhDq/LRbX3Qya4KkWt3gDJAXGXGKSgi/l
-         nUnP4MzBqUzA8nfDD7swdMeB55b6HTJmnOyEmNsQyqNiFlOKi7AK3NbY8up6kPsiu8SF
-         3Se97Z6PoJoKBXdrN2WSKoIV4vzlrc4dSSYcfoqBWODQYgAGaVX069ablnkdbrnlS6KA
-         1fZymu34Mgzau3YPfG0eeQB6PpgH2jXHk5+PIq8nonkHPFJ5jAO6W0fq8fnlSryWFvmB
-         N9Zw==
-X-Gm-Message-State: AAQBX9e71Us30w1yufM8nyXPgIm/Otmf60YZ+fIQ0frJUfwPloNZhwGO
-        wzwQO4bXwX5Zpm6dJTe3zkt3VQ==
-X-Google-Smtp-Source: AKy350Y1ZQJEhnif7Db4/DhBLluxZ+Poft+wmesJ0nfJVQ9JFGpmHrq9djlwFb1Z+iwpnc/OUnml+g==
-X-Received: by 2002:a05:6512:92a:b0:4e9:8994:49bd with SMTP id f10-20020a056512092a00b004e9899449bdmr6044678lft.3.1680179276029;
-        Thu, 30 Mar 2023 05:27:56 -0700 (PDT)
+        bh=OO+mjrMk1jZSB5RM1FlT3sMsdz1umFcmSSqhyUDz4Y0=;
+        b=jhszGXCjrridqfcKwUfWOYCQpBFL72lczTDXW5IWYZKzs+eCP6jN2ISP7/odY/AC09
+         /1xiqZ5ygRelrYA4CBav9D/vnXVCdeBJNrF0SEsBBd0/Am7rgohBHqsJu84V1oTBuNUi
+         UIbN+XXvPdE7v5wJJlqTapIXyOe7TZo5EbZx3LZH9iW+e7/dfqFe3HaLYaIOQGUjNFfO
+         eQjlxAn976KLoHG1mX8H3+aieuHBbgK/FI094mORJUZNxAc7PuKyz9Oysnv4qgR2K5Ej
+         qXD/Ykyr10tZtLSUrS1KtsGU/V0uFYSpmie8GbtPZuS4qpxWXTSV3aivNOTciGk3Hznf
+         Cgkw==
+X-Gm-Message-State: AAQBX9eTT4pqi6QCuwEjqNkMF/7kEvXSkW7r5IOUyucF0yo3g2bpAN4G
+        Pe92NlYLxxaFoW63pnDd0oCDNg==
+X-Google-Smtp-Source: AKy350bJaOnCk23XOkj5bdXP6K2QEU2a+l6y74hptNST1qySDKDdqhATbo6GdG/qyNwhsY5SI25bnA==
+X-Received: by 2002:a19:ad02:0:b0:4e8:5e39:6238 with SMTP id t2-20020a19ad02000000b004e85e396238mr6098835lfc.42.1680179297590;
+        Thu, 30 Mar 2023 05:28:17 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id u14-20020a056512094e00b004cb35b31b96sm5847822lft.257.2023.03.30.05.27.54
+        by smtp.gmail.com with ESMTPSA id m16-20020ac24290000000b004db508326c0sm5875815lfh.90.2023.03.30.05.28.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 05:27:55 -0700 (PDT)
-Message-ID: <f9ecaf20-bb35-57e9-d604-a2f47a614732@linaro.org>
-Date:   Thu, 30 Mar 2023 14:27:54 +0200
+        Thu, 30 Mar 2023 05:28:17 -0700 (PDT)
+Message-ID: <9ad6c0a7-ff10-54d9-e556-c9eeb66b9bc9@linaro.org>
+Date:   Thu, 30 Mar 2023 14:28:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [v2,35/50] drm/msm/dpu: duplicate sm8350 catalog entries
+Subject: Re: [v2,36/50] drm/msm/dpu: use defined symbol for sc8280xp's
+ maxwidth
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -66,9 +67,9 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@gmail.com>
-References: <20230211231259.1308718-36-dmitry.baryshkov@linaro.org>
+References: <20230211231259.1308718-37-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230211231259.1308718-36-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230211231259.1308718-37-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -84,42 +85,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 12.02.2023 00:12, Dmitry Baryshkov wrote:
-> Duplicate some of sm8350 catalog entries to remove dependencies between
-> DPU major generations.
+> Use defined name DEFAULT_DPU_OUTPUT_LINE_WIDTH instead of open coding
+> the value.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index 748f7e14dfcc..0a5d6d9fe751 100644
+> index 0a5d6d9fe751..a3a79d908451 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -137,6 +137,12 @@ static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
->  		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31), -1),
->  };
+> @@ -8,7 +8,7 @@
+>  #define _DPU_8_0_SC8280XP_H
 >  
-> +static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
-> +	MERGE_3D_BLK("merge_3d_0", MERGE_3D_0, 0x4e000),
-> +	MERGE_3D_BLK("merge_3d_1", MERGE_3D_1, 0x4f000),
-> +	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
-> +};
-> +
->  /* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
->  static const struct dpu_intf_cfg sc8280xp_intf[] = {
->  	INTF_BLK("intf_0", INTF_0, 0x34000, 0x2c4, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> @@ -192,8 +198,8 @@ static const struct dpu_mdss_cfg sc8280xp_dpu_cfg = {
->  	.dspp = sc8280xp_dspp,
->  	.pingpong_count = ARRAY_SIZE(sc8280xp_pp),
->  	.pingpong = sc8280xp_pp,
-> -	.merge_3d_count = ARRAY_SIZE(sm8350_merge_3d),
-> -	.merge_3d = sm8350_merge_3d,
-> +	.merge_3d_count = ARRAY_SIZE(sc8280xp_merge_3d),
-> +	.merge_3d = sc8280xp_merge_3d,
->  	.intf_count = ARRAY_SIZE(sc8280xp_intf),
->  	.intf = sc8280xp_intf,
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>  static const struct dpu_caps sc8280xp_dpu_caps = {
+> -	.max_mixer_width = 2560,
+> +	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>  	.max_mixer_blendstages = 11,
+>  	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+>  	.smart_dma_rev = DPU_SSPP_SMART_DMA_V2, /* TODO: v2.5 */
