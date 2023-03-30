@@ -2,87 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83A296D0820
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 16:24:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40B706D082C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 16:25:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232459AbjC3OYR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 10:24:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57976 "EHLO
+        id S230482AbjC3OZW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 10:25:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232471AbjC3OYI (ORCPT
+        with ESMTP id S231835AbjC3OZU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 10:24:08 -0400
-Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A078CA3B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:23:57 -0700 (PDT)
-Received: by mail-ua1-x92e.google.com with SMTP id p2so13937555uap.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:23:57 -0700 (PDT)
+        Thu, 30 Mar 2023 10:25:20 -0400
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 416CB173F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:25:15 -0700 (PDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id b6so13156944vsu.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680186232;
+        d=chromium.org; s=google; t=1680186311;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tdDVtbZuDJf8upkh5HvXpNatNcQceszJUO7yYX9Degg=;
-        b=FqHAlpUJOjlmuBo0Gc7cw02KWXxXcwmFen4CrTQ3o8zJz3d5i2jfF3jdOS/MM3B++A
-         qOwZZfvMAngOualsro1ktJTsojEn0sfWnOVqiGeobPNOXIl9XrFceG+luXB153BDX6GB
-         d11qG5AcXtQmJCGp2lF9ugsd7I8qJp119hUnk=
+        bh=rgSAl4+YtdqN02WoMh9cxZGDhw1MNojQ8HH4aKN4HAQ=;
+        b=HVwX3GyMBDMI81JH3eMSbxh8eUDP5GC5dqFdJCt7N810faVDMtzxlcbcYLO3JpDj+X
+         YudlkEmrBH5EgIEDiLy+7UTjzzOzTE3nTZxQJSj8BIZ5u8GIVdJ3bVvAopcAuf1seqeB
+         jcfGcA9MxgfXQA3hfOwh4Svnrj+Yq2SIFDqRg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680186232;
+        d=1e100.net; s=20210112; t=1680186311;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tdDVtbZuDJf8upkh5HvXpNatNcQceszJUO7yYX9Degg=;
-        b=54RDDRQuF9j8eVcFXEidfDNdyYG/zJLOS/6d8+mAsQsiUow6wmSCbZ/fdspzcunBtF
-         A+37bny+hqztI6jSZ0mcGbLRIa3G5HJ3b9hGrV5Rs+l/TJs+Rms4kFJACuWqwJswNkP+
-         maQ3eoPcTPf7czKMmLV+VzUIhrsC6BCxhIXuCbj6dyZ4B1lLit7XrZtmqCeRenSKlrvh
-         yZoDLvhzZsvMtN6d6l1sLazmuZI5Vff9qrGUVFBpXFxmncH2NGlFkkuvYLsOfwlcdHAu
-         hQ695w8/4EFR/JEr/sX92Eew48FEq8I2m2neBshJ6HKLMxPEdiMMWL1qeqPT4sMpmzqQ
-         3DwQ==
-X-Gm-Message-State: AAQBX9d1fcsTJKTtgfbUcMbBjGhi7KrMRK32wcITwG3zUQtra9AVEQGy
-        cGYzE52lhmJF/pDb9CQcCunj1NIatVDEYH/6wFE=
-X-Google-Smtp-Source: AKy350Ya0GpTyBdJMWGCT/ooWQir5+I0GdsGcMHd4eB+Nw3KrhBapCPRFHmScunC5UwhJtc42TTJBw==
-X-Received: by 2002:a1f:ee05:0:b0:436:8d4b:e7d3 with SMTP id m5-20020a1fee05000000b004368d4be7d3mr8967840vkh.12.1680186232487;
-        Thu, 30 Mar 2023 07:23:52 -0700 (PDT)
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
-        by smtp.gmail.com with ESMTPSA id f204-20020a1f9cd5000000b00408bfc20b5bsm5462217vke.49.2023.03.30.07.23.51
+        bh=rgSAl4+YtdqN02WoMh9cxZGDhw1MNojQ8HH4aKN4HAQ=;
+        b=yUqi8BhXOBfH4EBGInRwC1WfPNkH47XuQWNU7u6avocEpQByo+qivRboC9Big8Lcv4
+         gyL/ddpfL7rrPYzzxKdgqhbCXVH3wYljJm+3ek4moXEszCqo9r0s6Kv3wB16s20nBDan
+         lfGA7S9VmGDMIadM5IoUn39fywbDW5LNxKzV/ka+s8A05LgFUyEMLZBfkaaxmxnOPfgQ
+         44IYyJluP69SFhbHjzfFzVsBdgTVk/D2AkDxI6govwI1dF969hUBax5TsS2KvsGFTIzu
+         AO7oo1gVdq4qWhM0X83/1lnU75tvlUSdmc/ShoyQiPNM0tdHz+5odpTlkbhZynKoF9eA
+         da3w==
+X-Gm-Message-State: AAQBX9es+NUHT51RBsvlGv1ldGLuZs/jXrKrDFyifGnPKRfh9I8ofnFJ
+        c/Yx1KTw/6fsYRgbfuLSGUI3g5YemzOIGNXxpTo=
+X-Google-Smtp-Source: AKy350YdQH9KsBNVRZvXqp37kYZ4TTEhF3b5p0KisqhMzHcp/oAYDRRig1+obg1kBAMoEBZLWVBTvw==
+X-Received: by 2002:a67:ec4b:0:b0:426:b261:9e84 with SMTP id z11-20020a67ec4b000000b00426b2619e84mr5380011vso.21.1680186311692;
+        Thu, 30 Mar 2023 07:25:11 -0700 (PDT)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id i7-20020a05610220c700b0041ebb606a9dsm4422025vsr.20.2023.03.30.07.25.10
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 07:23:51 -0700 (PDT)
-Received: by mail-ua1-f51.google.com with SMTP id n17so13906948uaj.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:23:51 -0700 (PDT)
-X-Received: by 2002:a1f:ac17:0:b0:43b:7928:7a25 with SMTP id
- v23-20020a1fac17000000b0043b79287a25mr10387566vke.1.1680186230654; Thu, 30
- Mar 2023 07:23:50 -0700 (PDT)
+        Thu, 30 Mar 2023 07:25:11 -0700 (PDT)
+Received: by mail-vs1-f51.google.com with SMTP id c1so16399133vsk.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:25:10 -0700 (PDT)
+X-Received: by 2002:a67:d493:0:b0:426:a319:a226 with SMTP id
+ g19-20020a67d493000000b00426a319a226mr8587434vsj.7.1680186310355; Thu, 30 Mar
+ 2023 07:25:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <1677774797-31063-1-git-send-email-quic_vpolimer@quicinc.com>
- <1677774797-31063-15-git-send-email-quic_vpolimer@quicinc.com>
- <20230326162723.3lo6pnsfdwzsvbhj@ripper> <20230326163556.iesjkoh3nw3iwvf2@ripper>
- <CAE-0n520ypTRNT1X6kZ8o_Z+DN_68qwqZc1wZGMwsFqV5naktw@mail.gmail.com>
- <BN0PR02MB81736AFC01FB13F1640068CEE4899@BN0PR02MB8173.namprd02.prod.outlook.com>
- <CAD=FV=UjHiEk==KAhbx6QFW++69vDAM44sw-b2MGcJ7NsfbF-A@mail.gmail.com>
-In-Reply-To: <CAD=FV=UjHiEk==KAhbx6QFW++69vDAM44sw-b2MGcJ7NsfbF-A@mail.gmail.com>
+References: <20230329233416.27152-1-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230329233416.27152-1-quic_abhinavk@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 30 Mar 2023 07:23:38 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V7UoA5jP-ANFMNzm3oLbYmT73uDnqs0oKHKb16-NcULg@mail.gmail.com>
-Message-ID: <CAD=FV=V7UoA5jP-ANFMNzm3oLbYmT73uDnqs0oKHKb16-NcULg@mail.gmail.com>
-Subject: Re: [PATCH v14 14/14] drm/msm/dp: set self refresh aware based on PSR support
-To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
-        "Bjorn Andersson (QUIC)" <quic_bjorande@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+Date:   Thu, 30 Mar 2023 07:24:57 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U7JRP_2C7Rhc+0pwgPPBMKgZ=wJXkPvac4j5dDEsdAkA@mail.gmail.com>
+Message-ID: <CAD=FV=U7JRP_2C7Rhc+0pwgPPBMKgZ=wJXkPvac4j5dDEsdAkA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: remove hbr3 support on
+ herobrine boards
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        dmitry.baryshkov@linaro.org, quic_bjorande@quicinc.com,
+        quic_khsieh@quicinc.com, agross@kernel.org,
+        konrad.dybcio@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -97,142 +82,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Wed, Mar 29, 2023 at 8:47=E2=80=AFAM Doug Anderson <dianders@chromium.or=
-g> wrote:
+On Wed, Mar 29, 2023 at 4:34=E2=80=AFPM Abhinav Kumar <quic_abhinavk@quicin=
+c.com> wrote:
 >
-> Hi,
+> There are some interop issues seen across a few DP monitors with
+> HBR3 and herobrine boards where the DP display stays blank with hbr3.
+> This is still under investigation but in preparation for supporting
+> higher resolutions, its better to disable HBR3 till the issues are
+> root-caused as there is really no guarantee which monitors will show
+> the issue and which would not.
 >
-> On Wed, Mar 29, 2023 at 8:16=E2=80=AFAM Vinod Polimera
-> <vpolimer@qti.qualcomm.com> wrote:
-> >
-> >
-> >
-> > > -----Original Message-----
-> > > From: Stephen Boyd <swboyd@chromium.org>
-> > > Sent: Monday, March 27, 2023 9:58 PM
-> > > To: Bjorn Andersson <andersson@kernel.org>; Vinod Polimera (QUIC)
-> > > <quic_vpolimer@quicinc.com>
-> > > Cc: dri-devel@lists.freedesktop.org; linux-arm-msm@vger.kernel.org;
-> > > freedreno@lists.freedesktop.org; devicetree@vger.kernel.org; linux-
-> > > kernel@vger.kernel.org; robdclark@gmail.com; dianders@chromium.org;
-> > > Kalyan Thota (QUIC) <quic_kalyant@quicinc.com>;
-> > > dmitry.baryshkov@linaro.org; Kuogee Hsieh (QUIC)
-> > > <quic_khsieh@quicinc.com>; Vishnuvardhan Prodduturi (QUIC)
-> > > <quic_vproddut@quicinc.com>; Bjorn Andersson (QUIC)
-> > > <quic_bjorande@quicinc.com>; Abhinav Kumar (QUIC)
-> > > <quic_abhinavk@quicinc.com>; Sankeerth Billakanti (QUIC)
-> > > <quic_sbillaka@quicinc.com>
-> > > Subject: Re: [PATCH v14 14/14] drm/msm/dp: set self refresh aware bas=
-ed
-> > > on PSR support
-> > >
-> > > Quoting Bjorn Andersson (2023-03-26 09:35:56)
-> > > > On Sun, Mar 26, 2023 at 09:27:23AM -0700, Bjorn Andersson wrote:
-> > > > > On Thu, Mar 02, 2023 at 10:03:17PM +0530, Vinod Polimera wrote:
-> > > > > > For the PSR to kick in, self_refresh_aware has to be set.
-> > > > > > Initialize it based on the PSR support for the eDP interface.
-> > > > > >
-> > > > >
-> > > > > When I boot my sc8280xp devices (CRD and X13s) to console with th=
-is
-> > > > > patch included I get a login prompt, and then there are no more s=
-creen
-> > > > > updates.
-> > > > >
-> > > > > Switching virtual terminal (ctrl+alt+fN) causes the screen to red=
-raw.
-> > > > >
-> > > > > Blindly login in and launching Wayland works and from then on scr=
-een
-> > > > > updates works as expected.
-> > > > >
-> > > > > Switching from Wayland to another virtual terminal causes the pro=
-blem
-> > > to
-> > > > > re-appear, no updates after the initial refresh, switching back g=
-o the
-> > > > > Wayland-terminal crashed the machine.
-> > > > >
-> > > >
-> > > > Also, trying to bring the eDP-screen back from DPMS gives me:
-> > > >
-> > > > <3>[ 2355.218099] [drm:dp_catalog_ctrl_set_pattern_state_bit [msm]]
-> > > *ERROR* set state_bit for link_train=3D1 failed
-> > > > <3>[ 2355.218926] [drm:dp_ctrl_setup_main_link [msm]] *ERROR* link
-> > > training #1 failed. ret=3D-110
-> > > > <3>[ 2355.262859] [drm:dp_catalog_ctrl_set_pattern_state_bit [msm]]
-> > > *ERROR* set state_bit for link_train=3D1 failed
-> > > > <3>[ 2355.263600] [drm:dp_ctrl_setup_main_link [msm]] *ERROR* link
-> > > training #1 failed. ret=3D-110
-> > > > <3>[ 2355.305211] [drm:dp_catalog_ctrl_set_pattern_state_bit [msm]]
-> > > *ERROR* set state_bit for link_train=3D1 failed
-> > > > <3>[ 2355.305955] [drm:dp_ctrl_setup_main_link [msm]] *ERROR* link
-> > > training #1 failed. ret=3D-110
-> > > > <3>[ 2355.345250] [drm:dp_catalog_ctrl_set_pattern_state_bit [msm]]
-> > > *ERROR* set state_bit for link_train=3D1 failed
-> > > > <3>[ 2355.346026] [drm:dp_ctrl_setup_main_link [msm]] *ERROR* link
-> > > training #1 failed. ret=3D-110
-> > > > <3>[ 2355.405650] [drm:dp_display_process_hpd_high [msm]] *ERROR*
-> > > failed to complete DP link training
-> > > > <3>[ 2355.668988]
-> > > [drm:dpu_encoder_phys_vid_wait_for_commit_done:488] [dpu
-> > > error]vblank timeout
-> > > > <3>[ 2355.669030] [drm:dpu_kms_wait_for_commit_done:510] [dpu
-> > > error]wait for commit done returned -110
-> > > > <3>[ 2355.699989] [drm:dpu_encoder_frame_done_timeout:2398] [dpu
-> > > error]enc35 frame done timeout
-> > > >
-> > > > And then the machine just resets.
-> > > >
-> > >
-> > > I saw similar behavior on ChromeOS after we picked the PSR patches in=
-to
-> > > our kernel. I suspect it's the same problem. I switched back and fort=
-h
-> > > between VT2 and the OOBE screen with ctrl+alt+forward and that showed
-> > > what I typed on the virtual terminal after switching back and forth.
-> > > It's like the redraw only happens once on the switch and never again.=
- I
-> > > switched back and forth enough times that it eventually crashed the
-> > > kernel and rebooted. This was on CRD (sc7280-herobrine-crd.dts).
-> > >
-> > > There's an animation on the OOBE screen that is working though, so
-> > > perhaps PSR is working with the chrome compositor but not the virtual
-> > > terminal? I haven't investigated.
-> >
-> > I was able to reproduce the issue where in virtual terminal, I don't se=
-e any screen refresh despite typing in.
-> > In the VT mode, I see that PSR is entered, but despite typing in there =
-are no atomic commits triggered, hence the last buffer was always refreshed=
-.
-> >
-> > Queries from my side to Rob & Doug:
-> > 1) In VT mode, does the framework operates in single buffer mode withou=
-t any commit for new updates ?
-> > 2) if above is true then, how does driver know if the framework operate=
-s in single buffer mode, to make any appropriate action
-> > 3) what is the expected behavior with the driver here ? should it retur=
-n atomic_check failure, for single buffer mode operation or, it should exit=
- PSR ?
-> > 4) is there any HINT passed down to the driver so that we can bank on i=
-t and act accordingly?
+> This can be enabled back after successful validation across more DP
+> sinks.
 >
-> I haven't looked at this detail about PSR before, and I left my
-> PSR-enabled device at home so I can't easily test this right now. That
-> being said, from a bit of searching I would guess that
-> msm_framebuffer_dirtyfb() is somehow involved here. Are things better
-> if you get rid of the test against 'msm_fb->dirtyfb'?
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I at least used ftrace to confirm that on a different device
-> msm_framebuffer_dirtyfb() is not called during normal ChromeOS usage
-> but it _is_ called in VT2 usage.
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/=
+boot/dts/qcom/sc7280-herobrine.dtsi
+> index b6137816f2f3..313083ec1f39 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> @@ -464,7 +464,7 @@ &mdss_dp {
+>
+>  &mdss_dp_out {
+>         data-lanes =3D <0 1>;
+> -       link-frequencies =3D /bits/ 64 <1620000000 2700000000 5400000000 =
+8100000000>;
+> +       link-frequencies =3D /bits/ 64 <1620000000 2700000000 5400000000>=
+;
 
-Indeed, I can confirm that if I comment out the test in
-msm_framebuffer_dirtyfb() and just call straight through to
-drm_atomic_helper_dirtyfb() that typing on VT2 works fine.
+This seems OK to me.
 
-...so presumably you need to figure out how to get "dirtyfb" set
-properly when you have a PSR-enabled panel or maybe whenever the panel
-enters PSR mode?
-
--Doug
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
