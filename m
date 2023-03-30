@@ -2,450 +2,302 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAD066D05EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 15:08:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDB7F6D05FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 15:10:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229694AbjC3NI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 09:08:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37282 "EHLO
+        id S231833AbjC3NJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 09:09:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbjC3NI6 (ORCPT
+        with ESMTP id S231825AbjC3NJ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 09:08:58 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F94D7ED9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 06:08:56 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id br6so24399660lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 06:08:55 -0700 (PDT)
+        Thu, 30 Mar 2023 09:09:57 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38595AD27
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 06:09:54 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-5416698e889so353386847b3.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 06:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680181734;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C8j24A2/3sOqQc/Ns0LZOgQuqPO89v76cYWjmW5XyVU=;
-        b=TS94PzLWd3huyR2eFJ2A8R0ctJNjZJlBu3oMZC7+4q/bT6WqgUgDlQTW1lL0u6PyMr
-         fAqsgfBPiVt4MlLnd9Q7MH4NtbdXav+Ibox9c5pnMARgS+2JRXwplBU8oMdoNdRwUVem
-         Mrag6c4N/BCoj1VA7eovIIUG7xEkNLdCkMZjZ1/WT226YNDN3rkGR0wKFNPBWuhG6QI4
-         ee+z1dC3FeytaK8lIbEVAo6rRJ3mW2nGs8TcRk6ZZkVG8jknO8F8V4g925CJTyujLYP0
-         uMlsY5Dxr5d4Puenopavw5GyaH3qPEMrxZQPDBTtJY8z2Djhziz/MjHjnXUeERA0p4qM
-         4eEQ==
+        d=linaro.org; s=google; t=1680181793;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+6Cp+3u8Jtxt32MJ9JirWJQbXmKpej7rkbSJluQVHxw=;
+        b=ycChhJnY2leX5FJCTlPA7Q1Kv1GH+eIMLuuTKRjGtVNUxKpEwr42zftpLf9gt1lQbe
+         R3gI9ULFeure5ltpfkSDubqBTTtetW7wZasgWw7+glzTx//E/wLphrlAFPkkoI4S/tzR
+         /xgikRkdgZNjdErkqx69s/5fYirupb2CmWfJT6wHAmaj0B8yH50fs2B22ZK9ngGtAj/6
+         5cmb51B8ljT/Rmgn7HjGtyJ/84M/knyyliNvTsMBBkWo4sVtvYYPuN8RZiZZoRVpofH5
+         3Ki9wQsNheq7iyABusKZYa2kWqJxaZDBMug8kD4f8ERIXTbhyUI+V2STTOUEe2Jn49hC
+         +F/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680181734;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C8j24A2/3sOqQc/Ns0LZOgQuqPO89v76cYWjmW5XyVU=;
-        b=iPEpZHj7asDKVsmJZBjAV03KOhot3f+scbdR/G9N+Rb0rVaqQRIyf/zCxcqxMuo0QL
-         E/sIMvtLqAAXCogXu7CT9KM0G0HN1RGwQxNcTff66BGW0NAt3GmEiF04aCpjNhJeWCjQ
-         Ph8eg64oLt4AoaSBD04FRl6YuwQa/7+lV703c1GPBX/FHpUJSj5gm44BIo4Z9avUocaq
-         vfFuYsL53tSIX502eMgCKnbVqa+iuyMTGf+OB5KqL+uaVJ/3M9hwCJezDfsRSrdGOc0F
-         6g4TlujEZICOeVajO5jXpks5UI9GlHJhxASV+akdXtcxew2abgIezq1Emj4CDd9wMByy
-         /rfw==
-X-Gm-Message-State: AAQBX9eUzYX0Tn7eNhlrI3NlcCwYFjPklsxlROsXNew425DySZGSzF9t
-        ru2wFpuhjkrsWAY6DdtSUDLhrjh8iJZy/7QDjVI=
-X-Google-Smtp-Source: AKy350ZCBTx6qAiYq92Z8UEAb6rP2iyhYRwzWz2zoG4GdmYOaut/CUAdzHIT2lAMG1ML2SkXyi3gnA==
-X-Received: by 2002:a19:ee11:0:b0:4e8:77a:f894 with SMTP id g17-20020a19ee11000000b004e8077af894mr6595431lfb.25.1680181734148;
-        Thu, 30 Mar 2023 06:08:54 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id b16-20020a056512219000b004d85895d7e0sm4056462lft.147.2023.03.30.06.08.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 06:08:53 -0700 (PDT)
-Message-ID: <85299bfa-8c20-a377-8904-afc4f3a41be6@linaro.org>
-Date:   Thu, 30 Mar 2023 15:08:52 +0200
+        d=1e100.net; s=20210112; t=1680181793;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+6Cp+3u8Jtxt32MJ9JirWJQbXmKpej7rkbSJluQVHxw=;
+        b=kdcU6wKEKQxN83bBqa393ogyBPSSNILeDGMTjDcx7pnKo8Pp2ZPL69bxppAR2VoMCB
+         QS1lTWXS95R0H96ly9ucvIJdlyqFTybnzMg4TUoLwE7/XeafrjcXANgl1ARKGDGMlTzE
+         sT6kTuGQWPY9PZFbsYQrj7vWaeQDqPvoB7zJhEFOO1wv50Nr7zYdCrWXzqZSIuHH+Sud
+         AVK7JFGmS75rSMfWtfz+9YzcIDiKPxBFixKFoqfsnp2YKWDIMh5KS1Fk90Ld9kkdLAbH
+         uROaqksnrBGlvuWSsnNuivjdWwxmxb5RSN80Lfo1LE3J9J/bWz9Ts4C7EvyaBE/DROSe
+         qGzA==
+X-Gm-Message-State: AAQBX9cIt4CxaT2QK0iJHDevJPAL2nVhgFP2ziTjm2E2c46kq1OcMsiS
+        up3BFpSDRPbbQknS6xSa03ob0WsEqAs0TiPnsbD9tg==
+X-Google-Smtp-Source: AKy350a7yLcVEvU23AWBbvLxNabrCwUCiRrhVHRZaffnwLLDwW7hW+TJygczWVHRmXUSUgeip0oKsD++1/NQM+HuHBk=
+X-Received: by 2002:a81:b149:0:b0:543:9065:b225 with SMTP id
+ p70-20020a81b149000000b005439065b225mr11562966ywh.5.1680181793237; Thu, 30
+ Mar 2023 06:09:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [v2,45/50] drm/msm/dpu: inline IRQ_n_MASK defines
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230211231259.1308718-46-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230211231259.1308718-46-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <cover.1680162377.git.quic_varada@quicinc.com> <60954818576384e36136cb706aa554788ec4bb22.1680162377.git.quic_varada@quicinc.com>
+ <CAA8EJpoyw6mspNUffU3KKvRPdB2XQE0A6FF7YUUzwpBVQO=Ykw@mail.gmail.com> <20230330125749.GA19941@varda-linux.qualcomm.com>
+In-Reply-To: <20230330125749.GA19941@varda-linux.qualcomm.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 30 Mar 2023 16:09:41 +0300
+Message-ID: <CAA8EJpoWKCPtWcxS6UpdxXDQsO+PgdX1heOLmrfKq6T16-foEg@mail.gmail.com>
+Subject: Re: [PATCH v5 6/8] phy: qcom: qmp: Update IPQ9574 USB Phy
+ initialization Sequence
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 30 Mar 2023 at 15:58, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> On Thu, Mar 30, 2023 at 12:41:08PM +0300, Dmitry Baryshkov wrote:
+> > On Thu, 30 Mar 2023 at 11:42, Varadarajan Narayanan
+> > <quic_varada@quicinc.com> wrote:
+> > >
+> > > Updated USB QMP PHY Init sequence based on HPG for IPQ9574.
+> > > Reused clock and reset list from existing targets.
+> > >
+> > > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > > ---
+> > >  Changes in v5:
+> > >         - Fix additional review comments
+> > >         - Use V3 register offsets
+> > >  Changes in v4:
+> > >         - Use qmp_usb_offsets for register space access
+> > >  Changes in v3:
+> > >         - Fix hex captitalization
+> > >  Changes in v2:
+> > >         - Removed unused phy register offsets
+> > >         - Moved the clock entries to the correct place
+> > >         - Maintain sorted order
+> > > ---
+> > >  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 115 ++++++++++++++++++++++++++++++++
+> > >  1 file changed, 115 insertions(+)
+> > >
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> > > index a49711c..77041dd 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> > > @@ -139,6 +139,88 @@ static const unsigned int qmp_v5_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+> > >         [QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V5_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+> > >  };
+> > >
+> > > +static const struct qmp_phy_init_tbl ipq9574_usb3_serdes_tbl[] = {
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x1a),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_BG_TRIM, 0x0f),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SVS_MODE_CLK_SEL, 0x01),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x06),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_PLL_IVCO, 0x0f),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x06),
+> > > +       /* PLL and Loop filter settings */
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x68),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0xab),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0xaa),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x02),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_CP_CTRL_MODE0, 0x09),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_PLL_RCTRL_MODE0, 0x16),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_PLL_CCTRL_MODE0, 0x28),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE0, 0xa0),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0xaa),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x29),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_CORE_CLK_EN, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_CFG, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_BG_TIMER, 0x0a),
+> > > +       /* SSC settings */
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_EN_CENTER, 0x01),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER1, 0x7d),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER2, 0x01),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_ADJ_PER1, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_ADJ_PER2, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE1, 0x0a),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE2, 0x05),
+> > > +};
+> > > +
+> > > +static const struct qmp_phy_init_tbl ipq9574_usb3_tx_tbl[] = {
+> > > +       QMP_PHY_INIT_CFG(QSERDES_TX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN, 0x45),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_TX_RCV_DETECT_LVL_2, 0x12),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_TX_LANE_MODE, 0x06),
+> > > +};
+> > > +
+> > > +static const struct qmp_phy_init_tbl ipq9574_usb3_rx_tbl[] = {
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_SO_GAIN, 0x06),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x02),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL3, 0x6c),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL3, 0x4c),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL4, 0xb8),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x77),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x80),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x03),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_DEGLITCH_CNTRL, 0x16),
+> > > +       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_ENABLES, 0x0c),
+> > > +};
+> > > +
+> > > +static const struct qmp_phy_init_tbl ipq9574_usb3_pcs_tbl[] = {
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x15),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0e),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL2, 0x83),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL1, 0x02),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_L, 0x09),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_H_TOL, 0xa2),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_MAN_CODE, 0x85),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG1, 0xd1),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG2, 0x1f),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG3, 0x47),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_POWER_STATE_CONFIG2, 0x1b),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_WAIT_TIME, 0x75),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LFPS_TX_ECSTART_EQTLOCK, 0x86),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_AUXCLK, 0x04),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TSYNC_RSYNC_TIME, 0x44),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_L, 0xe7),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_L, 0x40),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_H, 0x00),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x17),
+> > > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0f),
+> > > +};
+> > > +
+> > >  static const struct qmp_phy_init_tbl ipq8074_usb3_serdes_tbl[] = {
+> > >         QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x1a),
+> > >         QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
+> > > @@ -1558,6 +1640,14 @@ static const char * const qmp_phy_vreg_l[] = {
+> > >         "vdda-phy", "vdda-pll",
+> > >  };
+> > >
+> > > +static const struct qmp_usb_offsets qmp_usb_offsets_ipq9574 = {
+> > > +       .serdes         = 0,
+> > > +       .pcs            = 0x800,
+> > > +       .pcs_usb        = 0,
+> >
+> > No, pcs_usb is not 0.
+>
+> Not sure I understand this comment.
+>
+> Since IPQ9574 uses new style DT entries, pcs_usb_offset = 0 and
+> that will not be used.
+>
+> qmp->pcs_usb is used in qmp_usb_enable_autonomous_mode and
+> qmp_usb_disable_autonomous_mode. If "qmp->pcs_usb == 0", those
+> functions use the value of qmp->pcs (0x7d800) for pcs_usb.
+
+So, you mixed qmp->pcs_usb and offsets->pcs_usb here. They are not equal.
+
+>
+> The registers used in these functions are
+> QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR & QPHY_PCS_AUTONOMOUS_MODE_CTRL
+>
+> The offsets for the above registers as specified in
+> qmp_v3_usb3phy_regs_layout is
+>
+>         #define QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL        0x0d8
+>         #define QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR       0x0dc
+>
+> qphy_{set|clr}bits called from qmp_usb_enable_autonomous_mode and
+> qmp_usb_disable_autonomous_mode will use the offset 0x7d8d8 and
+> 0x78d8c. This offset matches with the register offset document of
+> the IPQ9574. So, felt setting pcs_usb to zero should be ok. Can
+> you please clarify.
+
+And this tells you what pcs_usb offset is.
+
+>
+> Thanks
+> Varada
+>
+>
+> >
+> > > +       .tx             = 0x200,
+> > > +       .rx             = 0x400,
+> > > +};
+> > > +
+> > >  static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
+> > >         .serdes         = 0,
+> > >         .pcs            = 0x0200,
+> > > @@ -1586,6 +1676,28 @@ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
+> > >         .regs                   = qmp_v3_usb3phy_regs_layout,
+> > >  };
+> > >
+> > > +static const struct qmp_phy_cfg ipq9574_usb3phy_cfg = {
+> > > +       .lanes                  = 1,
+> > > +
+> > > +       .offsets                = &qmp_usb_offsets_ipq9574,
+> > > +
+> > > +       .serdes_tbl             = ipq9574_usb3_serdes_tbl,
+> > > +       .serdes_tbl_num         = ARRAY_SIZE(ipq9574_usb3_serdes_tbl),
+> > > +       .tx_tbl                 = ipq9574_usb3_tx_tbl,
+> > > +       .tx_tbl_num             = ARRAY_SIZE(ipq9574_usb3_tx_tbl),
+> > > +       .rx_tbl                 = ipq9574_usb3_rx_tbl,
+> > > +       .rx_tbl_num             = ARRAY_SIZE(ipq9574_usb3_rx_tbl),
+> > > +       .pcs_tbl                = ipq9574_usb3_pcs_tbl,
+> > > +       .pcs_tbl_num            = ARRAY_SIZE(ipq9574_usb3_pcs_tbl),
+> > > +       .clk_list               = qmp_v4_phy_clk_l,
+> > > +       .num_clks               = ARRAY_SIZE(qmp_v4_phy_clk_l),
+> > > +       .reset_list             = qcm2290_usb3phy_reset_l,
+> > > +       .num_resets             = ARRAY_SIZE(qcm2290_usb3phy_reset_l),
+> > > +       .vreg_list              = qmp_phy_vreg_l,
+> > > +       .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> > > +       .regs                   = qmp_v3_usb3phy_regs_layout,
+> > > +};
+> > > +
+> > >  static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
+> > >         .lanes                  = 1,
+> > >
+> > > @@ -2589,6 +2701,9 @@ static const struct of_device_id qmp_usb_of_match_table[] = {
+> > >                 .compatible = "qcom,ipq8074-qmp-usb3-phy",
+> > >                 .data = &ipq8074_usb3phy_cfg,
+> > >         }, {
+> > > +               .compatible = "qcom,ipq9574-qmp-usb3-phy",
+> > > +               .data = &ipq9574_usb3phy_cfg,
+> > > +       }, {
+> > >                 .compatible = "qcom,msm8996-qmp-usb3-phy",
+> > >                 .data = &msm8996_usb3phy_cfg,
+> > >         }, {
+> > > --
+> > > 2.7.4
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
 
-On 12.02.2023 00:12, Dmitry Baryshkov wrote:
-> IRQ masks are rarely shared between different DPU revisions. Inline them
-> to the dpu_mdss_cfg intances and drop them from the dpu_hw_catalog.c
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Everything looks good!
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  9 ++-
->  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    | 10 ++-
->  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    | 10 ++-
->  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   | 12 ++-
->  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  9 ++-
->  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  6 +-
->  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  6 +-
->  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  6 +-
->  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  8 +-
->  .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  7 +-
->  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  | 13 +++-
->  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  8 +-
->  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  8 +-
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 73 -------------------
->  14 files changed, 99 insertions(+), 86 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> index 36a4f11f44b7..1eb3b5a9d485 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> @@ -198,7 +198,14 @@ static const struct dpu_mdss_cfg msm8998_dpu_cfg = {
->  	.vbif = msm8998_vbif,
->  	.reg_dma_count = 0,
->  	.perf = &msm8998_perf_data,
-> -	.mdss_irqs = IRQ_SM8250_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR) | \
-> +		     BIT(MDP_INTF2_INTR) | \
-> +		     BIT(MDP_INTF3_INTR) | \
-> +		     BIT(MDP_INTF4_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> index 739a301afcb4..cc6431e42932 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> @@ -197,7 +197,15 @@ static const struct dpu_mdss_cfg sdm845_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sdm845_regdma,
->  	.perf = &sdm845_perf_data,
-> -	.mdss_irqs = IRQ_SDM845_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR) | \
-> +		     BIT(MDP_INTF2_INTR) | \
-> +		     BIT(MDP_INTF3_INTR) | \
-> +		     BIT(MDP_AD4_0_INTR) | \
-> +		     BIT(MDP_AD4_1_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index 33303040fbd0..a2c8b7c51890 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -83,7 +83,15 @@ static const struct dpu_mdss_cfg sm8150_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sm8150_regdma,
->  	.perf = &sm8150_perf_data,
-> -	.mdss_irqs = IRQ_SDM845_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR) | \
-> +		     BIT(MDP_INTF2_INTR) | \
-> +		     BIT(MDP_INTF3_INTR) | \
-> +		     BIT(MDP_AD4_0_INTR) | \
-> +		     BIT(MDP_AD4_1_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index 48185e3dc873..26211f4fad99 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -75,7 +75,17 @@ static const struct dpu_mdss_cfg sc8180x_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sm8150_regdma,
->  	.perf = &sc8180x_perf_data,
-> -	.mdss_irqs = IRQ_SC8180X_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR) | \
-> +		     BIT(MDP_INTF2_INTR) | \
-> +		     BIT(MDP_INTF3_INTR) | \
-> +		     BIT(MDP_INTF4_INTR) | \
-> +		     BIT(MDP_INTF5_INTR) | \
-> +		     BIT(MDP_AD4_0_INTR) | \
-> +		     BIT(MDP_AD4_1_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> index 4e667c7e98e9..b3d3b6fb4412 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> @@ -231,7 +231,14 @@ static const struct dpu_mdss_cfg sm8250_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sm8250_regdma,
->  	.perf = &sm8250_perf_data,
-> -	.mdss_irqs = IRQ_SM8250_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR) | \
-> +		     BIT(MDP_INTF2_INTR) | \
-> +		     BIT(MDP_INTF3_INTR) | \
-> +		     BIT(MDP_INTF4_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-> index 7f998ffa195f..2c991cb6ed7a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
-> @@ -142,7 +142,11 @@ static const struct dpu_mdss_cfg sc7180_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sdm845_regdma,
->  	.perf = &sc7180_perf_data,
-> -	.mdss_irqs = IRQ_SC7180_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> index 7e4cfb0d6901..1ba646cb96a9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> @@ -82,7 +82,11 @@ static const struct dpu_mdss_cfg sm6115_dpu_cfg = {
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
->  	.vbif = sdm845_vbif,
->  	.perf = &sm6115_perf_data,
-> -	.mdss_irqs = IRQ_SC7180_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> index 440240860635..2d9b54ff6510 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> @@ -72,7 +72,11 @@ static const struct dpu_mdss_cfg qcm2290_dpu_cfg = {
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
->  	.vbif = sdm845_vbif,
->  	.perf = &qcm2290_perf_data,
-> -	.mdss_irqs = IRQ_SC7180_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_INTR) | \
-> +		     BIT(MDP_INTF1_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index b27f6c528a1f..3080f34d2e5e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -214,7 +214,13 @@ static const struct dpu_mdss_cfg sm8350_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sm8350_regdma,
->  	.perf = &sm8350_perf_data,
-> -	.mdss_irqs = IRQ_SM8350_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_7xxx_INTR) | \
-> +		     BIT(MDP_INTF1_7xxx_INTR) | \
-> +		     BIT(MDP_INTF2_7xxx_INTR) | \
-> +		     BIT(MDP_INTF3_7xxx_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 3117bb358117..37b1f410e2c4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -148,7 +148,12 @@ static const struct dpu_mdss_cfg sc7280_dpu_cfg = {
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
->  	.vbif = sdm845_vbif,
->  	.perf = &sc7280_perf_data,
-> -	.mdss_irqs = IRQ_SC7280_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_7xxx_INTR) | \
-> +		     BIT(MDP_INTF1_7xxx_INTR) | \
-> +		     BIT(MDP_INTF5_7xxx_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index 81cbc99334a6..a023f4b1b92a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -100,7 +100,18 @@ static const struct dpu_mdss_cfg sc8280xp_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sc8280xp_regdma,
->  	.perf = &sc8280xp_perf_data,
-> -	.mdss_irqs = IRQ_SC8280XP_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_7xxx_INTR) | \
-> +		     BIT(MDP_INTF1_7xxx_INTR) | \
-> +		     BIT(MDP_INTF2_7xxx_INTR) | \
-> +		     BIT(MDP_INTF3_7xxx_INTR) | \
-> +		     BIT(MDP_INTF4_7xxx_INTR) | \
-> +		     BIT(MDP_INTF5_7xxx_INTR) | \
-> +		     BIT(MDP_INTF6_7xxx_INTR) | \
-> +		     BIT(MDP_INTF7_7xxx_INTR) | \
-> +		     BIT(MDP_INTF8_7xxx_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index a453c31c4bc7..2b6d48073bce 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -111,7 +111,13 @@ static const struct dpu_mdss_cfg sm8450_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sm8450_regdma,
->  	.perf = &sm8450_perf_data,
-> -	.mdss_irqs = IRQ_SM8450_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_7xxx_INTR) | \
-> +		     BIT(MDP_INTF1_7xxx_INTR) | \
-> +		     BIT(MDP_INTF2_7xxx_INTR) | \
-> +		     BIT(MDP_INTF3_7xxx_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 1d74ea789b4d..c54b77f3c940 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -197,7 +197,13 @@ static const struct dpu_mdss_cfg sm8550_dpu_cfg = {
->  	.reg_dma_count = 1,
->  	.dma_cfg = &sm8450_regdma,
->  	.perf = &sm8450_perf_data,
-> -	.mdss_irqs = IRQ_SM8450_MASK,
-> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
-> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
-> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> +		     BIT(MDP_INTF0_7xxx_INTR) | \
-> +		     BIT(MDP_INTF1_7xxx_INTR) | \
-> +		     BIT(MDP_INTF2_7xxx_INTR) | \
-> +		     BIT(MDP_INTF3_7xxx_INTR),
->  };
->  
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 3b015f3be31a..0b73e34d50a6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -83,79 +83,6 @@
->  
->  #define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
->  
-> -#define IRQ_SDM845_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			 BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			 BIT(MDP_INTF0_INTR) | \
-> -			 BIT(MDP_INTF1_INTR) | \
-> -			 BIT(MDP_INTF2_INTR) | \
-> -			 BIT(MDP_INTF3_INTR) | \
-> -			 BIT(MDP_AD4_0_INTR) | \
-> -			 BIT(MDP_AD4_1_INTR))
-> -
-> -#define IRQ_SC7180_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			 BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			 BIT(MDP_INTF0_INTR) | \
-> -			 BIT(MDP_INTF1_INTR))
-> -
-> -#define IRQ_SC7280_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			 BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			 BIT(MDP_INTF0_7xxx_INTR) | \
-> -			 BIT(MDP_INTF1_7xxx_INTR) | \
-> -			 BIT(MDP_INTF5_7xxx_INTR))
-> -
-> -#define IRQ_SM8250_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			 BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			 BIT(MDP_INTF0_INTR) | \
-> -			 BIT(MDP_INTF1_INTR) | \
-> -			 BIT(MDP_INTF2_INTR) | \
-> -			 BIT(MDP_INTF3_INTR) | \
-> -			 BIT(MDP_INTF4_INTR))
-> -
-> -#define IRQ_SM8350_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			 BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			 BIT(MDP_INTF0_7xxx_INTR) | \
-> -			 BIT(MDP_INTF1_7xxx_INTR) | \
-> -			 BIT(MDP_INTF2_7xxx_INTR) | \
-> -			 BIT(MDP_INTF3_7xxx_INTR))
-> -
-> -#define IRQ_SC8180X_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			  BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			  BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			  BIT(MDP_INTF0_INTR) | \
-> -			  BIT(MDP_INTF1_INTR) | \
-> -			  BIT(MDP_INTF2_INTR) | \
-> -			  BIT(MDP_INTF3_INTR) | \
-> -			  BIT(MDP_INTF4_INTR) | \
-> -			  BIT(MDP_INTF5_INTR) | \
-> -			  BIT(MDP_AD4_0_INTR) | \
-> -			  BIT(MDP_AD4_1_INTR))
-> -
-> -#define IRQ_SC8280XP_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			   BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			   BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			   BIT(MDP_INTF0_7xxx_INTR) | \
-> -			   BIT(MDP_INTF1_7xxx_INTR) | \
-> -			   BIT(MDP_INTF2_7xxx_INTR) | \
-> -			   BIT(MDP_INTF3_7xxx_INTR) | \
-> -			   BIT(MDP_INTF4_7xxx_INTR) | \
-> -			   BIT(MDP_INTF5_7xxx_INTR) | \
-> -			   BIT(MDP_INTF6_7xxx_INTR) | \
-> -			   BIT(MDP_INTF7_7xxx_INTR) | \
-> -			   BIT(MDP_INTF8_7xxx_INTR))
-> -
-> -#define IRQ_SM8450_MASK (BIT(MDP_SSPP_TOP0_INTR) | \
-> -			 BIT(MDP_SSPP_TOP0_INTR2) | \
-> -			 BIT(MDP_SSPP_TOP0_HIST_INTR) | \
-> -			 BIT(MDP_INTF0_7xxx_INTR) | \
-> -			 BIT(MDP_INTF1_7xxx_INTR) | \
-> -			 BIT(MDP_INTF2_7xxx_INTR) | \
-> -			 BIT(MDP_INTF3_7xxx_INTR))
-> -
->  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
->  			 BIT(DPU_WB_UBWC) | \
->  			 BIT(DPU_WB_YUV_CONFIG) | \
+-- 
+With best wishes
+Dmitry
