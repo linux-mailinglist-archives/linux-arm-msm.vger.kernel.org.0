@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA2406CFD10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 09:41:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C92F6CFD11
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 09:41:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbjC3Hl4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 03:41:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42660 "EHLO
+        id S229470AbjC3Hl5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 03:41:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjC3Hly (ORCPT
+        with ESMTP id S229379AbjC3Hlz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 03:41:54 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F22E244B8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 00:41:53 -0700 (PDT)
+        Thu, 30 Mar 2023 03:41:55 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9A64681
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 00:41:54 -0700 (PDT)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 68AF61FE94;
+        by smtp-out1.suse.de (Postfix) with ESMTPS id E4B4821B04;
         Thu, 30 Mar 2023 07:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
         t=1680162112; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=9Fs0TSV7YnG4gHE7IXONT2StiMW8F6KBBESqQJ4Y8tQ=;
-        b=ispgUMQfezZGd8KfSNuTJ8D8mOmKS12saNrk3sxCmKvi60U2/ofbZ40y9sGJwp10UMHeA5
-        YqTI1yIaJvTqRiPS8Nw8jML9WEEyGIaH+NcewnYAzokn+utBM78qGsH3XXsmrAG3smeKHm
-        xm+UVd0WySAxe1GGD0W5ZNNIjuKCq2o=
+        bh=k930eYMGmtYlGfmZvFTN92NO2Rqb8IiXQ99gQmEMF70=;
+        b=tiW9h0L8QChUMGotD1CXWHHRKCw/4CVPj4AIzOjaS420AvV5VS37oRdi4OgWIjOV9O2kn8
+        3HRinAMfGPQmWXO25OH1+wOBBHSI2CHnEhUJQQteS0B4ImcZHytIN/tNVKRGulEIUgVJEP
+        9I/4hPCRjY6p7moWb93jmvoCJUyEwyA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
         s=susede2_ed25519; t=1680162112;
         h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
          mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=9Fs0TSV7YnG4gHE7IXONT2StiMW8F6KBBESqQJ4Y8tQ=;
-        b=TrZOlcAE6K7Fnae3QgtvZdRNcATyPlT/NIlwCqkB6VoIuSU/upOQCz5oITYTU58SZ9hzrX
-        DpHof8QR98w8pOCg==
+        bh=k930eYMGmtYlGfmZvFTN92NO2Rqb8IiXQ99gQmEMF70=;
+        b=51La0ssuDzuehYIXDX97g8BY7P8gQA/PCjWP2mzCdMls/IzYDKDXPp5r9B7i8lq8nwnf6Y
+        zZddapDX2q+e3FCw==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 6E31B1348E;
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id AF7041390D;
         Thu, 30 Mar 2023 07:41:52 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
         by imap2.suse-dmz.suse.de with ESMTPSA
-        id uEsAGkA9JWSZfQAAMHmgww
+        id 2NjUKUA9JWSZfQAAMHmgww
         (envelope-from <tzimmermann@suse.de>); Thu, 30 Mar 2023 07:41:52 +0000
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
@@ -56,9 +56,9 @@ To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
         Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 4/6] drm/msm: Remove fbdev from struct msm_drm_private
-Date:   Thu, 30 Mar 2023 09:41:47 +0200
-Message-Id: <20230330074150.7637-5-tzimmermann@suse.de>
+Subject: [PATCH 5/6] drm/msm: Initialize fbdev DRM client
+Date:   Thu, 30 Mar 2023 09:41:48 +0200
+Message-Id: <20230330074150.7637-6-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230330074150.7637-1-tzimmermann@suse.de>
 References: <20230330074150.7637-1-tzimmermann@suse.de>
@@ -73,110 +73,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DRM device stores a pointer to the fbdev helper. Remove struct
-msm_drm_private.fbdev, which contains the same value. No functional
+Initialize the fbdev client in the fbdev code with empty helper
+functions. Also clean up the client. The helpers will later
+implement various functionality of the DRM client. No functional
 changes.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/gpu/drm/msm/msm_debugfs.c | 5 ++---
- drivers/gpu/drm/msm/msm_drv.c     | 4 ++--
- drivers/gpu/drm/msm/msm_drv.h     | 2 --
- drivers/gpu/drm/msm/msm_fbdev.c   | 8 ++------
- 4 files changed, 6 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/msm_fbdev.c | 38 +++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-index d6ecff0ab618..d4b31165708f 100644
---- a/drivers/gpu/drm/msm/msm_debugfs.c
-+++ b/drivers/gpu/drm/msm/msm_debugfs.c
-@@ -241,12 +241,11 @@ static int msm_fb_show(struct seq_file *m, void *arg)
- {
- 	struct drm_info_node *node = (struct drm_info_node *) m->private;
- 	struct drm_device *dev = node->minor->dev;
--	struct msm_drm_private *priv = dev->dev_private;
- 	struct drm_framebuffer *fb, *fbdev_fb = NULL;
- 
--	if (priv->fbdev) {
-+	if (dev->fb_helper) {
- 		seq_printf(m, "fbcon ");
--		fbdev_fb = priv->fbdev->fb;
-+		fbdev_fb = dev->fb_helper->fb;
- 		msm_framebuffer_describe(fbdev_fb, m);
- 	}
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 5211140ec50b..9f076b9ab19b 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -242,7 +242,7 @@ static int msm_drm_uninit(struct device *dev)
- 	msm_rd_debugfs_cleanup(priv);
- 
- #ifdef CONFIG_DRM_FBDEV_EMULATION
--	if (fbdev && priv->fbdev)
-+	if (ddev->fb_helper)
- 		msm_fbdev_free(ddev);
- #endif
- 
-@@ -537,7 +537,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 
- #ifdef CONFIG_DRM_FBDEV_EMULATION
- 	if (kms && fbdev)
--		priv->fbdev = msm_fbdev_init(ddev);
-+		msm_fbdev_init(ddev);
- #endif
- 
- 	ret = msm_debugfs_late_init(ddev);
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 9f0c184b02a0..852f88c36621 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -129,8 +129,6 @@ struct msm_drm_private {
- 	bool is_a2xx;
- 	bool has_cached_coherent;
- 
--	struct drm_fb_helper *fbdev;
--
- 	struct msm_rd_state *rd;       /* debugfs to dump all submits */
- 	struct msm_rd_state *hangrd;   /* debugfs to dump hanging submits */
- 	struct msm_perf_state *perf;
 diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index 0985486d194b..95b193a5e0d5 100644
+index 95b193a5e0d5..6c3665c5f4f6 100644
 --- a/drivers/gpu/drm/msm/msm_fbdev.c
 +++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -122,7 +122,6 @@ static const struct drm_fb_helper_funcs msm_fb_helper_funcs = {
+@@ -119,6 +119,30 @@ static const struct drm_fb_helper_funcs msm_fb_helper_funcs = {
+ 	.fb_probe = msm_fbdev_create,
+ };
+ 
++/*
++ * struct drm_client
++ */
++
++static void msm_fbdev_client_unregister(struct drm_client_dev *client)
++{ }
++
++static int msm_fbdev_client_restore(struct drm_client_dev *client)
++{
++	return 0;
++}
++
++static int msm_fbdev_client_hotplug(struct drm_client_dev *client)
++{
++	return 0;
++}
++
++static const struct drm_client_funcs msm_fbdev_client_funcs = {
++	.owner		= THIS_MODULE,
++	.unregister	= msm_fbdev_client_unregister,
++	.restore	= msm_fbdev_client_restore,
++	.hotplug	= msm_fbdev_client_hotplug,
++};
++
  /* initialize fbdev helper */
  struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
  {
--	struct msm_drm_private *priv = dev->dev_private;
- 	struct drm_fb_helper *helper;
- 	int ret;
+@@ -131,10 +155,16 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
  
-@@ -142,8 +141,6 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
- 	if (ret)
- 		goto fini;
+ 	drm_fb_helper_prepare(dev, helper, 32, &msm_fb_helper_funcs);
  
--	priv->fbdev = helper;
--
- 	return helper;
++	ret = drm_client_init(dev, &helper->client, "fbdev", &msm_fbdev_client_funcs);
++	if (ret) {
++		drm_err(dev, "Failed to register client: %d\n", ret);
++		goto err_drm_fb_helper_unprepare;
++	}
++
+ 	ret = drm_fb_helper_init(dev, helper);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "could not init fbdev: ret=%d\n", ret);
+-		goto fail;
++		goto err_drm_client_release;
+ 	}
+ 
+ 	ret = drm_fb_helper_initial_config(helper);
+@@ -145,8 +175,11 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
  
  fini:
-@@ -155,8 +152,7 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
+ 	drm_fb_helper_fini(helper);
+-fail:
++err_drm_client_release:
++	drm_client_release(&helper->client);
++err_drm_fb_helper_unprepare:
+ 	drm_fb_helper_unprepare(helper);
++	kfree(helper);
+ 	return NULL;
+ }
  
- void msm_fbdev_free(struct drm_device *dev)
- {
--	struct msm_drm_private *priv = dev->dev_private;
--	struct drm_fb_helper *helper = priv->fbdev;
-+	struct drm_fb_helper *helper = dev->fb_helper;
- 	struct drm_framebuffer *fb = helper->fb;
+@@ -168,6 +201,7 @@ void msm_fbdev_free(struct drm_device *dev)
+ 		drm_framebuffer_remove(fb);
+ 	}
  
- 	DBG();
-@@ -175,5 +171,5 @@ void msm_fbdev_free(struct drm_device *dev)
++	drm_client_release(&helper->client);
  	drm_fb_helper_unprepare(helper);
  	kfree(helper);
  
--	priv->fbdev = NULL;
-+	dev->fb_helper = NULL;
- }
 -- 
 2.40.0
 
