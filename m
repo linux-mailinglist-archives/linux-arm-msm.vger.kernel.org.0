@@ -2,77 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C09156CFEDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 10:44:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ED6A6CFFA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 11:19:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbjC3Iow (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 04:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38598 "EHLO
+        id S229615AbjC3JTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 05:19:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbjC3Iov (ORCPT
+        with ESMTP id S229500AbjC3JSi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 04:44:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B02587D87;
-        Thu, 30 Mar 2023 01:44:21 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32U4g0Qb008340;
-        Thu, 30 Mar 2023 08:43:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=49Q5JyUQMSYAGwSNEQOCBP+0mXdjzBTrPT7B9ELXkUs=;
- b=flBoVFCExGq3SJVB/reofqxLxATNfiD3Hp5deKk4mh7y/J0gwBsoRCAZqslg3/XEqlUk
- mEdhqzCj2wAmPEBdc1HmDlDLdS8Wu5AutMHbyXSIRrRGk8OZMa1MgMii6oUqv5RMGzo9
- jJmPx14SmZuiSEy4IW8lOmUlZ8crx7qm6UWQFKky3/eOQnlb8tFI/kvEBtVVD92ufGAR
- pM6Fk20/z4fMp4fKQH1Lvnidz1pR1wP16TCRh3E0DM9NwkZwvGH7NggPCfnZWbp5fj54
- 6Y2XPJ1iDbUJs5DRO5WpM+ncv+URxpP1IAvAzCUZ7e96RZ4EeKtA1v3e9el9etQhdVea Zw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn3mf8r1c-1
+        Thu, 30 Mar 2023 05:18:38 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0D3172A;
+        Thu, 30 Mar 2023 02:18:37 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32U8lhXP013501;
+        Thu, 30 Mar 2023 09:18:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=qmGkvGd4ktq1l/QDvk5WbJ3XQOI7H5CxYNwOBRXa/FA=;
+ b=W5zcyq4uPZk0yygVF/+epdDqQFvXYdMCmyamBJCG4SooB0oST4HF7mbVkBFI06ePamyE
+ F3+ueQXLA5J/shFfXott7a82njNk8q6tfC3tzPLjo3vMcuVzwqCQgUPTIb+FHUGIcovh
+ JUo68XFNHZRnO0rbxFbcvwQTrm2ZeXBK4pT8exYBwzc+/v+7Zw4+c1Ps2iOoAOPJR9Kt
+ U0R6cotpORl2hjmDrysbpGgfPed7bIEmCufwkCLTPnWppa+kMjxHyPW+VnNi+mVPvUf4
+ b+5YAZ/a1PdCzIRQKp0YKhns0ajGzvqJWbuJVQsYWPJaMfx25wv8hsqKbRVS609BRROg PA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn51ygg01-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 08:43:12 +0000
+        Thu, 30 Mar 2023 09:18:15 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32U8hCvc012454
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32U9IDal010154
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 08:43:12 GMT
-Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 30 Mar 2023 01:43:07 -0700
-From:   Maulik Shah <quic_mkshah@quicinc.com>
-To:     <andersson@kernel.org>, <ulf.hansson@linaro.org>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <wingers@google.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <sudeep.holla@arm.com>,
-        <jwerner@chromium.org>, <quic_lsrao@quicinc.com>,
-        <quic_rjendra@quicinc.com>, Maulik Shah <quic_mkshah@quicinc.com>,
-        <devicetree@vger.kernel.org>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sc7280: Add power-domains for cpuidle states
-Date:   Thu, 30 Mar 2023 14:12:50 +0530
-Message-ID: <20230330084250.32600-3-quic_mkshah@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230330084250.32600-1-quic_mkshah@quicinc.com>
-References: <20230330084250.32600-1-quic_mkshah@quicinc.com>
+        Thu, 30 Mar 2023 09:18:13 GMT
+Received: from [10.50.5.192] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
+ 2023 02:18:04 -0700
+Message-ID: <4be7554b-eba7-5c72-f040-9b9f12bfb3d9@quicinc.com>
+Date:   Thu, 30 Mar 2023 14:47:52 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH V10 2/4] clk: qcom: Add Global Clock Controller driver for
+ IPQ9574
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <arnd@arndb.de>, <broonie@kernel.org>,
+        <catalin.marinas@arm.com>, <devicetree@vger.kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <linus.walleij@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <marcel.ziswiler@toradex.com>, <mturquette@baylibre.com>,
+        <nfraprado@collabora.com>, <p.zabel@pengutronix.de>,
+        <robh+dt@kernel.org>, <shawnguo@kernel.org>, <will@kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230327132718.573-1-quic_devipriy@quicinc.com>
+ <20230327132718.573-3-quic_devipriy@quicinc.com>
+ <0af15083921c5d3c89392209654f0c9b.sboyd@kernel.org>
+ <2484518b-bcf6-7fb1-6bfb-b96b3682397b@quicinc.com>
+ <1cfd584a48e1bb453596948a0187ecf1.sboyd@kernel.org>
+Content-Language: en-US
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <1cfd584a48e1bb453596948a0187ecf1.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6NowLMuVgq1uUnoC9B-tcoh4RTo6RzVV
-X-Proofpoint-GUID: 6NowLMuVgq1uUnoC9B-tcoh4RTo6RzVV
+X-Proofpoint-ORIG-GUID: CkK5fHF6YxF7BIdqV0rOIUxMQspOyjII
+X-Proofpoint-GUID: CkK5fHF6YxF7BIdqV0rOIUxMQspOyjII
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-03-30_04,2023-03-30_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
- bulkscore=0 mlxscore=0 suspectscore=0 spamscore=0 adultscore=0
- impostorscore=0 mlxlogscore=943 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303300069
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=740
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303300075
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,195 +95,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add power-domains for cpuidle states to use psci os-initiated idle states.
 
-Cc: devicetree@vger.kernel.org
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 98 +++++++++++++++++++++-------
- 1 file changed, 73 insertions(+), 25 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 5e6f9f441f1a..1a232eb4dde6 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -170,9 +170,8 @@
- 			reg = <0x0 0x0>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
--					   &LITTLE_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -196,9 +195,8 @@
- 			reg = <0x0 0x100>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
--					   &LITTLE_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_100>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -218,9 +216,8 @@
- 			reg = <0x0 0x200>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
--					   &LITTLE_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_200>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -240,9 +237,8 @@
- 			reg = <0x0 0x300>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
--					   &LITTLE_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_300>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -262,9 +258,8 @@
- 			reg = <0x0 0x400>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			cpu-idle-states = <&BIG_CPU_SLEEP_0
--					   &BIG_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD4>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_400>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -284,9 +279,8 @@
- 			reg = <0x0 0x500>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			cpu-idle-states = <&BIG_CPU_SLEEP_0
--					   &BIG_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD5>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_500>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -306,9 +300,8 @@
- 			reg = <0x0 0x600>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			cpu-idle-states = <&BIG_CPU_SLEEP_0
--					   &BIG_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD6>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_600>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -328,9 +321,8 @@
- 			reg = <0x0 0x700>;
- 			clocks = <&cpufreq_hw 2>;
- 			enable-method = "psci";
--			cpu-idle-states = <&BIG_CPU_SLEEP_0
--					   &BIG_CPU_SLEEP_1
--					   &CLUSTER_SLEEP_0>;
-+			power-domains = <&CPU_PD7>;
-+			power-domain-names = "psci";
- 			next-level-cache = <&L2_700>;
- 			operating-points-v2 = <&cpu7_opp_table>;
- 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
-@@ -422,9 +414,11 @@
- 				min-residency-us = <5555>;
- 				local-timer-stop;
- 			};
-+		};
- 
-+		domain-idle-states {
- 			CLUSTER_SLEEP_0: cluster-sleep-0 {
--				compatible = "arm,idle-state";
-+				compatible = "domain-idle-state";
- 				idle-state-name = "cluster-power-down";
- 				arm,psci-suspend-param = <0x40003444>;
- 				entry-latency-us = <3263>;
-@@ -790,6 +784,59 @@
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+
-+		CPU_PD0: cpu0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD1: cpu1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD2: cpu2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD3: cpu3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD4: cpu4 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD5: cpu5 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD6: cpu6 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-+		};
-+
-+		CPU_PD7: cpu7 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
-+		};
-+
-+		CLUSTER_PD: cpu-cluster0 {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_SLEEP_0>;
-+		};
- 	};
- 
- 	qspi_opp_table: opp-table-qspi {
-@@ -5280,6 +5327,7 @@
- 					  <SLEEP_TCS   3>,
- 					  <WAKE_TCS    3>,
- 					  <CONTROL_TCS 1>;
-+			power-domains = <&CLUSTER_PD>;
- 
- 			apps_bcm_voter: bcm-voter {
- 				compatible = "qcom,bcm-voter";
--- 
-2.17.1
+On 3/28/2023 10:29 PM, Stephen Boyd wrote:
+> Quoting Devi Priya (2023-03-27 23:15:35)
+>>
+>>
+>> On 3/27/2023 10:18 PM, Stephen Boyd wrote:
+>>> Quoting Devi Priya (2023-03-27 06:27:16)
+>>>> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+>>>> new file mode 100644
+>>>> index 000000000000..b2a2d618a5ec
+>>>> --- /dev/null
+>>>> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+>>>> @@ -0,0 +1,4248 @@
+>>>> +// SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>>> +/*
+>>>> + * Copyright (c) 2023 The Linux Foundation. All rights reserved.
+>>>> + */
+>>>> +
+>>>> +#include <linux/kernel.h>
+>>>> +#include <linux/err.h>
+>>>> +#include <linux/platform_device.h>
+>>>> +#include <linux/module.h>
+>>>> +#include <linux/of.h>
+>>>> +#include <linux/of_device.h>
+>>>
+>>> What is this include for?
+>> This include actually don't seem necessary. But, I see that of.h &
+>> platform_device.h are being included via of_device.h
+>> Would you suggest to drop of_device.h or the other two
+>> headers instead?
+> 
+> Include headers for things you use. Don't try to omit includes if you
+> see that a header includes other headers that you're using.
+Sure, got it!
 
+Regards,
+Devi Priya
