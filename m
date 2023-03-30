@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B8B86D12AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 00:57:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 262566D12B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 01:01:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231325AbjC3W5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 18:57:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60594 "EHLO
+        id S231384AbjC3XBB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 19:01:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230333AbjC3W5C (ORCPT
+        with ESMTP id S230447AbjC3XBA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 18:57:02 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB5C1FC1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 15:57:01 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id br6so26553083lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 15:57:01 -0700 (PDT)
+        Thu, 30 Mar 2023 19:01:00 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76339D33C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 16:00:59 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id c9so16178463lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 16:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680217019;
+        d=linaro.org; s=google; t=1680217258;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IyKfQObvopk17NVpiPNCRsq0j+VPLHa0MW4Rc/CyGMo=;
-        b=Ji7nj7WFIrSFmsSZwyeeP6AwUE/ae3pup9Vl7d7C/X1lI8/RkqVM2oRl/XONGjv25C
-         jjXrxWlQfmEEKKps5mm+WG6JkWPQ5E/cIe8642EMhW4f8NSIW/CU6bKx29rrZ2NxKvtV
-         yjLthdVLQcxDiIh1WXBnoFbR6XIxav+h4O/vXqOAAohbEAxAJykydGNVJK+h8ApU52fi
-         wwgEONFNeOF5j4P+FG+gGgWdbOP51hoNYkpOt2yjY58/9uB54VVpUUu7cB1QjupsBNIQ
-         N4nYW1TWmm3rs7U4G2bp66Jhd6CBDwpeg6sGA7h1TT4rRD4PJpmh3HFF9PLFAfs/KGSh
-         LO7A==
+        bh=A6kuT6yMRhPANOcy+yitv1kvMjGcvYyKQpeqJZ7sFYY=;
+        b=irqWVOstEEB8FLwfQsyPkDPxarLwczbE0LqOIgKwbTZDiQYOB4RChmvGieN9dfY3Hn
+         SrTm9RhO5ryPBJpdOPnc7yrK5uecP6W3RUerUHAxZ/5Ta3ES63mDfBtu0BrWLILYxnoq
+         mhGgqjTekbMcI7mctuzjJD/6qEaG1CemnIqqlcQjVHyMfiFpymD5xXsk/OZjjMUCMZaC
+         T5gvpZbtSIiaQsTuSmVgum2ko7jurNNnsXr6rmIreiy54ergrh1q10hL9VQIWVhvFWh0
+         LWpjKSZFOKJXy/p1YnbBXzGsnd+0oCAgmak/K18/rdhRYvE/IoHffbGEV17rs5G6LO8C
+         4xHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680217019;
+        d=1e100.net; s=20210112; t=1680217258;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IyKfQObvopk17NVpiPNCRsq0j+VPLHa0MW4Rc/CyGMo=;
-        b=Cy025pMIsunuYhTsbVU6kr2lsmEXF6MeKWOu1Hb4R1IRUTQISM3H02b08oZsGQ00JA
-         H1udibLL6p5khykBZdhgonm54fUoe28WPAGAdP2DwZl05dN/JTrCRX0/afTsvtogqbKD
-         RhTUQFvg3d35wUt328L6Xp2bdx0pby0rq1huAWEYMkFLc7OJRyhz+I3E+GvNjd/zt4Os
-         j4cTseDKVceftQdy9xxduooavNVzHMnvwCxPlKKeqctxbz+rRKnQ/fzYX8mLSGPPszpK
-         GW2QSuVUmcmConRe3HN/FlCJ4nd6hCdxDtNFA+Lyitqh/dF+3lRADqees9OH80juwyEU
-         bpqQ==
-X-Gm-Message-State: AAQBX9cFl0kWHZ3+6VSN/LxAyT87z+o+Fz09Xd97HP5AvwfQdMjt2Wpf
-        l/ZU2Hc5BRY7Z2YYr2ktaZdDBA==
-X-Google-Smtp-Source: AKy350YEKYG2Ghd6pDF92L9f6skCBtKsWaPZ2RHNu3AcQXKQxltWKyLbsUk+nvYX4gucmmlu8Qocgg==
-X-Received: by 2002:ac2:5473:0:b0:4e8:5e39:6234 with SMTP id e19-20020ac25473000000b004e85e396234mr7655500lfn.16.1680217019433;
-        Thu, 30 Mar 2023 15:56:59 -0700 (PDT)
+        bh=A6kuT6yMRhPANOcy+yitv1kvMjGcvYyKQpeqJZ7sFYY=;
+        b=cAqIrZ+0uyGa4j/sXE3hbV+U1cQMThjDPJv3KtEnL5I62ynmCROPnVJRgnQxmLT0JB
+         iHdUmOJn3LqAJOHIwnXy7itbvgUm9GVycV6B4x/cZtbW499wi70SLv5XHeCpgXKJt5UG
+         q99OJ7+2Y41gmGv27SFFCZpONJ/2M94gsgNhDMxOqS1Sj1IcqX7WUwgCl6Yiacfs6zeP
+         SU4ovGAB0Xz1RHflmPTZySijqmj0EBZBbXvG5pe3SgnsXQmuvq1ytmrQIML71yx8oIk6
+         lktNW97Gk46BE2CcmQ4UiHyyDrM5YNvw0HIChvUwUIrF4F81dt0HMowbGZemw47gHq6h
+         gxMA==
+X-Gm-Message-State: AAQBX9eiPBl59wFRR6CNC2m0PjlOHuva13c0wUGDSEHkTqvBuojfLYVP
+        eXIwoef5G5zfLICbaJ9kO7kvGQ==
+X-Google-Smtp-Source: AKy350Z5ZuTNud6AGEQZ9lRSS0iZaokhTOF68/eLPut58alI5pZKqX5nYSacIeg2lYmztgwZ62id6Q==
+X-Received: by 2002:ac2:48a1:0:b0:4ea:9a49:99e4 with SMTP id u1-20020ac248a1000000b004ea9a4999e4mr6652314lfg.56.1680217257675;
+        Thu, 30 Mar 2023 16:00:57 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id i13-20020a056512006d00b004e83edd8ce8sm119241lfo.196.2023.03.30.15.56.58
+        by smtp.gmail.com with ESMTPSA id m14-20020a19520e000000b004cb1de3f487sm121752lfb.104.2023.03.30.16.00.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 15:56:59 -0700 (PDT)
-Message-ID: <8685b710-b74d-556a-815d-0ffef2b0eeff@linaro.org>
-Date:   Fri, 31 Mar 2023 00:56:57 +0200
+        Thu, 30 Mar 2023 16:00:57 -0700 (PDT)
+Message-ID: <6f2c8609-0733-c1f6-210f-3d6f3d987c23@linaro.org>
+Date:   Fri, 31 Mar 2023 01:00:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 1/1] dt-bindings: firmware: qcom: scm: Updating VMID
- list
+Subject: Re: [PATCH 1/4] dt-bindings: usb: gpio-sbu-mux: Add OnSemi NB7VPQ904M
+ mux
 Content-Language: en-US
-To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Rob Herring <robh@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>
-References: <20230330165117.26348-1-quic_gokukris@quicinc.com>
+        Andy Gross <agross@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
+ <20230321-topic-sagami_dp-v1-1-340c8bce4276@linaro.org>
+ <20230330153116.GA2181381-robh@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230330165117.26348-1-quic_gokukris@quicinc.com>
+In-Reply-To: <20230330153116.GA2181381-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -87,70 +85,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 30.03.2023 18:51, Gokul krishna Krishnakumar wrote:
-> Adding the full list of VMID's, which are used by different clients to
-> pass to the secure world.
+On 30.03.2023 17:31, Rob Herring wrote:
+> On Tue, Mar 21, 2023 at 11:12:28PM +0100, Konrad Dybcio wrote:
+>> The OnSemi NB7VPQ904M Type-C DP altmode redriver provides SBU signals
+>> that can be used in with the gpio-sbu-mux driver. Document it.
+>>
+>> Note that the -mux suffix is there to indicate that the gpio-sbu-mux
+>> driver interacts with the mux part of this otherwise quite sophisticated
+>> chip, leaving the "onnn,nb7vpq904m" compatible free for when a proper
+>> driver taking care of all of the chip's capabilities is introduced.
 > 
-> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-> ---
-> V2 Fixed allignment issues in [1]
-> 
-> [1] https://lore.kernel.org/lkml/20230328214703.12093-1-quic_gokukris@quicinc.com/
-> ---
-They're weirdly ordered now.. I think Dmitry's comment was
-just about the usage of space/tab such that git would not get
-confused. With that fixed, you should be able to get a diff like:
+> You should define a proper and complete binding. If you want to bind the 
+> gpio-sbu-mux driver to it now until you have a proper driver then that's 
+> fine. When you have such a driver, then you drop the compatible from the 
+> gpio-sbu-mux driver.
+Okay, that makes perfect sense and is good to know. Perhaps even worth
+documenting somewhere.
 
-+#define QCOM_SCM_VMID_LPASS		0x16
-#define QCOM_SCM_VMID_WLAN_CE		0x19
-+#define QCOM_SCM_VMID_CP_SPSS_SP	0x1A
-[...]
-+#define QCOM_SCM_VMID_CP_CDSP		0x2A
-#define QCOM_SCM_VMID_NAV		0x2B
-+#define QCOM_SCM_VMID_TVM		0x2D
-
-Still, I really appreciate you providing that information to the kernel!
+I think I'll delay resending this and get an "actual" driver going.
 
 Konrad
-
->  include/dt-bindings/firmware/qcom,scm.h | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
 > 
-> diff --git a/include/dt-bindings/firmware/qcom,scm.h b/include/dt-bindings/firmware/qcom,scm.h
-> index 1a4e68fa0744..7ad6cbe623d3 100644
-> --- a/include/dt-bindings/firmware/qcom,scm.h
-> +++ b/include/dt-bindings/firmware/qcom,scm.h
-> @@ -2,6 +2,7 @@
->  /*
->   * Copyright (c) 2010-2015, 2018-2019 The Linux Foundation. All rights reserved.
->   * Copyright (C) 2015 Linaro Ltd.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
->  #ifndef _DT_BINDINGS_FIRMWARE_QCOM_SCM_H
-> @@ -13,4 +14,25 @@
->  #define QCOM_SCM_VMID_WLAN_CE		0x19
->  #define QCOM_SCM_VMID_NAV		0x2B
->  
-> +#define QCOM_SCM_VMID_TZ		0x1
-> +#define QCOM_SCM_VMID_CP_TOUCH		0x8
-> +#define QCOM_SCM_VMID_CP_BITSTREAM	0x9
-> +#define QCOM_SCM_VMID_CP_PIXEL		0xA
-> +#define QCOM_SCM_VMID_CP_NON_PIXEL	0xB
-> +#define QCOM_SCM_VMID_CP_CAMERA		0xD
-> +#define QCOM_SCM_VMID_HLOS_FREE		0xE
-> +#define QCOM_SCM_VMID_MSS_NONMSA	0x10
-> +#define QCOM_SCM_VMID_CP_SEC_DISPLAY	0x11
-> +#define QCOM_SCM_VMID_CP_APP		0x12
-> +#define QCOM_SCM_VMID_LPASS		0x16
-> +#define QCOM_SCM_VMID_CP_SPSS_SP	0x1A
-> +#define QCOM_SCM_VMID_CP_CAMERA_PREVIEW	0x1D
-> +#define QCOM_SCM_VMID_CDSP		0x1E
-> +#define QCOM_SCM_VMID_CP_SPSS_SP_SHARED	0x22
-> +#define QCOM_SCM_VMID_CP_SPSS_HLOS_SHARED	0x24
-> +#define QCOM_SCM_VMID_ADSP_HEAP		0x25
-> +#define QCOM_SCM_VMID_CP_CDSP		0x2A
-> +#define QCOM_SCM_VMID_TVM		0x2D
-> +#define QCOM_SCM_VMID_OEMVM		0x31
-> +
->  #endif
+> Note that having the fallback "gpio-sbu-mux" is somewhat problematic 
+> because the kernel has no mechanism to ensure you bind the most specific 
+> driver. For that to happen, it would have to support (automatically) 
+> unbinding one driver and binding to the more specific driver since one 
+> driver could be built-in and the other a module.
+> 
+> Rob
