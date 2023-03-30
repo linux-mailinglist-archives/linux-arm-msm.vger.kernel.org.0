@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DAD96D04F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:38:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A11776D04FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:39:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjC3Miv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 08:38:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32920 "EHLO
+        id S230019AbjC3Mjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 08:39:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbjC3Mia (ORCPT
+        with ESMTP id S229742AbjC3Mjr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 08:38:30 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0417576A6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:38:29 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id z42so19405944ljq.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:38:28 -0700 (PDT)
+        Thu, 30 Mar 2023 08:39:47 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79D7A5CF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:39:20 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id y20so24353927lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:39:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680179907;
+        d=linaro.org; s=google; t=1680179959;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=akRZyjqJclMdbp3N5bLTzvOQ/s247q8kDmVY+hohIX4=;
-        b=LHhr/8GHEec7cDYXglHq9/Rv6mNTRGf7cNzyfxbrM1tVojyNSEcehJt9P0rkt+iRsZ
-         BVb+fjEwQGkK8F7QkU1LyJGExkLYEFldRrBH0ulgD825ezPT3BexDGNUuoZJ9pRktQZr
-         FdrEKRVG+1Ir1ae6QV1HzWn+qhyeMiyxdoXLlJSZ3UVyHrqh7YWY3vMMFK2ehkPeYbUt
-         Jq5b5GDvctB1yeRdckp+u2N5fcg41Mg802C1k8QyewxbzZlVaYOqL818UAT/VAzOqkR5
-         xMvq4ZvwCHlnjmtPVGNEine0GjfvZal1JeP7TXhRwwvwyxHeaCIjVkg6f4WFdehS+TUn
-         AJbw==
+        bh=3R3nPD3qFWgilc9137SlJTFMh5JUV9k90a6EhVZUbfc=;
+        b=VWgMfw5vMFuW9l6DTwdAhG8puqPhV6tLQpKUo7pdbDkHTwEDI+XontB3ocebEsfHbL
+         l3VfyZQFkbAQqBLY1TAskq1hSyvA+S4PLw3Rt1YJgQKjyrwR0Wisdk5OW3ib66iklGmU
+         vcYPPwmXNNX3dSmZ1Fl3Wpt9a87cF+HyAgyy3aoGhJD8gOhfhAf9vbELn0x+GPgqICjF
+         1+1Zvj3nBiUeDmOK++X0DKD4v+/FtgZtSs5KfD7Vd2hZYg0K3Qt74uNjnVRLTxX1CGd/
+         zZs6Ub9kfzt9M+uYHO8vmzq8+PAUb0AH2QJZ3t0o44E5PN8gLP50xcT/3bAOcg7B66TK
+         Dbcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680179907;
+        d=1e100.net; s=20210112; t=1680179959;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=akRZyjqJclMdbp3N5bLTzvOQ/s247q8kDmVY+hohIX4=;
-        b=4TGnsqUb//QEHsUzTxafdV6FoIxkwJQNPyBrmGl2ZS3FDuX4l8UHt8Z+vD9qs4zahE
-         Hl5Vm5WvJ0vtfaCiLTrLK1aK/nVzoJbr8f3uX2/wUNQ7Y5ficaNDYadWLPhxe5vVPVbI
-         fWPTU6oHO9AvTEcTt0g3SeBvqn/N+/vi9jKgni52rqfN+4U9lr32CNqgjjCg2VJYeZs8
-         QEfScWtaURWK2E9PPY7Sjb4pzP5/aX+NyarH9CpmIAt8EeMMXc4OYRnWYUJ/b6eY40fw
-         K1mFfhZwzNFuZrClk57iMLWP09EOfCKzB6mB2yhE9iSviC7FyLUOuTIV5IX/FlJpAfvL
-         EDgA==
-X-Gm-Message-State: AAQBX9fKHCFThzil7bWWhB+G/mntQNRvJt0dYO3WWVbHf4y/LysZEF0M
-        SQC8TK4vgJlcg4G5PHtLrDfnxg==
-X-Google-Smtp-Source: AKy350adA9ofQs86+ZGD0KxYL7LKIJfAhKSGxCfZ02uApda+TJqtVuHVJhj1AQGPK6HsEpi0hfmhGQ==
-X-Received: by 2002:a05:651c:1028:b0:2a2:c618:1f51 with SMTP id w8-20020a05651c102800b002a2c6181f51mr6869251ljm.24.1680179907244;
-        Thu, 30 Mar 2023 05:38:27 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id h13-20020a2e900d000000b00290b375a068sm5873914ljg.39.2023.03.30.05.38.26
+        bh=3R3nPD3qFWgilc9137SlJTFMh5JUV9k90a6EhVZUbfc=;
+        b=2KyJtC579r6ZP15kj6aJqnoZPWqE3SHlxsYdn34wzc2ybeZUTijXwLU8hTZ7bbU9Vc
+         Db4Ux/24HJ4IQatKP9y7q5X3BlXGiUqCDIxRApYMvQJrpJP+fxicGZgpi9wEDjSsFGVN
+         xWqqx9vKEzqzMlWmojn2t8+ayhtpyW6cYQB5C1O9ZsLifiG4MwJoixGpE4HftsvEfvhZ
+         9lv28mf/br1YKCsYLi42bbvyCPQIL1LXin04lk8C8LM+7psqBDamtMLRlrw1xG3KM9MF
+         hOFQFoiq2s8N58708wSF56AXkfqUL89vcrW//8GOhrTmayiSnNHODgsUMzgWr9ecBeKX
+         9iKw==
+X-Gm-Message-State: AAQBX9cVCyeiDOguMrEa0wHoWKHQ+He+Tf4ZGIEMfLGuAkd/vqWJFIZ0
+        kW1sk20MB8rdnzElhTUpaTXF0Q==
+X-Google-Smtp-Source: AKy350bLpzKJFAnX7mIedg2RtMhZzL8xIMz5h26kAsbDhPqh6l/YDnnkZsD5R6IC+MCFkQxQ+FEZyg==
+X-Received: by 2002:ac2:5699:0:b0:4e8:3bac:4e32 with SMTP id 25-20020ac25699000000b004e83bac4e32mr6183124lfr.53.1680179958934;
+        Thu, 30 Mar 2023 05:39:18 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id g1-20020a19ee01000000b004eaf8b20014sm3436476lfb.76.2023.03.30.05.39.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 05:38:26 -0700 (PDT)
-Message-ID: <60073c65-1df3-69f8-4755-798fe26a0905@linaro.org>
-Date:   Thu, 30 Mar 2023 15:38:25 +0300
+        Thu, 30 Mar 2023 05:39:18 -0700 (PDT)
+Message-ID: <e60607e3-8786-e4fe-f0fa-0851dbb53a3a@linaro.org>
+Date:   Thu, 30 Mar 2023 14:39:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [v2,38/50] drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+Subject: Re: [v2,40/50] drm/msm/dpu: enable DSPP on sc8180x
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -66,11 +66,10 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@gmail.com>
-References: <20230211231259.1308718-39-dmitry.baryshkov@linaro.org>
- <c7961d64-dc15-11d3-6269-74555c1c1b70@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <c7961d64-dc15-11d3-6269-74555c1c1b70@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20230211231259.1308718-41-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230211231259.1308718-41-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -82,50 +81,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2023 15:33, Konrad Dybcio wrote:
+
+
+On 12.02.2023 00:12, Dmitry Baryshkov wrote:
+> Enable DSPP blocks on sc8180x platform, basing on the vendor dtsi.
 > 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+There's only a single difference between 8150 and 8180:
+
+qcom,sde-dspp-dither = <0x82c 0x00010007>;
+
+is only present on the former. Not sure if it makes any difference.
+
+Konrad
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> On 12.02.2023 00:12, Dmitry Baryshkov wrote:
->> Mark DSPP_2 and DSPP_3 as used for LM_2 and LM_3
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
-> Could you point me to where it's specified downstream? I can't find it.
-
-https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/77276ed6a0055a4a0f41d7b0395a8b0bbcafd091/msm/sde/sde_hw_catalog.c#L2341
-
-Which says assign DSPP to LMs for as long as we have a spare DSPP
-
-> 
-> Also, deserves a Fixes.
-
-This is a tough question. We have been using sm8150_lm for sm8[2345]50. 
-So before "drm/msm/dpu: duplicate sm8150 catalog entries" there is no 
-way to fix that.
-
-> 
-> Konrad
->>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->> index a3faaab2226c..3d95f2472e7a 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->> @@ -107,9 +107,9 @@ static const struct dpu_lm_cfg sm8450_lm[] = {
->>   	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
->>   		&sdm845_lm_sblk, PINGPONG_1, LM_0, DSPP_1),
->>   	LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
->> -		&sdm845_lm_sblk, PINGPONG_2, LM_3, 0),
->> +		&sdm845_lm_sblk, PINGPONG_2, LM_3, DSPP_2),
->>   	LM_BLK("lm_3", LM_3, 0x47000, MIXER_SDM845_MASK,
->> -		&sdm845_lm_sblk, PINGPONG_3, LM_2, 0),
->> +		&sdm845_lm_sblk, PINGPONG_3, LM_2, DSPP_3),
->>   	LM_BLK("lm_4", LM_4, 0x48000, MIXER_SDM845_MASK,
->>   		&sdm845_lm_sblk, PINGPONG_4, LM_5, 0),
->>   	LM_BLK("lm_5", LM_5, 0x49000, MIXER_SDM845_MASK,
-
--- 
-With best wishes
-Dmitry
-
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> index c51e1bba1533..457733a6986e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> @@ -91,6 +91,8 @@ static const struct dpu_mdss_cfg sc8180x_dpu_cfg = {
+>  	.sspp = sm8150_sspp,
+>  	.mixer_count = ARRAY_SIZE(sm8150_lm),
+>  	.mixer = sm8150_lm,
+> +	.dspp_count = ARRAY_SIZE(sm8150_dspp),
+> +	.dspp = sm8150_dspp,
+>  	.pingpong_count = ARRAY_SIZE(sm8150_pp),
+>  	.pingpong = sm8150_pp,
+>  	.merge_3d_count = ARRAY_SIZE(sm8150_merge_3d),
