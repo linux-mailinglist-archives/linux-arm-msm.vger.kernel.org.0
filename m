@@ -2,157 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E7976D014B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:34:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A88CB6D023D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:57:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbjC3Kd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 06:33:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53804 "EHLO
+        id S231232AbjC3K5Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 06:57:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230366AbjC3Kd5 (ORCPT
+        with ESMTP id S229793AbjC3K5Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 06:33:57 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DAFB83DB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:33:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680172432; x=1711708432;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=bo52ssnb5zSJY09A/ox7VL3Gjv9ei2ZMX5sqTUzRDSI=;
-  b=NLfIesVFRhxMQVrGsnXw+QPnyj0NTfJbFaWPAfFUmUCkvb7iBWymgHFC
-   B7OY0Gpc8Uv6+0vamKutE3QAkGs+21cWuf9wOT58PfTKvodUmtmCLL68d
-   M4R0Jex+Ko3vOyj/pC/TxvqU81o0KkIUvBFrzCa7j3lIzx2sRGdM5uPqE
-   tiKIwysT/55+DLj1EtjkkOKN6IWRRViATNV7Ul+je4yiYgVrWZlqiGwmQ
-   qQbOptgguKRzoYEeyQJUzdZgnJKdeZZPpp7FEefVeA+r7cxNVqgv3aFS6
-   1ivyBBQJPbLis/YwOSeIL39pbA5+yFHTpjJEW7N6NhLzLcP7eMVXjGk/n
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="338628800"
-X-IronPort-AV: E=Sophos;i="5.98,303,1673942400"; 
-   d="scan'208";a="338628800"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2023 03:33:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="795620914"
-X-IronPort-AV: E=Sophos;i="5.98,303,1673942400"; 
-   d="scan'208";a="795620914"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 30 Mar 2023 03:33:48 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1phpbH-000KkO-2i;
-        Thu, 30 Mar 2023 10:33:47 +0000
-Date:   Thu, 30 Mar 2023 18:33:03 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-        sean@poorly.run, javierm@redhat.com, airlied@gmail.com,
-        daniel@ffwll.ch
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 6/6] drm/msm: Implement fbdev emulation as in-kernel
- client
-Message-ID: <202303301856.zSmpwZjj-lkp@intel.com>
-References: <20230330074150.7637-7-tzimmermann@suse.de>
+        Thu, 30 Mar 2023 06:57:24 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CC5B7A8B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:57:22 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id br6so23930693lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:57:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680173840;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fEeZR+WcM39xhpEXHe4o33Q+UWFLjkaYXxsz/SpALV0=;
+        b=ap0PmGpEjOfv2nUrxeYfNyJjPZMDfcKXuBbxzGaRAAPQ+EoUPnXPPUnwvm0mhZIxIp
+         wSrcSzDwkPl6zD1gtzkxtoPXsELvPtUhQUKjq/kcGOmfywtmBsWZMdFwtFz6Gkt8jt4X
+         1xYqe0jFL1GdN5LP9Cft3qyzy8PrBKYUb4CHwGlGw71FkMYUqx84boxjguNgO9h+t4yu
+         FZ4uza72h/VodF59WruDDzowT2xLnGbmJyIS9Zco7JG9H3e5dgAQQzr6RMKhnsgsfuTX
+         PZCrbrnV/gy53rwYDueBKk+i88MKJwUme7Pb0fOpvLfPEqPox3g/xHSznD14dUQfZtT7
+         OqNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680173840;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fEeZR+WcM39xhpEXHe4o33Q+UWFLjkaYXxsz/SpALV0=;
+        b=d92432ZrC3SV+ILVrmFlPuTRMFDWEMu6tthE6nkVp+RL6DPMAPtnxSCCbzBsPFPXgL
+         iseXrAbG0TAdUUOfkKjrYBmQOwUmqBTxJLYvhSWenm9W/Qcky6SXhKtp1tWl8OLYNe1R
+         2fTMMsTUk5QFGQBIdAWN6NEF+zHCbthEuwYOrlhV5oEKgt713uM6ucENclKJgDq7IK2U
+         LkDI4l7MMyMAzkpI+MJsS8n4ev4xgCAfbq05IByDy4plcHmaxLoXEZcLXiKl0WKHntQ3
+         dU2vQlGeOzWBNI9h4d2XS+0bxufmlU/HrrdJi2SrOZmj4qVxVvEtCWuaN1YmwLgsALaj
+         rUeA==
+X-Gm-Message-State: AAQBX9cl3n6rUREimL+BkjhxZOXDhYaPQC8diav4lv5mDTqgC7Q1whvp
+        bGIDScojRXe8mOmQDMHO0PxPWA==
+X-Google-Smtp-Source: AKy350ZbNlhbm9DQxukLP3ML+9FgpDYCaeTXB86XDbiFJ0YpbMmqdtHJQxXD09YjvMnEjlF5JuzyAg==
+X-Received: by 2002:ac2:50d9:0:b0:4e8:44c1:f170 with SMTP id h25-20020ac250d9000000b004e844c1f170mr6951040lfm.54.1680173840314;
+        Thu, 30 Mar 2023 03:57:20 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id t18-20020ac243b2000000b004e92c0ed7a0sm5823486lfl.100.2023.03.30.03.57.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 03:57:19 -0700 (PDT)
+Message-ID: <bc5dd7d1-e001-8bd2-55c6-b6827c418371@linaro.org>
+Date:   Thu, 30 Mar 2023 12:57:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230330074150.7637-7-tzimmermann@suse.de>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: msm8996: Improve GPU OPP table
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>
+References: <20230329-topic-adreno_opp-v1-0-24d34ac6f007@linaro.org>
+ <20230329-topic-adreno_opp-v1-3-24d34ac6f007@linaro.org>
+ <CAA8EJpprgiXWZC2W3JSgG3jtTZDtbwoeQ6LBK=pqfpk0oMvNRw@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJpprgiXWZC2W3JSgG3jtTZDtbwoeQ6LBK=pqfpk0oMvNRw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
-
-I love your patch! Yet something to improve:
-
-[auto build test ERROR on drm-misc/drm-misc-next]
-[also build test ERROR on linus/master v6.3-rc4]
-[cannot apply to next-20230330]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-msm-Clear-aperture-ownership-outside-of-fbdev-code/20230330-154729
-base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
-patch link:    https://lore.kernel.org/r/20230330074150.7637-7-tzimmermann%40suse.de
-patch subject: [PATCH 6/6] drm/msm: Implement fbdev emulation as in-kernel client
-config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20230330/202303301856.zSmpwZjj-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/ec39cb11cf72fb01ada6fe51c7c572a31dcc805d
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Thomas-Zimmermann/drm-msm-Clear-aperture-ownership-outside-of-fbdev-code/20230330-154729
-        git checkout ec39cb11cf72fb01ada6fe51c7c572a31dcc805d
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc SHELL=/bin/bash drivers/gpu/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303301856.zSmpwZjj-lkp@intel.com/
-
-All error/warnings (new ones prefixed by >>):
-
-   drivers/gpu/drm/msm/msm_io_utils.c: In function '_msm_ioremap':
->> drivers/gpu/drm/msm/msm_io_utils.c:72:15: error: implicit declaration of function 'devm_ioremap'; did you mean '_msm_ioremap'? [-Werror=implicit-function-declaration]
-      72 |         ptr = devm_ioremap(&pdev->dev, res->start, size);
-         |               ^~~~~~~~~~~~
-         |               _msm_ioremap
->> drivers/gpu/drm/msm/msm_io_utils.c:72:13: warning: assignment to 'void *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-      72 |         ptr = devm_ioremap(&pdev->dev, res->start, size);
-         |             ^
-   cc1: some warnings being treated as errors
 
 
-vim +72 drivers/gpu/drm/msm/msm_io_utils.c
+On 29.03.2023 23:32, Dmitry Baryshkov wrote:
+> On Wed, 29 Mar 2023 at 22:17, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> Remove the self-explanatory comment about opp-supported-hw contents,
+>> add required-opps to ensure reasonable power domain levels are voted
+>> for (currently we've been piggybacking off of miracles and MDP votes)
+>> and add newlines between each subnode.
+> 
+> I'm not sure this is 100% correct. The values that you add are correct
+> for the voltage scaling case. However, based on the vendor kernel
+> sources I think that MX should only be scaled if the voltage is scaled
+> too. I might be wrong here.
+MX must be >= CX (and GX), so this should bring no harm.
 
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  51  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  52  static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  53  				  bool quiet, phys_addr_t *psize)
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  54  {
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  55  	struct resource *res;
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  56  	unsigned long size;
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  57  	void __iomem *ptr;
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  58  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  59  	if (name)
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  60  		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  61  	else
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  62  		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  63  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  64  	if (!res) {
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  65  		if (!quiet)
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  66  			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  67  		return ERR_PTR(-EINVAL);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  68  	}
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  69  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  70  	size = resource_size(res);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  71  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20 @72  	ptr = devm_ioremap(&pdev->dev, res->start, size);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  73  	if (!ptr) {
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  74  		if (!quiet)
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  75  			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  76  		return ERR_PTR(-ENOMEM);
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  77  	}
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  78  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  79  	if (psize)
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  80  		*psize = size;
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  81  
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  82  	return ptr;
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  83  }
-d89e5028346bd80 Dmitry Baryshkov 2022-01-20  84  
+(citation needed, but that seems to hold true..)
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Konrad
+> 
+>>
+>> Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 18 +++++++++++++-----
+>>  1 file changed, 13 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>> index 4dd37f72e018..62ad30e94f40 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>> @@ -1244,37 +1244,45 @@ gpu: gpu@b00000 {
+>>                         gpu_opp_table: opp-table {
+>>                                 compatible = "operating-points-v2";
+>>
+>> -                               /*
+>> -                                * 624Mhz is only available on speed bins 0 and 3.
+>> -                                * 560Mhz is only available on speed bins 0, 2 and 3.
+>> -                                * All the rest are available on all bins of the hardware.
+>> -                                */
+>>                                 opp-624000000 {
+>>                                         opp-hz = /bits/ 64 <624000000>;
+>> +                                       required-opps = <&rpmpd_opp_turbo>;
+>>                                         opp-supported-hw = <0x09>;
+>>                                 };
+>> +
+>>                                 opp-560000000 {
+>>                                         opp-hz = /bits/ 64 <560000000>;
+>> +                                       required-opps = <&rpmpd_opp_turbo>;
+>>                                         opp-supported-hw = <0x0d>;
+>>                                 };
+>> +
+>>                                 opp-510000000 {
+>>                                         opp-hz = /bits/ 64 <510000000>;
+>> +                                       required-opps = <&rpmpd_opp_nom>;
+>>                                         opp-supported-hw = <0xff>;
+>>                                 };
+>> +
+>>                                 opp-401800000 {
+>>                                         opp-hz = /bits/ 64 <401800000>;
+>> +                                       required-opps = <&rpmpd_opp_nom>;
+>>                                         opp-supported-hw = <0xff>;
+>>                                 };
+>> +
+>>                                 opp-315000000 {
+>>                                         opp-hz = /bits/ 64 <315000000>;
+>> +                                       required-opps = <&rpmpd_opp_svs>;
+>>                                         opp-supported-hw = <0xff>;
+>>                                 };
+>> +
+>>                                 opp-214000000 {
+>>                                         opp-hz = /bits/ 64 <214000000>;
+>> +                                       required-opps = <&rpmpd_opp_svs>;
+>>                                         opp-supported-hw = <0xff>;
+>>                                 };
+>> +
+>>                                 opp-133000000 {
+>>                                         opp-hz = /bits/ 64 <133000000>;
+>> +                                       required-opps = <&rpmpd_opp_svs>;
+>>                                         opp-supported-hw = <0xff>;
+>>                                 };
+>>                         };
+>>
+>> --
+>> 2.40.0
+>>
+> 
+> 
