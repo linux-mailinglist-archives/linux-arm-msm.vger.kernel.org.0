@@ -2,141 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C58F26D032B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 088DE6D033B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:32:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjC3LaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 07:30:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
+        id S231609AbjC3Lcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 07:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229862AbjC3LaT (ORCPT
+        with ESMTP id S231601AbjC3Lcm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 07:30:19 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C8A4128
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:30:18 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5463fa0c2bfso17744607b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:30:18 -0700 (PDT)
+        Thu, 30 Mar 2023 07:32:42 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A738A69
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:32:41 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id br6so24052135lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680175817;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0Z6cuQ9hIHTdbnLN1pgaiYFS8g/uB5WtYlD8bXBl8g8=;
-        b=UBthkx5ykPrfy0hajs5iWpqWsQfl+OQJsVnlphXPHX8w3694JndAEVdJBTuXCnc0Kq
-         nP1uCUpMIZVQ0PYDdXXonkcnS0LWTZDFbNjD1hpeV5OlzzurRUqGkHLQYVUAXAsfpra4
-         OkVwXU9xu33KbjC1lM3OX5+XLsohPAIbpLm4+O39CY1x3xHXUoMypSjyuhU2yNCS2U+6
-         8i+YvIx3WGbfRuscgl6JPs0FfwBIGZRdg6bOtKlLkNxe0Vk8gCyUwBkmWhSoyh2DJfUM
-         cDiRQ0xR6vyKwvN2zJFEKewLJDr8i8KE/xFEwe7Pkc9s1XtMwyHEe9pCd6Pfi7GHw5d/
-         4vPA==
+        d=linaro.org; s=google; t=1680175959;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ML54njYnRDk7o4HcEtvBM1tdyqleAobA4f6MiXOsND0=;
+        b=a/g+QQMgnVz1l1tCLbVoEfKvVrzG4Xjf9B/g2JnuhGkNI4tS1LKGp1kHbW4YojKXJP
+         Ku6fYadkn41YpAXh6gfuoR19XBByfRsf+RL7L7hWXCOUEeYxV0AYmurCdxeKIpD8RPss
+         PH8d1/1V+EoHMV+xfrP1f0DwGPhHQNgfzWwGZJD4KkBOBxZIIMv7oURArB/WMsSkHX3h
+         VVSDTx9HY6t6ViPQAbDKHYyxvr+oLuos8cOinpMc9vfwWqUQF8ktCMuSXpObwAIhahoG
+         +bwkrBcFsuOwsueSArm8r8Tws1djOqLQ/+dDrJIGdhdWTFRY8hRcyi5iOcB8tHeyAbtC
+         /kLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680175817;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0Z6cuQ9hIHTdbnLN1pgaiYFS8g/uB5WtYlD8bXBl8g8=;
-        b=roappUSKt7fSoeo1E5hs5NqU8VY0vklWU6X90DrxVnyf7SQqtQMSMoXoa5/LMZlQ1g
-         N3cEzoJnO7BhI4tosXomu3R2yq2tycv2KCtKBY2Xt3yBnkP89P4++Vft09SAfywJ69Ag
-         jkJvWGMmhD2E7a9zGX/lHBcTkS+fZp6YhZAlzs1R2jCc3K8Ye9/MEj01+aM2zHIxHLU7
-         jZmHKbCiVzHR2Fty7OTe+hLsCfJQpScGlJI/kWRnlVBPkvXJ99Usj99Pr0TmN8zaxzOq
-         HidCOH2qtaq9c8eLOX0ihgzOystOVckwLRsmaH+YhnWc41bCGSD0AlQ02/5jHwUx+t3F
-         4B4A==
-X-Gm-Message-State: AAQBX9fV6U9Te689Ji4o83f1UdZwRTaU7Z214Q4cRG6gyHNkGVgRSOGp
-        Lw3UjjeHqxDOfZ76rA8AQ8JssXYOe+Eec5pg3qQBnA==
-X-Google-Smtp-Source: AKy350YGt/VZZjwJ8RcTGwckSwP2VskFLeTRHe+v6OIVJWT/tuEh4q+I+f8Xbf2gB3tFVnOxTRlce+Uag4DqyXPeuCI=
-X-Received: by 2002:a81:b617:0:b0:541:7f69:aa8b with SMTP id
- u23-20020a81b617000000b005417f69aa8bmr10804632ywh.5.1680175817633; Thu, 30
- Mar 2023 04:30:17 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680175959;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ML54njYnRDk7o4HcEtvBM1tdyqleAobA4f6MiXOsND0=;
+        b=b2wUrw9ORbw/9dFFzcYWqzm2l/QlVL/3A8vfwNwAtD9hyRuezy4ACi1neNcOLiRBVS
+         LdOtNjdWtmNdL9xIB9WOaimqT3GSIZWhuzu5jLvNTcmgIi50OVcTIUOLQcLALkPMjmlm
+         4r6VshU1kTgSU4Dlh5h56xg5VKsGX+ftlvdBt3dcrELCp5keyZu2FTr4b0QrqQ+CqjQo
+         O9pne5h51Q+dakxl+q1tCeMyzhssSCCOotaBByRb+rDPZYgwLJ3NRmFKMjH7UGE4URpz
+         M1tzDTmfi+MvDi2cF6C/SoLNkAY8cWfnNi/hVWw/KAKV0avK+8l7MCcY/jf0M/Fy0/bq
+         QTrw==
+X-Gm-Message-State: AAQBX9cPvspf9r4jM0A/oUaXJZ+Z12FbB9Am8GDmjuGMxUQgdrjw6G52
+        xdVS5wwOJNR43G4UoqggGjyD7Q==
+X-Google-Smtp-Source: AKy350bMZjydyBjP+bF1x8VvhUrc9aWFBhqR/qTQGnyb2aqUrAWzyEDsIgUBBXfUgRNjjkMMx0iANw==
+X-Received: by 2002:ac2:4903:0:b0:4db:3928:d66d with SMTP id n3-20020ac24903000000b004db3928d66dmr6644024lfi.42.1680175959204;
+        Thu, 30 Mar 2023 04:32:39 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id r17-20020a056512103100b004e8483bff82sm5830343lfr.271.2023.03.30.04.32.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 04:32:38 -0700 (PDT)
+Message-ID: <e10bb710-3515-8350-b3be-cb740751c130@linaro.org>
+Date:   Thu, 30 Mar 2023 13:32:37 +0200
 MIME-Version: 1.0
-References: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
- <34470797-493c-d99b-4d0c-0f9381c5b7c1@linaro.org> <b9b1ae11-d9cf-0139-41d0-5af4ff2c8e6b@linaro.org>
- <9ff4fc88-f4bc-3e05-cad9-176449d7258d@linaro.org>
-In-Reply-To: <9ff4fc88-f4bc-3e05-cad9-176449d7258d@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 30 Mar 2023 14:30:06 +0300
-Message-ID: <CAA8EJprwyxOqM6OpgTALgP1phduamETpGFEnwFuVSXX=HgG4AA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] drm/msm/a5xx: scale MX following the frequency changes
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v4] ASoC: dt-bindings: qcom,lpass-va-macro: Add missing
+ NPL clock
+To:     Mark Brown <broonie@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230330070342.19448-1-krzysztof.kozlowski@linaro.org>
+ <ZCVxTlb+qQXXuaay@sirena.org.uk>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ZCVxTlb+qQXXuaay@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Mar 2023 at 14:16, Konrad Dybcio <konrad.dybcio@linaro.org> wrot=
-e:
->
->
->
-> On 30.03.2023 13:15, Dmitry Baryshkov wrote:
-> > On 30/03/2023 14:06, Konrad Dybcio wrote:
-> >>
-> >>
-> >> On 30.03.2023 00:24, Dmitry Baryshkov wrote:
-> >>> Konrad brought up the topic of scaling the MX domain according to the
-> >>> OPP changes. Here is my RFC for this functionality. I post it as an R=
-FC
-> >>> for two reasons:
-> >>>
-> >>> 1) I'm not sure that we should scale MX if we are not scaling main
-> >>> voltage following the CPR3
-> >> It should be ok, however..
-> >>>
-> >> [...]
-> >>
-> >>> Dmitry Baryshkov (3):
-> >>>    dt-bindings: display/msm/gpu: allow specifying MX domain A5xx
-> >>>    drm/msm/a5xx: scale MX domain following the frequncy changes
-> >> This is a stopgap solution, CPR is a child of MX.
-> >
-> > Not so sure here. Vendor kernel scales voltages and MX levels separatel=
-y. Moreover, please correct me if I'm wrong here, the kernel doesn't scale =
-VDD_GFX directly. It programs GPMU's voltage table and then GPMU handles vo=
-ltage scaling according to performance levels being set. MX is handled in p=
-arallel to switching GPMU's level.
-> >
-> > I have implemented this voltage scaling locally, just need to run more =
-tests before posting (and unfortunately it depends either on CPR3+GFX or on=
- programming the voltages manually).
-> Oh no.. I forgot about the ugly goblin that we call GPMU.. I'll have
-> to dig into it further. Thanks for reminding me..
+On 30/03/2023 13:23, Mark Brown wrote:
+> On Thu, Mar 30, 2023 at 09:03:42AM +0200, Krzysztof Kozlowski wrote:
+>> Several devices (e.g. SC8280XP and SM8450) expect a NPL (Near Pad Logic)
+>> clock.  Add the clock and customize allowed clocks per each variant.
+>> The clocks are also required by ADSP in all variants.
+> 
+> This doesn't apply against current code, please check and resend.
 
-Let me send the fixed voltage table programming (probably on Friday).
+Indeed, there is a minor change going through Rob's tree. I'll rebase.
 
->
-> Konrad
-> >
-> >>
-> >> Konrad
-> >>>    arm64: dts: qcom: specify power domains for the GPU
-> >>>
-> >>>   .../devicetree/bindings/display/msm/gpu.yaml  |  9 +++-
-> >>>   arch/arm64/boot/dts/qcom/msm8996.dtsi         | 14 ++++-
-> >>>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c         | 52 ++++++++++++++++=
-+++
-> >>>   drivers/gpu/drm/msm/adreno/a5xx_gpu.h         |  3 ++
-> >>>   4 files changed, 76 insertions(+), 2 deletions(-)
-> >>>
-> >
+Best regards,
+Krzysztof
 
-
-
---=20
-With best wishes
-Dmitry
