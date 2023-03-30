@@ -2,99 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 088DE6D033B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 034BE6D0346
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:34:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbjC3Lcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 07:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
+        id S231648AbjC3LeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 07:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231601AbjC3Lcm (ORCPT
+        with ESMTP id S230304AbjC3LeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 07:32:42 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A738A69
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:32:41 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id br6so24052135lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:32:41 -0700 (PDT)
+        Thu, 30 Mar 2023 07:34:12 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ECE119A9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:34:10 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id q16so24076580lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680175959;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ML54njYnRDk7o4HcEtvBM1tdyqleAobA4f6MiXOsND0=;
-        b=a/g+QQMgnVz1l1tCLbVoEfKvVrzG4Xjf9B/g2JnuhGkNI4tS1LKGp1kHbW4YojKXJP
-         Ku6fYadkn41YpAXh6gfuoR19XBByfRsf+RL7L7hWXCOUEeYxV0AYmurCdxeKIpD8RPss
-         PH8d1/1V+EoHMV+xfrP1f0DwGPhHQNgfzWwGZJD4KkBOBxZIIMv7oURArB/WMsSkHX3h
-         VVSDTx9HY6t6ViPQAbDKHYyxvr+oLuos8cOinpMc9vfwWqUQF8ktCMuSXpObwAIhahoG
-         +bwkrBcFsuOwsueSArm8r8Tws1djOqLQ/+dDrJIGdhdWTFRY8hRcyi5iOcB8tHeyAbtC
-         /kLQ==
+        d=linaro.org; s=google; t=1680176049;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cYbYycdmup7ooDPSWSxlw+wfKu3e5N7WtJR3yxq44lc=;
+        b=m5vCBuGJqx23A5v6T6OBZyfULIxy1bEKyorWAYsxthAaAh8Ux79BG67VzvWO2dAw0v
+         HzpXSAVyZlV2PXHkKaI9klWO20uBj9Y5D9PiqlGESLiioNu4mewtsVuUhmj6rC47FDMQ
+         9R2Fcwg1NptgNmfG2JthKxOnyGHykCR9X0F0eTCJCL7SaUWDTYJPwIokZKQpvuriFr2K
+         z45zgkJGpZZrkMTfsNjmatrlCjCt0MYqw/kQVZeh9hDAQi5mrHJAj9RnJ8DgE2Leke+E
+         1bppdiJVzOtkLqBNWEd+L3Vz+45u3whZeUa9Kr5aL82S5GIEBheMp2UQw1QbOocBzLcx
+         NQmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680175959;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ML54njYnRDk7o4HcEtvBM1tdyqleAobA4f6MiXOsND0=;
-        b=b2wUrw9ORbw/9dFFzcYWqzm2l/QlVL/3A8vfwNwAtD9hyRuezy4ACi1neNcOLiRBVS
-         LdOtNjdWtmNdL9xIB9WOaimqT3GSIZWhuzu5jLvNTcmgIi50OVcTIUOLQcLALkPMjmlm
-         4r6VshU1kTgSU4Dlh5h56xg5VKsGX+ftlvdBt3dcrELCp5keyZu2FTr4b0QrqQ+CqjQo
-         O9pne5h51Q+dakxl+q1tCeMyzhssSCCOotaBByRb+rDPZYgwLJ3NRmFKMjH7UGE4URpz
-         M1tzDTmfi+MvDi2cF6C/SoLNkAY8cWfnNi/hVWw/KAKV0avK+8l7MCcY/jf0M/Fy0/bq
-         QTrw==
-X-Gm-Message-State: AAQBX9cPvspf9r4jM0A/oUaXJZ+Z12FbB9Am8GDmjuGMxUQgdrjw6G52
-        xdVS5wwOJNR43G4UoqggGjyD7Q==
-X-Google-Smtp-Source: AKy350bMZjydyBjP+bF1x8VvhUrc9aWFBhqR/qTQGnyb2aqUrAWzyEDsIgUBBXfUgRNjjkMMx0iANw==
-X-Received: by 2002:ac2:4903:0:b0:4db:3928:d66d with SMTP id n3-20020ac24903000000b004db3928d66dmr6644024lfi.42.1680175959204;
-        Thu, 30 Mar 2023 04:32:39 -0700 (PDT)
-Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id r17-20020a056512103100b004e8483bff82sm5830343lfr.271.2023.03.30.04.32.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 04:32:38 -0700 (PDT)
-Message-ID: <e10bb710-3515-8350-b3be-cb740751c130@linaro.org>
-Date:   Thu, 30 Mar 2023 13:32:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v4] ASoC: dt-bindings: qcom,lpass-va-macro: Add missing
- NPL clock
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1680176049;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cYbYycdmup7ooDPSWSxlw+wfKu3e5N7WtJR3yxq44lc=;
+        b=7dAjYoN6UtOJI3gDi4IsWWV14xQAdS5StdZ7ZhTrKYK9+JPN7bqAKWCwVJhqz9mPOj
+         rid+QUluvz6luDHjzGQbpAvm71YXsF83JGk948iw2Q6uDd30btxuY0KMwh5ukWV7k7cu
+         B8jnze8a2vbMzJAcbR1XJeRsPuOvT9dSv7uK85MLFCcQ/S2rgO3rMqMsrcH/OX0WworV
+         CwIEl2WyNT8un4KSQIy2A3rt9Rl8qhhFq3fdgXO+ctpt2x8+qi6LXW/x+PD9JyPb0fhW
+         TvtBsiM04OHPVg7IoB8sIDOaJefEnGXzaxuOwMS0sPOyVNsbnxBfNWIDmtKxm7pWx58f
+         XDzg==
+X-Gm-Message-State: AAQBX9eYCUjHdImWwV9s2X0Kc8aoeNAcWFW4SKyZgfnLV7HThY3bIYhl
+        sQ3IUkJStQrDmzgXPwx7e1Q2hw==
+X-Google-Smtp-Source: AKy350a2EDWQYZVhflo+GOFEPA/WWu3pQ/gL6jWPerrjJR9OygRe+bysk5u936muBYaB+ATgDKZ6jQ==
+X-Received: by 2002:ac2:5623:0:b0:4eb:c24:205b with SMTP id b3-20020ac25623000000b004eb0c24205bmr4787726lff.69.1680176048706;
+        Thu, 30 Mar 2023 04:34:08 -0700 (PDT)
+Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id 21-20020ac24855000000b004d5a720e689sm5877690lfy.126.2023.03.30.04.34.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 04:34:08 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Banajit Goswami <bgoswami@quicinc.com>,
         Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230330070342.19448-1-krzysztof.kozlowski@linaro.org>
- <ZCVxTlb+qQXXuaay@sirena.org.uk>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZCVxTlb+qQXXuaay@sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v5] ASoC: dt-bindings: qcom,lpass-va-macro: Add missing NPL clock
+Date:   Thu, 30 Mar 2023 13:34:05 +0200
+Message-Id: <20230330113405.55722-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2023 13:23, Mark Brown wrote:
-> On Thu, Mar 30, 2023 at 09:03:42AM +0200, Krzysztof Kozlowski wrote:
->> Several devices (e.g. SC8280XP and SM8450) expect a NPL (Near Pad Logic)
->> clock.  Add the clock and customize allowed clocks per each variant.
->> The clocks are also required by ADSP in all variants.
-> 
-> This doesn't apply against current code, please check and resend.
+Several devices (e.g. SC8280XP and SM8450) expect a NPL (Near Pad Logic)
+clock.  Add the clock and customize allowed clocks per each variant.
+The clocks are also required by ADSP in all variants.
 
-Indeed, there is a minor change going through Rob's tree. I'll rebase.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Best regards,
-Krzysztof
+---
+
+Changes since v4:
+1. Rebased on:
+   git://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-6.4
+
+Changes since v3:
+1. Only rebase. Other patches from this set were applied:
+https://lore.kernel.org/all/168010864198.3244592.2114017565664183933.b4-ty@kernel.org/
+
+Changes since v1:
+1. New patch.
+---
+ .../bindings/sound/qcom,lpass-va-macro.yaml   | 68 ++++++++++++++++---
+ 1 file changed, 57 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+index 4cf778e3afdd..4a56108c444b 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+@@ -9,9 +9,6 @@ title: LPASS(Low Power Audio Subsystem) VA Macro audio codec
+ maintainers:
+   - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+ 
+-allOf:
+-  - $ref: dai-common.yaml#
+-
+ properties:
+   compatible:
+     enum:
+@@ -31,16 +28,12 @@ properties:
+     const: 0
+ 
+   clocks:
+-    maxItems: 3
++    minItems: 1
++    maxItems: 4
+ 
+   clock-names:
+-    oneOf:
+-      - items:   #for ADSP based platforms
+-          - const: mclk
+-          - const: macro
+-          - const: dcodec
+-      - items:   #for ADSP bypass based platforms
+-          - const: mclk
++    minItems: 1
++    maxItems: 4
+ 
+   clock-output-names:
+     maxItems: 1
+@@ -64,6 +57,59 @@ required:
+   - compatible
+   - reg
+   - "#sound-dai-cells"
++  - clock-names
++  - clocks
++
++allOf:
++  - $ref: dai-common.yaml#
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,sc7280-lpass-va-macro
++    then:
++      properties:
++        clocks:
++          maxItems: 1
++        clock-names:
++          items:
++            - const: mclk
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,sm8250-lpass-va-macro
++    then:
++      properties:
++        clocks:
++          minItems: 3
++          maxItems: 3
++        clock-names:
++          items:
++            - const: mclk
++            - const: macro
++            - const: dcodec
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc8280xp-lpass-va-macro
++              - qcom,sm8450-lpass-va-macro
++    then:
++      properties:
++        clocks:
++          minItems: 4
++          maxItems: 4
++        clock-names:
++          items:
++            - const: mclk
++            - const: macro
++            - const: dcodec
++            - const: npl
+ 
+   - if:
+       properties:
+-- 
+2.34.1
 
