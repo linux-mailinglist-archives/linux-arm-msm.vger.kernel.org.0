@@ -2,69 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90FB96D09B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 17:33:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57FEC6D0A6B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 17:52:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233208AbjC3PdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 11:33:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
+        id S233480AbjC3PwG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 11:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233072AbjC3PdJ (ORCPT
+        with ESMTP id S233384AbjC3PwF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 11:33:09 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3AAE07E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 08:32:40 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id r11so19505475wrr.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 08:32:40 -0700 (PDT)
+        Thu, 30 Mar 2023 11:52:05 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C52E346B4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 08:51:34 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id le6so18452303plb.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 08:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680190353; x=1682782353;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h0mnRIbGkQTvtA6Sd/6ZGGzaZl2jf/GCphXRThjLz5Y=;
-        b=WE17Qre8lYHzyeHrBZm6fwLP1oMW62Te+pOa65fQDXkouN+NUOZNA7Hs/wForonk+z
-         aV4iFGWsfqzYxuWbjXX+oXmWeWzhLuFBEOrqwUyzX7Sa49iwsAphwKHjqrs5+tEswKP6
-         PRw5pKYt4C2E6oSYmtNWVAZmGyOfFzTczzTxSIRe6uUsRQPQEqQSmiSMQU56jrDHPeRd
-         DXwiZOaeQrOlMWRNr6kjJJ5nXRuEGz+/VCAqINxT80nvRlZNqcLcBySgbp0Zhub9W3lA
-         a26lk5lv1j+0kfFZwQdMKDlvKZfJKNZS0+wE9hy6OIEbzVfzxmg8Ub3qkgyTEENRLwZh
-         TqwA==
+        d=linaro.org; s=google; t=1680191493;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+UiZ1OnVN4eKK6Y2ubWlnceTNBKlqFHwpFESVYfLs/8=;
+        b=S/vO94S1KrhqZU+6ElYPyVmX/X2aqQ0WwjpCi7kD9I/GGADZwABRLXuThUACybh9fW
+         Jc8vWoM54trxFU9jTD8vT9qv1/YzIAK+t/+iSWqMHV3VvmbMbsFpPNPkLOWtNmQdr2M+
+         NOOglXpvt8QOovjU6tyAronds4rHDHXiVsrcr4pHOxIf4Mkc2kMCPS9E9hbM0FRc8Xap
+         OQzVkVSSJebU6P3/ujxSbgclr7egmG7yYKWaU9hkWjPXB+5srf+8/G/mryMBSsZC5uOk
+         AkZ+twFDDAEi1OvD7mYJUYLc+FXyT2GV6BPHwciyaDhucZPypkEltVKvz07HzD3Kxq9w
+         tEFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680190353; x=1682782353;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h0mnRIbGkQTvtA6Sd/6ZGGzaZl2jf/GCphXRThjLz5Y=;
-        b=dEmmenC4aXr5kDAlYUbjoz+siPe9KQeTmwF8DWMOh4dZGvY3j4D92b7jEWye7jWTEd
-         Sc02WAsHMZ0LC6xjHstIpZH0L2I9DdYTSuBftICwQZdB12pL2iGFoDNmvd8ALaaeq6+D
-         kBGSkxMSXgwx6p/WaSyBK3z8gUzZq0I3NP5coVUnExffLvDmK+99G/W35SzpE/NUdRo1
-         US4KRPE82HoUFHU1N/I87wOIg5brCM9lBmFYfGwwKAbY3APZ9gOBDOtSd4orXaoofjRo
-         C1m5b5ohQjckl/9K+ckE+bQMOTcpZffi2X+Ub/WBJuYF1QEZI+K7c3pS80Yag+zRJN9k
-         7OMg==
-X-Gm-Message-State: AAQBX9cutUXn8kwvqKqSEJH2gJND/XglNad+G3qEe37weKIb9rG4n/BD
-        v4Ve7zpHCltojcaKOPaIWRZEiA==
-X-Google-Smtp-Source: AKy350aC+RFjvAWsT892NKWeEYcETiN9cLISo67goew8T74Q9nYZx0MxDAWqnrl2lv5g0dIUeDFrvw==
-X-Received: by 2002:adf:e288:0:b0:2ce:a93d:882d with SMTP id v8-20020adfe288000000b002cea93d882dmr18958283wri.11.1680190353713;
-        Thu, 30 Mar 2023 08:32:33 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id b7-20020a5d4b87000000b002cfe0ab1246sm33151794wrt.20.2023.03.30.08.32.32
+        d=1e100.net; s=20210112; t=1680191493;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+UiZ1OnVN4eKK6Y2ubWlnceTNBKlqFHwpFESVYfLs/8=;
+        b=NZKwKh2ulP/RAZO7+ux2uUxCU1OQWRgPeF16r4aEX44u/B7Ze/nLnWJUnyufOM7jH6
+         eASqoq5T677ti08BTtLK1W6t8SFyNImJsERCWJxhJbYvMD1jpNNgP54JJCDdkINZbUN5
+         XSg8DiN03Mv+X3z221ecd6mFS5SBIRlParXGr8rZNU+XtAtZECWsLEv9BK53zn7i3YJb
+         IqgvfLHKE7/M2pXm8A53jlCwQ/MQR+JNeUeWScHRDjELr2pACAAj4w2fL70klhVzdTJC
+         kKoZCh7DtSY9CfsiMjTrkyCx1gayuSloSrDFOKUCzF8Ta5lRTbZJQcy/3ExOObloj3q7
+         Lung==
+X-Gm-Message-State: AAQBX9cP+dCsFadn0R0cTZmMlzMlSu98R4NRP/8Cdp+0/hCA97SfEDG0
+        GbTbmp/WPSu44yeFblLupKZKNJlsOGLeDOYUjZE=
+X-Google-Smtp-Source: AKy350Z/fQwD6SWUO0Js9b6F9iq2N+n6uG5uCtOKnAI5zH9aI+LgGmdPVVeCxTY1fZdDZEXa5GtkUA==
+X-Received: by 2002:a17:902:f543:b0:1a1:ce5d:5a15 with SMTP id h3-20020a170902f54300b001a1ce5d5a15mr25852068plf.50.1680191492871;
+        Thu, 30 Mar 2023 08:51:32 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c5e:53ce:1f39:30a5:d20f:f205])
+        by smtp.gmail.com with ESMTPSA id b2-20020a170902ed0200b0019c8ef78d52sm24799025pld.21.2023.03.30.08.51.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 08:32:32 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org, stephan@gerhold.net
-Subject: [PATCH v8 5/5] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
-Date:   Thu, 30 Mar 2023 16:32:22 +0100
-Message-Id: <20230330153222.2875121-6-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230330153222.2875121-1-bryan.odonoghue@linaro.org>
-References: <20230330153222.2875121-1-bryan.odonoghue@linaro.org>
+        Thu, 30 Mar 2023 08:51:32 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org
+Subject: [PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU idle-states
+Date:   Thu, 30 Mar 2023 21:21:22 +0530
+Message-Id: <20230330155122.591099-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -76,224 +71,224 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
+Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
 
-Tulip is paired with:
-
-- wcn3660
-- smb1360 battery charger
-- 720p Truly NT35521 Panel
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../qcom/msm8939-sony-xperia-kanuti-tulip.dts | 184 ++++++++++++++++++
- 2 files changed, 185 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
+Changes since v1:
+- v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
+- Addressed Konrad's comments on v1 and added GDHS and Power Collapse
+  cluster power states.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 31e0ac97fc088..3f8321ecb7e5f 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -30,6 +30,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-new file mode 100644
-index 0000000000000..cb47bb2413a7c
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-@@ -0,0 +1,184 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023, Bryan O'Donoghue.
-+ *
-+ */
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 132 +++++++++++++++++++++++++++
+ 1 file changed, 132 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 2a51c938bbcb..c93677e97076 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -45,6 +45,8 @@ CPU0: cpu@0 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 			L2_0: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+@@ -61,6 +63,8 @@ CPU1: cpu@1 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU2: cpu@2 {
+@@ -73,6 +77,8 @@ CPU2: cpu@2 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU3: cpu@3 {
+@@ -85,6 +91,8 @@ CPU3: cpu@3 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU4: cpu@100 {
+@@ -97,6 +105,8 @@ CPU4: cpu@100 {
+ 			dynamic-power-coefficient = <282>;
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD4>;
++			power-domain-names = "psci";
+ 			L2_1: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+@@ -113,6 +123,8 @@ CPU5: cpu@101 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD5>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU6: cpu@102 {
+@@ -125,6 +137,8 @@ CPU6: cpu@102 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD6>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU7: cpu@103 {
+@@ -137,6 +151,8 @@ CPU7: cpu@103 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD7>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		cpu-map {
+@@ -176,6 +192,68 @@ core3 {
+ 				};
+ 			};
+ 		};
 +
-+/dts-v1/;
++		idle-states {
++			entry-method = "psci";
 +
-+#include "msm8939.dtsi"
-+#include "msm8939-pm8916.dtsi"
-+#include <dt-bindings/arm/qcom,ids.h>
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "silver-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <290>;
++				exit-latency-us = <376>;
++				min-residency-us = <1182>;
++				local-timer-stop;
++			};
 +
-+/ {
-+	model = "Sony Xperia M4 Aqua";
-+	compatible = "sony,kanuti-tulip", "qcom,msm8939";
++			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "gold-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <297>;
++				exit-latency-us = <324>;
++				min-residency-us = <1110>;
++				local-timer-stop;
++			};
++		};
 +
-+	qcom,board-id = <QCOM_BOARD_ID_MTP 0>;
-+	qcom,msm-id = <QCOM_ID_MSM8939 0>, <QCOM_ID_MSM8939 0x30000>;
++		domain-idle-states {
++			CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
++				/* GDHS */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x40000022>;
++				entry-latency-us = <360>;
++				exit-latency-us = <421>;
++				min-residency-us = <782>;
++			};
 +
-+	aliases {
-+		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-+		mmc1 = &sdhc_2; /* SDC2 SD card slot */
-+		serial0 = &blsp1_uart2;
-+	};
++			CLUSTER_0_SLEEP_1: cluster-sleep-0-1 {
++				/* Power Collapse */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x41000044>;
++				entry-latency-us = <800>;
++				exit-latency-us = <2118>;
++				min-residency-us = <7376>;
++			};
 +
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
++			CLUSTER_1_SLEEP_0: cluster-sleep-1-0 {
++				/* GDHS */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x40000042>;
++				entry-latency-us = <314>;
++				exit-latency-us = <345>;
++				min-residency-us = <660>;
++			};
 +
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
++			CLUSTER_1_SLEEP_1: cluster-sleep-1-1 {
++				/* Power Collapse */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x41000044>;
++				entry-latency-us = <640>;
++				exit-latency-us = <1654>;
++				min-residency-us = <8094>;
++			};
++		};
+ 	};
+ 
+ 	firmware {
+@@ -199,6 +277,60 @@ pmu {
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
 +
-+&mdss {
-+	status = "okay";
-+};
++		CPU_PD0: power-domain-cpu0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
 +
-+&tlmm {
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <8>;
-+	};
-+};
++		CPU_PD1: power-domain-cpu1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
 +
-+&pronto {
-+	status = "okay";
++		CPU_PD2: power-domain-cpu2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
 +
-+	iris {
-+		compatible = "qcom,wcn3660";
-+	};
-+};
++		CPU_PD3: power-domain-cpu3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
 +
-+&smd_rpm_regulators {
-+	vdd_l1_l2_l3-supply = <&pm8916_s3>;
-+	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-+	vdd_l7-supply = <&pm8916_s4>;
++		CPU_PD4: power-domain-cpu4 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
 +
-+	pm8916_s3: s3 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1300000>;
-+	};
++		CPU_PD5: power-domain-cpu5 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
 +
-+	pm8916_s4: s4 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <2100000>;
-+	};
++		CPU_PD6: power-domain-cpu6 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
 +
-+	pm8916_l2: l2 {
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+	};
++		CPU_PD7: power-domain-cpu7 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
 +
-+	pm8916_l4: l4 {
-+		regulator-min-microvolt = <2050000>;
-+		regulator-max-microvolt = <2050000>;
-+	};
-+
-+	pm8916_l5: l5 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	pm8916_l6: l6 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+	};
-+
-+	pm8916_l7: l7 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+	};
-+
-+	pm8916_l8: l8 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2900000>;
-+	};
-+
-+	pm8916_l9: l9 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l10: l10 {
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l11: l11 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-system-load = <200000>;
-+		regulator-allow-set-load;
-+	};
-+
-+	pm8916_l12: l12 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l13: l13 {
-+		regulator-min-microvolt = <3075000>;
-+		regulator-max-microvolt = <3075000>;
-+	};
-+
-+	pm8916_l14: l14 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l15: l15 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l16: l16 {
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+	};
-+
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+
-+	pm8916_l18: l18 {
-+		regulator-min-microvolt = <2700000>;
-+		regulator-max-microvolt = <2700000>;
-+	};
-+};
-+
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc1_default_state>;
-+	pinctrl-1 = <&sdc1_sleep_state>;
-+	pinctrl-names = "default", "sleep";
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default_state>;
-+	pinctrl-1 = <&sdc2_sleep_state>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
-+	status = "okay";
-+};
-+
-+&usb {
-+	dr_mode = "device";
-+	extcon = <&usb_id>, <&usb_id>;
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
++		CLUSTER_PD: power-domain-cpu-cluster0 {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_0_SLEEP_0>, <&CLUSTER_0_SLEEP_1>,
++					     <&CLUSTER_1_SLEEP_0>, <&CLUSTER_1_SLEEP_1>;
++		};
+ 	};
+ 
+ 	reserved_memory: reserved-memory {
 -- 
-2.39.2
+2.38.1
 
