@@ -2,86 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52AED6D08BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 16:52:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A43126D0997
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 17:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231639AbjC3Owm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 10:52:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
+        id S233080AbjC3Pb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 11:31:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232306AbjC3Owl (ORCPT
+        with ESMTP id S233007AbjC3PbY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 10:52:41 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13E49AD24
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:52:34 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id j11so24836781lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 07:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680187952;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kFDNA5O4BRFjY00+Z1LJW119elAYOYVUw4CBAie71cg=;
-        b=eJWBU//eJrHG5mc3MWkqYZSyeiQVk3i4eaOJaS41ZDWBEDAUymCfUZpzw4Pa3onpqz
-         fxSBz4CVxHV4C26hz68gTIB7+KPV6LMDDuTcrf9WHS6GBTTtSBLyNjrobEakV77CPSXb
-         hnCSvLwk9tDgMA1LICJA9RS1zI5gShpEJev6LHd3x+QMwBgh1IwH2mkaxalD7ekwD6rG
-         94FcZ9oMOdJEF4173i0w4lthkEKj+E7ny6cjXPk5/NYfW0Kp6A6rdQLXII9w43spK3Lg
-         3px+6MCY3Ev88K6PUL95C1q2ctf/xYudq4ASG49tVVzgCEzMygzgtNL7cL0Ri1WwABfV
-         jhXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680187952;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kFDNA5O4BRFjY00+Z1LJW119elAYOYVUw4CBAie71cg=;
-        b=OqtiAxBvuo+bHpRtg36SHiEHHCWXzXof7/YYgQ9INSZiuzYYwZ4NIdKTqEu4KQWt3/
-         U0Z2EnrRc2/29dsOCzBwQyLfEdjGO7izAoWKeX0L4+cQQEl3Ym0C44KhneoA/rEY7kNT
-         mrIggqIOgX/7dblLDznBaIoH/LmFXHOGY5K1G5i8brFDCFXmLpFabJfgBDQSFTUFPgHG
-         0J9osnjdGoqh8Y2MQ0G8zPIUX1lZ41Z78fStecuB7MUvrsDoRvD24RLErBp3QcscqDnF
-         T/YXpItAreBUr9P4rGFRpckwgn4wnJcsOigZxPvmt6SMVoi80UERFx9Qk21A8dJw6kLY
-         0ovQ==
-X-Gm-Message-State: AAQBX9e53UVpjpGpJKftLNFl9WPVezF4LlAcTvR8Qb8nqgaIEhaeCrbH
-        q7yhzhpmJzA+MXixZ1dQ5TzYYQ==
-X-Google-Smtp-Source: AKy350bV2TIdi9zQe23PfA/0zCWQl3PFtYMIVplNdHrQIPV+NXfL02RAP+7MfBDh5lc4xKsVFwO3VQ==
-X-Received: by 2002:a19:7919:0:b0:4e8:3cfe:98c7 with SMTP id u25-20020a197919000000b004e83cfe98c7mr1915967lfc.4.1680187952252;
-        Thu, 30 Mar 2023 07:52:32 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id q29-20020ac2511d000000b004eb09820adbsm2385504lfb.105.2023.03.30.07.52.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 07:52:31 -0700 (PDT)
-Message-ID: <2eff49b1-f0ad-8d44-5902-93937867178b@linaro.org>
-Date:   Thu, 30 Mar 2023 17:52:31 +0300
+        Thu, 30 Mar 2023 11:31:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D85B8DBE5;
+        Thu, 30 Mar 2023 08:31:09 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32UBUWHj008825;
+        Thu, 30 Mar 2023 15:30:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gCKhnWFEhd2dmMFgaQAZ3b/AKnYi7MqyuXP/Q+DJ4e4=;
+ b=WJqQNEcek4grXYYFc/WRA8O0ueoDFpWbZSVsPCF4VeaCSyGgsBwc1PVOHDJ1Suj9cFwg
+ xIPFmXCxpdtGrN+Ke2KUSQNKqXYYZAlgbHEQDen3tvHgst/FLJ5kJv4aQk9tEW/3B3yF
+ QHQJg2DCDSiVzUMiP3b6h39mzNuM/FRnmY1GmKV+ZwN0qoJ8+g0N6+tRyaFnXgwA5Z5B
+ IDFaUMH0DnzVIY/o6XbDN9cgYvUswRIZ2TxdunFDRwCBpLM+s5E9Uf30n08WOYwW4Bpi
+ 5j4Esz4dFYdr9DuAYxs5V5CLKTr40PmkYeHqrjxQS4qxKEgZx03uQZ5uH+0JQlw1AJXG Ig== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn9kgrrh7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 15:30:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32UFUWFG012754
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 15:30:32 GMT
+Received: from [10.50.13.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
+ 2023 08:30:28 -0700
+Message-ID: <57a4a970-8e50-c0ac-962a-6bb1ebf337f1@quicinc.com>
+Date:   Thu, 30 Mar 2023 21:00:04 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] drm/msm/adreno: adreno_gpu: Use suspend() instead of
- idle() on load error
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, agross@kernel.org,
-        marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230329140445.2180662-1-konrad.dybcio@linaro.org>
- <ZCRNFitcrAeH27Pn@hovoldconsulting.com>
- <83986fa9-c9eb-ae5a-b239-584092f2cea5@linaro.org>
- <CAA8EJpohEo+kMw7fx5112m+z7JHSLDmsqOL4T7hmyvr2fPP8vQ@mail.gmail.com>
- <b985e536-227d-df86-0f23-b58882e9654b@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <b985e536-227d-df86-0f23-b58882e9654b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2 0/2] Add few device nodes for IPQ5332 SoC
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <wim@linux-watchdog.org>,
+        <linux@roeck-us.net>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230320104530.30411-1-quic_kathirav@quicinc.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230320104530.30411-1-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: z5l5kQf4nWLf5ccqzv--hHIyHOegO5ha
+X-Proofpoint-ORIG-GUID: z5l5kQf4nWLf5ccqzv--hHIyHOegO5ha
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-30_09,2023-03-30_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 mlxlogscore=719 lowpriorityscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303300123
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,60 +82,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/03/2023 17:34, Konrad Dybcio wrote:
-> 
-> 
-> On 29.03.2023 21:45, Dmitry Baryshkov wrote:
->> On Wed, 29 Mar 2023 at 18:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>
->>>
->>>
->>> On 29.03.2023 16:37, Johan Hovold wrote:
->>>> On Wed, Mar 29, 2023 at 04:04:44PM +0200, Konrad Dybcio wrote:
->>>>> If we fail to initialize the GPU for whatever reason (say we don't
->>>>> embed the GPU firmware files in the initrd), the error path involves
->>>>> pm_runtime_put_sync() which then calls idle() instead of suspend().
->>>>>
->>>>> This is suboptimal, as it means that we're not going through the
->>>>> clean shutdown sequence. With at least A619_holi, this makes the GPU
->>>>> not wake up until it goes through at least one more start-fail-stop
->>>>> cycle. Fix that by using pm_runtime_put_sync_suspend to force a clean
->>>>> shutdown.
->>>>
->>>> This does not sound right. If pm_runtime_put_sync() fails to suspend the
->>>> device when the usage count drops to zero, then you have a bug somewhere
->>>> else.
->>> I was surprised to see that it was not called as well, but I wasn't able
->>> to track it down before..
->>
->> Could you please check that it's autosuspend who kicks in? In other
->> words, if we disable autosuspend, the pm_runtime_put_sync is enough()?
->>
->> That would probably mean that we lack some kind of reset in the hw_init path.
->>
->> On the other hand, I do not know how the device will react to the
->> error-in-the-middle state. Modems for example, can enter the state
->> where you can not properly turn it off once it starts the boot
->> process.
->>
->> And if we remember the efforts that Akhil has put into making sure
->> that the GPU is properly reset in case of an _error_, it might be
->> nearly impossible to shut it down in a proper way.
->>
->> Thus said, I think that unless there is an obvious way to restart the
->> init process, Korad's pm_runtime_put_sync_suspend() looks like a
->> correct fix to me.
-> On the GPU side, when you cut GX and CX GDSCs, the hardware is off.
-> Some clock / gdsc logic may be retained, but the GPU itself gets
-> cut off. Parking the clocks and shuttting down VDD_GX (if exists)
-> only makes that stronger.
 
-If I remember correctly, GX and CX GPU GDSCs might be voted by other 
-users. Again, I'd direct you here to the series at [1]
+On 3/20/2023 4:15 PM, Kathiravan T wrote:
+> This series adds the support for QUP peripherals, PRNG, WDT for IPQ5332
+> SoC.
+>
+> This series depends on the below patch, due to the node ordering
+> https://lore.kernel.org/linux-arm-msm/20230217083308.12017-6-quic_kathirav@quicinc.com/#t
 
-[1]: https://patchwork.freedesktop.org/series/111966/
 
--- 
-With best wishes
-Dmitry
+Gentle Reminder...
 
+
+>
+> Kathiravan T (2):
+>    dt-bindings: watchdog: qcom-wdt: add qcom,apss-wdt-ipq5332 compatible
+>    arm64: dts: qcom: ipq5332: add few device nodes
+>
+>   .../bindings/watchdog/qcom-wdt.yaml           |  1 +
+>   arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts   | 14 ++++
+>   arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 67 +++++++++++++++++++
+>   3 files changed, 82 insertions(+)
+>
