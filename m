@@ -2,238 +2,271 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12EE46D0482
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:21:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51E316D0495
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:22:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbjC3MVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 08:21:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
+        id S231654AbjC3MWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 08:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbjC3MVX (ORCPT
+        with ESMTP id S231642AbjC3MWg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 08:21:23 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F7E376A2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:21:22 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id y15so24251017lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:21:22 -0700 (PDT)
+        Thu, 30 Mar 2023 08:22:36 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FD793C0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:22:24 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id f188so4730162ybb.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680178880;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mj+jQvqfsQg0GYU1HrWoFihjlq4T/WcOwAeTP0PI2+w=;
-        b=XyqbhXLn98gw21TwQFJBlcpqSSsHkXa1B5UD8hl2YJV06COp+5J/xDsMvpTbSQTcEZ
-         58tB8/qZfnweD4+t47AuU4S6jf0424LDy5HuPG4InABAsmTgtZySUvqBF5fb+4FMgtK3
-         sqnBaIND5ATyIRnGvV5hKqDYBZ3ORJZTmehRBFYKWmJqWNZozOwmA/PD4tMo6dNLueAN
-         HpePU5uDn3D3rgUy+3FlrZD8YzNGpu8kMH47IBGMddBCJB2kTz0oqXYsPi4MHVBNlfno
-         x82NroDfPYBY2gzW8AKfUybB+/sYY3soX6cd9ca2tXoxyrug1M1MGRPYr6LfINnZ1bvy
-         hqag==
+        d=linaro.org; s=google; t=1680178943;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fkgvBexVN7YQyw/6jRR4bXfTXLAK3o3NkknPbbqBnUc=;
+        b=FgLWSz9t3sWQkJWIb04amO3ju/Zy/bu1b0klnduPHyBdLRrKnsim8cN2Ap0lh+NJ7v
+         rOQTpRMNLMakHR8lZ4nNZJonc8b50PrHynV4j1bFMhbzJqZgdTKIpwDnXqfnt9i+ZcWv
+         9Of0Fh2TMpywg3h8wZGGu1bj+/R2RQffoS8mFz9WNJgtPkSKN5BgWY9cP4WF3HxAFKIu
+         0tx+1PUXygjYRH07aU38QCzOc1zL2TzxICadf5FnKVrFDVZ8K8O9qbwuoUixmvne8SBq
+         jDwfbNfNKa9Xa2WOpisjstOfQ4wT2jOTgZ++rT/wcEUMIxEE6JBv4hKhgXCpg6t/p110
+         K6uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680178880;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mj+jQvqfsQg0GYU1HrWoFihjlq4T/WcOwAeTP0PI2+w=;
-        b=cgI0Be8w89HJY/kHYpVdgMfXuv+kL429RMaBNeIemu+CU0WPmMlkSoRaxptfW3Evnp
-         wHeI0JiNRRtEPZn/r7YQIgFu8VabubEzpbksdvsnXtt/FaXVB4FuQlnUG+PGuT2t6YnH
-         VPG9TcxvpPSkui9PWVybyVK0yveeiDEN2LNBKJ32/P44wkb56T1VrVlaRLNdNGWlrnw7
-         Rp9/SXAQNqa/ukfuRHyp1TK12yyGxLFbB+DoDOrBA9g/HnS6YcmN97ENAkGjcHPty34N
-         djkjnA307h7UXsfinxuf9QDD2npxEACAtx4sOImD48NOE/RyK41xBjRXO4k6a0ATXNhc
-         fcdQ==
-X-Gm-Message-State: AAQBX9cTzaMIzPt0XK4wh2vO3CGqWZVUmf55ZQ6wX1u6LgM6Jg6VLRZA
-        ORFv5I9NgAuYstzezITEOvGNbidGvQWVrmSfq7g=
-X-Google-Smtp-Source: AKy350berVdJAV7LtIJu0UeRYQfoH146g4vZbdfJRlHx3rTqz53ct3F8mHtvuwzouQMUqNB7ZK424w==
-X-Received: by 2002:ac2:495e:0:b0:4e9:bafc:88d3 with SMTP id o30-20020ac2495e000000b004e9bafc88d3mr6178297lfi.59.1680178880552;
-        Thu, 30 Mar 2023 05:21:20 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id m16-20020a056512015000b004eb07f5cde6sm2439190lfo.297.2023.03.30.05.21.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 05:21:20 -0700 (PDT)
-Message-ID: <b99845e8-69a1-ba7b-1960-45998591ab20@linaro.org>
-Date:   Thu, 30 Mar 2023 14:21:18 +0200
+        d=1e100.net; s=20210112; t=1680178943;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fkgvBexVN7YQyw/6jRR4bXfTXLAK3o3NkknPbbqBnUc=;
+        b=m9r6rVaBT7W3EKzTRBFcT0F4P8U8rLCJ7amZZlaGtMLyp+Avf6AA96+1ldZ5YXNUEZ
+         sb4h3KmOw+mqZCNgG/TwchWdxA3vyslbZG3qLLZxUY06s56bt/IjOfgc2xhtYLT84uDi
+         q/6alNI5DJ6IvlREkmRzVFYj0KK+6017kuNQ8Pvp8MdW6h+iEnDOpHgQqTa4lSHP1UT5
+         ZHBor2QHhB13e4B3WHzKlGW8Med06BG4XifZrJh7DWXs2oSbe4vhJssiETEGG1ZhSNey
+         osnP6dfw2Z6bNggymxP1ftCiIuHAz7tKMYctPa6ZfMzGGUOda2bpdisAZxQnfPdMcBjc
+         D/cQ==
+X-Gm-Message-State: AAQBX9f4CFsh5Iled7bU63gl5MQ5z/yuc7Dt4becs01KuhTj4c1pDAu2
+        JINLNzOVhbmW6EivOjxk7blMgYddb8L7zWW8dULkbg==
+X-Google-Smtp-Source: AKy350ajq/TmUBLRPZjm2/sWAgQNJKdsLd/pLSNZPUTH6/oDAeLSyRGusPDM5yEZFtErnt+S0DtkjLRkSDFn6ORxK4E=
+X-Received: by 2002:a05:6902:70a:b0:b6e:361a:c86 with SMTP id
+ k10-20020a056902070a00b00b6e361a0c86mr12602065ybt.3.1680178943525; Thu, 30
+ Mar 2023 05:22:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [v2,31/50] drm/msm/dpu: duplicate sdm845 catalog entries
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230211231259.1308718-32-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230211231259.1308718-32-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230330084250.32600-1-quic_mkshah@quicinc.com> <20230330084250.32600-3-quic_mkshah@quicinc.com>
+In-Reply-To: <20230330084250.32600-3-quic_mkshah@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 30 Mar 2023 14:21:47 +0200
+Message-ID: <CAPDyKFoBi_TotpFF-OX2kyL=4zFSHK46nQsWFRqcX5YXTj-gLg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sc7280: Add power-domains for
+ cpuidle states
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     andersson@kernel.org, dianders@chromium.org, swboyd@chromium.org,
+        wingers@google.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        sudeep.holla@arm.com, jwerner@chromium.org, quic_lsrao@quicinc.com,
+        quic_rjendra@quicinc.com, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 30 Mar 2023 at 10:43, Maulik Shah <quic_mkshah@quicinc.com> wrote:
+>
+> Add power-domains for cpuidle states to use psci os-initiated idle states.
+>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-On 12.02.2023 00:12, Dmitry Baryshkov wrote:
-> Duplicate some of sdm845 catalog entries to remove dependencies between
-> DPU major generations.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Kind regards
+Uffe
+
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   | 19 +++++++-
->  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    | 43 +++++++++++++++++--
->  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  4 +-
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  4 +-
->  4 files changed, 60 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> index c963365a9945..36a4f11f44b7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> @@ -112,6 +112,21 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
->  		&msm8998_lm_sblk, PINGPONG_3, LM_1, 0),
->  };
->  
-> +static const struct dpu_pingpong_cfg msm8998_pp[] = {
-> +	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> +	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> +	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> +};
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 98 +++++++++++++++++++++-------
+>  1 file changed, 73 insertions(+), 25 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 5e6f9f441f1a..1a232eb4dde6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -170,9 +170,8 @@
+>                         reg = <0x0 0x0>;
+>                         clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> -                                          &LITTLE_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD0>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_0>;
+>                         operating-points-v2 = <&cpu0_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -196,9 +195,8 @@
+>                         reg = <0x0 0x100>;
+>                         clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> -                                          &LITTLE_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD1>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_100>;
+>                         operating-points-v2 = <&cpu0_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -218,9 +216,8 @@
+>                         reg = <0x0 0x200>;
+>                         clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> -                                          &LITTLE_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD2>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_200>;
+>                         operating-points-v2 = <&cpu0_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -240,9 +237,8 @@
+>                         reg = <0x0 0x300>;
+>                         clocks = <&cpufreq_hw 0>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> -                                          &LITTLE_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD3>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_300>;
+>                         operating-points-v2 = <&cpu0_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -262,9 +258,8 @@
+>                         reg = <0x0 0x400>;
+>                         clocks = <&cpufreq_hw 1>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&BIG_CPU_SLEEP_0
+> -                                          &BIG_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD4>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_400>;
+>                         operating-points-v2 = <&cpu4_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -284,9 +279,8 @@
+>                         reg = <0x0 0x500>;
+>                         clocks = <&cpufreq_hw 1>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&BIG_CPU_SLEEP_0
+> -                                          &BIG_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD5>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_500>;
+>                         operating-points-v2 = <&cpu4_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -306,9 +300,8 @@
+>                         reg = <0x0 0x600>;
+>                         clocks = <&cpufreq_hw 1>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&BIG_CPU_SLEEP_0
+> -                                          &BIG_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD6>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_600>;
+>                         operating-points-v2 = <&cpu4_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -328,9 +321,8 @@
+>                         reg = <0x0 0x700>;
+>                         clocks = <&cpufreq_hw 2>;
+>                         enable-method = "psci";
+> -                       cpu-idle-states = <&BIG_CPU_SLEEP_0
+> -                                          &BIG_CPU_SLEEP_1
+> -                                          &CLUSTER_SLEEP_0>;
+> +                       power-domains = <&CPU_PD7>;
+> +                       power-domain-names = "psci";
+>                         next-level-cache = <&L2_700>;
+>                         operating-points-v2 = <&cpu7_opp_table>;
+>                         interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+> @@ -422,9 +414,11 @@
+>                                 min-residency-us = <5555>;
+>                                 local-timer-stop;
+>                         };
+> +               };
+>
+> +               domain-idle-states {
+>                         CLUSTER_SLEEP_0: cluster-sleep-0 {
+> -                               compatible = "arm,idle-state";
+> +                               compatible = "domain-idle-state";
+>                                 idle-state-name = "cluster-power-down";
+>                                 arm,psci-suspend-param = <0x40003444>;
+>                                 entry-latency-us = <3263>;
+> @@ -790,6 +784,59 @@
+>         psci {
+>                 compatible = "arm,psci-1.0";
+>                 method = "smc";
 > +
->  static const struct dpu_dspp_cfg msm8998_dspp[] = {
->  	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_MSM8998_MASK,
->  		 &msm8998_dspp_sblk),
-> @@ -175,8 +190,8 @@ static const struct dpu_mdss_cfg msm8998_dpu_cfg = {
->  	.mixer = msm8998_lm,
->  	.dspp_count = ARRAY_SIZE(msm8998_dspp),
->  	.dspp = msm8998_dspp,
-> -	.pingpong_count = ARRAY_SIZE(sdm845_pp),
-> -	.pingpong = sdm845_pp,
-> +	.pingpong_count = ARRAY_SIZE(msm8998_pp),
-> +	.pingpong = msm8998_pp,
->  	.intf_count = ARRAY_SIZE(msm8998_intf),
->  	.intf = msm8998_intf,
->  	.vbif_count = ARRAY_SIZE(msm8998_vbif),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index 08b9648eed37..f7c79474133a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -27,6 +27,22 @@ static const struct dpu_ubwc_cfg sm8150_ubwc_cfg = {
->  	.highest_bank_bit = 0x2,
->  };
->  
-> +static const struct dpu_mdp_cfg sm8150_mdp[] = {
-> +	{
-> +	.name = "top_0", .id = MDP_TOP,
-> +	.base = 0x0, .len = 0x45c,
-> +	.features = BIT(DPU_MDP_AUDIO_SELECT),
-> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> +	.clk_ctrls[DPU_CLK_CTRL_VIG1] = { .reg_off = 0x2b4, .bit_off = 0 },
-> +	.clk_ctrls[DPU_CLK_CTRL_VIG2] = { .reg_off = 0x2bc, .bit_off = 0 },
-> +	.clk_ctrls[DPU_CLK_CTRL_VIG3] = { .reg_off = 0x2c4, .bit_off = 0 },
-> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-> +	.clk_ctrls[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
-> +	.clk_ctrls[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
-> +	.clk_ctrls[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
-> +	},
-> +};
+> +               CPU_PD0: cpu0 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+> +               };
 > +
->  static const struct dpu_ctl_cfg sm8150_ctl[] = {
->  	{
->  	.name = "ctl_0", .id = CTL_0,
-> @@ -66,6 +82,25 @@ static const struct dpu_ctl_cfg sm8150_ctl[] = {
->  	},
->  };
->  
-> +static const struct dpu_sspp_cfg sm8150_sspp[] = {
-> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f0, VIG_SDM845_MASK,
-> +		sdm845_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-> +	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, 0x1f0, VIG_SDM845_MASK,
-> +		sdm845_vig_sblk_1, 4, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
-> +	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, 0x1f0, VIG_SDM845_MASK,
-> +		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
-> +	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, 0x1f0, VIG_SDM845_MASK,
-> +		sdm845_vig_sblk_3, 12, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
-> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f0, DMA_SDM845_MASK,
-> +		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
-> +	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f0, DMA_SDM845_MASK,
-> +		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
-> +	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f0, DMA_CURSOR_SDM845_MASK,
-> +		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
-> +	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000, 0x1f0, DMA_CURSOR_SDM845_MASK,
-> +		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
-> +};
+> +               CPU_PD1: cpu1 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+> +               };
 > +
->  static const struct dpu_lm_cfg sm8150_lm[] = {
->  	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
->  		&sdm845_lm_sblk, PINGPONG_0, LM_1, DSPP_0),
-> @@ -165,12 +200,12 @@ static const struct dpu_perf_cfg sm8150_perf_data = {
->  static const struct dpu_mdss_cfg sm8150_dpu_cfg = {
->  	.caps = &sm8150_dpu_caps,
->  	.ubwc = &sm8150_ubwc_cfg,
-> -	.mdp_count = ARRAY_SIZE(sdm845_mdp),
-> -	.mdp = sdm845_mdp,
-> +	.mdp_count = ARRAY_SIZE(sm8150_mdp),
-> +	.mdp = sm8150_mdp,
->  	.ctl_count = ARRAY_SIZE(sm8150_ctl),
->  	.ctl = sm8150_ctl,
-> -	.sspp_count = ARRAY_SIZE(sdm845_sspp),
-> -	.sspp = sdm845_sspp,
-> +	.sspp_count = ARRAY_SIZE(sm8150_sspp),
-> +	.sspp = sm8150_sspp,
->  	.mixer_count = ARRAY_SIZE(sm8150_lm),
->  	.mixer = sm8150_lm,
->  	.dspp_count = ARRAY_SIZE(sm8150_dspp),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index 732ff876d311..c51e1bba1533 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -87,8 +87,8 @@ static const struct dpu_mdss_cfg sc8180x_dpu_cfg = {
->  	.mdp = sc8180x_mdp,
->  	.ctl_count = ARRAY_SIZE(sm8150_ctl),
->  	.ctl = sm8150_ctl,
-> -	.sspp_count = ARRAY_SIZE(sdm845_sspp),
-> -	.sspp = sdm845_sspp,
-> +	.sspp_count = ARRAY_SIZE(sm8150_sspp),
-> +	.sspp = sm8150_sspp,
->  	.mixer_count = ARRAY_SIZE(sm8150_lm),
->  	.mixer = sm8150_lm,
->  	.pingpong_count = ARRAY_SIZE(sm8150_pp),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 82a1d18cbaa3..d84f8eb8f88a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -854,10 +854,10 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
->   * Hardware catalog
->   *************************************************************/
->  
-> -#include "catalog/dpu_4_0_sdm845.h"
-> -
->  #include "catalog/dpu_3_0_msm8998.h"
->  
-> +#include "catalog/dpu_4_0_sdm845.h"
+> +               CPU_PD2: cpu2 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+> +               };
 > +
->  #include "catalog/dpu_5_0_sm8150.h"
->  #include "catalog/dpu_5_1_sc8180x.h"
->  
+> +               CPU_PD3: cpu3 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+> +               };
+> +
+> +               CPU_PD4: cpu4 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+> +               };
+> +
+> +               CPU_PD5: cpu5 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+> +               };
+> +
+> +               CPU_PD6: cpu6 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+> +               };
+> +
+> +               CPU_PD7: cpu7 {
+> +                       #power-domain-cells = <0>;
+> +                       power-domains = <&CLUSTER_PD>;
+> +                       domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+> +               };
+> +
+> +               CLUSTER_PD: cpu-cluster0 {
+> +                       #power-domain-cells = <0>;
+> +                       domain-idle-states = <&CLUSTER_SLEEP_0>;
+> +               };
+>         };
+>
+>         qspi_opp_table: opp-table-qspi {
+> @@ -5280,6 +5327,7 @@
+>                                           <SLEEP_TCS   3>,
+>                                           <WAKE_TCS    3>,
+>                                           <CONTROL_TCS 1>;
+> +                       power-domains = <&CLUSTER_PD>;
+>
+>                         apps_bcm_voter: bcm-voter {
+>                                 compatible = "qcom,bcm-voter";
+> --
+> 2.17.1
+>
