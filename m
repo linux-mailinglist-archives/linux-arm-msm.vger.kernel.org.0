@@ -2,87 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC9766D0BF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 18:54:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38B406D0C26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 19:04:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231929AbjC3QyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 12:54:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36358 "EHLO
+        id S231741AbjC3REX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 13:04:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230101AbjC3Qx4 (ORCPT
+        with ESMTP id S231852AbjC3REW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 12:53:56 -0400
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [IPv6:2001:67c:2050:0:465::101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBBB7171B;
-        Thu, 30 Mar 2023 09:53:46 -0700 (PDT)
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4PnTyb3T7Cz9sbY;
-        Thu, 30 Mar 2023 18:53:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1680195223;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=dKSbFG5DGVwvXJCZEdfm9iFVOlxnj2KKA0SRmRRz/mM=;
-        b=Xm03N916cgtDouzhEd8joAt0pt+gaeuj/NgdpBsez7EMQ9sj0HPDPOvxoaBOQcNGZOyDW+
-        ie164UorDGWtFMz3PsdbD/iROaatkYHsytzsLlU2KxeXFCkdipuFo7+RT/PEBt1MUf6B/X
-        kHYFfDV+vW182mDdv1bwba68sfzOUN6fB2g8Su9UoNsFyxLIDx9NnNlDPIz1dZvUjOKK2G
-        u+xzeV2yJwUqN6MvLle1GuoUv+UGyJYJ/rqdc2x2ThOGq2F4m8VvoiOlUR4KhrC0ksIv29
-        2VhCRHuw4YCL4T/jE8aBFhSvoEF/7jGl8YVGyKNnVVvr3my5GSa4InE7fFZ6tQ==
-From:   Dylan Van Assche <me@dylanvanassche.be>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>
-Subject: [PATCH v3 4/4] dts: arm64: qcom: sdm845-shift-axolotl: enable SLPI
-Date:   Thu, 30 Mar 2023 18:53:22 +0200
-Message-Id: <20230330165322.118279-5-me@dylanvanassche.be>
-In-Reply-To: <20230330165322.118279-1-me@dylanvanassche.be>
-References: <20230330165322.118279-1-me@dylanvanassche.be>
+        Thu, 30 Mar 2023 13:04:22 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C1A72A2;
+        Thu, 30 Mar 2023 10:04:18 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id cf7so24368083ybb.5;
+        Thu, 30 Mar 2023 10:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680195857;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IlDwVnjXPjHRMPhMgjQhgcuV4GVG8mC7w2wq3ycJVpU=;
+        b=hw3Ylsu5/V5zmwUjbFQXMniyjy0U/PBm0rpdJF50D+Ie8uy9rJHxKVvxxJmPY3Hs3q
+         1M4MqLLDVv5JqgU/UsXaZwyRl7KbI0l47/T7UX3/d62GpHY8de5mJ11QJ13H8Cmz03Ma
+         +4gQUV0qQn6nID4G7YOmp6D0EevpJGx/UTqTwyLwjI0qMsW2YCLWaLK2G/5FjQHe4d+n
+         5MYUswOsAq+rLvzT1GsBXRYI7+e9UXnwkqt+zuDy6CcVi0nd6MLj1iRivRDonheBtSII
+         Mq1jNw+S4d4hemsSqdukbojl0Xt3VqUiXukBKaLr1R+wogW8Cu/6mfTKAoihnh2Jpd2U
+         vQIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680195857;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IlDwVnjXPjHRMPhMgjQhgcuV4GVG8mC7w2wq3ycJVpU=;
+        b=uhoZvyOtVR5aSqJ5D+GK2Efkjp6bfXvYdKQm4YzvvIMGnKinylM1XpK7l+m8fgpxoI
+         irorWhvf490j1khbOCiBVQrCz8/aTv1QfZ0ThjGuxi3CFIQDLCEVztxBCE+56RuSfUDj
+         V7bwAarwTViGuagNLZeYfvbpz/ZpimyLW1eMVkuzT7pBPXu+xult0gjuDR5t4Z7omhmU
+         tySXOkbAaqr2Z785REah3Bvilkl9j1TjSmpHKffhLLnswHCMSUgjLan86GU57e7y1jjC
+         YE82mMFlnqTGhQc5hohjgj4VERE/GRXYk0m67LoWHJd6m7xhhpUAnJtjqlGpQosSlMze
+         Gudw==
+X-Gm-Message-State: AAQBX9c12qanvZdmL8+J/4nL6KqpktFFODIlpfrD0l8n5ruG9YRrM39b
+        ZcZlRBl2JN1uu4UDFfW30jZmTMR7I7U=
+X-Google-Smtp-Source: AKy350ZS888I2zvXwETSVCnDXVQBy76l3/CT2E1Vs+5IucefI2Rh9djzDoE+4XCUkMT8UWj7OcLeQg==
+X-Received: by 2002:a25:6d43:0:b0:89a:338:b74f with SMTP id i64-20020a256d43000000b0089a0338b74fmr18782917ybc.55.1680195857269;
+        Thu, 30 Mar 2023 10:04:17 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id b125-20020a256783000000b00b7767ca748dsm4261822ybc.42.2023.03.30.10.04.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 10:04:16 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date:   Thu, 30 Mar 2023 10:04:14 -0700
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Kathiravan T <quic_kathirav@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        wim@linux-watchdog.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: watchdog: qcom-wdt: add
+ qcom,apss-wdt-ipq9574 compatible
+Message-ID: <caf973ad-91e8-41b2-a801-123bfc54d12a@roeck-us.net>
+References: <20230329053726.14860-1-quic_kathirav@quicinc.com>
+ <20230329053726.14860-2-quic_kathirav@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329053726.14860-2-quic_kathirav@quicinc.com>
+X-Spam-Status: No, score=0.7 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,
+        FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the SLPI DSP on the SHIFTPHONES SHIFT6mq phone with a
-Qualcomm SDM845 SoC.
+On Wed, Mar 29, 2023 at 11:07:25AM +0530, Kathiravan T wrote:
+> Add a compatible for the IPQ9574 platform's APSS watchdog.
+> 
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
 
-Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
----
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index b54e304abf71..bd9571a258cf 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -572,6 +572,11 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&slpi_pas {
-+	firmware-name = "qcom/sdm845/axolotl/slpi.mbn";
-+	status = "okay";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
--- 
-2.39.2
-
+> ---
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 6448b633c970..6910533aee50 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -18,6 +18,7 @@ properties:
+>        - items:
+>            - enum:
+>                - qcom,kpss-wdt-ipq4019
+> +              - qcom,apss-wdt-ipq9574
+>                - qcom,apss-wdt-msm8994
+>                - qcom,apss-wdt-qcs404
+>                - qcom,apss-wdt-sa8775p
+> -- 
+> 2.17.1
+> 
