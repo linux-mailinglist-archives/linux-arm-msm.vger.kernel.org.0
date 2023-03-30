@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 545BD6D0113
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:23:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E7976D014B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:34:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbjC3KXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 06:23:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42264 "EHLO
+        id S230303AbjC3Kd6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 06:33:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230496AbjC3KXC (ORCPT
+        with ESMTP id S230366AbjC3Kd5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 06:23:02 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE1672B7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:23:01 -0700 (PDT)
+        Thu, 30 Mar 2023 06:33:57 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DAFB83DB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:33:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680171781; x=1711707781;
+  t=1680172432; x=1711708432;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=gLn5TTEcIlCoQHKj85Jril/VhPR3hAJS3q3MefOT/pw=;
-  b=VoUckJJlYbQKkXmsgPfCVxAiigSFPIVyXuI1zrp+nv5VYu2PxvCFXtBz
-   iKnMR/3PX6xLS+rLdJvnb2Z1tNaOlcpSzY3C5uBBLJg6+WT7VUDMadA2i
-   XTjkV9JgIq6EMpObdpSkSX03XjG33gWZKNU0wZgSlbsAQACLIML0NcwWh
-   OyoDmy1NjmiY8heMtMVHhJpe4qW8zERHLYl//rn6DfeYx8ZqJ0IMEoO3s
-   YEn+0NCWSHyA3fzhSNuJf1q5FMcoUx0xIf9JKfWXVrtrCuhTcQyYUvSFj
-   lVr/FdvZ5CO0fjtlG8FKQWT2pXLixitnJ6XGmS5mcZ3C5Hxhnpv8rQwvX
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="339853745"
+  bh=bo52ssnb5zSJY09A/ox7VL3Gjv9ei2ZMX5sqTUzRDSI=;
+  b=NLfIesVFRhxMQVrGsnXw+QPnyj0NTfJbFaWPAfFUmUCkvb7iBWymgHFC
+   B7OY0Gpc8Uv6+0vamKutE3QAkGs+21cWuf9wOT58PfTKvodUmtmCLL68d
+   M4R0Jex+Ko3vOyj/pC/TxvqU81o0KkIUvBFrzCa7j3lIzx2sRGdM5uPqE
+   tiKIwysT/55+DLj1EtjkkOKN6IWRRViATNV7Ul+je4yiYgVrWZlqiGwmQ
+   qQbOptgguKRzoYEeyQJUzdZgnJKdeZZPpp7FEefVeA+r7cxNVqgv3aFS6
+   1ivyBBQJPbLis/YwOSeIL39pbA5+yFHTpjJEW7N6NhLzLcP7eMVXjGk/n
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="338628800"
 X-IronPort-AV: E=Sophos;i="5.98,303,1673942400"; 
-   d="scan'208";a="339853745"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2023 03:22:51 -0700
+   d="scan'208";a="338628800"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2023 03:33:51 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="714938796"
+X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="795620914"
 X-IronPort-AV: E=Sophos;i="5.98,303,1673942400"; 
-   d="scan'208";a="714938796"
+   d="scan'208";a="795620914"
 Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga008.jf.intel.com with ESMTP; 30 Mar 2023 03:22:47 -0700
+  by fmsmga002.fm.intel.com with ESMTP; 30 Mar 2023 03:33:48 -0700
 Received: from kbuild by b613635ddfff with local (Exim 4.96)
         (envelope-from <lkp@intel.com>)
-        id 1phpQd-000Kjq-1q;
-        Thu, 30 Mar 2023 10:22:47 +0000
-Date:   Thu, 30 Mar 2023 18:22:44 +0800
+        id 1phpbH-000KkO-2i;
+        Thu, 30 Mar 2023 10:33:47 +0000
+Date:   Thu, 30 Mar 2023 18:33:03 +0800
 From:   kernel test robot <lkp@intel.com>
 To:     Thomas Zimmermann <tzimmermann@suse.de>, robdclark@gmail.com,
         quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
@@ -55,7 +55,7 @@ Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org
 Subject: Re: [PATCH 6/6] drm/msm: Implement fbdev emulation as in-kernel
  client
-Message-ID: <202303301849.HjMnKXNi-lkp@intel.com>
+Message-ID: <202303301856.zSmpwZjj-lkp@intel.com>
 References: <20230330074150.7637-7-tzimmermann@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,8 +85,8 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-msm
 base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
 patch link:    https://lore.kernel.org/r/20230330074150.7637-7-tzimmermann%40suse.de
 patch subject: [PATCH 6/6] drm/msm: Implement fbdev emulation as in-kernel client
-config: csky-randconfig-r011-20230329 (https://download.01.org/0day-ci/archive/20230330/202303301849.HjMnKXNi-lkp@intel.com/config)
-compiler: csky-linux-gcc (GCC) 12.1.0
+config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20230330/202303301856.zSmpwZjj-lkp@intel.com/config)
+compiler: sparc64-linux-gcc (GCC) 12.1.0
 reproduce (this is a W=1 build):
         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
         chmod +x ~/bin/make.cross
@@ -96,176 +96,62 @@ reproduce (this is a W=1 build):
         git checkout ec39cb11cf72fb01ada6fe51c7c572a31dcc805d
         # save the config file
         mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=csky olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=csky SHELL=/bin/bash drivers/gpu/drm/msm/
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc SHELL=/bin/bash drivers/gpu/
 
 If you fix the issue, kindly add following tag where applicable
 | Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202303301849.HjMnKXNi-lkp@intel.com/
+| Link: https://lore.kernel.org/oe-kbuild-all/202303301856.zSmpwZjj-lkp@intel.com/
 
-All errors (new ones prefixed by >>):
+All error/warnings (new ones prefixed by >>):
 
-   drivers/gpu/drm/msm/msm_drv.c: In function 'msm_drm_init':
->> drivers/gpu/drm/msm/msm_drv.c:538:20: error: 'fbdev' undeclared (first use in this function)
-     538 |         if (kms && fbdev)
-         |                    ^~~~~
-   drivers/gpu/drm/msm/msm_drv.c:538:20: note: each undeclared identifier is reported only once for each function it appears in
+   drivers/gpu/drm/msm/msm_io_utils.c: In function '_msm_ioremap':
+>> drivers/gpu/drm/msm/msm_io_utils.c:72:15: error: implicit declaration of function 'devm_ioremap'; did you mean '_msm_ioremap'? [-Werror=implicit-function-declaration]
+      72 |         ptr = devm_ioremap(&pdev->dev, res->start, size);
+         |               ^~~~~~~~~~~~
+         |               _msm_ioremap
+>> drivers/gpu/drm/msm/msm_io_utils.c:72:13: warning: assignment to 'void *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+      72 |         ptr = devm_ioremap(&pdev->dev, res->start, size);
+         |             ^
+   cc1: some warnings being treated as errors
 
 
-vim +/fbdev +538 drivers/gpu/drm/msm/msm_drv.c
+vim +72 drivers/gpu/drm/msm/msm_io_utils.c
 
-   398	
-   399	static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
-   400	{
-   401		struct msm_drm_private *priv = dev_get_drvdata(dev);
-   402		struct drm_device *ddev;
-   403		struct msm_kms *kms;
-   404		int ret, i;
-   405	
-   406		if (drm_firmware_drivers_only())
-   407			return -ENODEV;
-   408	
-   409		/* the fw fb could be anywhere in memory */
-   410		ret = drm_aperture_remove_framebuffers(false, drv);
-   411		if (ret)
-   412			return ret;
-   413	
-   414		ddev = drm_dev_alloc(drv, dev);
-   415		if (IS_ERR(ddev)) {
-   416			DRM_DEV_ERROR(dev, "failed to allocate drm_device\n");
-   417			return PTR_ERR(ddev);
-   418		}
-   419		ddev->dev_private = priv;
-   420		priv->dev = ddev;
-   421	
-   422		priv->wq = alloc_ordered_workqueue("msm", 0);
-   423		if (!priv->wq)
-   424			return -ENOMEM;
-   425	
-   426		INIT_LIST_HEAD(&priv->objects);
-   427		mutex_init(&priv->obj_lock);
-   428	
-   429		/*
-   430		 * Initialize the LRUs:
-   431		 */
-   432		mutex_init(&priv->lru.lock);
-   433		drm_gem_lru_init(&priv->lru.unbacked, &priv->lru.lock);
-   434		drm_gem_lru_init(&priv->lru.pinned,   &priv->lru.lock);
-   435		drm_gem_lru_init(&priv->lru.willneed, &priv->lru.lock);
-   436		drm_gem_lru_init(&priv->lru.dontneed, &priv->lru.lock);
-   437	
-   438		/* Teach lockdep about lock ordering wrt. shrinker: */
-   439		fs_reclaim_acquire(GFP_KERNEL);
-   440		might_lock(&priv->lru.lock);
-   441		fs_reclaim_release(GFP_KERNEL);
-   442	
-   443		drm_mode_config_init(ddev);
-   444	
-   445		ret = msm_init_vram(ddev);
-   446		if (ret)
-   447			goto err_drm_dev_put;
-   448	
-   449		/* Bind all our sub-components: */
-   450		ret = component_bind_all(dev, ddev);
-   451		if (ret)
-   452			goto err_drm_dev_put;
-   453	
-   454		dma_set_max_seg_size(dev, UINT_MAX);
-   455	
-   456		msm_gem_shrinker_init(ddev);
-   457	
-   458		if (priv->kms_init) {
-   459			ret = priv->kms_init(ddev);
-   460			if (ret) {
-   461				DRM_DEV_ERROR(dev, "failed to load kms\n");
-   462				priv->kms = NULL;
-   463				goto err_msm_uninit;
-   464			}
-   465			kms = priv->kms;
-   466		} else {
-   467			/* valid only for the dummy headless case, where of_node=NULL */
-   468			WARN_ON(dev->of_node);
-   469			kms = NULL;
-   470		}
-   471	
-   472		/* Enable normalization of plane zpos */
-   473		ddev->mode_config.normalize_zpos = true;
-   474	
-   475		if (kms) {
-   476			kms->dev = ddev;
-   477			ret = kms->funcs->hw_init(kms);
-   478			if (ret) {
-   479				DRM_DEV_ERROR(dev, "kms hw init failed: %d\n", ret);
-   480				goto err_msm_uninit;
-   481			}
-   482		}
-   483	
-   484		drm_helper_move_panel_connectors_to_head(ddev);
-   485	
-   486		ddev->mode_config.funcs = &mode_config_funcs;
-   487		ddev->mode_config.helper_private = &mode_config_helper_funcs;
-   488	
-   489		for (i = 0; i < priv->num_crtcs; i++) {
-   490			/* initialize event thread */
-   491			priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
-   492			priv->event_thread[i].dev = ddev;
-   493			priv->event_thread[i].worker = kthread_create_worker(0,
-   494				"crtc_event:%d", priv->event_thread[i].crtc_id);
-   495			if (IS_ERR(priv->event_thread[i].worker)) {
-   496				ret = PTR_ERR(priv->event_thread[i].worker);
-   497				DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
-   498				priv->event_thread[i].worker = NULL;
-   499				goto err_msm_uninit;
-   500			}
-   501	
-   502			sched_set_fifo(priv->event_thread[i].worker->task);
-   503		}
-   504	
-   505		ret = drm_vblank_init(ddev, priv->num_crtcs);
-   506		if (ret < 0) {
-   507			DRM_DEV_ERROR(dev, "failed to initialize vblank\n");
-   508			goto err_msm_uninit;
-   509		}
-   510	
-   511		if (kms) {
-   512			pm_runtime_get_sync(dev);
-   513			ret = msm_irq_install(ddev, kms->irq);
-   514			pm_runtime_put_sync(dev);
-   515			if (ret < 0) {
-   516				DRM_DEV_ERROR(dev, "failed to install IRQ handler\n");
-   517				goto err_msm_uninit;
-   518			}
-   519		}
-   520	
-   521		ret = drm_dev_register(ddev, 0);
-   522		if (ret)
-   523			goto err_msm_uninit;
-   524	
-   525		if (kms) {
-   526			ret = msm_disp_snapshot_init(ddev);
-   527			if (ret)
-   528				DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
-   529		}
-   530		drm_mode_config_reset(ddev);
-   531	
-   532		ret = msm_debugfs_late_init(ddev);
-   533		if (ret)
-   534			goto err_msm_uninit;
-   535	
-   536		drm_kms_helper_poll_init(ddev);
-   537	
- > 538		if (kms && fbdev)
-   539			msm_fbdev_setup(ddev);
-   540	
-   541		return 0;
-   542	
-   543	err_msm_uninit:
-   544		msm_drm_uninit(dev);
-   545	err_drm_dev_put:
-   546		drm_dev_put(ddev);
-   547		return ret;
-   548	}
-   549	
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  51  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  52  static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name,
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  53  				  bool quiet, phys_addr_t *psize)
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  54  {
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  55  	struct resource *res;
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  56  	unsigned long size;
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  57  	void __iomem *ptr;
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  58  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  59  	if (name)
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  60  		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  61  	else
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  62  		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  63  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  64  	if (!res) {
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  65  		if (!quiet)
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  66  			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  67  		return ERR_PTR(-EINVAL);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  68  	}
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  69  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  70  	size = resource_size(res);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  71  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20 @72  	ptr = devm_ioremap(&pdev->dev, res->start, size);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  73  	if (!ptr) {
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  74  		if (!quiet)
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  75  			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  76  		return ERR_PTR(-ENOMEM);
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  77  	}
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  78  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  79  	if (psize)
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  80  		*psize = size;
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  81  
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  82  	return ptr;
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  83  }
+d89e5028346bd80 Dmitry Baryshkov 2022-01-20  84  
 
 -- 
 0-DAY CI Kernel Test Service
