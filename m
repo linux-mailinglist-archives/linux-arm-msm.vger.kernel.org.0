@@ -2,105 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3F466D06B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 15:28:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C8F56D0758
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 15:54:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232001AbjC3N2t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 09:28:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
+        id S232007AbjC3Nyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 09:54:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231992AbjC3N2s (ORCPT
+        with ESMTP id S231368AbjC3Nyi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 09:28:48 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0915AA5FA;
-        Thu, 30 Mar 2023 06:28:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 9913BB82775;
-        Thu, 30 Mar 2023 13:28:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F12C433EF;
-        Thu, 30 Mar 2023 13:28:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680182915;
-        bh=v8AtPPr2npAFWTLwZhYml/BlOepM7LWNbVlANAVOCtg=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=uortMvtcdtdqnx0Y8n5Qs4F9ErnSxttq/nRUtqbVq9vZpzq6wAAZ4Dshr6cqcHpb6
-         nH1y0MXpMPsIquNjIdG0NIA1YsfS3ydxDu9u0oRI3DB0FQytofcHLhKFdY5TGIgEE5
-         DBkLno/7MT19g206Osn/IhZOk0vjoxEOpfGZatuyctJzn5Q3RtSCWt0mVnan/F0geQ
-         A8ejzHrOAMhk3lE3NOCZUZbMZ3nYB7YGHpZI63Q7iTd8xzCXd7z9B+Z2lypc2x8Vlv
-         LpTCOaz/G9ayCN6YYlcWhxsMMkv8ltlQXCaffLebVLmZgy9/Vq9FNFNVFGikjtbpme
-         x5YRdOnuTkHHg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Venkata Prasad Potturu <quic_potturu@quicinc.com>,
-        Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     stable@vger.kernel.org, Rob Herring <robh@kernel.org>
-In-Reply-To: <20230330071333.24308-1-krzysztof.kozlowski@linaro.org>
-References: <20230330071333.24308-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [RESEND PATCH] ASoC: dt-bindings: qcom,lpass-rx-macro: correct
- minItems for clocks
-Message-Id: <168018291034.3345013.1034943488652302497.b4-ty@kernel.org>
-Date:   Thu, 30 Mar 2023 14:28:30 +0100
+        Thu, 30 Mar 2023 09:54:38 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BB34EDE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 06:54:36 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id g17so24637386lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 06:54:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680184475;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3bDS+NZkCHNjcglyIFTFfiCpIuz6atTUwaUlX4EZFO0=;
+        b=ErhbzUuJagPIYLAc87qPWesX4OphTqSHbJlUJVBxYSuQj1F7by1TnBjfmXPMkVWe/a
+         Iu3m3k0LswZfbS3vZSMywRkPsQYArihDnUmFaAlH9Mb5bDzCTXzj65gkKQEv8OjR0RaW
+         tk2xX9+JDRLkNBdGasPWY23zteZ+ErxBVxkMgmShPfqCN4VTvlxDrfVRhfkIxXHpvln6
+         H9nocYvLcFCWlp5ljTC3t37lWhVXndOUFUgZlKgZtImqwfm4Lyh6vXhHz85Xpc9D8Mp2
+         HMrch5hd8A5/8XdkknaU0barZxVPKTAysNeuqgUcUpAqqj0ns4VD7Y0p7AhEIYB9G8Or
+         uJHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680184475;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3bDS+NZkCHNjcglyIFTFfiCpIuz6atTUwaUlX4EZFO0=;
+        b=FkKOggJ4PBKz0f44UNOXsgDcjH9pwawQFi3vxR8HmHOEA8nydR8GSsQSzdE+4hoN7u
+         uZrD9qlWx98VfuoKE1IIpGcV3tu2h+ZmSbLbZTUwqnDAiQVVIs7qaIwH/emrSNrA5ZVE
+         JVUXNW/EeawGssGhUxP2CdmdZ/gtmZ0Hi/OwQPHCsWRKay9ZD7vAbdaBK5ycvR5Ng+BV
+         lvdyg+jvll+lOSJcPFd/fR6bkZ+riNAjPXG+86Z5F5RVVSvylqH58ikU9Ijf6JEfhk74
+         RfkBffikVxXRJNRsBw7gcNuh7JSaq4lfltxaoOSXjiky5QC/6XcscaEuq7YGLtFRyZBN
+         yLtA==
+X-Gm-Message-State: AAQBX9c7/nEl5FgOYDT6v1G+hAqtbVmL7mMCKzkSsyfGeQ0ZKgRVc6Oz
+        NA315RJmyjX0yQ4nmLiLZomhfQ==
+X-Google-Smtp-Source: AKy350bscyofmdfis+7MYVvAX6/F+FXHo4829Gg5E4cWInBN+17SyFn1NzTYtImeQD2Xg1dAOF4b9w==
+X-Received: by 2002:a05:6512:985:b0:4e9:605e:b470 with SMTP id w5-20020a056512098500b004e9605eb470mr1821024lft.26.1680184474901;
+        Thu, 30 Mar 2023 06:54:34 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id q28-20020ac2529c000000b004eaf8613bc3sm3525907lfm.284.2023.03.30.06.54.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 06:54:34 -0700 (PDT)
+Message-ID: <7c4af740-1cf5-6b20-4642-8657ef31c9d8@linaro.org>
+Date:   Thu, 30 Mar 2023 15:54:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v4 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
+ PHY
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+References: <cover.1679909245.git.quic_varada@quicinc.com>
+ <4a21defe3320eb11d0e43bc7f02b3168ecefd458.1679909245.git.quic_varada@quicinc.com>
+ <3d49b4b0-587c-f7e5-4122-65b3e9f11583@linaro.org>
+ <20230330071016.GB13508@varda-linux.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230330071016.GB13508@varda-linux.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-2eb1a
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 30 Mar 2023 09:13:33 +0200, Krzysztof Kozlowski wrote:
-> The RX macro codec comes on some platforms in two variants - ADSP
-> and ADSP bypassed - thus the clock-names varies from 3 to 5.  The clocks
-> must vary as well:
+On 30/03/2023 09:10, Varadarajan Narayanan wrote:
+> On Mon, Mar 27, 2023 at 01:02:52PM +0300, Dmitry Baryshkov wrote:
+>> On 27/03/2023 12:30, Varadarajan Narayanan wrote:
+>>> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
+>>>
+>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>> ---
+>>>  Changes in v4:
+>>> 	- Remove constraints not applicable to IPQ9574
+>>>  Changes in v3:
+>>> 	- Update other mandatory fields to accomodate IPQ9574
+>>>  Changes in v2:
+>>> 	- Updated sections missed in previous patch
+>>> ---
+>>>  .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 25 ++++++++++++++++++++--
+>>>  1 file changed, 23 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+>>> index e81a382..aa5b58c 100644
+>>> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+>>> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+>>> @@ -21,6 +21,7 @@ properties:
+>>>      enum:
+>>>        - qcom,ipq6018-qmp-usb3-phy
+>>>        - qcom,ipq8074-qmp-usb3-phy
+>>> +      - qcom,ipq9574-qmp-usb3-phy
+>>>        - qcom,msm8996-qmp-usb3-phy
+>>>        - qcom,msm8998-qmp-usb3-phy
+>>>        - qcom,qcm2290-qmp-usb3-phy
+>>> @@ -122,8 +123,6 @@ required:
+>>>    - clock-names
+>>>    - resets
+>>>    - reset-names
+>>> -  - vdda-phy-supply
+>>> -  - vdda-pll-supply
+>>
+>> Same questions as for the qusb2 PHY. How is the PHY powered?
 > 
->   sc7280-idp.dtb: codec@3200000: clocks: [[202, 8], [202, 7], [203]] is too short
-> 
-> 
-> [...]
+> It is powered by always on regulators. Will create fixed
+> regulators and assign them to these.
 
-Applied to
+always-on where? in DTS? Then it is not really related to this patch...
+or you meant always-on power domains? Yet still device has power supplies.
 
-   broonie/sound.git for-next
-
-Thanks!
-
-[1/1] ASoC: dt-bindings: qcom,lpass-rx-macro: correct minItems for clocks
-      commit: 59257015ac8813d2430988aa01c2f4609a60e8e7
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+Krzysztof
 
