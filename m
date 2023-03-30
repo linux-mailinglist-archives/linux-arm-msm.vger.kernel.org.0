@@ -2,105 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A43126D0997
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 17:31:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A5F16D099C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 17:31:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233080AbjC3Pb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 11:31:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57542 "EHLO
+        id S233055AbjC3Pbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 11:31:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233007AbjC3PbY (ORCPT
+        with ESMTP id S233085AbjC3Pbe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 11:31:24 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D85B8DBE5;
-        Thu, 30 Mar 2023 08:31:09 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32UBUWHj008825;
-        Thu, 30 Mar 2023 15:30:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gCKhnWFEhd2dmMFgaQAZ3b/AKnYi7MqyuXP/Q+DJ4e4=;
- b=WJqQNEcek4grXYYFc/WRA8O0ueoDFpWbZSVsPCF4VeaCSyGgsBwc1PVOHDJ1Suj9cFwg
- xIPFmXCxpdtGrN+Ke2KUSQNKqXYYZAlgbHEQDen3tvHgst/FLJ5kJv4aQk9tEW/3B3yF
- QHQJg2DCDSiVzUMiP3b6h39mzNuM/FRnmY1GmKV+ZwN0qoJ8+g0N6+tRyaFnXgwA5Z5B
- IDFaUMH0DnzVIY/o6XbDN9cgYvUswRIZ2TxdunFDRwCBpLM+s5E9Uf30n08WOYwW4Bpi
- 5j4Esz4dFYdr9DuAYxs5V5CLKTr40PmkYeHqrjxQS4qxKEgZx03uQZ5uH+0JQlw1AJXG Ig== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn9kgrrh7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 15:30:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32UFUWFG012754
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 15:30:32 GMT
-Received: from [10.50.13.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
- 2023 08:30:28 -0700
-Message-ID: <57a4a970-8e50-c0ac-962a-6bb1ebf337f1@quicinc.com>
-Date:   Thu, 30 Mar 2023 21:00:04 +0530
+        Thu, 30 Mar 2023 11:31:34 -0400
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDF0CA0C;
+        Thu, 30 Mar 2023 08:31:18 -0700 (PDT)
+Received: by mail-oo1-f41.google.com with SMTP id l7-20020a4abe07000000b0053e1205c84bso2658268oop.9;
+        Thu, 30 Mar 2023 08:31:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680190278;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fnDjYGmEqOEcX6BV3D3Xoo9yGR2TRiur28JejHxdE3w=;
+        b=pTD4y+W8fF1+NtRJ6Sl80ayFjxvhl97qVLcgqNTvNEpWizlvCdAat9w7UOjnnQgVE6
+         FyNK04O6vyKVGG4gQ0T/X55WooCsqgCTQOQzuOOpdwgR6F0/NXmslBMSVskhyw8e+ilu
+         Hj3nhhnJK8tWHT0xph19tVok6dCW9ytsDC7goRxCPKsZphE4rHValCe6K6uCR7WXLGpI
+         g78jXZoHdEFxHKmoFK0ReN8O8r9AUCssQVzVSO6tcQeGfSX+BOKj/BFVCIsPSd9W1OOw
+         20+k1JVkP3SGrVEYcMIp/IzBuRDEuW9vLDaH3xOxzq7YlsDzKX7BxyywcUhQXAH4dvFs
+         n7og==
+X-Gm-Message-State: AAQBX9do2ssw9/d8katdmfthWgDBLc9h/zbphiVVLWGTpPr45xsrdpyF
+        n9QjG6LF04TUOvRRY9Ew1Q==
+X-Google-Smtp-Source: AKy350abjVDUmX8OWlEBXnmhH2hwWTbeugExUUvnY6Mez9tAhkValHyWVltMFvpiHlfSl2td0DikgQ==
+X-Received: by 2002:a4a:bd8c:0:b0:53c:5f89:eb85 with SMTP id k12-20020a4abd8c000000b0053c5f89eb85mr3363326oop.2.1680190277775;
+        Thu, 30 Mar 2023 08:31:17 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id o79-20020a4a2c52000000b0053b8ae294f3sm9069976ooo.11.2023.03.30.08.31.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 08:31:17 -0700 (PDT)
+Received: (nullmailer pid 2213086 invoked by uid 1000);
+        Thu, 30 Mar 2023 15:31:16 -0000
+Date:   Thu, 30 Mar 2023 10:31:16 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: usb: gpio-sbu-mux: Add OnSemi
+ NB7VPQ904M mux
+Message-ID: <20230330153116.GA2181381-robh@kernel.org>
+References: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
+ <20230321-topic-sagami_dp-v1-1-340c8bce4276@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH V2 0/2] Add few device nodes for IPQ5332 SoC
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <wim@linux-watchdog.org>,
-        <linux@roeck-us.net>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230320104530.30411-1-quic_kathirav@quicinc.com>
-Content-Language: en-US
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <20230320104530.30411-1-quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: z5l5kQf4nWLf5ccqzv--hHIyHOegO5ha
-X-Proofpoint-ORIG-GUID: z5l5kQf4nWLf5ccqzv--hHIyHOegO5ha
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-30_09,2023-03-30_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0 spamscore=0
- clxscore=1015 mlxlogscore=719 lowpriorityscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303300123
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230321-topic-sagami_dp-v1-1-340c8bce4276@linaro.org>
+X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Mar 21, 2023 at 11:12:28PM +0100, Konrad Dybcio wrote:
+> The OnSemi NB7VPQ904M Type-C DP altmode redriver provides SBU signals
+> that can be used in with the gpio-sbu-mux driver. Document it.
+> 
+> Note that the -mux suffix is there to indicate that the gpio-sbu-mux
+> driver interacts with the mux part of this otherwise quite sophisticated
+> chip, leaving the "onnn,nb7vpq904m" compatible free for when a proper
+> driver taking care of all of the chip's capabilities is introduced.
 
-On 3/20/2023 4:15 PM, Kathiravan T wrote:
-> This series adds the support for QUP peripherals, PRNG, WDT for IPQ5332
-> SoC.
->
-> This series depends on the below patch, due to the node ordering
-> https://lore.kernel.org/linux-arm-msm/20230217083308.12017-6-quic_kathirav@quicinc.com/#t
+You should define a proper and complete binding. If you want to bind the 
+gpio-sbu-mux driver to it now until you have a proper driver then that's 
+fine. When you have such a driver, then you drop the compatible from the 
+gpio-sbu-mux driver.
 
+Note that having the fallback "gpio-sbu-mux" is somewhat problematic 
+because the kernel has no mechanism to ensure you bind the most specific 
+driver. For that to happen, it would have to support (automatically) 
+unbinding one driver and binding to the more specific driver since one 
+driver could be built-in and the other a module.
 
-Gentle Reminder...
-
-
->
-> Kathiravan T (2):
->    dt-bindings: watchdog: qcom-wdt: add qcom,apss-wdt-ipq5332 compatible
->    arm64: dts: qcom: ipq5332: add few device nodes
->
->   .../bindings/watchdog/qcom-wdt.yaml           |  1 +
->   arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts   | 14 ++++
->   arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 67 +++++++++++++++++++
->   3 files changed, 82 insertions(+)
->
+Rob
