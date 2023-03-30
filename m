@@ -2,113 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D039F6D005A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 11:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97CD26D0084
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:02:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229923AbjC3J6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 05:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32872 "EHLO
+        id S229898AbjC3KCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 06:02:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjC3J6X (ORCPT
+        with ESMTP id S230181AbjC3KCT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 05:58:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC0A4AB;
-        Thu, 30 Mar 2023 02:58:22 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32U8wVkn031996;
-        Thu, 30 Mar 2023 09:58:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+5MOdgd+F9DOFkIAvbc9XGeePiUbARDP9UnLP6YhKxo=;
- b=dLFkDMHdHk9lCu8W//3UHsxeazPTdmqBxNuSV01GXgjSJMCe4RRrDMfWSBlyjQ/AEQPO
- yn34ZcMdOIoBgefYyH1MfAHNz0dXchrMLLdbTmEExqdDp79YOGthfWLmjwxHYfezEoz6
- q15ccFVa2ao813qw7NyBWTzzBGxlwZ1b3W32yha8HK1YnGL0qODteDCz5NI0QXrgXwt7
- CpjYfKEWxiC8LSvXmmN0BMHr0eWd4selofp6eLienXy0DudIK+BjJeBQ9GDh/MVLufiH
- lqhhjHfIq51alR2TZbiBeEJ2b1w2tZ4Kx09dcyPlP9wkTmPq1hw1aqg08zug5BMjBxu+ Xw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn7by846f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 09:58:16 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32U9wF1w001527
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 09:58:15 GMT
-Received: from [10.201.3.182] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
- 2023 02:58:11 -0700
-Message-ID: <7da90524-37b3-0168-6326-a0a46b287736@quicinc.com>
-Date:   Thu, 30 Mar 2023 15:28:07 +0530
+        Thu, 30 Mar 2023 06:02:19 -0400
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B038A54
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:02:00 -0700 (PDT)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5445009c26bso344507227b3.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680170519;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=8iTlDRktk7xPf3zd3cdhXI99KacYIZjktSgd38eWGh4=;
+        b=VBUDvaY+gQMis+XrqLFcoRH9kL39smZkNiSqzBsf6noF9V3KOhTIHKgXpbkSBuk6e/
+         Exemc3VKrlJFmzUriNDOL+l4iNhEPk92A5pJDPNJoPC6QtDrBua09JY6BN6WyrD3hl3Y
+         cYVlJZd04rFvdBe5lCttihIXzt/il9BFiwl2Qcw804KmZGfwqtOSR0ox3PAtfph+7Q36
+         FsVGVuJUEQ/weeOvJlbfd+rYLz0GzAL/zb/ysE8sThC99ioc4oBmHMB1yvl8bUFhEbv4
+         JOqywAsh4E+UFMi65bJK9JXFuFOZHypMdSi48ruY6IV5TN3h29TC2v2G5hAc23oufQg8
+         xXTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680170519;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8iTlDRktk7xPf3zd3cdhXI99KacYIZjktSgd38eWGh4=;
+        b=MzoNjJUUM72FJwOBdFS/lbFX9qNNtrBq8d3/m0NucxAgxwVVC8+aFJ+aN8Ib+Vowv0
+         FdBN96P9YSoowhkVfeG5xPX3sk0f3IH5GSO/wa0izp4xBHW/dCXpyMvlLNgcqQqQEXtV
+         LhvToqRU/mq9S2No8tzxQUBPbbieYnoHHOfNjNb6VYDi1N7glOtoARxQRF6zg37hhDRq
+         7P+dyNBaljjxtct18mh58yu47jBGmD4eoGFULVUxeAGL9+fHfZAvV4YpSWIl9WbStoCy
+         ij762g0BR9hBbC+nn7oOx3zg/mNURa1wKsOz2CEw21oBDO0c8XCTfYLA2T4c+balKC0B
+         uAGg==
+X-Gm-Message-State: AAQBX9drL0e3GbkdFkWsdU5287YvGpD1gzHTZPxCt2W/RDm64mYPqHOA
+        e4WmEAdy+SFONqyXq9iVqBFjgCx8JggWPmuXk9fd2g==
+X-Google-Smtp-Source: AKy350YsrGQ5f85kNh7qDhc8gU+uPe2w56kbUSbAgFRAHEIfvV4RYH3ZsM8gUtI2flmvhIgLAG6NcUHhA8RaF92lwu4=
+X-Received: by 2002:a81:ae4f:0:b0:545:ed8e:f4f6 with SMTP id
+ g15-20020a81ae4f000000b00545ed8ef4f6mr7079275ywk.5.1680170519380; Thu, 30 Mar
+ 2023 03:01:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] net: qrtr: Do not do DEL_SERVER broadcast after
- DEL_CLIENT
-Content-Language: en-US
-To:     Jakub Kicinski <kuba@kernel.org>
-CC:     <mani@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
- <20230329213216.7b0447e9@kernel.org>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <20230329213216.7b0447e9@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZS0G6pDsMpXHsRe609Ow0IiOUpDmzetz
-X-Proofpoint-GUID: ZS0G6pDsMpXHsRe609Ow0IiOUpDmzetz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-30_04,2023-03-30_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 clxscore=1015
- adultscore=0 mlxlogscore=998 malwarescore=0 mlxscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303300080
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20230330074150.7637-1-tzimmermann@suse.de> <20230330074150.7637-5-tzimmermann@suse.de>
+In-Reply-To: <20230330074150.7637-5-tzimmermann@suse.de>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 30 Mar 2023 13:01:48 +0300
+Message-ID: <CAA8EJpqpsoDDE2RvPHmQM=YDFFxHPW2YENNZzL8We78aQo_NPA@mail.gmail.com>
+Subject: Re: [PATCH 4/6] drm/msm: Remove fbdev from struct msm_drm_private
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        javierm@redhat.com, airlied@gmail.com, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 30 Mar 2023 at 10:41, Thomas Zimmermann <tzimmermann@suse.de> wrote:
+>
+> The DRM device stores a pointer to the fbdev helper. Remove struct
+> msm_drm_private.fbdev, which contains the same value. No functional
+> changes.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/gpu/drm/msm/msm_debugfs.c | 5 ++---
+>  drivers/gpu/drm/msm/msm_drv.c     | 4 ++--
+>  drivers/gpu/drm/msm/msm_drv.h     | 2 --
+>  drivers/gpu/drm/msm/msm_fbdev.c   | 8 ++------
+>  4 files changed, 6 insertions(+), 13 deletions(-)
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 3/30/2023 10:02 AM, Jakub Kicinski wrote:
-> On Wed, 29 Mar 2023 18:37:30 +0530 Sricharan R wrote:
->> When the qrtr socket is released, qrtr_port_remove gets called, which
->> broadcasts a DEL_CLIENT. After this DEL_SERVER is also additionally
->> broadcasted, which becomes NOP, but triggers the below error msg.
->>
->> "failed while handling packet from 2:-2", since remote node already
->> acted upon on receiving the DEL_CLIENT, once again when it receives
->> the DEL_SERVER, it returns -ENOENT.
->>
->> Fixing it by not sending a 'DEL_SERVER' to remote when a 'DEL_CLIENT'
->> was sent for that port.
-> 
-> You use the word "fix" so please add a Fixes tag.
-> 
-
-  ok
-
->> Signed-off-by: Ram Kumar D <quic_ramd@quicinc.com>
->> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> 
-> Spell out full names, please.
-
-  ok
-
-Regards,
-  Sricharan
+-- 
+With best wishes
+Dmitry
