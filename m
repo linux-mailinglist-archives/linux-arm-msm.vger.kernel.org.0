@@ -2,83 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8983A6D028B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3ABA6D02B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231241AbjC3LHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 07:07:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
+        id S231548AbjC3LNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 07:13:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229916AbjC3LHQ (ORCPT
+        with ESMTP id S231400AbjC3LNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 07:07:16 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84286A71
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:06:55 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id h11so17031944lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:06:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680174413;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9kFJmqVtwWUVcG0Lm77E8KR/5HB12mJDwmxwNxlca4Y=;
-        b=QFJNu3+0CjAQw1iofhkT/VGzYC5JtBTXOv1piZxLxkvwohLbO7ffQXvlBJV5/myadj
-         Fhzaxxn3qOPC09GRSp/56AvLmXbNSJxYvmqd8x874qBZE+RhW948/qPsY6V1UKLse056
-         1fcu/APUG+3/1TQ6lpSn39vbhMmNrO5lNP/0RYadmKlP0YXisDmlNdntxOcNGTqZQkr3
-         W5fjBxZGI5nAAofkKIveAelKKFj8y3KSRwBn0SiCZSVm6l5dG0F98DQVzb1WwSFMtsS/
-         fEeB6wyVMjIt6750T/pp7bdMilL/U/Wayoa7tKx12h3goMPRiTcLnvPmJSfpIWxxrejC
-         RaUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680174413;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9kFJmqVtwWUVcG0Lm77E8KR/5HB12mJDwmxwNxlca4Y=;
-        b=LrEADVC6YZbheoKG21c3evu7BtrzAWGec9ZH3cfSJPW1Bodco54RB0dFDtD1uLZ6TE
-         rf2UuSnbp/dDiVUMJottXHyFDngf9AwajGrDw6Mmj7AYsFGmOODRER2hKTgBYFaOjwOc
-         XKBRSHp5JhHG7pJsGtFeGVVhMPidUzEgJ9JLKvEl87XZqv398HVphoDoGxO7nl5Afsil
-         OMS0G6oI4X8FXnnlBJGeTavf0uA2KiSltywh1QEKW4x1EPhPhCA5+TtypLDcbcbVDTt8
-         bsGGkoiTX0xFLw6p8iFHlyMpPNmpHy1NktWYMtCemfCxKFrMf+WPEVPKW1TYCXzXVLAD
-         syFw==
-X-Gm-Message-State: AAQBX9cxhYYGXyWFT6LIv3aqb2cc0XxjdtRorXLCJqGC7Uow4svQFXpp
-        L3n/8haG2VjizhIMODff823+wg==
-X-Google-Smtp-Source: AKy350ZOwZSifMJ0COgNwwfI8Ff4NZPvJrvXq9pF7O3gWwfbrZxZjTu20qbb3ttl1T+NHD9CSza3rw==
-X-Received: by 2002:ac2:5a4c:0:b0:4d5:a689:7580 with SMTP id r12-20020ac25a4c000000b004d5a6897580mr6377686lfn.47.1680174413683;
-        Thu, 30 Mar 2023 04:06:53 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id t7-20020a19ad07000000b004e8451948desm5835252lfc.227.2023.03.30.04.06.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 04:06:53 -0700 (PDT)
-Message-ID: <34470797-493c-d99b-4d0c-0f9381c5b7c1@linaro.org>
-Date:   Thu, 30 Mar 2023 13:06:51 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [RFC PATCH 0/3] drm/msm/a5xx: scale MX following the frequency
- changes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 30 Mar 2023 07:13:35 -0400
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9473040DC;
+        Thu, 30 Mar 2023 04:13:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by sin.source.kernel.org (Postfix) with ESMTPS id EE50FCE2982;
+        Thu, 30 Mar 2023 11:13:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385C1C433EF;
+        Thu, 30 Mar 2023 11:13:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680174811;
+        bh=ukBEhWrw/ajFJGkVU2++82d/hl2/pJctfu+fiaMHW7I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=a7LcQIvbyx7HpDMExhi0iZUT+YkyF6a8Ahe17BEHusojPX7S8t7ZhOnRBnYTgF6+3
+         d91W6s+c8uv75MVWCsIjmTI8WKR63Ki65wdRLalRWD9Kuxr34MMMdfxd2NoBcy7K05
+         TS5JyobUdu8koooM2vi/ffjuEbrVQESlPWeOg1YInAsImoUx7co19tEbRgEayYgUjE
+         XyL8QwH0cxRH0Ldxp48VFEQKA2U/vRTV8MgzghQ6Jh2irGTXeZ/KY7KQwAIBdfOY0F
+         WWKH8Tv94CrI/MqWMNV/Q6PRQWwCwYfUOsbhWbx3HGdBmnGGZsQ/3sC1LTM8+iydCu
+         GBGf3QK/3bHzw==
+Date:   Thu, 30 Mar 2023 12:13:27 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Takashi Iwai <tiwai@suse.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Patrick Lai <quic_plai@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>
+Subject: Re: [PATCH v3 07/10] ASoC: dt-bindings: qcom,lpass-va-macro: Add
+ missing NPL clock
+Message-ID: <ZCVu11dHay8ktiRl@sirena.org.uk>
+References: <20230327132254.147975-1-krzysztof.kozlowski@linaro.org>
+ <20230327132254.147975-8-krzysztof.kozlowski@linaro.org>
+ <3bb3f40f-39da-2fe6-f5ca-2848a9e5c49b@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="IsDYuCYOQLYYOx2V"
+Content-Disposition: inline
+In-Reply-To: <3bb3f40f-39da-2fe6-f5ca-2848a9e5c49b@linaro.org>
+X-Cookie: Single tasking: Just Say No.
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,29 +70,31 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--IsDYuCYOQLYYOx2V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 30.03.2023 00:24, Dmitry Baryshkov wrote:
-> Konrad brought up the topic of scaling the MX domain according to the
-> OPP changes. Here is my RFC for this functionality. I post it as an RFC
-> for two reasons:
-> 
-> 1) I'm not sure that we should scale MX if we are not scaling main
-> voltage following the CPR3
-It should be ok, however..
-> 
-[...]
+On Thu, Mar 30, 2023 at 08:59:12AM +0200, Krzysztof Kozlowski wrote:
 
-> Dmitry Baryshkov (3):
->   dt-bindings: display/msm/gpu: allow specifying MX domain A5xx
->   drm/msm/a5xx: scale MX domain following the frequncy changes
-This is a stopgap solution, CPR is a child of MX.
+> It seems you applied v2, not v3, so this patch is missing and the
+> binding needs fixes.
 
-Konrad
->   arm64: dts: qcom: specify power domains for the GPU
-> 
->  .../devicetree/bindings/display/msm/gpu.yaml  |  9 +++-
->  arch/arm64/boot/dts/qcom/msm8996.dtsi         | 14 ++++-
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c         | 52 +++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.h         |  3 ++
->  4 files changed, 76 insertions(+), 2 deletions(-)
-> 
+I'd queued v2 already when you sent v3, and you're sending a lot
+of serieses right now.
+
+--IsDYuCYOQLYYOx2V
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQlbtMACgkQJNaLcl1U
+h9AXegf/RDW+9ZdRUx8ufviZmnmZibB7wVYT4S9MOFBHzXu5Xs9hFd60Nl2uhGsi
+VloXjO2lGlAuStck5I02NIMUNC1kEP/YExTGWadOY92CggJTGsUxhf4OGPKh5ib4
+bDn37PhNH6IRdcH/rNTSyLmzxqWkrPt610U7gdgsLAjB6JYIT2lREX6ZqW3Ssizw
+Qvq7IUXtcrs7DFEahV3ipkhBHB+RpZz++k0kWS42IlQo4Ij8pGanusKT5f5gzPoz
+rYEEkTmIZWyUzUPkBa22IE7ROpvkyc+dCaYfAyLhBOBBq7TVn6JfQErggPhridD/
+/S7VdzM5YXqVgwVHI/1nwAnvoumvNQ==
+=NJ5a
+-----END PGP SIGNATURE-----
+
+--IsDYuCYOQLYYOx2V--
