@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3F666D0B50
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 18:32:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC576D0B5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 18:33:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230355AbjC3QcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 12:32:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36556 "EHLO
+        id S231559AbjC3Qde (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 12:33:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231308AbjC3QcL (ORCPT
+        with ESMTP id S231482AbjC3Qdb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 12:32:11 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED0DCC2D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 09:32:09 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id h17so19691629wrt.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 09:32:09 -0700 (PDT)
+        Thu, 30 Mar 2023 12:33:31 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 664D9C16D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 09:33:29 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id h17so19695832wrt.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 09:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680193927;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1680194008;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=J5iqRDNOsfYjFAg7++f2WTswDCTx1cvQAgPwdrnyaM0=;
-        b=pptlaseNEQzrBWz16Lz87z6I6YeTtAadmZrZvMD2RsPgoAU4pcITcbjV7LXcQmKKH7
-         2a+sajzdUSMDJFBtDY3hkTb4nOUvTSINYca55xI5ECRv9AbLHEP6HIMQlo2vvPKXpfp5
-         e589BpuiC1gHnyLQohuywxLiGzscwRAZGv4WpQItE2K6GQh7GBK4VC9Pwv+E0ls4Z1gA
-         ESD0IX9+Pjrd23yjPeWAWgyNhcv5Q2z7JauQmQbnnlxbvgnYeu+e1WS/yTN7CvfW1ieq
-         q+GgA2YFavr+WZ64VDwd23/40PjY4RcrgF+0KPB0SgJj3FC1ZIQzpjTQA9eoBt1qrSBH
-         FFeg==
+        bh=uTAy36BLiNsY+GkgrBrUwBdOqLgTRdyYQkO3DlArkGg=;
+        b=ykj9ItrhNGUbv3CLkEnrHIDWenINsrAnNwTGgbRlrB7UtpwbpGwUJG3pPRS0Q3Gjsq
+         C0za0JX1ykye5t24XjVKO+IxqsIgdWPisYLm0N3ihpp4+IEzA49R7J/xoRALzmX1oQG7
+         LKKTPxPyFWJUnxsDF1aGcfKxEwiWlHRNle9zG2xIXb4VumSEuG00LzhyJaeDmmu1APrA
+         l4h0dSuOwE+DjnK7DNPSX+x+cW0zXAkxsJZ5PMym8eb7s5rnF6mRNzFCCQoii+JKEjTI
+         qpPNAm4oGkElOk/1g1b+gSN4eocx1J8w1cc9cds4XalHSK0cxhMyMLq9XdwuIKHE4Lj1
+         J5Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680193927;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1680194008;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J5iqRDNOsfYjFAg7++f2WTswDCTx1cvQAgPwdrnyaM0=;
-        b=3VWTORp3Pm0jY05IBZOl9vlklVqA+MiFnzG/i5hrHWGlISfbTCTryE4tLOuok8uae0
-         6dng1S4f2MunQ4ITR1119FsZisG4Lnx9jvunBLxpsXskOzKq3UCKm+YfAKT5Nomt3+Wc
-         AEf874XSpI9EJhfnK+RYi5kWKrKqJrrpIHPEyPDw5PsRcZdFarjXm/gyCIB2Eqpckc7O
-         ngQqvKXMHAkBi+/LBcKbwmr/Bu1agkKWa/ypJYAUxssbMLE+VMOw0S6e9NMyVuFwqcMh
-         24lukQCZwZcqf/0UYkaSET94BbFV9DVaoajsTo9nS8weMQbfwzal5UA0w0SVKqFUQ4oW
-         NGGg==
-X-Gm-Message-State: AAQBX9fiMiUwlb5IOhbMVAND+Ze7/9IqBRJSaALWWoI58pKWfEGvewaa
-        oOidJDpC1cquHp4NWgZcaM+u8w==
-X-Google-Smtp-Source: AKy350Z17UR+1JsQDt8ClL02GrGiOOfkHe+agCOzAElOLfdYL360rlfU3YMntQH5eQJlI5N/ETaI+w==
-X-Received: by 2002:adf:f74d:0:b0:2c7:1e00:d514 with SMTP id z13-20020adff74d000000b002c71e00d514mr16994490wrp.38.1680193927453;
-        Thu, 30 Mar 2023 09:32:07 -0700 (PDT)
+        bh=uTAy36BLiNsY+GkgrBrUwBdOqLgTRdyYQkO3DlArkGg=;
+        b=022dBWI3Mp+jto8lTdVTpc2RqiScaSyZ8M+4QLbdsx5wGMKCHM7bo7Bycf3fV/NpEW
+         tJUfKV3KTSYsPrW2b5lGFJs1B0LI1QZ8OW1B9Db5HPpjLypkLpzes5wLqFT/0G6sZk4f
+         SJRBICvR76vlqY3F8O64MdZJZYTwbTXvLWe1esfM0++Omv/JazI72ARUrUf7/Rw/BGMM
+         MH/UdXQhDybbq0JcPSyGNkn0nfx5e1RIo7/7oQ6R8Q12bdoNDRlnpa/ogXfR2PjW6i1p
+         2aJlBofsEBb/Yt+aGjlARVhHD3MvxUC305VCn4B2Hr9Bh+KuDYFmX28zZFqBnkOrNOOD
+         6GPA==
+X-Gm-Message-State: AAQBX9dRO5Smen7j6/mdFvGcVDla146Kdx188FSwmuqYbuK8a48P413v
+        qiPy/YCqgKM54R7S5VaksJQwEw==
+X-Google-Smtp-Source: AKy350bcRapicwm5w7+VNlWB7IP7tnaAHFf7ULeuGrQbhL5+YP/wpni6b+q+nRFmJNuZzpji+lzLxQ==
+X-Received: by 2002:adf:e4cb:0:b0:2ce:bd2e:1fea with SMTP id v11-20020adfe4cb000000b002cebd2e1feamr19906723wrm.26.1680194007864;
+        Thu, 30 Mar 2023 09:33:27 -0700 (PDT)
 Received: from [172.20.10.2] ([37.166.66.243])
-        by smtp.gmail.com with ESMTPSA id r10-20020adfce8a000000b002cefcac0c62sm33595242wrn.9.2023.03.30.09.32.05
+        by smtp.gmail.com with ESMTPSA id a4-20020adffb84000000b002d322b9a7f5sm33209463wrr.88.2023.03.30.09.33.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 09:32:07 -0700 (PDT)
-Message-ID: <be2c7c24-de19-d14a-639c-657a1ed32573@linaro.org>
-Date:   Thu, 30 Mar 2023 18:32:04 +0200
+        Thu, 30 Mar 2023 09:33:27 -0700 (PDT)
+Message-ID: <d099f038-7c73-9765-fa4e-c245bf8d0951@linaro.org>
+Date:   Thu, 30 Mar 2023 18:33:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8350-nagara: Unify status
- property placement
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8350-sagami: Add PMIC GLINK
+Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -67,10 +67,9 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
- <20230321-topic-sagami_dp-v1-4-340c8bce4276@linaro.org>
-Content-Language: en-GB
+ <20230321-topic-sagami_dp-v1-2-340c8bce4276@linaro.org>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20230321-topic-sagami_dp-v1-4-340c8bce4276@linaro.org>
+In-Reply-To: <20230321-topic-sagami_dp-v1-2-340c8bce4276@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -84,145 +83,23 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Le 21/03/2023 à 23:12, Konrad Dybcio a écrit :
-> As we're heading towards getting the status property last everywhere,
-> take care of it for SM8350 SONY Sagami.
+> Sagami devices, like other 8350s, uses PMIC GLINK for various
+> functionality around battery, charging, TCPM etc. Enable it.
+> 
+> Worth noting:
+> My USB mouse is unimpressed when connected to the device via a
+> non-powered USB-C dock. Microsoft HD-500 dock refuses to estalish a
+> PD handshake.
+
+That's interesting... perhaps UCSI is required here ?
+
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 30 ++++++++++------------
->   1 file changed, 14 insertions(+), 16 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> index b2baa81baf5e..95b1ba4ce470 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-> @@ -189,8 +189,8 @@ vph_pwr: vph-pwr-regulator {
->   };
->   
->   &adsp {
-> -	status = "okay";
->   	firmware-name = "qcom/sm8350/Sony/sagami/adsp.mbn";
-> +	status = "okay";
->   };
->   
->   &apps_rsc {
-> @@ -542,27 +542,27 @@ pmr735a_l7: ldo7 {
->   };
->   
->   &cdsp {
-> -	status = "okay";
->   	firmware-name = "qcom/sm8350/Sony/sagami/cdsp.mbn";
-> +	status = "okay";
->   };
->   
->   &i2c1 {
-> -	status = "okay";
->   	clock-frequency = <1000000>;
-> +	status = "okay";
->   
->   	/* Some subset of SONY IMX663 camera sensor @ 38 */
->   };
->   
->   &i2c4 {
-> -	status = "okay";
->   	clock-frequency = <400000>;
-> +	status = "okay";
->   
->   	/* Samsung Touchscreen (needs I2C GPI DMA) @ 48 */
->   };
->   
->   &i2c11 {
-> -	status = "okay";
->   	clock-frequency = <1000000>;
-> +	status = "okay";
->   
->   	cs35l41_l: speaker-amp@40 {
->   		compatible = "cirrus,cs35l41";
-> @@ -596,31 +596,31 @@ cs35l41_r: speaker-amp@41 {
->   };
->   
->   &i2c12 {
-> -	status = "okay";
->   	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
->   	clock-frequency = <100000>;
-> +	status = "okay";
->   
->   	/* AMS TCS3490 RGB+IR color sensor @ 72 */
->   };
->   
->   &i2c13 {
-> -	status = "okay";
->   	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
->   	clock-frequency = <100000>;
-> +	status = "okay";
->   
->   	/* Qualcomm PM8008i/PM8008j (?) @ 8, 9, c, d */
->   };
->   
->   &i2c15 {
-> -	status = "okay";
->   	clock-frequency = <400000>;
-> +	status = "okay";
->   
->   	/* NXP SN1X0 NFC @ 28 */
->   };
->   
->   &i2c17 {
-> -	status = "okay";
->   	clock-frequency = <1000000>;
-> +	status = "okay";
->   
->   	/* Cirrus Logic CS40L25A boosted haptics driver @ 40 */
->   };
-> @@ -652,8 +652,8 @@ mdss_dp_altmode: endpoint {
->   };
->   
->   &mpss {
-> -	status = "okay";
->   	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
-> +	status = "okay";
->   };
->   
->   &pm8350_gpios {
-> @@ -719,8 +719,8 @@ &pon_pwrkey {
->   };
->   
->   &pon_resin {
-> -	status = "okay";
->   	linux,code = <KEY_VOLUMEUP>;
-> +	status = "okay";
->   };
->   
->   &qupv3_id_0 {
-> @@ -748,8 +748,8 @@ &sdhc_2 {
->   };
->   
->   &slpi {
-> -	status = "okay";
->   	firmware-name = "qcom/sm8350/Sony/sagami/slpi.mbn";
-> +	status = "okay";
->   };
->   
->   &spi14 {
-> @@ -1038,16 +1038,14 @@ usb_1_dwc3_ss: endpoint {
->   };
->   
->   &usb_1_hsphy {
-> -	status = "okay";
-> -
->   	vdda-pll-supply = <&pm8350_l5>;
->   	vdda18-supply = <&pm8350c_l1>;
->   	vdda33-supply = <&pm8350_l2>;
-> +	status = "okay";
->   };
->   
->   &usb_1_qmpphy {
-> -	status = "okay";
-> -
->   	vdda-phy-supply = <&pm8350_l6>;
->   	vdda-pll-supply = <&pm8350_l1>;
-> +	status = "okay";
->   };
+>   .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 60 +++++++++++++++++++++-
+>   1 file changed, 59 insertions(+), 1 deletion(-)
 > 
 
+<snip>
+Anyway:
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
