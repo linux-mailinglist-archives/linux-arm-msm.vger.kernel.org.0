@@ -2,55 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 097BF6D107C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 23:04:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE8AF6D1090
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 23:12:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbjC3VEH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 17:04:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33768 "EHLO
+        id S229625AbjC3VLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 17:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230005AbjC3VEF (ORCPT
+        with ESMTP id S230211AbjC3VLd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 17:04:05 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DCCEF8E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:04:01 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1phzQw-00028k-Oi; Thu, 30 Mar 2023 23:03:46 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1phzQu-007qTM-Fc; Thu, 30 Mar 2023 23:03:44 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1phzQt-009HrC-R7; Thu, 30 Mar 2023 23:03:43 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mark Brown <broonie@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 2/2] spi: qup.c: Convert to platform remove callback returning void
-Date:   Thu, 30 Mar 2023 23:03:41 +0200
-Message-Id: <20230330210341.2459548-3-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230330210341.2459548-1-u.kleine-koenig@pengutronix.de>
-References: <20230330210341.2459548-1-u.kleine-koenig@pengutronix.de>
+        Thu, 30 Mar 2023 17:11:33 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030DFE072
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:11:32 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso21174212pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:11:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1680210691;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ts/+7LQ/a90MvbSUsF1wWZw6aBmGhxvSMeOp9K0n6B4=;
+        b=OA+qXoJPXeplznwBkYYzDfj3rlnWfYKi9SSiS1c3UEoZPKGOu/MfTcJGHYlitYfJij
+         Kx9b6usnN3Ay4rlLsCO9CMxZorkqibXar+hxVnABKEPiPL+gVXPLNKz8UiAGp3bVw2Kx
+         4i4xt0Rx9F6lk44/U++iK1hflPnxClyGgeuzs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680210691;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ts/+7LQ/a90MvbSUsF1wWZw6aBmGhxvSMeOp9K0n6B4=;
+        b=5VqhFwuZYXkoxT9JQ9aiYKs6AlVL826Oy2BcGwvCsVCAzAGUC4wKU0/DedxARuB8UD
+         g+v84g4ieCMbAFBH3vMI8b6Qkx4aoZ9eGDAKDKD2Ad+EASAg87qci6F5RFnHy0EK9aZq
+         s/h78QEl9lH/UBeFb1bFcNIlckf2rzp5WN2TndedDWIuo84Or1GnHEsQ/KnTn72qoFu2
+         YrNOOFCHPZcVGKCepnNd7udNLisZ8YCdhg5dQ6zF7MjTomyERlz0AMvQdEfTQ3p8LdEE
+         b0QcpwvO+/Y9mrlIv32FAXA1aaXWdGD7k20Aruv8c3HaE6Pj+BdV4f+2UycsxOQz7Z1i
+         aPbA==
+X-Gm-Message-State: AAQBX9duwF/d4ZH4MBEvl+zHYTvQ7OyrSHIX3K3jgmtyXYK+SUdtF/ip
+        t9bR/X/7YHjveUQB/67lAvyGRw==
+X-Google-Smtp-Source: AKy350aKbPAA/imN45S5d9F5KqLZwNk8NkRnjAxPmVE/Yxy548Sm0c6CEhdWYp6rXcp9Q3vwR/VLTw==
+X-Received: by 2002:a17:903:70f:b0:19e:bc8e:6421 with SMTP id kk15-20020a170903070f00b0019ebc8e6421mr20352821plb.47.1680210691365;
+        Thu, 30 Mar 2023 14:11:31 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:ba73:62df:d346:fc37])
+        by smtp.gmail.com with ESMTPSA id c20-20020a170902b69400b0019f1027f88bsm123897pls.307.2023.03.30.14.11.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 14:11:30 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] MAINTAINERS: qcom: Add reviewer for Qualcomm Chromebooks
+Date:   Thu, 30 Mar 2023 14:11:00 -0700
+Message-Id: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1743; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=4ORL/RE427evmh2kg1ELKEpHyPJUuSu3AoBaMjDdcSc=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkJfkq5c26xYNivbAWrdqVOkoPNDWiLyAo9vwpq lLCxtItF9CJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZCX5KgAKCRCPgPtYfRL+ Tr6ICACnpC2pTlrIoNeVVpYgETvvSiYyw2MJXkan4yp5ru2NiWK4JVyeRYCp3KOEX0FNCoDWP9D f5w1JWRh+QSJlGnfNjOIkz3y0tRWrA8LGmGdLrxP4jGaoXQ+82yJbDOqtCpAgs5KjsZGXBvqf3C F+p/WqQaxqp9zYAQg4/tIRbdb2qU96qQqk+jkTZUiPIqs0Gzn7OEdjIZZYAw93J8MbRwmyuqsD6 nv44IoRt6kOyHYt5QCnQ+2g+5sX1Frx+jXiVt5CB5MtrI9/KmshVFbuKJfpYomkGMQUcJOQ+6ae uWrxNpPd5d9Il6Qe1g5ORl0fE6Xidb+OR1tNIkI5CEwCMOTf
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,53 +70,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+Developers on the ChromeOS team generally want to be notified to
+review changes that affect Chromebook device tree files. While we
+could individually add developers, the set of developers and the time
+each one has available to review patches will change over time. Let's
+try adding a group list as a reviewer and see if that's an effective
+way to manage things.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+A few notes:
+* Though this email address is actually backed by a mailing list, I'm
+  adding it as "R"eviewer and not "L"ist since it's not a publicly
+  readable mailing list and it's intended just to have a few people on
+  it. This also hopefully conveys a little more responisbility for the
+  people that are part of this group.
+* I've added all sc7180 and sc7280 files here. At the moment I'm not
+  aware of any non-Chromebooks being supported that use these
+  chips. If later something shows up then we can try to narrow down.
+* I've added "sdm845-cheza" to this list but not the rest of
+  "sdm845". Cheza never shipped but some developers still find the old
+  developer boards useful and thus it continues to get minimal
+  maintenance. Most sdm845 device tree work, however, seems to be for
+  non-Chromebooks.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
- drivers/spi/spi-qup.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index 205e54f157b4..0b97c8a9372f 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1271,7 +1271,7 @@ static int spi_qup_resume(struct device *device)
- }
- #endif /* CONFIG_PM_SLEEP */
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8d5bc223f305..b4e9c5bda234 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2604,6 +2604,12 @@ F:	include/dt-bindings/*/qcom*
+ F:	include/linux/*/qcom*
+ F:	include/linux/soc/qcom/
  
--static int spi_qup_remove(struct platform_device *pdev)
-+static void spi_qup_remove(struct platform_device *pdev)
- {
- 	struct spi_master *master = dev_get_drvdata(&pdev->dev);
- 	struct spi_qup *controller = spi_master_get_devdata(master);
-@@ -1296,8 +1296,6 @@ static int spi_qup_remove(struct platform_device *pdev)
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
--
--	return 0;
- }
- 
- static const struct of_device_id spi_qup_dt_match[] = {
-@@ -1322,7 +1320,7 @@ static struct platform_driver spi_qup_driver = {
- 		.of_match_table = spi_qup_dt_match,
- 	},
- 	.probe = spi_qup_probe,
--	.remove = spi_qup_remove,
-+	.remove_new = spi_qup_remove,
- };
- module_platform_driver(spi_qup_driver);
- 
++ARM/QUALCOMM CHROMEBOOK SUPPORT
++R:	cros-qcom-dts-watchers@chromium.org
++F:	arch/arm64/boot/dts/qcom/sc7180*
++F:	arch/arm64/boot/dts/qcom/sc7280*
++F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
++
+ ARM/RDA MICRO ARCHITECTURE
+ M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
 -- 
-2.39.2
+2.40.0.348.gf938b09366-goog
 
