@@ -2,171 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 930BE6D04FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:40:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 700B06D050C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:42:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230355AbjC3MkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 08:40:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35534 "EHLO
+        id S231397AbjC3MmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 08:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230427AbjC3MkF (ORCPT
+        with ESMTP id S229682AbjC3MmO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 08:40:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 526A07D83;
-        Thu, 30 Mar 2023 05:40:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D971462040;
-        Thu, 30 Mar 2023 12:40:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E930C433D2;
-        Thu, 30 Mar 2023 12:40:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680180003;
-        bh=ZA55vgJCegp65j39BBfbZOuuoolCKnWNWh0gaLJ9iRQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PfkIDIPUwSVC1XTZlRntNwS3iELVw2E5HW+hM12xE6zgIHI0zS4Fuxk8IjclaHkwC
-         EnfYwqb1hJHinYk44kVj5jG1xB/82GwdZzW8f3fPIQFxkLoGzfkNhaPngtIk+mtHxK
-         PKw+1aSdq2l1jMhUHiL3qBXee2G4kF+g/+bPKuvROkMQEAR4RMpTI7cMmOEPwNPJZp
-         fMsvAi65q+9N9+8rJMICh0kT+Y8ywwLwg9m1Z01FKESPCltWhmVM1lk/OUzkLL0RcW
-         pmE4RXH66NN9wPoIwzKtowy8XJQ4g13vYlQayI6l1xbEMnzb0lqvhDyLJZ0U7XFqEH
-         +4QU8r5KgLyLQ==
-Date:   Thu, 30 Mar 2023 18:09:50 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Sricharan R <quic_srichara@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: Do not do DEL_SERVER broadcast after
- DEL_CLIENT
-Message-ID: <20230330112716.GA84386@thinkpad>
-References: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
+        Thu, 30 Mar 2023 08:42:14 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFF3A76A6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:42:12 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id br6so24296537lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:42:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680180131;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZMJJLrx8WpERmuOwE9D/mVr0vDV7iJCAwwMwlHp5vLk=;
+        b=FGrnmQ1bP4vmkxp92zJIv3f12AnLOYfsfWTaBFCufnXxqk42xO5H+HtBBb4gVSD4KH
+         IjbnyyktH/AywESUaBJVOeLZDXaeM6YFF0pJOLyXGy2mzEuqKK9X8x0nWza4gI+CVMYZ
+         g0f/mOA4WtwnwROgIg8VxsnR1p/1R7FTPQ6vPGaUv6Jcg+A7rw/ysa/QuUktLoYq78PT
+         oXQhry/zX3rj+Ld8wOM7l9phywe73W+f1h898Z6vMnax2cUEwuCQndcP/2Ve18jEw8nr
+         u7ZzaBYvIkuxiR3S/xyIEfcK0aPNCzYWSBQaa28fbiUGkpXjweu5+Rwuh3Lrwt8x+msN
+         2kbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680180131;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZMJJLrx8WpERmuOwE9D/mVr0vDV7iJCAwwMwlHp5vLk=;
+        b=UkKQgpa0xAuOZdqItR1gTsTe7zP+gmak3Jf80JJ/87uBv4LNILRm1BilPS73mSQYsY
+         GM5zHN5fFofUZFoZA5wFbeK+MnwdXR8pObRGknjrixNn12xO4H1it4ZNXoF4IW9wpAx/
+         jqmv76T3MvqadNL74MTfndz040/LRRf6JJ4vWsRJbFuvdswPguufIKhkE+eY2KkYByU7
+         Bsg/jqnlv+5AkiSPjFMT3ktQGMw3SFhmcARS26UQJYXkMuQwaB3vD+2xrkjLS+PlvYrL
+         4+adbnQPYV5ehrq+GOJSTQQnEl3gB4A+cE0oCPUOfKDoazDMkQZ27vgerClOKTpzC3JF
+         La1Q==
+X-Gm-Message-State: AAQBX9eN3ZB6LwB4bsEZFB6EazqFjDgIjNZWpO0ykZhmerDJA5pdi7hb
+        I9CyA2dhnaN07X5kYwULei+KJw==
+X-Google-Smtp-Source: AKy350bWtte7p/HWXqmuQ/gvAR5nGWte6AeqovBFSc2pFMBP2NPxf8wLZqNTsg5+bfCRMqigndVwZg==
+X-Received: by 2002:a19:f007:0:b0:4dc:8215:5531 with SMTP id p7-20020a19f007000000b004dc82155531mr6563744lfc.6.1680180130903;
+        Thu, 30 Mar 2023 05:42:10 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id y26-20020a2e321a000000b002934febffe4sm5900189ljy.128.2023.03.30.05.42.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 05:42:10 -0700 (PDT)
+Message-ID: <3bd39042-f608-f24b-b25b-71dace673e0a@linaro.org>
+Date:   Thu, 30 Mar 2023 14:42:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [v2,38/50] drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20230211231259.1308718-39-dmitry.baryshkov@linaro.org>
+ <c7961d64-dc15-11d3-6269-74555c1c1b70@linaro.org>
+ <60073c65-1df3-69f8-4755-798fe26a0905@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <60073c65-1df3-69f8-4755-798fe26a0905@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 06:37:30PM +0530, Sricharan R wrote:
-> When the qrtr socket is released, qrtr_port_remove gets called, which
-> broadcasts a DEL_CLIENT. After this DEL_SERVER is also additionally
-> broadcasted, which becomes NOP, but triggers the below error msg.
+
+
+On 30.03.2023 14:38, Dmitry Baryshkov wrote:
+> On 30/03/2023 15:33, Konrad Dybcio wrote:
+>>
+>>
+>> On 12.02.2023 00:12, Dmitry Baryshkov wrote:
+>>> Mark DSPP_2 and DSPP_3 as used for LM_2 and LM_3
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>> Could you point me to where it's specified downstream? I can't find it.
 > 
-> "failed while handling packet from 2:-2", since remote node already
-> acted upon on receiving the DEL_CLIENT, once again when it receives
-> the DEL_SERVER, it returns -ENOENT.
+> https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/77276ed6a0055a4a0f41d7b0395a8b0bbcafd091/msm/sde/sde_hw_catalog.c#L2341
 > 
-> Fixing it by not sending a 'DEL_SERVER' to remote when a 'DEL_CLIENT'
-> was sent for that port.
+> Which says assign DSPP to LMs for as long as we have a spare DSPP
 > 
-
-How about:
-
-"On the remote side, when QRTR socket is removed, af_qrtr will call
-qrtr_port_remove() which broadcasts the DEL_CLIENT packet to all neighbours
-including local NS. NS upon receiving the DEL_CLIENT packet, will remove
-the lookups associated with the node:port and broadcasts the DEL_SERVER
-packet.
-
-But on the host side, due to the arrival of the DEL_CLIENT packet, the NS
-would've already deleted the server belonging to that port. So when the
-remote's NS again broadcasts the DEL_SERVER for that port, it throws below
-error message on the host:
-
-"failed while handling packet from 2:-2"
-
-So fix this error by not broadcasting the DEL_SERVER packet when the
-DEL_CLIENT packet gets processed."
-
-> Signed-off-by: Ram Kumar D <quic_ramd@quicinc.com>
-> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> ---
-> Note: Functionally tested on 5.4 kernel and compile tested on 6.3 TOT
+>>
+>> Also, deserves a Fixes.
 > 
->  net/qrtr/ns.c | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
+> This is a tough question. We have been using sm8150_lm for sm8[2345]50. So before "drm/msm/dpu: duplicate sm8150 catalog entries" there is no way to fix that.
+If your concern is about stable backports, fixes tags denote that a bug was
+fixed and do not imply a patch needs to be backported, it only works as a
+hint for the stable scripts. "please backport this" is expressed through
+Cc-ing stable.
+
+Konrad
 > 
-> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> index 722936f..6fbb195 100644
-> --- a/net/qrtr/ns.c
-> +++ b/net/qrtr/ns.c
-> @@ -274,7 +274,7 @@ static struct qrtr_server *server_add(unsigned int service,
->  	return NULL;
->  }
->  
-> -static int server_del(struct qrtr_node *node, unsigned int port)
-> +static int server_del(struct qrtr_node *node, unsigned int port, bool del_server)
-
-s/bool del_server/bool bcast/g
-
->  {
->  	struct qrtr_lookup *lookup;
->  	struct qrtr_server *srv;
-> @@ -287,7 +287,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
->  	radix_tree_delete(&node->servers, port);
->  
->  	/* Broadcast the removal of local servers */
-> -	if (srv->node == qrtr_ns.local_node)
-> +	if (srv->node == qrtr_ns.local_node && del_server)
->  		service_announce_del(&qrtr_ns.bcast_sq, srv);
->  
->  	/* Announce the service's disappearance to observers */
-> @@ -373,7 +373,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
->  		}
->  		slot = radix_tree_iter_resume(slot, &iter);
->  		rcu_read_unlock();
-> -		server_del(node, srv->port);
-> +		server_del(node, srv->port, true);
->  		rcu_read_lock();
->  	}
->  	rcu_read_unlock();
-> @@ -459,10 +459,14 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
->  		kfree(lookup);
->  	}
->  
-> -	/* Remove the server belonging to this port */
-> +	/* Remove the server belonging to this port
-> +	 * Given that DEL_CLIENT is already broadcasted
-> +	 * by port_remove, no need to send DEL_SERVER for
-> +	 * the same port to remote
-> +	 */
-
-	/*
- 	 * Remove the server belonging to this port but don't broadcast
-	 * DEL_SERVER. Neighbours would've already removed the server belonging
-	 * to this port due to the DEL_CLIENT broadcast from qrtr_port_remove().
-	 */
-- Mani
-
->  	node = node_get(node_id);
->  	if (node)
-> -		server_del(node, port);
-> +		server_del(node, port, false);
->  
->  	/* Advertise the removal of this client to all local servers */
->  	local_node = node_get(qrtr_ns.local_node);
-> @@ -567,7 +571,7 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
->  	if (!node)
->  		return -ENOENT;
->  
-> -	return server_del(node, port);
-> +	return server_del(node, port, true);
->  }
->  
->  static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
-> -- 
-> 2.7.4
+>>
+>> Konrad
+>>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 4 ++--
+>>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>>> index a3faaab2226c..3d95f2472e7a 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>>> @@ -107,9 +107,9 @@ static const struct dpu_lm_cfg sm8450_lm[] = {
+>>>       LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
+>>>           &sdm845_lm_sblk, PINGPONG_1, LM_0, DSPP_1),
+>>>       LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
+>>> -        &sdm845_lm_sblk, PINGPONG_2, LM_3, 0),
+>>> +        &sdm845_lm_sblk, PINGPONG_2, LM_3, DSPP_2),
+>>>       LM_BLK("lm_3", LM_3, 0x47000, MIXER_SDM845_MASK,
+>>> -        &sdm845_lm_sblk, PINGPONG_3, LM_2, 0),
+>>> +        &sdm845_lm_sblk, PINGPONG_3, LM_2, DSPP_3),
+>>>       LM_BLK("lm_4", LM_4, 0x48000, MIXER_SDM845_MASK,
+>>>           &sdm845_lm_sblk, PINGPONG_4, LM_5, 0),
+>>>       LM_BLK("lm_5", LM_5, 0x49000, MIXER_SDM845_MASK,
 > 
-
--- 
-மணிவண்ணன் சதாசிவம்
