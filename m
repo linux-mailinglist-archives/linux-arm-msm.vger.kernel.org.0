@@ -2,74 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A0F46CFC2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 09:03:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D2C96CFC4E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 09:10:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbjC3HDv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 03:03:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55882 "EHLO
+        id S230430AbjC3HKl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 03:10:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbjC3HDt (ORCPT
+        with ESMTP id S229942AbjC3HKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 03:03:49 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41070658D
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 00:03:48 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id bi9so23245541lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 00:03:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680159826;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=b4Bb5GX+FMlQrfFYYOGtNxySJjTQGtWiEDeRjZZCDOc=;
-        b=axOEcx2StVb58YNriRAGg9TE9X8Qyz/E81tNpwlLZio4996hAhzfrW736X8NP+UbYN
-         5jEovPDXc6bUjOpzAWrPO0oHqdFWhtZW270LQkLxVYL/nFAJR0exUikcMyr9IPtcLvaO
-         MgAnp3mEL9MfKZaRn1yWqCKB6ZMOIzqlRmnipXwVtv1/kUS4KfYl+YIPzv1cEOz7/4pU
-         xZLM4xQ6CQOBjWe4akb42KEQOdAauFeuP7jnTSvyHw4Di7nQ6gbquhNZmsCLFgfSCqqV
-         JdjbXEnYBRvC10parnWyUnl+Ba4BoHlZJG0JIp3TKyj7sFeU6o/K8YgX7J6vfURiouqI
-         UAfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680159826;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b4Bb5GX+FMlQrfFYYOGtNxySJjTQGtWiEDeRjZZCDOc=;
-        b=xvmapYeAbVhNI89WTt1OIuW7Ir0bCljGQlb1HS0J5KwGFXKz0Mg0EX+3Rj5iCov82x
-         OaDKp23XjLV1ojGuxQjhh8lND7+F4TnFydhhCjylDFBUPd9GWFuxx9WkM2fdlgqJoMo0
-         X2Qd4JsFMmTRj121/KIZOpCworsegRDC2fJAmQY/O+CQuZwZR74j7UriPy0/UETzfhi9
-         jGhgGUAtJfthhGXysmZB6nC57cPrwaKswfQ4fnPDeDL9Ho8mNFVwf7Xo8LPq0oh0vIAy
-         4UThSgCxk8y405aTG65tmZ6dq2j1pNn1eTvf0jsFqTTVyQOfpzziL2iAQXx9ixFdFJ6D
-         QlFQ==
-X-Gm-Message-State: AAQBX9e9kL5s5sUvTkbEJUta+WhTlogJ4qzaIZjvyDt6WpQHaqQq/zVA
-        F/X9pU3olpSveJOXbtFmzTIc6g==
-X-Google-Smtp-Source: AKy350YZiokYUbkODadn+Xnup62W1KHlFr+bEB6GBWiAojf0zCSjvFeDAc1NaWwuJnOuIl4bmta8kw==
-X-Received: by 2002:ac2:4c17:0:b0:4ea:f227:c1d6 with SMTP id t23-20020ac24c17000000b004eaf227c1d6mr6518049lfq.67.1680159826438;
-        Thu, 30 Mar 2023 00:03:46 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id q29-20020ac2511d000000b004eb09820adbsm2243637lfb.105.2023.03.30.00.03.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 00:03:46 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4] ASoC: dt-bindings: qcom,lpass-va-macro: Add missing NPL clock
-Date:   Thu, 30 Mar 2023 09:03:42 +0200
-Message-Id: <20230330070342.19448-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Thu, 30 Mar 2023 03:10:40 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21BCD6195;
+        Thu, 30 Mar 2023 00:10:38 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32U2pkdx006462;
+        Thu, 30 Mar 2023 07:10:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=5fX5B9Q2BVkwuM7B9UYaH7QjBXrTk5UeN4scDRz2vRw=;
+ b=G2nJ5oTWYcWQZLg7f5c084VFO0cQV+HQ302xW9B8K/gPYzSI4hjNER4BQCT2EldPFJvm
+ XotNLtHUqcKx/wMQtIZ4ztgEXWm5T6Bu37wycw4BlB4Y/qE69hu2JBw4L1L4u5qEGZJY
+ EmVb36uM7NMlTI5F02GZNIqp26bYLAixcAalLDm04EnOrKCJJW07CQDGOqbfytvB+Mm9
+ pTtcO9d14plNbOzsAzgXBCsH9a2JFguor3zT51Y5WPOzxt1zqYSjb/9zFJJfXMFKx3LN
+ fnXP7RDxrMYoXw/BJrU1m/zFb2MpY36V8Kv0E+GJvpneQfN1Kz7bsiW5YDP0jSuOphri lQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pmpbm2hs0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 07:10:30 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32U7ASBD007377
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 07:10:28 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 30 Mar 2023 00:10:22 -0700
+Date:   Thu, 30 Mar 2023 12:40:17 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH v4 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
+ PHY
+Message-ID: <20230330071016.GB13508@varda-linux.qualcomm.com>
+References: <cover.1679909245.git.quic_varada@quicinc.com>
+ <4a21defe3320eb11d0e43bc7f02b3168ecefd458.1679909245.git.quic_varada@quicinc.com>
+ <3d49b4b0-587c-f7e5-4122-65b3e9f11583@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <3d49b4b0-587c-f7e5-4122-65b3e9f11583@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 87ChGyKcncQbXYejQSX4iRceP-vTJx2Y
+X-Proofpoint-ORIG-GUID: 87ChGyKcncQbXYejQSX4iRceP-vTJx2Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-30_02,2023-03-30_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ mlxlogscore=999 adultscore=0 phishscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303300056
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,119 +85,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Several devices (e.g. SC8280XP and SM8450) expect a NPL (Near Pad Logic)
-clock.  Add the clock and customize allowed clocks per each variant.
-The clocks are also required by ADSP in all variants.
+On Mon, Mar 27, 2023 at 01:02:52PM +0300, Dmitry Baryshkov wrote:
+> On 27/03/2023 12:30, Varadarajan Narayanan wrote:
+> >Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
+> >
+> >Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> >---
+> >  Changes in v4:
+> >	- Remove constraints not applicable to IPQ9574
+> >  Changes in v3:
+> >	- Update other mandatory fields to accomodate IPQ9574
+> >  Changes in v2:
+> >	- Updated sections missed in previous patch
+> >---
+> >  .../bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 25 ++++++++++++++++++++--
+> >  1 file changed, 23 insertions(+), 2 deletions(-)
+> >
+> >diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> >index e81a382..aa5b58c 100644
+> >--- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> >+++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+> >@@ -21,6 +21,7 @@ properties:
+> >      enum:
+> >        - qcom,ipq6018-qmp-usb3-phy
+> >        - qcom,ipq8074-qmp-usb3-phy
+> >+      - qcom,ipq9574-qmp-usb3-phy
+> >        - qcom,msm8996-qmp-usb3-phy
+> >        - qcom,msm8998-qmp-usb3-phy
+> >        - qcom,qcm2290-qmp-usb3-phy
+> >@@ -122,8 +123,6 @@ required:
+> >    - clock-names
+> >    - resets
+> >    - reset-names
+> >-  - vdda-phy-supply
+> >-  - vdda-pll-supply
+>
+> Same questions as for the qusb2 PHY. How is the PHY powered?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+It is powered by always on regulators. Will create fixed
+regulators and assign them to these.
 
----
+Thanks
+Varada
 
-Changes since v3:
-1. Only rebase. Other patches from this set were applied:
-https://lore.kernel.org/all/168010864198.3244592.2114017565664183933.b4-ty@kernel.org/
-
-Changes since v1:
-1. New patch.
----
- .../bindings/sound/qcom,lpass-va-macro.yaml   | 68 ++++++++++++++++---
- 1 file changed, 57 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-index 608207152a02..4a56108c444b 100644
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
-@@ -9,9 +9,6 @@ title: LPASS(Low Power Audio Subsystem) VA Macro audio codec
- maintainers:
-   - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
- 
--allOf:
--  - $ref: dai-common.yaml#
--
- properties:
-   compatible:
-     enum:
-@@ -31,16 +28,12 @@ properties:
-     const: 0
- 
-   clocks:
--    maxItems: 3
-+    minItems: 1
-+    maxItems: 4
- 
-   clock-names:
--    oneOf:
--      - items:   # for ADSP based platforms
--          - const: mclk
--          - const: macro
--          - const: dcodec
--      - items:   # for ADSP bypass based platforms
--          - const: mclk
-+    minItems: 1
-+    maxItems: 4
- 
-   clock-output-names:
-     maxItems: 1
-@@ -64,6 +57,59 @@ required:
-   - compatible
-   - reg
-   - "#sound-dai-cells"
-+  - clock-names
-+  - clocks
-+
-+allOf:
-+  - $ref: dai-common.yaml#
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,sc7280-lpass-va-macro
-+    then:
-+      properties:
-+        clocks:
-+          maxItems: 1
-+        clock-names:
-+          items:
-+            - const: mclk
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: qcom,sm8250-lpass-va-macro
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 3
-+          maxItems: 3
-+        clock-names:
-+          items:
-+            - const: mclk
-+            - const: macro
-+            - const: dcodec
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sc8280xp-lpass-va-macro
-+              - qcom,sm8450-lpass-va-macro
-+    then:
-+      properties:
-+        clocks:
-+          minItems: 4
-+          maxItems: 4
-+        clock-names:
-+          items:
-+            - const: mclk
-+            - const: macro
-+            - const: dcodec
-+            - const: npl
- 
-   - if:
-       properties:
--- 
-2.34.1
-
+> >  additionalProperties: false
+>
+> --
+> With best wishes
+> Dmitry
+>
