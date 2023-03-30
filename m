@@ -2,246 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 664806CFCA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 09:24:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96AF76CFCB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 09:30:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230294AbjC3HYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 03:24:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55352 "EHLO
+        id S229996AbjC3Hae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 03:30:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbjC3HYe (ORCPT
+        with ESMTP id S229835AbjC3Hac (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 03:24:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F029C26A4;
-        Thu, 30 Mar 2023 00:24:32 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32U3UmRK010140;
-        Thu, 30 Mar 2023 07:24:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=w+Syh63jv6AaJxqbd0OqyDNkWhkp+4iA/H1tO4pev4o=;
- b=GET+fRvp9VHMkqXZ2oqWf8MHN7O8DZPjrpf9GzGYYVLSC7ZOb0oVwNoLUq3ELJEpJWWK
- r8Md0c+547CjAHSqPI6nDiBhC+dCa3TeLY2/RcGXaeqTNZaWhwE8frmzoDCGcWklg7O7
- 8QkxCBYRKcs6M7l/8+sjXh5IQuZCZjo6l/0va1PFI3wWfHYfRx4KXQGR27sNzZPEtVbq
- Bc31gwVGUNBQSXMyvUdPSAIgj5B7T7Om+F+/jI69wwDhgX3JUh9gJDyvqYURa78uidO0
- 1IT8Za0IPEkH5S3F6BX8h/AA6Y39WaboGoUuNzu8euYG5AMij91urAsv895n+PyIRXdf eg== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pmq1vaetr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 07:24:25 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32U7O412028454
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 07:24:04 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 30 Mar 2023 00:23:58 -0700
-Date:   Thu, 30 Mar 2023 12:53:54 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <20230330072353.GF13508@varda-linux.qualcomm.com>
-References: <cover.1679909245.git.quic_varada@quicinc.com>
- <f3c42c0e2e2fb309dc0d248e0e1b921c6b8c11f9.1679909245.git.quic_varada@quicinc.com>
- <e5d4663f-c816-4789-a63c-5d6ce4744692@linaro.org>
+        Thu, 30 Mar 2023 03:30:32 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89BBA4213
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 00:30:30 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id d11-20020a05600c3acb00b003ef6e6754c5so7394075wms.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 00:30:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680161429;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=R9Sq3GghZPSalrYUSlYEg5rtJO5siyHm45G17IspFvU=;
+        b=W8hTUnm3FJqGZsNDUkrS7U0/MDDiEvivsCWPAiKAiGV6gTQygCCgMMJLJBLIxNu/72
+         mTWPrPQ0wSDPuqljkL60qnzNbV5cQI3W+uAaNjGeB58RVX1W+dyedU45zyjhDkxZK2Em
+         357vQSWIr0qJJaK3kSgE4akGJozICx3gYJTYrcoRlzBXsTrKP/3HsTOpoCjxzbxsBiam
+         pqTDwlWbQ17o1Xr/xaNJnFpImqaW3wRTz50MvER4tnEkH/mlu8FSo0LuhLDgRA2FBPiA
+         7X5sr37GoSALrAtRLsWzv7GYCeNqzNmF8vPkYq3zuhM4KxbUjUpFAN0OHXZdSBJEg/Ro
+         jZlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680161429;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R9Sq3GghZPSalrYUSlYEg5rtJO5siyHm45G17IspFvU=;
+        b=ZZklnsvSNDalKjAfMNsc0mbcA0HtRfuRjclY/12ISWLHLN6J0Q0PNuoWIAH/4MQG01
+         1g0ege1wpoPJQXa5v7rE8MMjdiHtJ1yyrr9FRAva7EuKQjQcBpCad2F96z+L+XfNeaFh
+         Xytv7se7ppGHO55G18uOxkAVpju/a1neOwUbICiA4KIOoIQWwMTeIJcRkd8ZqmI5pIWD
+         PzweP1Cl5+CnYci+rbicFHW6q70HCXsp4LsoNiC34+BdajtYZhehcpvwIxGIDODmHrYq
+         QWyit1TByb3WuCpoJknqBB1frEgh7zfzSOlVCEeVI8eOgWoY/gQ23VSfsN9zFcGBnTkQ
+         9LBQ==
+X-Gm-Message-State: AO0yUKV8InlzxjIEz49Tm6uO95Vu58QDmHjsHBi9LdxcMVp0fsXU+TGR
+        AxliqYrD5TtOx9rNwFWCIKecPQ==
+X-Google-Smtp-Source: AK7set/990zYxsUocwt1yD0MUSMosyecq1clA1R/FSRQa9PAXq4liR6KvZqs+/7FvnAVteYWRkrvFA==
+X-Received: by 2002:a1c:7406:0:b0:3ed:320a:3721 with SMTP id p6-20020a1c7406000000b003ed320a3721mr17989911wmc.22.1680161428900;
+        Thu, 30 Mar 2023 00:30:28 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:fe8e:8291:fc25:6c8f? ([2a01:e0a:982:cbb0:fe8e:8291:fc25:6c8f])
+        by smtp.gmail.com with ESMTPSA id n2-20020a05600c4f8200b003ef5e5f93f5sm5068457wmq.19.2023.03.30.00.30.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 00:30:28 -0700 (PDT)
+Message-ID: <45c5597b-628e-f1ee-cd48-9ce5291765ee@linaro.org>
+Date:   Thu, 30 Mar 2023 09:30:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <e5d4663f-c816-4789-a63c-5d6ce4744692@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AtMFVF46kWJSzOm7HrAWHkqC66jO2FmD
-X-Proofpoint-ORIG-GUID: AtMFVF46kWJSzOm7HrAWHkqC66jO2FmD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-30_03,2023-03-30_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=988
- impostorscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2303300059
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] dt-bindings: serial: Drop unneeded quotes
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Hammer Hsieh <hammerh0314@gmail.com>
+Cc:     linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230327170137.4104272-1-robh@kernel.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230327170137.4104272-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 28, 2023 at 09:09:09AM +0200, Krzysztof Kozlowski wrote:
-> On 27/03/2023 11:30, Varadarajan Narayanan wrote:
-> > Add USB phy and controller related nodes
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  Changes in v4:
-> > 	- Use newer bindings without subnodes
-> > 	- Fix coding style issues
-> >
-> >  Changes in v3:
-> > 	- Insert the nodes at proper location
-> >
-> >  Changes in v2:
-> > 	- Fixed issues flagged by Krzysztof
-> > 	- Fix issues reported by make dtbs_check
-> > 	- Remove NOC related clocks (to be added with proper
-> > 	  interconnect support)
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 83 +++++++++++++++++++++++++++++++++++
-> >  1 file changed, 83 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > index 2bb4053..5379c25 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > @@ -215,6 +215,45 @@
-> >  		#size-cells = <1>;
-> >  		ranges = <0 0 0 0xffffffff>;
-> >
-> > +		qusb_phy_0: phy@7b000 {
-> > +			compatible = "qcom,ipq9574-qusb2-phy";
-> > +			reg = <0x0007b000 0x180>;
-> > +			#phy-cells = <0>;
-> > +
-> > +			clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> > +				 <&xo_board_clk>;
-> > +			clock-names = "cfg_ahb",
-> > +				      "ref";
-> > +
-> > +			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> > +			status = "disabled";
-> > +		};
-> > +
-> > +		ssphy_0: phy@7d000 {
-> > +			compatible = "qcom,ipq9574-qmp-usb3-phy";
-> > +			reg = <0x0007d000 0xa00>;
-> > +			#clock-cells = <1>;
-> > +			#address-cells = <1>;
-> > +			#size-cells = <1>;
-> > +			ranges;
->
-> Why do you need these three?
+On 27/03/2023 19:01, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>   .../devicetree/bindings/serial/amlogic,meson-uart.yaml        | 4 ++--
 
-Don't need these. Have moved to qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-specification instead of qcom,msm8996-qmp-usb3-phy.yaml. Will
-update accordingly and post.
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-> > +
-> > +			clocks = <&gcc GCC_USB0_AUX_CLK>,
-> > +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> > +				 <&gcc GCC_USB0_PIPE_CLK>;
-> > +			clock-names = "aux",
-> > +				      "cfg_ahb",
-> > +				      "pipe";
-> > +
-> > +			resets = <&gcc GCC_USB0_PHY_BCR>,
-> > +				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
-> > +			reset-names = "phy",
-> > +				      "common";
-> > +			status = "disabled";
-> > +
-> > +			#phy-cells = <0>;
-> > +			clock-output-names = "usb0_pipe_clk";
->
-> Does not look like you tested the DTS against bindings. Please run `make
-> dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-> for instructions).
+>   .../devicetree/bindings/serial/qcom,serial-geni-qcom.yaml     | 4 ++--
+>   Documentation/devicetree/bindings/serial/renesas,em-uart.yaml | 4 ++--
+>   Documentation/devicetree/bindings/serial/renesas,hscif.yaml   | 4 ++--
+>   Documentation/devicetree/bindings/serial/renesas,sci.yaml     | 4 ++--
+>   Documentation/devicetree/bindings/serial/renesas,scif.yaml    | 4 ++--
+>   Documentation/devicetree/bindings/serial/renesas,scifa.yaml   | 4 ++--
+>   Documentation/devicetree/bindings/serial/renesas,scifb.yaml   | 4 ++--
+>   Documentation/devicetree/bindings/serial/serial.yaml          | 4 ++--
+>   Documentation/devicetree/bindings/serial/sprd-uart.yaml       | 4 ++--
+>   .../devicetree/bindings/serial/sunplus,sp7021-uart.yaml       | 4 ++--
+>   11 files changed, 22 insertions(+), 22 deletions(-)
+> 
 
-Have addressed these and have created a new patch. Will post it
-shortly. IPQ9574 doesn't have any power domains, hence don't have
-power-domains entry in the DT node. make dtbs_check is giving the
-following messages hope that is ok
+<snip>
 
-	/local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: phy@7d000: 'power-domains' is a required property
-        From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-
-	/local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: usb@8a00000: 'power-domains' is a required property
-        From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-
->
-> > +		};
-> > +
-> >  		pcie0_phy: phy@84000 {
-> >  			compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
-> >  			reg = <0x00084000 0x1bc>; /* Serdes PLL */
-> > @@ -436,6 +475,50 @@
-> >  			status = "disabled";
-> >  		};
-> >
-> > +		usb3: usb3@8a00000 {
->
-> usb@
-
-Will fix.
-
-> > +			compatible = "qcom,ipq9574-dwc3", "qcom,dwc3";
-> > +			reg = <0x08af8800 0x400>;
-> > +			#address-cells = <1>;
-> > +			#size-cells = <1>;
-> > +			ranges;
->
->
->
-> > +
-> > +			clocks = <&gcc GCC_SNOC_USB_CLK>,
-> > +				 <&gcc GCC_ANOC_USB_AXI_CLK>,
-> > +				 <&gcc GCC_USB0_MASTER_CLK>,
-> > +				 <&gcc GCC_USB0_SLEEP_CLK>,
-> > +				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> > +
-> > +			clock-names = "sys_noc_axi",
-> > +				      "anoc_axi",
-> > +				      "master",
-> > +				      "sleep",
-> > +				      "mock_utmi";
-> > +
-> > +			assigned-clocks = <&gcc GCC_USB0_MASTER_CLK>,
-> > +					  <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> > +			assigned-clock-rates = <200000000>,
-> > +					       <24000000>;
-> > +
-> > +			resets = <&gcc GCC_USB_BCR>;
-> > +			status = "disabled";
-> > +
-> > +			dwc_0: usb@8a00000 {
-> > +				compatible = "snps,dwc3";
-> > +				reg = <0x8a00000 0xcd00>;
-> > +				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> > +				clock-names = "ref";
-> > +				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> > +				phys = <&qusb_phy_0>, <&ssphy_0>;
-> > +				phy-names = "usb2-phy", "usb3-phy";
-> > +				tx-fifo-resize;
-> > +				snps,is-utmi-l1-suspend;
-> > +				snps,hird-threshold = /bits/ 8 <0x0>;
-> > +				snps,dis_u2_susphy_quirk;
-> > +				snps,dis_u3_susphy_quirk;
-> > +				dr_mode = "host";
->
-> Are you saying that peripheral mode cannot work on this USB controller?
-> Never?
-
-Will move to board DTS.
-
-Thanks
-Varada
-
-> Best regards,
-> Krzysztof
->
