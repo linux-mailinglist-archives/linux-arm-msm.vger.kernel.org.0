@@ -2,112 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F7256D115F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 23:54:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F65F6D123F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 00:40:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230210AbjC3Vy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 17:54:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37874 "EHLO
+        id S230393AbjC3WkA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 18:40:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbjC3Vy0 (ORCPT
+        with ESMTP id S230146AbjC3Wj7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 17:54:26 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D000B10402
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:54:23 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id c9so15966527lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 14:54:23 -0700 (PDT)
+        Thu, 30 Mar 2023 18:39:59 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFFBFCA2E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 15:39:58 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id h25so26520336lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 15:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680213263;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Mg71u/7TiS0yeZEc+ean62kiFm+Wj1LDeVN5x0ynJuQ=;
-        b=RlE3Jk2kza5Hn6wvqs8H9mJXXZ+sdzAOFGgtcnJZg4LtCra7uRcpSy+7UvgmmCa9g5
-         agx0CxEhawLxeIbUZHi2wMEtvFZuaOJKcdive7Up/dSmymfpJpx4h3gw6tkPZW+hItCV
-         SH0fah8/KsavNF3uTWEwCXk6mt01FGz+etcOFaEZ40gcTTIK3nMSBMlnsIhlr0aZ2YKh
-         AnbfVz3yYB3cR3jwBvGLs+J495z3jhH7W7avBbrpF1Zm7IpMtNanzFeKIUotsfz2iBFo
-         TyS1EZ9dT8pXURKsEq2wZkJaz8KcaySwXDs1dx7NLVRStYhN6u+8HS+Ph/mcTwlkKsWA
-         BlmQ==
+        d=linaro.org; s=google; t=1680215997;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OurrUfulgDLG1acYGUK2PeBost/v1bN601i045HTPhk=;
+        b=qmwdk07Z+xXFSEYoKyC+rywMRGMEXnPEzbqcmAfmOV1zUlDj49u+n5XPQhs9mVJt7y
+         LKNp21BFM0+xFTdoWNws2WLO7bhO18LH8wihXkDHQDqGVWvaZEHxLVUtWSy+a22WgMVw
+         jly5fLPH6fZauDuL8n+Rgd4eZpbuK+TB35xM/DoJJNh441bHfSOfBFPGG8EtbSS8QD9S
+         IN1Nt053GsX354C4uaGpdyxrwhofPdb6+5QsX4vHWnDLp+33lSEk+s2s+MKocijFY/3q
+         zCrelbBygD1Oxm2tIlQ9WteH7nxXuj3Dfq3+bzzyka5/TxoOgQJUpR1VgAa73hFSmjpA
+         DsAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680213263;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Mg71u/7TiS0yeZEc+ean62kiFm+Wj1LDeVN5x0ynJuQ=;
-        b=iUbZJxUBmLXgCI4pYxEgkEmdKhdwBHIwwukVuuW4SgD23nKRBsutzRzBHmu99JbS/L
-         /jRMKhdSFTO/leKVvpO02NARhqfjV4cfCYziQo8t8KrD8rOLDy8DgFixUa3e5vS/prcE
-         xLyon2VgJatzsHHxdkJAwGQn3Rs0z4SFXgghDL2ltYhBDuA/cjR98zUz7OnTsEPdYDoz
-         WfKpNs4uyPEmzzoy1Gox+HYPuqhuHdDtN8h7dKWm8IVnD/R0xoRg12054H72ZzwdWtHF
-         S0FnQCwdvWVhwPNogMxdVEbsmnqchhdWI0hjDDtej3OqjFy3K3oEBeMo/l+Oy1/U4BOF
-         p6jQ==
-X-Gm-Message-State: AAQBX9d2bKKdCc6IzhGV6IKTzsXifPrn96prtWVghiMSohtrZduotA+N
-        Ctp7BfO8/dO2JNZAFVz+1JZLug==
-X-Google-Smtp-Source: AKy350Yq+zO6EudWHj9Ls+EFPMtnQ5dFAOYX4oVyujhvLt4gbmYXlKaK7Iy4Wk0zRJVvHlG1qMqGKw==
-X-Received: by 2002:ac2:51ad:0:b0:4eb:c18:efae with SMTP id f13-20020ac251ad000000b004eb0c18efaemr5579067lfk.17.1680213263400;
-        Thu, 30 Mar 2023 14:54:23 -0700 (PDT)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id f16-20020a056512093000b004cc8207741fsm104574lft.93.2023.03.30.14.54.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 14:54:22 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v3 38/38] drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
-Date:   Fri, 31 Mar 2023 00:53:24 +0300
-Message-Id: <20230330215324.1853304-39-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
-References: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20210112; t=1680215997;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OurrUfulgDLG1acYGUK2PeBost/v1bN601i045HTPhk=;
+        b=UMmTAQ+4nvGdhR8565jbZdhw/l8/E60TdV6puUroTb3zdgQ90fhLPfkHpulzRmOqLn
+         PuK9DKoBig0OAgaGi8Vuhjvrm3mD0DLU/SW1MVFDGolsx5RCO4Tldbfxtv8+BHaJN487
+         WuLygde26FxnoHyZK3N3XjzwsI4YWfCBNuwsP0OO2I+JlwEZVVkU2BQh5CEGQHSy7gat
+         7zc1bD1UtuxcxkZ0VG3xb1648Am2kxn5cjnlwIBhbUp/L55j5PFO/bxIgxgSas/fsO9G
+         Fz530tmzKqmqZD4R1m/Qd2+cKOoe3zjhVJpriE1iKQuJFtJfl/7YSCKn7l4LJfjSwIsi
+         KCpQ==
+X-Gm-Message-State: AAQBX9cUPPb/MGxoatztN1DCzJV2+kS04r+KjkLWklewxe03rq1F3Ugp
+        isMrReaYdPsMVDXTb/H7oVtjOg==
+X-Google-Smtp-Source: AKy350Z7nKasA21i3nRGHseFKu8567qcSr/P8vJhq+AIt0QGXwZ9bG3NVjkH74OAuWvhGacWNHnIIw==
+X-Received: by 2002:ac2:4830:0:b0:4e8:6261:58bd with SMTP id 16-20020ac24830000000b004e8626158bdmr7154846lft.37.1680215997048;
+        Thu, 30 Mar 2023 15:39:57 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id m4-20020a195204000000b004db0d97b053sm114976lfb.137.2023.03.30.15.39.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 15:39:56 -0700 (PDT)
+Message-ID: <2c8cab8c-c70d-8f59-e3d8-23b79c3cdb22@linaro.org>
+Date:   Fri, 31 Mar 2023 00:39:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [v3,24/38] drm/msm/dpu: catalog: add comments regarding
+ DPU_CTL_SPLIT_DISPLAY
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20230330215324.1853304-25-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230330215324.1853304-25-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To ease review and reuse rename MERGE_3D feature masks to contain base
-DPU version since which this mask is used.
 
+
+On 30.03.2023 23:53, Dmitry Baryshkov wrote:
+> For sm8150+ the DPU_CTL_SPLIT_DISPLAY should be replaced with
+> DPU_CTL_ACTIVE_CFG support (which supports having a single CTL for both
+> interfaces in a split). Add comments where this conversion is required.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 96c5b94264e8..d74029f163c8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -88,7 +88,7 @@
- #define CTL_DPU_9_MASK (CTL_DPU_7_MASK | \
- 			BIT(DPU_CTL_HAS_LAYER_EXT4))
- 
--#define MERGE_3D_SM8150_MASK (0)
-+#define MERGE_3D_DPU_5_MASK (0)
- 
- #define DSPP_MSM8998_MASK BIT(DPU_DSPP_PCC) | BIT(DPU_DSPP_GC)
- 
-@@ -529,7 +529,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
- 	{\
- 	.name = _name, .id = _id, \
- 	.base = _base, .len = 0x100, \
--	.features = MERGE_3D_SM8150_MASK, \
-+	.features = MERGE_3D_DPU_5_MASK, \
- 	.sblk = NULL \
- 	}
- 
--- 
-2.39.2
-
+Konrad
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 1 +
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 1 +
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 1 +
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 1 +
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 1 +
+>  5 files changed, 5 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> index e6280b0cb207..6c6f8b4a4be8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> @@ -42,6 +42,7 @@ static const struct dpu_mdp_cfg sm8150_mdp[] = {
+>  	},
+>  };
+>  
+> +/* FIXME: get rid of DPU_CTL_SPLIT_DISPLAY in favour of proper ACTIVE_CTL support */
+>  static const struct dpu_ctl_cfg sm8150_ctl[] = {
+>  	{
+>  	.name = "ctl_0", .id = CTL_0,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> index f19d1c2ba845..cfaa68a25427 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> @@ -43,6 +43,7 @@ static const struct dpu_mdp_cfg sm8250_mdp[] = {
+>  	},
+>  };
+>  
+> +/* FIXME: get rid of DPU_CTL_SPLIT_DISPLAY in favour of proper ACTIVE_CTL support */
+>  static const struct dpu_ctl_cfg sm8250_ctl[] = {
+>  	{
+>  	.name = "ctl_0", .id = CTL_0,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 9afcb6cc50a5..84396240f0d1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -41,6 +41,7 @@ static const struct dpu_mdp_cfg sm8350_mdp[] = {
+>  	},
+>  };
+>  
+> +/* FIXME: get rid of DPU_CTL_SPLIT_DISPLAY in favour of proper ACTIVE_CTL support */
+>  static const struct dpu_ctl_cfg sm8350_ctl[] = {
+>  	{
+>  	.name = "ctl_0", .id = CTL_0,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index af80e1ced3ce..49dd4a908413 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -42,6 +42,7 @@ static const struct dpu_mdp_cfg sm8450_mdp[] = {
+>  	},
+>  };
+>  
+> +/* FIXME: get rid of DPU_CTL_SPLIT_DISPLAY in favour of proper ACTIVE_CTL support */
+>  static const struct dpu_ctl_cfg sm8450_ctl[] = {
+>  	{
+>  	.name = "ctl_0", .id = CTL_0,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 5c437c7682ea..c9d1892ec8f5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -43,6 +43,7 @@ static const struct dpu_mdp_cfg sm8550_mdp[] = {
+>  	},
+>  };
+>  
+> +/* FIXME: get rid of DPU_CTL_SPLIT_DISPLAY in favour of proper ACTIVE_CTL support */
+>  static const struct dpu_ctl_cfg sm8550_ctl[] = {
+>  	{
+>  	.name = "ctl_0", .id = CTL_0,
