@@ -2,134 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9618C6D0DC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 20:31:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C1956D0EE7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 21:33:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231322AbjC3Sb4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 14:31:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60884 "EHLO
+        id S231613AbjC3TdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 15:33:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230423AbjC3Sbz (ORCPT
+        with ESMTP id S231796AbjC3TdO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 14:31:55 -0400
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A12E4681
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 11:31:54 -0700 (PDT)
-Received: by mail-vs1-xe2c.google.com with SMTP id dg15so5413833vsb.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 11:31:54 -0700 (PDT)
+        Thu, 30 Mar 2023 15:33:14 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA80EB52
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 12:33:13 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso6765555pjc.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 12:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680201111;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6bmgWM4VeyB5ih4GlZbThd/2eiyQX/X/Evx0/5WbwLA=;
-        b=n7Fbcx5kLC5PQCrKOLLphRB+Qj+CJ1V2n+6VE2q9x8tgdTfNT/TvljT9Ud5D0Sev+I
-         jSx0/mE5wPBJBUslQrVt+msUKR8oj3psvddiRCxHXDNcC7JwUdR4++FURzyQa2lH2oPP
-         QrylpyoNqKGTbaDitz5XTgPk8P5ruj9xa1qC8=
+        d=linaro.org; s=google; t=1680204792;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i6JuvYmYJCj0w3cmFeh/1DSQl/9BrhvO1sQcJl2DJ6s=;
+        b=rD6xqSmuN7f9T3bBAcfIeecEZ8zbF3WWnbD5MUeXkuHYRZ1Ot/MHFdY0+NMMDnxXVF
+         nI7XP3eNwfIgLdGyisNIC84I/8r2vuxUwN13fcAxUTvBKIjCvU+Ozt34RI4ksIYxp/QW
+         kcg4EGKgP+Md5xXYasUjAC9BYHjRJPfcGgeqYy5ipvUIG+KquXJg3TND+cm0Ci2WHqrU
+         u/XKg+4vUDWVgfstcU2oGNjdFEPhBi0FZ5csQiMmZJSzIUY7cS51NisBo7zOOdDZXu6I
+         xG+PgPJeIly6xYLRgab8GK2FaX1LFTrdjcKOJua9hI2B+mvxQbBIbq9WqBSuU7kQYAXY
+         r+Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680201111;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6bmgWM4VeyB5ih4GlZbThd/2eiyQX/X/Evx0/5WbwLA=;
-        b=5qHP6AgByxDs4qCkOTe48nNC9ky6x9+T9GY0Splg51gpJ46XoK6FYg1yTaKl5ubUM8
-         xLKa04x0IKt9IcyXH8VcFnTFifLewXEz0ouN2IRkhBfM1R7OBw67KxxKhuemHsebobBi
-         1PoUCHy4d+0F95g4DKDTYSXJF97KPpWST6KmD4p4QgfCImqUhiaDLJf4edav23suj/wU
-         ch5Ht4RwKjqpA2+iagT9uoOCd3pRI4AZskFkcrI1Cs9iYdKzxfYUF3hPZ69ThI3aHxYk
-         CcDhmrVi/terPcj/VqUsPx18QButMs+dyptOxOIs1TwYC2zZ8M0Jvsne6qasfAbNpVqe
-         gI3g==
-X-Gm-Message-State: AAQBX9dPpSix6qb4235lXpdRya4iO8dqx9S+DQfNHnLwfL2xWtTldN/l
-        i1pQkYtLJWpG8gkAr9OdDRsI41S7HpoK21zOkVs=
-X-Google-Smtp-Source: AKy350aWcqu3gCOXLEGIoXaPVRME1+fI8AfHGgtUhhlqb8+0AuuH4rJ0zh3ARE5LPi2VYmW53WBR+w==
-X-Received: by 2002:a05:6102:da:b0:426:60b:34f2 with SMTP id u26-20020a05610200da00b00426060b34f2mr8393596vsp.30.1680201111169;
-        Thu, 30 Mar 2023 11:31:51 -0700 (PDT)
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com. [209.85.217.54])
-        by smtp.gmail.com with ESMTPSA id j185-20020a676ec2000000b004122a65ee17sm4864384vsc.21.2023.03.30.11.31.50
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 11:31:50 -0700 (PDT)
-Received: by mail-vs1-f54.google.com with SMTP id d18so17037441vsv.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 11:31:50 -0700 (PDT)
-X-Received: by 2002:a67:c18a:0:b0:425:cf00:e332 with SMTP id
- h10-20020a67c18a000000b00425cf00e332mr13402479vsj.7.1680201109830; Thu, 30
- Mar 2023 11:31:49 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680204792;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i6JuvYmYJCj0w3cmFeh/1DSQl/9BrhvO1sQcJl2DJ6s=;
+        b=GUT6RaGAgwduShk1/wgWWw1gNSN9w1iym/YoSUcOmOtmHWXVCkiplypdhLNoTqm3xH
+         tMttEqdUm8I4RnFoOR/1M3hL0/lM8wznZ0pfCiq5NABWs8P1zvDvNAkg7O/XcpK8N4VK
+         8+lIz49Uv3uAl4D9Trb3YelODsW834GloG5VlVbwInhIwFS2dYMTSI4eV8LfB/uHNGG1
+         Ol4tAIMCX2aH7MH2TF019xIwB7TkuqIuU2PxTfHeM4EwDE3xWD2kWI/lnSKA9h1rFzX2
+         x4JiLSHkG6O6msIwtog5eBhGTKn8Lpsou56g4/c1VsLEmG3BWz0FAqnkgsdOMg3ywTe6
+         i0Rg==
+X-Gm-Message-State: AAQBX9ds4cKnwXnrLK5Av4LWy2jxoSm6U1ya7jTdUASVbNGRObmSetPG
+        kRISyH86Dhip2577jnRHnr8sHjB4wAf2D49602I=
+X-Google-Smtp-Source: AKy350bwnzSO1atdK4SjssSFu51Ce4F/E0AWt/J5nDUy29uUaW4L6CMPp5W/74N+w4A8cEqTVe/zlg==
+X-Received: by 2002:a17:90b:1c8b:b0:234:d78:9b4c with SMTP id oo11-20020a17090b1c8b00b002340d789b4cmr26470010pjb.18.1680204792371;
+        Thu, 30 Mar 2023 12:33:12 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c5e:53ce:1f39:30a5:d20f:f205])
+        by smtp.gmail.com with ESMTPSA id g3-20020a170902934300b0019e8c3cd3f4sm84616plp.201.2023.03.30.12.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 12:33:12 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org
+Subject: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU idle-states
+Date:   Fri, 31 Mar 2023 01:03:03 +0530
+Message-Id: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-References: <20230324195555.3921170-1-markyacoub@google.com> <20230324195555.3921170-10-markyacoub@google.com>
-In-Reply-To: <20230324195555.3921170-10-markyacoub@google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 30 Mar 2023 11:31:38 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xvu++Bvkkq+xORUB0OWq_49nupFgCqsbX0XJz8vgy0Zw@mail.gmail.com>
-Message-ID: <CAD=FV=Xvu++Bvkkq+xORUB0OWq_49nupFgCqsbX0XJz8vgy0Zw@mail.gmail.com>
-Subject: Re: [PATCH v7 09/10] arm64: dts: qcom: sc7180: Add support for HDCP
- in dp-controller
-To:     Mark Yacoub <markyacoub@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        seanpaul@chromium.org, suraj.kandpal@intel.com,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
 
-On Fri, Mar 24, 2023 at 12:56=E2=80=AFPM Mark Yacoub <markyacoub@chromium.o=
-rg> wrote:
->
-> From: Sean Paul <seanpaul@chromium.org>
->
-> Add the register ranges required for HDCP key injection and
-> HDCP TrustZone interaction as described in the dt-bindings for the
-> sc7180 dp controller.
->
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
->
-> ---
-> Changes in v3:
-> -Split off into a new patch containing just the dts change (Stephen)
-> -Add hdcp compatible string (Stephen)
-> Changes in v4:
-> -Rebase on Bjorn's multi-dp patchset
-> Changes in v5:
-> -Put the tz register offsets in trogdor dtsi (Rob C)
-> Changes in v6:
-> -Rebased: Removed modifications in sc7180.dtsi as it's already upstream
-> Changes in v7:
-> -Change registers offset
->
->  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/bo=
-ot/dts/qcom/sc7180-trogdor.dtsi
-> index 47f39c547c41a..63183ac9c3c48 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-> @@ -816,6 +816,14 @@ &mdss_dp {
->         status =3D "okay";
->         pinctrl-names =3D "default";
->         pinctrl-0 =3D <&dp_hot_plug_det>;
-> +
-> +       reg =3D <0 0x0ae90000 0 0x200>,
-> +             <0 0x0ae90200 0 0x200>,
-> +             <0 0x0ae90400 0 0xc00>,
-> +             <0 0x0ae91000 0 0x400>,
-> +             <0 0x0ae91400 0 0x400>,
-> +             <0 0x0aed1000 0 0x174>,
-> +             <0 0x0aee1000 0 0x2c>;
+Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+---
+Changes since v1:
+- v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
+- Addressed Konrad's comments on v1 and added GDHS and Power Collapse
+  cluster power states.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+ arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
+ 1 file changed, 136 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+index 2a51c938bbcb..b63395d476ed 100644
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -45,6 +45,8 @@ CPU0: cpu@0 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD0>;
++			power-domain-names = "psci";
+ 			L2_0: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+@@ -61,6 +63,8 @@ CPU1: cpu@1 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD1>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU2: cpu@2 {
+@@ -73,6 +77,8 @@ CPU2: cpu@2 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD2>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU3: cpu@3 {
+@@ -85,6 +91,8 @@ CPU3: cpu@3 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_0>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
++			power-domains = <&CPU_PD3>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU4: cpu@100 {
+@@ -97,6 +105,8 @@ CPU4: cpu@100 {
+ 			dynamic-power-coefficient = <282>;
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD4>;
++			power-domain-names = "psci";
+ 			L2_1: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+@@ -113,6 +123,8 @@ CPU5: cpu@101 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD5>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU6: cpu@102 {
+@@ -125,6 +137,8 @@ CPU6: cpu@102 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD6>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		CPU7: cpu@103 {
+@@ -137,6 +151,8 @@ CPU7: cpu@103 {
+ 			enable-method = "psci";
+ 			next-level-cache = <&L2_1>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
++			power-domains = <&CPU_PD7>;
++			power-domain-names = "psci";
+ 		};
+ 
+ 		cpu-map {
+@@ -176,6 +192,68 @@ core3 {
+ 				};
+ 			};
+ 		};
++
++		idle-states {
++			entry-method = "psci";
++
++			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "silver-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <290>;
++				exit-latency-us = <376>;
++				min-residency-us = <1182>;
++				local-timer-stop;
++			};
++
++			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
++				compatible = "arm,idle-state";
++				idle-state-name = "gold-rail-power-collapse";
++				arm,psci-suspend-param = <0x40000003>;
++				entry-latency-us = <297>;
++				exit-latency-us = <324>;
++				min-residency-us = <1110>;
++				local-timer-stop;
++			};
++		};
++
++		domain-idle-states {
++			CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
++				/* GDHS */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x40000022>;
++				entry-latency-us = <360>;
++				exit-latency-us = <421>;
++				min-residency-us = <782>;
++			};
++
++			CLUSTER_0_SLEEP_1: cluster-sleep-0-1 {
++				/* Power Collapse */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x41000044>;
++				entry-latency-us = <800>;
++				exit-latency-us = <2118>;
++				min-residency-us = <7376>;
++			};
++
++			CLUSTER_1_SLEEP_0: cluster-sleep-1-0 {
++				/* GDHS */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x40000042>;
++				entry-latency-us = <314>;
++				exit-latency-us = <345>;
++				min-residency-us = <660>;
++			};
++
++			CLUSTER_1_SLEEP_1: cluster-sleep-1-1 {
++				/* Power Collapse */
++				compatible = "domain-idle-state";
++				arm,psci-suspend-param = <0x41000044>;
++				entry-latency-us = <640>;
++				exit-latency-us = <1654>;
++				min-residency-us = <8094>;
++			};
++		};
+ 	};
+ 
+ 	firmware {
+@@ -199,6 +277,64 @@ pmu {
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
++
++		CPU_PD0: power-domain-cpu0 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_0_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD1: power-domain-cpu1 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_0_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD2: power-domain-cpu2 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_0_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD3: power-domain-cpu3 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_0_PD>;
++			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++		};
++
++		CPU_PD4: power-domain-cpu4 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_1_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD5: power-domain-cpu5 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_1_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD6: power-domain-cpu6 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_1_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CPU_PD7: power-domain-cpu7 {
++			#power-domain-cells = <0>;
++			power-domains = <&CLUSTER_1_PD>;
++			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++		};
++
++		CLUSTER_0_PD: power-domain-cpu-cluster0 {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_0_SLEEP_0>, <&CLUSTER_0_SLEEP_1>;
++		};
++
++		CLUSTER_1_PD: power-domain-cpu-cluster1 {
++			#power-domain-cells = <0>;
++			domain-idle-states = <&CLUSTER_1_SLEEP_0>, <&CLUSTER_1_SLEEP_1>;
++		};
+ 	};
+ 
+ 	reserved_memory: reserved-memory {
+-- 
+2.38.1
+
