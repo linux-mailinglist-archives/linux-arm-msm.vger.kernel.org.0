@@ -2,202 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C50B6CF9EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 06:02:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11AA26CFA30
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 06:32:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbjC3EC3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 00:02:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43218 "EHLO
+        id S229610AbjC3EcW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 00:32:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbjC3ECY (ORCPT
+        with ESMTP id S229552AbjC3EcV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 00:02:24 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D84565B8E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 21:02:19 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id t10so71267388edd.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Mar 2023 21:02:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brainfault-org.20210112.gappssmtp.com; s=20210112; t=1680148938;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DRrMSTrE1hzXNMTnJR9hzwcHZG5OJLH6N1k4mRkhtxc=;
-        b=ynfExVnq8Pbne4CrK35vVvzcZo/HMcJEJUR3Ujna/kLNgyxndnnVOhaOok7Q3u4boK
-         FW4keBgSZ6pU7kWyE+manshTU5Tk7hNavSWkOvFCWTteIMmp/9Qk7GSzFj7kYZ5XfmBv
-         miUHdrLcGJzpXksYn+qz42allwe3QMPmR/pnE7vpqvm1r6J8sdtN2nbt3yHJRZJvjQa2
-         WULHOKYx2FaImOfeOidrkyK9ABt3NseOxAzqi3/iHsrvkvaPYLGzC0VonLkMDJt7dAvE
-         qA6CCYx7R2kWBHI86Kqb+JhYZk0VIktRQH4ecdVqtPrNiVN9gXZkgnTnC6UdsKE6Gs/B
-         u+Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680148938;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DRrMSTrE1hzXNMTnJR9hzwcHZG5OJLH6N1k4mRkhtxc=;
-        b=qJW4zzYNp/6nz4sQlb5Tzvm4ZWGOnkQGoIDMKTZarLntGv74FXS+dB9FSlK1EOqEOV
-         bmFiy8hfFyW88QZQcpeInihy/A3MipV95XmsUCrVkkPaxP7SXtb+aqWlDcw5aP/Sg5/L
-         ruT2ztm3LiwtZDVzOpW80ZGp2ephqKVLEB7rSEwWjFxNbAGqU84byRJ2/l9y9AigaHUQ
-         XYJ5xHSkO26jKPL1uFLdi2yzom94lqCVATN6UEv8vqNlnPxCc2G4mnfzqbCp2lwWT8SW
-         Pz+K3VbMjr2ABUpH+wNm3OXPFfYhxNTVpely1Sh0Hea8EiZxneDz9Ae3x/R7YSbjLELL
-         ZdNA==
-X-Gm-Message-State: AAQBX9eRIzuaEAvmd0vE4skqsXWSBnCkI63dYAvU+lxYmA1V3AB7IyWx
-        FIcjDGlBS/mWTidbYInUQgN6VOtMYrAbXTx0HqLE8g==
-X-Google-Smtp-Source: AKy350YsOJqAiqRYem5e01w1p2m+BEvgEUELir1jFBDVGQszGos9GuJs6YHfU/Z+9mLpMcFmxWEdJiS8UYrZt9G/tI4=
-X-Received: by 2002:a50:9fef:0:b0:4fc:1608:68c8 with SMTP id
- c102-20020a509fef000000b004fc160868c8mr10756114edf.1.1680148938164; Wed, 29
- Mar 2023 21:02:18 -0700 (PDT)
+        Thu, 30 Mar 2023 00:32:21 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D38C10D7;
+        Wed, 29 Mar 2023 21:32:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 51B7EB8258C;
+        Thu, 30 Mar 2023 04:32:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA01C433D2;
+        Thu, 30 Mar 2023 04:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680150738;
+        bh=BpCkRkfg8i2crE/yPAM4A8j0OQ5LOXAgBqv/LL75Vwc=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=WS36mhqouLME5EXpvXM6z1aFwhqzU//QhVXjalxXfvk/m6Uz4GR2TZKA5bu/Qkx6/
+         nHfX6slRdxHA3zW0Xapga3Xk6m0YPbw49DuWiIjcQMgS6qNg4m/I/jVqMs85K0MXN7
+         1aXpMm9RtKxnhjOZJ0CzvAZlUsPRHYOkjNfh64myejkRM2xbkJL7rahIisXextMqyV
+         5fILFORu/kCIDeBYpaylop5TSfqsK03EJjNGc220yK10dNIyeEyd6DPPRhdXJL9nuU
+         Sv3wVqxx/MNXh4VHSggV+KzjlftiYu4UFBoJtSLaAPic1BVu3tFLFf5iJPkOiVQcoZ
+         7/d3a1XYWqlTg==
+Date:   Wed, 29 Mar 2023 21:32:16 -0700
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Sricharan R <quic_srichara@quicinc.com>
+Cc:     <mani@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] net: qrtr: Do not do DEL_SERVER broadcast after
+ DEL_CLIENT
+Message-ID: <20230329213216.7b0447e9@kernel.org>
+In-Reply-To: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
+References: <1680095250-21032-1-git-send-email-quic_srichara@quicinc.com>
 MIME-Version: 1.0
-References: <20230329-dt-cpu-header-cleanups-v1-0-581e2605fe47@kernel.org> <20230329-dt-cpu-header-cleanups-v1-16-581e2605fe47@kernel.org>
-In-Reply-To: <20230329-dt-cpu-header-cleanups-v1-16-581e2605fe47@kernel.org>
-From:   Anup Patel <anup@brainfault.org>
-Date:   Thu, 30 Mar 2023 09:32:06 +0530
-Message-ID: <CAAhSdy3MYV=v2TNZ_507zGe6Pj_c95TZwODPK8-zTHpkn-ukww@mail.gmail.com>
-Subject: Re: [PATCH 16/19] cpuidle: Adjust includes to remove of_device.h
-To:     Rob Herring <robh@kernel.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Amit Daniel Kachhap <amit.kachhap@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Huacai Chen <chenhuacai@kernel.org>,
-        Jiaxun Yang <jiaxun.yang@flygoat.com>,
-        Marc Zyngier <maz@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, sparclinux@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-riscv@lists.infradead.org, linux-pm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-mips@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 9:22=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
-:
->
-> Now that of_cpu_device_node_get() is defined in of.h, of_device.h is just
-> implicitly including other includes, and is no longer needed. Adjust the
-> include files with what was implicitly included by of_device.h (cpu.h,
-> cpuhotplug.h, of.h, and of_platform.h) and drop including of_device.h.
->
-> Signed-off-by: Rob Herring <robh@kernel.org>
+On Wed, 29 Mar 2023 18:37:30 +0530 Sricharan R wrote:
+> When the qrtr socket is released, qrtr_port_remove gets called, which
+> broadcasts a DEL_CLIENT. After this DEL_SERVER is also additionally
+> broadcasted, which becomes NOP, but triggers the below error msg.
+> 
+> "failed while handling packet from 2:-2", since remote node already
+> acted upon on receiving the DEL_CLIENT, once again when it receives
+> the DEL_SERVER, it returns -ENOENT.
+> 
+> Fixing it by not sending a 'DEL_SERVER' to remote when a 'DEL_CLIENT'
+> was sent for that port.
 
-For cpuidle-riscv-sbi.c
-Acked-by: Anup Patel <anup@brainfault.org>
+You use the word "fix" so please add a Fixes tag.
 
-Regards,
-Anup
+> Signed-off-by: Ram Kumar D <quic_ramd@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
 
-> ---
-> Please ack and I will take the series via the DT tree.
-> ---
->  drivers/cpuidle/cpuidle-psci.c      | 1 -
->  drivers/cpuidle/cpuidle-qcom-spm.c  | 3 +--
->  drivers/cpuidle/cpuidle-riscv-sbi.c | 2 +-
->  drivers/cpuidle/dt_idle_states.c    | 1 -
->  4 files changed, 2 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/cpuidle/cpuidle-psci.c b/drivers/cpuidle/cpuidle-psc=
-i.c
-> index 6de027f9f6f5..bf68920d038a 100644
-> --- a/drivers/cpuidle/cpuidle-psci.c
-> +++ b/drivers/cpuidle/cpuidle-psci.c
-> @@ -16,7 +16,6 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/platform_device.h>
->  #include <linux/psci.h>
->  #include <linux/pm_domain.h>
-> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle=
--qcom-spm.c
-> index c6e2e91bb4c3..1fc9968eae19 100644
-> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
-> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
-> @@ -11,8 +11,7 @@
->  #include <linux/io.h>
->  #include <linux/slab.h>
->  #include <linux/of.h>
-> -#include <linux/of_address.h>
-> -#include <linux/of_device.h>
-> +#include <linux/of_platform.h>
->  #include <linux/err.h>
->  #include <linux/platform_device.h>
->  #include <linux/cpuidle.h>
-> diff --git a/drivers/cpuidle/cpuidle-riscv-sbi.c b/drivers/cpuidle/cpuidl=
-e-riscv-sbi.c
-> index be383f4b6855..ae0b838a0634 100644
-> --- a/drivers/cpuidle/cpuidle-riscv-sbi.c
-> +++ b/drivers/cpuidle/cpuidle-riscv-sbi.c
-> @@ -8,6 +8,7 @@
->
->  #define pr_fmt(fmt) "cpuidle-riscv-sbi: " fmt
->
-> +#include <linux/cpuhotplug.h>
->  #include <linux/cpuidle.h>
->  #include <linux/cpumask.h>
->  #include <linux/cpu_pm.h>
-> @@ -15,7 +16,6 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->  #include <linux/slab.h>
->  #include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
-> diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_s=
-tates.c
-> index 02aa0b39af9d..12fec92a85fd 100644
-> --- a/drivers/cpuidle/dt_idle_states.c
-> +++ b/drivers/cpuidle/dt_idle_states.c
-> @@ -14,7 +14,6 @@
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> -#include <linux/of_device.h>
->
->  #include "dt_idle_states.h"
->
->
-> --
-> 2.39.2
->
+Spell out full names, please.
