@@ -2,174 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FE2C6D026D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:03:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8983A6D028B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 13:07:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231231AbjC3LDo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 07:03:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36378 "EHLO
+        id S231241AbjC3LHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 07:07:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231460AbjC3LDn (ORCPT
+        with ESMTP id S229916AbjC3LHQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 07:03:43 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179946A71;
-        Thu, 30 Mar 2023 04:03:38 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32UAs7PV015381;
-        Thu, 30 Mar 2023 11:03:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vul7olHZLizn9mFsl0sHisxIJ3GgAM9Zuxm0tboBoGo=;
- b=WNZ1qDQJZRPkz5ySK+JTGPRwNSupM46dkaoWfgRB1FJYrVZtbPS9eGz/8uQA+uRQfVgu
- 0SnUuTCoirpNqbn+SWWxXWbxEpn19N0Tv8YtWwCNunt1KP9Tmdsb9EWQluV3S2X3riog
- HNZgS64vyFRaRHGrs07Ba9MfUYJOhNQYp+nz4No7g/narfEk1UbEpgpYbqFkjz0gSZxz
- M6SLj8pytZuXZ0IEpLVmNw6nD5wKAfprQ4Dt+1IlPPgVx2wxPitbgPuAqHy6wpio5JgO
- DxZrVwEBoMuhOY74AWLfp6/py/A0vG0nGkKOIb872La+KFjJE5nkOT4rlUgzcP4IaxhP IQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn51ygpg7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 11:03:02 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32UB31VK032743
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 30 Mar 2023 11:03:01 GMT
-Received: from [10.216.26.177] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
- 2023 04:02:55 -0700
-Message-ID: <0e85caec-f6ec-fbd4-1815-8df9769bffcf@quicinc.com>
-Date:   Thu, 30 Mar 2023 16:32:51 +0530
+        Thu, 30 Mar 2023 07:07:16 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84286A71
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:06:55 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id h11so17031944lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 04:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680174413;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9kFJmqVtwWUVcG0Lm77E8KR/5HB12mJDwmxwNxlca4Y=;
+        b=QFJNu3+0CjAQw1iofhkT/VGzYC5JtBTXOv1piZxLxkvwohLbO7ffQXvlBJV5/myadj
+         Fhzaxxn3qOPC09GRSp/56AvLmXbNSJxYvmqd8x874qBZE+RhW948/qPsY6V1UKLse056
+         1fcu/APUG+3/1TQ6lpSn39vbhMmNrO5lNP/0RYadmKlP0YXisDmlNdntxOcNGTqZQkr3
+         W5fjBxZGI5nAAofkKIveAelKKFj8y3KSRwBn0SiCZSVm6l5dG0F98DQVzb1WwSFMtsS/
+         fEeB6wyVMjIt6750T/pp7bdMilL/U/Wayoa7tKx12h3goMPRiTcLnvPmJSfpIWxxrejC
+         RaUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680174413;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9kFJmqVtwWUVcG0Lm77E8KR/5HB12mJDwmxwNxlca4Y=;
+        b=LrEADVC6YZbheoKG21c3evu7BtrzAWGec9ZH3cfSJPW1Bodco54RB0dFDtD1uLZ6TE
+         rf2UuSnbp/dDiVUMJottXHyFDngf9AwajGrDw6Mmj7AYsFGmOODRER2hKTgBYFaOjwOc
+         XKBRSHp5JhHG7pJsGtFeGVVhMPidUzEgJ9JLKvEl87XZqv398HVphoDoGxO7nl5Afsil
+         OMS0G6oI4X8FXnnlBJGeTavf0uA2KiSltywh1QEKW4x1EPhPhCA5+TtypLDcbcbVDTt8
+         bsGGkoiTX0xFLw6p8iFHlyMpPNmpHy1NktWYMtCemfCxKFrMf+WPEVPKW1TYCXzXVLAD
+         syFw==
+X-Gm-Message-State: AAQBX9cxhYYGXyWFT6LIv3aqb2cc0XxjdtRorXLCJqGC7Uow4svQFXpp
+        L3n/8haG2VjizhIMODff823+wg==
+X-Google-Smtp-Source: AKy350ZOwZSifMJ0COgNwwfI8Ff4NZPvJrvXq9pF7O3gWwfbrZxZjTu20qbb3ttl1T+NHD9CSza3rw==
+X-Received: by 2002:ac2:5a4c:0:b0:4d5:a689:7580 with SMTP id r12-20020ac25a4c000000b004d5a6897580mr6377686lfn.47.1680174413683;
+        Thu, 30 Mar 2023 04:06:53 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id t7-20020a19ad07000000b004e8451948desm5835252lfc.227.2023.03.30.04.06.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 04:06:53 -0700 (PDT)
+Message-ID: <34470797-493c-d99b-4d0c-0f9381c5b7c1@linaro.org>
+Date:   Thu, 30 Mar 2023 13:06:51 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 02/18] media: venus: Introduce VPU version distinction
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RFC PATCH 0/3] drm/msm/a5xx: scale MX following the frequency
+ changes
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>
-CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Vikash Garodia" <vgarodia@codeaurora.org>
-References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
- <20230228-topic-venus-v1-2-58c2c88384e9@linaro.org>
- <cf2eee18-a6c9-2a9b-84fa-3e2351c413e8@quicinc.com>
- <f8833364-854e-3f04-db7a-82a29682b0c9@linaro.org>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <f8833364-854e-3f04-db7a-82a29682b0c9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mX4hA1DBL7Tow3_Bk7jTu7ZtGJXwdTL7
-X-Proofpoint-GUID: mX4hA1DBL7Tow3_Bk7jTu7ZtGJXwdTL7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-30_06,2023-03-30_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- impostorscore=0 malwarescore=0 adultscore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 clxscore=1011 priorityscore=1501 mlxlogscore=999
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303300090
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/2/2023 5:07 PM, Konrad Dybcio wrote:
->
-> On 2.03.2023 08:12, Dikshita Agarwal wrote:
->> On 2/28/2023 8:54 PM, Konrad Dybcio wrote:
->>> The Video Processing Unit hardware version is the differentiator,
->>> based on which we should decide which code paths to take in hw
->>> init. Up until now, we've relied on HFI versions, but that was
->>> just a happy accident between recent SoCs. Add a field in the
->>> res struct and add correlated definitions that will be used to
->>> account for the aforementioned differences.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>    drivers/media/platform/qcom/venus/core.h | 15 +++++++++++++++
->>>    1 file changed, 15 insertions(+)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->>> index 32551c2602a9..4b785205c5b1 100644
->>> --- a/drivers/media/platform/qcom/venus/core.h
->>> +++ b/drivers/media/platform/qcom/venus/core.h
->>> @@ -48,6 +48,14 @@ struct bw_tbl {
->>>        u32 peak_10bit;
->>>    };
->>>    +enum vpu_version {
->>> +    VPU_VERSION_AR50, /* VPU4 */
->>> +    VPU_VERSION_AR50_LITE, /* VPU4.4 */
->>> +    VPU_VERSION_IRIS1, /* VPU5 */
 
-There was Venus3X, followed by a different generation of video hardware. 
-Driver just extended the versions for next generation incrementally.
 
-Existing versions in driver are not the VPU versions, so we can drop 
-them from comments.
+On 30.03.2023 00:24, Dmitry Baryshkov wrote:
+> Konrad brought up the topic of scaling the MX domain according to the
+> OPP changes. Here is my RFC for this functionality. I post it as an RFC
+> for two reasons:
+> 
+> 1) I'm not sure that we should scale MX if we are not scaling main
+> voltage following the CPR3
+It should be ok, however..
+> 
+[...]
 
->>> +    VPU_VERSION_IRIS2,
->>> +    VPU_VERSION_IRIS2_1,
->>> +};
->>> +
->>>    struct venus_resources {
->>>        u64 dma_mask;
->>>        const struct freq_tbl *freq_tbl;
->>> @@ -71,6 +79,7 @@ struct venus_resources {
->>>        const char * const resets[VIDC_RESETS_NUM_MAX];
->>>        unsigned int resets_num;
->>>        enum hfi_version hfi_version;
->>> +    enum vpu_version vpu_version;
->>>        u8 num_vpp_pipes;
->>>        u32 max_load;
->>>        unsigned int vmem_id;
->>> @@ -473,6 +482,12 @@ struct venus_inst {
->>>    #define IS_V4(core)    ((core)->res->hfi_version == HFI_VERSION_4XX)
->>>    #define IS_V6(core)    ((core)->res->hfi_version == HFI_VERSION_6XX)
->>>    +#define IS_AR50(core)        ((core)->res->vpu_version == VPU_VERSION_AR50)
->>> +#define IS_AR50_LITE(core)    ((core)->res->vpu_version == VPU_VERSION_AR50_LITE)
->>> +#define IS_IRIS1(core)        ((core)->res->vpu_version == VPU_VERSION_IRIS1)
->>> +#define IS_IRIS2(core)        ((core)->res->vpu_version == VPU_VERSION_IRIS2)
->>> +#define IS_IRIS2_1(core)    ((core)->res->vpu_version == VPU_VERSION_IRIS2_1)
->>> +
->>>    #define ctrl_to_inst(ctrl)    \
->>>        container_of((ctrl)->handler, struct venus_inst, ctrl_handler)
->>>    
->> Adding VPU version check seems a good idea to me. Can we remove HFI Version checks now?
-> If all implementations using VPU x.y *always* use the
-> same HFI generation for given x, y, we could.
+> Dmitry Baryshkov (3):
+>   dt-bindings: display/msm/gpu: allow specifying MX domain A5xx
+>   drm/msm/a5xx: scale MX domain following the frequncy changes
+This is a stopgap solution, CPR is a child of MX.
 
-HFIs generally does not change, so we can be sure that they would always 
-use the same HFI.
-
-We might add a new interface (HFI) for a feature requirement, but always 
-support the existing ones.
-
->
-> That said, I think keeping it as-is would be convenient
-> from the maintainability standpoint if nothing else.. For
-> example functions that only appear in ancient msm-3.10
-> releases can be easily guarded with IS_V1 or what have you
-> without having to dig up all n VPU revisions.
->
-> Konrad
+Konrad
+>   arm64: dts: qcom: specify power domains for the GPU
+> 
+>  .../devicetree/bindings/display/msm/gpu.yaml  |  9 +++-
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi         | 14 ++++-
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c         | 52 +++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.h         |  3 ++
+>  4 files changed, 76 insertions(+), 2 deletions(-)
+> 
