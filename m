@@ -2,123 +2,271 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D6CE6D00B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 545BD6D0113
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 12:23:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229847AbjC3KKr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 06:10:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51582 "EHLO
+        id S230030AbjC3KXF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 06:23:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231190AbjC3KKq (ORCPT
+        with ESMTP id S230496AbjC3KXC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 06:10:46 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 518E27DB2;
-        Thu, 30 Mar 2023 03:10:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id C8298B8258A;
-        Thu, 30 Mar 2023 10:10:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD83C433D2;
-        Thu, 30 Mar 2023 10:10:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680171040;
-        bh=NXNwGsAYLBsQY9dA06ZnOE2S68dF14Wy6ldja64Ce0w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=P8RuF43lX0HN67shTTXKZj0DzpruL+7nrAV5z1JxfN3TdehDEFeD/FFubfbzgAIMN
-         0CSG41hSJrtylhO0ylPmwChpwgZ/bYgPtIHg5JTzOeNmFzXug2qVqCMymMi7HVYQfn
-         WNwi6X1b07GeWa8wW3ckdJTxMB1CHYJPwXnt412g1H+I9k/pQlUz2uriJ7Sva+3/d5
-         /H1R1B3jxtHGoTksEpxFbnvMartPgwkxXuy/pLE0yih+nDS4o+0kGPnd+nlg7KoWia
-         w+ch6UaCfYtjygcofaFXx5BH0bAwdOiWcwbk3rc4SOeiHicb7OUPJCij8pp54JseeV
-         EdjwFWJsIES+w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1phpFC-0005NY-Gj; Thu, 30 Mar 2023 12:10:58 +0200
-Date:   Thu, 30 Mar 2023 12:10:58 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        Mark Pearson <markpearson@lenovo.com>,
-        Tim Jiang <quic_tjiang@quicinc.com>
-Subject: Re: [PATCH v8 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
- chip wcn6855
-Message-ID: <ZCVgMuSdyMQhf/Ko@hovoldconsulting.com>
-References: <20230326233812.28058-1-steev@kali.org>
- <20230326233812.28058-3-steev@kali.org>
+        Thu, 30 Mar 2023 06:23:02 -0400
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE1672B7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 03:23:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1680171781; x=1711707781;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gLn5TTEcIlCoQHKj85Jril/VhPR3hAJS3q3MefOT/pw=;
+  b=VoUckJJlYbQKkXmsgPfCVxAiigSFPIVyXuI1zrp+nv5VYu2PxvCFXtBz
+   iKnMR/3PX6xLS+rLdJvnb2Z1tNaOlcpSzY3C5uBBLJg6+WT7VUDMadA2i
+   XTjkV9JgIq6EMpObdpSkSX03XjG33gWZKNU0wZgSlbsAQACLIML0NcwWh
+   OyoDmy1NjmiY8heMtMVHhJpe4qW8zERHLYl//rn6DfeYx8ZqJ0IMEoO3s
+   YEn+0NCWSHyA3fzhSNuJf1q5FMcoUx0xIf9JKfWXVrtrCuhTcQyYUvSFj
+   lVr/FdvZ5CO0fjtlG8FKQWT2pXLixitnJ6XGmS5mcZ3C5Hxhnpv8rQwvX
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="339853745"
+X-IronPort-AV: E=Sophos;i="5.98,303,1673942400"; 
+   d="scan'208";a="339853745"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Mar 2023 03:22:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10664"; a="714938796"
+X-IronPort-AV: E=Sophos;i="5.98,303,1673942400"; 
+   d="scan'208";a="714938796"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga008.jf.intel.com with ESMTP; 30 Mar 2023 03:22:47 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1phpQd-000Kjq-1q;
+        Thu, 30 Mar 2023 10:22:47 +0000
+Date:   Thu, 30 Mar 2023 18:22:44 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+        sean@poorly.run, javierm@redhat.com, airlied@gmail.com,
+        daniel@ffwll.ch
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 6/6] drm/msm: Implement fbdev emulation as in-kernel
+ client
+Message-ID: <202303301849.HjMnKXNi-lkp@intel.com>
+References: <20230330074150.7637-7-tzimmermann@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230326233812.28058-3-steev@kali.org>
+In-Reply-To: <20230330074150.7637-7-tzimmermann@suse.de>
 X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Mar 26, 2023 at 06:38:10PM -0500, Steev Klimaszewski wrote:
-> Add regulators, GPIOs and changes required to power on/off wcn6855.
-> Add support for firmware download for wcn6855 which is in the
-> linux-firmware repository as hpbtfw21.tlv and hpnv21.bin.
-> 
-> Based on the assumption that this is similar to the wcn6750
-> 
-> Tested-on: BTFW.HSP.2.1.0-00538-VER_PATCHZ-1
-> 
-> Signed-off-by: Steev Klimaszewski <steev@kali.org>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Tested-by: Bjorn Andersson <andersson@kernel.org>
-> ---
-> Changes since v7:
->  * None
+Hi Thomas,
 
-Only noticed now when Luiz applied the patches, but why did you drop my
-reviewed-by and tested-by tags from this patch when submitting v8?
+I love your patch! Yet something to improve:
 
-For the record:
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on linus/master v6.3-rc4]
+[cannot apply to next-20230330]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
- 
-> Changes since v6:
->  * Update commit message.
->  * Add Johan's R-b and T-b.
-> 
-> Changes since v5:
->  * Revert Set qcadev->initspeed since 6855 doesn't use it, don't touch.
->  * Convert get_fw_build_info to a switch statement
->  * Add poweroff handling
->  * Fix up line alignments
->  * Drop from microsoft extensions check since I don't actually know if we need
-> 
-> Changes since v4:
->  * Remove unused firmware check because we don't have mbn firmware.
->  * Set qcadev->init_speed if it hasn't been set.
-> 
-> Changes since v3:
->  * drop unused regulators
-> 
-> Changes since v2:
->  * drop unnecessary commit info
-> 
-> Changes since v1:
->  * None
+url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-msm-Clear-aperture-ownership-outside-of-fbdev-code/20230330-154729
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20230330074150.7637-7-tzimmermann%40suse.de
+patch subject: [PATCH 6/6] drm/msm: Implement fbdev emulation as in-kernel client
+config: csky-randconfig-r011-20230329 (https://download.01.org/0day-ci/archive/20230330/202303301849.HjMnKXNi-lkp@intel.com/config)
+compiler: csky-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/ec39cb11cf72fb01ada6fe51c7c572a31dcc805d
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Thomas-Zimmermann/drm-msm-Clear-aperture-ownership-outside-of-fbdev-code/20230330-154729
+        git checkout ec39cb11cf72fb01ada6fe51c7c572a31dcc805d
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=csky olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=csky SHELL=/bin/bash drivers/gpu/drm/msm/
 
-Johan
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303301849.HjMnKXNi-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/gpu/drm/msm/msm_drv.c: In function 'msm_drm_init':
+>> drivers/gpu/drm/msm/msm_drv.c:538:20: error: 'fbdev' undeclared (first use in this function)
+     538 |         if (kms && fbdev)
+         |                    ^~~~~
+   drivers/gpu/drm/msm/msm_drv.c:538:20: note: each undeclared identifier is reported only once for each function it appears in
+
+
+vim +/fbdev +538 drivers/gpu/drm/msm/msm_drv.c
+
+   398	
+   399	static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+   400	{
+   401		struct msm_drm_private *priv = dev_get_drvdata(dev);
+   402		struct drm_device *ddev;
+   403		struct msm_kms *kms;
+   404		int ret, i;
+   405	
+   406		if (drm_firmware_drivers_only())
+   407			return -ENODEV;
+   408	
+   409		/* the fw fb could be anywhere in memory */
+   410		ret = drm_aperture_remove_framebuffers(false, drv);
+   411		if (ret)
+   412			return ret;
+   413	
+   414		ddev = drm_dev_alloc(drv, dev);
+   415		if (IS_ERR(ddev)) {
+   416			DRM_DEV_ERROR(dev, "failed to allocate drm_device\n");
+   417			return PTR_ERR(ddev);
+   418		}
+   419		ddev->dev_private = priv;
+   420		priv->dev = ddev;
+   421	
+   422		priv->wq = alloc_ordered_workqueue("msm", 0);
+   423		if (!priv->wq)
+   424			return -ENOMEM;
+   425	
+   426		INIT_LIST_HEAD(&priv->objects);
+   427		mutex_init(&priv->obj_lock);
+   428	
+   429		/*
+   430		 * Initialize the LRUs:
+   431		 */
+   432		mutex_init(&priv->lru.lock);
+   433		drm_gem_lru_init(&priv->lru.unbacked, &priv->lru.lock);
+   434		drm_gem_lru_init(&priv->lru.pinned,   &priv->lru.lock);
+   435		drm_gem_lru_init(&priv->lru.willneed, &priv->lru.lock);
+   436		drm_gem_lru_init(&priv->lru.dontneed, &priv->lru.lock);
+   437	
+   438		/* Teach lockdep about lock ordering wrt. shrinker: */
+   439		fs_reclaim_acquire(GFP_KERNEL);
+   440		might_lock(&priv->lru.lock);
+   441		fs_reclaim_release(GFP_KERNEL);
+   442	
+   443		drm_mode_config_init(ddev);
+   444	
+   445		ret = msm_init_vram(ddev);
+   446		if (ret)
+   447			goto err_drm_dev_put;
+   448	
+   449		/* Bind all our sub-components: */
+   450		ret = component_bind_all(dev, ddev);
+   451		if (ret)
+   452			goto err_drm_dev_put;
+   453	
+   454		dma_set_max_seg_size(dev, UINT_MAX);
+   455	
+   456		msm_gem_shrinker_init(ddev);
+   457	
+   458		if (priv->kms_init) {
+   459			ret = priv->kms_init(ddev);
+   460			if (ret) {
+   461				DRM_DEV_ERROR(dev, "failed to load kms\n");
+   462				priv->kms = NULL;
+   463				goto err_msm_uninit;
+   464			}
+   465			kms = priv->kms;
+   466		} else {
+   467			/* valid only for the dummy headless case, where of_node=NULL */
+   468			WARN_ON(dev->of_node);
+   469			kms = NULL;
+   470		}
+   471	
+   472		/* Enable normalization of plane zpos */
+   473		ddev->mode_config.normalize_zpos = true;
+   474	
+   475		if (kms) {
+   476			kms->dev = ddev;
+   477			ret = kms->funcs->hw_init(kms);
+   478			if (ret) {
+   479				DRM_DEV_ERROR(dev, "kms hw init failed: %d\n", ret);
+   480				goto err_msm_uninit;
+   481			}
+   482		}
+   483	
+   484		drm_helper_move_panel_connectors_to_head(ddev);
+   485	
+   486		ddev->mode_config.funcs = &mode_config_funcs;
+   487		ddev->mode_config.helper_private = &mode_config_helper_funcs;
+   488	
+   489		for (i = 0; i < priv->num_crtcs; i++) {
+   490			/* initialize event thread */
+   491			priv->event_thread[i].crtc_id = priv->crtcs[i]->base.id;
+   492			priv->event_thread[i].dev = ddev;
+   493			priv->event_thread[i].worker = kthread_create_worker(0,
+   494				"crtc_event:%d", priv->event_thread[i].crtc_id);
+   495			if (IS_ERR(priv->event_thread[i].worker)) {
+   496				ret = PTR_ERR(priv->event_thread[i].worker);
+   497				DRM_DEV_ERROR(dev, "failed to create crtc_event kthread\n");
+   498				priv->event_thread[i].worker = NULL;
+   499				goto err_msm_uninit;
+   500			}
+   501	
+   502			sched_set_fifo(priv->event_thread[i].worker->task);
+   503		}
+   504	
+   505		ret = drm_vblank_init(ddev, priv->num_crtcs);
+   506		if (ret < 0) {
+   507			DRM_DEV_ERROR(dev, "failed to initialize vblank\n");
+   508			goto err_msm_uninit;
+   509		}
+   510	
+   511		if (kms) {
+   512			pm_runtime_get_sync(dev);
+   513			ret = msm_irq_install(ddev, kms->irq);
+   514			pm_runtime_put_sync(dev);
+   515			if (ret < 0) {
+   516				DRM_DEV_ERROR(dev, "failed to install IRQ handler\n");
+   517				goto err_msm_uninit;
+   518			}
+   519		}
+   520	
+   521		ret = drm_dev_register(ddev, 0);
+   522		if (ret)
+   523			goto err_msm_uninit;
+   524	
+   525		if (kms) {
+   526			ret = msm_disp_snapshot_init(ddev);
+   527			if (ret)
+   528				DRM_DEV_ERROR(dev, "msm_disp_snapshot_init failed ret = %d\n", ret);
+   529		}
+   530		drm_mode_config_reset(ddev);
+   531	
+   532		ret = msm_debugfs_late_init(ddev);
+   533		if (ret)
+   534			goto err_msm_uninit;
+   535	
+   536		drm_kms_helper_poll_init(ddev);
+   537	
+ > 538		if (kms && fbdev)
+   539			msm_fbdev_setup(ddev);
+   540	
+   541		return 0;
+   542	
+   543	err_msm_uninit:
+   544		msm_drm_uninit(dev);
+   545	err_drm_dev_put:
+   546		drm_dev_put(ddev);
+   547		return ret;
+   548	}
+   549	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
