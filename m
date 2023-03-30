@@ -2,334 +2,299 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 153796D0576
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:56:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 186C86D0581
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Mar 2023 14:58:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbjC3M4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 08:56:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51802 "EHLO
+        id S230035AbjC3M6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 08:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbjC3M4b (ORCPT
+        with ESMTP id S231367AbjC3M6M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 08:56:31 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6701701
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:56:29 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id y20so24416983lfj.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 05:56:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680180987;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=My/kh8FAc+a/DtylS38p61qx9mFqngZhP3tiK/qTFWw=;
-        b=beqh7tUdppB4g3HSjFxBnHO/i7fdhaEcrjEvFrGIS5qbTJQuKqEWVrFUyelLAcQ/q2
-         3JI8NT2W3jthBGfs1s79FoqOUcvI2xklr+LZ8fisVxd5H4zhLOwiX0GNtQWoKg5dennw
-         I2Qmxr9RhV6VrR1GHA7DdNQCUQDh30kyVVedWPJFqsWyo67EPZ/GetNI3HRx7HQ0T7gf
-         0LKucfedZYi79xmOLxG2UliCEp3VF8awS+1ztEEoISQRgWiGSFLxm/5vc8UPRdNphjdV
-         +IuGPjfwKacghgXikDscyxIpg1o2ObN+ml+vLLW8c1/wXCyPZdj3aFNHoWYpCDvEDefT
-         Whaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680180987;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=My/kh8FAc+a/DtylS38p61qx9mFqngZhP3tiK/qTFWw=;
-        b=vCas/O/qCUc9PSWa9Aa/vjtHVUHoMHQ4PbBDRrxd8WEQkvch3y/J2dYsorsESIehfr
-         apLDPuhZghL+BQg7ONp6foiS7ERIelNLeojO9bCn+1Xk2y2E9ivBqjDYYKR2ZKXrC3v2
-         Iy1flCT/6dddyojNhj8baiXbSBbBTrv53g/0erTU3FNH8uC45lb7aH7jaYr5FBbhox2U
-         Pcg4immK+56F1G8ULKJtIBUmclJk3Ae5WjkH5jlEzXvyjjpigjh2EnewnLPP9W6ylHtU
-         P+sySmshPdONSXCaKq2Gcc3LOL3jQvvfF3nAf5YW8nBp5LOLi1vkEnx+u9sLxeQ8lSYr
-         FHqw==
-X-Gm-Message-State: AAQBX9cCYabk6hK9HeTAD/CvXmsiH1+OH3zC//URdQ44In7DuhhT4Hrm
-        EJG6BUFSXoISkQpA8ttCfguR8A==
-X-Google-Smtp-Source: AKy350b7MvOypy8cXjHgg3vOy2Jr7ul14Hp2+ncLfFjLlGz/XpV4R0+9FvK09/8V8jFkJznx4Pu82g==
-X-Received: by 2002:ac2:5ded:0:b0:4dd:af74:fe1a with SMTP id z13-20020ac25ded000000b004ddaf74fe1amr7121033lfq.48.1680180987335;
-        Thu, 30 Mar 2023 05:56:27 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id q30-20020ac2515e000000b004cf6c56fdb5sm5853772lfd.232.2023.03.30.05.56.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Mar 2023 05:56:27 -0700 (PDT)
-Message-ID: <e9630379-20cd-f513-3b88-92b00f452539@linaro.org>
-Date:   Thu, 30 Mar 2023 14:56:25 +0200
+        Thu, 30 Mar 2023 08:58:12 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC4B10F3;
+        Thu, 30 Mar 2023 05:58:11 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32UArTiI026312;
+        Thu, 30 Mar 2023 12:58:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=l4bosBmg2yENuCSLikCixfjRCSUBzv/KwV5r8m6+V/Y=;
+ b=h+BF3XoFk5z+r/iO8OK19sFqmvsB3GL7w6UUdMinxnpX1oijl/7hmyFqmTK2VddmxE2U
+ phvTEDIbnOG23ZIKc0PJUR4y958Fr+HK8bgdBTms7SeYUCHhjWDS9t7gt1DiDmJzBpB4
+ 6RwVnGMAGf/sOVXiT1EhjlziwbeCMHNib86i8v+QVkZDm/qnPVKEWImyaFqqG0txAyuQ
+ dA9QW7Wbe0Hxq8GjSubr2mHawKZqgHO2Kvfe4hcRjrruEnUdqSRsfKIQht/EIepn6w4r
+ /hQGek98oWLLRHvWGirjq9MP0gvR4iv+2az24kY7oxQ8uhZssOnJn0L3VnGWkgVjxM/i 2Q== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn8wng8vj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 12:58:01 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32UCw03t011736
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 30 Mar 2023 12:58:00 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 30 Mar 2023 05:57:54 -0700
+Date:   Thu, 30 Mar 2023 18:27:50 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+Subject: Re: [PATCH v5 6/8] phy: qcom: qmp: Update IPQ9574 USB Phy
+ initialization Sequence
+Message-ID: <20230330125749.GA19941@varda-linux.qualcomm.com>
+References: <cover.1680162377.git.quic_varada@quicinc.com>
+ <60954818576384e36136cb706aa554788ec4bb22.1680162377.git.quic_varada@quicinc.com>
+ <CAA8EJpoyw6mspNUffU3KKvRPdB2XQE0A6FF7YUUzwpBVQO=Ykw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [v2,42/50] drm/msm/dpu: deduplicate sm6115 with qcm2290
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230211231259.1308718-43-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230211231259.1308718-43-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpoyw6mspNUffU3KKvRPdB2XQE0A6FF7YUUzwpBVQO=Ykw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: fDuDz5i29YnhDjD7KytZitIUU5YTcZ0u
+X-Proofpoint-GUID: fDuDz5i29YnhDjD7KytZitIUU5YTcZ0u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-30_07,2023-03-30_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2303300104
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Mar 30, 2023 at 12:41:08PM +0300, Dmitry Baryshkov wrote:
+> On Thu, 30 Mar 2023 at 11:42, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
+> >
+> > Updated USB QMP PHY Init sequence based on HPG for IPQ9574.
+> > Reused clock and reset list from existing targets.
+> >
+> > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> >  Changes in v5:
+> >         - Fix additional review comments
+> >         - Use V3 register offsets
+> >  Changes in v4:
+> >         - Use qmp_usb_offsets for register space access
+> >  Changes in v3:
+> >         - Fix hex captitalization
+> >  Changes in v2:
+> >         - Removed unused phy register offsets
+> >         - Moved the clock entries to the correct place
+> >         - Maintain sorted order
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 115 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 115 insertions(+)
+> >
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> > index a49711c..77041dd 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> > @@ -139,6 +139,88 @@ static const unsigned int qmp_v5_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
+> >         [QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = QPHY_V5_PCS_USB3_LFPS_RXTERM_IRQ_CLEAR,
+> >  };
+> >
+> > +static const struct qmp_phy_init_tbl ipq9574_usb3_serdes_tbl[] = {
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x1a),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_CLK_SELECT, 0x30),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_BG_TRIM, 0x0f),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_FASTLOCK_FO_GAIN, 0x0b),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SVS_MODE_CLK_SEL, 0x01),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_CMN_CONFIG, 0x06),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_PLL_IVCO, 0x0f),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SYS_CLK_CTRL, 0x06),
+> > +       /* PLL and Loop filter settings */
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x68),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0xab),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0xaa),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x02),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_CP_CTRL_MODE0, 0x09),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_PLL_RCTRL_MODE0, 0x16),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_PLL_CCTRL_MODE0, 0x28),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_INTEGLOOP_GAIN0_MODE0, 0xa0),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0xaa),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x29),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_CORE_CLK_EN, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP_CFG, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_VCO_TUNE_MAP, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_BG_TIMER, 0x0a),
+> > +       /* SSC settings */
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_EN_CENTER, 0x01),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER1, 0x7d),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_PER2, 0x01),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_ADJ_PER1, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_ADJ_PER2, 0x00),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE1, 0x0a),
+> > +       QMP_PHY_INIT_CFG(QSERDES_COM_SSC_STEP_SIZE2, 0x05),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl ipq9574_usb3_tx_tbl[] = {
+> > +       QMP_PHY_INIT_CFG(QSERDES_TX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN, 0x45),
+> > +       QMP_PHY_INIT_CFG(QSERDES_TX_RCV_DETECT_LVL_2, 0x12),
+> > +       QMP_PHY_INIT_CFG(QSERDES_TX_LANE_MODE, 0x06),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl ipq9574_usb3_rx_tbl[] = {
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_UCDR_SO_GAIN, 0x06),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL2, 0x02),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL3, 0x6c),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL3, 0x4c),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQU_ADAPTOR_CNTRL4, 0xb8),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x77),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_RX_OFFSET_ADAPTOR_CNTRL2, 0x80),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_CNTRL, 0x03),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_DEGLITCH_CNTRL, 0x16),
+> > +       QMP_PHY_INIT_CFG(QSERDES_RX_SIGDET_ENABLES, 0x0c),
+> > +};
+> > +
+> > +static const struct qmp_phy_init_tbl ipq9574_usb3_pcs_tbl[] = {
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x15),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0e),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL2, 0x83),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNTRL1, 0x02),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_L, 0x09),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_CNT_VAL_H_TOL, 0xa2),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_FLL_MAN_CODE, 0x85),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG1, 0xd1),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG2, 0x1f),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LOCK_DETECT_CONFIG3, 0x47),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_POWER_STATE_CONFIG2, 0x1b),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_WAIT_TIME, 0x75),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RXEQTRAINING_RUN_TIME, 0x13),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_LFPS_TX_ECSTART_EQTLOCK, 0x86),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_PWRUP_RESET_DLY_TIME_AUXCLK, 0x04),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TSYNC_RSYNC_TIME, 0x44),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_L, 0xe7),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_P1U2_H, 0x03),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_L, 0x40),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RCVR_DTCT_DLY_U3_H, 0x00),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M6DB_V0, 0x17),
+> > +       QMP_PHY_INIT_CFG(QPHY_V3_PCS_TXDEEMPH_M3P5DB_V0, 0x0f),
+> > +};
+> > +
+> >  static const struct qmp_phy_init_tbl ipq8074_usb3_serdes_tbl[] = {
+> >         QMP_PHY_INIT_CFG(QSERDES_COM_SYSCLK_EN_SEL, 0x1a),
+> >         QMP_PHY_INIT_CFG(QSERDES_COM_BIAS_EN_CLKBUFLR_EN, 0x08),
+> > @@ -1558,6 +1640,14 @@ static const char * const qmp_phy_vreg_l[] = {
+> >         "vdda-phy", "vdda-pll",
+> >  };
+> >
+> > +static const struct qmp_usb_offsets qmp_usb_offsets_ipq9574 = {
+> > +       .serdes         = 0,
+> > +       .pcs            = 0x800,
+> > +       .pcs_usb        = 0,
+>
+> No, pcs_usb is not 0.
+
+Not sure I understand this comment.
+
+Since IPQ9574 uses new style DT entries, pcs_usb_offset = 0 and
+that will not be used.
+
+qmp->pcs_usb is used in qmp_usb_enable_autonomous_mode and
+qmp_usb_disable_autonomous_mode. If "qmp->pcs_usb == 0", those
+functions use the value of qmp->pcs (0x7d800) for pcs_usb.
+
+The registers used in these functions are
+QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR & QPHY_PCS_AUTONOMOUS_MODE_CTRL
+
+The offsets for the above registers as specified in
+qmp_v3_usb3phy_regs_layout is
+
+	#define QPHY_V3_PCS_AUTONOMOUS_MODE_CTRL	0x0d8
+	#define QPHY_V3_PCS_LFPS_RXTERM_IRQ_CLEAR	0x0dc
+
+qphy_{set|clr}bits called from qmp_usb_enable_autonomous_mode and
+qmp_usb_disable_autonomous_mode will use the offset 0x7d8d8 and
+0x78d8c. This offset matches with the register offset document of
+the IPQ9574. So, felt setting pcs_usb to zero should be ok. Can
+you please clarify.
+
+Thanks
+Varada
 
 
-On 12.02.2023 00:12, Dmitry Baryshkov wrote:
-> Remove duplicate between sm6115 and qcm2290, which belong to the same
-> DPU major revision.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    | 36 ++++------
->  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   | 66 ++++---------------
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h | 51 ++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  2 +-
->  4 files changed, 80 insertions(+), 75 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> index aadb65329ec3..7e4cfb0d6901 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> @@ -7,6 +7,8 @@
->  #ifndef _DPU_6_3_SM6115_H
->  #define _DPU_6_3_SM6115_H
->  
-> +#include "dpu_6_lm1.h"
-> +
->  static const struct dpu_caps sm6115_dpu_caps = {
->  	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
->  	.max_mixer_blendstages = 0x4,
-> @@ -24,16 +26,6 @@ static const struct dpu_ubwc_cfg sm6115_ubwc_cfg = {
->  	.ubwc_swizzle = 0x7,
->  };
->  
-> -static const struct dpu_mdp_cfg sm6115_mdp[] = {
-> -	{
-> -	.name = "top_0", .id = MDP_TOP,
-> -	.base = 0x0, .len = 0x494,
-> -	.features = 0,
-> -	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> -	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-> -	},
-> -};
-> -
->  static const struct dpu_sspp_cfg sm6115_sspp[] = {
->  	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
->  		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-> @@ -73,20 +65,20 @@ static const struct dpu_perf_cfg sm6115_perf_data = {
->  static const struct dpu_mdss_cfg sm6115_dpu_cfg = {
->  	.caps = &sm6115_dpu_caps,
->  	.ubwc = &sm6115_ubwc_cfg,
-> -	.mdp_count = ARRAY_SIZE(sm6115_mdp),
-> -	.mdp = sm6115_mdp,
-> -	.ctl_count = ARRAY_SIZE(qcm2290_ctl),
-> -	.ctl = qcm2290_ctl,
-> +	.mdp_count = ARRAY_SIZE(dpu_6_lm1_mdp),
-> +	.mdp = dpu_6_lm1_mdp,
-> +	.ctl_count = ARRAY_SIZE(dpu_6_lm1_ctl),
-> +	.ctl = dpu_6_lm1_ctl,
->  	.sspp_count = ARRAY_SIZE(sm6115_sspp),
->  	.sspp = sm6115_sspp,
-> -	.mixer_count = ARRAY_SIZE(qcm2290_lm),
-> -	.mixer = qcm2290_lm,
-> -	.dspp_count = ARRAY_SIZE(qcm2290_dspp),
-> -	.dspp = qcm2290_dspp,
-> -	.pingpong_count = ARRAY_SIZE(qcm2290_pp),
-> -	.pingpong = qcm2290_pp,
-> -	.intf_count = ARRAY_SIZE(qcm2290_intf),
-> -	.intf = qcm2290_intf,
-> +	.mixer_count = ARRAY_SIZE(dpu_6_lm1_lm),
-> +	.mixer = dpu_6_lm1_lm,
-> +	.dspp_count = ARRAY_SIZE(dpu_6_lm1_dspp),
-> +	.dspp = dpu_6_lm1_dspp,
-> +	.pingpong_count = ARRAY_SIZE(dpu_6_lm1_pp),
-> +	.pingpong = dpu_6_lm1_pp,
-> +	.intf_count = ARRAY_SIZE(dpu_6_lm1_intf),
-> +	.intf = dpu_6_lm1_intf,
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
->  	.vbif = sdm845_vbif,
->  	.perf = &sm6115_perf_data,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> index 48e7d4c641cd..440240860635 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> @@ -7,6 +7,8 @@
->  #ifndef _DPU_6_5_QCM2290_H
->  #define _DPU_6_5_QCM2290_H
->  
-> +#include "dpu_6_lm1.h"
-> +
->  static const struct dpu_caps qcm2290_dpu_caps = {
->  	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
->  	.max_mixer_blendstages = 0x4,
-> @@ -21,25 +23,6 @@ static const struct dpu_ubwc_cfg qcm2290_ubwc_cfg = {
->  	.highest_bank_bit = 0x2,
->  };
->  
-> -static const struct dpu_mdp_cfg qcm2290_mdp[] = {
-> -	{
-> -	.name = "top_0", .id = MDP_TOP,
-> -	.base = 0x0, .len = 0x494,
-> -	.features = 0,
-> -	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> -	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-> -	},
-> -};
-> -
-> -static const struct dpu_ctl_cfg qcm2290_ctl[] = {
-> -	{
-> -	.name = "ctl_0", .id = CTL_0,
-> -	.base = 0x1000, .len = 0x1dc,
-> -	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> -	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-> -	},
-> -};
-> -
->  static const struct dpu_sspp_cfg qcm2290_sspp[] = {
->  	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_QCM2290_MASK,
->  		 qcm2290_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-> @@ -47,27 +30,6 @@ static const struct dpu_sspp_cfg qcm2290_sspp[] = {
->  		 qcm2290_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
->  };
->  
-> -static const struct dpu_lm_cfg qcm2290_lm[] = {
-> -	LM_BLK("lm_0", LM_0, 0x44000, MIXER_QCM2290_MASK,
-> -		&qcm2290_lm_sblk, PINGPONG_0, 0, DSPP_0),
-> -};
-> -
-> -static const struct dpu_dspp_cfg qcm2290_dspp[] = {
-> -	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
-> -		 &sm8150_dspp_sblk),
-> -};
-> -
-> -static const struct dpu_pingpong_cfg qcm2290_pp[] = {
-> -	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk,
-> -		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> -};
-> -
-> -static const struct dpu_intf_cfg qcm2290_intf[] = {
-> -	INTF_BLK("intf_0", INTF_0, 0x00000, 0x2b8, INTF_NONE, 0, 0, 0, 0, 0, 0),
-> -	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x2b8, INTF_DSI, 0, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> -};
-> -
->  static const struct dpu_perf_cfg qcm2290_perf_data = {
->  	.max_bw_low = 2700000,
->  	.max_bw_high = 2700000,
-> @@ -93,20 +55,20 @@ static const struct dpu_perf_cfg qcm2290_perf_data = {
->  static const struct dpu_mdss_cfg qcm2290_dpu_cfg = {
->  	.caps = &qcm2290_dpu_caps,
->  	.ubwc = &qcm2290_ubwc_cfg,
-> -	.mdp_count = ARRAY_SIZE(qcm2290_mdp),
-> -	.mdp = qcm2290_mdp,
-> -	.ctl_count = ARRAY_SIZE(qcm2290_ctl),
-> -	.ctl = qcm2290_ctl,
-> +	.mdp_count = ARRAY_SIZE(dpu_6_lm1_mdp),
-> +	.mdp = dpu_6_lm1_mdp,
-> +	.ctl_count = ARRAY_SIZE(dpu_6_lm1_ctl),
-> +	.ctl = dpu_6_lm1_ctl,
->  	.sspp_count = ARRAY_SIZE(qcm2290_sspp),
->  	.sspp = qcm2290_sspp,
-> -	.mixer_count = ARRAY_SIZE(qcm2290_lm),
-> -	.mixer = qcm2290_lm,
-> -	.dspp_count = ARRAY_SIZE(qcm2290_dspp),
-> -	.dspp = qcm2290_dspp,
-> -	.pingpong_count = ARRAY_SIZE(qcm2290_pp),
-> -	.pingpong = qcm2290_pp,
-> -	.intf_count = ARRAY_SIZE(qcm2290_intf),
-> -	.intf = qcm2290_intf,
-> +	.mixer_count = ARRAY_SIZE(dpu_6_lm1_lm),
-> +	.mixer = dpu_6_lm1_lm,
-> +	.dspp_count = ARRAY_SIZE(dpu_6_lm1_dspp),
-> +	.dspp = dpu_6_lm1_dspp,
-> +	.pingpong_count = ARRAY_SIZE(dpu_6_lm1_pp),
-> +	.pingpong = dpu_6_lm1_pp,
-> +	.intf_count = ARRAY_SIZE(dpu_6_lm1_intf),
-> +	.intf = dpu_6_lm1_intf,
->  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
->  	.vbif = sdm845_vbif,
->  	.perf = &qcm2290_perf_data,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
-> new file mode 100644
-> index 000000000000..40e1183b9377
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
-> @@ -0,0 +1,51 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2015-2018, 2020 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DPU_6_LM1_H
-> +#define _DPU_6_LM1_H
-> +
-> +static const struct dpu_mdp_cfg dpu_6_lm1_mdp[] = {
-> +	{
-> +	.name = "top_0", .id = MDP_TOP,
-> +	.base = 0x0, .len = 0x494,
-> +	.features = 0,
-> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-> +	},
-> +};
-> +
-> +static const struct dpu_ctl_cfg dpu_6_lm1_ctl[] = {
-> +	{
-> +	.name = "ctl_0", .id = CTL_0,
-> +	.base = 0x1000, .len = 0x1dc,
-> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-> +	},
-> +};
-> +
-> +static const struct dpu_lm_cfg dpu_6_lm1_lm[] = {
-> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_QCM2290_MASK,
-> +		&qcm2290_lm_sblk, PINGPONG_0, 0, DSPP_0),
-> +};
-> +
-> +static const struct dpu_dspp_cfg dpu_6_lm1_dspp[] = {
-> +	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
-> +		 &sm8150_dspp_sblk),
-> +};
-> +
-> +static const struct dpu_pingpong_cfg dpu_6_lm1_pp[] = {
-> +	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk,
-> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +};
-> +
-> +static const struct dpu_intf_cfg dpu_6_lm1_intf[] = {
-> +	INTF_BLK("intf_0", INTF_0, 0x00000, 0x2b8, INTF_NONE, 0, 0, 0, 0, 0, 0),
-> +	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x2b8, INTF_DSI, 0, 24, INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> +};
-> +
-> +#endif
-> +
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 5091cec30bfc..3b015f3be31a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -845,8 +845,8 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
->  
->  #include "catalog/dpu_6_0_sm8250.h"
->  #include "catalog/dpu_6_2_sc7180.h"
-> -#include "catalog/dpu_6_5_qcm2290.h"
->  #include "catalog/dpu_6_3_sm6115.h"
-> +#include "catalog/dpu_6_5_qcm2290.h"
->  
->  #include "catalog/dpu_7_0_sm8350.h"
->  #include "catalog/dpu_7_2_sc7280.h"
+>
+> > +       .tx             = 0x200,
+> > +       .rx             = 0x400,
+> > +};
+> > +
+> >  static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
+> >         .serdes         = 0,
+> >         .pcs            = 0x0200,
+> > @@ -1586,6 +1676,28 @@ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
+> >         .regs                   = qmp_v3_usb3phy_regs_layout,
+> >  };
+> >
+> > +static const struct qmp_phy_cfg ipq9574_usb3phy_cfg = {
+> > +       .lanes                  = 1,
+> > +
+> > +       .offsets                = &qmp_usb_offsets_ipq9574,
+> > +
+> > +       .serdes_tbl             = ipq9574_usb3_serdes_tbl,
+> > +       .serdes_tbl_num         = ARRAY_SIZE(ipq9574_usb3_serdes_tbl),
+> > +       .tx_tbl                 = ipq9574_usb3_tx_tbl,
+> > +       .tx_tbl_num             = ARRAY_SIZE(ipq9574_usb3_tx_tbl),
+> > +       .rx_tbl                 = ipq9574_usb3_rx_tbl,
+> > +       .rx_tbl_num             = ARRAY_SIZE(ipq9574_usb3_rx_tbl),
+> > +       .pcs_tbl                = ipq9574_usb3_pcs_tbl,
+> > +       .pcs_tbl_num            = ARRAY_SIZE(ipq9574_usb3_pcs_tbl),
+> > +       .clk_list               = qmp_v4_phy_clk_l,
+> > +       .num_clks               = ARRAY_SIZE(qmp_v4_phy_clk_l),
+> > +       .reset_list             = qcm2290_usb3phy_reset_l,
+> > +       .num_resets             = ARRAY_SIZE(qcm2290_usb3phy_reset_l),
+> > +       .vreg_list              = qmp_phy_vreg_l,
+> > +       .num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> > +       .regs                   = qmp_v3_usb3phy_regs_layout,
+> > +};
+> > +
+> >  static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
+> >         .lanes                  = 1,
+> >
+> > @@ -2589,6 +2701,9 @@ static const struct of_device_id qmp_usb_of_match_table[] = {
+> >                 .compatible = "qcom,ipq8074-qmp-usb3-phy",
+> >                 .data = &ipq8074_usb3phy_cfg,
+> >         }, {
+> > +               .compatible = "qcom,ipq9574-qmp-usb3-phy",
+> > +               .data = &ipq9574_usb3phy_cfg,
+> > +       }, {
+> >                 .compatible = "qcom,msm8996-qmp-usb3-phy",
+> >                 .data = &msm8996_usb3phy_cfg,
+> >         }, {
+> > --
+> > 2.7.4
+> >
+>
+>
+> --
+> With best wishes
+> Dmitry
