@@ -2,229 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 360CF6D265B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 18:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94BAB6D27D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 20:29:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231701AbjCaQ6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 12:58:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35540 "EHLO
+        id S231313AbjCaS3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 14:29:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbjCaQ6h (ORCPT
+        with ESMTP id S231628AbjCaS3l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 12:58:37 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D5ACC2B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 09:58:34 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id g19so16625109lfr.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 09:58:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680281913;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hg1hXo3YKH/4ZXl0Bdlyb1YGCLWHlTSlPb8rJUV/Kbo=;
-        b=vjtUojPefRyqY+EWHbk0JjeTGM/N6xkAxTRRmYSI9XFQN/RSvrW/Ikqn3Eo/iFr5nd
-         oXDcgkPdtUorydkQgDPDs486K6MfxJXIMVOh+er2U3LOl1Vwy1CY2V9Vwr2K8fYKvFup
-         kA6p2zjiEAUhQkyFH74s3051Ryh3cCIET1sY486KCEcs9sXXjyoLgrtlClsSS9miNvSv
-         hCoHzL0DK5hankH/kLs0DJaiETHAc9IsOOR6OMuDR8mYlV6kDtCVCyzHUFBNMJgeCLtb
-         zPjMEu64v8haYCu2BJE1zkIfevKcQfnkykDu30Td7t3gU5j3GTL4XO2Sjjke9W9Wp44s
-         YleA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680281913;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hg1hXo3YKH/4ZXl0Bdlyb1YGCLWHlTSlPb8rJUV/Kbo=;
-        b=pIzA4A6fY8yyw4tF/QnDjzvyVVQ3YZ42fhoxwYtGXrQQDNolopH/KNb6ga5M0kSK9+
-         TagPScmzDcoyMfJgEThc6CuClVCkBBCSkfSX2nYnolawqtJHKmgBHOgqaO1bZ1V5/vPO
-         sSl9aUXFKzmvFi1UfuRpQzkoaCNuVoaVF9AfwlnJ3Qveb0xdpmfdTBWKeaIfz7WYn8xE
-         ctDpDuianVjU/uc0OEkdRZxsocF+msAs18PoShTPmohcXJ1FzZUQqyHoD+nb3zT/qYAk
-         pakeVnoqKNaOPTGWzhFhg1DpTYmZrO6Z/wKBi/KLRirpILWRYee6+wX0mKY0gasJV2sr
-         mKDA==
-X-Gm-Message-State: AAQBX9c5lGF2EpKde/WCl701aRBg6LwZee9BpkZ2avLVeUrX4SDg2tYI
-        cywlCUJP85vviUcd/aCwFDge1VifRQr+ZAGxpAQ=
-X-Google-Smtp-Source: AKy350ZrZLcTT2PuvoFqTFyfP0UYsKgVGSDG9xR3i4dZoLnDzfY2hfB9nbLERhwWRrcK9lXv+TMYrQ==
-X-Received: by 2002:a19:ad07:0:b0:4e8:c81b:1a11 with SMTP id t7-20020a19ad07000000b004e8c81b1a11mr7746310lfc.49.1680281913169;
-        Fri, 31 Mar 2023 09:58:33 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id w15-20020ac25d4f000000b004e81c9bb65csm440732lfd.282.2023.03.31.09.58.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Mar 2023 09:58:32 -0700 (PDT)
-Message-ID: <8f0d4b5b-211c-ac53-798e-70d2f2b3ab37@linaro.org>
-Date:   Fri, 31 Mar 2023 18:58:30 +0200
+        Fri, 31 Mar 2023 14:29:41 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F32522E91;
+        Fri, 31 Mar 2023 11:29:40 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 198E6B83178;
+        Fri, 31 Mar 2023 18:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F405C433D2;
+        Fri, 31 Mar 2023 18:29:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680287377;
+        bh=VLiJYbbgaqDt3zgZhKIrkeJlT8nzzl7lxkh40spkePs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ft+VxX5m72VgnD+w68Y6gDR4gRDdUgawFkMEVPOQaTuH2622mAz8s7k6pn/2Sa36Y
+         WRC5cb83JijOh4sJehOAPP1Ate5sh4bDAB8T5DA8UZ52YXs2vtaWDhDfY8qyqpzupt
+         hkcL9tIuKi03F4ECw65QeJDXipD/gohFtWTS734JAth4W+afeS2z2Ais1lGD9pajqX
+         rtXmE8b0qLPokHxrrTkLSgAQ1v/0yKU8Z6yiP8r0Z3/aOdRKECPGmzohDfh6JN8xQS
+         E7szFFRlqyYO1PBWuQbEA3Uo3x3F70U2zARlDRbhZEny03mhAsyZDhgVncVm93CYRa
+         Et/vV+sdmeLrQ==
+Date:   Fri, 31 Mar 2023 23:59:31 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2] net: qrtr: Do not do DEL_SERVER broadcast after
+ DEL_CLIENT
+Message-ID: <20230331182931.GB6352@thinkpad>
+References: <1680248937-16617-1-git-send-email-quic_srichara@quicinc.com>
+ <20230331080216.GA6352@thinkpad>
+ <4792f5c8-2902-2e46-b663-22cffe450556@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC support
-Content-Language: en-US
-To:     Dylan Van Assche <me@dylanvanassche.be>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230330165322.118279-1-me@dylanvanassche.be>
- <20230330165322.118279-3-me@dylanvanassche.be>
- <f9a4a2de-42f8-676a-ae6d-d20391206f83@linaro.org>
- <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
- <e43e944c-9f65-cde5-5d8c-a76f33f99b44@linaro.org>
- <603ef0bf04b9c4f7f8e94e2ccece97ffa1b0582b.camel@dylanvanassche.be>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <603ef0bf04b9c4f7f8e94e2ccece97ffa1b0582b.camel@dylanvanassche.be>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <4792f5c8-2902-2e46-b663-22cffe450556@quicinc.com>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Mar 31, 2023 at 02:02:04PM +0530, Sricharan Ramabadhran wrote:
+> <..>
+> 
+> > > -static int server_del(struct qrtr_node *node, unsigned int port)
+> > > +static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
+> > >   {
+> > >   	struct qrtr_lookup *lookup;
+> > >   	struct qrtr_server *srv;
+> > > @@ -287,7 +287,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
+> > >   	radix_tree_delete(&node->servers, port);
+> > >   	/* Broadcast the removal of local servers */
+> > > -	if (srv->node == qrtr_ns.local_node)
+> > > +	if (srv->node == qrtr_ns.local_node && bcast)
+> > >   		service_announce_del(&qrtr_ns.bcast_sq, srv);
+> > >   	/* Announce the service's disappearance to observers */
+> > > @@ -373,7 +373,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
+> > >   		}
+> > >   		slot = radix_tree_iter_resume(slot, &iter);
+> > >   		rcu_read_unlock();
+> > > -		server_del(node, srv->port);
+> > > +		server_del(node, srv->port, true);
+> > >   		rcu_read_lock();
+> > >   	}
+> > >   	rcu_read_unlock();
+> > > @@ -459,10 +459,13 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
+> > >   		kfree(lookup);
+> > >   	}
+> > > -	/* Remove the server belonging to this port */
+> > > +	/* Remove the server belonging to this port but don't broadcast
+> > 
+> > This is still not as per the multi line comment style perferred in kernel.
+> > Please read: https://www.kernel.org/doc/html/latest/process/coding-style.html#commenting
+> > 
+> 
+>  Ho, i had it like first style and checkpatch cribbed. Then changed it
+>  as per the second style for net/ format. You mean we should stick to
+>  1 st style ?
+> 
 
+Oops, sorry I forgot the fact that the networking code uses a different style.
+Ignore my above comment.
 
-On 31.03.2023 15:14, Dylan Van Assche wrote:
-> On Fri, 2023-03-31 at 14:20 +0200, Konrad Dybcio wrote:
->>
->>
->> On 31.03.2023 11:36, Dylan Van Assche wrote:
->>> Hi Konrad,
->>>
->>> On Fri, 2023-03-31 at 04:03 +0200, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 30.03.2023 18:53, Dylan Van Assche wrote:
->>>>> Qualcomm SDM845 SoC features a SLPI DSP which uses FastRPC
->>>>> through
->>>>> an allocated memory region to load files from the host
->>>>> filesystem
->>>>> such as sensor configuration files.
->>>>>
->>>>> Add a FastRPC node at /dev/fastrpc-sdsp and a DMA region,
->>>>> similar
->>>>> to
->>>>> downstream, to allow userspace to communicate with the SLPI via
->>>>> the
->>>>> FastRPC interface for initializing the sensors on the SLPI.
->>>>>
->>>>> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 24
->>>>> ++++++++++++++++++++++++
->>>>>  1 file changed, 24 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>> index 3b547cb7aeb8..8ea4944f3ad6 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>>>> @@ -878,6 +878,14 @@ mdata_mem: mpss-metadata {
->>>>>                         size = <0 0x4000>;
->>>>>                         no-map;
->>>>>                 };
->>>>> +
->>>>> +               fastrpc_mem: fastrpc {
->>>>> +                       compatible = "shared-dma-pool";
->>>>> +                       reusable;
->>>> Please move it last to get a nice reverse-Christmas-tree layout.
->>>>
->>>
->>> Will fix in v4.
->>>
->>>>> +                       alloc-ranges = <0 0x00000000 0
->>>>> 0xffffffff>;
->>>> Would there be any issues with it starting over (1<<31 - 1)?
->>>>
->>>
->>> You mean a bigger region then, like the whole CMA region then?
->>> AFAIK,
->>> the SLPI always use the same region expecting it to be in this
->>> range.
->>> However, I cannot confirm more, as I have no insights in the
->>> firmware
->>> running on there, this all comes from finding out what it exactly
->>> does
->>> on downstream.
->> I was asking about the <.. 0 0xfff.f> part specifically, as that
->> means
->> it can't be allocated above 4 gigs. But I guess it's just how qcom
->> envisioned it.
->>
-> 
-> I think it is limited by qcom, but I cannot be entirely sure :)
-> In any case, for v4, do I keep 0xffffffff?
-Yep, let's not stray into the unknown..
+- Mani
 
-Konrad
-> 
->> Also, please use 0x0 in alloc-ranges as well, this is all addresses/
->> reg sizes.
->>
->> Konrad
-> 
-> Yes, will use 0x0 instead of 0.
-> 
-> Dylan
-> 
->>>
->>>>> +                       alignment = <0 0x400000>;
->>>> Please use 0x0 for the 0 here, as it's essentially reg.size with
->>>> size-cells = 2
->>>
->>> Will fix in v4.
->>>
->>>>
->>>>> +                       size = <0 0x1000000>;
->>>> Ditto
->>>
->>> Will fix in v4.
->>>
->>>>
->>>>> +               };
->>>>>         };
->>>>>  
->>>>>         adsp_pas: remoteproc-adsp {
->>>>> @@ -3344,6 +3352,22 @@ glink-edge {
->>>>>                                 label = "dsps";
->>>>>                                 qcom,remote-pid = <3>;
->>>>>                                 mboxes = <&apss_shared 24>;
->>>>> +
->>>>> +                               fastrpc {
->>>>> +                                       compatible =
->>>>> "qcom,fastrpc";
->>>>> +                                       qcom,glink-channels =
->>>>> "fastrpcglink-apps-dsp";
->>>>> +                                       label = "sdsp";
->>>>> +                                       qcom,non-secure-domain;
->>>>> +                                       qcom,vmids = <0x3 0xF
->>>>> 0x5
->>>>> 0x6>;
->>>> Please use the recently-introduced header and depend on (and
->>>> make a patch atop)
->>>>
->>>> https://lore.kernel.org/linux-arm-msm/8685b710-b74d-556a-815d-0ffef2b0eeff@linaro.org/T/#t
->>>>
->>>> Konrad
->>>>
->>>>> +                                       memory-region =
->>>>> <&fastrpc_mem>;
->>>>> +                                       #address-cells = <1>;
->>>>> +                                       #size-cells = <0>;
->>>>> +
->>>>> +                                       compute-cb@0 {
->>>>> +                                               compatible =
->>>>> "qcom,fastrpc-compute-cb";
->>>>> +                                               reg = <0>;
->>>>> +                                       };
->>>>> +                               };
->>>>>                         };
->>>>>                 };
->>>>>  
->>>
->>> Kind regards,
->>> Dylan
-> 
+> Regards,
+>  Sricharan
+
+-- 
+மணிவண்ணன் சதாசிவம்
