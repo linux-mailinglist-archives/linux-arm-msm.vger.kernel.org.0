@@ -2,164 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E3A76D16A9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 07:14:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94CD86D16F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 07:50:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbjCaFOG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 01:14:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51490 "EHLO
+        id S230023AbjCaFuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 01:50:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbjCaFOF (ORCPT
+        with ESMTP id S229814AbjCaFuJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 01:14:05 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7054DEB63
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 22:14:02 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so13101271wmq.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 22:14:02 -0700 (PDT)
+        Fri, 31 Mar 2023 01:50:09 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E216DBD4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 22:50:05 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id u38so14060778pfg.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 22:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680239641;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pULYDGzh4E8UCXDt/pmSRIwAO6ObDjtZf1sR4LLd8yA=;
-        b=kQkec1O6Ot/vcD84SVGs08IGHNMfIgt8VNpntgMvo9olmArl578NgRYSGwest+DLfL
-         ikqw1LsfzghXhMbJPu2RKiA0keZsUJYqAILUx84/3pc8eRM6pVuD+RVxUWyLce0LlNoC
-         zzKZ0ri2OG8wSFxFW8/vwxuEiE7KtTaXLWQP2DymFV2yvKqYlw6JaTk9XalpcnrzzXVw
-         vpYXKs80XH5PnY9VI79q849BmFoY20Aemh/dKcy9q+uHCeWZrSk9+e3I8VA2SW+Lm4sY
-         6Kz0JK+MfYeNy51EO3nUzHkIaR6GK8tFEHaX5OsXw9m094E5SBTHZBabVmd4Q0ewSnc5
-         9qIQ==
+        d=linaro.org; s=google; t=1680241805;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/3nkvz76Kmrv3hbovEY5+v+WAWeK34sXiKeBzdNDn28=;
+        b=zi9O+FHEk8cymIknF2sF8w8nxwV62xUF/t07fVO2BRUgoI9k9MRO6Fptd2ONhwz0B0
+         hAAhLQb8dFanGQbHR94e/iFwtYbnDjsD2vhcJGJxKdHawFz+lMFav0wC+pXjjAImvhZR
+         3bIvGTNwbOps4JCjijHWSkz2ev/ViQCKwKOmdz/3887YniTd4kHT4jOsziK04Zy8xCVA
+         li7t2EhbVKeHOxeCGMWOANbnazUrUHfskFZR7rf6nVKdII4si5/qq1ZZvCCv0QuWPDg7
+         yOgmmQ218QaG1jWNLgBgi5TUEOseNDjubFJN9Dg5smndSmXtzlPv7bZr/vd9yFjJO+8n
+         z27A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680239641;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pULYDGzh4E8UCXDt/pmSRIwAO6ObDjtZf1sR4LLd8yA=;
-        b=61DxfPl1fQeMwHn6lMIXHk1frV2D5fVtiJuLKIdGtwU+jxyoTixu/e1u/HJATojv0G
-         cC8iAsPxQ32HW+WUFAS7yfzH2CobaPh3hjGxMVP6svhNr4kf06P/ufhbeE9ugoEUjOm2
-         dk1Wu1nv6pt7r6S6gj3akRPwhyPpMZgG1jC9k+Jnbvd4G1txI5082qxCXwlcacMZ0qTX
-         KOPqLRVjIuS70qP3R/eagkXpRmMiH+7Uf9rLCdzYPE9KTRNeEGy71Xb7Ik8FwGZx+bu0
-         l8MtCCBKBh+AjU0j6OoAZpLtbjtQIVIgrmgvepueb2qH0mRGwWbR+wVP+TPWRrUvfYx/
-         J9Pg==
-X-Gm-Message-State: AO0yUKVIelWcdmMkv5qizSYGpuasWOW82njRAWCUSun5roU/utp/loZ0
-        IV/vwXU/gHC8/N5feKaNOV4TOw==
-X-Google-Smtp-Source: AK7set8+GpaUDXRWjB5QY6Zo9WS9R7HYI+Pvg65VlG7RDva4bJ4tmC4UyBNwr+8bDuf+0i2hFKbHjw==
-X-Received: by 2002:a7b:c44f:0:b0:3ed:d3a7:7077 with SMTP id l15-20020a7bc44f000000b003edd3a77077mr18364656wmi.40.1680239640856;
-        Thu, 30 Mar 2023 22:14:00 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id x21-20020a05600c21d500b003ef64affec7sm1349808wmj.22.2023.03.30.22.13.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 22:14:00 -0700 (PDT)
-Date:   Fri, 31 Mar 2023 08:13:58 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v4 5/7] scsi: ufs: ufs-qcom: Switch to the new ICE API
-Message-ID: <ZCZsFjKItcIS+U/b@linaro.org>
-References: <20230327134734.3256974-1-abel.vesa@linaro.org>
- <20230327134734.3256974-6-abel.vesa@linaro.org>
- <20230327181934.GD1882@sol.localdomain>
+        d=1e100.net; s=20210112; t=1680241805;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/3nkvz76Kmrv3hbovEY5+v+WAWeK34sXiKeBzdNDn28=;
+        b=sQN0Bbrd5sHoF6Y1e8tDdpJDJs2uOM0BjyQbo3XgDSRHUPfdet0+Ne2STM85jZM6HM
+         foQrDppddW+aVCL/FZLsHHTU9GiUjEmP2uMxI2MRpUo33hocDMeAXLFI7PCJ66bZ37NN
+         N/ia3ATg+ppEkDLqiSN84ip0y2XwxDPWXCEZFAgwlTk6ZZv0A5Bv194aIBG6uLZR0IQK
+         fIRFOQS7BK9CGSXzdtXShuWE6MQ4TV2Eg1Hu2E7+cy/Vb4S6UZzo35lo8pQzE61Rc91X
+         fN/S6KnRrkp5tj2BlqYtObEn7PVepOPvluqRddKH2Yvv7yhFIt3c68p9G7DqnbmdHtpY
+         0OaQ==
+X-Gm-Message-State: AAQBX9c4gxI+iBiiLYo5O4D3EPQnYRTi4erwexZ4PDMGMNhxVyveU6vn
+        8BMkqLbSYS+gVZiHtUo1Gx6fag==
+X-Google-Smtp-Source: AKy350ZRFpWG1nNLD5QMFXlw8ACbFlfLgTo16+2Yh0cJ0QDQ/HhLm6U1Bx0O3HYkjmrm97EoHs8NnA==
+X-Received: by 2002:aa7:9601:0:b0:624:2e60:f21e with SMTP id q1-20020aa79601000000b006242e60f21emr25262492pfg.29.1680241804749;
+        Thu, 30 Mar 2023 22:50:04 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c5e:53ce:1f39:30a5:d20f:f205? ([2401:4900:1c5e:53ce:1f39:30a5:d20f:f205])
+        by smtp.gmail.com with ESMTPSA id bv129-20020a632e87000000b00508e7bd761fsm740351pgb.87.2023.03.30.22.50.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 22:50:04 -0700 (PDT)
+Message-ID: <a3c692bf-9ca7-d15a-4f1d-c5a31d1b82f6@linaro.org>
+Date:   Fri, 31 Mar 2023 11:19:58 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230327181934.GD1882@sol.localdomain>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+Subject: Re: [PATCH v3 1/9] dt-bindings: dma: Add support for SM6115 and
+ QCM2290 SoCs
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org, neil.armstrong@linaro.org
+References: <20230328092815.292665-1-bhupesh.sharma@linaro.org>
+ <20230328092815.292665-2-bhupesh.sharma@linaro.org>
+ <76982d25-cba5-2a18-387f-b1735eef21fe@linaro.org>
+Content-Language: en-US
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+In-Reply-To: <76982d25-cba5-2a18-387f-b1735eef21fe@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-03-27 11:19:34, Eric Biggers wrote:
-> Hi Abel,
+On 3/30/23 1:41 PM, Krzysztof Kozlowski wrote:
+> On 28/03/2023 11:28, Bhupesh Sharma wrote:
+>> Add new compatible for BAM DMA engine version v1.7.4 which is
+>> found on Qualcomm SM6115 and QCM2290 SoCs. Since its very similar
+>> to v1.7.0 used on SM8150 like SoCs, mark the comptible scheme
+>> accordingly.
+>>
+>> While at it, also update qcom,bam-dma bindings to add comments
+>> which describe the BAM DMA versions used in SM8150 and SM8250 SoCs.
+>> This provides an easy reference for identifying the actual BAM DMA
+>> version available on Qualcomm SoCs.
+>>
+>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>> ---
+>>   .../devicetree/bindings/dma/qcom,bam-dma.yaml | 22 +++++++++++++------
+>>   1 file changed, 15 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>> index f1ddcf672261..624208d20a34 100644
+>> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>> @@ -15,13 +15,21 @@ allOf:
+>>   
+>>   properties:
+>>     compatible:
+>> -    enum:
+>> -        # APQ8064, IPQ8064 and MSM8960
+>> -      - qcom,bam-v1.3.0
+>> -        # MSM8974, APQ8074 and APQ8084
+>> -      - qcom,bam-v1.4.0
+>> -        # MSM8916 and SDM845
+>> -      - qcom,bam-v1.7.0
+>> +    oneOf:
+>> +      - items:
 > 
-> On Mon, Mar 27, 2023 at 04:47:32PM +0300, Abel Vesa wrote:
-> > Now that there is a new dedicated ICE driver, drop the ufs-qcom-ice and
-> > use the new ICE api provided by the Qualcomm soc driver ice. The platforms
-> > that already have ICE support will use the API as library since there will
-> > not be a devicetree node, but instead they have reg range. In this case,
-> > the of_qcom_ice_get will return an ICE instance created for the consumer's
-> > device. But if there are platforms that do not have ice reg in the
-> > consumer devicetree node and instead provide a dedicated ICE devicetree
-> > node, the of_qcom_ice_get will look up the device based on qcom,ice
-> > property and will get the ICE instance registered by the probe function
-> > of the ice driver.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> 
-> I am still worried about the ICE clock.  Are you sure it is being managed
-> correctly?  With your patch, the ICE clock gets enabled in ufs_qcom_ice_resume
-> and disabled in ufs_qcom_ice_suspend, which hopefully pair up.  But it also gets
-> enabled in ufs_qcom_ice_enable which isn't paired with anything.  Also, this all
-> happens at a different time from the existing UFS clocks being enabled/disabled.
+> Drop "items". This is just an enum.
 
-Right, I messed this up since the last version. Sorry about that.
+Sure, will fix it in v4.
 
-What I need to do is to drop the enabling of the clock from
-qcom_ice_enable and only do it from qcom_ice_resume. As for disabling
-it, it remains as is, that is, in qcom_ice_disable.
+Thanks
 
-Then, I need to enable the clock right before checking the supported
-version. I'll do that with devm_clk_get_enabled (also optional for the
-legacy once as I explained in the reply to the 6th patch).
+>> +          - enum:
+>> +              # APQ8064, IPQ8064 and MSM8960
+>> +              - qcom,bam-v1.3.0
 
-> 
-> I wonder if the ICE clock should be enabled/disabled in ufs_qcom_setup_clocks()
-> instead of what you are doing currently?
-> 
-> > +static int ufs_qcom_ice_init(struct ufs_qcom_host *host)
-> > +{
-> > +	struct ufs_hba *hba = host->hba;
-> > +	struct device *dev = hba->dev;
-> > +
-> > +	host->ice = of_qcom_ice_get(dev);
-> > +	if (host->ice == ERR_PTR(-EOPNOTSUPP)) {
-> > +		dev_warn(dev, "Disabling inline encryption support\n");
-> > +		hba->caps &= ~UFSHCD_CAP_CRYPTO;
-> > +		host->ice = NULL;
-> > +	}
-> > +
-> > +	if (IS_ERR(host->ice))
-> > +		return PTR_ERR(host->ice);
-> > +
-> > +	return 0;
-> > +}
-> 
-> This is still sometimes leaving UFSHCD_CAP_CRYPTO set in cases where ICE is
-> unsupported.
-> 
-> Moving the *setting* of UFSHCD_CAP_CRYPTO into here would fix that.
-> 
-
-I'll do exactly that. Thanks.
-
-> It is also hard to understand how the -EOPNOTSUPP case differs from the NULL
-> case.  Can you add a comment?  Or just consider keeping the original behavior,
-> which did not distinguish between these cases (as long as MASK_CRYPTO_SUPPORT
-> was set in REG_CONTROLLER_CAPABILITIES, which was checked first).
-
-I believe it makes more sense to return -EOPNOTSUPP when the driver
-doesn't support a specific version of the HW. If you do not agree, I'll
-make it return NULL then.
-
-> 
-> - Eric
