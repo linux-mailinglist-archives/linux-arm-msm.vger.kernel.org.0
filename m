@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58CB86D23BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 17:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BC546D23F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 17:28:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233133AbjCaPND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 11:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39002 "EHLO
+        id S232918AbjCaP2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 11:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbjCaPMy (ORCPT
+        with ESMTP id S232153AbjCaP2m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 11:12:54 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87843C174
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 08:12:53 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 20so23440174lju.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 08:12:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680275572;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w/XAz5u4W7EF3PznGOG4CKpssJVKtnSZng4vT2/ozGA=;
-        b=hHr8JtfB99Morqcmu5qj1P0BeG1OIBh94IbA6t6kXmMFkIsH2V6OhN/Svm9k3NrhoX
-         sV7szFzUsSUt5IsxCEPTFoTxnrQeYg5Pc5YyIkRkJCaDlNhnfy8zxi3WF9r1XGQdzGhu
-         +w3SvAdpmO9g8oRvbiFHPpbX930VT6Z+joddNcQmVoxpniOOjCp3Fn0/vA2S0+kLJvi9
-         0S5e/Xe1f2QP+eigyEe4vlfTnj0xw0A0kYw6RgMrP+av3RZGvJ421oHQDAOPBTr4qc22
-         snOC2uEy0t6JM1iAihzSCzi00BsFm3rVdQNR9qD2JErIj/c+/2HHASMoyUUAHwTio6SF
-         c24w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680275572;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w/XAz5u4W7EF3PznGOG4CKpssJVKtnSZng4vT2/ozGA=;
-        b=bXESA3BnNja029TI+0EUhdjzgqeTHiKq057fQOqQDrf6WZ/yoZdajMM248kLIm3Fvd
-         65a331HyiWrfgSmf42LIkrXZYLm/wB/m7DEKHUxry32P7X9B2GrRNlzBtstiiDqLErO6
-         PDXG//L0M1aFkOjtn7CeybnY1oo6AKm8/XmQ033IMUCMGoiJIlHh40oMk5q/nQxDKWZZ
-         AQ470bvElpwg/IWdKoFnsf69XSi/b303KtbSsugfgavZtbEqIs/PUOgIvGMivtH43pMr
-         hdL03C5SXl5EfOWx1ijRb5uv5L+FuhNy89bzG5b2Tez5M7ODMZbOXt82WEi5/pBLQqUt
-         tDLw==
-X-Gm-Message-State: AAQBX9cOrndvGs4y05TVJwm0GGdO3fkKbEiT0fws8W4FEaKx9CspsgmU
-        bcLmItpHN3adxm3LfMomjDfV/A==
-X-Google-Smtp-Source: AKy350aikhYuCpaVA47lPInLKEbaA8Ifr7Ed7rw8aSpLWpeZKI0vEV3Hp67lKcoeXSpgZEjs9h7BtQ==
-X-Received: by 2002:a2e:a40e:0:b0:2a6:22fd:6b08 with SMTP id p14-20020a2ea40e000000b002a622fd6b08mr678220ljn.3.1680275571946;
-        Fri, 31 Mar 2023 08:12:51 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a8-20020a2e9808000000b002934b5d6a61sm395709ljj.121.2023.03.31.08.12.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 08:12:51 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH RESEND v2 2/2] phy: qcom-qmp-pcie: drop sdm845_qhp_pcie_rx_tbl
-Date:   Fri, 31 Mar 2023 18:12:50 +0300
-Message-Id: <20230331151250.4049-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20230331151250.4049-1-dmitry.baryshkov@linaro.org>
-References: <20230331151250.4049-1-dmitry.baryshkov@linaro.org>
+        Fri, 31 Mar 2023 11:28:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B891BF54;
+        Fri, 31 Mar 2023 08:28:40 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32V9XJKc020114;
+        Fri, 31 Mar 2023 15:28:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=6qcypVzMNkLWeZ9yXHpWDaOXDE2ERBXhQP32pFnzclw=;
+ b=CXow/l59loWE6/v1jTeziB1HFfRrDIjiFyG/Prx/HN6/lHWk1WOgSMhn2/UlSe61TMCJ
+ oUYoX0u7cUkDMYnC3/7OlsZ2KaTXPo8lgzOV6c13pM4KfkYCFqeRMl+lyl4Vh35KMlBK
+ MqRBIxf3seR5cOWCJvkrsjbIBEjFyJOQ+7zpeL7naH/62e21toMIrpHqrI7noXqoSHQO
+ tkSf0PwbddLURVc/yOpCM9U/iwtOwwSdvJOwKvnnc7wlsA9sGIPWyV/Br5GAj32jiUdY
+ /QU7rdLFZNmU6gxKx8jOE5B4HIPxkRsRBL7xkgAUCuOuwP8rbGgLttAVo009QnJSQruQ Ow== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pnvyuh807-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 31 Mar 2023 15:28:33 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32VFSVAE014668
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 31 Mar 2023 15:28:31 GMT
+Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 31 Mar 2023 08:28:27 -0700
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+To:     <swboyd@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <broonie@kernel.org>, <quic_plai@quicinc.com>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <quic_visr@quicinc.com>
+CC:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Subject: [PATCH v10 0/3] Add resets for ADSP based audio clock controller driver
+Date:   Fri, 31 Mar 2023 20:58:02 +0530
+Message-ID: <20230331152805.3199968-1-quic_mohs@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QZkWOzbuG4h9BA9kZSO4GgG9gOGvFzEO
+X-Proofpoint-ORIG-GUID: QZkWOzbuG4h9BA9kZSO4GgG9gOGvFzEO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-31_07,2023-03-31_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1011
+ priorityscore=1501 malwarescore=0 mlxlogscore=923 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303310122
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,37 +79,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SDM845 QHP PHY doesn't have designated RX region. Corresponding RX
-table is empty, so we can drop it completely.
+Add resets and remove qdsp6ss clock controller for audioreach based platforms.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 5 -----
- 1 file changed, 5 deletions(-)
+Changes since v9:
+    -- Drop "clk: qcom: lpassaudiocc-sc7280: Modify qcom_cc_probe" patch.
+    -- Update Fixes tag in Add the required gdsc's in lpass_cc_sc7280_desc patch.
+    -- Add the max_register value in Skip qdsp6ss clock registration patch.
+Changes since v8:
+    -- Add the required gdsc's in lpass_cc_sc7280_desc structure.
+    -- Modify qcom_cc_probe to qcom_cc_probe_by_index.
+    -- Update the commit message for v8,4/5 patch, which is not required for new logic.
+    -- Drop "Add binding headers for lpasscc" patch.
+    -- Drop "Skip lpass_aon_cc_pll config" patch.
+Changes since v7:
+    -- Modiy AHB clock probing method in "Merge lpasscc into lpass_aon patch".
+    -- Fix Typo errors in "Merge lpasscc into lpass_aon patch".
+    -- Update commit message in "Merge lpasscc into lpass_aon patch"
+Changes since v6:
+    -- Update commit message in "Merge lpasscc into lpass_aon patch" patch.
+    -- Drop "Skip lpasscorecc registration" patch.
+    -- Add comment in the code in "Skip lpass_aon_cc_pll config" patch.
+Changes since v5:
+    -- Fix compilation issue.
+Changes since v4:
+    -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+    -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
+Changes since v3:
+    -- Remove duplicate clock resets patch.
+    -- Add binding headers for q6 clocks.
+    -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
+    -- Create new patches for handling conflicts of ADSP and bypass solution.
+Changes since v2:
+    -- Revert removing qdsp6ss clock control.
+    -- Add Conditional check for qdsp6ss clock registration.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index f378c1ebefd7..df505279edfd 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -725,9 +725,6 @@ static const struct qmp_phy_init_tbl sdm845_qhp_pcie_tx_tbl[] = {
- 	QMP_PHY_INIT_CFG(PCIE_GEN3_QHP_L0_RSM_START, 0x01),
- };
- 
--static const struct qmp_phy_init_tbl sdm845_qhp_pcie_rx_tbl[] = {
--};
--
- static const struct qmp_phy_init_tbl sdm845_qhp_pcie_pcs_tbl[] = {
- 	QMP_PHY_INIT_CFG(PCIE_GEN3_QHP_PHY_POWER_STATE_CONFIG, 0x3f),
- 	QMP_PHY_INIT_CFG(PCIE_GEN3_QHP_PHY_PCS_TX_RX_CONFIG, 0x50),
-@@ -2212,8 +2209,6 @@ static const struct qmp_phy_cfg sdm845_qhp_pciephy_cfg = {
- 		.serdes_num	= ARRAY_SIZE(sdm845_qhp_pcie_serdes_tbl),
- 		.tx		= sdm845_qhp_pcie_tx_tbl,
- 		.tx_num		= ARRAY_SIZE(sdm845_qhp_pcie_tx_tbl),
--		.rx		= sdm845_qhp_pcie_rx_tbl,
--		.rx_num		= ARRAY_SIZE(sdm845_qhp_pcie_rx_tbl),
- 		.pcs		= sdm845_qhp_pcie_pcs_tbl,
- 		.pcs_num	= ARRAY_SIZE(sdm845_qhp_pcie_pcs_tbl),
- 	},
+Mohammad Rafi Shaik (1):
+  clk: qcom: lpassaudiocc-sc7280: Add required gdsc power domain clks in
+    lpass_cc_sc7280_desc
+
+Srinivasa Rao Mandadapu (2):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml       |  7 +++++++
+ drivers/clk/qcom/lpassaudiocc-sc7280.c            |  2 ++
+ drivers/clk/qcom/lpasscc-sc7280.c                 | 15 ++++++++++-----
+ 3 files changed, 19 insertions(+), 5 deletions(-)
+
 -- 
-2.30.2
+2.25.1
 
