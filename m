@@ -2,79 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB676D19E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 10:32:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09F286D1A9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 10:42:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230131AbjCaIcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 04:32:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53160 "EHLO
+        id S231904AbjCaImi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 04:42:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbjCaIcT (ORCPT
+        with ESMTP id S231611AbjCaImG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 04:32:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1359138;
-        Fri, 31 Mar 2023 01:32:18 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32V729cS021646;
-        Fri, 31 Mar 2023 08:32:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=r4iJnzwIAsULH4Il/U+tC47GyZ2GCICQr95aHXk6hNQ=;
- b=g37Gc494Abw1RTFb9iT83ecz//jEA9ZKOtAWfA8jz6XngcM+yYNlfucksHv1mFHZptik
- cucSAofbUSa8i+0gcvhiGRxptrOCr7PT2yH5nIAfShPqhdxsbRxjf53H09hqZPy6bFCp
- we0k6KiQblQKwfJpeyYRbRw1cVMHrkd0KMO6zcWdjJEpgymycXocGqBVx3T3j5kgTW7C
- 7BSINegj73WVFNES24nYpn7jY/Jaro2j0V+qaAF8JuF3n5MgQPEklZ4k/nM5ipF1FluI
- Xx5ZdY2ZZLo/m5OOaXVaOdHcqHq4ruCWLHm18EM3bkahJfngSXhnabgfxHch1b9OwieF oA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn7byba35-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 08:32:11 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32V8WBxH012002
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 08:32:11 GMT
-Received: from [10.216.13.246] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 31 Mar
- 2023 01:32:07 -0700
-Message-ID: <4792f5c8-2902-2e46-b663-22cffe450556@quicinc.com>
-Date:   Fri, 31 Mar 2023 14:02:04 +0530
+        Fri, 31 Mar 2023 04:42:06 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE1501D935
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 01:41:31 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id y20so27979058lfj.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 01:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680252043;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gjXQ5aQpqa9dtTjZKu9qBegMD76XnvSRVVOgnd82YkA=;
+        b=vltQKUL3hd9OWaeRLdVX83lC9n5JnQDc4llvdPRGU22FvnP96K9I88V0ANxqtlRKXP
+         t2DmmsASCcz5z3tr/h3gtvUX7GSjKy6VuQqYaooHwqPN/PlkdqzDVjHfr9QllImsWqG5
+         aW01Olub4vZc6jwBtji2t4P4F2tCSgGweFusFG7gLbcqvrtfsyzpJZUW2t1w4itI7lYY
+         47P7raJ7QtH3W7Zpoju4a2yE1Q18SO4+D3PXoYZLYj4tWCoN0yk6BKQMn0plL07ByDl7
+         wgkjePVTUHMk4BpyMvopnikvt1g6Q11/AEd/quexyX20zkVSNJEkABjPOrXEs/zutbMX
+         9NSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680252043;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gjXQ5aQpqa9dtTjZKu9qBegMD76XnvSRVVOgnd82YkA=;
+        b=yv9lHAEFuKFAjTd3McfnwHxrWTLj9IaD3HcXrZHXq+45n/L1xXsshulNuFXw84FY2T
+         3fr4/gyVXcW0UaeNbCR+0TEn6y5ni4y6qXxROBGBZhhE6W6LxPrqwgQJHPh48i/VA3SK
+         m2dKN+1gswo6jdB5L2Pl4UrzNWFmM4TI9nPh0tchShFl9kMEUlPoLZiLrzds/qIUScxK
+         VOGTlWFu36+iYqQQaOaWquDn3st7l4j4pIi9iFJ7dBllHmSNl7Odzch+9/w3dPMPH05N
+         6E8XV5lUfT/7dZTuOlrtYr7L99iiDRrsKn+etI03ggDRr7Hlr67qmPNLlRUHv5yUvLmr
+         6lkQ==
+X-Gm-Message-State: AAQBX9c4qe2tvRfkDcwAZhMRK83VyQCDCfr93npG+fTC/+tj6zHpZqcD
+        sgbnIRlOUwAWTWnJo/itMlzeaA==
+X-Google-Smtp-Source: AKy350ZF4EPLm2KOd54BriJCTJPExfvm5KVPdSmGedrby3dOniEiFQ93phf7NAJWdI34ReDhM3A7ZA==
+X-Received: by 2002:ac2:5482:0:b0:4b5:8f03:a2bc with SMTP id t2-20020ac25482000000b004b58f03a2bcmr7517722lfk.9.1680252043253;
+        Fri, 31 Mar 2023 01:40:43 -0700 (PDT)
+Received: from [192.168.0.21] (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id s5-20020a19ad45000000b004e845b49d81sm289545lfd.140.2023.03.31.01.40.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Mar 2023 01:40:42 -0700 (PDT)
+Message-ID: <bdb9c715-3cc9-73b8-e500-d2e34075b53e@linaro.org>
+Date:   Fri, 31 Mar 2023 10:40:41 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V2] net: qrtr: Do not do DEL_SERVER broadcast after
- DEL_CLIENT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RFC PATCH 1/3] dt-bindings: display/msm/gpu: allow specifying MX
+ domain A5xx
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>,
-        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1680248937-16617-1-git-send-email-quic_srichara@quicinc.com>
- <20230331080216.GA6352@thinkpad>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <20230331080216.GA6352@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230329222500.1131836-1-dmitry.baryshkov@linaro.org>
+ <20230329222500.1131836-2-dmitry.baryshkov@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230329222500.1131836-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yWUOuhIlPHa6RaHAPobr63OwjC3k6wvQ
-X-Proofpoint-GUID: yWUOuhIlPHa6RaHAPobr63OwjC3k6wvQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-31_04,2023-03-30_04,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 clxscore=1015
- adultscore=0 mlxlogscore=255 malwarescore=0 mlxscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303310070
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,46 +87,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-<..>
-
->>   
->> -static int server_del(struct qrtr_node *node, unsigned int port)
->> +static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
->>   {
->>   	struct qrtr_lookup *lookup;
->>   	struct qrtr_server *srv;
->> @@ -287,7 +287,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
->>   	radix_tree_delete(&node->servers, port);
->>   
->>   	/* Broadcast the removal of local servers */
->> -	if (srv->node == qrtr_ns.local_node)
->> +	if (srv->node == qrtr_ns.local_node && bcast)
->>   		service_announce_del(&qrtr_ns.bcast_sq, srv);
->>   
->>   	/* Announce the service's disappearance to observers */
->> @@ -373,7 +373,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
->>   		}
->>   		slot = radix_tree_iter_resume(slot, &iter);
->>   		rcu_read_unlock();
->> -		server_del(node, srv->port);
->> +		server_del(node, srv->port, true);
->>   		rcu_read_lock();
->>   	}
->>   	rcu_read_unlock();
->> @@ -459,10 +459,13 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
->>   		kfree(lookup);
->>   	}
->>   
->> -	/* Remove the server belonging to this port */
->> +	/* Remove the server belonging to this port but don't broadcast
+On 30/03/2023 00:24, Dmitry Baryshkov wrote:
+> Some a5xx Adreno devices might need additional power domains to handle
+> voltage scaling. While we do not (yet) have support for CPR3 providing
+> voltage scaling, allow specifying MX domain to scale the memory cell
+> voltage.
 > 
-> This is still not as per the multi line comment style perferred in kernel.
-> Please read: https://www.kernel.org/doc/html/latest/process/coding-style.html#commenting
-> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-  Ho, i had it like first style and checkpatch cribbed. Then changed it
-  as per the second style for net/ format. You mean we should stick to
-  1 st style ?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Regards,
-  Sricharan
+Best regards,
+Krzysztof
+
