@@ -2,143 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F81C6D1C95
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 11:37:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 390F16D1DE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 12:22:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232306AbjCaJhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 05:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52414 "EHLO
+        id S231417AbjCaKWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 06:22:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232305AbjCaJhM (ORCPT
+        with ESMTP id S230151AbjCaKVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 05:37:12 -0400
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C19C172C;
-        Fri, 31 Mar 2023 02:37:02 -0700 (PDT)
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        Fri, 31 Mar 2023 06:21:18 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A6A40C6;
+        Fri, 31 Mar 2023 03:18:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4PnwCq5qnZz9sSL;
-        Fri, 31 Mar 2023 11:36:39 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1680255399;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=bYLxII/AzHSuhLaXujV1FeTSBkeqV/qJ8zqJUY5DdQU=;
-        b=YkxkO5Wu4rQH7Jkf7KZTwSe2qEmE4rS/2rBdzEJzWwqVaBSEiHYuaOxgQ06UtiWhL+GJ1J
-        a5al0uAqOav2KTb9Bl2dGYprFLXDIC2HjjIHVdgnP9RqifKqu0Re1K8l4YncvrwaacXERc
-        KsKkqll9XxiKwzwYRrRGFcO4mC5KIkmkHVgSc2Y8+/DVaxHu0NkQjIWOC7eV5wyfek6aWj
-        mDLYu38RdvKaG4RJwWfSqU3uURfVBMaXSNZBYFZXaojGttw8YApvOqobvOyCQkFULbqjiv
-        HIUE2uBRluWF/WP+V1ZmZ8rBpFk0nvWRv8KPa638WADac/elPxNh1Tre49r13Q==
-Message-ID: <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
-Subject: Re: [PATCH v3 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC
- support
-From:   Dylan Van Assche <me@dylanvanassche.be>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Date:   Fri, 31 Mar 2023 11:36:37 +0200
-In-Reply-To: <f9a4a2de-42f8-676a-ae6d-d20391206f83@linaro.org>
-References: <20230330165322.118279-1-me@dylanvanassche.be>
-         <20230330165322.118279-3-me@dylanvanassche.be>
-         <f9a4a2de-42f8-676a-ae6d-d20391206f83@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+        by ams.source.kernel.org (Postfix) with ESMTPS id CE0A3B82E29;
+        Fri, 31 Mar 2023 10:18:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4F0C433D2;
+        Fri, 31 Mar 2023 10:18:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680257929;
+        bh=5A3MI1NM5Uq/2OVg1nMJ+OOp//buqxGmoqLAWsIGndg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=nFu8EEpL/yc6LfoS3gnG3bmm4mj3ewDjHxPWj9mvPwAM+ZuAZVRh6EhG7X6qmZ5HD
+         l5cAYUlVPq/z4q9mER2jXuIvzGQonzJ8ULQPpBwjMYoZRY5GePZG+o+irlHXOp8vTD
+         DybiTBkdYhiEMqL9fU4xX/j554JNFo3ZxyKdiU+b+4eR37mWDdX3AyotYNrWZGyExY
+         Hpz6gF2ZhRcUsXKXT+FAJrZEbbdG5zOJlZ0SqmF21V+7YsHXJmMEGXHOZYsx2bPivZ
+         heJvpIwi0b11XfAq9jWZbLUsCJrHq1WtlkBHa3Ola2amMkXG/fIyuYP/XTh0FiUG4r
+         /PAYny8iqIpvA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1piBqg-0004es-QE; Fri, 31 Mar 2023 12:19:10 +0200
+Date:   Fri, 31 Mar 2023 12:19:10 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v5 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+Message-ID: <ZCaznloORtzgioOP@hovoldconsulting.com>
+References: <cover.1680162377.git.quic_varada@quicinc.com>
+ <c46b542b112b59002ab965be1d3fcae8c372d545.1680162377.git.quic_varada@quicinc.com>
+ <CAA8EJpo_ckJtYV4aU613X5L6+wj-1i9vZkud5p72PLdCSnj5ng@mail.gmail.com>
+ <20230331092710.GB19162@varda-linux.qualcomm.com>
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230331092710.GB19162@varda-linux.qualcomm.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgS29ucmFkLAoKT24gRnJpLCAyMDIzLTAzLTMxIGF0IDA0OjAzICswMjAwLCBLb25yYWQgRHli
-Y2lvIHdyb3RlOgo+IAo+IAo+IE9uIDMwLjAzLjIwMjMgMTg6NTMsIER5bGFuIFZhbiBBc3NjaGUg
-d3JvdGU6Cj4gPiBRdWFsY29tbSBTRE04NDUgU29DIGZlYXR1cmVzIGEgU0xQSSBEU1Agd2hpY2gg
-dXNlcyBGYXN0UlBDIHRocm91Z2gKPiA+IGFuIGFsbG9jYXRlZCBtZW1vcnkgcmVnaW9uIHRvIGxv
-YWQgZmlsZXMgZnJvbSB0aGUgaG9zdCBmaWxlc3lzdGVtCj4gPiBzdWNoIGFzIHNlbnNvciBjb25m
-aWd1cmF0aW9uIGZpbGVzLgo+ID4gCj4gPiBBZGQgYSBGYXN0UlBDIG5vZGUgYXQgL2Rldi9mYXN0
-cnBjLXNkc3AgYW5kIGEgRE1BIHJlZ2lvbiwgc2ltaWxhcgo+ID4gdG8KPiA+IGRvd25zdHJlYW0s
-IHRvIGFsbG93IHVzZXJzcGFjZSB0byBjb21tdW5pY2F0ZSB3aXRoIHRoZSBTTFBJIHZpYSB0aGUK
-PiA+IEZhc3RSUEMgaW50ZXJmYWNlIGZvciBpbml0aWFsaXppbmcgdGhlIHNlbnNvcnMgb24gdGhl
-IFNMUEkuCj4gPiAKPiA+IFNpZ25lZC1vZmYtYnk6IER5bGFuIFZhbiBBc3NjaGUgPG1lQGR5bGFu
-dmFuYXNzY2hlLmJlPgo+ID4gLS0tCj4gPiDCoGFyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9zZG04
-NDUuZHRzaSB8IDI0ICsrKysrKysrKysrKysrKysrKysrKysrKwo+ID4gwqAxIGZpbGUgY2hhbmdl
-ZCwgMjQgaW5zZXJ0aW9ucygrKQo+ID4gCj4gPiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9ib290
-L2R0cy9xY29tL3NkbTg0NS5kdHNpCj4gPiBiL2FyY2gvYXJtNjQvYm9vdC9kdHMvcWNvbS9zZG04
-NDUuZHRzaQo+ID4gaW5kZXggM2I1NDdjYjdhZWI4Li44ZWE0OTQ0ZjNhZDYgMTAwNjQ0Cj4gPiAt
-LS0gYS9hcmNoL2FybTY0L2Jvb3QvZHRzL3Fjb20vc2RtODQ1LmR0c2kKPiA+ICsrKyBiL2FyY2gv
-YXJtNjQvYm9vdC9kdHMvcWNvbS9zZG04NDUuZHRzaQo+ID4gQEAgLTg3OCw2ICs4NzgsMTQgQEAg
-bWRhdGFfbWVtOiBtcHNzLW1ldGFkYXRhIHsKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoHNpemUgPSA8MCAweDQwMDA+Owo+ID4gwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbm8tbWFwOwo+ID4gwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9Owo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoGZhc3RycGNfbWVtOiBmYXN0cnBjIHsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgY29tcGF0aWJsZSA9ICJzaGFyZWQtZG1hLXBvb2wi
-Owo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqByZXVz
-YWJsZTsKPiBQbGVhc2UgbW92ZSBpdCBsYXN0IHRvIGdldCBhIG5pY2UgcmV2ZXJzZS1DaHJpc3Rt
-YXMtdHJlZSBsYXlvdXQuCj4gCgpXaWxsIGZpeCBpbiB2NC4KCj4gPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGFsbG9jLXJhbmdlcyA9IDwwIDB4MDAwMDAw
-MDAgMCAweGZmZmZmZmZmPjsKPiBXb3VsZCB0aGVyZSBiZSBhbnkgaXNzdWVzIHdpdGggaXQgc3Rh
-cnRpbmcgb3ZlciAoMTw8MzEgLSAxKT8KPiAKCllvdSBtZWFuIGEgYmlnZ2VyIHJlZ2lvbiB0aGVu
-LCBsaWtlIHRoZSB3aG9sZSBDTUEgcmVnaW9uIHRoZW4/IEFGQUlLLAp0aGUgU0xQSSBhbHdheXMg
-dXNlIHRoZSBzYW1lIHJlZ2lvbiBleHBlY3RpbmcgaXQgdG8gYmUgaW4gdGhpcyByYW5nZS4KSG93
-ZXZlciwgSSBjYW5ub3QgY29uZmlybSBtb3JlLCBhcyBJIGhhdmUgbm8gaW5zaWdodHMgaW4gdGhl
-IGZpcm13YXJlCnJ1bm5pbmcgb24gdGhlcmUsIHRoaXMgYWxsIGNvbWVzIGZyb20gZmluZGluZyBv
-dXQgd2hhdCBpdCBleGFjdGx5IGRvZXMKb24gZG93bnN0cmVhbS4KCj4gPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGFsaWdubWVudCA9IDwwIDB4NDAwMDAw
-PjsKPiBQbGVhc2UgdXNlIDB4MCBmb3IgdGhlIDAgaGVyZSwgYXMgaXQncyBlc3NlbnRpYWxseSBy
-ZWcuc2l6ZSB3aXRoCj4gc2l6ZS1jZWxscyA9IDIKCldpbGwgZml4IGluIHY0LgoKPiAKPiA+ICvC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgc2l6ZSA9IDwwIDB4
-MTAwMDAwMD47Cj4gRGl0dG8KCldpbGwgZml4IGluIHY0LgoKPiAKPiA+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqB9Owo+ID4gwqDCoMKgwqDCoMKgwqDCoH07Cj4gPiDCoAo+ID4gwqDC
-oMKgwqDCoMKgwqDCoGFkc3BfcGFzOiByZW1vdGVwcm9jLWFkc3Agewo+ID4gQEAgLTMzNDQsNiAr
-MzM1MiwyMiBAQCBnbGluay1lZGdlIHsKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBsYWJlbCA9ICJkc3BzIjsKPiA+IMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqBxY29tLHJlbW90ZS1waWQgPSA8Mz47Cj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbWJveGVzID0gPCZhcHNzX3No
-YXJlZCAyND47Cj4gPiArCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBmYXN0cnBjIHsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqBjb21wYXRpYmxlID0KPiA+ICJxY29tLGZhc3RycGMiOwo+ID4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoHFjb20sZ2xpbmstY2hhbm5lbHMgPQo+ID4gImZhc3RycGNnbGluay1hcHBzLWRzcCI7
-Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgbGFiZWwgPSAic2RzcCI7Cj4gPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgcWNvbSxub24tc2VjdXJlLWRvbWFpbjsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqBxY29tLHZtaWRzID0gPDB4MyAweEYgMHg1Cj4gPiAweDY+Owo+IFBsZWFzZSB1c2UgdGhl
-IHJlY2VudGx5LWludHJvZHVjZWQgaGVhZGVyIGFuZCBkZXBlbmQgb24gKGFuZAo+IG1ha2UgYSBw
-YXRjaCBhdG9wKQo+IAo+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xpbnV4LWFybS1tc20vODY4
-NWI3MTAtYjc0ZC01NTZhLTgxNWQtMGZmZWYyYjBlZWZmQGxpbmFyby5vcmcvVC8jdAo+IAo+IEtv
-bnJhZAo+IAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoG1lbW9yeS1yZWdpb24gPQo+ID4gPCZm
-YXN0cnBjX21lbT47Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgI2FkZHJlc3MtY2VsbHMgPSA8
-MT47Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgI3NpemUtY2VsbHMgPSA8MD47Cj4gPiArCj4g
-PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgY29tcHV0ZS1jYkAwIHsKPiA+ICvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgY29tcGF0aWJsZSA9Cj4gPiAicWNvbSxmYXN0cnBjLWNv
-bXB1dGUtY2IiOwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqByZWcg
-PSA8MD47Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgfTsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoH07Cj4gPiDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9Owo+ID4gwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9Owo+ID4gwqAKCktpbmQgcmVnYXJkcywKRHlsYW4K
+On Fri, Mar 31, 2023 at 02:57:11PM +0530, Varadarajan Narayanan wrote:
+> On Thu, Mar 30, 2023 at 12:44:40PM +0300, Dmitry Baryshkov wrote:
+> > On Thu, 30 Mar 2023 at 11:42, Varadarajan Narayanan
+> > <quic_varada@quicinc.com> wrote:
+> > >
+> > > Add USB phy and controller related nodes
+> > >
+> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > > ---
+> > >  Changes in v5:
+> > >         - Fix additional comments
+> > >         - Edit nodes to match with qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> > >         - 'make dtbs_check' giving the following messages since
+> > >           ipq9574 doesn't have power domains. Hope this is ok
+> > >
+> > >                 /local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: phy@7d000: 'power-domains' is a required property
+> > >                 From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> > >                 /local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: usb@8a00000: 'power-domains' is a required property
+> > >                 From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> >
+> > No, I think it is not.
+> 
+> There are no GDSCs in IPQ9574. Can you suggest how to proceed.
 
+You need to update the binding and either make the power domains
+property optional in the binding or dependent on the SoC.
 
+> > > +               ssphy_0: phy@7d000 {
+> >
+> > Nit: usually the label usb_0_qmpphy
+> >
+> > > +                       compatible = "qcom,ipq9574-qmp-usb3-phy";
+> > > +                       reg = <0x0007d000 0xa00>;
+> > > +                       #phy-cells = <0>;
+> > > +
+> > > +                       clocks = <&gcc GCC_USB0_AUX_CLK>,
+> > > +                                <&xo_board_clk>,
+> > > +                                <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> > > +                                <&gcc GCC_USB0_PIPE_CLK>;
+> > > +                       clock-names = "aux",
+> > > +                                     "ref",
+> > > +                                     "com_aux",
+
+This is not the right name for this clock so you need to update the
+binding first.
+
+Please be more careful.
+
+> > > +                                     "pipe";
+> > > +
+> > > +                       resets = <&gcc GCC_USB0_PHY_BCR>,
+> > > +                                <&gcc GCC_USB3PHY_0_PHY_BCR>;
+> > > +                       reset-names = "phy",
+> > > +                                     "phy_phy";
+> > > +
+> > > +                       vdda-pll-supply = <&reg_usb_1p8>;
+> > > +                       vdda-phy-supply = <&reg_usb_0p925>;
+> > > +
+> > > +                       status = "disabled";
+> > > +
+> > > +                       #clock-cells = <0>;
+> > > +                       clock-output-names = "usb0_pipe_clk";
+> > > +               };
+
+Johan
