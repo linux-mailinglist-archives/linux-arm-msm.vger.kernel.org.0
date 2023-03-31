@@ -2,109 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 597A36D21F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 15:59:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16D426D224E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 16:24:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232633AbjCaN7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 09:59:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
+        id S232144AbjCaOYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 10:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232663AbjCaN7T (ORCPT
+        with ESMTP id S231566AbjCaOY3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 09:59:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F26E11665;
-        Fri, 31 Mar 2023 06:59:11 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32VCDXaD013987;
-        Fri, 31 Mar 2023 13:59:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0efs2B7GiN50fVn2SDR3wcVCxcPBG0kv0j0bjRmvWxo=;
- b=An02CWyn5G2smGq6sQ6adFPRE1QIg9FSWtTdphgkYXMobHsa+WXMKWnVr0JklDXyFfe4
- cl0NLu//RzhgeX7wScjXG7JHxanO2NJg1PpaeufsTBOI3mhw4h1p2nlVtcDr9KrPuA+C
- LWthh4g0CM4WOkqYQKS3gxs71S0I3ZZNznyV4E1X/+u6auNyh7fw5jKVh8joSIAaRdyx
- FVwx+7uhGRq+uxaEwXGf4Mh+9kceu7za84Yf7+KdWEJeS/2NH4ViErmzzwyTu4M3hGpF
- 8lTnYWlVwgHe3IqEpHhO92BKt6IJbmGKrzidVvFVR0ISREVFSdlsWfuLFb63SvaqEG80 7A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pnvyuguss-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 13:59:08 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32VDx7Oa020018
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 13:59:07 GMT
-Received: from vpolimer-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 31 Mar 2023 06:59:02 -0700
-From:   Vinod Polimera <quic_vpolimer@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>
-CC:     Vinod Polimera <quic_vpolimer@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <robdclark@gmail.com>,
-        <dianders@chromium.org>, <swboyd@chromium.org>,
-        <quic_kalyant@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <quic_khsieh@quicinc.com>, <quic_vproddut@quicinc.com>,
-        <quic_bjorande@quicinc.com>, <quic_abhinavk@quicinc.com>,
-        <quic_sbillaka@quicinc.com>
-Subject: [PATCH v1 3/3] msm: skip the atomic commit of self refresh while PSR running
-Date:   Fri, 31 Mar 2023 19:28:34 +0530
-Message-ID: <1680271114-1534-4-git-send-email-quic_vpolimer@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
-References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
+        Fri, 31 Mar 2023 10:24:29 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D9BE5B9D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 07:24:27 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id r19so325671ilj.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 07:24:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680272666; x=1682864666;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6UCEBU5mLz9QdxPqNmojtQa38OeHK3XeLs0yM78qHDU=;
+        b=ysa2qjifmTJO9JHHygIj29NmPqr7X++zxe0C5SngoNEYEgnb6q3wTU0Ve8V3Hk83qq
+         xyyQcuFNn2Joc/XP++7VT03IfLitF+LM8DOP0xJ/cRTKpR8InW0+3C31Mbh7F4ztZUnN
+         zCwyOiMRX2fzNPiOUI2aIg9/HgN+XbXvLdihCmNm2Bn3LDgvSfYnMYm8EToTOrGMPf4J
+         osR6kfHsUdXfrRt0vB+TpSvVef8YETc489yJTl/1WCscdnWZZqFjVrNKxgL4vB/EFSrR
+         ZsF7jEu35iOjh6Q4RD19FIcrALibJKiLmUQfYeA4xvDxLcjtld6MgCvxU/RzPK2vfkfP
+         Ae1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680272666; x=1682864666;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6UCEBU5mLz9QdxPqNmojtQa38OeHK3XeLs0yM78qHDU=;
+        b=Tu+ir8kVnzM6TSkzBAGLKSdYRHlfoJBUt7Q9+/uMn+zxMc699QRnQB3ddmHwsrRLtF
+         KGcFpyfqVUfdFUIfdT+KVzVxRJuGV58wxiq6T6pYkAoyc3yO8FCJJO2DrhdHcVHFB1Pe
+         RZ1GKv8KjzvPwqQQ67UCOasrYuFnC1EPUPhFbOzbyZ/e98PXhsJguocV5qh3MrPfCXjj
+         LOyZ40+87TyUfqM6PNjyZw0JgRe7NSb8jqBiV5e6EVmr3AuSUqY76m0GVIBwGsuGh38q
+         GX/e/XIOa6Dh4yG9OBY7I6zuBCgcwKR6nZ9WLC4dQydZwVOtdFSthuI6WdIljabWK+53
+         WZuw==
+X-Gm-Message-State: AAQBX9etiV6X09tOiL74z2u400Hlqr6KZDS0rlD0K+evg2ChIOZjzrcp
+        pkSHHp/+57k5yIeuXOQkhtjwcA==
+X-Google-Smtp-Source: AKy350YVgRKOO4Y8oepZkwpgSMnl2j7X6N2/BaBvJ1LPgAjZRmKLiJF6tNiaXZIiQzSXa2KbugpiaA==
+X-Received: by 2002:a05:6e02:4cb:b0:323:f57c:806d with SMTP id f11-20020a056e0204cb00b00323f57c806dmr14994799ils.3.1680272666593;
+        Fri, 31 Mar 2023 07:24:26 -0700 (PDT)
+Received: from [172.22.22.4] ([98.61.227.136])
+        by smtp.googlemail.com with ESMTPSA id g3-20020a056e020d0300b003230c7d6a3csm657043ilj.67.2023.03.31.07.24.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Mar 2023 07:24:25 -0700 (PDT)
+Message-ID: <88a4808c-5f45-cb07-83bb-039f9d832b5b@linaro.org>
+Date:   Fri, 31 Mar 2023 09:24:24 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MnHT4qZKxPdFf57uPNUz_MJJg1rLBTqq
-X-Proofpoint-ORIG-GUID: MnHT4qZKxPdFf57uPNUz_MJJg1rLBTqq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-31_07,2023-03-31_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 mlxlogscore=873 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2303310109
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+From:   Alex Elder <elder@linaro.org>
+Subject: Re: [PATCH v11 00/26] Drivers for gunyah hypervisor
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In certain CPU stress conditions, there can be a delay in scheduling commit
-work and it was observed that PSR commit from a different work queue was 
-scheduled. Avoid these commits as display is already in PSR mode.
+On 3/3/23 7:06 PM, Elliot Berman wrote:
+> Gunyah is a Type-1 hypervisor independent of any
+> high-level OS kernel, and runs in a higher CPU privilege level. It does
+> not depend on any lower-privileged OS kernel/code for its core
+> functionality. This increases its security and can support a much smaller
+> trusted computing base than a Type-2 hypervisor.
+> 
+> Gunyah is an open source hypervisor. The source repo is available at
+> https://github.com/quic/gunyah-hypervisor.
 
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
----
- drivers/gpu/drm/msm/msm_atomic.c | 3 +++
- 1 file changed, 3 insertions(+)
+I've done a pretty detailed review again, and got further along
+than I did last time.  Things are definitely looking better, but
+I have found some bugs that need to be addressed.
 
-diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
-index 645fe53..f8141bb 100644
---- a/drivers/gpu/drm/msm/msm_atomic.c
-+++ b/drivers/gpu/drm/msm/msm_atomic.c
-@@ -192,6 +192,9 @@ int msm_atomic_check(struct drm_device *dev, struct drm_atomic_state *state)
- 			new_crtc_state->mode_changed = true;
- 			state->allow_modeset = true;
- 		}
-+
-+		if (old_crtc_state->self_refresh_active && new_crtc_state->self_refresh_active)
-+			return -EINVAL;
- 	}
- 
- 	return drm_atomic_helper_check(dev, state);
--- 
-2.7.4
+I also make a lot of comments about grouping certain sets of
+definitions into enumerated types.  Also I tend to notice when
+things aren't done consistently, and I mention that a lot.
+
+There are silly suggestions all over about alignment of
+things--these are mainly to make the code look prettier,
+though that's a matter of opinion.
+
+I still prefer having lines generally closer to 80 columns
+wide, but I've already mentioned that...
+
+I really focused on the code, and not the documentation.
+In fact I didn't even pay much attention to your patch
+headers either.  I did not review the SCM calls yet.
+
+So in summary I have not reviewed patches 1, 2, 16, 17,
+and 26.  I try to look at everything in my next review,
+which I hope will be final (or very close).
+
+					-Alex
+
+> The diagram below shows the architecture.
+> 
+> ::
+> 
+>           VM A                    VM B
+>       +-----+ +-----+  | +-----+ +-----+ +-----+
+>       |     | |     |  | |     | |     | |     |
+>   EL0 | APP | | APP |  | | APP | | APP | | APP |
+>       |     | |     |  | |     | |     | |     |
+>       +-----+ +-----+  | +-----+ +-----+ +-----+
+>   ---------------------|-------------------------
+>       +--------------+ | +----------------------+
+>       |              | | |                      |
+>   EL1 | Linux Kernel | | |Linux kernel/Other OS |   ...
+>       |              | | |                      |
+>       +--------------+ | +----------------------+
+>   --------hvc/smc------|------hvc/smc------------
+>       +----------------------------------------+
+>       |                                        |
+>   EL2 |            Gunyah Hypervisor           |
+>       |                                        |
+>       +----------------------------------------+
+> 
+> Gunyah provides these following features.
+> 
+
+. . .
 
