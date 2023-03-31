@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7C966D14B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 03:15:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36A186D14BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 03:15:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbjCaBO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 21:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33748 "EHLO
+        id S229517AbjCaBPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 21:15:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjCaBO6 (ORCPT
+        with ESMTP id S229666AbjCaBPA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 21:14:58 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0503CDCF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 18:14:57 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id a44so2836616ljr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 18:14:57 -0700 (PDT)
+        Thu, 30 Mar 2023 21:15:00 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA05D306
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 18:14:58 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id by14so2307791ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 18:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680225296;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xMt5o7eVOVyetFxZi6Wtlfos4TgIUANblrdBkQ0mZ+g=;
-        b=ovLvv6Z3mM4rfJoKMIhlkqF5ZX9/tY0KVKB5Iksff70ffOL8mKfTOWOHOXEBDogsLy
-         zmeeH4c8yT/NCB5HZvz22V4u3k0Ax3JutM7KiKHumlVDFSwGkjA3TpirAR3MXE6nKQ2M
-         0X1uWbcsqKdFB9LLh42tYPAsYxCTYRa8G6lqsczqqNCqGRuP3pwlrAKg/4EFz0Ur83v/
-         qvoRBbuHeKJ8qvhUi++M0Nihvp2Zrm/1CEwOiZr9eR+SnHTwpOpFqIX2p9QgvghkI7qZ
-         SOwhDIhwVFdFRe8P12/JxoMTwrYazUnsQAAtraLr6pEpTDFLKEsxFapccp05p4xCoS8S
-         3kAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680225296;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1680225297;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xMt5o7eVOVyetFxZi6Wtlfos4TgIUANblrdBkQ0mZ+g=;
-        b=JcsKif29Yethd+uhqCHl0XWdW+0UGD475vDODTm8RnUGF7Bcpwfc+El+KoAwioiNOz
-         VpS/LdpnHwyt8RTDckzdhfSXxygf3AleBc96AsKvCvb3VEFO9ZilPN3q12yujJNEpbmN
-         GuEdXlZyF9+zz5dazjxtr0C1NYt5+gQ+2qYHbjL1VmYgs61mwJ/5RxjNDOr0/Gle2YPZ
-         lL+qqOg9TBhGnDzrImny7YrZQE/8hLy3mRri1WwNcKDWyw5Wa8cxCfvLkN5mNaArTCN6
-         kQ+d2veh5yo8GKJ701YebwRljeMlgn/vyQJqdLfweK+uy/ovyPnEHH0fiYISTaosxkR8
-         OkzQ==
-X-Gm-Message-State: AAQBX9fukq/jYAZp4eLa53neCtD5DvM2ZlycgRC2ZHgsRehQaAlT+Nbl
-        fZVUot+pfsqVxf1I1wbp+iu94Q==
-X-Google-Smtp-Source: AKy350bB+awwGcgIgXmdkRxLiXinTgLBgl/AzH2xLNTvmCh9sh6FfYlLCnNuLerm3AcQT7uXNulBNg==
-X-Received: by 2002:a2e:b614:0:b0:2a0:3f9f:fecd with SMTP id r20-20020a2eb614000000b002a03f9ffecdmr7740015ljn.49.1680225295836;
-        Thu, 30 Mar 2023 18:14:55 -0700 (PDT)
+        bh=p4o6oBmHnEhp5oKh/mixd7WOHYgf5ln4PuMXkA7t4Yg=;
+        b=ilIG2XmxB/j7n7ATeF8zJTqz4zU2CrZAhUg7m4fK8Ct9T3JCf+UojRN2STUA6fj/N8
+         e/MkIBwAqqo6YeNmch6+KcXlbjkcMAUlfRa7Xldldwc8qjrMo5N6relst0oYtxTgE2Jk
+         QTkBQuHpXE/gWpk6a9g+S85Dybzo2/bHMMSUMJIdIGTEzZ7XzGN2Vta/lJAQHImrjJhl
+         JFTY+vhLgHk578tIAu3AAKZnL/UnaAcT770w/MeJW706mdvvAWDujHuW4esZOhIxHUsQ
+         8xqhryyHkDC92IcC+aQ/sbPw3jEVGQzL4EJ9NK+PHwlmSVNlNqlKVNK3JErawbNLRb8n
+         OS9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680225297;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p4o6oBmHnEhp5oKh/mixd7WOHYgf5ln4PuMXkA7t4Yg=;
+        b=xL/Uhn23FBQTr466HVjDGweEYSv6Ws4z6ODJ4/8m/6Cc3ww4HFJ1fG8F+iXWkNbfL5
+         7pGOMuz844FzgUIBFF4VJanx6USpkNjn3asawZTDwKxAb+HgAuDwxho4VKNx/zqIQsIY
+         oUjdohdXtcXy37ab8pT3IT12n9WGdknZ8YoTFwuxE/KNnJBvEXe3fcVcFKqFqkcPp+35
+         kiQ1+hZKLPrzYokucintHqbFt2nE6OM9Vwwz5WuKdxBkfvrTtzUJ/87ePJLzE0Y6Ih5C
+         jSvLScb7Xv3+hY7OYXrsKNQCok0A6AWlopHyMXNoEnWf/WoNcGwKUdTS4XdI1guTqPjf
+         +AsA==
+X-Gm-Message-State: AAQBX9f7QHTqAvzGH+9Rb4SX6DYeoqZF5P2Uqku3vFdhkYdObl1MdIgF
+        CdGCfNXMy+XdKW7WZQpyupl7TA==
+X-Google-Smtp-Source: AKy350Y8pbW2rnifmrFP6LIvKRu4SZkzHXfmhAHRIISb+6+uRa6c0W7ynL15+xedRsg87Zo3jeaRGA==
+X-Received: by 2002:a2e:aa1c:0:b0:2a1:9b6a:72b9 with SMTP id bf28-20020a2eaa1c000000b002a19b6a72b9mr2513568ljb.13.1680225297167;
+        Thu, 30 Mar 2023 18:14:57 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id n7-20020a2e7207000000b002986854f27dsm134573ljc.23.2023.03.30.18.14.54
+        by smtp.gmail.com with ESMTPSA id n7-20020a2e7207000000b002986854f27dsm134573ljc.23.2023.03.30.18.14.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 18:14:55 -0700 (PDT)
+        Thu, 30 Mar 2023 18:14:56 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v3 0/5] SM8[12]50 GPU speedbin
-Date:   Fri, 31 Mar 2023 03:14:48 +0200
-Message-Id: <20230331-topic-konahana_speedbin-v3-0-2dede22dd7f7@linaro.org>
+Date:   Fri, 31 Mar 2023 03:14:49 +0200
+Subject: [PATCH v3 1/5] drm/msm/a6xx: Add support for A640 speed binning
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAg0JmQC/x2N0QrCMAxFf2Xk2UBtJ4K/IiJpl7ngSEujIoz9u
- 8HHcy6Hu4FxFza4DBt0/ohJVYd0GKAspA9GmZwhhphCSkd81SYFn1XJZ7pbY56yKFLmUM7xNMd
- xBK8zGWPupGXxXt/r6rJ1nuX7v7ve9v0HC8vjcn4AAAA=
+Message-Id: <20230331-topic-konahana_speedbin-v3-1-2dede22dd7f7@linaro.org>
+References: <20230331-topic-konahana_speedbin-v3-0-2dede22dd7f7@linaro.org>
+In-Reply-To: <20230331-topic-konahana_speedbin-v3-0-2dede22dd7f7@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -75,11 +75,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680225294; l=1580;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680225294; l=1296;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Z4sih2qa0PUG8gStwgxQKZOfyMiBl0L0thVhEIYRgTA=;
- b=dDH9R7V3yQBHD6qeTJlYEPlkejHdOYxSa8xt9FibgBrfIH7UZSZ5KtyijfLN7/4YvNKdhxl1le8W
- 5AD4PNGiDVycRXBzI/kobVEyCawYc6HG0/SuS8nTuprHGsz7ivQy
+ bh=VXMxl1zaALk2VQGZ0SUWZWF+pL7ypf/TNwlzN5n8NSU=;
+ b=kdwkwRFUtJBE2RUvooae/psy8PkBqKZzpIRLEnDz0bWAFsqckUPcG6f+uXQfdlVlK+Uu7jLRej2i
+ 6iCqX4j7AjGitZ8xuD3j/PrE/IF9redU8LaK+IiBz+VU46aV/KQr
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -91,44 +91,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series brings SM8[12]50 (A6[45]0) speedbin support along with a
-touch-up for 8150, allowing Adreno to cooperate with the display hw.
+Add support for matching QFPROM fuse values to get the correct speed bin
+on A640 (SM8150) GPUs.
 
-Tested on Xperia 5 II (SM8250 Edo PDX206) and Xperia 5 (SM8150 Kumano
-Bahamut).
-
-v2 -> v3:
-- Don't swap speedbin 2 (with fuse val 3) and speedbin 3 (with fuse val 2)
-  on SM8250 (no functional change, this is all a software construct but
-  let's stick with the official mapping) [2/5], [5/5]
-
-I kept all of the tags in good faith.
-
-v1 -> v2:
-- Drop bindings patches (Applied by Srini)
-- Remove leftover comment about missing speedbin in 8150 DTSI (Marijn)
-- Collect tags
-
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (5):
-      drm/msm/a6xx: Add support for A640 speed binning
-      drm/msm/a6xx: Add support for A650 speed binning
-      arm64: dts: qcom: sm8150: Don't start Adreno in headless mode
-      arm64: dts: qcom: sm8150: Add GPU speedbin support
-      arm64: dts: qcom: sm8250: Add GPU speedbin support
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts |  5 +++++
- arch/arm64/boot/dts/qcom/sm8150-mtp.dts |  5 +++++
- arch/arm64/boot/dts/qcom/sm8150.dtsi    | 31 +++++++++++++++++++++----------
- arch/arm64/boot/dts/qcom/sm8250.dtsi    | 23 ++++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 31 +++++++++++++++++++++++++++++++
- 5 files changed, 84 insertions(+), 11 deletions(-)
----
-base-commit: a6d9e3034536ba4b68ac34490c02267e6eec9c05
-change-id: 20230331-topic-konahana_speedbin-abe0c725f244
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 1e09777cce3f..663090973c1b 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1890,6 +1890,16 @@ static u32 a619_get_speed_bin(u32 fuse)
+ 	return UINT_MAX;
+ }
+ 
++static u32 a640_get_speed_bin(u32 fuse)
++{
++	if (fuse == 0)
++		return 0;
++	else if (fuse == 1)
++		return 1;
++
++	return UINT_MAX;
++}
++
+ static u32 adreno_7c3_get_speed_bin(u32 fuse)
+ {
+ 	if (fuse == 0)
+@@ -1915,6 +1925,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
+ 	if (adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), rev))
+ 		val = adreno_7c3_get_speed_bin(fuse);
+ 
++	if (adreno_cmp_rev(ADRENO_REV(6, 4, 0, ANY_ID), rev))
++		val = a640_get_speed_bin(fuse);
++
+ 	if (val == UINT_MAX) {
+ 		DRM_DEV_ERROR(dev,
+ 			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.40.0
 
