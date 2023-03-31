@@ -2,264 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C00FD6D13F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 02:19:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8412F6D1439
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 02:39:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbjCaATv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Mar 2023 20:19:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35480 "EHLO
+        id S229629AbjCaAjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Mar 2023 20:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjCaATu (ORCPT
+        with ESMTP id S229659AbjCaAjU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Mar 2023 20:19:50 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D481043E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 17:18:48 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5416698e889so386419997b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 17:18:48 -0700 (PDT)
+        Thu, 30 Mar 2023 20:39:20 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C1519A5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 17:39:11 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id j11so26830239lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 17:39:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680221814;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nwvfaw6V9dI0/2q8Aos33hd9sn4tNv/OIznp4380bhA=;
-        b=a01qGW759DCrNw8iYW5mvUtEzjuZ/9zM+dyA1D6Nk21WkKg0b2TSWhfP/CYl6tA/cq
-         Go1FZ2Nj5CVqh+8LeCt0ooKNdm3xZK+dDEZGwL8rGI7nSMdnmVOIrgZwgkhNQpVaznM2
-         9T2J+kRems4rjDcH2/Ep2I8LR0KEwA2wEzx8Nmhv1vQ12pG4ZYwp0MHNqCFvbST8eKBY
-         h6B7bEwg/bP9MUAs+pjbnI2r1dW2fybA7zsLGEDCqAcWPGYlCVSb3+MZpc6wJ9OdYT6p
-         bI2TMdstjTFu7as4wvfCSJWXwDi3bdC36Xy//N78YsSS9LHDcHX83dQ+MCrV2nmLcWwg
-         mf1Q==
+        d=linaro.org; s=google; t=1680223150;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GGffWxiLWtEc/sDkXGzevKji1Y0bUIbGHyNyuOurZmg=;
+        b=hw6P+cNJTYoVFUvkhbDLCLyr6hkV8w6DdP80DifpNo1tZPIrNXR4LvRxV1DOjkKREh
+         +amDuT0QfAgO9fkwBXYUcFk/Sksxwa8YCiruNRuBTHwfuWVxd2HLmgwjrs2+DJpkuYZJ
+         7d0WBXPuU574cvAX8TSPEPv/ZwjCMislILLMYgR7Kj5saimZqfizVHEQR6MXiXiT6XNB
+         qe5moXa91McwwRoQKdEDzsPzXAz5yi8EX8m8AIoHJLU5BoJr4nH3LtefyJmgtyO32CM1
+         pE69mICzXN16x5fkrLzHVmccjiBr51/87wPyCwvs9vy3KiYQjwilRPVUzAX7TvMPmo55
+         USFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680221814;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nwvfaw6V9dI0/2q8Aos33hd9sn4tNv/OIznp4380bhA=;
-        b=S+M/W/1S3xAjYEw4pF6iNv4jzzpZCHalB8dqKBtv4QUo2piH9YnDM7T5nCT3OYdG90
-         Hf3sqNVGMvkp50220eLJ4kczk02v0kdlKKBjb6wYHlnyaVuLgylzLIHf03BPoVHOYi38
-         3jvpFf9bMmJ6iu3cwVClegHdPLKDNMNPBS4+/IV1J0zWo+IZIP3oHVqJo3YsoxZf4ed2
-         YFoF2SMeHXi3aan2M6yaV5BBdZQ3GuNACdSCkTWZ7Ycfb17MeMJT3tNWhp3/oW2n+AwQ
-         WA+VJWuiZtv9OByTkwaCocorZ3LzlVhn61QdjMN2tCJiKAZVWBgnl8jUXFc/hC7l73Re
-         hwiA==
-X-Gm-Message-State: AAQBX9fYohB/QrxFA0fShvh1fcXifii5g+XE/NqJYkYBHo7syYJiybHr
-        LDp0D1f+jch56znDiylJ2lgVGlAkWsBe5UOsmbIEqQ==
-X-Google-Smtp-Source: AKy350YULGhI88B8rpCIUYDVshjOig8QxNGjzbSr/leeOL3+1x3nAIgmZaWodS7XOCzA6c6ljtL7dd+VjDMKYJDBBNw=
-X-Received: by 2002:a81:b617:0:b0:541:7f69:aa8b with SMTP id
- u23-20020a81b617000000b005417f69aa8bmr12056627ywh.5.1680221814251; Thu, 30
- Mar 2023 17:16:54 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680223150;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GGffWxiLWtEc/sDkXGzevKji1Y0bUIbGHyNyuOurZmg=;
+        b=l+JwNUzq0k98z/mwdnNAEpfGtBDu8+KaHBX6zXAjZsfWqcbaH6zNsRdlltJ7e0onxN
+         4acVb4YFfnB+uwwbAzTHhTzkrWfsaQUh8vqwNtfNHQMY/AxTZ+uAfE8VR0G00//WkNUv
+         d6ZPAw9gC6cupx5iqSVo3TenDQewV9UnaqjwlcFdYC70VA4ewnQ8XLaivbIDuEzJWhAs
+         zPjDT4Elpm9sE7mV9XXX91nCcKkOk1tHdeMjOZ75fn3KJaawuS8UesXR3eOdYBTPzM/X
+         PIw99atEqs+HzUo7EX7liLKnmd0iebs3GOyli2ZfPIRGTQ0FVrxZw4NSAPe2Uh0iBA4z
+         SKVg==
+X-Gm-Message-State: AAQBX9drO8wFCDGyXVblHjZoZ6G/SaI1Pi2B1Yyb+FWUSItu2fB6kOzh
+        ZLPblFPOUQyykF6dqjMtasaaWw==
+X-Google-Smtp-Source: AKy350YSStvzpj8ckN2dlm2ZDKPCmXkOO8MPKj1SGrOpVpVoFQCvkIaHGATguDKP7y44/9sGbxM2jQ==
+X-Received: by 2002:ac2:5ec6:0:b0:4eb:20e:6aec with SMTP id d6-20020ac25ec6000000b004eb020e6aecmr7159970lfq.40.1680223149832;
+        Thu, 30 Mar 2023 17:39:09 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id 10-20020ac2484a000000b004a2c447598fsm147065lfy.159.2023.03.30.17.39.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Mar 2023 17:39:09 -0700 (PDT)
+Message-ID: <48ac39ed-cb14-a07a-447f-b1022c44737e@linaro.org>
+Date:   Fri, 31 Mar 2023 03:39:08 +0300
 MIME-Version: 1.0
-References: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v1-5-f3e479f59b6d@quicinc.com>
- <0698ce89-d70c-c3f4-f006-18130858aacf@linaro.org> <2c9ac12f-df2f-8576-555b-3d84a6205ee3@quicinc.com>
- <c3ac5c2b-e0e0-5d7c-67d3-4fc2316b68c5@linaro.org> <6461a8b8-f620-5f9c-9533-f65ac42c0524@quicinc.com>
-In-Reply-To: <6461a8b8-f620-5f9c-9533-f65ac42c0524@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 31 Mar 2023 03:16:42 +0300
-Message-ID: <CAA8EJprriCLXR+P7ZOWLQCOhvi0WCUzNrCu4eyyqegNtPZbBUg@mail.gmail.com>
-Subject: Re: [PATCH RFC 5/5] drm/msm/dsi: Use MSM and DRM DSC helper methods
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 2/5] drm/msm/a6xx: Add support for A650 speed binning
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, krzysztof.kozlowski@linaro.org
+Cc:     marijn.suijten@somainline.org, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Chia-I Wu <olvaffe@gmail.com>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230120172233.1905761-1-konrad.dybcio@linaro.org>
+ <20230120172233.1905761-3-konrad.dybcio@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230120172233.1905761-3-konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 31 Mar 2023 at 03:07, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->
->
->
-> On 3/30/2023 4:14 PM, Dmitry Baryshkov wrote:
-> > On 31/03/2023 01:49, Jessica Zhang wrote:
-> >>
-> >>
-> >> On 3/29/2023 4:48 PM, Dmitry Baryshkov wrote:
-> >>> On 30/03/2023 02:18, Jessica Zhang wrote:
-> >>>> Use MSM and DRM DSC helper methods.
-> >>>>
-> >>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >>>> ---
-> >>>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 18 ++++++++++++------
-> >>>>   1 file changed, 12 insertions(+), 6 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>> index 74d38f90398a..7419fe58a941 100644
-> >>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >>>> @@ -31,6 +31,7 @@
-> >>>>   #include "msm_kms.h"
-> >>>>   #include "msm_gem.h"
-> >>>>   #include "phy/dsi_phy.h"
-> >>>> +#include "disp/msm_dsc_helper.h"
-> >>>>   #define DSI_RESET_TOGGLE_DELAY_MS 20
-> >>>> @@ -841,14 +842,14 @@ static void dsi_update_dsc_timing(struct
-> >>>> msm_dsi_host *msm_host, bool is_cmd_mod
-> >>>>   {
-> >>>>       struct drm_dsc_config *dsc = msm_host->dsc;
-> >>>>       u32 reg, reg_ctrl, reg_ctrl2;
-> >>>> -    u32 slice_per_intf, total_bytes_per_intf;
-> >>>> +    u32 slice_per_intf;
-> >>>>       u32 pkt_per_line;
-> >>>>       u32 eol_byte_num;
-> >>>>       /* first calculate dsc parameters and then program
-> >>>>        * compress mode registers
-> >>>>        */
-> >>>> -    slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
-> >>>> +    slice_per_intf = msm_dsc_get_slice_per_intf(dsc, hdisplay);
-> >>>
-> >>> This looks good
-> >>>
-> >>>>       /*
-> >>>>        * If slice_count is greater than slice_per_intf
-> >>>> @@ -858,10 +859,10 @@ static void dsi_update_dsc_timing(struct
-> >>>> msm_dsi_host *msm_host, bool is_cmd_mod
-> >>>>       if (dsc->slice_count > slice_per_intf)
-> >>>>           dsc->slice_count = 1;
-> >>>> -    total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
-> >>>> +    eol_byte_num = msm_dsc_get_eol_byte_num(msm_host->dsc, hdisplay,
-> >>>> +            dsi_get_bpp(msm_host->format));
-> >>>> -    eol_byte_num = total_bytes_per_intf % 3;
-> >>>> -    pkt_per_line = slice_per_intf / dsc->slice_count;
-> >>>> +    pkt_per_line = slice_per_intf / MSM_DSC_SLICE_PER_PKT;
-> >>>
-> >>> And for these values the result is definitely changed. Separate patch
-> >>> & description please. Just in case, "values per downstream kernel" is
-> >>> not a proper description for such changes.
-> >>
-> >> Hi Dmitry,
-> >>
-> >> Sure, I can put this into a separate patch.
-> >>
-> >> The reason this was changed from slice_count to SLICE_PER_PKT was
-> >> because slice count and slice per packet aren't always equivalent.
-> >> There can be cases where panel configures DSC to have multiple soft
-> >> slices per interface, but the panel only specifies 1 slice per packet.
-> >
-> > Please put this nice description into the commit message. It is exactly
-> > what I was looking for!
-> >
-> > BTW: Do you expect to change MSM_DSC_SLICE_PER_PKT later or it will stay
-> > at "1"? If so, it might be easier to drop it and instead add a comment.
->
-> MSM_DSC_SLICE_PER_PKT is the default value for panels that don't specify
-> a slice_per_pkt value. (Now that I think about it, might be better to
-> call it MSM_DSC_DEFAULT_SLICE_PER_PKT instead...)
+On 20/01/2023 19:22, Konrad Dybcio wrote:
+> Add support for matching QFPROM fuse values to get the correct speed bin
+> on A650 (SM8250) GPUs.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Note, there is no slice_per_pkt in drm_dsc_config, so we must come up
-with another way to pass this data from the panel or to deduce the
-value in our driver.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
->
-> I don't expect it to change in the future, but it's a little more
-> readable than just dividing by 1 IMO. If you prefer dropping the macro
-> and adding a comment, I'm also okay with that.
+Thank you for the patch. It took me a while to dive into various ways 
+vendor kernels handle GPU speed bins.
 
-There is no need to divide by 1, the value doesn't change. So I'd
-probably prefer something like:
-
-/* Default to 1 slice per packet */
-if (panel_slice_per_pkt)
-    pkt_per_line = slice_per_intf / panel_slice_per_pkt;
-else
-    pkt_per_line = slice_per_intf;
-
-Or:
-
-/* Default to 1 slice per packet */
-slice_per_pkt = 1;
-if (panel_slice_per_pkt)
-    slice_per_pkt = panel_slice_per_pkt;
-pkt_per_line = slice_per_intf / slice_per_pkt;
-
-BTW: could you possibly change 'intf' to 'line' to v2? It seems there
-is a mixture of them through the code. If there is a difference
-between intf and line which is not yet posted, it's fine to keep the
-current code. WDYT?
-
->
-> Thanks,
->
-> Jessica Zhang
->
-> >
-> > Regarding eol_byte_num, probably the best explanation would be that is
-> > is a size of a padding rather than a size of a trailer bytes in a line
-> > (and thus original calculation was incorrect).
-> >
-> >>
-> >>>
-> >>>>       if (is_cmd_mode) /* packet data type */
-> >>>>           reg =
-> >>>> DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-> >>>> @@ -911,6 +912,11 @@ static void dsi_timing_setup(struct
-> >>>> msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >>>>       DBG("");
-> >>>> +    if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
-> >>>> +        /* Default widebus_en to false for now. */
-> >>>> +        hdisplay = msm_dsc_get_pclk_per_line(msm_host->dsc,
-> >>>> mode->hdisplay,
-> >>>> +                dsi_get_bpp(msm_host->format));
-> >>>> +
-> >>>
-> >>> This is definitely something new and thus should probably go into a
-> >>> separate patch and be described. Also I'm not sure how does that
-> >>> interact with the hdisplay-related calculations below, under the
-> >>> if(dsc) clause.
-> >>
-> >> After double-checking the math here, I think this part of the change
-> >> is actually wrong. pclk_per_line is essentially doing hdisplay / 3,
-> >> which is a repeat of what's being done in the `if (dsc)` block.
-> >>
-> >> Will replace `hdisplay /= 3` with the pclk_per_line calculation.
-> >
-> > Thanks!
-> >
-> >>
-> >> Thanks,
-> >>
-> >> Jessica Zhang
-> >>
-> >>>
-> >>>>       /*
-> >>>>        * For bonded DSI mode, the current DRM mode has
-> >>>>        * the complete width of the panel. Since, the complete
-> >>>> @@ -1759,7 +1765,7 @@ static int dsi_populate_dsc_params(struct
-> >>>> msm_dsi_host *msm_host, struct drm_dsc
-> >>>>           return ret;
-> >>>>       }
-> >>>> -    dsc->initial_scale_value = 32;
-> >>>> +    dsc->initial_scale_value =
-> >>>> drm_dsc_calculate_initial_scale_value(dsc);
-> >>>
-> >>> This is fine, we only support 8bpp where these values match.
-> >>>
-> >>>>       dsc->line_buf_depth = dsc->bits_per_component + 1;
-> >>>>       return drm_dsc_compute_rc_parameters(dsc);
-> >>>>
-> >>>
-> >>> --
-> >>> With best wishes
-> >>> Dmitry
-> >>>
-> >
-> > --
-> > With best wishes
-> > Dmitry
-> >
-
-
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 17 +++++++++++++++++
+>   1 file changed, 17 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 0ee8cb3e490c..c5f5d0bb3fdc 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1894,6 +1894,20 @@ static u32 a640_get_speed_bin(u32 fuse)
+>   	return UINT_MAX;
+>   }
+>   
+> +static u32 a650_get_speed_bin(u32 fuse)
+> +{
+> +	if (fuse == 0)
+> +		return 0;
+> +	else if (fuse == 1)
+> +		return 1;
+> +	else if (fuse == 2)
+> +		return 2;
+> +	else if (fuse == 3)
+> +		return 3;
+> +
+> +	return UINT_MAX;
+> +}
+> +
+>   static u32 adreno_7c3_get_speed_bin(u32 fuse)
+>   {
+>   	if (fuse == 0)
+> @@ -1922,6 +1936,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
+>   	if (adreno_cmp_rev(ADRENO_REV(6, 4, 0, ANY_ID), rev))
+>   		val = a640_get_speed_bin(fuse);
+>   
+> +	if (adreno_cmp_rev(ADRENO_REV(6, 5, 0, ANY_ID), rev))
+> +		val = a650_get_speed_bin(fuse);
+> +
+>   	if (val == UINT_MAX) {
+>   		DRM_DEV_ERROR(dev,
+>   			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
 
 -- 
 With best wishes
 Dmitry
+
