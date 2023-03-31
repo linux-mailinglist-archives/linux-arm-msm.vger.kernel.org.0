@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D14346D2A3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 23:48:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3B2F6D2A43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 23:48:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233302AbjCaVsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 17:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35048 "EHLO
+        id S233319AbjCaVsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 17:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233230AbjCaVs0 (ORCPT
+        with ESMTP id S233260AbjCaVs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 31 Mar 2023 17:48:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FA332369F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 14:46:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DFBF23B65
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 14:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680299190;
+        s=mimecast20190719; t=1680299198;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=lI/wTNKANfMxYvWqJ0umcXHaHwboSDwAnj65voZzExc=;
-        b=g6Sd8A7sSwezAAcFSLbYv/kO/OhXh70MZ2wI5+tg3sSVNcWqZVUs9FoLLlw3DcxbXI3XIq
-        t/etMbA3rHV39ytK0lS+u9vazKrdrBl+ecZQBfN0iwGcjjr1Wrsgs+wRii/t6j5f3ZS4wY
-        DyvfqrBgDMWzmweWzZNdK8iqzdJYdPY=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=qACvXNoEnX2lVAx6UnLm5++0SRgSju5l/WpOwhVlX2M=;
+        b=DzYDHYIINKS1s4PCVh9GSo6e7KXGCPo50auTVYs6R3yXn717W5EDDL6OvYQTMfVTjjq+pW
+        PYpHKynn4TNgZJJ5h1CvI7UhPUX3tYhPNfCuQVuJqnAangWPem7ymMxSoRlbiepKeGLI0b
+        LM16V35iKqRlgDNTnEa3vW6/XTS0574=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-458-sEyzNyCgMFuDvPmw6qwenA-1; Fri, 31 Mar 2023 17:46:28 -0400
-X-MC-Unique: sEyzNyCgMFuDvPmw6qwenA-1
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-17e3d37b3e6so12185008fac.22
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 14:46:28 -0700 (PDT)
+ us-mta-222-l4Ux2TGjPeSSybrlrmF6sQ-1; Fri, 31 Mar 2023 17:46:32 -0400
+X-MC-Unique: l4Ux2TGjPeSSybrlrmF6sQ-1
+Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-17ab1d11480so12063349fac.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 14:46:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680299187;
+        d=1e100.net; s=20210112; t=1680299191;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lI/wTNKANfMxYvWqJ0umcXHaHwboSDwAnj65voZzExc=;
-        b=MvAsQwMdKtx9Hk73HtYhp7dSD1PgLd97gjdJAGAPsgs6qXLfvuRdxbStQkfXvY51Jy
-         ooJs4tGvFhZjDpxEX/WCQhttoUPWQXeIqDHPIaMy3KIBsLLx6SYg91YRgRiyEbRy1f3Y
-         wEhE0YG6DlY0pfO+Y1Zhpjudq4t/27fVGiqpoGbRuE//Q/Twlb29rz9zcxNrWwGYgwgg
-         UeBNyDxoD286B5jHJ6WnCa/7yZiU1+PZb/DExXX3nnVS9dORwY89Lgfp4vAwqeBJ4qH8
-         MBGxVKt5105VK0B5mTys33g6BDqoaSM9BdA9VDwtc3nlPeURPuFV2orFIn7xCX82LBiY
-         VpbA==
-X-Gm-Message-State: AO0yUKVcq+brt2WO03bloL4VLak6N1D9LLssePKmE6cl+3tX2Rnr3XUs
-        rdzw02hIm56nLkc05r//XsQKMIWf/TZu3AldTwJURJtKKCYcTjGNT9qY84Sz9OfYsAMHo+AqCM8
-        JL5REEnNrx5P2LB7SSc/5oLJmDw==
-X-Received: by 2002:a05:6808:4246:b0:384:41e3:75d0 with SMTP id dp6-20020a056808424600b0038441e375d0mr13650062oib.21.1680299187640;
-        Fri, 31 Mar 2023 14:46:27 -0700 (PDT)
-X-Google-Smtp-Source: AK7set+cnC/lvq+HQYTkPySHxCv7Oqj79qtnzLha/xwBat64KUQy8cafpalczgXYXQNna9WcIF3elQ==
-X-Received: by 2002:a05:6808:4246:b0:384:41e3:75d0 with SMTP id dp6-20020a056808424600b0038441e375d0mr13650046oib.21.1680299187462;
-        Fri, 31 Mar 2023 14:46:27 -0700 (PDT)
+        bh=qACvXNoEnX2lVAx6UnLm5++0SRgSju5l/WpOwhVlX2M=;
+        b=Uv1I9PszC5mwX7fVQ+/ufFMhCeTNZpa5b21xA+SxbW9vs9ziBritpaaXo72ghEfjum
+         PfNsNMtQ86hX2u6RZM79KMsuIbAEZ0+Z5tPDIUpvo2JET81hD4LcSKm727di0yDPadxG
+         3bG81rn6pbJk1qhLtEjDD6MryC+Na0TDqx21sjMf+PniheS90W+rHOF9HWTBEN4vwLlB
+         X9MUj7t4sJoEI3ZP5+xMPv91NOJxVR4c0btV3CUdSsvpxVqSScUJmaLrgzG1gkUmicPS
+         gb4/sajP5K/mTy2iIA+USTJVM1heVzh68x6ZepeVCZOAbzaw0AVa7Uf0WEEi2k12jTLH
+         /iXw==
+X-Gm-Message-State: AO0yUKW7i7wbrPt6kobVngwVJy0Btspo6cNip2DufhZQGEwhe2oKW0BB
+        SBeaUvvGA+Bv5EstV7/wQuZwXrJJhl/nQAx9qu1/0MfGxa4TRt55LXgMk/tdT2uVTzPGxcRDE1k
+        PnGxk3ONnyKUOEOYfh+oGuIwjiw==
+X-Received: by 2002:a4a:4185:0:b0:533:c6b7:27dc with SMTP id x127-20020a4a4185000000b00533c6b727dcmr12902138ooa.0.1680299191475;
+        Fri, 31 Mar 2023 14:46:31 -0700 (PDT)
+X-Google-Smtp-Source: AK7set822UYJHwGM7owlnRUxqK6f0CJtFjIBd5BokBFZ7cUXSCSQ9eyAJDzp0jQbAnb0TfpNiU6TyQ==
+X-Received: by 2002:a4a:4185:0:b0:533:c6b7:27dc with SMTP id x127-20020a4a4185000000b00533c6b727dcmr12902133ooa.0.1680299191225;
+        Fri, 31 Mar 2023 14:46:31 -0700 (PDT)
 Received: from halaney-x13s.attlocal.net (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id x80-20020a4a4153000000b0053d9be4be68sm1328531ooa.19.2023.03.31.14.46.25
+        by smtp.gmail.com with ESMTPSA id x80-20020a4a4153000000b0053d9be4be68sm1328531ooa.19.2023.03.31.14.46.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 14:46:27 -0700 (PDT)
+        Fri, 31 Mar 2023 14:46:30 -0700 (PDT)
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -75,9 +75,9 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
         jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com,
         Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH net-next v3 05/12] net: stmmac: Remove unnecessary if statement brackets
-Date:   Fri, 31 Mar 2023 16:45:42 -0500
-Message-Id: <20230331214549.756660-6-ahalaney@redhat.com>
+Subject: [PATCH net-next v3 06/12] net: stmmac: Fix DMA typo
+Date:   Fri, 31 Mar 2023 16:45:43 -0500
+Message-Id: <20230331214549.756660-7-ahalaney@redhat.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230331214549.756660-1-ahalaney@redhat.com>
 References: <20230331214549.756660-1-ahalaney@redhat.com>
@@ -94,37 +94,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The brackets are unnecessary, remove them to match the coding style
-used in the kernel.
+DAM is supposed to be DMA. Fix it to improve readability.
 
 Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 ---
 
 Changes since v2:
-    * None
+    * New patch, stumbled into this typo when refactoring
 
-Changes since v1:
-    * This patch is split from the next patch since it is a logically
-      different change (Andrew Lunn)
+ drivers/net/ethernet/stmicro/stmmac/common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-index 21aaa2730ac8..6807c4c1a0a2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-@@ -281,9 +281,8 @@ static int stmmac_mdio_read_c22(struct mii_bus *bus, int phyaddr, int phyreg)
- 	value |= (phyreg << priv->hw->mii.reg_shift) & priv->hw->mii.reg_mask;
- 	value |= (priv->clk_csr << priv->hw->mii.clk_csr_shift)
- 		& priv->hw->mii.clk_csr_mask;
--	if (priv->plat->has_gmac4) {
-+	if (priv->plat->has_gmac4)
- 		value |= MII_GMAC4_READ;
--	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
+index 54bb072aeb2d..4ad692c4116c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -242,7 +242,7 @@ struct stmmac_safety_stats {
  
- 	data = stmmac_mdio_read(priv, data, value);
+ #define SF_DMA_MODE 1		/* DMA STORE-AND-FORWARD Operation Mode */
  
+-/* DAM HW feature register fields */
++/* DMA HW feature register fields */
+ #define DMA_HW_FEAT_MIISEL	0x00000001	/* 10/100 Mbps Support */
+ #define DMA_HW_FEAT_GMIISEL	0x00000002	/* 1000 Mbps Support */
+ #define DMA_HW_FEAT_HDSEL	0x00000004	/* Half-Duplex Support */
 -- 
 2.39.2
 
