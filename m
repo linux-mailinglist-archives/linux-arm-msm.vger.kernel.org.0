@@ -2,78 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 696F66D2349
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 16:58:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21BFD6D2359
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 17:00:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232930AbjCaO6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 10:58:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46200 "EHLO
+        id S232401AbjCaPAF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 11:00:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232667AbjCaO6x (ORCPT
+        with ESMTP id S233114AbjCaO77 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 10:58:53 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC842B459
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 07:58:51 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id ew6so90667812edb.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 07:58:51 -0700 (PDT)
+        Fri, 31 Mar 2023 10:59:59 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4199420609
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 07:59:40 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso25693691pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 07:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1680274730; x=1682866730;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=538xuMSTOYlR94sLXq+YdUeK7qKmrwEQChDpknTA4pI=;
-        b=zc0VHKv4XuWqifVy+y0iAXE+wYKrR2yZ/ovW1ZRmEXk9p6WZ7m6gXuUY9f1ECZg2ZP
-         yCWrUa3InDd+SXh2nOYo7vygm3UZhj9KYjoEYsqwBqiD+Xzt//zP8eBHNqX9/Vdeuwwe
-         5divth+FVaJ4EaIXs2x3OyIBCexz+uCHgC/+uylL+6azuUZJx7HJKnk7y9MGC32n2aJk
-         4ZQMIApGF0/eiuLQhnuUvxIWfFchJ76Aw8wSg6cDDcvEYRC7wDRK1lGXz66n1KRa7Fvg
-         6bMXZKTwU1JhK0W9yiLwtQhhIgDdPheVRtGVBIac6dQNxj4gjGBkYaxy2QUW9rlo0qe7
-         yaTQ==
+        d=linaro.org; s=google; t=1680274780;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9NzHj5YNmfV17NjzDcXNm3XqoCp5Q8xNrFkgMu/Sz2E=;
+        b=MURy1nptnSIC9bVRPExXFlM9BrJR8EjvMi0qpfg/x4x3tVHEuRG+z/vtu5BCYYuPdq
+         amAASCWBP/TCAdNwiWg06uqq3S6CHuW0lGHHqnf3VsQDGmzejvxgRZmC+FzC0arwNJQ4
+         xC1Gqx2g1l5qAril3QBD/1ZIrg7TolxArVjthZldiNisV2MvZEENV52wCjn/2Hi1WbtJ
+         kMS5iIN5r2MPfOoO/By2o9sD6nvkSjLasEDzUz40HnZCqMsVyCDWLTuJEUK3tI94tspc
+         pEs0Af6rE/gGh/7uxuoSlCz/XTt1ah47hA5Xn+V0kWvpt6ciPLpbyviqFOXEN83T/UvJ
+         X7XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680274730; x=1682866730;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=538xuMSTOYlR94sLXq+YdUeK7qKmrwEQChDpknTA4pI=;
-        b=Ye2bNLmyS84ONYYvZvxHymTlyOftVHmiQbaPEr82Onr5kQqmV04gxm9200rH56Pesw
-         U+mccjHUGdpRwqfvqs2wMcy1/GU2Cn4TtUBBDRQO8Q1dA8RHwSKqrqhy9WKZCpnopcoo
-         DlhuCKu6S8M0ruqP56uhSREqozK2YfrjNCydjMaaV1UX7VXRUqsT5ZxVxS10RdW62lsK
-         Hxcq8BUEXfqccbzTm2+VyTpxPMxsuNDjPWBlJKrdlrXExb495xCuVrjOUQf7fKS1pY3x
-         zdakwiNUezY97S75n2TfGJOP9EA3x7ievuLRipHetoH4LfpbbFCR3mlFLWPA//9l1Q9J
-         vFHw==
-X-Gm-Message-State: AAQBX9cQKl2BSCFxnlZGdf8N/szD/g44xnsISAmvQweJ0bi7Wpa7edbI
-        KMdHn9Y2OpId9YgEzr8g8VTnXA==
-X-Google-Smtp-Source: AKy350YgDH+b8wsSokfM5mL8lfZ7MC5xS4LMIEZCZtKlP3UNuKBYECFd3V6pJ4f8i4WZCVjAHV7jDA==
-X-Received: by 2002:a05:6402:3514:b0:4fc:97d9:18ec with SMTP id b20-20020a056402351400b004fc97d918ecmr8616566edd.21.1680274730271;
-        Fri, 31 Mar 2023 07:58:50 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id v7-20020a170906564700b009447277c26fsm1063251ejr.72.2023.03.31.07.58.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Mar 2023 07:58:50 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 31 Mar 2023 16:58:49 +0200
-Message-Id: <CRKNOI8764EP.1IEYF5GFODE7G@otso>
-Cc:     <wcheng@codeaurora.org>, <caleb.connolly@linaro.org>,
-        <konrad.dybcio@linaro.org>, <subbaram@quicinc.com>,
-        <jackp@quicinc.com>, <robertom@qti.qualcomm.com>,
-        <lujianhua000@gmail.com>
-Subject: Re: [PATCH v4 00/18] Add Qualcomm PMIC TPCM support
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        <linux@roeck-us.net>, <heikki.krogerus@linux.intel.com>,
-        <gregkh@linuxfoundation.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20230318121828.739424-1-bryan.odonoghue@linaro.org>
- <CREPJP5KTX2D.VCM8IIZIP1ZT@otso>
- <9c541f81-8501-a142-1df8-6e71509c0d88@linaro.org>
- <CRKFT6BE3AW9.3OH8GRUPW2TLN@otso>
- <233c8e94-d926-c5b2-a0b7-87333d5cdc2a@linaro.org>
-In-Reply-To: <233c8e94-d926-c5b2-a0b7-87333d5cdc2a@linaro.org>
+        d=1e100.net; s=20210112; t=1680274780;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9NzHj5YNmfV17NjzDcXNm3XqoCp5Q8xNrFkgMu/Sz2E=;
+        b=spwd3I3ysH7zg5pj+NMRrdIEUpq6xZyei9HM4f8k/qd7TiyjJ9Kq6T03oIKyqbeM0y
+         0wCFNjA6xVErfCtKmuGgaBBSF8l6xoQDcmCGM0dRA4O56HBgxSod6KhKhV5lxkYwj/Ou
+         RLoHSOm0/RzPFZIiMpPKVvQPW7piyRIuPP1D8DMdUBY+ESV5loE61A/MsOu/XxuTHpO9
+         Sa5DwUhWBhyoDg/cjCNSeEnQ3U6gd6oek8BhPOhauXr7rMRDW1WFx9LxduJaMZ+9WEHB
+         KVfWwwFVUhj3rdD26h5tHVMDpjYm0qJQA6lf7Dy6ElACVLPTKk/okNR2q5CUy9H5yATG
+         j/Jw==
+X-Gm-Message-State: AAQBX9eZmjAysSFMnDS4LhDnkcDTA4QEnzPw6ffKKzTVZzH5J1BxY7gJ
+        JT2sMVTXSp8L9lQTmkRkR/ES
+X-Google-Smtp-Source: AKy350YYknMh+4tEYvWzJEoKBk26+WN1OvAn4meY49WI/3zKi0s8J4g/N+wjv8qY8g2F1amWUzJ6/Q==
+X-Received: by 2002:a17:90b:4b8a:b0:23f:582d:f45f with SMTP id lr10-20020a17090b4b8a00b0023f582df45fmr28438422pjb.1.1680274779637;
+        Fri, 31 Mar 2023 07:59:39 -0700 (PDT)
+Received: from localhost.localdomain ([59.92.101.186])
+        by smtp.gmail.com with ESMTPSA id q3-20020a17090a938300b0023b15e61f07sm1617194pjo.12.2023.03.31.07.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Mar 2023 07:59:39 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     andersson@kernel.org
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 1/2] ARM: dts: qcom: sdx55: Move reset and wake gpios to board dts
+Date:   Fri, 31 Mar 2023 20:29:14 +0530
+Message-Id: <20230331145915.11653-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -83,132 +70,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri Mar 31, 2023 at 3:52 PM CEST, Bryan O'Donoghue wrote:
-> On 31/03/2023 09:48, Luca Weiss wrote:
-> > Hi Bryan,
-> >=20
-> > On Fri Mar 24, 2023 at 4:28 PM CET, Bryan O'Donoghue wrote:
-> >> On 24/03/2023 15:10, Luca Weiss wrote:
-> >>> When plugging in the device with TCPM on into my PC (peripheral mode)
-> >>> then the USB device registers and unregisters every couple of seconds=
-,
-> >>> never stays stable on. No messages in dmesg when this happens. This o=
-nly
-> >>> happens with the USB-C plug in one direction, in the other it
-> >>> works reliable.
-> >>
-> >> Sounds like we need to do some SoC specific debug on orientation
-> >> switching in the PHY.
-> >=20
-> > I also know that the phone has a AW35743 chip in the USB path,
-> > controlled by DP_AUX_EN and DP_AUX_SEL gpios but I think this is only
-> > for displayport, right?
-> >=20
->
-> https://www.awinic.com/en/productDetail/AW35743CSR#product-details D+/D-=
-=20
-> looks like USB 2.x ..
->
-> Your DP should go over TX1+/1 TX2+/- depending on orientation and # of=20
-> lanes in use.
+The reset and wake properties in the PCIe EP node belong to the board dts
+as they can be customized per board design. So let's move them from SoC
+dtsi.
 
-There's USB0_DP_AUX_P & USB0_DP_AUX_M from the SoC connected on the
-D1+/- & D2+/- pins of this awinic chip, and out comes USB_SBU1 and
-USB_SBU2 which goes to the USB connector. So just switching polarity of
-those pins.
-But let's say whatever it does, it's not relevant to this use case now
-without DP?
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts | 3 +++
+ arch/arm/boot/dts/qcom-sdx55.dtsi                | 2 --
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
->
-> https://www.allaboutcircuits.com/uploads/articles/Fig1m11292018.png
->
-> >>
-> >> I wonder how many lanes dp_opts->lanes says for your part ?
-> >=20
-> > Not sure.. Where is this configured?
->
-> Heh - now that I look my lane count =3D=3D 0, a bug to be fixed..
->
-> Hmm, Luca can you test this change
->
-> -       if (orientation =3D=3D TYPEC_ORIENTATION_NONE) {
-> -               if (qmp->init_count)
-> -                       ret =3D qmp_combo_dp_power_off(dp_phy);
-> -       } else {
-> -               if (!qmp->init_count)
-> -                       ret =3D qmp_combo_dp_power_on(dp_phy);
-> -       }
-> +       if (orientation =3D=3D TYPEC_ORIENTATION_NONE)
-> +               ret =3D qmp_combo_dp_power_off(dp_phy);
-> +       else
-> +               ret =3D qmp_combo_dp_power_on(dp_phy);
-
-I unfortunately don't really see any change in behavior with this..
-
->
->
-> > But I also don't have DisplayPort over USB-C (video out) configured yet=
-.
-> > Related question: does video out work on sm8250+pm8150b for you?
->
-> Nope - WIP. I see getting TCPM upstream and working as a first step,=20
-> then we look at introduction of the redriver, DP work, dt etc.
-
-Clear, I look forward to that landing ;) But also already what the
-driver does now is really useful!
-
-Regards
-Luca
-
->
->
-> > [ 1722.130836] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: get_cc: =
-misc 0x000000cb cc1 0x00000001 Ra cc2 0x00000002 Rd attached 1 cc=3Dcc1
-> >=20
-> > - unplug -
-> >=20
-> > [ 1867.223052] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: get_cc: =
-misc 0x00000042 cc1 0x00000000 Open cc2 0x00000000 Open attached 0 cc=3Dcc1
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > USB unstable (device plug orientation 2):
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >=20
-> > [ 1894.263324] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: get_cc: =
-misc 0x000000c9 cc1 0x00000002 Rd cc2 0x00000001 Ra attached 1 cc=3Dcc2
-> > - unplug -
-> >=20
-> > [ 1907.264840] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: get_cc: =
-misc 0x00000040 cc1 0x00000000 Open cc2 0x00000000 Open attached 0 cc=3Dcc2
->
-> Normal, correct.
->
-> For reference on 8250
->
-> Attached orientation reverse / cc2
->
-> [   77.719278] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: set_cc:=20
-> currsrc=3D2 Rp-3.0-330uA mode EN_SRC_ONLY debounce 1 attached 1 cc=3Dcc2
->
-> Detached orientation (none)
-> [   82.475667] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: get_cc:=20
-> misc 0x000000c0 cc1 0x00000000 Open cc2 0x00000000 Open attached 0 cc=3Dc=
-c2
->
-> Attached orientation normal / cc1
-> [   82.485375] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500:=20
-> start_toggling: misc 0x00000040 attached 0 port_type 0 current cc 5 new 5
-> [   85.247368] qcom,pmic-typec c440000.spmi:pmic@2:typec@1500: get_cc:=20
-> misc 0x000000cb cc1 0x00000001 Ra cc2 0x00000002 Rd attached 1 cc=3Dcc1
->
-> Anyway I reckon that guard I have in the PHY code is wrong, would=20
-> appreciate a test.
->
-> ---
-> bod
+diff --git a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+index 81f33eba39e5..b73b707342af 100644
+--- a/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
++++ b/arch/arm/boot/dts/qcom-sdx55-telit-fn980-tlb.dts
+@@ -255,6 +255,9 @@ &pcie_ep {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pcie_ep_clkreq_default &pcie_ep_perst_default
+ 		     &pcie_ep_wake_default>;
++
++	reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
++	wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
+ };
+ 
+ &qpic_bam {
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index 286fa92da428..bc310ed01b40 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -421,8 +421,6 @@ pcie_ep: pcie-ep@1c00000 {
+ 				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "global",
+ 					  "doorbell";
+-			reset-gpios = <&tlmm 57 GPIO_ACTIVE_LOW>;
+-			wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
+ 			resets = <&gcc GCC_PCIE_BCR>;
+ 			reset-names = "core";
+ 			power-domains = <&gcc PCIE_GDSC>;
+-- 
+2.25.1
 
