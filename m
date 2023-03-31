@@ -2,81 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 971D66D200A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 14:21:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 889BB6D2036
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 14:26:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232338AbjCaMVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 08:21:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57546 "EHLO
+        id S232256AbjCaM0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 08:26:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232165AbjCaMVK (ORCPT
+        with ESMTP id S232144AbjCaM0f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 08:21:10 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE0D20C1B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 05:20:35 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 20so22842547lju.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 05:20:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680265229;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=H16BPzJztbd3HhazhXcI1P8r1+/2++5vbOFamiLRHNU=;
-        b=BlVahfuPWT0j8HZz1RZflHoZMFUESz2hAMgu4LPi2xdY6ayIz7DfuR0yABB8ZvZrkW
-         sYr2e7zHM6nx0it+FEg4yPH8bAmP/s8b8tewooNgjV5WKeU4VRRu4JzH9iileUN/d50X
-         /LHlb0FwzEAYMfQncZV7vDxmjchcsXW32fNK+jaaN/wYfH91kFHW6B4PgbMP5yawUuEe
-         XzEQco64VoJ5916HPH+lBfAxC7JbqHKgEevMl+1Y3XqNSgaxrUhs9ZIo8DMr9f1nnRBE
-         tYTSpkqFmDtkhUGBIndFEOP3qMrWrxkFVG2YDRGb36HRQ/hgVagRhO64OgfM6QLBBGZm
-         xBxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680265229;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H16BPzJztbd3HhazhXcI1P8r1+/2++5vbOFamiLRHNU=;
-        b=czzmzsDk0GbLRFh0LESoABXCnub0IUw08WCxnRBepmCPfwIWo6537RBUWjwzqjofSc
-         HHwSUkv6ET08WtUuMzfIW6AQkD4hGA5spFbipZN9BG+Ak2m41X95EMlRYyigGaZ6j1Xg
-         CHqtrx1IO/kw8SOCe2YwAZ2WKKneBHlW+ELPDdNAiU7YF9z0aMK4oZYZOSMEYoa65iDx
-         KPjyKXZ180h63tuDowXAoqCO/iB1gX0kuTVMM1aIXEWcVkopa1fxIhx7dRUTktHqBsa+
-         L8Wv6WB/4y6186xmrIO2OBMbyIWOBxd+pUX66O3IG6SU/7zjxRQT90TJDIeACknhybOI
-         K0sQ==
-X-Gm-Message-State: AAQBX9dRPLiGIO4iJJYFSd0IdBwsGoPBoCSTFLT1xQeEYQqFe5k7Wu5c
-        WHlfF/OAXu+Ke4ZjnaPIVrFXyQ==
-X-Google-Smtp-Source: AKy350Z/1M/vqT1JYEJ7bqIsbB1UnFAUGbHJ5SekA9BN0UeXAuixfK9k4n5Z3qziMPSbTFX/QOLrHg==
-X-Received: by 2002:a2e:7c10:0:b0:29c:956f:536f with SMTP id x16-20020a2e7c10000000b0029c956f536fmr7373518ljc.52.1680265228952;
-        Fri, 31 Mar 2023 05:20:28 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id o24-20020a2e7318000000b002934b9ce521sm343867ljc.10.2023.03.31.05.20.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Mar 2023 05:20:28 -0700 (PDT)
-Message-ID: <e43e944c-9f65-cde5-5d8c-a76f33f99b44@linaro.org>
-Date:   Fri, 31 Mar 2023 14:20:27 +0200
+        Fri, 31 Mar 2023 08:26:35 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02AD226BE;
+        Fri, 31 Mar 2023 05:26:33 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32V7DMgV006937;
+        Fri, 31 Mar 2023 12:26:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KecvlXR5Xf+6vpH/FS8Z60UCAHN1qIrGzVAd51rNoOQ=;
+ b=KK+G+XysT+0jpo8exI2ZxVrGf38rjxJ6mBGNx9HXwrnXFhh/HIvUErt5570N7UrZPsOP
+ TleraHmFlWZ3uvt8RCW53WofOLG7D7n/Gf1nD5vgJipY1zMUBq63zJVbuES1qjpzYmiI
+ BQCEC/MiEA3J1wDzNE77hJ7Zz+bIwpUFyZ1V6Vvywb41crpjktcmLcgWG4b20RX7BB/F
+ QBDVRRnw2gdgXQ23hKr6sKRKTxPOHRAzu1hKqLiwdoGfqsWJ9Xitn3CTpk+3cFJSW0kT
+ bEhRs6afnQRruZXKX+fYYEqGTwW2ABzvQpNwO0jg1cwFvlvdxn+Pi4J54QGwfst0tD6n 2g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pntxf8uaf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 31 Mar 2023 12:26:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32VCPxcf018378
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 31 Mar 2023 12:25:59 GMT
+Received: from [10.50.5.218] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 31 Mar
+ 2023 05:25:50 -0700
+Message-ID: <0316b1fb-0581-e3e6-b5ba-64c2a6ef2ec4@quicinc.com>
+Date:   Fri, 31 Mar 2023 17:52:51 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v3 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC support
-To:     Dylan Van Assche <me@dylanvanassche.be>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230330165322.118279-1-me@dylanvanassche.be>
- <20230330165322.118279-3-me@dylanvanassche.be>
- <f9a4a2de-42f8-676a-ae6d-d20391206f83@linaro.org>
- <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
+Subject: Re: [PATCH V10 3/4] arm64: dts: qcom: Add support for ipq9574 SoC and
+ RDP433 variant
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <nfraprado@collabora.com>,
+        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230327132718.573-1-quic_devipriy@quicinc.com>
+ <20230327132718.573-4-quic_devipriy@quicinc.com>
+ <CAA8EJprTm1sZ8fnfNee+NJTiaFq17QwWaEnSoJWVYs_GY65xFg@mail.gmail.com>
+ <a6225636-7abb-3c5c-c78f-8d40c25167b9@quicinc.com>
+ <CAA8EJprgcMOX-WRXP2i9k850La1A1UKaKuODd-fVi27nOxMbyA@mail.gmail.com>
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <CAA8EJprgcMOX-WRXP2i9k850La1A1UKaKuODd-fVi27nOxMbyA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vW7OdrM7OPZuEvEvwN9zF4gpPlQa2XXp
+X-Proofpoint-ORIG-GUID: vW7OdrM7OPZuEvEvwN9zF4gpPlQa2XXp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-31_06,2023-03-30_04,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2303310099
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,115 +98,198 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 31.03.2023 11:36, Dylan Van Assche wrote:
-> Hi Konrad,
-> 
-> On Fri, 2023-03-31 at 04:03 +0200, Konrad Dybcio wrote:
->>
->>
->> On 30.03.2023 18:53, Dylan Van Assche wrote:
->>> Qualcomm SDM845 SoC features a SLPI DSP which uses FastRPC through
->>> an allocated memory region to load files from the host filesystem
->>> such as sensor configuration files.
+On 3/28/2023 4:09 PM, Dmitry Baryshkov wrote:
+> On Tue, 28 Mar 2023 at 10:31, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>> On 3/27/2023 8:15 PM, Dmitry Baryshkov wrote:
+>>> On Mon, 27 Mar 2023 at 16:28, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>>>>
+>>>> Add initial device tree support for Qualcomm IPQ9574 SoC and
+>>>> Reference Design Platform(RDP) 433 which is based on IPQ9574
+>>>> family of SoCs
+>>>>
+>>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>>>> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>>>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>>> ---
+>>>>    Changes in V10:
+>>>>           - Renamed the Board Device Tree Source to use the RDP numbers
+>>>>           - Updated the Makefile, subject and commit message accordingly
+>>>>
+>>>>    arch/arm64/boot/dts/qcom/Makefile           |   1 +
+>>>>    arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts |  84 ++++++
+>>>>    arch/arm64/boot/dts/qcom/ipq9574.dtsi       | 270 ++++++++++++++++++++
+>>>>    3 files changed, 355 insertions(+)
+>>>>    create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>>>>    create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>>> index 1a29403400b7..52f1f92c5195 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>>> @@ -8,6 +8,7 @@ dtb-$(CONFIG_ARCH_QCOM) += ipq6018-cp01-c1.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)        += ipq8074-hk01.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)        += ipq8074-hk10-c1.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)        += ipq8074-hk10-c2.dtb
+>>>> +dtb-$(CONFIG_ARCH_QCOM)        += ipq9574-rdp433.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)        += msm8916-acer-a1-724.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)        += msm8916-alcatel-idol347.dtb
+>>>>    dtb-$(CONFIG_ARCH_QCOM)        += msm8916-asus-z00l.dtb
+>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>>>> new file mode 100644
+>>>> index 000000000000..2ce8e09e7565
+>>>> --- /dev/null
+>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>>>> @@ -0,0 +1,84 @@
+>>>> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+>>>> +/*
+>>>> + * IPQ9574 RDP433 board device tree source
+>>>> + *
+>>>> + * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>> + */
+>>>> +
+>>>> +/dts-v1/;
+>>>> +
+>>>> +#include "ipq9574.dtsi"
+>>>> +
+>>>> +/ {
+>>>> +       model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7";
+>>>> +       compatible = "qcom,ipq9574-ap-al02-c7", "qcom,ipq9574";
+>>>> +
+>>>> +       aliases {
+>>>> +               serial0 = &blsp1_uart2;
+>>>> +       };
+>>>> +
+>>>> +       chosen {
+>>>> +               stdout-path = "serial0:115200n8";
+>>>> +       };
+>>>> +};
+>>>> +
+>>>> +&blsp1_uart2 {
+>>>> +       pinctrl-0 = <&uart2_pins>;
+>>>> +       pinctrl-names = "default";
+>>>> +       status = "okay";
+>>>> +};
+>>>> +
+>>>> +&sdhc_1 {
+>>>> +       pinctrl-0 = <&sdc_default_state>;
+>>>> +       pinctrl-names = "default";
+>>>> +       mmc-ddr-1_8v;
+>>>> +       mmc-hs200-1_8v;
+>>>> +       mmc-hs400-1_8v;
+>>>> +       mmc-hs400-enhanced-strobe;
+>>>> +       max-frequency = <384000000>;
+>>>> +       bus-width = <8>;
+>>>> +       status = "okay";
+>>>> +};
+>>>> +
+>>>> +&sleep_clk {
+>>>> +       clock-frequency = <32000>;
+>>>> +};
+>>>> +
+>>>> +&tlmm {
+>>>> +       sdc_default_state: sdc-default-state {
+>>>> +               clk-pins {
+>>>> +                       pins = "gpio5";
+>>>> +                       function = "sdc_clk";
+>>>> +                       drive-strength = <8>;
+>>>> +                       bias-disable;
+>>>> +               };
+>>>> +
+>>>> +               cmd-pins {
+>>>> +                       pins = "gpio4";
+>>>> +                       function = "sdc_cmd";
+>>>> +                       drive-strength = <8>;
+>>>> +                       bias-pull-up;
+>>>> +               };
+>>>> +
+>>>> +               data-pins {
+>>>> +                       pins = "gpio0", "gpio1", "gpio2",
+>>>> +                              "gpio3", "gpio6", "gpio7",
+>>>> +                              "gpio8", "gpio9";
+>>>> +                       function = "sdc_data";
+>>>> +                       drive-strength = <8>;
+>>>> +                       bias-pull-up;
+>>>> +               };
+>>>> +
+>>>> +               rclk-pins {
+>>>> +                       pins = "gpio10";
+>>>> +                       function = "sdc_rclk";
+>>>> +                       drive-strength = <8>;
+>>>> +                       bias-pull-down;
+>>>> +               };
+>>>> +       };
+>>>> +};
+>>>> +
+>>>> +&xo_board_clk {
+>>>> +       clock-frequency = <24000000>;
+>>>> +};
+>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>> new file mode 100644
+>>>> index 000000000000..3bb7435f5e7f
+>>>> --- /dev/null
+>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>>> @@ -0,0 +1,270 @@
+>>>> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+>>>> +/*
+>>>> + * IPQ9574 SoC device tree source
+>>>> + *
+>>>> + * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+>>>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>>>> + */
+>>>> +
+>>>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+>>>> +#include <dt-bindings/clock/qcom,ipq9574-gcc.h>
+>>>> +#include <dt-bindings/reset/qcom,ipq9574-gcc.h>
+>>>> +
+>>>> +/ {
+>>>> +       interrupt-parent = <&intc>;
+>>>> +       #address-cells = <2>;
+>>>> +       #size-cells = <2>;
+>>>> +
+>>>> +       clocks {
+>>>> +               bias_pll_ubi_nc_clk: bias-pll-ubi-nc-clk {
+>>>> +                       compatible = "fixed-clock";
+>>>> +                       clock-frequency = <353000000>;
+>>>> +                       #clock-cells = <0>;
+>>>> +               };
 >>>
->>> Add a FastRPC node at /dev/fastrpc-sdsp and a DMA region, similar
->>> to
->>> downstream, to allow userspace to communicate with the SLPI via the
->>> FastRPC interface for initializing the sensors on the SLPI.
->>>
->>> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 24 ++++++++++++++++++++++++
->>>  1 file changed, 24 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> index 3b547cb7aeb8..8ea4944f3ad6 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> @@ -878,6 +878,14 @@ mdata_mem: mpss-metadata {
->>>                         size = <0 0x4000>;
->>>                         no-map;
->>>                 };
->>> +
->>> +               fastrpc_mem: fastrpc {
->>> +                       compatible = "shared-dma-pool";
->>> +                       reusable;
->> Please move it last to get a nice reverse-Christmas-tree layout.
->>
+>>> What is the source for this clock? With it clocking at 353 MHz, I
+>>> doubt that it is an external clock.
+>> bias_pll_ubi_nc_clk (353MHz)is a backup source
+>> for Q6_AXIM2_CLK/PCIE2_AXIM_CLK/PCIE3_AXIM_CLK/SNOC-CLK
+>> It is from the CMN_PLL, and is the same as that of PPE core clock.
+>> Do you suggest to move its clock-frequency to Board DT similar to
+>> xo/sleep clock?
 > 
-> Will fix in v4.
-> 
->>> +                       alloc-ranges = <0 0x00000000 0 0xffffffff>;
->> Would there be any issues with it starting over (1<<31 - 1)?
->>
-> 
-> You mean a bigger region then, like the whole CMA region then? AFAIK,
-> the SLPI always use the same region expecting it to be in this range.
-> However, I cannot confirm more, as I have no insights in the firmware
-> running on there, this all comes from finding out what it exactly does
-> on downstream.
-I was asking about the <.. 0 0xfff.f> part specifically, as that means
-it can't be allocated above 4 gigs. But I guess it's just how qcom
-envisioned it.
+> No, I suggest moving it to the device where it originates. If it comes
+> from GCC, it should be provided by the GCC, not by the top-level fixed
+> clock.Bias PLL is a fixed PLL on the SoC which provides 352MHz.
+As it is just a backup source for PCIE2_AXIM_CLK, we would remove the
+clock node as it is not being used.
 
-Also, please use 0x0 in alloc-ranges as well, this is all addresses/
-reg sizes.
-
-Konrad
 > 
->>> +                       alignment = <0 0x400000>;
->> Please use 0x0 for the 0 here, as it's essentially reg.size with
->> size-cells = 2
+>>>
+>>>> +
+>>>> +               sleep_clk: sleep-clk {
+>>>> +                       compatible = "fixed-clock";
+>>>> +                       #clock-cells = <0>;
+>>>> +               };
+>>>> +
+>>>> +               xo_board_clk: xo-board-clk {
+>>>> +                       compatible = "fixed-clock";
+>>>> +                       #clock-cells = <0>;
+>>>> +               };
+>>>> +       };
+>>>
+>>> [skipped the rest]
+>>>
+>> Regards,
+>> Devi Priya
 > 
-> Will fix in v4.
 > 
->>
->>> +                       size = <0 0x1000000>;
->> Ditto
-> 
-> Will fix in v4.
-> 
->>
->>> +               };
->>>         };
->>>  
->>>         adsp_pas: remoteproc-adsp {
->>> @@ -3344,6 +3352,22 @@ glink-edge {
->>>                                 label = "dsps";
->>>                                 qcom,remote-pid = <3>;
->>>                                 mboxes = <&apss_shared 24>;
->>> +
->>> +                               fastrpc {
->>> +                                       compatible =
->>> "qcom,fastrpc";
->>> +                                       qcom,glink-channels =
->>> "fastrpcglink-apps-dsp";
->>> +                                       label = "sdsp";
->>> +                                       qcom,non-secure-domain;
->>> +                                       qcom,vmids = <0x3 0xF 0x5
->>> 0x6>;
->> Please use the recently-introduced header and depend on (and
->> make a patch atop)
->>
->> https://lore.kernel.org/linux-arm-msm/8685b710-b74d-556a-815d-0ffef2b0eeff@linaro.org/T/#t
->>
->> Konrad
->>
->>> +                                       memory-region =
->>> <&fastrpc_mem>;
->>> +                                       #address-cells = <1>;
->>> +                                       #size-cells = <0>;
->>> +
->>> +                                       compute-cb@0 {
->>> +                                               compatible =
->>> "qcom,fastrpc-compute-cb";
->>> +                                               reg = <0>;
->>> +                                       };
->>> +                               };
->>>                         };
->>>                 };
->>>  
-> 
-> Kind regards,
-> Dylan
+>
+Regards,
+Devi Priya
