@@ -2,345 +2,339 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DD376D1680
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 06:57:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66D456D1685
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 06:59:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbjCaE5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 00:57:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44694 "EHLO
+        id S229912AbjCaE7K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 00:59:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbjCaE5u (ORCPT
+        with ESMTP id S229819AbjCaE7J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 00:57:50 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 566F61AC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 21:57:49 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32V4NE6O014439;
-        Fri, 31 Mar 2023 04:57:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=GuvskULF7sOL7J4PmGMghA3sA9Qn/YSMVIL83HKup/A=;
- b=aSq/Jxc7X3M1STscoA1YtX1Nxhh9SUAx2iJumfIStHkasVE2Z4nW53TG/7dHM02gJVt9
- XzihivrPReQ9kDfqhfy1Gz+l64lNG60P9YGEZWrdr7kuNheEdpa/bz0vcDgwj87ood9D
- FyaS6lcuIGVjyGX9aDdY3O2CGj/OJsrGfvFuZdvzsaGaJQCc1PvxweZQCIVRH0xItDWR
- dnmOTYaw5BpRZUoTAeURX619PzenQCtxbirtpy8M9Q0aZD/laXTP6uTk6TVpuX7E0FFG
- kqc3lYpGjb0xZWNmjfzQMld0V77Xugq19EJ5wMCbKuJNYDphPvZYKnzG92ZesM5QdWn4 rw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pn8wnjf3y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 04:57:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32V4vcfU016738
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 04:57:38 GMT
-Received: from [10.110.53.163] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 30 Mar
- 2023 21:57:38 -0700
-Message-ID: <87ff4154-8753-c3d0-bd1b-cf01bdfe3059@quicinc.com>
-Date:   Thu, 30 Mar 2023 21:57:37 -0700
+        Fri, 31 Mar 2023 00:59:09 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5ECAD28
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 21:59:07 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id l15-20020a05600c4f0f00b003ef6d684102so9276266wmq.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Mar 2023 21:59:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680238745;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CtrQ/sfgZJDgAVtBs/XHZ720wUcC9wfbpwW+uTym+Ko=;
+        b=bOTAz0PL3Nm9O7Rt3Lrl1sLlxw2eFRlY3TMp3AQiaGqcXU0lYfgBzlQ3ihJ+TeMZpr
+         F44R7hj9gsxKYp2UhuO2uQu29qiMb9KGsOdDV4KYcHztEogDIxHa80xo/7J6sghMhX8U
+         odB36cHiDlzUvxUpCXi5xgWGqH3CQoNGhCInMNyUez/9S3NDpH3XuyAESfvz12wTMIrS
+         MwI1mWQ/milxnUSwPr6soaqIvZpyq0/kJ6YizVUyGAGngaL4dz8dyvruIuPxeYF/Dzjq
+         u9+TtDuCQMfLZfueHGXArLWXLwIEVjhc9ua/r82Kx1+xDChQEN/lwncqA4iXA2vkVjec
+         srUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680238745;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CtrQ/sfgZJDgAVtBs/XHZ720wUcC9wfbpwW+uTym+Ko=;
+        b=ofbTasbzYjHBkXwEx5gKaop+5/M+SFyzqBeU/yd/hPBWC3lhP6YBqbTOnVYQbntDdt
+         byY3pnXY+bApEsRMl1MCdVGfzHA3MDhQWmjTZGOl3blRL0DwIW3u+ygTeUyNw9TcRFFu
+         9ANCbqcM/wOjsyrQBA6Kw2NIVT8vHgyfP30wsqUXMB1YsS1j7tOKH51gbqwKiW7SjOAM
+         hBVTdQaG7U9vTgiws//D3R1uEZ0QenNX4qmD78X9XgKVSLLS1kB6FNPJpx70m7ZPfDP9
+         kprCBDnTALAnhv0yWd8pVAz7sNiAKBKEclVDWeDlIDsLrPMC0wSyBUKczks/6Rgqjsib
+         Ys3Q==
+X-Gm-Message-State: AAQBX9eWumzfhJ3YD0o5DwU912WR4WIUZOi7aiB4VL+pjojtdDvHvY0x
+        7w7mqvYKAzrSFoJSbdUuxHrJhg==
+X-Google-Smtp-Source: AKy350YvHyoTFCWAhgIVBeZ/OnETAHjbjvoRYM9SxSkQX8AJSQi3qrI+7nICSls4VL0ttgg6vPG3Kw==
+X-Received: by 2002:a1c:6a07:0:b0:3f0:310c:e3cf with SMTP id f7-20020a1c6a07000000b003f0310ce3cfmr5092288wmc.37.1680238745511;
+        Thu, 30 Mar 2023 21:59:05 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id p6-20020a5d6386000000b002e558f1c45fsm1064444wru.69.2023.03.30.21.59.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 21:59:05 -0700 (PDT)
+Date:   Fri, 31 Mar 2023 07:59:03 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Android Kernel Team <kernel-team@android.com>
+Subject: Re: [PATCH v3 0/4] Allow genpd providers to power off domains on
+ sync state
+Message-ID: <ZCZolyDL/awnt73K@linaro.org>
+References: <20230327193829.3756640-1-abel.vesa@linaro.org>
+ <CAGETcx9f1p2esfyzyfU04EAB1FXh=d9-U81DaGyZNjL_Vti3oQ@mail.gmail.com>
+ <ZCVyBuKMvDV0gQPW@linaro.org>
+ <CAGETcx-mxzzZ_FU6Agju9gMhFOEDhY6Rj78BnvAVJjNtZhif=w@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH RFC 5/5] drm/msm/dsi: Use MSM and DRM DSC
- helper methods
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-CC:     Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v1-5-f3e479f59b6d@quicinc.com>
- <0698ce89-d70c-c3f4-f006-18130858aacf@linaro.org>
- <2c9ac12f-df2f-8576-555b-3d84a6205ee3@quicinc.com>
- <c3ac5c2b-e0e0-5d7c-67d3-4fc2316b68c5@linaro.org>
- <6461a8b8-f620-5f9c-9533-f65ac42c0524@quicinc.com>
- <CAA8EJprriCLXR+P7ZOWLQCOhvi0WCUzNrCu4eyyqegNtPZbBUg@mail.gmail.com>
- <86e851f7-bbbe-b849-e36b-f3c9af93e9e3@quicinc.com>
- <be4b854b-0938-d051-2f74-cde02188a052@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <be4b854b-0938-d051-2f74-cde02188a052@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3yRxVNsKpdGWHs71cVcNjPU7soNIjMNg
-X-Proofpoint-GUID: 3yRxVNsKpdGWHs71cVcNjPU7soNIjMNg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-31_01,2023-03-30_04,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 impostorscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2303310037
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAGETcx-mxzzZ_FU6Agju9gMhFOEDhY6Rj78BnvAVJjNtZhif=w@mail.gmail.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/30/2023 7:47 PM, Dmitry Baryshkov wrote:
-> On 31/03/2023 04:33, Abhinav Kumar wrote:
->>
->>
->> On 3/30/2023 5:16 PM, Dmitry Baryshkov wrote:
->>> On Fri, 31 Mar 2023 at 03:07, Jessica Zhang 
->>> <quic_jesszhan@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 3/30/2023 4:14 PM, Dmitry Baryshkov wrote:
->>>>> On 31/03/2023 01:49, Jessica Zhang wrote:
->>>>>>
->>>>>>
->>>>>> On 3/29/2023 4:48 PM, Dmitry Baryshkov wrote:
->>>>>>> On 30/03/2023 02:18, Jessica Zhang wrote:
->>>>>>>> Use MSM and DRM DSC helper methods.
->>>>>>>>
->>>>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>>>>> ---
->>>>>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 18 ++++++++++++------
->>>>>>>>    1 file changed, 12 insertions(+), 6 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>>> index 74d38f90398a..7419fe58a941 100644
->>>>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>>> @@ -31,6 +31,7 @@
->>>>>>>>    #include "msm_kms.h"
->>>>>>>>    #include "msm_gem.h"
->>>>>>>>    #include "phy/dsi_phy.h"
->>>>>>>> +#include "disp/msm_dsc_helper.h"
->>>>>>>>    #define DSI_RESET_TOGGLE_DELAY_MS 20
->>>>>>>> @@ -841,14 +842,14 @@ static void dsi_update_dsc_timing(struct
->>>>>>>> msm_dsi_host *msm_host, bool is_cmd_mod
->>>>>>>>    {
->>>>>>>>        struct drm_dsc_config *dsc = msm_host->dsc;
->>>>>>>>        u32 reg, reg_ctrl, reg_ctrl2;
->>>>>>>> -    u32 slice_per_intf, total_bytes_per_intf;
->>>>>>>> +    u32 slice_per_intf;
->>>>>>>>        u32 pkt_per_line;
->>>>>>>>        u32 eol_byte_num;
->>>>>>>>        /* first calculate dsc parameters and then program
->>>>>>>>         * compress mode registers
->>>>>>>>         */
->>>>>>>> -    slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
->>>>>>>> +    slice_per_intf = msm_dsc_get_slice_per_intf(dsc, hdisplay);
->>>>>>>
->>>>>>> This looks good
->>>>>>>
->>>>>>>>        /*
->>>>>>>>         * If slice_count is greater than slice_per_intf
->>>>>>>> @@ -858,10 +859,10 @@ static void dsi_update_dsc_timing(struct
->>>>>>>> msm_dsi_host *msm_host, bool is_cmd_mod
->>>>>>>>        if (dsc->slice_count > slice_per_intf)
->>>>>>>>            dsc->slice_count = 1;
->>>>>>>> -    total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
->>>>>>>> +    eol_byte_num = msm_dsc_get_eol_byte_num(msm_host->dsc, 
->>>>>>>> hdisplay,
->>>>>>>> +            dsi_get_bpp(msm_host->format));
->>>>>>>> -    eol_byte_num = total_bytes_per_intf % 3;
->>>>>>>> -    pkt_per_line = slice_per_intf / dsc->slice_count;
->>>>>>>> +    pkt_per_line = slice_per_intf / MSM_DSC_SLICE_PER_PKT;
->>>>>>>
->>>>>>> And for these values the result is definitely changed. Separate 
->>>>>>> patch
->>>>>>> & description please. Just in case, "values per downstream 
->>>>>>> kernel" is
->>>>>>> not a proper description for such changes.
->>>>>>
->>>>>> Hi Dmitry,
->>>>>>
->>>>>> Sure, I can put this into a separate patch.
->>>>>>
->>>>>> The reason this was changed from slice_count to SLICE_PER_PKT was
->>>>>> because slice count and slice per packet aren't always equivalent.
->>>>>> There can be cases where panel configures DSC to have multiple soft
->>>>>> slices per interface, but the panel only specifies 1 slice per 
->>>>>> packet.
->>>>>
->>>>> Please put this nice description into the commit message. It is 
->>>>> exactly
->>>>> what I was looking for!
->>>>>
->>>>> BTW: Do you expect to change MSM_DSC_SLICE_PER_PKT later or it will 
->>>>> stay
->>>>> at "1"? If so, it might be easier to drop it and instead add a 
->>>>> comment.
->>>>
->>>> MSM_DSC_SLICE_PER_PKT is the default value for panels that don't 
->>>> specify
->>>> a slice_per_pkt value. (Now that I think about it, might be better to
->>>> call it MSM_DSC_DEFAULT_SLICE_PER_PKT instead...)
->>>
->>> Note, there is no slice_per_pkt in drm_dsc_config, so we must come up
->>> with another way to pass this data from the panel or to deduce the
->>> value in our driver.
->>>
->>>>
->>>> I don't expect it to change in the future, but it's a little more
->>>> readable than just dividing by 1 IMO. If you prefer dropping the macro
->>>> and adding a comment, I'm also okay with that.
->>>
->>> There is no need to divide by 1, the value doesn't change. So I'd
->>> probably prefer something like:
->>>
->>> /* Default to 1 slice per packet */
->>> if (panel_slice_per_pkt)
->>>      pkt_per_line = slice_per_intf / panel_slice_per_pkt;
->>> else
->>>      pkt_per_line = slice_per_intf;
->>>
->>> Or:
->>>
->>> /* Default to 1 slice per packet */
->>> slice_per_pkt = 1;
->>> if (panel_slice_per_pkt)
->>>      slice_per_pkt = panel_slice_per_pkt;
->>> pkt_per_line = slice_per_intf / slice_per_pkt;
->>>
->>> BTW: could you possibly change 'intf' to 'line' to v2? It seems there
->>> is a mixture of them through the code. If there is a difference
->>> between intf and line which is not yet posted, it's fine to keep the
->>> current code. WDYT?
->>>
->>
->> No, I dont agree with the change from intf to line.
->>
->> In case of dual DSI, intf is not equal to line.
->>
->> 2 intfs = 1 line
->>
->> Hence that distinction is necessary.
+On 23-03-30 12:50:44, Saravana Kannan wrote:
+> On Thu, Mar 30, 2023 at 4:27 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > On 23-03-27 17:17:28, Saravana Kannan wrote:
+> > > On Mon, Mar 27, 2023 at 12:38 PM Abel Vesa <abel.vesa@linaro.org> wrote:
+> > > >
+> > > > There have been already a couple of tries to make the genpd "disable
+> > > > unused" late initcall skip the powering off of domains that might be
+> > > > needed until later on (i.e. until some consumer probes). The conclusion
+> > > > was that the provider could return -EBUSY from the power_off callback
+> > > > until the provider's sync state has been reached. This patch series tries
+> > > > to provide a proof-of-concept that is working on Qualcomm platforms.
+> > >
+> > > I'm giving my thoughts in the cover letter instead of spreading it
+> > > around all the patches so that there's context between the comments.
+> > >
+> > > 1) Why can't all the logic in this patch series be implemented at the
+> > > framework level? And then allow the drivers to opt into this behavior
+> > > by setting the sync_state() callback.
+> > >
+> > > That way, you can land it only for QC drivers by setting up
+> > > sync_state() callback only for QC drivers, but actually have the same
+> > > code function correctly for non-QC drivers too. And then once we have
+> > > this functionality working properly for QC drivers for one kernel
+> > > version (or two), we'll just have the framework set the device's
+> > > driver's sync_state() if it doesn't have one already.
+> >
+> > I think Ulf has already NACK'ed that approach here:
+> > [1] https://lore.kernel.org/lkml/CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y1Sir-G+GoxkCvpN=iiA@mail.gmail.com/
 > 
-> Ack, this is what I was looking for!
-> 
-> so intf = line / num_intf?
+> I would have NACK'ed that too because that's an incomplete fix. As I
+> said further below, the fix needs to be at the aggregation level where
+> you aggregate all the current consumer requests. In there, you need to
+> add in the "state at boot" input that gets cleared out after a
+> sync_state() call is received for that power domain.
 > 
 
-Yes by definition, "line" is one horizontal line of pixels for the panel.
+So, just to make sure I understand your point. You would rather have the
+genpd_power_off check if 'state at boot' is 'on' and return busy and
+then clear then, via a generic genpd sync state you would mark 'state at
+boot' as 'off' and queue up a power off request for each PD from there.
+And as for 'state at boot' it would check the enable bit through
+provider.
 
-So intf = h_active of panel / num_intf
+Am I right so far?
 
-But here "line" is one line of pixels pulled by the interface.
-
-So for dual dsi cases its = h_active of panel / 2
-
-> Maybe I should explain the reason for my question:
+> > And suggested this new approach that this patch series proposes.
+> > (Unless I missunderstood his point)
+> >
+> > >
+> > > 2) sync_state() is not just about power on/off. It's also about the
+> > > power domain level. Can you handle that too please?
+> >
+> > Well, this patchset only tries to delay the disabling of unused power
+> > domains until all consumers have had a chance to probe. So we use sync
+> > state only to queue up a power-off request to make sure those unused
+> > ones get disabled.
 > 
-> msm_dsc_get_pclk_per_line() uses intf_width, calculates pclk_per_line 
-> (not per intf). msm_dsc_get_dce_bytes_per_line() does the same thing
+> Sure, but the design is completely unusable for a more complete
+> sync_state() behavior. I'm okay if you want to improve the
+> sync_state() behavior in layers, but don't do it in a way where the
+> current design will definitely not work for what you want to add in
+> the future.
+
+But you would still be OK with the qcom_cc sync state wrapper, I guess,
+right? Your concern is only about the sync state callback being not
+genpd generic one, AFAIU.
+
 > 
-> In this patch we take slice_per_intf, divide it with slice_per_pkt and 
-> get pkt_per_line (rather than pkt_per_intf).
+> > >
+> > > 3) In your GDSC drivers, it's not clear to me if you are preventing
+> > > power off until sync_state() only for GDSCs that were already on at
+> > > boot. So if an off-at-boot GDSC gets turned on, and then you attempt
+> > > to turn it off before all its consumers have probed, it'll fail to
+> > > power it off even though that wasn't necessary?
+> >
+> > I think we can circumvent looking at a GDSC by knowing it there was ever
+> > a power on request since boot. I'll try to come up with something in the
+> > new version.
 > 
-> This is what prompted my question regarding intf vs line.
+> Please no. There's nothing wrong with reading the GDSC values. Please
+> read them and don't turn on GDSC's that weren't on at boot.
+
+Sorry for the typos above, I basically said that for this concern of
+yours, we can add the 'state at boot' thing you mentioned above by
+looking at the GDSC (as in reading reg).
+
 > 
-
-Valid question. The terminology gets a bit confusing because.
-
-pclk_per_line can be only per interface.
-
-Thats because each interface can pull the pixels at different pclks.
-
-If it helps, I would say, this is pclk_per_line for each interface.
-
-OR in other words pclks needed to pull one line of pixels for each 
-interface.
-
-But if i changed it to slice_per_line that would be wrong because then 
-line becomes the full panel horizontal line.
-
->>
->>>>
->>>> Thanks,
->>>>
->>>> Jessica Zhang
->>>>
->>>>>
->>>>> Regarding eol_byte_num, probably the best explanation would be that is
->>>>> is a size of a padding rather than a size of a trailer bytes in a line
->>>>> (and thus original calculation was incorrect).
->>>>>
->>>>>>
->>>>>>>
->>>>>>>>        if (is_cmd_mode) /* packet data type */
->>>>>>>>            reg =
->>>>>>>> DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE); 
->>>>>>>>
->>>>>>>> @@ -911,6 +912,11 @@ static void dsi_timing_setup(struct
->>>>>>>> msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>>>>>        DBG("");
->>>>>>>> +    if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
->>>>>>>> +        /* Default widebus_en to false for now. */
->>>>>>>> +        hdisplay = msm_dsc_get_pclk_per_line(msm_host->dsc,
->>>>>>>> mode->hdisplay,
->>>>>>>> +                dsi_get_bpp(msm_host->format));
->>>>>>>> +
->>>>>>>
->>>>>>> This is definitely something new and thus should probably go into a
->>>>>>> separate patch and be described. Also I'm not sure how does that
->>>>>>> interact with the hdisplay-related calculations below, under the
->>>>>>> if(dsc) clause.
->>>>>>
->>>>>> After double-checking the math here, I think this part of the change
->>>>>> is actually wrong. pclk_per_line is essentially doing hdisplay / 3,
->>>>>> which is a repeat of what's being done in the `if (dsc)` block.
->>>>>>
->>>>>> Will replace `hdisplay /= 3` with the pclk_per_line calculation.
->>>>>
->>>>> Thanks!
->>>>>
->>>>>>
->>>>>> Thanks,
->>>>>>
->>>>>> Jessica Zhang
->>>>>>
->>>>>>>
->>>>>>>>        /*
->>>>>>>>         * For bonded DSI mode, the current DRM mode has
->>>>>>>>         * the complete width of the panel. Since, the complete
->>>>>>>> @@ -1759,7 +1765,7 @@ static int dsi_populate_dsc_params(struct
->>>>>>>> msm_dsi_host *msm_host, struct drm_dsc
->>>>>>>>            return ret;
->>>>>>>>        }
->>>>>>>> -    dsc->initial_scale_value = 32;
->>>>>>>> +    dsc->initial_scale_value =
->>>>>>>> drm_dsc_calculate_initial_scale_value(dsc);
->>>>>>>
->>>>>>> This is fine, we only support 8bpp where these values match.
->>>>>>>
->>>>>>>>        dsc->line_buf_depth = dsc->bits_per_component + 1;
->>>>>>>>        return drm_dsc_compute_rc_parameters(dsc);
->>>>>>>>
->>>>>>>
->>>>>>> -- 
->>>>>>> With best wishes
->>>>>>> Dmitry
->>>>>>>
->>>>>
->>>>> -- 
->>>>> With best wishes
->>>>> Dmitry
->>>>>
->>>
->>>
->>>
+> Otherwise you are making it a hassle for the case where there is a
+> consumer without a driver for a GDSC that was off at boot. You are now
+> forcing the use of timeouts or writing to state_synced file. Those
+> should be absolute last resorts, but you are making that a requirement
+> with your current implementation. If you implement it correctly by
+> reading the GDSC register, things will "just work". And it's not even
+> hard to do.
 > 
+> NACK'ed until this is handled correctly.
+> 
+> >
+> > >
+> > > 4) The returning -EBUSY when a power off is attempted seems to be
+> > > quite wasteful. The framework will go through the whole sequence of
+> > > trying to power down, send the notifications and then fail and then
+> > > send the undo notifications. Combined with point (2) I think this can
+> > > be handled better at the aggregation level in the framework to avoid
+> > > even going that far into the power off sequence.
+> >
+> > Again, have a look at [1] (above).
+> 
+> See my reply above. If you do it properly at the framework level, this
+> can be done in a clean way and will work for all power domains.
+> 
+> -Saravana
+> 
+> >
+> > Ulf, any thoughts on this 4th point?
+> >
+> > >
+> > > -Saravana
+> > >
+> > > >
+> > > > I've been doing extensive testing on SM8450, but I've also spinned this
+> > > > on my X13s (SC8280XP). Both patches that add the sync state callback to
+> > > > the SC8280XP and SM8450 are here to provide context. Once we agree on
+> > > > the form, I intend to add the sync state callback to all gdsc providers.
+> > > >
+> > > > Currently, some of the gdsc providers might not reach sync state due to
+> > > > list of consumers not probing yet (or at all). The sync state can be
+> > > > enforced by writing 1 to the state_synced sysfs attribute of the
+> > > > provider, thanks to Saravana's commit [1] which has been already merged.
+> > > >
+> > > > [1] https://lore.kernel.org/r/20230304005355.746421-3-saravanak@google.com
+> > > >
+> > > > V2 (RFC) of this patchset was here:
+> > > > https://lore.kernel.org/all/20230320134217.1685781-1-abel.vesa@linaro.org/
+> > > >
+> > > > Changes since v2:
+> > > >  * renamed genpd_queue_power_off_work to pm_genpd_queue_power_off and added
+> > > >    comment about its purpose w.r.t. it being exported.
+> > > >  * added the qcom_cc generic sync state callback to all providers that
+> > > >    register GDSCs, instead of SM8450 and SC8280XP
+> > > >
+> > > > Changes since v1:
+> > > >  * Added the qcom_cc sync state callback which calls in turn the gdsc one
+> > > >  * dropped extra semicolon from pm_domain.h
+> > > >
+> > > > Abel Vesa (4):
+> > > >   PM: domains: Allow power off queuing from providers
+> > > >   soc: qcom: rpmhpd: Do proper power off when state synced
+> > > >   clk: qcom: gdsc: Avoid actual power off until sync state
+> > > >   clk: qcom: Add sync state callback to all providers
+> > > >
+> > > >  drivers/base/power/domain.c            | 18 ++++++++++--------
+> > > >  drivers/clk/qcom/apss-ipq6018.c        |  1 +
+> > > >  drivers/clk/qcom/camcc-sc7180.c        |  1 +
+> > > >  drivers/clk/qcom/camcc-sc7280.c        |  1 +
+> > > >  drivers/clk/qcom/camcc-sdm845.c        |  1 +
+> > > >  drivers/clk/qcom/camcc-sm6350.c        |  1 +
+> > > >  drivers/clk/qcom/camcc-sm8250.c        |  1 +
+> > > >  drivers/clk/qcom/camcc-sm8450.c        |  1 +
+> > > >  drivers/clk/qcom/common.c              | 19 +++++++++++++++++++
+> > > >  drivers/clk/qcom/common.h              |  2 ++
+> > > >  drivers/clk/qcom/dispcc-qcm2290.c      |  1 +
+> > > >  drivers/clk/qcom/dispcc-sc7180.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sc7280.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sc8280xp.c     |  1 +
+> > > >  drivers/clk/qcom/dispcc-sdm845.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm6115.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm6125.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm6350.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm6375.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm8250.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm8450.c       |  1 +
+> > > >  drivers/clk/qcom/dispcc-sm8550.c       |  1 +
+> > > >  drivers/clk/qcom/gcc-apq8084.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-ipq806x.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-ipq8074.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-mdm9615.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8660.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8909.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8916.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8939.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8953.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8960.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8974.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8976.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8994.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8996.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-msm8998.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-qcm2290.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-qcs404.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-qdu1000.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-sa8775p.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-sc7180.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sc7280.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sc8180x.c         |  1 +
+> > > >  drivers/clk/qcom/gcc-sc8280xp.c        |  1 +
+> > > >  drivers/clk/qcom/gcc-sdm660.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sdm845.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sdx55.c           |  1 +
+> > > >  drivers/clk/qcom/gcc-sdx65.c           |  1 +
+> > > >  drivers/clk/qcom/gcc-sm6115.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm6125.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm6350.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm6375.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm7150.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm8150.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm8250.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm8350.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm8450.c          |  1 +
+> > > >  drivers/clk/qcom/gcc-sm8550.c          |  1 +
+> > > >  drivers/clk/qcom/gdsc.c                | 26 ++++++++++++++++++++++++++
+> > > >  drivers/clk/qcom/gdsc.h                |  6 ++++++
+> > > >  drivers/clk/qcom/gpucc-msm8998.c       |  1 +
+> > > >  drivers/clk/qcom/gpucc-sc7180.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sc7280.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sc8280xp.c      |  1 +
+> > > >  drivers/clk/qcom/gpucc-sdm660.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sdm845.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm6115.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm6125.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm6350.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm6375.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm8150.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm8250.c        |  1 +
+> > > >  drivers/clk/qcom/gpucc-sm8350.c        |  1 +
+> > > >  drivers/clk/qcom/lcc-ipq806x.c         |  1 +
+> > > >  drivers/clk/qcom/lpassaudiocc-sc7280.c |  1 +
+> > > >  drivers/clk/qcom/lpasscc-sc7280.c      |  1 +
+> > > >  drivers/clk/qcom/lpasscorecc-sc7180.c  |  2 ++
+> > > >  drivers/clk/qcom/lpasscorecc-sc7280.c  |  2 ++
+> > > >  drivers/clk/qcom/mmcc-apq8084.c        |  1 +
+> > > >  drivers/clk/qcom/mmcc-msm8974.c        |  1 +
+> > > >  drivers/clk/qcom/mmcc-msm8994.c        |  1 +
+> > > >  drivers/clk/qcom/mmcc-msm8996.c        |  1 +
+> > > >  drivers/clk/qcom/mmcc-msm8998.c        |  1 +
+> > > >  drivers/clk/qcom/mmcc-sdm660.c         |  1 +
+> > > >  drivers/clk/qcom/videocc-sc7180.c      |  1 +
+> > > >  drivers/clk/qcom/videocc-sc7280.c      |  1 +
+> > > >  drivers/clk/qcom/videocc-sdm845.c      |  1 +
+> > > >  drivers/clk/qcom/videocc-sm8150.c      |  1 +
+> > > >  drivers/clk/qcom/videocc-sm8250.c      |  1 +
+> > > >  drivers/soc/qcom/rpmhpd.c              | 19 +++++++------------
+> > > >  include/linux/pm_domain.h              |  4 ++++
+> > > >  92 files changed, 161 insertions(+), 20 deletions(-)
+> > > >
+> > > > --
+> > > > 2.34.1
+> > > >
