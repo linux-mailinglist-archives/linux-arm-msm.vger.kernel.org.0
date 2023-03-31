@@ -2,143 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EFF826D281A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 20:49:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1686B6D2856
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 20:56:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbjCaStv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 14:49:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
+        id S232330AbjCaS4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 14:56:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233118AbjCaStv (ORCPT
+        with ESMTP id S233228AbjCaS4Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 14:49:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A283220C32
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 11:49:49 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32VHlVNX032700;
-        Fri, 31 Mar 2023 18:49:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=1dCe6zH5TPV9+NSxkoSOLELQx+Dutd50keKEdWexZEI=;
- b=TFlJ5muIsRRv2iBImiJPiZITUrOXQoqGGBYVvcUBOlxRwxbGcKkd38z31K4ENxnJyoH7
- B1E89AUgSNPChw7b/NfdAkGgyx2Ze9AAw/0aSDYH76YfIQRuQ8kRjU+klX9rHCsQD+fW
- ZQ3ZqPkdQk+2VQk5IvUzbPb1nWnJdC2WMrktg6o45SKXNiUMxL+5lCd73ek+xLK7UKVd
- cdA+0VhMByZrESBHXxx6fzdXGb8jZgj99ttaVXtgGyEVkReMHYWkTV3+lBD/i62bIgn5
- RCuJbg1B9Bijkuws5ZQBl2MZ6nRvUpAi0eW0jfQeSAX5HjHP2R1iuRZGI+bWKEIoDAhj uA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pnyey9dgh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 18:49:43 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 32VIngWq030059
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 31 Mar 2023 18:49:42 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 31 Mar 2023 11:49:42 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-Date:   Fri, 31 Mar 2023 11:49:21 -0700
-Subject: [PATCH RFC v2 6/6] drm/msm/dsi: Fix calculations for eol_byte_num
- and pkt_per_line
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230329-rfc-msm-dsc-helper-v2-6-3c13ced536b2@quicinc.com>
-References: <20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Fri, 31 Mar 2023 14:56:25 -0400
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EDA523FDF;
+        Fri, 31 Mar 2023 11:56:14 -0700 (PDT)
+Received: by mail-oi1-f173.google.com with SMTP id bi31so17391330oib.9;
+        Fri, 31 Mar 2023 11:56:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680288973;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SRYjfKN3eK3vnBIG5oj6mxdR/iFPW7kkC2GPzDxU+F0=;
+        b=A8WlG5No6f5Frze7s5F2DMIxoVpK73x4ZzadCTmiFJwDsYBduHyGNL5lYcueK9bc72
+         mgk5ajNxtd9EUT45+1DSphP4PE1LdxIxhCpilVFttJIzOf7YWiOmCbB8F5j4OYUKb7Ls
+         ID33zWsUFPvtLpUb2a1Gaq/cyg/r7/zk8bTzX7sqm+Xswp0fYj3+/81UlgjheOl3Nbli
+         Lp8rYMw0BLryhfLSbG8GxHHz9LeVtE48UeBzC4J0L9Bp55qH1Vy2xwZJ/3ux9/vwZ3Cl
+         yYwyASdyN4gkXD5nrz2ktRpVTBQJGhn9dxd/prGGUcTGTQljfRZnGPWoaCT+6v1ZNhlH
+         suDw==
+X-Gm-Message-State: AAQBX9cbinOLBgmYfbd5cofKy+JLQz+Ag0vMPkgFt6YIVnq8z5b1xhiS
+        5PJ3kVIon4jfX+xSGExLIQ==
+X-Google-Smtp-Source: AKy350bIDeTcfXjKXMCdouCUmqZoQzF2jlr3OoSKVKdzBeGpGQzJ5XI0jorXx7xo1T9jDrsYb0ibDg==
+X-Received: by 2002:a05:6808:13cb:b0:389:7d24:def5 with SMTP id d11-20020a05680813cb00b003897d24def5mr3621775oiw.10.1680288972707;
+        Fri, 31 Mar 2023 11:56:12 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id w8-20020a056808018800b003896b3269d3sm1263329oic.20.2023.03.31.11.56.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Mar 2023 11:56:12 -0700 (PDT)
+Received: (nullmailer pid 1946699 invoked by uid 1000);
+        Fri, 31 Mar 2023 18:56:11 -0000
+Date:   Fri, 31 Mar 2023 13:56:11 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Jessica Zhang" <quic_jesszhan@quicinc.com>
-X-Mailer: b4 0.13-dev-00303
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680288580; l=2041;
- i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=kZKkwVo7xgmDFtSUOvXsSf99R0JW0VaxoP+632K9wZg=;
- b=wpTz5kOivSE5xkvzd7pAKcAy+zCqSGK9zSLq5rQ8JCw46RoYlgmOzSDlYDdxCseGvsv8bzSrk
- y1Eh1YgVjLRAu0988ULDMj+kG7i6wcAW1En117Mpy377m50NJ8uwlTt
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Tu_LWpWv1dqCHCHqnSF2AyH7ux9b0BFJ
-X-Proofpoint-ORIG-GUID: Tu_LWpWv1dqCHCHqnSF2AyH7ux9b0BFJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-31_07,2023-03-31_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 suspectscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 priorityscore=1501 clxscore=1015
- phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2303310151
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Johan Hovold <johan+linaro@kernel.org>,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH 1/5] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: add
+ sm8150 USB+DP PHY
+Message-ID: <168028897102.1946640.12125439806794137069.robh@kernel.org>
+References: <20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
+ <20230324215550.1966809-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230324215550.1966809-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the correct calculations for eol_byte_num and pkt_per_line.
 
-Currently, pkt_per_line is calculated by dividing slice_per_intf by
-slice_count. This is incorrect, as slice_per_intf should be divided by
-slice_per_pkt, which is not always equivalent to slice_count as it is
-possible for there to be multiple soft slices per interface even though
-a panel only specifies one slice per packet.
+On Sat, 25 Mar 2023 00:55:46 +0300, Dmitry Baryshkov wrote:
+> Add bindings for sm8150 USB+DP PHY. These bindings follow the older
+> style as this is a quick conversion to simplify further driver cleanup.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml    | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-For eol_byte_num, the current calculation describes the size of the
-trailing bytes in the line. Change the calculation so that it describes
-the number of padding bytes instead.
-
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index b7ab81737473..613ec19f4383 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -842,7 +842,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- {
- 	struct drm_dsc_config *dsc = msm_host->dsc;
- 	u32 reg, reg_ctrl, reg_ctrl2;
--	u32 slice_per_intf, total_bytes_per_intf;
-+	u32 slice_per_intf;
- 	u32 pkt_per_line;
- 	u32 eol_byte_num;
- 
-@@ -859,10 +859,12 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	if (dsc->slice_count > slice_per_intf)
- 		dsc->slice_count = 1;
- 
--	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
-+	eol_byte_num = msm_dsc_get_eol_byte_num(dsc, hdisplay, dsi_get_bpp(msm_host->format));
- 
--	eol_byte_num = total_bytes_per_intf % 3;
--	pkt_per_line = slice_per_intf / dsc->slice_count;
-+	/* Default to 1 slice_per_pkt, so pkt_per_line will be equal to
-+	 * slice per intf.
-+	 */
-+	pkt_per_line = slice_per_intf;
- 
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-
--- 
-2.39.2
+Acked-by: Rob Herring <robh@kernel.org>
 
