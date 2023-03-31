@@ -2,131 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 390F16D1DE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 12:22:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 971D66D200A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 14:21:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231417AbjCaKWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 06:22:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52898 "EHLO
+        id S232338AbjCaMVd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 08:21:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbjCaKVS (ORCPT
+        with ESMTP id S232165AbjCaMVK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 06:21:18 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A6A40C6;
-        Fri, 31 Mar 2023 03:18:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id CE0A3B82E29;
-        Fri, 31 Mar 2023 10:18:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4F0C433D2;
-        Fri, 31 Mar 2023 10:18:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680257929;
-        bh=5A3MI1NM5Uq/2OVg1nMJ+OOp//buqxGmoqLAWsIGndg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nFu8EEpL/yc6LfoS3gnG3bmm4mj3ewDjHxPWj9mvPwAM+ZuAZVRh6EhG7X6qmZ5HD
-         l5cAYUlVPq/z4q9mER2jXuIvzGQonzJ8ULQPpBwjMYoZRY5GePZG+o+irlHXOp8vTD
-         DybiTBkdYhiEMqL9fU4xX/j554JNFo3ZxyKdiU+b+4eR37mWDdX3AyotYNrWZGyExY
-         Hpz6gF2ZhRcUsXKXT+FAJrZEbbdG5zOJlZ0SqmF21V+7YsHXJmMEGXHOZYsx2bPivZ
-         heJvpIwi0b11XfAq9jWZbLUsCJrHq1WtlkBHa3Ola2amMkXG/fIyuYP/XTh0FiUG4r
-         /PAYny8iqIpvA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1piBqg-0004es-QE; Fri, 31 Mar 2023 12:19:10 +0200
-Date:   Fri, 31 Mar 2023 12:19:10 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <ZCaznloORtzgioOP@hovoldconsulting.com>
-References: <cover.1680162377.git.quic_varada@quicinc.com>
- <c46b542b112b59002ab965be1d3fcae8c372d545.1680162377.git.quic_varada@quicinc.com>
- <CAA8EJpo_ckJtYV4aU613X5L6+wj-1i9vZkud5p72PLdCSnj5ng@mail.gmail.com>
- <20230331092710.GB19162@varda-linux.qualcomm.com>
+        Fri, 31 Mar 2023 08:21:10 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE0D20C1B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 05:20:35 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 20so22842547lju.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 05:20:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680265229;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=H16BPzJztbd3HhazhXcI1P8r1+/2++5vbOFamiLRHNU=;
+        b=BlVahfuPWT0j8HZz1RZflHoZMFUESz2hAMgu4LPi2xdY6ayIz7DfuR0yABB8ZvZrkW
+         sYr2e7zHM6nx0it+FEg4yPH8bAmP/s8b8tewooNgjV5WKeU4VRRu4JzH9iileUN/d50X
+         /LHlb0FwzEAYMfQncZV7vDxmjchcsXW32fNK+jaaN/wYfH91kFHW6B4PgbMP5yawUuEe
+         XzEQco64VoJ5916HPH+lBfAxC7JbqHKgEevMl+1Y3XqNSgaxrUhs9ZIo8DMr9f1nnRBE
+         tYTSpkqFmDtkhUGBIndFEOP3qMrWrxkFVG2YDRGb36HRQ/hgVagRhO64OgfM6QLBBGZm
+         xBxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680265229;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H16BPzJztbd3HhazhXcI1P8r1+/2++5vbOFamiLRHNU=;
+        b=czzmzsDk0GbLRFh0LESoABXCnub0IUw08WCxnRBepmCPfwIWo6537RBUWjwzqjofSc
+         HHwSUkv6ET08WtUuMzfIW6AQkD4hGA5spFbipZN9BG+Ak2m41X95EMlRYyigGaZ6j1Xg
+         CHqtrx1IO/kw8SOCe2YwAZ2WKKneBHlW+ELPDdNAiU7YF9z0aMK4oZYZOSMEYoa65iDx
+         KPjyKXZ180h63tuDowXAoqCO/iB1gX0kuTVMM1aIXEWcVkopa1fxIhx7dRUTktHqBsa+
+         L8Wv6WB/4y6186xmrIO2OBMbyIWOBxd+pUX66O3IG6SU/7zjxRQT90TJDIeACknhybOI
+         K0sQ==
+X-Gm-Message-State: AAQBX9dRPLiGIO4iJJYFSd0IdBwsGoPBoCSTFLT1xQeEYQqFe5k7Wu5c
+        WHlfF/OAXu+Ke4ZjnaPIVrFXyQ==
+X-Google-Smtp-Source: AKy350Z/1M/vqT1JYEJ7bqIsbB1UnFAUGbHJ5SekA9BN0UeXAuixfK9k4n5Z3qziMPSbTFX/QOLrHg==
+X-Received: by 2002:a2e:7c10:0:b0:29c:956f:536f with SMTP id x16-20020a2e7c10000000b0029c956f536fmr7373518ljc.52.1680265228952;
+        Fri, 31 Mar 2023 05:20:28 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id o24-20020a2e7318000000b002934b9ce521sm343867ljc.10.2023.03.31.05.20.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Mar 2023 05:20:28 -0700 (PDT)
+Message-ID: <e43e944c-9f65-cde5-5d8c-a76f33f99b44@linaro.org>
+Date:   Fri, 31 Mar 2023 14:20:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230331092710.GB19162@varda-linux.qualcomm.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC support
+To:     Dylan Van Assche <me@dylanvanassche.be>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230330165322.118279-1-me@dylanvanassche.be>
+ <20230330165322.118279-3-me@dylanvanassche.be>
+ <f9a4a2de-42f8-676a-ae6d-d20391206f83@linaro.org>
+ <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 31, 2023 at 02:57:11PM +0530, Varadarajan Narayanan wrote:
-> On Thu, Mar 30, 2023 at 12:44:40PM +0300, Dmitry Baryshkov wrote:
-> > On Thu, 30 Mar 2023 at 11:42, Varadarajan Narayanan
-> > <quic_varada@quicinc.com> wrote:
-> > >
-> > > Add USB phy and controller related nodes
-> > >
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > >  Changes in v5:
-> > >         - Fix additional comments
-> > >         - Edit nodes to match with qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> > >         - 'make dtbs_check' giving the following messages since
-> > >           ipq9574 doesn't have power domains. Hope this is ok
-> > >
-> > >                 /local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: phy@7d000: 'power-domains' is a required property
-> > >                 From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> > >                 /local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: usb@8a00000: 'power-domains' is a required property
-> > >                 From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> >
-> > No, I think it is not.
+
+
+On 31.03.2023 11:36, Dylan Van Assche wrote:
+> Hi Konrad,
 > 
-> There are no GDSCs in IPQ9574. Can you suggest how to proceed.
+> On Fri, 2023-03-31 at 04:03 +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 30.03.2023 18:53, Dylan Van Assche wrote:
+>>> Qualcomm SDM845 SoC features a SLPI DSP which uses FastRPC through
+>>> an allocated memory region to load files from the host filesystem
+>>> such as sensor configuration files.
+>>>
+>>> Add a FastRPC node at /dev/fastrpc-sdsp and a DMA region, similar
+>>> to
+>>> downstream, to allow userspace to communicate with the SLPI via the
+>>> FastRPC interface for initializing the sensors on the SLPI.
+>>>
+>>> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 24 ++++++++++++++++++++++++
+>>>  1 file changed, 24 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>> index 3b547cb7aeb8..8ea4944f3ad6 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>> @@ -878,6 +878,14 @@ mdata_mem: mpss-metadata {
+>>>                         size = <0 0x4000>;
+>>>                         no-map;
+>>>                 };
+>>> +
+>>> +               fastrpc_mem: fastrpc {
+>>> +                       compatible = "shared-dma-pool";
+>>> +                       reusable;
+>> Please move it last to get a nice reverse-Christmas-tree layout.
+>>
+> 
+> Will fix in v4.
+> 
+>>> +                       alloc-ranges = <0 0x00000000 0 0xffffffff>;
+>> Would there be any issues with it starting over (1<<31 - 1)?
+>>
+> 
+> You mean a bigger region then, like the whole CMA region then? AFAIK,
+> the SLPI always use the same region expecting it to be in this range.
+> However, I cannot confirm more, as I have no insights in the firmware
+> running on there, this all comes from finding out what it exactly does
+> on downstream.
+I was asking about the <.. 0 0xfff.f> part specifically, as that means
+it can't be allocated above 4 gigs. But I guess it's just how qcom
+envisioned it.
 
-You need to update the binding and either make the power domains
-property optional in the binding or dependent on the SoC.
+Also, please use 0x0 in alloc-ranges as well, this is all addresses/
+reg sizes.
 
-> > > +               ssphy_0: phy@7d000 {
-> >
-> > Nit: usually the label usb_0_qmpphy
-> >
-> > > +                       compatible = "qcom,ipq9574-qmp-usb3-phy";
-> > > +                       reg = <0x0007d000 0xa00>;
-> > > +                       #phy-cells = <0>;
-> > > +
-> > > +                       clocks = <&gcc GCC_USB0_AUX_CLK>,
-> > > +                                <&xo_board_clk>,
-> > > +                                <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> > > +                                <&gcc GCC_USB0_PIPE_CLK>;
-> > > +                       clock-names = "aux",
-> > > +                                     "ref",
-> > > +                                     "com_aux",
-
-This is not the right name for this clock so you need to update the
-binding first.
-
-Please be more careful.
-
-> > > +                                     "pipe";
-> > > +
-> > > +                       resets = <&gcc GCC_USB0_PHY_BCR>,
-> > > +                                <&gcc GCC_USB3PHY_0_PHY_BCR>;
-> > > +                       reset-names = "phy",
-> > > +                                     "phy_phy";
-> > > +
-> > > +                       vdda-pll-supply = <&reg_usb_1p8>;
-> > > +                       vdda-phy-supply = <&reg_usb_0p925>;
-> > > +
-> > > +                       status = "disabled";
-> > > +
-> > > +                       #clock-cells = <0>;
-> > > +                       clock-output-names = "usb0_pipe_clk";
-> > > +               };
-
-Johan
+Konrad
+> 
+>>> +                       alignment = <0 0x400000>;
+>> Please use 0x0 for the 0 here, as it's essentially reg.size with
+>> size-cells = 2
+> 
+> Will fix in v4.
+> 
+>>
+>>> +                       size = <0 0x1000000>;
+>> Ditto
+> 
+> Will fix in v4.
+> 
+>>
+>>> +               };
+>>>         };
+>>>  
+>>>         adsp_pas: remoteproc-adsp {
+>>> @@ -3344,6 +3352,22 @@ glink-edge {
+>>>                                 label = "dsps";
+>>>                                 qcom,remote-pid = <3>;
+>>>                                 mboxes = <&apss_shared 24>;
+>>> +
+>>> +                               fastrpc {
+>>> +                                       compatible =
+>>> "qcom,fastrpc";
+>>> +                                       qcom,glink-channels =
+>>> "fastrpcglink-apps-dsp";
+>>> +                                       label = "sdsp";
+>>> +                                       qcom,non-secure-domain;
+>>> +                                       qcom,vmids = <0x3 0xF 0x5
+>>> 0x6>;
+>> Please use the recently-introduced header and depend on (and
+>> make a patch atop)
+>>
+>> https://lore.kernel.org/linux-arm-msm/8685b710-b74d-556a-815d-0ffef2b0eeff@linaro.org/T/#t
+>>
+>> Konrad
+>>
+>>> +                                       memory-region =
+>>> <&fastrpc_mem>;
+>>> +                                       #address-cells = <1>;
+>>> +                                       #size-cells = <0>;
+>>> +
+>>> +                                       compute-cb@0 {
+>>> +                                               compatible =
+>>> "qcom,fastrpc-compute-cb";
+>>> +                                               reg = <0>;
+>>> +                                       };
+>>> +                               };
+>>>                         };
+>>>                 };
+>>>  
+> 
+> Kind regards,
+> Dylan
