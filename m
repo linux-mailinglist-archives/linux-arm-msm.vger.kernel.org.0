@@ -2,146 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09CCB6D2637
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 18:48:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 360CF6D265B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 18:58:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbjCaQso (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 12:48:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45062 "EHLO
+        id S231701AbjCaQ6j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 12:58:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbjCaQsM (ORCPT
+        with ESMTP id S230403AbjCaQ6h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 12:48:12 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15F02546B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 09:45:46 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id y15so29683052lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 09:45:46 -0700 (PDT)
+        Fri, 31 Mar 2023 12:58:37 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D5ACC2B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 09:58:34 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id g19so16625109lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 09:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680281142;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aVPNGzE8knM5pBPI7ltbCkbarv1RauyyhmNw2NMK9fI=;
-        b=fcIPli0uvusPMxD8NS30RfbTAKhOrXOEJ6MjRsWSRevuAFhRi3S1RVkfQDK4sMKuI5
-         Ac6Hvs6FmUtWf85rXhSG7FYMbXhvmb2OYqYBbSpWQyDQoQPelIlGfqQ7WsG2TBHoa+or
-         Wy10XlnhVGfhcBiXdkScv7Hh55V/GIKWKCJ29WG7vHvRUmJF4aButfys6uX65OIHtNdn
-         5ZrSqU/TqI9VPVjPgkuE50126wGlbOXqsgvQDprykeVe4Sa3K5nXhNcz9sPRG3+JwtVo
-         MF/JLIaDq9Eu3X3N2vdp1Eezr/sNZSkFFOrPpnwNTDNuk7ncr5w/3w1f7ZKLJQ/fK2m9
-         lZtw==
+        d=linaro.org; s=google; t=1680281913;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Hg1hXo3YKH/4ZXl0Bdlyb1YGCLWHlTSlPb8rJUV/Kbo=;
+        b=vjtUojPefRyqY+EWHbk0JjeTGM/N6xkAxTRRmYSI9XFQN/RSvrW/Ikqn3Eo/iFr5nd
+         oXDcgkPdtUorydkQgDPDs486K6MfxJXIMVOh+er2U3LOl1Vwy1CY2V9Vwr2K8fYKvFup
+         kA6p2zjiEAUhQkyFH74s3051Ryh3cCIET1sY486KCEcs9sXXjyoLgrtlClsSS9miNvSv
+         hCoHzL0DK5hankH/kLs0DJaiETHAc9IsOOR6OMuDR8mYlV6kDtCVCyzHUFBNMJgeCLtb
+         zPjMEu64v8haYCu2BJE1zkIfevKcQfnkykDu30Td7t3gU5j3GTL4XO2Sjjke9W9Wp44s
+         YleA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680281142;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aVPNGzE8knM5pBPI7ltbCkbarv1RauyyhmNw2NMK9fI=;
-        b=JRbaLyxZ5ie21hsbGHq6maJEu6/sQ3uE0H4lNkfUR/K6CZxwxJMJq4k4YNuQP79YID
-         cgy1/ChLYXArpSYUTnPVNL42vElouB+IiXLzs19cYPW/Iitmmi8O3K8rghR/X+Hcaa1D
-         i6K0gczTeVggpdHuSRn0xAb/vcOqC6Y4q+TYLllmjGvmmRnm9KoJo5+GvqqIc6ct3ZJ4
-         nJXiiJl7sK/SkmIrECKfdayq5gkxfVRAT9Df8TEWK4zg/HvlCFS7esYB5u1uKeMROOLJ
-         0/kH6XXwFNFwkJAL0TnEQdGF8VINIYQRx3qdOULfndiElTz+L5UpP0mN5BnE1Ts6zRq+
-         DCuw==
-X-Gm-Message-State: AAQBX9fYk872D9grTnXfRqFLtxpMnY/Dhdfr0WjFMKF+jlS78ph/Qcl1
-        x/Jv0V0P8h7ZD6d4SQFCk/YS/Q==
-X-Google-Smtp-Source: AKy350ZCIzf3HpKQk7h74wkE7rEdIEczmi+cu52MVVZN3UkaAM2vtFQWOxseiIxN7L/nPA5F4VfX5Q==
-X-Received: by 2002:ac2:4c36:0:b0:4ea:fdcf:8f60 with SMTP id u22-20020ac24c36000000b004eafdcf8f60mr7777605lfq.3.1680281142829;
-        Fri, 31 Mar 2023 09:45:42 -0700 (PDT)
-Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id u26-20020ac2519a000000b004e8483bff82sm439872lfi.271.2023.03.31.09.45.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 09:45:42 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
-Cc:     Patrick Lai <quic_plai@quicinc.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 7/7] soundwire: qcom: use tabs for indentation in defines
-Date:   Fri, 31 Mar 2023 18:45:30 +0200
-Message-Id: <20230331164530.227302-7-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230331164530.227302-1-krzysztof.kozlowski@linaro.org>
-References: <20230331164530.227302-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20210112; t=1680281913;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hg1hXo3YKH/4ZXl0Bdlyb1YGCLWHlTSlPb8rJUV/Kbo=;
+        b=pIzA4A6fY8yyw4tF/QnDjzvyVVQ3YZ42fhoxwYtGXrQQDNolopH/KNb6ga5M0kSK9+
+         TagPScmzDcoyMfJgEThc6CuClVCkBBCSkfSX2nYnolawqtJHKmgBHOgqaO1bZ1V5/vPO
+         sSl9aUXFKzmvFi1UfuRpQzkoaCNuVoaVF9AfwlnJ3Qveb0xdpmfdTBWKeaIfz7WYn8xE
+         ctDpDuianVjU/uc0OEkdRZxsocF+msAs18PoShTPmohcXJ1FzZUQqyHoD+nb3zT/qYAk
+         pakeVnoqKNaOPTGWzhFhg1DpTYmZrO6Z/wKBi/KLRirpILWRYee6+wX0mKY0gasJV2sr
+         mKDA==
+X-Gm-Message-State: AAQBX9c5lGF2EpKde/WCl701aRBg6LwZee9BpkZ2avLVeUrX4SDg2tYI
+        cywlCUJP85vviUcd/aCwFDge1VifRQr+ZAGxpAQ=
+X-Google-Smtp-Source: AKy350ZrZLcTT2PuvoFqTFyfP0UYsKgVGSDG9xR3i4dZoLnDzfY2hfB9nbLERhwWRrcK9lXv+TMYrQ==
+X-Received: by 2002:a19:ad07:0:b0:4e8:c81b:1a11 with SMTP id t7-20020a19ad07000000b004e8c81b1a11mr7746310lfc.49.1680281913169;
+        Fri, 31 Mar 2023 09:58:33 -0700 (PDT)
+Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
+        by smtp.gmail.com with ESMTPSA id w15-20020ac25d4f000000b004e81c9bb65csm440732lfd.282.2023.03.31.09.58.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Mar 2023 09:58:32 -0700 (PDT)
+Message-ID: <8f0d4b5b-211c-ac53-798e-70d2f2b3ab37@linaro.org>
+Date:   Fri, 31 Mar 2023 18:58:30 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 2/4] dts: arm64: qcom: sdm845: add SLPI FastRPC support
+Content-Language: en-US
+To:     Dylan Van Assche <me@dylanvanassche.be>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230330165322.118279-1-me@dylanvanassche.be>
+ <20230330165322.118279-3-me@dylanvanassche.be>
+ <f9a4a2de-42f8-676a-ae6d-d20391206f83@linaro.org>
+ <e7b73a24b8ba76cb6dc9921f73c47632a749b93f.camel@dylanvanassche.be>
+ <e43e944c-9f65-cde5-5d8c-a76f33f99b44@linaro.org>
+ <603ef0bf04b9c4f7f8e94e2ccece97ffa1b0582b.camel@dylanvanassche.be>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <603ef0bf04b9c4f7f8e94e2ccece97ffa1b0582b.camel@dylanvanassche.be>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        UPPERCASE_50_75 autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use consistently only tabs to indent the value in defines.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soundwire/qcom.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 7d4f1d9d160b..c771ada67a99 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -58,9 +58,9 @@
- #define SWRM_INTERRUPT_STATUS_SPECIAL_CMD_ID_FINISHED		BIT(10)
- #define SWRM_INTERRUPT_STATUS_AUTO_ENUM_FAILED			BIT(11)
- #define SWRM_INTERRUPT_STATUS_AUTO_ENUM_TABLE_IS_FULL		BIT(12)
--#define SWRM_INTERRUPT_STATUS_BUS_RESET_FINISHED_V2             BIT(13)
--#define SWRM_INTERRUPT_STATUS_CLK_STOP_FINISHED_V2              BIT(14)
--#define SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP               BIT(16)
-+#define SWRM_INTERRUPT_STATUS_BUS_RESET_FINISHED_V2		BIT(13)
-+#define SWRM_INTERRUPT_STATUS_CLK_STOP_FINISHED_V2		BIT(14)
-+#define SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP		BIT(16)
- #define SWRM_INTERRUPT_MAX					17
- #define SWRM_V1_3_INTERRUPT_MASK_ADDR				0x204
- #define SWRM_V1_3_INTERRUPT_CLEAR				0x208
-@@ -125,20 +125,20 @@
- #define SWRM_REG_VAL_PACK(data, dev, id, reg)	\
- 			((reg) | ((id) << 16) | ((dev) << 20) | ((data) << 24))
- 
--#define MAX_FREQ_NUM		1
--#define TIMEOUT_MS		100
--#define QCOM_SWRM_MAX_RD_LEN	0x1
--#define QCOM_SDW_MAX_PORTS	14
--#define DEFAULT_CLK_FREQ	9600000
--#define SWRM_MAX_DAIS		0xF
--#define SWR_INVALID_PARAM 0xFF
--#define SWR_HSTOP_MAX_VAL 0xF
--#define SWR_HSTART_MIN_VAL 0x0
--#define SWR_BROADCAST_CMD_ID    0x0F
--#define SWR_MAX_CMD_ID	14
--#define MAX_FIFO_RD_RETRY 3
--#define SWR_OVERFLOW_RETRY_COUNT 30
--#define SWRM_LINK_STATUS_RETRY_CNT 100
-+#define MAX_FREQ_NUM						1
-+#define TIMEOUT_MS						100
-+#define QCOM_SWRM_MAX_RD_LEN					0x1
-+#define QCOM_SDW_MAX_PORTS					14
-+#define DEFAULT_CLK_FREQ					9600000
-+#define SWRM_MAX_DAIS						0xF
-+#define SWR_INVALID_PARAM					0xFF
-+#define SWR_HSTOP_MAX_VAL					0xF
-+#define SWR_HSTART_MIN_VAL					0x0
-+#define SWR_BROADCAST_CMD_ID					0x0F
-+#define SWR_MAX_CMD_ID						14
-+#define MAX_FIFO_RD_RETRY					3
-+#define SWR_OVERFLOW_RETRY_COUNT				30
-+#define SWRM_LINK_STATUS_RETRY_CNT				100
- 
- enum {
- 	MASTER_ID_WSA = 1,
--- 
-2.34.1
+On 31.03.2023 15:14, Dylan Van Assche wrote:
+> On Fri, 2023-03-31 at 14:20 +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 31.03.2023 11:36, Dylan Van Assche wrote:
+>>> Hi Konrad,
+>>>
+>>> On Fri, 2023-03-31 at 04:03 +0200, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 30.03.2023 18:53, Dylan Van Assche wrote:
+>>>>> Qualcomm SDM845 SoC features a SLPI DSP which uses FastRPC
+>>>>> through
+>>>>> an allocated memory region to load files from the host
+>>>>> filesystem
+>>>>> such as sensor configuration files.
+>>>>>
+>>>>> Add a FastRPC node at /dev/fastrpc-sdsp and a DMA region,
+>>>>> similar
+>>>>> to
+>>>>> downstream, to allow userspace to communicate with the SLPI via
+>>>>> the
+>>>>> FastRPC interface for initializing the sensors on the SLPI.
+>>>>>
+>>>>> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+>>>>> ---
+>>>>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 24
+>>>>> ++++++++++++++++++++++++
+>>>>>  1 file changed, 24 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>>> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>>> index 3b547cb7aeb8..8ea4944f3ad6 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+>>>>> @@ -878,6 +878,14 @@ mdata_mem: mpss-metadata {
+>>>>>                         size = <0 0x4000>;
+>>>>>                         no-map;
+>>>>>                 };
+>>>>> +
+>>>>> +               fastrpc_mem: fastrpc {
+>>>>> +                       compatible = "shared-dma-pool";
+>>>>> +                       reusable;
+>>>> Please move it last to get a nice reverse-Christmas-tree layout.
+>>>>
+>>>
+>>> Will fix in v4.
+>>>
+>>>>> +                       alloc-ranges = <0 0x00000000 0
+>>>>> 0xffffffff>;
+>>>> Would there be any issues with it starting over (1<<31 - 1)?
+>>>>
+>>>
+>>> You mean a bigger region then, like the whole CMA region then?
+>>> AFAIK,
+>>> the SLPI always use the same region expecting it to be in this
+>>> range.
+>>> However, I cannot confirm more, as I have no insights in the
+>>> firmware
+>>> running on there, this all comes from finding out what it exactly
+>>> does
+>>> on downstream.
+>> I was asking about the <.. 0 0xfff.f> part specifically, as that
+>> means
+>> it can't be allocated above 4 gigs. But I guess it's just how qcom
+>> envisioned it.
+>>
+> 
+> I think it is limited by qcom, but I cannot be entirely sure :)
+> In any case, for v4, do I keep 0xffffffff?
+Yep, let's not stray into the unknown..
 
+Konrad
+> 
+>> Also, please use 0x0 in alloc-ranges as well, this is all addresses/
+>> reg sizes.
+>>
+>> Konrad
+> 
+> Yes, will use 0x0 instead of 0.
+> 
+> Dylan
+> 
+>>>
+>>>>> +                       alignment = <0 0x400000>;
+>>>> Please use 0x0 for the 0 here, as it's essentially reg.size with
+>>>> size-cells = 2
+>>>
+>>> Will fix in v4.
+>>>
+>>>>
+>>>>> +                       size = <0 0x1000000>;
+>>>> Ditto
+>>>
+>>> Will fix in v4.
+>>>
+>>>>
+>>>>> +               };
+>>>>>         };
+>>>>>  
+>>>>>         adsp_pas: remoteproc-adsp {
+>>>>> @@ -3344,6 +3352,22 @@ glink-edge {
+>>>>>                                 label = "dsps";
+>>>>>                                 qcom,remote-pid = <3>;
+>>>>>                                 mboxes = <&apss_shared 24>;
+>>>>> +
+>>>>> +                               fastrpc {
+>>>>> +                                       compatible =
+>>>>> "qcom,fastrpc";
+>>>>> +                                       qcom,glink-channels =
+>>>>> "fastrpcglink-apps-dsp";
+>>>>> +                                       label = "sdsp";
+>>>>> +                                       qcom,non-secure-domain;
+>>>>> +                                       qcom,vmids = <0x3 0xF
+>>>>> 0x5
+>>>>> 0x6>;
+>>>> Please use the recently-introduced header and depend on (and
+>>>> make a patch atop)
+>>>>
+>>>> https://lore.kernel.org/linux-arm-msm/8685b710-b74d-556a-815d-0ffef2b0eeff@linaro.org/T/#t
+>>>>
+>>>> Konrad
+>>>>
+>>>>> +                                       memory-region =
+>>>>> <&fastrpc_mem>;
+>>>>> +                                       #address-cells = <1>;
+>>>>> +                                       #size-cells = <0>;
+>>>>> +
+>>>>> +                                       compute-cb@0 {
+>>>>> +                                               compatible =
+>>>>> "qcom,fastrpc-compute-cb";
+>>>>> +                                               reg = <0>;
+>>>>> +                                       };
+>>>>> +                               };
+>>>>>                         };
+>>>>>                 };
+>>>>>  
+>>>
+>>> Kind regards,
+>>> Dylan
+> 
