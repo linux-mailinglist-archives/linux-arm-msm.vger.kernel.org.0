@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B21226D1BE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 11:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BED4D6D1BE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 11:21:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231415AbjCaJVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 05:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
+        id S231205AbjCaJVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 05:21:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbjCaJVi (ORCPT
+        with ESMTP id S231268AbjCaJVj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 05:21:38 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53C6419BA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 02:21:36 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id h9so22369858ljq.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 02:21:36 -0700 (PDT)
+        Fri, 31 Mar 2023 05:21:39 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FB24691
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 02:21:37 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id g19so14950096lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 02:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680254494;
+        d=linaro.org; s=google; t=1680254496;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pmaEro9qJ+WFWPEtna9Xd9AaFut1CJeCBKXroVRKWyA=;
-        b=FIZ8ZxAJp4cqsSt94KmZsnFwd9GFQBHF989CwXrTFCHrS0GYuaC9KFvpIrp++JbQW/
-         9U8wpZ9SQuKLDm6k6IsLtbdn1dAtky8tJejv9pe1SPsHYe4fffjG1RXm3YeCeGbWjwyo
-         qFHOkrtMj09MNwUCyJ3vHZ8QFYlm9I3R4JqoArtAL3v+xgBxM1ZA3Et9y3ZZ/0s+YNA2
-         /1WY+RTMcs8oV2kvJMFOd+mxbV2zb/9Y5oQHGgFnmiKOmtZjyjF/mAfubx7s3hLBzkQ6
-         99v8i/dE5/vKimmq6sbsRtDH+pLaibweHAa6CvfWTtarRP1FMUcsq+2Bl71toeqpBm/E
-         Dw2g==
+        bh=NW6ucyBlPaXPLxhxGyKJLKFBicJXxXMRT8wQieSVLcc=;
+        b=D7QPZXFGxqqP0qqgvQWKXe1hG/jslLSp7yMCKzsxGg/Pa1fDmWCvYH/sNpfjCsmePg
+         e7xTaUbAzJuh6d6XWGo3UvHbnome+wLjlZO45no76hU+4r7rFHhTmBCR5Z/A1L1xyS72
+         c2/jDipvmx/ZAqnrOoC9bcCBcEQHV3KVE2d3IC571Jsal8E9SPWHp21l0ol5UJ+JvfDo
+         jEhgsoFkKvchsbMkQlEeMmTU7QqfrRVZitC+UpgO/bPGBlycWuWcy/nOrSuEOPBlhZ21
+         LUjIc/Eyvp2Yb0x74twbESA7f7yIOub7B6qyuOaZ2d6IRuGKCXVriLWVt0eH01ecWTgZ
+         dqcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680254494;
+        d=1e100.net; s=20210112; t=1680254496;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pmaEro9qJ+WFWPEtna9Xd9AaFut1CJeCBKXroVRKWyA=;
-        b=lKykgLR6K9xwpHN94XVGWLCPdGidfdKihwfhGFNf5n2XWt4gOEyMl27Pa2CD8Iaus0
-         WFUThPDBYOBzR0KDV/RGlyeeXqF9VVJBAvYnbOrWYoUxgUauVEB6iamIJYd5o8zjnTbX
-         Ep9ouKrzkX1p3E8YkfeagCY8p5s1L3P08wIqk7e0y/ks670Gvq1WhrTW+pGTtyoVaXhV
-         Yw2JfnQ/xTzJ+J/YMkB0Utt7GJhMnl8I0b+Y389sjeu0G1NA2xELOccnXHwMmumEYCzX
-         LF+fPvGc/CnuoQqt9C7rDVTKOymGMVKyh0hcGNWt7k1b0WF8ku3REsq8h+yfrmLSNSxo
-         HXeQ==
-X-Gm-Message-State: AAQBX9eeceCEJPkmD1i0EIAEfSeqX5AhP3Pdxg41Jz8EjJkkymuyyuEH
-        MF1Yi22DXm70tr+2E8TSweqZ9Q==
-X-Google-Smtp-Source: AKy350aGVXPWJABt4xJLjGmuG7zNjs4L3aSsJ+nPkZRk7N9zS/D+N/69PUJRzZGKJ2kplzpG7PMjeQ==
-X-Received: by 2002:a2e:8781:0:b0:2a6:2088:cfa4 with SMTP id n1-20020a2e8781000000b002a62088cfa4mr422773lji.42.1680254494629;
-        Fri, 31 Mar 2023 02:21:34 -0700 (PDT)
+        bh=NW6ucyBlPaXPLxhxGyKJLKFBicJXxXMRT8wQieSVLcc=;
+        b=Ccya23CiD00Lg0Ea9nWJ/iwYP1WXHhe2XvWGr020Jp2+qmiW6EUV55wm39kcibFyIm
+         Wk+8+JPwjYhYZi/r41FpHa2YidvLQJb+tQh5zfygNftDGSnhY0mMNyLFX4fpHftifMqo
+         Inh4GGfshFLYdf4ZZYXg45gJJzV+O5x3oTOF4cR1QJbdmfjL0DCeK8L025lAlB/3ef9L
+         jaMuDftbOJ8rlRvGzHRYzLyGnaR6p43+BssWEEUyOCF2bG5VGmEisEmE3QJiNKvagO2k
+         86iWm+cTKCLvmsZ3PPjNVvGDCTnYEFEHdxPPeSLO+e/vIv+AqSWu75sptN5JzUixTq0k
+         /ECQ==
+X-Gm-Message-State: AAQBX9fPbd7a3CjKm1I2Sp/0qWcy5uvaS5ytgsA6CCCtckDH/5uBqK0i
+        kjcHXd2/V8G6Lz7ERmphAY5l+A==
+X-Google-Smtp-Source: AKy350Zbx52kYMTbjjjzdzz6vFmRalC2xoYJFzqZul3n09VJmagQWDMlRbT8K9aD9e6XM+LoUktDzQ==
+X-Received: by 2002:a19:505e:0:b0:4d8:86c1:477d with SMTP id z30-20020a19505e000000b004d886c1477dmr2830775lfj.18.1680254495878;
+        Fri, 31 Mar 2023 02:21:35 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
-        by smtp.gmail.com with ESMTPSA id a13-20020a2e88cd000000b0029bd1e3f9easm282629ljk.32.2023.03.31.02.21.33
+        by smtp.gmail.com with ESMTPSA id a13-20020a2e88cd000000b0029bd1e3f9easm282629ljk.32.2023.03.31.02.21.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 02:21:34 -0700 (PDT)
+        Fri, 31 Mar 2023 02:21:35 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -64,9 +64,9 @@ To:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh@kernel.org>
-Subject: [RESEND PATCH 2/3] dt-bindings: remoteproc: qcom,sm6115-pas: correct memory-region constraints
-Date:   Fri, 31 Mar 2023 11:21:24 +0200
-Message-Id: <20230331092125.44885-2-krzysztof.kozlowski@linaro.org>
+Subject: [RESEND PATCH 3/3] dt-bindings: remoteproc: qcom,sm8550-pas: require memory-region
+Date:   Fri, 31 Mar 2023 11:21:25 +0200
+Message-Id: <20230331092125.44885-3-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230331092125.44885-1-krzysztof.kozlowski@linaro.org>
 References: <20230331092125.44885-1-krzysztof.kozlowski@linaro.org>
@@ -81,31 +81,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm PAS devices expect exactly one memory region, not many.  Also,
-the memory-region is now defined in device specific binding, not in
+The memory-region is defined in device specific binding, not in
 qcom,pas-common.yaml, thus also require it in the same place.
 
-Fixes: 838c558bb8bc ("dt-bindings: remoteproc: qcom: Add sm6115 pas yaml file")
+Fixes: 084258d60712 ("dt-bindings: remoteproc: qcom: adsp: document sm8550 adsp, cdsp & mpss compatible")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml        | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml          | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-index f5d1fa9f45f1..1ac5b99b2fad 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm6115-pas.yaml
-@@ -32,7 +32,7 @@ properties:
-       - const: xo
- 
-   memory-region:
--    minItems: 1
-+    maxItems: 1
-     description: Reference to the reserved-memory for the Hexagon core
- 
-   smd-edge: false
-@@ -44,6 +44,7 @@ properties:
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+index fe216aa531ed..58120829fb06 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+@@ -53,6 +53,7 @@ properties:
  required:
    - compatible
    - reg
