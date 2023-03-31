@@ -2,122 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48FBB6D1968
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 10:07:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E998C6D19AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 31 Mar 2023 10:20:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229659AbjCaIHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 04:07:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51892 "EHLO
+        id S230512AbjCaIUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 04:20:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230171AbjCaIHs (ORCPT
+        with ESMTP id S231148AbjCaIUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 04:07:48 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186DC1B7F8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 01:07:38 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id y14so21530736wrq.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 01:07:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680250056; x=1682842056;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ImAx/oxEO+lHncb/ZesUrhnsKkwvaeFgdPZ5ntmrUCc=;
-        b=hYo4gicJ5iiWIczEayogdArsTd/kZGrWvZCCUMX3xMI5zAQdHFRuAbIoBVeIBqDAgH
-         FJxD0MqerkjCX9WWpHSiZ7e/xTPyB/vJVvg0ljtZjKl8fAu7Hb445g4runNQ54Khlytt
-         FDXG6UAQlWs7j5IrYRxDSFLw4uwK5o+YAGCbUDquW2wcBVBmYlvZJfzZ0E6ermR/dzli
-         RjcJEtPK9Ogov/77E+LAGgTGsApkCcjRbpokrNABdqBq6C3mQuJ1PInhiLRSACuThEuJ
-         c6G/X/E6qD+1meI/eILbI8AcGgjdztgDveeEwV9RyPaYMV7sX5aWqHzUX+EXQ81PNy22
-         uOPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680250056; x=1682842056;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ImAx/oxEO+lHncb/ZesUrhnsKkwvaeFgdPZ5ntmrUCc=;
-        b=h+RuRZPe3mHpF4NKiAZzfvZac7UT7n+VSeC2VV1cz6w/20gx7/7/3N+85QJBtg0W0b
-         PqehTI2uaCkxUdFUJwbIAgaidR4/f+l3R9kbUhCrbsudXMukW2v+RAXq+XJhVQ/ZldLg
-         ARzc/HFBuk2aG7Q+4tDXenfiqfveDzkOtoNkEAtkVcBigXDqGumruwftACGvtS8mM+R+
-         mp5//6fMcXOiTrJy42qYb5o2QyhQOfi2hpnl4Ex03NjM9GiJahRG/7adPzIjIhK6sNR9
-         GkxqFrAo5lLn9W0CjwCdzpxTYgnUutcuv8pAajq0tIMM4aer0dbtcc7Dy8G6YKkimAxn
-         Ppcg==
-X-Gm-Message-State: AAQBX9dv9rFt0qRKxa/83iT5qZlyGU1CB7FzHXkF/BEGn8BisqCPBimc
-        ejhQf2p/N26vX77L+Dyw4xyXBt7yAYgNa2rzBQE=
-X-Google-Smtp-Source: AKy350bxs9ZUM/3ex/YLlrgnbmR/q9tIRVwQaAUTFOf3rSiGvAR3/p8XfIs+BByVofxargQ0oFGabg==
-X-Received: by 2002:a5d:45c1:0:b0:2d0:bba8:38f3 with SMTP id b1-20020a5d45c1000000b002d0bba838f3mr22407216wrs.14.1680250056391;
-        Fri, 31 Mar 2023 01:07:36 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id s12-20020adfeccc000000b002da1261aa44sm1514267wro.48.2023.03.31.01.07.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Mar 2023 01:07:35 -0700 (PDT)
-Message-ID: <f26174aa-a6ca-151c-2602-2f39b40bb7da@linaro.org>
-Date:   Fri, 31 Mar 2023 09:07:34 +0100
+        Fri, 31 Mar 2023 04:20:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 036E6AF3B;
+        Fri, 31 Mar 2023 01:20:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 965F7B82CF3;
+        Fri, 31 Mar 2023 08:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 422FBC4339B;
+        Fri, 31 Mar 2023 08:20:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680250817;
+        bh=V+bfnvlS+kOmBBeElvXS7vrBIjidlHmWIetDz9gZ2Fc=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=p8rQfzc1uGsVvHTd7Ewy0ywh0zOHBOm99RCtK/jO3kJ/EvUhnFAJmCWVCqT+LB7gZ
+         oMAhL68de6QogCqVcdPAB+tSFznhNcqn/mSAI+xyzrhsVvKR75jLEO299cURmoU1YZ
+         C6MTqVRHuWmyFffrxcKxgJZW/olvqcHQ5x4y1K9t66D6+v/nKXPl2F2MExvloG58pr
+         5+LKbiTQ7KDciS0m/l2L3fwTKWD6giOfwKRttZNiYdRvuHH73cU9Kw48gnhCqBz0Zi
+         HN5OyaB5+Y1LC/JRH20UjFZrxx/XXB6lBz2i/4NrIFGhC11d76RrUnq+sfELgWJhBm
+         uOB76fvNDi/LQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1F8E8C0C40E;
+        Fri, 31 Mar 2023 08:20:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        "Milen Mitkov (Consultant) (QUIC)" <quic_mmitkov@quicinc.com>,
-        "bryan.odonoghue@linaro.org" <bryan.odonoghue@linaro.org>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Jigarkumar Zala <jzala@quicinc.com>,
-        "todor.too@gmail.com" <todor.too@gmail.com>,
-        "nicolas.dechesne@linaro.org" <nicolas.dechesne@linaro.org>
-Cc:     "agross@kernel.org" <agross@kernel.org>,
-        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        Chandan Gera <cgera@qti.qualcomm.com>,
-        Guru Chinnabhandar <gchinnab@quicinc.com>,
-        Alireza Yasan <ayasan@qti.qualcomm.com>,
-        "laurent.pinchart@ideasonboard.com" 
-        <laurent.pinchart@ideasonboard.com>
-References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
- <662d68f7-6160-263d-6e4d-e3687d5cf8eb@quicinc.com>
- <7565d38c-d8f4-39e0-8547-fbb511f6d649@quicinc.com>
- <894e3ce6-0f2b-608b-ec4e-09083704f429@linaro.org>
- <8243cc42-236c-20e3-74dc-1f130ab1dcf6@quicinc.com>
- <BYAPR02MB557503013F05BF1EA1E1300CC28F9@BYAPR02MB5575.namprd02.prod.outlook.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <BYAPR02MB557503013F05BF1EA1E1300CC28F9@BYAPR02MB5575.namprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] net: qrtr: Fix a refcount bug in qrtr_recvmsg()
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <168025081712.23963.16327516163139075912.git-patchwork-notify@kernel.org>
+Date:   Fri, 31 Mar 2023 08:20:17 +0000
+References: <20230330012532.1065159-1-william.xuanziyang@huawei.com>
+In-Reply-To: <20230330012532.1065159-1-william.xuanziyang@huawei.com>
+To:     Ziyang Xuan <william.xuanziyang@huawei.com>
+Cc:     mani@kernel.org, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/03/2023 07:20, Azam Sadiq Pasha Kapatrala Syed wrote:
-> + Nico (Linaro)
-> Hi Team
+Hello:
+
+This patch was applied to netdev/net.git (main)
+by David S. Miller <davem@davemloft.net>:
+
+On Thu, 30 Mar 2023 09:25:32 +0800 you wrote:
+> Syzbot reported a bug as following:
 > 
-> Would like to know if anything is pending form our end as we want to get the patches mainlined?
+> refcount_t: addition on 0; use-after-free.
+> ...
+> RIP: 0010:refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
+> ...
+> Call Trace:
+>  <TASK>
+>  __refcount_add include/linux/refcount.h:199 [inline]
+>  __refcount_inc include/linux/refcount.h:250 [inline]
+>  refcount_inc include/linux/refcount.h:267 [inline]
+>  kref_get include/linux/kref.h:45 [inline]
+>  qrtr_node_acquire net/qrtr/af_qrtr.c:202 [inline]
+>  qrtr_node_lookup net/qrtr/af_qrtr.c:398 [inline]
+>  qrtr_send_resume_tx net/qrtr/af_qrtr.c:1003 [inline]
+>  qrtr_recvmsg+0x85f/0x990 net/qrtr/af_qrtr.c:1070
+>  sock_recvmsg_nosec net/socket.c:1017 [inline]
+>  sock_recvmsg+0xe2/0x160 net/socket.c:1038
+>  qrtr_ns_worker+0x170/0x1700 net/qrtr/ns.c:688
+>  process_one_work+0x991/0x15c0 kernel/workqueue.c:2390
+>  worker_thread+0x669/0x1090 kernel/workqueue.c:2537
 > 
-> Thanks,
-> Azam
+> [...]
 
-I'd like to get a clearer picture on this
+Here is the summary with links:
+  - [net] net: qrtr: Fix a refcount bug in qrtr_recvmsg()
+    https://git.kernel.org/netdev/net/c/44d807320000
 
-[   90.535909] qcom-camss ac6a000.camss: VFE HW Version = 2.0.1
-[   90.545756] qcom-camss ac6a000.camss: CSIPHY 3PH HW Version = 0x40010000
-[   90.546358] qcom-camss ac6a000.camss: CSID HW Version = 2.0.1
-[   90.546365] qcom-camss ac6a000.camss: csid_link_setup: Enabled CSID 
-virtual channels mask 0x1
-[   90.547675] qcom-camss ac6a000.camss: csid_link_setup: Enabled CSID 
-virtual channels mask 0x0
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-Using the IMX577 sensor on the RB5 we get his pretty odd virtual 
-channels mask.
 
-If userspace is sending this in, the question I have is why. Surely with 
-a sensor that doesn't have a VC there should be no impact on user-space.
-
----
-bod
