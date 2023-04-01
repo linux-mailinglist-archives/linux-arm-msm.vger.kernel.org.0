@@ -2,109 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ADC26D328F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 18:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 975826D32AD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 18:57:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229379AbjDAQUE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 12:20:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42008 "EHLO
+        id S229830AbjDAQ5f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 12:57:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjDAQUE (ORCPT
+        with ESMTP id S229461AbjDAQ5e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 12:20:04 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC4C1B7D5
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 09:20:03 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pidxM-0008Un-4u; Sat, 01 Apr 2023 18:19:56 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pidxK-008GST-Tr; Sat, 01 Apr 2023 18:19:54 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pidxK-009khV-7r; Sat, 01 Apr 2023 18:19:54 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Vignesh Raghavendra <vigneshr@ti.com>
-Cc:     Richard Weinberger <richard@nod.at>, linux-mtd@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, kernel@pengutronix.de
-Subject: [PATCH 38/49] mtd: rawnand: qcom: Convert to platform remove callback returning void
-Date:   Sat,  1 Apr 2023 18:19:27 +0200
-Message-Id: <20230401161938.2503204-39-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230401161938.2503204-1-u.kleine-koenig@pengutronix.de>
-References: <20230401161938.2503204-1-u.kleine-koenig@pengutronix.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1878; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=G28o7xn3QeMDu6fYFFRYPya7v5M/PkKU71x1+qlTeuM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkKFlIoSNlhz8SuPP1vj89aETRFZubu7irTsjfo seAd3212iyJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZChZSAAKCRCPgPtYfRL+ TlG6B/0ToTS5PmudnWMvPXc08gvHEHveyRmqI7ZmtdZLRYRCCj8qe8KsVhsQcsJTd73Z6ggGkOx TIW4NvZh9lWSMxLI5pd+hdAkIuoROHvfnlXH5VJXAYJf8qXO8NDozk4tiwuwB+tUDdDo/FIgeX4 JMKBWLS9FOnI0boY53KWw/Acb0j/SZBqN0emeA61Bko07JE/6hTwRtF6KXSzUp9tUdf9/4nzsJG XyO3X64lRIA591mmoYy9Mh28lXwszMvqT++JT83dKptAPuSNDT2/xvToXkCrISLTyi2xw/Q3gne MbcghY8XSx32hMyRSr9OehzOlAQAkKS0GGMRmET4yKitNY3q
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Sat, 1 Apr 2023 12:57:34 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C68E3CC3A;
+        Sat,  1 Apr 2023 09:57:33 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 331Fk4VQ027431;
+        Sat, 1 Apr 2023 16:57:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=p+9jihlrSFZgB2eBUCx0dZ9L0V64SZG/10WisCIecLQ=;
+ b=o6UTf/lkCz9pc4Ckd7+T5GQfjwXnq0tvF+gAem6ogwfnBe/ImyZOXErlZQl3WgZIbW9E
+ y6CUwqOS1hZKMWfAfmGVb/ewYc2NXx5Se3Zl9nuyNdF/6Ez1ZOrhWYEb2xamkRPd45Xx
+ lw8OzjH6Z72j/KbtGOjX+r/XAnz4mYoeQPK5373BD5MlCGR4nRWVsOqstwhtLPwfu7mL
+ V6JmIStKTeHTuoRRHtBml9M+SawPuT2pMIZAKfygpwy9qNBuMC13p81Im0O0Hyae+9qL
+ WZikBjtIztpAjDXw3uu6+2q0p8TPAkHTfjNEDAcecH3coCTwwhDCft5R+k8OxdWrkcws SQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ppcq3h2e1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 01 Apr 2023 16:57:31 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 331GvRMv006674;
+        Sat, 1 Apr 2023 16:57:27 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3ppdpk2udr-1;
+        Sat, 01 Apr 2023 16:57:27 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 331GvQvc006668;
+        Sat, 1 Apr 2023 16:57:26 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-sartgarg-hyd.qualcomm.com [10.213.105.147])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 331GvQSk006666;
+        Sat, 01 Apr 2023 16:57:26 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2339771)
+        id F0394504928; Sat,  1 Apr 2023 22:27:25 +0530 (+0530)
+From:   Sarthak Garg <quic_sartgarg@quicinc.com>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_sachgupt@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        Sarthak Garg <quic_sartgarg@quicinc.com>
+Subject: [PATCH V1 0/2] Introduce new vendor op and export few symbols
+Date:   Sat,  1 Apr 2023 22:27:21 +0530
+Message-Id: <20230401165723.19762-1-quic_sartgarg@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8ZmnscFKtjUJ3lp370yyogy9g4U7TIvw
+X-Proofpoint-ORIG-GUID: 8ZmnscFKtjUJ3lp370yyogy9g4U7TIvw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-31_07,2023-03-31_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=5 priorityscore=1501 mlxscore=5
+ lowpriorityscore=0 phishscore=0 impostorscore=0 suspectscore=0 spamscore=5
+ bulkscore=0 mlxlogscore=130 adultscore=0 clxscore=1011 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304010154
+X-Spam-Status: No, score=0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,SPF_NONE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+For our earlier discussions on clock scaling and partial init features
+we have come up with a new design where we have moved the entire logic
+for both the features in our vendor related files.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+But to support this new design we need a vendor op in
+_mmc_suspend/_mmc_resume functions to control our feature functionality
+in suspend/resume paths.
+Moreover export of few symbols is also needed to make core layer
+functions accessible to our vendor module.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/mtd/nand/raw/qcom_nandc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Old discussion for Clock scaling feature :
+https://patchwork.kernel.org/project/linux-mmc/cover/1571668177-3766-1-git-send-email-rampraka@codeaurora.org/
 
-diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 198a44794d2d..218c8a840e32 100644
---- a/drivers/mtd/nand/raw/qcom_nandc.c
-+++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -3315,7 +3315,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qcom_nandc_remove(struct platform_device *pdev)
-+static void qcom_nandc_remove(struct platform_device *pdev)
- {
- 	struct qcom_nand_controller *nandc = platform_get_drvdata(pdev);
- 	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-@@ -3337,8 +3337,6 @@ static int qcom_nandc_remove(struct platform_device *pdev)
- 
- 	dma_unmap_resource(&pdev->dev, nandc->base_dma, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
--
--	return 0;
- }
- 
- static const struct qcom_nandc_props ipq806x_nandc_props = {
-@@ -3405,7 +3403,7 @@ static struct platform_driver qcom_nandc_driver = {
- 		.of_match_table = qcom_nandc_of_match,
- 	},
- 	.probe   = qcom_nandc_probe,
--	.remove  = qcom_nandc_remove,
-+	.remove_new = qcom_nandc_remove,
- };
- module_platform_driver(qcom_nandc_driver);
- 
+Old discussion for Partial init feature :
+https://patchwork.kernel.org/project/linux-mmc/patch/1650963852-4173-1-git-send-email-quic_spathi@quicinc.com/
+
+Hence introduce new vendor op in suspend/resume and export few symbols
+nedeed for our feature.
+
+Sarthak Garg (2):
+  mmc: core: Define new vendor ops to enable internal features
+  mmc: core: Export core functions to let vendors use for their features
+
+ drivers/mmc/core/core.c    |  6 ++++++
+ drivers/mmc/core/host.c    |  1 +
+ drivers/mmc/core/mmc.c     | 31 ++++++++++++++++++++++---------
+ drivers/mmc/core/mmc_ops.c |  1 +
+ drivers/mmc/core/queue.c   |  1 +
+ include/linux/mmc/host.h   |  4 ++++
+ 6 files changed, 35 insertions(+), 9 deletions(-)
+
 -- 
-2.39.2
+2.17.1
 
