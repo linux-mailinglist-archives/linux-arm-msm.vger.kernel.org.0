@@ -2,81 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE7406D30A7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 14:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 591C26D30B6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 14:21:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbjDAMHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 08:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36752 "EHLO
+        id S229505AbjDAMVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 08:21:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbjDAMHI (ORCPT
+        with ESMTP id S229437AbjDAMVf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 08:07:08 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 405171D922
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 05:07:07 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id k37so32308365lfv.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 05:07:07 -0700 (PDT)
+        Sat, 1 Apr 2023 08:21:35 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB4C1191F1
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 05:21:33 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id by14so6550245ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 05:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680350825;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1680351692;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y7Qmqlgj/pXH3Y28DXqDizOgEn8pn2sV8hA+vFAOHvY=;
-        b=Yg7crNRCm/hXBLfZLqn1mfEJ607+Poa1SAM2cROWjKYPWEWkwrGXkIFtCmzUGIu7zm
-         OP5NMTzMNnWwF9WkT/pZ68PAs1QfrAQ+CoHVmJWWxRuZTEtqgJQFJgGsXwJamqCK5LvR
-         11n17o/6aoIxrIymTaAtNKOu+OaKhTyaANQUOo2xdmkDK7fIgT/2BV1ekK3eAab1wElI
-         J9NqlI2Zv+EHfiSvmcwgeGGFWuquuthrNXK8w4iu3bXaxu327RJ8Y6Co/H05D6pSn7dS
-         5+uOwQ90IYJ28xf3mthvBBpNMNO6pGnVOU4Q3wPq4664X/cjWVFdfJ8JsdsSKqXUOceI
-         /T9w==
+        bh=AZ2ewhbHO8gaVPhu+Agj8Vv62N4QLjibp6e4jDmUV/Y=;
+        b=FPxzYjka4DKzGeWgiF70dDCv1l3rXWTAO67npQHzlvtK1jmylgS32BCQEz6um6UnWP
+         S4qpjwyPcHTcu6fo9OmTt07m+TZa0mzIphw4WyCJA+1ki9ThfEOKoT3+VRKlajpQd3jW
+         U9WvZ2dJqHzU9uJnrDIxkRkjR3ukttAn0U4ayxqqoeyTvEDakpL6M7BP+CVWt37oOeMC
+         j/4P3WsBn76jnqHMPzlk0IqvqedlJocDD9gc86BbVsl0nzuh7EqybFfJYIA9+ptZ0kmf
+         guXc4xLuJVTp1L+zlaTar8IqFQETeHJ2iE04VFMVcEXF4Ac1L7ufXY7oP8+F5D/myZJt
+         2meg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680350825;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1680351692;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y7Qmqlgj/pXH3Y28DXqDizOgEn8pn2sV8hA+vFAOHvY=;
-        b=PAEs/iAcqEle6YydU0YU03cQahK3oKPMTWIymv/SwuVjRoYCaTWnruF5mhcKB9IfNz
-         YuSz/SDBhsfAsGlc62b8QzdDl0mJAcbRiAlXRHCmZTrTxvfnBLSnlwr/K/34iLIp+HGV
-         7b5oGwklyaqjdq2xIBB/wyKho1wp8ZkWUGc7Xlfm7ap/8+/BQ3vPWLA1F81jQHPsa5kA
-         Hq/zVhSZ07pXQKvrUF+zuaIk9lHtChgUrK4PFQgHdGWPL+GpgueWoHJVRKQL874ZBffR
-         5qTyxkikRLQWPfBkZONXw0TOs7128ddANOLFWDwc6kLv995UX8AKNFxzgDFZhLX6pm7z
-         SLng==
-X-Gm-Message-State: AAQBX9f1WX3QuHod35vdl7yq83+AZ9NAT+1NExeByWwOnDQB0iUjJt2f
-        H9nTy+rEkVqqMlrr0FAPxOJZAQ==
-X-Google-Smtp-Source: AKy350ZeUt96m9Ua90W2xBAzxyacEvLLa/RKgrIImkJP0pE8+ut0lVJRyC55RxK3g3VKWlP0bwgljg==
-X-Received: by 2002:ac2:523b:0:b0:4eb:cbb:9229 with SMTP id i27-20020ac2523b000000b004eb0cbb9229mr5804873lfl.59.1680350825498;
-        Sat, 01 Apr 2023 05:07:05 -0700 (PDT)
+        bh=AZ2ewhbHO8gaVPhu+Agj8Vv62N4QLjibp6e4jDmUV/Y=;
+        b=BiyuFcZxCttyd2Ysy5ckUZxa3A3LRZQN8x1cPu6jhSLHgWCKCnIrJiaXnm4Z1euul2
+         Jyq5Sc5wtq0QFId5nNPZPAOXGuXBs0QbR0EhU15laPQm8c2pViHLjYfmSNdD1Rrwf5nr
+         J0N3tLTFTxuRp54WpeBIjanfLoqLxT4J3YMYYpMToxuBIHNnxfcsNGSEzefy82JPkRsz
+         P6obTcxfXyVSvkgqoIJKmrEC4Jy54idSpwm4cB4juGR1bEf+ZSUfZpCvouGVgsj4PmYb
+         9kVh6V1wuYht6wVaQ2YNzoVdOlKTQxhzh4+aXlVouYCypCS8f1EfMWKBbmh/iyf4k5Iv
+         v0Fw==
+X-Gm-Message-State: AAQBX9dl+UQmwRSd4cpVMDeF26gaQEnnfkChlRPKjvIHTM0eUIFGRdh7
+        yNyjhhSOll8EpwXJI1Gi9hpuncoI8fjihLPoPMA=
+X-Google-Smtp-Source: AKy350bvn9XtMMorAvyMJCKZdH+KM11VYlH3otHJHzrzFhCFLo17S89b+0vEhCvj2WBvTXf0iQZ8OQ==
+X-Received: by 2002:a2e:9b81:0:b0:295:a8e6:6b15 with SMTP id z1-20020a2e9b81000000b00295a8e66b15mr3721567lji.4.1680351692004;
+        Sat, 01 Apr 2023 05:21:32 -0700 (PDT)
 Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id h22-20020ac250d6000000b004cb24a027d2sm784282lfm.48.2023.04.01.05.07.03
+        by smtp.gmail.com with ESMTPSA id e8-20020a2e8ec8000000b00293534d9757sm789793ljl.81.2023.04.01.05.21.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Apr 2023 05:07:05 -0700 (PDT)
-Message-ID: <64f8f865-6a3f-118e-4080-91eb466a5acf@linaro.org>
-Date:   Sat, 1 Apr 2023 14:06:54 +0200
+        Sat, 01 Apr 2023 05:21:31 -0700 (PDT)
+Message-ID: <0ff99bb5-4792-270d-b03e-2638939f160f@linaro.org>
+Date:   Sat, 1 Apr 2023 14:21:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
- SRAM as reg space
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org>
- <20230328-topic-msgram_mpm-v1-2-1b788a5f5a33@linaro.org>
- <20230329034958.GC3554086@dragon>
- <c42b8c24-2159-64ae-d36c-92c69274f24f@linaro.org>
- <20230329132819.GA3590215@dragon>
- <14350eba-edb6-0243-5451-2e2b7d1bd3fd@linaro.org>
- <20230330013449.GB3590215@dragon>
+Subject: Re: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU
+ idle-states
 Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
+        robh+dt@kernel.org
+References: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230330013449.GB3590215@dragon>
+In-Reply-To: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -91,43 +81,239 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 30.03.2023 03:34, Shawn Guo wrote:
-> On Wed, Mar 29, 2023 at 03:30:12PM +0200, Konrad Dybcio wrote:
->>>>>> @@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
->>>>>>  
->>>>>>  	raw_spin_lock_init(&priv->lock);
->>>>>>  
->>>>>> -	priv->base = devm_platform_ioremap_resource(pdev, 0);
->>>>>> -	if (IS_ERR(priv->base))
->>>>>> -		return PTR_ERR(priv->base);
->>>>>> +	/* If we have a handle to an RPM message ram partition, use it. */
->>>>>> +	msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
->>>>>> +	if (msgram_np) {
->>>>>> +		ret = of_address_to_resource(msgram_np, 0, &res);
->>>>>> +		/* Don't use devm_ioremap_resource, as we're accessing a shared region. */
->>>>>> +		priv->base = ioremap(res.start, resource_size(&res));
->>>>>
->>>>> Are you suggesting that other cores/drivers will also need to access
->>>>> the mpm slice below?
->>>>>
->>>>> 	apss_mpm: sram@1b8 {
->>>>> 		reg = <0x1b8 0x48>;
->>>>> 	};
->>>> Yes, the RPM M3 core. Other slices may be accessed
->>>> by any core at any time.
->>>
->>> Hmm, let me reword my question.  Other than irq-qcom-mpm, is there any
->>> other Linux drivers that also need to request this slice region?
->> No.
->>
->>> Otherwise, I do not understand why devm_ioremap_resource() cannot be
->>> used.
->> drivers/rpmsg/qcom_glink_rpm.c calls devm_ioremap on the entire
->> RPM MSG RAM.
+On 30.03.2023 21:33, Bhupesh Sharma wrote:
+> Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
 > 
-> Can we use devm_ioremap() too instead of ioremap() here?
-Hm. Yes, we totally can!
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+> Changes since v1:
+> - v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
+> - Addressed Konrad's comments on v1 and added GDHS and Power Collapse
+>   cluster power states.
+> 
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
+>  1 file changed, 136 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> index 2a51c938bbcb..b63395d476ed 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> @@ -45,6 +45,8 @@ CPU0: cpu@0 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD0>;
+> +			power-domain-names = "psci";
+>  			L2_0: l2-cache {
+>  				compatible = "cache";
+>  				cache-level = <2>;
+> @@ -61,6 +63,8 @@ CPU1: cpu@1 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD1>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU2: cpu@2 {
+> @@ -73,6 +77,8 @@ CPU2: cpu@2 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD2>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU3: cpu@3 {
+> @@ -85,6 +91,8 @@ CPU3: cpu@3 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD3>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU4: cpu@100 {
+> @@ -97,6 +105,8 @@ CPU4: cpu@100 {
+>  			dynamic-power-coefficient = <282>;
+>  			next-level-cache = <&L2_1>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			power-domains = <&CPU_PD4>;
+> +			power-domain-names = "psci";
+>  			L2_1: l2-cache {
+>  				compatible = "cache";
+>  				cache-level = <2>;
+> @@ -113,6 +123,8 @@ CPU5: cpu@101 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_1>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			power-domains = <&CPU_PD5>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU6: cpu@102 {
+> @@ -125,6 +137,8 @@ CPU6: cpu@102 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_1>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			power-domains = <&CPU_PD6>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU7: cpu@103 {
+> @@ -137,6 +151,8 @@ CPU7: cpu@103 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_1>;
+>  			qcom,freq-domain = <&cpufreq_hw 1>;
+> +			power-domains = <&CPU_PD7>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		cpu-map {
+> @@ -176,6 +192,68 @@ core3 {
+>  				};
+>  			};
+>  		};
+> +
+> +		idle-states {
+> +			entry-method = "psci";
+> +
+> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "silver-rail-power-collapse";
+> +				arm,psci-suspend-param = <0x40000003>;
+> +				entry-latency-us = <290>;
+> +				exit-latency-us = <376>;
+> +				min-residency-us = <1182>;
+> +				local-timer-stop;
+> +			};
+> +
+> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "gold-rail-power-collapse";
+> +				arm,psci-suspend-param = <0x40000003>;
+> +				entry-latency-us = <297>;
+> +				exit-latency-us = <324>;
+> +				min-residency-us = <1110>;
+> +				local-timer-stop;
+> +			};
+> +		};
+> +
+> +		domain-idle-states {
+> +			CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
+> +				/* GDHS */
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x40000022>;
+This 0x22 ending seems very sus.
+
+The last nibble represents the core-level power state and the
+penultimate one represents the same at cluster level. A value
+of 2 in that cluster nibble is actually undefined by the PSCI spec,
+whereas the value of 4 (as you have in all of the other idle
+states, including D3G for the perf cluster) corresponds to
+"Retention", so unless there's a very weird nuance in the
+TZ for this SoC, it should probably end in 0x42.
+
+Otherwise I think this LGTM now!
 
 Konrad
-> 
-> Shawn
+> +				entry-latency-us = <360>;
+> +				exit-latency-us = <421>;
+> +				min-residency-us = <782>;
+> +			};
+> +
+> +			CLUSTER_0_SLEEP_1: cluster-sleep-0-1 {
+> +				/* Power Collapse */
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x41000044>;
+> +				entry-latency-us = <800>;
+> +				exit-latency-us = <2118>;
+> +				min-residency-us = <7376>;
+> +			};
+> +
+> +			CLUSTER_1_SLEEP_0: cluster-sleep-1-0 {
+> +				/* GDHS */
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x40000042>;
+> +				entry-latency-us = <314>;
+> +				exit-latency-us = <345>;
+> +				min-residency-us = <660>;
+> +			};
+> +
+> +			CLUSTER_1_SLEEP_1: cluster-sleep-1-1 {
+> +				/* Power Collapse */
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x41000044>;
+> +				entry-latency-us = <640>;
+> +				exit-latency-us = <1654>;
+> +				min-residency-us = <8094>;
+> +			};
+> +		};
+>  	};
+>  
+>  	firmware {
+> @@ -199,6 +277,64 @@ pmu {
+>  	psci {
+>  		compatible = "arm,psci-1.0";
+>  		method = "smc";
+> +
+> +		CPU_PD0: power-domain-cpu0 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_0_PD>;
+> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD1: power-domain-cpu1 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_0_PD>;
+> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD2: power-domain-cpu2 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_0_PD>;
+> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD3: power-domain-cpu3 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_0_PD>;
+> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD4: power-domain-cpu4 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_1_PD>;
+> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD5: power-domain-cpu5 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_1_PD>;
+> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD6: power-domain-cpu6 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_1_PD>;
+> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CPU_PD7: power-domain-cpu7 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_1_PD>;
+> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
+> +		};
+> +
+> +		CLUSTER_0_PD: power-domain-cpu-cluster0 {
+> +			#power-domain-cells = <0>;
+> +			domain-idle-states = <&CLUSTER_0_SLEEP_0>, <&CLUSTER_0_SLEEP_1>;
+> +		};
+> +
+> +		CLUSTER_1_PD: power-domain-cpu-cluster1 {
+> +			#power-domain-cells = <0>;
+> +			domain-idle-states = <&CLUSTER_1_SLEEP_0>, <&CLUSTER_1_SLEEP_1>;
+> +		};
+>  	};
+>  
+>  	reserved_memory: reserved-memory {
