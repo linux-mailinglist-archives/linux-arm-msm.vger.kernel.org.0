@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 835E56D34C2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 00:08:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 072046D34BF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 00:08:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230218AbjDAWIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230191AbjDAWIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sat, 1 Apr 2023 18:08:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230244AbjDAWI1 (ORCPT
+        with ESMTP id S230255AbjDAWIa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 18:08:27 -0400
+        Sat, 1 Apr 2023 18:08:30 -0400
 Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95F4629508
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 15:08:24 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id bx10so8316945ljb.8
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5511A2B0E8
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 15:08:25 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id x20so26623128ljq.9
         for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 15:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1680386904;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/4p6ERzkRu9AnspBZ9AUdWZ5pV1CnYsS0+M38enTe40=;
-        b=QJkW3nrrwWYXButVD/8lohroU9VKsy0Tz9GCgpQYYtdNEiQaoFsKHuztsjtChSDcBp
-         enmC5Y696r0oyOYF60G/qGY4YN89XpCwnC5AOPiqyG9q7JWOxNJMtdGfZ00/aPijC5u3
-         3D0o25iF8XApAWX44NvyfUCEtgzsDZhL4msP+dYpm7PMSxY+mmmEttbYP+kvtGcsayN6
-         dL0Y+fWsr69l2YdbB2xfx/R4YVHj2zh/CgSjFkACTEaj0FOA/OZf+H2yCDcP9inX9PoT
-         ZiNFE96EaX0LRbdaynht3Br7wfOnK38ANohaPxrCYJ1RiKH+z1K77BGT/1FPfwnhGV59
-         sqfA==
+        bh=aFAjGC6zhILn0mPDKxdlAN+y3zIIQ7ldIAczmYLBd2A=;
+        b=E6m9YA+qlZGexpONIIU75zHZXRTM7DPLwq7cQkLNBc2wFE9185ToWbeehqqwpl5cmJ
+         LcG0RHc/i5ls7z7Ljo740RzL6FxpfR7f+STsxOX2n+oIp89pkbVdez+4jiMc/JIJZsXX
+         M6qwmm2ZKVi1+6AAT6ucHex2L5WuO1d4Ku/iOG4rAM/Eit23o6AsH2YjB5X6fF/SnSG5
+         crR/I3qoExdcuCx7Nz4y7kx2eTY9+SXTgBr5GH51gE0oTOf+vnkmaWDoNvfpKH9jvf2x
+         fx/bxlZZ9JlWTr40YcqQqw7jM0JOgM9ganDle21cyKASkniX4YqnmhICId76w9Qd6xvC
+         Vigg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1680386904;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/4p6ERzkRu9AnspBZ9AUdWZ5pV1CnYsS0+M38enTe40=;
-        b=cW1BW78w/ee3kYc00azuRajNfiPrTxLX47g3jyWXbSKBfTmqTCcsTNcwl+DATkgTI6
-         WjJtiRGbVZUyRxf89s0HjAG6Z1mYWpZ9xW5yzVX1uOz1yw0P8WYfNrOlb+oolaSB7/0F
-         a9eKUHulrr+9PwbOmbhjGjFjnX00+rIA3amosDn0SGefRY6lH9fTCxlMHO5jyCaVprLN
-         3N7NDRMGJ/JQdrwBCCzdI0W8lkEMPLr7Ywr0MCQpJ1wE6Pn3FyOKqTqtAccur7ipsRhJ
-         ZqAhZlQLWLbLS3XPRGJEhgS6WCLinALeHn2l/psdevi7Kz20efyQ9hn6sI+JNJAj/XC2
-         AGYQ==
-X-Gm-Message-State: AAQBX9dlJNfbIFiQw6Z6yubj2YQDYZTLG8oQ1r6eCFKNpennN7dV9l0g
-        CbtGvOdaGFvhQmUB0a9wwWJ+Xw==
-X-Google-Smtp-Source: AKy350YSwXn/xytYEtSL/8SZ4zXa7JBKVo9QRL5uy42lweXVIbHc7vyTxdHGFOoeFIg8b9VXeriHGA==
-X-Received: by 2002:a2e:a40e:0:b0:2a6:22fd:6b08 with SMTP id p14-20020a2ea40e000000b002a622fd6b08mr1938648ljn.3.1680386903986;
-        Sat, 01 Apr 2023 15:08:23 -0700 (PDT)
+        bh=aFAjGC6zhILn0mPDKxdlAN+y3zIIQ7ldIAczmYLBd2A=;
+        b=wWV1bkC2kvKEibP0GBfZM0WDM+tmtKX8HTxLoAmLbsiAKDOos1n2WDiWANvSfg+5un
+         Dpey5z03cEWzoZklt0tKtIlqHBj8nimhxHdjXm4X7DsD6fiHzit1Vjg8IajypBo4KfLY
+         9Kv4ZQBWkIy949potI1t0Xmj0WFa85IMKbNt2R2QOc9kIkS1BYA+JRWgGtp32MlXd0ch
+         6npoHkf559ZCUj5+d4i+SjeimM4pSd+g9kkCWOEzjgZUsJVJGPL37E4lZucAu/2FT0QO
+         3i9ZHYLOLt0UtBsrFSZTCO2uAk+xuR64BunY+fG/OhcRE4ggyXeMM9V3GR8TEzFYPe8G
+         i/hA==
+X-Gm-Message-State: AAQBX9cxFfoXXtJPoZyDQ8mQrBXBPe9dSv3R0mwoqkv8epSN7bipOVrh
+        +2sDXZ9vXxfGFTnYOFFLHUetPiIGXOssxJCIxcd6Gg==
+X-Google-Smtp-Source: AKy350a94Su8jmKkZ/4NO1jhSAxMM3jX5OQ85DUUOpiRViRuYvwfcPgmfXV8EaMZwoeZNTalOQIXcA==
+X-Received: by 2002:a2e:7812:0:b0:298:a853:1c3c with SMTP id t18-20020a2e7812000000b00298a8531c3cmr9343919ljc.4.1680386904575;
+        Sat, 01 Apr 2023 15:08:24 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k17-20020a2e9211000000b0029bd4d0d3f2sm997590ljg.33.2023.04.01.15.08.23
+        by smtp.gmail.com with ESMTPSA id k17-20020a2e9211000000b0029bd4d0d3f2sm997590ljg.33.2023.04.01.15.08.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 15:08:23 -0700 (PDT)
+        Sat, 01 Apr 2023 15:08:24 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>,
         Jonathan Cameron <jic23@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-Subject: [PATCH v2 20/22] arm64: dts: qcom: pm8150: convert to use dynamic SID/LABEL
-Date:   Sun,  2 Apr 2023 01:08:08 +0300
-Message-Id: <20230401220810.3563708-21-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 21/22] arch: arm64: dts: qcom: pm8150: support SID greater that 9
+Date:   Sun,  2 Apr 2023 01:08:09 +0300
+Message-Id: <20230401220810.3563708-22-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
 References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
@@ -77,165 +77,123 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SA8450p-based platforms have 4 instances of pm8150. Convert pm8150.dtsi
-to use pmic-dyn-header.dtsi in order to support dynamic and label
-assignment.
+Supporting SIDs greater than 9 required additional handling in order to
+properly generatae hex values. Apply this customization to pm8150.dtsi.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pm8150.dtsi          | 53 ++++++++++++-------
- arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi |  1 +
- 2 files changed, 36 insertions(+), 18 deletions(-)
+ arch/arm64/boot/dts/qcom/pm8150.dtsi          | 16 ++++++++--------
+ arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi |  6 ++++++
+ arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi |  6 ++++++
+ 3 files changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/pm8150.dtsi b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-index db90c55fa2cf..77bb325e425b 100644
+index 77bb325e425b..37cc99e5d1a6 100644
 --- a/arch/arm64/boot/dts/qcom/pm8150.dtsi
 +++ b/arch/arm64/boot/dts/qcom/pm8150.dtsi
-@@ -9,13 +9,28 @@
- #include <dt-bindings/spmi/spmi.h>
- #include <dt-bindings/iio/qcom,spmi-vadc.h>
- 
-+/* (Sadly) this PMIC can be configured to be at different SIDs */
-+#ifndef PMIC_SID
-+	#define PMIC_SID 0
-+#endif
-+
-+#ifndef PMIC_SID1
-+	#define PMIC_SID1 1
-+#endif
-+
-+#ifndef PMIC_LABEL
-+	#define PMIC_LABEL pm8150
-+#endif
-+
-+#include "pmic-dyn-header.dtsi"
-+
- / {
- 	thermal-zones {
--		pm8150-thermal {
-+		NODE(thermal) {
- 			polling-delay-passive = <100>;
- 			polling-delay = <0>;
- 
--			thermal-sensors = <&pm8150_temp>;
-+			thermal-sensors = <&LABEL(temp)>;
- 
- 			trips {
- 				trip0 {
-@@ -41,9 +56,9 @@ trip2 {
- };
- 
+@@ -58,7 +58,7 @@ trip2 {
  &spmi_bus {
--	pm8150_0: pmic@0 {
-+	pmic@0 {
+ 	pmic@0 {
  		compatible = "qcom,pm8150", "qcom,spmi-pmic";
--		reg = <0x0 SPMI_USID>;
-+		reg = <PMIC_SID SPMI_USID>;
+-		reg = <PMIC_SID SPMI_USID>;
++		reg = <PMIC_SID_HEX SPMI_USID>;
  		#address-cells = <1>;
  		#size-cells = <0>;
  
-@@ -55,7 +70,7 @@ pon: pon@800 {
+@@ -70,7 +70,7 @@ pon: pon@800 {
  
  			pon_pwrkey: pwrkey {
  				compatible = "qcom,pm8941-pwrkey";
--				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
-+				interrupts = <PMIC_SID 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
+-				interrupts = <PMIC_SID 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
++				interrupts = <PMIC_SID_HEX 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
  				debounce = <15625>;
  				bias-pull-up;
  				linux,code = <KEY_POWER>;
-@@ -65,7 +80,7 @@ pon_pwrkey: pwrkey {
+@@ -80,7 +80,7 @@ pon_pwrkey: pwrkey {
  
  			pon_resin: resin {
  				compatible = "qcom,pm8941-resin";
--				interrupts = <0x0 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
-+				interrupts = <PMIC_SID 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
+-				interrupts = <PMIC_SID 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
++				interrupts = <PMIC_SID_HEX 0x8 0x1 IRQ_TYPE_EDGE_BOTH>;
  				debounce = <15625>;
  				bias-pull-up;
  
-@@ -73,22 +88,22 @@ pon_resin: resin {
- 			};
- 		};
- 
--		pm8150_temp: temp-alarm@2400 {
-+		LABEL(temp): temp-alarm@2400 {
+@@ -91,7 +91,7 @@ pon_resin: resin {
+ 		LABEL(temp): temp-alarm@2400 {
  			compatible = "qcom,spmi-temp-alarm";
  			reg = <0x2400>;
--			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
--			io-channels = <&pm8150_adc ADC5_DIE_TEMP>;
-+			interrupts = <PMIC_SID 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			io-channels = <&LABEL(adc) ADC5_DIE_TEMP>;
+-			interrupts = <PMIC_SID 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
++			interrupts = <PMIC_SID_HEX 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
+ 			io-channels = <&LABEL(adc) ADC5_DIE_TEMP>;
  			io-channel-names = "thermal";
  			#thermal-sensor-cells = <0>;
- 		};
- 
--		pm8150_adc: adc@3100 {
-+		LABEL(adc): adc@3100 {
- 			compatible = "qcom,spmi-adc5";
- 			reg = <0x3100>;
+@@ -103,7 +103,7 @@ LABEL(adc): adc@3100 {
  			#address-cells = <1>;
  			#size-cells = <0>;
  			#io-channel-cells = <1>;
--			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-+			interrupts = <PMIC_SID 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+-			interrupts = <PMIC_SID 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
++			interrupts = <PMIC_SID_HEX 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
  
  			ref-gnd@0 {
  				reg = <ADC5_REF_GND>;
-@@ -109,10 +124,10 @@ die-temp@6 {
- 			};
- 		};
- 
--		pm8150_adc_tm: adc-tm@3500 {
-+		LABEL(adc_tm): adc-tm@3500 {
+@@ -127,7 +127,7 @@ die-temp@6 {
+ 		LABEL(adc_tm): adc-tm@3500 {
  			compatible = "qcom,spmi-adc-tm5";
  			reg = <0x3500>;
--			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
-+			interrupts = <PMIC_SID 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
+-			interrupts = <PMIC_SID 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
++			interrupts = <PMIC_SID_HEX 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
  			#thermal-sensor-cells = <1>;
  			#address-cells = <1>;
  			#size-cells = <0>;
-@@ -123,24 +138,26 @@ rtc@6000 {
+@@ -138,7 +138,7 @@ rtc@6000 {
  			compatible = "qcom,pm8941-rtc";
  			reg = <0x6000>, <0x6100>;
  			reg-names = "rtc", "alarm";
--			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
-+			interrupts = <PMIC_SID 0x61 0x1 IRQ_TYPE_NONE>;
+-			interrupts = <PMIC_SID 0x61 0x1 IRQ_TYPE_NONE>;
++			interrupts = <PMIC_SID_HEX 0x61 0x1 IRQ_TYPE_NONE>;
  		};
  
--		pm8150_gpios: gpio@c000 {
-+		LABEL(gpios): gpio@c000 {
- 			compatible = "qcom,pm8150-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
- 			gpio-controller;
--			gpio-ranges = <&pm8150_gpios 0 0 10>;
-+			gpio-ranges = <&LABEL(gpios) 0 0 10>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
- 		};
- 	};
+ 		LABEL(gpios): gpio@c000 {
+@@ -154,7 +154,7 @@ LABEL(gpios): gpio@c000 {
  
--	pmic@1 {
-+	pmic@PMIC_SID1 {
+ 	pmic@PMIC_SID1 {
  		compatible = "qcom,pm8150", "qcom,spmi-pmic";
--		reg = <0x1 SPMI_USID>;
-+		reg = <PMIC_SID1 SPMI_USID>;
+-		reg = <PMIC_SID1 SPMI_USID>;
++		reg = <PMIC_SID1_HEX SPMI_USID>;
  		#address-cells = <1>;
  		#size-cells = <0>;
  	};
- };
-+
-+#include "pmic-dyn-footer.dtsi"
 diff --git a/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi b/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi
-index 29b10e7fb8c3..83a2bada48ff 100644
+index 83a2bada48ff..f3743ef3aa13 100644
 --- a/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi
 +++ b/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi
-@@ -12,5 +12,6 @@
+@@ -11,6 +11,12 @@
+ 
  #undef NODE
  
++#undef HEX
++#undef _HEX
++
++#undef PMIC_SID_HEX
++#undef PMIC_SID1_HEX
++
  #undef PMIC_SID
-+#undef PMIC_SID1
+ #undef PMIC_SID1
  #undef PMIC_LABEL
- #undef PMIC_NODE
+diff --git a/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi b/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi
+index bb41c9387aba..640d1bf5ce8e 100644
+--- a/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi
+@@ -18,3 +18,9 @@
+ #define __LABEL(pmic, name) pmic ## _ ## name
+ 
+ #define NODE(name) PMIC_NODE ##-##  name
++
++#define HEX(sid) _HEX(sid)
++#define _HEX(sid) 0x## sid
++
++#define PMIC_SID_HEX HEX(PMIC_SID)
++#define PMIC_SID1_HEX HEX(PMIC_SID1)
 -- 
 2.30.2
 
