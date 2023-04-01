@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 063BE6D34B6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 00:08:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B22DD6D34BB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 00:08:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbjDAWIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 18:08:30 -0400
+        id S230212AbjDAWIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 18:08:32 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbjDAWIZ (ORCPT
+        with ESMTP id S230241AbjDAWI1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 18:08:25 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC962BEC3
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 15:08:22 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id z42so26613826ljq.13
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 15:08:22 -0700 (PDT)
+        Sat, 1 Apr 2023 18:08:27 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B652B0C0
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 15:08:24 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id z42so26613834ljq.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 15:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1680386902;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YQcvFQ9kHeNL8IHceY65oLWn/T5sUycgBhvoOeDCGS8=;
-        b=l8LipmmPEPafjGuO2N3xSP9FojJsVdZrEgkYuzcKJoi0L9qS3edOM6WL76Y7N6FK5u
-         FkH87FgUmo6qGbv57vR8qh4nRRm5tgOVWF1yd1ksuElpIjmfuo/UZVdN8QYfYIwR0SXh
-         R8SK3/tWR3jNo2zQXGeYIxqCfPYyr5X/dJ5MvchIdMmoCFz26IvCTC3FxHM91BNbY9jS
-         CjZer0mdDfk0n76Jh95loIFykDcF18ExMuO64+G5QJ9ehol53V1eBnlZ3oMUZzpti1t8
-         tdgYacDb8qXItq2B9pjWLqJxWufWZAM5UZ0fetHREgPruNmV4PxtK/NeZoezkMkLD/EM
-         cqGw==
+        bh=Prd++xPaLuXWKrZ9/YvClXLdfWQ6hYA83t8qkIsDY/s=;
+        b=X0HJIBmB+sEjaqhIloH0DkRY8Qaqtm4WsmOB2ZeSD+a2griARyH/GFyzmz1kMhjd8d
+         dZSrBTSRWAWxRCcURw1a8buklE/v9eYxgjgrGda3hMpM3Oerm506ZTHOqpo7g0fiv59r
+         h8tHxmPG0kwU8YVloZHepoeE4NZEo2YIc5KEHIhxttk+h1sUrgtBvO5qB+StZNi0jA8t
+         UtqLhXqdNguId/JTTMTykMw8AosFguRucZ147HknoQc8xACoWCpLixgzW387VVITeX45
+         iJLVD3MZeR7NQIA/EN/viMBJiAz/h/XZcJ6Zf99lb1xtJ5MqoVkpDXsThdUKF58eTH75
+         ofbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1680386902;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YQcvFQ9kHeNL8IHceY65oLWn/T5sUycgBhvoOeDCGS8=;
-        b=MiVaxFP2tWgO39LVD+EqAGnirZcyUAOOVkm9GOWoz+HWPlAt1WQvdqsbqOTk5Z+5eg
-         YT6chpQE7zFFKRuqZSWCe+OQYBhc/+RpW3KHPWV+H4RqhAKw0t5VDAbuVReUwSQ6eFWi
-         RGkInaw7ARY849zSvrYd0dUonro+AAGBUZcFvG+7a9e4iV8aJqJ9A8RNmpV7oq3pboE0
-         Lvo2AyJDONyQmEyubAk0DrUD/z9uV8svySWKLiIVCQwRFZfTvQs9/aL4KR+xJ2rGr0Yu
-         c9O1y2r/4bT0BdNPIZ6x0gkI6FBzKxooaTuRo1PwYFdp3SJr7Fjv/rTI5b4RnlFzz2MF
-         KhwQ==
-X-Gm-Message-State: AAQBX9dghqhQwGr8jSghI9swH4ugcAyZEEYd+TVje75agVr/mUNLPceo
-        0oDjtd11uwIlUZlOy5RK/86BiA==
-X-Google-Smtp-Source: AKy350bvN/CKvFinouzJhGtptL8M6mIPhxsjXlT8iGe9Xvr0pWQAgGSuCYWdsO7ajfzeTotjaD0AHg==
-X-Received: by 2002:a2e:9001:0:b0:29f:6fd7:697c with SMTP id h1-20020a2e9001000000b0029f6fd7697cmr9134501ljg.28.1680386902171;
+        bh=Prd++xPaLuXWKrZ9/YvClXLdfWQ6hYA83t8qkIsDY/s=;
+        b=SN9Jcg74i03FG67NzBP/7scTXEg8VBXDP9YM59BYnT+JGYmuVouzGutht6O7q3s7N2
+         ACd+9dduGgRUq4WQHf7QQVZxhr4ePyY6pY7qX6AkCKBIvYAasp2O/1HriWCRjQ4I6QKV
+         bSiz+CWHeOr+QB1IM8BDRqfxMDhCzSgbJpPsciBYW8lHsGehdt6fP+oWWFhNwdoIVmcK
+         0pIjgeMNydNhUZTf1s8Tqewkm7T5hf2lLaCbpjN8RuHAO7/G6urML2jSZ3l7Jt+UXEC+
+         rMTQ6M0py+EBYhpW0/joTO3+nFw7h4nXRgc1QCgw6RVARR19Cl1QZTTqxQKrfvW1USe6
+         jmoQ==
+X-Gm-Message-State: AAQBX9euAXESl0wjOifLJ78BvOzRjXyaMffJ+9svnn3PB2Y2QK8jqtPn
+        rMRiGi1LBpbRsRlFzTPIl0ejdWvT25XL9AoWe91QdQ==
+X-Google-Smtp-Source: AKy350Y07FInGOk+rwDxq5xduEweLqehE6tsu1usirPoiFmQj1rrjZUT/sX9JfowVUsm9AU45VYS4Q==
+X-Received: by 2002:a2e:aa8b:0:b0:2a1:ed00:4b9e with SMTP id bj11-20020a2eaa8b000000b002a1ed004b9emr3834703ljb.1.1680386902809;
         Sat, 01 Apr 2023 15:08:22 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k17-20020a2e9211000000b0029bd4d0d3f2sm997590ljg.33.2023.04.01.15.08.21
+        by smtp.gmail.com with ESMTPSA id k17-20020a2e9211000000b0029bd4d0d3f2sm997590ljg.33.2023.04.01.15.08.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 15:08:21 -0700 (PDT)
+        Sat, 01 Apr 2023 15:08:22 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>,
         Jonathan Cameron <jic23@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-Subject: [PATCH v2 17/22] arm64: dts: qcom: pm8350c: use interrupts-extended for IRQ specification
-Date:   Sun,  2 Apr 2023 01:08:05 +0300
-Message-Id: <20230401220810.3563708-18-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 18/22] arm64: dts: qcom: sc8280xp*: use pm8350c.dtsi
+Date:   Sun,  2 Apr 2023 01:08:06 +0300
+Message-Id: <20230401220810.3563708-19-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
 References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
@@ -77,29 +77,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As stated in the commit 2d5cab9232ba ("arm64: dts: qcom: sc8280xp-pmics:
-Specify interrupt parent explicitly"), we should not use bare interrupts
-for our PMIC devices. Instead interrupts-extended should be used. Change
-pm8350.dtsi to use interrupts-extended propery.
+Employ PMIC_SID/_LABEL and switch sc8280xp-pmics to use pm8350c.dtsi in
+order to reduce duplication and possible discrepancies.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pm8350c.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  4 +--
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  4 +--
+ arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi  | 32 +++----------------
+ 3 files changed, 8 insertions(+), 32 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8350c.dtsi b/arch/arm64/boot/dts/qcom/pm8350c.dtsi
-index ddfc8fd6bb3e..eef36900dee6 100644
---- a/arch/arm64/boot/dts/qcom/pm8350c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8350c.dtsi
-@@ -51,7 +51,7 @@ pmic@PMIC_SID {
- 		LABEL(temp_alarm): temp-alarm@a00 {
- 			compatible = "qcom,spmi-temp-alarm";
- 			reg = <0xa00>;
--			interrupts = <0x2 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&spmi_bus PMIC_SID 0xa 0x0 IRQ_TYPE_EDGE_BOTH>;
- 			#thermal-sensor-cells = <0>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index d7b537284990..18f821d99434 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -24,7 +24,7 @@ aliases {
  
+ 	backlight: backlight {
+ 		compatible = "pwm-backlight";
+-		pwms = <&pmc8280c_lpg 3 1000000>;
++		pwms = <&pmc8280c_pwm 3 1000000>;
+ 		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
+ 		power-supply = <&vreg_edp_bl>;
+ 
+@@ -555,7 +555,7 @@ &pcie4_phy {
+ 	status = "okay";
+ };
+ 
+-&pmc8280c_lpg {
++&pmc8280c_pwm {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index 590400985055..c74d32f7931e 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -54,7 +54,7 @@ wcd938x: audio-codec {
+ 
+ 	backlight: backlight {
+ 		compatible = "pwm-backlight";
+-		pwms = <&pmc8280c_lpg 3 1000000>;
++		pwms = <&pmc8280c_pwm 3 1000000>;
+ 		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
+ 		power-supply = <&vreg_edp_bl>;
+ 
+@@ -725,7 +725,7 @@ &pcie4_phy {
+ 	status = "okay";
+ };
+ 
+-&pmc8280c_lpg {
++&pmc8280c_pwm {
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+index 69f79ed87f62..3d2914d13fd2 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+@@ -16,40 +16,16 @@
+ #define PMIC_NODE pmc82801
+ #include "pm8350.dtsi"
+ 
++#define PMIC_SID 2
++#define PMIC_LABEL pmc8280c
++#include "pm8350c.dtsi"
++
+ #define PMIC_SID 3
+ #define PMIC_LABEL pmc8280_2
+ #define PMIC_NODE pmc82802
+ #include "pm8350.dtsi"
+ 
+ &spmi_bus {
+-	pmc8280c: pmic@2 {
+-		compatible = "qcom,pm8350c", "qcom,spmi-pmic";
+-		reg = <0x2 SPMI_USID>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		pmc8280c_gpios: gpio@8800 {
+-			compatible = "qcom,pm8350c-gpio", "qcom,spmi-gpio";
+-			reg = <0x8800>;
+-			gpio-controller;
+-			gpio-ranges = <&pmc8280c_gpios 0 0 9>;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-		};
+-
+-		pmc8280c_lpg: pwm {
+-			compatible = "qcom,pm8350c-pwm";
+-
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			#pwm-cells = <2>;
+-
+-			status = "disabled";
+-		};
+-	};
+-
+ 	pmr735a: pmic@4 {
+ 		compatible = "qcom,pmr735a", "qcom,spmi-pmic";
+ 		reg = <0x4 SPMI_USID>;
 -- 
 2.30.2
 
