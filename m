@@ -2,171 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF6B36D3273
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 17:49:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEB436D3297
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 18:21:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229890AbjDAPtu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 11:49:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33660 "EHLO
+        id S229610AbjDAQVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 12:21:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbjDAPtr (ORCPT
+        with ESMTP id S229461AbjDAQVP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 11:49:47 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3E332544E
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 08:49:44 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id le6so24159612plb.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 08:49:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680364184;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0XxX9v4o0e9A74KVKINLnIuAStvu5tpKtcGeS/xTyjw=;
-        b=jwCIYHio2McD+8FXZ6aibHPMSWP88pY8QBlEyDOCcDHMAb2TtaArVkFKtHMdv+ft1x
-         09BmXEvC256DiBUubxpE+HDUq/uPAZarxS2HgII2R9vdQ66g+G467w86LpSBw2zqinmK
-         LuyN0U2eNbkUVcrGpdxF/NAKqhzsIT+qLSZzNfMSh2nnPnfX4Q752LXtmWKRWf6Lld+D
-         eD/4yrZ378Oqj3UP3CIl2buoa0GO8XssGdgrSF61rhsHBvzTzbxj0kD8FOHPyBQvqJ3E
-         i6VP8GmkOxvU64IqmUFJwvn1foNoKtR9FBB3WqeBwLqGrK2+/097rYoT5UKViOoI5Jgm
-         /uDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680364184;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0XxX9v4o0e9A74KVKINLnIuAStvu5tpKtcGeS/xTyjw=;
-        b=0tbLgkYs7PwHpa0S/h71RwIZCP3INFqbjtoVj//N5Mk9xshOzRVUrtrW2i40jSShhU
-         mIGLdnYzJSzny93gJW32TCgDWK84Kb5C94kEbLw2h/XgRF8xhGqHOvDupGkGgjK1Ywax
-         o/EGJVUvLOfRA/eeSReYv2WVT+nRIIL1l8gVsZpO2WnSlm8w+s5hXApZHpylDLrfW6KF
-         HjFHm7k5RxM90PAhAK43cqY/504EPhh4FKOdmWoYmtTTi4T45R8XOTJCX6jE99DZHQZO
-         BPasXHutQP5O+fjK+zuBaDKbX2Q1SoynOpd7PGKWQ62khx7E35ms5IHgTG2Mi27vxBJY
-         8wgw==
-X-Gm-Message-State: AAQBX9eXcG7swGbo0NV+mj0bOQCoDW7ut86T4XMYuD6HnQhQw88wE2Ms
-        pfrTXP5MnmQrF2vLMmbYCrYlScvq/N9Oi2yg3pg=
-X-Google-Smtp-Source: AKy350awvfGT7Nqv73PoQZ7BRCcmmbD6AC4VvpCw4O2VXwKQumhywOswA1HdtnFQOi9jNQenyVGgcQ==
-X-Received: by 2002:a05:6a20:1610:b0:e4:83b4:bb9d with SMTP id l16-20020a056a20161000b000e483b4bb9dmr6369178pzj.29.1680364183964;
-        Sat, 01 Apr 2023 08:49:43 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.66.184])
-        by smtp.gmail.com with ESMTPSA id 65-20020a630444000000b0050fb4181e8bsm3385367pge.40.2023.04.01.08.49.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 08:49:43 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-Date:   Sat,  1 Apr 2023 21:17:25 +0530
-Message-Id: <20230401154725.1059563-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230401154725.1059563-1-bhupesh.sharma@linaro.org>
-References: <20230401154725.1059563-1-bhupesh.sharma@linaro.org>
+        Sat, 1 Apr 2023 12:21:15 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2945F2D5E
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 09:21:14 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pidxN-00089G-VF; Sat, 01 Apr 2023 18:19:58 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pidxD-008GPi-EI; Sat, 01 Apr 2023 18:19:47 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pidxC-009kf7-7s; Sat, 01 Apr 2023 18:19:46 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Miquel Raynal <miquel.raynal@bootlin.com>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Naga Sureshkumar Relli <nagasure@xilinx.com>,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Valentin Korenblit <vkorenblit@sequans.com>,
+        Wang Weiyang <wangweiyang2@huawei.com>,
+        =?utf-8?q?Pali_Roh=C3=A1r?= <pali@kernel.org>,
+        =?utf-8?q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
+        Han Xu <han.xu@nxp.com>,
+        Harvey Hunt <harveyhuntnexus@gmail.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Liang Yang <liang.yang@amlogic.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Phil Edworthy <phil.edworthy@renesas.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Chuanhong Guo <gch981213@gmail.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Christophe Kerello <christophe.kerello@foss.st.com>,
+        Jack Wang <jinpu.wang@ionos.com>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Stefan Agner <stefan@agner.ch>, Lucas Stach <dev@lynxeye.de>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>
+Cc:     Richard Weinberger <richard@nod.at>, linux-mtd@lists.infradead.org,
+        kernel@pengutronix.de, linux-arm-kernel@lists.infradead.org,
+        linux-mips@vger.kernel.org, Jerome Brunet <jbrunet@baylibre.com>,
+        linux-amlogic@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-mediatek@lists.infradead.org, linux-oxnas@groups.io,
+        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: [PATCH 00/49] mtd: nand: Convert to platform remove callback returning void
+Date:   Sat,  1 Apr 2023 18:18:49 +0200
+Message-Id: <20230401161938.2503204-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7821; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=8nRDgN5CqU2nRF//FRAdHbfY+cIFaqsEtSZQEPh7QiU=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkKFjvp7868qd0VsHN6SrxaEO8NTL3D3fmpZjg3 cwKJmJerMqJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZChY7wAKCRCPgPtYfRL+ TmkoB/9SLYo/ZDac4CvKk1I5MwZ2nAQBqeUpre7ZKONouC+Gkder1fO1RUM4NlhPPEffEi+2yVj hvcHL7KB5t8UeLrH1vE4Nfi5/3wVAmPww7pWHCPy5AF29t7fgt3U/IYs9QHSysdj+FA73SP/62S ZWdZgdVuVhqYvfPh2RsBg7QJYkAjbhmhA3ZY080V2LH7EpMW6GwOSdQ0OEZ6da9H82tbY9Uz4zk Rb5KLVyrwfuT0n3Dw5q7/YmB6D8y15Diqty+SnJAGLqjGgKNbPUxVOuBDgnXJHcMdA2etpWvgh/ zGMY8LDnJKc/tIuA8o341utDrcxym5uDPWg81ONd0MsBvTHu
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add USB superspeed qmp phy node to dtsi.
+Hello,
 
-Make sure that the various board dts files (which include sm4250.dtsi file)
-continue to work as intended.
+this series adapts the platform drivers below drivers/mtd/nand to use the
+.remove_new() callback. Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver core
+doesn't (and cannot) cope for errors during remove. The only effect of a
+non-zero return value in .remove() is that the driver core emits a warning. The
+device is removed anyhow and an early return from .remove() usually yields a
+resource leak.
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
- arch/arm64/boot/dts/qcom/sm6115.dtsi          | 36 +++++++++++++++++--
- .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
- 3 files changed, 40 insertions(+), 2 deletions(-)
+By changing the remove callback to return void driver authors cannot
+reasonably assume any more that there is some kind of cleanup later.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-index a1f0622db5a0..75951fd439df 100644
---- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-@@ -242,6 +242,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 2a51c938bbcb..b2fa565e4816 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -650,6 +650,38 @@ usb_hsphy: phy@1613000 {
- 			status = "disabled";
- 		};
- 
-+		usb_qmpphy: phy@1615000 {
-+			compatible = "qcom,sm6115-qmp-usb3-phy";
-+			reg = <0x0 0x01615000 0x0 0x200>;
-+			clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
-+				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-+			clock-names = "cfg_ahb",
-+				      "ref",
-+				      "com_aux";
-+			resets = <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>,
-+				 <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>;
-+			reset-names = "phy_phy", "phy";
-+			status = "disabled";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			usb_ssphy: phy@1615200 {
-+				reg = <0x0 0x01615200 0x0 0x200>,
-+				      <0x0 0x01615400 0x0 0x200>,
-+				      <0x0 0x01615c00 0x0 0x400>,
-+				      <0x0 0x01615600 0x0 0x200>,
-+				      <0x0 0x01615800 0x0 0x200>,
-+				      <0x0 0x01615a00 0x0 0x100>;
-+				#clock-cells = <0>;
-+				#phy-cells = <0>;
-+				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "usb3_phy_pipe_clk_src";
-+			};
-+		};
-+
- 		qfprom@1b40000 {
- 			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
- 			reg = <0x0 0x01b40000 0x0 0x7000>;
-@@ -1100,8 +1132,8 @@ usb_dwc3: usb@4e00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0 0x04e00000 0x0 0xcd00>;
- 				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
--				phys = <&usb_hsphy>;
--				phy-names = "usb2-phy";
-+				phys = <&usb_hsphy>, <&usb_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
- 				iommus = <&apps_smmu 0x120 0x0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-index 10c9d338446c..d60cc024749b 100644
---- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -280,6 +280,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
+As all drivers already return 0 in their .remove callback, they can be
+converted trivially.
+
+Thanks
+Uwe
+
+Uwe Kleine-König (49):
+  mtd: nand: mxic-ecc: Convert to platform remove callback returning
+    void
+  mtd: onenand: generic: Convert to platform remove callback returning
+    void
+  mtd: onenand: omap2: Convert to platform remove callback returning
+    void
+  mtd: onenand: samsung: Convert to platform remove callback returning
+    void
+  mtd: rawnand: ams-delta: Convert to platform remove callback returning
+    void
+  mtd: rawnand: arasan: Convert to platform remove callback returning
+    void
+  mtd: rawnand: atmel: Convert to platform remove callback returning
+    void
+  mtd: rawnand: au1550nd: Convert to platform remove callback returning
+    void
+  mtd: rawnand: bcm47xxnflash: Convert to platform remove callback
+    returning void
+  mtd: rawnand: cadence: Convert to platform remove callback returning
+    void
+  mtd: rawnand: davinci: Convert to platform remove callback returning
+    void
+  mtd: rawnand: denali_dt: Convert to platform remove callback returning
+    void
+  mtd: rawnand: fsl_elbc: Convert to platform remove callback returning
+    void
+  mtd: rawnand: fsl_ifc: Convert to platform remove callback returning
+    void
+  mtd: rawnand: fsl_upm: Convert to platform remove callback returning
+    void
+  mtd: rawnand: fsmc: Convert to platform remove callback returning void
+  mtd: rawnand: gpio: Convert to platform remove callback returning void
+  mtd: rawnand: gpmi: Convert to platform remove callback returning void
+  mtd: rawnand: hisi504: Convert to platform remove callback returning
+    void
+  mtd: rawnand: ingenic: Convert to platform remove callback returning
+    void
+  mtd: rawnand: intel: Convert to platform remove callback returning
+    void
+  mtd: rawnand: lpc32xx_mlc: Convert to platform remove callback
+    returning void
+  mtd: rawnand: lpc32xx_slc: Convert to platform remove callback
+    returning void
+  mtd: rawnand: marvell: Convert to platform remove callback returning
+    void
+  mtd: rawnand: meson: Convert to platform remove callback returning
+    void
+  mtd: rawnand: mpc5121_nfc: Convert to platform remove callback
+    returning void
+  mtd: rawnand: mtk: Convert to platform remove callback returning void
+  mtd: rawnand: mxc: Convert to platform remove callback returning void
+  mtd: rawnand: mxic: Convert to platform remove callback returning void
+  mtd: rawnand: ndfc: Convert to platform remove callback returning void
+  mtd: rawnand: omap2: Convert to platform remove callback returning
+    void
+  mtd: rawnand: omap_elm: Convert to platform remove callback returning
+    void
+  mtd: rawnand: orion: Convert to platform remove callback returning
+    void
+  mtd: rawnand: oxnas: Convert to platform remove callback returning
+    void
+  mtd: rawnand: pasemi: Convert to platform remove callback returning
+    void
+  mtd: rawnand: pl35x: Convert to platform remove callback returning
+    void
+  mtd: rawnand: plat: Convert to platform remove callback returning void
+  mtd: rawnand: qcom: Convert to platform remove callback returning void
+  mtd: rawnand: renesas: Convert to platform remove callback returning
+    void
+  mtd: rawnand: rockchip: Convert to platform remove callback returning
+    void
+  mtd: rawnand: s3c2410: Convert to platform remove callback returning
+    void
+  mtd: rawnand: sh_flctl: Convert to platform remove callback returning
+    void
+  mtd: rawnand: sharpsl: Convert to platform remove callback returning
+    void
+  mtd: rawnand: socrates: Convert to platform remove callback returning
+    void
+  mtd: rawnand: stm32_fmc2: Convert to platform remove callback
+    returning void
+  mtd: rawnand: sunxi: Convert to platform remove callback returning
+    void
+  mtd: rawnand: tegra: Convert to platform remove callback returning
+    void
+  mtd: rawnand: vf610_nfc: Convert to platform remove callback returning
+    void
+  mtd: rawnand: xway: Convert to platform remove callback returning void
+
+ drivers/mtd/nand/ecc-mxic.c                     | 6 ++----
+ drivers/mtd/nand/onenand/generic.c              | 6 ++----
+ drivers/mtd/nand/onenand/onenand_omap2.c        | 6 ++----
+ drivers/mtd/nand/onenand/onenand_samsung.c      | 6 ++----
+ drivers/mtd/nand/raw/ams-delta.c                | 6 ++----
+ drivers/mtd/nand/raw/arasan-nand-controller.c   | 6 ++----
+ drivers/mtd/nand/raw/atmel/nand-controller.c    | 6 ++----
+ drivers/mtd/nand/raw/au1550nd.c                 | 5 ++---
+ drivers/mtd/nand/raw/bcm47xxnflash/main.c       | 6 ++----
+ drivers/mtd/nand/raw/cadence-nand-controller.c  | 6 ++----
+ drivers/mtd/nand/raw/davinci_nand.c             | 6 ++----
+ drivers/mtd/nand/raw/denali_dt.c                | 6 ++----
+ drivers/mtd/nand/raw/fsl_elbc_nand.c            | 6 ++----
+ drivers/mtd/nand/raw/fsl_ifc_nand.c             | 6 ++----
+ drivers/mtd/nand/raw/fsl_upm.c                  | 6 ++----
+ drivers/mtd/nand/raw/fsmc_nand.c                | 6 ++----
+ drivers/mtd/nand/raw/gpio.c                     | 6 ++----
+ drivers/mtd/nand/raw/gpmi-nand/gpmi-nand.c      | 5 ++---
+ drivers/mtd/nand/raw/hisi504_nand.c             | 6 ++----
+ drivers/mtd/nand/raw/ingenic/ingenic_nand_drv.c | 6 ++----
+ drivers/mtd/nand/raw/intel-nand-controller.c    | 6 ++----
+ drivers/mtd/nand/raw/lpc32xx_mlc.c              | 6 ++----
+ drivers/mtd/nand/raw/lpc32xx_slc.c              | 6 ++----
+ drivers/mtd/nand/raw/marvell_nand.c             | 6 ++----
+ drivers/mtd/nand/raw/meson_nand.c               | 6 ++----
+ drivers/mtd/nand/raw/mpc5121_nfc.c              | 6 ++----
+ drivers/mtd/nand/raw/mtk_nand.c                 | 6 ++----
+ drivers/mtd/nand/raw/mxc_nand.c                 | 6 ++----
+ drivers/mtd/nand/raw/mxic_nand.c                | 5 ++---
+ drivers/mtd/nand/raw/ndfc.c                     | 6 ++----
+ drivers/mtd/nand/raw/omap2.c                    | 5 ++---
+ drivers/mtd/nand/raw/omap_elm.c                 | 5 ++---
+ drivers/mtd/nand/raw/orion_nand.c               | 6 ++----
+ drivers/mtd/nand/raw/oxnas_nand.c               | 6 ++----
+ drivers/mtd/nand/raw/pasemi_nand.c              | 6 ++----
+ drivers/mtd/nand/raw/pl35x-nand-controller.c    | 6 ++----
+ drivers/mtd/nand/raw/plat_nand.c                | 6 ++----
+ drivers/mtd/nand/raw/qcom_nandc.c               | 6 ++----
+ drivers/mtd/nand/raw/renesas-nand-controller.c  | 6 ++----
+ drivers/mtd/nand/raw/rockchip-nand-controller.c | 6 ++----
+ drivers/mtd/nand/raw/s3c2410.c                  | 8 +++-----
+ drivers/mtd/nand/raw/sh_flctl.c                 | 6 ++----
+ drivers/mtd/nand/raw/sharpsl.c                  | 6 ++----
+ drivers/mtd/nand/raw/socrates_nand.c            | 6 ++----
+ drivers/mtd/nand/raw/stm32_fmc2_nand.c          | 6 ++----
+ drivers/mtd/nand/raw/sunxi_nand.c               | 6 ++----
+ drivers/mtd/nand/raw/tegra_nand.c               | 6 ++----
+ drivers/mtd/nand/raw/vf610_nfc.c                | 5 ++---
+ drivers/mtd/nand/raw/xway_nand.c                | 6 ++----
+ 49 files changed, 99 insertions(+), 191 deletions(-)
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
 -- 
-2.38.1
+2.39.2
 
