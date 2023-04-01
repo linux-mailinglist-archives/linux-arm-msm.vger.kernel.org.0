@@ -2,363 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 430E96D33AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 21:58:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45F646D33E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 22:50:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbjDAT61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 15:58:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32796 "EHLO
+        id S229563AbjDAUuS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 16:50:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbjDAT60 (ORCPT
+        with ESMTP id S229437AbjDAUuR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 15:58:26 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 313F4AD09
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 12:58:24 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id t14so26485590ljd.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 12:58:24 -0700 (PDT)
+        Sat, 1 Apr 2023 16:50:17 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A096727020;
+        Sat,  1 Apr 2023 13:50:14 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id x3so102885162edb.10;
+        Sat, 01 Apr 2023 13:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680379102;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fwnHi09+elTR3UZLLVl3sZt/UwMRssVkoYabnFhUaeU=;
-        b=HglNIkSjQqrTxRcsmP8Eyo8nFkjkwb0Fp6cVqY9/jIId+cA5SUnPhWJ3CicpBeMbrY
-         TkRZ1AtL2hBCbR5OjxbLlaJz7XXU1GF2PqN0nAHaRHm4BWe8R50UNUWEbPZugw2KCeYV
-         mAfYYkFXAt1aR3AirNvfa6xWRJR5lozSlDIWaYLSRJ8bnTsOhE/tHhmOiALiYrsIm4Mi
-         5OCOXx0yPWICXOyn3+aCNa+6aQsyPw2fXFFjx7PKeI6iomBnev/yrdvHS+P5tQ8Rf7y4
-         MpojXLl43T5U/6sVmKu8qfp7wD8kpf2XtlTpSrAXlSugHykBAA/hGrrpvF3USKu4Q2G9
-         LSdA==
+        d=gmail.com; s=20210112; t=1680382213;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lgOZGBjMrNfEYOFT5qZhKEYrnCSxGGA+y6RDWbFUmcQ=;
+        b=IAFFAmjeXyQmEa5Ly4hXquwBrGPwcV7jislsH8OSykhx2EAuqvqyTJecBGzIqy91Zl
+         WRiG1N8jHGzAKrP/M2duHDGYtc/AY13kLwn/cFr4RV7lzKoHP0RtlpOaXSKxUwVwaTjN
+         FKtkUZgtNl//UhS6om5Xch/dnV9BsNS+c2/8pP+WIdEi+/Kr1hLMDfkaM+aPNHTJ4T9h
+         vBMtguWONPiH+/ON4HkV0IfLpdDkXNf+Y4AM2WUI2X0PQg0Z3yV3IsbDwZ0kvjt9Smy4
+         vjs85DSLXyYqdnAnAxX918Sfah/Q3TedlSayum2eXLZkshUDa5WedlB9UIU70HqkVh3v
+         NkVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680379102;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1680382213;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fwnHi09+elTR3UZLLVl3sZt/UwMRssVkoYabnFhUaeU=;
-        b=Y4TXto2zGe/Bss0h86JoZ97G8BMMgJ2pfrx3JwqKFR/ioXCv/egDcRpswFhTJaAs7e
-         OoWtVs3hascLQpjkIByaIMnitaBdQKgS1nlke9TGewgyWe7Ry6CLmLFCtdyajzF0LAFL
-         ma9S56ndlUTAO3h8qnEsZTd27TmSOcP7KDSdgtabxVGDvYOGswTKOMzDm4HCivUO8DeE
-         g75kDLnzRlQ6bipQ3EPdhJMuGinyPLkbFbCezEHOWsOBjwJ/VsldPsv4m36YIEYBPQSV
-         LZg5t0JDPcHBAbsXqda8c61YHCT3e51tcfm2CHtYEYVD2/glqUilulKNf8Vg3WzIhoFX
-         EtHQ==
-X-Gm-Message-State: AAQBX9fOtNwExXqLu9jp0h346O2d4NLDuLpcHowuLkTI5/PsV79Cc+Lj
-        UQzug4DlFmN8tnA1FtR1OYbTVRbl5kMeb/fdIHYWrw==
-X-Google-Smtp-Source: AKy350bgfdixJAWw6uWqEqJ5aTFocNM2BbyRCa+1LC9oDjHuI0w9TCDVG5l+vC7V+bbVnQUAZ2exMg==
-X-Received: by 2002:a2e:8781:0:b0:2a6:2088:cfa4 with SMTP id n1-20020a2e8781000000b002a62088cfa4mr1710135lji.42.1680379102378;
-        Sat, 01 Apr 2023 12:58:22 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d4-20020a2e3604000000b0029353caa593sm955337lja.5.2023.04.01.12.58.21
+        bh=lgOZGBjMrNfEYOFT5qZhKEYrnCSxGGA+y6RDWbFUmcQ=;
+        b=zMnNYVDTXo/S5WboGl7yUTiKCCoNgH07P/pNv7gQFraEwdQBLjaxTVcCiSIzcXJDIh
+         O7LAufWAM6e/dgL6P+y97OlXTK+bgloFfaIsisAW2tmlUjARGMyUMWYkg7lR6CFsRVCP
+         bI0nOr+hHjU5/sl7P209CtVOIRDNAbuB4s9X74Jps9c66cjuJcRg0y4sivMQvMu+epJq
+         ofctX68vTZOaDpNv9f0skRBYRDm8jxAckTvIxApeb8cEHf8uKcE1VowqE4vohmqkFvkP
+         QNF97No6+RDZPY/BgJIOJ/CGn41VgPBhwisgH2MqkJZ4gT1RTmSEca6lXK4gf4AKk267
+         St2g==
+X-Gm-Message-State: AAQBX9cosR8eHAEM7rOJi/5w7o2mgFaxrKAmDug65+wsXGk/0XTemfPj
+        C0HJeQ5Z6yUUpza1gCCTkyo=
+X-Google-Smtp-Source: AKy350a6XGOCGMuiiPDn0shWd3zKUNOozT4lgr0FASh6XfKT3uXOIVvH/st/0W2pnqXiMRQKKZ96sw==
+X-Received: by 2002:a17:907:6da1:b0:947:ad38:6184 with SMTP id sb33-20020a1709076da100b00947ad386184mr6649516ejc.31.1680382213096;
+        Sat, 01 Apr 2023 13:50:13 -0700 (PDT)
+Received: from ?IPV6:2a01:c23:bda6:2000:35bd:7a7:441f:cb1? (dynamic-2a01-0c23-bda6-2000-35bd-07a7-441f-0cb1.c23.pool.telefonica.de. [2a01:c23:bda6:2000:35bd:7a7:441f:cb1])
+        by smtp.googlemail.com with ESMTPSA id w19-20020a170906d21300b00930894eb708sm2462440ejz.223.2023.04.01.13.50.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Apr 2023 12:58:21 -0700 (PDT)
-Message-ID: <e5b758ed-f279-ecc3-3be4-039c5a19b212@linaro.org>
-Date:   Sat, 1 Apr 2023 22:58:21 +0300
+        Sat, 01 Apr 2023 13:50:12 -0700 (PDT)
+Message-ID: <a49619b7-2340-2726-8c7e-df6ff0c1793a@gmail.com>
+Date:   Sat, 1 Apr 2023 22:50:12 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU
- idle-states
-Content-Language: en-GB
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        andersson@kernel.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org
-References: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
- <0ff99bb5-4792-270d-b03e-2638939f160f@linaro.org>
- <CAH=2NtzPReiUHuEAW8PsQJvNzOYvb71pZ7SWRbThWdLT7_a0ug@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAH=2NtzPReiUHuEAW8PsQJvNzOYvb71pZ7SWRbThWdLT7_a0ug@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Content-Language: en-US
+To:     Sarthak Garg <quic_sartgarg@quicinc.com>, adrian.hunter@intel.com,
+        ulf.hansson@linaro.org
+Cc:     linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_sachgupt@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Kees Cook <keescook@chromium.org>,
+        "Jason A. Donenfeld" <Jason@zx2c4.com>,
+        =?UTF-8?Q?Christian_L=c3=b6hle?= <CLoehle@hyperstone.com>,
+        Yann Gautier <yann.gautier@foss.st.com>,
+        ChanWoo Lee <cw9316.lee@samsung.com>,
+        Shaik Sajida Bhanu <quic_c_sbhanu@quicinc.com>,
+        Ye Bin <yebin10@huawei.com>,
+        Alexander Stein <alexander.stein@ew.tq-group.com>,
+        Yu Zhe <yuzhe@nfschina.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Brian Norris <briannorris@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Jens Axboe <axboe@kernel.dk>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Vincent Whitchurch <vincent.whitchurch@axis.com>,
+        David Sterba <dsterba@suse.com>,
+        John Garry <john.garry@huawei.com>
+References: <20230401165723.19762-1-quic_sartgarg@quicinc.com>
+ <20230401165723.19762-3-quic_sartgarg@quicinc.com>
+From:   Heiner Kallweit <hkallweit1@gmail.com>
+Subject: Re: [PATCH V1 2/2] mmc: core: Export core functions to let vendors
+ use for their features
+In-Reply-To: <20230401165723.19762-3-quic_sartgarg@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/04/2023 21:26, Bhupesh Sharma wrote:
-> Hi Konrad,
+On 01.04.2023 18:57, Sarthak Garg wrote:
+> Export core functions to let vendors use for their internal features.
 > 
-> On Sat, 1 Apr 2023 at 17:51, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 30.03.2023 21:33, Bhupesh Sharma wrote:
->>> Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
->>>
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> ---
->>> Changes since v1:
->>> - v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
->>> - Addressed Konrad's comments on v1 and added GDHS and Power Collapse
->>>    cluster power states.
->>>
->>>   arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
->>>   1 file changed, 136 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>> index 2a51c938bbcb..b63395d476ed 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
->>> @@ -45,6 +45,8 @@ CPU0: cpu@0 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_0>;
->>>                        qcom,freq-domain = <&cpufreq_hw 0>;
->>> +                     power-domains = <&CPU_PD0>;
->>> +                     power-domain-names = "psci";
->>>                        L2_0: l2-cache {
->>>                                compatible = "cache";
->>>                                cache-level = <2>;
->>> @@ -61,6 +63,8 @@ CPU1: cpu@1 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_0>;
->>>                        qcom,freq-domain = <&cpufreq_hw 0>;
->>> +                     power-domains = <&CPU_PD1>;
->>> +                     power-domain-names = "psci";
->>>                };
->>>
->>>                CPU2: cpu@2 {
->>> @@ -73,6 +77,8 @@ CPU2: cpu@2 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_0>;
->>>                        qcom,freq-domain = <&cpufreq_hw 0>;
->>> +                     power-domains = <&CPU_PD2>;
->>> +                     power-domain-names = "psci";
->>>                };
->>>
->>>                CPU3: cpu@3 {
->>> @@ -85,6 +91,8 @@ CPU3: cpu@3 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_0>;
->>>                        qcom,freq-domain = <&cpufreq_hw 0>;
->>> +                     power-domains = <&CPU_PD3>;
->>> +                     power-domain-names = "psci";
->>>                };
->>>
->>>                CPU4: cpu@100 {
->>> @@ -97,6 +105,8 @@ CPU4: cpu@100 {
->>>                        dynamic-power-coefficient = <282>;
->>>                        next-level-cache = <&L2_1>;
->>>                        qcom,freq-domain = <&cpufreq_hw 1>;
->>> +                     power-domains = <&CPU_PD4>;
->>> +                     power-domain-names = "psci";
->>>                        L2_1: l2-cache {
->>>                                compatible = "cache";
->>>                                cache-level = <2>;
->>> @@ -113,6 +123,8 @@ CPU5: cpu@101 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_1>;
->>>                        qcom,freq-domain = <&cpufreq_hw 1>;
->>> +                     power-domains = <&CPU_PD5>;
->>> +                     power-domain-names = "psci";
->>>                };
->>>
->>>                CPU6: cpu@102 {
->>> @@ -125,6 +137,8 @@ CPU6: cpu@102 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_1>;
->>>                        qcom,freq-domain = <&cpufreq_hw 1>;
->>> +                     power-domains = <&CPU_PD6>;
->>> +                     power-domain-names = "psci";
->>>                };
->>>
->>>                CPU7: cpu@103 {
->>> @@ -137,6 +151,8 @@ CPU7: cpu@103 {
->>>                        enable-method = "psci";
->>>                        next-level-cache = <&L2_1>;
->>>                        qcom,freq-domain = <&cpufreq_hw 1>;
->>> +                     power-domains = <&CPU_PD7>;
->>> +                     power-domain-names = "psci";
->>>                };
->>>
->>>                cpu-map {
->>> @@ -176,6 +192,68 @@ core3 {
->>>                                };
->>>                        };
->>>                };
->>> +
->>> +             idle-states {
->>> +                     entry-method = "psci";
->>> +
->>> +                     LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
->>> +                             compatible = "arm,idle-state";
->>> +                             idle-state-name = "silver-rail-power-collapse";
->>> +                             arm,psci-suspend-param = <0x40000003>;
->>> +                             entry-latency-us = <290>;
->>> +                             exit-latency-us = <376>;
->>> +                             min-residency-us = <1182>;
->>> +                             local-timer-stop;
->>> +                     };
->>> +
->>> +                     BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
->>> +                             compatible = "arm,idle-state";
->>> +                             idle-state-name = "gold-rail-power-collapse";
->>> +                             arm,psci-suspend-param = <0x40000003>;
->>> +                             entry-latency-us = <297>;
->>> +                             exit-latency-us = <324>;
->>> +                             min-residency-us = <1110>;
->>> +                             local-timer-stop;
->>> +                     };
->>> +             };
->>> +
->>> +             domain-idle-states {
->>> +                     CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
->>> +                             /* GDHS */
->>> +                             compatible = "domain-idle-state";
->>> +                             arm,psci-suspend-param = <0x40000022>;
->> This 0x22 ending seems very sus.
->>
->> The last nibble represents the core-level power state and the
->> penultimate one represents the same at cluster level. A value
->> of 2 in that cluster nibble is actually undefined by the PSCI spec,
->> whereas the value of 4 (as you have in all of the other idle
->> states, including D3G for the perf cluster) corresponds to
->> "Retention", so unless there's a very weird nuance in the
->> TZ for this SoC, it should probably end in 0x42.
->>
->> Otherwise I think this LGTM now!
-> 
-> I am also learning by experiment about the exact values to use here,
-> as the only ready reckoner of how these values are calculated, seems
-> to be available via [1].
-> 
-> Also it seems the downstream code uses the following approach to
-> calculate the LPM state suspend-param, which for example for
-> CLUSTER_0_SLEEP_1 states turns out to be:
-> 
->      state_id = get_cluster_id(cpu->parent, &affinity_level, from_idle); = 0x40
->      power_state = (is-reset << 30) = 0x40000000
->      affinity_level = (affinity level & 0x3) << 24 = 0x1000000
->      state_id += power_state + affinity_level + psci_id;
-> 
->      = 0x40000000 + 0x1000000 + 0x40 + 0x4 = 0x41000044
-> 
-> For the D3G cases as well, I just used the 'qcom,psci-mode = <2>'
-> value as provided in downstream code (see [2]), for the overall
-> calculations.
-> 
-> Also, the only usage of D3G state I could find upstream (in qcom dtsi
-> files0 is for 'msm8916' (see [3]), which also uses the value with
-> ending 0x2 -> 'arm,psci-suspend-param = <0x41000032>'
+Typically extensions to the core require at least one user. So you should
+add your driver, that makes use of the changes, to the series.
+And best explain what's special with your hardware so that it needs a core
+extension whilst drivers for other hardware are fine with the core as-is.
 
-D3G has min-child-idx = 1, so the end PSCI param should be 0x41000023
-D3 is 0x41000043
-
+> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+> ---
+>  drivers/mmc/core/core.c    |  6 ++++++
+>  drivers/mmc/core/host.c    |  1 +
+>  drivers/mmc/core/mmc.c     | 18 ++++++++++++------
+>  drivers/mmc/core/mmc_ops.c |  1 +
+>  drivers/mmc/core/queue.c   |  1 +
+>  5 files changed, 21 insertions(+), 6 deletions(-)
 > 
-> [1]. https://patchwork.kernel.org/project/linux-arm-msm/patch/20201221002907.2870059-3-danny@kdrag0n.dev/#23857409
-> [2]. https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/tags/android-11.0.0_r0.56/qcom/bengal-pm.dtsi#127
-> [3]. https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/msm8916.dtsi#L209
-> 
-> Thanks,
-> Bhupesh
-> 
->>> +                             entry-latency-us = <360>;
->>> +                             exit-latency-us = <421>;
->>> +                             min-residency-us = <782>;
->>> +                     };
->>> +
->>> +                     CLUSTER_0_SLEEP_1: cluster-sleep-0-1 {
->>> +                             /* Power Collapse */
->>> +                             compatible = "domain-idle-state";
->>> +                             arm,psci-suspend-param = <0x41000044>;
->>> +                             entry-latency-us = <800>;
->>> +                             exit-latency-us = <2118>;
->>> +                             min-residency-us = <7376>;
->>> +                     };
->>> +
->>> +                     CLUSTER_1_SLEEP_0: cluster-sleep-1-0 {
->>> +                             /* GDHS */
->>> +                             compatible = "domain-idle-state";
->>> +                             arm,psci-suspend-param = <0x40000042>;
->>> +                             entry-latency-us = <314>;
->>> +                             exit-latency-us = <345>;
->>> +                             min-residency-us = <660>;
->>> +                     };
->>> +
->>> +                     CLUSTER_1_SLEEP_1: cluster-sleep-1-1 {
->>> +                             /* Power Collapse */
->>> +                             compatible = "domain-idle-state";
->>> +                             arm,psci-suspend-param = <0x41000044>;
->>> +                             entry-latency-us = <640>;
->>> +                             exit-latency-us = <1654>;
->>> +                             min-residency-us = <8094>;
->>> +                     };
->>> +             };
->>>        };
->>>
->>>        firmware {
->>> @@ -199,6 +277,64 @@ pmu {
->>>        psci {
->>>                compatible = "arm,psci-1.0";
->>>                method = "smc";
->>> +
->>> +             CPU_PD0: power-domain-cpu0 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_0_PD>;
->>> +                     domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD1: power-domain-cpu1 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_0_PD>;
->>> +                     domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD2: power-domain-cpu2 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_0_PD>;
->>> +                     domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD3: power-domain-cpu3 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_0_PD>;
->>> +                     domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD4: power-domain-cpu4 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_1_PD>;
->>> +                     domain-idle-states = <&BIG_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD5: power-domain-cpu5 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_1_PD>;
->>> +                     domain-idle-states = <&BIG_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD6: power-domain-cpu6 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_1_PD>;
->>> +                     domain-idle-states = <&BIG_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CPU_PD7: power-domain-cpu7 {
->>> +                     #power-domain-cells = <0>;
->>> +                     power-domains = <&CLUSTER_1_PD>;
->>> +                     domain-idle-states = <&BIG_CPU_SLEEP_0>;
->>> +             };
->>> +
->>> +             CLUSTER_0_PD: power-domain-cpu-cluster0 {
->>> +                     #power-domain-cells = <0>;
->>> +                     domain-idle-states = <&CLUSTER_0_SLEEP_0>, <&CLUSTER_0_SLEEP_1>;
->>> +             };
->>> +
->>> +             CLUSTER_1_PD: power-domain-cpu-cluster1 {
->>> +                     #power-domain-cells = <0>;
->>> +                     domain-idle-states = <&CLUSTER_1_SLEEP_0>, <&CLUSTER_1_SLEEP_1>;
->>> +             };
->>>        };
->>>
->>>        reserved_memory: reserved-memory {
-
--- 
-With best wishes
-Dmitry
+> diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
+> index 3d3e0ca52614..ed44b65f19e0 100644
+> --- a/drivers/mmc/core/core.c
+> +++ b/drivers/mmc/core/core.c
+> @@ -916,6 +916,7 @@ void mmc_set_clock(struct mmc_host *host, unsigned int hz)
+>  	host->ios.clock = hz;
+>  	mmc_set_ios(host);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_set_clock);
+>  
+>  int mmc_execute_tuning(struct mmc_card *card)
+>  {
+> @@ -950,6 +951,7 @@ int mmc_execute_tuning(struct mmc_card *card)
+>  
+>  	return err;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_execute_tuning);
+>  
+>  /*
+>   * Change the bus mode (open drain/push-pull) of a host.
+> @@ -959,6 +961,7 @@ void mmc_set_bus_mode(struct mmc_host *host, unsigned int mode)
+>  	host->ios.bus_mode = mode;
+>  	mmc_set_ios(host);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_set_bus_mode);
+>  
+>  /*
+>   * Change data bus width of a host.
+> @@ -968,6 +971,7 @@ void mmc_set_bus_width(struct mmc_host *host, unsigned int width)
+>  	host->ios.bus_width = width;
+>  	mmc_set_ios(host);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_set_bus_width);
+>  
+>  /*
+>   * Set initial state after a power cycle or a hw_reset.
+> @@ -1001,6 +1005,7 @@ void mmc_set_initial_state(struct mmc_host *host)
+>  
+>  	mmc_crypto_set_initial_state(host);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_set_initial_state);
+>  
+>  /**
+>   * mmc_vdd_to_ocrbitnum - Convert a voltage to the OCR bit number
+> @@ -1270,6 +1275,7 @@ void mmc_set_timing(struct mmc_host *host, unsigned int timing)
+>  	host->ios.timing = timing;
+>  	mmc_set_ios(host);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_set_timing);
+>  
+>  /*
+>   * Select appropriate driver type for host.
+> diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
+> index 76900f67c782..1c5eb1d9d585 100644
+> --- a/drivers/mmc/core/host.c
+> +++ b/drivers/mmc/core/host.c
+> @@ -166,6 +166,7 @@ void mmc_retune_hold(struct mmc_host *host)
+>  		host->retune_now = 1;
+>  	host->hold_retune += 1;
+>  }
+> +EXPORT_SYMBOL(mmc_retune_hold);
+>  
+>  void mmc_retune_release(struct mmc_host *host)
+>  {
+> diff --git a/drivers/mmc/core/mmc.c b/drivers/mmc/core/mmc.c
+> index 32386e4644df..b984a4f90535 100644
+> --- a/drivers/mmc/core/mmc.c
+> +++ b/drivers/mmc/core/mmc.c
+> @@ -1002,7 +1002,7 @@ static void mmc_set_bus_speed(struct mmc_card *card)
+>   * If the bus width is changed successfully, return the selected width value.
+>   * Zero is returned instead of error value if the wide width is not supported.
+>   */
+> -static int mmc_select_bus_width(struct mmc_card *card)
+> +int mmc_select_bus_width(struct mmc_card *card)
+>  {
+>  	static unsigned ext_csd_bits[] = {
+>  		EXT_CSD_BUS_WIDTH_8,
+> @@ -1067,11 +1067,12 @@ static int mmc_select_bus_width(struct mmc_card *card)
+>  
+>  	return err;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_select_bus_width);
+>  
+>  /*
+>   * Switch to the high-speed mode
+>   */
+> -static int mmc_select_hs(struct mmc_card *card)
+> +int mmc_select_hs(struct mmc_card *card)
+>  {
+>  	int err;
+>  
+> @@ -1085,11 +1086,12 @@ static int mmc_select_hs(struct mmc_card *card)
+>  
+>  	return err;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_select_hs);
+>  
+>  /*
+>   * Activate wide bus and DDR if supported.
+>   */
+> -static int mmc_select_hs_ddr(struct mmc_card *card)
+> +int mmc_select_hs_ddr(struct mmc_card *card)
+>  {
+>  	struct mmc_host *host = card->host;
+>  	u32 bus_width, ext_csd_bits;
+> @@ -1158,8 +1160,9 @@ static int mmc_select_hs_ddr(struct mmc_card *card)
+>  
+>  	return err;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_select_hs_ddr);
+>  
+> -static int mmc_select_hs400(struct mmc_card *card)
+> +int mmc_select_hs400(struct mmc_card *card)
+>  {
+>  	struct mmc_host *host = card->host;
+>  	unsigned int max_dtr;
+> @@ -1253,6 +1256,7 @@ static int mmc_select_hs400(struct mmc_card *card)
+>  	       __func__, err);
+>  	return err;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_select_hs400);
+>  
+>  int mmc_hs200_to_hs400(struct mmc_card *card)
+>  {
+> @@ -1533,7 +1537,7 @@ static int mmc_select_hs200(struct mmc_card *card)
+>  /*
+>   * Activate High Speed, HS200 or HS400ES mode if supported.
+>   */
+> -static int mmc_select_timing(struct mmc_card *card)
+> +int mmc_select_timing(struct mmc_card *card)
+>  {
+>  	int err = 0;
+>  
+> @@ -1568,12 +1572,13 @@ static int mmc_select_timing(struct mmc_card *card)
+>  	mmc_set_bus_speed(card);
+>  	return 0;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_select_timing);
+>  
+>  /*
+>   * Execute tuning sequence to seek the proper bus operating
+>   * conditions for HS200 and HS400, which sends CMD21 to the device.
+>   */
+> -static int mmc_hs200_tuning(struct mmc_card *card)
+> +int mmc_hs200_tuning(struct mmc_card *card)
+>  {
+>  	struct mmc_host *host = card->host;
+>  
+> @@ -1588,6 +1593,7 @@ static int mmc_hs200_tuning(struct mmc_card *card)
+>  
+>  	return mmc_execute_tuning(card);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_hs200_tuning);
+>  
+>  /*
+>   * Handle the detection and initialisation of a card.
+> diff --git a/drivers/mmc/core/mmc_ops.c b/drivers/mmc/core/mmc_ops.c
+> index 3b3adbddf664..62c16dac9d62 100644
+> --- a/drivers/mmc/core/mmc_ops.c
+> +++ b/drivers/mmc/core/mmc_ops.c
+> @@ -118,6 +118,7 @@ int mmc_select_card(struct mmc_card *card)
+>  
+>  	return _mmc_select_card(card->host, card);
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_select_card);
+>  
+>  int mmc_deselect_cards(struct mmc_host *host)
+>  {
+> diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+> index b396e3900717..2c710d736032 100644
+> --- a/drivers/mmc/core/queue.c
+> +++ b/drivers/mmc/core/queue.c
+> @@ -69,6 +69,7 @@ enum mmc_issue_type mmc_issue_type(struct mmc_queue *mq, struct request *req)
+>  
+>  	return MMC_ISSUE_SYNC;
+>  }
+> +EXPORT_SYMBOL_GPL(mmc_issue_type);
+>  
+>  static void __mmc_cqe_recovery_notifier(struct mmc_queue *mq)
+>  {
 
