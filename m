@@ -2,67 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8045C6D32C8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 19:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A29C26D32D5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 19:35:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbjDARYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 13:24:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58174 "EHLO
+        id S229681AbjDARfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 13:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjDARYe (ORCPT
+        with ESMTP id S229575AbjDARfl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 13:24:34 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30A0FEC75
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 10:24:33 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id d11-20020a05600c3acb00b003ef6e6754c5so11861490wms.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 10:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680369871;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qxMDn/yltQyq4K/x1oMJCpvevyLh8LBMcartubJGxQY=;
-        b=CsGk9STcMivrNmo4f8J73h4LNh9WKFLQFOFqgKfPI4ZfYOi2QK8BbqhQjjolkpy0Kc
-         HgnQd8QSRwYLmh63KB3zbKA4AEriFa9zl7oou728m3IHkl9gldrtBJuqE14ml6SivHTu
-         D7NaFGMXSwPHqnroRdOQzrV1T0UaA4jM58HJ8ZeX+qZjc77f4IlX9wGdTvOOQ8I7oA1v
-         R+o1DF3Y7eRNo3ZA+MGzy7XlRJkxFEg++gSTCcJgxJu/AyNbOoUZpXy/u2JRVhOdbF6P
-         dfYJHOdPu6bdj3Gpfl8R3od52vDEc7+itM3hqjfZVh2r8BVOEj//DXqMap0eGMn8gVx3
-         /6WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680369871;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qxMDn/yltQyq4K/x1oMJCpvevyLh8LBMcartubJGxQY=;
-        b=V6wOB/US/GY5iI0f+xyji49cYd+PtenOSOukcG6Ytqi/IpKqUHEILms+5SAEu/Xgcv
-         P01EhUMNRCLJEoYXFrjcwn54Xnp1+IeBOT8zids8/bNUeEJOoCVz5EDS9xzWDS5eFVTY
-         7s2gWx5kDQLAJ3JZpwmt/lc7J5FaYxs7ltMmaJDVZs8uocGqPKyMRYWelgMIOS/D7FgA
-         0bKQiTxYznhpJBmJFoy39sZKud//gtcJswkOZEIYLQPMg6Z16JYT/hTeseFnYGfzK4dp
-         m9G4ok75+oU/O5hqp+mtD/aQxMfqPwJG1a6iaKZtzhW6Y/D+1q66GQdCBYKQ2yaKPgAY
-         w63Q==
-X-Gm-Message-State: AO0yUKUYl83aw0VOevhLeerQjOW/n98lXbUgtOuHllF9zRk+p+1kQMiX
-        9sLxvjaGrw5zW1H3lkOTtpWz4VC1pRr/woYShCqAew==
-X-Google-Smtp-Source: AK7set9xLgmHXiMGn+jeUBL8cGjeJA3n0v0xvxORWBx0f9qHdPrcy7o0gjM6tsqE957Y9/XPwolwLzqo2O4gswHwtl4=
-X-Received: by 2002:a7b:cd0d:0:b0:3ee:10fb:56f8 with SMTP id
- f13-20020a7bcd0d000000b003ee10fb56f8mr6815557wmj.8.1680369871601; Sat, 01 Apr
- 2023 10:24:31 -0700 (PDT)
+        Sat, 1 Apr 2023 13:35:41 -0400
+Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [IPv6:2001:67c:2050:0:465::202])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0583B443;
+        Sat,  1 Apr 2023 10:35:38 -0700 (PDT)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4Ppknx5RwKz9sTM;
+        Sat,  1 Apr 2023 19:35:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
+        s=MBO0001; t=1680370533;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=QlwqryxjwFEcRsCwNYC3KAfNY5tSCiH5bPCN24vQW8k=;
+        b=Y8Ggx7+z0JfhkBKAMSKQwsd3Efzv/edr2wsa1hx7Dk9YaqXtDJE66DNTLbh5UTcGn0UZvH
+        fncXnnA847hrNt1TSPE5xNOo1uWVEIexnbtX7s+lT1McTSM6kqG6BPgIyZTyu8vnED5HyJ
+        XaPG76fYyL6BfuL9MuomWOnJyhU+2Y4/Bkic+A0zbFC84uTW4INTlnAnErAoC77+boCive
+        N5CQfIUFUFd965Zcyx9Rrg1m6rAovuzbPGXGHLAng0J//Z8Cckr/FgGZzGX+6jdZ3x8R6A
+        66fsQI+cRLmTAAnfxIAvj53mePFJV81/e07xYV3od9qQSky22o47JlkjwtQTWA==
+From:   Dylan Van Assche <me@dylanvanassche.be>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Dylan Van Assche <me@dylanvanassche.be>
+Subject: [PATCH v4 0/6] dts: qcom: arm64: sdm845: SLPI DSP enablement
+Date:   Sat,  1 Apr 2023 19:35:17 +0200
+Message-Id: <20230401173523.15244-1-me@dylanvanassche.be>
 MIME-Version: 1.0
-References: <20230401154725.1059563-1-bhupesh.sharma@linaro.org>
- <20230401154725.1059563-2-bhupesh.sharma@linaro.org> <CAA8EJpruSDvsr7hsheeOHHF2EXshq8wM_HCiV8Cx3i5zVOweDQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpruSDvsr7hsheeOHHF2EXshq8wM_HCiV8Cx3i5zVOweDQ@mail.gmail.com>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Sat, 1 Apr 2023 22:54:20 +0530
-Message-ID: <CAH=2Ntw6+vKyRZQWq1Zg=gUs2SJgqFUe7NUtqqJSozi-FOLCOA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom,qmp-usb: Fix phy subnode
- for SM6115 & QCM2290 USB3 PHY
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,67 +56,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 1 Apr 2023 at 22:42, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Sat, 1 Apr 2023 at 18:49, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
-> >
-> > The USB3 SS (QMP) PHY found on Qualcomm SM6115 & QCM2290 SoCs is
-> > similar to sm8150 QMP PHY in the sense that the phy subnode supports
->
-> sm8150 has 5 QMP PHYs. Which one is mentioned here?
+* About *
 
-'qcom,sm8150-qmp-usb3-phy' which is named as 'usb_1_qmpphy' in
-sm8150.dtsi (see :
-<https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/sm8150.dtsi#n3394>)
-and has 6 regs , namely TX lane 1, RX lane 1, PCS, TX lane 2, RX lane
-2 and PCS_MISC.
+The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+DSP for sensors connected to the SoC which is responsible for exposing
+sensors to userspace, power saving, and other features. 
+While sensors are connected to GPIOs of the SoC, they cannot be used
+because the hypervisor blocks direct access to the sensors, thus the 
+DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+GLink edge (dsps) to communicate with the host and has a FastRPC interface
+to load files from the host filesystem such as sensor configuration files.
+The FastRPC interface does not use regular FastRPC Compute Banks
+but instead uses an allocated CMA region through which communication happens.
 
-Regards,
-Bhupesh
+* Changes *
 
-> > 6 regs, namely TX lane 1, RX lane 1, PCS, TX lane 2, RX lane 2 and
-> > PCS_MISC.
-> >
-> > Update the dt-bindings document to reflect the same.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  .../devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> > index e81a38281f8c..1575dc70bcf2 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> > @@ -276,7 +276,9 @@ allOf:
-> >          compatible:
-> >            contains:
-> >              enum:
-> > +              - qcom,qcm2290-qmp-usb3-phy
-> >                - qcom,sdm845-qmp-usb3-phy
-> > +              - qcom,sm6115-qmp-usb3-phy
-> >                - qcom,sm8150-qmp-usb3-phy
-> >                - qcom,sm8350-qmp-usb3-phy
-> >                - qcom,sm8450-qmp-usb3-phy
-> > @@ -318,12 +320,10 @@ allOf:
-> >              enum:
-> >                - qcom,ipq6018-qmp-usb3-phy
-> >                - qcom,ipq8074-qmp-usb3-phy
-> > -              - qcom,qcm2290-qmp-usb3-phy
-> >                - qcom,sc7180-qmp-usb3-phy
-> >                - qcom,sc8180x-qmp-usb3-phy
-> >                - qcom,sdx55-qmp-usb3-uni-phy
-> >                - qcom,sdx65-qmp-usb3-uni-phy
-> > -              - qcom,sm6115-qmp-usb3-phy
-> >                - qcom,sm8150-qmp-usb3-uni-phy
-> >                - qcom,sm8250-qmp-usb3-phy
-> >      then:
-> > --
-> > 2.38.1
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+This patchseries completes support for the SLPI in the Qualcomm SDM845 SoC
+by adding the SLPI to the SDM845 DTS and enable it for 2 hardware devices:
+- Oneplus 6
+- SHIFTPHONES SHIFT6mq
+
+* Related patches *
+
+1. Remoteproc changes (v3) to support the SLPI DSP in SDM845:
+https://lore.kernel.org/linux-remoteproc/20230330164633.117335-1-me@dylanvanassche.be
+2. FastRPC changes (v2) to support the SLPI DSP in SDM845:
+https://lore.kernel.org/linux-arm-msm/20230327184204.498032-1-me@dylanvanassche.be/
+
+This serie does not depend on any serie, but all of them are necessary
+to enable the feature in the end.
+
+* Changelog *
+
+Changes in v2:
+
+- Removed double blank lines
+- Enforce alphabetically order for 'slpi_pas'
+- Reordered 'slpi_pas' properties
+- Fixed FastRPC syntax
+- Dropped qcom,assign-all-mem property as this is not necessary anymore
+
+Changes in v3:
+
+- Dropped FastRPC dt-bindings change, unnecessary to relax the bindings
+- Add reg property to compute-cb for the SLPI on SDM845
+
+Changes in v4:
+- Moved SLPI node in sdm845.dtsi to honor sorting by unit address
+- Reordered FastRPC memory nodes to have a reverse-Christmas-tree layout
+- Use 0x0 instead of 0 for memory addresses
+- Add SSC_Q6 (0x5) and ADSP_Q6 (0x6) VMIDs to qcom,scm.h
+- Replace magic VMID values by the qcom,scm.h in sdm845.dtsi
+- Added Reviewed-by tags for patches:
+  - 'dts: arm64: qcom: sdm845-oneplus: enable SLPI'
+  - 'dts: arm64: qcom: sdm845-shift-axolotl: enable SLPI'
+  as these are unchanged in v4.
+
+Kind regards,
+Dylan Van Assche
+
+Dylan Van Assche (6):
+  dts: arm64: qcom: sdm845: add SLPI remoteproc
+  dts: arm64: qcom: sdm845: add SLPI FastRPC support
+  dt-bindings: firmware: qcom: scm: add SSC_Q6 and ADSP_Q6 VMIDs
+  dts: qcom: arm64: qcom: sdm845: use defines for VMIDs
+  dts: arm64: qcom: sdm845-oneplus: enable SLPI
+  dts: arm64: qcom: sdm845-shift-axolotl: enable SLPI
+
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  5 ++
+ .../boot/dts/qcom/sdm845-shift-axolotl.dts    |  5 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 62 +++++++++++++++++++
+ include/dt-bindings/firmware/qcom,scm.h       |  2 +
+ 4 files changed, 74 insertions(+)
+
+-- 
+2.39.2
+
