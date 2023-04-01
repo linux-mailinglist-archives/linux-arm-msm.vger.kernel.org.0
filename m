@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6691D6D3494
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 00:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E5A86D3492
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 00:08:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229495AbjDAWIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 18:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40908 "EHLO
+        id S230240AbjDAWIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 18:08:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230191AbjDAWIT (ORCPT
+        with ESMTP id S230204AbjDAWIR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 18:08:19 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227AA27000
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 15:08:17 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id z42so26613677ljq.13
+        Sat, 1 Apr 2023 18:08:17 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D55783CD
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 15:08:16 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id z42so26613700ljq.13
         for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 15:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680386895;
+        d=linaro.org; s=google; t=1680386896;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wo7hNFgWkmnMOkJb7IUde00I0wylcKYMGhkL0Te7EUM=;
-        b=SH+EbcUlX4yL03lNwa4vuXBYV37S+JaguNgM4CWXCzaodw49NgcKRERthNX8HgTzE9
-         WJVIDOAG2U3NgYVm4gA0WAmQvpPcM9HZ3fcwBSuOU1ogH9/4DPcdxTUHVd8bncop2rft
-         WpN88qD9XPZz7ocoQQGYE7wxTuuhSxS3UD3d4fwliaiikxL9U+0BOJbaBblHY4eQaWUi
-         MbrZ/ZJ0NB97C4RMlJWWiISDRckPLqowcHD7/DiS4/vMoHhglfo6+tLUk+hOWmXederL
-         LuK+OAh31toQhdA3qPRTwDx8bP143+EIoWOsKk3kPLNvyTlW5Q3rhywwhZlPmzNBEKf4
-         hcLg==
+        bh=BWojdc1ild/jkFKcyiUFlzgUKZw9Hjq+5anNECZfCIY=;
+        b=Q9byt6+GUeEnSswYsjDJovP3MECz1PizUCuzOd+lX7l9yUJPgJIFTAzQs7+0ccTDtu
+         v5ia7JGYlH1K+B6MpU3LxMq3povv6FD4j3/1xadfX3MGda1oL2dllKxdOF4u1wMESHCJ
+         V4u1IxVLWHxIV6Yt19sC6LdrVjkaxToufu13vniOmlV2fbhd0n6H5LHD44UXxOODBB57
+         e3MsuyF1pFTJ6fjLLg0k8A3Z5EfSdSfx+gH+5jxvR5yGu4elO6HSaULFcI2jWZHoLDQ4
+         wsuFfk3ZkNKfQm9f2/+VLzo5zNJRB2URFEY6wRQwR0FMxuJVrQqiOu244oTZJ1tThlp7
+         46ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680386895;
+        d=1e100.net; s=20210112; t=1680386896;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wo7hNFgWkmnMOkJb7IUde00I0wylcKYMGhkL0Te7EUM=;
-        b=Jj4kHxCMU3S4quIMvaKHI8Akuaud9xkkoQqD0dTl76Nd0pRIdsA4Lww4Zb42uQpudm
-         gf8l31YuxGq0l2U0cSFIpAJ1hbljIxkko53DNE1sZnRkbRuid1AmdoFuKh6qm+hk/21J
-         6l6ar59ZVZE56QQOM3SqUia4FZgTD5MruG4Ge7trjwkSUOCCxYyvAII6yMB/TqMEK/9r
-         tkmVjQYmGC8SZ8g2UO6fsnb55yTE6jRhTzbxLrAOsJcEmj/LCjXe5KdFcLFRkcxApH4I
-         pjbvdvL+qAUYRoVuDgtpnkOZ0cNP87d3r+XkNhobAlMr50dhbNLpnHrf2KSX+xCxHp+K
-         Hvcw==
-X-Gm-Message-State: AAQBX9fRyKVyM9BPf7sI8ttypvOhe5R2sf6CgmfdrfSGTLJEJgkKXdOq
-        jItkkQJ/1ftbLmp09QYp/9nQkQ==
-X-Google-Smtp-Source: AKy350ZsWyAGhQPrVhlRvpsC6hpOup3F5JMBatVQQTkgFICDuU3e6rzjpfCJlvPcsMxpArvm7ghfLQ==
-X-Received: by 2002:a2e:b0d3:0:b0:2a2:e84c:bff9 with SMTP id g19-20020a2eb0d3000000b002a2e84cbff9mr9128136ljl.29.1680386895307;
+        bh=BWojdc1ild/jkFKcyiUFlzgUKZw9Hjq+5anNECZfCIY=;
+        b=2EEBxZcqDr7bHTm2u4oBw87u2JYAUbY4BRejm9dvVLW7goxDS225XSgDfO8JGCnDf/
+         jiuEIyQt/uDZ7oBuGCFeoyta/EJ4AxFMm1sCEUXBTnN2YnNVfjUaCjl1CjkJhX3Mn88W
+         YqvsFA9epeAfZ8MxRdpYFzgAxljxRA/ti+51SS9PWEmNffEpWZTBH42JGSTLz33mzpTq
+         WzJKQMOIOubUPnnlDmjIV5+g/6WziWsTLHY/3LNs3C/rC4a0UznZjPOP+IeqU0l9n//9
+         JP6XJ2n5WPgamo1yy9DjkoX7jvaD/SlaiWHTFVU2nOvtLyvndFm0Y66Ws8+u2I0kZ86G
+         kPaw==
+X-Gm-Message-State: AAQBX9e1GsStxQC5Z89Enrq+mxKBBrRNdcXqKsxLzBjsysw6mWKiAia4
+        WLzCHWPzMK03Xo3Uw4BrsUJFjg==
+X-Google-Smtp-Source: AKy350ZesZrciIaS34piWXf66NS5s/Sz5aXKdUb1T4ZUckmKU3mk6TM+tKJluPSPKVxTs8z/fkyUig==
+X-Received: by 2002:a2e:80c9:0:b0:2a3:8903:f161 with SMTP id r9-20020a2e80c9000000b002a38903f161mr9259265ljg.42.1680386895999;
         Sat, 01 Apr 2023 15:08:15 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id k17-20020a2e9211000000b0029bd4d0d3f2sm997590ljg.33.2023.04.01.15.08.14
+        by smtp.gmail.com with ESMTPSA id k17-20020a2e9211000000b0029bd4d0d3f2sm997590ljg.33.2023.04.01.15.08.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 15:08:14 -0700 (PDT)
+        Sat, 01 Apr 2023 15:08:15 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Johan Hovold <johan+linaro@kernel.org>,
         Jonathan Cameron <jic23@kernel.org>,
         Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-Subject: [PATCH v2 06/22] arm64: dts: qcom: pmk8350: rename pon label
-Date:   Sun,  2 Apr 2023 01:07:54 +0300
-Message-Id: <20230401220810.3563708-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 07/22] arm64: dts: qcom: pmk8350: port sdam_6 device from sc8280xp-pmics
+Date:   Sun,  2 Apr 2023 01:07:55 +0300
+Message-Id: <20230401220810.3563708-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
 References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
@@ -77,109 +77,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To reduce a possibility of the conflicts, rename pmk8350's pon_pwrkey
-and pon_resin to contain the PMIC name too.
+sc8280xp-pmics.dtsi contains a copy of pmk8350 with one extra device,
+nvram (sdam). Port its definition from sc8280xp-pmics.dtsi into main
+pmk8350.dtsi file.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pmk8350.dtsi                   | 4 ++--
- arch/arm64/boot/dts/qcom/sm8350-mtp.dts                 | 8 ++++----
- arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi | 8 ++++----
- arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi | 4 ++--
- 4 files changed, 12 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/pmk8350.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-index f26fb7d32faf..455ffffb5f5c 100644
+index 455ffffb5f5c..26e40dbfc173 100644
 --- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-@@ -25,14 +25,14 @@ pmk8350_pon: pon@1300 {
- 			reg = <0x1300>, <0x800>;
- 			reg-names = "hlos", "pbs";
+@@ -66,6 +66,15 @@ pmk8350_rtc: rtc@6100 {
+ 			status = "disabled";
+ 		};
  
--			pon_pwrkey: pwrkey {
-+			pmk8350_pon_pwrkey: pwrkey {
- 				compatible = "qcom,pmk8350-pwrkey";
- 				interrupts = <PMK8350_SID 0x13 0x7 IRQ_TYPE_EDGE_BOTH>;
- 				linux,code = <KEY_POWER>;
- 				status = "disabled";
- 			};
- 
--			pon_resin: resin {
-+			pmk8350_pon_resin: resin {
- 				compatible = "qcom,pmk8350-resin";
- 				interrupts = <PMK8350_SID 0x13 0x6 IRQ_TYPE_EDGE_BOTH>;
- 				status = "disabled";
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-index d21d2aacf201..152601832cbc 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-mtp.dts
-@@ -285,17 +285,17 @@ &mpss {
- 	firmware-name = "qcom/sm8350/modem.mbn";
- };
- 
--&pmk8350_rtc {
-+&pmk8350_pon_pwrkey {
- 	status = "okay";
- };
- 
--&pon_pwrkey {
-+&pmk8350_pon_resin {
- 	status = "okay";
-+	linux,code = <KEY_VOLUMEDOWN>;
- };
- 
--&pon_resin {
-+&pmk8350_rtc {
- 	status = "okay";
--	linux,code = <KEY_VOLUMEDOWN>;
- };
- 
- &qupv3_id_0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-index 89382ad73133..e28f49e31b9f 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
-@@ -618,17 +618,17 @@ vol_down_n: vol-down-n-state {
- 	};
- };
- 
--&pmk8350_rtc {
-+&pmk8350_pon_pwrkey {
- 	status = "okay";
- };
- 
--&pon_pwrkey {
-+&pmk8350_pon_resin {
- 	status = "okay";
-+	linux,code = <KEY_VOLUMEUP>;
- };
- 
--&pon_resin {
-+&pmk8350_rtc {
- 	status = "okay";
--	linux,code = <KEY_VOLUMEUP>;
- };
- 
- &qupv3_id_0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-index 67538b5a557e..99e9b776b93d 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-@@ -684,11 +684,11 @@ &pmk8350_gpios {
- 			  "PMK8350_OPTION";
- };
- 
--&pon_pwrkey {
-+&pmk8350_pon_pwrkey {
- 	status = "okay";
- };
- 
--&pon_resin {
-+&pmk8350_pon_resin {
- 	linux,code = <KEY_VOLUMEUP>;
- 	status = "okay";
- };
++		pmk8350_sdam_6: nvram@8500 {
++			compatible = "qcom,spmi-sdam";
++			reg = <0x8500>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges = <0 0x8500 0x100>;
++			status = "disabled";
++		};
++
+ 		pmk8350_gpios: gpio@b000 {
+ 			compatible = "qcom,pmk8350-gpio", "qcom,spmi-gpio";
+ 			reg = <0xb000>;
 -- 
 2.30.2
 
