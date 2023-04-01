@@ -2,100 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AE2E6D2C61
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 03:10:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AD616D2C84
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 03:41:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233317AbjDABKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 31 Mar 2023 21:10:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38504 "EHLO
+        id S233271AbjDABld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 31 Mar 2023 21:41:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232190AbjDABKa (ORCPT
+        with ESMTP id S230193AbjDABlc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 31 Mar 2023 21:10:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 469D91BF48
-        for <linux-arm-msm@vger.kernel.org>; Fri, 31 Mar 2023 18:10:29 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3310v1bU004496;
-        Sat, 1 Apr 2023 01:10:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tUiFAVKPUWdEA4iAtHUYnJrmlY855FNd++quJPs1PcI=;
- b=G5JFo/UPMPdHmX4obJxXCdtOdqLsV/vbrCNh55ChcrQfpKgbs7meZLaX8VvjBLf7p3fY
- P3LYpWJlbnWUybK8qb//h5nPv35W3bg3+CpbEYteihzpjdVFjtm6LlGsLeIxDSIg8wlD
- vkJES1/VjRX9HnjadxcDcn5CfDDoBKt3dVlLjvI+EXnsTJHQGnDrN2+iajTI6W1hnz6i
- M+ikX6JdugE1dg4+1wCFTiMzU/+X4lvGy63bxLxxccjZ4jROWpdmtATRvJ1tEM/SQcNg
- a/gzxeXkIRsTCZFoJJu1zwQpQbsZ6geSrQZADJtlAmyU+n9D7f4qSbO2oR8FtcTp9TPy NA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pnyeya41x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 01 Apr 2023 01:10:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3311AJJi001897
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 1 Apr 2023 01:10:19 GMT
-Received: from [10.110.53.163] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 31 Mar
- 2023 18:10:18 -0700
-Message-ID: <8d73aaa5-50b1-7084-bfbd-56f89e6bff3f@quicinc.com>
-Date:   Fri, 31 Mar 2023 18:10:17 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 04/38] drm/msm/dpu: move UBWC/memory configuration to
- separate struct
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Fri, 31 Mar 2023 21:41:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3704E1D2CE;
+        Fri, 31 Mar 2023 18:41:32 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C578062CC7;
+        Sat,  1 Apr 2023 01:41:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBD8C4339C;
+        Sat,  1 Apr 2023 01:41:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680313291;
+        bh=zULgrpvFzLbZxGzXFkFJJiNXYfMCPshJoWU2onBetIg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=CJnx17/m2E+WI3RYOLEY8ocYjfVxBcVUvPyY/BZQtLSj3xRxNkbdr03lpD5mWWenW
+         ACNcbf1Hj+C2Sqe/JLEK+WXr7Jp2c496F+uegJY/azAhGCV2FNqcybeqN7Qqt1BcGD
+         fQ0W/V6FQdhg6xYf6Z5mGjiF9oxaLTxajsOhiu9QDZMtBj0GWWrluqIsCclMRJPEsr
+         sbA+pelM+6F/ywkQq3R98s0bKkQhgDCoajNeHD1Onll/YwDUpRO1A3b0bvY+0Vibr3
+         FRlKF1O7oZnp4P6bMsnU3FHd4YWHsOZcrwr+tMqcPG0yOVayt5O9PgtXE2m789VFXU
+         EQFXhIf9YMV0Q==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Luca Weiss <luca@z3ntu.xyz>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
- <20230330215324.1853304-5-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230330215324.1853304-5-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9_UMhNjJui4eT46CroK6KhmKFTDgBj--
-X-Proofpoint-ORIG-GUID: 9_UMhNjJui4eT46CroK6KhmKFTDgBj--
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-31_07,2023-03-31_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 suspectscore=0
- mlxlogscore=715 spamscore=0 mlxscore=0 priorityscore=1501 clxscore=1015
- phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2304010008
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.2 02/25] ARM: dts: qcom: apq8026-lg-lenok: add missing reserved memory
+Date:   Fri, 31 Mar 2023 21:41:00 -0400
+Message-Id: <20230401014126.3356410-2-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230401014126.3356410-1-sashal@kernel.org>
+References: <20230401014126.3356410-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Luca Weiss <luca@z3ntu.xyz>
 
+[ Upstream commit ecd240875e877d78fd03efbc62292f550872df3f ]
 
-On 3/30/2023 2:52 PM, Dmitry Baryshkov wrote:
-> UBWC and highest bank settings differ slightly between different DPU
-> units of the same generation, while the dpu_caps and dpu_mdp_cfg are
-> much more stable. To ease configuration reuse move ubwc_swizzle and
-> highest_bank_bit data to separate structure.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+Turns out these two memory regions also need to be avoided, otherwise
+weird things will happen when Linux tries to use this memory.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230308-lenok-reserved-memory-v1-1-b8bf6ff01207@z3ntu.xyz
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+index de2fb1c01b6e3..b82381229adf6 100644
+--- a/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
++++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
+@@ -27,6 +27,16 @@ chosen {
+ 	};
+ 
+ 	reserved-memory {
++		sbl_region: sbl@2f00000 {
++			reg = <0x02f00000 0x100000>;
++			no-map;
++		};
++
++		external_image_region: external-image@3100000 {
++			reg = <0x03100000 0x200000>;
++			no-map;
++		};
++
+ 		adsp_region: adsp@3300000 {
+ 			reg = <0x03300000 0x1400000>;
+ 			no-map;
+-- 
+2.39.2
+
