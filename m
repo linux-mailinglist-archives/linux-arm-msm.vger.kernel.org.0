@@ -2,318 +2,258 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 591C26D30B6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 14:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CA9C6D3158
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  1 Apr 2023 16:33:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbjDAMVg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 1 Apr 2023 08:21:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40226 "EHLO
+        id S229570AbjDAOdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 1 Apr 2023 10:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjDAMVf (ORCPT
+        with ESMTP id S229894AbjDAOdJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 1 Apr 2023 08:21:35 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB4C1191F1
-        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 05:21:33 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id by14so6550245ljb.12
-        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 05:21:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680351692;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AZ2ewhbHO8gaVPhu+Agj8Vv62N4QLjibp6e4jDmUV/Y=;
-        b=FPxzYjka4DKzGeWgiF70dDCv1l3rXWTAO67npQHzlvtK1jmylgS32BCQEz6um6UnWP
-         S4qpjwyPcHTcu6fo9OmTt07m+TZa0mzIphw4WyCJA+1ki9ThfEOKoT3+VRKlajpQd3jW
-         U9WvZ2dJqHzU9uJnrDIxkRkjR3ukttAn0U4ayxqqoeyTvEDakpL6M7BP+CVWt37oOeMC
-         j/4P3WsBn76jnqHMPzlk0IqvqedlJocDD9gc86BbVsl0nzuh7EqybFfJYIA9+ptZ0kmf
-         guXc4xLuJVTp1L+zlaTar8IqFQETeHJ2iE04VFMVcEXF4Ac1L7ufXY7oP8+F5D/myZJt
-         2meg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680351692;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AZ2ewhbHO8gaVPhu+Agj8Vv62N4QLjibp6e4jDmUV/Y=;
-        b=BiyuFcZxCttyd2Ysy5ckUZxa3A3LRZQN8x1cPu6jhSLHgWCKCnIrJiaXnm4Z1euul2
-         Jyq5Sc5wtq0QFId5nNPZPAOXGuXBs0QbR0EhU15laPQm8c2pViHLjYfmSNdD1Rrwf5nr
-         J0N3tLTFTxuRp54WpeBIjanfLoqLxT4J3YMYYpMToxuBIHNnxfcsNGSEzefy82JPkRsz
-         P6obTcxfXyVSvkgqoIJKmrEC4Jy54idSpwm4cB4juGR1bEf+ZSUfZpCvouGVgsj4PmYb
-         9kVh6V1wuYht6wVaQ2YNzoVdOlKTQxhzh4+aXlVouYCypCS8f1EfMWKBbmh/iyf4k5Iv
-         v0Fw==
-X-Gm-Message-State: AAQBX9dl+UQmwRSd4cpVMDeF26gaQEnnfkChlRPKjvIHTM0eUIFGRdh7
-        yNyjhhSOll8EpwXJI1Gi9hpuncoI8fjihLPoPMA=
-X-Google-Smtp-Source: AKy350bvn9XtMMorAvyMJCKZdH+KM11VYlH3otHJHzrzFhCFLo17S89b+0vEhCvj2WBvTXf0iQZ8OQ==
-X-Received: by 2002:a2e:9b81:0:b0:295:a8e6:6b15 with SMTP id z1-20020a2e9b81000000b00295a8e66b15mr3721567lji.4.1680351692004;
-        Sat, 01 Apr 2023 05:21:32 -0700 (PDT)
-Received: from [192.168.1.101] (abxj225.neoplus.adsl.tpnet.pl. [83.9.3.225])
-        by smtp.gmail.com with ESMTPSA id e8-20020a2e8ec8000000b00293534d9757sm789793ljl.81.2023.04.01.05.21.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Apr 2023 05:21:31 -0700 (PDT)
-Message-ID: <0ff99bb5-4792-270d-b03e-2638939f160f@linaro.org>
-Date:   Sat, 1 Apr 2023 14:21:26 +0200
+        Sat, 1 Apr 2023 10:33:09 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B3E1EFC4;
+        Sat,  1 Apr 2023 07:33:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 079B1B80B6B;
+        Sat,  1 Apr 2023 14:33:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7E6C433EF;
+        Sat,  1 Apr 2023 14:33:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680359584;
+        bh=JIhjvzZjVgxbZ3IK6UWczaUzyLdXz5AOFgcqgubTBoE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=H7Z1RaY3GsJvS8DJzhR/pyw8nG0W+9lAut1A2Uo9a3gSA6gqOqpZGEE+YkZNe/H6X
+         wc/Lf96YIH2qUDECGXG/CdiDpxpCGltR4T8xzNvZJS5Kmb0vpWptmSJiv4Gjr+3FfC
+         hK2z74cJKmXcujbCjTJ1gx6Dgg3CCpWsoJmx0vyYxL4jcgMz0v80p+TeTo3bS+diGY
+         /dmwD5JB3YUlTHRrajTJP/L9ASf4DM6CpFQVzPuR9T04HZtyZn3/4VgwSdqtE/gdyw
+         /75K6z5PglvkiPnWXWpajZRIeHOmNsK/SHsSTsE+2aXi4fF8V3S/42Zd7SvxpDCvE3
+         OjjVRyERyarCw==
+Date:   Sat, 1 Apr 2023 15:48:12 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        devicetree@vger.kernel.org, Lars-Peter Clausen <lars@metafoo.de>,
+        linux-iio@vger.kernel.org
+Subject: Re: [PATCH 1/6] dt-bindings: iio: qcom,spmi-adc7-pmk8350.h: include
+ sid into defines
+Message-ID: <20230401154812.62152900@jic23-huawei>
+In-Reply-To: <20230329000833.2507594-2-dmitry.baryshkov@linaro.org>
+References: <20230329000833.2507594-1-dmitry.baryshkov@linaro.org>
+        <20230329000833.2507594-2-dmitry.baryshkov@linaro.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU
- idle-states
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org
-References: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 29 Mar 2023 03:08:28 +0300
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
 
-
-On 30.03.2023 21:33, Bhupesh Sharma wrote:
-> Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
+> pmk8350 can take different addresses on SPMI bus. Rather than having a
+> default SID, follow the pm8350's example and make the sid explicit when
+> specifying ADC channels.
 > 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Hi Dmitry,
+
+How do you want this applied? I can take it through IIO if you like but
+I'm not sure if that will cause trouble for other dts patches in flight.
+
+I'm fine with it going via another tree though and don't expect
+to see any clashes. If so.
+
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
 > ---
-> Changes since v1:
-> - v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
-> - Addressed Konrad's comments on v1 and added GDHS and Power Collapse
->   cluster power states.
+>  .../bindings/iio/adc/qcom,spmi-vadc.yaml      |  2 +-
+>  .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |  4 +-
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  2 +-
+>  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |  2 +-
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  4 +-
+>  .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |  2 +-
+>  .../dt-bindings/iio/qcom,spmi-adc7-pmk8350.h  | 52 +++++++++----------
+>  7 files changed, 32 insertions(+), 36 deletions(-)
 > 
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
->  1 file changed, 136 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 2a51c938bbcb..b63395d476ed 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -45,6 +45,8 @@ CPU0: cpu@0 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
->  			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			power-domains = <&CPU_PD0>;
-> +			power-domain-names = "psci";
->  			L2_0: l2-cache {
->  				compatible = "cache";
->  				cache-level = <2>;
-> @@ -61,6 +63,8 @@ CPU1: cpu@1 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
->  			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			power-domains = <&CPU_PD1>;
-> +			power-domain-names = "psci";
->  		};
+> diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+> index bd6e0d6f6e0c..df317901e7d0 100644
+> --- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+> +++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
+> @@ -293,7 +293,7 @@ examples:
 >  
->  		CPU2: cpu@2 {
-> @@ -73,6 +77,8 @@ CPU2: cpu@2 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
->  			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			power-domains = <&CPU_PD2>;
-> +			power-domain-names = "psci";
->  		};
+>              /* Other properties are omitted */
+>              xo-therm@44 {
+> -                reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +                reg = <PMK8350_ADC7_AMUX_THM1_100K_PU(0)>;
+>                  qcom,ratiometric;
+>                  qcom,hw-settle-time = <200>;
+>              };
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> index 52ec18cf1eda..ff07d27775dc 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
+> @@ -218,7 +218,7 @@ examples:
 >  
->  		CPU3: cpu@3 {
-> @@ -85,6 +91,8 @@ CPU3: cpu@3 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
->  			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			power-domains = <&CPU_PD3>;
-> +			power-domain-names = "psci";
->  		};
+>              /* Other properties are omitted */
+>              xo-therm@44 {
+> -                reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +                reg = <PMK8350_ADC7_AMUX_THM1_100K_PU(0)>;
+>                  qcom,ratiometric;
+>                  qcom,hw-settle-time = <200>;
+>              };
+> @@ -240,7 +240,7 @@ examples:
 >  
->  		CPU4: cpu@100 {
-> @@ -97,6 +105,8 @@ CPU4: cpu@100 {
->  			dynamic-power-coefficient = <282>;
->  			next-level-cache = <&L2_1>;
->  			qcom,freq-domain = <&cpufreq_hw 1>;
-> +			power-domains = <&CPU_PD4>;
-> +			power-domain-names = "psci";
->  			L2_1: l2-cache {
->  				compatible = "cache";
->  				cache-level = <2>;
-> @@ -113,6 +123,8 @@ CPU5: cpu@101 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_1>;
->  			qcom,freq-domain = <&cpufreq_hw 1>;
-> +			power-domains = <&CPU_PD5>;
-> +			power-domain-names = "psci";
->  		};
+>              pmk8350-xo-therm@0 {
+>                  reg = <0>;
+> -                io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +                io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU(0)>;
+>                  qcom,decimation = <340>;
+>                  qcom,ratiometric;
+>                  qcom,hw-settle-time-us = <200>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index 5dc9bee28e7f..14c9bdaa46ed 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -433,7 +433,7 @@ &pcie1_phy {
 >  
->  		CPU6: cpu@102 {
-> @@ -125,6 +137,8 @@ CPU6: cpu@102 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_1>;
->  			qcom,freq-domain = <&cpufreq_hw 1>;
-> +			power-domains = <&CPU_PD6>;
-> +			power-domain-names = "psci";
->  		};
+>  &pmk8350_vadc {
+>  	pmk8350-die-temp@3 {
+> -		reg = <PMK8350_ADC7_DIE_TEMP>;
+> +		reg = <PMK8350_ADC7_DIE_TEMP(0)>;
+>  		label = "pmk8350_die_temp";
+>  		qcom,pre-scaling = <1 1>;
+>  	};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+> index cb0cc2ba2fa3..e3919e074ebd 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
+> @@ -389,7 +389,7 @@ &pm8350c_pwm {
 >  
->  		CPU7: cpu@103 {
-> @@ -137,6 +151,8 @@ CPU7: cpu@103 {
->  			enable-method = "psci";
->  			next-level-cache = <&L2_1>;
->  			qcom,freq-domain = <&cpufreq_hw 1>;
-> +			power-domains = <&CPU_PD7>;
-> +			power-domain-names = "psci";
->  		};
+>  &pmk8350_vadc {
+>  	pmk8350-die-temp@3 {
+> -		reg = <PMK8350_ADC7_DIE_TEMP>;
+> +		reg = <PMK8350_ADC7_DIE_TEMP(0)>;
+>  		label = "pmk8350_die_temp";
+>  		qcom,pre-scaling = <1 1>;
+>  	};
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index 46c7fdafb840..590400985055 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -824,13 +824,13 @@ &pmk8280_vadc {
+>  	status = "okay";
 >  
->  		cpu-map {
-> @@ -176,6 +192,68 @@ core3 {
->  				};
->  			};
->  		};
-> +
-> +		idle-states {
-> +			entry-method = "psci";
-> +
-> +			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "silver-rail-power-collapse";
-> +				arm,psci-suspend-param = <0x40000003>;
-> +				entry-latency-us = <290>;
-> +				exit-latency-us = <376>;
-> +				min-residency-us = <1182>;
-> +				local-timer-stop;
-> +			};
-> +
-> +			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> +				compatible = "arm,idle-state";
-> +				idle-state-name = "gold-rail-power-collapse";
-> +				arm,psci-suspend-param = <0x40000003>;
-> +				entry-latency-us = <297>;
-> +				exit-latency-us = <324>;
-> +				min-residency-us = <1110>;
-> +				local-timer-stop;
-> +			};
-> +		};
-> +
-> +		domain-idle-states {
-> +			CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
-> +				/* GDHS */
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x40000022>;
-This 0x22 ending seems very sus.
-
-The last nibble represents the core-level power state and the
-penultimate one represents the same at cluster level. A value
-of 2 in that cluster nibble is actually undefined by the PSCI spec,
-whereas the value of 4 (as you have in all of the other idle
-states, including D3G for the perf cluster) corresponds to
-"Retention", so unless there's a very weird nuance in the
-TZ for this SoC, it should probably end in 0x42.
-
-Otherwise I think this LGTM now!
-
-Konrad
-> +				entry-latency-us = <360>;
-> +				exit-latency-us = <421>;
-> +				min-residency-us = <782>;
-> +			};
-> +
-> +			CLUSTER_0_SLEEP_1: cluster-sleep-0-1 {
-> +				/* Power Collapse */
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x41000044>;
-> +				entry-latency-us = <800>;
-> +				exit-latency-us = <2118>;
-> +				min-residency-us = <7376>;
-> +			};
-> +
-> +			CLUSTER_1_SLEEP_0: cluster-sleep-1-0 {
-> +				/* GDHS */
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x40000042>;
-> +				entry-latency-us = <314>;
-> +				exit-latency-us = <345>;
-> +				min-residency-us = <660>;
-> +			};
-> +
-> +			CLUSTER_1_SLEEP_1: cluster-sleep-1-1 {
-> +				/* Power Collapse */
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x41000044>;
-> +				entry-latency-us = <640>;
-> +				exit-latency-us = <1654>;
-> +				min-residency-us = <8094>;
-> +			};
-> +		};
+>  	pmic-die-temp@3 {
+> -		reg = <PMK8350_ADC7_DIE_TEMP>;
+> +		reg = <PMK8350_ADC7_DIE_TEMP(0)>;
+>  		qcom,pre-scaling = <1 1>;
+>  		label = "pmk8350_die_temp";
 >  	};
 >  
->  	firmware {
-> @@ -199,6 +277,64 @@ pmu {
->  	psci {
->  		compatible = "arm,psci-1.0";
->  		method = "smc";
-> +
-> +		CPU_PD0: power-domain-cpu0 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_0_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD1: power-domain-cpu1 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_0_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD2: power-domain-cpu2 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_0_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD3: power-domain-cpu3 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_0_PD>;
-> +			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD4: power-domain-cpu4 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_1_PD>;
-> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD5: power-domain-cpu5 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_1_PD>;
-> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD6: power-domain-cpu6 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_1_PD>;
-> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CPU_PD7: power-domain-cpu7 {
-> +			#power-domain-cells = <0>;
-> +			power-domains = <&CLUSTER_1_PD>;
-> +			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +		};
-> +
-> +		CLUSTER_0_PD: power-domain-cpu-cluster0 {
-> +			#power-domain-cells = <0>;
-> +			domain-idle-states = <&CLUSTER_0_SLEEP_0>, <&CLUSTER_0_SLEEP_1>;
-> +		};
-> +
-> +		CLUSTER_1_PD: power-domain-cpu-cluster1 {
-> +			#power-domain-cells = <0>;
-> +			domain-idle-states = <&CLUSTER_1_SLEEP_0>, <&CLUSTER_1_SLEEP_1>;
-> +		};
->  	};
+>  	xo-therm@44 {
+> -		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU(0)>;
+>  		qcom,hw-settle-time = <200>;
+>  		qcom,ratiometric;
+>  		label = "pmk8350_xo_therm";
+> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> index 7ae6aba5d2ec..af6cf4fbddc7 100644
+> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+> @@ -516,7 +516,7 @@ &pmk8350_rtc {
 >  
->  	reserved_memory: reserved-memory {
+>  &pmk8350_vadc {
+>  	adc-chan@644 {
+> -		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
+> +		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU(0)>;
+>  		qcom,ratiometric;
+>  		qcom,hw-settle-time = <200>;
+>  		qcom,pre-scaling = <1 1>;
+> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h b/include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
+> index 6c296870e95b..ca85a2d69453 100644
+> --- a/include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
+> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-pmk8350.h
+> @@ -6,41 +6,37 @@
+>  #ifndef _DT_BINDINGS_QCOM_SPMI_VADC_PMK8350_H
+>  #define _DT_BINDINGS_QCOM_SPMI_VADC_PMK8350_H
+>  
+> -#ifndef PMK8350_SID
+> -#define PMK8350_SID					0
+> -#endif
+> -
+>  /* ADC channels for PMK8350_ADC for PMIC7 */
+> -#define PMK8350_ADC7_REF_GND			(PMK8350_SID << 8 | 0x0)
+> -#define PMK8350_ADC7_1P25VREF			(PMK8350_SID << 8 | 0x01)
+> -#define PMK8350_ADC7_VREF_VADC			(PMK8350_SID << 8 | 0x02)
+> -#define PMK8350_ADC7_DIE_TEMP			(PMK8350_SID << 8 | 0x03)
+> +#define PMK8350_ADC7_REF_GND(sid)			((sid) << 8 | 0x0)
+> +#define PMK8350_ADC7_1P25VREF(sid)			((sid) << 8 | 0x01)
+> +#define PMK8350_ADC7_VREF_VADC(sid)			((sid) << 8 | 0x02)
+> +#define PMK8350_ADC7_DIE_TEMP(sid)			((sid) << 8 | 0x03)
+>  
+> -#define PMK8350_ADC7_AMUX_THM1			(PMK8350_SID << 8 | 0x04)
+> -#define PMK8350_ADC7_AMUX_THM2			(PMK8350_SID << 8 | 0x05)
+> -#define PMK8350_ADC7_AMUX_THM3			(PMK8350_SID << 8 | 0x06)
+> -#define PMK8350_ADC7_AMUX_THM4			(PMK8350_SID << 8 | 0x07)
+> -#define PMK8350_ADC7_AMUX_THM5			(PMK8350_SID << 8 | 0x08)
+> +#define PMK8350_ADC7_AMUX_THM1(sid)			((sid) << 8 | 0x04)
+> +#define PMK8350_ADC7_AMUX_THM2(sid)			((sid) << 8 | 0x05)
+> +#define PMK8350_ADC7_AMUX_THM3(sid)			((sid) << 8 | 0x06)
+> +#define PMK8350_ADC7_AMUX_THM4(sid)			((sid) << 8 | 0x07)
+> +#define PMK8350_ADC7_AMUX_THM5(sid)			((sid) << 8 | 0x08)
+>  
+>  /* 30k pull-up1 */
+> -#define PMK8350_ADC7_AMUX_THM1_30K_PU		(PMK8350_SID << 8 | 0x24)
+> -#define PMK8350_ADC7_AMUX_THM2_30K_PU		(PMK8350_SID << 8 | 0x25)
+> -#define PMK8350_ADC7_AMUX_THM3_30K_PU		(PMK8350_SID << 8 | 0x26)
+> -#define PMK8350_ADC7_AMUX_THM4_30K_PU		(PMK8350_SID << 8 | 0x27)
+> -#define PMK8350_ADC7_AMUX_THM5_30K_PU		(PMK8350_SID << 8 | 0x28)
+> +#define PMK8350_ADC7_AMUX_THM1_30K_PU(sid)		((sid) << 8 | 0x24)
+> +#define PMK8350_ADC7_AMUX_THM2_30K_PU(sid)		((sid) << 8 | 0x25)
+> +#define PMK8350_ADC7_AMUX_THM3_30K_PU(sid)		((sid) << 8 | 0x26)
+> +#define PMK8350_ADC7_AMUX_THM4_30K_PU(sid)		((sid) << 8 | 0x27)
+> +#define PMK8350_ADC7_AMUX_THM5_30K_PU(sid)		((sid) << 8 | 0x28)
+>  
+>  /* 100k pull-up2 */
+> -#define PMK8350_ADC7_AMUX_THM1_100K_PU		(PMK8350_SID << 8 | 0x44)
+> -#define PMK8350_ADC7_AMUX_THM2_100K_PU		(PMK8350_SID << 8 | 0x45)
+> -#define PMK8350_ADC7_AMUX_THM3_100K_PU		(PMK8350_SID << 8 | 0x46)
+> -#define PMK8350_ADC7_AMUX_THM4_100K_PU		(PMK8350_SID << 8 | 0x47)
+> -#define PMK8350_ADC7_AMUX_THM5_100K_PU		(PMK8350_SID << 8 | 0x48)
+> +#define PMK8350_ADC7_AMUX_THM1_100K_PU(sid)		((sid) << 8 | 0x44)
+> +#define PMK8350_ADC7_AMUX_THM2_100K_PU(sid)		((sid) << 8 | 0x45)
+> +#define PMK8350_ADC7_AMUX_THM3_100K_PU(sid)		((sid) << 8 | 0x46)
+> +#define PMK8350_ADC7_AMUX_THM4_100K_PU(sid)		((sid) << 8 | 0x47)
+> +#define PMK8350_ADC7_AMUX_THM5_100K_PU(sid)		((sid) << 8 | 0x48)
+>  
+>  /* 400k pull-up3 */
+> -#define PMK8350_ADC7_AMUX_THM1_400K_PU		(PMK8350_SID << 8 | 0x64)
+> -#define PMK8350_ADC7_AMUX_THM2_400K_PU		(PMK8350_SID << 8 | 0x65)
+> -#define PMK8350_ADC7_AMUX_THM3_400K_PU		(PMK8350_SID << 8 | 0x66)
+> -#define PMK8350_ADC7_AMUX_THM4_400K_PU		(PMK8350_SID << 8 | 0x67)
+> -#define PMK8350_ADC7_AMUX_THM5_400K_PU		(PMK8350_SID << 8 | 0x68)
+> +#define PMK8350_ADC7_AMUX_THM1_400K_PU(sid)		((sid) << 8 | 0x64)
+> +#define PMK8350_ADC7_AMUX_THM2_400K_PU(sid)		((sid) << 8 | 0x65)
+> +#define PMK8350_ADC7_AMUX_THM3_400K_PU(sid)		((sid) << 8 | 0x66)
+> +#define PMK8350_ADC7_AMUX_THM4_400K_PU(sid)		((sid) << 8 | 0x67)
+> +#define PMK8350_ADC7_AMUX_THM5_400K_PU(sid)		((sid) << 8 | 0x68)
+>  
+>  #endif /* _DT_BINDINGS_QCOM_SPMI_VADC_PMK8350_H */
+
