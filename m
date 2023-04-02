@@ -2,112 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 40D586D37AE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 13:35:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B6CC6D37C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 13:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjDBLfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Apr 2023 07:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41900 "EHLO
+        id S230090AbjDBLzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Apr 2023 07:55:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjDBLfD (ORCPT
+        with ESMTP id S229591AbjDBLzM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Apr 2023 07:35:03 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C29E19A
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 04:35:01 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id q16so34519792lfe.10
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 04:35:01 -0700 (PDT)
+        Sun, 2 Apr 2023 07:55:12 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D42D1E384
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 04:55:11 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-54601d90118so346744377b3.12
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 04:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680435300;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2nCMWdel6dHdzVC0ymLbPnP9dfCzAbiSb5UP+e8Vgh0=;
-        b=KNVWFW6FF9gShYXpQA8BwvaGJFhl9brMLEQWZy89nhSM+tbWb6OCDwv/cjKa64hp5l
-         3U6mdnP8JE79mOonTJzYs4xPDBye98eOUhJbuNTnIvqv407g/8K59RCEoiVol4LWUSz1
-         zUd1wlsMXv3LQxR/brKyS4VTZDd6iJ363/VnE2+koi75GSpBg64KlXNBhDsPLeyB+MVt
-         Q9XSGl7IxU4FTFR4W2fx+HydQT2roMP603HFGHBtQT9B5w3rXOTZxrARGS/UjDBL0Ul7
-         EXqReK/UN/3ichymIqua4ZgJBpDUCR8uwsMpJVkRwOUO1Mqllzn4De7yM2hYPnTeuW9s
-         Evxg==
+        d=linaro.org; s=google; t=1680436510;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QCb+PvVz9vDjaUXWhXFHA5eliELDec/Jtrdt7VRzzHI=;
+        b=P+CWpB2UIFi7fSl+IhvqqE3HDSFwVgZ3g5oitw7gV4Iw2zlCjzmspx475zX0JXaEv4
+         UBIRKMn+PaS38WH5q/AYJC0FQJWSeYnCOlN4e6pPOYrExnxzxkt/MiNby+G8VC2lSkj2
+         OTIKTgCjCWa7+Rp20UKuhgeme84Pb50kS3qZMeuwIxT+v38Km+/7GZjns44qwrJJYpMD
+         buVJBeMjH3dbBm5Y7jFdGTqw6U4vSSTlgOCttNXMr8+fefXoX1X76agn09SEDCoHbNmL
+         D7j4/To5+q8MPj0hfZQxrB4QT8vYp6IFuMD4Lohk3vLEbcTH+ZT7Ndt6INxABBUJMcBH
+         g+ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680435300;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2nCMWdel6dHdzVC0ymLbPnP9dfCzAbiSb5UP+e8Vgh0=;
-        b=doVW8/f8TwEly18biH2R4Wi5DfCVotAegn+e1evACUN6y5zchb6pjb1vCgraMyRu2s
-         TTXn1N+BoLbkrDwI1tDZ04xTTvbwJRPoQ2wt57ry1Rw1Kz2hAX+EV+aLOl8Sgjm+G0m+
-         BRDFtToVQXnwXbflm43m4sBQKU8nqGneQfoRLHQKvGDH7fXgo0tuws97p6bvY9/yU406
-         3J9teVwEOiu7gv8DoYqhxJSN/mJTkBVfSWWP6+yb824JOopSt87CV9u3T31u7JH1Q6zP
-         sqHkirytnYwyhwu9WKA3uyn9CBbWTTGs5LuuVMWZ+m0QdiPW1rYmob4dQLIajR/U7gsW
-         x1pw==
-X-Gm-Message-State: AAQBX9fzxzcM3gn7cQhSgY3OdV3FkBMLXTrH9j2XACH1lRmtbTVxlpiL
-        3xdI+H79ljAr9/LHmWbTyXAr/A==
-X-Google-Smtp-Source: AKy350Y8+NwNkDDb/SsEp913su/cFIU8CI5VBxWmQZnY+aY6IEIZtE6uDT6bZRXeJ5bH7Mow34xiFw==
-X-Received: by 2002:ac2:519c:0:b0:4ea:f6d7:2293 with SMTP id u28-20020ac2519c000000b004eaf6d72293mr10318888lfi.55.1680435300225;
-        Sun, 02 Apr 2023 04:35:00 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id o11-20020ac2494b000000b004b6efcb7bb5sm1244356lfi.169.2023.04.02.04.34.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Apr 2023 04:34:59 -0700 (PDT)
-Message-ID: <5bb1afde-c6f8-d635-8b24-b0b574901698@linaro.org>
-Date:   Sun, 2 Apr 2023 14:34:59 +0300
+        d=1e100.net; s=20210112; t=1680436510;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QCb+PvVz9vDjaUXWhXFHA5eliELDec/Jtrdt7VRzzHI=;
+        b=rwSYx6xj3fSoFS/VIglvPw/n1kipDI4bxl2SYwd7EoO+JesrG/dofdJYBDgAa8Y+I3
+         8TR1+GtCpDzmtTRmDbSk+NVuPpqmlxb2yRE3Tz6Rg3GULLxkGkDN3Ho2snPNg7mfVxcZ
+         N9cwY1iMjqiz48BGrojRWJcS7fU7oz9jkdHWK+A6dIcjfB0290hZPtKcOpw/Yu63q22T
+         IrEzaONn2HKFx4FY6gad/u604dx0yo6tTx+/zAXbBIBlmWKw/420ybLYgTkyHJx9RPL/
+         xceUNebDkEwEF9WRdRdZpDBrFY1rfKkfoCR+e0+jHi18rja++m72NIPFL4J6A2FLGTM6
+         b0cg==
+X-Gm-Message-State: AAQBX9dP6Pa4h+D4E6w4LbE4zMOXtKPM0CQSCfdTEf54rxItr9EcuFff
+        fCO1QsKe0ap2Ig+XQb0pAxz8vsulllU8LFVMPR3tYA==
+X-Google-Smtp-Source: AKy350b5CVIF0s9p1uDLO//v8xxaCU59UCLNsAz4bzleOn08Q3r/xLEZFSD+qiYv3wKgQFzHm4Dux3TWxzNRWXM2G7g=
+X-Received: by 2002:a81:7e10:0:b0:52f:184a:da09 with SMTP id
+ o16-20020a817e10000000b0052f184ada09mr8060907ywn.2.1680436510167; Sun, 02 Apr
+ 2023 04:55:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH RFC v2 6/6] drm/msm/dsi: Fix calculations for eol_byte_num
- and pkt_per_line
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v2-6-3c13ced536b2@quicinc.com>
+References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
+ <20230401220810.3563708-10-dmitry.baryshkov@linaro.org> <127c7d41-b7dc-6c9a-0653-f5bf2a626907@linaro.org>
+In-Reply-To: <127c7d41-b7dc-6c9a-0653-f5bf2a626907@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v2-6-3c13ced536b2@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Date:   Sun, 2 Apr 2023 14:54:59 +0300
+Message-ID: <CAA8EJpqg15KVx+H_29kJO-KfDEN3LFHZCfpfTWM40WMa2PoAXw@mail.gmail.com>
+Subject: Re: [PATCH v2 09/22] arm64: dts: qcom: pmk8350: allow overriding the label
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/03/2023 21:49, Jessica Zhang wrote:
-> Use the correct calculations for eol_byte_num and pkt_per_line.
+On Sun, 2 Apr 2023 at 12:44, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 02/04/2023 00:07, Dmitry Baryshkov wrote:
+> > sc8280xp-pmics.dtsi incorporates a copy of pmk8350, but the dts files
+> > use labels following the markings found in the schematics. Allow
+> > overriding the labels in pmk8350.dtsi.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi | 13 +++++++++
+> >  arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi | 14 ++++++++++
+> >  arch/arm64/boot/dts/qcom/pmk8350.dtsi         | 28 +++++++++++--------
+> >  3 files changed, 44 insertions(+), 11 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi
+> >  create mode 100644 arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi b/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi
+> > new file mode 100644
+> > index 000000000000..1c81269f0783
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/pmic-dyn-footer.dtsi
+> > @@ -0,0 +1,13 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2023, Linaro Limited
+> > + */
+> > +
+> > +/* cleanly revert the effects pmic-dyn-header.dtsi */
+> > +
+> > +#undef LABEL
+> > +#undef _LABEL
+> > +#undef __LABEL
+>
+> That makes the code less readable.
+>
+> > +
+> > +#undef PMIC_SID
+> > +#undef PMIC_LABEL
+>
+> And it keeps growing and confusing.
+>
+> > diff --git a/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi b/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi
+> > new file mode 100644
+> > index 000000000000..75f0448568bd
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/pmic-dyn-header.dtsi
+> > @@ -0,0 +1,14 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2023, Linaro Limited
+> > + */
+> > +
+> > +/*
+> > + * Preprocessor symbols to assist in describing PMICs which have configurable
+> > + * SID. All effects of this header (or its parameters) must be reverted in
+> > + * pmic-dyn-footer.dtsi.
+> > + */
+> > +
+> > +#define LABEL(name) _LABEL(PMIC_LABEL, name)
+> > +#define _LABEL(pmic, name) __LABEL(pmic, name)
+> > +#define __LABEL(pmic, name) pmic ## _ ## name
+>
+> No, defines in DTS should be simple. This makes it ungrepable.
 
-Nit: this line duplicates commit subject and thus is mostly useless.
+I see. I still think that we should remove this duplication. Would you
+prefer for me to define all pmk8350.dtsi labels individually? What
+kind of approach could you possibly propose?
 
-> 
-> Currently, pkt_per_line is calculated by dividing slice_per_intf by
-> slice_count. This is incorrect, as slice_per_intf should be divided by
-> slice_per_pkt, which is not always equivalent to slice_count as it is
-> possible for there to be multiple soft slices per interface even though
-> a panel only specifies one slice per packet.
-> 
-> For eol_byte_num, the current calculation describes the size of the
-> trailing bytes in the line. Change the calculation so that it describes
-> the number of padding bytes instead.
-> 
-> Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
 Dmitry
-
