@@ -2,142 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 040016D358C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 07:03:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BA276D359E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 07:35:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229952AbjDBFDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Apr 2023 01:03:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41156 "EHLO
+        id S230176AbjDBFfo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Apr 2023 01:35:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjDBFDK (ORCPT
+        with ESMTP id S229847AbjDBFfm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Apr 2023 01:03:10 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DFA1EA27;
-        Sat,  1 Apr 2023 22:03:07 -0700 (PDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1piprn-0003eO-Bq; Sun, 02 Apr 2023 07:02:59 +0200
-Message-ID: <12c5a8f2-3082-68a2-e973-18fb957068ac@leemhuis.info>
-Date:   Sun, 2 Apr 2023 07:02:58 +0200
+        Sun, 2 Apr 2023 01:35:42 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A3281DFA9
+        for <linux-arm-msm@vger.kernel.org>; Sat,  1 Apr 2023 22:35:40 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id i9so26177420wrp.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 01 Apr 2023 22:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680413738;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zF3oKohIhhLJKd1QNch/n6u1agXLLOguv1dKAbb5oNs=;
+        b=Wb9rIRHuELGn/5H8BgxsO7O97HeB5oiDDKs2v2wKk0oXqzmLMP76NQyp03Y9WHn7NM
+         uf6O+fP4/BxYcikXrHUwTp6+ZALpBf44S3EgeVbPo3hPbQPx7U9CrrMTuzKDBbRMlD7K
+         jxxMD5QA7YFkLycwUYs1+MA0IOsvjZ8hXIt8QsrOA2vKPhq26MLK1OTRRJZkiSc9Bjmp
+         oVjiVqMxVR8gDDOejKUTF11OEaVJSxiynd3pk8Zwiltl6JyZBPw36fi5v3eFSFnoGXKx
+         jh6CLBvnRsfqC3hK+Vgsux4yIdpCMLWv90KxEMw7OoDEQCbt8q+0QBLNq2F0/A3pBdBx
+         nV6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680413738;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zF3oKohIhhLJKd1QNch/n6u1agXLLOguv1dKAbb5oNs=;
+        b=3pOMQYl+oS+Qilj73g4jPLzon/e/RGLVmELWwb3Y/jU3ZcLFcbQSBlwUWagnYxjvUd
+         D7Ysz4YRplDuDbjYQiJELmnGuGKa1989n6QWlsptf5Jk2ap+6lbRoCuCOhSciAeGkg1E
+         LQYbMd0YSPSptna/Qas7Ukp5UWHVyXtR/TlFlc+T9WD4V0+9qsSuVDHVinqenP2nvxJQ
+         +/Gk4i6sopKd9wyxeK8b+EVdH1lvCvizpH84pmuOBNUNfIwPW2EqBXLY0kIJ+yXmPKAF
+         HlbetHTTdM4hxwgHjYCv7xzobcX0znDaXZBjTm2FD6yOZWMQcykcW/8kqBhzZVgRYREt
+         t1fg==
+X-Gm-Message-State: AAQBX9fc0e+riTnrAI1WUT3/YvDtbX4rCeRTt/7O76doFFk7OnYUcq7C
+        N29M7Pj4vpzkttJ/uOIDRMkkcfAPVplYsnH2fr8Uyw==
+X-Google-Smtp-Source: AKy350Yvj3z/JViDBysPD9wGuatiM+Z9teHEtvB8EXqIgjRI+UzWAYBpYdg92tH0fX0ytHcyXVCOvCmIotcGqT+cz88=
+X-Received: by 2002:a05:6000:5c1:b0:2d7:9771:fc4b with SMTP id
+ bh1-20020a05600005c100b002d79771fc4bmr4303491wrb.5.1680413738137; Sat, 01 Apr
+ 2023 22:35:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-Content-Language: en-US, de-DE
-To:     Leonard Lausen <leonard@lausen.nl>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, mka@chromium.org,
-        Albert Esteve <aesteve@redhat.com>,
-        stanimir.varbanov@linaro.org,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        Fritz Koenig <frkoenig@google.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-References: <87edq2dus1.fsf@minerva.mail-host-address-is-not-set>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
- <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
- <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
- <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
- <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
- <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
- <DM8PR02MB8169E16569616870A583B376F3AB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <87356wn6xf.fsf@minerva.mail-host-address-is-not-set>
- <87edq9hj4w.fsf@minerva.mail-host-address-is-not-set>
- <d18fac76-6b77-a446-5fe0-7236556e9187@quicinc.com>
- <0c84724d-08d4-ddcb-5f71-4eb8261240c6@quicinc.com>
- <a2fec0a5855150966fa5a920216c205032965f98@lausen.nl>
-From:   "Linux regression tracking (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-In-Reply-To: <a2fec0a5855150966fa5a920216c205032965f98@lausen.nl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1680411787;3e27d53d;
-X-HE-SMSGID: 1piprn-0003eO-Bq
-X-Spam-Status: No, score=-0.0 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
+ <0ff99bb5-4792-270d-b03e-2638939f160f@linaro.org> <CAH=2NtzPReiUHuEAW8PsQJvNzOYvb71pZ7SWRbThWdLT7_a0ug@mail.gmail.com>
+ <e5b758ed-f279-ecc3-3be4-039c5a19b212@linaro.org>
+In-Reply-To: <e5b758ed-f279-ecc3-3be4-039c5a19b212@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Sun, 2 Apr 2023 11:05:26 +0530
+Message-ID: <CAH=2NtzXjgQEaTDVZip6GEHhterker2B3c+w_4A5J4W_LDTctA@mail.gmail.com>
+Subject: Re: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU idle-states
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sun, 2 Apr 2023 at 01:28, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 01/04/2023 21:26, Bhupesh Sharma wrote:
+> > Hi Konrad,
+> >
+> > On Sat, 1 Apr 2023 at 17:51, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >>
+> >>
+> >> On 30.03.2023 21:33, Bhupesh Sharma wrote:
+> >>> Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
+> >>>
+> >>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> >>> ---
+> >>> Changes since v1:
+> >>> - v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
+> >>> - Addressed Konrad's comments on v1 and added GDHS and Power Collapse
+> >>>    cluster power states.
+> >>>
+> >>>   arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
+> >>>   1 file changed, 136 insertions(+)
+> >>>
+> >>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>> index 2a51c938bbcb..b63395d476ed 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> >>> @@ -45,6 +45,8 @@ CPU0: cpu@0 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_0>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+> >>> +                     power-domains = <&CPU_PD0>;
+> >>> +                     power-domain-names = "psci";
+> >>>                        L2_0: l2-cache {
+> >>>                                compatible = "cache";
+> >>>                                cache-level = <2>;
+> >>> @@ -61,6 +63,8 @@ CPU1: cpu@1 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_0>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+> >>> +                     power-domains = <&CPU_PD1>;
+> >>> +                     power-domain-names = "psci";
+> >>>                };
+> >>>
+> >>>                CPU2: cpu@2 {
+> >>> @@ -73,6 +77,8 @@ CPU2: cpu@2 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_0>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+> >>> +                     power-domains = <&CPU_PD2>;
+> >>> +                     power-domain-names = "psci";
+> >>>                };
+> >>>
+> >>>                CPU3: cpu@3 {
+> >>> @@ -85,6 +91,8 @@ CPU3: cpu@3 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_0>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+> >>> +                     power-domains = <&CPU_PD3>;
+> >>> +                     power-domain-names = "psci";
+> >>>                };
+> >>>
+> >>>                CPU4: cpu@100 {
+> >>> @@ -97,6 +105,8 @@ CPU4: cpu@100 {
+> >>>                        dynamic-power-coefficient = <282>;
+> >>>                        next-level-cache = <&L2_1>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+> >>> +                     power-domains = <&CPU_PD4>;
+> >>> +                     power-domain-names = "psci";
+> >>>                        L2_1: l2-cache {
+> >>>                                compatible = "cache";
+> >>>                                cache-level = <2>;
+> >>> @@ -113,6 +123,8 @@ CPU5: cpu@101 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_1>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+> >>> +                     power-domains = <&CPU_PD5>;
+> >>> +                     power-domain-names = "psci";
+> >>>                };
+> >>>
+> >>>                CPU6: cpu@102 {
+> >>> @@ -125,6 +137,8 @@ CPU6: cpu@102 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_1>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+> >>> +                     power-domains = <&CPU_PD6>;
+> >>> +                     power-domain-names = "psci";
+> >>>                };
+> >>>
+> >>>                CPU7: cpu@103 {
+> >>> @@ -137,6 +151,8 @@ CPU7: cpu@103 {
+> >>>                        enable-method = "psci";
+> >>>                        next-level-cache = <&L2_1>;
+> >>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+> >>> +                     power-domains = <&CPU_PD7>;
+> >>> +                     power-domain-names = "psci";
+> >>>                };
+> >>>
+> >>>                cpu-map {
+> >>> @@ -176,6 +192,68 @@ core3 {
+> >>>                                };
+> >>>                        };
+> >>>                };
+> >>> +
+> >>> +             idle-states {
+> >>> +                     entry-method = "psci";
+> >>> +
+> >>> +                     LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+> >>> +                             compatible = "arm,idle-state";
+> >>> +                             idle-state-name = "silver-rail-power-collapse";
+> >>> +                             arm,psci-suspend-param = <0x40000003>;
+> >>> +                             entry-latency-us = <290>;
+> >>> +                             exit-latency-us = <376>;
+> >>> +                             min-residency-us = <1182>;
+> >>> +                             local-timer-stop;
+> >>> +                     };
+> >>> +
+> >>> +                     BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+> >>> +                             compatible = "arm,idle-state";
+> >>> +                             idle-state-name = "gold-rail-power-collapse";
+> >>> +                             arm,psci-suspend-param = <0x40000003>;
+> >>> +                             entry-latency-us = <297>;
+> >>> +                             exit-latency-us = <324>;
+> >>> +                             min-residency-us = <1110>;
+> >>> +                             local-timer-stop;
+> >>> +                     };
+> >>> +             };
+> >>> +
+> >>> +             domain-idle-states {
+> >>> +                     CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
+> >>> +                             /* GDHS */
+> >>> +                             compatible = "domain-idle-state";
+> >>> +                             arm,psci-suspend-param = <0x40000022>;
+> >> This 0x22 ending seems very sus.
+> >>
+> >> The last nibble represents the core-level power state and the
+> >> penultimate one represents the same at cluster level. A value
+> >> of 2 in that cluster nibble is actually undefined by the PSCI spec,
+> >> whereas the value of 4 (as you have in all of the other idle
+> >> states, including D3G for the perf cluster) corresponds to
+> >> "Retention", so unless there's a very weird nuance in the
+> >> TZ for this SoC, it should probably end in 0x42.
+> >>
+> >> Otherwise I think this LGTM now!
+> >
+> > I am also learning by experiment about the exact values to use here,
+> > as the only ready reckoner of how these values are calculated, seems
+> > to be available via [1].
+> >
+> > Also it seems the downstream code uses the following approach to
+> > calculate the LPM state suspend-param, which for example for
+> > CLUSTER_0_SLEEP_1 states turns out to be:
+> >
+> >      state_id = get_cluster_id(cpu->parent, &affinity_level, from_idle); = 0x40
+> >      power_state = (is-reset << 30) = 0x40000000
+> >      affinity_level = (affinity level & 0x3) << 24 = 0x1000000
+> >      state_id += power_state + affinity_level + psci_id;
+> >
+> >      = 0x40000000 + 0x1000000 + 0x40 + 0x4 = 0x41000044
+> >
+> > For the D3G cases as well, I just used the 'qcom,psci-mode = <2>'
+> > value as provided in downstream code (see [2]), for the overall
+> > calculations.
+> >
+> > Also, the only usage of D3G state I could find upstream (in qcom dtsi
+> > files0 is for 'msm8916' (see [3]), which also uses the value with
+> > ending 0x2 -> 'arm,psci-suspend-param = <0x41000032>'
+>
+> D3G has min-child-idx = 1, so the end PSCI param should be 0x41000023
+> D3 is 0x41000043
 
+Ok, let me recheck at my end as well.
 
-On 01.04.23 22:53, Leonard Lausen wrote:
-> Hi Javier, Dikshita, Stan,
-> 
-> the revert wasn't applied to v6.2 series. Can you please apply it and include it for v6.2.10?
-> 
-> March 6, 2023 at 5:43 AM, "Javier Martinez Canillas" <javierm@redhat.com> wrote:
->>> On 3/1/2023 3:15 PM, Dikshita Agarwal wrote:
->>>> On 2/28/2023 9:33 PM, Javier Martinez Canillas wrote:
->>>>> Javier Martinez Canillas<javierm@redhat.com>  writes:
->>>>>> Vikash Garodia<vgarodia@qti.qualcomm.com>  writes:
->>>>>>
->>>>>>> Stan, could you please help with the revert and a pull request having this revert
->>>>>>> alongwith other pending changes ?
->>>>>>>
->>>>>> Other fix posted is "media: venus: dec: Fix capture formats enumeration order":
->>>>>>
->>>>>> https://patchwork.kernel.org/project/linux-media/patch/20230210081835.2054482-1-javierm@redhat.com/
->>>
->>> Hi Javier,
->>>
->>> Thanks for this patch "media: venus: dec: Fix capture formats
->>> enumeration order".
->>>
->>> Somehow I can't find it in my mailbox to be able to reply there.
->>>
->>> Could you please explain what is the regression you see here?
->>>
->>
->> You can find the thread and explanation of the issue here:
->>
->> https://lore.kernel.org/lkml/Y+KPW18o%2FDa+N8UI@google.com/T/
->>
->> But Stanimir already picked it and sent a PR for v6.3 including it.
-> 
-> While "media: venus: dec: Fix capture formats enumeration order" may have been
-> applied to v6.3,
-
-To me it looks like it was submitted[1], but not yet applied even to the
-media tree[2] -- while guess, maybe due problems mentioned in[3]? Or am
-I missing something?
-
-[1]
-https://lore.kernel.org/all/20230329211655.100276-1-stanimir.k.varbanov@gmail.com/
-[2] https://git.linuxtv.org/media_tree.git/log/?h=fixes
-[3]
-https://lore.kernel.org/all/20230329214310.2503484-1-jenkins@linuxtv.org/
-
-> this still leaves the regression introduced by "venus:
-> firmware: Correct non-pix start and end addresses". As pointed out by Matthias
-> Kaehlcke, the commit prevents SC7180 and sc7280 AOSS from entering sleep mode
-> during system suspend. This is a serious regression in v6.2 kernel series.
-
-That fix is sitting in the media tree for a while and afaics still
-hasn't been sent to Linus (which is needed to get this fixed in 6.2.y).
-
-Mauro, could you maybe take care of that?
-
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-If I did something stupid, please tell me, as explained on that page.
+Thanks
+Bhupesh
