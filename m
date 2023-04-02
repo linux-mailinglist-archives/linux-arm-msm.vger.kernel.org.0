@@ -2,84 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A4616D3768
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 12:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D68A6D3777
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 13:02:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbjDBKtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Apr 2023 06:49:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57836 "EHLO
+        id S230348AbjDBLCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Apr 2023 07:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjDBKtp (ORCPT
+        with ESMTP id S229492AbjDBLCP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Apr 2023 06:49:45 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA5D1207D
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 03:49:43 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id ek18so106603278edb.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 03:49:43 -0700 (PDT)
+        Sun, 2 Apr 2023 07:02:15 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE9A1B367
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 04:02:09 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id h25so34503149lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 04:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680432582;
+        d=linaro.org; s=google; t=1680433328;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hjR00TgAnnMwLDCvz0xT0MzHATrmHlJrCAFtw5aFKdk=;
-        b=pkSrbHT2FYuk1Z6tCCsWbzsSFqJrBPI6wjADRsIIxnUglOL3L9Qu6voguaiIUrnnU2
-         JPjcWYsxgRQbir6z1Wx/eDztWZiSw5OBWG4HtkXAkEsR3exMnhz0XP47cDxIk6Dl7vDa
-         f3vCSRhXip5T1S8AQVDzFKP6Cd31AO9Ihs6Sy4B1AeWwcE0FX2PpeYJxULMlok4JVIPp
-         ydNNsv8E8ral5yWhU2/zxN5VSC6lRhnlGefjW3J8G1lAF3F1c4YYF0/9Xlyl0isNvVjf
-         m8ucRuuoWEMiGSBM5/+sHQuME5Lqt7GIZKs0VmolQsb3CzO+35GIp315QJlpRNegKbnL
-         Lzig==
+        bh=Pjhc1Lo1QXYK2mc4fR/wxw9auCD3+2lFp524CK7hL6Y=;
+        b=tyAGxMFBhmZJy+ulZ0XKhvsvMUzut8UKQE4FyL74OwsQPgR2c8nHfGvlKOa9hxEfX7
+         6Zn6cxKNQ32LPexpnvN3qU/E9qjK4d3AuWQTgzBsSItmoL7nKfT08R1jL3/fh/cSczRr
+         kjaiCwP8kvLO0O0UJWih2/+Z5c8XbR0gUsteu85009UfSUmyvTJAVMxiIoJVyos0TJhn
+         /EMz7E/CdrRAtvOEt3/VHZzGhTMJP/KI/HvcjERvuz/FaubABjJw0am7tC27GvmpQu2M
+         aiXJ19/P4OhkJvgSxD/F6m3F9U0V4eDpX4KFQrvkkao/Nj9kx3FF95wec21rASzT5V1g
+         ZJNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680432582;
+        d=1e100.net; s=20210112; t=1680433328;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hjR00TgAnnMwLDCvz0xT0MzHATrmHlJrCAFtw5aFKdk=;
-        b=wWH2LgDgboz94vy+L7r/Mt3XaMEBWs7RmSPpzmkoLGMOjn2eLw2EkkRUUrxbOtYMRj
-         SnIGsGcLKtZujzBGfDckqg4+StcBhCFVlWK+e60AyQv8Xp6AEMeZLVeyq0cCl1igED8B
-         yLLB9hHMTjPJ9hBTj32K2iGltXwKUhMRQeNxkri/lNLwC+xvo6YH8Pz4P+YTWSqyBveq
-         5BLfBl+ljjE+vW4pHkPcYGNOiBlixV06QjwrUBlVLnyHpB1NH/AlKoDEwqRmRYmA0mFo
-         0UKEEXAkW1Fe63NYM7AqaCX6MVyk9A1KrFu70edaTip9GaLzNSXs+cXKTiT/M7MXlGjX
-         6FOQ==
-X-Gm-Message-State: AAQBX9dh0nXQywp/0zIuIRTb6PL2Y4hv42E5lM6AzS/3ju4YQHHXGnfw
-        NWnQtggF/MtDwsYfg1TZltTQ6g==
-X-Google-Smtp-Source: AKy350bwisRgcgGnMtchBJUcbuj4Pcg+osZs9dbE8qToLV5KDtYpFRlg5/KXsZxdQi+Q/OWZDnLNPA==
-X-Received: by 2002:a17:907:a42a:b0:947:d757:d822 with SMTP id sg42-20020a170907a42a00b00947d757d822mr6531312ejc.68.1680432582447;
-        Sun, 02 Apr 2023 03:49:42 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:7f7f:6a30:7a20:94d5? ([2a02:810d:15c0:828:7f7f:6a30:7a20:94d5])
-        by smtp.gmail.com with ESMTPSA id ee55-20020a056402293700b004aef147add6sm3082265edb.47.2023.04.02.03.49.40
+        bh=Pjhc1Lo1QXYK2mc4fR/wxw9auCD3+2lFp524CK7hL6Y=;
+        b=5WAFUYW6mjaB61D4TI/HgZR9uHU2YHxulFAgER1QHzPP63Oi5ZLOS158S6TrNDxlKw
+         iE0RQcmU+4apHvhqlbtbuNltTDPE7lfoM8sgt09X47l7rjxcPWtXAF8YL7wa54Uprn6L
+         jM7tevt2Kkpe13onAsZE/Yj5RcneFeyvfeJlt8i+e8VoWQShKWqmLZZtwzTMAv95uaEl
+         zHZwFd0GCTNB8fE6ISzHCqE0dtk4HJd+/NtaSBYZx4t8plNJWMfS8vFcI+qQ/GoHNTzc
+         HWtsnk0DBG8XGXzarp5vLfw/Rlq31K69c6Cy+DaKzPKe2jZeVYkZQdDPw3/f7hAq3xHK
+         hqMA==
+X-Gm-Message-State: AAQBX9c64KTQV0yvMxAuCBA3n+yczA2ez6GksUmkfcorpG/QEXkYXmyJ
+        SInzzbVIoDeulbLIvfbNQWEcFg==
+X-Google-Smtp-Source: AKy350bu8YnYwg18cMuvag24DooQIAFYaj0Ey1Op3Ruxhphu9lurkoQl/DaunlE/8FmWJGqlyZdGUQ==
+X-Received: by 2002:a19:c502:0:b0:4e9:6097:add8 with SMTP id w2-20020a19c502000000b004e96097add8mr9359450lfe.32.1680433328117;
+        Sun, 02 Apr 2023 04:02:08 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id t18-20020ac25492000000b004cc7acfbd2bsm1237120lfk.287.2023.04.02.04.02.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Apr 2023 03:49:42 -0700 (PDT)
-Message-ID: <a13ae120-b50c-b5ef-a686-bc811e6b9d37@linaro.org>
-Date:   Sun, 2 Apr 2023 12:49:40 +0200
+        Sun, 02 Apr 2023 04:02:07 -0700 (PDT)
+Message-ID: <33430a31-b9da-5f1c-bae0-9ec6f24fda99@linaro.org>
+Date:   Sun, 2 Apr 2023 14:02:07 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH net-next v3 04/12] dt-bindings: net: qcom,ethqos: Add
- Qualcomm sc8280xp compatibles
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, wens@csie.org, jernej.skrabec@gmail.com,
-        samuel@sholland.org, mturquette@baylibre.com,
-        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
-        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
-        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-References: <20230331214549.756660-1-ahalaney@redhat.com>
- <20230331214549.756660-5-ahalaney@redhat.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230331214549.756660-5-ahalaney@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 02/22] arm64: dts: qcom: pm8350b: fix thermal zone node
+ name
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
+References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
+ <20230401220810.3563708-3-dmitry.baryshkov@linaro.org>
+ <47efb05a-d1e7-a3c5-c423-4eb53fe86386@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <47efb05a-d1e7-a3c5-c423-4eb53fe86386@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -91,15 +85,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/03/2023 23:45, Andrew Halaney wrote:
-> The sc8280xp has a new version of the ETHQOS hardware in it, EMAC v3.
-> Add a compatible for this.
+On 02/04/2023 13:34, Krzysztof Kozlowski wrote:
+> On 02/04/2023 00:07, Dmitry Baryshkov wrote:
+>> Correct the thermal zone node name to remove the clash with
+>> pm8350c.dtsi. Remove unused labels.
+>>
+>> Fixes: 5c1399299d9d ("arm64: dts: qcom: pm8350b: add temp sensor and thermal zone config")
 > 
-> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> Please describe the observable bug from that commit being fixed here.
+> Any future clash, which did not exist that time, is not a bug. It's future.
+> 
+> Naming changes here are more a matter of style, because the old names
+> were correct according to our coding guidelines, just not precise (c
+> instead of b). But node names anyway are not important from the point of
+> view fixes and adding such tag will cause a needless backport.
 
+It is needed. Including both pm8350c.dtsi and pm8350b.dtsi will result 
+in one thermal zone overriding another one.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
