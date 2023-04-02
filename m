@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 466A36D3708
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 12:09:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1F9A6D3742
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 12:25:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231138AbjDBKJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Apr 2023 06:09:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33432 "EHLO
+        id S230484AbjDBKZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Apr 2023 06:25:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230424AbjDBKIp (ORCPT
+        with ESMTP id S230469AbjDBKZs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Apr 2023 06:08:45 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2BC901C
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 03:08:09 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id cv11so4592230pfb.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 03:08:09 -0700 (PDT)
+        Sun, 2 Apr 2023 06:25:48 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9644AAD1E
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 03:25:46 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id i6so31757913ybu.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 03:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680430089;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9oFHBwDflAuoBx3nAvQZJqLFUNje4jYksqgr3MUJ8Rg=;
-        b=XVANtkx4Ujw3O5BQDdROvCmsJ6bq7/P0CEhVqCx7RKpYllQpA+HHyVWzXbE0HS3xf0
-         Jd1UOqNKuV+vl8IM0Or/7X/3Yi1xw1HwlHBZ5PkipbTnWSMrfvlC8bScqXriH7n0NbhY
-         Jy3qhn1oYCb8KTdrAIThAkQKmXygHhp/XqalOlg1jSpv7ORCmVnK7qzDXvO3BJ4LuLpM
-         /XaTs1zSCdfyRVskPDEArs3wjKMo1c01vapmqf2xpCUA0bvLYjbNGFj/ccFKJBxwNCZt
-         zucClueWyQIXFy8Iwv9EGn9mqKey7YNJycezAEPBK5+i2cj8wVlsSGGI+D2cvKjB7gUW
-         YDxw==
+        d=linaro.org; s=google; t=1680431146;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KodlI3T9gIGNKExurYss7S90CHxoFmiQi19Fv33tm80=;
+        b=NRqVuzCvmgqT2j/yh0aFP0Ve2CFgmKSvCq//rnLv+Ht68qtC3eRgwFQw3ZrTde7TAN
+         r63bgJGkj0c70hRrgom3suEfRG7mSpTRqLXsC7kH70AgdW2tsIy2jeDnm3v0FYXQOUGa
+         KukOkLjMB+DOIUaKFuqGTn2k6lAYTQs89QysH9+9fOVejsvGHdJgB3mRK/SomIiZ/lX0
+         vkRhfDT9W1ssb0+5IIRksgMtxY8cFifUKTf6+IOqVEtrBB/7LGpCZyS0KA7rIf3RUoxH
+         lG/m6F2F1fN2OtojGzGSlc5oYeeU1Av/twdmzhx/TtqnrrhfPVuKdbv4z0eG57v8D7YW
+         Sd4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680430089;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9oFHBwDflAuoBx3nAvQZJqLFUNje4jYksqgr3MUJ8Rg=;
-        b=6ieurVllN/P/D8mMKfSVXZGBYSJW0r9qJ6COcQCer/21/nDE8a6lPiHXugLETQ8wol
-         7kXfKTdi44ERZK2yuWuSg9Yg5LUmqpaJvVI094FtFexOdFNTIf5Ei+7CxyNiWXTNdN+q
-         yNVYIXadrFcsIDFbVB0OyFJHet8QHKMQnncg8HtTBW5rOIlJWIrs1iVQsc9vcwai40bG
-         JdOC24uIYNcST6DbK9HaAQk89XIANwUpY2hu+5kIEg1oVdjvp2K3R7shPNFXSwFUmiWZ
-         K9zZwE491QlUsSww8zWrtVCB38SSHkPejKSFyZfcwL1cfBYMbTomDCiR3pOB9yPUEksk
-         gR5w==
-X-Gm-Message-State: AAQBX9fUYiRJmRXVkxesf5xzRmdk6BYkfIr46eHzWRPDIQw3N+/LSMWM
-        bR4UZxno6NCiF7LFct/Z7xCCqB/RN99Gk70qnrg=
-X-Google-Smtp-Source: AKy350bg1jeAuFYwFwN9setvofB4ridXSnnwqFYhX53Ad6wGS71AeJ0ual7JAZZJlInCZ+ep84USXA==
-X-Received: by 2002:a62:8401:0:b0:628:1852:8431 with SMTP id k1-20020a628401000000b0062818528431mr36133939pfd.30.1680430088880;
-        Sun, 02 Apr 2023 03:08:08 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.66.184])
-        by smtp.gmail.com with ESMTPSA id a26-20020a62bd1a000000b0062dba4e4706sm4788739pff.191.2023.04.02.03.08.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Apr 2023 03:08:08 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, andersson@kernel.org,
-        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
-        rfoss@kernel.org, neil.armstrong@linaro.org
-Subject: [PATCH v5 11/11] arm64: dts: qcom: sm8450: add crypto nodes
-Date:   Sun,  2 Apr 2023 15:35:09 +0530
-Message-Id: <20230402100509.1154220-12-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230402100509.1154220-1-bhupesh.sharma@linaro.org>
-References: <20230402100509.1154220-1-bhupesh.sharma@linaro.org>
+        d=1e100.net; s=20210112; t=1680431146;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KodlI3T9gIGNKExurYss7S90CHxoFmiQi19Fv33tm80=;
+        b=AK0Y3S/BVxeN6MQiqqjDPP4+AX2m4SruBfa5XJ1iodUlAoApHJuy04n/m66Fn/avLB
+         eskxce6y5V0mErQ22yaEiaA4wCfFGQbCn7bmPkaerBE9rNVhdc8aV3tUPHPcAu0isfbI
+         c2h7c840Z39rMXUxqQVAHZoTl2Ib1qulXcwO0f3DsFQ84OJClKKGn490CTu+AHgHg11b
+         X8J0y9B+GZVjLby4wgYIkfzpuFmXeAWoRPk6mnZCL2/I6N9FOZL6DCmXjuOPLQvJj+NS
+         unktmA4SqKI65xBVXmpuf7hNu1VNqlievfR+m0XadIwZK1m7MQ7XtK8sFtwyE9R92H6J
+         E4Kg==
+X-Gm-Message-State: AAQBX9dNZJ40Abpo0wSuX2waMRP7vDSWnxMcnnYxiz1NnVnAY6ht+TRF
+        KKHDuZ3G603XBbmfvlnwp6OChg/nm/fu4iD8G7QaXQ==
+X-Google-Smtp-Source: AKy350Zhua0XPUXeL7qI0MJFcsLbwxfNeiRJJ2T9ICUOaNPEj6ZsG29U+QeBFhzxSAscdkNnD/2MdkQLRcaRerYI8O8=
+X-Received: by 2002:a05:6902:1201:b0:b6c:4d60:1bd6 with SMTP id
+ s1-20020a056902120100b00b6c4d601bd6mr21886235ybu.9.1680431145759; Sun, 02 Apr
+ 2023 03:25:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
+ <20230401220810.3563708-4-dmitry.baryshkov@linaro.org> <0d7d1fcb-e914-907b-0ed5-44e104929766@linaro.org>
+In-Reply-To: <0d7d1fcb-e914-907b-0ed5-44e104929766@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 2 Apr 2023 13:25:34 +0300
+Message-ID: <CAA8EJpqqnRvJJUJn3VoFaBncMz1mgn6_q4vHp6Pv2L9V4QOdKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/22] arm64: dts: qcom: sc8280xp-pmics: use pmk8350
+ specifics for pon device
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -75,57 +75,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+On Sun, 2 Apr 2023 at 12:42, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 02/04/2023 00:07, Dmitry Baryshkov wrote:
+> > Following the commit c0ee8e0ba5cc ("arm64: dts: qcom: pmk8350: Use the
+> > correct PON compatible") and commit f46ef374e0dc ("arm64: dts: qcom:
+> > pmk8350: Specify PBS register for PON") use "qcom,pmk8350-pon" compat
+> > string and add RBS region to the PON device.
+> >
+> > Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+>
+> There is no compatible qcom,pmk8350-pon documented at ccd3517faf18, so
+> backporting it there is incorrect. qcom,pmk8350-pon is neither in v5.19
+> nor in v6.0.
 
-Add crypto engine (CE) and CE BAM related nodes and definitions
-for the SM8450 SoC.
+Well, according to Documentation/process/submitting-patches.rst, Fixes
+tag is about noting that there was an issue fixed in the commit. The
+mentioned commit has an issue, as the device should have a second
+region. I did not intend to have this patch backported (no Cc stable).
+If I were, I could have also added a Cc stable # 5.19.x 03fccdc76dce.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-[Bhupesh: Corrected the compatible list]
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 31877f18dce2..d7a28cac4f47 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -4146,6 +4146,34 @@ ufs_mem_phy_lanes: phy@1d87400 {
- 			};
- 		};
- 
-+		cryptobam: dma-controller@1dc4000 {
-+			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-+			reg = <0 0x01dc4000 0 0x28000>;
-+			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+			#dma-cells = <1>;
-+			qcom,ee = <0>;
-+			qcom,controlled-remotely;
-+			iommus = <&apps_smmu 0x584 0x11>,
-+				 <&apps_smmu 0x588 0x0>,
-+				 <&apps_smmu 0x598 0x5>,
-+				 <&apps_smmu 0x59a 0x0>,
-+				 <&apps_smmu 0x59f 0x0>;
-+		};
-+
-+		crypto: crypto@1de0000 {
-+			compatible = "qcom,sm8450-qce", "qcom,sm8150-qce", "qcom,qce";
-+			reg = <0 0x01dfa000 0 0x6000>;
-+			dmas = <&cryptobam 4>, <&cryptobam 5>;
-+			dma-names = "rx", "tx";
-+			iommus = <&apps_smmu 0x584 0x11>,
-+				 <&apps_smmu 0x588 0x0>,
-+				 <&apps_smmu 0x598 0x5>,
-+				 <&apps_smmu 0x59a 0x0>,
-+				 <&apps_smmu 0x59f 0x0>;
-+			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "memory";
-+		};
-+
- 		sdhc_2: mmc@8804000 {
- 			compatible = "qcom,sm8450-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0 0x08804000 0 0x1000>;
 -- 
-2.38.1
-
+With best wishes
+Dmitry
