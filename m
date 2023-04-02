@@ -2,107 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A3A86D36C6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 11:55:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12A0D6D36DA
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  2 Apr 2023 12:07:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbjDBJzq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 2 Apr 2023 05:55:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56324 "EHLO
+        id S230390AbjDBKHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 2 Apr 2023 06:07:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbjDBJzq (ORCPT
+        with ESMTP id S230354AbjDBKHX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 2 Apr 2023 05:55:46 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F073C1B7
-        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 02:55:43 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id y4so106396941edo.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 02:55:43 -0700 (PDT)
+        Sun, 2 Apr 2023 06:07:23 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F0B44A6
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 03:07:20 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id z11so17322596pfh.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 03:07:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680429342;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6qOcw5c52dYpyKHrYXZEVHM/zl+hEaxxU+kA54pWk9Y=;
-        b=DWUOglP9AcVdiW0K7+s/g7piIWl8guG5sxjbTdH2FD9vsZgA6nXXhhLRWk6vJzMXt2
-         stWMcZsuhX/XKOj44u6D6IyimIOjsFrqUtYkV3R8Su5cUzvsLdjs3nQp53DjlLHCpRkB
-         Q1ihhaheDvrXh1IrzGVBUVbNlpzLzf6bZGKeI0Nvs+zVwDxuN+dwnexvOeWqXv7dM7aX
-         QReLlvrlJabArE+AQ+fzgBYlDR+WX/GmAHxe5aFb1NkJoAGvY3kbnHdCbwKOlWzJ2qqM
-         rVOBKwdD9axioQqQ4kdrCKOqdOjeDLH0/H2yEkNWTSPHQe69mfSkDb6TQKtYLpgD1JJT
-         +1mw==
+        d=linaro.org; s=google; t=1680430040;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LbcpNdii47h7TS2sDEqIBCRRzLggrrEsT68ykuaA9G4=;
+        b=R86U4rubSlMu45rTmKuGAh1ipkQWxDqIc2yaQZ85Du3zUVU3JZp41800pHfCldruTL
+         KPKq6BNNFQ0rySvQyQyESWp2hOy0Nwk44tENFq9vQTsgIaBZzTjP8Y1N7/7A4QRta6Yh
+         dDSdteaVIY/4BHTJ7zM8AKmN8uefWwklMnLqydTVxfws2kPecGsNB+/AktaX8JcQ4a1u
+         lpyTQdyxhvpm71bo+GQV56pqgnvM3Nf5Y9NVLsy8YJytVkCo/IlJMC9yEuIfcsHAgjIl
+         8JM117lDSm3WacL7KxP27R3suAD4W247audx3IXuGvHIkJAQAwCCj+Rhyn3KPqJ12ut5
+         yimQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680429342;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6qOcw5c52dYpyKHrYXZEVHM/zl+hEaxxU+kA54pWk9Y=;
-        b=cAZqqa4GJp5dPy2PFj49nmfUcSaFXKvlxxxXFFV8HC3qz+2h+w8I2nUR611qTpwwjL
-         52opa9XoICx8lmZL/xlY+1YtmKi3Dp2KcvxfhYjFWetVkVc5e4/t6zqO7xvgM4/0BxGu
-         4wd8YfV3K0Cpikn0LAD2u1T2RWO8SIVahj3cugH2s+A2g5eQ7fYfnciVbVbA++GvswhJ
-         FtlZjGbtsizxwuCIA5a4UkIROsr8bCKA9uQN1HN1e8MYsvPRUCNGGE2PPr0EsojL3v+5
-         2FP8ls5Civrv92MB0ct59SVvuGRmVEdFWElWrLvi+aEQHLX5hWiWok5bakcf+pQXlg2m
-         DKLQ==
-X-Gm-Message-State: AAQBX9cHyBiEiEvmiRVjBIw7UCUF9TVxZU+f7YQCiiJghb6Z1ZMOWOdz
-        7fLb4hDr/2TMGpUBVQWkDgBv9M9td0SYVNJRiuc=
-X-Google-Smtp-Source: AKy350Z6sz3BJUxyuvQ/4FwqO6Mj5Dovdy4rBa89PqUsmYbFjuNa37cA70rMHp5V7fP/lP1DmYUvlg==
-X-Received: by 2002:a17:906:d975:b0:947:d991:8e4c with SMTP id rp21-20020a170906d97500b00947d9918e4cmr5331857ejb.68.1680429342507;
-        Sun, 02 Apr 2023 02:55:42 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:7f7f:6a30:7a20:94d5? ([2a02:810d:15c0:828:7f7f:6a30:7a20:94d5])
-        by smtp.gmail.com with ESMTPSA id cw1-20020a170906c78100b0093de5b42856sm3033800ejb.119.2023.04.02.02.55.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Apr 2023 02:55:42 -0700 (PDT)
-Message-ID: <10626c79-46da-3f66-0327-66576b3e5f2c@linaro.org>
-Date:   Sun, 2 Apr 2023 11:55:41 +0200
+        d=1e100.net; s=20210112; t=1680430040;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LbcpNdii47h7TS2sDEqIBCRRzLggrrEsT68ykuaA9G4=;
+        b=VdNlt8kjiP5kIDHZNqqQYoxkQnZZYrvMVz7XXVdbG3mTu+R4vceAWlJIp4bhrKgDNZ
+         d/5C99vs+lGPhW8boa3RTv3T0XLYYUgHovW8bn3ICO3j/XmVam0DsNP92vkdDdypGQPJ
+         MmrBl+lZ5SOn/yjPwFBmOwXlpXx0sh6bjhIOGI8vFNAVFx6YEHkwlNrwtZJdx/6Rskgs
+         Kdx9/Qla6wz/7dp3EVC4+4rczEHJLkQHwLqzyxkFNokYVIVS0IPX4vP7G2ib9K/rNJVP
+         7XyR7+KwnkpJUR+ZmywiZQQle745vJG+tMj6gfajU29Hhq3DPI1pVK5oloY652Up71eo
+         vP/g==
+X-Gm-Message-State: AAQBX9d79g+ajv6Bq5HgdBPZFup9JeGcyrUtS/hlg9VaUvSQUhpbfJzg
+        PgKEJ7tH4C+Z4xvkTMAoVGlkfsYB5ATvHG0WXHc=
+X-Google-Smtp-Source: AKy350ZBYGQQN100axzsFpPvHBD8jqrHFqg3mLi4YgSLtrKJamjsjGuvXDq36mOgNs3Fq6UKyxZbYw==
+X-Received: by 2002:a62:1c49:0:b0:626:80f:7a0d with SMTP id c70-20020a621c49000000b00626080f7a0dmr31584270pfc.8.1680430039671;
+        Sun, 02 Apr 2023 03:07:19 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.66.184])
+        by smtp.gmail.com with ESMTPSA id a26-20020a62bd1a000000b0062dba4e4706sm4788739pff.191.2023.04.02.03.07.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Apr 2023 03:07:19 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org, neil.armstrong@linaro.org
+Subject: [PATCH v5 00/11] arm64: qcom: Enable Crypto Engine for a few Qualcomm SoCs
+Date:   Sun,  2 Apr 2023 15:34:58 +0530
+Message-Id: <20230402100509.1154220-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 00/22] arm64: dts: qcom: remove duplication in PMIC
- declarations
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/04/2023 00:07, Dmitry Baryshkov wrote:
-> The sc8280xp platform uses its own copy of PMIC declarations. This can
-> easily end up with the issues that are fixed in the main PMIC include
-> file, but are not fixed for sc8280xp (and vice versa). For example
-> commit c0ee8e0ba5cc ("arm64: dts: qcom: pmk8350: Use the correct PON
-> compatible") changed pmk8350 to use "qcom,pmk8350-pon" compat for the
-> PON device, while sc8280xp-pmic.dtsi still has the incorrect
-> "qcom,pm8998-pon".
-> 
-> Another example is pm8280_2_temp_alarm device, which uses interrupts
-> tied to SID 2, while having SID 3. This can be easily left unnoticed.
-> 
-> Employ a small amount of C preprocessor magic to make
-> sc8280xp-pmics.dtsi use standard PMIC include files
+Changes since v4:
+-----------------
+- v4 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230331164323.729093-1-bhupesh.sharma@linaro.org/
+- Collected R-Bs from Konrad for a couple of patches sent in v4.
+- Fixed incorrect email IDs for a couple of patches sent in v3, which I used for
+  some patches created on a different work machine.
+- No functional changes since v3.
 
-Preprocessor magic is disliked in DTS. We allow only simple defines, no
-undefs. Sometimes some nodes or strings could be concatenated, but in
-obvious way. You should not parametrize it and have different, generated
-labels in DTS based on something coming external to that DTS.
+Changes since v3:
+-----------------
+- v3 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230328092815.292665-1-bhupesh.sharma@linaro.org/
+- Collected Acks from Krzysztof for a couple of patches sent in v3.
+- Fixed review comments from Krzysztof regarding DMA binding document
+  and also added a couple of new patches which are required to fix the
+  'dtbs_check' errors highlighted after this fix.
 
-Best regards,
-Krzysztof
+Changes since v2:
+-----------------
+- v2 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230322114519.3412469-1-bhupesh.sharma@linaro.org/
+- No functional change since v2. As the sdm845 patch from v1 was accepted in linux-next,
+  dropped it from this version.
+
+Changes since v1:
+-----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230321190118.3327360-1-bhupesh.sharma@linaro.org/
+- Folded the BAM DMA dt-binding change.
+  (sent earlier as: https://lore.kernel.org/linux-arm-msm/20230321184811.3325725-1-bhupesh.sharma@linaro.org/)
+- Folded the QCE dt-binding change.
+  (sent earlier as: https://lore.kernel.org/linux-arm-msm/20230320073816.3012198-1-bhupesh.sharma@linaro.org/)
+- Folded Neil's SM8450 dts patch in this series.
+- Addressed review comments from Rob, Stephan and Konrad.
+- Collected Konrad's R-B for [PATCH 5/9].
+
+This patchset enables Crypto Engine support for Qualcomm SoCs like
+SM6115, SM8150, SM8250, SM8350 and SM8450.
+
+Note that:
+- SM8250 crypto engine patch utilizes the work already done by myself and
+  Vladimir.
+- SM8350 crypto engine patch utilizes the work already done by Robert.
+- SM8450 crypto engine patch utilizes the work already done by Neil.
+
+Also this patchset is rebased on linux-next/master.
+
+Bhupesh Sharma (10):
+  dt-bindings: dma: Add support for SM6115 and QCM2290 SoCs
+  dt-bindings: dma: Increase iommu maxItems for BAM DMA
+  arm64: dts: qcom: sdm8550: Fix the BAM DMA engine compatible string
+  arm64: dts: qcom: sdm845: Fix the slimbam DMA engine compatible string
+  dt-bindings: qcom-qce: Fix compatible combinations for SM8150 and
+    IPQ4019 SoCs
+  dt-bindings: qcom-qce: Add compatibles for SM6115 and QCM2290
+  arm64: dts: qcom: sm6115: Add Crypto Engine support
+  arm64: dts: qcom: sm8150: Add Crypto Engine support
+  arm64: dts: qcom: sm8250: Add Crypto Engine support
+  arm64: dts: qcom: sm8350: Add Crypto Engine support
+
+Neil Armstrong (1):
+  arm64: dts: qcom: sm8450: add crypto nodes
+
+ .../devicetree/bindings/crypto/qcom-qce.yaml  |  8 ++++++
+ .../devicetree/bindings/dma/qcom,bam-dma.yaml | 22 +++++++++------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 22 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 22 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 22 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          | 22 +++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          | 28 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  2 +-
+ 9 files changed, 140 insertions(+), 10 deletions(-)
+
+-- 
+2.38.1
 
