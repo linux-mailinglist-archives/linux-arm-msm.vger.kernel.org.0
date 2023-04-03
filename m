@@ -2,146 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 516876D3D5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 08:32:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8ABC66D3D72
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 08:39:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231473AbjDCGcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 02:32:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44320 "EHLO
+        id S231372AbjDCGjt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 02:39:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbjDCGcX (ORCPT
+        with ESMTP id S231402AbjDCGjs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 02:32:23 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760EC172B;
-        Sun,  2 Apr 2023 23:32:22 -0700 (PDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pjDjk-0004mY-CR; Mon, 03 Apr 2023 08:32:16 +0200
-Message-ID: <8d55f6e3-b573-7f63-bfed-4aa73bdc473a@leemhuis.info>
-Date:   Mon, 3 Apr 2023 08:32:15 +0200
+        Mon, 3 Apr 2023 02:39:48 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE48CA30;
+        Sun,  2 Apr 2023 23:39:46 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3334f8mn017249;
+        Mon, 3 Apr 2023 06:39:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AC0DGBr1P5ZXE9dXpblLlLAEcoFh5fnTzg7ZQvDdUnE=;
+ b=oyYH/b1GkMyA4RybCpPKyR6Pb3v9+mP+KH66fSOS3taZua21ODCqqtHNplhkFBfLYauf
+ 8ET3qwm1fBauGAm0+BDAPbJ110Lz9JIBZ2TUOqTOIZl9e+Cd6xH1s9U0CyCiTHVV83Fp
+ lcYXfFn1FiTHaYZK2sf7tZrLesSh0vnHcpLPIdHUWZf2FGqb1RoPWY+k4ciNlhm+PW30
+ ydw6jEmLKyVe4UZ3dboID1azEfkfeeTU06wzQpOLAmBwbvRpHcosGLcbCShSRBsD4PZW
+ NNp5lu89kSYIt5ndOWfl8UwnFeGAiGKFCYlwZzXc7W1pQ0OUdG/sJ8c7iTRwKXKom40F Hg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ppcq3kprf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Apr 2023 06:39:33 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3336dWn3018470
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Apr 2023 06:39:32 GMT
+Received: from [10.216.31.88] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sun, 2 Apr 2023
+ 23:39:26 -0700
+Message-ID: <8c18bddc-c3d5-74b4-7b85-d819df0ec3d6@quicinc.com>
+Date:   Mon, 3 Apr 2023 12:09:23 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
- addresses"
-Content-Language: en-US, de-DE
-From:   Thorsten Leemhuis <regressions@leemhuis.info>
-To:     Leonard Lausen <leonard@lausen.nl>,
-        Javier Martinez Canillas <javierm@redhat.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Vikash Garodia <vgarodia@qti.qualcomm.com>,
-        Linux regressions mailing list <regressions@lists.linux.dev>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Cc:     linux-kernel@vger.kernel.org, mka@chromium.org,
-        Albert Esteve <aesteve@redhat.com>,
-        stanimir.varbanov@linaro.org,
-        Enric Balletbo i Serra <eballetb@redhat.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        Fritz Koenig <frkoenig@google.com>,
-        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-References: <87edq2dus1.fsf@minerva.mail-host-address-is-not-set>
- <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
- <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
- <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
- <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
- <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
- <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
- <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
- <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
- <DM8PR02MB8169E16569616870A583B376F3AB9@DM8PR02MB8169.namprd02.prod.outlook.com>
- <87356wn6xf.fsf@minerva.mail-host-address-is-not-set>
- <87edq9hj4w.fsf@minerva.mail-host-address-is-not-set>
- <d18fac76-6b77-a446-5fe0-7236556e9187@quicinc.com>
- <0c84724d-08d4-ddcb-5f71-4eb8261240c6@quicinc.com>
- <a2fec0a5855150966fa5a920216c205032965f98@lausen.nl>
- <12c5a8f2-3082-68a2-e973-18fb957068ac@leemhuis.info>
-In-Reply-To: <12c5a8f2-3082-68a2-e973-18fb957068ac@leemhuis.info>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v10 2/3] clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock
+ registration
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <broonie@kernel.org>,
+        <konrad.dybcio@somainline.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mturquette@baylibre.com>,
+        <quic_plai@quicinc.com>, <quic_rohkumar@quicinc.com>,
+        <quic_visr@quicinc.com>, <robh+dt@kernel.org>,
+        <swboyd@chromium.org>
+CC:     Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+References: <20230331152805.3199968-1-quic_mohs@quicinc.com>
+ <20230331152805.3199968-3-quic_mohs@quicinc.com>
+ <32e439d2fb2db190cd1486b2bd15aab3.sboyd@kernel.org>
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+In-Reply-To: <32e439d2fb2db190cd1486b2bd15aab3.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1680503542;a339c812;
-X-HE-SMSGID: 1pjDjk-0004mY-CR
-X-Spam-Status: No, score=-2.4 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eeoQ-h7je3rZXW3YNnPm8RIXha6bhBec
+X-Proofpoint-ORIG-GUID: eeoQ-h7je3rZXW3YNnPm8RIXha6bhBec
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-03_03,2023-03-31_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 phishscore=0 impostorscore=0 suspectscore=0 spamscore=0
+ bulkscore=0 mlxlogscore=999 adultscore=0 clxscore=1015 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304030049
+X-Spam-Status: No, score=-2.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02.04.23 07:02, Linux regression tracking (Thorsten Leemhuis) wrote:
-> On 01.04.23 22:53, Leonard Lausen wrote:
+
+On 4/1/2023 12:16 AM, Stephen Boyd wrote:
+> Quoting Mohammad Rafi Shaik (2023-03-31 08:28:04)
+>> diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+>> index 5c1e17bd0d76..24aeed6bcf0e 100644
+>> --- a/drivers/clk/qcom/lpasscc-sc7280.c
+>> +++ b/drivers/clk/qcom/lpasscc-sc7280.c
+>> @@ -17,6 +17,8 @@
+>>   #include "clk-branch.h"
+>>   #include "common.h"
+>>   
+>> +#define QDSP6SS_MAX_REGISTER           0x3f
+> You can drop the define and just put the raw number in the one place
+> this is used.
+Thanks for comment,
+
+okay, will drop the define.
+>> +
+>>   static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
+>>          .halt_reg = 0x0,
+>>          .halt_check = BRANCH_HALT,
+>> @@ -118,12 +120,15 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
+>>                  goto destroy_pm_clk;
+>>          }
+>>   
+>> -       lpass_regmap_config.name = "qdsp6ss";
+>> -       desc = &lpass_qdsp6ss_sc7280_desc;
+>> +       if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
+>> +               lpass_regmap_config.name = "qdsp6ss";
+>> +               lpass_regmap_config.max_register = QDSP6SS_MAX_REGISTER;
+>> +               desc = &lpass_qdsp6ss_sc7280_desc;
 >>
->> the revert wasn't applied to v6.2 series. Can you please apply it and include it for v6.2.10?
-
-I pointed Linus to this and he merged the revert directly; and it's
-already queued for the next 6.2.y release:
-
-https://lore.kernel.org/all/CAHk-%3DwhRs_MavKCqtV3%3DK31dq9Z6HzbaG8Uxo-EV%3DuRxdsXduA@mail.gmail.com/
-https://git.kernel.org/torvalds/c/f95b8ea79c47c0ad3d18f45ad538f9970e414d1f
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=902f9eb696dfdd40e88d99bafa34ea25f1f9e927
-
-Now to the remaining venus regression:
-
->> March 6, 2023 at 5:43 AM, "Javier Martinez Canillas" <javierm@redhat.com> wrote:
->>>> On 3/1/2023 3:15 PM, Dikshita Agarwal wrote:
->>>>> On 2/28/2023 9:33 PM, Javier Martinez Canillas wrote:
->>>>>> Javier Martinez Canillas<javierm@redhat.com>  writes:
->>>>>>> Vikash Garodia<vgarodia@qti.qualcomm.com>  writes:
->>>>>>>
->>>>>>>> Stan, could you please help with the revert and a pull request having this revert
->>>>>>>> alongwith other pending changes ?
->>>>>>>>
->>>>>>> Other fix posted is "media: venus: dec: Fix capture formats enumeration order":
->>>>>>>
->>>>>>> https://patchwork.kernel.org/project/linux-media/patch/20230210081835.2054482-1-javierm@redhat.com/
->>>>
->>>> Hi Javier,
->>>>
->>>> Thanks for this patch "media: venus: dec: Fix capture formats
->>>> enumeration order".
->>>>
->>>> Somehow I can't find it in my mailbox to be able to reply there.
->>>>
->>>> Could you please explain what is the regression you see here?
->>>>
->>>
->>> You can find the thread and explanation of the issue here:
->>>
->>> https://lore.kernel.org/lkml/Y+KPW18o%2FDa+N8UI@google.com/T/
->>>
->>> But Stanimir already picked it and sent a PR for v6.3 including it.
->>
->> While "media: venus: dec: Fix capture formats enumeration order" may have been
->> applied to v6.3,
-> 
-> To me it looks like it was submitted[1], but not yet applied even to the
-> media tree[2] -- while guess, maybe due problems mentioned in[3]? Or am
-> I missing something?
-> 
-> [1]
-> https://lore.kernel.org/all/20230329211655.100276-1-stanimir.k.varbanov@gmail.com/
-> [2] https://git.linuxtv.org/media_tree.git/log/?h=fixes
-> [3]
-> https://lore.kernel.org/all/20230329214310.2503484-1-jenkins@linuxtv.org/
-
-I only notice now: from [1] above it looks like that regression fix was
-applied to a tree that seems to be intended for 6.4. Is that okay for
-everybody, or should we ask Linus to pick this up as well (unless of
-course Mauro shows up and forwards the patch, of course)? They fix a
-regression from 5.19 afaics, so not a fresh problem, but apparently one
-that bugged a few people recently.
-
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-If I did something stupid, please tell me, as explained on that page.
