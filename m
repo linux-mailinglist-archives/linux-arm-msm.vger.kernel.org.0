@@ -2,110 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 111016D3CF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2CAD6D3D28
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 08:15:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbjDCFpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 01:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50646 "EHLO
+        id S231446AbjDCGPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 02:15:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjDCFpi (ORCPT
+        with ESMTP id S230414AbjDCGPa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 01:45:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E27E5B9A;
-        Sun,  2 Apr 2023 22:45:37 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B363B614B9;
-        Mon,  3 Apr 2023 05:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1739C433D2;
-        Mon,  3 Apr 2023 05:45:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680500736;
-        bh=HF4zXr7YlZTAcnD2hGh5dmkIZO641Z6Jw2n7nFuw+/8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KRRtHJ1LxxNmiVh6nQBuwS5XkdYIGrtMLp4wLAGxhaPHMOUQOTY1qIarZ0tY9nGxC
-         H8pwkIKvZBvdavczazPcSCvMXVHiaWhPuCDO0CiNcRHW/gGnScNvup/Q+QpyPviMCj
-         U9KVxJjBmzTghdAJdyiCLFVbmcIEIk0LZSLhtK7L1KIURbb5FjqTpv4h1yJDFstG7B
-         g8uyzHhgbIh7zeSNi5kbCIJttjDHJTlfAz66JIAnJWBSnQiij1J64ARJZoBwl6cNsI
-         tqfPidIoWE70yjAxegmojGsxoKWmTAh1nF13vdWA5Jr5MxZlF09OICpi2xQtpj8Pps
-         gjg4pS7yw1sgw==
-Date:   Mon, 3 Apr 2023 11:15:31 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] bus: mhi: host: Remove duplicate ee check for syserr
-Message-ID: <20230403054531.GK4627@thinkpad>
-References: <1674597444-24543-1-git-send-email-quic_jhugo@quicinc.com>
- <1674597444-24543-2-git-send-email-quic_jhugo@quicinc.com>
- <20230403053730.GI4627@thinkpad>
+        Mon, 3 Apr 2023 02:15:30 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CB1065A8
+        for <linux-arm-msm@vger.kernel.org>; Sun,  2 Apr 2023 23:15:28 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id q19so24980557wrc.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 02 Apr 2023 23:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680502526;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OYr1/KuS7kMHwn46ltI5HEmCt5k4aJgWKClGbWF133s=;
+        b=NTT03Lm8sZsH76eTG3jdAAaurDzfPUGB/iUpyvrJJCgS/iHAOeP0mrd1UJgq2TUEf4
+         PHikextz4mHfKRXGZ4176flEtQA/gWpe9qSMGNQywQtYGkfXzsQxACYuZL2EPyY1WuLH
+         zfgdDB7IP0Cq5JaR/05zHCo8WFZZANccGr8a3VV3/ATQhd2bPMp2PGSd3VuyW3TytX/9
+         SsoAXEjVr4cLrtTZfufguHJhwRPZxbI4dOyUo11D3Sp2U35r1NGH4GBoT5loZVl4ey+j
+         QwbzVdgsaj55u3lJQXWm+Nlm9GErX/1dT51kDE6G5ziC++k4jRAkazihgt5lJheHXYgP
+         H1Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680502526;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OYr1/KuS7kMHwn46ltI5HEmCt5k4aJgWKClGbWF133s=;
+        b=kXi9NBQJfQ8FibhymBXgZ2FjxCgz1ACIq5Z1PareDlLI1JUZ/YbBA4fDq1xJ4u6DrS
+         mElly5hvhJOMJCAe/7DdB3TCQ3V5+FxCk9LkkDwhAGazy2XwEN533nezojYFKEf7M6aZ
+         DjgaXMq4IzvUdGZaXz+Is9MEYKwCkAtDH+dzyYXR1CK4MstqezzHJjSnWYueKMw9HR/O
+         t3XSYSjKBjM+KJ8ZwAiyiRsPin4eIftrkiF5nGvHj9B4qJzeUfcFcqLVLO94T397jMNl
+         ULvN6jQPPqwC3pzBEOjLAfRd+su2eA9TsXJ474aQ2ajFjCJk+/C2bg4j8xieCDOIglH5
+         WZXA==
+X-Gm-Message-State: AAQBX9dnDzugNBUEXwyTJaFHa+YZrsbdBCXHRHUdBTI8dl2EHunowzt3
+        DZJx+eHqs+DlvrJXyOTgRvzgJIXJlllGG3gCk+TRdg==
+X-Google-Smtp-Source: AKy350acf1mfzrEPgp1c2mLaWyYaPeg8MW/g55MD0k5rk9VLpt+743GauRSVo2/m6TW4qS0GzGWVj+lSeid5yNUguIM=
+X-Received: by 2002:a05:6000:5c1:b0:2d7:9771:fc4b with SMTP id
+ bh1-20020a05600005c100b002d79771fc4bmr4955083wrb.5.1680502526512; Sun, 02 Apr
+ 2023 23:15:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230403053730.GI4627@thinkpad>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230402100509.1154220-1-bhupesh.sharma@linaro.org>
+ <20230402100509.1154220-6-bhupesh.sharma@linaro.org> <21eaeea4-4f2e-5ce5-c75b-d74ded8e6e4c@linaro.org>
+In-Reply-To: <21eaeea4-4f2e-5ce5-c75b-d74ded8e6e4c@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Mon, 3 Apr 2023 11:45:05 +0530
+Message-ID: <CAH=2NtzKGxzmCq2JTajxWoeRFR+mPnFY3YF5mn0tGt30T7SJoQ@mail.gmail.com>
+Subject: Re: [PATCH v5 05/11] dt-bindings: qcom-qce: Fix compatible
+ combinations for SM8150 and IPQ4019 SoCs
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
+        robh+dt@kernel.org, konrad.dybcio@linaro.org, rfoss@kernel.org,
+        neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 03, 2023 at 11:07:35AM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Jan 24, 2023 at 02:57:23PM -0700, Jeffrey Hugo wrote:
-> > If we detect a system error via intvec, we only process the syserr if the
-> > current ee is different than the last observed ee.  The reason for this
-> > check is to prevent bhie from running multiple times, but with the single
-> > queue handling syserr, that is not possible.
-> > 
-> > The check can cause an issue with device recovery.  If PBL loads a bad SBL
-> > via BHI, but that SBL hangs before notifying the host of an ee change,
-> > then issuing soc_reset to crash the device and retry (after supplying a
-> > fixed SBL) will not recover the device as the host will observe a PBL->PBL
-> > transition and not process the syserr.  The device will be stuck until
-> > either the driver is reloaded, or the host is rebooted.  Instead, remove
-> > the check so that we can attempt to recover the device.
-> > 
-> > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> 
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> 
-
-Forgot to add that, this patch also needs a fixes tag and backporting.
-
-- Mani
-
-> - Mani
-> 
-> > Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+On Mon, 3 Apr 2023 at 11:06, Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> On 4/2/23 13:05, Bhupesh Sharma wrote:
+> > Currently the compatible list available in 'qce' dt-bindings does not
+> > support SM8150 and IPQ4019 SoCs directly which may lead to potential
+> > 'dtbs_check' error(s).
+> >
+> > Fix the same.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > > ---
-> >  drivers/bus/mhi/host/main.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> > index df0fbfe..0c3a009 100644
-> > --- a/drivers/bus/mhi/host/main.c
-> > +++ b/drivers/bus/mhi/host/main.c
-> > @@ -503,7 +503,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
-> >  	}
-> >  	write_unlock_irq(&mhi_cntrl->pm_lock);
-> >  
-> > -	if (pm_state != MHI_PM_SYS_ERR_DETECT || ee == mhi_cntrl->ee)
-> > +	if (pm_state != MHI_PM_SYS_ERR_DETECT)
-> >  		goto exit_intvec;
-> >  
-> >  	switch (ee) {
-> > -- 
-> > 2.7.4
-> > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+> >   Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 6 ++++++
+> >   1 file changed, 6 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> > index e375bd981300..90ddf98a6df9 100644
+> > --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> > +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> > @@ -24,6 +24,12 @@ properties:
+> >           deprecated: true
+> >           description: Kept only for ABI backward compatibility
+> >
+> > +      - items:
+> > +          - enum:
+> > +              - qcom,ipq4019-qce
+> > +              - qcom,sm8150-qce
+> > +          - const: qcom,qce
+> > +
+> >         - items:
+> >             - enum:
+> >                 - qcom,ipq6018-qce
+>
+> Two commit tags given for v2 are missing.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Cannot get your comment. Please be more descriptive.
+
+Thanks,
+Bhupesh
