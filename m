@@ -2,89 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55D626D3FFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 11:16:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C9586D4015
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 11:18:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231970AbjDCJQx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 05:16:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37750 "EHLO
+        id S231645AbjDCJSn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 05:18:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231708AbjDCJQk (ORCPT
+        with ESMTP id S231793AbjDCJSk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 05:16:40 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54021F76E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 02:16:13 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id e18so28547149wra.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 02:16:13 -0700 (PDT)
+        Mon, 3 Apr 2023 05:18:40 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744D1EF82
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 02:18:15 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id ew6so114454792edb.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 02:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680513369; x=1683105369;
+        d=linaro.org; s=google; t=1680513488;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CgiUgoMbQalvGxGNUyeqmJVel41Q5UZD43id4O4KUIY=;
-        b=LTlww1TaDWlvt+fItUXvrutapoP2NQDnuv5sTlH3l1Z6LKKkWUVtSK82i1HzEnibae
-         rrEq6W3DbMT/CrBpbtIQOKzEelBUt5rsULWEpcNleiz8JcPiFvZlcn+0cLXBGXNAKuWb
-         lCR43Eb9tMjwTvuv8VUH+p4MtR6ZSAXhns+enhWX/75s1CUh/kou2y22qhOpBRPUT+3m
-         LqadmCxQv4jCJc5QMrAye3JFZdf2YJZPlKHND0R7DUs3R/9TLc8CoKkKNT2g24pJYQTG
-         8k4voHY8zdz7c6BMRi+X8nRRAAALNlmKdJdr4P0emhMZXYggK1PGjbCZW1nAQVRzpENa
-         AHXg==
+        bh=Fh11/vZEUZKLkOBCVhKAajLq2amko3vePl8fRjQBQK8=;
+        b=jO+hd1ty05tIA5V7nI2eOUnHRMS+EPf51CpabQa3jghAv5h2DbI4FHNcAs2gFGGZaA
+         jEWi/nZYYw6H8IhfXPWl6dnPoke5NJNxHPEq5kYFyI8gEXTi/qLs9LqaQiJprRQrjfQA
+         jxyKrjQD2aqybCq83pV7hTa4viHZNnRjPQq9RIhUuS1pQABBwjh1bPnk9gs93evCTtNn
+         ejIMYbXLJbzDdw9DSXmbVPpHV8YPoc91tePG374S8KeE4THZtaQMla1Nz6xOxX2tFL3E
+         LNRd4+xyeZ8Y5M49fnL4DNADVt+L94e9KqZJoMBs1cHKxqvm0OJ4xQL1aiZhBlpBqIhB
+         FQVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680513369; x=1683105369;
+        d=1e100.net; s=20210112; t=1680513488;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CgiUgoMbQalvGxGNUyeqmJVel41Q5UZD43id4O4KUIY=;
-        b=e9NjLuP77qYwAjSzwBxPwiZG/2Z0sy9xLLYurh0KHWQ4rupiRDxf7wW5+PY2mdQry0
-         ARHMv3OYJ9q8G1/53cC6gFNU7OY0UE5LQRpH7ApnEg4yQXRAFxNT86JL142lHi8RYNgK
-         KhGZQ+qb0HBzrF6tgfXBFW44lV9ZabFFNO+sjVUkgZLrIoeaaCsIowPCxyMISsjl3PyM
-         3d66k5XEN8PPANLyKQtZGjP/19rN2B3GrzY7a/P426zDvgiOCsz2C+lavF/kued5mPih
-         2Pp3cFwnpxZAULpOiX/EYy4ChGG02TAPDuupYGVVFhZndFOREEyWbpuZm5FP7dIfLuXe
-         Q4tA==
-X-Gm-Message-State: AAQBX9fj3fH20bXTbPY63L3SQVdPacKJw2sMzhtuQRzlMOfFBZ5mQ0H4
-        hObe+KxpUrtEZzqonm0WWI4ynA==
-X-Google-Smtp-Source: AKy350Z1ox3GvJMY5UNjXwR984hUj4F7ACc0TaiFWN+DZooA/dwB9mBqLcPN16f8mNEzC2CYdpYY3A==
-X-Received: by 2002:a5d:4603:0:b0:2d0:8ed9:5ab4 with SMTP id t3-20020a5d4603000000b002d08ed95ab4mr27601427wrq.60.1680513369587;
-        Mon, 03 Apr 2023 02:16:09 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id m17-20020adfe0d1000000b002d1e49cff35sm9227233wri.40.2023.04.03.02.16.08
+        bh=Fh11/vZEUZKLkOBCVhKAajLq2amko3vePl8fRjQBQK8=;
+        b=JoGLYBvky3vxgujuRph6hDOZ7NyJXvcPGgFqMcoL7B1SuGTTEe5j/awpb5RbjMUalx
+         ckxqZHE+qDttbHEqGvachAUAofXBIpgBEkRX7saQLsZAp0NsqEp9dWgHtDJnKDbJ5/wn
+         bOVjpdFt/bbtlRmbxC6eryQj8AXiW4DdbiQRUJrEseZTGSVSLRoPZYG56IWCxIZXTTZX
+         qsXFN0A8i/cabkXR7d1gAqrRgJnip4xJ/X6B4V7LmWETbj1WJt7tM5d5LzLxhRknw5b9
+         HyY7o6CWsXYbzFG51EflYo0HyDfKNn5Jacoo24zT7EBMcYHFiTg5nSf+5kFpKO6A4hmi
+         q/xg==
+X-Gm-Message-State: AAQBX9eUXr5yVcPbDma2/mM+d6rtcZQs44oxXq1poBSjkWUuWP2UksJz
+        T9onTLwfwJJgDhnC2V4HVeOwWQ==
+X-Google-Smtp-Source: AKy350af6ubpegssC3X+D9m3NP0v8LJfwv/yCXR+6WKWlEvRrxHGTUrdIWLbpsbQggiTg/ceZTFrmQ==
+X-Received: by 2002:a05:6402:6d1:b0:502:24a4:b0ae with SMTP id n17-20020a05640206d100b0050224a4b0aemr34472116edy.14.1680513488612;
+        Mon, 03 Apr 2023 02:18:08 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:ae90:d80:1069:4805? ([2a02:810d:15c0:828:ae90:d80:1069:4805])
+        by smtp.gmail.com with ESMTPSA id b17-20020a50b411000000b004bf7905559asm4341659edh.44.2023.04.03.02.18.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 02:16:09 -0700 (PDT)
-Message-ID: <d500c5bb-7aca-ae0d-f23e-495cd049e422@linaro.org>
-Date:   Mon, 3 Apr 2023 10:16:07 +0100
+        Mon, 03 Apr 2023 02:18:08 -0700 (PDT)
+Message-ID: <48f71f9a-0d00-16df-fff8-5aa455918378@linaro.org>
+Date:   Mon, 3 Apr 2023 11:18:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: fix pon compatible and
+ registers
 Content-Language: en-US
-To:     "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>,
-        Azam Sadiq Pasha Kapatrala Syed <akapatra@quicinc.com>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Jigarkumar Zala <jzala@quicinc.com>,
-        "todor.too@gmail.com" <todor.too@gmail.com>,
-        "nicolas.dechesne@linaro.org" <nicolas.dechesne@linaro.org>
-Cc:     "agross@kernel.org" <agross@kernel.org>,
-        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        Chandan Gera <cgera@qti.qualcomm.com>,
-        Guru Chinnabhandar <gchinnab@quicinc.com>,
-        Alireza Yasan <ayasan@qti.qualcomm.com>,
-        "laurent.pinchart@ideasonboard.com" 
-        <laurent.pinchart@ideasonboard.com>
-References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
- <662d68f7-6160-263d-6e4d-e3687d5cf8eb@quicinc.com>
- <7565d38c-d8f4-39e0-8547-fbb511f6d649@quicinc.com>
- <894e3ce6-0f2b-608b-ec4e-09083704f429@linaro.org>
- <8243cc42-236c-20e3-74dc-1f130ab1dcf6@quicinc.com>
- <BYAPR02MB557503013F05BF1EA1E1300CC28F9@BYAPR02MB5575.namprd02.prod.outlook.com>
- <f26174aa-a6ca-151c-2602-2f39b40bb7da@linaro.org>
- <7b3cb8a6-8306-f001-5701-af3b482421e9@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <7b3cb8a6-8306-f001-5701-af3b482421e9@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230327122948.4323-1-johan+linaro@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230327122948.4323-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -95,65 +81,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 09:38, Milen Mitkov (Consultant) wrote:
-> On 31/03/2023 11:07, Bryan O'Donoghue wrote:
->> On 31/03/2023 07:20, Azam Sadiq Pasha Kapatrala Syed wrote:
->>> + Nico (Linaro)
->>> Hi Team
->>>
->>> Would like to know if anything is pending form our end as we want to 
->>> get the patches mainlined?
->>>
->>> Thanks,
->>> Azam
->>
->> I'd like to get a clearer picture on this
->>
->> [   90.535909] qcom-camss ac6a000.camss: VFE HW Version = 2.0.1
->> [   90.545756] qcom-camss ac6a000.camss: CSIPHY 3PH HW Version = 
->> 0x40010000
->> [   90.546358] qcom-camss ac6a000.camss: CSID HW Version = 2.0.1
->> [   90.546365] qcom-camss ac6a000.camss: csid_link_setup: Enabled CSID 
->> virtual channels mask 0x1
->> [   90.547675] qcom-camss ac6a000.camss: csid_link_setup: Enabled CSID 
->> virtual channels mask 0x0
->>
->> Using the IMX577 sensor on the RB5 we get his pretty odd virtual 
->> channels mask.
->>
->> If userspace is sending this in, the question I have is why. Surely 
->> with a sensor that doesn't have a VC there should be no impact on 
->> user-space.
->>
->> ---
->> bod
+On 27/03/2023 14:29, Johan Hovold wrote:
+> The pmk8280 PMIC PON peripheral is gen3 and uses two sets of registers;
+> hlos and pbs.
 > 
-> Hey Bryan,
+> This specifically fixes the following error message during boot when the
+> pbs registers are not defined:
 > 
-> what media-ctl commands are you using? I can't recreate this on my side. 
-> I am using this set of commands to test (with the default imx577 driver 
-> without any multiple virtual channels outputs) and am getting only the 
-> first message (virtual channels mask 0x1):
+> 	PON_PBS address missing, can't read HW debounce time
 > 
-> media-ctl --reset
-> media-ctl -v -d /dev/media0 -V '"imx577 
-> '22-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> Note that this also enables the spurious interrupt workaround introduced
+> by commit 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press
+> debouncing support") (which may or may not be needed).
 > 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> 
-> Thanks,
-> 
-> Milen
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> index c35e7f6bd657..a0ba535bb6c9 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> @@ -59,8 +59,9 @@ pmk8280: pmic@0 {
+>  		#size-cells = <0>;
+>  
+>  		pmk8280_pon: pon@1300 {
+> -			compatible = "qcom,pm8998-pon";
+> -			reg = <0x1300>;
+> +			compatible = "qcom,pmk8350-pon";
 
-Its a dev_dbg() so "#define DEBUG 1" in 
-drivers/media/platform/qcom/camss/camss-csid.c
+Same comment as Dmitry's. There is no compatible "qcom,pmk8350-pon"
+ccd3517faf18, therefore indicated backport (through AUTOSEL) will lead
+to invalid stable kernel.
 
----
-bod
+You must drop the Fixes tag, because this cannot be backported.
+
+Best regards,
+Krzysztof
 
