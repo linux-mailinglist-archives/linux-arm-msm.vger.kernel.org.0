@@ -2,369 +2,259 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 742886D4F87
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 19:50:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C84216D4F9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 19:54:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231583AbjDCRuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 13:50:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
+        id S232191AbjDCRyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 13:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231928AbjDCRt6 (ORCPT
+        with ESMTP id S231932AbjDCRyC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 13:49:58 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C7A24206
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 10:49:23 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id t14so31227460ljd.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 10:49:23 -0700 (PDT)
+        Mon, 3 Apr 2023 13:54:02 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D276A358E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 10:53:52 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id bi9so39115255lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 10:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680544102;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cmh0U8QZH0xaWmRcmSkGM1kVFcibzuua/RqQdb5w48c=;
-        b=pUYKi9COWvM908cqLmR/Stpqm/ekT1k/Ssqy7bUJzUau/ZVCKK/6wI/5u5+5PVoiir
-         /VRKH5esgpWBLfwsE/0M0F+hF6hG0hUEsBtErE9ZUJWAw2JHlcCqYN4pqZv17cWe8LZm
-         5YcjrzBzxJkRZkTp70MTZ0IFN4YI6uJIdDzGPNd7/FJGjcXpJJI9JleN2h6ZERKZUBqY
-         aOvSCvMdUXlQTQDSvBUJGrwQ5TAmOQghmSwI18JCqI8/MOA10wnQil3/Yrk1paT2GsgY
-         XrxfRMvRC/Trfcz0VWv+xOnsfIvBKDvIPHUYyyWCREAjIGZ6lu3Gb4wjKQke88BVqETI
-         ns0A==
+        d=linaro.org; s=google; t=1680544431;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Fe1puile+CIeu4Oxbg9Rq2eJRWjjHhk67hQmRmGqNb0=;
+        b=uEteMWJ/CCIPT3d7X2MBjeVd4Nn5xYSdU/WTTGfJukxogCLoZiSjQVhh05fyjwHgKN
+         s/hYUK7dK1os3TufOuzqA1dBb0ZrPbph/WTpIgKo7RQ8S5byapyx12TuegqJDUo2NhYm
+         +YnyFtHvbAfJyQyB27x0IQ//EOCY0xZ73IhaPtOgWKDZBn2nShVZDU+C13Ti4an+gmvf
+         8vXRsdGSwSGrdrXKYfpJHrfcFXBMqgaXvM9PmtNsCdgnOM1yYt/8TVPKX7h0+oWJrk9p
+         N/aiHdANkoEKKe8GEWCGhE4kmZQElQiLT1+LViOZ2wkujN9+EVnWakDpbwN2TeZcKJN2
+         gPkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680544102;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cmh0U8QZH0xaWmRcmSkGM1kVFcibzuua/RqQdb5w48c=;
-        b=NrCAIELymsa6WeR4s0HP/nSL/tKBZlmZ68nkY+8poYd5p6MfeEdJd4IYwtReO+K/TN
-         g0WaJeFbFgZ0vaW9ygjVJRO2FZ3nzNA2ZAy+A6O3QcDvJkPsRFtN+jC8Uf0qT4vHLUBU
-         NZgVIyjJv+fC0vWAbvdY+lK5wpuYiBZHA5/GJXSgZ8DOk5Q7jkZJgftdJ+otBGJr8AoH
-         bPT2Pv4t0zSAlC3NjVp6nbOmZ8EjCW/cjUCViA/MdHndl9SZuvU3mC3LNteasdWBC7Ah
-         gmVggiTt17EWHeR3QK9iyTWaOvu59m/FsGRmMWBBCOQrnHt1e7lqUiA6ydJh84CJPkON
-         XkyA==
-X-Gm-Message-State: AAQBX9d/JAGBjh03l2UJ1pOnrYrim6a9QTVIQe3W69kuefhkfkwc+QC0
-        FMU/A+yEyofCmE6JiH1bntuQkp5/SgdyAX0+tKI=
-X-Google-Smtp-Source: AKy350bO6RBLR5yWbMFgglqYDQA4F446v9NcM5SCkNi19VgH8B47arkq95Jp1Z/wKteCLZAq9Kh1vw==
-X-Received: by 2002:a2e:9e16:0:b0:295:a3aa:e7d8 with SMTP id e22-20020a2e9e16000000b00295a3aae7d8mr91237ljk.29.1680544101964;
-        Mon, 03 Apr 2023 10:48:21 -0700 (PDT)
-Received: from localhost.localdomain (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
-        by smtp.gmail.com with ESMTPSA id n20-20020a2e86d4000000b00295a8c68585sm1863588ljj.56.2023.04.03.10.48.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 10:48:21 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Rob Herring <robh@kernel.org>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: gcc-qcm2290: Mark RCGs shared where applicable
-Date:   Mon,  3 Apr 2023 19:48:07 +0200
-Message-Id: <20230403174807.345185-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.40.0
+        d=1e100.net; s=20210112; t=1680544431;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fe1puile+CIeu4Oxbg9Rq2eJRWjjHhk67hQmRmGqNb0=;
+        b=jF081tfB/EIb++fiivEahaVx56mRlH8Ws09Ya2lJrcenDA91jUPhV80iCxA5cRrs7W
+         qYD8jf9D6ZQrn8zPb3giTWbakWT+G+DlMXq4KciTn0dUOp5OOCATy4vXq+wSKqEUB66H
+         RjKw3CYNr9H/palnRwtDZUDaQZskzI+fV0H3gdE2ZKWG2HDOrKVuv5zryEPe7ZbmupNO
+         dgN3WVYSeMqPt8d7B/8kfXoShY/tq0qrDtXbCWkvXSFS9SwotkVGSJm4RxUuThap/zeQ
+         DU+4SPxETvn+R6wrjhOqZSgkloppAajQHPMwKuVDoznAipWpXzJ9R8QldULitzCKUUFU
+         bjzg==
+X-Gm-Message-State: AAQBX9foho02C9I1lJZhPaA9/o3wLRQkFckGvCgKIIW/KRdqrR+EMkSG
+        80Gth8+v3zyRsmABRWvmH8L/lQ==
+X-Google-Smtp-Source: AKy350YF+lZZAQb/4jTlpXSTDkQZ84ZHiqGluR+QD0cxob99tywlh4Lwg6ObhfzTpFupVCaMR3Ce4g==
+X-Received: by 2002:ac2:488f:0:b0:4cf:e904:bba5 with SMTP id x15-20020ac2488f000000b004cfe904bba5mr10694700lfc.29.1680544430986;
+        Mon, 03 Apr 2023 10:53:50 -0700 (PDT)
+Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
+        by smtp.gmail.com with ESMTPSA id h21-20020ac250d5000000b004cca1658a41sm1879087lfm.300.2023.04.03.10.53.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 10:53:50 -0700 (PDT)
+Message-ID: <3c5a9608-ecd2-a3c0-e866-7d0070e49b89@linaro.org>
+Date:   Mon, 3 Apr 2023 19:53:48 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
+ bootup voltage
+Content-Language: en-US
+To:     Devi Priya <quic_devipriy@quicinc.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     agross@kernel.org, andersson@kernel.org, lgirdwood@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
+References: <20230217142030.16012-1-quic_devipriy@quicinc.com>
+ <20230217142030.16012-5-quic_devipriy@quicinc.com>
+ <907628d1-b88d-5ac6-ed9d-7f63e2875738@linaro.org>
+ <Y/aeu5ua7cY5cGON@sirena.org.uk>
+ <39f73580-f263-de0e-6819-89c3f4c75c3a@quicinc.com>
+ <8ce07abd-2d02-69d2-8dc6-fe11525aecda@linaro.org>
+ <11b05b9f-b969-6648-2204-2da5f8465c96@quicinc.com>
+ <751e5129-3c11-0156-719e-3fe996a149be@quicinc.com>
+ <3f434777-c4b6-272f-1971-f9adf3faefe4@linaro.org>
+ <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
+ <ca12735e-d6c8-997e-036f-693cd8a9870f@linaro.org>
+ <e19393e3-5898-bff2-cc00-d88c9194c7c2@quicinc.com>
+ <6e1f6466-7f2e-7bd5-f6a2-5691a30c4e1f@linaro.org>
+ <9989c92c-9949-5531-c7d2-e54882795a68@quicinc.com>
+ <69df153d-bdc6-9008-39d6-72f66bab2e38@linaro.org>
+ <5914a8db-3644-1c94-00ba-460ba2c26a5d@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <5914a8db-3644-1c94-00ba-460ba2c26a5d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The vast majority of shared RCGs were not marked as such. Fix it.
 
-Fixes: 496d1a13d405 ("clk: qcom: Add Global Clock Controller driver for QCM2290")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gcc-qcm2290.c | 62 +++++++++++++++++-----------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
-index 096deff2ba25..48995e50c6bd 100644
---- a/drivers/clk/qcom/gcc-qcm2290.c
-+++ b/drivers/clk/qcom/gcc-qcm2290.c
-@@ -650,7 +650,7 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
- 		.name = "gcc_usb30_prim_mock_utmi_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -686,7 +686,7 @@ static struct clk_rcg2 gcc_camss_axi_clk_src = {
- 		.name = "gcc_camss_axi_clk_src",
- 		.parent_data = gcc_parents_4,
- 		.num_parents = ARRAY_SIZE(gcc_parents_4),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -706,7 +706,7 @@ static struct clk_rcg2 gcc_camss_cci_clk_src = {
- 		.name = "gcc_camss_cci_clk_src",
- 		.parent_data = gcc_parents_9,
- 		.num_parents = ARRAY_SIZE(gcc_parents_9),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -728,7 +728,7 @@ static struct clk_rcg2 gcc_camss_csi0phytimer_clk_src = {
- 		.name = "gcc_camss_csi0phytimer_clk_src",
- 		.parent_data = gcc_parents_5,
- 		.num_parents = ARRAY_SIZE(gcc_parents_5),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -742,7 +742,7 @@ static struct clk_rcg2 gcc_camss_csi1phytimer_clk_src = {
- 		.name = "gcc_camss_csi1phytimer_clk_src",
- 		.parent_data = gcc_parents_5,
- 		.num_parents = ARRAY_SIZE(gcc_parents_5),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -764,7 +764,7 @@ static struct clk_rcg2 gcc_camss_mclk0_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -779,7 +779,7 @@ static struct clk_rcg2 gcc_camss_mclk1_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -794,7 +794,7 @@ static struct clk_rcg2 gcc_camss_mclk2_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -809,7 +809,7 @@ static struct clk_rcg2 gcc_camss_mclk3_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -830,7 +830,7 @@ static struct clk_rcg2 gcc_camss_ope_ahb_clk_src = {
- 		.name = "gcc_camss_ope_ahb_clk_src",
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -854,7 +854,7 @@ static struct clk_rcg2 gcc_camss_ope_clk_src = {
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -888,7 +888,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_clk_src = {
- 		.name = "gcc_camss_tfe_0_clk_src",
- 		.parent_data = gcc_parents_7,
- 		.num_parents = ARRAY_SIZE(gcc_parents_7),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -912,7 +912,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_csid_clk_src = {
- 		.name = "gcc_camss_tfe_0_csid_clk_src",
- 		.parent_data = gcc_parents_8,
- 		.num_parents = ARRAY_SIZE(gcc_parents_8),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -926,7 +926,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_clk_src = {
- 		.name = "gcc_camss_tfe_1_clk_src",
- 		.parent_data = gcc_parents_7,
- 		.num_parents = ARRAY_SIZE(gcc_parents_7),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -940,7 +940,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_csid_clk_src = {
- 		.name = "gcc_camss_tfe_1_csid_clk_src",
- 		.parent_data = gcc_parents_8,
- 		.num_parents = ARRAY_SIZE(gcc_parents_8),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -963,7 +963,7 @@ static struct clk_rcg2 gcc_camss_tfe_cphy_rx_clk_src = {
- 		.parent_data = gcc_parents_10,
- 		.num_parents = ARRAY_SIZE(gcc_parents_10),
- 		.flags = CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -984,7 +984,7 @@ static struct clk_rcg2 gcc_camss_top_ahb_clk_src = {
- 		.name = "gcc_camss_top_ahb_clk_src",
- 		.parent_data = gcc_parents_4,
- 		.num_parents = ARRAY_SIZE(gcc_parents_4),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1006,7 +1006,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
- 		.name = "gcc_gp1_clk_src",
- 		.parent_data = gcc_parents_2,
- 		.num_parents = ARRAY_SIZE(gcc_parents_2),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1020,7 +1020,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
- 		.name = "gcc_gp2_clk_src",
- 		.parent_data = gcc_parents_2,
- 		.num_parents = ARRAY_SIZE(gcc_parents_2),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1034,7 +1034,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
- 		.name = "gcc_gp3_clk_src",
- 		.parent_data = gcc_parents_2,
- 		.num_parents = ARRAY_SIZE(gcc_parents_2),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1054,7 +1054,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
- 		.name = "gcc_pdm2_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1082,7 +1082,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s0_clk_src",
- 	.parent_data = gcc_parents_1,
- 	.num_parents = ARRAY_SIZE(gcc_parents_1),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
-@@ -1098,7 +1098,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s1_clk_src",
- 	.parent_data = gcc_parents_1,
- 	.num_parents = ARRAY_SIZE(gcc_parents_1),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
-@@ -1114,7 +1114,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s2_clk_src",
- 	.parent_data = gcc_parents_1,
- 	.num_parents = ARRAY_SIZE(gcc_parents_1),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
-@@ -1130,7 +1130,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s3_clk_src",
- 	.parent_data = gcc_parents_1,
- 	.num_parents = ARRAY_SIZE(gcc_parents_1),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
-@@ -1146,7 +1146,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s4_clk_src",
- 	.parent_data = gcc_parents_1,
- 	.num_parents = ARRAY_SIZE(gcc_parents_1),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
-@@ -1162,7 +1162,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
- 	.name = "gcc_qupv3_wrap0_s5_clk_src",
- 	.parent_data = gcc_parents_1,
- 	.num_parents = ARRAY_SIZE(gcc_parents_1),
--	.ops = &clk_rcg2_ops,
-+	.ops = &clk_rcg2_shared_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
-@@ -1219,7 +1219,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
- 		.name = "gcc_sdcc1_ice_core_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1266,7 +1266,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
- 		.name = "gcc_usb30_prim_master_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1280,7 +1280,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
- 		.name = "gcc_usb3_prim_phy_aux_clk_src",
- 		.parent_data = gcc_parents_13,
- 		.num_parents = ARRAY_SIZE(gcc_parents_13),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1303,7 +1303,7 @@ static struct clk_rcg2 gcc_video_venus_clk_src = {
- 		.parent_data = gcc_parents_14,
- 		.num_parents = ARRAY_SIZE(gcc_parents_14),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
--- 
-2.40.0
+On 3.04.2023 16:07, Devi Priya wrote:
+> 
+> 
+> On 3/28/2023 1:58 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 28.03.2023 08:12, Devi Priya wrote:
+>>>
+>>>
+>>> On 3/27/2023 2:56 PM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 27.03.2023 10:40, Devi Priya wrote:
+>>>>>
+>>>>>
+>>>>> On 3/18/2023 7:38 PM, Konrad Dybcio wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 14.03.2023 18:15, Devi Priya wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 3/8/2023 3:57 PM, Konrad Dybcio wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 7.03.2023 07:55, Devi Priya wrote:
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> On 3/6/2023 6:39 PM, Devi Priya wrote:
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> On 3/3/2023 6:57 PM, Konrad Dybcio wrote:
+>>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>> On 3.03.2023 14:21, Devi Priya wrote:
+>>>>>>>>>>>>
+>>>>>>>>>>>>
+>>>>>>>>>>>> On 2/23/2023 4:31 AM, Mark Brown wrote:
+>>>>>>>>>>>>> On Wed, Feb 22, 2023 at 11:11:42PM +0100, Konrad Dybcio wrote:
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>> Thinking about it again, this seems like something that could be
+>>>>>>>>>>>>>> generalized and introduced into regulator core.. Hardcoding this
+>>>>>>>>>>>>>> will not end well.. Not to mention it'll affect all mp5496-using
+>>>>>>>>>>>>>> boards that are already upstream.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>> WDYT about regulator-init-microvolts Mark?
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> The overwhelming majority of devices that have variable voltages
+>>>>>>>>>>>>> support readback, these Qualcomm firmware devices are pretty much
+>>>>>>>>>>>>> unique in this regard.  We don't want a general property to set a
+>>>>>>>>>>>>> specific voltage since normally we should be using the
+>>>>>>>>>>>>> constraints and don't normally need to adjust things immediately
+>>>>>>>>>>>>> since we can tell what the current voltage is.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> This is pretty much just going to be a device specific bodge,
+>>>>>>>>>>>>> ideally something that does know what the voltage is would be
+>>>>>>>>>>>>> able to tell us at runtime but if that's not possible then
+>>>>>>>>>>>>> there's no good options.  If the initial voltage might vary based
+>>>>>>>>>>>>> on board then a device specific DT property might be less
+>>>>>>>>>>>>> terrible, if it's determined by the regulator the current code
+>>>>>>>>>>>>> seems fine.  Or just leave the current behavour, if the
+>>>>>>>>>>>>> constraints are accurate then hopefully a temporary dip in
+>>>>>>>>>>>>> voltage is just inelegant rather than an issue.  Indeed the
+>>>>>>>>>>>>> current behaviour might well save power if you've got a voltage
+>>>>>>>>>>>>> range configured and nothing actually ever gets round to setting
+>>>>>>>>>>>>> the voltage (which is depressingly common, people seem keen on
+>>>>>>>>>>>>> setting voltage ranges even when the voltage is never varied in
+>>>>>>>>>>>>> practice).
+>>>>>>>>>>>>
+>>>>>>>>>>>> Hi Mark, The initial bootup voltage is actually blown into the OTP register of the PMIC and it remains the same across boards for IPQ9574 SoC.
+>>>>>>>>>>> But what about IPQ6018 which also uses MP5496? That's also gonna
+>>>>>>>>>>> set the voltage on there, it may be too high/low..
+>>>>>>>>> For IPQ6018, the bootup voltage is the same as that of IPQ9574 which is
+>>>>>>>>> 875mV
+>>>>>>>> Okay, but what about any other design that employs or may employ
+>>>>>>>> MP5496 in the future?
+>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>>       Initially the SoC runs at 800MHz with a voltage of 875mV set by the bootloaders. As kernel does not know the initial voltage, during regulator registration the framework considers the current voltage to be zero and tries to bring up the regulator to minimum supported voltage of 600mV. This causes the dip which might be of concern in SS parts where the voltage might be insufficient leading to silent reboots.
+>>>>>>>>>>> That's an SoC-specific thing, the same regulator can be used with
+>>>>>>>>>>> many different ones. We can't just assume it'll always be like this.
+>>>>>>>>>>> I see the problem, but I believe this is not the correct solution
+>>>>>>>>> Okay, As we had discussions on reading back the voltage & the generic
+>>>>>>>>> DT property, do you suggest any other possible solutions here?
+>>>>>>>> Due to the sudden influx of various IPQ SoCs on the mailing list lately
+>>>>>>>> I have no idea if it concerned this one too, but at least one of them
+>>>>>>>> was said not to use RPM for controlling the clocks. If that's the case,
+>>>>>>>> I see no reason at all to use it for scaling the regulators, the PMIC
+>>>>>>>> could be addressed directly over I2C as a normal device. You'd probably
+>>>>>>>> want to keep VDD_[CM]X scaling through rpmpd, but it's easily done by
+>>>>>>>> simply not registering the CX/MX registers as children of the I2C
+>>>>>>>> regulator IC.
+>>>>>>>
+>>>>>>> IPQ9574 SoC has RPM and uses it for controlling the regulators.
+>>>>>>> Currently, the RPM firmware does not have read support implemented
+>>>>>>> and so, we were not able to read the bootup voltage.
+>>>>>>> As we randomly saw silent reboots when the kernel boots up,
+>>>>>>> do you think we could proceed with this change for time being
+>>>>>>> and revisit the same when any SoC in the future employs MP5496?
+>>>>>> I'm still thinking about a cleaner fix because hardcoding voltages
+>>>>>> in kernel is just dangerous. Could you check whether attaching a CPU
+>>>>>> supply and adding an OPP table where each level has an opp-microvolt
+>>>>>> property would resolve your issue?
+>>>>>>
+>>>>>> Konrad
+>>>>> Yes, Understood! We already have the CPU supply and OPP table where
+>>>>> each level has an opp-microvolt property changes in place and it did
+>>>>> not help in our case.
+>>>> Ouch. That totally sounds like a bug.. Would you be willing to dig
+>>>> a bit further into why this happens?
+>>> As the regulator registration happens before the cpu freq scaling comes
+>>> into picture, having an OPP table did not help to set the bootup voltage
+>> I see, but the order should not affect it. If your regulator driver
+>> returns -EPROBE_DEFER, so should the cpufreq one.
+>>
+>> Konrad
+> Sorry konrad, don't exactly get your point here.
+> The cpufreq driver depends on the regulator driver to be probed as
+> the regulator serves as the cpu-supply.
+> But, when the regulator driver comes up, it tries to bring up the
+> regulators to the minimum supported voltage provided with the
+> regulator-min-microvolt property in the DT.
+Right, that exists.. 
 
+Mark, do you think it should be updated such that the requests are
+aggregated before assuming min_uV is "just fine"?
+
+> 
+> The regulator being the CPU only supply, updating the
+> regulator-min-microvolt with SVS voltage (725000uV) would ideally help
+> us with the issue. That way, we could update the DT and drop this patch.
+> 
+> This approach seems quite ideal to us. Shall we proceed with it if we don't foresee any issues?
+Yes, please do so as a temporary measure and leave a comment about
+it in the device tree so that it's not forgotten about. Ideally
+both scaling up and down should be supported..
+
+Konrad
+> 
+> Thanks,
+> Devi Priya
+> 
+>>>>
+>>>> Konrad
+>>>>> We have now planned to update the regulator-min-microvolt property
+>>>>> with the SVS voltage (725000uV) in the board DT such that the regulators
+>>>>> are brought up with the nominal voltage which would be sufficient
+>>>>> for all the corner parts operating at 800MHz.
+>>>>>
+>>>>> That way, we would update the DT and drop this patch in the next spin.
+>>>>>
+>>>>> Thanks,
+>>>>> Devi Priya
+>>>>>>>>
+>>>>>>>> Konrad
+>>>>>>>>>>>
+>>>>>>>>>>> Konrad
+>>>>>>>>>>>>
+>>>>>>>>>>>> Best Regards,
+>>>>>>>>>>>> Devi Priya
