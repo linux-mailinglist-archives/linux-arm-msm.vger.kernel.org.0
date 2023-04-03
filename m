@@ -2,67 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 912D46D519E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 21:54:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC546D51D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 22:05:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232578AbjDCTyO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 15:54:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
+        id S232787AbjDCUFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 16:05:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232254AbjDCTyN (ORCPT
+        with ESMTP id S231695AbjDCUFk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 15:54:13 -0400
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89A161FDA;
-        Mon,  3 Apr 2023 12:54:12 -0700 (PDT)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id DD0D41C0DFD; Mon,  3 Apr 2023 21:54:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-        t=1680551650;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=fykVoMCfV1nx33PPt8DE784tGv/X2NEpQvm7pJbRM6M=;
-        b=juEewWzjR/oFjcMcyhikVgpbth86/4CzY4LjhmZYOiqcJ+5Be4T+2WDJeJBSHO4bPavBvk
-        y+/DQog1H9zekTEiK2kzTiGyfrFiYFlzRITJwZC49aSofJp8dLsv0R37DWITFhzFJJaEu5
-        npoFwNyjVcf2waVYeKGbQdTBYGtyeoY=
-Date:   Mon, 3 Apr 2023 21:54:10 +0200
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Christian Marangi <ansuelsmth@gmail.com>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Mon, 3 Apr 2023 16:05:40 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8B4F1FC6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 13:05:37 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id l27so30594349wrb.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 13:05:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680552336;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ypjGSD9MoiyC/BSmZV4rpdSicxantTDyraV9ZwR3Wko=;
+        b=HUKwUP5VZRNpodrnPPM3ifw1bAJa/1Pwl19tZY0gZTDQdqvslDjrKagBUWgrt8/NY1
+         iJ2tN7m+ZqpRE+cPJMdWcNCThCpokwmT7wlwclKRVO8wDwCdc/pV4pkMjvEhq5no8djC
+         kPGn53hin1pRv+iB8fzqU95rfylIHRDYJ0C5vDUFdDcMnNXlFDzMODxFRuRHDnhIfDgD
+         CXJ6y6TnYjCZVy6iOCDFQph/FZRUWWpdmfYk6xaMyt1+X7y038/HXHZtZNOQxDMfQztv
+         7Znx05mTUxZUmAcoNI+qMtJA3exG/ecL3Ah/qeCHRICM69kcalZ0fIqnlwgmhR9/jGmJ
+         RS1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680552336;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ypjGSD9MoiyC/BSmZV4rpdSicxantTDyraV9ZwR3Wko=;
+        b=VHE8Iy8spqv1ID6y3uX+Trn032JjMyfVcoDmWRRLQNUV3747ER2wsTH/9CcgzUmQS+
+         cUWpKulzBewxLigFyvi2wYCHJBiYDwI5pOH5Fv59ROCUiPCgVT6lHvdldqiul+xL3IFc
+         F0MjbnTZIXXwShlUe/rg1rnfZRe9CKxKHv6hbdQqKumPSYaCWD87w0e19wsS9b+qghEw
+         FOJvkrBchAx1RzQsYvAqwPugm26A3782/9k1YTTtkCiZ4hzWOPJIRop8SuOoXukwzfax
+         8lnA9SNHvgx+HmeuxajnTqmzyWW071HZox8ZMvxSMxhudvptEEgA8AHFqlCqpfaS1oMb
+         QIlQ==
+X-Gm-Message-State: AAQBX9epBw5cVtXA5v/JAsWNy6xvXjx1kyLnC+eUI02BD7n2v0GFytip
+        ur33isPe1p1YtieGQHvwjWsGIQ==
+X-Google-Smtp-Source: AKy350Ykoxehj3xlHAZUYS0YuJeY0lOEIiHNddtOkaPl+8pQTa1wGWFgeMQoaWYcLwn59zlnlqdkXg==
+X-Received: by 2002:adf:dbcf:0:b0:2ce:da65:1e1d with SMTP id e15-20020adfdbcf000000b002ceda651e1dmr14024101wrj.24.1680552336280;
+        Mon, 03 Apr 2023 13:05:36 -0700 (PDT)
+Received: from localhost.localdomain ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id iv19-20020a05600c549300b003ef69873cf1sm20798037wmb.40.2023.04.03.13.05.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 13:05:35 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v6 16/16] arm: mvebu: dt: Add PHY LED support
- for 370-rd WAN port
-Message-ID: <ZCsu4qD8k947kN7v@duo.ucw.cz>
-References: <20230327141031.11904-1-ansuelsmth@gmail.com>
- <20230327141031.11904-17-ansuelsmth@gmail.com>
- <ZCKl1A9dZOIAdMY8@duo.ucw.cz>
- <2e5c6dfb-5f55-416f-a934-6fa3997783b7@lunn.ch>
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: [PATCH v5 0/6] Add dedicated Qcom ICE driver
+Date:   Mon,  3 Apr 2023 23:05:24 +0300
+Message-Id: <20230403200530.2103099-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="lPaKBUJ34nC7zHk1"
-Content-Disposition: inline
-In-Reply-To: <2e5c6dfb-5f55-416f-a934-6fa3997783b7@lunn.ch>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,76 +85,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+As both SDCC and UFS drivers use the ICE with duplicated implementation,
+while none of the currently supported platforms make use concomitantly
+of the same ICE IP block instance, the new SM8550 allows both UFS and
+SDCC to do so. In order to support such scenario, there is a need for
+a unified implementation and a devicetree node to be shared between
+both types of storage devices. So lets drop the duplicate implementation
+of the ICE from both SDCC and UFS and make it a dedicated (soc) driver.
+Also, switch all UFS and SDCC devicetree nodes to use the new ICE
+approach.
 
---lPaKBUJ34nC7zHk1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The v4 is here:
+https://lore.kernel.org/all/20230327134734.3256974-1-abel.vesa@linaro.org/
 
-Hi!
+Changes since v4:
+ * dropped the SDHCI dt-bindings patch as it will be added along
+   with the first use of qcom,ice property from an SDHCI DT node
 
-> > > The WAN port of the 370-RD has a Marvell PHY, with one LED on
-> > > the front panel. List this LED in the device tree.
-> >=20
-> > > @@ -135,6 +136,19 @@ &mdio {
-> > >  	pinctrl-names =3D "default";
-> > >  	phy0: ethernet-phy@0 {
-> > >  		reg =3D <0>;
-> > > +		leds {
-> > > +			#address-cells =3D <1>;
-> > > +			#size-cells =3D <0>;
-> > > +
-> > > +			led@0 {
-> > > +				reg =3D <0>;
-> > > +				label =3D "WAN";
-> > > +				color =3D <LED_COLOR_ID_WHITE>;
-> > > +				function =3D LED_FUNCTION_LAN;
-> > > +				function-enumerator =3D <1>;
-> > > +				linux,default-trigger =3D "netdev";
-> > > +			};
-> >=20
-> > /sys/class/leds/WAN is not acceptable.
->=20
-> As i said here, that is not what it gets called:
->=20
-> https://lore.kernel.org/netdev/aa2d0a8b-b98b-4821-9413-158be578e8e0@lunn.=
-ch/T/#m6c72bd355df3fcf8babc0d01dd6bf2697d069407
->=20
-> > It can be found in /sys/class/leds/f1072004.mdio-mii:00:WAN. But when
-> > we come to using it for ledtrig-netdev, the user is more likely to foll=
-ow
-> > /sys/class/net/eth0/phydev/leds/f1072004.mdio-mii\:00\:WAN/
->=20
-> Is that acceptable?
->=20
-> What are the acceptance criteria?
+See each individual patch for changelogs.
 
-Acceptance criteria would be "consistent with documentation and with
-other similar users". If the LED is really white, it should be
-f1072004.mdio-mii\:white\:WAN, but you probably want
-f1072004.mdio-mii\:white\:LAN (or :activity), as discussed elsewhere in the=
- thread.
+Abel Vesa (6):
+  dt-bindings: crypto: Add Qualcomm Inline Crypto Engine
+  dt-bindings: ufs: qcom: Add ICE phandle
+  soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver
+  scsi: ufs: ufs-qcom: Switch to the new ICE API
+  mmc: sdhci-msm: Switch to the new ICE API
+  arm64: dts: qcom: sm8550: Add the Inline Crypto Engine node
 
-Documentation is in Documentation/leds/well-known-leds.txt , so you
-should probably add a new section about networking, and explain naming
-scheme for network activity LEDs. When next users appear, I'll point
-them to the documentation.
+ .../crypto/qcom,inline-crypto-engine.yaml     |  42 ++
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |  19 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  10 +
+ drivers/mmc/host/Kconfig                      |   2 +-
+ drivers/mmc/host/sdhci-msm.c                  | 220 +++--------
+ drivers/soc/qcom/Kconfig                      |   4 +
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/ice.c                        | 365 ++++++++++++++++++
+ drivers/ufs/host/Kconfig                      |   2 +-
+ drivers/ufs/host/Makefile                     |   4 +-
+ drivers/ufs/host/ufs-qcom-ice.c               | 244 ------------
+ drivers/ufs/host/ufs-qcom.c                   |  97 ++++-
+ drivers/ufs/host/ufs-qcom.h                   |  32 +-
+ include/soc/qcom/ice.h                        |  37 ++
+ 14 files changed, 626 insertions(+), 453 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+ create mode 100644 drivers/soc/qcom/ice.c
+ delete mode 100644 drivers/ufs/host/ufs-qcom-ice.c
+ create mode 100644 include/soc/qcom/ice.h
 
-Does that sound ok?
+-- 
+2.34.1
 
-Best regards,
-								Pavel
---=20
-People of Russia, stop Putin before his war on Ukraine escalates.
-
---lPaKBUJ34nC7zHk1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZCsu4gAKCRAw5/Bqldv6
-8h78AJ9AUnGfeFk8XU7IuIMt4pYID4EtCACgncPOn1FIVY/7WnPw/CXAoZkbNu0=
-=zXBp
------END PGP SIGNATURE-----
-
---lPaKBUJ34nC7zHk1--
