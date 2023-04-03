@@ -2,145 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DE646D41CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 12:19:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F23CD6D421A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 12:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232303AbjDCKTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 06:19:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37390 "EHLO
+        id S232243AbjDCKeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 06:34:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231961AbjDCKTT (ORCPT
+        with ESMTP id S231470AbjDCKeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 06:19:19 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B2112BF3;
-        Mon,  3 Apr 2023 03:19:07 -0700 (PDT)
-Received: from [192.168.2.163] (109-252-124-32.nat.spd-mgts.ru [109.252.124.32])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: dmitry.osipenko)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 7E3D56601F5E;
-        Mon,  3 Apr 2023 11:19:04 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1680517146;
-        bh=oUsrnUvVWFNCO2I8SuCXiTW/AVZU2rkXoBafHs5oU3Y=;
-        h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-        b=lULd60iyGYARm3PqzyHmdn7asLZYd2d8dPWIEjvXyMF07YzyTnsdvZi2dYUGyyKAu
-         hmW8XBPJQ6/iNKJHewWO+8Ak6W2rS3OU/OVGVuet7EP1bZyS1GNzWJz8c1D/Ip+QLK
-         LN/UrIG7gufbNIC48TTRIRA99cicPtqUQT7ij8l6h/yE2i1Jt468aGCYN6B6ZSPq6V
-         NB0nVByIN7hCp3ntdWTkFDGH9uP7rozub9VgUCThwJg6vLpuPNZpnl+83FFlS5pOuL
-         5iEzz4yl/t408u97uSNIW7ZmNXhyVTF0D6zS6/I4Rov2Y+ceq8S1Pn9+WjLchRvvIg
-         nb8/Tklw6SA6A==
-Message-ID: <80cdf100-ef3c-23ae-5adf-bcf97fa85e72@collabora.com>
-Date:   Mon, 3 Apr 2023 13:19:01 +0300
+        Mon, 3 Apr 2023 06:34:00 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26D25DBCA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 03:33:50 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id e9so14546764ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 03:33:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680518028;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KfUo0fru+wd28kIFWm+j4w66y5teANTbx3Vvk6eQF5U=;
+        b=yoohv5e/xezbYEWRo56wL/ynszQm5bdS5XLo/KUPuBZOPPsla64IfOl2RN6zVhz+RD
+         En1LMcOxAHTu1RQQdNTSNJp7033t1mdrIqTpvNpADI0shTH6gxJ1ebhEuSpSZXKR1ckh
+         pHFvS06oMVmn+QME7LzEjj82B1cAhYRG12xhifmaAe4yXWyak6a817f7RYCiCsror9AE
+         T0ipA5YYjeLVA1oS1k5YULHCFEYv9I8hTTKezcFIz7Pb/0VdwJ7CLueSZ7on8ohX8GWR
+         QCCGvRJXzsESHdHI+93UQf82ejaZsgXF988e8LxU5D6m6sMnlVO3sl6dmyI4P7MvySiD
+         SR8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680518028;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KfUo0fru+wd28kIFWm+j4w66y5teANTbx3Vvk6eQF5U=;
+        b=xxbAOnt79AZLVYxkieIkbAimq5Es6Qulpok+E22ha7d8eqEE7enxxTh5sFkqF2n/yo
+         pnQ1hnLdjZWs5EAo3wGz7Oa++F9ZeUXzSLlyjBn/xJtT1bQJJW4hS68MRMgdDLhhrzYg
+         A9TuSPXaUVPtNbEL0p2Pbkk9yGkHIpt48xtgywnzERWrv6q9pSHy/SSh6516D78r1j07
+         2NBBUyNe0AMaKIRZLhCxUgpmvNISykwyAx4dhu9rrfvhVRR8+ouyquM3+pm4KG/ragbg
+         MWJ7oUxIEyZZchR667szsOo7P8ZvlOa8D29ePSKQdxtKXGNZRyVKUB0P+0RukzUWyevv
+         j5kw==
+X-Gm-Message-State: AAQBX9cYjrfDkBAsVbup29kDKys2cZfmzwNvYe5TRQNNFbx8+LUf9e+u
+        gNacW80JCPR1NZRLKr0Nszt6Zg==
+X-Google-Smtp-Source: AKy350ar/Ubc0zKI9OpT54QLs4a1MwS2rycinNgMruZXM0+oic2ZCkjMi1NRCACCyCzC8UXkvYz3uQ==
+X-Received: by 2002:a2e:95d4:0:b0:29c:9207:d0a7 with SMTP id y20-20020a2e95d4000000b0029c9207d0a7mr10881352ljh.43.1680518028244;
+        Mon, 03 Apr 2023 03:33:48 -0700 (PDT)
+Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
+        by smtp.gmail.com with ESMTPSA id m14-20020a2e910e000000b002959d2cc975sm1684870ljg.37.2023.04.03.03.33.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 03:33:47 -0700 (PDT)
+Message-ID: <9e059c75-2854-45ba-9e0b-df69dd355bbf@linaro.org>
+Date:   Mon, 3 Apr 2023 12:33:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1 0/7] Move dma-buf mmap() reservation locking down to
- exporters
+ Thunderbird/102.9.1
+Subject: Re: [RESEND PATCH v2 1/1] arm64: dts: qcom: sm6115: Add CPU
+ idle-states
 Content-Language: en-US
-From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To:     Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        Liam Mark <lmark@codeaurora.org>,
-        Brian Starkey <Brian.Starkey@arm.com>,
-        John Stultz <jstultz@google.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>
-Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@collabora.com
-References: <20230402164826.752842-1-dmitry.osipenko@collabora.com>
-In-Reply-To: <20230402164826.752842-1-dmitry.osipenko@collabora.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org
+References: <20230330193303.612475-1-bhupesh.sharma@linaro.org>
+ <0ff99bb5-4792-270d-b03e-2638939f160f@linaro.org>
+ <CAH=2NtzPReiUHuEAW8PsQJvNzOYvb71pZ7SWRbThWdLT7_a0ug@mail.gmail.com>
+ <e5b758ed-f279-ecc3-3be4-039c5a19b212@linaro.org>
+ <CAH=2NtzXjgQEaTDVZip6GEHhterker2B3c+w_4A5J4W_LDTctA@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAH=2NtzXjgQEaTDVZip6GEHhterker2B3c+w_4A5J4W_LDTctA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/2/23 19:48, Dmitry Osipenko wrote:
-> This patchset makes dma-buf exporters responisble for taking care of
-> the reservation lock. I also included patch that moves drm-shmem to use
-> reservation lock, to let CI test the whole set. I'm going to take all
-> the patches via the drm-misc tree, please give an ack.
-> 
-> Previous policy stated that dma-buf core takes the lock around mmap()
-> callback. Which meant that both importers and exporters shouldn't touch
-> the reservation lock in the mmap() code path. This worked well until
-> Intel-CI found a deadlock problem in a case of self-imported dma-buf [1].
-> 
-> The problem happens when userpace mmaps a self-imported dma-buf, i.e.
-> mmaps the dma-buf FD. DRM core treats self-imported dma-bufs as own GEMs
-> [2]. There is no way to differentiate a prime GEM from a normal GEM for
-> drm-shmem in drm_gem_shmem_mmap(), which resulted in a deadlock problem
-> for drm-shmem mmap() code path once it's switched to use reservation lock.
-> 
-> It was difficult to fix the drm-shmem problem without adjusting dma-buf
-> locking policy. In parctice not much changed from importers perspective
-> because previosly dma-buf was taking the lock in between of importers
-> and exporters. Now this lock is shifted down to exporters.
-> 
-> [1] https://intel-gfx-ci.01.org/tree/drm-tip/Patchwork_114671v2/shard-snb5/igt@prime_vgem@sync@rcs0.html
-> [2] https://elixir.bootlin.com/linux/v6.3-rc4/source/drivers/gpu/drm/drm_prime.c#L924
-> 
-> Dmitry Osipenko (7):
->   Revert "media: videobuf2: Assert held reservation lock for dma-buf
->     mmapping"
->   Revert "dma-buf/heaps: Assert held reservation lock for dma-buf
->     mmapping"
->   Revert "udmabuf: Assert held reservation lock for dma-buf mmapping"
->   Revert "fastrpc: Assert held reservation lock for dma-buf mmapping"
->   Revert "drm: Assert held reservation lock for dma-buf mmapping"
->   dma-buf: Change locking policy for mmap()
->   drm/shmem-helper: Switch to reservation lock
-> 
->  drivers/dma-buf/dma-buf.c                     |  17 +-
->  drivers/dma-buf/heaps/cma_heap.c              |   3 -
->  drivers/dma-buf/heaps/system_heap.c           |   3 -
->  drivers/dma-buf/udmabuf.c                     |   2 -
->  drivers/gpu/drm/drm_gem_shmem_helper.c        | 217 ++++++++----------
->  drivers/gpu/drm/drm_prime.c                   |   2 -
->  drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c    |   2 -
->  drivers/gpu/drm/lima/lima_gem.c               |   8 +-
->  drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c     |   2 -
->  drivers/gpu/drm/panfrost/panfrost_drv.c       |   7 +-
->  .../gpu/drm/panfrost/panfrost_gem_shrinker.c  |   6 +-
->  drivers/gpu/drm/panfrost/panfrost_mmu.c       |  19 +-
->  drivers/gpu/drm/tegra/gem.c                   |   2 -
->  .../common/videobuf2/videobuf2-dma-contig.c   |   3 -
->  .../media/common/videobuf2/videobuf2-dma-sg.c |   3 -
->  .../common/videobuf2/videobuf2-vmalloc.c      |   3 -
->  drivers/misc/fastrpc.c                        |   3 -
->  include/drm/drm_gem_shmem_helper.h            |  14 +-
->  18 files changed, 123 insertions(+), 193 deletions(-)
-> 
 
-Intel's IGT passed[1] (see Tests section) with the new locking policy,
-which failed previously for the "drm/shmem-helper: Switch to reservation
-lock" patch.
 
-[1] https://patchwork.freedesktop.org/series/116000/
+On 2.04.2023 07:35, Bhupesh Sharma wrote:
+> On Sun, 2 Apr 2023 at 01:28, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On 01/04/2023 21:26, Bhupesh Sharma wrote:
+>>> Hi Konrad,
+>>>
+>>> On Sat, 1 Apr 2023 at 17:51, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 30.03.2023 21:33, Bhupesh Sharma wrote:
+>>>>> Add CPU idle-state nodes and power-domains in Qualcomm sm6115 SoC dtsi.
+>>>>>
+>>>>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+>>>>> ---
+>>>>> Changes since v1:
+>>>>> - v1 can be viewed here: https://lore.kernel.org/lkml/e5cda4cf-5c2a-a7ed-9e1d-1fe9f2cbef40@linaro.org
+>>>>> - Addressed Konrad's comments on v1 and added GDHS and Power Collapse
+>>>>>    cluster power states.
+>>>>>
+>>>>>   arch/arm64/boot/dts/qcom/sm6115.dtsi | 136 +++++++++++++++++++++++++++
+>>>>>   1 file changed, 136 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>>> index 2a51c938bbcb..b63395d476ed 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>>>>> @@ -45,6 +45,8 @@ CPU0: cpu@0 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_0>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+>>>>> +                     power-domains = <&CPU_PD0>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                        L2_0: l2-cache {
+>>>>>                                compatible = "cache";
+>>>>>                                cache-level = <2>;
+>>>>> @@ -61,6 +63,8 @@ CPU1: cpu@1 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_0>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+>>>>> +                     power-domains = <&CPU_PD1>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                };
+>>>>>
+>>>>>                CPU2: cpu@2 {
+>>>>> @@ -73,6 +77,8 @@ CPU2: cpu@2 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_0>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+>>>>> +                     power-domains = <&CPU_PD2>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                };
+>>>>>
+>>>>>                CPU3: cpu@3 {
+>>>>> @@ -85,6 +91,8 @@ CPU3: cpu@3 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_0>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 0>;
+>>>>> +                     power-domains = <&CPU_PD3>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                };
+>>>>>
+>>>>>                CPU4: cpu@100 {
+>>>>> @@ -97,6 +105,8 @@ CPU4: cpu@100 {
+>>>>>                        dynamic-power-coefficient = <282>;
+>>>>>                        next-level-cache = <&L2_1>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+>>>>> +                     power-domains = <&CPU_PD4>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                        L2_1: l2-cache {
+>>>>>                                compatible = "cache";
+>>>>>                                cache-level = <2>;
+>>>>> @@ -113,6 +123,8 @@ CPU5: cpu@101 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_1>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+>>>>> +                     power-domains = <&CPU_PD5>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                };
+>>>>>
+>>>>>                CPU6: cpu@102 {
+>>>>> @@ -125,6 +137,8 @@ CPU6: cpu@102 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_1>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+>>>>> +                     power-domains = <&CPU_PD6>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                };
+>>>>>
+>>>>>                CPU7: cpu@103 {
+>>>>> @@ -137,6 +151,8 @@ CPU7: cpu@103 {
+>>>>>                        enable-method = "psci";
+>>>>>                        next-level-cache = <&L2_1>;
+>>>>>                        qcom,freq-domain = <&cpufreq_hw 1>;
+>>>>> +                     power-domains = <&CPU_PD7>;
+>>>>> +                     power-domain-names = "psci";
+>>>>>                };
+>>>>>
+>>>>>                cpu-map {
+>>>>> @@ -176,6 +192,68 @@ core3 {
+>>>>>                                };
+>>>>>                        };
+>>>>>                };
+>>>>> +
+>>>>> +             idle-states {
+>>>>> +                     entry-method = "psci";
+>>>>> +
+>>>>> +                     LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+>>>>> +                             compatible = "arm,idle-state";
+>>>>> +                             idle-state-name = "silver-rail-power-collapse";
+>>>>> +                             arm,psci-suspend-param = <0x40000003>;
+>>>>> +                             entry-latency-us = <290>;
+>>>>> +                             exit-latency-us = <376>;
+>>>>> +                             min-residency-us = <1182>;
+>>>>> +                             local-timer-stop;
+>>>>> +                     };
+>>>>> +
+>>>>> +                     BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+>>>>> +                             compatible = "arm,idle-state";
+>>>>> +                             idle-state-name = "gold-rail-power-collapse";
+>>>>> +                             arm,psci-suspend-param = <0x40000003>;
+>>>>> +                             entry-latency-us = <297>;
+>>>>> +                             exit-latency-us = <324>;
+>>>>> +                             min-residency-us = <1110>;
+>>>>> +                             local-timer-stop;
+>>>>> +                     };
+>>>>> +             };
+>>>>> +
+>>>>> +             domain-idle-states {
+>>>>> +                     CLUSTER_0_SLEEP_0: cluster-sleep-0-0 {
+>>>>> +                             /* GDHS */
+>>>>> +                             compatible = "domain-idle-state";
+>>>>> +                             arm,psci-suspend-param = <0x40000022>;
+>>>> This 0x22 ending seems very sus.
+>>>>
+>>>> The last nibble represents the core-level power state and the
+>>>> penultimate one represents the same at cluster level. A value
+>>>> of 2 in that cluster nibble is actually undefined by the PSCI spec,
+>>>> whereas the value of 4 (as you have in all of the other idle
+>>>> states, including D3G for the perf cluster) corresponds to
+>>>> "Retention", so unless there's a very weird nuance in the
+>>>> TZ for this SoC, it should probably end in 0x42.
+>>>>
+>>>> Otherwise I think this LGTM now!
+>>>
+>>> I am also learning by experiment about the exact values to use here,
+>>> as the only ready reckoner of how these values are calculated, seems
+>>> to be available via [1].
+>>>
+>>> Also it seems the downstream code uses the following approach to
+>>> calculate the LPM state suspend-param, which for example for
+>>> CLUSTER_0_SLEEP_1 states turns out to be:
+>>>
+>>>      state_id = get_cluster_id(cpu->parent, &affinity_level, from_idle); = 0x40
+>>>      power_state = (is-reset << 30) = 0x40000000
+>>>      affinity_level = (affinity level & 0x3) << 24 = 0x1000000
+>>>      state_id += power_state + affinity_level + psci_id;
+>>>
+>>>      = 0x40000000 + 0x1000000 + 0x40 + 0x4 = 0x41000044
+>>>
+>>> For the D3G cases as well, I just used the 'qcom,psci-mode = <2>'
+>>> value as provided in downstream code (see [2]), for the overall
+>>> calculations.>>>
+>>> Also, the only usage of D3G state I could find upstream (in qcom dtsi
+>>> files0 is for 'msm8916' (see [3]), which also uses the value with
+>>> ending 0x2 -> 'arm,psci-suspend-param = <0x41000032>'
+Yes, the lowest '2' must be correct. I am concerned about the one above
+it (val & 0xf0).
 
--- 
-Best regards,
-Dmitry
+>>
+>> D3G has min-child-idx = 1, so the end PSCI param should be 0x41000023
+>> D3 is 0x41000043
+Not sure what that has to do with it. Looking at ancient kernel doc:
 
+qcom,min-child-idx: The minimum level that a child CPU should be in
+	before this level can be chosen. This property is required for all
+        non-default level.
+
+And it looks like the downstream code ensures that we don't just jump
+from "CPU running" to "CPU [some stage of] power collapse".
+
+
+So it looks like this patch may be good after all.. Can you verify with
+sysfs/debugfs that this idle state is being entered correctly?
+
+Konrad
+> 
+> Ok, let me recheck at my end as well.
+> 
+> Thanks
+> Bhupesh
