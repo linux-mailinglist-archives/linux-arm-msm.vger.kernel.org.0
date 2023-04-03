@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88F126D45A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 15:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E016E6D45A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 15:25:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232401AbjDCNZi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 09:25:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53638 "EHLO
+        id S232376AbjDCNZg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 09:25:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232556AbjDCNZV (ORCPT
+        with ESMTP id S232481AbjDCNZW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 09:25:21 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B06022202
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 06:25:10 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id r11so117314145edd.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 06:25:10 -0700 (PDT)
+        Mon, 3 Apr 2023 09:25:22 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C1422E90
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 06:25:11 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id ek18so117336699edb.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 06:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680528309;
+        d=linaro.org; s=google; t=1680528310;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1cFC2doK7pP+oZeom2O+jOvVNNVc+JGEYRAe06U7TEU=;
-        b=tzRfk8NOdb/h927gg/TWagqrk60Ev0iFDYfLVXJiwNd5qxCR4SaQ12ZujIf+zwJPb5
-         veojcYiD+25NuWCpRkUWd+Xk5H0ZJzqrPqYGlkNI8Wfj7rGpj8OOfclitrkW26YSgM7e
-         gUqdtm4+pOs2MZ4vDSvBBt7Vc+23eB6tEd9u3XxkK4a50d470J1R/D0hgFmSUNmHQ1dX
-         Hp35beC+zAdmSVeHdaKkKFHDknXrxGxGIIBm8Ud3AcM/Z5XOHLB0mxVWiyrONl5McQq3
-         2HLsFHd/vlD+txHkqAuUppb5au7uD1atcUsR5VXz3SHg8S0Bq7F3/WFOS8V1cMage530
-         g+hQ==
+        bh=RNWNIuqhfrK8VPT/wc/b5owpPd0Qbj32dt41XL6jF7I=;
+        b=KbIE8hHpBMmVbs1dUdcqesZJr111M3juAwR/UVy5JlGbulKsFx7d6iHgThw/UcfE/H
+         g04ODRwtd7K6JWW/AkKYz82yClpeSok0TeRoIdHfTQS5tIH6oI/MxL9Al6YniKjUnWx3
+         95rKlTw/YTNiVRHJYjQ1YTfXPy1LUZuyhdMD2gzeT581NPC7ChG/vf1o8Daz7p5hMY7M
+         5RwASrOm4q0F4tXsKsBdHd0Aez6pVZnN0AQqt+hrU8iSFTq3djeT35MNlR/XURafW0yT
+         5MpnnUX2QuMq76hKOPQlmREU4ipwp6Xj9KyNXVSu1cRLId3aKBjBJVaePjq5CPDP3Qnb
+         /AwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680528309;
+        d=1e100.net; s=20210112; t=1680528310;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1cFC2doK7pP+oZeom2O+jOvVNNVc+JGEYRAe06U7TEU=;
-        b=jDhePrt6wZhH2+PMJUJFbI98oNPklbnvdtu95iMAK+AJEQNo001ficHu4Xj4DX9uRP
-         PC1QaVgixcqIyL7EyeUkmKXb/pF30QRFMzuAzyk4gJ4SetvJantM2HYrIGKvBNFa99xW
-         wvwZKtv91JEJ4W+h4ZaDjG5zWprUTFXlrDTccwDCp2L9+7WOoLE2t36oQFiy/vohYA/H
-         uCvSbZnQwJDispmHvzDEYaSMEFmMAk6ngJR3v9BjIKcMnwG915KyrYtF8XL4Ncqd9rnX
-         C6RkCcxt05tslJOYVPHWOk8+4b6GX501GS8xMt5gVZ9aH0U8EjVVj0YH5YHBikw1ORbH
-         bMYA==
-X-Gm-Message-State: AAQBX9cymIwDFurTK4aQwZj3AiJd5shWQ/xwoak/Q2glD/nYTG+xccBl
-        Kow+rLurs2qY5qdh3vpzIMxZpQ==
-X-Google-Smtp-Source: AKy350YbAnSJzJAryYy5Z4w+TUXHLgy/iWJlundDtd2T8cKcldJbO5NJI5MUclajMl0qDLW39vc2ZA==
-X-Received: by 2002:a17:907:75f2:b0:88a:1ea9:a5ea with SMTP id jz18-20020a17090775f200b0088a1ea9a5eamr32427334ejc.65.1680528308765;
-        Mon, 03 Apr 2023 06:25:08 -0700 (PDT)
+        bh=RNWNIuqhfrK8VPT/wc/b5owpPd0Qbj32dt41XL6jF7I=;
+        b=ssgsyEOXmp+P7pCeTmYqgHWbNQhXXJZJHlXt+zncBZXDD4Zur+WahuwCjf3T0oF2sT
+         l7HVXlaU+ptEfy/q0hrsLnfFv1RxQCp/cNVvFrA4kgMXZm3KWSgyWDENYNYKVHTS8HBK
+         9AYVLvBWGDixAwOhlKpOsyFbih6vdaR1QFZqvWeyDnloYeFvkV6izWSgyoiCaLiFA7JM
+         MCW8atMBqKIz9zWQR7Bs97B3M3pumaPJldTJuhFutJZ1+pon4m2M5i1Pp6PH1J1Pgrlw
+         Yb4PioHW3Aw5xQju43XyWaQ+X21f9fW0FvDKAmFinbv84QHoTkxvZOVLlrDyeUR0+gmN
+         xuLQ==
+X-Gm-Message-State: AAQBX9er6M44zS6NuGnYi34+YIOwdBAcZetFRSLn82ISObiFphv+r/kT
+        ZtqTv0870aNgGS1DAa7HJLDIoA==
+X-Google-Smtp-Source: AKy350aNoUlBedlJkAaKw8U0tZgt086mXDJsj0D3EEMN2efvta5ShNiO6t6OdWHXPV90xvmimW0M3A==
+X-Received: by 2002:a05:6402:2693:b0:4bc:edde:150d with SMTP id w19-20020a056402269300b004bcedde150dmr17348061edd.0.1680528310030;
+        Mon, 03 Apr 2023 06:25:10 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:ae90:d80:1069:4805])
-        by smtp.gmail.com with ESMTPSA id p18-20020a170906229200b00930ba362216sm4658489eja.176.2023.04.03.06.25.07
+        by smtp.gmail.com with ESMTPSA id p18-20020a170906229200b00930ba362216sm4658489eja.176.2023.04.03.06.25.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 06:25:08 -0700 (PDT)
+        Mon, 03 Apr 2023 06:25:09 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -66,9 +66,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
 Cc:     Patrick Lai <quic_plai@quicinc.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 2/7] dt-bindings: soundwire: qcom: add 16-bit sample interval
-Date:   Mon,  3 Apr 2023 15:24:58 +0200
-Message-Id: <20230403132503.62090-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 3/7] soundwire: qcom: allow 16-bit sample interval for ports
+Date:   Mon,  3 Apr 2023 15:24:59 +0200
+Message-Id: <20230403132503.62090-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230403132503.62090-1-krzysztof.kozlowski@linaro.org>
 References: <20230403132503.62090-1-krzysztof.kozlowski@linaro.org>
@@ -91,60 +91,105 @@ both bytes will be used, thus add a new 'qcom,ports-sinterval' property
 to allow 16-bit sample intervals.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../bindings/soundwire/qcom,soundwire.yaml    | 22 +++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-index c283c594fb5c..883b8be9be1b 100644
---- a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-+++ b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-@@ -86,7 +86,7 @@ properties:
-   qcom,ports-sinterval-low:
-     $ref: /schemas/types.yaml#/definitions/uint8-array
-     description:
--      Sample interval low of each data port.
-+      Sample interval (only lowest byte) of each data port.
-       Out ports followed by In ports. Used for Sample Interval calculation.
-       Value of 0xff indicates that this option is not implemented
-       or applicable for the respective data port.
-@@ -94,6 +94,19 @@ properties:
-     minItems: 3
-     maxItems: 16
+---
+
+Changes since v1:
+1. Drop unneeded semicolon.
+---
+ drivers/soundwire/qcom.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index c296e0bf897b..faa091e7472a 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -95,6 +95,7 @@
+ #define SWRM_DP_BLOCK_CTRL2_BANK(n, m)	(0x1130 + 0x100 * (n - 1) + 0x40 * m)
+ #define SWRM_DP_PORT_HCTRL_BANK(n, m)	(0x1134 + 0x100 * (n - 1) + 0x40 * m)
+ #define SWRM_DP_BLOCK_CTRL3_BANK(n, m)	(0x1138 + 0x100 * (n - 1) + 0x40 * m)
++#define SWRM_DP_SAMPLECTRL2_BANK(n, m)	(0x113C + 0x100 * (n - 1) + 0x40 * m)
+ #define SWRM_DIN_DPn_PCM_PORT_CTRL(n)	(0x1054 + 0x100 * (n - 1))
+ #define SWR_MSTR_MAX_REG_ADDR		(0x1740)
  
-+  qcom,ports-sinterval:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    description:
-+      Sample interval of each data port.
-+      Out ports followed by In ports. Used for Sample Interval calculation.
-+      Value of 0xffff indicates that this option is not implemented
-+      or applicable for the respective data port.
-+      More info in MIPI Alliance SoundWire 1.0 Specifications.
-+    minItems: 3
-+    maxItems: 16
-+    items:
-+      maximum: 0xffff
+@@ -131,7 +132,7 @@ enum {
+ };
+ 
+ struct qcom_swrm_port_config {
+-	u8 si;
++	u32 si;
+ 	u8 off1;
+ 	u8 off2;
+ 	u8 bp_mode;
+@@ -806,12 +807,20 @@ static int qcom_swrm_transport_params(struct sdw_bus *bus,
+ 
+ 	value = pcfg->off1 << SWRM_DP_PORT_CTRL_OFFSET1_SHFT;
+ 	value |= pcfg->off2 << SWRM_DP_PORT_CTRL_OFFSET2_SHFT;
+-	value |= pcfg->si;
++	value |= pcfg->si & 0xff;
+ 
+ 	ret = ctrl->reg_write(ctrl, reg, value);
+ 	if (ret)
+ 		goto err;
+ 
++	if (pcfg->si > 0xff) {
++		value = (pcfg->si >> 8) & 0xff;
++		reg = SWRM_DP_SAMPLECTRL2_BANK(params->port_num, bank);
++		ret = ctrl->reg_write(ctrl, reg, value);
++		if (ret)
++			goto err;
++	}
 +
-   qcom,ports-offset1:
-     $ref: /schemas/types.yaml#/definitions/uint8-array
-     description:
-@@ -219,10 +232,15 @@ required:
-   - '#size-cells'
-   - qcom,dout-ports
-   - qcom,din-ports
--  - qcom,ports-sinterval-low
-   - qcom,ports-offset1
-   - qcom,ports-offset2
+ 	if (pcfg->lane_control != SWR_INVALID_PARAM) {
+ 		reg = SWRM_DP_PORT_CTRL_2_BANK(params->port_num, bank);
+ 		value = pcfg->lane_control;
+@@ -1185,7 +1194,7 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+ 	struct device_node *np = ctrl->dev->of_node;
+ 	u8 off1[QCOM_SDW_MAX_PORTS];
+ 	u8 off2[QCOM_SDW_MAX_PORTS];
+-	u8 si[QCOM_SDW_MAX_PORTS];
++	u32 si[QCOM_SDW_MAX_PORTS];
+ 	u8 bp_mode[QCOM_SDW_MAX_PORTS] = { 0, };
+ 	u8 hstart[QCOM_SDW_MAX_PORTS];
+ 	u8 hstop[QCOM_SDW_MAX_PORTS];
+@@ -1193,6 +1202,7 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+ 	u8 blk_group_count[QCOM_SDW_MAX_PORTS];
+ 	u8 lane_control[QCOM_SDW_MAX_PORTS];
+ 	int i, ret, nports, val;
++	bool si_32 = false;
  
-+oneOf:
-+  - required:
-+      - qcom,ports-sinterval-low
-+  - required:
-+      - qcom,ports-sinterval
-+
- additionalProperties: false
+ 	ctrl->reg_read(ctrl, SWRM_COMP_PARAMS, &val);
  
- examples:
+@@ -1236,9 +1246,14 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+ 		return ret;
+ 
+ 	ret = of_property_read_u8_array(np, "qcom,ports-sinterval-low",
+-					si, nports);
+-	if (ret)
+-		return ret;
++					(u8 *)si, nports);
++	if (ret) {
++		ret = of_property_read_u32_array(np, "qcom,ports-sinterval",
++						 si, nports);
++		if (ret)
++			return ret;
++		si_32 = true;
++	}
+ 
+ 	ret = of_property_read_u8_array(np, "qcom,ports-block-pack-mode",
+ 					bp_mode, nports);
+@@ -1266,7 +1281,10 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+ 
+ 	for (i = 0; i < nports; i++) {
+ 		/* Valid port number range is from 1-14 */
+-		ctrl->pconfig[i + 1].si = si[i];
++		if (si_32)
++			ctrl->pconfig[i + 1].si = si[i];
++		else
++			ctrl->pconfig[i + 1].si = ((u8 *)si)[i];
+ 		ctrl->pconfig[i + 1].off1 = off1[i];
+ 		ctrl->pconfig[i + 1].off2 = off2[i];
+ 		ctrl->pconfig[i + 1].bp_mode = bp_mode[i];
 -- 
 2.34.1
 
