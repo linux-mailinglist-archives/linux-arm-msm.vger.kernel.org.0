@@ -2,140 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 708396D4D47
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 18:12:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C6266D4D5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 18:18:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232406AbjDCQMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 12:12:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
+        id S232580AbjDCQSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 12:18:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjDCQML (ORCPT
+        with ESMTP id S231769AbjDCQSW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 12:12:11 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5B6AB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 09:12:10 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id j7so35445628ybg.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 09:12:10 -0700 (PDT)
+        Mon, 3 Apr 2023 12:18:22 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680BF1731
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 09:18:20 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id g17so38807285lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 09:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680538329;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ckRoaRfuFXSxICrM929LhPKiHMEGVxGno6xY+TLvhpw=;
-        b=FVhe/9/B5nnJIV+P+o3lR0MP8LctNsUM8vqI6LLpp5pOt9jJiOh9UHqSCQPsQ9Idbx
-         PveyIETXxV9OXgvwdBG8WHQZiqo1///a8v4eJZzdQOnew15zDxUkUg3g1+3GN1V8WWm5
-         UBIW3hmoHELoAQHoaOrQRZJL3C91NcfwFDS2CXp3wVnxQBOEPfPcYFkZJUszKf4znOGi
-         EoY3CoyLXyg21b0tp9g3XgeYo2tzFUjtWPCLP9jRuuwzs9VJLXxFHbjX7r2UUsb9Ovqq
-         KCEszdUu1e8jBQ2HJel2Fc9oVXahuP33s6Mr9oxYSXXYoq9e3T2GHwJre1EWKGo6zRmU
-         bbcA==
+        d=linaro.org; s=google; t=1680538698;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+mXE+LsKS7w58ofo+TThv1QNk3ptIYcwRlDn4y/JXOw=;
+        b=Ab2s2zc6kt+PUJGEdq78Ow/02BEc/9oD9n2Xl7cIqVo7a1xrDEwrCt67kiZYk97GsC
+         F+/Y0juFg0xv0FMkANyGrYwv5v/UuA49IyqNwWAgn2LvqtNpRst1REMOmNsw7l0V9e2n
+         pGSTiC+7OMRkRksOL4vyuNQHFc4BgTPGFfJKm9AsPtao/aoUhIb4/0Wo21o47wvI+Npt
+         QySnsfTAsMd0X0Mx86OZfuccSzsDvg0/6Jnb5QDXzc3Bp0G7DAJUUQ8Sy4l2aZ6hGG8I
+         sfeCzoa+rl8VkSrdRVRSidBvKKBnGfchDe5DK3hmgOsuORkD52v+pJvT7tIcSfltzrnn
+         pzKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680538329;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ckRoaRfuFXSxICrM929LhPKiHMEGVxGno6xY+TLvhpw=;
-        b=YnbyPfFR0AaEZ2+/+ePH5fG5/6WDdBBvajjVCAg/xY2nY8079lJRp2GzxSCB68NuM+
-         aKwsgq6b8CqizHdAYiJGBx6mTNHo6dNYMOy/obkMkSsmmQsAyhmvw0XoJictAsXDttge
-         F7YSNoapfbPg+qPuyOBEVg2xk/lSilskDzuJAQ5d4xjJjxtj/dtJedyJ9IAorILyzs0v
-         fsMOJfKUDaKlStdGjpznsb+vG7j2hzl0pLFn0GCSIsP7860S653ekVFlNmFb3Rou/QNa
-         6hi6FJ8pzWDaKvFxWyOXelLaYCu8xGGBeHGYygtkUMBXW6TuNf6no3EtXzzD2AbXRj3R
-         +tjA==
-X-Gm-Message-State: AAQBX9edvy0VR4FUAskziH7XBVkhfbWesgrpBEzuL5oKQKcovArGii2m
-        qAD3YdT/Hx6nWVhdwJr1OSUd5Z009lUT4tmPS0bjFA==
-X-Google-Smtp-Source: AKy350bgZqCXxxXnZWum0y79BB4tNnWGNnYcibSUYJZtBvIrylGXzXDniMPLIwWkuC258xvk77u2JPwshx6cwkUy1ns=
-X-Received: by 2002:a05:6902:168d:b0:b6c:2d28:b3e7 with SMTP id
- bx13-20020a056902168d00b00b6c2d28b3e7mr23000047ybb.9.1680538329177; Mon, 03
- Apr 2023 09:12:09 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680538698;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+mXE+LsKS7w58ofo+TThv1QNk3ptIYcwRlDn4y/JXOw=;
+        b=dITbXer0QL1TKmpgfN3mROaY0zvfq2vRDN65v+CLjBP1ku9LDxg4K32FpN5oDBUNw4
+         GzZSZM65jmfZlmPtFyI3BkVsQKUi8F/pOdlbcbhsbbeQafjy71bQr7D5N/Sy1CCVSQTl
+         ZFQNRY9QMxJVv9eCsTJ/yAPa3P6sXPDeJls9EA/z+m+RiyJeUk+/o4EKmk34o6lSoPrV
+         xhWNA3xIb792ivbwo2JF9gV3Zk1Z/8cNfR4eqCLZx0aGMqY+AzugDsNYsEr+YxyboMr+
+         6tB8bsb+M+ms/CtkDtropItalYE1Kugsbum8k7ftsJUE+w7cJQAR049dc2/Kwz+lw3mj
+         3paA==
+X-Gm-Message-State: AAQBX9eU5WG/JKupVYsVzJlyWf3bnnZCKdVJzyltm3vFYgV5/iuIKm2f
+        Ug6PMeyiT7RdzNV5UPvny3mXng==
+X-Google-Smtp-Source: AKy350bvNo7tfrCyjtYJUYqPuZYVN4n4KKpm6N6lDY1dyQfZedAAVlr9435poDXIfEBaCxiLIx6OhA==
+X-Received: by 2002:a05:6512:951:b0:4e9:609f:256d with SMTP id u17-20020a056512095100b004e9609f256dmr9317327lft.13.1680538698581;
+        Mon, 03 Apr 2023 09:18:18 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id u23-20020ac24c37000000b004d291dcee7fsm1842094lfq.55.2023.04.03.09.18.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 09:18:18 -0700 (PDT)
+Message-ID: <3b41077b-3482-db89-de31-c41cf6429216@linaro.org>
+Date:   Mon, 3 Apr 2023 19:18:16 +0300
 MIME-Version: 1.0
-References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
- <1680271114-1534-4-git-send-email-quic_vpolimer@quicinc.com>
- <CAA8EJppc3LDQy2RgVZbWki4Y-_FOTK67Y8RfK5Bm9gqdfqMjqQ@mail.gmail.com> <BN0PR02MB8173E9FF869F7EEFCE1F5410E4929@BN0PR02MB8173.namprd02.prod.outlook.com>
-In-Reply-To: <BN0PR02MB8173E9FF869F7EEFCE1F5410E4929@BN0PR02MB8173.namprd02.prod.outlook.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v1 1/3] drm/msm/dpu: set dirty_fb flag while in self
+ refresh mode
+Content-Language: en-GB
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 3 Apr 2023 19:11:58 +0300
-Message-ID: <CAA8EJprj5cmB_STfv45NDCJ_e=aWfwMgaNmGkQBqFa8fQq6gQw@mail.gmail.com>
-Subject: Re: [PATCH v1 3/3] msm: skip the atomic commit of self refresh while
- PSR running
-To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
-Cc:     "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
-        "Bjorn Andersson (QUIC)" <quic_bjorande@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com
+References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1680271114-1534-2-git-send-email-quic_vpolimer@quicinc.com>
+ <CAA8EJpo4HaYJ358gnBTfo94o7xUcN+z57+EJUMfJT1gQ5m_UEg@mail.gmail.com>
+In-Reply-To: <CAA8EJpo4HaYJ358gnBTfo94o7xUcN+z57+EJUMfJT1gQ5m_UEg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 3 Apr 2023 at 15:01, Vinod Polimera <vpolimer@qti.qualcomm.com> wrote:
->
-> > On Fri, 31 Mar 2023 at 16:59, Vinod Polimera <quic_vpolimer@quicinc.com>
-> > wrote:
-> > >
-> > > In certain CPU stress conditions, there can be a delay in scheduling commit
-> > > work and it was observed that PSR commit from a different work queue
-> > was
-> > > scheduled. Avoid these commits as display is already in PSR mode.
-> > >
-> > > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_atomic.c | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_atomic.c
-> > b/drivers/gpu/drm/msm/msm_atomic.c
-> > > index 645fe53..f8141bb 100644
-> > > --- a/drivers/gpu/drm/msm/msm_atomic.c
-> > > +++ b/drivers/gpu/drm/msm/msm_atomic.c
-> > > @@ -192,6 +192,9 @@ int msm_atomic_check(struct drm_device *dev,
-> > struct drm_atomic_state *state)
-> > >                         new_crtc_state->mode_changed = true;
-> > >                         state->allow_modeset = true;
-> > >                 }
-> > > +
-> > > +               if (old_crtc_state->self_refresh_active && new_crtc_state-
-> > >self_refresh_active)
-> > > +                       return -EINVAL;
-> >
-> > EINVAL here means that atomic_check will fail if both old and new
-> > states are in SR mode. For example, there might be a mode set for
-> > another CRTC (while keeping this one in SR mode). I don't think this
-> > is correct. We should skip/shortcut the commit, that's true. But I
-> > doubt that returning an error here is a proper way to do this. Please
-> > correct me if I'm wrong.
->
-> If there is a modeset on same crtc with a different connector. The new_crtc_state will not have self_refresh_active set.
-> Self_refresh_active is set from the helper library, which will duplicate the old_state and just adds self_refresh_active to true and active to false.
-> so we can be confident that if we are checking for self_refresh_active status then it should be coming from the library call.
->
-> Also the EINVAL is returned to the self_refresh library API and the function will be retired.
+On 31/03/2023 17:45, Dmitry Baryshkov wrote:
+> On Fri, 31 Mar 2023 at 16:59, Vinod Polimera <quic_vpolimer@quicinc.com> wrote:
+>>
+>> While in virtual terminal mode with PSR enabled, there will be
+>> no atomic commits triggered without dirty_fb being set. This
+>> will create a notion of no screen update. Allow atomic commit
+>> when dirty_fb ioctl is issued, so that it can trigger a PSR exit
+>> and shows update on the screen.
+> 
+> Will this impact non-VT workloads? If I remember correctly, we added
+> dirty_fb handling to prevent the framework from limiting the page
+> flips to vblank events (in DSI video mode).
 
-Maybe I misunderstand you here. However, in this way EINVAL is
-returned to drm_atomic_check_only() and not to the SR code.
+Actually, this is kind of stupid. If we care about the workload of this 
+pipe, then it is being updated, which means it is not in SR mode, 
+self_refresh_active = false.
 
-> And self_refresh_active is cleared on every commit : https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/drm_atomic_state_helper.c#n158
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-And this means that this check will not trigger at all, if I'm not
-mistaken. You've added code to msm_atomic_check(), so
-drm_self_refresh_helper_alter_state() was not called (yet) and thus
-new_crtc_state->self_refresh_active is set to false, fresh after
-crtc's duplicate_state.
+> 
+>>
+>> Reported-by: Bjorn Andersson <andersson@kernel.org>
+>> Link: https://lore.kernel.org/all/20230326162723.3lo6pnsfdwzsvbhj@ripper/
+>> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> index ab636da..96f645e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> @@ -1158,6 +1158,9 @@ static bool dpu_crtc_needs_dirtyfb(struct drm_crtc_state *cstate)
+>>          struct drm_crtc *crtc = cstate->crtc;
+>>          struct drm_encoder *encoder;
+>>
+>> +       if (cstate->self_refresh_active)
+>> +               return true;
+>> +
+>>          drm_for_each_encoder_mask (encoder, crtc->dev, cstate->encoder_mask) {
+>>                  if (dpu_encoder_get_intf_mode(encoder) == INTF_MODE_CMD) {
+>>                          return true;
+>> --
+>> 2.7.4
+>>
+> 
+> 
 
---
+-- 
 With best wishes
 Dmitry
+
