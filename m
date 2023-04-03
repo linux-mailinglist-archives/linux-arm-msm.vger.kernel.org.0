@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CFBC6D3CB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:18:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1302C6D3CBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:19:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231354AbjDCFSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 01:18:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57318 "EHLO
+        id S231444AbjDCFTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 01:19:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229751AbjDCFSE (ORCPT
+        with ESMTP id S231491AbjDCFSm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 01:18:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D81955A7;
-        Sun,  2 Apr 2023 22:18:03 -0700 (PDT)
+        Mon, 3 Apr 2023 01:18:42 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA04A5BA9;
+        Sun,  2 Apr 2023 22:18:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BC529614AC;
-        Mon,  3 Apr 2023 05:18:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD540C433D2;
-        Mon,  3 Apr 2023 05:18:00 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id A593DB81134;
+        Mon,  3 Apr 2023 05:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D53C433EF;
+        Mon,  3 Apr 2023 05:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680499082;
-        bh=Ry7b3/8RKxj+1luWeOjO0avmB+5u5dLjGt3zcnvaVn4=;
+        s=k20201202; t=1680499109;
+        bh=P8j0AzckZVYhGZrPQQ0YU21I6adlzSVHyeBkQuU1TaA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XjB+HVnPEgcwhnLAcYDTS25EspHJqwb5NR3ehZXCyNHLNOpnm86IVK9dzLlZkAU88
-         4DkXuvE7Ncr5avdB8aYtmwPbfJgRKnJXkrKRimeBT16J25XmbHSkZKXyH/NOvK+pRc
-         FJfWCkxY7olQKKpu44eOUcpVI3onDC5hs1Hb6N2KwtMt9slk/eiqP+FU8IuvFy3lKX
-         /A0/nq4zGBEMwK2hYDcBI58CfFq0+kS7r0LL6BAIFoVNF8iU7u6PiQUonHIaF/t7Ga
-         6T4toYalOS+z4N81wlUHC4NmGbcKA3lp+mOfcB1mhnmH9DBPV/oWCvAYn2ZE5SbIhi
-         4ehYlLfrJw86w==
-Date:   Mon, 3 Apr 2023 10:47:57 +0530
+        b=ArnlNllK5+jL5k0N6RXq6IqNSbuKSzUmT07cVkdEF+J969KZc205Y78fIj0Haa4pC
+         d9/PzbvFL3pIK1hAh79zAAyC3i6hB2gOXcCG3+bJ+82zyl3XXUV2VqzFyZxK8fsTPk
+         VBmEUPWtFi5bD/VviCpHeKLGjt2KwMIfWQjr7hSCjEXvWkII6MMSDcABWPLhx0l3v8
+         WgAtt76Co24WYzs2H75+FsJjYiuuvf0/MlOF21C5IK+fePj/F/8H9RJs2BoZS5ZTQw
+         7i789aZ47nzCCIuH1tTRZheEPmxAWMoSEjSMn3pYJtf02fMCgNRsrcXAiQ4EUvumlB
+         fV9TNf0Zc074g==
+Date:   Mon, 3 Apr 2023 10:48:24 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
 Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] bus: mhi: host: Use ERANGE for BHIOFF/BHIEOFF range check
-Message-ID: <20230403051757.GC4627@thinkpad>
+Message-ID: <20230403051824.GD4627@thinkpad>
 References: <1679674860-28229-1-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <1679674860-28229-1-git-send-email-quic_jhugo@quicinc.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,7 +61,7 @@ On Fri, Mar 24, 2023 at 10:21:00AM -0600, Jeffrey Hugo wrote:
 > Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
 > Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Applied to mhi-next!
 
 - Mani
 
