@@ -2,144 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26E916D4EE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 19:26:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 914046D4F08
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 19:36:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232979AbjDCR0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 13:26:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
+        id S231484AbjDCRga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 13:36:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233111AbjDCR0o (ORCPT
+        with ESMTP id S230511AbjDCRg2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 13:26:44 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84E5F113;
-        Mon,  3 Apr 2023 10:26:39 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id eh3so120265495edb.11;
-        Mon, 03 Apr 2023 10:26:39 -0700 (PDT)
+        Mon, 3 Apr 2023 13:36:28 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A972107
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 10:36:27 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id y15so39072953lfa.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 10:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680542798; x=1683134798;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y+hD9dA0ZbFxuYniLgq410rnyqNfqnu1PjrS/o7Wfzo=;
-        b=butJWZEuLrgW6EYVdXQX7er0f2ttpqKwL1T+MagEvKSjYh1ZWri67cTm2AimwJ0oeT
-         0yAEcubHelx0+crMbFwYZEwev/9QgTzweiRuTsOnsFmJlQF7l0s8NtvKYdEgC7YASkBi
-         wJDNANefgtUl/pYwm5EuCsuEdRMWLlNrYRanIGPkhB+hzk41OlX+qhC+/PYOVd8IU120
-         +x8hdO2z9wX9faXLzBpCf0om18/IMGWUMsVONzVPs//VQjyqUm2/2f4hjfEqwcv8/N2s
-         kc/4XU4k7ldj05CY+zPwi6DkQE4muIHxqLyLgF/UeN1E3iwAPh4FSEGos0H4d2fl4Srt
-         c1+g==
+        d=linaro.org; s=google; t=1680543385;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lgJjE+KvrFmAUSASYTKE46Q0Rh1x9INPUFBYXq75mYY=;
+        b=nBX8sZqvPSn2BoLqUd21+B0CAXHZdTQ0ISH9Tcc73TxJxQPyv0AqgzoV2dQMkm3Bvi
+         O3XD6pB+zaqy9VS2tzYJVWc6qACb9K4/KF9JRHU73iR2Nqa3WM+xlKkt3n3jhxgJcgMk
+         exKrAL4Xc5Qnf/JgHz+n0elUBaX815aw9FzNJjCAghz2bY3jWnE2t/MioF94by5/NtPE
+         XHJh3QiRyqvxvBanyH5F3BKMmmxwhbgL4/ZQ9EsM5Wrfn1st2WHOdBg1KptLB+aB2iYM
+         cj2c5ocgfDzHW3IYcAqs3fJtWmElAZYPEamcEwzcXDWYxEvf3bdoLCr9II4u4sjrm9Gd
+         fx0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680542798; x=1683134798;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y+hD9dA0ZbFxuYniLgq410rnyqNfqnu1PjrS/o7Wfzo=;
-        b=Wqh7HyyKNE5VsZfB1P/wqHNT90CoQJFCr9JYxHNQXvxrVLGz0dbY8t2RfO6+LnLGx9
-         hWR4g19471ozzAri9t0Ob0nXvAiigFuEPGvDaA4KPIL1XXotMJiqFcavOc3oFg4kBP9R
-         dm+upZyx27yEY4ePCFO9mZwX5grVqnU7WsUlkzSDwhxkGdKFoX2bQtDizu8X8+nmtlnB
-         1SJYJUTgdYCWLfucwEqvGxXfow0erb6LaprgQdo652J/VZ/5u3xBUOc8RJ5QHfj/0biR
-         JSe2liNtc/6XHJ4oo8dG0tubBxYt1wr2dGzjyWaGl3UCC9D7iYZmrhEqOX/MUQunHlET
-         H+Gg==
-X-Gm-Message-State: AAQBX9dcIsJBjrvG5b77XA9gHQuWTbxh2f9RUkDqT+QM4gHrXd5w6FYr
-        tNOxp5MDv1xKDwE8q1PWQwc=
-X-Google-Smtp-Source: AKy350Ytu2/uzMZQ1usmBm61eO1m+4WPscUOFQRGsCNu1cdSg0v/ydxcUnWenLETPMfW9cawQZYtSg==
-X-Received: by 2002:a17:906:3148:b0:930:fa8e:9597 with SMTP id e8-20020a170906314800b00930fa8e9597mr36258140eje.42.1680542797873;
-        Mon, 03 Apr 2023 10:26:37 -0700 (PDT)
-Received: from [192.168.1.45] (hst-221-41.medicom.bg. [84.238.221.41])
-        by smtp.gmail.com with ESMTPSA id bu7-20020a170906a14700b0093348be32cfsm4874651ejb.90.2023.04.03.10.26.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 10:26:37 -0700 (PDT)
-Message-ID: <36febd82-85b2-aa4d-c7e0-6343b119e0cc@gmail.com>
-Date:   Mon, 3 Apr 2023 20:26:28 +0300
+        d=1e100.net; s=20210112; t=1680543385;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lgJjE+KvrFmAUSASYTKE46Q0Rh1x9INPUFBYXq75mYY=;
+        b=YibDpccSON5M1r3FiORfdlUsCoa4DXw0s/6Kp8dD//hepH9aOOqP4nVGvyym/a2v8V
+         bbNW/H7g424mXaLsHcLVPQZOAWBm54LGCFTPzL3HqyRibRigj8voFG+g8WB02vSwvIGT
+         Vev1kfdv1gdR7HOK4RwRUHmBN6oUbGgrRtq1aj2mERaTOVL7/9gt1E5bM8loqUNRlzJ6
+         SERWLz37CryiYltQ2zj1nmQCyRXpbQu/HVtMhZFPLDKz55sredP+Pjm6o8ceTee+0/Bg
+         nI4cd2dqxMeBZFagHnreoku0QpWIjquPE816e+RRuIlZybwgjxzLxBrEI0EUDn5mXECJ
+         eGrA==
+X-Gm-Message-State: AAQBX9fU5hi7BfNShvPt8S1VS15qaI/eUtf3P8/Olo9jC2XAMJSr2UG2
+        O6H7Jk3TSJlWTBm+F86pwqTrgQ==
+X-Google-Smtp-Source: AKy350bJXi16e3RU7z+3y153PGXst7YnIlzzbnKu4rGKbZ2jW0MjBgMeg2Fk0Y9DTYJYacDMfdJDdw==
+X-Received: by 2002:ac2:592b:0:b0:4e9:9e45:3470 with SMTP id v11-20020ac2592b000000b004e99e453470mr9492416lfi.3.1680543385584;
+        Mon, 03 Apr 2023 10:36:25 -0700 (PDT)
+Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
+        by smtp.gmail.com with ESMTPSA id v2-20020a056512096200b004cc5f44747dsm1871094lft.220.2023.04.03.10.36.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 10:36:25 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/9] RB1 + QCM2290 support
+Date:   Mon, 03 Apr 2023 19:35:58 +0200
+Message-Id: <20230403-topic-rb1_qcm-v1-0-ca849b62ba07@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] media: dt-bindings: Drop unneeded quotes
-To:     Sakari Ailus <sakari.ailus@iki.fi>, Rob Herring <robh@kernel.org>
-Cc:     Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Joe Tessler <jrt@google.com>,
-        Dongchun Zhu <dongchun.zhu@mediatek.com>,
-        Jacopo Mondi <jacopo+renesas@jmondi.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        =?UTF-8?Q?Niklas_S=c3=b6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Yunfei Dong <yunfei.dong@mediatek.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH4OK2QC/x2N0QrCMAwAf2Xk2UDXjln8FZHRdNEFZjdTFWHs3
+ w17vIPjNqiswhUuzQbKX6myFIP21ECeUnkwymgM3vngOhfwvaySUakdXvmJ55hi9D2FjnqwhlJ
+ lJE0lT1aVzzybXJXv8jsm19u+/wFSZVRQdAAAAA==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Benoit Parrot <bparrot@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-References: <20230320233944.2920964-1-robh@kernel.org>
- <ZCaoVwRuxVOTZdI4@valkosipuli.retiisi.eu>
-Content-Language: en-US, bg-BG
-From:   Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-In-Reply-To: <ZCaoVwRuxVOTZdI4@valkosipuli.retiisi.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680543384; l=2279;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=Oe8NOlqI6eJ+DsG/9HBWcEqSh9kVrB8UltmKWG7DjW4=;
+ b=KETWvJB5B1cGRgGv6EoAEJegYxKMFx6xHznjKtlgvFvTQuslWNwkf5G4at9TQaf3wz3XUpTX50Kd
+ Sd06EoJeCPz0VCyTDBMPw0UirD1i+FF17G8OpP6lhQ0tSyfGy/D6
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hei Sakari,
+This series brings basic support for the Qualcomm Robotics RB1 board,
+including but not limited to:
 
-On 31.03.23 г. 12:31 ч., Sakari Ailus wrote:
-> Hi Rob,
-> 
-> On Mon, Mar 20, 2023 at 06:39:42PM -0500, Rob Herring wrote:
->> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
->> checking for this can be enabled in yamllint.
->>
->> Signed-off-by: Rob Herring <robh@kernel.org>
-> 
-> This patch contains changes to Qualcomm bindings that have been already
-> made by other patches by Krzysztof. I think these took some time to get
-> merged to the media tree.
-> 
-> I've dropped those, the result is here:
-> 
-> <URL:https://git.linuxtv.org/sailus/media_tree.git/commit/?id=d75cae0884e80bba486f85e82b33a1dae3c9c976>
-> 
+- TSENS-connected thermal management
+- USB2
+- eMMC (uSD depends requires regulators to work, will be sent separately)
+- the necessary plumbing for *DSP + Wi-Fi (that also needs regulators)
+- buttons
 
-Do you think it will fix this pull request failure?
+A compatible in the SCM C driver is not added on purpose, as:
+1. it's not neccessary before we figure out disabling rpmcc, the dt
+   part is in regardless (the clock it consumes is always-on today)
+2. a point to get rid of SoC-specific compatibles in there was raised
 
-https://lore.kernel.org/all/20230329214310.2503484-1-jenkins@linuxtv.org/
+See also:
+https://www.thundercomm.com/product/qualcomm-robotics-rb1-platform/
+https://www.qualcomm.com/products/internet-of-things/industrial/industrial-automation/qualcomm-robotics-rb1-platform
 
+Dependencies:
+- https://lore.kernel.org/linux-arm-msm/20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org/
+- https://lore.kernel.org/linux-arm-msm/20230315183231.3562580-1-konrad.dybcio@linaro.org/
+- https://lore.kernel.org/linux-arm-msm/20230323173019.3706069-1-dianders@chromium.org/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (9):
+      dt-bindings: firmware: document Qualcomm QCM2290 SCM
+      dt-bindings: arm: qcom: Add QRB2210/QCM2290 and RB1 board
+      arm64: dts: qcom: Add initial QCM2290, PM2250 & RB1 device trees
+      arm64: dts: qcom: qcm2290: Add most QUPs
+      arm64: dts: qcom: qcm2290: Add thermal zones
+      arm64: dts: qcom: qcm2290: Add SMP2P
+      arm64: dts: qcom: qcm2290: Add ADSP & modem
+      arm64: dts: qcom: qcm2290: Add WCN3990 Wi-Fi node
+      arm64: dts: qcom: qrb2210-rb1: Enable RESIN Volume Down
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    8 +
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |    3 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ arch/arm64/boot/dts/qcom/pm2250.dtsi               |   63 +
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 1561 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           |  112 ++
+ 6 files changed, 1748 insertions(+)
+---
+base-commit: 31bd35b66249699343d2416658f57e97314a433a
+change-id: 20230403-topic-rb1_qcm-78a8826b34b6
+
+Best regards,
 -- 
-regards,
-Stan
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
