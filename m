@@ -2,125 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 596AA6D4513
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 15:01:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9538E6D4521
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 15:02:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231593AbjDCNBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 09:01:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52896 "EHLO
+        id S232363AbjDCNCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 09:02:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbjDCNBB (ORCPT
+        with ESMTP id S232285AbjDCNCJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 09:01:01 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B85E52D5B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 06:00:59 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id cn12so117031963edb.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 06:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680526858;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=16UcNG/PukjzRElXQ0FZ/prdEavSXuL0hY9oDia7Fqw=;
-        b=eycy1+5anorySr0EFsfJZnLN8eQhIR5TfCplDiItBZdFqBp2M6BsniseXTJiP8SoAS
-         pSN8Bk+cdLzpMkjXTcvNgyt4LWQbT1STGcJ1VmYAFhbKbWgOACfOQDft9s7L4ueR7YUY
-         Ppl09mPH+/NKn+33LmC/c4165oi+RSn9dJip2JCgOwhiZFWqVSx8cntBiPvFPRXwAbym
-         VpTgJC5Wws9vHFG4EGWzl2IFCuE+i8ZdbFqGXlk+b+8ahyeKxOvCDhgr9/Ekn3DHHHc6
-         QZHVSsfHj/eKd1nXglpsL3+DRbzgTvcavCB1S1MuKsUrlhT0Ef8wJJmCoV2jeQq7iJ/F
-         AWWA==
+        Mon, 3 Apr 2023 09:02:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3D01A941
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 06:01:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1680526879;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=qp8jb1qENX7rVnqrJSaV9tv+NNohtm3BMtsMs+alKp0=;
+        b=b4TZLRpsMM0e6x5tBFt4XybyPywv1OS+fgWzua+byFw0z7sCPCB+gw0dXJokHDeKaFXoAm
+        AQ02U18WqbpoxibtDon8VwRJnc97xraJ2FUwmtEW98JZ8VTNCkleGfCx4ZWRGduTlSUF0Z
+        or257CVusWNSj/YpEFaPtSVK7ltWxDU=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-vpFWapyVPJ6igvk8uUGdSQ-1; Mon, 03 Apr 2023 09:01:18 -0400
+X-MC-Unique: vpFWapyVPJ6igvk8uUGdSQ-1
+Received: by mail-oi1-f197.google.com with SMTP id q127-20020acaf285000000b00386dec7a02bso6918107oih.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 06:01:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680526858;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=16UcNG/PukjzRElXQ0FZ/prdEavSXuL0hY9oDia7Fqw=;
-        b=tM4SPqLYbvcGcJmmpZAulhR05vCOnzb7+4/MgyIjOTWzyF/pCqRRER+pduj1lc7gC+
-         Atpa/MHeuHT2bMaYYeTTNm5IFlCTpj8DKq5pMfRf+K73LFYAyX8IBkP0rVehct48zrzr
-         v2Li8/wufMDzUWGgVfHqseD6UACCR0dhfbwCTlfUSUiXjGBkCoKCUfImMflUxgIjGxWz
-         6kdqAfujkhYHK6ZqbdBZ0VJaAohv/hL/7PNtVeIURw4evnFD3dNyMm8hfaqIqT+UCvmO
-         Brgip2akdQ1O1Ca8N3ySpW5g4dZvCxAc7/i7Tcmxk2MPL5DMnqtlDnCUhtqJS4gjYZwl
-         9/cQ==
-X-Gm-Message-State: AAQBX9cIpxfb7n5LzkK5W/YIRq08XLmbDvssD98yTko3dXfgPwzx8zdN
-        kodwPMTwvXfwYwp9R6s0wRA4b6F80D9AhHnuVNs=
-X-Google-Smtp-Source: AKy350b2E4l2oBqoAIHFcKHDtPoNN3TqQLCC/1CYg/oSDuyx1JvMR7UiSyE/Rixg0Bz1LHvkV/VLUw==
-X-Received: by 2002:a17:906:bc57:b0:933:12d1:d168 with SMTP id s23-20020a170906bc5700b0093312d1d168mr33724368ejv.10.1680526858206;
-        Mon, 03 Apr 2023 06:00:58 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ae90:d80:1069:4805? ([2a02:810d:15c0:828:ae90:d80:1069:4805])
-        by smtp.gmail.com with ESMTPSA id xb7-20020a170907070700b00948c2f245a9sm672737ejb.110.2023.04.03.06.00.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 06:00:57 -0700 (PDT)
-Message-ID: <d30402fc-d7a1-f0bf-2f8b-04b4982b53d6@linaro.org>
-Date:   Mon, 3 Apr 2023 15:00:56 +0200
+        d=1e100.net; s=20210112; t=1680526877;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qp8jb1qENX7rVnqrJSaV9tv+NNohtm3BMtsMs+alKp0=;
+        b=vpXkLy34ONZIQC6iBQgf0APiBitfHBPQOk/SlXO/6cia8OIR7gqy1lQYGKFmNLyZG+
+         n2ZgHzlbyMl1krVc3fRAKkXLXHPTnds/VoVEDxpd+bxnjhh/uWnPbJm1lxJUExYPpLoR
+         9uVLHdL5w32dCSEWd6fCfgIBwNo+ou/iscsN8G2SrDSgufZNS6oSXzs8s3ceJ3todlXQ
+         TGbv6M7L6UiQAKjLCQppuOIfsdfHjeihmEMNohViLiK2u1DojC5Gvn4aTzw1K2NOYzyC
+         ucfJGhlk/hpeEif2gcMZMv6JNAu50CY8FECrubQKE6ib7gOE8UQV9+rv1hEvUo3Z2uAN
+         tn1g==
+X-Gm-Message-State: AAQBX9cYNs29nvaomt8l8+jXoHIO+IdvpWCbylgiZ1XWrxTZR25rPdEy
+        fJI44KLX8ELy4mkQ/CozMtksdGfLCmVUxz8+A5iNfVxUAdBbVX5rjVhufQtKtLVzUS4KYUot76y
+        DvGZPYhm6xDg1VVTVzAu7rhRvNw==
+X-Received: by 2002:a05:6870:a10a:b0:169:cbcc:25c0 with SMTP id m10-20020a056870a10a00b00169cbcc25c0mr9340406oae.14.1680526877282;
+        Mon, 03 Apr 2023 06:01:17 -0700 (PDT)
+X-Google-Smtp-Source: AKy350bVyA1HaKN+sFnH2QwAuA0pQ0vlOfQSri1+XfKwdC7nAbRh3YgkVYvmAZP3E261XxLXanhZsg==
+X-Received: by 2002:a05:6870:a10a:b0:169:cbcc:25c0 with SMTP id m10-20020a056870a10a00b00169cbcc25c0mr9340341oae.14.1680526876532;
+        Mon, 03 Apr 2023 06:01:16 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id l11-20020a056870218b00b001777244e3f9sm3521228oae.8.2023.04.03.06.01.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 06:01:16 -0700 (PDT)
+Date:   Mon, 3 Apr 2023 08:01:12 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, bhupesh.sharma@linaro.org, wens@csie.org,
+        jernej.skrabec@gmail.com, samuel@sholland.org,
+        mturquette@baylibre.com, peppe.cavallaro@st.com,
+        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
+        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+        linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
+Subject: Re: [PATCH net-next v3 00/12] Add EMAC3 support for sa8540p-ride
+Message-ID: <20230403130112.53z6m2lmm5lnjsm2@halaney-x13s>
+References: <20230331214549.756660-1-ahalaney@redhat.com>
+ <20230331220613.2cr2r5mcf2wwse4j@halaney-x13s>
+ <20230331215504.0169293a@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 00/22] arm64: dts: qcom: remove duplication in PMIC
- declarations
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
- <10626c79-46da-3f66-0327-66576b3e5f2c@linaro.org>
- <c6f20137-299a-afb1-c42d-35f7386b1e27@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <c6f20137-299a-afb1-c42d-35f7386b1e27@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230331215504.0169293a@kernel.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 12:44, Konrad Dybcio wrote:
+On Fri, Mar 31, 2023 at 09:55:04PM -0700, Jakub Kicinski wrote:
+> On Fri, 31 Mar 2023 17:06:13 -0500 Andrew Halaney wrote:
+> > As promised: https://lore.kernel.org/netdev/20230331215804.783439-1-ahalaney@redhat.com/T/#t
 > 
+> Patch 12 never made it to netdev or lore :(
 > 
-> On 2.04.2023 11:55, Krzysztof Kozlowski wrote:
->> On 02/04/2023 00:07, Dmitry Baryshkov wrote:
->>> The sc8280xp platform uses its own copy of PMIC declarations. This can
->>> easily end up with the issues that are fixed in the main PMIC include
->>> file, but are not fixed for sc8280xp (and vice versa). For example
->>> commit c0ee8e0ba5cc ("arm64: dts: qcom: pmk8350: Use the correct PON
->>> compatible") changed pmk8350 to use "qcom,pmk8350-pon" compat for the
->>> PON device, while sc8280xp-pmic.dtsi still has the incorrect
->>> "qcom,pm8998-pon".
->>>
->>> Another example is pm8280_2_temp_alarm device, which uses interrupts
->>> tied to SID 2, while having SID 3. This can be easily left unnoticed.
->>>
->>> Employ a small amount of C preprocessor magic to make
->>> sc8280xp-pmics.dtsi use standard PMIC include files
->>
->> Preprocessor magic is disliked in DTS. We allow only simple defines, no
->> undefs. Sometimes some nodes or strings could be concatenated, but in
->> obvious way. You should not parametrize it and have different, generated
->> labels in DTS based on something coming external to that DTS.
-> This again begs the question, is it time we start moving parts of the
-> dts code to be autogenerated?
 
-Do we auto-generate C-code? Just a bit, but in general no. There are
-exceptions but coding style is here clear:
-https://elixir.bootlin.com/linux/v6.1-rc2/source/Documentation/process/coding-style.rst#L828
+Well, that's no good as I definitely want some eyes on that one :(
 
-Pre-processor generated code should be narrowed to some cases or simpler
-structures.
+I've already gotten _some_ reviews on the earlier patches in v3,
+I am going to absorb anything super quick into a v4 today, then send that out,
+maybe copy pasting larger questions I have yet to respond to? Seems like
+an ok approach.. not having the full solution in hand is crummy for
+review. Let me know if you think that's a bad call and just a resend is
+better.
 
-For DTS we actually are even stricter.
-
-
-Best regards,
-Krzysztof
+Sorry, not sure where I messed that up Friday evening when writing
+changelogs etc.
 
