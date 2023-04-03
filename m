@@ -2,74 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03AF06D4D3B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 18:09:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 708396D4D47
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 18:12:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232069AbjDCQJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 12:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40688 "EHLO
+        id S232406AbjDCQMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 12:12:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231836AbjDCQJE (ORCPT
+        with ESMTP id S229498AbjDCQML (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 12:09:04 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D712AB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 09:08:59 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso33127154pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 09:08:59 -0700 (PDT)
+        Mon, 3 Apr 2023 12:12:11 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5B6AB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 09:12:10 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id j7so35445628ybg.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 09:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680538138;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FReLfJ5RyVdrbXiYpGSEiw2ngxGjYmfHewo4jwkGSLo=;
-        b=lg/XksLHRF0mCqn5cd62/i93K/9XsNi/UKaXq2wmKqKs+ZOLTGDg++Rp2XG8BFoP+R
-         QspmHdp9B5qi8/2jNRqBwRVGinzRnYobyqmSkdR8qmZEECBJ5wyargRS3hQEOdgTUPWi
-         mVPBHsuMqaqKe/PW28NCJac9OuqQSVqjiLsYu/+y7C+AmgeC6bfEd3pFxNAj3IFzAfWj
-         wA2f1ooIt6rlDzI7TQTt9pEUOuNoFS7bpNmHSmx2geGVubaq4VgSf3jygYaqi0BccZDX
-         J+ujIkpxnpMJj8fJpWyDtMBBeoxapyPm4bnBVv48weLyMscZIg9NkywvMG8GBJzgOsZ1
-         efZQ==
+        d=linaro.org; s=google; t=1680538329;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ckRoaRfuFXSxICrM929LhPKiHMEGVxGno6xY+TLvhpw=;
+        b=FVhe/9/B5nnJIV+P+o3lR0MP8LctNsUM8vqI6LLpp5pOt9jJiOh9UHqSCQPsQ9Idbx
+         PveyIETXxV9OXgvwdBG8WHQZiqo1///a8v4eJZzdQOnew15zDxUkUg3g1+3GN1V8WWm5
+         UBIW3hmoHELoAQHoaOrQRZJL3C91NcfwFDS2CXp3wVnxQBOEPfPcYFkZJUszKf4znOGi
+         EoY3CoyLXyg21b0tp9g3XgeYo2tzFUjtWPCLP9jRuuwzs9VJLXxFHbjX7r2UUsb9Ovqq
+         KCEszdUu1e8jBQ2HJel2Fc9oVXahuP33s6Mr9oxYSXXYoq9e3T2GHwJre1EWKGo6zRmU
+         bbcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680538138;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FReLfJ5RyVdrbXiYpGSEiw2ngxGjYmfHewo4jwkGSLo=;
-        b=xo9yIMsbwYjVw7CUAMfr1uqPSx33kcePKW6OyfSHNuz5f/GuzBJG+1H8dZEhZulA2V
-         0Rs4zymyVItiOo/ql6SdA8NK0zOwMgbFSlp3C7xRQeSYLAfnC3o91fM8PSd7bVgO4YVR
-         uvTFQH1nizCXIwR2wyGK7Tt5wX8qhLbH1ikRSlXJKGv73BOGgoMnmsH8PRn9IKwE6XS9
-         kXu6aZDsshIhb54IFlECV3CcqPemgYPb81U5Yswz9MKYiZJPGDKEMZHXb+SgCMdc7hzK
-         NpHFLbM3bGxMy+CABqYcZ9Fb7ova7R4LLLnaZ9vSXYc+9hk1CwVhp3dmhQbwjDtxCHRL
-         a+/Q==
-X-Gm-Message-State: AAQBX9dC80sI2v5p2cGvH4Z6rMt2fvXbCiatEnzpfZgDj76KWLVkqui9
-        ic7Nj3OLK70TXIkmNtEGghBs
-X-Google-Smtp-Source: AKy350YTQOFeFPqGkXZukS9T2TYmxtydivmfM+gu0zZDzHiY5SbmtSdDu8RkO4nUco4wSwkrrnO+SQ==
-X-Received: by 2002:a05:6a20:8c05:b0:de:808e:8f3d with SMTP id j5-20020a056a208c0500b000de808e8f3dmr19411536pzh.13.1680538138603;
-        Mon, 03 Apr 2023 09:08:58 -0700 (PDT)
-Received: from thinkpad ([27.111.75.109])
-        by smtp.gmail.com with ESMTPSA id f23-20020aa782d7000000b005cd81a74821sm7133449pfn.152.2023.04.03.09.08.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 09:08:58 -0700 (PDT)
-Date:   Mon, 3 Apr 2023 21:38:52 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        agross@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@somainline.org, amit.pundir@linaro.org,
-        regressions@leemhuis.info, sumit.semwal@linaro.org,
-        catalin.marinas@arm.com, robin.murphy@arm.com
-Subject: Re: [PATCH V4 00/11] Fix XPU violation during modem metadata
- authentication
-Message-ID: <20230403160852.GD11346@thinkpad>
-References: <20230117085840.32356-1-quic_sibis@quicinc.com>
- <20230327161857.GA32697@willie-the-truck>
+        d=1e100.net; s=20210112; t=1680538329;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ckRoaRfuFXSxICrM929LhPKiHMEGVxGno6xY+TLvhpw=;
+        b=YnbyPfFR0AaEZ2+/+ePH5fG5/6WDdBBvajjVCAg/xY2nY8079lJRp2GzxSCB68NuM+
+         aKwsgq6b8CqizHdAYiJGBx6mTNHo6dNYMOy/obkMkSsmmQsAyhmvw0XoJictAsXDttge
+         F7YSNoapfbPg+qPuyOBEVg2xk/lSilskDzuJAQ5d4xjJjxtj/dtJedyJ9IAorILyzs0v
+         fsMOJfKUDaKlStdGjpznsb+vG7j2hzl0pLFn0GCSIsP7860S653ekVFlNmFb3Rou/QNa
+         6hi6FJ8pzWDaKvFxWyOXelLaYCu8xGGBeHGYygtkUMBXW6TuNf6no3EtXzzD2AbXRj3R
+         +tjA==
+X-Gm-Message-State: AAQBX9edvy0VR4FUAskziH7XBVkhfbWesgrpBEzuL5oKQKcovArGii2m
+        qAD3YdT/Hx6nWVhdwJr1OSUd5Z009lUT4tmPS0bjFA==
+X-Google-Smtp-Source: AKy350bgZqCXxxXnZWum0y79BB4tNnWGNnYcibSUYJZtBvIrylGXzXDniMPLIwWkuC258xvk77u2JPwshx6cwkUy1ns=
+X-Received: by 2002:a05:6902:168d:b0:b6c:2d28:b3e7 with SMTP id
+ bx13-20020a056902168d00b00b6c2d28b3e7mr23000047ybb.9.1680538329177; Mon, 03
+ Apr 2023 09:12:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230327161857.GA32697@willie-the-truck>
+References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1680271114-1534-4-git-send-email-quic_vpolimer@quicinc.com>
+ <CAA8EJppc3LDQy2RgVZbWki4Y-_FOTK67Y8RfK5Bm9gqdfqMjqQ@mail.gmail.com> <BN0PR02MB8173E9FF869F7EEFCE1F5410E4929@BN0PR02MB8173.namprd02.prod.outlook.com>
+In-Reply-To: <BN0PR02MB8173E9FF869F7EEFCE1F5410E4929@BN0PR02MB8173.namprd02.prod.outlook.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 3 Apr 2023 19:11:58 +0300
+Message-ID: <CAA8EJprj5cmB_STfv45NDCJ_e=aWfwMgaNmGkQBqFa8fQq6gQw@mail.gmail.com>
+Subject: Re: [PATCH v1 3/3] msm: skip the atomic commit of self refresh while
+ PSR running
+To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
+Cc:     "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "dianders@chromium.org" <dianders@chromium.org>,
+        "swboyd@chromium.org" <swboyd@chromium.org>,
+        "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
+        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
+        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
+        "Bjorn Andersson (QUIC)" <quic_bjorande@quicinc.com>,
+        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
+        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -79,37 +82,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 05:18:57PM +0100, Will Deacon wrote:
-> Hi Sibi,
-> 
-> On Tue, Jan 17, 2023 at 02:28:29PM +0530, Sibi Sankar wrote:
-> > The memory region allocated using dma_alloc_attr with no kernel mapping
-> > attribute set would still be a part of the linear kernel map. Any access
-> > to this region by the application processor after assigning it to the
-> > remote Q6 will result in a XPU violation. Fix this by replacing the
-> > dynamically allocated memory region with a no-map carveout and unmap the
-> > modem metadata memory region before passing control to the remote Q6.
-> > The addition of the carveout and memunmap is required only on SoCs that
-> > mandate memory protection before transferring control to Q6, hence the
-> > driver falls back to dynamic memory allocation in the absence of the
-> > modem metadata carveout.
-> 
-> [...]
-> 
-> >   remoteproc: qcom_q6v5_mss: Use a carveout to authenticate modem
-> >     headers
-> 
-> With this change now merged, am I ok to downgrade the arm64
-> arch_dma_prep_coherent() back to a clean?
-> 
+On Mon, 3 Apr 2023 at 15:01, Vinod Polimera <vpolimer@qti.qualcomm.com> wrote:
+>
+> > On Fri, 31 Mar 2023 at 16:59, Vinod Polimera <quic_vpolimer@quicinc.com>
+> > wrote:
+> > >
+> > > In certain CPU stress conditions, there can be a delay in scheduling commit
+> > > work and it was observed that PSR commit from a different work queue
+> > was
+> > > scheduled. Avoid these commits as display is already in PSR mode.
+> > >
+> > > Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> > > ---
+> > >  drivers/gpu/drm/msm/msm_atomic.c | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/msm_atomic.c
+> > b/drivers/gpu/drm/msm/msm_atomic.c
+> > > index 645fe53..f8141bb 100644
+> > > --- a/drivers/gpu/drm/msm/msm_atomic.c
+> > > +++ b/drivers/gpu/drm/msm/msm_atomic.c
+> > > @@ -192,6 +192,9 @@ int msm_atomic_check(struct drm_device *dev,
+> > struct drm_atomic_state *state)
+> > >                         new_crtc_state->mode_changed = true;
+> > >                         state->allow_modeset = true;
+> > >                 }
+> > > +
+> > > +               if (old_crtc_state->self_refresh_active && new_crtc_state-
+> > >self_refresh_active)
+> > > +                       return -EINVAL;
+> >
+> > EINVAL here means that atomic_check will fail if both old and new
+> > states are in SR mode. For example, there might be a mode set for
+> > another CRTC (while keeping this one in SR mode). I don't think this
+> > is correct. We should skip/shortcut the commit, that's true. But I
+> > doubt that returning an error here is a proper way to do this. Please
+> > correct me if I'm wrong.
+>
+> If there is a modeset on same crtc with a different connector. The new_crtc_state will not have self_refresh_active set.
+> Self_refresh_active is set from the helper library, which will duplicate the old_state and just adds self_refresh_active to true and active to false.
+> so we can be confident that if we are checking for self_refresh_active status then it should be coming from the library call.
+>
+> Also the EINVAL is returned to the self_refresh library API and the function will be retired.
 
-I think you can. If something breaks, we will fix it (without reverting) ;)
+Maybe I misunderstand you here. However, in this way EINVAL is
+returned to drm_atomic_check_only() and not to the SR code.
 
-- Mani
+> And self_refresh_active is cleared on every commit : https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/drm_atomic_state_helper.c#n158
 
-> Thanks,
-> 
-> Will
+And this means that this check will not trigger at all, if I'm not
+mistaken. You've added code to msm_atomic_check(), so
+drm_self_refresh_helper_alter_state() was not called (yet) and thus
+new_crtc_state->self_refresh_active is set to false, fresh after
+crtc's duplicate_state.
 
--- 
-மணிவண்ணன் சதாசிவம்
+--
+With best wishes
+Dmitry
