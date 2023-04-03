@@ -2,183 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DACC6D434C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 13:19:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F28D6D43AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 13:38:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231384AbjDCLTj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 07:19:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47992 "EHLO
+        id S231906AbjDCLiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 07:38:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232278AbjDCLTg (ORCPT
+        with ESMTP id S232111AbjDCLiE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 07:19:36 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B421CA09
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 04:19:22 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 6CFED21BF6;
-        Mon,  3 Apr 2023 11:19:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1680520761; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=gDCIotJKyS3Ga1gCPnJobV8ICNrGgE1WY4EkisD64zM=;
-        b=pCji8P1bJ9qxd+gk6R/HoHFaQqAUoh9a9lRGhtgnBUIHOJv3shcFmWfz71Z7ucbMbe8IYC
-        Tp3KRoaxattHcE+pNGghdgJiSDSdmVzvl2LKBtYyfaQTrpp6+JqUwJu7LTiuYT4LYFEOv8
-        5X39L+5WAhejH8ZVcCE5UmpMACLK+Go=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1680520761;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=gDCIotJKyS3Ga1gCPnJobV8ICNrGgE1WY4EkisD64zM=;
-        b=684uEO375jXde5HF95cHxlKEusmd3IIPe30N0PIZ9yS7Wyr5sHVEne6IJZqh3I5s1DLhVj
-        xmIqlInohMgHdKBA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 419D813416;
-        Mon,  3 Apr 2023 11:19:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id /6olDzm2KmQLJQAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 03 Apr 2023 11:19:21 +0000
-Message-ID: <74792856-b906-4085-64a2-ec7d32c16508@suse.de>
-Date:   Mon, 3 Apr 2023 13:19:20 +0200
+        Mon, 3 Apr 2023 07:38:04 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE7640F7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 04:38:00 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id e65so34296625ybh.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 04:38:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680521879;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kOtVINJ/hc23uS0iMesRcqKkmMZoIVagEw2q0yZm6ro=;
+        b=ooObK+1ussEz9MkPWv2L7OY6QejUJuirtapW60/NR2vaLWVRdQS9XfRZg1rRrs4ZW5
+         iR1tA0v3jClQD1Myhlc7Lm8/fV1rdf+zd18TpFDnFH78TE41qDVAX1uXz4LJp/itzO8l
+         0Wbr03FkIXSpwwU29ojU/6b6OPoftJJLsMrJeP8lO9zAjL8npYM6VN10xBYvfO7vQeRG
+         7hn0CtA6U2l7hOP5pLf/9Lg8ajZ+hRO2IJwh5vxvYfdW/KG08RGPZPgdvNYm8qa6BEXM
+         lGB2JaVsAbwNmAfa3QAA/Y4lFP9zXXKzU3zGsqTSledNRwWC7Rs4i2LBzCxsvdQqDFXI
+         Cs2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680521879;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kOtVINJ/hc23uS0iMesRcqKkmMZoIVagEw2q0yZm6ro=;
+        b=5zbHG+5cnUJdeq1986/720+GAkLlX+ECZ1fI6GD4EQRhPT9j8NVj+lKQlTXqUxh/qW
+         ulYF7Vyz0duM5VW60Haogik8QtCd7py6fvC6LUMq/g60FBdZu0PxmXZ8J29sB9KrsOs1
+         f8sWhEWwbELF6WaB3wvgBb87wBS0zq3i0XMv9ZWzKioHh9LksX3FAQwL5aXx8aTBxCaR
+         VkbI3nlKPHgi4XQCPVMC61VdaIQm2wD9vHbsPCt20VU77+Uyb5VEVKPgORq72skRR0JC
+         /ZuTk7cQQGm4aBjWR5aLnqFoWI8RubMUpMVepoiNoJBHeBUAyMQuXhYkKTRVvlc/ddXS
+         AZdg==
+X-Gm-Message-State: AAQBX9cfKInPMzOSLj10i+DqVJHOloPgKabkNBAgTRx7x/E9gJVaznWq
+        tUoevGDUNB7Hzu9mEYGeWpy6T6Zl1qpLfNrw6jLs0A==
+X-Google-Smtp-Source: AKy350afzcPqX3jlKimzowQ9CIxvNv5ojFUPC42RPy1gJ6dnsBFzCwXMuJQXuXZzFt6qjVY8bCXUnQ8H3swFp+zc73k=
+X-Received: by 2002:a05:6902:1501:b0:b4c:9333:2a2 with SMTP id
+ q1-20020a056902150100b00b4c933302a2mr18709043ybu.9.1680521879578; Mon, 03 Apr
+ 2023 04:37:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/6] drm/msm: Clear aperture ownership outside of fbdev
- code
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     freedreno@lists.freedesktop.org, sean@poorly.run,
-        quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
-        javierm@redhat.com, linux-arm-msm@vger.kernel.org
-References: <20230330074150.7637-1-tzimmermann@suse.de>
- <20230330074150.7637-2-tzimmermann@suse.de>
- <CAA8EJpov+D5VjWWKWCEjp_C1Rt2B6=2j8rBc8JUPtjEcYYRzYQ@mail.gmail.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <CAA8EJpov+D5VjWWKWCEjp_C1Rt2B6=2j8rBc8JUPtjEcYYRzYQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------y0c0jAbHkT80gWW3YFYdZqDE"
-X-Spam-Status: No, score=-3.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
+ <10626c79-46da-3f66-0327-66576b3e5f2c@linaro.org> <c6f20137-299a-afb1-c42d-35f7386b1e27@linaro.org>
+In-Reply-To: <c6f20137-299a-afb1-c42d-35f7386b1e27@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 3 Apr 2023 14:37:48 +0300
+Message-ID: <CAA8EJppU7LRqgWoDBWNSY_dnGf9TNO-f3WqAf1eP=aWCMu0pJg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/22] arm64: dts: qcom: remove duplication in PMIC declarations
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------y0c0jAbHkT80gWW3YFYdZqDE
-Content-Type: multipart/mixed; boundary="------------3egR0O1yelS03R0BdZXADZn3";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: freedreno@lists.freedesktop.org, sean@poorly.run,
- quic_abhinavk@quicinc.com, dri-devel@lists.freedesktop.org,
- javierm@redhat.com, linux-arm-msm@vger.kernel.org
-Message-ID: <74792856-b906-4085-64a2-ec7d32c16508@suse.de>
-Subject: Re: [PATCH 1/6] drm/msm: Clear aperture ownership outside of fbdev
- code
-References: <20230330074150.7637-1-tzimmermann@suse.de>
- <20230330074150.7637-2-tzimmermann@suse.de>
- <CAA8EJpov+D5VjWWKWCEjp_C1Rt2B6=2j8rBc8JUPtjEcYYRzYQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpov+D5VjWWKWCEjp_C1Rt2B6=2j8rBc8JUPtjEcYYRzYQ@mail.gmail.com>
+On Mon, 3 Apr 2023 at 13:44, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 2.04.2023 11:55, Krzysztof Kozlowski wrote:
+> > On 02/04/2023 00:07, Dmitry Baryshkov wrote:
+> >> The sc8280xp platform uses its own copy of PMIC declarations. This can
+> >> easily end up with the issues that are fixed in the main PMIC include
+> >> file, but are not fixed for sc8280xp (and vice versa). For example
+> >> commit c0ee8e0ba5cc ("arm64: dts: qcom: pmk8350: Use the correct PON
+> >> compatible") changed pmk8350 to use "qcom,pmk8350-pon" compat for the
+> >> PON device, while sc8280xp-pmic.dtsi still has the incorrect
+> >> "qcom,pm8998-pon".
+> >>
+> >> Another example is pm8280_2_temp_alarm device, which uses interrupts
+> >> tied to SID 2, while having SID 3. This can be easily left unnoticed.
+> >>
+> >> Employ a small amount of C preprocessor magic to make
+> >> sc8280xp-pmics.dtsi use standard PMIC include files
+> >
+> > Preprocessor magic is disliked in DTS. We allow only simple defines, no
+> > undefs. Sometimes some nodes or strings could be concatenated, but in
+> > obvious way. You should not parametrize it and have different, generated
+> > labels in DTS based on something coming external to that DTS.
+> This again begs the question, is it time we start moving parts of the
+> dts code to be autogenerated?
+>
+> Should we keep a separate file for each SID?
+>
+> Or should we consider the SPMI 'interrupts' implementation flawed and
+> work towards one that does not require a SID to be specified within?
+>
+> Currently it's:
+>
+> interrupts = <USID PERIPH_ADDR>>8 IRQ_WITHIN_PERIPH IRQ_TYPE>;
+>
+> So the first two cells are effectively useless and can be retrieved
+> from the parent node and the reg property.
+>
+> Getting rid of that would solve a decent chunk of problems that this
+> patchset concerns.
 
---------------3egR0O1yelS03R0BdZXADZn3
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+While I agree with the USID part, the PERIPH_ADDR part is not always
+like that, see pm8916.dtsi / audio-codec@f000.
 
-SGkNCg0KQW0gMzAuMDMuMjMgdW0gMTE6NTEgc2NocmllYiBEbWl0cnkgQmFyeXNoa292Og0K
-PiBPbiBUaHUsIDMwIE1hciAyMDIzIGF0IDEwOjQxLCBUaG9tYXMgWmltbWVybWFubiA8dHpp
-bW1lcm1hbm5Ac3VzZS5kZT4gd3JvdGU6DQo+Pg0KPj4gTW92ZSBhcGVydHVyZSBtYW5hZ2Vt
-ZW50IG91dCBvZiB0aGUgZmJkZXYgY29kZS4gSXQgaXMgdW5yZWxhdGVkDQo+PiBhbmQgbmVl
-ZHMgdG8gcnVuIGV2ZW4gaWYgZmJkZXYgc3VwcG9ydCBoYXMgYmVlbiBkaXNhYmxlZC4gQ2Fs
-bA0KPj4gdGhlIGhlbHBlciBhdCB0aGUgdG9wIG9mIG1zbV9kcm1faW5pdCgpIHRvIHRha2Ug
-b3ZlciBoYXJkd2FyZQ0KPj4gZnJvbSBvdGhlciBkcml2ZXJzLg0KPj4NCj4+IFNpZ25lZC1v
-ZmYtYnk6IFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPg0KPj4gLS0t
-DQo+PiAgIGRyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2Rydi5jICAgfCA2ICsrKysrKw0KPj4g
-ICBkcml2ZXJzL2dwdS9kcm0vbXNtL21zbV9mYmRldi5jIHwgNiAtLS0tLS0NCj4+ICAgMiBm
-aWxlcyBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKyksIDYgZGVsZXRpb25zKC0pDQo+Pg0KPj4g
-ZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2Rydi5jIGIvZHJpdmVycy9n
-cHUvZHJtL21zbS9tc21fZHJ2LmMNCj4+IGluZGV4IGFjYTQ4Yzg2OGMxNC4uNTIxMTE0MGVj
-NTBiIDEwMDY0NA0KPj4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZHJ2LmMNCj4+
-ICsrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2Rydi5jDQo+PiBAQCAtMTIsNiArMTIs
-NyBAQA0KPj4gICAjaW5jbHVkZSA8bGludXgvdWFjY2Vzcy5oPg0KPj4gICAjaW5jbHVkZSA8
-dWFwaS9saW51eC9zY2hlZC90eXBlcy5oPg0KPj4NCj4+ICsjaW5jbHVkZSA8ZHJtL2RybV9h
-cGVydHVyZS5oPg0KPj4gICAjaW5jbHVkZSA8ZHJtL2RybV9icmlkZ2UuaD4NCj4+ICAgI2lu
-Y2x1ZGUgPGRybS9kcm1fZHJ2Lmg+DQo+PiAgICNpbmNsdWRlIDxkcm0vZHJtX2ZpbGUuaD4N
-Cj4+IEBAIC00MTEsNiArNDEyLDExIEBAIHN0YXRpYyBpbnQgbXNtX2RybV9pbml0KHN0cnVj
-dCBkZXZpY2UgKmRldiwgY29uc3Qgc3RydWN0IGRybV9kcml2ZXIgKmRydikNCj4+ICAgICAg
-ICAgIGlmIChkcm1fZmlybXdhcmVfZHJpdmVyc19vbmx5KCkpDQo+PiAgICAgICAgICAgICAg
-ICAgIHJldHVybiAtRU5PREVWOw0KPj4NCj4+ICsgICAgICAgLyogdGhlIGZ3IGZiIGNvdWxk
-IGJlIGFueXdoZXJlIGluIG1lbW9yeSAqLw0KPj4gKyAgICAgICByZXQgPSBkcm1fYXBlcnR1
-cmVfcmVtb3ZlX2ZyYW1lYnVmZmVycyhmYWxzZSwgZHJ2KTsNCj4+ICsgICAgICAgaWYgKHJl
-dCkNCj4+ICsgICAgICAgICAgICAgICByZXR1cm4gcmV0Ow0KPj4gKw0KPiANCj4gSSB0aGlu
-ayBpdCBpcyBub3QgYSBnb29kIHBsYWNlIHRvIHJlbW92ZSBmcmFtZWJ1ZmZlcnMuIEVGSUZC
-IG1pZ2h0IGJlDQo+IHN0aWxsIGFsaXZlIGFuZCBpZiB3ZSBraWNrIGl0IG91dCwgaXQgbWln
-aHQgYmUgdmVyeSBoYXJkIHRvIGRlYnVnIHdoYXQNCj4gd2VudCB3cm9uZy4NCj4gQ291bGQg
-eW91IHBsZWFzZSBtb3ZlIGl0IGFmdGVyIGNvbXBvbmVudCBiaW5kPyBUaGVuIHdlIGNhbiBi
-ZSBzdXJlIGF0DQo+IGxlYXN0IHRoYXQgYWxsIHN1YmRldmljZXMgYXJlIGJvdW5kLiBJIHNl
-ZSB0aGF0IGFybWFkYSBhbmQgc3VuNGkgY2FsbA0KPiBpdCBhcyBsYXRlIGFzIHBvc3NpYmxl
-LCB3aGVuIG5vIGNhbGxzIGNhbiBmYWlsLg0KDQpPay4gSSBicmllZmx5IGxvb2tlZCBvdmVy
-IHRoZSBjb2RlIHRvIG1ha2Ugc3VyZSB0aGF0IG5vIGNvZGUgdG91Y2hlcyBIVyANCnNldHRp
-bmdzIGJlZm9yZSBtc20gYWNxdWlyZXMgdGhlIGRldmljZS4NCg0KQmVzdCByZWdhcmRzDQpU
-aG9tYXMNCg0KPiANCj4+ICAgICAgICAgIGRkZXYgPSBkcm1fZGV2X2FsbG9jKGRydiwgZGV2
-KTsNCj4+ICAgICAgICAgIGlmIChJU19FUlIoZGRldikpIHsNCj4+ICAgICAgICAgICAgICAg
-ICAgRFJNX0RFVl9FUlJPUihkZXYsICJmYWlsZWQgdG8gYWxsb2NhdGUgZHJtX2RldmljZVxu
-Iik7DQo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYyBi
-L2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2ZiZGV2LmMNCj4+IGluZGV4IGQyNmFhNTIyMTdj
-ZS4uZmM3ZDA0MDZhOWY5IDEwMDY0NA0KPj4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9t
-c21fZmJkZXYuYw0KPj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0K
-Pj4gQEAgLTQsNyArNCw2IEBADQo+PiAgICAqIEF1dGhvcjogUm9iIENsYXJrIDxyb2JkY2xh
-cmtAZ21haWwuY29tPg0KPj4gICAgKi8NCj4+DQo+PiAtI2luY2x1ZGUgPGRybS9kcm1fYXBl
-cnR1cmUuaD4NCj4+ICAgI2luY2x1ZGUgPGRybS9kcm1fY3J0Yy5oPg0KPj4gICAjaW5jbHVk
-ZSA8ZHJtL2RybV9mYl9oZWxwZXIuaD4NCj4+ICAgI2luY2x1ZGUgPGRybS9kcm1fZm91cmNj
-Lmg+DQo+PiBAQCAtMTU0LDExICsxNTMsNiBAQCBzdHJ1Y3QgZHJtX2ZiX2hlbHBlciAqbXNt
-X2ZiZGV2X2luaXQoc3RydWN0IGRybV9kZXZpY2UgKmRldikNCj4+ICAgICAgICAgICAgICAg
-ICAgZ290byBmYWlsOw0KPj4gICAgICAgICAgfQ0KPj4NCj4+IC0gICAgICAgLyogdGhlIGZ3
-IGZiIGNvdWxkIGJlIGFueXdoZXJlIGluIG1lbW9yeSAqLw0KPj4gLSAgICAgICByZXQgPSBk
-cm1fYXBlcnR1cmVfcmVtb3ZlX2ZyYW1lYnVmZmVycyhmYWxzZSwgZGV2LT5kcml2ZXIpOw0K
-Pj4gLSAgICAgICBpZiAocmV0KQ0KPj4gLSAgICAgICAgICAgICAgIGdvdG8gZmluaTsNCj4+
-IC0NCj4+ICAgICAgICAgIHJldCA9IGRybV9mYl9oZWxwZXJfaW5pdGlhbF9jb25maWcoaGVs
-cGVyKTsNCj4+ICAgICAgICAgIGlmIChyZXQpDQo+PiAgICAgICAgICAgICAgICAgIGdvdG8g
-ZmluaTsNCj4+IC0tDQo+PiAyLjQwLjANCj4+DQo+IA0KPiANCg0KLS0gDQpUaG9tYXMgWmlt
-bWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERldmVsb3Blcg0KU1VTRSBTb2Z0d2FyZSBTb2x1
-dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxkc3RyLiA1LCA5MDQwOSBOw7xybmJlcmcsIEdl
-cm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJuYmVyZykNCkdlc2Now6RmdHNmw7xocmVyOiBJ
-dm8gVG90ZXYNCg==
+I'll give it a thought, but it is probably not in the forthcoming future.
 
---------------3egR0O1yelS03R0BdZXADZn3--
 
---------------y0c0jAbHkT80gWW3YFYdZqDE
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmQqtjgFAwAAAAAACgkQlh/E3EQov+Ah
-xw//TuheHev7IpQwFs+ijuiq28Z4yNMPbN8QzwqVGf3s/lyLPVP3+KCA2k9g4PK+G6XdXhNxzSij
-LfjRVNGmVQeSwNYAqHq8BkdKs+Hix1j5742c4k3GZ4u2Y2GmZUUyef0xKS3YY5XUOoOlcsw4Keur
-OQ5j7BZt/96l6sTESZjVgmt3bbb3+wvMCJm4WScp6inMKpDAA6u0cxYNRhpI9egP9RidMP7svyTJ
-47fdlzDifUMy2KFFplgJAZDPEYxup3NDzo1X/sIGG1GE1oNoX2otqWa2wmUsBsJc2165fmM8hPDI
-eOlNQF5MPeTIJjC6O9M/guxFSDsKKQIKpV+1qkZTBdb39YbEtNOAk3BoBTrtVgslHimHiDN4WmUI
-6hbK/174EpA56oy2Fbh/aK1iOAJHieC3Cc+j3up/texLTjCOiXhSuHbByn/TEX/JlCL41tjyYmU1
-VMJspLv4D/BARg4CQDuaTNP93d9ch9Ioi+vHHqfMVtTpG0XQUY1F7EEa85eP8/RD84a6jH+A+ZON
-ElLZTAiRr6miLA+L3uBpgnvRzroQ32a35cpwmhdH/mobMaIfctyXKt91ksJUtczcel217VgeK50T
-vIjPgqhuJKBiO+gh26lOVRpl7OoQH5ABRRg3+g403czt6m/3SuV4imrwkKeUf/gQrAwzSutz9Xqy
-V0s=
-=mWxz
------END PGP SIGNATURE-----
-
---------------y0c0jAbHkT80gWW3YFYdZqDE--
+-- 
+With best wishes
+Dmitry
