@@ -2,103 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D40766D3D5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 08:31:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 516876D3D5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 08:32:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231459AbjDCGbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 02:31:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43714 "EHLO
+        id S231473AbjDCGcY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 02:32:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230053AbjDCGbr (ORCPT
+        with ESMTP id S229670AbjDCGcX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 02:31:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0EF1D52B;
-        Sun,  2 Apr 2023 23:31:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C5058614F5;
-        Mon,  3 Apr 2023 06:31:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243EAC433EF;
-        Mon,  3 Apr 2023 06:31:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680503503;
-        bh=i8cq8H4Yhw1CAAarD0GVgGxvxr3tNkVZXqgsXfxngYk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=u4cYoVxSOhOfhTpWPKpbOBVRgTIJqWOhnbnVJl9YmnirdokLMeggLXfs9zcBoPeC/
-         NU0V4hF+sufLI1eU9Az7+F+EiH5PEbuC/ZXg9YinnX2Hng2VyAc0R98yq3KYnvjmKt
-         o6839xRuPf13GmSk2W+YLAfKzOXywqtuxVRLvwlk5JESfop0foME+5G/4TKdcujnJ0
-         UxNDt1zAYokIkrAVT3zO1CF7sAV2IT8VozWY8TSgurBZ8ltCgVsxC90I23OwbFYxdP
-         2/39ptU+iuKnpBjjzkNXSLV6juY9f+vfAkfCb+1rtEbPkk5DM5jyN95lcc/Mohqc9C
-         WZ6IQGWIFKUwg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pjDjZ-0004o9-NJ; Mon, 03 Apr 2023 08:32:06 +0200
-Date:   Mon, 3 Apr 2023 08:32:05 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 3 Apr 2023 02:32:23 -0400
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760EC172B;
+        Sun,  2 Apr 2023 23:32:22 -0700 (PDT)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1pjDjk-0004mY-CR; Mon, 03 Apr 2023 08:32:16 +0200
+Message-ID: <8d55f6e3-b573-7f63-bfed-4aa73bdc473a@leemhuis.info>
+Date:   Mon, 3 Apr 2023 08:32:15 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] Revert "venus: firmware: Correct non-pix start and end
+ addresses"
+Content-Language: en-US, de-DE
+From:   Thorsten Leemhuis <regressions@leemhuis.info>
+To:     Leonard Lausen <leonard@lausen.nl>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Vikash Garodia <vgarodia@qti.qualcomm.com>,
+        Linux regressions mailing list <regressions@lists.linux.dev>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc:     linux-kernel@vger.kernel.org, mka@chromium.org,
+        Albert Esteve <aesteve@redhat.com>,
+        stanimir.varbanov@linaro.org,
+        Enric Balletbo i Serra <eballetb@redhat.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org
-Subject: Re: [PATCH v2 03/22] arm64: dts: qcom: sc8280xp-pmics: use pmk8350
- specifics for pon device
-Message-ID: <ZCpy5TUWacjtVo05@hovoldconsulting.com>
-References: <20230401220810.3563708-1-dmitry.baryshkov@linaro.org>
- <20230401220810.3563708-4-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230401220810.3563708-4-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        Fritz Koenig <frkoenig@google.com>,
+        "Rajeshwar Kurapaty (QUIC)" <quic_rkurapat@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+References: <87edq2dus1.fsf@minerva.mail-host-address-is-not-set>
+ <ef09bc9f-d570-be11-238b-bd34063917fc@redhat.com>
+ <70c01751-1dd7-c4bd-a96e-94dea437aa40@redhat.com>
+ <DM8PR02MB81696369DBFE619E43F81EEFF3DE9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <e87344c6-acef-7f3f-5cac-24961dbd9401@redhat.com>
+ <6f97a117-0d9c-e21b-9adf-50f2233ba9e3@leemhuis.info>
+ <ea283f0a-ca72-447e-ce87-68c1bbee793e@leemhuis.info>
+ <CAFOAJEdBbzqkGVqw+vgNYNxyaTHwvjFyskTwjycP820L2tOctA@mail.gmail.com>
+ <b548da46-bf91-6f1c-4b63-4002109056bc@leemhuis.info>
+ <9a0bfef8-0b5d-f4d0-a8a5-4bbcacc5c0fb@leemhuis.info>
+ <DM8PR02MB8169E16569616870A583B376F3AB9@DM8PR02MB8169.namprd02.prod.outlook.com>
+ <87356wn6xf.fsf@minerva.mail-host-address-is-not-set>
+ <87edq9hj4w.fsf@minerva.mail-host-address-is-not-set>
+ <d18fac76-6b77-a446-5fe0-7236556e9187@quicinc.com>
+ <0c84724d-08d4-ddcb-5f71-4eb8261240c6@quicinc.com>
+ <a2fec0a5855150966fa5a920216c205032965f98@lausen.nl>
+ <12c5a8f2-3082-68a2-e973-18fb957068ac@leemhuis.info>
+In-Reply-To: <12c5a8f2-3082-68a2-e973-18fb957068ac@leemhuis.info>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1680503542;a339c812;
+X-HE-SMSGID: 1pjDjk-0004mY-CR
+X-Spam-Status: No, score=-2.4 required=5.0 tests=NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Apr 02, 2023 at 01:07:51AM +0300, Dmitry Baryshkov wrote:
-> Following the commit c0ee8e0ba5cc ("arm64: dts: qcom: pmk8350: Use the
-> correct PON compatible") and commit f46ef374e0dc ("arm64: dts: qcom:
-> pmk8350: Specify PBS register for PON") use "qcom,pmk8350-pon" compat
-> string and add RBS region to the PON device.
+On 02.04.23 07:02, Linux regression tracking (Thorsten Leemhuis) wrote:
+> On 01.04.23 22:53, Leonard Lausen wrote:
+>>
+>> the revert wasn't applied to v6.2 series. Can you please apply it and include it for v6.2.10?
+
+I pointed Linus to this and he merged the revert directly; and it's
+already queued for the next 6.2.y release:
+
+https://lore.kernel.org/all/CAHk-%3DwhRs_MavKCqtV3%3DK31dq9Z6HzbaG8Uxo-EV%3DuRxdsXduA@mail.gmail.com/
+https://git.kernel.org/torvalds/c/f95b8ea79c47c0ad3d18f45ad538f9970e414d1f
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=902f9eb696dfdd40e88d99bafa34ea25f1f9e927
+
+Now to the remaining venus regression:
+
+>> March 6, 2023 at 5:43 AM, "Javier Martinez Canillas" <javierm@redhat.com> wrote:
+>>>> On 3/1/2023 3:15 PM, Dikshita Agarwal wrote:
+>>>>> On 2/28/2023 9:33 PM, Javier Martinez Canillas wrote:
+>>>>>> Javier Martinez Canillas<javierm@redhat.com>  writes:
+>>>>>>> Vikash Garodia<vgarodia@qti.qualcomm.com>  writes:
+>>>>>>>
+>>>>>>>> Stan, could you please help with the revert and a pull request having this revert
+>>>>>>>> alongwith other pending changes ?
+>>>>>>>>
+>>>>>>> Other fix posted is "media: venus: dec: Fix capture formats enumeration order":
+>>>>>>>
+>>>>>>> https://patchwork.kernel.org/project/linux-media/patch/20230210081835.2054482-1-javierm@redhat.com/
+>>>>
+>>>> Hi Javier,
+>>>>
+>>>> Thanks for this patch "media: venus: dec: Fix capture formats
+>>>> enumeration order".
+>>>>
+>>>> Somehow I can't find it in my mailbox to be able to reply there.
+>>>>
+>>>> Could you please explain what is the regression you see here?
+>>>>
+>>>
+>>> You can find the thread and explanation of the issue here:
+>>>
+>>> https://lore.kernel.org/lkml/Y+KPW18o%2FDa+N8UI@google.com/T/
+>>>
+>>> But Stanimir already picked it and sent a PR for v6.3 including it.
+>>
+>> While "media: venus: dec: Fix capture formats enumeration order" may have been
+>> applied to v6.3,
 > 
-> Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-I already sent a fix for this last Monday:
-
-	https://lore.kernel.org/all/20230327122948.4323-1-johan+linaro@kernel.org/
-
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> To me it looks like it was submitted[1], but not yet applied even to the
+> media tree[2] -- while guess, maybe due problems mentioned in[3]? Or am
+> I missing something?
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-> index c35e7f6bd657..a3c7369f9594 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-> @@ -59,8 +59,8 @@ pmk8280: pmic@0 {
->  		#size-cells = <0>;
->  
->  		pmk8280_pon: pon@1300 {
-> -			compatible = "qcom,pm8998-pon";
-> -			reg = <0x1300>;
-> +			compatible = "qcom,pmk8350-pon";
-> +			reg = <0x1300>, <0x800>;
+> [1]
+> https://lore.kernel.org/all/20230329211655.100276-1-stanimir.k.varbanov@gmail.com/
+> [2] https://git.linuxtv.org/media_tree.git/log/?h=fixes
+> [3]
+> https://lore.kernel.org/all/20230329214310.2503484-1-jenkins@linuxtv.org/
 
-This is missing 'reg-names'.
+I only notice now: from [1] above it looks like that regression fix was
+applied to a tree that seems to be intended for 6.4. Is that okay for
+everybody, or should we ask Linus to pick this up as well (unless of
+course Mauro shows up and forwards the patch, of course)? They fix a
+regression from 5.19 afaics, so not a fresh problem, but apparently one
+that bugged a few people recently.
 
->  
->  			pmk8280_pon_pwrkey: pwrkey {
->  				compatible = "qcom,pmk8350-pwrkey";
-
-Johan
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+If I did something stupid, please tell me, as explained on that page.
