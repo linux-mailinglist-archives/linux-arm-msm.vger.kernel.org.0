@@ -2,113 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A1586D504E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 20:28:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BF9E6D50EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 20:46:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233060AbjDCS21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 14:28:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53888 "EHLO
+        id S231627AbjDCSqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 14:46:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232952AbjDCS2Z (ORCPT
+        with ESMTP id S233358AbjDCSqS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 14:28:25 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59261AD;
-        Mon,  3 Apr 2023 11:28:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8181B61849;
-        Mon,  3 Apr 2023 18:28:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828C4C433D2;
-        Mon,  3 Apr 2023 18:28:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680546504;
-        bh=lXVuRDL3OOhM/7oo7YuhjrICNT7KyEsvlL2vir4NKoE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RoTi57o9UoUkogq8ICPwNO4zH+5q8or3+UFEpbEhbu16062MsHxnOdQ2x8b1JxICb
-         4Kz7264DwAaWTX3yyP399WaCG8PGcuZjgMpqbIdFOdQ9FRmQFL1XzB+KkptLCMo+mK
-         2RY3nkzZO6rT1X9EN48iavRDb3kjAlRMZRgUyMSvawJSDsgA604x0VxAzkgxpK1uab
-         WQN14Fdtrzyi7Rdxcb3e0IKiw6UsWks6M/BJounEsmW8KJHeStwfhuk726CcV/ixzG
-         WXqwKeX2580FT1HB3b21nVHq+fZ4J+Jiue9g/YY6wSETD00UwA2nBk6i1TAB2TdN1b
-         L+n8kSTEWMpGA==
-Date:   Mon, 3 Apr 2023 19:28:17 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_ipkumar@quicinc.com
-Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
- bootup voltage
-Message-ID: <a657284f-a408-48a8-b294-0add65b3e2a2@sirena.org.uk>
-References: <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
- <ca12735e-d6c8-997e-036f-693cd8a9870f@linaro.org>
- <e19393e3-5898-bff2-cc00-d88c9194c7c2@quicinc.com>
- <6e1f6466-7f2e-7bd5-f6a2-5691a30c4e1f@linaro.org>
- <9989c92c-9949-5531-c7d2-e54882795a68@quicinc.com>
- <69df153d-bdc6-9008-39d6-72f66bab2e38@linaro.org>
- <5914a8db-3644-1c94-00ba-460ba2c26a5d@quicinc.com>
- <3c5a9608-ecd2-a3c0-e866-7d0070e49b89@linaro.org>
- <8c513ddc-435e-40ce-b1f8-84eaf8241ed4@sirena.org.uk>
- <fe4dd395-cd1d-55e8-1be9-f588f69a8b13@linaro.org>
+        Mon, 3 Apr 2023 14:46:18 -0400
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57FDD2106;
+        Mon,  3 Apr 2023 11:46:14 -0700 (PDT)
+Received: by mail-ot1-f49.google.com with SMTP id r40-20020a05683044a800b006a14270bc7eso12812494otv.6;
+        Mon, 03 Apr 2023 11:46:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680547573;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wy0NcaxMPjAd0Cjp8anGLQ+ZJvJT6IQ/gKneu1y1dn4=;
+        b=RUCI2YU5l1jF7/0EiY/CpchLdFe4V2JlDTdyH59Sywc1uALECZtS33AanlTXUM+o3E
+         N9waLui/RWD+714E8VEhDhk5jk3E87vyZ6ugc73voPrl4NTc3OMQPuchV6mZR2rt3L51
+         /dd1UzKPY/eonld+UEtLwC16eSM3MCGmWFgGppGCc+2/99H1MiiLdHh75/sdMZgPS75z
+         kYKioG2vNdB3nAE0fSIHY0v2yuq8dY/Q6XZTFNEeBwU2iqvA6njGQuKpQbH+SGs1X6f3
+         pRXAUAcBYJJkr5+zVXKo2t/A0KrrEhNMWltdPU0k8ESPYLB1yvc3s748pPjhAw5O0cpS
+         cbRw==
+X-Gm-Message-State: AAQBX9fq+NJtKn9TmUXsZdjMoRsyZhFV/k5mecYE7hZ0unglXMpiFpd6
+        PbrgfDW5M9fHsUVihczeJA==
+X-Google-Smtp-Source: AKy350YjgozHOEC2dvNCQI9uebQk/eVsGBSXpTw8cGc1ZFM5R8OSBSr2dBzvQAQoRblbFeGR9A8sDg==
+X-Received: by 2002:a9d:77d3:0:b0:69a:5407:e563 with SMTP id w19-20020a9d77d3000000b0069a5407e563mr10154194otl.16.1680547573599;
+        Mon, 03 Apr 2023 11:46:13 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b11-20020a056830104b00b006a1287ccce6sm4540387otp.31.2023.04.03.11.46.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 11:46:12 -0700 (PDT)
+Received: (nullmailer pid 1356073 invoked by uid 1000);
+        Mon, 03 Apr 2023 18:46:11 -0000
+Date:   Mon, 3 Apr 2023 13:46:11 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Christian Marangi <ansuelsmth@gmail.com>
+Cc:     Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v6 16/16] arm: mvebu: dt: Add PHY LED support
+ for 370-rd WAN port
+Message-ID: <20230403184611.GA1352384-robh@kernel.org>
+References: <20230327141031.11904-1-ansuelsmth@gmail.com>
+ <20230327141031.11904-17-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eJO3awvhoD6CB9ap"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fe4dd395-cd1d-55e8-1be9-f588f69a8b13@linaro.org>
-X-Cookie: Membership dues are not refundable.
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230327141031.11904-17-ansuelsmth@gmail.com>
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Mar 27, 2023 at 04:10:31PM +0200, Christian Marangi wrote:
+> From: Andrew Lunn <andrew@lunn.ch>
+> 
+> The WAN port of the 370-RD has a Marvell PHY, with one LED on
+> the front panel. List this LED in the device tree.
+> 
+> Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+>  arch/arm/boot/dts/armada-370-rd.dts | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/armada-370-rd.dts b/arch/arm/boot/dts/armada-370-rd.dts
+> index be005c9f42ef..15b36aa34ef4 100644
+> --- a/arch/arm/boot/dts/armada-370-rd.dts
+> +++ b/arch/arm/boot/dts/armada-370-rd.dts
+> @@ -20,6 +20,7 @@
+>  /dts-v1/;
+>  #include <dt-bindings/input/input.h>
+>  #include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/leds/common.h>
+>  #include <dt-bindings/gpio/gpio.h>
+>  #include "armada-370.dtsi"
+>  
+> @@ -135,6 +136,19 @@ &mdio {
+>  	pinctrl-names = "default";
+>  	phy0: ethernet-phy@0 {
+>  		reg = <0>;
+> +		leds {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			led@0 {
+> +				reg = <0>;
+> +				label = "WAN";
 
---eJO3awvhoD6CB9ap
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+WAN or
 
-On Mon, Apr 03, 2023 at 08:21:25PM +0200, Konrad Dybcio wrote:
-> On 3.04.2023 20:14, Mark Brown wrote:
+> +				color = <LED_COLOR_ID_WHITE>;
+> +				function = LED_FUNCTION_LAN;
 
-> > than up to the minimum.  The driver could also look at the constraints
-> > when guessing at the hardware configuration rather than claiming an out
-> > of spec voltage, this would mean we wouldn't need to correct anything.
+LAN?
 
-> Hm, all of what you said sounds like a valid concern.. And then we
-> probably shouldn't shoot up to max by default, as going too low is
-> not going to cause as much potential irreversible damage as going
-> too high.. Especially with programmer error..
-
-It sounds like the driver should just be reporting a value which is at
-least within the constraints.
-
-> Too bad Qualcomm's firmware architecture doesn't allow for reading
-> back the voltage..
-
-Right, their interfaces here have some serious drawbacks.
-
---eJO3awvhoD6CB9ap
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQrGsAACgkQJNaLcl1U
-h9Brzgf/fHXT5Kvi+p/X1tFyM8ue/cFz1bfRsZhhHC3QWHYVy42iBGd89Om++a18
-sXyeCOE007CEnQ/sf4VmRsHd3kqJngCeBFep6aEhN6A63epUDXCZVjN/WQtJwNzH
-8oM3mmYdndld/BdpG4A61FOlUInvxD3Dq7/I+RyUm6CFF8VFowhzw19UU6zfKwNF
-7a65sQqgdXurpz9hDBZ0r5sB6gLb810Y9E2D/RcyvmrmwvFbv/ZlbbTUjqDf8Trc
-N8znzhC+ZfBRiDt/9YBx2wxLrV7UhCt2NP7RS9KP5hKfedc1e3dBomXE8rArDM0F
-HpJ4JUhGggNDNkTFs2gjAGJcJdtrhA==
-=RhOj
------END PGP SIGNATURE-----
-
---eJO3awvhoD6CB9ap--
+> +				function-enumerator = <1>;
+> +				linux,default-trigger = "netdev";
+> +			};
+> +		};
+>  	};
+>  
+>  	switch: switch@10 {
+> -- 
+> 2.39.2
+> 
