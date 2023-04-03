@@ -2,235 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ABCA6D4B9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 17:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A6C76D4BDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 17:29:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232683AbjDCPRg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 11:17:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49980 "EHLO
+        id S232787AbjDCP27 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 11:28:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232605AbjDCPRf (ORCPT
+        with ESMTP id S232769AbjDCP26 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 11:17:35 -0400
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2041.outbound.protection.outlook.com [40.107.220.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF031DD;
-        Mon,  3 Apr 2023 08:17:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TzkPkjng247PYyIIRG4kSurvwk32OjQkXbhZEUjk/qF6jTgLye/7/SdJpkpWw0XGPzp9EXdiXz4wo0bWjrRzihy1EBHmjb4AQoxovlTYFhuj+CTQPmetaxIhjeTPZyHS2zwtVozsQkQ3TiZHtAlMORsDYUSrMowr/U6K5k1p3M12tVqfSm5e/M3n7Lr2w7YW7VcP1dJwbH25EoDw95AedPNEgHS3txe6qDHrwWRyUrkCYXNiOutCuYVt5htvVmtxouFVgpqs+Y8+l/EGlQQA6O685nETfKoXewhvr0Xe2wvfr38VrcMzAMduNUO3iliQ7iEVi5ylsMEKNCPCRHE+cg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CYr+BEYcS3evb/LrvDsledhg8Ojdg6pW6sbyMBGhZvU=;
- b=XHkZiBQG1FYqjbXPswhkbod5ZvxAuh13TiTbl3wBwsLrn+u5unkSkrPLsYtGrHjUKto4qLrw1U5xyEKgvkcxpxWOUOw6vcaTjy5ih2LAETeZIbqmZaE5tXkKZf4sJ0Lont8cOYvock+EuUrg+NHBdJtppKeYpkCEpjbS1vU0xTWURLUYa2p3slgudamq3V5tVWo4xO86XRoxIrRxM0UzCpMWF1L+eMUIJl/uIIsfIDESEAfnXCKbBTKbSSwOTpT1M36Y/WnBUh9KFOYQbHmS/RIMBslvMg9P9zec2E7hA3Y1dpZervO7Nl1FfiiBMEBopimlUx6W7ZGZeiL4HGiU/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CYr+BEYcS3evb/LrvDsledhg8Ojdg6pW6sbyMBGhZvU=;
- b=bILXMAudUFeOCPuVtb3jXGr2TkOmMIM9NWC1kjs17BAueY7cJWP4HvWeq0R7Ihn9yeFwFqkLSupFslS2zreJTzoZKEk/tnwBGJgL8bzg47fX+O9k401zHfUOPdjyeJnSBBblOAV+olgpbcIB2MnkpMySh7szzrQEOo29Pj59AJE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
- by IA0PR12MB9045.namprd12.prod.outlook.com (2603:10b6:208:406::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.33; Mon, 3 Apr
- 2023 15:17:31 +0000
-Received: from BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::4624:dc39:943e:6ae]) by BN8PR12MB3587.namprd12.prod.outlook.com
- ([fe80::4624:dc39:943e:6ae%5]) with mapi id 15.20.6254.030; Mon, 3 Apr 2023
- 15:17:31 +0000
-Message-ID: <7854897f-67f8-e82c-3edf-e8ef923d2474@amd.com>
-Date:   Mon, 3 Apr 2023 17:17:22 +0200
+        Mon, 3 Apr 2023 11:28:58 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47AFD1BE1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 08:28:56 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id h11so31612677lfu.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 08:28:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680535734;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kPrYDdekg0I0RRl5/w+irR1rQMqphVIrp6PinKuObBw=;
+        b=hmqvElmrXWJQcUaSjMqNlMYt7VMO5e+YWgeZceMhEr3KKNjrq5vpft3N1tQrJwj8i4
+         spJfLHjKk/NeKfJ1DNkS3z4DysUz8zSMacTKa8dxfJuYReoOfj4964HdGF3YD3TypsvH
+         kuc6ozrwD7DsG9hMFup6LsPS7DYSGjBjh0KPaXb/MBflDirA7jBV+6La+sxympQFOhJB
+         +i7T9WKkMTujomHn2C/+firfbVi0mx9ZRMiTVWRsg9L+6Dkin3IpkVWfpCKix6Xk6p2j
+         94B9k2XKDYhrXH0W3gth/aac1tOFI6rwL6UfsPAphUxScAuonKUd1k51P1YEco5Oa34p
+         nPwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680535734;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kPrYDdekg0I0RRl5/w+irR1rQMqphVIrp6PinKuObBw=;
+        b=gMxwAvkz5cJ8WHNtU7CemEwPt47g9YsVkVQczjOi5nOZ01OWpJvtP3qMjKYSHmdMrN
+         3WhIqiKxvx5lZbLWZ82/5F3VUwamx6J0PKDzju3uznq+5LC07t1Fyca9FmnPWalJz074
+         4U1ncJna1lT2djV+LFBz6w3LBJqd44BAZVgqAvyFQyaGlLghTd0Dvd7wtzveBzMRBfnW
+         AKlv2P8q+U7mp7HUHgzijNgIWiTRMdTT96NuV09PuTuwDoxO8XLdQ+MHqtQaZtEs1isV
+         GQ2eX2+8jodhM2uKfBaiA5IICODYR2gFCpcmftPs7PBRK+HQtcGA7kCSPMJB6K6cy2lo
+         ShJQ==
+X-Gm-Message-State: AAQBX9f30YqXy8IfFFP5jBf4AN1NzAQeEUCGWFbFflEksMeX62iui2zJ
+        dTlIYseaOTjfnH8NbqX1CZu/Pw==
+X-Google-Smtp-Source: AKy350b95P/uSTgREdLEfWsH6IoiTIqaKI1+nr+mYyy4HAI6QLDWwdnTFFIlZWhlWMb7ONSwCX7yew==
+X-Received: by 2002:a05:6512:3c2:b0:4dd:98c6:ee2 with SMTP id w2-20020a05651203c200b004dd98c60ee2mr9940947lfp.15.1680535734467;
+        Mon, 03 Apr 2023 08:28:54 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id w6-20020ac24426000000b004cb14fa604csm1815299lfl.262.2023.04.03.08.28.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 08:28:54 -0700 (PDT)
+Message-ID: <0e75e04d-fc07-2f60-bfb9-ee092075fae6@linaro.org>
+Date:   Mon, 3 Apr 2023 18:28:53 +0300
+MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v1 5/7] Revert "drm: Assert held reservation lock for
- dma-buf mmapping"
-Content-Language: en-US
-To:     Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        Liam Mark <lmark@codeaurora.org>,
-        Brian Starkey <Brian.Starkey@arm.com>,
-        John Stultz <jstultz@google.com>,
-        Gerd Hoffmann <kraxel@redhat.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Tomi Valkeinen <tomba@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>
-Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        kernel@collabora.com
-References: <20230402164826.752842-1-dmitry.osipenko@collabora.com>
- <20230402164826.752842-6-dmitry.osipenko@collabora.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <20230402164826.752842-6-dmitry.osipenko@collabora.com>
+Subject: Re: [PATCH v1 3/3] msm: skip the atomic commit of self refresh while
+ PSR running
+Content-Language: en-GB
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_kalyant@quicinc.com, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com
+References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
+ <1680271114-1534-4-git-send-email-quic_vpolimer@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1680271114-1534-4-git-send-email-quic_vpolimer@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR0P281CA0156.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:b3::10) To BN8PR12MB3587.namprd12.prod.outlook.com
- (2603:10b6:408:43::13)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|IA0PR12MB9045:EE_
-X-MS-Office365-Filtering-Correlation-Id: 566a4c94-824b-4585-155a-08db34568b29
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: QHYOWiV5+1BrvZgbFPLyI5WemshzQ5K2QzDfuNu62quRx0wl9YUuvNh56Ua9xaC6K+cbcMr2mXm7a+L1rswwpmJJooTNyRP1VVclqXt+IzwYkTkFqGT3YGFv1zwEGXmD29q0mpLu8gi+CK90hpdNOZ8WK82SIE9nb7qRt2NvPGHlN6sxcJhkLoBeSTmPk54sJGF6eVPGzJGsiz51lkGZP9pcuSGTLgCK7w8o+F9YADX9Du/KfzJMGAH1fc1pYCLOJodZmiTX8BmTVfZUkQW0KOIoNut9pqMlry2ceQJS6N1MtZ3Y/UmGsEvVukgnfn8gXOcD+w1zQEJJQjbqEduoG2o2YpUz+N6fWsMSY/ZjoeK849FkANEFJnAChKoGXEXERfm/KQB+yq1aXJo0uI2gNxQ3O1d7tVaLcvBWYUv0dCUnau0xtdqYOlG7VwsrFQSX7yEu3KWaQSm/OFeM8+MQYOi60785G9SBkITn5oHlzpOWHhPiXnz5ZJNOiOMPNTlK/uqeyk1va/kC4XCJiu+PTPWUac3YIXwtG06wr6POC4MoX518IzX8WVEEXIkK9elR7UJfMUs3Udt8QZvqAfWXn7tqpMMwSmutecAc2qratzzUJMhR6Cpoc+nhwZuNDB3Eg6wOltgpMxDUgU8w6YaI2eL5Hryb3pRTiU5BJybsW9Q=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(396003)(346002)(376002)(366004)(136003)(451199021)(478600001)(110136005)(83380400001)(31686004)(31696002)(86362001)(6506007)(6486002)(6666004)(66946007)(66556008)(66476007)(316002)(6512007)(2616005)(66574015)(4326008)(186003)(7416002)(921005)(41300700001)(38100700002)(2906002)(8676002)(8936002)(5660300002)(36756003)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bUtBalJsQkJxMTQwdjZJbnlLd0QyYTZFS2dXZmxoRUdwU1VzNEtYeS9uTUNQ?=
- =?utf-8?B?YWJqbjM2MnFMMEVQRzlFUUhmZmM2dVhDU3lvdmpJNmJiYm9Scjd3dDhwRGF0?=
- =?utf-8?B?TE9TS2pMcFBCTFFEL3lYMVdFM1pGT2JtR2tLUm5sdlc2YlF0bU5YeDB2UGxP?=
- =?utf-8?B?VFJnbHcvcW03bXVrMGVCZC9wMzhjcXMzWEFNNW1SeG13c1JIUnJqYlJHb2dJ?=
- =?utf-8?B?OGJ6UkVBRVBDaHlpU1QxOXZSTWpnMkhRYXJKVW9OemhZc21yU1RWNE1CN0Fr?=
- =?utf-8?B?bjdUaytHb3d4aWNnaTR5Z0lBZkkrYitOV0xBRXM4cGFhWVlqWXh2bFZzeUF0?=
- =?utf-8?B?K2REL0lxYmlqdzJXVFBFUWEzM0R0VEFnVVpXQzZHc1RHQjdlVlRBTisrWEsv?=
- =?utf-8?B?SkJoWDZoWUNEa3daMHhxbi9kOUE2eVB4SVRZY3d1UngwWmNCRWI5OFlqTFVM?=
- =?utf-8?B?Y1RLNEdiZXNrYmNmZGxvSWo0ZHZ0MktWWDZkNDMzNDljekhySzFGMTJvbHov?=
- =?utf-8?B?TUY4MkZSVjdZSU55VjllZW8rbC94VFZhZ0xKQjI2RTlDNjFiamdqRDUvaFBi?=
- =?utf-8?B?SGhVR1RBZzlnQjIzNDcxcHNLSytxZUliNWJ0L09aQnRlU01DY04vWVlFRVhp?=
- =?utf-8?B?WGh0UDJmUFkveDRrd0NadmFsM0FxcFNRS2pLRzBCM2cyNGM5ek1HbmRaTUZB?=
- =?utf-8?B?R0trMldPRWFjU1hmN1RJd3BiaCtXNCsrY1BoRmt3R3JGM3VlbDFSWFZJQ0Fv?=
- =?utf-8?B?ZmNvUC9RTDZka05jOWRDY2tDVnJhRjlGb2NMSmtpV2RJQXBQQjNPQzZuNXMy?=
- =?utf-8?B?QXR1TStlMnFXR3EwYm92R2FBeG15SXd2K3g1Z1ZFUU81M0sxa1lWZUQxUDRJ?=
- =?utf-8?B?Qk5EaEMxNlk5M3lCVGs2cUlTR1EzaFZBY0QrME5Bb3E5aFVFc1RiWmhZUitK?=
- =?utf-8?B?blg1eGJTZndsaVNaTXl6UlVXN0NIQ1RyOUJqZzZrSy9ZUzJTWjg2Z216UkMy?=
- =?utf-8?B?bjdaS0pWNEtQc0E3VjJwb0VqZW1WYXlYVjFqQnRSUGQ3U1kwU3gzWmZic3Zx?=
- =?utf-8?B?WVl1ZVEvK2ZOekFBWUgzaGNvZ1dQS25WZlJQOFRDdjNYUkM5cXg1MVkyeUdq?=
- =?utf-8?B?WlVFcmNscmtabURwVEl2elJYdXEveHZiNnBNNDVqdnA1dDRiRVlTVXdhVTVP?=
- =?utf-8?B?SVB4YnAvYWxYbUFhVTFjSUg0VGtWa1lIdFRsTlNJeG5kWHdka0FMM0dxdmxG?=
- =?utf-8?B?VW92U3ZXWUxkUTBxSm5INmJTaFdLbE9LSTJSZE9hZEFuRzhUS1BiSGNKbklz?=
- =?utf-8?B?V0FXTDYxRE5LZm5EalBBREZSZkV1T1FrazU2TlExUFZoMndoMzl0V0R3QjVs?=
- =?utf-8?B?cWhkZ01zclROVGFqSnhma0VYbHA5QllSbVNHNXlzcTJhdDdCaEFjanc5VTFp?=
- =?utf-8?B?UVBuajBwV2ZFWGZCNEJxNHF2OG1pNVBrcWtSQUcvVzRWeEE3OUJ3TUY4M3FX?=
- =?utf-8?B?ajBTWkdpay9zcm9QYnVLYkZHN2NKRlMxaGx6WGNCYTJvd1prVEdJcWRoQWdp?=
- =?utf-8?B?Z25nTWJ5eWtrNWZpY1pYa0tzK1AwZ2hrTGQ4TWdqeFBVRzVISEVXYVVEMVpy?=
- =?utf-8?B?YXhuZXZPczF4bkJNZUhYRXUrQlZvRitLdVVvek5MM1dKbStCaWtZR3dvaXJa?=
- =?utf-8?B?TCsxcDErNkd2YUs2TWtDRk10cXE0azdINXV1T2tza212dk9rczBCMUh0aFBP?=
- =?utf-8?B?MkFCTzZwSnpSRHFhbFdUM0dDVTN6emk2WUtPaVlGR2prMkJUWnZqS0cvM01V?=
- =?utf-8?B?dVNodWl1bmhXNlo2RFpJeXArY1pXc1VlRVZLMWtDOGs4T1VqL3BkYk9OWHNS?=
- =?utf-8?B?ckFZbWtCSTAvblJ1dXJoVTZqcVY0dm5EN1IycGJVS3B6U0xNRGdhNTU1eWdU?=
- =?utf-8?B?dzJLWWQrSXUrSFRuUzNkSTRxbzVRbVByeUMvczVCa3hjaUJhTU1xajR4dDFS?=
- =?utf-8?B?S2xwTE4vRlVDNUpLMFhUcUkwVlVLS1VFTFdQWUtiS3Rwa2NGb0lnS2lPaHZI?=
- =?utf-8?B?bU00UFdpUzRjbG45MDFTRjZwbWUrWm5QS1RFeG1reHJZaURROGorVHVCNXht?=
- =?utf-8?B?dFhUQmtLNCtDOXREeWdXSmJnK0NZL0J4eERvWUZXcXlhczZzay9FUklFcDI3?=
- =?utf-8?Q?+VhILNsRjeC/lQUH6QRFiyJJloAgfL0hWvBxI2a9uMzw?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 566a4c94-824b-4585-155a-08db34568b29
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Apr 2023 15:17:31.3440
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0rrmKlzAmRidkXnHTG/MA/YmUefRfjIbf2xAn560S/PdMlAxTD/mb+pdkdZTEkRA
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB9045
-X-Spam-Status: No, score=-0.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 02.04.23 um 18:48 schrieb Dmitry Osipenko:
-> Don't assert held dma-buf reservation lock on memory mapping of exported
-> buffer.
->
-> We're going to change dma-buf mmap() locking policy such that exporters
-> will have to handle the lock. The previous locking policy caused deadlock
-> problem for DRM drivers in a case of self-imported dma-bufs, it's solved
-> by moving the lock down to exporters.
-
-I only checked the TTM code path and think that at least that one should 
-work fine.
-
-> Fixes: 39ce25291871 ("drm: Assert held reservation lock for dma-buf mmapping")
-
-This here is not really a "fix" for the previous patch. We just found 
-that we didn't like the behavior and so reverted the original patch.
-
-A "Reverts..." comment in the commit message would be more appropriate I 
-think.
-
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-
-Acked-by: Christian König <christian.koenig@amd.com>
-
-Regards,
-Christian.
-
+On 31/03/2023 16:58, Vinod Polimera wrote:
+> In certain CPU stress conditions, there can be a delay in scheduling commit
+> work and it was observed that PSR commit from a different work queue was
+> scheduled. Avoid these commits as display is already in PSR mode.
+> 
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
 > ---
->   drivers/gpu/drm/drm_prime.c                | 2 --
->   drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c | 2 --
->   drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c  | 2 --
->   drivers/gpu/drm/tegra/gem.c                | 2 --
->   4 files changed, 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
-> index 149cd4ff6a3b..cea85e84666f 100644
-> --- a/drivers/gpu/drm/drm_prime.c
-> +++ b/drivers/gpu/drm/drm_prime.c
-> @@ -781,8 +781,6 @@ int drm_gem_dmabuf_mmap(struct dma_buf *dma_buf, struct vm_area_struct *vma)
->   	struct drm_gem_object *obj = dma_buf->priv;
->   	struct drm_device *dev = obj->dev;
+>   drivers/gpu/drm/msm/msm_atomic.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_atomic.c b/drivers/gpu/drm/msm/msm_atomic.c
+> index 645fe53..f8141bb 100644
+> --- a/drivers/gpu/drm/msm/msm_atomic.c
+> +++ b/drivers/gpu/drm/msm/msm_atomic.c
+> @@ -192,6 +192,9 @@ int msm_atomic_check(struct drm_device *dev, struct drm_atomic_state *state)
+
+The corresponding patch is not yet applied. I wonder how this was tested.
+
+>   			new_crtc_state->mode_changed = true;
+>   			state->allow_modeset = true;
+>   		}
+> +
+> +		if (old_crtc_state->self_refresh_active && new_crtc_state->self_refresh_active)
+> +			return -EINVAL;
+>   	}
 >   
-> -	dma_resv_assert_held(dma_buf->resv);
-> -
->   	if (!dev->driver->gem_prime_mmap)
->   		return -ENOSYS;
->   
-> diff --git a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-> index fd556a076d05..1df74f7aa3dc 100644
-> --- a/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-> +++ b/drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c
-> @@ -97,8 +97,6 @@ static int i915_gem_dmabuf_mmap(struct dma_buf *dma_buf, struct vm_area_struct *
->   	struct drm_i915_private *i915 = to_i915(obj->base.dev);
->   	int ret;
->   
-> -	dma_resv_assert_held(dma_buf->resv);
-> -
->   	if (obj->base.size < vma->vm_end - vma->vm_start)
->   		return -EINVAL;
->   
-> diff --git a/drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c b/drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c
-> index 3abc47521b2c..8e194dbc9506 100644
-> --- a/drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c
-> +++ b/drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c
-> @@ -66,8 +66,6 @@ static int omap_gem_dmabuf_mmap(struct dma_buf *buffer,
->   	struct drm_gem_object *obj = buffer->priv;
->   	int ret = 0;
->   
-> -	dma_resv_assert_held(buffer->resv);
-> -
->   	ret = drm_gem_mmap_obj(obj, omap_gem_mmap_size(obj), vma);
->   	if (ret < 0)
->   		return ret;
-> diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-> index bce991a2ccc0..871ef5d26523 100644
-> --- a/drivers/gpu/drm/tegra/gem.c
-> +++ b/drivers/gpu/drm/tegra/gem.c
-> @@ -693,8 +693,6 @@ static int tegra_gem_prime_mmap(struct dma_buf *buf, struct vm_area_struct *vma)
->   	struct drm_gem_object *gem = buf->priv;
->   	int err;
->   
-> -	dma_resv_assert_held(buf->resv);
-> -
->   	err = drm_gem_mmap_obj(gem, gem->size, vma);
->   	if (err < 0)
->   		return err;
+>   	return drm_atomic_helper_check(dev, state);
+
+-- 
+With best wishes
+Dmitry
 
