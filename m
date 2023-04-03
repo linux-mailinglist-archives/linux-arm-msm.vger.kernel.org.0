@@ -2,53 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B5B36D3CB0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDBEC6D3CB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:17:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230490AbjDCFPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 01:15:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55014 "EHLO
+        id S230516AbjDCFRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 01:17:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230192AbjDCFPF (ORCPT
+        with ESMTP id S229751AbjDCFRY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 01:15:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE69C5FDB;
-        Sun,  2 Apr 2023 22:15:03 -0700 (PDT)
+        Mon, 3 Apr 2023 01:17:24 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87967AF1A;
+        Sun,  2 Apr 2023 22:17:23 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7377D61490;
-        Mon,  3 Apr 2023 05:15:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDEAC433D2;
-        Mon,  3 Apr 2023 05:15:00 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0BEECB80ED6;
+        Mon,  3 Apr 2023 05:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0495FC433D2;
+        Mon,  3 Apr 2023 05:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680498902;
-        bh=Ixr/FFBnESFYocqUR2S5brutidXiL5FXC0yTKcWtPxk=;
+        s=k20201202; t=1680499040;
+        bh=g2TSS6m0UMtjThk7tJNAadrmxBfJBuYpYI2CML4irS0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=GazujrsRaycMDAoP33HEUQ0JfQ7EMg0bNtPSIQJZat3LWer2Eu2uIckZ9nNpBnNYp
-         OXXbsQuyymB7jgZrClRzUWhjM6HPjHsbJUswwCj6jxaM+Z1psmxYl4PwehOaikiilM
-         xvDmEbw+J/6MWCb/eyyQ1GnTSl7JKfs75iuFk9TPV1K43UPjBAtNGIFiUhQw1KUncq
-         0HU0wq035hQx2DLpOkdINRQCmU6FWpQYMZdMonql8+0ksJnX+JqUc7qP7XzHF4FdNF
-         l/EKnY05EvqGepme2Og3KXyaVFY0JbTdCMceCHRxtXisTmGuBpQuhjBNRazZJh+zuE
-         D/OaXOKyIbxdw==
-Date:   Mon, 3 Apr 2023 10:44:56 +0530
+        b=j/QRGMOcuaDDa2RhAQeD9MHMeuqXNqS23ZE/TWoO2ArLqF+WKfeWlC3RzppXrS9fo
+         sm8AFyrw7xyv7HCHp8+vdvZ2J+Dx8P/7XNYrS9wa/otAv8huW2YSVQw88p0A1tOgt7
+         U1uYv35/CqW77ve5hwCzb/0Gt/5sfqXQ0/2qBe1nvTYyJ+sshEcyMHl3IkOFe5/gbd
+         lagS1wWq/xYZvi1B2Xl8bc/QfdR+nYTcVjkitsLCqRPDm8W0kQyXmYqGksa4OvF5Ir
+         EoPJZ+U9DD+4n+h54TzHSVSoqMpo8k+SaYAA1GMiNSlJd2ZrpVh9q3KIqzRrnZb0JP
+         p2AQ0PXp5lqJw==
+Date:   Mon, 3 Apr 2023 10:47:15 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Simon Horman <horms@kernel.org>
-Cc:     Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-trace-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH RFC] net: qrtr: correct types of trace event parameters
-Message-ID: <20230403051436.GA4627@thinkpad>
-References: <20230402-qrtr-trace-types-v1-1-da062d368e74@kernel.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: host: Range check CHDBOFF and ERDBOFF
+Message-ID: <20230403051715.GB4627@thinkpad>
+References: <1679674384-27209-1-git-send-email-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230402-qrtr-trace-types-v1-1-da062d368e74@kernel.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+In-Reply-To: <1679674384-27209-1-git-send-email-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -56,116 +54,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Apr 02, 2023 at 01:15:33PM +0200, Simon Horman wrote:
-> The arguments passed to the trace events are of type unsigned int,
-> however the signature of the events used __le32 parameters.
+On Fri, Mar 24, 2023 at 10:13:04AM -0600, Jeffrey Hugo wrote:
+> If the value read from the CHDBOFF and ERDBOFF registers is outside the
+> range of the MHI register space then an invalid address might be computed
+> which later causes a kernel panic.  Range check the read value to prevent
+> a crash due to bad data from the device.
 > 
-> I may be missing the point here, but sparse flagged this and it
-> does seem incorrect to me.
-> 
->   net/qrtr/ns.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, include/trace/events/qrtr.h):
->   ./include/trace/events/qrtr.h:11:1: warning: cast to restricted __le32
->   ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
->   ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
->   ... (a lot more similar warnings)
->   net/qrtr/ns.c:115:47:    expected restricted __le32 [usertype] service
->   net/qrtr/ns.c:115:47:    got unsigned int service
->   net/qrtr/ns.c:115:61: warning: incorrect type in argument 2 (different base types)
->   ... (a lot more similar warnings)
-> 
+> Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-You are right. The actual arguments (service, instance, node, port) transferred/
-received over QRTR are in le32 as per the protocol. But in the NS driver, the
-arguments passed to the trace events are in the native endian (i.e) before
-getting typecased to le32 for transmission.
-
-And my intention was to trace the arguments in native endian format only. So
-this patch indeed fixes the issue.
-
-> Signed-off-by: Simon Horman <horms@kernel.org>
-
-Please add the fixes tag once you remove RFC,
-
-Fixes: dfddb54043f0 ("net: qrtr: Add tracepoint support")
-
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Applied to mhi-next!
 
 - Mani
 
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 > ---
->  include/trace/events/qrtr.h | 33 ++++++++++++++++++---------------
->  1 file changed, 18 insertions(+), 15 deletions(-)
 > 
-> diff --git a/include/trace/events/qrtr.h b/include/trace/events/qrtr.h
-> index b1de14c3bb93..441132c67133 100644
-> --- a/include/trace/events/qrtr.h
-> +++ b/include/trace/events/qrtr.h
-> @@ -10,15 +10,16 @@
+> v2:
+> -CC stable
+> -Use ERANGE for the error code
+> 
+>  drivers/bus/mhi/host/init.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 3d779ee..b46a082 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -516,6 +516,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  		return -EIO;
+>  	}
 >  
->  TRACE_EVENT(qrtr_ns_service_announce_new,
+> +	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
+> +		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
+> +			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
+> +		return -ERANGE;
+> +	}
+> +
+>  	/* Setup wake db */
+>  	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
+>  	mhi_cntrl->wake_set = false;
+> @@ -532,6 +538,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
+>  		return -EIO;
+>  	}
 >  
-> -	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-> +	TP_PROTO(unsigned int service, unsigned int instance,
-> +		 unsigned int node, unsigned int port),
->  
->  	TP_ARGS(service, instance, node, port),
->  
->  	TP_STRUCT__entry(
-> -		__field(__le32, service)
-> -		__field(__le32, instance)
-> -		__field(__le32, node)
-> -		__field(__le32, port)
-> +		__field(unsigned int, service)
-> +		__field(unsigned int, instance)
-> +		__field(unsigned int, node)
-> +		__field(unsigned int, port)
->  	),
->  
->  	TP_fast_assign(
-> @@ -36,15 +37,16 @@ TRACE_EVENT(qrtr_ns_service_announce_new,
->  
->  TRACE_EVENT(qrtr_ns_service_announce_del,
->  
-> -	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-> +	TP_PROTO(unsigned int service, unsigned int instance,
-> +		 unsigned int node, unsigned int port),
->  
->  	TP_ARGS(service, instance, node, port),
->  
->  	TP_STRUCT__entry(
-> -		__field(__le32, service)
-> -		__field(__le32, instance)
-> -		__field(__le32, node)
-> -		__field(__le32, port)
-> +		__field(unsigned int, service)
-> +		__field(unsigned int, instance)
-> +		__field(unsigned int, node)
-> +		__field(unsigned int, port)
->  	),
->  
->  	TP_fast_assign(
-> @@ -62,15 +64,16 @@ TRACE_EVENT(qrtr_ns_service_announce_del,
->  
->  TRACE_EVENT(qrtr_ns_server_add,
->  
-> -	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-> +	TP_PROTO(unsigned int service, unsigned int instance,
-> +		 unsigned int node, unsigned int port),
->  
->  	TP_ARGS(service, instance, node, port),
->  
->  	TP_STRUCT__entry(
-> -		__field(__le32, service)
-> -		__field(__le32, instance)
-> -		__field(__le32, node)
-> -		__field(__le32, port)
-> +		__field(unsigned int, service)
-> +		__field(unsigned int, instance)
-> +		__field(unsigned int, node)
-> +		__field(unsigned int, port)
->  	),
->  
->  	TP_fast_assign(
+> +	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
+> +		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
+> +			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
+> +		return -ERANGE;
+> +	}
+> +
+>  	/* Setup event db address for each ev_ring */
+>  	mhi_event = mhi_cntrl->mhi_event;
+>  	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
+> -- 
+> 2.7.4
 > 
 
 -- 
