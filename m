@@ -2,48 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F0E76D44A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 14:45:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 869766D44A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 14:45:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbjDCMpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S231708AbjDCMpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 3 Apr 2023 08:45:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231532AbjDCMpn (ORCPT
+        with ESMTP id S230269AbjDCMpn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 3 Apr 2023 08:45:43 -0400
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616E1658F
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A3865BC
         for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 05:45:42 -0700 (PDT)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id F1F6C1FF3D;
-        Mon,  3 Apr 2023 12:45:40 +0000 (UTC)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 4CE8A1FF43;
+        Mon,  3 Apr 2023 12:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
         t=1680525941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-        bh=hpiFlTmrji3Q9ytRoYjAuJC+JpPwu81VCde8xwkls0Q=;
-        b=VwCWKEwxgqq0kM3hkVRD4H2LOOp47q3JJUh3yjKNCKB6Ls3uG0n3qZNMB/I4veMmZQtMHc
-        rJr1eqL9/+mn7HKQ2wVPnvllua57+VwePV8iOJjX2xbYgKQ2i/ZciXDYfg0M3KFO6Bxsxx
-        T8zr6guG6HpShafTnFwoFrVy2gzEflM=
+         mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=3J+heJlM6DDAz8pDf9FYR46VE55utPLjCgK6hZx67QE=;
+        b=QT6N/jPpurhwpEk1oN3jXqHkq87Ro5dArf7ndrvXmNrjuckz6LO2605/FxY3d+/6z0YjuJ
+        9EKOaSJ2v6X3ZYIQ19Hsy39Fn8uI+SIw8+LC7aYIo6uuBH6LTTCdW8g628um9+L6lOcUoe
+        UQ/FDhdla8yqunbbqGkwwA1mszgPxd0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
         s=susede2_ed25519; t=1680525941;
         h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-        bh=hpiFlTmrji3Q9ytRoYjAuJC+JpPwu81VCde8xwkls0Q=;
-        b=1HJJWi1SYkw16PESCnrSbLoTKAF7Af9DvHH+gEBEmUDjzh/nYleHLUXs231P8AMdWazLu+
-        ED+rwzIVGmvHp1Bg==
+         mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=3J+heJlM6DDAz8pDf9FYR46VE55utPLjCgK6hZx67QE=;
+        b=cYWHeoGOAJc1yX9euH4QBl4NZr0/ILasQ1esMuB7tWyIgWP6YXXBbKu772FrytedYGbb2Z
+        pjo93qG3Nsp4VSBQ==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B62551331A;
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 01CEC13A2F;
         Mon,  3 Apr 2023 12:45:40 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
         by imap2.suse-dmz.suse.de with ESMTPSA
-        id sim1KnTKKmTRVgAAMHmgww
+        id cCgnO3TKKmTRVgAAMHmgww
         (envelope-from <tzimmermann@suse.de>); Mon, 03 Apr 2023 12:45:40 +0000
 From:   Thomas Zimmermann <tzimmermann@suse.de>
 To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
@@ -51,11 +55,14 @@ To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
         airlied@gmail.com, daniel@ffwll.ch
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 0/8] drm/msm: Convert fbdev to DRM client
-Date:   Mon,  3 Apr 2023 14:45:30 +0200
-Message-Id: <20230403124538.8497-1-tzimmermann@suse.de>
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH v2 1/8] drm/msm: Include <linux/io.h>
+Date:   Mon,  3 Apr 2023 14:45:31 +0200
+Message-Id: <20230403124538.8497-2-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230403124538.8497-1-tzimmermann@suse.de>
+References: <20230403124538.8497-1-tzimmermann@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -67,43 +74,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert msm' fbdev code to struct drm_client. Replaces the current
-ad-hoc integration. The conversion includes a number of cleanups. As
-with most other drivers' fbdev emulation, fbdev in msm is now just
-another DRM client that runs after the DRM device has been registered.
+Include <linux/io.h> to get the declaration of devm_ioremap() on
+sparc64. No functional changes.
 
-Once all drivers' fbdev emulation has been converted to struct drm_client,
-we can attempt to add additional in-kernel clients. A DRM-based dmesg
-log or a bootsplash are commonly mentioned. DRM can then switch easily
-among the existing clients if/when required.
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202303301856.zSmpwZjj-lkp@intel.com/
+---
+ drivers/gpu/drm/msm/msm_io_utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I did the conversion from similar experience with other drivers. But I
-don't have the hardware to test this. Any testing is welcome.
-
-v2:
-	* handle 'fbdev' module parameter in fbdev code
-	* add missing kfree()
-	* minor fixes
-
-Thomas Zimmermann (8):
-  drm/msm: Include <linux/io.h>
-  drm/msm: Clear aperture ownership outside of fbdev code
-  drm/msm: Remove fb from struct msm_fbdev
-  drm/msm: Remove struct msm_fbdev
-  drm/msm: Remove fbdev from struct msm_drm_private
-  drm/msm: Move module parameter 'fbdev' to fbdev code
-  drm/msm: Initialize fbdev DRM client
-  drm/msm: Implement fbdev emulation as in-kernel client
-
- drivers/gpu/drm/msm/msm_debugfs.c  |   6 +-
- drivers/gpu/drm/msm/msm_drv.c      |  27 ++---
- drivers/gpu/drm/msm/msm_drv.h      |  12 +-
- drivers/gpu/drm/msm/msm_fbdev.c    | 173 +++++++++++++++++------------
- drivers/gpu/drm/msm/msm_io_utils.c |   1 +
- 5 files changed, 125 insertions(+), 94 deletions(-)
-
-
-base-commit: a7180debb9c631375684f4d717466cfb9f238660
+diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+index d02cd29ce829..59d2788c4510 100644
+--- a/drivers/gpu/drm/msm/msm_io_utils.c
++++ b/drivers/gpu/drm/msm/msm_io_utils.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <linux/interconnect.h>
++#include <linux/io.h>
+ 
+ #include "msm_drv.h"
+ 
 -- 
 2.40.0
 
