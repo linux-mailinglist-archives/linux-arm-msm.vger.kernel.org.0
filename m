@@ -2,240 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 665F66D41B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 12:17:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DE646D41CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 12:19:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231741AbjDCKRo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 06:17:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35228 "EHLO
+        id S232303AbjDCKTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 06:19:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231571AbjDCKRo (ORCPT
+        with ESMTP id S231961AbjDCKTT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 06:17:44 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23D06A77
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 03:17:41 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id g17so37378222lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 03:17:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680517060;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CYWunT6ljLivd4wOmJltu2pTDnUfXFoW1kvmT3KC1QE=;
-        b=CJvXvyFr0yjtxSqivXbkpCcvc0H/CT5Eonky3l6Mk2azf7riTYbT0oGepNmOI5QSO2
-         tvM80d2CMcceuNCXKmGgPLz8IRukbwQe1e31W0LUXMvs6giQbKJvWRqO5BtHwA+Np/uq
-         grWXum+E2Enovwah7JyDoAn5cKkG6x5kMNLSXezWYvF8p2fewdS1idyv1c9h8ssYOo5e
-         hysZIAcY33b8LZMGAmwNsEOz81sxCq0IRvoKX3XcgA9/4uIv8l85EeX7Xrk07v3qY2Fg
-         t4kM9anM315HOmrHtSAifarscYiTw2qNpyLUzZ+GNMLLB7q/QyFrJYyfAFL3D2kxWlts
-         kx3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680517060;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CYWunT6ljLivd4wOmJltu2pTDnUfXFoW1kvmT3KC1QE=;
-        b=rQC4CPWs7x6fAtnAtQ5b/apiRIFdcbfxdFZPUU0Ui4v/0su476NhXhW3aomsYAym5g
-         i2Wuq0CxOfMLFHyjIrfd2kpjETrYoEgOvdG8ct4xtk1JSjMoBhFQY+IMsv4A8e3/C4kV
-         2hoA/A3pJj+m7x4OnxpKw9BY6JjbPOUzv/KkZWvazEXD3moBRws0QA51MehRigTm3+24
-         bWJte2Ai1IasyH+BFrcT9K7GhROXSUpyRsBfmujE6y19rJSbPVxj/Xcc8qxxsJ/ddy1H
-         uaC453p4YHeDt83zSFYFcHl9OALhdzZxaahnYxi/JA+cFMnxX5Qh1Pjk4YLfiEr3r9MO
-         WTkQ==
-X-Gm-Message-State: AAQBX9d8ZzUI3kHeX5ZF0J+DERwKC+AWesJBzQFNuRmtoIu3aPEFLZKw
-        9FygD0ZnZ29ZpX6ofcIog0+MBQ==
-X-Google-Smtp-Source: AKy350YJmY7LxwUOQLiwMFFgX8lclMVAm4rfogfN3uFeeeJtrG3sPerJemo+C2+/Lq4iTju333wZBw==
-X-Received: by 2002:a05:6512:4dd:b0:4eb:c24:2066 with SMTP id w29-20020a05651204dd00b004eb0c242066mr7869572lfq.68.1680517060196;
-        Mon, 03 Apr 2023 03:17:40 -0700 (PDT)
-Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
-        by smtp.gmail.com with ESMTPSA id u26-20020ac2519a000000b004e8483bff82sm1709319lfi.271.2023.04.03.03.17.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 03:17:39 -0700 (PDT)
-Message-ID: <97316d33-29b9-700f-8766-df538b133f35@linaro.org>
-Date:   Mon, 3 Apr 2023 12:17:38 +0200
+        Mon, 3 Apr 2023 06:19:19 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B2112BF3;
+        Mon,  3 Apr 2023 03:19:07 -0700 (PDT)
+Received: from [192.168.2.163] (109-252-124-32.nat.spd-mgts.ru [109.252.124.32])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 7E3D56601F5E;
+        Mon,  3 Apr 2023 11:19:04 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1680517146;
+        bh=oUsrnUvVWFNCO2I8SuCXiTW/AVZU2rkXoBafHs5oU3Y=;
+        h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+        b=lULd60iyGYARm3PqzyHmdn7asLZYd2d8dPWIEjvXyMF07YzyTnsdvZi2dYUGyyKAu
+         hmW8XBPJQ6/iNKJHewWO+8Ak6W2rS3OU/OVGVuet7EP1bZyS1GNzWJz8c1D/Ip+QLK
+         LN/UrIG7gufbNIC48TTRIRA99cicPtqUQT7ij8l6h/yE2i1Jt468aGCYN6B6ZSPq6V
+         NB0nVByIN7hCp3ntdWTkFDGH9uP7rozub9VgUCThwJg6vLpuPNZpnl+83FFlS5pOuL
+         5iEzz4yl/t408u97uSNIW7ZmNXhyVTF0D6zS6/I4Rov2Y+ceq8S1Pn9+WjLchRvvIg
+         nb8/Tklw6SA6A==
+Message-ID: <80cdf100-ef3c-23ae-5adf-bcf97fa85e72@collabora.com>
+Date:   Mon, 3 Apr 2023 13:19:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8350-nagara: Unify status
- property placement
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v1 0/7] Move dma-buf mmap() reservation locking down to
+ exporters
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230321-topic-sagami_dp-v1-0-340c8bce4276@linaro.org>
- <20230321-topic-sagami_dp-v1-4-340c8bce4276@linaro.org>
- <i5tsdvn45peivo7tegmg3q4mhsz2ly2kfs64kezeykn2bbosd5@ugfqrjqumljd>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <i5tsdvn45peivo7tegmg3q4mhsz2ly2kfs64kezeykn2bbosd5@ugfqrjqumljd>
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To:     Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        Liam Mark <lmark@codeaurora.org>,
+        Brian Starkey <Brian.Starkey@arm.com>,
+        John Stultz <jstultz@google.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@collabora.com
+References: <20230402164826.752842-1-dmitry.osipenko@collabora.com>
+In-Reply-To: <20230402164826.752842-1-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2.04.2023 17:19, Marijn Suijten wrote:
-> On 2023-03-21 23:12:31, Konrad Dybcio wrote:
+On 4/2/23 19:48, Dmitry Osipenko wrote:
+> This patchset makes dma-buf exporters responisble for taking care of
+> the reservation lock. I also included patch that moves drm-shmem to use
+> reservation lock, to let CI test the whole set. I'm going to take all
+> the patches via the drm-misc tree, please give an ack.
 > 
-> When you get to resending this, change sm8350-nagara in the title to
-> sm8350-sagami :)
-Even I confuse them, they just look too alike! ;)
+> Previous policy stated that dma-buf core takes the lock around mmap()
+> callback. Which meant that both importers and exporters shouldn't touch
+> the reservation lock in the mmap() code path. This worked well until
+> Intel-CI found a deadlock problem in a case of self-imported dma-buf [1].
+> 
+> The problem happens when userpace mmaps a self-imported dma-buf, i.e.
+> mmaps the dma-buf FD. DRM core treats self-imported dma-bufs as own GEMs
+> [2]. There is no way to differentiate a prime GEM from a normal GEM for
+> drm-shmem in drm_gem_shmem_mmap(), which resulted in a deadlock problem
+> for drm-shmem mmap() code path once it's switched to use reservation lock.
+> 
+> It was difficult to fix the drm-shmem problem without adjusting dma-buf
+> locking policy. In parctice not much changed from importers perspective
+> because previosly dma-buf was taking the lock in between of importers
+> and exporters. Now this lock is shifted down to exporters.
+> 
+> [1] https://intel-gfx-ci.01.org/tree/drm-tip/Patchwork_114671v2/shard-snb5/igt@prime_vgem@sync@rcs0.html
+> [2] https://elixir.bootlin.com/linux/v6.3-rc4/source/drivers/gpu/drm/drm_prime.c#L924
+> 
+> Dmitry Osipenko (7):
+>   Revert "media: videobuf2: Assert held reservation lock for dma-buf
+>     mmapping"
+>   Revert "dma-buf/heaps: Assert held reservation lock for dma-buf
+>     mmapping"
+>   Revert "udmabuf: Assert held reservation lock for dma-buf mmapping"
+>   Revert "fastrpc: Assert held reservation lock for dma-buf mmapping"
+>   Revert "drm: Assert held reservation lock for dma-buf mmapping"
+>   dma-buf: Change locking policy for mmap()
+>   drm/shmem-helper: Switch to reservation lock
+> 
+>  drivers/dma-buf/dma-buf.c                     |  17 +-
+>  drivers/dma-buf/heaps/cma_heap.c              |   3 -
+>  drivers/dma-buf/heaps/system_heap.c           |   3 -
+>  drivers/dma-buf/udmabuf.c                     |   2 -
+>  drivers/gpu/drm/drm_gem_shmem_helper.c        | 217 ++++++++----------
+>  drivers/gpu/drm/drm_prime.c                   |   2 -
+>  drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c    |   2 -
+>  drivers/gpu/drm/lima/lima_gem.c               |   8 +-
+>  drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c     |   2 -
+>  drivers/gpu/drm/panfrost/panfrost_drv.c       |   7 +-
+>  .../gpu/drm/panfrost/panfrost_gem_shrinker.c  |   6 +-
+>  drivers/gpu/drm/panfrost/panfrost_mmu.c       |  19 +-
+>  drivers/gpu/drm/tegra/gem.c                   |   2 -
+>  .../common/videobuf2/videobuf2-dma-contig.c   |   3 -
+>  .../media/common/videobuf2/videobuf2-dma-sg.c |   3 -
+>  .../common/videobuf2/videobuf2-vmalloc.c      |   3 -
+>  drivers/misc/fastrpc.c                        |   3 -
+>  include/drm/drm_gem_shmem_helper.h            |  14 +-
+>  18 files changed, 123 insertions(+), 193 deletions(-)
+> 
 
-Konrad
-> 
-> - Marijn
-> 
->> As we're heading towards getting the status property last everywhere,
->> take care of it for SM8350 SONY Sagami.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi   | 30 ++++++++++------------
->>  1 file changed, 14 insertions(+), 16 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
->> index b2baa81baf5e..95b1ba4ce470 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8350-sony-xperia-sagami.dtsi
->> @@ -189,8 +189,8 @@ vph_pwr: vph-pwr-regulator {
->>  };
->>  
->>  &adsp {
->> -	status = "okay";
->>  	firmware-name = "qcom/sm8350/Sony/sagami/adsp.mbn";
->> +	status = "okay";
->>  };
->>  
->>  &apps_rsc {
->> @@ -542,27 +542,27 @@ pmr735a_l7: ldo7 {
->>  };
->>  
->>  &cdsp {
->> -	status = "okay";
->>  	firmware-name = "qcom/sm8350/Sony/sagami/cdsp.mbn";
->> +	status = "okay";
->>  };
->>  
->>  &i2c1 {
->> -	status = "okay";
->>  	clock-frequency = <1000000>;
->> +	status = "okay";
->>  
->>  	/* Some subset of SONY IMX663 camera sensor @ 38 */
->>  };
->>  
->>  &i2c4 {
->> -	status = "okay";
->>  	clock-frequency = <400000>;
->> +	status = "okay";
->>  
->>  	/* Samsung Touchscreen (needs I2C GPI DMA) @ 48 */
->>  };
->>  
->>  &i2c11 {
->> -	status = "okay";
->>  	clock-frequency = <1000000>;
->> +	status = "okay";
->>  
->>  	cs35l41_l: speaker-amp@40 {
->>  		compatible = "cirrus,cs35l41";
->> @@ -596,31 +596,31 @@ cs35l41_r: speaker-amp@41 {
->>  };
->>  
->>  &i2c12 {
->> -	status = "okay";
->>  	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
->>  	clock-frequency = <100000>;
->> +	status = "okay";
->>  
->>  	/* AMS TCS3490 RGB+IR color sensor @ 72 */
->>  };
->>  
->>  &i2c13 {
->> -	status = "okay";
->>  	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
->>  	clock-frequency = <100000>;
->> +	status = "okay";
->>  
->>  	/* Qualcomm PM8008i/PM8008j (?) @ 8, 9, c, d */
->>  };
->>  
->>  &i2c15 {
->> -	status = "okay";
->>  	clock-frequency = <400000>;
->> +	status = "okay";
->>  
->>  	/* NXP SN1X0 NFC @ 28 */
->>  };
->>  
->>  &i2c17 {
->> -	status = "okay";
->>  	clock-frequency = <1000000>;
->> +	status = "okay";
->>  
->>  	/* Cirrus Logic CS40L25A boosted haptics driver @ 40 */
->>  };
->> @@ -652,8 +652,8 @@ mdss_dp_altmode: endpoint {
->>  };
->>  
->>  &mpss {
->> -	status = "okay";
->>  	firmware-name = "qcom/sm8350/Sony/sagami/modem.mbn";
->> +	status = "okay";
->>  };
->>  
->>  &pm8350_gpios {
->> @@ -719,8 +719,8 @@ &pon_pwrkey {
->>  };
->>  
->>  &pon_resin {
->> -	status = "okay";
->>  	linux,code = <KEY_VOLUMEUP>;
->> +	status = "okay";
->>  };
->>  
->>  &qupv3_id_0 {
->> @@ -748,8 +748,8 @@ &sdhc_2 {
->>  };
->>  
->>  &slpi {
->> -	status = "okay";
->>  	firmware-name = "qcom/sm8350/Sony/sagami/slpi.mbn";
->> +	status = "okay";
->>  };
->>  
->>  &spi14 {
->> @@ -1038,16 +1038,14 @@ usb_1_dwc3_ss: endpoint {
->>  };
->>  
->>  &usb_1_hsphy {
->> -	status = "okay";
->> -
->>  	vdda-pll-supply = <&pm8350_l5>;
->>  	vdda18-supply = <&pm8350c_l1>;
->>  	vdda33-supply = <&pm8350_l2>;
->> +	status = "okay";
->>  };
->>  
->>  &usb_1_qmpphy {
->> -	status = "okay";
->> -
->>  	vdda-phy-supply = <&pm8350_l6>;
->>  	vdda-pll-supply = <&pm8350_l1>;
->> +	status = "okay";
->>  };
->>
->> -- 
->> 2.40.0
->>
+Intel's IGT passed[1] (see Tests section) with the new locking policy,
+which failed previously for the "drm/shmem-helper: Switch to reservation
+lock" patch.
+
+[1] https://patchwork.freedesktop.org/series/116000/
+
+-- 
+Best regards,
+Dmitry
+
