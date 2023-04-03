@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 741306D53D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 23:45:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790756D53DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 23:46:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233376AbjDCVp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 17:45:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39744 "EHLO
+        id S233314AbjDCVqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 17:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233389AbjDCVp5 (ORCPT
+        with ESMTP id S232619AbjDCVqZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 17:45:57 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 655AF49DD;
-        Mon,  3 Apr 2023 14:45:26 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-17997ccf711so32421427fac.0;
-        Mon, 03 Apr 2023 14:45:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680558024;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GjyuESymcsR2VMINdm5Bfho26ybLnXPxoDubHNZ3lbA=;
-        b=fWYoNaHuQqYuxXc4ACWEKBJycECBB/VQGiBer0s2l2QZGGr4191sPXzyBrHG7X4EVU
-         ZRd5NjU5STjc8xj52TxN69No35q8T8di+N+nBkdjjmTee0p4Nrj8Vg9JG2tpqClpCLab
-         Cipypn9koN71B5FFlwm5nZieYULyloTeHkvrAz7klSoAPniibaWtBKHr2Z8nL+KnpAdR
-         1fU5R6E3p7Th2JgfQnLdcDzMdDxd/YwTozhQ1pkuc00qoV4oa35YEvpkc48goxTy0cfr
-         TD8vWVqi/CO7jONRPrY14TLNd5yJ+d6o/2XbpmCiw10/WucJ9mh3NBTTyjkgyUUCM4lM
-         CgRw==
-X-Gm-Message-State: AAQBX9f3G1KMjPhpTT/mAlfy0jIqKA6njLIaxKohSqdAcA1bIlzA5w8Q
-        b/BaDVKjgXRaIfydBKMUJA==
-X-Google-Smtp-Source: AKy350aFlhW6NPkDPCD/nqbhHu6uFB2MQkICizhIFFbEPL5jfztjWv/9j8uFDgl83EMtCrKL01hYiQ==
-X-Received: by 2002:a05:6870:b38a:b0:177:c013:9dac with SMTP id w10-20020a056870b38a00b00177c0139dacmr366185oap.48.1680558024171;
-        Mon, 03 Apr 2023 14:40:24 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id d11-20020a9d5e0b000000b006a3170fe3efsm2942956oti.27.2023.04.03.14.40.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 14:40:23 -0700 (PDT)
-Received: (nullmailer pid 1920507 invoked by uid 1000);
-        Mon, 03 Apr 2023 21:40:22 -0000
-Date:   Mon, 3 Apr 2023 16:40:22 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Conor Dooley <conor@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        linuxppc-dev@lists.ozlabs.org,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Scott Wood <oss@buserror.net>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        devicetree@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v1] dt-bindings: move cache controller bindings to a
- cache directory
-Message-ID: <168055794093.1918674.10704326537545829066.robh@kernel.org>
-References: <20230330173255.109731-1-conor@kernel.org>
+        Mon, 3 Apr 2023 17:46:25 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AF0D10DA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 14:45:57 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 333Jt5K0026134;
+        Mon, 3 Apr 2023 21:45:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=RkBPfHV8emcEFbk+rumA80U4z8KDVjKMtNbOHa3jIXA=;
+ b=B5h8cA1MU5Y1eZiFKzagGIADWz+ufBWDkM5YTF0wD9750wnTI4o8DPZKoMfJt1ChGncR
+ sakHJojwvORq4rqyIWJtP4BAZdCLoENkF7K0V8LjL+SSyi5oGbg0Hi46Kc9wSoOAqeuH
+ pBX2iC4Y3OjCX20ATMDLKEK9S382aBJVvDTjfRrlaB71yQoeyUYEwEUqAo1gZKKxmEce
+ tt84v+TyaFnKZ/EOaZN+7zrzuU75/5hdwNvyFQ7wAEAXKILnztr5+wVRHWKRZLmHtGTs
+ G6wNcC1KsQd51qivw0bZGpZ3jiVoKbfpzCmgwybLTvcfoyg3vA3qdwrOebhpOyoD7ZD0 oA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pqu7f1te1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 03 Apr 2023 21:45:30 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 333LjTTE025345
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 3 Apr 2023 21:45:29 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 3 Apr 2023
+ 14:45:28 -0700
+Message-ID: <b20b78ff-067d-769a-2266-94662d224843@quicinc.com>
+Date:   Mon, 3 Apr 2023 14:45:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230330173255.109731-1-conor@kernel.org>
-X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH RFC v2 4/6] drm/msm/dpu: Fix slice_last_group_size
+ calculation
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v2-4-3c13ced536b2@quicinc.com>
+ <b3a9fecd-0677-482b-7066-03465d5f0dd0@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <b3a9fecd-0677-482b-7066-03465d5f0dd0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: x8yY0-yusmJCYXvPjJwPEDW2Bh57KF6Y
+X-Proofpoint-ORIG-GUID: x8yY0-yusmJCYXvPjJwPEDW2Bh57KF6Y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-03_17,2023-04-03_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ malwarescore=0 phishscore=0 mlxlogscore=999 spamscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304030171
+X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,37 +88,68 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Thu, 30 Mar 2023 18:32:56 +0100, Conor Dooley wrote:
-> From: Conor Dooley <conor.dooley@microchip.com>
-> 
-> There's a bunch of bindings for (mostly l2) cache controllers
-> scattered to the four winds, move them to a common directory.
-> I renamed the freescale l2cache.txt file, as while that might make sense
-> when the parent dir is fsl, it's confusing after the move.
-> The two Marvell bindings have had a "marvell," prefix added to match
-> their compatibles.
-> 
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-> ---
->  .../{memory-controllers => cache}/baikal,bt1-l2-ctl.yaml        | 2 +-
->  .../{powerpc/fsl/l2cache.txt => cache/freescale-l2cache.txt}    | 0
->  Documentation/devicetree/bindings/{arm => cache}/l2c2x0.yaml    | 2 +-
->  .../{arm/mrvl/feroceon.txt => cache/marvell,feroceon-cache.txt} | 0
->  .../{arm/mrvl/tauros2.txt => cache/marvell,tauros2-cache.txt}   | 0
->  .../devicetree/bindings/{arm/msm => cache}/qcom,llcc.yaml       | 2 +-
->  .../devicetree/bindings/{riscv => cache}/sifive,ccache0.yaml    | 2 +-
->  .../socionext => cache}/socionext,uniphier-system-cache.yaml    | 2 +-
->  MAINTAINERS                                                     | 2 ++
->  9 files changed, 7 insertions(+), 5 deletions(-)
->  rename Documentation/devicetree/bindings/{memory-controllers => cache}/baikal,bt1-l2-ctl.yaml (95%)
->  rename Documentation/devicetree/bindings/{powerpc/fsl/l2cache.txt => cache/freescale-l2cache.txt} (100%)
->  rename Documentation/devicetree/bindings/{arm => cache}/l2c2x0.yaml (99%)
->  rename Documentation/devicetree/bindings/{arm/mrvl/feroceon.txt => cache/marvell,feroceon-cache.txt} (100%)
->  rename Documentation/devicetree/bindings/{arm/mrvl/tauros2.txt => cache/marvell,tauros2-cache.txt} (100%)
->  rename Documentation/devicetree/bindings/{arm/msm => cache}/qcom,llcc.yaml (96%)
->  rename Documentation/devicetree/bindings/{riscv => cache}/sifive,ccache0.yaml (98%)
->  rename Documentation/devicetree/bindings/{arm/socionext => cache}/socionext,uniphier-system-cache.yaml (96%)
-> 
 
-Applied, thanks!
+On 4/2/2023 4:27 AM, Dmitry Baryshkov wrote:
+> On 31/03/2023 21:49, Jessica Zhang wrote:
+>> Correct the math for slice_last_group_size so that it matches the
+>> calculations downstream.
+>>
+>> Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c | 6 +++++-
+>>   1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>> index b952f7d2b7f5..9312a8d7fbd9 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+>> @@ -56,7 +56,11 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc 
+>> *hw_dsc,
+>>       if (is_cmd_mode)
+>>           initial_lines += 1;
+>> -    slice_last_group_size = 3 - (dsc->slice_width % 3);
+>> +    slice_last_group_size = dsc->slice_width % 3;
+>> +
+>> +    if (slice_last_group_size == 0)
+>> +        slice_last_group_size = 3;
+> 
+> Hmm. As I went on checking this against techpack:
+> 
+> mod = dsc->slice_width % 3
+> 
+> mod | techpack | old | your_patch
+> 0   | 2        | 3   | 3
+> 1   | 0        | 2   | 1
+> 2   | 1        | 1   | 2
+> 
+> So, obviously neither old nor new code match the calculations of the 
+> techpack. If we assume that sde_dsc_helper code is correct (which I have 
+> no reasons to doubt), then the proper code should be:
+> 
+> slice_last_group_size = (dsc->slice_width + 2) % 3;
+> 
+> Could you please doublecheck and adjust.
 
+Hi Dmitry,
+
+The calculation should match the techpack calculation (I kept the `data 
+|= ((slice_last_group_size - 1) << 18);` a few lines down).
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>> +
+>>       data = (initial_lines << 20);
+>>       data |= ((slice_last_group_size - 1) << 18);
+>>       /* bpp is 6.4 format, 4 LSBs bits are for fractional part */
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
