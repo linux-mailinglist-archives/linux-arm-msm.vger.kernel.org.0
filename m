@@ -2,136 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7DA0D6D4C5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 17:48:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8A2D6D4C79
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 17:50:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231624AbjDCPr7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 11:47:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55104 "EHLO
+        id S232565AbjDCPuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 11:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230115AbjDCPr6 (ORCPT
+        with ESMTP id S232572AbjDCPuG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 11:47:58 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55A6E30C3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 08:47:20 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id t10so118978381edd.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 08:47:20 -0700 (PDT)
+        Mon, 3 Apr 2023 11:50:06 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B99210E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 08:49:36 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id mp3-20020a17090b190300b0023fcc8ce113so32995808pjb.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 08:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680536827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3msoM9z3RclTRd+eHQKtiv2M7gCA/4iFqXhqJTbcCvI=;
-        b=v0+x2EZy3qjDuUVIrhkwAooxOofocWnH75XU1LyTABMzV0iuoerniGu8hYjl7SeOGC
-         wAH/mUChSngKFjrlfrJZjMhD4GHgdeN57wwk0wV8OWdtD7cky8jwkZqZeOP+uXVuKJJX
-         HG1qB6Zpf4gWjSG+iJyHSHKnE39UxoqWWHS5cON58+4CcbUEAD1T92/avrnmxfUduCk8
-         IODwe2YCy7Qac1NgWrzNh/c9rraM8QhDONqzYnzQTghprOtm9BSJ3VktQweXTOsvKZE8
-         dVcdUPk+Jxs4UgE4vIXj9Qr2QskDjkmT7bfZLPCzPDI8jViA3QmcSnCe6QndqLDmibP2
-         8Sqw==
+        d=linaro.org; s=google; t=1680536969;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sjdpEr1kbdCek7+Xx4AMcpWMybctv63LfhzPtH0NYpI=;
+        b=Ffq+9Ao/yKeSVo9K+0CQxyz3aN64b8sLF8aki0lQyNqP3Rgvqt9paDWEKXq4gLoA8V
+         fMVGj5THzkvpBXY4DRwYufLgtmUtpDtU9iIha2pb3Wo3TmV+eIQiCgMVs4AW1F1cDJcK
+         D1pYHuFEnxhgSCTelEMYMQPBC3FGdEH1npol0woxbt/T9ry1dGMOb4/2h0zKbHTapFYE
+         2t8lFHKv7CUA6SqYfFMBKHwaKx3r84BAHtskBADkGyPBt5XWaJZ5uZs0c7kPT4tLyW9Z
+         5N6ezanrfYsWpNFrvPZjKFv8iGQWaZumMCnnChY7UNmbOkPqT6maiV5SMpldBD7U5gO0
+         UMHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680536827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3msoM9z3RclTRd+eHQKtiv2M7gCA/4iFqXhqJTbcCvI=;
-        b=IQvDxrRCsowVU/XnVE+m/U8QaRCXLpoAeXBUAPpWpTYXpNZGil//Wt8NOJT5yCyBta
-         3v8tYdsoipRMEWvVyVyzEFeBwH23e3tnM2eFjh7vvTJGJU3IMgelATGjHcynrH0y8OLg
-         YY+ch+EYrMCv4s6xvfmsDDS2AqjULowEyjTAp8BthJfj7jTFN4d1c3iA3rNyJQ+M3XVd
-         vYHSto3JIWpGnyQDnQzwpoNRoghnNai7Z9aiF1Vjvb3M20RQQOX7a0ZfK+MFcJeONrQN
-         u3zUjfbgBddmLJ327/YwZ5vUZOHUlwUOCQj94lBLhSqdt+KmETWLCMbJwXK6h1i0T4LH
-         7yXg==
-X-Gm-Message-State: AAQBX9d/W580UiFQQjQ7NY9OuwRMvNZNUxcdcaDOgNnJSapXtbzu1wDd
-        85PSx3uggOyaTVNZ9OECrUJpgZhqvOv29yS7TUU=
-X-Google-Smtp-Source: AKy350Z09E9t8/lLHZEsbdT5wvlMV+SEiS4YsUcnXn+I5zCfuY0rRM0+hymgL8S7tpDUY4pqkj/utg==
-X-Received: by 2002:a17:906:738a:b0:933:4ca3:9678 with SMTP id f10-20020a170906738a00b009334ca39678mr35816062ejl.24.1680536826851;
-        Mon, 03 Apr 2023 08:47:06 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ae90:d80:1069:4805? ([2a02:810d:15c0:828:ae90:d80:1069:4805])
-        by smtp.gmail.com with ESMTPSA id gv19-20020a1709072bd300b00931db712768sm4707227ejc.4.2023.04.03.08.47.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 08:47:06 -0700 (PDT)
-Message-ID: <bf7b5218-56ba-5525-fcb8-7be71b114a79@linaro.org>
-Date:   Mon, 3 Apr 2023 17:47:05 +0200
+        d=1e100.net; s=20210112; t=1680536969;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sjdpEr1kbdCek7+Xx4AMcpWMybctv63LfhzPtH0NYpI=;
+        b=NHxMmg+7qccyMje2fN0mXIa9SROUQdYdi2zsW/C++T1K8k3H0YDWKIstgAeN11h+q2
+         kcV2Czhnr0mTveloLvVf+L3DFcfU9ZNgI4Q1GcusftWFAgmRmgkxAHvhWv++dhJnZ10c
+         rIOPcHvYWUgadzr659y7iXqZkCXwwx1vx0xqKDosKn4R6ru71qqN1VY0GgJw1pUmhIP5
+         1O4xfYtzo6hgqtSa+UWzeogCluYv6mtFb2S9ahF5JSBDBNpudM9NyuVQdQYBbaiGUrTp
+         jf9IJ6TZeFoFKBMQXLFsEe0eK0VcRiPVs45bQixQNPXd9FM/m0gtxaqmY+tt1SYX0ovi
+         Z4Yg==
+X-Gm-Message-State: AAQBX9e6BSjn3X83RTWQz5dqHkK3spQR6sBnqkgptWV+D5TeDrFAGQmp
+        goR92T7634Yu1HDVeNuVSo5V
+X-Google-Smtp-Source: AKy350bLVLkvH5+SJ7RuR133hSaDHPSe+UDoAzkm/zI1o2vRWweDiIcYX69H5D4GqOcdySwY0DDySQ==
+X-Received: by 2002:a17:90b:1b48:b0:23d:2532:ae34 with SMTP id nv8-20020a17090b1b4800b0023d2532ae34mr18497287pjb.2.1680536968965;
+        Mon, 03 Apr 2023 08:49:28 -0700 (PDT)
+Received: from localhost.localdomain ([27.111.75.109])
+        by smtp.gmail.com with ESMTPSA id c10-20020a17090a020a00b0023af4eb597csm9621534pjc.52.2023.04.03.08.49.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 08:49:28 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com, robh@kernel.org
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_krichai@quicinc.com, johan+linaro@kernel.org, steev@kali.org,
+        mka@chromium.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v4 0/1] PCI: qcom: Add support for system suspend and resume
+Date:   Mon,  3 Apr 2023 21:19:21 +0530
+Message-Id: <20230403154922.20704-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v4 4/6] dts: qcom: arm64: qcom: sdm845: use defines for
- VMIDs
-Content-Language: en-US
-To:     Dylan Van Assche <me@dylanvanassche.be>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230401173523.15244-1-me@dylanvanassche.be>
- <20230401173523.15244-5-me@dylanvanassche.be>
- <ea03bfb6-34c4-45e2-c179-74ecafad559f@linaro.org>
- <2d9d001f14036caf4f6d47448d4d2fdb0b188101.camel@dylanvanassche.be>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2d9d001f14036caf4f6d47448d4d2fdb0b188101.camel@dylanvanassche.be>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 17:32, Dylan Van Assche wrote:
-> Hi Krzysztof,
-> 
-> On Mon, 2023-04-03 at 11:20 +0200, Krzysztof Kozlowski wrote:
->> On 01/04/2023 19:35, Dylan Van Assche wrote:
->>> Use VMID defines for SLPI's FastRPC node in the Qualcomm SDM845 DTS
->>> instead of hardcoded magic values.
->>>
->>> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 4 +++-
->>>  1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> index 1f25a7f4e02b..dc4b553cbe2e 100644
->>> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->>> @@ -13,6 +13,7 @@
->>>  #include <dt-bindings/clock/qcom,rpmh.h>
->>>  #include <dt-bindings/clock/qcom,videocc-sdm845.h>
->>>  #include <dt-bindings/dma/qcom-gpi.h>
->>> +#include <dt-bindings/firmware/qcom,scm.h>
->>>  #include <dt-bindings/gpio/gpio.h>
->>>  #include <dt-bindings/interconnect/qcom,osm-l3.h>
->>>  #include <dt-bindings/interconnect/qcom,sdm845.h>
->>> @@ -3372,7 +3373,8 @@ fastrpc {
->>>                                         qcom,glink-channels =
->>> "fastrpcglink-apps-dsp";
->>>                                         label = "sdsp";
->>>                                         qcom,non-secure-domain;
->>> -                                       qcom,vmids = <0x3 0xF 0x5
->>> 0x6>;
->>
->> Didn't you just add it in previous patch? Don't add incorrect code
->> which
->> you immediately change.
->>
-> 
-> Both are similar, the code is in fact the same. I followed what Konrad
-> suggested in v3 to make a patch on top:
+Hello,
 
-I don't understand. Device nodes are similar, but they are different? If
-you add a line in patch X and change it in patch X+1, then something is
-wrong. Isn't this the case here or these are different device nodes?
+This series (a single patch) adds the system suspend and resume support
+to the Qualcomm PCIe RC controller.
 
+Background
+==========
 
-Best regards,
-Krzysztof
+There were previous attempts [1][2] to add system suspend and resume
+support to this driver.
+
+In previous versions, the controller was put into low power mode by turning
+OFF the resources even if there were active PCIe devices connected. Thanks
+to Qualcomm's internal power topology, the link did not enter L2/L3 state
+and the devices were still powered ON. But during very late end of suspend
+cycle, kernel tried to disable MSIs of the PCIe devices. This caused access
+violations as the resources needed to access the PCIe devices config space
+were turned OFF. Series [1] worked around this issue by not accessing the
+PCIe config space if the link was down in dw_msi_{un}mask_irq() functions.
+But that approach was not accepted.
+
+Then, series [2] implemented the suspend and resume operations using the
+syscore framework that disabled the resources at the end of the suspend
+cycle. But that approach also did not get much acceptance.
+
+Proposal
+========
+
+So the proposal here is to just vote for minimal interconnect bandwidth to
+keep the interconnect path active and not turn OFF the resources if there
+are active PCIe devices connected to the controllers. This avoids the
+access violation issue during suspend and also saves some power due to the
+lower interconnect bandwidth used.
+
+Then if there are no active PCIe devices connected to the controller,
+the resources are turned OFF completely and brought back during resume.
+This also saves power if there are controllers in a system without any
+devices connected.
+
+Testing
+=======
+
+This series has been tested on Lenovo Thinkpad X13s.
+
+Thanks,
+Mani
+
+[1] https://lore.kernel.org/linux-pci/1656055682-18817-1-git-send-email-quic_krichai@quicinc.com/
+[2] https://lore.kernel.org/linux-pci/1663669347-29308-1-git-send-email-quic_krichai@quicinc.com/
+
+Changes in v4:
+
+* Used 1KiB interconnect bandwidth during suspend
+
+Changes in v3:
+
+* Limited comments to 80 column
+* Added error handling in resume_noirq()
+
+Changes in v2:
+
+* Used minimum icc vote to keep data path functional during suspend
+* Collected Ack
+
+Manivannan Sadhasivam (1):
+  PCI: qcom: Add support for system suspend and resume
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 62 ++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
+
+-- 
+2.25.1
 
