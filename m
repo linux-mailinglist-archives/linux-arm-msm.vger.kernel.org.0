@@ -2,388 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9463F6D44B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 14:45:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32AB66D44C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 14:46:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231893AbjDCMpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 08:45:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38004 "EHLO
+        id S232406AbjDCMqu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 08:46:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232241AbjDCMpr (ORCPT
+        with ESMTP id S232396AbjDCMqu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 08:45:47 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D977D98
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 05:45:44 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 366E221CC7;
-        Mon,  3 Apr 2023 12:45:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1680525943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=420wvBnvp1Pv+KONXZ7sMFyAxDEnoJgFxUL7b1bGX8k=;
-        b=PfwrNZfGfuroxay/yEqYOJ+zk78TTLL/TrBRr8wRhmniseO1f/V1jG+8CzRqKGjhGK9AlI
-        JQfA8FvQq8cuLz5yllDh8xnXamge1J+aBnYT04PQrVcIoET6TEMTa1y0azTwQlzMk3Q5tk
-        1NfJFLdZxHi1BmWn/DQxZh0+lo3Xq68=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1680525943;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=420wvBnvp1Pv+KONXZ7sMFyAxDEnoJgFxUL7b1bGX8k=;
-        b=pqk7ELz4fL6Xc2Us4AN4o3gGQUodiboGm9zyY6DmNHj0vSjn5VPwJNCzFLoFbvUhxbRGR+
-        RBwfhhPkTHtd4NCw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id DF6031331A;
-        Mon,  3 Apr 2023 12:45:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id qIlcNXbKKmTRVgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 03 Apr 2023 12:45:42 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, javierm@redhat.com,
-        airlied@gmail.com, daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 8/8] drm/msm: Implement fbdev emulation as in-kernel client
-Date:   Mon,  3 Apr 2023 14:45:38 +0200
-Message-Id: <20230403124538.8497-9-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230403124538.8497-1-tzimmermann@suse.de>
-References: <20230403124538.8497-1-tzimmermann@suse.de>
+        Mon, 3 Apr 2023 08:46:50 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F49612CD3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 05:46:44 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id x3so116743191edb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 05:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680526002;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=neR03f3r/PRhjAxKrg/Uky+bO4+qgi4bjtbZrSyz90E=;
+        b=EVf6w8kopeQc5qosEWtBUokCa1r/js/Uos9oLbIUHBl7ks4jjsstI7+flc/COTL7Ha
+         Gkcu5ZQ/QuLXaEE/GKyxNh5PxaUrgnehTafoxe1prUQuiFAL7CgADqWdszPIfPNBF1RH
+         3DN1PUtvGoR8M6bBnPGKTmGXoWLHbGA82jX2dlDjrNuMYLWZDM4TZfd/O2odptXBdZcZ
+         cGtzemu26UNrQ7jGPQjMT/Pz582Bleiq/v3nfWI/767OQinZoMj/yjnba9LncQ1o827p
+         JhoTNa6VbwXiIjw4blmxx01Yo0KG4qFFfNq6fwRdNV9mxFhgI5uBuV2YyE0FM8GELMaO
+         t/kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680526002;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=neR03f3r/PRhjAxKrg/Uky+bO4+qgi4bjtbZrSyz90E=;
+        b=y5a9uBzMLS1s3lqS7vMJCZg1gsMwk9N4bKaygzhVgekEM3Xp51a531yIC9TNSIymsM
+         RMVezZos2XcGl9aRtoEn5lTKSn2ouZkwyFek5Q8uHZwNjVCNdzufaPp3nfSnijZRj4Rc
+         UhoU3/U6rQHOdtilAkQ/vPDBC5O/+g4Y5wUT2POQn0sFbxbbyRNe0Uy3mE4Z0YMrxZkw
+         l+CGwMS36+7DrhIg7etwyWC8rBiXYvVzsg3/qXiR4DCRtr6SeqLxXNiCpaPvJ9aazEpP
+         r9S5n4Hxqcyu/Y+T3PNxOcFkJRJkta0+gfTsQwCD4u5XsIoY1BVeR5k/q0zK3NJA2QSC
+         Q36g==
+X-Gm-Message-State: AAQBX9f/E7yMO7KeI5W97qLpwns8V3qb6d7TOgAOYweVQKmnPJmW5Q19
+        3gO8K/UWfLPYzraDqYZ1q+l6QA==
+X-Google-Smtp-Source: AKy350aM+WlVOHnlCeNVQ6/mZEeUvJbST8Uv9+hSJYqmAjs6DsIwLFoDwV9YdRcHTJhsJ1wP9roCtA==
+X-Received: by 2002:a17:906:4d0f:b0:8b2:8876:6a3c with SMTP id r15-20020a1709064d0f00b008b288766a3cmr34083927eju.29.1680526002502;
+        Mon, 03 Apr 2023 05:46:42 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:ae90:d80:1069:4805? ([2a02:810d:15c0:828:ae90:d80:1069:4805])
+        by smtp.gmail.com with ESMTPSA id o18-20020a17090608d200b0092973e209f2sm4535108eje.109.2023.04.03.05.46.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 05:46:42 -0700 (PDT)
+Message-ID: <a04ca2bd-72f9-c89a-3fcb-36dd710b107f@linaro.org>
+Date:   Mon, 3 Apr 2023 14:46:41 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: fix pon compatible and
+ registers
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230327122948.4323-1-johan+linaro@kernel.org>
+ <48f71f9a-0d00-16df-fff8-5aa455918378@linaro.org>
+ <ZCqwWwdhhJdOK+5Y@hovoldconsulting.com>
+ <5dfb81df-8ae2-eb62-01a2-b26c6b8d2597@linaro.org>
+In-Reply-To: <5dfb81df-8ae2-eb62-01a2-b26c6b8d2597@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move code from ad-hoc fbdev callbacks into DRM client functions
-and remove the old callbacks. The functions instruct the client
-to poll for changed output or restore the display. The DRM core
-calls both, the old callbacks and the new client helpers, from
-the same places. The new functions perform the same operation as
-before, so there's no change in functionality.
+On 03/04/2023 14:33, Krzysztof Kozlowski wrote:
+> On 03/04/2023 12:54, Johan Hovold wrote:
+>> On Mon, Apr 03, 2023 at 11:18:07AM +0200, Krzysztof Kozlowski wrote:
+>>> On 27/03/2023 14:29, Johan Hovold wrote:
+>>>> The pmk8280 PMIC PON peripheral is gen3 and uses two sets of registers;
+>>>> hlos and pbs.
+>>>>
+>>>> This specifically fixes the following error message during boot when the
+>>>> pbs registers are not defined:
+>>>>
+>>>> 	PON_PBS address missing, can't read HW debounce time
+>>>>
+>>>> Note that this also enables the spurious interrupt workaround introduced
+>>>> by commit 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press
+>>>> debouncing support") (which may or may not be needed).
+>>>>
+>>>> Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+>>>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 5 +++--
+>>>>  1 file changed, 3 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+>>>> index c35e7f6bd657..a0ba535bb6c9 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+>>>> @@ -59,8 +59,9 @@ pmk8280: pmic@0 {
+>>>>  		#size-cells = <0>;
+>>>>  
+>>>>  		pmk8280_pon: pon@1300 {
+>>>> -			compatible = "qcom,pm8998-pon";
+>>>> -			reg = <0x1300>;
+>>>> +			compatible = "qcom,pmk8350-pon";
+>>>
+>>> Same comment as Dmitry's. There is no compatible "qcom,pmk8350-pon"
+>>> ccd3517faf18, therefore indicated backport (through AUTOSEL) will lead
+>>> to invalid stable kernel.
+>>>
+>>> You must drop the Fixes tag, because this cannot be backported.
+>>
+>> That's bullshit. Do you see a stable tag? Is 5.19-stable still active?
+> 
+> Why do you refer to activeness of v5.19? This will go also to v6.0 and v6.1.
+> 
+>>
+>> The problem is that the driver was updated before the binding was so the
+>> above mentioned probe error has been there since this file was merged.
+> 
+> I grepped and that commit did not have such compatible. Are you saying
+> that the kernel which was released with this commit already had that
+> compatible in driver (through different merge/tree)?
 
-Replace all code that initializes or releases fbdev emulation
-throughout the driver. Instead initialize the fbdev client by a
-single call to msm_fbdev_setup() after msm has registered its
-DRM device. As in most drivers, msm's fbdev emulation now acts
-like a regular DRM client.
+So I double checked, the commit ccd3517faf18 (which is being "fixed")
+was introduced in v6.0-rc1. v6.0-rc1 did not have "qcom,pmk8350-pon"
+compatible, thus it could not be fixed that way. Therefore this cannot
+be logically fix for that commit from that release.
 
-The fbdev client setup consists of the initial preparation and the
-hot-plugging of the display. The latter creates the fbdev device
-and sets up the fbdev framebuffer. The setup performs display
-hot-plugging once. If no display can be detected, DRM probe helpers
-re-run the detection on each hotplug event.
+"Fixes" means that commit has a bug and this is how it should be fixed.
+So v6.0 kernel should be fixed to use "qcom,pmk8350-pon" compatible,
+which is obviously wrong. v6.0 does not support it and the "fix" would
+actually break it (which might be worse or better than original problem,
+but that's independent thing).
 
-A call to drm_dev_unregister() releases the client automatically.
-No further action is required within msm. If the fbdev framebuffer
-has been fully set up, struct fb_ops.fb_destroy implements the
-release. For partially initialized emulation, the fbdev client
-reverts the initial setup.
 
-v2:
-	* handle fbdev module parameter correctly (kernel test robot)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/msm/msm_debugfs.c |   1 +
- drivers/gpu/drm/msm/msm_drv.c     |  15 +---
- drivers/gpu/drm/msm/msm_drv.h     |  10 ++-
- drivers/gpu/drm/msm/msm_fbdev.c   | 115 ++++++++++++++++++------------
- 4 files changed, 81 insertions(+), 60 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-index 7de9e39f051e..9c0e633a3a61 100644
---- a/drivers/gpu/drm/msm/msm_debugfs.c
-+++ b/drivers/gpu/drm/msm/msm_debugfs.c
-@@ -10,6 +10,7 @@
- #include <linux/fault-inject.h>
- 
- #include <drm/drm_debugfs.h>
-+#include <drm/drm_fb_helper.h>
- #include <drm/drm_file.h>
- #include <drm/drm_framebuffer.h>
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 4bf486f0ebb9..b4d7968e4251 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -54,7 +54,6 @@
- 
- static const struct drm_mode_config_funcs mode_config_funcs = {
- 	.fb_create = msm_framebuffer_create,
--	.output_poll_changed = drm_fb_helper_output_poll_changed,
- 	.atomic_check = drm_atomic_helper_check,
- 	.atomic_commit = drm_atomic_helper_commit,
- };
-@@ -235,11 +234,6 @@ static int msm_drm_uninit(struct device *dev)
- 	msm_perf_debugfs_cleanup(priv);
- 	msm_rd_debugfs_cleanup(priv);
- 
--#ifdef CONFIG_DRM_FBDEV_EMULATION
--	if (ddev->fb_helper)
--		msm_fbdev_free(ddev);
--#endif
--
- 	msm_disp_snapshot_destroy(ddev);
- 
- 	drm_mode_config_cleanup(ddev);
-@@ -529,17 +523,15 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 	}
- 	drm_mode_config_reset(ddev);
- 
--#ifdef CONFIG_DRM_FBDEV_EMULATION
--	if (kms)
--		msm_fbdev_init(ddev);
--#endif
--
- 	ret = msm_debugfs_late_init(ddev);
- 	if (ret)
- 		goto err_msm_uninit;
- 
- 	drm_kms_helper_poll_init(ddev);
- 
-+	if (kms)
-+		msm_fbdev_setup(ddev);
-+
- 	return 0;
- 
- err_msm_uninit:
-@@ -1068,7 +1060,6 @@ static const struct drm_driver msm_driver = {
- 				DRIVER_SYNCOBJ,
- 	.open               = msm_open,
- 	.postclose           = msm_postclose,
--	.lastclose          = drm_fb_helper_lastclose,
- 	.dumb_create        = msm_gem_dumb_create,
- 	.dumb_map_offset    = msm_gem_dumb_map_offset,
- 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 852f88c36621..11a9d2ce07a1 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -29,7 +29,6 @@
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_probe_helper.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/display/drm_dsc.h>
- #include <drm/msm_drm.h>
- #include <drm/drm_gem.h>
-@@ -304,8 +303,13 @@ struct drm_framebuffer *msm_framebuffer_create(struct drm_device *dev,
- struct drm_framebuffer * msm_alloc_stolen_fb(struct drm_device *dev,
- 		int w, int h, int p, uint32_t format);
- 
--struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev);
--void msm_fbdev_free(struct drm_device *dev);
-+#ifdef CONFIG_DRM_FBDEV_EMULATION
-+void msm_fbdev_setup(struct drm_device *dev);
-+#else
-+static inline void msm_fbdev_setup(struct drm_device *dev)
-+{
-+}
-+#endif
- 
- struct hdmi;
- #ifdef CONFIG_DRM_MSM_HDMI
-diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index 77788c6c802d..2ebc86381e1c 100644
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -4,7 +4,8 @@
-  * Author: Rob Clark <robdclark@gmail.com>
-  */
- 
--#include <drm/drm_crtc.h>
-+#include <drm/drm_drv.h>
-+#include <drm/drm_crtc_helper.h>
- #include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
-@@ -30,6 +31,25 @@ static int msm_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
- 	return drm_gem_prime_mmap(bo, vma);
- }
- 
-+static void msm_fbdev_fb_destroy(struct fb_info *info)
-+{
-+	struct drm_fb_helper *helper = (struct drm_fb_helper *)info->par;
-+	struct drm_framebuffer *fb = helper->fb;
-+	struct drm_gem_object *bo = msm_framebuffer_bo(fb, 0);
-+
-+	DBG();
-+
-+	drm_fb_helper_fini(helper);
-+
-+	/* this will free the backing object */
-+	msm_gem_put_vaddr(bo);
-+	drm_framebuffer_remove(fb);
-+
-+	drm_client_release(&helper->client);
-+	drm_fb_helper_unprepare(helper);
-+	kfree(helper);
-+}
-+
- static const struct fb_ops msm_fb_ops = {
- 	.owner = THIS_MODULE,
- 	DRM_FB_HELPER_DEFAULT_OPS,
-@@ -43,6 +63,7 @@ static const struct fb_ops msm_fb_ops = {
- 	.fb_copyarea = drm_fb_helper_sys_copyarea,
- 	.fb_imageblit = drm_fb_helper_sys_imageblit,
- 	.fb_mmap = msm_fbdev_mmap,
-+	.fb_destroy = msm_fbdev_fb_destroy,
- };
- 
- static int msm_fbdev_create(struct drm_fb_helper *helper,
-@@ -128,16 +149,52 @@ static const struct drm_fb_helper_funcs msm_fb_helper_funcs = {
-  */
- 
- static void msm_fbdev_client_unregister(struct drm_client_dev *client)
--{ }
-+{
-+	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
-+
-+	if (fb_helper->info) {
-+		drm_fb_helper_unregister_info(fb_helper);
-+	} else {
-+		drm_client_release(&fb_helper->client);
-+		drm_fb_helper_unprepare(fb_helper);
-+		kfree(fb_helper);
-+	}
-+}
- 
- static int msm_fbdev_client_restore(struct drm_client_dev *client)
- {
-+	drm_fb_helper_lastclose(client->dev);
-+
- 	return 0;
- }
- 
- static int msm_fbdev_client_hotplug(struct drm_client_dev *client)
- {
-+	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
-+	struct drm_device *dev = client->dev;
-+	int ret;
-+
-+	if (dev->fb_helper)
-+		return drm_fb_helper_hotplug_event(dev->fb_helper);
-+
-+	ret = drm_fb_helper_init(dev, fb_helper);
-+	if (ret)
-+		goto err_drm_err;
-+
-+	if (!drm_drv_uses_atomic_modeset(dev))
-+		drm_helper_disable_unused_functions(dev);
-+
-+	ret = drm_fb_helper_initial_config(fb_helper);
-+	if (ret)
-+		goto err_drm_fb_helper_fini;
-+
- 	return 0;
-+
-+err_drm_fb_helper_fini:
-+	drm_fb_helper_fini(fb_helper);
-+err_drm_err:
-+	drm_err(dev, "Failed to setup fbdev emulation (ret=%d)\n", ret);
-+	return ret;
- }
- 
- static const struct drm_client_funcs msm_fbdev_client_funcs = {
-@@ -148,18 +205,20 @@ static const struct drm_client_funcs msm_fbdev_client_funcs = {
- };
- 
- /* initialize fbdev helper */
--struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
-+void msm_fbdev_setup(struct drm_device *dev)
- {
- 	struct drm_fb_helper *helper;
- 	int ret;
- 
- 	if (!fbdev)
--		return NULL;
-+		return;
-+
-+	drm_WARN(dev, !dev->registered, "Device has not been registered.\n");
-+	drm_WARN(dev, dev->fb_helper, "fb_helper is already set!\n");
- 
- 	helper = kzalloc(sizeof(*helper), GFP_KERNEL);
- 	if (!helper)
--		return NULL;
--
-+		return;
- 	drm_fb_helper_prepare(dev, helper, 32, &msm_fb_helper_funcs);
- 
- 	ret = drm_client_init(dev, &helper->client, "fbdev", &msm_fbdev_client_funcs);
-@@ -168,49 +227,15 @@ struct drm_fb_helper *msm_fbdev_init(struct drm_device *dev)
- 		goto err_drm_fb_helper_unprepare;
- 	}
- 
--	ret = drm_fb_helper_init(dev, helper);
--	if (ret) {
--		DRM_DEV_ERROR(dev->dev, "could not init fbdev: ret=%d\n", ret);
--		goto err_drm_client_release;
--	}
--
--	ret = drm_fb_helper_initial_config(helper);
-+	ret = msm_fbdev_client_hotplug(&helper->client);
- 	if (ret)
--		goto fini;
-+		drm_dbg_kms(dev, "client hotplug ret=%d\n", ret);
- 
--	return helper;
-+	drm_client_register(&helper->client);
- 
--fini:
--	drm_fb_helper_fini(helper);
--err_drm_client_release:
--	drm_client_release(&helper->client);
--err_drm_fb_helper_unprepare:
--	drm_fb_helper_unprepare(helper);
--	kfree(helper);
--	return NULL;
--}
-+	return;
- 
--void msm_fbdev_free(struct drm_device *dev)
--{
--	struct drm_fb_helper *helper = dev->fb_helper;
--	struct drm_framebuffer *fb = helper->fb;
--
--	DBG();
--
--	drm_fb_helper_unregister_info(helper);
--
--	drm_fb_helper_fini(helper);
--
--	/* this will free the backing object */
--	if (fb) {
--		struct drm_gem_object *bo = msm_framebuffer_bo(fb, 0);
--		msm_gem_put_vaddr(bo);
--		drm_framebuffer_remove(fb);
--	}
--
--	drm_client_release(&helper->client);
-+err_drm_fb_helper_unprepare:
- 	drm_fb_helper_unprepare(helper);
- 	kfree(helper);
--
--	dev->fb_helper = NULL;
- }
--- 
-2.40.0
+Best regards,
+Krzysztof
 
