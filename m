@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BB8C6D4068
+	by mail.lfdr.de (Postfix) with ESMTP id B77246D4069
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 11:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232005AbjDCJXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 05:23:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52126 "EHLO
+        id S232030AbjDCJXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 05:23:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231947AbjDCJXk (ORCPT
+        with ESMTP id S232045AbjDCJXl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 05:23:40 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F3EEC6E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 02:23:23 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id y15so37160941lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 02:23:23 -0700 (PDT)
+        Mon, 3 Apr 2023 05:23:41 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCA24492
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 02:23:24 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id j11so37137659lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 02:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680513801;
+        d=linaro.org; s=google; t=1680513802;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B/vvD74dTg6Ok9D3o7oMegz307H2NDMir9mYubi5ivw=;
-        b=K1azTHao1MjTShcSN2oVWr5jewh1WrWWg/uSMSPj0cZSepspTsLsUE8yhji0HfGlfS
-         Xve42Pem8Gr7gFEsGncWjK88pEu2u/i54aUpnGnXjzo8Gwvj3yFzOep9DoXyfwXT2Jit
-         igZD8lH7oN4vqdNNl3G7fM5pnI/IhAVqrmckxc8lwS1+AQgJIc7Ku6fK3yyAOHqX3ZSr
-         xTHl8NoZXJGgUAeu8KkoXVYT5m4+1DsEM+CHdnCF3zczgCJ+cr2bfYWtbBMDzkRNiLlP
-         NuT9FxUS+CrO8IGrxTIWQ3IAEhN9rtrXvg14nnfc/pkPsaKuB48sSSizzX8124BUZiNp
-         C7sA==
+        bh=1gaquRMKA5vN1NbkJUAlatscdzdszTSr64eMgADFB5o=;
+        b=YAUgqcEM46wNYjl4QvuUbuoXPCuvmjARXI7E+kId0b8x1f2AXTXIZdkEYIXL4Nx5sE
+         IYfyFNM8bCOGjno6ilHIu6B4z1fOupXebwaQQcaRgkOOBIf3mRbw1jCN3LpHawi6Mjoe
+         wdbxxpzH7gRct5OtvNAbIhe46Qk4Vsdl7Sei0MfWysdqVB6Og4YkgKs7ZukizyzZf0Fq
+         mWd+oT2+DFHR04DVosw/lkHgwAUVpdMs0aA9CYtc4w6J+LjW6gG02KWb+KUfPMd74jlR
+         1+ltFtaOPzJiwsekyNUfSv9rc//Ot9+cOCqpvkxTTDCCfOeWylLjdLlmxI6hr/HmIxmk
+         kyhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680513801;
+        d=1e100.net; s=20210112; t=1680513802;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=B/vvD74dTg6Ok9D3o7oMegz307H2NDMir9mYubi5ivw=;
-        b=YfM90bF6ZMyBY/aRJkKYWWdAWzBxcBlv9ZOCGphPOcM75+sj5+jGMNSbAuAFfwTtp4
-         XI8z4voHbpwZ9E/omvuP0kloQ6rZfbPqDPXIlQdNSEmw9WN5zZHGVhhwLV/w5xt6RpN9
-         SUKr14EBrIIEDDtO9IsjJwrdT91CPgwMYpwYH5tf+NgLbYMd+vUz0VTo/PvoqZb3w+Kf
-         bgCvH+wBbujzISIM/qMGuYpkn9P++nmwD73uqjDvPS9JlaMIPg2gvzM9Y5GpHFhudbzP
-         kj4CYaGPzZfX30YHDtucJylsN1Xb8o54TOez/3P2mTPIGkh+hmONTk0QDvA6WlzQ6E1B
-         +z/g==
-X-Gm-Message-State: AAQBX9fzHRuoaNRZ1YBpF8oaytBpBNlEQ6j2dbttI+Zuqt8xDdadTVB6
-        pB6tCyNPW/STMEn9I3m077SyIw==
-X-Google-Smtp-Source: AKy350bJEhdvMEKnfbjk6VbrKH8zClgxGzO1FgBv9sn94U6YU1pIrLcBf8WPtHz6DgtOTGbP557o1Q==
-X-Received: by 2002:ac2:54ae:0:b0:4ea:f8f0:545f with SMTP id w14-20020ac254ae000000b004eaf8f0545fmr10148214lfk.52.1680513801365;
+        bh=1gaquRMKA5vN1NbkJUAlatscdzdszTSr64eMgADFB5o=;
+        b=jejMx0y0hWZVSi+YUEZ9+qZvx+COmGG5dTK70lm1qwxF3ooK5RmBX+8hhUjN4WTlin
+         X614Mvvop1EOm3DU3UEnyHk7+kVeGFpE+IV6z90J4THXHl7p1/FUjGX8ezqGJFudhHCP
+         Yx/dwvMXRD2YIqnQNDwT5xaPl9H8X6c632pHm7pz0XyR9JuChxcDLONtAC18dp7RwDn+
+         3Xx2wzxFroPYcEMciqdtlS1dCb2XkZUR+4k0i0VkUk3GLdv77xsIHI2KqcVFDBmKc8EL
+         CMkYOHIDfEz1xLQzt24dhuJOVTzTMmDwvFXOZ8Hc8fMsWVlqyPE0vsxWAXg25RUQsLht
+         zuXg==
+X-Gm-Message-State: AAQBX9e/vlFS4oJqwf8wO7MTZeOpcF+k02wsxzuiBFQAVNYI0n6DJY4g
+        EMWmY3WsipeLRFh03dowCL8kHg==
+X-Google-Smtp-Source: AKy350bZMCk1vD6sNsSHEJdr/MLqWXuUSMv7DPVdDg4Mkdj3jWEhG4jvn09CINvTgFpBYKppWEvKCg==
+X-Received: by 2002:ac2:446d:0:b0:4ea:8892:58dd with SMTP id y13-20020ac2446d000000b004ea889258ddmr7984581lfl.59.1680513801994;
         Mon, 03 Apr 2023 02:23:21 -0700 (PDT)
 Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w5-20020ac25985000000b004e844bb6939sm1680666lfn.2.2023.04.03.02.23.20
+        by smtp.gmail.com with ESMTPSA id w5-20020ac25985000000b004e844bb6939sm1680666lfn.2.2023.04.03.02.23.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 03 Apr 2023 02:23:21 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -64,11 +64,10 @@ To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
 Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
         <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
         intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: [PATCH v4 10/12] drm/display/dsc: Add flatness and initial scale value calculations
-Date:   Mon,  3 Apr 2023 12:23:11 +0300
-Message-Id: <20230403092313.235320-11-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 11/12] drm/i915/dsc: use additional DSC helpers
+Date:   Mon,  3 Apr 2023 12:23:12 +0300
+Message-Id: <20230403092313.235320-12-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230403092313.235320-1-dmitry.baryshkov@linaro.org>
 References: <20230403092313.235320-1-dmitry.baryshkov@linaro.org>
@@ -83,42 +82,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Switch to drm_dsc_set_const_params() to set some semi-constant
+parameters. The rc_model_size, which is set beforehand, is preserved by
+the helper. Also make use of drm_dsc_set_initial_scale_value().
 
-Add helpers to calculate det_thresh_flatness and initial_scale_value as
-these calculations are defined within the DSC spec.
-
-Changes in v2:
-- Renamed det_thresh_flatness to flatness_det_thresh
-- Set initial_scale_value directly in helper
-
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- include/drm/display/drm_dsc_helper.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/i915/display/intel_vdsc.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
-index 4448c482b092..bfa7f3acafcb 100644
---- a/include/drm/display/drm_dsc_helper.h
-+++ b/include/drm/display/drm_dsc_helper.h
-@@ -26,5 +26,16 @@ void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
- int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
- int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c b/drivers/gpu/drm/i915/display/intel_vdsc.c
+index bd9116d2cd76..2d4917ca1f14 100644
+--- a/drivers/gpu/drm/i915/display/intel_vdsc.c
++++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
+@@ -216,6 +216,7 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
  
-+static inline void drm_dsc_set_initial_scale_value(struct drm_dsc_config *dsc)
-+{
-+	dsc->initial_scale_value = 8 * dsc->rc_model_size /
-+		(dsc->rc_model_size - dsc->initial_offset);
-+}
-+
-+static inline int drm_dsc_calculate_flatness_det_thresh(struct drm_dsc_config *dsc)
-+{
-+	return 2 << (dsc->bits_per_component - 8);
-+}
-+
- #endif /* _DRM_DSC_HELPER_H_ */
+ 	vdsc_cfg->bits_per_component = pipe_config->pipe_bpp / 3;
  
++	drm_dsc_set_const_params(vdsc_cfg);
+ 	drm_dsc_set_rc_buf_thresh(vdsc_cfg);
+ 
+ 	/*
+@@ -251,19 +252,7 @@ int intel_dsc_compute_params(struct intel_crtc_state *pipe_config)
+ 			vdsc_cfg->rc_range_params[0].range_bpg_offset = 0;
+ 	}
+ 
+-	/*
+-	 * BitsPerComponent value determines mux_word_size:
+-	 * When BitsPerComponent is less than or 10bpc, muxWordSize will be equal to
+-	 * 48 bits otherwise 64
+-	 */
+-	if (vdsc_cfg->bits_per_component <= 10)
+-		vdsc_cfg->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+-	else
+-		vdsc_cfg->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
+-
+-	/* InitialScaleValue is a 6 bit value with 3 fractional bits (U3.3) */
+-	vdsc_cfg->initial_scale_value = (vdsc_cfg->rc_model_size << 3) /
+-		(vdsc_cfg->rc_model_size - vdsc_cfg->initial_offset);
++	drm_dsc_set_initial_scale_value(vdsc_cfg);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
