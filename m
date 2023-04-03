@@ -2,124 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6D356D5142
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 21:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 128336D5159
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 21:29:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231357AbjDCTYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 15:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
+        id S232725AbjDCT3P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 15:29:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231411AbjDCTYt (ORCPT
+        with ESMTP id S230044AbjDCT3P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 15:24:49 -0400
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 178A5E7C;
-        Mon,  3 Apr 2023 12:24:47 -0700 (PDT)
-Received: from hillosipuli.retiisi.eu (dkzcv-3yyyyyyyyyyyyyt-3.rev.dnainternet.fi [IPv6:2001:14ba:4505:1fdc::1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: sailus)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Pr16v6hS3z49Q0d;
-        Mon,  3 Apr 2023 22:24:39 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-        t=1680549885;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Tp5qcqPaxivMIuFMRKaAe5HT8V/qPK5f6UKZnTDqXZs=;
-        b=wj8iMdaB6O5svgBz97QcbFfxl9pOUa1PNhWR6/nMI8DJ/TlBNBIzxaoXQ4xFtAVcllZBGn
-        1h11XWEmzs+t+7S8wZmoH14Ni8IZIiAbMuwhBvBpaZQSxGqHI3PBS4/eRQdeOwpNSUUZ4Q
-        9oD4KR5OR/7ixTFuQJjiBae6kKroRXjgsr1oQ1YHFdRtSRUWdkyXT6ydrbBKs2fI2Nf6at
-        KgPm5BT3ib2zzo+p3tbEYZMZCdzbPUGlXdxIKRq6Wl3LoBqS5w7Tcdh9ze+jq4BX8ZDee1
-        E31/c03A+3U1KSnRAQJPWWdm9O+j4FuxlElRkzejBkCFdfXldIoFoa2cL7+rAQ==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1680549885; a=rsa-sha256;
-        cv=none;
-        b=pTLkgQTxUMn8kAT5W3Z+ogFont60P6E8KePKCXivg0tBgmGITjjXMVNgPLPZmGVszTwkb9
-        8xmV8K+JZuzm7F5CFJy//1r6ial5+VTAqVELsLbmuuAMfOY1FbI3yDkl8ZCGK0ToM5mF6F
-        iXE23DARwHLsLEzlUBnPniLP4sabKK6I8VHkzWvPos67ec7cBwbNsoN6VKbLTay13Lx0Te
-        srYyEk9eLJ72MlypaetY0e3iRJp+oyVh9XtQdLwdV+Gk7bvcCtArTcbo8tYuuL7peYlIWK
-        3MAa6H4E+TVhwLzsPEbZwvIuhCayXj1Up3OmaEuUmeKIlKMxGrnJHjS1tylKqw==
-ARC-Authentication-Results: i=1;
-        ORIGINATING;
-        auth=pass smtp.auth=sailus smtp.mailfrom=sakari.ailus@iki.fi
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=lahtoruutu; t=1680549885;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Tp5qcqPaxivMIuFMRKaAe5HT8V/qPK5f6UKZnTDqXZs=;
-        b=nDY5LUXsU7qY8CejlN+YlEuCBrJE/yaOwuV73ThTDfxvd8Q/gVoeJnKw2jhXh4fy8A7SPX
-        04/1VA27KvucaNF6obkcJs2PPrdTE0lqb28f0pJOkLQXoIeseCKj3IvDUyXnBCVMbpl03s
-        yasLIby0zyRIhZg4rK6kfJ04rUVkkEFvNGm5TZYXULNkyhoQREHpmP/LL8JdsOm0Nmc2LH
-        0bmnev2mHgSMrVvTzXkiub2kKx9ZZcsn7/QC6F+28qWZ7KKjWBErPDIXmgXOy47iBBRRO6
-        0ZiawUTptzsFdcFQ0UPZ510Z4RUtHySIcAMki/r3tFx2/Ka+zwbnh9UJRyw49Q==
-Received: from valkosipuli.retiisi.eu (valkosipuli.localdomain [192.168.4.2])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by hillosipuli.retiisi.eu (Postfix) with ESMTPS id 4C2E2634C91;
-        Mon,  3 Apr 2023 22:22:09 +0300 (EEST)
-Date:   Mon, 3 Apr 2023 22:22:08 +0300
-From:   Sakari Ailus <sakari.ailus@iki.fi>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Cc:     Rob Herring <robh@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Mon, 3 Apr 2023 15:29:15 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9828910D8;
+        Mon,  3 Apr 2023 12:29:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=AAqqz91IkxtBpU9F67YVn5gGJYIyol387UJgSDAtT5U=; b=Y9As7AFU5T2norvvnESMx00ZZb
+        CYNv8XYgnCcZLniLA2prGlo6gYvkmZEMVYbhxV0oBeZRy+Kt0s2/OqmDL1kbWcxwsJf4bVXlBAr+G
+        x8YKc56647hjKvbBLGqpCBuwe+gFcxoF+6koa6a/3xnsZZYt1BYhIlf6zsAXyefmWs8g=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1pjPrH-009Jxd-N3; Mon, 03 Apr 2023 21:28:51 +0200
+Date:   Mon, 3 Apr 2023 21:28:51 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Joe Tessler <jrt@google.com>,
-        Dongchun Zhu <dongchun.zhu@mediatek.com>,
-        Jacopo Mondi <jacopo+renesas@jmondi.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-        Niklas =?iso-8859-1?Q?S=F6derlund?= 
-        <niklas.soderlund+renesas@ragnatech.se>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Yunfei Dong <yunfei.dong@mediatek.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Benoit Parrot <bparrot@ti.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] media: dt-bindings: Drop unneeded quotes
-Message-ID: <ZCsnYGMkV2Zrw3fJ@valkosipuli.retiisi.eu>
-References: <20230320233944.2920964-1-robh@kernel.org>
- <ZCaoVwRuxVOTZdI4@valkosipuli.retiisi.eu>
- <36febd82-85b2-aa4d-c7e0-6343b119e0cc@gmail.com>
+        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v6 16/16] arm: mvebu: dt: Add PHY LED support
+ for 370-rd WAN port
+Message-ID: <dc344367-4b17-4582-bb03-52f941cb802c@lunn.ch>
+References: <20230327141031.11904-1-ansuelsmth@gmail.com>
+ <20230327141031.11904-17-ansuelsmth@gmail.com>
+ <20230403184611.GA1352384-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <36febd82-85b2-aa4d-c7e0-6343b119e0cc@gmail.com>
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+In-Reply-To: <20230403184611.GA1352384-robh@kernel.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -127,43 +68,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stan,
-
-How are you doing?
-
-On Mon, Apr 03, 2023 at 08:26:28PM +0300, Stanimir Varbanov wrote:
-> Hei Sakari,
+> > +		leds {
+> > +			#address-cells = <1>;
+> > +			#size-cells = <0>;
+> > +
+> > +			led@0 {
+> > +				reg = <0>;
+> > +				label = "WAN";
 > 
-> On 31.03.23 г. 12:31 ч., Sakari Ailus wrote:
-> > Hi Rob,
-> > 
-> > On Mon, Mar 20, 2023 at 06:39:42PM -0500, Rob Herring wrote:
-> > > Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> > > checking for this can be enabled in yamllint.
-> > > 
-> > > Signed-off-by: Rob Herring <robh@kernel.org>
-> > 
-> > This patch contains changes to Qualcomm bindings that have been already
-> > made by other patches by Krzysztof. I think these took some time to get
-> > merged to the media tree.
-> > 
-> > I've dropped those, the result is here:
-> > 
-> > <URL:https://git.linuxtv.org/sailus/media_tree.git/commit/?id=d75cae0884e80bba486f85e82b33a1dae3c9c976>
-> > 
+> WAN or
 > 
-> Do you think it will fix this pull request failure?
+> > +				color = <LED_COLOR_ID_WHITE>;
+> > +				function = LED_FUNCTION_LAN;
 > 
-> https://lore.kernel.org/all/20230329214310.2503484-1-jenkins@linuxtv.org/
+> LAN?
 
-Ah, it seems to be the same issue here.
+Hi Rob
 
-The patch has been merged via my tree, whereas the rest of the patchset was
-apparently merged by Hans earlier on.
+I did not know there was LED_FUNCTION_WAN. I just blindly copied it
+from some other DT fragment.
 
-<URL:https://patchwork.linuxtv.org/project/linux-media/list/?series=9531&submitter=&state=*&q=&archive=&delegate=>
+I will change this, thanks.
 
--- 
-Kind regards,
-
-Sakari Ailus
+	Andrew
