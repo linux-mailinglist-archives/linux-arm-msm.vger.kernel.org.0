@@ -2,96 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CBD26D402E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 11:21:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F358D6D404E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 11:23:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbjDCJVQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 05:21:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46836 "EHLO
+        id S232032AbjDCJXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 05:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232011AbjDCJU5 (ORCPT
+        with ESMTP id S231975AbjDCJXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 05:20:57 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4316110FA;
-        Mon,  3 Apr 2023 02:20:46 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3338Lc6E001931;
-        Mon, 3 Apr 2023 09:20:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=W128USzMqbugLvfVmHEw0F4lZUvRXlAcT7kaMbYWwNE=;
- b=Oh0J79fY5v0McoDPaYKfqFWjs5WjGzA8xCdITgDAzgkJIuixEWornDzfQBifmSaSKr8U
- T3bPlDEytzXWXT9MKsvpZs3sP1Lrw7NEKJUJsWw75zbB4NXMc7XzvRkhufxh02CpmPPP
- iqa3s4ulwLjbi4qQUeLDC2QZLrRovcmdJyz9UilmzhlphadTF/9hQ44/oY7e+STst8Rz
- /BLdvpJVxwIbWHwuk/ItEo3LttWu2o8vhfu+73UOoiXuoQuv5dWKo9VhviR1MmaDQ07m
- wOw/oFPr7YlfOaODFtgglVlL4wtLXnFljyYXnDphSJWFHLmQ+gtqu5ejYCkERd81j9Od og== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pqu7f03hn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Apr 2023 09:20:37 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3339Kalq031843
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Apr 2023 09:20:36 GMT
-Received: from [10.251.45.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 3 Apr 2023
- 02:20:33 -0700
-Message-ID: <d653be97-337f-dc09-786c-b13304c643fe@quicinc.com>
-Date:   Mon, 3 Apr 2023 12:20:31 +0300
+        Mon, 3 Apr 2023 05:23:33 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75E8CFF22
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 02:23:16 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id j11so37137211lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 02:23:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680513795;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EtVCC2sqWX4+Mq7NALEB6lzAsKnEhdcOZVvmQOHFlmQ=;
+        b=kXMdJu1oAz8RkogNiaVcVQDXkkx4aNY71D7RyXS48H+GY24cmyLbnkcV3xjDNIUOMu
+         YM4+OJ4Y3JCyCJ7PfnoieHT4Zx6axj4Ni7UibcGTPyos+mPiLGiV9KRjswoCOUVYbyZ2
+         hlm0jvyBKZxgvwF4fhgFlCqBP0cJeQ87/l1X6fL6NqY3jnJmJPEq+ii493oyDsXtwVyu
+         QB21FyNOwz10DoaA/cUduMRv+gfarb+hOOzmjbRBDnLTzITekAB8kyOGCsW9BJqPM7Cc
+         dQlsd4yI12kyqrWl6eyjKE6mvyoWoH0+dG4eL0D2DVpq1nWopt+lFal957MmLxtMcM6Q
+         Bv+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680513795;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EtVCC2sqWX4+Mq7NALEB6lzAsKnEhdcOZVvmQOHFlmQ=;
+        b=USl+bmRrL6BO/KKouKsmxSkScAsv0uZbNmknspxq4Wx/Q9fywk7KFcMUGb6x4Vdl52
+         L93WJHAjyCPTEyvaDxqQDnm1TFXjymLK1pEq58aVklm+HHG4Q3x8cgq1CrcqBJKHDJYG
+         dyL0BOx7SRR5kJeUFGa3RCqkudOm3qK8SkqhTR1x4vmOdREAxowBpv4bklotV38JgOu5
+         QzSfyn3zqTbVkML5ovAgQrrk0wxw/ychD3iK64H7LlRijZI9g72T76m+sXKaBUKTgCMn
+         D0XJ4Ztm2BKJtuMt3Jc7K8kFvpk3cBwVayAJLs6TD3oo8daqW1LlqjqqQS9m8UhDPpp7
+         /CJg==
+X-Gm-Message-State: AAQBX9e903wSlMWL+4w1SgSn+gn3AX0pNo4nf2i0y8Y19NlAiDLGaKNt
+        cdW6P4kASFO7+bzPRGUKKFJxXA==
+X-Google-Smtp-Source: AKy350bEt/pfhDifVSZGPSEQacf0JBsmuuJnexEOmvGWwSWTvHA8VDI7eTjKMhCWHM6t7dah0Unxzw==
+X-Received: by 2002:ac2:5613:0:b0:4ea:f7be:e071 with SMTP id v19-20020ac25613000000b004eaf7bee071mr9687585lfd.46.1680513794690;
+        Mon, 03 Apr 2023 02:23:14 -0700 (PDT)
+Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id w5-20020ac25985000000b004e844bb6939sm1680666lfn.2.2023.04.03.02.23.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 02:23:14 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 00/12] drm/i915: move DSC RC tables to drm_dsc_helper.c
+Date:   Mon,  3 Apr 2023 12:23:01 +0300
+Message-Id: <20230403092313.235320-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v7 0/4] media: camss: sm8250: Virtual channels support for
- SM8250
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        "Azam Sadiq Pasha Kapatrala Syed" <akapatra@quicinc.com>,
-        "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Jigarkumar Zala <jzala@quicinc.com>,
-        "todor.too@gmail.com" <todor.too@gmail.com>,
-        "nicolas.dechesne@linaro.org" <nicolas.dechesne@linaro.org>
-CC:     "agross@kernel.org" <agross@kernel.org>,
-        "konrad.dybcio@somainline.org" <konrad.dybcio@somainline.org>,
-        "mchehab@kernel.org" <mchehab@kernel.org>,
-        Chandan Gera <cgera@qti.qualcomm.com>,
-        Guru Chinnabhandar <gchinnab@quicinc.com>,
-        Alireza Yasan <ayasan@qti.qualcomm.com>,
-        "laurent.pinchart@ideasonboard.com" 
-        <laurent.pinchart@ideasonboard.com>
-References: <20221209094037.1148-1-quic_mmitkov@quicinc.com>
- <662d68f7-6160-263d-6e4d-e3687d5cf8eb@quicinc.com>
- <7565d38c-d8f4-39e0-8547-fbb511f6d649@quicinc.com>
- <894e3ce6-0f2b-608b-ec4e-09083704f429@linaro.org>
- <8243cc42-236c-20e3-74dc-1f130ab1dcf6@quicinc.com>
- <BYAPR02MB557503013F05BF1EA1E1300CC28F9@BYAPR02MB5575.namprd02.prod.outlook.com>
- <f26174aa-a6ca-151c-2602-2f39b40bb7da@linaro.org>
- <7b3cb8a6-8306-f001-5701-af3b482421e9@quicinc.com>
- <d500c5bb-7aca-ae0d-f23e-495cd049e422@linaro.org>
-From:   "Milen Mitkov (Consultant)" <quic_mmitkov@quicinc.com>
-In-Reply-To: <d500c5bb-7aca-ae0d-f23e-495cd049e422@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bXLo7mBw4vE1zFrsGuEJ1JzoYR9JlIJw
-X-Proofpoint-ORIG-GUID: bXLo7mBw4vE1zFrsGuEJ1JzoYR9JlIJw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-03_06,2023-03-31_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- malwarescore=0 phishscore=0 mlxlogscore=999 spamscore=0 bulkscore=0
- adultscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304030071
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -99,82 +79,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Other platforms (msm) will benefit from sharing the DSC config setup
+functions. This series moves parts of static DSC config data from the
+i915 driver to the common helpers to be used by other drivers.
 
-On 03/04/2023 12:16, Bryan O'Donoghue wrote:
-> On 03/04/2023 09:38, Milen Mitkov (Consultant) wrote:
->> On 31/03/2023 11:07, Bryan O'Donoghue wrote:
->>> On 31/03/2023 07:20, Azam Sadiq Pasha Kapatrala Syed wrote:
->>>> + Nico (Linaro)
->>>> Hi Team
->>>>
->>>> Would like to know if anything is pending form our end as we want 
->>>> to get the patches mainlined?
->>>>
->>>> Thanks,
->>>> Azam
->>>
->>> I'd like to get a clearer picture on this
->>>
->>> [   90.535909] qcom-camss ac6a000.camss: VFE HW Version = 2.0.1
->>> [   90.545756] qcom-camss ac6a000.camss: CSIPHY 3PH HW Version = 
->>> 0x40010000
->>> [   90.546358] qcom-camss ac6a000.camss: CSID HW Version = 2.0.1
->>> [   90.546365] qcom-camss ac6a000.camss: csid_link_setup: Enabled 
->>> CSID virtual channels mask 0x1
->>> [   90.547675] qcom-camss ac6a000.camss: csid_link_setup: Enabled 
->>> CSID virtual channels mask 0x0
->>>
->>> Using the IMX577 sensor on the RB5 we get his pretty odd virtual 
->>> channels mask.
->>>
->>> If userspace is sending this in, the question I have is why. Surely 
->>> with a sensor that doesn't have a VC there should be no impact on 
->>> user-space.
->>>
->>> ---
->>> bod
->>
->> Hey Bryan,
->>
->> what media-ctl commands are you using? I can't recreate this on my 
->> side. I am using this set of commands to test (with the default 
->> imx577 driver without any multiple virtual channels outputs) and am 
->> getting only the first message (virtual channels mask 0x1):
->>
->> media-ctl --reset
->> media-ctl -v -d /dev/media0 -V '"imx577 
->> '22-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
->> media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
->> media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
->> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
->>
->> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F 
->> /dev/video0
->>
->>
->> Thanks,
->>
->> Milen
->
-> Its a dev_dbg() so "#define DEBUG 1" in 
-> drivers/media/platform/qcom/camss/camss-csid.c
->
-> ---
-> bod
->
-Yes, I enabled the dev_dbg(). I just see only one message with regards 
-to the channels mask. Just this one:
+Note: the RC parameters were cross-checked against config files found in
+DSC model 2021062, 20161212 (and 20150914). The first patch modifies
+tables according to those config files, while preserving parameter
+values using the code. I have not changed one of the values in the
+pre-SCR config file as it clearly looks like a typo in the config file,
+considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
 
-[   90.546365] qcom-camss ac6a000.camss: csid_link_setup: Enabled CSID 
-virtual channels mask 0x1
+Chances since v3:
+- Rebased on top of drm-intel-next
+- Dropped the msm patch to make patchset fully mergeable through
+  drm-intel
+- Made drm_dsc_set_const_params() ignore rc_model_size, picked up
+  drm_dsc_set_initial_scale_value() patch by Jessica and switched
+  intel_vdsc.c to use those two helpers.
+- Added a patch to make i915 actually use rc_tgt_offset_high,
+  rc_tgt_offset_low and rc_edge_factor from struct drm_dsc_config.
 
-so I wonder if you're testing with a different set of media-ctl/yavta 
-commands.
+Chances since v2:
+- Rebased on top of drm-intel-next
 
+Chances since v1:
+- Made drm_dsc_rc_buf_thresh static rather than exporting it
+- Switched drm_dsc_rc_buf_thresh loop to use ARRAY_SIZE. Added
+  BUILD_BUG_ON's to be sure that array sizes are correct
+- Fixed rc_parameters_data indentation to be logical and tidy
+- Fixed drm_dsc_setup_rc_params() kerneldoc
+- Added a clause to drm_dsc_setup_rc_params() to verify bpp and bpc
+  being set.
+- Fixed range_bpg_offset programming in calculate_rc_params()
+- Fixed bpp vs bpc bug in intel_dsc_compute_params()
+- Added FIXME comment next to the customizations in
+  intel_dsc_compute_params().
 
-Regards,
+Dmitry Baryshkov (11):
+  drm/i915/dsc: change DSC param tables to follow the DSC model
+  drm/i915/dsc: move rc_buf_thresh values to common helper
+  drm/i915/dsc: move DSC tables to DRM DSC helper
+  drm/i915/dsc: stop using interim structure for calculated params
+  drm/display/dsc: use flat array for rc_parameters lookup
+  drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
+  drm/display/dsc: include the rest of pre-SCR parameters
+  drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
+  drm/display/dsc: add helper to set semi-const parameters
+  drm/i915/dsc: use additional DSC helpers
+  drm/i915/dsc: make use of several params from drm_dsc_config
 
-Milen
+Jessica Zhang (1):
+  drm/display/dsc: Add flatness and initial scale value calculations
+
+ drivers/gpu/drm/display/drm_dsc_helper.c  | 1008 +++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_vdsc.c |  464 ++--------
+ include/drm/display/drm_dsc_helper.h      |   21 +
+ 3 files changed, 1081 insertions(+), 412 deletions(-)
+
+-- 
+2.39.2
 
