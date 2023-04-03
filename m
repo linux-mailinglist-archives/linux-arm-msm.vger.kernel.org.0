@@ -2,160 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79DBF6D3D9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 08:59:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 633A36D3E74
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 09:54:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbjDCG7j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 02:59:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56292 "EHLO
+        id S229498AbjDCHy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 03:54:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231336AbjDCG7j (ORCPT
+        with ESMTP id S231779AbjDCHy0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 02:59:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1CF2D4E;
-        Sun,  2 Apr 2023 23:59:38 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3336inTD023885;
-        Mon, 3 Apr 2023 06:59:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=3GDQJ/ZROzBuIwYu+EN78kMi1ZXmlZTyRpJ+QDJIxSo=;
- b=nkIIBWZSesFGzPkw0j1ehDdYs8a2Y9bNpgt990Pd8q/StUSgqSTdzV2D+0SGhRgFBHKO
- dOXW/KMRm/gnefarqqdtoPf8dJykSbsbcNbeqU/xX9ZcbxNEWT0hZdfjgQFI7nDEFENj
- RYDsra0CjE0ZqgMxyEU3T0fA6BTolHaeteF9lc3PFwEk/GIk4JH5II0AgZygEh56/16p
- kR3Or8H/6L6vYAJLQwrMaOrkP2yfbzbBkwMQfGWUZYdb/axLsx7/GOtedjLruFLfDxVO
- UOuR8hPbZ9z1Yo75dXXVSmS0eFTr8b/TS/ur9EUYmB9um4NPitO9zwBLazh2SKPn4GlF 9A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ppcubkmmv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Apr 2023 06:59:31 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3336xUmM006226
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Apr 2023 06:59:30 GMT
-Received: from srichara-linux.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Sun, 2 Apr 2023 23:59:10 -0700
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To:     <mani@kernel.org>, <manivannan.sadhasivam@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH V3] net: qrtr: Do not do DEL_SERVER broadcast after DEL_CLIENT
-Date:   Mon, 3 Apr 2023 12:28:51 +0530
-Message-ID: <1680505131-11645-1-git-send-email-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 3 Apr 2023 03:54:26 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A22D49F4;
+        Mon,  3 Apr 2023 00:54:24 -0700 (PDT)
+Received: from canpemm500006.china.huawei.com (unknown [172.30.72.55])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4PqjkW1KHtznZrh;
+        Mon,  3 Apr 2023 15:50:59 +0800 (CST)
+Received: from localhost.localdomain (10.175.104.82) by
+ canpemm500006.china.huawei.com (7.192.105.130) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.23; Mon, 3 Apr 2023 15:54:21 +0800
+From:   Ziyang Xuan <william.xuanziyang@huawei.com>
+To:     <mani@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
+        <kuba@kernel.org>, <pabeni@redhat.com>, <andersson@kernel.org>,
+        <luca@z3ntu.xyz>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>
+Subject: [PATCH net] net: qrtr: Fix an uninit variable access bug in qrtr_tx_resume()
+Date:   Mon, 3 Apr 2023 15:54:17 +0800
+Message-ID: <20230403075417.2244203-1-william.xuanziyang@huawei.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JkQt9VfVVSq8hxsG_EnCUUoSAJfpw-ZJ
-X-Proofpoint-GUID: JkQt9VfVVSq8hxsG_EnCUUoSAJfpw-ZJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-03_04,2023-03-31_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- clxscore=1015 mlxlogscore=882 phishscore=0 mlxscore=0 spamscore=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304030053
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.104.82]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ canpemm500006.china.huawei.com (7.192.105.130)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On the remote side, when QRTR socket is removed, af_qrtr will call
-qrtr_port_remove() which broadcasts the DEL_CLIENT packet to all neighbours
-including local NS. NS upon receiving the DEL_CLIENT packet, will remove
-the lookups associated with the node:port and broadcasts the DEL_SERVER
-packet.
+Syzbot reported a bug as following:
 
-But on the host side, due to the arrival of the DEL_CLIENT packet, the NS
-would've already deleted the server belonging to that port. So when the
-remote's NS again broadcasts the DEL_SERVER for that port, it throws below
-error message on the host:
+=====================================================
+BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+ qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+ qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
+ qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+ call_write_iter include/linux/fs.h:2189 [inline]
+ aio_write+0x63a/0x950 fs/aio.c:1600
+ io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+ __do_sys_io_submit fs/aio.c:2078 [inline]
+ __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+ __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-"failed while handling packet from 2:-2"
+Uninit was created at:
+ slab_post_alloc_hook mm/slab.h:766 [inline]
+ slab_alloc_node mm/slub.c:3452 [inline]
+ __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
+ __do_kmalloc_node mm/slab_common.c:967 [inline]
+ __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
+ kmalloc_reserve net/core/skbuff.c:492 [inline]
+ __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
+ __netdev_alloc_skb+0x120/0x7d0 net/core/skbuff.c:630
+ qrtr_endpoint_post+0xbd/0x11b0 net/qrtr/af_qrtr.c:446
+ qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+ call_write_iter include/linux/fs.h:2189 [inline]
+ aio_write+0x63a/0x950 fs/aio.c:1600
+ io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+ __do_sys_io_submit fs/aio.c:2078 [inline]
+ __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+ __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-So fix this error by not broadcasting the DEL_SERVER packet when the
-DEL_CLIENT packet gets processed."
+It is because that skb->len requires at least sizeof(struct qrtr_ctrl_pkt)
+in qrtr_tx_resume(). And skb->len equals to size in qrtr_endpoint_post().
+But size is less than sizeof(struct qrtr_ctrl_pkt) when qrtr_cb->type
+equals to QRTR_TYPE_RESUME_TX in qrtr_endpoint_post() under the syzbot
+scenario. This triggers the uninit variable access bug.
 
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Ram Kumar Dharuman <quic_ramd@quicinc.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Add size check when qrtr_cb->type equals to QRTR_TYPE_RESUME_TX in
+qrtr_endpoint_post() to fix the bug.
+
+Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
+Reported-by: syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=c14607f0963d27d5a3d5f4c8639b500909e43540
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
 ---
-[v3] Ordered signed off tags and added Mani's reviewed-by
-Note: Functionally tested on 5.4 and compile tested on 6.3 TOT
+ net/qrtr/af_qrtr.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- net/qrtr/ns.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index 722936f..0f25a38 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -274,7 +274,7 @@ static struct qrtr_server *server_add(unsigned int service,
- 	return NULL;
- }
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 3a70255c8d02..631e81a8a368 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -498,6 +498,10 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 	if (!size || len != ALIGN(size, 4) + hdrlen)
+ 		goto err;
  
--static int server_del(struct qrtr_node *node, unsigned int port)
-+static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
- {
- 	struct qrtr_lookup *lookup;
- 	struct qrtr_server *srv;
-@@ -287,7 +287,7 @@ static int server_del(struct qrtr_node *node, unsigned int port)
- 	radix_tree_delete(&node->servers, port);
- 
- 	/* Broadcast the removal of local servers */
--	if (srv->node == qrtr_ns.local_node)
-+	if (srv->node == qrtr_ns.local_node && bcast)
- 		service_announce_del(&qrtr_ns.bcast_sq, srv);
- 
- 	/* Announce the service's disappearance to observers */
-@@ -373,7 +373,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
- 		}
- 		slot = radix_tree_iter_resume(slot, &iter);
- 		rcu_read_unlock();
--		server_del(node, srv->port);
-+		server_del(node, srv->port, true);
- 		rcu_read_lock();
- 	}
- 	rcu_read_unlock();
-@@ -459,10 +459,13 @@ static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
- 		kfree(lookup);
- 	}
- 
--	/* Remove the server belonging to this port */
-+	/* Remove the server belonging to this port but don't broadcast
-+	 * DEL_SERVER. Neighbours would've already removed the server belonging
-+	 * to this port due to the DEL_CLIENT broadcast from qrtr_port_remove().
-+	 */
- 	node = node_get(node_id);
- 	if (node)
--		server_del(node, port);
-+		server_del(node, port, false);
- 
- 	/* Advertise the removal of this client to all local servers */
- 	local_node = node_get(qrtr_ns.local_node);
-@@ -567,7 +570,7 @@ static int ctrl_cmd_del_server(struct sockaddr_qrtr *from,
- 	if (!node)
- 		return -ENOENT;
- 
--	return server_del(node, port);
-+	return server_del(node, port, true);
- }
- 
- static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
++	if (cb->type == QRTR_TYPE_RESUME_TX &&
++	    size < sizeof(struct qrtr_ctrl_pkt))
++		goto err;
++
+ 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
+ 	    cb->type != QRTR_TYPE_RESUME_TX)
+ 		goto err;
 -- 
-2.7.4
+2.25.1
 
