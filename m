@@ -2,82 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 958836D4FF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 20:06:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6B676D501A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 20:14:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233163AbjDCSGk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 14:06:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33182 "EHLO
+        id S231655AbjDCSO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 14:14:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233093AbjDCSG3 (ORCPT
+        with ESMTP id S231716AbjDCSO0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 14:06:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA93C2D7E
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 11:06:26 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3339ZKpX021703;
-        Mon, 3 Apr 2023 18:06:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=guJPsaiKLk1htFFc+OysyC1Hngau2BaO6YxJV+a1lVA=;
- b=PrYuCC3li9kzZTb/8Cmb38N81c5Gi2ejfPKjycdX354VlRKJb4iHH2SJH2EOTIGOpUl1
- lSGlTEi9No03jqi79QRfgRqNEj++pI7InX5pyMqlGmEoxxvOPc+I1pcGIuxmv07XQqF7
- j7bSDXBg2JeHkBbli19jXZDVgh6QfQT/77luTsZmdnpYTzT4QCTteKfQfItRBdfeNMoi
- 2AYIaccxh2+o0x84O3EKnAjtqv3la98gksz4s9a6jakAdWyPzOz4OLkz4XIFNY+UfLFc
- j4jMCA9HGiKSEjCAem5SiQEGJ3n4WD5ZHLx5iTxpRsbA+8AjugrrItZ2Cf+jd3EJYb2w mg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pquxth9a7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Apr 2023 18:06:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 333I6IIP007876
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Apr 2023 18:06:18 GMT
-Received: from [10.110.66.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 3 Apr 2023
- 11:06:18 -0700
-Message-ID: <b4972790-d990-063a-7ef4-2f05407357e8@quicinc.com>
-Date:   Mon, 3 Apr 2023 11:06:17 -0700
+        Mon, 3 Apr 2023 14:14:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C922D40;
+        Mon,  3 Apr 2023 11:14:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9D1DA62474;
+        Mon,  3 Apr 2023 18:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A47EC4339B;
+        Mon,  3 Apr 2023 18:14:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680545653;
+        bh=dZxhtfWNZthe6C4xSPneZtKMKl2XLrfONcmPfYXK2jc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=NZstyKQH0+x8/mU9b3+M59+yT3SblfTJS/FVkhjxHos8YUryMzPUtFsi8nSJ4T3Zv
+         +ep2vLyEI98IrmpcyD6Eru2ott753MJDrXx5qtq2b2gP40+2H4LHrSAiI2sxs0DqfN
+         ZEIMgcYQR65Xrs0LocD744pzfk+sIq6ymQyM6OBOIGaZ/z9Z4y4edcGAiDeMumbE/i
+         Ox1QX+bx7l7WJlhGqnvJC+WIxAw8indMjTb3w4tbW70snSUM0sG2MKccdlfvRmJ8po
+         OpiWE1hgFtBNmQ00BcRSyyu5w9c6zB8eoKuCa54h5I0uc5XtEMLRPKQVtQeeAgHwlk
+         O4POQ7nF5cm5g==
+Date:   Mon, 3 Apr 2023 19:14:04 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, lgirdwood@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+Subject: Re: [PATCH V2 4/6] regulator: qcom_smd: Add support to define the
+ bootup voltage
+Message-ID: <8c513ddc-435e-40ce-b1f8-84eaf8241ed4@sirena.org.uk>
+References: <751e5129-3c11-0156-719e-3fe996a149be@quicinc.com>
+ <3f434777-c4b6-272f-1971-f9adf3faefe4@linaro.org>
+ <a54d4e1b-d62d-559d-1882-e460e696c056@quicinc.com>
+ <ca12735e-d6c8-997e-036f-693cd8a9870f@linaro.org>
+ <e19393e3-5898-bff2-cc00-d88c9194c7c2@quicinc.com>
+ <6e1f6466-7f2e-7bd5-f6a2-5691a30c4e1f@linaro.org>
+ <9989c92c-9949-5531-c7d2-e54882795a68@quicinc.com>
+ <69df153d-bdc6-9008-39d6-72f66bab2e38@linaro.org>
+ <5914a8db-3644-1c94-00ba-460ba2c26a5d@quicinc.com>
+ <3c5a9608-ecd2-a3c0-e866-7d0070e49b89@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 00/38] drm/msm/dpu: rework HW catalog
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aPdSy2UEFSGcVbeNrV40UbuH-bWAhQSB
-X-Proofpoint-ORIG-GUID: aPdSy2UEFSGcVbeNrV40UbuH-bWAhQSB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-03_15,2023-04-03_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 mlxlogscore=999 priorityscore=1501
- impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0 bulkscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304030138
-X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+3527FmE72Bif88B"
+Content-Disposition: inline
+In-Reply-To: <3c5a9608-ecd2-a3c0-e866-7d0070e49b89@linaro.org>
+X-Cookie: Membership dues are not refundable.
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,188 +72,46 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--+3527FmE72Bif88B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 3/30/2023 2:52 PM, Dmitry Baryshkov wrote:
-> This huge series attempts to restructure the DPU HW catalog into a
-> manageable and reviewable data set. In order to ease review and testing
-> I merged all the necessary fixes into this series. Also I cherry-picked
-> & slightly fixed Konrad's patch adding size to the SSPP and INTF macros.
-> 
+On Mon, Apr 03, 2023 at 07:53:48PM +0200, Konrad Dybcio wrote:
+> On 3.04.2023 16:07, Devi Priya wrote:
 
-I had to first dig up some history about why dpu catalog grew so much in 
-the first place before starting this review. When the DPU driver first 
-landed (which pre-dates my work in upstream), it looks like it followed 
-mdp5 model from mdp5_cfg.c. But looks like as the number of chipsets 
-which use DPU kept growing, this is becoming a burden.
+> > But, when the regulator driver comes up, it tries to bring up the
+> > regulators to the minimum supported voltage provided with the
+> > regulator-min-microvolt property in the DT.
 
-As everyone knows, downstream follows a devicetree model for the dpu 
-hardware and that should have always been the case. Perhaps in the last 
-2-3 years more time could have been spent on standardizing the bindings 
-used for hw blocks in order to maintain a less hard-coded catalog file 
-and more in the device tree.
+> Right, that exists..=20
 
-Then the catalog would have just been a place to parse the device tree, 
-set the feature capability based on chipset (refer 
-_sde_hardware_pre_caps). That way offsets , number of blocks and the 
-blocks themselves still come from the device tree but perhaps some 
-specific features are at SOC level for which the catalog still stays.
+> Mark, do you think it should be updated such that the requests are
+> aggregated before assuming min_uV is "just fine"?
 
-That being said, I thought of different strategies even before the 
-review but two issues prevented me from suggesting those ideas (one of 
-which I am seeing even here , which I am going to suggest below and also 
-suggest why it wont work).
+We can't tell if any consumers are ever going to appear, and the
+regulator having a voltage outside of the constraints is an urgent
+problem we need to fix quickly.  Since we try to bring the voltage to
+the nearest end of the constraint the driver could always change the
+bogus voltage it reports to one that is excessively high, this would
+mean the core will try to bring the voltage down to the maximum rather
+than up to the minimum.  The driver could also look at the constraints
+when guessing at the hardware configuration rather than claiming an out
+of spec voltage, this would mean we wouldn't need to correct anything.
 
-1) For the same DPU major/minor version, some features might get dropped 
-or even get added with different SOCs as overall the system capabilities 
-might differ like number of SSPPs or memory footprint of the SOC etc.
+--+3527FmE72Bif88B
+Content-Type: application/pgp-signature; name="signature.asc"
 
-So there is no good way right now to generalize any dpu catalog or to 
-tie it with a DPU major/minor version. We will have to stick with a 
-per-SOC model.
+-----BEGIN PGP SIGNATURE-----
 
-This is what led me to not pursue that route.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQrF2wACgkQJNaLcl1U
+h9DUkgf5AeX2hkEfb36b/p7jPZcbfRZXttviLT2LkmjynPWAK8PRiewZ0XNVv4An
+E51IGruDP7nB2ArHnrhCwICAU0r4r6TRSaY3S6xgxhdCZqi+1VHIKhLTYDNHD9/d
+TmCnsqxzC0c3cj9OB8couC3BgfGXOp0pGMuZLzeYlCG+trEbwBu2HnqBGx5L6zBV
+n6jUvhhazcyrVfYaxdDBzxHUM/CPiIY5ez7jEcD4PLXEvlSZFDmE5AZTs28HAZTx
+b5qtdfIrV4D5JYNfU90pg5JB2kcN3Uc1iYuFX7Y40hD778/gG+9xHi3jsGt2L06/
+Vn3MCOS4ssu5v19tKmFquxaxpVcZSA==
+=0SE9
+-----END PGP SIGNATURE-----
 
-2) For the same DPU major/minor version, even if core-DPU is same (in 
-terms of SSPP, DSPP etc), the number of interfaces can change. So again 
-no room to generalize same DPU hw version.
-
-3) For the same reason as (1) and (2), I think the de-duplication 
-strategy used in this series is not correct. The idea of 
-dpu_hw_version_num_layer_mixer is just not scalable as I dont know how 
-many variants that will lead to. So it seems like just an attempt to 
-de-duplicate which perhaps works today for existing dpu chipsets in 
-upstream but by no means scalable. Lets go ahead with per-SOC catalog 
-file but lets live with some amount of duplication between them if we 
-really have to split it across header files.
-
-I also thought of similar strategies to generalize like based on 
-sub-blocks similar to what you have done but all of these were NAKed 
-internally by folks who work on more chipsets / have more visibility 
-into the spread of features across chipsets.
-
-> First 4 patches clean up the catalog a bit in order to make it more
-> suitable for refactoring.
-> 
-
-These are okay. I will address your follow-up questions about patch (1) 
-and lets land these.
-
-> Then the next batch of 13 + 5 patches split the hw catalog entries into
-> per-SoC files.
-> 
-
-This part is also fine. But perhaps dont have dpu hw version in the 
-file. So just dpu_hw_sm8250.h or dpu_hw_sm8350.h etc.
-
-> Next 9 patches rework catalog entries, mostly targeting deduplication of
-> data used by several platforms. At this moment only three pairs (out of
-> 13 devices supported by DPU) are merged. However this part lays out the
-> ground to ease adding support for new platforms, some of which use the
-> same configuration as the existing platforms
-> 
-
-This is the part I suggest we drop.
-
-> Last batch of 7 patches renames existing macros to ease using them while
-> adding support for new devices.
-> 
-
-I have to check this part but perhaps after re-basing based on my 
-earlier comment.
-
-> This pile of patches is submitted in a single batch to allow one to
-> observe the final goal of the cleanup which otherwise might be hard to
-> assess.
-> 
-> 
-> Changes since v2:
-> - Fixed sc8280xp SSPP size to 0x2ac
-> - Rebased on top of msm-next-lumag, dropped merged patches
-> 
-> Changes since v1:
-> - Picked up Konrad's patch
-> - Picked up dependencies into the main series
-> - Moved qseed3lite vs qseed4 patches into the fixes part
-> - Fixed sm6115 in a similar manner.
-> 
-> Dmitry Baryshkov (37):
->    drm/msm/dpu: constify DSC data structures
->    drm/msm/dpu: mark remaining pp data as const
->    drm/msm/dpu: move UBWC/memory configuration to separate struct
->    drm/msm/dpu: split SM8550 catalog entry to the separate file
->    drm/msm/dpu: split SM8450 catalog entry to the separate file
->    drm/msm/dpu: split SC8280XP catalog entry to the separate file
->    drm/msm/dpu: split SC7280 catalog entry to the separate file
->    drm/msm/dpu: split SM8350 catalog entry to the separate file
->    drm/msm/dpu: split SM6115 catalog entry to the separate file
->    drm/msm/dpu: split QCM2290 catalog entry to the separate file
->    drm/msm/dpu: split SC7180 catalog entry to the separate file
->    drm/msm/dpu: split SM8250 catalog entry to the separate file
->    drm/msm/dpu: split SC8180X catalog entry to the separate file
->    drm/msm/dpu: split SM8150 catalog entry to the separate file
->    drm/msm/dpu: split MSM8998 catalog entry to the separate file
->    drm/msm/dpu: split SDM845 catalog entry to the separate file
->    drm/msm/dpu: duplicate sdm845 catalog entries
->    drm/msm/dpu: duplicate sc7180 catalog entries
->    drm/msm/dpu: duplicate sm8150 catalog entries
->    drm/msm/dpu: duplicate sm8250 catalog entries
->    drm/msm/dpu: duplicate sm8350 catalog entries
->    drm/msm/dpu: use defined symbol for sc8280xp's maxwidth
->    drm/msm/dpu: catalog: add comments regarding DPU_CTL_SPLIT_DISPLAY
->    drm/msm/dpu: enable DPU_CTL_SPLIT_DISPLAY for sc8280xp
->    drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
->    drm/msm/dpu: drop duplicate vig_sblk instances
->    drm/msm/dpu: enable DSPP on sc8180x
->    drm/msm/dpu: deduplicate sc8180x with sm8150
->    drm/msm/dpu: deduplicate sm6115 with qcm2290
->    drm/msm/dpu: deduplicate sc8280xp with sm8450
->    drm/msm/dpu: drop unused macros from hw catalog
->    drm/msm/dpu: inline IRQ_n_MASK defines
->    drm/msm/dpu: rename INTF_foo_MASK to contain major DPU version
->    drm/msm/dpu: rename CTL_foo_MASK to contain major DPU version
->    drm/msm/dpu: rename VIG and DMA_foo_MASK to contain major DPU version
->    drm/msm/dpu: rename MIXER_foo_MASK to contain major DPU version
->    drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
-> 
-> Konrad Dybcio (1):
->    drm/msm/dpu: Allow variable SSPP/INTF_BLK size
-> 
->   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  210 ++
->   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  210 ++
->   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |   97 +
->   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |   91 +
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h |  152 ++
->   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  244 ++
->   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  151 ++
->   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   91 +
->   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   83 +
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h |   53 +
->   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  226 ++
->   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  158 ++
->   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  136 ++
->   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  142 ++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h |   99 +
->   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  209 ++
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 2175 +----------------
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   37 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    |    4 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |   18 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |    4 +-
->   21 files changed, 2443 insertions(+), 2147 deletions(-)
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> 
+--+3527FmE72Bif88B--
