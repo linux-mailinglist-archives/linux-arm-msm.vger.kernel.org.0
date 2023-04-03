@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1302C6D3CBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 792186D3CC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:20:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231444AbjDCFTH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 01:19:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58456 "EHLO
+        id S231462AbjDCFUd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 01:20:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231491AbjDCFSm (ORCPT
+        with ESMTP id S230192AbjDCFUc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 01:18:42 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA04A5BA9;
-        Sun,  2 Apr 2023 22:18:31 -0700 (PDT)
+        Mon, 3 Apr 2023 01:20:32 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC795BA9;
+        Sun,  2 Apr 2023 22:20:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id A593DB81134;
-        Mon,  3 Apr 2023 05:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D53C433EF;
-        Mon,  3 Apr 2023 05:18:27 +0000 (UTC)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 07169B81136;
+        Mon,  3 Apr 2023 05:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522DFC433D2;
+        Mon,  3 Apr 2023 05:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680499109;
-        bh=P8j0AzckZVYhGZrPQQ0YU21I6adlzSVHyeBkQuU1TaA=;
+        s=k20201202; t=1680499228;
+        bh=VO7ZTBlvGEHOHPdtxg5W/qEhh/9v1Pznmzk39ZuXRGk=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ArnlNllK5+jL5k0N6RXq6IqNSbuKSzUmT07cVkdEF+J969KZc205Y78fIj0Haa4pC
-         d9/PzbvFL3pIK1hAh79zAAyC3i6hB2gOXcCG3+bJ+82zyl3XXUV2VqzFyZxK8fsTPk
-         VBmEUPWtFi5bD/VviCpHeKLGjt2KwMIfWQjr7hSCjEXvWkII6MMSDcABWPLhx0l3v8
-         WgAtt76Co24WYzs2H75+FsJjYiuuvf0/MlOF21C5IK+fePj/F/8H9RJs2BoZS5ZTQw
-         7i789aZ47nzCCIuH1tTRZheEPmxAWMoSEjSMn3pYJtf02fMCgNRsrcXAiQ4EUvumlB
-         fV9TNf0Zc074g==
-Date:   Mon, 3 Apr 2023 10:48:24 +0530
+        b=IVRcmUTIxQhvE2DUpbbYkBUAoZwXtnehxq79P9rZ3iKWkAHBxVzCVwbNCobVdlaeR
+         2IUElUNED9T8ir/7WtgA18zAaQMX53sBbXjKWo6B0efYBzkIDe8yTjwxxyg3cFTqSL
+         6YBLTxUVFTLp5V9tI4byuOinRw3epNMzW69+CBhoQLbaYtV1Z+tjbPZabMjDa3RSKz
+         p6cUvt9QWbsPszvcI8y0v+cI8ddKoHyaz2n0PsG6d8xjiGt/p8h6mSmJRu2xP+AI/0
+         VLnCXk+DsCUJV7hWFLwSgZXeSpx2CjsOBgJCzXEb3CHLkb5mCkrtS27VtIot0XbIAr
+         KtlOMJ54h3pog==
+Date:   Mon, 3 Apr 2023 10:50:24 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     Slark Xiao <slark_xiao@163.com>
 Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: Use ERANGE for BHIOFF/BHIEOFF range check
-Message-ID: <20230403051824.GD4627@thinkpad>
-References: <1679674860-28229-1-git-send-email-quic_jhugo@quicinc.com>
+Subject: Re: [PATCH] bus: mhi: pci_generic: Add Foxconn T99W510
+Message-ID: <20230403052024.GE4627@thinkpad>
+References: <20230329072239.93632-1-slark_xiao@163.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1679674860-28229-1-git-send-email-quic_jhugo@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+In-Reply-To: <20230329072239.93632-1-slark_xiao@163.com>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -54,49 +54,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 24, 2023 at 10:21:00AM -0600, Jeffrey Hugo wrote:
-> If the BHIOFF or BHIEOFF range checks fail, they return EINVAL.  ERANGE
-> is a better error code since it implies an out of range condition.
+On Wed, Mar 29, 2023 at 03:22:39PM +0800, Slark Xiao wrote:
+> The Foxconn T99W510 device is designed based on Qualcomm
+> SDX24. Add 3 variants for different potential customer.
 > 
-> Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-Applied to mhi-next!
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
 - Mani
 
 > ---
+>  drivers/bus/mhi/host/pci_generic.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 > 
-> This feels more like a style change than fixing a bug, so I'm being
-> conservative and intentionally not listing a fixes tag.
-> 
->  drivers/bus/mhi/host/init.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index b46a082..f72fcb6 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -1112,7 +1112,7 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->  	if (bhi_off >= mhi_cntrl->reg_len) {
->  		dev_err(dev, "BHI offset: 0x%x is out of range: 0x%zx\n",
->  			bhi_off, mhi_cntrl->reg_len);
-> -		ret = -EINVAL;
-> +		ret = -ERANGE;
->  		goto error_reg_offset;
->  	}
->  	mhi_cntrl->bhi = mhi_cntrl->regs + bhi_off;
-> @@ -1129,7 +1129,7 @@ int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl)
->  			dev_err(dev,
->  				"BHIe offset: 0x%x is out of range: 0x%zx\n",
->  				bhie_off, mhi_cntrl->reg_len);
-> -			ret = -EINVAL;
-> +			ret = -ERANGE;
->  			goto error_reg_offset;
->  		}
->  		mhi_cntrl->bhie = mhi_cntrl->regs + bhie_off;
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 91d02f84ba21..db0a0b062d8e 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -363,6 +363,15 @@ static const struct mhi_controller_config modem_foxconn_sdx55_config = {
+>  	.event_cfg = mhi_foxconn_sdx55_events,
+>  };
+>  
+> +static const struct mhi_pci_dev_info mhi_foxconn_sdx24_info = {
+> +	.name = "foxconn-sdx24",
+> +	.config = &modem_foxconn_sdx55_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.mru_default = 32768,
+> +	.sideband_wake = false,
+> +};
+> +
+>  static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+>  	.name = "foxconn-sdx55",
+>  	.fw = "qcom/sdx55m/sbl1.mbn",
+> @@ -587,6 +596,15 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* T99W373 (sdx62) */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0d9),
+>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx65_info },
+> +	/* T99W510 (sdx24), variant 1 */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f0),
+> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
+> +	/* T99W510 (sdx24), variant 2 */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f1),
+> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
+> +	/* T99W510 (sdx24), variant 3 */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_FOXCONN, 0xe0f2),
+> +		.driver_data = (kernel_ulong_t) &mhi_foxconn_sdx24_info },
+>  	/* MV31-W (Cinterion) */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_THALES, 0x00b3),
+>  		.driver_data = (kernel_ulong_t) &mhi_mv31_info },
 > -- 
-> 2.7.4
+> 2.34.1
 > 
 
 -- 
