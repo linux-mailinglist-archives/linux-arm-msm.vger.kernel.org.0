@@ -2,82 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91FA96D5115
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 21:07:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6D356D5142
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 21:24:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231513AbjDCTHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 15:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35138 "EHLO
+        id S231357AbjDCTYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 15:24:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjDCTHO (ORCPT
+        with ESMTP id S231411AbjDCTYt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 15:07:14 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2062101
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 12:07:12 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 333ETqPv026979;
-        Mon, 3 Apr 2023 19:07:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dOed60UN+eh1dm1tAIE9fiexuRCZM9wl9JIJoqB4vu0=;
- b=M3gs8FeKE9ML+yMR42qAICMUQoR0MvrvrrLJ+6zScGye1w6I+dR3RSKMvu41yDtO2yaW
- eqOAooaxAlUGxYGgVylIs8xcRjsRVmY2LBxih5NPbAmzH/7wK/+qD+oZdl95q2IcwfmB
- JxCbHznuTLGiWDLuPCUCM0ebiSSqRinJ+B3mdRjH3s45InjYoQRlxczlXIxmDF6/7irD
- hYKPxDP3ccYuc6YbYY+T+VyEIRb1RagFICGEaUJXFTd7uhYfO4ATSYHmrcTHYc59n1MN
- PpqoE/UZKOi6N0gHT9wIJoS9TAltqDJmC2+9RZzDXmywpYnqURt+KySja0eBqLJFNzNA iQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pr0kx0pe0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 03 Apr 2023 19:07:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 333J73Z0032262
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 3 Apr 2023 19:07:03 GMT
-Received: from [10.110.66.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 3 Apr 2023
- 12:07:03 -0700
-Message-ID: <9d1529c0-779c-7f1f-6e6e-1972bb0d39f4@quicinc.com>
-Date:   Mon, 3 Apr 2023 12:07:02 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3 00/38] drm/msm/dpu: rework HW catalog
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Mon, 3 Apr 2023 15:24:49 -0400
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 178A5E7C;
+        Mon,  3 Apr 2023 12:24:47 -0700 (PDT)
+Received: from hillosipuli.retiisi.eu (dkzcv-3yyyyyyyyyyyyyt-3.rev.dnainternet.fi [IPv6:2001:14ba:4505:1fdc::1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sailus)
+        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Pr16v6hS3z49Q0d;
+        Mon,  3 Apr 2023 22:24:39 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+        t=1680549885;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Tp5qcqPaxivMIuFMRKaAe5HT8V/qPK5f6UKZnTDqXZs=;
+        b=wj8iMdaB6O5svgBz97QcbFfxl9pOUa1PNhWR6/nMI8DJ/TlBNBIzxaoXQ4xFtAVcllZBGn
+        1h11XWEmzs+t+7S8wZmoH14Ni8IZIiAbMuwhBvBpaZQSxGqHI3PBS4/eRQdeOwpNSUUZ4Q
+        9oD4KR5OR/7ixTFuQJjiBae6kKroRXjgsr1oQ1YHFdRtSRUWdkyXT6ydrbBKs2fI2Nf6at
+        KgPm5BT3ib2zzo+p3tbEYZMZCdzbPUGlXdxIKRq6Wl3LoBqS5w7Tcdh9ze+jq4BX8ZDee1
+        E31/c03A+3U1KSnRAQJPWWdm9O+j4FuxlElRkzejBkCFdfXldIoFoa2cL7+rAQ==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1680549885; a=rsa-sha256;
+        cv=none;
+        b=pTLkgQTxUMn8kAT5W3Z+ogFont60P6E8KePKCXivg0tBgmGITjjXMVNgPLPZmGVszTwkb9
+        8xmV8K+JZuzm7F5CFJy//1r6ial5+VTAqVELsLbmuuAMfOY1FbI3yDkl8ZCGK0ToM5mF6F
+        iXE23DARwHLsLEzlUBnPniLP4sabKK6I8VHkzWvPos67ec7cBwbNsoN6VKbLTay13Lx0Te
+        srYyEk9eLJ72MlypaetY0e3iRJp+oyVh9XtQdLwdV+Gk7bvcCtArTcbo8tYuuL7peYlIWK
+        3MAa6H4E+TVhwLzsPEbZwvIuhCayXj1Up3OmaEuUmeKIlKMxGrnJHjS1tylKqw==
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=sailus smtp.mailfrom=sakari.ailus@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=lahtoruutu; t=1680549885;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Tp5qcqPaxivMIuFMRKaAe5HT8V/qPK5f6UKZnTDqXZs=;
+        b=nDY5LUXsU7qY8CejlN+YlEuCBrJE/yaOwuV73ThTDfxvd8Q/gVoeJnKw2jhXh4fy8A7SPX
+        04/1VA27KvucaNF6obkcJs2PPrdTE0lqb28f0pJOkLQXoIeseCKj3IvDUyXnBCVMbpl03s
+        yasLIby0zyRIhZg4rK6kfJ04rUVkkEFvNGm5TZYXULNkyhoQREHpmP/LL8JdsOm0Nmc2LH
+        0bmnev2mHgSMrVvTzXkiub2kKx9ZZcsn7/QC6F+28qWZ7KKjWBErPDIXmgXOy47iBBRRO6
+        0ZiawUTptzsFdcFQ0UPZ510Z4RUtHySIcAMki/r3tFx2/Ka+zwbnh9UJRyw49Q==
+Received: from valkosipuli.retiisi.eu (valkosipuli.localdomain [192.168.4.2])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by hillosipuli.retiisi.eu (Postfix) with ESMTPS id 4C2E2634C91;
+        Mon,  3 Apr 2023 22:22:09 +0300 (EEST)
+Date:   Mon, 3 Apr 2023 22:22:08 +0300
+From:   Sakari Ailus <sakari.ailus@iki.fi>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc:     Rob Herring <robh@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Joe Tessler <jrt@google.com>,
+        Dongchun Zhu <dongchun.zhu@mediatek.com>,
+        Jacopo Mondi <jacopo+renesas@jmondi.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+        Niklas =?iso-8859-1?Q?S=F6derlund?= 
+        <niklas.soderlund+renesas@ragnatech.se>,
+        Tiffany Lin <tiffany.lin@mediatek.com>,
+        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+        Yunfei Dong <yunfei.dong@mediatek.com>,
+        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
- <b4972790-d990-063a-7ef4-2f05407357e8@quicinc.com>
- <f198ac6a-df12-9c08-55e8-f677acea8e2c@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <f198ac6a-df12-9c08-55e8-f677acea8e2c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Benoit Parrot <bparrot@ti.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH] media: dt-bindings: Drop unneeded quotes
+Message-ID: <ZCsnYGMkV2Zrw3fJ@valkosipuli.retiisi.eu>
+References: <20230320233944.2920964-1-robh@kernel.org>
+ <ZCaoVwRuxVOTZdI4@valkosipuli.retiisi.eu>
+ <36febd82-85b2-aa4d-c7e0-6343b119e0cc@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2L806kuGRLjXowJJOhX-pv06-4pmuD90
-X-Proofpoint-ORIG-GUID: 2L806kuGRLjXowJJOhX-pv06-4pmuD90
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-03_15,2023-04-03_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- impostorscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304030146
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+In-Reply-To: <36febd82-85b2-aa4d-c7e0-6343b119e0cc@gmail.com>
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,284 +127,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Stan,
 
+How are you doing?
 
-On 4/3/2023 11:48 AM, Dmitry Baryshkov wrote:
-> On 03/04/2023 21:06, Abhinav Kumar wrote:
->>
->>
->> On 3/30/2023 2:52 PM, Dmitry Baryshkov wrote:
->>> This huge series attempts to restructure the DPU HW catalog into a
->>> manageable and reviewable data set. In order to ease review and testing
->>> I merged all the necessary fixes into this series. Also I cherry-picked
->>> & slightly fixed Konrad's patch adding size to the SSPP and INTF macros.
->>>
->>
->> I had to first dig up some history about why dpu catalog grew so much 
->> in the first place before starting this review. When the DPU driver 
->> first landed (which pre-dates my work in upstream), it looks like it 
->> followed mdp5 model from mdp5_cfg.c. But looks like as the number of 
->> chipsets which use DPU kept growing, this is becoming a burden.
->>
->> As everyone knows, downstream follows a devicetree model for the dpu 
->> hardware and that should have always been the case. Perhaps in the 
->> last 2-3 years more time could have been spent on standardizing the 
->> bindings used for hw blocks in order to maintain a less hard-coded 
->> catalog file and more in the device tree.
+On Mon, Apr 03, 2023 at 08:26:28PM +0300, Stanimir Varbanov wrote:
+> Hei Sakari,
 > 
-> Unfortunately, this is not how the upstream DT works. If something is a 
-> constant hardware property, it should not go into the DT. So pushing 
-> catalog to dt would have been immediately frowned upon by Rob Herring or 
-> Krzysztof.
+> On 31.03.23 г. 12:31 ч., Sakari Ailus wrote:
+> > Hi Rob,
+> > 
+> > On Mon, Mar 20, 2023 at 06:39:42PM -0500, Rob Herring wrote:
+> > > Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> > > checking for this can be enabled in yamllint.
+> > > 
+> > > Signed-off-by: Rob Herring <robh@kernel.org>
+> > 
+> > This patch contains changes to Qualcomm bindings that have been already
+> > made by other patches by Krzysztof. I think these took some time to get
+> > merged to the media tree.
+> > 
+> > I've dropped those, the result is here:
+> > 
+> > <URL:https://git.linuxtv.org/sailus/media_tree.git/commit/?id=d75cae0884e80bba486f85e82b33a1dae3c9c976>
+> > 
 > 
-
-Yes certainly we cannot put hardware specific properties. But in 
-general, modelling the hardware like the number of sspps, number of 
-interfaces and number of dspps etc can be a bit abstracted? like 
-blk-type and blk-offset? blk-type can be a custom string because each 
-block is named differently for different vendors?
-
-The number of blk_offsets decides number of blocks. Its not constant 
-right. We are seeing it varying with chipsets.
-
->> Then the catalog would have just been a place to parse the device 
->> tree, set the feature capability based on chipset (refer 
->> _sde_hardware_pre_caps). That way offsets , number of blocks and the 
->> blocks themselves still come from the device tree but perhaps some 
->> specific features are at SOC level for which the catalog still stays.
->>
->> That being said, I thought of different strategies even before the 
->> review but two issues prevented me from suggesting those ideas (one of 
->> which I am seeing even here , which I am going to suggest below and 
->> also suggest why it wont work).
->>
->> 1) For the same DPU major/minor version, some features might get 
->> dropped or even get added with different SOCs as overall the system 
->> capabilities might differ like number of SSPPs or memory footprint of 
->> the SOC etc.
->>
->> So there is no good way right now to generalize any dpu catalog or to 
->> tie it with a DPU major/minor version. We will have to stick with a 
->> per-SOC model.
+> Do you think it will fix this pull request failure?
 > 
-> Up to now, the SoC was equal to major+minor. Could you please be more 
-> specific here, if there are any actual differences within major+minor 
-> families?
-> 
+> https://lore.kernel.org/all/20230329214310.2503484-1-jenkins@linuxtv.org/
 
-So lets say, the same DPU major/minor version is used but we have only 
-one DSI on one chipset Vs two DSIs on the other, some of the features 
-which come into play only for dual DSI cannot be used. Like broadcasting 
-a DCS command across two DSIs etc. This is a very basic example, but 
-there are many examples.
+Ah, it seems to be the same issue here.
 
->>
->> This is what led me to not pursue that route.
->>
->> 2) For the same DPU major/minor version, even if core-DPU is same (in 
->> terms of SSPP, DSPP etc), the number of interfaces can change. So 
->> again no room to generalize same DPU hw version.
-> 
-> Again, I might be just scratching the surface, but I have not observed 
-> this.
-> 
+The patch has been merged via my tree, whereas the rest of the patchset was
+apparently merged by Hans earlier on.
 
-This typically happens based on what products that chipset is catered 
-towards. Thats pretty much what I can share. But more number of 
-interfaces for more number of displays / use-cases.
+<URL:https://patchwork.linuxtv.org/project/linux-media/list/?series=9531&submitter=&state=*&q=&archive=&delegate=>
 
->>
->> 3) For the same reason as (1) and (2), I think the de-duplication 
->> strategy used in this series is not correct. The idea of 
->> dpu_hw_version_num_layer_mixer is just not scalable as I dont know how 
->> many variants that will lead to. So it seems like just an attempt to 
->> de-duplicate which perhaps works today for existing dpu chipsets in 
->> upstream but by no means scalable. Lets go ahead with per-SOC catalog 
->> file but lets live with some amount of duplication between them if we 
->> really have to split it across header files.
-> 
-> Indeed, this leads to minor differences on top of major+lm. However, I 
-> think, the overall complexity is lowered.
-> 
-> Nevertheless, let's land the major set of patches and leave 
-> generalization for the later time. I think, with the addition of the 
-> next several platforms we will see the drill.
-> 
+-- 
+Kind regards,
 
-Yes, I would say lets handle generalization/de-duplication later when we 
-see more patterns.
-
-Lets land the main pieces first.
-
-Going with dpu version and number of lms is not the way to generalize it 
-from what we think.
-
->> I also thought of similar strategies to generalize like based on 
->> sub-blocks similar to what you have done but all of these were NAKed 
->> internally by folks who work on more chipsets / have more visibility 
->> into the spread of features across chipsets.
->>
->>> First 4 patches clean up the catalog a bit in order to make it more
->>> suitable for refactoring.
->>>
->>
->> These are okay. I will address your follow-up questions about patch 
->> (1) and lets land these.
->>
->>> Then the next batch of 13 + 5 patches split the hw catalog entries into
->>> per-SoC files.
->>>
->>
->> This part is also fine. But perhaps dont have dpu hw version in the 
->> file. So just dpu_hw_sm8250.h or dpu_hw_sm8350.h etc.
-> 
-> Having a version makes it easier to compare chipsets (and also to verify 
-> that feature masks are correct), so I'd like to retain it.
-> 
-
-This is again trying to generalize it. So for example, yes perhaps today 
-the chipsets we have belong to a particular DPU major/minor version and 
-it might look like because they are in the same family things look 
-similar but that can also go against this. If we find some differences 
-among them, then some upstream developers might think "Oh, these belong 
-to the same family, but how come it doesnt have the same features?". 
-Thats why I am hesitant to go with DPU major/minor version in the name.
-
->>
->>> Next 9 patches rework catalog entries, mostly targeting deduplication of
->>> data used by several platforms. At this moment only three pairs (out of
->>> 13 devices supported by DPU) are merged. However this part lays out the
->>> ground to ease adding support for new platforms, some of which use the
->>> same configuration as the existing platforms
->>>
->>
->> This is the part I suggest we drop.
->>
->>> Last batch of 7 patches renames existing macros to ease using them while
->>> adding support for new devices.
->>>
->>
->> I have to check this part but perhaps after re-basing based on my 
->> earlier comment.
-> 
-> Ack, I'll see what I can drop and what is going to be there.
-> 
-> Up to now there were some natural shares, like sm8150 vs sc8180x and 
-> qcm2290 vs sm6115. Do you think we should populate the missing parts by 
-> duplicate the data?
-> 
-
-Yes, lets go ahead with the duplicate data for now. Once a more 
-reasonable strategy evolves for generalizing it, we can update it.
-
->>
->>> This pile of patches is submitted in a single batch to allow one to
->>> observe the final goal of the cleanup which otherwise might be hard to
->>> assess.
->>>
->>>
->>> Changes since v2:
->>> - Fixed sc8280xp SSPP size to 0x2ac
->>> - Rebased on top of msm-next-lumag, dropped merged patches
->>>
->>> Changes since v1:
->>> - Picked up Konrad's patch
->>> - Picked up dependencies into the main series
->>> - Moved qseed3lite vs qseed4 patches into the fixes part
->>> - Fixed sm6115 in a similar manner.
->>>
->>> Dmitry Baryshkov (37):
->>>    drm/msm/dpu: constify DSC data structures
->>>    drm/msm/dpu: mark remaining pp data as const
->>>    drm/msm/dpu: move UBWC/memory configuration to separate struct
->>>    drm/msm/dpu: split SM8550 catalog entry to the separate file
->>>    drm/msm/dpu: split SM8450 catalog entry to the separate file
->>>    drm/msm/dpu: split SC8280XP catalog entry to the separate file
->>>    drm/msm/dpu: split SC7280 catalog entry to the separate file
->>>    drm/msm/dpu: split SM8350 catalog entry to the separate file
->>>    drm/msm/dpu: split SM6115 catalog entry to the separate file
->>>    drm/msm/dpu: split QCM2290 catalog entry to the separate file
->>>    drm/msm/dpu: split SC7180 catalog entry to the separate file
->>>    drm/msm/dpu: split SM8250 catalog entry to the separate file
->>>    drm/msm/dpu: split SC8180X catalog entry to the separate file
->>>    drm/msm/dpu: split SM8150 catalog entry to the separate file
->>>    drm/msm/dpu: split MSM8998 catalog entry to the separate file
->>>    drm/msm/dpu: split SDM845 catalog entry to the separate file
->>>    drm/msm/dpu: duplicate sdm845 catalog entries
->>>    drm/msm/dpu: duplicate sc7180 catalog entries
->>>    drm/msm/dpu: duplicate sm8150 catalog entries
->>>    drm/msm/dpu: duplicate sm8250 catalog entries
->>>    drm/msm/dpu: duplicate sm8350 catalog entries
->>>    drm/msm/dpu: use defined symbol for sc8280xp's maxwidth
->>>    drm/msm/dpu: catalog: add comments regarding DPU_CTL_SPLIT_DISPLAY
->>>    drm/msm/dpu: enable DPU_CTL_SPLIT_DISPLAY for sc8280xp
->>>    drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
->>>    drm/msm/dpu: drop duplicate vig_sblk instances
->>>    drm/msm/dpu: enable DSPP on sc8180x
->>>    drm/msm/dpu: deduplicate sc8180x with sm8150
->>>    drm/msm/dpu: deduplicate sm6115 with qcm2290
->>>    drm/msm/dpu: deduplicate sc8280xp with sm8450
->>>    drm/msm/dpu: drop unused macros from hw catalog
->>>    drm/msm/dpu: inline IRQ_n_MASK defines
->>>    drm/msm/dpu: rename INTF_foo_MASK to contain major DPU version
->>>    drm/msm/dpu: rename CTL_foo_MASK to contain major DPU version
->>>    drm/msm/dpu: rename VIG and DMA_foo_MASK to contain major DPU version
->>>    drm/msm/dpu: rename MIXER_foo_MASK to contain major DPU version
->>>    drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
->>>
->>> Konrad Dybcio (1):
->>>    drm/msm/dpu: Allow variable SSPP/INTF_BLK size
->>>
->>>   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  210 ++
->>>   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  210 ++
->>>   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |   97 +
->>>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |   91 +
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h |  152 ++
->>>   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  244 ++
->>>   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  151 ++
->>>   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   91 +
->>>   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   83 +
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h |   53 +
->>>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  226 ++
->>>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  158 ++
->>>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  136 ++
->>>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  142 ++
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h |   99 +
->>>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  209 ++
->>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 2175 +----------------
->>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   37 +-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    |    4 +-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |   18 +-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |    4 +-
->>>   21 files changed, 2443 insertions(+), 2147 deletions(-)
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
->>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
->>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h
->>>   create mode 100644 
->>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->>>
-> 
+Sakari Ailus
