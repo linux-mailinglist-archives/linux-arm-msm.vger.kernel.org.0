@@ -2,130 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E33D6D4278
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 12:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79EF06D42A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 12:54:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231786AbjDCKse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 06:48:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38520 "EHLO
+        id S231918AbjDCKyl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 06:54:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231679AbjDCKsd (ORCPT
+        with ESMTP id S231894AbjDCKyZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 06:48:33 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D11AB6EB4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 03:48:30 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id by14so10673773ljb.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 03:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680518909;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4n9yhzm1Rmk8D25FTiH0wOJ+GO4nCT0aVo2ehKd/0bI=;
-        b=c0uJzu1LiPBut0N7W8zNzlAV9wmMrZZZpbLe/3ycBlOFIuMn0P5nX3QLN31VNxOVps
-         ppMd6IWf3/FQ99ALwIPjufG53hlW0NOaO9kfCdzuagDp3o5/4+wANyp0vWasLbujmCmA
-         PUvisxJBeLuctt5Y/FnhZ1VbuudXDFYUEwRKj0D1wkz/T09+BkHogFOcvQ7ErrrcDrY2
-         v4SjUKlP9XTkcXhdPM1OlC6kXUqiP4jNSbb+TP4rZOeqN9z12ks8VP3Wa80F83Hbe3zC
-         cTXQhrN5dRWJ7ox445WJftUWLlFDLHPraL+HlIrf9bVUvCGKNGbsMqUOPa6fhkHCjLSM
-         f3uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680518909;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4n9yhzm1Rmk8D25FTiH0wOJ+GO4nCT0aVo2ehKd/0bI=;
-        b=xPDl9odzivbYCGNcGLK/JSOHc97gzfE4US3GBl4BVLfxGTgLnksjcgBxF3C+2B4d9R
-         j//Pc3Z+b1n2WWuYrg7Nqg2mkUIUoIQp9U1vgInyaQmesLjdn+U3QtjwXn/+80nb4n8y
-         tWH/ZfKLfURIDEoA1PTK390DSnhEY4E3F6B55ENXgMmr1ISdZmXKAyddJLvgdV1i9ekB
-         Z7qSFzKtalRYdoRAl52J1cZAvA9skIlg5d+n5EiUr2gabl7/Ry+wlZEGOfh1PvgUfpMl
-         7UDZ7nLeIdTHWy3YtPoKZGDEYMtYbHoetNljvEPuhormCjfikpS80bryTQzaE3Hf5FV8
-         ycMQ==
-X-Gm-Message-State: AAQBX9fSk+KJwk6C3+DZ5AhI02vgiIGKHjhODaV1osaU8isegsbxzaPE
-        B/c6z5P+bdVzAEs28+LRMZDN8A==
-X-Google-Smtp-Source: AKy350b9py/sij6PkWPceiL0IU5yAJ5hg6zA+et/1jOZ9VZhnEZINtiQQwxVTa7ptGeT1rQVEva9GQ==
-X-Received: by 2002:a2e:b043:0:b0:295:c491:3b16 with SMTP id d3-20020a2eb043000000b00295c4913b16mr4737035ljl.7.1680518909142;
-        Mon, 03 Apr 2023 03:48:29 -0700 (PDT)
-Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
-        by smtp.gmail.com with ESMTPSA id g25-20020a2e9cd9000000b00298a8527806sm1688302ljj.93.2023.04.03.03.48.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 03:48:28 -0700 (PDT)
-Message-ID: <463a9885-741e-a44a-c6c2-7cf5b0560d2d@linaro.org>
-Date:   Mon, 3 Apr 2023 12:48:27 +0200
+        Mon, 3 Apr 2023 06:54:25 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33BE12055;
+        Mon,  3 Apr 2023 03:53:58 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 8CFAAB8184D;
+        Mon,  3 Apr 2023 10:53:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C11AC433EF;
+        Mon,  3 Apr 2023 10:53:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680519236;
+        bh=VWMo1YJspHOfBC+lus10zI4L7eNsXSOhn8XQ8widspU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=InCZo1EfGW3TaJCuifsyUJAn7xv98k6uy+ckeaSMPOM9USkCQ78Bk9HmjDVRVtnMs
+         HQckvKA/7bBzmsfegNZb+Ca6HOg4VlUrUNIc3YYEVlwkj0rlv4a9zineEn2+Pae+hN
+         Vg3SWBxzRm/v90l1cdtEQOfTmoNjHVViobtEsiQu5S0mPhLk7Vjhl7jafHNCcjniEI
+         67Ra+2S15o80jw+8sRqRhxG9FLTSHJRY4sjmVIvoY29dXW6j6PCCO5BB1XMMBgUt0Z
+         SnLRgYDGi1SIoljEnQUSFjlxFqSt7YIxDQB9LedVfnOEp0U2KcycqglD5lfIAwRbf6
+         PKwj9zIV1sYMg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pjHpL-0003Ag-3Y; Mon, 03 Apr 2023 12:54:19 +0200
+Date:   Mon, 3 Apr 2023 12:54:19 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: fix pon compatible and
+ registers
+Message-ID: <ZCqwWwdhhJdOK+5Y@hovoldconsulting.com>
+References: <20230327122948.4323-1-johan+linaro@kernel.org>
+ <48f71f9a-0d00-16df-fff8-5aa455918378@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v5 05/11] dt-bindings: qcom-qce: Fix compatible
- combinations for SM8150 and IPQ4019 SoCs
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, rfoss@kernel.org, neil.armstrong@linaro.org
-References: <20230402100509.1154220-1-bhupesh.sharma@linaro.org>
- <20230402100509.1154220-6-bhupesh.sharma@linaro.org>
- <21eaeea4-4f2e-5ce5-c75b-d74ded8e6e4c@linaro.org>
- <CAH=2NtzKGxzmCq2JTajxWoeRFR+mPnFY3YF5mn0tGt30T7SJoQ@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAH=2NtzKGxzmCq2JTajxWoeRFR+mPnFY3YF5mn0tGt30T7SJoQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <48f71f9a-0d00-16df-fff8-5aa455918378@linaro.org>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3.04.2023 08:15, Bhupesh Sharma wrote:
-> On Mon, 3 Apr 2023 at 11:06, Vladimir Zapolskiy
-> <vladimir.zapolskiy@linaro.org> wrote:
->>
->> On 4/2/23 13:05, Bhupesh Sharma wrote:
->>> Currently the compatible list available in 'qce' dt-bindings does not
->>> support SM8150 and IPQ4019 SoCs directly which may lead to potential
->>> 'dtbs_check' error(s).
->>>
->>> Fix the same.
->>>
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> ---
->>>   Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 6 ++++++
->>>   1 file changed, 6 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
->>> index e375bd981300..90ddf98a6df9 100644
->>> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
->>> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
->>> @@ -24,6 +24,12 @@ properties:
->>>           deprecated: true
->>>           description: Kept only for ABI backward compatibility
->>>
->>> +      - items:
->>> +          - enum:
->>> +              - qcom,ipq4019-qce
->>> +              - qcom,sm8150-qce
->>> +          - const: qcom,qce
->>> +
->>>         - items:
->>>             - enum:
->>>                 - qcom,ipq6018-qce
->>
->> Two commit tags given for v2 are missing.
+On Mon, Apr 03, 2023 at 11:18:07AM +0200, Krzysztof Kozlowski wrote:
+> On 27/03/2023 14:29, Johan Hovold wrote:
+> > The pmk8280 PMIC PON peripheral is gen3 and uses two sets of registers;
+> > hlos and pbs.
+> > 
+> > This specifically fixes the following error message during boot when the
+> > pbs registers are not defined:
+> > 
+> > 	PON_PBS address missing, can't read HW debounce time
+> > 
+> > Note that this also enables the spurious interrupt workaround introduced
+> > by commit 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press
+> > debouncing support") (which may or may not be needed).
+> > 
+> > Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> > index c35e7f6bd657..a0ba535bb6c9 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> > @@ -59,8 +59,9 @@ pmk8280: pmic@0 {
+> >  		#size-cells = <0>;
+> >  
+> >  		pmk8280_pon: pon@1300 {
+> > -			compatible = "qcom,pm8998-pon";
+> > -			reg = <0x1300>;
+> > +			compatible = "qcom,pmk8350-pon";
 > 
-> Cannot get your comment. Please be more descriptive.
+> Same comment as Dmitry's. There is no compatible "qcom,pmk8350-pon"
+> ccd3517faf18, therefore indicated backport (through AUTOSEL) will lead
+> to invalid stable kernel.
+>
+> You must drop the Fixes tag, because this cannot be backported.
 
-https://lore.kernel.org/linux-arm-msm/333081a2-6b31-3fca-1a95-4273b5a46fb7@linaro.org/
+That's bullshit. Do you see a stable tag? Is 5.19-stable still active?
 
-Konrad
-> 
-> Thanks,
-> Bhupesh
+The problem is that the driver was updated before the binding was so the
+above mentioned probe error has been there since this file was merged.
+
+AUTOSEL is crazy and people apparently just ignore it instead of NAKing
+when it is suggesting backporting devicetree cleanups (which to be fair
+should generally not have Fixes tags in the first place).
+
+If 5.19-stable was still active and someone suggested backporting this
+one, they would have to change the compatible string to match the
+inconsistent 5.19 kernel. Note that that would need to happen regardless
+of whether this patch has a Fixes tag or not.
+
+Johan
