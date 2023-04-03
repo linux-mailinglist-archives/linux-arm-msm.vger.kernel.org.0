@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 914046D4F08
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 19:36:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B03396D4F09
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 19:36:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231484AbjDCRga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 13:36:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39464 "EHLO
+        id S231645AbjDCRgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 13:36:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230511AbjDCRg2 (ORCPT
+        with ESMTP id S231447AbjDCRga (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 13:36:28 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A972107
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 10:36:27 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id y15so39072953lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 10:36:27 -0700 (PDT)
+        Mon, 3 Apr 2023 13:36:30 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5AC2117
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 10:36:28 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id q16so39055849lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 10:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680543385;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lgJjE+KvrFmAUSASYTKE46Q0Rh1x9INPUFBYXq75mYY=;
-        b=nBX8sZqvPSn2BoLqUd21+B0CAXHZdTQ0ISH9Tcc73TxJxQPyv0AqgzoV2dQMkm3Bvi
-         O3XD6pB+zaqy9VS2tzYJVWc6qACb9K4/KF9JRHU73iR2Nqa3WM+xlKkt3n3jhxgJcgMk
-         exKrAL4Xc5Qnf/JgHz+n0elUBaX815aw9FzNJjCAghz2bY3jWnE2t/MioF94by5/NtPE
-         XHJh3QiRyqvxvBanyH5F3BKMmmxwhbgL4/ZQ9EsM5Wrfn1st2WHOdBg1KptLB+aB2iYM
-         cj2c5ocgfDzHW3IYcAqs3fJtWmElAZYPEamcEwzcXDWYxEvf3bdoLCr9II4u4sjrm9Gd
-         fx0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680543385;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1680543387;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lgJjE+KvrFmAUSASYTKE46Q0Rh1x9INPUFBYXq75mYY=;
-        b=YibDpccSON5M1r3FiORfdlUsCoa4DXw0s/6Kp8dD//hepH9aOOqP4nVGvyym/a2v8V
-         bbNW/H7g424mXaLsHcLVPQZOAWBm54LGCFTPzL3HqyRibRigj8voFG+g8WB02vSwvIGT
-         Vev1kfdv1gdR7HOK4RwRUHmBN6oUbGgrRtq1aj2mERaTOVL7/9gt1E5bM8loqUNRlzJ6
-         SERWLz37CryiYltQ2zj1nmQCyRXpbQu/HVtMhZFPLDKz55sredP+Pjm6o8ceTee+0/Bg
-         nI4cd2dqxMeBZFagHnreoku0QpWIjquPE816e+RRuIlZybwgjxzLxBrEI0EUDn5mXECJ
-         eGrA==
-X-Gm-Message-State: AAQBX9fU5hi7BfNShvPt8S1VS15qaI/eUtf3P8/Olo9jC2XAMJSr2UG2
-        O6H7Jk3TSJlWTBm+F86pwqTrgQ==
-X-Google-Smtp-Source: AKy350bJXi16e3RU7z+3y153PGXst7YnIlzzbnKu4rGKbZ2jW0MjBgMeg2Fk0Y9DTYJYacDMfdJDdw==
-X-Received: by 2002:ac2:592b:0:b0:4e9:9e45:3470 with SMTP id v11-20020ac2592b000000b004e99e453470mr9492416lfi.3.1680543385584;
-        Mon, 03 Apr 2023 10:36:25 -0700 (PDT)
+        bh=TBvlpAK7/o8+j8xD5iOhFbOub8lAxsWFT3ml9SF2k8w=;
+        b=pVSHW4PAuNqPDtga0H+TNnSJkHF6vACVmUdZrLcN7oIwTMIcX0/K2/n3bJxzpRuY37
+         53LlrhPZ4kskfWyZSETT/+qr08/R/+ZSNmj99wqQ4qqH2MOWtTuyJmjYYJG6g+5HwIey
+         qx06ibGDlersfvOpEhEo/plJiI2uT1YpJycwNmx3wppDfW91l9LLosVcbvpPOIS1gup/
+         V0PZ9TM8EgtxzMs0KMo3kDsBjzMD6t+wz47A8ZhLqnw1rmfeO69kPHr5DaK2Hu2LduvP
+         QB9lU2WmgtO+Tou4rvNmK647IM3LIrbEUqGBLLWXlOT3LdBf/gM9Xj5vN4vmBv6GURPe
+         NlBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680543387;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TBvlpAK7/o8+j8xD5iOhFbOub8lAxsWFT3ml9SF2k8w=;
+        b=hD2yKvxEy+HyirY6bPXfGC9oLcKBa7rWN+etjmP75RxmTh283FtrM03TOoCs2Pmcjh
+         WBoBxrvOD3C1SpkJ+MfCqNTckjRGm7WDHPaGTSRIHlbDPD4vxUXDF1TuMw2zhN3yqGTb
+         gTdH2Kn+nD8hrFuYOZG5FgIT2eA0Hctv+4dNFRXJ1+gJOEsLj1Nj339uttDPfz7JzBRV
+         CsxjBuEuX2Qg/XPpDnHDhb0iPaLDFBjnUuaBMh9zXDHZsxmc7DAOlSKDEFzjqUS+NijU
+         cx9B330TQ4QoPX4+hNJvmLMHHXFUUbZrsBXX3WirL9nHJQFbdisNt9PhdYwWdSN81TzQ
+         gXpA==
+X-Gm-Message-State: AAQBX9dXaCxCm9W25nGmX6FN2Ojneho9dyCSUekMPnJGT7X0k0zM1RxI
+        mnweyjfOCG/zB+HVHv9ByPelRw==
+X-Google-Smtp-Source: AKy350ZPcOlRP/SHBR/lSTxQrru/S9RLs7psdb0vj739i+w24uSW8v/Q3Bf1M/x2O3HSBcz+GuKxDA==
+X-Received: by 2002:ac2:5e87:0:b0:4db:405f:d5c0 with SMTP id b7-20020ac25e87000000b004db405fd5c0mr9949850lfq.48.1680543386984;
+        Mon, 03 Apr 2023 10:36:26 -0700 (PDT)
 Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
-        by smtp.gmail.com with ESMTPSA id v2-20020a056512096200b004cc5f44747dsm1871094lft.220.2023.04.03.10.36.24
+        by smtp.gmail.com with ESMTPSA id v2-20020a056512096200b004cc5f44747dsm1871094lft.220.2023.04.03.10.36.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 10:36:25 -0700 (PDT)
+        Mon, 03 Apr 2023 10:36:26 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH 0/9] RB1 + QCM2290 support
-Date:   Mon, 03 Apr 2023 19:35:58 +0200
-Message-Id: <20230403-topic-rb1_qcm-v1-0-ca849b62ba07@linaro.org>
+Date:   Mon, 03 Apr 2023 19:35:59 +0200
+Subject: [PATCH 1/9] dt-bindings: firmware: document Qualcomm QCM2290 SCM
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH4OK2QC/x2N0QrCMAwAf2Xk2UDXjln8FZHRdNEFZjdTFWHs3
- w17vIPjNqiswhUuzQbKX6myFIP21ECeUnkwymgM3vngOhfwvaySUakdXvmJ55hi9D2FjnqwhlJ
- lJE0lT1aVzzybXJXv8jsm19u+/wFSZVRQdAAAAA==
+Message-Id: <20230403-topic-rb1_qcm-v1-1-ca849b62ba07@linaro.org>
+References: <20230403-topic-rb1_qcm-v1-0-ca849b62ba07@linaro.org>
+In-Reply-To: <20230403-topic-rb1_qcm-v1-0-ca849b62ba07@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -72,11 +72,11 @@ Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680543384; l=2279;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680543384; l=1279;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=Oe8NOlqI6eJ+DsG/9HBWcEqSh9kVrB8UltmKWG7DjW4=;
- b=KETWvJB5B1cGRgGv6EoAEJegYxKMFx6xHznjKtlgvFvTQuslWNwkf5G4at9TQaf3wz3XUpTX50Kd
- Sd06EoJeCPz0VCyTDBMPw0UirD1i+FF17G8OpP6lhQ0tSyfGy/D6
+ bh=hZK413Fcu+BN0crcpQ11mOoyXOGctjEEVv2fsaW1SYg=;
+ b=Q3mDf8jw3EgBBLGu845DYQ9YsIGMUCvnRM3PsbvtwnSUHv8hL6+0PyoeykcEIgLARdqwM2jZ2HMn
+ TaM3P4t2BiAP2cl9aXRMcqntBCZj2JZbbDQ6gbBHE71dDELlQR1g
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -88,54 +88,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series brings basic support for the Qualcomm Robotics RB1 board,
-including but not limited to:
-
-- TSENS-connected thermal management
-- USB2
-- eMMC (uSD depends requires regulators to work, will be sent separately)
-- the necessary plumbing for *DSP + Wi-Fi (that also needs regulators)
-- buttons
-
-A compatible in the SCM C driver is not added on purpose, as:
-1. it's not neccessary before we figure out disabling rpmcc, the dt
-   part is in regardless (the clock it consumes is always-on today)
-2. a point to get rid of SoC-specific compatibles in there was raised
-
-See also:
-https://www.thundercomm.com/product/qualcomm-robotics-rb1-platform/
-https://www.qualcomm.com/products/internet-of-things/industrial/industrial-automation/qualcomm-robotics-rb1-platform
-
-Dependencies:
-- https://lore.kernel.org/linux-arm-msm/20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org/
-- https://lore.kernel.org/linux-arm-msm/20230315183231.3562580-1-konrad.dybcio@linaro.org/
-- https://lore.kernel.org/linux-arm-msm/20230323173019.3706069-1-dianders@chromium.org/
+Add a compatible for Qualcomm QCM2290 SCM and add it to the core clock
+users list.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (9):
-      dt-bindings: firmware: document Qualcomm QCM2290 SCM
-      dt-bindings: arm: qcom: Add QRB2210/QCM2290 and RB1 board
-      arm64: dts: qcom: Add initial QCM2290, PM2250 & RB1 device trees
-      arm64: dts: qcom: qcm2290: Add most QUPs
-      arm64: dts: qcom: qcm2290: Add thermal zones
-      arm64: dts: qcom: qcm2290: Add SMP2P
-      arm64: dts: qcom: qcm2290: Add ADSP & modem
-      arm64: dts: qcom: qcm2290: Add WCN3990 Wi-Fi node
-      arm64: dts: qcom: qrb2210-rb1: Enable RESIN Volume Down
+ Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
- Documentation/devicetree/bindings/arm/qcom.yaml    |    8 +
- .../devicetree/bindings/firmware/qcom,scm.yaml     |    3 +
- arch/arm64/boot/dts/qcom/Makefile                  |    1 +
- arch/arm64/boot/dts/qcom/pm2250.dtsi               |   63 +
- arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 1561 ++++++++++++++++++++
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           |  112 ++
- 6 files changed, 1748 insertions(+)
----
-base-commit: 31bd35b66249699343d2416658f57e97314a433a
-change-id: 20230403-topic-rb1_qcm-78a8826b34b6
+diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+index 543feb3b6c58..35540f292bfd 100644
+--- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
++++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+@@ -40,6 +40,7 @@ properties:
+           - qcom,scm-msm8994
+           - qcom,scm-msm8996
+           - qcom,scm-msm8998
++          - qcom,scm-qcm2290
+           - qcom,scm-qdu1000
+           - qcom,scm-sa8775p
+           - qcom,scm-sc7180
+@@ -109,6 +110,7 @@ allOf:
+               - qcom,scm-msm8960
+               - qcom,scm-msm8974
+               - qcom,scm-msm8976
++              - qcom,scm-qcm2290
+               - qcom,scm-sm6375
+     then:
+       required:
+@@ -127,6 +129,7 @@ allOf:
+               - qcom,scm-apq8064
+               - qcom,scm-msm8660
+               - qcom,scm-msm8960
++              - qcom,scm-qcm2290
+               - qcom,scm-sm6375
+     then:
+       properties:
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.40.0
 
