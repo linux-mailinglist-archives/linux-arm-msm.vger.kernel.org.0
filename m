@@ -2,114 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9538E6D4521
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 15:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E3CD6D452F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 15:03:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232363AbjDCNCL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 09:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53288 "EHLO
+        id S232157AbjDCNDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 09:03:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232285AbjDCNCJ (ORCPT
+        with ESMTP id S232434AbjDCNDo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 09:02:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3D01A941
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 06:01:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680526879;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=qp8jb1qENX7rVnqrJSaV9tv+NNohtm3BMtsMs+alKp0=;
-        b=b4TZLRpsMM0e6x5tBFt4XybyPywv1OS+fgWzua+byFw0z7sCPCB+gw0dXJokHDeKaFXoAm
-        AQ02U18WqbpoxibtDon8VwRJnc97xraJ2FUwmtEW98JZ8VTNCkleGfCx4ZWRGduTlSUF0Z
-        or257CVusWNSj/YpEFaPtSVK7ltWxDU=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-vpFWapyVPJ6igvk8uUGdSQ-1; Mon, 03 Apr 2023 09:01:18 -0400
-X-MC-Unique: vpFWapyVPJ6igvk8uUGdSQ-1
-Received: by mail-oi1-f197.google.com with SMTP id q127-20020acaf285000000b00386dec7a02bso6918107oih.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 06:01:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680526877;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qp8jb1qENX7rVnqrJSaV9tv+NNohtm3BMtsMs+alKp0=;
-        b=vpXkLy34ONZIQC6iBQgf0APiBitfHBPQOk/SlXO/6cia8OIR7gqy1lQYGKFmNLyZG+
-         n2ZgHzlbyMl1krVc3fRAKkXLXHPTnds/VoVEDxpd+bxnjhh/uWnPbJm1lxJUExYPpLoR
-         9uVLHdL5w32dCSEWd6fCfgIBwNo+ou/iscsN8G2SrDSgufZNS6oSXzs8s3ceJ3todlXQ
-         TGbv6M7L6UiQAKjLCQppuOIfsdfHjeihmEMNohViLiK2u1DojC5Gvn4aTzw1K2NOYzyC
-         ucfJGhlk/hpeEif2gcMZMv6JNAu50CY8FECrubQKE6ib7gOE8UQV9+rv1hEvUo3Z2uAN
-         tn1g==
-X-Gm-Message-State: AAQBX9cYNs29nvaomt8l8+jXoHIO+IdvpWCbylgiZ1XWrxTZR25rPdEy
-        fJI44KLX8ELy4mkQ/CozMtksdGfLCmVUxz8+A5iNfVxUAdBbVX5rjVhufQtKtLVzUS4KYUot76y
-        DvGZPYhm6xDg1VVTVzAu7rhRvNw==
-X-Received: by 2002:a05:6870:a10a:b0:169:cbcc:25c0 with SMTP id m10-20020a056870a10a00b00169cbcc25c0mr9340406oae.14.1680526877282;
-        Mon, 03 Apr 2023 06:01:17 -0700 (PDT)
-X-Google-Smtp-Source: AKy350bVyA1HaKN+sFnH2QwAuA0pQ0vlOfQSri1+XfKwdC7nAbRh3YgkVYvmAZP3E261XxLXanhZsg==
-X-Received: by 2002:a05:6870:a10a:b0:169:cbcc:25c0 with SMTP id m10-20020a056870a10a00b00169cbcc25c0mr9340341oae.14.1680526876532;
-        Mon, 03 Apr 2023 06:01:16 -0700 (PDT)
-Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id l11-20020a056870218b00b001777244e3f9sm3521228oae.8.2023.04.03.06.01.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 06:01:16 -0700 (PDT)
-Date:   Mon, 3 Apr 2023 08:01:12 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Jakub Kicinski <kuba@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, bhupesh.sharma@linaro.org, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        mturquette@baylibre.com, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Subject: Re: [PATCH net-next v3 00/12] Add EMAC3 support for sa8540p-ride
-Message-ID: <20230403130112.53z6m2lmm5lnjsm2@halaney-x13s>
-References: <20230331214549.756660-1-ahalaney@redhat.com>
- <20230331220613.2cr2r5mcf2wwse4j@halaney-x13s>
- <20230331215504.0169293a@kernel.org>
+        Mon, 3 Apr 2023 09:03:44 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 592A620C27;
+        Mon,  3 Apr 2023 06:03:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id F095BB8198B;
+        Mon,  3 Apr 2023 13:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E51C4339B;
+        Mon,  3 Apr 2023 13:03:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680526988;
+        bh=v1Pszh5fW8WyXmnfcFzSWf8zEpFGb5aRngCORZusvag=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=V3ArRHOyteVcFRd/xdt0WMXDJEPg9g+QwOtYaV47vHGdMWCMITjMb8H1zlhgjnTKh
+         GZGzgxI+uw/UsjJTYS9Qv8ewz8Iz/3Bafsw7t8rG1a2afWg+aqbPpnJLS4vacPjxB9
+         ZldDcAWyHtdwf42Qyy0lZZ5b/Jvfj+iPPZ0Dq8wRLY1znajqL6wRn471YfO7cxsEgF
+         FAGE9A61odAekWrpouMTguzpWX0K68bhDscqKjF1UnEibudIfJYK+8Rc6MpZ6flBQi
+         a96DECHz49gt2wut/Ssg4y8n69O6gQT0neOJr57Gkp7lnil+b1cnxy/1n/IUNWULCc
+         yHQJywfaLNJFA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pjJqP-0004IS-0m; Mon, 03 Apr 2023 15:03:33 +0200
+Date:   Mon, 3 Apr 2023 15:03:33 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: fix pon compatible and
+ registers
+Message-ID: <ZCrOpWowEjUmltVA@hovoldconsulting.com>
+References: <20230327122948.4323-1-johan+linaro@kernel.org>
+ <48f71f9a-0d00-16df-fff8-5aa455918378@linaro.org>
+ <ZCqwWwdhhJdOK+5Y@hovoldconsulting.com>
+ <5dfb81df-8ae2-eb62-01a2-b26c6b8d2597@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230331215504.0169293a@kernel.org>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <5dfb81df-8ae2-eb62-01a2-b26c6b8d2597@linaro.org>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 31, 2023 at 09:55:04PM -0700, Jakub Kicinski wrote:
-> On Fri, 31 Mar 2023 17:06:13 -0500 Andrew Halaney wrote:
-> > As promised: https://lore.kernel.org/netdev/20230331215804.783439-1-ahalaney@redhat.com/T/#t
+On Mon, Apr 03, 2023 at 02:33:01PM +0200, Krzysztof Kozlowski wrote:
+> On 03/04/2023 12:54, Johan Hovold wrote:
+> > On Mon, Apr 03, 2023 at 11:18:07AM +0200, Krzysztof Kozlowski wrote:
+> >> On 27/03/2023 14:29, Johan Hovold wrote:
+> >>> The pmk8280 PMIC PON peripheral is gen3 and uses two sets of registers;
+> >>> hlos and pbs.
+> >>>
+> >>> This specifically fixes the following error message during boot when the
+> >>> pbs registers are not defined:
+> >>>
+> >>> 	PON_PBS address missing, can't read HW debounce time
+> >>>
+> >>> Note that this also enables the spurious interrupt workaround introduced
+> >>> by commit 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press
+> >>> debouncing support") (which may or may not be needed).
+> >>>
+> >>> Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
+> >>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> >>> ---
+> >>>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 5 +++--
+> >>>  1 file changed, 3 insertions(+), 2 deletions(-)
+> >>>
+> >>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> >>> index c35e7f6bd657..a0ba535bb6c9 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> >>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
+> >>> @@ -59,8 +59,9 @@ pmk8280: pmic@0 {
+> >>>  		#size-cells = <0>;
+> >>>  
+> >>>  		pmk8280_pon: pon@1300 {
+> >>> -			compatible = "qcom,pm8998-pon";
+> >>> -			reg = <0x1300>;
+> >>> +			compatible = "qcom,pmk8350-pon";
+> >>
+> >> Same comment as Dmitry's. There is no compatible "qcom,pmk8350-pon"
+> >> ccd3517faf18, therefore indicated backport (through AUTOSEL) will lead
+> >> to invalid stable kernel.
+> >>
+> >> You must drop the Fixes tag, because this cannot be backported.
+> > 
+> > That's bullshit. Do you see a stable tag? Is 5.19-stable still active?
 > 
-> Patch 12 never made it to netdev or lore :(
+> Why do you refer to activeness of v5.19? This will go also to v6.0 and v6.1.
+
+6.0 stable is also EOL, and 6.1 has "qcom,pmk8350-pon".
+
+> > The problem is that the driver was updated before the binding was so the
+> > above mentioned probe error has been there since this file was merged.
 > 
+> I grepped and that commit did not have such compatible. Are you saying
+> that the kernel which was released with this commit already had that
+> compatible in driver (through different merge/tree)?
 
-Well, that's no good as I definitely want some eyes on that one :(
+The pwrkey started printing an error when the PON register was not
+defined in 5.18 so the problem was already there when support for
+sc8280xp was merged. Hence the Fixes tag.
 
-I've already gotten _some_ reviews on the earlier patches in v3,
-I am going to absorb anything super quick into a v4 today, then send that out,
-maybe copy pasting larger questions I have yet to respond to? Seems like
-an ok approach.. not having the full solution in hand is crummy for
-review. Let me know if you think that's a bad call and just a resend is
-better.
+	0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press debouncing support")
 
-Sorry, not sure where I messed that up Friday evening when writing
-changelogs etc.
+> > AUTOSEL is crazy and people apparently just ignore it instead of NAKing
+> > when it is suggesting backporting devicetree cleanups (which to be fair
+> > should generally not have Fixes tags in the first place).
+> 
+> Sorry, no clue what do you want to say here... if you are unhappy with
+> AUTOSEL, I am not the one to receive such feedback. Anyway, regardless
+> of AUTOSEL, my concern was that the release containing that commit was
+> not ready to work with that compatible. Isn't this the case here?
 
+You were the one who brought up AUTOSEL, but it's shortcomings should
+not be relevant here and that was my point.
+
+No one is suggesting to backport this patch, but if someone were then
+they need to do just that and *port* it to 5.19 or whatever imaginary
+stable tree you care about which do not have "qcom,pmk8350-pon" (as I
+mentioned below).
+
+> > If 5.19-stable was still active and someone suggested backporting this
+> 
+> Whether v5.19 is active or not, it does not matter. Why would it matter?
+> This will go longterm v6.1 as well!
+
+That would be perfectly fine as, again, 6.1 has "qcom,pmk8350-pon".
+
+> > one, they would have to change the compatible string to match the
+> > inconsistent 5.19 kernel. Note that that would need to happen regardless
+> > of whether this patch has a Fixes tag or not.
+> 
+> Any manual backporting of something which is not a fix for older kernel
+> is already risky business and whoever is doing it, he is responsible for
+> the outcome.
+
+Exactly, and the same applies to fixes and arguable scripted backports
+as well.
+
+Johan
