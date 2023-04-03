@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B53B26D549E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 00:16:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70C0B6D54D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 00:38:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233650AbjDCWQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 18:16:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
+        id S233475AbjDCWiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 18:38:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233647AbjDCWQ1 (ORCPT
+        with ESMTP id S233325AbjDCWiU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 18:16:27 -0400
+        Mon, 3 Apr 2023 18:38:20 -0400
 Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B436B1989
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 15:16:24 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id x17so39989741lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 15:16:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDC531FF9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 15:38:18 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id h25so40007463lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 15:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680560183;
+        d=linaro.org; s=google; t=1680561497;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5bxA4Gss3+RptUe9l82LyArjhA/BEimzCrq88tRrjxk=;
-        b=ThsidMxEnDpVEQwTPwwaLS+vc0EYzoqJy1xKlf/taZhAz87kNLQPLokCDj2uVY6XqQ
-         EjSK85lZE7YDLYHZk0zojbWjIUh5D0DiGt2v431dXGAzqcfV1YEb9VRgds5/4moFjBhU
-         YLTFFyw2CT1if24t/dUG5D5a4VnhWumy5UrMpqWyi1SmjYSd1Q4crAkJfX1hWiibGUSU
-         sT1KsbQrO2KEqXafy96uRqMZltE43g+ukjtbp27e3jihUzHW9VWXvaEGo43W2clKZuIw
-         8klhGTcE0uwxKMIhTvoeBLWZLSwVHobPA7R6wvUoHKLTJnI6njsho1vWXUdqp2XDq3XU
-         ttyQ==
+        bh=FtsOWrQW7hkNYFADGqbjwZ60d4zvSefDrCxExKDl8Ps=;
+        b=hwuZ8XieWgBLN5adU41i6xX2s4eNlMpyUG883h6xHBqIp68TLP0PISWCmEmBxbOFNp
+         La0z50tJWUVSnxmQGKjzd2D0TI3d8OdvzjbH9uwZNYgcJWNoG92y7hvf5wRLkIcNnJkT
+         9xaak/ZDCbwD9kqTd2ISNgfEwhja79Z07uNJPnxcGhHgeZ9/vQGpDOoJeWvRtPZ/2Gxc
+         TvPZiYYuhXrmLzm7gBiYz6zwetuFr+2zYf3U5JHJIDUNZM1JFosfH9/7+5HX0jn7xUye
+         RlhlegeuGZo1+3qU3CEAaNzaV47X5Q9mtT55migZtfvsp6ZvbmSskgy9parZdncdzPQx
+         BKWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680560183;
+        d=1e100.net; s=20210112; t=1680561497;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5bxA4Gss3+RptUe9l82LyArjhA/BEimzCrq88tRrjxk=;
-        b=DKp9dU3TZUulyHACms5i6e83sqy+OauwwwMPqVsX8X/JqFdgTar6vAmaRkMgWDQbvI
-         xghBlhfcj13lF8PCktvoW7JF2dj3X81eNfZGc4XWw3gkMfL4epuRHboRiGvsYdkrv3Qg
-         TzwK1/rsyxXGt4ojh+rH2gjdwRPmCP97nLhORjtkpOkICIP7hbEwGjPoujsfJLx+04ii
-         9svRStRPO6Ad3/OsyusNHJFEH2Y1Pl4EFNgdHy0yOMwyscR2iWB30x5SOveQ0bsGAT6Q
-         GbthJTt9S9Z/ngkLwmYqUDMix7e2T23vJaNC/cVi5Hcjfi1V0Agpay1pKC9+q+G+G0Pg
-         RJ1Q==
-X-Gm-Message-State: AAQBX9cHu4ETpRz5lcDUV2WQ/JqlKutqK5zr1cOBuqAowt2gAafv/mN0
-        mHa/le+zR+QozQceZUeiNeMM+e6ssDQ5Cvd1neg=
-X-Google-Smtp-Source: AKy350Y/IBSgH+tFeEA1GQREyA7F8/5hOuGrOnkaZm9d7ktpMtv2+gTKYXFMNw1z7lcQQSVjJ2FBUg==
-X-Received: by 2002:a19:ad04:0:b0:4cb:4362:381d with SMTP id t4-20020a19ad04000000b004cb4362381dmr40604lfc.62.1680560182861;
-        Mon, 03 Apr 2023 15:16:22 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a24-20020ac25218000000b004db00b4c671sm1956313lfl.7.2023.04.03.15.16.22
+        bh=FtsOWrQW7hkNYFADGqbjwZ60d4zvSefDrCxExKDl8Ps=;
+        b=rovimURk4YKYqut5QOmRXQXjlwuIHNRzVr47DXIgaWesU+SWZ/K8JuRUFlWjQl5LjT
+         GT82Lp7jSxWwoeO2pfFwl1BoQyB1171sZO0fHvfCwUG69eRogxdXC43rQPV86PPUnNVf
+         2d7xa8XTfzBSM7v6jvi3DfzLDYfvsE+qk192LpHnPIryEuqhUU8dUnpUm5kA9hQXhdYP
+         RvlM2K0MuirSfRmGCQv/EXE3X5DlW3cFQeW8wy59sNlwa23DmpQUHr8OdmrnVjCEGQ9L
+         RDf/t+jFm9zZIAFx8csJNb5fzvCcFneOqNN8uTGv0C6x1AAVQxDWl0HwbJ5GxEyMPIlb
+         hODQ==
+X-Gm-Message-State: AAQBX9f0kBWmczVy1CAwTgN3PuuSVICRKEDpXA3R7qxl9i4Gt1/HgQRT
+        OyptwjJn1qVhojQ2UNoX3bW37g==
+X-Google-Smtp-Source: AKy350YZO6iPPjj1sua6F66RRClLCkmeKk/nQmT2y4PKC2eroOuYFkNzuee/Tto92qVvDnzdKwZi/Q==
+X-Received: by 2002:a05:6512:2192:b0:4e8:3da6:485a with SMTP id b18-20020a056512219200b004e83da6485amr56645lft.68.1680561496989;
+        Mon, 03 Apr 2023 15:38:16 -0700 (PDT)
+Received: from [192.168.1.101] (abxj135.neoplus.adsl.tpnet.pl. [83.9.3.135])
+        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004e9cad1cd7csm1985379lfg.229.2023.04.03.15.38.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 15:16:22 -0700 (PDT)
-Message-ID: <29f0f5e6-bad2-6371-6afd-12eefcba9919@linaro.org>
-Date:   Tue, 4 Apr 2023 01:16:21 +0300
+        Mon, 03 Apr 2023 15:38:16 -0700 (PDT)
+Message-ID: <b2e81e6c-a9fa-0cc1-01ed-1d82297454c4@linaro.org>
+Date:   Tue, 4 Apr 2023 00:38:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 00/38] drm/msm/dpu: rework HW catalog
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 4/7] dt-bindings: iommu: arm,smmu: enable clocks for
+ sa8775p
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230330215324.1853304-1-dmitry.baryshkov@linaro.org>
- <b4972790-d990-063a-7ef4-2f05407357e8@quicinc.com>
- <f198ac6a-df12-9c08-55e8-f677acea8e2c@linaro.org>
- <9d1529c0-779c-7f1f-6e6e-1972bb0d39f4@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9d1529c0-779c-7f1f-6e6e-1972bb0d39f4@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+References: <20230328193632.226095-1-brgl@bgdev.pl>
+ <20230328193632.226095-5-brgl@bgdev.pl>
+ <20230403204127.GA1708388-robh@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230403204127.GA1708388-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -83,326 +87,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 22:07, Abhinav Kumar wrote:
-> 
-> 
-> On 4/3/2023 11:48 AM, Dmitry Baryshkov wrote:
->> On 03/04/2023 21:06, Abhinav Kumar wrote:
->>>
->>>
->>> On 3/30/2023 2:52 PM, Dmitry Baryshkov wrote:
->>>> This huge series attempts to restructure the DPU HW catalog into a
->>>> manageable and reviewable data set. In order to ease review and testing
->>>> I merged all the necessary fixes into this series. Also I cherry-picked
->>>> & slightly fixed Konrad's patch adding size to the SSPP and INTF 
->>>> macros.
->>>>
->>>
->>> I had to first dig up some history about why dpu catalog grew so much 
->>> in the first place before starting this review. When the DPU driver 
->>> first landed (which pre-dates my work in upstream), it looks like it 
->>> followed mdp5 model from mdp5_cfg.c. But looks like as the number of 
->>> chipsets which use DPU kept growing, this is becoming a burden.
->>>
->>> As everyone knows, downstream follows a devicetree model for the dpu 
->>> hardware and that should have always been the case. Perhaps in the 
->>> last 2-3 years more time could have been spent on standardizing the 
->>> bindings used for hw blocks in order to maintain a less hard-coded 
->>> catalog file and more in the device tree.
->>
->> Unfortunately, this is not how the upstream DT works. If something is 
->> a constant hardware property, it should not go into the DT. So pushing 
->> catalog to dt would have been immediately frowned upon by Rob Herring 
->> or Krzysztof.
->>
-> 
-> Yes certainly we cannot put hardware specific properties. But in 
-> general, modelling the hardware like the number of sspps, number of 
-> interfaces and number of dspps etc can be a bit abstracted? like 
-> blk-type and blk-offset? blk-type can be a custom string because each 
-> block is named differently for different vendors?
 
-No.
 
-> 
-> The number of blk_offsets decides number of blocks. Its not constant 
-> right. We are seeing it varying with chipsets.
-> 
->>> Then the catalog would have just been a place to parse the device 
->>> tree, set the feature capability based on chipset (refer 
->>> _sde_hardware_pre_caps). That way offsets , number of blocks and the 
->>> blocks themselves still come from the device tree but perhaps some 
->>> specific features are at SOC level for which the catalog still stays.
->>>
->>> That being said, I thought of different strategies even before the 
->>> review but two issues prevented me from suggesting those ideas (one 
->>> of which I am seeing even here , which I am going to suggest below 
->>> and also suggest why it wont work).
->>>
->>> 1) For the same DPU major/minor version, some features might get 
->>> dropped or even get added with different SOCs as overall the system 
->>> capabilities might differ like number of SSPPs or memory footprint of 
->>> the SOC etc.
->>>
->>> So there is no good way right now to generalize any dpu catalog or to 
->>> tie it with a DPU major/minor version. We will have to stick with a 
->>> per-SOC model.
+On 3.04.2023 22:41, Rob Herring wrote:
+> On Tue, Mar 28, 2023 at 09:36:29PM +0200, Bartosz Golaszewski wrote:
+>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >>
->> Up to now, the SoC was equal to major+minor. Could you please be more 
->> specific here, if there are any actual differences within major+minor 
->> families?
->>
+>> The KGSL iommu will require the clocks property to be set. Enable it for
 > 
-> So lets say, the same DPU major/minor version is used but we have only 
-> one DSI on one chipset Vs two DSIs on the other, some of the features 
-> which come into play only for dual DSI cannot be used. Like broadcasting 
-> a DCS command across two DSIs etc. This is a very basic example, but 
-> there are many examples.
+> Isn't KGSL the name for QCom's adreno vendor driver? What does that have 
+> to do with bindings?
+It's called "KGSL SMMU" (as opposed to the other "APPS SMMU" (Application
+Processor SubSystem) in some places in Qualcommland
 
-I'm asking for the exact details, because up to now the driver was using 
-major:minor to find the catalog entry. It was modelled this way in 
-sdm845/sc7180, then it was natural for us to continue down this path.
-
-I will put reworking catalog to be bound to the binding data
-
+Konrad
 > 
->>>
->>> This is what led me to not pursue that route.
->>>
->>> 2) For the same DPU major/minor version, even if core-DPU is same (in 
->>> terms of SSPP, DSPP etc), the number of interfaces can change. So 
->>> again no room to generalize same DPU hw version.
+>> sa8775p in the bindings.
 >>
->> Again, I might be just scratching the surface, but I have not observed 
->> this.
+>> Cc: Will Deacon <will@kernel.org>
+>> Cc: Robin Murphy <robin.murphy@arm.com>
+>> Cc: Joerg Roedel <joro@8bytes.org>
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> ---
+>>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 1 -
+>>  1 file changed, 1 deletion(-)
 >>
-> 
-> This typically happens based on what products that chipset is catered 
-> towards. Thats pretty much what I can share. But more number of 
-> interfaces for more number of displays / use-cases.
-
-Ack, I will not that we should be more careful about this items.
-
-> 
->>>
->>> 3) For the same reason as (1) and (2), I think the de-duplication 
->>> strategy used in this series is not correct. The idea of 
->>> dpu_hw_version_num_layer_mixer is just not scalable as I dont know 
->>> how many variants that will lead to. So it seems like just an attempt 
->>> to de-duplicate which perhaps works today for existing dpu chipsets 
->>> in upstream but by no means scalable. Lets go ahead with per-SOC 
->>> catalog file but lets live with some amount of duplication between 
->>> them if we really have to split it across header files.
+>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> index 807cb511fe18..74d5164ed1e8 100644
+>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>> @@ -375,7 +375,6 @@ allOf:
+>>                - nvidia,smmu-500
+>>                - qcom,qcm2290-smmu-500
+>>                - qcom,qdu1000-smmu-500
+>> -              - qcom,sa8775p-smmu-500
+>>                - qcom,sc7180-smmu-500
+>>                - qcom,sc8180x-smmu-500
+>>                - qcom,sc8280xp-smmu-500
+>> -- 
+>> 2.37.2
 >>
->> Indeed, this leads to minor differences on top of major+lm. However, I 
->> think, the overall complexity is lowered.
->>
->> Nevertheless, let's land the major set of patches and leave 
->> generalization for the later time. I think, with the addition of the 
->> next several platforms we will see the drill.
->>
-> 
-> Yes, I would say lets handle generalization/de-duplication later when we 
-> see more patterns.
-> 
-> Lets land the main pieces first.
-> 
-> Going with dpu version and number of lms is not the way to generalize it 
-> from what we think.
-> 
->>> I also thought of similar strategies to generalize like based on 
->>> sub-blocks similar to what you have done but all of these were NAKed 
->>> internally by folks who work on more chipsets / have more visibility 
->>> into the spread of features across chipsets.
->>>
->>>> First 4 patches clean up the catalog a bit in order to make it more
->>>> suitable for refactoring.
->>>>
->>>
->>> These are okay. I will address your follow-up questions about patch 
->>> (1) and lets land these.
->>>
->>>> Then the next batch of 13 + 5 patches split the hw catalog entries into
->>>> per-SoC files.
->>>>
->>>
->>> This part is also fine. But perhaps dont have dpu hw version in the 
->>> file. So just dpu_hw_sm8250.h or dpu_hw_sm8350.h etc.
->>
->> Having a version makes it easier to compare chipsets (and also to 
->> verify that feature masks are correct), so I'd like to retain it.
->>
-> 
-> This is again trying to generalize it. So for example, yes perhaps today 
-> the chipsets we have belong to a particular DPU major/minor version and 
-> it might look like because they are in the same family things look 
-> similar but that can also go against this. If we find some differences 
-> among them, then some upstream developers might think "Oh, these belong 
-> to the same family, but how come it doesnt have the same features?". 
-> Thats why I am hesitant to go with DPU major/minor version in the name.
-
-We have both major/minor and SoC name, so we will not mix them. However, 
-yes, if I were to see two SoCs having the same major/minor, it would be 
-natural for me to compare them. Ask/check if I got it correct that the 
-details are not the same. Curse and add a separate catalog entry.
-
-Please note, that if we remove the major/minor from the file name, the 
-entry becomes completely deteached from hw version. The only connection 
-will be the cfg_handler table. And moving the SoC <-> catalog binding to 
-the match data (as there can be different chipsets with the same hw rev) 
-will remove this binding completely.
-
-Thus, I think I am going to keep it in the file name at least. The note 
-that major/minor doesn't guarantee the same set of features is noted.
-
-> 
->>>
->>>> Next 9 patches rework catalog entries, mostly targeting 
->>>> deduplication of
->>>> data used by several platforms. At this moment only three pairs (out of
->>>> 13 devices supported by DPU) are merged. However this part lays out the
->>>> ground to ease adding support for new platforms, some of which use the
->>>> same configuration as the existing platforms
->>>>
->>>
->>> This is the part I suggest we drop.
->>>
->>>> Last batch of 7 patches renames existing macros to ease using them 
->>>> while
->>>> adding support for new devices.
->>>>
->>>
->>> I have to check this part but perhaps after re-basing based on my 
->>> earlier comment.
->>
->> Ack, I'll see what I can drop and what is going to be there.
->>
->> Up to now there were some natural shares, like sm8150 vs sc8180x and 
->> qcm2290 vs sm6115. Do you think we should populate the missing parts 
->> by duplicate the data?
->>
-> 
-> Yes, lets go ahead with the duplicate data for now. Once a more 
-> reasonable strategy evolves for generalizing it, we can update it.
-
-Ack, will provide corresponding patches.
-
-> 
->>>
->>>> This pile of patches is submitted in a single batch to allow one to
->>>> observe the final goal of the cleanup which otherwise might be hard to
->>>> assess.
->>>>
->>>>
->>>> Changes since v2:
->>>> - Fixed sc8280xp SSPP size to 0x2ac
->>>> - Rebased on top of msm-next-lumag, dropped merged patches
->>>>
->>>> Changes since v1:
->>>> - Picked up Konrad's patch
->>>> - Picked up dependencies into the main series
->>>> - Moved qseed3lite vs qseed4 patches into the fixes part
->>>> - Fixed sm6115 in a similar manner.
->>>>
->>>> Dmitry Baryshkov (37):
->>>>    drm/msm/dpu: constify DSC data structures
->>>>    drm/msm/dpu: mark remaining pp data as const
->>>>    drm/msm/dpu: move UBWC/memory configuration to separate struct
->>>>    drm/msm/dpu: split SM8550 catalog entry to the separate file
->>>>    drm/msm/dpu: split SM8450 catalog entry to the separate file
->>>>    drm/msm/dpu: split SC8280XP catalog entry to the separate file
->>>>    drm/msm/dpu: split SC7280 catalog entry to the separate file
->>>>    drm/msm/dpu: split SM8350 catalog entry to the separate file
->>>>    drm/msm/dpu: split SM6115 catalog entry to the separate file
->>>>    drm/msm/dpu: split QCM2290 catalog entry to the separate file
->>>>    drm/msm/dpu: split SC7180 catalog entry to the separate file
->>>>    drm/msm/dpu: split SM8250 catalog entry to the separate file
->>>>    drm/msm/dpu: split SC8180X catalog entry to the separate file
->>>>    drm/msm/dpu: split SM8150 catalog entry to the separate file
->>>>    drm/msm/dpu: split MSM8998 catalog entry to the separate file
->>>>    drm/msm/dpu: split SDM845 catalog entry to the separate file
->>>>    drm/msm/dpu: duplicate sdm845 catalog entries
->>>>    drm/msm/dpu: duplicate sc7180 catalog entries
->>>>    drm/msm/dpu: duplicate sm8150 catalog entries
->>>>    drm/msm/dpu: duplicate sm8250 catalog entries
->>>>    drm/msm/dpu: duplicate sm8350 catalog entries
->>>>    drm/msm/dpu: use defined symbol for sc8280xp's maxwidth
->>>>    drm/msm/dpu: catalog: add comments regarding DPU_CTL_SPLIT_DISPLAY
->>>>    drm/msm/dpu: enable DPU_CTL_SPLIT_DISPLAY for sc8280xp
->>>>    drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
->>>>    drm/msm/dpu: drop duplicate vig_sblk instances
->>>>    drm/msm/dpu: enable DSPP on sc8180x
->>>>    drm/msm/dpu: deduplicate sc8180x with sm8150
->>>>    drm/msm/dpu: deduplicate sm6115 with qcm2290
->>>>    drm/msm/dpu: deduplicate sc8280xp with sm8450
->>>>    drm/msm/dpu: drop unused macros from hw catalog
->>>>    drm/msm/dpu: inline IRQ_n_MASK defines
->>>>    drm/msm/dpu: rename INTF_foo_MASK to contain major DPU version
->>>>    drm/msm/dpu: rename CTL_foo_MASK to contain major DPU version
->>>>    drm/msm/dpu: rename VIG and DMA_foo_MASK to contain major DPU 
->>>> version
->>>>    drm/msm/dpu: rename MIXER_foo_MASK to contain major DPU version
->>>>    drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
->>>>
->>>> Konrad Dybcio (1):
->>>>    drm/msm/dpu: Allow variable SSPP/INTF_BLK size
->>>>
->>>>   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  210 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  210 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |   97 +
->>>>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |   91 +
->>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h |  152 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  244 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  151 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   91 +
->>>>   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   83 +
->>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h |   53 +
->>>>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  226 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  158 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  136 ++
->>>>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  142 ++
->>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h |   99 +
->>>>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  209 ++
->>>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 2175 
->>>> +----------------
->>>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   37 +-
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    |    4 +-
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |   18 +-
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |    4 +-
->>>>   21 files changed, 2443 insertions(+), 2147 deletions(-)
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
->>>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_lm6.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
->>>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_lm1.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->>>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_lm6.h
->>>>   create mode 100644 
->>>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->>>>
->>
-
--- 
-With best wishes
-Dmitry
-
