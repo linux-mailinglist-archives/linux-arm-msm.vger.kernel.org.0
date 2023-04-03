@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 792186D3CC1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:20:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18C2C6D3CC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 07:21:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231462AbjDCFUd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 01:20:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59924 "EHLO
+        id S230516AbjDCFVW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 01:21:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230192AbjDCFUc (ORCPT
+        with ESMTP id S231509AbjDCFVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 01:20:32 -0400
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC795BA9;
-        Sun,  2 Apr 2023 22:20:31 -0700 (PDT)
+        Mon, 3 Apr 2023 01:21:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFE5C174;
+        Sun,  2 Apr 2023 22:21:13 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id 07169B81136;
-        Mon,  3 Apr 2023 05:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522DFC433D2;
-        Mon,  3 Apr 2023 05:20:27 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BD837614A9;
+        Mon,  3 Apr 2023 05:21:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5635C433EF;
+        Mon,  3 Apr 2023 05:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680499228;
-        bh=VO7ZTBlvGEHOHPdtxg5W/qEhh/9v1Pznmzk39ZuXRGk=;
+        s=k20201202; t=1680499272;
+        bh=Mj47Qs23bdwv1bF+3GKPtoumqI9bOKyr2shj6muWIEI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=IVRcmUTIxQhvE2DUpbbYkBUAoZwXtnehxq79P9rZ3iKWkAHBxVzCVwbNCobVdlaeR
-         2IUElUNED9T8ir/7WtgA18zAaQMX53sBbXjKWo6B0efYBzkIDe8yTjwxxyg3cFTqSL
-         6YBLTxUVFTLp5V9tI4byuOinRw3epNMzW69+CBhoQLbaYtV1Z+tjbPZabMjDa3RSKz
-         p6cUvt9QWbsPszvcI8y0v+cI8ddKoHyaz2n0PsG6d8xjiGt/p8h6mSmJRu2xP+AI/0
-         VLnCXk+DsCUJV7hWFLwSgZXeSpx2CjsOBgJCzXEb3CHLkb5mCkrtS27VtIot0XbIAr
-         KtlOMJ54h3pog==
-Date:   Mon, 3 Apr 2023 10:50:24 +0530
+        b=Z/ZUv/5JhIq3gjDZ3+c0yUzAuJanRGFd5cFeQj89qw2F7Jf2pTLvybuOhDisRE1os
+         hBjA96W8ZXjvii/iSpNTQZJCpTq/RVlHVyqz6Yd9OzW0fBAOu6oIceUXEb5gF2CmCr
+         ua1L71VUP4okfczraqNvEW1mMx7+hQrIjE3AKwXIx9fUN0uVTZLw+S9iiLyEiLYQDt
+         p3nGq4Q831L59lefm8SiD/0CefCzZHLSYI4b3hONjD8VU3rd72GZDtdTI9bgE2M0Ts
+         5LQ/CE/Bo81xrUrHzvDAaD+q9ZW+S8oHDGDZYgm8BXThVCCcm5eJKxV0l8hEvpOW87
+         L52hSgtqHRhBA==
+Date:   Mon, 3 Apr 2023 10:51:07 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Slark Xiao <slark_xiao@163.com>
 Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] bus: mhi: pci_generic: Add Foxconn T99W510
-Message-ID: <20230403052024.GE4627@thinkpad>
+Message-ID: <20230403052107.GF4627@thinkpad>
 References: <20230329072239.93632-1-slark_xiao@163.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <20230329072239.93632-1-slark_xiao@163.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,7 +60,7 @@ On Wed, Mar 29, 2023 at 03:22:39PM +0800, Slark Xiao wrote:
 > 
 > Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Applied to mhi-next!
 
 - Mani
 
