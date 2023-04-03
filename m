@@ -2,163 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99FA36D4477
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 14:33:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F0E76D44A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  3 Apr 2023 14:45:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231843AbjDCMdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 3 Apr 2023 08:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55338 "EHLO
+        id S230269AbjDCMpo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 3 Apr 2023 08:45:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231877AbjDCMdH (ORCPT
+        with ESMTP id S231532AbjDCMpn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 3 Apr 2023 08:33:07 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800A561A2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 05:33:04 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id x3so116591246edb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 05:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680525183;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M3OGvuUvXrUbBF160+4HtZaEXZGNPa/djYQZa+YmEk0=;
-        b=GQAg4nQK5Mvc5pc1scKeKwqGxKWdcJAQIireqHmi2z897c26Z1EPM7SnikuV28WL8+
-         qbOjjrBo8P+JaMjcevGe9EXGgzk/7YCe3XXnLe7Pl0qXtivK5oCSdWlgVa9Mn6uzzzK9
-         I5BYa0KRd4/xG6CeC7ZVsa0ecVsOHqiSUkVLb4DAnJEwAlwqJ76AVDwvgtXtmv58y5Z2
-         4otMlJu3DwoJSpUccU8g5d62du/df1hYJ4rd4+0tSBkIN5PlNkl3kfj05LVWK57GDsUe
-         YY/L2eQxXXKzGlbD/UUCixtewGRYpnvSbdcuP/ps7vfonFYOeHEEzUB17QnZnmCoL1S6
-         dT5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680525183;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M3OGvuUvXrUbBF160+4HtZaEXZGNPa/djYQZa+YmEk0=;
-        b=Iyfk+GqQ0hm05cSrN/2jFGzlfZnHfz0ZsFPf9/MLWGAtyWEqQnZGNfMsWHs+vVeBS8
-         oFXYWSPOr6Ml2khv0Vczdkg2BATgSHt+HAsGdCFCE9s1bRwY9xjORx4LJRopdBanxAe3
-         jq6dFY7U/GBoaMVleMgE6xk9deYdLDVpAlx3NtVW3IO73SIkWhIMIdGxuP2Lq2yl19IG
-         EZThkRXHtlMpvzNrQhazcOrvj4RiWQsCbLbF2Pkhs/HdBTclH1zmEJVhgRMRK4Jv80pa
-         u5ZPQoZ9tM2fQBw0dTMVbcfONRs1Ov41ZADSfI2d6ak1Jk6KeVey1OSwqbzIFbpsBpMx
-         z6Rw==
-X-Gm-Message-State: AAQBX9cOONWd/kKnA5N59squszb2UTqux2BwOYYl7kjQ4T0WHs54izcq
-        9HXnZY0rX85OUhltwRKrtMy1Og==
-X-Google-Smtp-Source: AKy350YWPGhRz66/fnA00kTRX8hQfJh5cfNX+Jb8eBFOij0y1td86P+SO8mYT55Cfitf32/7Z066pQ==
-X-Received: by 2002:a17:907:f90:b0:8fd:2f01:86c0 with SMTP id kb16-20020a1709070f9000b008fd2f0186c0mr40959251ejc.2.1680525182925;
-        Mon, 03 Apr 2023 05:33:02 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ae90:d80:1069:4805? ([2a02:810d:15c0:828:ae90:d80:1069:4805])
-        by smtp.gmail.com with ESMTPSA id h12-20020a1709063c0c00b00947eafc76fbsm3464230ejg.144.2023.04.03.05.33.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 05:33:02 -0700 (PDT)
-Message-ID: <5dfb81df-8ae2-eb62-01a2-b26c6b8d2597@linaro.org>
-Date:   Mon, 3 Apr 2023 14:33:01 +0200
+        Mon, 3 Apr 2023 08:45:43 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616E1658F
+        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 05:45:42 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id F1F6C1FF3D;
+        Mon,  3 Apr 2023 12:45:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1680525941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=hpiFlTmrji3Q9ytRoYjAuJC+JpPwu81VCde8xwkls0Q=;
+        b=VwCWKEwxgqq0kM3hkVRD4H2LOOp47q3JJUh3yjKNCKB6Ls3uG0n3qZNMB/I4veMmZQtMHc
+        rJr1eqL9/+mn7HKQ2wVPnvllua57+VwePV8iOJjX2xbYgKQ2i/ZciXDYfg0M3KFO6Bxsxx
+        T8zr6guG6HpShafTnFwoFrVy2gzEflM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1680525941;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=hpiFlTmrji3Q9ytRoYjAuJC+JpPwu81VCde8xwkls0Q=;
+        b=1HJJWi1SYkw16PESCnrSbLoTKAF7Af9DvHH+gEBEmUDjzh/nYleHLUXs231P8AMdWazLu+
+        ED+rwzIVGmvHp1Bg==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B62551331A;
+        Mon,  3 Apr 2023 12:45:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id sim1KnTKKmTRVgAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 03 Apr 2023 12:45:40 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        dmitry.baryshkov@linaro.org, sean@poorly.run, javierm@redhat.com,
+        airlied@gmail.com, daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 0/8] drm/msm: Convert fbdev to DRM client
+Date:   Mon,  3 Apr 2023 14:45:30 +0200
+Message-Id: <20230403124538.8497-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-pmics: fix pon compatible and
- registers
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230327122948.4323-1-johan+linaro@kernel.org>
- <48f71f9a-0d00-16df-fff8-5aa455918378@linaro.org>
- <ZCqwWwdhhJdOK+5Y@hovoldconsulting.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZCqwWwdhhJdOK+5Y@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 12:54, Johan Hovold wrote:
-> On Mon, Apr 03, 2023 at 11:18:07AM +0200, Krzysztof Kozlowski wrote:
->> On 27/03/2023 14:29, Johan Hovold wrote:
->>> The pmk8280 PMIC PON peripheral is gen3 and uses two sets of registers;
->>> hlos and pbs.
->>>
->>> This specifically fixes the following error message during boot when the
->>> pbs registers are not defined:
->>>
->>> 	PON_PBS address missing, can't read HW debounce time
->>>
->>> Note that this also enables the spurious interrupt workaround introduced
->>> by commit 0b65118e6ba3 ("Input: pm8941-pwrkey - add software key press
->>> debouncing support") (which may or may not be needed).
->>>
->>> Fixes: ccd3517faf18 ("arm64: dts: qcom: sc8280xp: Add reference device")
->>> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi | 5 +++--
->>>  1 file changed, 3 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->>> index c35e7f6bd657..a0ba535bb6c9 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
->>> @@ -59,8 +59,9 @@ pmk8280: pmic@0 {
->>>  		#size-cells = <0>;
->>>  
->>>  		pmk8280_pon: pon@1300 {
->>> -			compatible = "qcom,pm8998-pon";
->>> -			reg = <0x1300>;
->>> +			compatible = "qcom,pmk8350-pon";
->>
->> Same comment as Dmitry's. There is no compatible "qcom,pmk8350-pon"
->> ccd3517faf18, therefore indicated backport (through AUTOSEL) will lead
->> to invalid stable kernel.
->>
->> You must drop the Fixes tag, because this cannot be backported.
-> 
-> That's bullshit. Do you see a stable tag? Is 5.19-stable still active?
+Convert msm' fbdev code to struct drm_client. Replaces the current
+ad-hoc integration. The conversion includes a number of cleanups. As
+with most other drivers' fbdev emulation, fbdev in msm is now just
+another DRM client that runs after the DRM device has been registered.
 
-Why do you refer to activeness of v5.19? This will go also to v6.0 and v6.1.
+Once all drivers' fbdev emulation has been converted to struct drm_client,
+we can attempt to add additional in-kernel clients. A DRM-based dmesg
+log or a bootsplash are commonly mentioned. DRM can then switch easily
+among the existing clients if/when required.
 
-> 
-> The problem is that the driver was updated before the binding was so the
-> above mentioned probe error has been there since this file was merged.
+I did the conversion from similar experience with other drivers. But I
+don't have the hardware to test this. Any testing is welcome.
 
-I grepped and that commit did not have such compatible. Are you saying
-that the kernel which was released with this commit already had that
-compatible in driver (through different merge/tree)?
+v2:
+	* handle 'fbdev' module parameter in fbdev code
+	* add missing kfree()
+	* minor fixes
 
-> 
-> AUTOSEL is crazy and people apparently just ignore it instead of NAKing
-> when it is suggesting backporting devicetree cleanups (which to be fair
-> should generally not have Fixes tags in the first place).
+Thomas Zimmermann (8):
+  drm/msm: Include <linux/io.h>
+  drm/msm: Clear aperture ownership outside of fbdev code
+  drm/msm: Remove fb from struct msm_fbdev
+  drm/msm: Remove struct msm_fbdev
+  drm/msm: Remove fbdev from struct msm_drm_private
+  drm/msm: Move module parameter 'fbdev' to fbdev code
+  drm/msm: Initialize fbdev DRM client
+  drm/msm: Implement fbdev emulation as in-kernel client
 
-Sorry, no clue what do you want to say here... if you are unhappy with
-AUTOSEL, I am not the one to receive such feedback. Anyway, regardless
-of AUTOSEL, my concern was that the release containing that commit was
-not ready to work with that compatible. Isn't this the case here?
+ drivers/gpu/drm/msm/msm_debugfs.c  |   6 +-
+ drivers/gpu/drm/msm/msm_drv.c      |  27 ++---
+ drivers/gpu/drm/msm/msm_drv.h      |  12 +-
+ drivers/gpu/drm/msm/msm_fbdev.c    | 173 +++++++++++++++++------------
+ drivers/gpu/drm/msm/msm_io_utils.c |   1 +
+ 5 files changed, 125 insertions(+), 94 deletions(-)
 
-> 
-> If 5.19-stable was still active and someone suggested backporting this
 
-Whether v5.19 is active or not, it does not matter. Why would it matter?
-This will go longterm v6.1 as well!
-
-> one, they would have to change the compatible string to match the
-> inconsistent 5.19 kernel. Note that that would need to happen regardless
-> of whether this patch has a Fixes tag or not.
-
-Any manual backporting of something which is not a fix for older kernel
-is already risky business and whoever is doing it, he is responsible for
-the outcome.
-
-Best regards,
-Krzysztof
+base-commit: a7180debb9c631375684f4d717466cfb9f238660
+-- 
+2.40.0
 
