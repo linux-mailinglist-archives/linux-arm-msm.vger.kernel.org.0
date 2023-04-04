@@ -2,260 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 596D26D68F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 18:34:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5B9D6D6932
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 18:49:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231637AbjDDQeq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 12:34:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
+        id S231539AbjDDQtM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 12:49:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231516AbjDDQep (ORCPT
+        with ESMTP id S229881AbjDDQtJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 12:34:45 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD57040CD
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 09:34:43 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id c29so43111850lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 09:34:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680626082;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nITyBTNOJIWRuIKiYEciol1MR0ETXizCKOJZaZE6IDQ=;
-        b=WH+zhNv/4gDJq4k2ejdVejyfYSwlHuklBdvMVFWR+CkBZ5TtdmJ4SVWUQ5MPg2sstP
-         oZDjrKkJDrG1kdSmvOJrsVUtKKF8brBEdsOlL6Fj14RtPdnMuzStWorp1v7ZQelhtETQ
-         MHayuhn+2iNlr6wkooMxD0PkNU7nOwdTV8HHo9u/y4bglgeqB0lDVeTtat/j0xQmYSdI
-         7BGosOnuqoklrPlYQ34FtHVqe/JUjiNLRKVNNg9oBwfw62YG/FqkgC9/dk4uX7jAv6L9
-         wJp2Zqb8NmSsKnpBlihVowVvilQYyih/CjvQLHjrC1vQz3RVE1pA8qGtyz5fRnrQJFuV
-         FUKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680626082;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nITyBTNOJIWRuIKiYEciol1MR0ETXizCKOJZaZE6IDQ=;
-        b=aI0VcjCSO4p75xI4m8rtBa3HHMBVYYEdbJI8J+91JTBHhF1B9zHY6o2LVMdI6vuHVq
-         97ajfFI7dSZIQEHFxQIva2yJUjyNKshgxz198/6QzPzoULL1GiJFpNcWp/rcy9dWA8A0
-         2/4PoXDmMURclvUGCHK4rLq39/EgHR57FdgiNv6oNPbOuY16t6LSrmAte+lrue4JqMqm
-         S+WAC+d64qcVchGFaxErmhr65uqQX3Cm3IuO+BfWq+4lfmEaXDslRyk9E7LUZeNYRxhn
-         CTozvYvPyRGiV8RDd1MrWuAjTad8fiYCIkY98OVoA14OhqHmSMDKjmQdK4p6whCuP4NW
-         6uHw==
-X-Gm-Message-State: AAQBX9dJiMwz86fLTFN9zx6nELcLzgKpSvMQTQ6rxw2oc8E9TM66WJnj
-        b59C+Ex4H/AUJgyzv24GQ+6y32HM32kTFESwE5M=
-X-Google-Smtp-Source: AKy350ZFyLXMkangNgT5gW+VlY3TWkEy1mI6YChEzPyE9wCDdCYRL9M4Hk8VD8fqVR/cJuxT/rRN4w==
-X-Received: by 2002:ac2:4e6a:0:b0:4b6:fddc:1fcd with SMTP id y10-20020ac24e6a000000b004b6fddc1fcdmr858563lfs.23.1680626082010;
-        Tue, 04 Apr 2023 09:34:42 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::227? (dzccz6yyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::227])
-        by smtp.gmail.com with ESMTPSA id r16-20020ac25a50000000b004e848782e2esm2378296lfn.57.2023.04.04.09.34.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 09:34:41 -0700 (PDT)
-Message-ID: <c0193dc7-1e74-e826-856b-7be14c6993ad@linaro.org>
-Date:   Tue, 4 Apr 2023 19:34:41 +0300
+        Tue, 4 Apr 2023 12:49:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684EFE7B;
+        Tue,  4 Apr 2023 09:49:08 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 334E5hE9000809;
+        Tue, 4 Apr 2023 16:48:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=xq5sbhEZFEE7jSOavNjgMoKUDELZyorIuW0tEx2/Ho8=;
+ b=bNi5vFsRqC1WGWHdGg4HKnWEo5RsDAQCLAE8AfKBhUY49vY/DaxOPczRzpj0DZYhlKP6
+ +McpLUAXTsKC4KCq1eiv/NzO+iYgV6EPI20Dkc9+6zpLKUhhVyraJqPfubEM430qEh+l
+ qhPcJ8GHXy2ADCzA4YmgddIk5L0HrVNgJEFx5jcTwmspIaNG8WHZJ8EbioiwHlaDtK1n
+ LCMfUwz7SU3b+Hg+sgQ75NstKAn2EBJJ7S0KbsR5jp/AodL53iebetv/LBVeIKqtYFzf
+ fdkMteobzUg94OerAWphLQEiqMlBJwSlFekt+Zzs55HUHQI5ZHrZXBSXN1HQMhB4+aU3 +Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prnbt0fh6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Apr 2023 16:48:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 334GmqML005062
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 4 Apr 2023 16:48:52 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 4 Apr 2023 09:48:43 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
+        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <mani@kernel.org>, <p.zabel@pengutronix.de>,
+        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_ipkumar@quicinc.com>
+Subject: [PATCH V2 0/9] Add PCIe support for IPQ9574
+Date:   Tue, 4 Apr 2023 22:18:19 +0530
+Message-ID: <20230404164828.8031-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH RFC v2 2/6] drm/msm: Add MSM-specific DSC helper methods
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v2-2-3c13ced536b2@quicinc.com>
- <5b4a3305-1e26-220d-a770-1f6945fbac7a@linaro.org>
- <acdd6ae0-a6e8-3338-5e68-44a93f94de77@quicinc.com>
- <2591482a-a259-5406-83b8-4afeee9e3a43@linaro.org>
- <3e2c8780-5074-062e-567e-6e75467e50c7@quicinc.com>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <3e2c8780-5074-062e-567e-6e75467e50c7@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Wy0ULt0xuLpRLu0KwbayI96Plg9KvEmW
+X-Proofpoint-GUID: Wy0ULt0xuLpRLu0KwbayI96Plg9KvEmW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-04_08,2023-04-04_05,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=628
+ bulkscore=0 impostorscore=0 spamscore=0 clxscore=1011 adultscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304040155
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/04/2023 19:29, Jessica Zhang wrote:
-> 
-> 
-> On 4/3/2023 5:33 PM, Dmitry Baryshkov wrote:
->> On 04/04/2023 00:38, Jessica Zhang wrote:
->>>
->>>
->>> On 4/2/2023 4:21 AM, Dmitry Baryshkov wrote:
->>>> On 31/03/2023 21:49, Jessica Zhang wrote:
->>>>> Introduce MSM-specific DSC helper methods, as some calculations are
->>>>> common between DP and DSC.
->>>>>
->>>>> Changes in v2:
->>>>> - Moved files up to msm/ directory
->>>>> - Dropped get_comp_ratio() helper
->>>>> - Used drm_int2fixp() to convert to integers to fp
->>>>> - Style changes to improve readability
->>>>> - Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
->>>>> - Changed msm_dsc_get_slice_per_intf() to a static inline method
->>>>> - Dropped last division step of msm_dsc_get_pclk_per_line() and 
->>>>> changed
->>>>>    method name accordingly
->>>>> - Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
->>>>> - Fixed some math issues caused by passing in incorrect types to
->>>>>    drm_fixed methods in get_bytes_per_soft_slice()
->>>>>
->>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>> ---
->>>>>   drivers/gpu/drm/msm/Makefile         |  1 +
->>>>>   drivers/gpu/drm/msm/msm_dsc_helper.c | 53 
->>>>> ++++++++++++++++++++++++++++++++++++
->>>>>   drivers/gpu/drm/msm/msm_dsc_helper.h | 42 
->>>>> ++++++++++++++++++++++++++++
->>>>>   3 files changed, 96 insertions(+)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/Makefile 
->>>>> b/drivers/gpu/drm/msm/Makefile
->>>>> index 7274c41228ed..b814fc80e2d5 100644
->>>>> --- a/drivers/gpu/drm/msm/Makefile
->>>>> +++ b/drivers/gpu/drm/msm/Makefile
->>>>> @@ -94,6 +94,7 @@ msm-y += \
->>>>>       msm_atomic_tracepoints.o \
->>>>>       msm_debugfs.o \
->>>>>       msm_drv.o \
->>>>> +    msm_dsc_helper.o \
->>>>>       msm_fb.o \
->>>>>       msm_fence.o \
->>>>>       msm_gem.o \
->>>>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.c 
->>>>> b/drivers/gpu/drm/msm/msm_dsc_helper.c
->>>>> new file mode 100644
->>>>> index 000000000000..60b73e17e6eb
->>>>> --- /dev/null
->>>>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.c
->>>>> @@ -0,0 +1,53 @@
->>>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>>> +/*
->>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
->>>>> reserved
->>>>> + */
->>>>> +
->>>>> +#include <linux/kernel.h>
->>>>> +#include <linux/errno.h>
->>>>> +#include <drm/drm_fixed.h>
->>>>> +
->>>>> +#include "msm_drv.h"
->>>>> +#include "msm_dsc_helper.h"
->>>>> +
->>>>> +static s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc, 
->>>>> int intf_width, u32 src_bpp)
->>>>
->>>> intf_width is unused
->>>
->>> Hi Dmitry,
->>>
->>> Acked.
->>>
->>>>
->>>>> +{
->>>>> +    int bpp = msm_dsc_get_bpp_int(dsc);
->>>>> +    s64 numerator_fp, denominator_fp;
->>>>> +    s64 comp_ratio_fp = drm_fixp_from_fraction(src_bpp, bpp);
->>>>> +
->>>>> +    numerator_fp = drm_int2fixp(dsc->slice_width * 3);
->>>>
->>>> You have lost dsc->bits_per_component here.
->>>
->>> This was moved to the denominator calculation, but I'll move it back 
->>> to this line to avoid confusion.
->>
->> Maybe you occasionally mixed bpp and bpc, because there is no 
->> bits_per_component usage in denominator. Could you please recheck the 
->> calculations.
->>
->>>
->>>>
->>>>> +    denominator_fp = drm_fixp_from_fraction(comp_ratio_fp * 8, 
->>>>> drm_int2fixp(bpp));
->>>>
->>>> denominator_fp = drm_fixp_from_fraction(src_bpp * 8, bpp);
->>>
->>> Acked.
->>>
->>>>
->>>>> +
->>>>> +    return drm_fixp_div(numerator_fp, denominator_fp);
->>>>> +}
->>>>> +
->>>>> +u32 msm_dsc_get_eol_byte_num(struct drm_dsc_config *dsc, int 
->>>>> intf_width, u32 src_bpp)
->>>>> +{
->>>>> +    u32 bytes_per_soft_slice, extra_eol_bytes, bytes_per_intf;
->>>>> +    s64 bytes_per_soft_slice_fp;
->>>>> +    int slice_per_intf = msm_dsc_get_slice_per_intf(dsc, intf_width);
->>>>> +
->>>>> +    bytes_per_soft_slice_fp = get_bytes_per_soft_slice(dsc, 
->>>>> intf_width, src_bpp);
->>>>> +    bytes_per_soft_slice = 
->>>>> drm_fixp2int_ceil(bytes_per_soft_slice_fp);
->>>>> +
->>>>> +    bytes_per_intf = bytes_per_soft_slice * slice_per_intf;
->>>>> +    extra_eol_bytes = bytes_per_intf % 3;
->>>>> +    if (extra_eol_bytes != 0)
->>>>> +        extra_eol_bytes = 3 - extra_eol_bytes;
->>>>
->>>> I become confused here when I checked eol_bytes in the display 
->>>> techpack.
->>>>
->>>> I see that for DP the dp_panel_dsc_pclk_param_calc() calculates 
->>>> dsc->eol_bytes_num in this way, the size to pad dsc_byte_count * 
->>>> slice_per_intf to 3 bytes.
->>>>
->>>> However, for DSI this is a simple as total_bytes_per_intf % 3 , so 
->>>> it is not a padding, but a length of the last chunk.
->>>>
->>>> Could you please clarify? If the techpack code is correct, I'd 
->>>> prefer if we return last chunk size here and calculate the padding 
->>>> length in the DP driver.
->>>
->>> I've double checked the calculations between DP and DSI, and I think 
->>> you're right. Will move the `if (extra_eol_bytes != 0)` block out to 
->>> DP code.
->>
->> Ack. Could you please check with HW team that our understanding is 
->> correct?
-> 
-> Hey Dmitry,
-> 
-> I've checked with the HW team and looks like the math for eol_byte_nums 
-> differs between DP and DSI.
-> 
-> For DSI, eol_byte_num = bytes_per_intf % 3
-> 
-> But for DP, eol_byte_num = (bytes_per_intf % 3 == 0) ? 0 : 3 - 
-> bytes_per_intf % 3 *only* for non-widebus.
-> 
-> For DP && widebus enabled, eol_byte_num = (bytes_per_intf % 6 == 0) ? 0 
-> : 6 - bytes_per_intf % 6
-> 
-> In that case, we should move even the bytes_per_intf % 3 out and change 
-> this method to msm_dsc_get_bytes_per_intf() instead.
+PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
+are found on IPQ9574 platform. The PCIe0 & PCIe1 are 1-lane
+Gen3 host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
 
-Thanks for the note. I'm looking forward to seeing the v3 then.
+This series adds support for enabling the same
 
-> 
-> Thanks,
-> 
-> Jessica Zhang
+DTS patch is based on the below series
+https://lore.kernel.org/linux-arm-msm/20230329053726.14860-1-quic_kathirav@quicinc.com/
 
+Changes in V2:
+	- Reordered the patches and splitted the board DT changes
+	  into a separate patch as suggested
+	- Detailed change logs are added to the respective patches
+
+Devi Priya (9):
+  dt-bindings: clock: Add PCIe pipe clock definitions
+  clk: qcom: gcc-ipq9574: Add PCIe pipe clocks
+  dt-bindings: phy: qcom,qmp-pcie: Add ipq9574 bindings
+  phy: qcom-qmp-pcie: Add support for IPQ9574 g3x1 and g3x2 PCIEs
+  dt-bindings: PCI: qcom: Add IPQ9574
+  dt-bindings: pinctrl: qcom: Add few missing functions
+  arm64: dts: qcom: ipq9574: Add PCIe PHYs and controller nodes
+  arm64: dts: qcom: ipq9574: Enable PCIe PHYs and controllers
+  PCI: qcom: Add support for IPQ9574
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  48 +++
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       | 103 ++++-
+ .../bindings/pinctrl/qcom,ipq9574-tlmm.yaml   |   6 +-
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   |  62 +++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 375 +++++++++++++++++-
+ drivers/clk/qcom/gcc-ipq9574.c                |  76 ++++
+ drivers/pci/controller/dwc/pcie-qcom.c        |  62 ++-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 332 ++++++++++++++++
+ .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  26 +-
+ .../phy/qualcomm/phy-qcom-qmp-qserdes-pll.h   |   3 +
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h  |   4 +
+ 11 files changed, 1046 insertions(+), 51 deletions(-)
+
+
+base-commit: 31bd35b66249699343d2416658f57e97314a433a
 -- 
-With best wishes
-Dmitry
+2.17.1
 
