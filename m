@@ -2,185 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F47E6D5AA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 10:20:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEF746D5B58
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 10:59:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234127AbjDDIU0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 04:20:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56336 "EHLO
+        id S233938AbjDDI7S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 04:59:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234123AbjDDIUX (ORCPT
+        with ESMTP id S234045AbjDDI7Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 04:20:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A10DF1A4;
-        Tue,  4 Apr 2023 01:20:22 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3345usVj014799;
-        Tue, 4 Apr 2023 08:20:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=X3b5qJIOalorokOS7twAewMeNT3gtn3t8Ss3x3cQbCI=;
- b=dcYu+YeXALGc4IXslie6D1Tb0e/70WP9UtTO0hnWEaacdD9ORIewfoz9Jo3yLhVIoVNx
- 4q8BonxC9msmCKa2nBUq75OCFnMogGj1cVwpiUi1OSjqoDA0s/wMaQ1K9HdG087yJGjO
- 0oHjqcbYh5tzlIRBc9MzlVKCxqJ93Ujsbf7o5wwDYlea6OwlqM5LkqZQzO2TXBptmDBO
- B3DGE8JkOlVAXo6mw3SMWcjhLgXLIdr5DaLpGGQTtshDl8pE5Z2rAkVQ3H0Wtj64LtKn
- +AYJGcz6YOmRNJNcD5wXFS2yLhOCJjHhFfxj/PZEp+nyPFUCCHDZBaRQZ2QETaRwwAWW WA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pqw36tr9n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Apr 2023 08:20:19 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3348KIUt021098
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 4 Apr 2023 08:20:18 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 4 Apr 2023
- 01:20:15 -0700
-Message-ID: <ed690550-3256-f889-c18f-2182d4b904cc@quicinc.com>
-Date:   Tue, 4 Apr 2023 13:50:12 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH RFC] net: qrtr: correct types of trace event parameters
-Content-Language: en-US
-To:     Simon Horman <horms@kernel.org>,
+        Tue, 4 Apr 2023 04:59:16 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 232E310FE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 01:59:13 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id l12so31950182wrm.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 01:59:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680598751;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xhmLvYTQcPKtQRpKNvJ99GQcivVXlt+ZGDjfmFboqdY=;
+        b=iFuBFInAqwNQveiwRZUKoUptD7VgxIu2xXvn5sA1OBeDBNJFH6cmXnD8fAcjC/iM5+
+         vsqGz3Ce9igGibAd0w5FaLhXs+92iaV6NpVjom8jVtydnyU8TEeNVOHf6M/mnmPG6sdI
+         XYqlCKhrRwCDd8P4hivhShtLOmsNSAHgsJ8daVq2urAiXXEyFIpLQ7vAlvXbqZAtUyTb
+         fXYat8OuoA8JirQAhzqxHKWKa4qaRuaZUIENvcDbGMDPBHR8anDYKW+ljM4B7WUwAbDe
+         qJKIjCWAtRoKZ07YGdwRi+W6VjU1ZrPPQx1zqZpsRFCwRkd3GsQsRlZBz+K+cnFiyg1p
+         gN1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680598751;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xhmLvYTQcPKtQRpKNvJ99GQcivVXlt+ZGDjfmFboqdY=;
+        b=T1xXx58xyLtF92xDx/5hnzwSOqT1YF4yoyb67sFdyRyuFXNF27OO7RRYO/gxkIiTee
+         4pHFyqbp6KeGzQtSSd+qy3iavL1XQufaNlrc0LS8B+AG00yGUgwWy0WBg7Sz3oc9wOoQ
+         w4ZT2tJJSDkbaImzCHHc2rjUtW+k1ik7FiDKxoxD+8xJ5DC9T/f2pHyh1wJ7AHvCYzLr
+         6OiSEFySfjaa57ZHqcEnWtBFoihptqEGVuAr0EO/YU5UY8m4gdtSTZw6zHpwoy8LILCD
+         dMNiEWObzzKL4nVgpqG0EwPAMTMjme5F9MqeqwQyJXkSj3Gi74mraVfP/cWh2mYA0scg
+         QQ7g==
+X-Gm-Message-State: AAQBX9cXmqXHnp0JgjyAeKAwT9x6HrQaKRs22eM5aIHV0cKg6CcOSNhQ
+        anQCuTa+AhD04LpTVsamYdcNzg==
+X-Google-Smtp-Source: AKy350bTPANrZCQfItZxB//61A8/dpTItubB+xmFkueFRy36gzr1xtKT50DBcvGfsbByv9g2a/nkgA==
+X-Received: by 2002:adf:f786:0:b0:2e5:151e:89f1 with SMTP id q6-20020adff786000000b002e5151e89f1mr1163239wrp.8.1680598751583;
+        Tue, 04 Apr 2023 01:59:11 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id u13-20020adfeb4d000000b002daeb108304sm11777978wrn.33.2023.04.04.01.59.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 01:59:11 -0700 (PDT)
+Date:   Tue, 4 Apr 2023 11:59:09 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Manivannan Sadhasivam <mani@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-trace-kernel@vger.kernel.org>, <netdev@vger.kernel.org>
-References: <20230402-qrtr-trace-types-v1-1-da062d368e74@kernel.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230402-qrtr-trace-types-v1-1-da062d368e74@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4uNhI53zH0IIxZvyxYztqfPi_ilI_20V
-X-Proofpoint-GUID: 4uNhI53zH0IIxZvyxYztqfPi_ilI_20V
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-04_02,2023-04-03_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- phishscore=0 clxscore=1011 malwarescore=0 adultscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304040077
-X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v5 2/6] dt-bindings: ufs: qcom: Add ICE phandle
+Message-ID: <ZCvm3fzSh8owVDdc@linaro.org>
+References: <20230403200530.2103099-1-abel.vesa@linaro.org>
+ <20230403200530.2103099-3-abel.vesa@linaro.org>
+ <9fc90c8b-9234-84fa-7dab-fee9de2b9813@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9fc90c8b-9234-84fa-7dab-fee9de2b9813@linaro.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/2/2023 4:45 PM, Simon Horman wrote:
-> The arguments passed to the trace events are of type unsigned int,
-> however the signature of the events used __le32 parameters.
+On 23-04-04 07:41:55, Krzysztof Kozlowski wrote:
+> On 03/04/2023 22:05, Abel Vesa wrote:
+> > Starting with SM8550, the ICE will have its own devicetree node
+> > so add the qcom,ice property to reference it.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> > 
+> > The v4 is here:
+> > https://lore.kernel.org/all/20230327134734.3256974-4-abel.vesa@linaro.org/
+> > 
+> > Changes since v4:
+> >  * Added check for sm8550 compatible w.r.t. qcom,ice in order to enforce
+> >    it while making sure none of the other platforms are allowed to use it
 > 
-> I may be missing the point here, but sparse flagged this and it
-> does seem incorrect to me.
+> Why?
+
+SM8550 will be the first platform to use the new DT bindings w.r.t ICE.
+
 > 
->    net/qrtr/ns.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, include/trace/events/qrtr.h):
->    ./include/trace/events/qrtr.h:11:1: warning: cast to restricted __le32
->    ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
->    ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
->    ... (a lot more similar warnings)
->    net/qrtr/ns.c:115:47:    expected restricted __le32 [usertype] service
->    net/qrtr/ns.c:115:47:    got unsigned int service
->    net/qrtr/ns.c:115:61: warning: incorrect type in argument 2 (different base types)
->    ... (a lot more similar warnings)
+> Also, this does not solve my previous question still.
+
+Well, the clocks are not added for the a few platforms (which include
+SM8550). Same for 'ice' reg range.. So the only thing left is to
+enforce the qcom,ice property availability only for SM8550. I believe
+it solves the mutual exclusiveness of the "ice" reg range along with the
+clocks versus the qcom,ice property, by enforcing at compatible level.
+
+Is this not enough?
+
 > 
-> Signed-off-by: Simon Horman <horms@kernel.org>
-> ---
->   include/trace/events/qrtr.h | 33 ++++++++++++++++++---------------
->   1 file changed, 18 insertions(+), 15 deletions(-)
-> 
-> diff --git a/include/trace/events/qrtr.h b/include/trace/events/qrtr.h
-> index b1de14c3bb93..441132c67133 100644
-> --- a/include/trace/events/qrtr.h
-> +++ b/include/trace/events/qrtr.h
-> @@ -10,15 +10,16 @@
->   
->   TRACE_EVENT(qrtr_ns_service_announce_new,
->   
-> -	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-> +	TP_PROTO(unsigned int service, unsigned int instance,
-> +		 unsigned int node, unsigned int port),
->   
->   	TP_ARGS(service, instance, node, port),
->   
->   	TP_STRUCT__entry(
-> -		__field(__le32, service)
-> -		__field(__le32, instance)
-> -		__field(__le32, node)
-> -		__field(__le32, port)
-> +		__field(unsigned int, service)
-> +		__field(unsigned int, instance)
-> +		__field(unsigned int, node)
-> +		__field(unsigned int, port)
->   	),
->   
->   	TP_fast_assign(
-> @@ -36,15 +37,16 @@ TRACE_EVENT(qrtr_ns_service_announce_new,
->   
->   TRACE_EVENT(qrtr_ns_service_announce_del,
->   
-> -	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-> +	TP_PROTO(unsigned int service, unsigned int instance,
-> +		 unsigned int node, unsigned int port),
->   
->   	TP_ARGS(service, instance, node, port),
->   
->   	TP_STRUCT__entry(
-> -		__field(__le32, service)
-> -		__field(__le32, instance)
-> -		__field(__le32, node)
-> -		__field(__le32, port)
-> +		__field(unsigned int, service)
-> +		__field(unsigned int, instance)
-> +		__field(unsigned int, node)
-> +		__field(unsigned int, port)
->   	),
->   
->   	TP_fast_assign(
-> @@ -62,15 +64,16 @@ TRACE_EVENT(qrtr_ns_service_announce_del,
->   
->   TRACE_EVENT(qrtr_ns_server_add,
->   
-> -	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-> +	TP_PROTO(unsigned int service, unsigned int instance,
-> +		 unsigned int node, unsigned int port),
->   
->   	TP_ARGS(service, instance, node, port),
->   
->   	TP_STRUCT__entry(
-> -		__field(__le32, service)
-> -		__field(__le32, instance)
-> -		__field(__le32, node)
-> -		__field(__le32, port)
-> +		__field(unsigned int, service)
-> +		__field(unsigned int, instance)
-> +		__field(unsigned int, node)
-> +		__field(unsigned int, port)
->   	),
->   
->   	TP_fast_assign(
-
-LGTM.
-
-Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-
---Mukesh
-
+> Best regards,
+> Krzysztof
 > 
