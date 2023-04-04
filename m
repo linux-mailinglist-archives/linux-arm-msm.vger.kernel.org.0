@@ -2,114 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EF1F6D69A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 18:57:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBEA76D69C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 19:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235646AbjDDQ5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 12:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43894 "EHLO
+        id S235241AbjDDRFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 13:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235645AbjDDQ5m (ORCPT
+        with ESMTP id S232681AbjDDRFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 12:57:42 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4B08E7B;
-        Tue,  4 Apr 2023 09:57:18 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id b20so133317298edd.1;
-        Tue, 04 Apr 2023 09:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680627437;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P7MhNZCWbmm+EQT2ZpLl2E/34gvDoi8JcsBYxfVZFwk=;
-        b=VpLHIMinqDrwBgJCKe6aTCq+o2ToI2AcQwk7ETuH985y5l712JB/Jr1vrwVpie63AZ
-         nP362aTfXVOwRwLlXpHGRk4PBTdeD94ijJ3+RUp1P9nqBBAXEX3pLLPbG+6Inwk7Uyaj
-         uFjOnX4OGtjx8sYfx5vR29bO11rfY1Hsi6htfgOa7JqSh39Nv9chkha/eSesvzGdBXYu
-         bpqi5ctpHBfKsmoMkLOHfPG+HXDlIrDf4yTtLRYMdJ/ZFlrEERZIjqkBnEZBJXKN5zvv
-         6tBj4cl/oiz+AS47+YvLvIi9B3cokqy7sBMFOpBtuySkQHlO05Xw1iJ2uLy3r//bUthI
-         cYSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680627437;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P7MhNZCWbmm+EQT2ZpLl2E/34gvDoi8JcsBYxfVZFwk=;
-        b=PRTYfEX1C8ZXf47E47LaSmilt401XwtlshFpHdUHRzQnSxpSyIfQ2fSyYtL4dDeRh5
-         PLGKpnSVA/e3biAM6OFr4D5ZyoSacotVatQB87DE53OvspBTTyh2MHaMYw5v5inekHBt
-         qzu3t/zrhxySq8JKdtqDFqoFAQoLBiBo67ROpJmIAob7Ga8XjCZnVCiffUHZAt1gfp+l
-         I6uwyDIuho2i/GFPp/k1W+WK9pGuCfSi26m885ih2DWP+xu97pXzN+98QoK8HL4wMhX+
-         SQ+3TqxDcgl8n3CRJ/f9vgwew6dldUrKiRH0YrACcgiwcFBuf70HmOwrTV5PchkNZGP1
-         wjlA==
-X-Gm-Message-State: AAQBX9cb6HgpGP+A+t0BjAJL1P9jodHXaUVyz5VInSupSoZOFQplaAYp
-        HSGtKbUbpaxkaCZCv5NupYY=
-X-Google-Smtp-Source: AKy350aLVwwKqFdLN/chhOt48r5LY4guvRxpRxIkNFsLEqvsNQmQtpD22vmnvW+Hx6srEDa7zCZz5g==
-X-Received: by 2002:aa7:d514:0:b0:4fb:6523:2b38 with SMTP id y20-20020aa7d514000000b004fb65232b38mr156531edq.27.1680627437154;
-        Tue, 04 Apr 2023 09:57:17 -0700 (PDT)
-Received: from jernej-laptop.localnet (82-149-1-233.dynamic.telemach.net. [82.149.1.233])
-        by smtp.gmail.com with ESMTPSA id e27-20020a50d4db000000b004fadc041e13sm6144420edj.42.2023.04.04.09.57.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 09:57:16 -0700 (PDT)
-From:   Jernej =?utf-8?B?xaBrcmFiZWM=?= <jernej.skrabec@gmail.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Subject: Re: [PATCH V4] nvmem: add explicit config option to read old syntax fixed OF
- cells
-Date:   Tue, 04 Apr 2023 18:57:14 +0200
-Message-ID: <4817385.31r3eYUQgx@jernej-laptop>
-In-Reply-To: <20230403225540.1931-1-zajec5@gmail.com>
-References: <20230403225540.1931-1-zajec5@gmail.com>
+        Tue, 4 Apr 2023 13:05:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08ACDD3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 10:05:52 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 334C4IsB028033;
+        Tue, 4 Apr 2023 17:05:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TF6/+Y1yvswi7U/ueFMA0kU2PxzsF2rsHN7or2sToZs=;
+ b=hv0SVWCj+Ci2Wj3XgGqKe74X04M6c0/tKEX+WGMCc5uE3lNvRGBKmLHtH7J2ijT+XDFl
+ Tw8Alp0UPKnIb4cBo08jVJ1E9SdXk6B8Pcwg/X6f3henv4okarUzpSb58LT+a2bFUa8C
+ hYLpZxzD4W4xLjd7UGMXLUuDsMgbRFkxTx/KZMLaEQs87jufJs8ISvHdIE52a958JLj/
+ UOpyNfkm2jHPZ3q/ne1bPCSZZJCoMyhv47Wg5JuH4Yb6cyVphjQIiPFe+2dR9jLOc8M5
+ Tf/sNZ/7EY86sHQIM3cWQXN7vbVgnNC3A0aXz5SZAzRqtZYEXbPGPO5RulqzenqhQ5Cv xQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prg8wsegr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Apr 2023 17:05:45 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 334H5iM8010615
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 4 Apr 2023 17:05:44 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 4 Apr 2023
+ 10:05:44 -0700
+Message-ID: <f0c3a0f7-816d-38ac-40b9-f783b5f642da@quicinc.com>
+Date:   Tue, 4 Apr 2023 10:05:43 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH RFC v2 2/6] drm/msm: Add MSM-specific DSC helper methods
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v2-2-3c13ced536b2@quicinc.com>
+ <5b4a3305-1e26-220d-a770-1f6945fbac7a@linaro.org>
+ <acdd6ae0-a6e8-3338-5e68-44a93f94de77@quicinc.com>
+ <2591482a-a259-5406-83b8-4afeee9e3a43@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <2591482a-a259-5406-83b8-4afeee9e3a43@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LhHwMJeeNCPbedtnBiLdAvpr_nXJmwo_
+X-Proofpoint-ORIG-GUID: LhHwMJeeNCPbedtnBiLdAvpr_nXJmwo_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-04_08,2023-04-04_05,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304040158
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -118,83 +89,269 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dne torek, 04. april 2023 ob 00:55:40 CEST je Rafa=C5=82 Mi=C5=82ecki napis=
-al(a):
-> From: Rafa=C5=82 Mi=C5=82ecki <rafal@milecki.pl>
->=20
-> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
-> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
-> layout binding.
->=20
-> New syntax is meant to be clearer and should help avoiding imprecise
-> bindings.
->=20
-> NVMEM subsystem already supports the new binding. It should be a good
-> idea to limit support for old syntax to existing drivers that actually
-> support & use it (we can't break backward compatibility!). That way we
-> additionally encourage new bindings & drivers to ignore deprecated
-> binding.
->=20
-> It wasn't clear (to me) if rtc and w1 code actually uses old syntax
-> fixed cells. I enabled them to don't risk any breakage.
->=20
-> Signed-off-by: Rafa=C5=82 Mi=C5=82ecki <rafal@milecki.pl>
-> [for meson-{efuse,mx-efuse}.c]
-> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-> [for mtk-efuse.c, nvmem/core.c, nvmem-provider.h]
-> Reviewed-by: AngeloGioacchino Del Regno
-> <angelogioacchino.delregno@collabora.com> [MT8192, MT8195 Chromebooks]
-> Tested-by: AngeloGioacchino Del Regno
-> <angelogioacchino.delregno@collabora.com> [for microchip-otpc.c]
-> Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-> [SAMA7G5-EK]
-> Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-> ---
-> This is based on top of them
-> [PATCH V6 3/3] nvmem: core: add support for fixed cells *layout*
->=20
-> V2: Fix stm32-romem.c typo breaking its compilation
->     Pick Martin's Acked-by
->     Add paragraph about layouts deprecating add_legacy_fixed_of_cells
-> V3: Update commit description:
->     1. Make it clear we're NOT dropping fixed cells support
->     2. Use nicer words (s/made sense/was totally safe/)
->     3. Explain fixed cells layout thing
->     4. Add paragraph with purpose of this commit
-> V4: Completely rewrite commit message.
->     Rename config option to "add_legacy_fixed_of_cells".
-> ---
->  drivers/mtd/mtdcore.c          | 2 ++
->  drivers/nvmem/apple-efuses.c   | 1 +
->  drivers/nvmem/core.c           | 8 +++++---
->  drivers/nvmem/imx-ocotp-scu.c  | 1 +
->  drivers/nvmem/imx-ocotp.c      | 1 +
->  drivers/nvmem/meson-efuse.c    | 1 +
->  drivers/nvmem/meson-mx-efuse.c | 1 +
->  drivers/nvmem/microchip-otpc.c | 1 +
->  drivers/nvmem/mtk-efuse.c      | 1 +
->  drivers/nvmem/qcom-spmi-sdam.c | 1 +
->  drivers/nvmem/qfprom.c         | 1 +
->  drivers/nvmem/rave-sp-eeprom.c | 1 +
->  drivers/nvmem/rockchip-efuse.c | 1 +
->  drivers/nvmem/sc27xx-efuse.c   | 1 +
->  drivers/nvmem/sprd-efuse.c     | 1 +
->  drivers/nvmem/stm32-romem.c    | 1 +
->  drivers/nvmem/sunplus-ocotp.c  | 1 +
->  drivers/nvmem/sunxi_sid.c      | 1 +
-
-=46or sunxi_sid:
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-
-Best regards,
-Jernej
-
->  drivers/nvmem/uniphier-efuse.c | 1 +
->  drivers/nvmem/zynqmp_nvmem.c   | 1 +
->  drivers/rtc/nvmem.c            | 1 +
->  drivers/w1/slaves/w1_ds250x.c  | 1 +
->  include/linux/nvmem-provider.h | 2 ++
->  23 files changed, 29 insertions(+), 3 deletions(-)
 
 
+On 4/3/2023 5:33 PM, Dmitry Baryshkov wrote:
+> On 04/04/2023 00:38, Jessica Zhang wrote:
+>>
+>>
+>> On 4/2/2023 4:21 AM, Dmitry Baryshkov wrote:
+>>> On 31/03/2023 21:49, Jessica Zhang wrote:
+>>>> Introduce MSM-specific DSC helper methods, as some calculations are
+>>>> common between DP and DSC.
+>>>>
+>>>> Changes in v2:
+>>>> - Moved files up to msm/ directory
+>>>> - Dropped get_comp_ratio() helper
+>>>> - Used drm_int2fixp() to convert to integers to fp
+>>>> - Style changes to improve readability
+>>>> - Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
+>>>> - Changed msm_dsc_get_slice_per_intf() to a static inline method
+>>>> - Dropped last division step of msm_dsc_get_pclk_per_line() and changed
+>>>>    method name accordingly
+>>>> - Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
+>>>> - Fixed some math issues caused by passing in incorrect types to
+>>>>    drm_fixed methods in get_bytes_per_soft_slice()
+>>>>
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/Makefile         |  1 +
+>>>>   drivers/gpu/drm/msm/msm_dsc_helper.c | 53 
+>>>> ++++++++++++++++++++++++++++++++++++
+>>>>   drivers/gpu/drm/msm/msm_dsc_helper.h | 42 
+>>>> ++++++++++++++++++++++++++++
+>>>>   3 files changed, 96 insertions(+)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/Makefile 
+>>>> b/drivers/gpu/drm/msm/Makefile
+>>>> index 7274c41228ed..b814fc80e2d5 100644
+>>>> --- a/drivers/gpu/drm/msm/Makefile
+>>>> +++ b/drivers/gpu/drm/msm/Makefile
+>>>> @@ -94,6 +94,7 @@ msm-y += \
+>>>>       msm_atomic_tracepoints.o \
+>>>>       msm_debugfs.o \
+>>>>       msm_drv.o \
+>>>> +    msm_dsc_helper.o \
+>>>>       msm_fb.o \
+>>>>       msm_fence.o \
+>>>>       msm_gem.o \
+>>>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.c 
+>>>> b/drivers/gpu/drm/msm/msm_dsc_helper.c
+>>>> new file mode 100644
+>>>> index 000000000000..60b73e17e6eb
+>>>> --- /dev/null
+>>>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.c
+>>>> @@ -0,0 +1,53 @@
+>>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>>> +/*
+>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>>>> reserved
+>>>> + */
+>>>> +
+>>>> +#include <linux/kernel.h>
+>>>> +#include <linux/errno.h>
+>>>> +#include <drm/drm_fixed.h>
+>>>> +
+>>>> +#include "msm_drv.h"
+>>>> +#include "msm_dsc_helper.h"
+>>>> +
+>>>> +static s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc, int 
+>>>> intf_width, u32 src_bpp)
+>>>
+>>> intf_width is unused
+>>
+>> Hi Dmitry,
+>>
+>> Acked.
+>>
+>>>
+>>>> +{
+>>>> +    int bpp = msm_dsc_get_bpp_int(dsc);
+>>>> +    s64 numerator_fp, denominator_fp;
+>>>> +    s64 comp_ratio_fp = drm_fixp_from_fraction(src_bpp, bpp);
+>>>> +
+>>>> +    numerator_fp = drm_int2fixp(dsc->slice_width * 3);
+>>>
+>>> You have lost dsc->bits_per_component here.
+>>
+>> This was moved to the denominator calculation, but I'll move it back 
+>> to this line to avoid confusion.
+> 
+> Maybe you occasionally mixed bpp and bpc, because there is no 
+> bits_per_component usage in denominator. Could you please recheck the 
+> calculations.
 
+Hey Dmitry,
+
+Sorry, forgot to respond to this comment in my earlier reply.
+
+This was a mistake in the v2 code -- should have used 
+dsc->bits_per_component instead of bpp and did not catch it during 
+validation as bpp == bpc for the panel I'm testing on.
+
+Will use bits_per_compnent going forward.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>
+>>>
+>>>> +    denominator_fp = drm_fixp_from_fraction(comp_ratio_fp * 8, 
+>>>> drm_int2fixp(bpp));
+>>>
+>>> denominator_fp = drm_fixp_from_fraction(src_bpp * 8, bpp);
+>>
+>> Acked.
+>>
+>>>
+>>>> +
+>>>> +    return drm_fixp_div(numerator_fp, denominator_fp);
+>>>> +}
+>>>> +
+>>>> +u32 msm_dsc_get_eol_byte_num(struct drm_dsc_config *dsc, int 
+>>>> intf_width, u32 src_bpp)
+>>>> +{
+>>>> +    u32 bytes_per_soft_slice, extra_eol_bytes, bytes_per_intf;
+>>>> +    s64 bytes_per_soft_slice_fp;
+>>>> +    int slice_per_intf = msm_dsc_get_slice_per_intf(dsc, intf_width);
+>>>> +
+>>>> +    bytes_per_soft_slice_fp = get_bytes_per_soft_slice(dsc, 
+>>>> intf_width, src_bpp);
+>>>> +    bytes_per_soft_slice = drm_fixp2int_ceil(bytes_per_soft_slice_fp);
+>>>> +
+>>>> +    bytes_per_intf = bytes_per_soft_slice * slice_per_intf;
+>>>> +    extra_eol_bytes = bytes_per_intf % 3;
+>>>> +    if (extra_eol_bytes != 0)
+>>>> +        extra_eol_bytes = 3 - extra_eol_bytes;
+>>>
+>>> I become confused here when I checked eol_bytes in the display techpack.
+>>>
+>>> I see that for DP the dp_panel_dsc_pclk_param_calc() calculates 
+>>> dsc->eol_bytes_num in this way, the size to pad dsc_byte_count * 
+>>> slice_per_intf to 3 bytes.
+>>>
+>>> However, for DSI this is a simple as total_bytes_per_intf % 3 , so it 
+>>> is not a padding, but a length of the last chunk.
+>>>
+>>> Could you please clarify? If the techpack code is correct, I'd prefer 
+>>> if we return last chunk size here and calculate the padding length in 
+>>> the DP driver.
+>>
+>> I've double checked the calculations between DP and DSI, and I think 
+>> you're right. Will move the `if (extra_eol_bytes != 0)` block out to 
+>> DP code.
+> 
+> Ack. Could you please check with HW team that our understanding is correct?
+> 
+>>
+>>>
+>>>> +
+>>>> +    return extra_eol_bytes;
+>>>> +}
+>>>> +
+>>>> +int msm_dsc_get_uncompressed_pclk_per_line(struct drm_dsc_config 
+>>>> *dsc, int intf_width, u32 src_bpp)
+>>>
+>>> Basing on Abhinav's description ("pclk_per_line can be only per 
+>>> interface") would it better be named as 
+>>> msm_dsc_get_uncompressed_pclk_per_intf() ? or 
+>>> msm_dsc_get_uncompressed_pclk_for_intf() ?
+>>>
+>>> BTW: if get_bytes_per_soft_slice() doesn't use intf_width, we can 
+>>> probably drop it here too.
+>>>
+>>>> +{
+>>>> +    s64 data_width;
+>>>> +
+>>>> +    if (!dsc->slice_width || (intf_width < dsc->slice_width))
+>>>> +        return -EINVAL;
+>>>
+>>> Error code is not validated at dsi_timing_setup. I'd suggest moving 
+>>> error checks there and dropping the error handling here. If 
+>>> dsc->slice_width is not set, we should stop much earlier than 
+>>> drm_bridge's pre_enable() callback.
+>>
+>> Acked.
+>>
+>> Thanks,
+>>
+>> Jessica Zhang
+>>
+>>>
+>>>> +
+>>>> +    data_width = drm_fixp_mul(dsc->slice_count,
+>>>> +            get_bytes_per_soft_slice(dsc, intf_width, src_bpp));
+>>>> +
+>>>> +    return drm_fixp2int_ceil(data_width);
+>>>> +}
+>>>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h 
+>>>> b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>>>> new file mode 100644
+>>>> index 000000000000..743cd324b7d9
+>>>> --- /dev/null
+>>>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>>>> @@ -0,0 +1,42 @@
+>>>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>>>> +/*
+>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>>>> reserved
+>>>> + */
+>>>> +
+>>>> +#ifndef MSM_DSC_HELPER_H_
+>>>> +#define MSM_DSC_HELPER_H_
+>>>> +
+>>>> +#include <drm/display/drm_dsc_helper.h>
+>>>> +#include <drm/drm_modes.h>
+>>>> +
+>>>> +/*
+>>>> + * Helper methods for MSM specific DSC calculations that are common 
+>>>> between timing engine,
+>>>> + * DSI, and DP.
+>>>> + */
+>>>> +
+>>>> +static inline int msm_dsc_get_bpp_int(struct drm_dsc_config *dsc)
+>>>> +{
+>>>> +    WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
+>>>> +    return dsc->bits_per_pixel >> 4;
+>>>> +}
+>>>> +
+>>>> +static inline int msm_dsc_get_slice_per_intf(struct drm_dsc_config 
+>>>> *dsc, int intf_width)
+>>>> +{
+>>>> +    return DIV_ROUND_UP(intf_width, dsc->slice_width);
+>>>> +}
+>>>> +
+>>>> +static inline u32 msm_dsc_get_dce_bytes_per_line(struct 
+>>>> drm_dsc_config *dsc, int intf_width)
+>>>> +{
+>>>> +    return DIV_ROUND_UP(msm_dsc_get_bpp_int(dsc) * intf_width, 8);
+>>>> +}
+>>>> +
+>>>> +u32 msm_dsc_get_eol_byte_num(struct drm_dsc_config *dsc, int 
+>>>> intf_width, u32 src_bpp);
+>>>> +u32 msm_dsc_get_dce_bytes_per_line(struct drm_dsc_config *dsc, int 
+>>>> intf_width);
+>>>> +
+>>>> +/* Calculate uncompressed pclk per line. This value will then be 
+>>>> passed along to
+>>>> + * DSI and DP to calculate pclk_per_line. This is because DSI and 
+>>>> DP divide the
+>>>> + * uncompressed pclk_per_line by different values depending on if 
+>>>> widebus is enabled.
+>>>> + */
+>>>> +int msm_dsc_get_uncompressed_pclk_per_line(struct drm_dsc_config *dsc,
+>>>> +        int intf_width, u32 src_bpp);
+>>>> +#endif /* MSM_DSC_HELPER_H_ */
+>>>>
+>>>
+>>> -- 
+>>> With best wishes
+>>> Dmitry
+>>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
