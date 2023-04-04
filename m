@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38BB96D6F22
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 23:43:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 081466D6F2C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 23:43:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235754AbjDDVnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 17:43:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50122 "EHLO
+        id S236266AbjDDVnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 17:43:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234988AbjDDVnI (ORCPT
+        with ESMTP id S234988AbjDDVns (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 17:43:08 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D23D10CA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 14:43:07 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id x17so44160724lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 14:43:07 -0700 (PDT)
+        Tue, 4 Apr 2023 17:43:48 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E1B173A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 14:43:47 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id h25so44116722lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 14:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680644586;
+        d=linaro.org; s=google; t=1680644625;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gSR45RkCkZAa6HfvzU+qpgIaeIB15LuPXZ7G+069NSk=;
-        b=I7aAm/b8LBQTjsriGf5wlEn2paOkAC9x9Dffq5nPc8cgqqqPEsB8FNA7xP4SuDBuqX
-         ZBNWGFAkDGwnWyRyLghIW+oj5MXhLqMBu2LLifNseSROmMkM7TNJ7CaJiXuAnKq5rckS
-         dHJWrdlDfixUG5UqGeX5C4cCtf7Aoyy3HzRqTfPIi8ONNtEYGD+Xe4sMwq5mHd0qx6Rd
-         /P/rCMcZJ1L1L5XiSBXxYQFWXiglGYypP8dY18PjTf1Adb6KVBKWFQexWeIl5jgaiuhE
-         Id7H1GQiBKhH7yNPuJaCHCUCXxcf3pTPF4X14HDSEPWbljCBiPTDF+7cXVLsCcToocVO
-         cEdg==
+        bh=xKUgiJ3loiwk0e4aXihhVUgl3OPblBbKPcoqYQAlaG4=;
+        b=DBHwp8UvxZF5RelW+ds8zN4JFO23lMT0BxnL78ZuYts4f7FubSjbyxggA9JGa+O3it
+         WlMmk9jo0yCA09J2uyijC6X7ExkvsO8YwTggcwpjTVczPwZnoSZDbLJlUqvjX2rYl/I7
+         +HKmeIbXz1wyVdP6iDb2NtMY4Ot3NtlhZgNnM246eRsu3EHtoYaQeCQUmp9ERhCS6WxN
+         Fjj4K976WevfG1zpbTC+/BdmzK4o6lMY1+F+V92NOWdXLx/aBNhxb3vGKyF6csDDRQCi
+         PWgE0CURuvnvY1Vz9a9YxBt9rnMESeqAefaQzvEdLYFGJAvWK+TdApKX4S75R8xyHOMp
+         uuqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680644586;
+        d=1e100.net; s=20210112; t=1680644625;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gSR45RkCkZAa6HfvzU+qpgIaeIB15LuPXZ7G+069NSk=;
-        b=g1RD2L3a4PdwTq6V/F9oHmrEsn0Dd1AnfRXkSsqu7flu4Qda6IPZ/YCzoeOCzL+t5v
-         7FxkP6WOgin5nlPQUFcGnWsmBfrF9P99Y0g5pNpeTmCUM5thaM5BMYZyWsdEcAnPX01g
-         6afDxPWPBURZVwPy2DNjXahM9AzD0M2JDGXZdXPC9WrQh8YSb9zlug26B7c3aN79K1tZ
-         GsR3i9hVcnCnzn3RD91E/s0HvntTssoZUYWTKoU3Qn6oHCRECCwl28f+vHaAjTm3vdCh
-         3UTkgVpGXiwZf64m2Tme4IfX/zP4hegm3lm5rd3eIB2Qkvx7q6EWAWfJWWqp+teNLsZ4
-         kJcA==
-X-Gm-Message-State: AAQBX9cqcC/4aHPv5GBrWYLAXfqEXG3Ea0uDpOUbdme9OahvlVoc28Tu
-        bC5qHc3/x5Mf7R83k4lbHam/dg==
-X-Google-Smtp-Source: AKy350aqwjn5ys3NOtAi47em7O+S8a0XsVjMCu5tyoY3tio0RsgoA26TA7qzZYrihV3AtEDGFEyNhg==
-X-Received: by 2002:a19:c502:0:b0:4b4:8f01:f8b1 with SMTP id w2-20020a19c502000000b004b48f01f8b1mr1069888lfe.31.1680644585926;
-        Tue, 04 Apr 2023 14:43:05 -0700 (PDT)
+        bh=xKUgiJ3loiwk0e4aXihhVUgl3OPblBbKPcoqYQAlaG4=;
+        b=GxANrSDnE4P+3Cy8u57lL9q/mDhykIArVLDzIHzK1f8tnnEKl+tOQCcWpgsdxIf1f7
+         VxBVcpzKlp3YNVsYwmfO8B4Xu3swcdlqsiLQZF+eReRkm5yjguLAN1RzMeXrgvob+60O
+         XiyLBl4/eWinRv0/22ASmbJ1UmfKPlK7yYhK3Sd+JvesXy/f4EEg0Izdz71U3FPd5ZUX
+         4rLONkZd2Kl2UBSU+ExxhrJLkHkXVbwxz4KY5IJeiybdoJrPTcat0Qrb2jNV4dO5lAt3
+         UxXz/k7bZgyKnZXoMXES2Pg3KOSiFph/EmlCOd5M6tcS6WHaxV53gbgHZ9VMMQu6UuVf
+         cwIw==
+X-Gm-Message-State: AAQBX9ctadstWJJfe7R7VE9yumhFeGoUFXDL1sm3DE4VP1Vs8kGpktqb
+        ey7T7cbeDV5CLfNKXzvpXBA4XA==
+X-Google-Smtp-Source: AKy350Ycdl0Cl3uRa1nCTKWiPW/L0+xiN8st0AuHISzk9T3nMsHBMckmQGPp2Ur+xJLIxY991Vb/Bw==
+X-Received: by 2002:ac2:519c:0:b0:4eb:c4e:bd87 with SMTP id u28-20020ac2519c000000b004eb0c4ebd87mr912474lfi.58.1680644625716;
+        Tue, 04 Apr 2023 14:43:45 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id o2-20020a2e9442000000b0029571d505a1sm2543919ljh.80.2023.04.04.14.43.05
+        by smtp.gmail.com with ESMTPSA id q17-20020a19a411000000b004d3d43c7569sm2499581lfc.3.2023.04.04.14.43.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 14:43:05 -0700 (PDT)
-Message-ID: <ad5207e8-50d8-98b1-cd07-f4ab0735d25d@linaro.org>
-Date:   Wed, 5 Apr 2023 00:43:05 +0300
+        Tue, 04 Apr 2023 14:43:45 -0700 (PDT)
+Message-ID: <4a7bcbec-e9e2-2178-420a-56dcf8fb88dc@linaro.org>
+Date:   Wed, 5 Apr 2023 00:43:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 2/8] drm/msm: Clear aperture ownership outside of fbdev
- code
+Subject: Re: [PATCH v2 4/8] drm/msm: Remove struct msm_fbdev
 Content-Language: en-GB
 To:     Thomas Zimmermann <tzimmermann@suse.de>, robdclark@gmail.com,
         quic_abhinavk@quicinc.com, sean@poorly.run, javierm@redhat.com,
@@ -64,9 +63,9 @@ To:     Thomas Zimmermann <tzimmermann@suse.de>, robdclark@gmail.com,
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20230403124538.8497-1-tzimmermann@suse.de>
- <20230403124538.8497-3-tzimmermann@suse.de>
+ <20230403124538.8497-5-tzimmermann@suse.de>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230403124538.8497-3-tzimmermann@suse.de>
+In-Reply-To: <20230403124538.8497-5-tzimmermann@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -80,19 +79,17 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 03/04/2023 15:45, Thomas Zimmermann wrote:
-> Move aperture management out of the fbdev code. It is unrelated
-> and needs to run even if fbdev support has been disabled. Call
-> the helper at the top of msm_drm_init() to take over hardware
-> from other drivers.
+> Remove struct msm_fbdev, which is an empty wrapper around struct
+> drm_fb_helper. Use the latter directly. No functional changes.
 > 
 > v2:
-> 	* bind all subdevices before acquiring device (Dmitri)
+> 	* kfree fbdev helper instance on init errors (Dmitri)
 > 
 > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
->   drivers/gpu/drm/msm/msm_drv.c   | 6 ++++++
->   drivers/gpu/drm/msm/msm_fbdev.c | 6 ------
->   2 files changed, 6 insertions(+), 6 deletions(-)
+>   drivers/gpu/drm/msm/msm_fbdev.c | 20 ++++----------------
+>   1 file changed, 4 insertions(+), 16 deletions(-)
+>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
