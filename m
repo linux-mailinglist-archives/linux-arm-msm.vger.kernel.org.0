@@ -2,89 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1475E6D6E0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 22:30:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DCCC6D6E37
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 22:42:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235997AbjDDUag (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 16:30:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43304 "EHLO
+        id S236168AbjDDUmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 16:42:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235459AbjDDUaf (ORCPT
+        with ESMTP id S236087AbjDDUm3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 16:30:35 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E30944A2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 13:30:30 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id o20so32307446ljp.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 13:30:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680640228;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wVfh9bVs718xmqYWbLxq84sLtCYl5S5iKglZAo0/Wr0=;
-        b=fZiTOHXBjMLThtw06HI6lA/s5hvgSLgfQ2dpfs6bH/PDs/5DuV7PkB5C6XGYtaQPpP
-         F8cvxD9MbrewE+Ck/chHNZVXIOf/q5XfY4E+qXj2yB73fTabts/2kaWg1DM4mTceJ912
-         lsHOWbfbvISfNpCMcPs47hnV15yHUx17dGdhQ=
+        Tue, 4 Apr 2023 16:42:29 -0400
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50058468E;
+        Tue,  4 Apr 2023 13:42:24 -0700 (PDT)
+Received: by mail-oi1-f177.google.com with SMTP id bl22so11194284oib.11;
+        Tue, 04 Apr 2023 13:42:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680640228;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wVfh9bVs718xmqYWbLxq84sLtCYl5S5iKglZAo0/Wr0=;
-        b=JK6de1VtJGYMPYvxF7oxSlDaxN0fZR+azFoQYzXFr8eYZnJsU4IrAOn7s0Cv1CNSY3
-         b9CXZdmPdN4AXt14s2SnnHmlGLvtXd8rfXAblMuoNaBSjaT3KQm1n8gSx6IVaENdELgr
-         2DhNs/k1AktREchDWCV9DoYb3VzSVvHKRljOBXYIM8tkx/j4A9lSisZVt2TUmfJIHt3B
-         R+i1xxjvvnH4Z0QjTnY8tTxY8HaAwsa4JYYfhDYf7f5AbW2nYNty8X6zV7NrdFH5S+5I
-         P4KXkc8iNLo2wJL1XIgZZvr0NZP0ZUimPzaqJZKKMX9M5ZQfaftVttmAdTFX1b6zCSg4
-         fjVg==
-X-Gm-Message-State: AAQBX9eGHeS1B7ry9AAaq8NEE/60Ee4RUo69KAvAY7Nds0aXZDdDS4AX
-        uUwRRURTw+VznhViCee/61aZUKemVVR7eYymOfnx0w==
-X-Google-Smtp-Source: AKy350Z0w/yxRxDQgZ1PmCKCBQivotWHrI7VNWOh+GWyofFlc0djhC1XzDmQJWbDPpZ6NNZhR3xSzvnnMqjY7j1QEcI=
-X-Received: by 2002:a2e:8ec9:0:b0:2a3:fc8:711b with SMTP id
- e9-20020a2e8ec9000000b002a30fc8711bmr1481105ljl.10.1680640228682; Tue, 04 Apr
- 2023 13:30:28 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 4 Apr 2023 13:30:28 -0700
+        d=1e100.net; s=20210112; t=1680640943;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KBi9VXnHWBPCYkffNdPrifIxEbW15RY1Ay74oyEreAU=;
+        b=4n/Yrf0aS1kEaO+V9rQd5RoUE35QpjjNcNpuS25cadaE67ei2wUopJjpTbT7UYwhXv
+         CsCgx51sz/Lb9X2cGAXwduYx1Rr9dsM7e6Y+s5gx2YGOs8RFQs71GS0oGhqvP1bxtpkG
+         Yv9Vrt+Bl/dLerV47KAn/FH8mwyhUGQUKJKpAO0nWbmu48Yz0EwAgDRtqHyhyLURL62h
+         BsWwCNm2m33V8dqKk3tzftLCY16/EdDR7QrHq5f7Ghi12Ln1tKLTFT37A96RunFtuPkk
+         ZTR44DoFWOlAOkmy6dVuV08zg9ggqs1FOuppCPw8xM2xpzto0oI2Mloa4HW40bOnYk3o
+         2SWA==
+X-Gm-Message-State: AAQBX9cKjUFFGa5fSObNiCatC3EKyf4O/SCeqZNHHevF051OZcyxlj/t
+        uPi6ySMod6lffrZpdP0R+Q==
+X-Google-Smtp-Source: AKy350YVkwiiQklPnU32vOUMUIZnlFofSGv1HYMjqHQP+bygjvZC3mj8DJpsAFQ1lLyOzW7RYel+Eg==
+X-Received: by 2002:a54:4585:0:b0:387:926e:35d3 with SMTP id z5-20020a544585000000b00387926e35d3mr241273oib.20.1680640943548;
+        Tue, 04 Apr 2023 13:42:23 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id d11-20020a9d5e0b000000b006a3170fe3efsm4207936oti.27.2023.04.04.13.42.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 13:42:23 -0700 (PDT)
+Received: (nullmailer pid 635963 invoked by uid 1000);
+        Tue, 04 Apr 2023 20:42:22 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Christian Marangi <ansuelsmth@gmail.com>
+Cc:     netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] dt-bindings: net: ethernet-switch: Make "#address-cells/#size-cells" required
+Date:   Tue,  4 Apr 2023 15:42:13 -0500
+Message-Id: <20230404204213.635773-1-robh@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-In-Reply-To: <1680631400-28865-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1680631400-28865-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Tue, 4 Apr 2023 13:30:28 -0700
-Message-ID: <CAE-0n52U7yG=5DzYiHCH=JR4LvdczvhpuaU3RXqX6K9VwfvEgw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] spi: Add DMA mode support to spi-qcom-qspi
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
-        devicetree@vger.kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-        robh+dt@kernel.org, vkoul@kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Vijaya Krishna Nivarthi (2023-04-04 11:03:18)
-> There are large number of QSPI irqs that fire during boot/init and later
-> on every suspend/resume.
-> This could be made faster by doing DMA instead of PIO.
-> Below is comparison for number of interrupts raised in 2 acenarios...
-> Boot up and stabilise
-> Suspend/Resume
->
-> Sequence   PIO    DMA
-> =======================
-> Boot-up    69088  19284
-> S/R        5066   3430
->
+The schema doesn't allow for a single (unaddressed) ethernet port node
+nor does a single port switch make much sense. So if there's always
+multiple child nodes, "#address-cells" and "#size-cells" should be
+required.
 
-The interrupts are less, yes, but does it save time or power?
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/net/ethernet-switch.yaml   | 4 ++++
+ Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/net/ethernet-switch.yaml b/Documentation/devicetree/bindings/net/ethernet-switch.yaml
+index a04f8ef744aa..2ceccce6cbd7 100644
+--- a/Documentation/devicetree/bindings/net/ethernet-switch.yaml
++++ b/Documentation/devicetree/bindings/net/ethernet-switch.yaml
+@@ -40,6 +40,10 @@ patternProperties:
+         type: object
+         description: Ethernet switch ports
+ 
++    required:
++      - "#address-cells"
++      - "#size-cells"
++
+ oneOf:
+   - required:
+       - ports
+diff --git a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+index d7748dd33199..ad1ff9533697 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.yaml
+@@ -53,7 +53,9 @@ examples:
+             reg = <0x10>;
+ 
+             ports {
+-              /* ... */
++                #address-cells = <1>;
++                #size-cells = <0>;
++                /* ... */
+             };
+         };
+     };
+-- 
+2.39.2
+
