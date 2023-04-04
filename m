@@ -2,82 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20BDF6D586F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 08:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9478E6D58A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 08:18:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233633AbjDDGJC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 02:09:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57410 "EHLO
+        id S233452AbjDDGSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 02:18:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233594AbjDDGJB (ORCPT
+        with ESMTP id S233413AbjDDGSQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 02:09:01 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA661BCB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  3 Apr 2023 23:09:00 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id h8so126114979ede.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 03 Apr 2023 23:09:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680588538;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xckjHRqAlVFqSSMovCWlCEaEkbe+U6hDZsaBMakZfUw=;
-        b=gFgwpbl0BxgP8SYTBqiWNf2YY9d3jy7QlcfGKO/CRBGqx43V6Cwypg8ziYR/58dhIR
-         1Whdkl1X7pMXJp5wm6mvVgpG02B3dEkS8nzgCnwATfmWu26uWVtSxbedfw02/3lCO/kl
-         QDah2AyLolNEgifPwqCzCArs2DnGXqFYJ1FLyxAH+57XL+y/P4GcaNyKTgCwWjY3rm5Q
-         niIbVE1ULhpI9TRCxko1lbfM+i3E1+u3uq77dzjv7/Gb4PBtPzunBBIzR1ziQ5EJQZ0/
-         c0iBSOASALb9TyjLJGdGaTloNVaV7ZRDjIh3Vs4oRYkStEBxg+vMKYCylwdWvPHkrZGD
-         XtNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680588538;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xckjHRqAlVFqSSMovCWlCEaEkbe+U6hDZsaBMakZfUw=;
-        b=77xJz06lLqTQMurzbNladQDxX/6o0t/l4FpySD1BnEueemDQROI1fI9VnwxnDIOdY/
-         7hDHo+XkUz2qJ8t592K93aP3rYTWo8IhApcEle+z7aRbstpc/n6BIW2qq0DgkpvjGhnP
-         fLi/LkUI3Z0+bO9Mr4VIZX/TqEUwD7Se53lixpPRi1t5Www+cHi/gcJb9aiH+11ckZpi
-         1nfS1N968GezkyoKzTBFTJ6eOpOegmb81Xvja+Ohvauh0XVMKKczLvILpFt+F5ZJVCtl
-         az/VqKDvBl3mPX5YD+xBIOTxRtiWqKgQH0TgyZuKGWKONIYFc+Gq7okHxEPVrLXS6UPr
-         jcbw==
-X-Gm-Message-State: AAQBX9dk995n56UGiCllRrhq2K1nxNq0CuZhplTqkOTcNSAPgKMmwqlx
-        eavob2DOGaTQqrT5OWUxKTlKDg==
-X-Google-Smtp-Source: AKy350YGab/IBm5Uh9cFgleOLNHy7MnDU4Xj92g56W32VU95LNOGjOX54YB+TQ+uEJGtIXVV8ljZTA==
-X-Received: by 2002:a17:907:a07b:b0:932:ba53:83ba with SMTP id ia27-20020a170907a07b00b00932ba5383bamr1380544ejc.34.1680588538620;
-        Mon, 03 Apr 2023 23:08:58 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:233a:5c18:b527:381e? ([2a02:810d:15c0:828:233a:5c18:b527:381e])
-        by smtp.gmail.com with ESMTPSA id f24-20020a170906825800b008bc8ad41646sm5453187ejx.157.2023.04.03.23.08.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Apr 2023 23:08:58 -0700 (PDT)
-Message-ID: <4816461e-38b7-ba79-dd64-859fa0ee808e@linaro.org>
-Date:   Tue, 4 Apr 2023 08:08:57 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 8/9] arm64: dts: qcom: qcm2290: Add WCN3990 Wi-Fi node
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230403-topic-rb1_qcm-v1-0-ca849b62ba07@linaro.org>
- <20230403-topic-rb1_qcm-v1-8-ca849b62ba07@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230403-topic-rb1_qcm-v1-8-ca849b62ba07@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        Tue, 4 Apr 2023 02:18:16 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6DF1BD7;
+        Mon,  3 Apr 2023 23:17:59 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 333ATM9X029579;
+        Tue, 4 Apr 2023 06:17:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=dOcWD7hwOiecoarohEbN981aTy62qme7WLPGbsPkvIY=;
+ b=X2vJAaqOHgwYJ80O3MvPFAqd5yMlSwNGSDk3fv8WB8CXjrpXpcLkNGpqGUJffFgmf7Ve
+ mA9WTcbDfrDEVNZfKhtpnhCqWRqYRbsJxytrKbf3lIpBEn0x609I4jNqJ1kX4is3MTUR
+ ozr4eieEU2YbiBGjGWzglIvGzsdGxF+Jo5sCxKqEb26kmavpfN/RaZYV2+piNYPLdVsJ
+ htzHCIR101uOJDfjZENBB30WelRorLsx+mcKXezobQCcKHSVckvjEXHBVY6884Flih/X
+ Tm4uzj1KVSfkzpWqb41KE4c6BXVsxblZi04fY6UHAaEDH9IlRLQre1nlDP8lpMThazKY RQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pqw36tetb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Apr 2023 06:17:19 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3346HF5J025295;
+        Tue, 4 Apr 2023 06:17:15 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3ppdpkhu3g-1;
+        Tue, 04 Apr 2023 06:17:15 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3346HFWI025190;
+        Tue, 4 Apr 2023 06:17:15 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3346HFhr025188;
+        Tue, 04 Apr 2023 06:17:15 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+        id 9519632EE; Tue,  4 Apr 2023 11:47:14 +0530 (+0530)
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+To:     linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH 0/3] fix decoder issues with firmware version check
+Date:   Tue,  4 Apr 2023 11:47:09 +0530
+Message-Id: <1680589032-26046-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 0ftWUsmWInntVOaIrzhF3do2H3vksrzX
+X-Proofpoint-GUID: 0ftWUsmWInntVOaIrzhF3do2H3vksrzX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-03_19,2023-04-03_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ phishscore=0 clxscore=1015 malwarescore=0 adultscore=0 mlxscore=0
+ mlxlogscore=792 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304040057
+X-Spam-Status: No, score=-0.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,23 +78,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 19:36, Konrad Dybcio wrote:
-> Add a node for the ATH10K SNoC-managed WCN3990 Wi-Fi.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
+This series includes the changes to
+  - add firmware version based check to enable/disable some feature.
+  - add support of new HFI to notify sequence change event to
+    driver during resolution change at interframe.
+  - use firmware version based check to fix EOS handling for different
+    firmware versions.
 
-We had these talks a lot... All these 3-8 patches should be two patches:
-1. SoC DTSI
-2. Board DTS.
+With this series, divided the previous version [1] into
+multiple patches as suggested in review comments.
 
-Splitting superficially patchset on initial submission does not make
-sense. If you sent it in separate patchsets during development - release
-early, release often - then of course it would be fine. But hoarding
-patches till everything is ready is not the approach we want (and we
-made it clear that SM8550 should be the last such platform) and does not
-justify later fake-splitting.
+[1] https://patchwork.kernel.org/project/linux-media/list/?series=733169
 
-Best regards,
-Krzysztof
+Dikshita Agarwal (3):
+  venus: add firmware version based check
+  venus: enable sufficient sequence change support for vp9
+  venus: fix EOS handling in decoder stop command
+
+ drivers/media/platform/qcom/venus/core.h       | 18 ++++++++++++++++++
+ drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+ drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+ drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+ drivers/media/platform/qcom/venus/vdec.c       | 10 +++++++++-
+ 5 files changed, 39 insertions(+), 3 deletions(-)
+
+-- 
+2.7.4
 
