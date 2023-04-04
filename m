@@ -2,169 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1F276D5EE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 13:24:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4ADD6D61D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 15:08:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234781AbjDDLYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 07:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55948 "EHLO
+        id S234769AbjDDNIe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 09:08:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234378AbjDDLYv (ORCPT
+        with ESMTP id S234768AbjDDNId (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 07:24:51 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0831FD3;
-        Tue,  4 Apr 2023 04:24:50 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 195F963249;
-        Tue,  4 Apr 2023 11:24:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C04EC433D2;
-        Tue,  4 Apr 2023 11:24:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680607489;
-        bh=45L8OTcH+B0HWF79y0YD7k2NGle3X+Mu1k7dADgiuIg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=e2sUn9AHkU/mGqOiQjFSjOTOeeqi+/qO/SD7OuXyJwZ/4+BxHqlo3FP1BMfyuNmLW
-         iLDYGlWqSqQetpuK2MiHk7AyqmAGr+9MXJ9C87yOPiKceKrjYrv6Ay5FyCBbM8cNsk
-         2WkufQbMwmAqAxOCMHiSfXf7uZGZVLbVyMPr4uSGXxc5uObWSK8JxC272F3V8bQaHI
-         tGTZQ6vejtEc+qOEp24vzhtMyqJ3+9l97OvlS/pIokW/AKnDE8aHNNo6kEbqB+VC47
-         OYi5krSn8ueKDBzScVjrSbrNVBCrRR/MIqmQnkEQrLXQmVtqwPwhxzw89LdThSTR41
-         M3ySq6oHzj9Hg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pjemp-0006bj-TV; Tue, 04 Apr 2023 13:25:16 +0200
-Date:   Tue, 4 Apr 2023 13:25:15 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
-        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
-Message-ID: <ZCwJG5SEqmeIzJG1@hovoldconsulting.com>
-References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
- <20230325165217.31069-2-manivannan.sadhasivam@linaro.org>
- <ZCKrXZn7Eu/jvdpG@hovoldconsulting.com>
- <20230328093853.GA5695@thinkpad>
- <20230329052600.GA5575@thinkpad>
- <ZCP4MHe+9M24S4nJ@hovoldconsulting.com>
- <20230329132343.GD5575@thinkpad>
+        Tue, 4 Apr 2023 09:08:33 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB1910F2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 06:08:31 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id q16so42296761lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 06:08:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680613710;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7kPnU2nLRwz6G9LFL7GuLhoTybSEj4D3+fJk4EzfqT0=;
+        b=sVengYYIfKT0tYEJOvzUwxYQMX6mUMzzLnlnIrnghVX6MxsIkC2iQJTv62sAEDSIiS
+         6s9R4I+Ji0MkOb+4u0LDvF1luBy5BiFE4LuvYA/B51dWdfkF+9C8U26UCvCgVtu3E2kt
+         gaD/qRbG7tIv/UMBMQD8TY4SLMqgkS0RJMagt+h/hRyecS0mnS7YklqSpxrs1fZHkhyd
+         4xiwxmcWtT1jPtmNtR78qUGPDvt4M7Zcl/DewMyrvFbVa3NhNoM4buV/QNQ9JYHfovIb
+         eGHxer7QCHvbxUu8wKY/1Z9lP0YdYN2YXpvF0P138G27awrn03k2i4FGbgN2Og+Pxxy8
+         1EOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680613710;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7kPnU2nLRwz6G9LFL7GuLhoTybSEj4D3+fJk4EzfqT0=;
+        b=kBZ2ah8Gybz88MbaYW1yLOT0lHL0OYpJ7S8ABruyrHdIsqir+QV+8UVJ3Ym+Y957z2
+         oCcgwYyrNnLVgt45CI4SVCl1SuGeCIyFNusRCAruDD41SUkJm/Ty7tR91ErBvX6vvSLM
+         9yk02Xgotk0o75DQrexzK5FJYjuu48nJybViM1btY2iqXYPDQa6EqAt+HaH8ZqhSjPIp
+         hnzO+tDyIoOsEZZo4fFqtdGRfe9n8mp62EUgTC2EhlPC15AJhlxjZwdskmI2ZBtMaeej
+         36fz+Xa1EcHeQx/nscCaujnsdgHcscRPA1FDAo+N9BKn/yMcSF/RjHu9mNC7NWQ09Wmx
+         FJsg==
+X-Gm-Message-State: AAQBX9fKvmlZKvbCIP9ymsvD0lT0uhIQ6NNvWWA59hfk1RKqihaZibQH
+        YnvAy34iZRY51fE2cWDv0ItY+ARmp8VxMjOX1kA=
+X-Google-Smtp-Source: AKy350YTau/wB3HvhMOSz4nsP/qk130OsWvl/OtJ5Xz/Hdxb+06EACeJukXpRjTwNT5WA9SLIVfpWQ==
+X-Received: by 2002:a19:5503:0:b0:4eb:44da:e85d with SMTP id n3-20020a195503000000b004eb44dae85dmr580858lfe.57.1680613710145;
+        Tue, 04 Apr 2023 06:08:30 -0700 (PDT)
+Received: from eriador.lumag.spb.ru ([193.65.47.217])
+        by smtp.gmail.com with ESMTPSA id c11-20020a05651c014b00b0029e5448e752sm2304789ljd.131.2023.04.04.06.07.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 06:08:29 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v4 00/42] drm/msm/dpu: rework HW catalog
+Date:   Tue,  4 Apr 2023 16:05:40 +0300
+Message-Id: <20230404130622.509628-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230329132343.GD5575@thinkpad>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 06:53:43PM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Mar 29, 2023 at 10:34:56AM +0200, Johan Hovold wrote:
-> > On Wed, Mar 29, 2023 at 10:56:00AM +0530, Manivannan Sadhasivam wrote:
-> > > On Tue, Mar 28, 2023 at 03:09:03PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Tue, Mar 28, 2023 at 10:54:53AM +0200, Johan Hovold wrote:
-> > > > > On Sat, Mar 25, 2023 at 10:22:13PM +0530, Manivannan Sadhasivam wrote:
+This huge series attempts to restructure the DPU HW catalog into a
+manageable and reviewable data set. In order to ease review and testing
+I merged all the necessary fixes into this series. Also I cherry-picked
+& slightly fixed Konrad's patch adding size to the SSPP and INTF macros.
 
-> > > > > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > > > index 0d02599d8867..266a94c712aa 100644
-> > > > > > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > > > @@ -3040,6 +3040,13 @@ usb_0_dwc3: usb@a600000 {
-> > > > > >  				iommus = <&apps_smmu 0x820 0x0>;
-> > > > > >  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
-> > > > > >  				phy-names = "usb2-phy", "usb3-phy";
-> > > > > > +				snps,hird-threshold = /bits/ 8 <0x0>;
-> > > > > > +				snps,usb2-gadget-lpm-disable;
-> > > > > 
-> > > > > Here you are disabling LPM for gadget mode, which makes most of the
-> > > > > other properties entirely pointless.
-> > > 
-> > > Checked with Qcom on these quirks. So this one is just disabling lpm for USB2
-> > > and rest of the quirks below are for SS/SSP modes.
-> > 
-> > No, snps,hird-threshold is for USB2 LPM and so is
-> > snps,is-utmi-l1-suspend and snps,has-lpm-erratum as you'll see if you
-> > look at the implementation.
-> > 
-> 
-> Correct me if I'm wrong. When I look into the code, "snps,is-utmi-l1-suspend"
-> and "snps,hird-threshold" are used independently of the LPM mode atleast in one
-> place:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/dwc3/gadget.c#n2867
-> 
-> But I could be completely wrong here as my understanding of the usb stack is not
-> that great.
+First 6 patches clean up the catalog a bit in order to make it more
+suitable for refactoring.
 
-Yeah, it's not that obvious from just looking at the code, but L1 (and
-BESL) are USB2 LPM concepts and if you disable LPM then there is no need
-to override these values in the BOS descriptor either (as is done in
-dwc3_gadget_config_params() and bos_desc()).
+Second batch of 13 + 5 + 4 patches split the hw catalog entries into
+per-SoC files.
 
-> > > > > > +				snps,is-utmi-l1-suspend;
-> > > > > > +				snps,dis-u1-entry-quirk;
-> > > > > > +				snps,dis-u2-entry-quirk;
-> > > > > 
-> > > > > These appear to be used to optimise certain gadget application and
-> > > > > likely not something that should be set in a dtsi.
-> > > > > 
-> > > > 
-> > > > I will cross check these with Qcom and respin accordingly.
-> > > > 
-> > > 
-> > > These quirks are needed as per the DWC IP integration with this SoC it seems.
-> > > But I got the point that these don't add any values for host only
-> > > configurations. At the same time, these quirks still hold true for the SoC even
-> > > if not exercised.
-> > > 
-> > > So I think we should keep these in the dtsi itself.
-> > 
-> > Please take a closer look at the quirks you're enabling first. Commit
-> > 729dcffd1ed3 ("usb: dwc3: gadget: Add support for disabling U1 and U2
-> > entries") which added 
-> > 
-> > > > > > +				snps,dis-u1-entry-quirk;
-> > > > > > +				snps,dis-u2-entry-quirk;
-> > 
-> > explicitly mentions
-> > 
-> > 	Gadget applications may have a requirement to disable the U1 and U2
-> > 	entry based on the usecase.
-> > 
-> > which sounds like something that needs to be done in a per board dts at
-> > least.
-> > 
-> 
-> Going by this commit message it sounds like it. But...
-> 
-> > Perhaps keeping all of these in in the dtsi is correct, but that's going
-> > to need some more motivation than simply that some vendor does so (as
-> > they often do all sorts of things they should not).
-> > 
-> 
-> If you read my last reply one more time, I didn't reason it based on the vendor
-> code.
+Then the next 6 patches perform a post-split cleanup. They enable
+missing features, drop obvious duplicates, etc.
 
-I was referring to the fact that these properties had been copied from
-the vendor dtsi and seemingly so without further review or
-justification in the commit message (e.g. to explain the
-inconsistencies).
+Then 6 patches rename/inline existing macros to ease using them while
+adding support for new devices.
 
-> But I hear a contradict reply from Qcom saying that these properties are
-> required as a part of the DWC3 IP integration with the SoC. I need to recheck
-> with them again tomorrow.
-> 
-> Also, if these properties are application specific then they shouldn't be in
-> devicetree atleast :/
+And last 2 patches migrate HW catalog entries to be tied to the
+of_device_id rather than using HW revision to obtain one: in the email
+discussion of the previous revision of the patchset it was revealed that
+there exist different SoCs with the same DPU hw revision, but different
+fetures being enabled in the hardware.
 
-I fully agree with that.
+This pile of patches is submitted in a single batch to allow one to
+observe the final goal of the cleanup which otherwise might be hard to
+assess.
 
-Johan
+Changes since v3:
+- Split the SSPP/INTF size patch into SSPP and INTF parts (Abhinav)
+- Dropped the deduplication part for now. Replaced that with
+  _duplicating_ the data (Abhinav)
+- Reworked catalog/kms interface to bind data using device match table
+
+Changes since v2:
+- Fixed sc8280xp SSPP size to 0x2ac
+- Rebased on top of msm-next-lumag, dropped merged patches
+
+Changes since v1:
+- Picked up Konrad's patch
+- Picked up dependencies into the main series
+- Moved qseed3lite vs qseed4 patches into the fixes part
+- Fixed sm6115 in a similar manner.
+
+Dmitry Baryshkov (40):
+  drm/msm/dpu: use CTL_SC7280_MASK for sm8450's ctl_0
+  drm/msm/dpu: constify DSC data structures
+  drm/msm/dpu: mark remaining pp data as const
+  drm/msm/dpu: move UBWC/memory configuration to separate struct
+  drm/msm/dpu: split SM8550 catalog entry to the separate file
+  drm/msm/dpu: split SM8450 catalog entry to the separate file
+  drm/msm/dpu: split SC8280XP catalog entry to the separate file
+  drm/msm/dpu: split SC7280 catalog entry to the separate file
+  drm/msm/dpu: split SM8350 catalog entry to the separate file
+  drm/msm/dpu: split SM6115 catalog entry to the separate file
+  drm/msm/dpu: split QCM2290 catalog entry to the separate file
+  drm/msm/dpu: split SC7180 catalog entry to the separate file
+  drm/msm/dpu: split SM8250 catalog entry to the separate file
+  drm/msm/dpu: split SC8180X catalog entry to the separate file
+  drm/msm/dpu: split SM8150 catalog entry to the separate file
+  drm/msm/dpu: split MSM8998 catalog entry to the separate file
+  drm/msm/dpu: split SDM845 catalog entry to the separate file
+  drm/msm/dpu: duplicate sdm845 catalog entries
+  drm/msm/dpu: duplicate sc7180 catalog entries
+  drm/msm/dpu: duplicate sm8150 catalog entries
+  drm/msm/dpu: duplicate sm8250 catalog entries
+  drm/msm/dpu: duplicate sm8350 catalog entries
+  drm/msm/dpu: expand sc8180x catalog
+  drm/msm/dpu: expand sc7180 catalog
+  drm/msm/dpu: expand sm6115 catalog
+  drm/msm/dpu: expand sm8550 catalog
+  drm/msm/dpu: use defined symbol for sc8280xp's maxwidth
+  drm/msm/dpu: catalog: add comments regarding DPU_CTL_SPLIT_DISPLAY
+  drm/msm/dpu: enable DPU_CTL_SPLIT_DISPLAY for sc8280xp
+  drm/msm/dpu: enable DSPP_2/3 for LM_2/3 on sm8450
+  drm/msm/dpu: drop duplicate vig_sblk instances
+  drm/msm/dpu: enable DSPP and DSC on sc8180x
+  drm/msm/dpu: inline IRQ_n_MASK defines
+  drm/msm/dpu: rename INTF_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename CTL_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename VIG and DMA_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename MIXER_foo_MASK to contain major DPU version
+  drm/msm/dpu: rename MERGE_3D_foo_MASK to contain major DPU version
+  drm/msm/dpu: fetch DPU configuration from match data
+  drm/msm/dpu: drop unused macros from hw catalog
+
+Konrad Dybcio (2):
+  drm/msm/dpu: Allow variable SSPP_BLK size
+  drm/msm/dpu: Allow variable INTF_BLK size
+
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  210 ++
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  210 ++
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  237 ++
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  239 ++
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  244 ++
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  156 ++
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  131 +
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  122 +
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  226 ++
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  158 ++
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  223 ++
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  234 ++
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  239 ++
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 2209 +----------------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   89 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c    |    4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   |   18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |    4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   42 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |    1 -
+ 20 files changed, 2753 insertions(+), 2243 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+
+-- 
+2.39.2
+
