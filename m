@@ -2,86 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 500EB6D5CF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 12:18:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 712096D5DBE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 12:42:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234476AbjDDKSV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 06:18:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
+        id S234403AbjDDKmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 06:42:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234448AbjDDKSQ (ORCPT
+        with ESMTP id S233904AbjDDKmG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 06:18:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E46662D6D;
-        Tue,  4 Apr 2023 03:17:56 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 334A8uoE006539;
-        Tue, 4 Apr 2023 10:17:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=UygHRW+XeXRLDobQrXhjKYj5INVdFOoWpX9KDos1R9k=;
- b=DOo7P7g+N0mePU8yf/R+VSwjXf0462XdMnlLmq13FIgPonuUuvqdp5mX9rzejL/pRp+S
- IC7gsZNB2HyteNvhqKaiwSuP4g02JA6uEGnAcYYJrpD28vcPBoO3r0bsdJ8BkXVEx7fP
- dERDItjBEfSTPJMA0bixWQI+F+bX8Luv/u4gbZXDBExSr4GIoS4/lK74gSJxYyfaPS+z
- GsYqBX7yetBk3n7dmGMlqUmlKXQQjTjDGkGcEw/aoTS6mmNCkUobpHve/rd48mN1axCT
- Vt3cDFbADZ7tzawikkJW8FD3I5BNXS6i4p44uVTkGIRqDN3GuxSIyME4g8jloTE8vq3D ig== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prg8wr7ty-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 04 Apr 2023 10:17:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 334AHRu7002497
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 4 Apr 2023 10:17:27 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 4 Apr 2023 03:17:17 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
-        <geert+renesas@glider.be>, <rafal@milecki.pl>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>
-Subject: [PATCH V11 4/4] arm64: defconfig: Enable IPQ9574 SoC base configs
-Date:   Tue, 4 Apr 2023 15:46:22 +0530
-Message-ID: <20230404101622.5394-5-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230404101622.5394-1-quic_devipriy@quicinc.com>
-References: <20230404101622.5394-1-quic_devipriy@quicinc.com>
+        Tue, 4 Apr 2023 06:42:06 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84C5B1713
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 03:42:01 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id m2so32285327wrh.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 03:42:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680604920;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kMMkkwa1DeBjuIxqtolsFfNBw/JbCSfKSLU5AIzSffM=;
+        b=TQwvDVU3vO5kpLXTSCPdY1bue1XUsBgljwBUxgP1u61LURfmaxlwu8FGMRiCcOX2ei
+         T2ZtRYyq7mvITHzni6P7Og77oa92as3SdzsoN1//oQALYYNrNvHPMuqY2ROOEMRH/UAV
+         f8pWztspMH7NDFIBRCz+sncxvYKO/04iwxhunvALSTMfDwv3M5adgku52j3Jvm2OZ6ee
+         4/hNiZMkWtZkr1Gk/DCE4sPqbHeBnxEnFQVuU9ZQ+W1/Xcp3oiTXUAUI4IM8/0fpM2jL
+         Zkpu7dbmvCdDH+93QmlaW+KJL2x3eqcCgUPLxgY/9WhCC9Il5ecbz1f7IMKFo79E3vfq
+         N6Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680604920;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kMMkkwa1DeBjuIxqtolsFfNBw/JbCSfKSLU5AIzSffM=;
+        b=qdN9jdrLj4EKSIJDLjHard2FNNsDB9MRQPpqvXA9mpfaRIKd1oqsoNf/bpExcSkqhG
+         ccxiEthWFUxeyDePpGq1NtVoPC5cHjUfijsWWKTw3IMCCRGCmUVBPKbaGlZtdqkas5B1
+         FXAXiAK1dGlMIBsU9y/ey6oZoNKvdWsOQFyIE1uXGtGrXhBIGtCCi3bUTOhZYSxWViAh
+         KI6FLScDCmejUxRNOtsf/cUlPeAxZ3a9AsqHAOwc51oSar4kV+hvUaWK68DjbQ8fytXq
+         YEhIYE8Uf5uii+DO/Wld2FkxVA+p1cVuKi6kWDOVAr01yMPpSl8CFCrOma7bVP3kGpna
+         9u8g==
+X-Gm-Message-State: AAQBX9dOzsvsdDHKYpkrdjDwqfoWEpuwTgEiptTDJmtHg+cRWuTsaa9R
+        RSADR/DKgt/lrjvY4JGlrnDeIg==
+X-Google-Smtp-Source: AKy350andMQlc/NSkoD1itFkTq9FAROBUT7E0DWG3ebDLDs5tZZH76/uH88kkbI44lS/ZaGqyyrRpA==
+X-Received: by 2002:a5d:6e42:0:b0:2d6:a357:f133 with SMTP id j2-20020a5d6e42000000b002d6a357f133mr1132544wrz.44.1680604919960;
+        Tue, 04 Apr 2023 03:41:59 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id v8-20020a05600c470800b003ef71d7d64asm22334917wmo.6.2023.04.04.03.41.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 03:41:59 -0700 (PDT)
+Date:   Tue, 4 Apr 2023 13:41:57 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v5 2/6] dt-bindings: ufs: qcom: Add ICE phandle
+Message-ID: <ZCv+9WjlkA4n9Dwg@linaro.org>
+References: <20230403200530.2103099-1-abel.vesa@linaro.org>
+ <20230403200530.2103099-3-abel.vesa@linaro.org>
+ <9fc90c8b-9234-84fa-7dab-fee9de2b9813@linaro.org>
+ <ZCvm3fzSh8owVDdc@linaro.org>
+ <c816d432-26b8-2655-adf1-4b72b8645215@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jrINZPVCYN5UwMFqxWtl6R4UbjFsrPcy
-X-Proofpoint-ORIG-GUID: jrINZPVCYN5UwMFqxWtl6R4UbjFsrPcy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-04_03,2023-04-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 mlxlogscore=723
- adultscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304040094
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c816d432-26b8-2655-adf1-4b72b8645215@linaro.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,34 +92,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enables clk & pinctrl related configs for Qualcomm IPQ9574 SoC
+On 23-04-04 12:12:06, Krzysztof Kozlowski wrote:
+> On 04/04/2023 10:59, Abel Vesa wrote:
+> > On 23-04-04 07:41:55, Krzysztof Kozlowski wrote:
+> >> On 03/04/2023 22:05, Abel Vesa wrote:
+> >>> Starting with SM8550, the ICE will have its own devicetree node
+> >>> so add the qcom,ice property to reference it.
+> >>>
+> >>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> >>> ---
+> >>>
+> >>> The v4 is here:
+> >>> https://lore.kernel.org/all/20230327134734.3256974-4-abel.vesa@linaro.org/
+> >>>
+> >>> Changes since v4:
+> >>>  * Added check for sm8550 compatible w.r.t. qcom,ice in order to enforce
+> >>>    it while making sure none of the other platforms are allowed to use it
+> >>
+> >> Why?
+> > 
+> > SM8550 will be the first platform to use the new DT bindings w.r.t ICE.
+> 
+> This I understand, but why other platforms cannot use it?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- arch/arm64/configs/defconfig | 2 ++
- 1 file changed, 2 insertions(+)
+The platforms that do not have ICE support yet will be added in the same
+subschema along with SM8550 when the ICE DT node will be added in their
+dtsi.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 29c79a6a85eb..8f24c280dec2 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -557,6 +557,7 @@ CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
- CONFIG_PINCTRL_IPQ5332=y
- CONFIG_PINCTRL_IPQ6018=y
-+CONFIG_PINCTRL_IPQ9574=y
- CONFIG_PINCTRL_MSM8916=y
- CONFIG_PINCTRL_MSM8953=y
- CONFIG_PINCTRL_MSM8976=y
-@@ -1155,6 +1156,7 @@ CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_GCC_5332=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
-+CONFIG_IPQ_GCC_9574=y
- CONFIG_MSM_GCC_8916=y
- CONFIG_MSM_GCC_8994=y
- CONFIG_MSM_MMCC_8994=m
--- 
-2.17.1
+> 
+> > 
+> >>
+> >> Also, this does not solve my previous question still.
+> > 
+> > Well, the clocks are not added for the a few platforms (which include
+> > SM8550). Same for 'ice' reg range.. So the only thing left is to
+> > enforce the qcom,ice property availability only for SM8550. I believe
+> > it solves the mutual exclusiveness of the "ice" reg range along with the
+> > clocks versus the qcom,ice property, by enforcing at compatible level.
+> 
+> Ah, I think I understand. That would work except I don't understand why
+> enforcing qcom,qce only for specific, new SoCs. Assuming it is a correct
+> hardware representation, we want it for everyone, don't we?
 
+Yes, but they will be added to the subschema (qcom,ice one) when their
+their ICE support (ICE DT) will be added. This way, we keep the bindings
+check without failures (for now).
+
+> 
+> Best regards,
+> Krzysztof
+> 
