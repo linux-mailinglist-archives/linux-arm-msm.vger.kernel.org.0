@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18BFE6D5C4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 11:47:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8DE06D5C6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 11:56:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234190AbjDDJrY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 05:47:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49240 "EHLO
+        id S233952AbjDDJ4B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 05:56:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233828AbjDDJrX (ORCPT
+        with ESMTP id S234044AbjDDJz7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 05:47:23 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D0C199E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 02:47:21 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id g19so28509321lfr.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 02:47:20 -0700 (PDT)
+        Tue, 4 Apr 2023 05:55:59 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FD7526A2
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 02:55:54 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id q16so41625414lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 02:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680601639;
+        d=linaro.org; s=google; t=1680602152;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=S1O1fJ/QD0Sr5hbtJk4fgvp8dFxjfJ/As4fthYvER08=;
-        b=y1VjK2qIxTXGbrhW7PuyfMAZVtvaxfqf0iOUb8Sv33oWQvC8nV+B43+sPccGbRS+9e
-         qAVjct7qMylS7rbl5y46NonRmXe+5R3/A/gFUPgPXNBldTDLaT/E4pT5ve/7zQYhYYRT
-         H6uzRnLruQ/dVVyrw2r1Cubv9OL0XA87qCT5eyD0Jt5EQ37Yy3tj9iREJtSYF/TWoNKN
-         ISelXjacTEmkXrXHcZZu72y+Y75fjaJ+Ph+9INzk/l2E6r3tA/wxdjvo+4S22Hyc38yj
-         xPrxr/OqmdZHv2m0VwcwPjtUy0w5nORtdkjsWTFwNHOiD95W/YTeNSIAHOfxvh5G4bj8
-         H6nw==
+        bh=/l2O7xGhkXg80job3CbxHwv7CQHev/2/sBjYhl7ubJ0=;
+        b=juWpOLyPYEkeh2ez9VFh1DA6dxgmqiaF/d0cQ6ezmgQ6ndchZqYUXmU9CMYho18i/A
+         XjAx0hGVI95SUfj1Bxa16YrF/NjM4vPTmVOA+JibxoG6AFK7n7xcOXDV/Yi5Q2LSiZli
+         VsCCe6Wc0wRfGex7bCLOGsQZQTvfWhFo4ftbBuU8pOLGaU6GpGTp/ypl52IGoPguIp6f
+         UwbrriaNxRA0yP838tvEmf0CmkJdOs/OCEMWPtFgSQvnjVPuLmCDRZ370oouxpCGqX9g
+         yui+KQHcNysE6W9QldashBfYG2KLgPSWrEBvSPwNuEXAn+34lSphHQTHcfCYRzvzKUZW
+         yETQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680601639;
+        d=1e100.net; s=20210112; t=1680602152;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S1O1fJ/QD0Sr5hbtJk4fgvp8dFxjfJ/As4fthYvER08=;
-        b=4B9xrZqZsY7hVqBOeL2/FlQGDJbOJWKpmSJvZ5lC8wLb4NA6J9MFNqN23SW19XoBTO
-         1DqS15nXkv2MezJlE2PVxhN6oNs0NDj5QT2mPkVcfICA/hBCRrg3NaLS7sTQL5Ga3EKt
-         ofG7xK9JRH5cvk8GXN9gQEc7yIyynGIdZZav0nHP7X9sZRGkucWxmm6+XilLhAeSqvgZ
-         UonqBVDID8vXodg9qRTro5M+QYQSaqubRGYoV8S2MypsfNl0yWNcK5PwgdR8s1rgYSqQ
-         Mv0wANFFdFjCSNhX5de+WkzioE75eZfCFa7mgJ3z2/Y7cBOU36V/5Ecp/xXNdA6i6Ius
-         M/rw==
-X-Gm-Message-State: AAQBX9f4EW6errZLBi1cKVtrXtXegxL/vcQXEK/TlZqD1hG10vLFJ9SB
-        DqUPUtZtnWt0/6x0U4Wn7IfDSA==
-X-Google-Smtp-Source: AKy350axP7aYuaRB6bZuTKw/BgneVXxibH2twHQ6/CpCCb9fd9pMdlpREVmardu9htFeu339Ig/XPA==
-X-Received: by 2002:ac2:54a4:0:b0:4ea:4793:fad0 with SMTP id w4-20020ac254a4000000b004ea4793fad0mr579816lfk.5.1680601639329;
-        Tue, 04 Apr 2023 02:47:19 -0700 (PDT)
+        bh=/l2O7xGhkXg80job3CbxHwv7CQHev/2/sBjYhl7ubJ0=;
+        b=M54d2vOVzsiWkJQDRwhQX4tRvCh8TQ3ia5kXnMnuJmtrKaUNTwkTlkKHQrP3yqZP/n
+         fS2BW3Kyjwi3Dcd8Uh+jLaMRTv2Dt01bLv9CXpcDIxmeVZWz2jXXoATZxOwz1LsVaqgp
+         LG0l6ZUINx80GUfRorB4UYXZPQcffpFNCoo8Wy4/QC0CpBuzdVJBiKvT5AImZsqoXPip
+         NiMu2kpdVnEiyBFDL6ED30cFidiNLZcSKy4a27jaTztUEA6pRbr81Re/XGlehbMZ5StC
+         UUDL/WFB9dVTXtLTp1I7SAW1rsq4CllXEO4jVlCVVOZReF7knWJDHJniNOnq8WxJVOOD
+         r5qw==
+X-Gm-Message-State: AAQBX9fFQKPEkTE9EXkh/pn3734KmCg2dMijj97oC4Tk5uCxnBFY7zps
+        MM2PrZWytZctCafynlpXDyIcwg==
+X-Google-Smtp-Source: AKy350aa9aBBfffj1oFXk1jPliWoUTWPFTdHcxXTdGGgXnwyyt84D4yZLmZH5+hmTHku7u567UugvQ==
+X-Received: by 2002:ac2:5613:0:b0:4e8:3dc1:70f4 with SMTP id v19-20020ac25613000000b004e83dc170f4mr518471lfd.34.1680602152594;
+        Tue, 04 Apr 2023 02:55:52 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id y27-20020ac2447b000000b004e9b183fc5bsm2241581lfl.8.2023.04.04.02.47.18
+        by smtp.gmail.com with ESMTPSA id x2-20020ac259c2000000b004eaf41933a4sm2242007lfn.59.2023.04.04.02.55.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 02:47:18 -0700 (PDT)
-Message-ID: <b99e4236-de56-95e4-f1a1-db52238e937f@linaro.org>
-Date:   Tue, 4 Apr 2023 11:47:17 +0200
+        Tue, 04 Apr 2023 02:55:52 -0700 (PDT)
+Message-ID: <a295af57-f8d1-35c2-77e8-7d29d043e47e@linaro.org>
+Date:   Tue, 4 Apr 2023 11:55:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 3/9] arm64: dts: qcom: Add initial QCM2290, PM2250 & RB1
- device trees
+Subject: Re: [PATCH 8/9] arm64: dts: qcom: qcm2290: Add WCN3990 Wi-Fi node
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -71,10 +70,10 @@ Cc:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230403-topic-rb1_qcm-v1-0-ca849b62ba07@linaro.org>
- <20230403-topic-rb1_qcm-v1-3-ca849b62ba07@linaro.org>
- <e1c2605c-6976-4d3e-25c8-e71145eea518@linaro.org>
+ <20230403-topic-rb1_qcm-v1-8-ca849b62ba07@linaro.org>
+ <4816461e-38b7-ba79-dd64-859fa0ee808e@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <e1c2605c-6976-4d3e-25c8-e71145eea518@linaro.org>
+In-Reply-To: <4816461e-38b7-ba79-dd64-859fa0ee808e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -89,87 +88,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4.04.2023 08:06, Krzysztof Kozlowski wrote:
+On 4.04.2023 08:08, Krzysztof Kozlowski wrote:
 > On 03/04/2023 19:36, Konrad Dybcio wrote:
->> Add initial device trees for the QCM2290 SoC, QC Robotics RB1 board, as
->> well as the bundled PM2250 PMIC.
->>
->> On the SoC part, CA53 compatibles were used, as Qualcomm claims that's
->> what has been implemented, despite the cores reporting a Qualcomm Kryo
->> MIDR_EL1[PART_NUM].
->>
->> To get a successful boot on RB1, run:
->>
->> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/qrb2210-rb1.dtb >\
->> .Image.gz-dtb
->>
->> mkbootimg \
->>         --kernel .Image.gz-dtb \
->>         --ramdisk some_initrd \
->>         --output rb1-boot.img \
->>         --pagesize 4096 \
->>         --base 0x8000 \
->>         --cmdline 'some cmdline'
->>
->> fastboot boot rb1-boot.img
->>
->> There's no dtbo or other craziness to worry about.
->> For the best dev experience, you can erase boot and use fastboot boot
->> everytime, so that the bootloader doesn't mess with you.
->>
->> If you have a SoM revision 3 or older (there should be a sticker on it
->> with text like -r00, where r is the revision), you will need to apply
->> this additional diff:
->>
->>         aliases {
->> -               serial0 = &uart0;
->> +               serial0 = &uart4;
->>
->> /* UART connected to the Micro-USB port via a FTDI chip */
->> -&uart0 {
->> +&uart4 {
->>
->> That should however only concern preproduction boards.
+>> Add a node for the ATH10K SNoC-managed WCN3990 Wi-Fi.
 >>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
-[...]
-
->> @@ -0,0 +1,63 @@
->> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-This I think can go BSD3
-
 > 
-> Odd license. Unless you based it on 2.0+, please use standard dual-license.
+> We had these talks a lot... All these 3-8 patches should be two patches:
+> 1. SoC DTSI
+> 2. Board DTS.
+> 
+> Splitting superficially patchset on initial submission does not make
+> sense. If you sent it in separate patchsets during development - release
+> early, release often - then of course it would be fine. But hoarding
+> patches till everything is ready is not the approach we want (and we
+> made it clear that SM8550 should be the last such platform)
+That wasn't my intention.
 
-[...]
->> +	pmic@1 {
->> +		compatible = "qcom,pm2250", "qcom,spmi-pmic";
->> +		reg = <0x1 SPMI_USID>;
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +	};
->> +};
->> \ No newline at end of file
-> 
-> Patch error to fix.
-Ack.
+This patchset is "feature-rich", as it piggybacks off of Shawn and Loic
+having submitted the driver parts long long ago and SM6115 being quite
+well-supported (and almost identical to the QCM). Patches 4-8 were not
+"held hostage" waiting for full fat platform enablement, but were
+essentially "copy-paste, adjust, verify" and that does not require a
+lot of manpower or time.. I split them to ease the review (~850 LoC @
+PATCH 3, ~1900 LoC @ PATCH 8).
 
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
->> new file mode 100644
->> index 000000000000..27d4742cdb19
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
->> @@ -0,0 +1,848 @@
->> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-> 
-> Same concern. Also in DTS.
-This was based off of sm6115 dtsi, which is dual-licensed.
-I'm not a legal expert, not sure how much flexibility we
-can get here.
+In any case, the fact that there's so many features submitted with
+the initial posting is not related to me holding onto them on
+purpose, they were created together, probably within 20 minutes of
+each other.. This should have been posted a long time ago with even
+more things (like regulators), but there's been some communication
+issues with Qualcomm..
+
+LMK how you want me to proceed with this.
 
 Konrad
+
+and does not
+> justify later fake-splitting.
 > 
 > Best regards,
 > Krzysztof
