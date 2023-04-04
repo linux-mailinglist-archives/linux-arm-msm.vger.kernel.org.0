@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0BD36D621F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 15:09:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BC6C6D6224
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 15:09:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234357AbjDDNJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 09:09:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42476 "EHLO
+        id S234958AbjDDNJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 09:09:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234985AbjDDNJ0 (ORCPT
+        with ESMTP id S234976AbjDDNJ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 09:09:26 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FCF010F2
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 06:09:24 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id o20so30834342ljp.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 06:09:24 -0700 (PDT)
+        Tue, 4 Apr 2023 09:09:28 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC45170C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 06:09:25 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id y7so1341082ljp.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 06:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680613763;
+        d=linaro.org; s=google; t=1680613764;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5uOl0j0yVJTK0EO6FSNMdqRAG1vOcMrWWtGv1m7YFSI=;
-        b=vIDo6hrp0SsxqRH6Uv1juxRiWj9HpUqcTxUDOuZifv5/4IuOJzd3ENqjaArKL/b6C7
-         9SV+9TY9xlFkMLqS+vyL6xbDHrsN0/cqm600ZCDEC25soKgBD0XJxLnjUH6ARspLBh32
-         AbY5r/C2RqpAc8/xekQNTrQnh61NQi3MH9M40wCd0C3DSMkTlu1yXjZ3Y4UywEu/7Gza
-         ry30Y+uzL1TylrxsJI6ndpYRDnaH/rtmJI3LT/Otbi0D3wYZjo6bdjnHnV3hi+X424fu
-         uRZJExIiZk6qxBZBmJxwFlxKAzqbWhyG+DVxMS84Is5KuJ6VL7sk0DvZqKkaUsEWVswY
-         lpjQ==
+        bh=k3Fx3sk6Vn5lZzb/pUoNHIe5WMfmNRaGDKPmYFHhJvI=;
+        b=GBCLKiFtcawE3NWz82ifekpZfkzi6SZJzphv4ONq67WMTNMc0Xs7+xCHUsy78IhbfV
+         kfWpmu9OY52ApNyBeOTfvsOYePmk7TDsx41qsj0T0sa4k/64JxZhzi+Tc1oqtobMmoxX
+         b0V4ptP5H/6r7SSEp6YzO9C16yRIBK2M5CUhQ+xFXhjq3lIY4sBmGw5gI1VZnb5zhkfY
+         Y5pTmOkApc+LIFaSynPxyOZxjSre3ryWmnZSK2ZfVk3D9pGiFpw80CNUHzBQkkhtMUy2
+         ApUMA9n5iFmpEmkNox7ahwcychsRi9kp9tALElZ3oP+hGWQ4txV5agorewOo5mqyNz2G
+         U5Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680613763;
+        d=1e100.net; s=20210112; t=1680613764;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5uOl0j0yVJTK0EO6FSNMdqRAG1vOcMrWWtGv1m7YFSI=;
-        b=FaUgWFBxNoy48N/IuIH6wNwYPTP67SNqOYOs8b51Qn3F12h6Zn/MoADBp743EqAqeD
-         GzF3Irhftn5dCaAHAZ+cDZBLkoeW+MlFg2fE7sIH5+WRE27elpQBs03C4XVBXaYAf7qG
-         YxBocON7I1TxyPGnqgPgry2/KrOJjwWaKA/Tmx7EwsKhhNNGfLjyNiHbh7LpLhUY3HnU
-         aqOoJttqkXNg+vEpt1BBUPA59uAfkMmpmTPuDFLjAJh1AZ3Y5NI+60tS20Y3R2ayYF+F
-         P259arm+sbzeayt2kutIrkqRb73MLCFnjHc7hQxout5SAD/AlCZLhY0eFG05IKwHnan6
-         oGug==
-X-Gm-Message-State: AAQBX9eZ76+HOHCVqEKmUeeUnbIIKXV5so4jI1zNj9tXOKUmPnWzDrda
-        0LJ/6RdY0rWcfaQwr2xye1fLig==
-X-Google-Smtp-Source: AKy350aVLgQ/q/7zADbN+1dfDFphXTrml+T8MOtnOJWXESjkSrcHni1WiHw6M+WSOSCBnP2SsjkKGg==
-X-Received: by 2002:a2e:9251:0:b0:299:a7c7:d4ce with SMTP id v17-20020a2e9251000000b00299a7c7d4cemr526455ljg.21.1680613762977;
-        Tue, 04 Apr 2023 06:09:22 -0700 (PDT)
+        bh=k3Fx3sk6Vn5lZzb/pUoNHIe5WMfmNRaGDKPmYFHhJvI=;
+        b=x0JP8r3opzG5q+rAToV8Rhab/+Hp1l3A8nhw5gqWuq2J/tLSaknMrjikNDKghH57KK
+         BSejfMqwZeEq4wMY3s83x5rTY0i6UQxkd0e7CH7dK098hTYj29UESXFXZdCdkpHirmLg
+         rTm/gIX4lWXlnqM0NXR+w7G2yclmVh7G2AZcDxeG1aiND2cUwvi6nasZEi0gDMaOItBg
+         HkAa/IbrR5hdc6DXknepVAJO9cIJ/8S2/Phru9MT/zvVK0FwXUPXcwBOH7IgPkd/HeSD
+         oyxiLq2/GkZjPzqqb8UTh/DekLyfZV3UuAhErPTEgElzB7p25HdJQ+rJ5p8oXDA08uk7
+         NzUQ==
+X-Gm-Message-State: AAQBX9dWRE6bk0DOn5yCa/CX6r2c+zUOEiI9nM0rz2c7aKuMsBt88pCb
+        GMLkn/IzPBA6zL/pdIMWo2SoPQ==
+X-Google-Smtp-Source: AKy350YymQmNmYx7ky4qkixUz5KwnKiqsiPqms3ZBxxlMT3nOM/mz6XPYUJkzXNXdJUH3d8I+z6Jlw==
+X-Received: by 2002:a2e:b046:0:b0:298:b333:4267 with SMTP id d6-20020a2eb046000000b00298b3334267mr960471ljl.18.1680613763866;
+        Tue, 04 Apr 2023 06:09:23 -0700 (PDT)
 Received: from eriador.lumag.spb.ru ([193.65.47.217])
-        by smtp.gmail.com with ESMTPSA id c11-20020a05651c014b00b0029e5448e752sm2304789ljd.131.2023.04.04.06.09.21
+        by smtp.gmail.com with ESMTPSA id c11-20020a05651c014b00b0029e5448e752sm2304789ljd.131.2023.04.04.06.09.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 06:09:22 -0700 (PDT)
+        Tue, 04 Apr 2023 06:09:23 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -58,10 +58,11 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v4 28/42] drm/msm/dpu: expand sm8550 catalog
-Date:   Tue,  4 Apr 2023 16:06:08 +0300
-Message-Id: <20230404130622.509628-29-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v4 29/42] drm/msm/dpu: use defined symbol for sc8280xp's maxwidth
+Date:   Tue,  4 Apr 2023 16:06:09 +0300
+Message-Id: <20230404130622.509628-30-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230404130622.509628-1-dmitry.baryshkov@linaro.org>
 References: <20230404130622.509628-1-dmitry.baryshkov@linaro.org>
@@ -76,64 +77,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Duplicate sm8450 catalog entries to sm8550 to remove dependencies
-between DPU instances.
+Use defined name DEFAULT_DPU_OUTPUT_LINE_WIDTH instead of open coding
+the value.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    | 32 ++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 95bb8dbdecc3..c7247a5739f1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -172,6 +172,36 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
- 	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+index 39894cbf456d..d30b797e90e0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+@@ -8,7 +8,7 @@
+ #define _DPU_8_0_SC8280XP_H
  
-+static const struct dpu_perf_cfg sm8550_perf_data = {
-+	.max_bw_low = 13600000,
-+	.max_bw_high = 18200000,
-+	.min_core_ib = 2500000,
-+	.min_llcc_ib = 0,
-+	.min_dram_ib = 800000,
-+	.min_prefill_lines = 35,
-+	/* FIXME: lut tables */
-+	.danger_lut_tbl = {0x3ffff, 0x3ffff, 0x0},
-+	.safe_lut_tbl = {0xfe00, 0xfe00, 0xffff},
-+	.qos_lut_tbl = {
-+		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-+		.entries = sc7180_qos_linear
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
-+		.entries = sc7180_qos_macrotile
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
-+		.entries = sc7180_qos_nrt
-+		},
-+		/* TODO: macrotile-qseed is different from macrotile */
-+	},
-+	.cdp_cfg = {
-+		{.rd_enable = 1, .wr_enable = 1},
-+		{.rd_enable = 1, .wr_enable = 0}
-+	},
-+	.clk_inefficiency_factor = 105,
-+	.bw_inefficiency_factor = 120,
-+};
-+
- static const struct dpu_mdss_cfg sm8550_dpu_cfg = {
- 	.caps = &sm8550_dpu_caps,
- 	.ubwc = &sm8550_ubwc_cfg,
-@@ -195,7 +225,7 @@ static const struct dpu_mdss_cfg sm8550_dpu_cfg = {
- 	.vbif = sdm845_vbif,
- 	.reg_dma_count = 1,
- 	.dma_cfg = &sm8450_regdma,
--	.perf = &sm8450_perf_data,
-+	.perf = &sm8550_perf_data,
- 	.mdss_irqs = IRQ_SM8450_MASK,
- };
- 
+ static const struct dpu_caps sc8280xp_dpu_caps = {
+-	.max_mixer_width = 2560,
++	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+ 	.max_mixer_blendstages = 11,
+ 	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+ 	.has_src_split = true,
 -- 
 2.39.2
 
