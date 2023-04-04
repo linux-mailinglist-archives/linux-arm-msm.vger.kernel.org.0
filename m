@@ -2,93 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 154E06D69E1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 19:09:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E105E6D6ADF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 19:47:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235121AbjDDRJh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 13:09:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57898 "EHLO
+        id S232062AbjDDRrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 13:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232447AbjDDRJg (ORCPT
+        with ESMTP id S230080AbjDDRrB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 13:09:36 -0400
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 946E0CF;
-        Tue,  4 Apr 2023 10:09:35 -0700 (PDT)
-Received: by mail-oi1-f177.google.com with SMTP id bj20so24721267oib.3;
-        Tue, 04 Apr 2023 10:09:35 -0700 (PDT)
+        Tue, 4 Apr 2023 13:47:01 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C4D1993
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 10:46:59 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id br6so43323922lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 10:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680630418;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RV8KrH+fxSPgZ9OjX7icc1BadpyWNvC86iBDQVaMJIw=;
+        b=PF0HhkOk1Uv3kOWGXyl9mSqxdS6YA/N/87vyRBGC8x0cWncMBVXKnymFCqGj29/kvK
+         sdHDCgf6z/dL33PG2pULxshilFIsUSBrNq8fOVGAInoa6ecOPkLxTTMttgBgmU75EYxk
+         2gOXZNOgDPZoHhaS2sL/JKOm2w2xDBNcJUqBbfmRy6IL7nTlbYLWU+ZYLRP0EryMttQb
+         GrZd56HPmYBLzWNokynUlaGhraYj51PkTUqIjpKuHhbIowgsgSNMd9xV29mLvJftRto2
+         sak0v7kxMlgchEVRm62YYd1IABuCB8F+F/zHmjAMfgi90suEk1MqTbaEr7nYNhIuqhKW
+         yQsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680628175;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6H1CnmaYD1ILwp+VcjbZQm8EbJhKwj2OJVE8FjdAMCw=;
-        b=JzQHB5DS/6nydDyXoBHoauN/7ZnzfHiZxyvHrdxFSDgxfFOtg7f35VVTI62ymdmO49
-         p/yPZlkSkRdO/3EugLNXubTa/2S7lI8HXf/FX1A+XPHlSWDsAoli0Eg8h1aClZxMJ7UD
-         jCUWLhgCya3hIM/lCx0gzTPL81zIYjiiFchyG6a1+9g1dtbmj/7rd9ktS56zhyRsPn4p
-         wUG0cJ0XA9K49llu1+af3k7vX59NHTRbUGYNbq32SKVMkgF9Kf7SwMDFqVqbioAl6fFk
-         HUqIvlFQMdbhGcLncb9aUjti55K2xOgehx04dtrKfvHTjUnfETpXX9/OV7lL+u6WSyxW
-         a0zA==
-X-Gm-Message-State: AAQBX9cx0MX4/cZr8f2m+uTb62gn2sessJjHUwuJ0ZfinrCzXt3YOjM5
-        rb92Pb5NQ91G4cAbwQh0WJXNjPptOg==
-X-Google-Smtp-Source: AKy350bzXz+KM07Z6ghxSIozeb5vXQ9jMix/XK+MQYxeeXeuQgAj8RDRawgpUHIYTNQcxAvMuDSwsg==
-X-Received: by 2002:a05:6808:68e:b0:389:14bd:8246 with SMTP id k14-20020a056808068e00b0038914bd8246mr76571oig.13.1680628174494;
-        Tue, 04 Apr 2023 10:09:34 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i185-20020aca3bc2000000b003848dbe505fsm5382750oia.57.2023.04.04.10.09.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 10:09:33 -0700 (PDT)
-Received: (nullmailer pid 130248 invoked by uid 1000);
-        Tue, 04 Apr 2023 17:09:32 -0000
-Date:   Tue, 4 Apr 2023 12:09:32 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Tom Joseph <tjoseph@cadence.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srikanth Thokala <srikanth.thokala@intel.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: PCI: Drop unneeded quotes
-Message-ID: <20230404170932.GE49361-robh@kernel.org>
-References: <20230320233911.2920364-1-robh@kernel.org>
+        d=1e100.net; s=20210112; t=1680630418;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RV8KrH+fxSPgZ9OjX7icc1BadpyWNvC86iBDQVaMJIw=;
+        b=DkwTiHcJzjZtK5MGXDFEVR/BesxH+vDXEjJElCPgclm3SjSxVBnrxv1DwxEX8MSfC0
+         NMwAzzolFyyi6Ywovht1j9WMtm5VMqv26oX7x/uQh77DTaA3DBHqFmk5kr3pLlyl5D6/
+         NrO0am7AXqCyNxGOlJQAW04vQwfwpql+68evnCOjUuk5uP4R2z6VAjnYeHz6CGWwTOtN
+         4YmNaSwUiTVHfiYvR0tSRdSM9YKf/2Jakx0w6tZnUBa07S5Rq9EvqhS+e3crJzdAD6Yy
+         rwBJwmE49OT+tPJuVpfI4YGw7SWIqga6DrsGZp5fXxTE7V405oiwu0kUv6RMRss+N/Ke
+         al4Q==
+X-Gm-Message-State: AAQBX9fgARe7gpDX8xmjcaElITCK2Nx4YsSMXCO9VAwyZN2UHmKRy+i/
+        j+IiTu4SxZk/nzxqSOq7fVJfvc1BHOWz3GqjTFk=
+X-Google-Smtp-Source: AKy350Y//L+R1u3wX768xf8NTmn0Rca5PKXcaK0O6VJ1OXoOIzxJG+SoZD9d2tEHSjpyL0iqt7Ozpg==
+X-Received: by 2002:ac2:4191:0:b0:4e9:a16f:a176 with SMTP id z17-20020ac24191000000b004e9a16fa176mr738208lfh.36.1680630418051;
+        Tue, 04 Apr 2023 10:46:58 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id q22-20020ac25296000000b004e7fa99f3f4sm2420351lfm.265.2023.04.04.10.46.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Apr 2023 10:46:57 -0700 (PDT)
+Message-ID: <6a937870-af8c-95fb-1ac3-68e9eb2cbf27@linaro.org>
+Date:   Tue, 4 Apr 2023 19:46:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230320233911.2920364-1-robh@kernel.org>
-X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] MAINTAINERS: qcom: Add reviewer for Qualcomm Chromebooks
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel@vger.kernel.org
+References: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 06:39:11PM -0500, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->  .../devicetree/bindings/pci/cdns,cdns-pcie-ep.yaml        | 2 +-
->  .../devicetree/bindings/pci/cdns,cdns-pcie-host.yaml      | 2 +-
->  Documentation/devicetree/bindings/pci/cdns-pcie-ep.yaml   | 8 ++++----
->  Documentation/devicetree/bindings/pci/cdns-pcie-host.yaml | 8 ++++----
->  Documentation/devicetree/bindings/pci/cdns-pcie.yaml      | 4 ++--
->  .../devicetree/bindings/pci/intel,keembay-pcie-ep.yaml    | 4 ++--
->  .../devicetree/bindings/pci/intel,keembay-pcie.yaml       | 4 ++--
->  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml   | 2 +-
->  .../devicetree/bindings/pci/ti,j721e-pci-ep.yaml          | 6 +++---
->  .../devicetree/bindings/pci/ti,j721e-pci-host.yaml        | 6 +++---
->  .../bindings/reset/brcm,bcm7216-pcie-sata-rescal.yaml     | 4 ++--
->  11 files changed, 25 insertions(+), 25 deletions(-)
 
-Applied, thanks.
+
+On 30.03.2023 23:11, Douglas Anderson wrote:
+> Developers on the ChromeOS team generally want to be notified to
+> review changes that affect Chromebook device tree files. While we
+> could individually add developers, the set of developers and the time
+> each one has available to review patches will change over time. Let's
+> try adding a group list as a reviewer and see if that's an effective
+> way to manage things.
+> 
+> A few notes:
+> * Though this email address is actually backed by a mailing list, I'm
+>   adding it as "R"eviewer and not "L"ist since it's not a publicly
+>   readable mailing list and it's intended just to have a few people on
+>   it. This also hopefully conveys a little more responisbility for the
+>   people that are part of this group.
+> * I've added all sc7180 and sc7280 files here. At the moment I'm not
+>   aware of any non-Chromebooks being supported that use these
+>   chips. If later something shows up then we can try to narrow down.
+IMO it'd be good if you could keep an eye on all of them, especially
+with the quite numerous ways that CrOS fw differs! You're the main
+users of the SC7xxx SoCs so it only sounds logical.
+
+> * I've added "sdm845-cheza" to this list but not the rest of
+>   "sdm845". Cheza never shipped but some developers still find the old
+>   developer boards useful and thus it continues to get minimal
+>   maintenance. Most sdm845 device tree work, however, seems to be for
+>   non-Chromebooks.
+Seems to also still be used in mesa CI
+
+> 
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> 
+>  MAINTAINERS | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 8d5bc223f305..b4e9c5bda234 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2604,6 +2604,12 @@ F:	include/dt-bindings/*/qcom*
+>  F:	include/linux/*/qcom*
+>  F:	include/linux/soc/qcom/
+>  
+> +ARM/QUALCOMM CHROMEBOOK SUPPORT
+> +R:	cros-qcom-dts-watchers@chromium.org
+> +F:	arch/arm64/boot/dts/qcom/sc7180*
+> +F:	arch/arm64/boot/dts/qcom/sc7280*
+> +F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
+> +
+>  ARM/RDA MICRO ARCHITECTURE
+>  M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>  L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
