@@ -2,59 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DD2A6D6CDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 21:03:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6CAF6D6D2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 21:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235917AbjDDTDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 15:03:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34672 "EHLO
+        id S235857AbjDDTaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 15:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236102AbjDDTCj (ORCPT
+        with ESMTP id S235874AbjDDTaO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 15:02:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0575559DD;
-        Tue,  4 Apr 2023 12:02:17 -0700 (PDT)
+        Tue, 4 Apr 2023 15:30:14 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842DF49DF;
+        Tue,  4 Apr 2023 12:30:10 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C488634A7;
-        Tue,  4 Apr 2023 19:02:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEE4C433EF;
-        Tue,  4 Apr 2023 19:02:15 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A877963391;
+        Tue,  4 Apr 2023 19:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDA5C433D2;
+        Tue,  4 Apr 2023 19:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680634936;
-        bh=v6YyIlEU+FHwG8OPdW5hOLpVAMY1w2LcfZBn3Y6jhzk=;
+        s=k20201202; t=1680636609;
+        bh=RG89+5kPRUwR9k9Bvna0hUHCqED7uHCr7Ee16EjKvzg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q01Llgh8cZB5nu8HwYWF8yNzB75BhBu5E3E1GUBYcGkZz+bWMMa/CziwYAHTpRAaS
-         IOBdGR9PQYAG+r7sQlPGBflhu+OAh1YL3JGaBRMFQf+s46997XvBUfpek7gtxgo8N2
-         bPxFCi50sLHgsb9tDzQgYbd4kzaZ2SSTUQ+Xo/Uw4RXWiU5Oud9vWsgXiGJ5AOMqqq
-         10nJGi7fIDpfAZzbk+kfPiS+4INHZg+NsEE/eou9X81ulT9ozh5lF7yCPhuXNOvxLo
-         GMI07DpLz9rz1FBZ9+YNgLreMD8BbtDPuugYNJyfGilAgX56xsC1wOtmDCZMwwHhh9
-         MkzB9Y52ONm0A==
-Date:   Tue, 4 Apr 2023 12:05:10 -0700
+        b=t8/FYXxo9PXl5a4jGlYCVjomNpM/ycB4LKHZz8UlGCtFiVznb+sLvVQrkEOfzGOgX
+         qD2QZsQZcgkAjlRWuFoTEiXXoH3AnWfk11dBSno6wNVx6mXfKHMRFJ5VqCjx+9XU4c
+         XDyEgTab4Hzrw4W/EEex4QdnyTWNu56sOzWfwzxGhLI0qBqMs66VjthL2Txj14Rycz
+         4VrGi2VnHF68+58MIhsS+iDwkXa3ef3GQG6owdXNcTD7z7ilxTFvF7aYHMRZpc3bgy
+         OkQMR+kJcjUSkM3mW2wT9QMVuSfjORvfs2/cT4xRJUyqagENZ9Ccyb5m5aaGeNXGmq
+         gnJVMxC1r1Taw==
+Date:   Tue, 4 Apr 2023 12:33:02 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>
-Subject: Re: [PATCH v4 1/1] soc: qcom: mdt_loader: Enhance split binary
- detection
-Message-ID: <20230404190510.dvsmkroyvu6437rb@ripper>
-References: <20230404175417.31185-1-quic_gokukris@quicinc.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845: add framebuffer
+ reserved memory
+Message-ID: <20230404193302.ukwdf2cuqr33rbus@ripper>
+References: <20230315111947.3807083-1-caleb.connolly@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230404175417.31185-1-quic_gokukris@quicinc.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+In-Reply-To: <20230315111947.3807083-1-caleb.connolly@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -62,107 +57,168 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 04, 2023 at 10:54:17AM -0700, Gokul krishna Krishnakumar wrote:
-> It may be that the offset of the first program header lies inside the mdt's
-> filesize, in this case the loader would incorrectly assume that the bins
-> were not split. The loading would then continue on to fail for split bins.
+On Wed, Mar 15, 2023 at 11:19:45AM +0000, Caleb Connolly wrote:
+> The bootloader configures a framebuffer in memory to display splash
+> screens or other information. This configuration is overriden when the
+> display pipeline probes, but never unmapped from the SMMU.
 
-What does "continue on to fail for split bins" actually mean? In what
-way does it fail?
+Are you saying that as the SMMU driver clears the register content, this
+mapping remains?
 
-> This change updates the logic used by the mdt loader to understand whether
-> the firmware images are split or not. It figures this out by checking if
-> each programs header's segment lies within the file or not.
+> To prevent
+> issues from the kernel trying to allocate in this region and to allow
+> using the framebuffer for debugging, many devices already reserve this
+> region.
 > 
-> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
-> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 
-The first S-o-b should be that of the author (unless Co-developed-by)
-and in [1] you're the author and Melody provide her S-o-b to certify
-the origin of her contribution.
-
-> ---
-> V4 addresses the comments from V3.
-
-That's nice, but not very helpful. Please spell out what you changed.
-
-> 
-> V3 is separated out from [1] and includes
-> changes addressing comments from that patch set.
-> 
-> [1] https://lore.kernel.org/all/20230306231202.12223-5-quic_molvera@quicinc.com/
-> ---
->  drivers/soc/qcom/mdt_loader.c | 27 +++++++++++++++++++++++++--
->  1 file changed, 25 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index 33dd8c315eb7..9270992728d4 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -258,6 +258,26 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
->  }
->  EXPORT_SYMBOL_GPL(qcom_mdt_pas_init);
->  
-> +static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char* fw_name)
-> +{
-> +	const struct elf32_phdr *phdrs;
-> +	const struct elf32_hdr *ehdr;
-> +	uint64_t seg_start, seg_end;
-> +	int i;
-> +
-> +	ehdr = (struct elf32_hdr *)fw->data;
-> +	phdrs = (struct elf32_phdr *)(ehdr + 1);
-> +
-> +	for (i = 0; i < ehdr->e_phnum; i++) {
-> +		seg_start = phdrs[i].p_offset;
-> +		seg_end = phdrs[i].p_offset + phdrs[i].p_filesz;
-> +		if (seg_start > fw->size || seg_end > fw->size)
-> +			return true;
-> +	}
-> +
-> +	return false;
-> +}
-> +
->  static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
->  			   const char *fw_name, int pas_id, void *mem_region,
->  			   phys_addr_t mem_phys, size_t mem_size,
-> @@ -270,6 +290,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
->  	phys_addr_t min_addr = PHYS_ADDR_MAX;
->  	ssize_t offset;
->  	bool relocate = false;
-> +	bool is_split;
->  	void *ptr;
->  	int ret = 0;
->  	int i;
-> @@ -277,6 +298,8 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
->  	if (!fw || !mem_region || !mem_phys || !mem_size)
->  		return -EINVAL;
->  
-> +
-
-Double empty lines here?
-
-> +	is_split = qcom_mdt_bins_are_split(fw, fw_name);
->  	ehdr = (struct elf32_hdr *)fw->data;
->  	phdrs = (struct elf32_phdr *)(ehdr + 1);
->  
-> @@ -330,8 +353,8 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
->  
->  		ptr = mem_region + offset;
->  
-> -		if (phdr->p_filesz && phdr->p_offset < fw->size &&
-> -		    phdr->p_offset + phdr->p_filesz <= fw->size) {
-> +
-> +		if (phdr->p_filesz && !is_split) {
-
-This looks much better now, thanks.
+What kind of issues do you see?
 
 Regards,
 Bjorn
 
->  			/* Firmware is large enough to be non-split */
->  			if (phdr->p_offset + phdr->p_filesz > fw->size) {
->  				dev_err(dev, "file %s segment %d would be truncated\n",
+> All devices follow MTP and use the same address for this region, Cheza
+> is a likely exception though I'm not able to validate that.
+> 
+> Some devices only reserve the size needed to store the actual
+> framebuffer, this is incorrect as on all devices I've checked the full
+> 0x2400000 bytes are mapped.
+> 
+> This patch moves the framebuffer region to sdm845.dtsi and removes it
+> from each individual device. This ensures that the correct size is
+> always reserved and prevents having the add the region for each
+> individual device.
+> 
+> This patch specifically ensures that this region is now reserved on the
+> OnePlus 6, where it wasn't before.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> ---
+> 
+> Changes since v1:
+>  * Offer more context and justification for this change
+>  * Make sure Cheza doesn't inherit the node.
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi              | 6 ------
+>  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts     | 5 -----
+>  arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts           | 5 -----
+>  arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi       | 6 ------
+>  .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 6 ------
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi                        | 5 +++++
+>  arch/arm64/boot/dts/qcom/sdm850.dtsi                        | 2 ++
+>  7 files changed, 7 insertions(+), 28 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> index f942c5afea9b..6a1c674a015b 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> @@ -93,12 +93,6 @@ spss_mem: memory@99000000 {
+>  			no-map;
+>  		};
+>  
+> -		/* Framebuffer region */
+> -		memory@9d400000 {
+> -			reg = <0x0 0x9d400000 0x0 0x2400000>;
+> -			no-map;
+> -		};
+> -
+>  		/* rmtfs lower guard */
+>  		memory@f0800000 {
+>  			reg = <0 0xf0800000 0 0x1000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> index d37a433130b9..7c2457948a32 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> @@ -55,11 +55,6 @@ vreg_s4a_1p8: pm8998-smps4 {
+>  	};
+>  
+>  	reserved-memory {
+> -		memory@9d400000 {
+> -			reg = <0x0 0x9d400000 0x0 0x02400000>;
+> -			no-map;
+> -		};
+> -
+>  		memory@a1300000 {
+>  			compatible = "ramoops";
+>  			reg = <0x0 0xa1300000 0x0 0x100000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> index b54e304abf71..4f6b1053c15b 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> @@ -60,11 +60,6 @@ key-vol-up {
+>  	};
+>  
+>  	reserved-memory {
+> -		framebuffer_region@9d400000 {
+> -			reg = <0x0 0x9d400000 0x0 (1080 * 2160 * 4)>;
+> -			no-map;
+> -		};
+> -
+>  		ramoops: ramoops@b0000000 {
+>  			compatible = "ramoops";
+>  			reg = <0 0xb0000000 0 0x00400000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> index 4984c7496c31..7e273cc0158d 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
+> @@ -79,12 +79,6 @@ vreg_s4a_1p8: pm8998-smps4 {
+>  	};
+>  
+>  	reserved-memory {
+> -		/* SONY was cool and didn't diverge from MTP this time, yay! */
+> -		cont_splash_mem: memory@9d400000 {
+> -			reg = <0x0 0x9d400000 0x0 0x2400000>;
+> -			no-map;
+> -		};
+> -
+>  		ramoops@ffc00000 {
+>  			compatible = "ramoops";
+>  			reg = <0x0 0xffc00000 0x0 0x100000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+> index e0fda4d754fe..191c2664f721 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+> @@ -98,12 +98,6 @@ spss_mem: memory@97f00000 {
+>  			no-map;
+>  		};
+>  
+> -		/* Cont splash region set up by the bootloader */
+> -		cont_splash_mem: framebuffer@9d400000 {
+> -			reg = <0 0x9d400000 0 0x2400000>;
+> -			no-map;
+> -		};
+> -
+>  		rmtfs_mem: memory@f6301000 {
+>  			compatible = "qcom,rmtfs-mem";
+>  			reg = <0 0xf6301000 0 0x200000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 479859bd8ab3..ecec2ee46683 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -865,6 +865,11 @@ spss_mem: spss@97b00000 {
+>  			no-map;
+>  		};
+>  
+> +		cont_splash_mem: framebuffer@9d400000 {
+> +			reg = <0 0x9d400000 0 0x2400000>;
+> +			no-map;
+> +		};
+> +
+>  		mdata_mem: mpss-metadata {
+>  			alloc-ranges = <0 0xa0000000 0 0x20000000>;
+>  			size = <0 0x4000>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850.dtsi b/arch/arm64/boot/dts/qcom/sdm850.dtsi
+> index da9f6fbe32f6..b787575c77a5 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm850.dtsi
+> @@ -7,6 +7,8 @@
+>  
+>  #include "sdm845.dtsi"
+>  
+> +/delete-node/ &cont_splash_mem;
+> +
+>  &cpu4_opp_table {
+>  	cpu4_opp33: opp-2841600000 {
+>  		opp-hz = /bits/ 64 <2841600000>;
 > -- 
 > 2.39.2
 > 
