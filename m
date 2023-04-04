@@ -2,72 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E105E6D6ADF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 19:47:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59D356D6AE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 19:52:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232062AbjDDRrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 13:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36082 "EHLO
+        id S235609AbjDDRwS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 13:52:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbjDDRrB (ORCPT
+        with ESMTP id S235334AbjDDRwQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 13:47:01 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C4D1993
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 10:46:59 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id br6so43323922lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 10:46:59 -0700 (PDT)
+        Tue, 4 Apr 2023 13:52:16 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AC7430F3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 10:52:12 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id h25so43372218lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 10:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680630418;
+        d=linaro.org; s=google; t=1680630730;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RV8KrH+fxSPgZ9OjX7icc1BadpyWNvC86iBDQVaMJIw=;
-        b=PF0HhkOk1Uv3kOWGXyl9mSqxdS6YA/N/87vyRBGC8x0cWncMBVXKnymFCqGj29/kvK
-         sdHDCgf6z/dL33PG2pULxshilFIsUSBrNq8fOVGAInoa6ecOPkLxTTMttgBgmU75EYxk
-         2gOXZNOgDPZoHhaS2sL/JKOm2w2xDBNcJUqBbfmRy6IL7nTlbYLWU+ZYLRP0EryMttQb
-         GrZd56HPmYBLzWNokynUlaGhraYj51PkTUqIjpKuHhbIowgsgSNMd9xV29mLvJftRto2
-         sak0v7kxMlgchEVRm62YYd1IABuCB8F+F/zHmjAMfgi90suEk1MqTbaEr7nYNhIuqhKW
-         yQsg==
+        bh=IrQ9Nk/ZqyT6PCBf5HyzrcvGRnNXSx6wEgKVrWsu1Ww=;
+        b=gryqHmNGVwdHcrupS+brUu78qIBxYUYs6tcxtpAJ5KJhB465EyC79ukjwZGMdR0uv3
+         wDE+owTqx8cu/iO1u/E9scdJAVcy26TBfYuXdeqPXJo23dXfPXXUBNqRD08bODIk2pF6
+         xsSHZW+kxwoiRRefP7TySqeEKmF/BYFyU1iTj7KRo5slDUAySfC0SjSxAO2vC08xwe/t
+         qjZ8RJi7L93v3rFgkxK4xCMDt641++armwBXRQoV6FAtVPhuFOu0G0NhBKv8s6FOsmEv
+         7GRnfLSR3xQLqIdTZCofvFSh3LrBeFDZE2v65KP5y8ocpP1J7RwAKrZBICdLlY9UFAsn
+         b/Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680630418;
+        d=1e100.net; s=20210112; t=1680630730;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RV8KrH+fxSPgZ9OjX7icc1BadpyWNvC86iBDQVaMJIw=;
-        b=DkwTiHcJzjZtK5MGXDFEVR/BesxH+vDXEjJElCPgclm3SjSxVBnrxv1DwxEX8MSfC0
-         NMwAzzolFyyi6Ywovht1j9WMtm5VMqv26oX7x/uQh77DTaA3DBHqFmk5kr3pLlyl5D6/
-         NrO0am7AXqCyNxGOlJQAW04vQwfwpql+68evnCOjUuk5uP4R2z6VAjnYeHz6CGWwTOtN
-         4YmNaSwUiTVHfiYvR0tSRdSM9YKf/2Jakx0w6tZnUBa07S5Rq9EvqhS+e3crJzdAD6Yy
-         rwBJwmE49OT+tPJuVpfI4YGw7SWIqga6DrsGZp5fXxTE7V405oiwu0kUv6RMRss+N/Ke
-         al4Q==
-X-Gm-Message-State: AAQBX9fgARe7gpDX8xmjcaElITCK2Nx4YsSMXCO9VAwyZN2UHmKRy+i/
-        j+IiTu4SxZk/nzxqSOq7fVJfvc1BHOWz3GqjTFk=
-X-Google-Smtp-Source: AKy350Y//L+R1u3wX768xf8NTmn0Rca5PKXcaK0O6VJ1OXoOIzxJG+SoZD9d2tEHSjpyL0iqt7Ozpg==
-X-Received: by 2002:ac2:4191:0:b0:4e9:a16f:a176 with SMTP id z17-20020ac24191000000b004e9a16fa176mr738208lfh.36.1680630418051;
-        Tue, 04 Apr 2023 10:46:58 -0700 (PDT)
+        bh=IrQ9Nk/ZqyT6PCBf5HyzrcvGRnNXSx6wEgKVrWsu1Ww=;
+        b=ebcAG6rBFNS04OlDEy9fSmUPU03fOYwrDKLq0SKfiK69oz0bXkoAR6AxK62tT2PA2a
+         CwU9S5QJpY8fBFMu94uwfXhI17UTF9xVKKrYCt9nwH5YcAPymAD04Jiad9Q+/WRX3WlA
+         TChzEfdFfPBhU4fhXsHIX+sO/MmCpOLWhIZGEr7Q98EyMWL7xA0VI0QM5BaPp5YoQ3p3
+         PBGA4CxDkUEt8tsxkPRxlg3BRxmMz1qNeftNnBYpCs+ljerzcWgJ8kVc8gal1NtcH4sV
+         QPJexmDPfe/N6ya6i1eJtvjohpXSDCzfWPFqVvk7Sl/IGkHiyZB6HSzXQ0/aWlSp9H4j
+         g5EA==
+X-Gm-Message-State: AAQBX9eKtZf9Ef74PIlto5cAz3RzEVjaMFTnuD3KwNS+O5lMc+d4+jiy
+        dkEdMzt8kw79pCD9X8x76LAwPQ==
+X-Google-Smtp-Source: AKy350bPKGXIlcrnZI/qixYG1byf7Rly7InMsFsRfB8gb/+aPlSEzEY2IBTwrqlfQ7Yiny/IOPBszQ==
+X-Received: by 2002:ac2:4e49:0:b0:4db:19fb:6a7 with SMTP id f9-20020ac24e49000000b004db19fb06a7mr858515lfr.60.1680630730335;
+        Tue, 04 Apr 2023 10:52:10 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id q22-20020ac25296000000b004e7fa99f3f4sm2420351lfm.265.2023.04.04.10.46.56
+        by smtp.gmail.com with ESMTPSA id u14-20020a056512040e00b004dc83d04840sm2417541lfk.79.2023.04.04.10.52.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 10:46:57 -0700 (PDT)
-Message-ID: <6a937870-af8c-95fb-1ac3-68e9eb2cbf27@linaro.org>
-Date:   Tue, 4 Apr 2023 19:46:56 +0200
+        Tue, 04 Apr 2023 10:52:09 -0700 (PDT)
+Message-ID: <955cd520-3881-0c22-d818-13fe9a47e124@linaro.org>
+Date:   Tue, 4 Apr 2023 19:52:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH] MAINTAINERS: qcom: Add reviewer for Qualcomm Chromebooks
+Subject: Re: [PATCH 01/18] media: venus: hfi_venus: Set
+ venus_sys_idle_indicator to false on V6
 Content-Language: en-US
-To:     Douglas Anderson <dianders@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
+References: <20230228-topic-venus-v1-0-58c2c88384e9@linaro.org>
+ <20230228-topic-venus-v1-1-58c2c88384e9@linaro.org>
+ <99eeebc6-69aa-c6ba-139b-92672c299747@linaro.org>
+ <893851c9-c8be-ed7f-ebde-5d90b9313f6d@linaro.org>
+ <48ac4272-0e11-d943-e950-0be8d93fb036@linaro.org>
+ <b7f0c568-72b7-3342-decc-784cd5f68b1a@linaro.org>
+ <1091d8b4-3dd3-427b-2fcb-c3e0d32b0a3b@linaro.org>
+ <aa8db9a1-ac11-acbe-1a05-b60c39989bc1@nexus-software.ie>
+ <28b0eed5-6e80-e424-70bb-ba984fdbc1ac@quicinc.com>
+ <909746ad-a6b9-18d8-cb43-b2460c7181d0@linaro.org>
+ <e93ba74a-ccde-c6bd-4302-8884144d615d@quicinc.com>
+ <bf5e30fa-5014-5585-3b8e-b1a8d2f95549@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
+In-Reply-To: <bf5e30fa-5014-5585-3b8e-b1a8d2f95549@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -80,60 +98,145 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 30.03.2023 23:11, Douglas Anderson wrote:
-> Developers on the ChromeOS team generally want to be notified to
-> review changes that affect Chromebook device tree files. While we
-> could individually add developers, the set of developers and the time
-> each one has available to review patches will change over time. Let's
-> try adding a group list as a reviewer and see if that's an effective
-> way to manage things.
+On 30.03.2023 12:44, Vikash Garodia wrote:
+> On 3/24/2023 2:46 PM, Dikshita Agarwal wrote:
+>>
+>>
+>> On 3/20/2023 8:24 PM, Konrad Dybcio wrote:
+>>> On 2.03.2023 07:39, Dikshita Agarwal wrote:
+>>>> On 2/28/2023 10:23 PM, Bryan O'Donoghue wrote:
+>>>>> On 28/02/2023 15:41, Konrad Dybcio wrote:
+>>>>>>> Can you test it and make sure ?
+>>>>>> As I mentioned in the cover letter, 8250 still seems to work with this
+>>>>>> patchset. I have no idea how one would go about validating the
+>>>>>> functionality enabled through this call.
+>>>>> We offlined about this.
+>>>>>
+>>>>> I think it is correct to say you don't have access to a display to test this on sm8250.
+>>>>>
+>>>>> I do so, I will try this out for you, though I'll wait for your V2 for this series.
+>>>>>
+>>>>> ---
+>>>>> bod
+>>>> Hi Konrad,
+>>>>
+>>>> I understand from your commit text, setting this indicator for AR50L is causing issue with suspend.
+>>>>
+>>>> Ideally it shouldn't cause any such issue. I checked with FW team and got to know that this property is not supported on AR50LT so if you set it there should be some property not supported error.
+>>>>
+>>>> In my opinion it would be good to replace these versions checks with VPU version check you have introduced in your other patch and keep this setting for current targets and not set wherever not needed eg AR50LT.
+>>> So.. I did *something* and I'm no longer getting a jump to EDL.
+>>>
+>>> The *something* being knocking off hfi_core_suspend().
+>>>
+>>> If I send a sys_idle_indicator = true, I get (reformatted for
+>>> better legibility):
+>>>
+>>>
+>>> [    0.576543] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_H:HostDr:unkn:--------:-> IMAGE_VARIANT_STRING=PROD
+>>>
+>>> [    0.603818] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_H:HostDr:unkn:--------:-> OEM_IMAGE_VERSION_STRING=CRM
+>>>
+>>> [    0.608633] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_H:HostDr:unkn:--------:-> BUILD_TIME: Mar 15 2021 04:24:58
+>>>
+>>> [    0.608644] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_L:HostDr:unkn:--------:-> Host cmd 0x10005
+>>>
+>>> [    0.608655] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_E:HostDr:unkn:--------:-> VenusHostDriver_SetSysProperty(1019): HostDriver:  VenusHostDriver_SetSysProperty unsupport property!
+>>>
+>>> [    0.608667] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_E:HostDr:unkn:--------:-> WaitForHWidle(408): VENUS is idle, no HW is running
+>>>
+>>> [    0.650759] qcom-venus 5a00000.video-codec: VenusFW  :
+>>> <VFW_E:HostDr:unkn:--------:-> assert_loop(433):
+>>> FW Assertion - Z:/b/venus_proc/venus/drivers/src/VenusHostDriver.c:1020:5ab9a
+>>
+>> this "unsupported property" error and then the assert from FW is expected on AR50LT if driver sets HFI_PROPERTY_SYS_IDLE_INDICATOR to FW.
+>>
+>> As I mentioned in my other reply, this property doesn't need to be set by driver now, FW internally always enables it.
+>>
+>>> Which then crashes Venus for good (perhaps we're missing a
+>>> handler for such errors that would hard reset the hw), meaning
+>>> trying to access it through ffmpeg will result in it never firing
+>>> any IRQs, so no submitted commands ever complete.
+>>>
+>>> With this information, after uncommenting the hfi_core_suspend
+>>> call and changing:
+>>>
+>>> [1]
+>>> --- hfi_venus.c : venus_suspend_3xx() --
+>>>
+>>> - venus_prepare_power_collapse(hdev, true);
+>>> + venus_prepare_power_collapse(hdev, false);
+>>>
+>>> ----------------------------------------
+>>>
+>>> I was able to test further. Turning the ARM9 core off messes
+>>> with the sys_idle things. Perhaps some power sequencing is
+>>> wrong. The diff I just mentioned comes from the fact that
+>>> AR50L will never ever ever send a PC_PREP_DONE ack, or at
+>>> least downstream never expects it (or any other HFI6XX
+>>> target FWIW) to do so.
+>>>
+>>>
+>>> Now, I also realized the adjacent set_power_control doesn't seem to be used at
+>>> all on msm-4.19 techpack/video. Testing all the possible combinations, I get
+>>> (to make it extra clear, with all the powerdown stuff in place and only diff
+>>> [1] in place atop what I already had before):
+>>>
+>>>
+>>> [set_idle_message] [set_power_control] [result]
+>>> 0 0 - no crash at boot, venus doesn't work ->
+>>>     "Too many packets buffered for output stream 0:1."
+>>>
+>>> 0 1 - no crash at boot, ffmpeg hangs near vdec session init ->
+>>>     jump to EDL shortly after
+>>>
+>>> 1 0 - hang at boot, even before display subsys initializes ->
+>>>     platform totally hangs
+>>>
+>>> 1 1 - same as (1, 0), probably due to sys_idle_indicator being on ->
+>>>     platform totally hangs as well
+>>>
+>>> Perhaps (0, 0) is "good" and things can be worked up from there?
+>>> Can you recheck with the firmware team if this is expected?
+>>
+>> I will check regarding set_power_control(HFI_PROPERTY_SYS_CODEC_POWER_PLANE_CTRL) with FW team and get back.
+>>
+> HFI_PROPERTY_SYS_IDLE_INDICATOR is not supported beyond 8916 (which is versioned as V1 in video driver). This can be dropped.
 > 
-> A few notes:
-> * Though this email address is actually backed by a mailing list, I'm
->   adding it as "R"eviewer and not "L"ist since it's not a publicly
->   readable mailing list and it's intended just to have a few people on
->   it. This also hopefully conveys a little more responisbility for the
->   people that are part of this group.
-> * I've added all sc7180 and sc7280 files here. At the moment I'm not
->   aware of any non-Chromebooks being supported that use these
->   chips. If later something shows up then we can try to narrow down.
-IMO it'd be good if you could keep an eye on all of them, especially
-with the quite numerous ways that CrOS fw differs! You're the main
-users of the SC7xxx SoCs so it only sounds logical.
-
-> * I've added "sdm845-cheza" to this list but not the rest of
->   "sdm845". Cheza never shipped but some developers still find the old
->   developer boards useful and thus it continues to get minimal
->   maintenance. Most sdm845 device tree work, however, seems to be for
->   non-Chromebooks.
-Seems to also still be used in mesa CI
-
+> Since the property is not functionally active, it is upto firmware when they might decide to start error out as unsupported property.
 > 
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> Cc: Matthias Kaehlcke <mka@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> SYS_CODEC_POWER_PLANE_CTRL is supported for AR50/AR50L/IRIS1/2. It is a mandatory HFI to get the required power benefits.
+> 
+> vcodec0 GDSC should be also configured as HW_CTRL while setting POWER_PLANE_CTRL to firmware.
+> 
+Okay that's very good to know. To sum it up, the outcome you would
+expect is (more or less):
+
+- static bool venus_sys_idle_indicator = true;
+
+[...]
+
+- if(IS_V4(hdev->core) || IS_V6(hdev->core))
+-	venus_sys_idle_indicator = true;
+
++ venus_sys_idle_indicator = IS_V1(hdev->core);
+
+
+?
 
 Konrad
-> 
->  MAINTAINERS | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 8d5bc223f305..b4e9c5bda234 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2604,6 +2604,12 @@ F:	include/dt-bindings/*/qcom*
->  F:	include/linux/*/qcom*
->  F:	include/linux/soc/qcom/
->  
-> +ARM/QUALCOMM CHROMEBOOK SUPPORT
-> +R:	cros-qcom-dts-watchers@chromium.org
-> +F:	arch/arm64/boot/dts/qcom/sc7180*
-> +F:	arch/arm64/boot/dts/qcom/sc7280*
-> +F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
-> +
->  ARM/RDA MICRO ARCHITECTURE
->  M:	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->  L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+>> Thanks,
+>>
+>> Dikshita
+>>
+>>> Konrad
+>>>> Thanks,
+>>>>
+>>>> Dikshita
+>>>>
