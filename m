@@ -2,127 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C34B6D5E94
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 13:05:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1F276D5EE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 13:24:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234719AbjDDLFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 07:05:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34038 "EHLO
+        id S234781AbjDDLYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 07:24:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234707AbjDDLFb (ORCPT
+        with ESMTP id S234378AbjDDLYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 07:05:31 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7408910E0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 04:03:22 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id i5so129112359eda.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 04:03:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680606197;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P2X3kREg8ClZqoLFGTfMEQlTm6xCmy/glA1Hk2D1aa0=;
-        b=vj66DxpITdwlhJH75l7RkUQZ6WiakI8+iJL0HkFajARLadSSmedSCC38T3fau0NSAi
-         cuHLk9G6os+2CZPFZVMURrKYJtSV7XCcHUktC2KxBi0JYdJlEn3jIyfrRNS76EsHP+Gc
-         vSP5yuFfS0DKENJu13mSmPMXDHrOXQXyXBYgwI3yB8ukOi9+MFNaQF9blxs+UoTs3Txj
-         P/UnBYcmSIK9qgN4/80r2zy0VyjYl/ggKEoJFNcam6FWF7UWgHng1XycK5KJiIIpCKFx
-         8UCAyfQtf3TLsUcvIFlRm7Fj10RNvbeRR0Jx2rNoMSjsM3v8zioZQ2F1Kxd7kbRj5vr5
-         XELQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680606197;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P2X3kREg8ClZqoLFGTfMEQlTm6xCmy/glA1Hk2D1aa0=;
-        b=T+tdp6IVY3V1fpG/sFxp5Kd5MBuJDqJo3lmyBcF6SgK1jKJROP/+CM2/fDDtryqmme
-         hA69iP/u8qImeYCUOaP5wdy6y6S1+u79KB1rdoyraQAUbuuaGwD938jrG5v2WCuWt3Ut
-         a+VtsN1eLxmtK7JWgUXjCPJ+m78CUwHtjRGw2p8xd8pTEPGTPUNCrk4Y/gk+1HqG6EUc
-         P3kLhBfFRFjgtR8y8+uOC/H5nvnSpQy5y5asNhqoMDLLDJmnPJ8nHIZ5bUcUrp/3tya/
-         c4a9+TIaeuAqi/oU9nOz+FehiLyxlinret8AgGA5PmjxiZiwKILgPVBMlaQoj6x7WjOu
-         LVSQ==
-X-Gm-Message-State: AAQBX9eXgM51fvxvkm8aOfTkvPBpqmwea9C2qYiVt/pk0tOlm35zwzdC
-        ONrfoz+BbVTWYGZrv+rewNaN5w==
-X-Google-Smtp-Source: AKy350Z6X6wonQ9ndSEeOqk1V1vulMt/+C2VlT2zTtfQjqb1wDbl0iUZQJtUmkPOwDAPJiXlYGDAKA==
-X-Received: by 2002:a17:906:1281:b0:947:405a:955f with SMTP id k1-20020a170906128100b00947405a955fmr1842422ejb.31.1680606197540;
-        Tue, 04 Apr 2023 04:03:17 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:99ed:4575:6001:8bda? ([2a02:810d:15c0:828:99ed:4575:6001:8bda])
-        by smtp.gmail.com with ESMTPSA id c10-20020a170906d18a00b00923f05b2931sm5796213ejz.118.2023.04.04.04.03.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 04:03:17 -0700 (PDT)
-Message-ID: <5f8692af-700a-a47f-d81c-fe9c905958e1@linaro.org>
-Date:   Tue, 4 Apr 2023 13:03:15 +0200
+        Tue, 4 Apr 2023 07:24:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0831FD3;
+        Tue,  4 Apr 2023 04:24:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 195F963249;
+        Tue,  4 Apr 2023 11:24:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C04EC433D2;
+        Tue,  4 Apr 2023 11:24:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680607489;
+        bh=45L8OTcH+B0HWF79y0YD7k2NGle3X+Mu1k7dADgiuIg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=e2sUn9AHkU/mGqOiQjFSjOTOeeqi+/qO/SD7OuXyJwZ/4+BxHqlo3FP1BMfyuNmLW
+         iLDYGlWqSqQetpuK2MiHk7AyqmAGr+9MXJ9C87yOPiKceKrjYrv6Ay5FyCBbM8cNsk
+         2WkufQbMwmAqAxOCMHiSfXf7uZGZVLbVyMPr4uSGXxc5uObWSK8JxC272F3V8bQaHI
+         tGTZQ6vejtEc+qOEp24vzhtMyqJ3+9l97OvlS/pIokW/AKnDE8aHNNo6kEbqB+VC47
+         OYi5krSn8ueKDBzScVjrSbrNVBCrRR/MIqmQnkEQrLXQmVtqwPwhxzw89LdThSTR41
+         M3ySq6oHzj9Hg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pjemp-0006bj-TV; Tue, 04 Apr 2023 13:25:16 +0200
+Date:   Tue, 4 Apr 2023 13:25:15 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     andersson@kernel.org, Thinh.Nguyen@synopsys.com,
+        gregkh@linuxfoundation.org, mathias.nyman@intel.com,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: sc8280xp: Add missing dwc3 quirks
+Message-ID: <ZCwJG5SEqmeIzJG1@hovoldconsulting.com>
+References: <20230325165217.31069-1-manivannan.sadhasivam@linaro.org>
+ <20230325165217.31069-2-manivannan.sadhasivam@linaro.org>
+ <ZCKrXZn7Eu/jvdpG@hovoldconsulting.com>
+ <20230328093853.GA5695@thinkpad>
+ <20230329052600.GA5575@thinkpad>
+ <ZCP4MHe+9M24S4nJ@hovoldconsulting.com>
+ <20230329132343.GD5575@thinkpad>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v5 2/6] dt-bindings: ufs: qcom: Add ICE phandle
-Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-References: <20230403200530.2103099-1-abel.vesa@linaro.org>
- <20230403200530.2103099-3-abel.vesa@linaro.org>
- <9fc90c8b-9234-84fa-7dab-fee9de2b9813@linaro.org>
- <ZCvm3fzSh8owVDdc@linaro.org>
- <c816d432-26b8-2655-adf1-4b72b8645215@linaro.org>
- <ZCv+9WjlkA4n9Dwg@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZCv+9WjlkA4n9Dwg@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329132343.GD5575@thinkpad>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/04/2023 12:41, Abel Vesa wrote:
->>>>
->>>> Also, this does not solve my previous question still.
->>>
->>> Well, the clocks are not added for the a few platforms (which include
->>> SM8550). Same for 'ice' reg range.. So the only thing left is to
->>> enforce the qcom,ice property availability only for SM8550. I believe
->>> it solves the mutual exclusiveness of the "ice" reg range along with the
->>> clocks versus the qcom,ice property, by enforcing at compatible level.
->>
->> Ah, I think I understand. That would work except I don't understand why
->> enforcing qcom,qce only for specific, new SoCs. Assuming it is a correct
->> hardware representation, we want it for everyone, don't we?
+On Wed, Mar 29, 2023 at 06:53:43PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Mar 29, 2023 at 10:34:56AM +0200, Johan Hovold wrote:
+> > On Wed, Mar 29, 2023 at 10:56:00AM +0530, Manivannan Sadhasivam wrote:
+> > > On Tue, Mar 28, 2023 at 03:09:03PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Tue, Mar 28, 2023 at 10:54:53AM +0200, Johan Hovold wrote:
+> > > > > On Sat, Mar 25, 2023 at 10:22:13PM +0530, Manivannan Sadhasivam wrote:
+
+> > > > > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> > > > > > index 0d02599d8867..266a94c712aa 100644
+> > > > > > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> > > > > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> > > > > > @@ -3040,6 +3040,13 @@ usb_0_dwc3: usb@a600000 {
+> > > > > >  				iommus = <&apps_smmu 0x820 0x0>;
+> > > > > >  				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
+> > > > > >  				phy-names = "usb2-phy", "usb3-phy";
+> > > > > > +				snps,hird-threshold = /bits/ 8 <0x0>;
+> > > > > > +				snps,usb2-gadget-lpm-disable;
+> > > > > 
+> > > > > Here you are disabling LPM for gadget mode, which makes most of the
+> > > > > other properties entirely pointless.
+> > > 
+> > > Checked with Qcom on these quirks. So this one is just disabling lpm for USB2
+> > > and rest of the quirks below are for SS/SSP modes.
+> > 
+> > No, snps,hird-threshold is for USB2 LPM and so is
+> > snps,is-utmi-l1-suspend and snps,has-lpm-erratum as you'll see if you
+> > look at the implementation.
+> > 
 > 
-> Yes, but they will be added to the subschema (qcom,ice one) when their
-> their ICE support (ICE DT) will be added. This way, we keep the bindings
-> check without failures (for now).
+> Correct me if I'm wrong. When I look into the code, "snps,is-utmi-l1-suspend"
+> and "snps,hird-threshold" are used independently of the LPM mode atleast in one
+> place:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/usb/dwc3/gadget.c#n2867
+> 
+> But I could be completely wrong here as my understanding of the usb stack is not
+> that great.
 
-I understand that then you will rework this if:then case, so I think it
-is just easier to make it correct from the first place. If there is
-qcom,qce, then reg is maxItems:1. Otherwise - maxItems can be 2. You
-achieve the same result, all DTS validate, without any need of further
-changes later.
+Yeah, it's not that obvious from just looking at the code, but L1 (and
+BESL) are USB2 LPM concepts and if you disable LPM then there is no need
+to override these values in the BOS descriptor either (as is done in
+dwc3_gadget_config_params() and bos_desc()).
 
+> > > > > > +				snps,is-utmi-l1-suspend;
+> > > > > > +				snps,dis-u1-entry-quirk;
+> > > > > > +				snps,dis-u2-entry-quirk;
+> > > > > 
+> > > > > These appear to be used to optimise certain gadget application and
+> > > > > likely not something that should be set in a dtsi.
+> > > > > 
+> > > > 
+> > > > I will cross check these with Qcom and respin accordingly.
+> > > > 
+> > > 
+> > > These quirks are needed as per the DWC IP integration with this SoC it seems.
+> > > But I got the point that these don't add any values for host only
+> > > configurations. At the same time, these quirks still hold true for the SoC even
+> > > if not exercised.
+> > > 
+> > > So I think we should keep these in the dtsi itself.
+> > 
+> > Please take a closer look at the quirks you're enabling first. Commit
+> > 729dcffd1ed3 ("usb: dwc3: gadget: Add support for disabling U1 and U2
+> > entries") which added 
+> > 
+> > > > > > +				snps,dis-u1-entry-quirk;
+> > > > > > +				snps,dis-u2-entry-quirk;
+> > 
+> > explicitly mentions
+> > 
+> > 	Gadget applications may have a requirement to disable the U1 and U2
+> > 	entry based on the usecase.
+> > 
+> > which sounds like something that needs to be done in a per board dts at
+> > least.
+> > 
+> 
+> Going by this commit message it sounds like it. But...
+> 
+> > Perhaps keeping all of these in in the dtsi is correct, but that's going
+> > to need some more motivation than simply that some vendor does so (as
+> > they often do all sorts of things they should not).
+> > 
+> 
+> If you read my last reply one more time, I didn't reason it based on the vendor
+> code.
 
-Best regards,
-Krzysztof
+I was referring to the fact that these properties had been copied from
+the vendor dtsi and seemingly so without further review or
+justification in the commit message (e.g. to explain the
+inconsistencies).
 
+> But I hear a contradict reply from Qcom saying that these properties are
+> required as a part of the DWC3 IP integration with the SoC. I need to recheck
+> with them again tomorrow.
+> 
+> Also, if these properties are application specific then they shouldn't be in
+> devicetree atleast :/
+
+I fully agree with that.
+
+Johan
