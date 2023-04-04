@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DED446D6B67
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 20:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EA456D6BC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 20:25:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234726AbjDDSTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 14:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36574 "EHLO
+        id S236052AbjDDSZN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 14:25:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234588AbjDDSTn (ORCPT
+        with ESMTP id S236372AbjDDSYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 14:19:43 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5034219
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 11:19:41 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id t10so134067253edd.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 11:19:41 -0700 (PDT)
+        Tue, 4 Apr 2023 14:24:35 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B194ED0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 11:22:50 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id s20so14544837ljp.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 11:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680632380;
+        d=linaro.org; s=google; t=1680632561;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pmY4so7rL1IiXlLyFmtrvmRaD9meAoYe9sOd/P8wK54=;
-        b=BXukX23v003pUHm3aq8Ayky+2Mbagq1WAvtyffxYP38ByUqVJsKtMwSFkInJTncPMe
-         SOdNpKsb20smj2v8o16qRY+jkvbNv52vVZgXnjpOHjF2uZlOH9sM1apRDYKmjTZ3OejA
-         +57Yc5OSUf2GOPezF6E/sRlxC0TD1q60GX3O0Lx8e2JcOT3UWZWK0if8h69+U9ydyeyG
-         YhKyAq7xFMKFLFUGIxSVzBH8tsArP4vIvPeaZ9u5Vj+JQ7IZX/uK1t77ZyYs5tEAKCRj
-         Lbaz9Jw9KmOLEmR8KdcFT6lQRV1gTFcjUY0tGSIPqzFOvqk5RlHkGf5jeBs4mGYX33zk
-         u1xg==
+        bh=gCsbCvTCgaRyB9wS8Q3xuu2Nx7yr20kYCx9UApEX9HE=;
+        b=pQcruk62SM9JprxSleDZCweUkHcc4/pN6Kips+B4RetrsoJ93Zl/p7/I+7ioy39a12
+         MyyB70JpxZAVqwfnWDBHmRCvPBHsJoav64L4iXUAxbJd1tgsoNLKgymK1qwFbkRyGYmW
+         QHUm3wl3IrJnzAgetDDf5GmFfSRz14i4ag1z6/wH8F0g6POEHgmh9auN+RwtxJWPTxem
+         kIPKuiUnumQwR/O2GGdImFAf+o68qzeNMUSAtIIL+m2gnfWiWH+1uxP+0ijmdjRCqiHh
+         45KC4gvcUShNhJzGIe8fZhptv58ayfS1GevgkcXmPale8V4hkxYvyDq+DFxMzbvOy3ql
+         ZR4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680632380;
+        d=1e100.net; s=20210112; t=1680632561;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pmY4so7rL1IiXlLyFmtrvmRaD9meAoYe9sOd/P8wK54=;
-        b=m6H0rhj+XKsNjqzMAZ6axWFUsYiCwvoF7GRLQKFQlZowP17zuyofZ0O9ZOgQbWJTDs
-         h1uYqxpyS0FROS5VzDjV3CAYeS3j4a5UtE65ukd+hmAuETLfr6ATXEZOYtstSUhAKnck
-         ND07zkjKG3Z44UC1HX96ls+QDhKIlEtuWCT71cATnMoNd1fgAlSPFFps6RSx2R5NMMI+
-         4fHKXqpJFrQVp0yIRiVzMPWccaYwhl583Xl4aXDIRI6Obf05ATCW5XN/RIMHrkfE+4Qo
-         BFfGX5gHfxgEBMgstYWDV0ZPHAhGjA7F8D3KKz2GI8z9WzX7evrWIWriFpfmTd4OPAfC
-         U7tQ==
-X-Gm-Message-State: AAQBX9eWjda6kz5OJ0vKoHnIuhG0duUslxtSa8Qtb8sOJ2V5dsOpCiAd
-        YmJYWp2NE+HXvhGTeqKJPC6mHw==
-X-Google-Smtp-Source: AKy350YSv4hgO2n82VC7/9PaYtH4FxfGW1LzXmWBN5mtNsi1jCuWBGB7+CJ8mCMoLoeaqinIVeNbAw==
-X-Received: by 2002:a17:906:3c4d:b0:8af:2107:6ce5 with SMTP id i13-20020a1709063c4d00b008af21076ce5mr498016ejg.35.1680632380419;
-        Tue, 04 Apr 2023 11:19:40 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:7467:56f4:40b7:cba8? ([2a02:810d:15c0:828:7467:56f4:40b7:cba8])
-        by smtp.gmail.com with ESMTPSA id q15-20020a17090676cf00b00947c0cecceasm5659288ejn.206.2023.04.04.11.19.39
+        bh=gCsbCvTCgaRyB9wS8Q3xuu2Nx7yr20kYCx9UApEX9HE=;
+        b=EXaEcxsuENh47188+/Whg5enLcALlpeyQHEanERcFf9fLFq72si11j4Ddo53tUTUiN
+         K4XiHz2ZdyXm4XbnurMwtp3LFZSvuWLjkZ/PRnjwWO9G057jIWAWi1a7bs7XaRotxrvY
+         rjArvpL+jhZjm8shT/lG6tf5kFsjmWwcxnlk8kCSu2L8K4nT4IyF2uDDmIXuJo6a9fi/
+         a2Q6Q91evHCbSz/ZDtMBSToQfm9E4RyEApOWH6y8xc8ahGNOzIis3LGMRUp4/Ogg3Wrz
+         9dVYR8plHHcT+C2A4Z4BZMK9HPRKvcnTy/OWmKHFiOiT0nSNQC+dk1qkV8kz4iR9uGBO
+         b6Yg==
+X-Gm-Message-State: AAQBX9dL/w+Q/404ssdkjQBnKDSG7ke5wGp3X/6B+WGYNh1hbouSrsg0
+        SgaVekgL8t+w6IBmCYFe6Izi/g==
+X-Google-Smtp-Source: AKy350amooGyjgE60rmOZStLcfFrZJssPaQsBXH+2h13GWe5K3DiXU/Zh3sujpFhXylGHNj2nd9Iow==
+X-Received: by 2002:a2e:99d4:0:b0:299:5d3a:4f29 with SMTP id l20-20020a2e99d4000000b002995d3a4f29mr1184378ljj.31.1680632560746;
+        Tue, 04 Apr 2023 11:22:40 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id m14-20020a19520e000000b004cb1de3f487sm2428259lfb.104.2023.04.04.11.22.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 11:19:40 -0700 (PDT)
-Message-ID: <86449ddc-1eeb-5af0-dfaf-0b80e7d8d992@linaro.org>
-Date:   Tue, 4 Apr 2023 20:19:38 +0200
+        Tue, 04 Apr 2023 11:22:40 -0700 (PDT)
+Message-ID: <8f0404d0-659d-0855-15dd-8a45f6fd1871@linaro.org>
+Date:   Tue, 4 Apr 2023 20:22:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc7280: Add stream-id of qspi to
- iommus
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 2/3] venus: enable sufficient sequence change support for
+ vp9
 Content-Language: en-US
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        broonie@kernel.org, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com
-References: <1680631400-28865-1-git-send-email-quic_vnivarth@quicinc.com>
- <1680631400-28865-2-git-send-email-quic_vnivarth@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1680631400-28865-2-git-send-email-quic_vnivarth@quicinc.com>
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Viswanath Boma <quic_vboma@quicinc.com>
+References: <1680589032-26046-1-git-send-email-quic_dikshita@quicinc.com>
+ <1680589032-26046-3-git-send-email-quic_dikshita@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1680589032-26046-3-git-send-email-quic_dikshita@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -82,28 +80,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/04/2023 20:03, Vijaya Krishna Nivarthi wrote:
-> This is done as part of adding DMA support to qspi driver.
+
+
+On 4.04.2023 08:17, Dikshita Agarwal wrote:
+> VP9 supports resolution change at interframe.
+> Currenlty, if sequence change is detected at interframe and
+> resources are sufficient, sequence change event is not raised
+> by firmware to driver until the next keyframe.
+> This change add the HFI to notify the sequence change in this
+> case to driver.
 > 
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> Tested-by: Nathan Hebert <nhebert@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/media/platform/qcom/venus/hfi_cmds.c   | 1 +
+>  drivers/media/platform/qcom/venus/hfi_helper.h | 2 ++
+>  drivers/media/platform/qcom/venus/vdec.c       | 8 ++++++++
+>  3 files changed, 11 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 5e6f9f4..9e05285 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -3434,6 +3434,7 @@
->  		qspi: spi@88dc000 {
->  			compatible = "qcom,sc7280-qspi", "qcom,qspi-v1";
->  			reg = <0 0x088dc000 0 0x1000>;
-> +			iommus = <&apps_smmu 0x20 0x0>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 930b743..e2539b5 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+>  		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
+>  		break;
+>  	}
+> +	case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
+>  	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
+>  		struct hfi_enable *in = pdata;
+>  		struct hfi_enable *en = prop_data;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index d2d6719..20516b4 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -469,6 +469,8 @@
+>  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH			0x1003007
+>  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT			0x1003009
+>  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE			0x100300a
+> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
+> +								0x0100300b
+>  
+>  /*
+>   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 4ceaba3..f0394b9 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -671,6 +671,14 @@ static int vdec_set_properties(struct venus_inst *inst)
+>  			return ret;
+>  	}
+>  
+> +	/* Enabling sufficient sequence change support for VP9 */
+> +	if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+> +		ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+> +		ret = hfi_session_set_property(inst, ptype, &en);
+> +		if (ret)
+> +			return ret;
+> +	}
+Does it never have to be turned off? Or does it happen automatically
+at session closure?
 
-Does not look like you tested the DTS against bindings. Please run `make
-dtbs_check` (see Documentation/devicetree/bindings/writing-schema.rst
-for instructions).
-
-Best regards,
-Krzysztof
-
+Konrad
+> +
+>  	ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+>  	conceal = ctr->conceal_color & 0xffff;
+>  	conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
