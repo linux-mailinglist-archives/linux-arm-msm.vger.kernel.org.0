@@ -2,315 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F4026D7045
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 00:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35ED66D704C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 00:51:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236637AbjDDWru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 18:47:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
+        id S236362AbjDDWvx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 18:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236549AbjDDWrs (ORCPT
+        with ESMTP id S235833AbjDDWvw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 18:47:48 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88F552D6D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 15:47:46 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y15so44272473lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 15:47:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680648464;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=n9hExFqp3rfsa5Xr1FlWQxDCQKu/ifdPHYr+ePtML1g=;
-        b=pnLRtgO/bJjn2T6YqMKU0nCLmdge+M6jC0+9/I3Ij5FtgLe4ud041XUXIfN+gWE3wr
-         fMyDC7gfIjcR6gwyN3Oj4IltTHfQbGQPvy4O8UEDliwt1NXtS9QRCorafV9A5+KnIFne
-         os1Gvc6mznp2M0IAVThrrP1fRjzoiByoIhP1RMXH7oLXWt0skOYG2YrqmZe6RJVfsXj5
-         mXKPZN7t/WAPms3RFUcOh0zREuYTIT9G39QqvbZZo6Jhc0r4jOhr/eicd7Fd5fIsTV+N
-         BMano6hqvbsHWodLanAD9PIqYEadaarfyY+LtsnUUSCowJUD5gupm4fPOHBuK0+OP+7A
-         46Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680648464;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n9hExFqp3rfsa5Xr1FlWQxDCQKu/ifdPHYr+ePtML1g=;
-        b=spBWIQE5OTN+R0YLvxMkfj0yT4I6jhFVwWrm7zx7MWpKE8KDEO4jq4jYCN6RPtLD5P
-         9RsQvCadlGfUVXmFxRwc/dHAzl+JVS9UjUIsQYb1+VwRPxGMb0LheDhrJh+ohkrtRm+5
-         R443DciQukmVF/AJ8WEZI4I2VTVjSZe9VnrqECfWUhgxdo4X2wafEZRQ28nW26ffS/3v
-         39dhMjqZDzIxalW2jTR4j3s/FylWhqx9H2I+iFOwOuUxP2Pmd+DNZ+7vWs+zUK6IJPFG
-         NE50+Wo6lV2pRNfMntAr4hmTlCS+0hxkK6W2McT4MwAyA4TXX/j/Wa876t22vz/Nm2Ei
-         yyxg==
-X-Gm-Message-State: AAQBX9fces8ryBqEbCWJkgsBQJB2fQn5wMaJqe3sqxXBbOcUFzrfVuIV
-        cnDvcX5A56Vq5Ff0GdK8rbYb3J2yNSmygoS3lew=
-X-Google-Smtp-Source: AKy350ak7OUgZo6HPs4brOwgTKEHifOyuewZv8S2pt0pEd/FnNxQ1gfrVeFunCR7KnI7ySOiNBLp9Q==
-X-Received: by 2002:ac2:569e:0:b0:4dd:9b6b:6b5b with SMTP id 30-20020ac2569e000000b004dd9b6b6b5bmr1169547lfr.16.1680648464286;
-        Tue, 04 Apr 2023 15:47:44 -0700 (PDT)
-Received: from localhost.localdomain (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id v14-20020ac2560e000000b004e8011cbaa0sm2508307lfd.111.2023.04.04.15.47.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 15:47:43 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org
-Cc:     marijn.suijten@somainline.org, bhupesh.sharma@linaro.org,
-        vladimir.zapolskiy@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Iskren Chernev <me@iskren.info>, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: gcc-sm6115: Mark RCGs shared where applicable
-Date:   Wed,  5 Apr 2023 00:47:19 +0200
-Message-Id: <20230404224719.909746-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.40.0
+        Tue, 4 Apr 2023 18:51:52 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39F31732
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 15:51:51 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 334Ku0Gv001265;
+        Tue, 4 Apr 2023 22:51:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dynxzS1p1hlHrXF0VINq+q3zRxMAuG/05aMDWK0H6K8=;
+ b=V6NVxaoKD742BfNE0gzs7Cj+hwrb/8hRdDhvd8L1ZzrObdZqOtU9dXnllsoVEWXhq534
+ EdXDH7KY0pmsYGOTHGQQ2H9mIFdVKfx7oR6CUax2bGsYE+mltmnkV4GV9ps49hFj/jg4
+ GPCRTEgfV3qCiMSFj8Tb5PARhTrBGDgd7lTAHa31y9dBF8ruivOmSdadwlT3eS8E5PJx
+ W5zTkTo3HoyIZRYubwKpWKFm8m3JDCG/GIYecRAxKfC4Qnn47UdHehSMoVH7o2rlm1X0
+ wjSCbIXaCieMlXPJCedON7Dqv+kEM19gWRHzB1C48PY7oWG+2dk9SD8ZhAmtFKk3Hcn4 5w== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prpg212rs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 04 Apr 2023 22:51:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 334Mpi3u013587
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 4 Apr 2023 22:51:44 GMT
+Received: from [10.110.66.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 4 Apr 2023
+ 15:51:44 -0700
+Message-ID: <5df3d955-8945-e641-7b00-f093cddb9653@quicinc.com>
+Date:   Tue, 4 Apr 2023 15:51:43 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v4 25/42] drm/msm/dpu: expand sc8180x catalog
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230404130622.509628-1-dmitry.baryshkov@linaro.org>
+ <20230404130622.509628-26-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230404130622.509628-26-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -cVxQvuXz0j5kjfPFnOlqmp2iAqRCtja
+X-Proofpoint-ORIG-GUID: -cVxQvuXz0j5kjfPFnOlqmp2iAqRCtja
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-04_12,2023-04-04_05,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 mlxscore=0 spamscore=0 mlxlogscore=582 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304040208
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The vast majority of shared RCGs were not marked as such. Fix it.
 
-Fixes: cbe63bfdc54f ("clk: qcom: Add Global Clock controller (GCC) driver for SM6115")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gcc-sm6115.c | 50 +++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm6115.c b/drivers/clk/qcom/gcc-sm6115.c
-index ceb7abd961ac..20ebee2c2005 100644
---- a/drivers/clk/qcom/gcc-sm6115.c
-+++ b/drivers/clk/qcom/gcc-sm6115.c
-@@ -694,7 +694,7 @@ static struct clk_rcg2 gcc_camss_axi_clk_src = {
- 		.parent_data = gcc_parents_7,
- 		.num_parents = ARRAY_SIZE(gcc_parents_7),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -715,7 +715,7 @@ static struct clk_rcg2 gcc_camss_cci_clk_src = {
- 		.parent_data = gcc_parents_9,
- 		.num_parents = ARRAY_SIZE(gcc_parents_9),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -738,7 +738,7 @@ static struct clk_rcg2 gcc_camss_csi0phytimer_clk_src = {
- 		.parent_data = gcc_parents_4,
- 		.num_parents = ARRAY_SIZE(gcc_parents_4),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -753,7 +753,7 @@ static struct clk_rcg2 gcc_camss_csi1phytimer_clk_src = {
- 		.parent_data = gcc_parents_4,
- 		.num_parents = ARRAY_SIZE(gcc_parents_4),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -768,7 +768,7 @@ static struct clk_rcg2 gcc_camss_csi2phytimer_clk_src = {
- 		.parent_data = gcc_parents_4,
- 		.num_parents = ARRAY_SIZE(gcc_parents_4),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -790,7 +790,7 @@ static struct clk_rcg2 gcc_camss_mclk0_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -805,7 +805,7 @@ static struct clk_rcg2 gcc_camss_mclk1_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -820,7 +820,7 @@ static struct clk_rcg2 gcc_camss_mclk2_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -835,7 +835,7 @@ static struct clk_rcg2 gcc_camss_mclk3_clk_src = {
- 		.parent_data = gcc_parents_3,
- 		.num_parents = ARRAY_SIZE(gcc_parents_3),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -857,7 +857,7 @@ static struct clk_rcg2 gcc_camss_ope_ahb_clk_src = {
- 		.parent_data = gcc_parents_8,
- 		.num_parents = ARRAY_SIZE(gcc_parents_8),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -881,7 +881,7 @@ static struct clk_rcg2 gcc_camss_ope_clk_src = {
- 		.parent_data = gcc_parents_8,
- 		.num_parents = ARRAY_SIZE(gcc_parents_8),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -916,7 +916,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_clk_src = {
- 		.parent_data = gcc_parents_5,
- 		.num_parents = ARRAY_SIZE(gcc_parents_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -941,7 +941,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_csid_clk_src = {
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -956,7 +956,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_clk_src = {
- 		.parent_data = gcc_parents_5,
- 		.num_parents = ARRAY_SIZE(gcc_parents_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -971,7 +971,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_csid_clk_src = {
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -986,7 +986,7 @@ static struct clk_rcg2 gcc_camss_tfe_2_clk_src = {
- 		.parent_data = gcc_parents_5,
- 		.num_parents = ARRAY_SIZE(gcc_parents_5),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1001,7 +1001,7 @@ static struct clk_rcg2 gcc_camss_tfe_2_csid_clk_src = {
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1024,7 +1024,7 @@ static struct clk_rcg2 gcc_camss_tfe_cphy_rx_clk_src = {
- 		.parent_data = gcc_parents_10,
- 		.num_parents = ARRAY_SIZE(gcc_parents_10),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1046,7 +1046,7 @@ static struct clk_rcg2 gcc_camss_top_ahb_clk_src = {
- 		.parent_data = gcc_parents_7,
- 		.num_parents = ARRAY_SIZE(gcc_parents_7),
- 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1116,7 +1116,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
- 		.name = "gcc_pdm2_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1329,7 +1329,7 @@ static struct clk_rcg2 gcc_ufs_phy_axi_clk_src = {
- 		.name = "gcc_ufs_phy_axi_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1351,7 +1351,7 @@ static struct clk_rcg2 gcc_ufs_phy_ice_core_clk_src = {
- 		.name = "gcc_ufs_phy_ice_core_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1392,7 +1392,7 @@ static struct clk_rcg2 gcc_ufs_phy_unipro_core_clk_src = {
- 		.name = "gcc_ufs_phy_unipro_core_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1414,7 +1414,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
- 		.name = "gcc_usb30_prim_master_clk_src",
- 		.parent_data = gcc_parents_0,
- 		.num_parents = ARRAY_SIZE(gcc_parents_0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -1483,7 +1483,7 @@ static struct clk_rcg2 gcc_video_venus_clk_src = {
- 		.parent_data = gcc_parents_13,
- 		.num_parents = ARRAY_SIZE(gcc_parents_13),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
--- 
-2.40.0
+On 4/4/2023 6:06 AM, Dmitry Baryshkov wrote:
+> Duplicate sm8150 catalog entries to sc8180x to remove dependencies
+> between DPU instances.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
