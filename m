@@ -2,106 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1632E6D6CAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 20:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0BBB6D6CED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 21:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232696AbjDDSyV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 14:54:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55604 "EHLO
+        id S231620AbjDDTFr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 15:05:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbjDDSyU (ORCPT
+        with ESMTP id S235445AbjDDTFl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 14:54:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A84C7170F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 11:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680634414;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=j0M5QDGBellEBnHKe7QL0tgh7mmOP32p1W0jTZXhVvA=;
-        b=gLRWa6MIpmuTrol0ciHBIsZf2UZR+Q4+9QpSTiDTbgKX86ecizK3mskYEq6Ze9RFpFB8QH
-        GJBW/LVK9/L5vpLXvU1HuhV7LfI7voAYvkIFn5Q2JK3pE68WVxUKw+MJFVge7PwzrvLiOF
-        g9JPU2Q4hNT2IeWiVIKq0wPn5OFb9cM=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-AdOf1Y_yMtmg4qNCkuMmow-1; Tue, 04 Apr 2023 14:53:33 -0400
-X-MC-Unique: AdOf1Y_yMtmg4qNCkuMmow-1
-Received: by mail-qv1-f71.google.com with SMTP id q1-20020ad44341000000b005a676b725a2so15056021qvs.18
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 11:53:33 -0700 (PDT)
+        Tue, 4 Apr 2023 15:05:41 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69CB74ED7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 12:05:06 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id q16so43608564lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 12:05:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680635104;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=b5dgMuodeZyHzVT6FAH17HFaS4nHaYRdl9cH8QECjHA=;
+        b=PNK48df4b81vGypDdYK41csF7ttvhDtcCM36t2Rf9srpmo6sWIaTkikR70C+xjmQwY
+         HDdkLrvZoMeUdOfWQx+Kki6hp4deeHR+RAcu+jD3t7PESXxSJHtHsp88mPpvu5VLJUt7
+         bGVODPHVLvxQYnzwJCVNBtqGywiLz0O/TyTMMK96AO5FiSvDWOr0ySpXFlma52Szu6+z
+         C0tWn2pnb7WKrgE2PJFTfxalZFWbnr7wN0xYeVcyeWulOakmFDI0m+8o+Ffl5W4oiCxt
+         pTmo68/Kb9tMkL1hVes1MgcRjxFmECX+wkAvLLAK91ji9LyWQwc8LFjSh1VcgoOf1ghq
+         py1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680634413;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j0M5QDGBellEBnHKe7QL0tgh7mmOP32p1W0jTZXhVvA=;
-        b=4yoUTwPqdFoc/d+6M2c5uvRKTX+iZC/G9HEV11AvjZK1zDAcsgSdAvAkNBscGEKOZM
-         MosgbRuJhUOvBXUd+pR+UhDxTDY2LmVjONLMm71oAhXQvuJPr9wfvaCqTZwBzPztshsL
-         d96XuEg69yLoVpdM0LETxTa1cmzY9LPSQQ7zPlhsyBXUpPh5kE0I/1TfSiD8pkaI4a83
-         SrytdZcGu/2oHp3dXgFS4uKoDB7Kze5ob4SbPEOGsuTLO8yTQuFWc0trK652bvgxxZhG
-         YZqRUU1CO9ucQndkPpSLSALKTPgsfD5HY9vki5Wp53quTfdCbsQMjUFdKzW4r/56OiYw
-         lZrQ==
-X-Gm-Message-State: AAQBX9cqKVhkbllnHFno6HXW4h9r8EA7BskqdbM0gUMhA5wz/3fuLt6f
-        +z2CsrHkalAEuRiMX813I5D1HZii8f/0sL1n2PMt5sGwe+CBXgie9kepcPhKoryN6p6kuxYcbah
-        qn4VuhrnYyw+ipOLYZLahgHvNXwoHi+/81g==
-X-Received: by 2002:a05:622a:138b:b0:3e4:e8be:c3a4 with SMTP id o11-20020a05622a138b00b003e4e8bec3a4mr741054qtk.56.1680634412932;
-        Tue, 04 Apr 2023 11:53:32 -0700 (PDT)
-X-Google-Smtp-Source: AKy350aHha48xVckQMZBBBOfNL67WaM8+Vk8RyO27WZmOEbqXBCe+GmWfP76gbamBPcNYhZvXnXLKA==
-X-Received: by 2002:a05:622a:138b:b0:3e4:e8be:c3a4 with SMTP id o11-20020a05622a138b00b003e4e8bec3a4mr741035qtk.56.1680634412694;
-        Tue, 04 Apr 2023 11:53:32 -0700 (PDT)
-Received: from dell-per740-01.7a2m.lab.eng.bos.redhat.com (nat-pool-bos-t.redhat.com. [66.187.233.206])
-        by smtp.gmail.com with ESMTPSA id f9-20020ac84989000000b003e38f7e4562sm3400800qtq.69.2023.04.04.11.53.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 11:53:32 -0700 (PDT)
-From:   Tom Rix <trix@redhat.com>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        dmitry.baryshkov@linaro.org, sean@poorly.run, airlied@gmail.com,
-        daniel@ffwll.ch, vladimir.lypak@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Tom Rix <trix@redhat.com>
-Subject: [PATCH] drm/msm/mdp5: set varaiable msm8x76_config storage-class-specifier to static
-Date:   Tue,  4 Apr 2023 14:53:29 -0400
-Message-Id: <20230404185329.1925964-1-trix@redhat.com>
-X-Mailer: git-send-email 2.27.0
+        d=1e100.net; s=20210112; t=1680635104;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b5dgMuodeZyHzVT6FAH17HFaS4nHaYRdl9cH8QECjHA=;
+        b=HtcemAIzM6y1G9Vq3lMMg/unUhzHbdYT2gRBFswm5S6dRxM84++ugMJE6ykl4JMtNv
+         U787Nu0FMcr9dDIxGPvYs5NHU0wOCmNsRVoBrj+giS7466ukONFH63T+DhCbcOt3iQsS
+         54+6XaX6S8xi0PfO1lgQrzxHZfLC3tk3Wr0w49BNsIylESFlL5Y9Um0r0s4vGBBAT77P
+         wd7Du+wEjm+ByrBHIDOHZ0Hvv9fb6kuhvHjvhqD05VCTDO2wXoaeMDa8hS+WBft6gmcX
+         E+EX01LRSpVK3qW6wB8HKgQBG7cL4K4iHeiuJGuuqjfRFsQubC6y1ZWT73+TiwtPpmqR
+         LBlA==
+X-Gm-Message-State: AAQBX9eJLLbhoHgOI4MVShMk0gwOLvDOLB89tk4iDIVABY9GDcqcRQgH
+        gnlt7Xx5JPJzEtXMGyqJptt2c2cPBr5JyLknoqo=
+X-Google-Smtp-Source: AKy350ZJm7DCWcawFstZhDR/T62LoyF1dMnhZc8JIB9o1LYekSdv0olD4QHgqYZPKKmJfDgn2RcvxA==
+X-Received: by 2002:ac2:561b:0:b0:4eb:2a26:babf with SMTP id v27-20020ac2561b000000b004eb2a26babfmr89283lfd.0.1680635104208;
+        Tue, 04 Apr 2023 12:05:04 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id v16-20020ac25610000000b004caf992bba9sm2467420lfd.268.2023.04.04.12.05.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Apr 2023 12:05:03 -0700 (PDT)
+Message-ID: <2c3a823c-4620-1557-39ff-1db169aeb7aa@linaro.org>
+Date:   Tue, 4 Apr 2023 21:05:02 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 2/3] venus: enable sufficient sequence change support for
+ vp9
+Content-Language: en-US
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Viswanath Boma <quic_vboma@quicinc.com>
+References: <1680589032-26046-1-git-send-email-quic_dikshita@quicinc.com>
+ <1680589032-26046-3-git-send-email-quic_dikshita@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1680589032-26046-3-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-smatch reports
-drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c:658:26: warning: symbol
-  'msm8x76_config' was not declared. Should it be static?
 
-This variable is only used in one file so should be static.
 
-Signed-off-by: Tom Rix <trix@redhat.com>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 4.04.2023 08:17, Dikshita Agarwal wrote:
+> VP9 supports resolution change at interframe.
+> Currenlty, if sequence change is detected at interframe and
+> resources are sufficient, sequence change event is not raised
+> by firmware to driver until the next keyframe.
+> This change add the HFI to notify the sequence change in this
+> case to driver.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+> Tested-by: Nathan Hebert <nhebert@chromium.org>
+> ---
+>  drivers/media/platform/qcom/venus/hfi_cmds.c   | 1 +
+>  drivers/media/platform/qcom/venus/hfi_helper.h | 2 ++
+>  drivers/media/platform/qcom/venus/vdec.c       | 8 ++++++++
+>  3 files changed, 11 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> index 930b743..e2539b5 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+>  		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
+>  		break;
+>  	}
+> +	case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
+>  	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
+>  		struct hfi_enable *in = pdata;
+>  		struct hfi_enable *en = prop_data;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index d2d6719..20516b4 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -469,6 +469,8 @@
+>  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH			0x1003007
+>  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT			0x1003009
+>  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE			0x100300a
+> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
+> +								0x0100300b
+Also, nit: this one has a leading zero, whereas other properties don't
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index 1f1555aa02d2..2eec2d78f32a 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -655,7 +655,7 @@ static const struct mdp5_cfg_hw msm8x96_config = {
- 	.max_clk = 412500000,
- };
- 
--const struct mdp5_cfg_hw msm8x76_config = {
-+static const struct mdp5_cfg_hw msm8x76_config = {
- 	.name = "msm8x76",
- 	.mdp = {
- 		.count = 1,
--- 
-2.27.0
-
+Konrad
+>  
+>  /*
+>   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 4ceaba3..f0394b9 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -671,6 +671,14 @@ static int vdec_set_properties(struct venus_inst *inst)
+>  			return ret;
+>  	}
+>  
+> +	/* Enabling sufficient sequence change support for VP9 */
+> +	if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+> +		ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+> +		ret = hfi_session_set_property(inst, ptype, &en);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+>  	ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+>  	conceal = ctr->conceal_color & 0xffff;
+>  	conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
