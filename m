@@ -2,86 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53EED6D6B39
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 20:07:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4330B6D6B58
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  4 Apr 2023 20:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236351AbjDDSHv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 14:07:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54000 "EHLO
+        id S235024AbjDDSRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 14:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235403AbjDDSHp (ORCPT
+        with ESMTP id S234462AbjDDSRR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 14:07:45 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 514FA55BF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 11:07:24 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id x20so34783911ljq.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 11:07:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680631637;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dKGYy/lnfy+kLVObhWRLvXvnRmxbL6o7FAqb6+OXgrQ=;
-        b=DbMjP6MwypN0+AIvI231crk6wvxsuu1WgEHE8k11XZwNJ4wrzM22ZnANpFzc2fIHna
-         xoU+P8AQqFjdSEJUcHCaDAwXjAOKFNZjTTr4RRqxfmX5chfPkxBWkOwkg4rkGJ4qBUZP
-         8YmaIFmy5Z1qX7WKMVTNSZ5J0z8bhI8Z4hWuQykH40P1zjalVw093YXWCaQpvO8Yox1+
-         /lJH++B4xthR9N3fAGfyZX397SX4/YQYq/+lYqQaw9yMZRb2KOQ06KXQQTv9jOJgkgM7
-         AUKntf986yXaatoMev2hFimEW1tDanBSrkmwyxDe26kjfZh2vMqA37SXRqRtlKA7Q49+
-         G28g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680631637;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dKGYy/lnfy+kLVObhWRLvXvnRmxbL6o7FAqb6+OXgrQ=;
-        b=Avlrnqz7HzEMj8Fi9t72E0EbxnRYyQSjKkI9JhD+ifbmj6YmFYaSvXDex7luL7Idlf
-         Gi7yULUAMICvjYvU4HSai5w/BuF3UYDucfKaCKsXh8/rrLGXXWbC6fJhnauCHympRWTk
-         GTbVW4owndMl8JOlyQRRBH5ngFrE/JeGrprN+S+Vz2jTbjdgfC/xLmzt4ZSwgsW7s3zA
-         i1Av5xL7hQnXiCe1klaAsZoDsdyBjjon7tRwLo+4HJSW9TfTgMRq+INPWH5wZrzWbnrB
-         bQnYM4lR2bMwbQTVZVTDSK1kpvZO6+ZwuKrf+SC9nBK+ciuPYJ6Hv7B5hsd8Gi7BvpPT
-         Dn+w==
-X-Gm-Message-State: AAQBX9cWY4gQU+rgZqLVdLB5aaGYzX4Med5mqjyh/Glz/Q5XgKPGVG7g
-        OaSHOpNPgljF7QjL8wi42j+tyg==
-X-Google-Smtp-Source: AKy350bTRPJNdhoD8Ppp5HPZcfIS1qN1iMMfdXM1O3Ez1bpFq/GD7QD6JQ8TrFGnaqFjGD4viKhZcg==
-X-Received: by 2002:a2e:9002:0:b0:29e:6d48:d8d5 with SMTP id h2-20020a2e9002000000b0029e6d48d8d5mr1151815ljg.29.1680631637323;
-        Tue, 04 Apr 2023 11:07:17 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id o7-20020a2e90c7000000b002958c4e96fasm2470187ljg.3.2023.04.04.11.07.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 11:07:16 -0700 (PDT)
-Message-ID: <0bd29b3e-a6c9-ff22-cfb3-1860f56b4ee5@linaro.org>
-Date:   Tue, 4 Apr 2023 20:07:15 +0200
+        Tue, 4 Apr 2023 14:17:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA9310D1;
+        Tue,  4 Apr 2023 11:17:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9B41F63836;
+        Tue,  4 Apr 2023 18:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F83EC433EF;
+        Tue,  4 Apr 2023 18:17:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680632235;
+        bh=vecS1rMZwna2jwd0r4is1sU1FGqAK45eMK1pf6rma2g=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=D5YgiPUjRdkDNfKFybm84mcNTEYwvACfjLNgiCxWqnR1yi8J9AqW5xzssUQDcVOfx
+         a/QMi5iooEOgxTPoVTH1YeDPcjouaJ68r6QNiGFjGX/ZyNR/lJ68Cc2sir/k1C6CrI
+         YUT/FYGBun4FCR29ObWT2D8xg30rbQz8bspTaDNuMg8cN63pe/FJKDoTWxJo4+JDd7
+         dik1Co50BM1tYOkI0NGPfrZUy9Sn+ve3x3VWuek2jk4LqrtIDfS59LZv+XT3GvuqgK
+         qF+2RhAf0EWC7Za4Me67yL/PDXuZYc4dyclaTMzWCPoSAJxSFzppoPaZXuCiNtrBMf
+         AhTEue0YsMNCw==
+Date:   Tue, 4 Apr 2023 19:17:08 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        vkoul@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org, quic_msavaliy@quicinc.com,
+        dianders@chromium.org, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com
+Subject: Re: [PATCH 2/2] spi: spi-qcom-qspi: Add DMA mode support
+Message-ID: <d784dab7-a1a6-4db7-aa13-e39e9904f342@sirena.org.uk>
+References: <1680631400-28865-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1680631400-28865-3-git-send-email-quic_vnivarth@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 4/7] soundwire: qcom: use consistently 'ctrl' as state
- variable name
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
-Cc:     Patrick Lai <quic_plai@quicinc.com>
-References: <20230403132503.62090-1-krzysztof.kozlowski@linaro.org>
- <20230403132503.62090-5-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230403132503.62090-5-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="kDrRpbySrwTW+T6a"
+Content-Disposition: inline
+In-Reply-To: <1680631400-28865-3-git-send-email-quic_vnivarth@quicinc.com>
+X-Cookie: Being ugly isn't illegal.  Yet.
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,430 +62,87 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--kDrRpbySrwTW+T6a
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 3.04.2023 15:25, Krzysztof Kozlowski wrote:
-> The pointer to 'struct qcom_swrm_ctrl' was called sometimes 'swrm' and
-> sometimes 'ctrl' variable.  Choose one - 'ctrl' - so the code will be
-> consistent and easier to read.
-> 
-> No functional change.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Tue, Apr 04, 2023 at 11:33:20PM +0530, Vijaya Krishna Nivarthi wrote:
 
-Konrad
->  drivers/soundwire/qcom.c | 168 +++++++++++++++++++--------------------
->  1 file changed, 84 insertions(+), 84 deletions(-)
-> 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index faa091e7472a..00522de47b6f 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -279,14 +279,14 @@ static u32 swrm_get_packed_reg_val(u8 *cmd_id, u8 cmd_data,
->  	return val;
->  }
->  
-> -static int swrm_wait_for_rd_fifo_avail(struct qcom_swrm_ctrl *swrm)
-> +static int swrm_wait_for_rd_fifo_avail(struct qcom_swrm_ctrl *ctrl)
->  {
->  	u32 fifo_outstanding_data, value;
->  	int fifo_retry_count = SWR_OVERFLOW_RETRY_COUNT;
->  
->  	do {
->  		/* Check for fifo underflow during read */
-> -		swrm->reg_read(swrm, SWRM_CMD_FIFO_STATUS, &value);
-> +		ctrl->reg_read(ctrl, SWRM_CMD_FIFO_STATUS, &value);
->  		fifo_outstanding_data = FIELD_GET(SWRM_RD_CMD_FIFO_CNT_MASK, value);
->  
->  		/* Check if read data is available in read fifo */
-> @@ -297,39 +297,39 @@ static int swrm_wait_for_rd_fifo_avail(struct qcom_swrm_ctrl *swrm)
->  	} while (fifo_retry_count--);
->  
->  	if (fifo_outstanding_data == 0) {
-> -		dev_err_ratelimited(swrm->dev, "%s err read underflow\n", __func__);
-> +		dev_err_ratelimited(ctrl->dev, "%s err read underflow\n", __func__);
->  		return -EIO;
+A few quick review comments, mostly coding style though.
+
+> +struct qspi_cmd_desc {
+> +	uint32_t data_address;
+> +	uint32_t next_descriptor;
+> +	uint32_t direction:1;
+> +	uint32_t multi_io_mode:3;
+> +	uint32_t reserved1:4;
+> +	uint32_t fragment:1;
+> +	uint32_t reserved2:7;
+> +	uint32_t length:16;
+> +	//------------------------//
+
+What does this mean?
+
+> +	uint8_t *bounce_src;
+> +	uint8_t *bounce_dst;
+> +	uint32_t bounce_length;
+> +};
+
+> +
+> +#define QSPI_MAX_NUM_DESC 5
+>  struct qspi_xfer {
+
+Missing blank line after the define...
+
+> +	for (ii = 0; ii < sgt->nents; ii++)
+> +		sg_total_len += sg_dma_len(sgt->sgl + ii);
+
+Why are we calling the iterator ii here?
+
+> +	if (ctrl->xfer.dir == QSPI_READ)
+> +		byte_ptr = (uint8_t *)xfer->rx_buf;
+> +	else
+> +		byte_ptr = (uint8_t *)xfer->tx_buf;
+
+If we need to cast to or from void * there's some sort of problem.
+
+> +/* Switch to DMA if transfer length exceeds this */
+> +#define QSPI_MAX_BYTES_FIFO 64
+> +#define NO_TX_DATA_DELAY_FOR_DMA 1
+> +#define DMA_CONDITIONAL (xfer->len > QSPI_MAX_BYTES_FIFO)
+> +
+
+DMA_CONDITIONAL absolutely should not be a define, this just makes
+things harder to read.  Just have everything call can_dma() when needed.
+
+> +#if NO_TX_DATA_DELAY_FOR_DMA
+> +		mstr_cfg &= ~(TX_DATA_OE_DELAY_MSK | TX_DATA_DELAY_MSK);
+> +#endif
+
+Why would we add extra delays if we don't need them, might someone set
+this and if so when?
+
+> +	if (ctrl->xfer_mode == QSPI_FIFO) {
+
+> +	} else if (ctrl->xfer_mode == QSPI_DMA) {
+
 >  	}
->  
->  	return 0;
->  }
->  
-> -static int swrm_wait_for_wr_fifo_avail(struct qcom_swrm_ctrl *swrm)
-> +static int swrm_wait_for_wr_fifo_avail(struct qcom_swrm_ctrl *ctrl)
->  {
->  	u32 fifo_outstanding_cmds, value;
->  	int fifo_retry_count = SWR_OVERFLOW_RETRY_COUNT;
->  
->  	do {
->  		/* Check for fifo overflow during write */
-> -		swrm->reg_read(swrm, SWRM_CMD_FIFO_STATUS, &value);
-> +		ctrl->reg_read(ctrl, SWRM_CMD_FIFO_STATUS, &value);
->  		fifo_outstanding_cmds = FIELD_GET(SWRM_WR_CMD_FIFO_CNT_MASK, value);
->  
->  		/* Check for space in write fifo before writing */
-> -		if (fifo_outstanding_cmds < swrm->wr_fifo_depth)
-> +		if (fifo_outstanding_cmds < ctrl->wr_fifo_depth)
->  			return 0;
->  
->  		usleep_range(500, 510);
->  	} while (fifo_retry_count--);
->  
-> -	if (fifo_outstanding_cmds == swrm->wr_fifo_depth) {
-> -		dev_err_ratelimited(swrm->dev, "%s err write overflow\n", __func__);
-> +	if (fifo_outstanding_cmds == ctrl->wr_fifo_depth) {
-> +		dev_err_ratelimited(ctrl->dev, "%s err write overflow\n", __func__);
->  		return -EIO;
->  	}
->  
->  	return 0;
->  }
->  
-> -static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
-> +static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *ctrl, u8 cmd_data,
->  				     u8 dev_addr, u16 reg_addr)
->  {
->  
-> @@ -342,20 +342,20 @@ static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
->  		val = swrm_get_packed_reg_val(&cmd_id, cmd_data,
->  					      dev_addr, reg_addr);
->  	} else {
-> -		val = swrm_get_packed_reg_val(&swrm->wcmd_id, cmd_data,
-> +		val = swrm_get_packed_reg_val(&ctrl->wcmd_id, cmd_data,
->  					      dev_addr, reg_addr);
->  	}
->  
-> -	if (swrm_wait_for_wr_fifo_avail(swrm))
-> +	if (swrm_wait_for_wr_fifo_avail(ctrl))
->  		return SDW_CMD_FAIL_OTHER;
->  
->  	if (cmd_id == SWR_BROADCAST_CMD_ID)
-> -		reinit_completion(&swrm->broadcast);
-> +		reinit_completion(&ctrl->broadcast);
->  
->  	/* Its assumed that write is okay as we do not get any status back */
-> -	swrm->reg_write(swrm, SWRM_CMD_FIFO_WR_CMD, val);
-> +	ctrl->reg_write(ctrl, SWRM_CMD_FIFO_WR_CMD, val);
->  
-> -	if (swrm->version <= SWRM_VERSION_1_3_0)
-> +	if (ctrl->version <= SWRM_VERSION_1_3_0)
->  		usleep_range(150, 155);
->  
->  	if (cmd_id == SWR_BROADCAST_CMD_ID) {
-> @@ -363,7 +363,7 @@ static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
->  		 * sleep for 10ms for MSM soundwire variant to allow broadcast
->  		 * command to complete.
->  		 */
-> -		ret = wait_for_completion_timeout(&swrm->broadcast,
-> +		ret = wait_for_completion_timeout(&ctrl->broadcast,
->  						  msecs_to_jiffies(TIMEOUT_MS));
->  		if (!ret)
->  			ret = SDW_CMD_IGNORED;
-> @@ -376,41 +376,41 @@ static int qcom_swrm_cmd_fifo_wr_cmd(struct qcom_swrm_ctrl *swrm, u8 cmd_data,
->  	return ret;
->  }
->  
-> -static int qcom_swrm_cmd_fifo_rd_cmd(struct qcom_swrm_ctrl *swrm,
-> +static int qcom_swrm_cmd_fifo_rd_cmd(struct qcom_swrm_ctrl *ctrl,
->  				     u8 dev_addr, u16 reg_addr,
->  				     u32 len, u8 *rval)
->  {
->  	u32 cmd_data, cmd_id, val, retry_attempt = 0;
->  
-> -	val = swrm_get_packed_reg_val(&swrm->rcmd_id, len, dev_addr, reg_addr);
-> +	val = swrm_get_packed_reg_val(&ctrl->rcmd_id, len, dev_addr, reg_addr);
->  
->  	/*
->  	 * Check for outstanding cmd wrt. write fifo depth to avoid
->  	 * overflow as read will also increase write fifo cnt.
->  	 */
-> -	swrm_wait_for_wr_fifo_avail(swrm);
-> +	swrm_wait_for_wr_fifo_avail(ctrl);
->  
->  	/* wait for FIFO RD to complete to avoid overflow */
->  	usleep_range(100, 105);
-> -	swrm->reg_write(swrm, SWRM_CMD_FIFO_RD_CMD, val);
-> +	ctrl->reg_write(ctrl, SWRM_CMD_FIFO_RD_CMD, val);
->  	/* wait for FIFO RD CMD complete to avoid overflow */
->  	usleep_range(250, 255);
->  
-> -	if (swrm_wait_for_rd_fifo_avail(swrm))
-> +	if (swrm_wait_for_rd_fifo_avail(ctrl))
->  		return SDW_CMD_FAIL_OTHER;
->  
->  	do {
-> -		swrm->reg_read(swrm, SWRM_CMD_FIFO_RD_FIFO_ADDR, &cmd_data);
-> +		ctrl->reg_read(ctrl, SWRM_CMD_FIFO_RD_FIFO_ADDR, &cmd_data);
->  		rval[0] = cmd_data & 0xFF;
->  		cmd_id = FIELD_GET(SWRM_RD_FIFO_CMD_ID_MASK, cmd_data);
->  
-> -		if (cmd_id != swrm->rcmd_id) {
-> +		if (cmd_id != ctrl->rcmd_id) {
->  			if (retry_attempt < (MAX_FIFO_RD_RETRY - 1)) {
->  				/* wait 500 us before retry on fifo read failure */
->  				usleep_range(500, 505);
-> -				swrm->reg_write(swrm, SWRM_CMD_FIFO_CMD,
-> +				ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CMD,
->  						SWRM_CMD_FIFO_FLUSH);
-> -				swrm->reg_write(swrm, SWRM_CMD_FIFO_RD_CMD, val);
-> +				ctrl->reg_write(ctrl, SWRM_CMD_FIFO_RD_CMD, val);
->  			}
->  			retry_attempt++;
->  		} else {
-> @@ -419,9 +419,9 @@ static int qcom_swrm_cmd_fifo_rd_cmd(struct qcom_swrm_ctrl *swrm,
->  
->  	} while (retry_attempt < MAX_FIFO_RD_RETRY);
->  
-> -	dev_err(swrm->dev, "failed to read fifo: reg: 0x%x, rcmd_id: 0x%x,\
-> +	dev_err(ctrl->dev, "failed to read fifo: reg: 0x%x, rcmd_id: 0x%x,\
->  		dev_num: 0x%x, cmd_data: 0x%x\n",
-> -		reg_addr, swrm->rcmd_id, dev_addr, cmd_data);
-> +		reg_addr, ctrl->rcmd_id, dev_addr, cmd_data);
->  
->  	return SDW_CMD_IGNORED;
->  }
-> @@ -533,39 +533,39 @@ static int qcom_swrm_enumerate(struct sdw_bus *bus)
->  
->  static irqreturn_t qcom_swrm_wake_irq_handler(int irq, void *dev_id)
->  {
-> -	struct qcom_swrm_ctrl *swrm = dev_id;
-> +	struct qcom_swrm_ctrl *ctrl = dev_id;
->  	int ret;
->  
-> -	ret = pm_runtime_resume_and_get(swrm->dev);
-> +	ret = pm_runtime_resume_and_get(ctrl->dev);
->  	if (ret < 0 && ret != -EACCES) {
-> -		dev_err_ratelimited(swrm->dev,
-> +		dev_err_ratelimited(ctrl->dev,
->  				    "pm_runtime_resume_and_get failed in %s, ret %d\n",
->  				    __func__, ret);
->  		return ret;
->  	}
->  
-> -	if (swrm->wake_irq > 0) {
-> -		if (!irqd_irq_disabled(irq_get_irq_data(swrm->wake_irq)))
-> -			disable_irq_nosync(swrm->wake_irq);
-> +	if (ctrl->wake_irq > 0) {
-> +		if (!irqd_irq_disabled(irq_get_irq_data(ctrl->wake_irq)))
-> +			disable_irq_nosync(ctrl->wake_irq);
->  	}
->  
-> -	pm_runtime_mark_last_busy(swrm->dev);
-> -	pm_runtime_put_autosuspend(swrm->dev);
-> +	pm_runtime_mark_last_busy(ctrl->dev);
-> +	pm_runtime_put_autosuspend(ctrl->dev);
->  
->  	return IRQ_HANDLED;
->  }
->  
->  static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
->  {
-> -	struct qcom_swrm_ctrl *swrm = dev_id;
-> +	struct qcom_swrm_ctrl *ctrl = dev_id;
->  	u32 value, intr_sts, intr_sts_masked, slave_status;
->  	u32 i;
->  	int devnum;
->  	int ret = IRQ_HANDLED;
-> -	clk_prepare_enable(swrm->hclk);
-> +	clk_prepare_enable(ctrl->hclk);
->  
-> -	swrm->reg_read(swrm, SWRM_INTERRUPT_STATUS, &intr_sts);
-> -	intr_sts_masked = intr_sts & swrm->intr_mask;
-> +	ctrl->reg_read(ctrl, SWRM_INTERRUPT_STATUS, &intr_sts);
-> +	intr_sts_masked = intr_sts & ctrl->intr_mask;
->  
->  	do {
->  		for (i = 0; i < SWRM_INTERRUPT_MAX; i++) {
-> @@ -575,80 +575,80 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
->  
->  			switch (value) {
->  			case SWRM_INTERRUPT_STATUS_SLAVE_PEND_IRQ:
-> -				devnum = qcom_swrm_get_alert_slave_dev_num(swrm);
-> +				devnum = qcom_swrm_get_alert_slave_dev_num(ctrl);
->  				if (devnum < 0) {
-> -					dev_err_ratelimited(swrm->dev,
-> +					dev_err_ratelimited(ctrl->dev,
->  					    "no slave alert found.spurious interrupt\n");
->  				} else {
-> -					sdw_handle_slave_status(&swrm->bus, swrm->status);
-> +					sdw_handle_slave_status(&ctrl->bus, ctrl->status);
->  				}
->  
->  				break;
->  			case SWRM_INTERRUPT_STATUS_NEW_SLAVE_ATTACHED:
->  			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
-> -				dev_dbg_ratelimited(swrm->dev, "SWR new slave attached\n");
-> -				swrm->reg_read(swrm, SWRM_MCP_SLV_STATUS, &slave_status);
-> -				if (swrm->slave_status == slave_status) {
-> -					dev_dbg(swrm->dev, "Slave status not changed %x\n",
-> +				dev_dbg_ratelimited(ctrl->dev, "SWR new slave attached\n");
-> +				ctrl->reg_read(ctrl, SWRM_MCP_SLV_STATUS, &slave_status);
-> +				if (ctrl->slave_status == slave_status) {
-> +					dev_dbg(ctrl->dev, "Slave status not changed %x\n",
->  						slave_status);
->  				} else {
-> -					qcom_swrm_get_device_status(swrm);
-> -					qcom_swrm_enumerate(&swrm->bus);
-> -					sdw_handle_slave_status(&swrm->bus, swrm->status);
-> +					qcom_swrm_get_device_status(ctrl);
-> +					qcom_swrm_enumerate(&ctrl->bus);
-> +					sdw_handle_slave_status(&ctrl->bus, ctrl->status);
->  				}
->  				break;
->  			case SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET:
-> -				dev_err_ratelimited(swrm->dev,
-> +				dev_err_ratelimited(ctrl->dev,
->  						"%s: SWR bus clsh detected\n",
->  						__func__);
-> -				swrm->intr_mask &= ~SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET;
-> -				swrm->reg_write(swrm, SWRM_INTERRUPT_CPU_EN, swrm->intr_mask);
-> +				ctrl->intr_mask &= ~SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET;
-> +				ctrl->reg_write(ctrl, SWRM_INTERRUPT_CPU_EN, ctrl->intr_mask);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_RD_FIFO_OVERFLOW:
-> -				swrm->reg_read(swrm, SWRM_CMD_FIFO_STATUS, &value);
-> -				dev_err_ratelimited(swrm->dev,
-> +				ctrl->reg_read(ctrl, SWRM_CMD_FIFO_STATUS, &value);
-> +				dev_err_ratelimited(ctrl->dev,
->  					"%s: SWR read FIFO overflow fifo status 0x%x\n",
->  					__func__, value);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_RD_FIFO_UNDERFLOW:
-> -				swrm->reg_read(swrm, SWRM_CMD_FIFO_STATUS, &value);
-> -				dev_err_ratelimited(swrm->dev,
-> +				ctrl->reg_read(ctrl, SWRM_CMD_FIFO_STATUS, &value);
-> +				dev_err_ratelimited(ctrl->dev,
->  					"%s: SWR read FIFO underflow fifo status 0x%x\n",
->  					__func__, value);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_WR_CMD_FIFO_OVERFLOW:
-> -				swrm->reg_read(swrm, SWRM_CMD_FIFO_STATUS, &value);
-> -				dev_err(swrm->dev,
-> +				ctrl->reg_read(ctrl, SWRM_CMD_FIFO_STATUS, &value);
-> +				dev_err(ctrl->dev,
->  					"%s: SWR write FIFO overflow fifo status %x\n",
->  					__func__, value);
-> -				swrm->reg_write(swrm, SWRM_CMD_FIFO_CMD, 0x1);
-> +				ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CMD, 0x1);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_CMD_ERROR:
-> -				swrm->reg_read(swrm, SWRM_CMD_FIFO_STATUS, &value);
-> -				dev_err_ratelimited(swrm->dev,
-> +				ctrl->reg_read(ctrl, SWRM_CMD_FIFO_STATUS, &value);
-> +				dev_err_ratelimited(ctrl->dev,
->  					"%s: SWR CMD error, fifo status 0x%x, flushing fifo\n",
->  					__func__, value);
-> -				swrm->reg_write(swrm, SWRM_CMD_FIFO_CMD, 0x1);
-> +				ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CMD, 0x1);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_DOUT_PORT_COLLISION:
-> -				dev_err_ratelimited(swrm->dev,
-> +				dev_err_ratelimited(ctrl->dev,
->  						"%s: SWR Port collision detected\n",
->  						__func__);
-> -				swrm->intr_mask &= ~SWRM_INTERRUPT_STATUS_DOUT_PORT_COLLISION;
-> -				swrm->reg_write(swrm,
-> -					SWRM_INTERRUPT_CPU_EN, swrm->intr_mask);
-> +				ctrl->intr_mask &= ~SWRM_INTERRUPT_STATUS_DOUT_PORT_COLLISION;
-> +				ctrl->reg_write(ctrl,
-> +					SWRM_INTERRUPT_CPU_EN, ctrl->intr_mask);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_READ_EN_RD_VALID_MISMATCH:
-> -				dev_err_ratelimited(swrm->dev,
-> +				dev_err_ratelimited(ctrl->dev,
->  					"%s: SWR read enable valid mismatch\n",
->  					__func__);
-> -				swrm->intr_mask &=
-> +				ctrl->intr_mask &=
->  					~SWRM_INTERRUPT_STATUS_READ_EN_RD_VALID_MISMATCH;
-> -				swrm->reg_write(swrm,
-> -					SWRM_INTERRUPT_CPU_EN, swrm->intr_mask);
-> +				ctrl->reg_write(ctrl,
-> +					SWRM_INTERRUPT_CPU_EN, ctrl->intr_mask);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_SPECIAL_CMD_ID_FINISHED:
-> -				complete(&swrm->broadcast);
-> +				complete(&ctrl->broadcast);
->  				break;
->  			case SWRM_INTERRUPT_STATUS_BUS_RESET_FINISHED_V2:
->  				break;
-> @@ -657,19 +657,19 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
->  			case SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP:
->  				break;
->  			default:
-> -				dev_err_ratelimited(swrm->dev,
-> +				dev_err_ratelimited(ctrl->dev,
->  						"%s: SWR unknown interrupt value: %d\n",
->  						__func__, value);
->  				ret = IRQ_NONE;
->  				break;
->  			}
->  		}
-> -		swrm->reg_write(swrm, SWRM_INTERRUPT_CLEAR, intr_sts);
-> -		swrm->reg_read(swrm, SWRM_INTERRUPT_STATUS, &intr_sts);
-> -		intr_sts_masked = intr_sts & swrm->intr_mask;
-> +		ctrl->reg_write(ctrl, SWRM_INTERRUPT_CLEAR, intr_sts);
-> +		ctrl->reg_read(ctrl, SWRM_INTERRUPT_STATUS, &intr_sts);
-> +		intr_sts_masked = intr_sts & ctrl->intr_mask;
->  	} while (intr_sts_masked);
->  
-> -	clk_disable_unprepare(swrm->hclk);
-> +	clk_disable_unprepare(ctrl->hclk);
->  	return ret;
->  }
->  
-> @@ -1301,23 +1301,23 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
->  #ifdef CONFIG_DEBUG_FS
->  static int swrm_reg_show(struct seq_file *s_file, void *data)
->  {
-> -	struct qcom_swrm_ctrl *swrm = s_file->private;
-> +	struct qcom_swrm_ctrl *ctrl = s_file->private;
->  	int reg, reg_val, ret;
->  
-> -	ret = pm_runtime_resume_and_get(swrm->dev);
-> +	ret = pm_runtime_resume_and_get(ctrl->dev);
->  	if (ret < 0 && ret != -EACCES) {
-> -		dev_err_ratelimited(swrm->dev,
-> +		dev_err_ratelimited(ctrl->dev,
->  				    "pm_runtime_resume_and_get failed in %s, ret %d\n",
->  				    __func__, ret);
->  		return ret;
->  	}
->  
->  	for (reg = 0; reg <= SWR_MSTR_MAX_REG_ADDR; reg += 4) {
-> -		swrm->reg_read(swrm, reg, &reg_val);
-> +		ctrl->reg_read(ctrl, reg, &reg_val);
->  		seq_printf(s_file, "0x%.3x: 0x%.2x\n", reg, reg_val);
->  	}
-> -	pm_runtime_mark_last_busy(swrm->dev);
-> -	pm_runtime_put_autosuspend(swrm->dev);
-> +	pm_runtime_mark_last_busy(ctrl->dev);
-> +	pm_runtime_put_autosuspend(ctrl->dev);
->  
->  
->  	return 0;
-> @@ -1498,13 +1498,13 @@ static int qcom_swrm_remove(struct platform_device *pdev)
->  	return 0;
->  }
->  
-> -static bool swrm_wait_for_frame_gen_enabled(struct qcom_swrm_ctrl *swrm)
-> +static bool swrm_wait_for_frame_gen_enabled(struct qcom_swrm_ctrl *ctrl)
->  {
->  	int retry = SWRM_LINK_STATUS_RETRY_CNT;
->  	int comp_sts;
->  
->  	do {
-> -		swrm->reg_read(swrm, SWRM_COMP_STATUS, &comp_sts);
-> +		ctrl->reg_read(ctrl, SWRM_COMP_STATUS, &comp_sts);
->  
->  		if (comp_sts & SWRM_FRM_GEN_ENABLED)
->  			return true;
-> @@ -1512,7 +1512,7 @@ static bool swrm_wait_for_frame_gen_enabled(struct qcom_swrm_ctrl *swrm)
->  		usleep_range(500, 510);
->  	} while (retry--);
->  
-> -	dev_err(swrm->dev, "%s: link status not %s\n", __func__,
-> +	dev_err(ctrl->dev, "%s: link status not %s\n", __func__,
->  		comp_sts & SWRM_FRM_GEN_ENABLED ? "connected" : "disconnected");
->  
->  	return false;
+
+This should be a switch statement.
+
+--kDrRpbySrwTW+T6a
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQsaaMACgkQJNaLcl1U
+h9BZfQf9E/FbfM9Y8h2lD6huqt78OFAf4jE1tjFt0kIcwXUTKo8u2VXaJ8sshPn5
+rIlF+ebk/XkQ1XkEyxP/oaCj8W5Jnut1nIjMAkjKrwjN/vrHN8O/HO5C9A0SXq3p
+uxefYwl9dgHK15YL+GpqD+syqm1KglJKE57uJGcV/FMD3UraYXrxBU0LH+nHCkR8
+fK7tGA0V6YyMazCSXCP9gmd5FL/kdriaX+arH/WErKhxFeLsd4aiqwNSXsV0S9My
+xbWwJd55w0umfou96GNxqblH5CCyQSFjBdhu34EKXTr3nNnX3a5WT25tE+xWfcAf
+EUqHBrMNpvUHv9xGonWDnEicW50ylA==
+=qQMD
+-----END PGP SIGNATURE-----
+
+--kDrRpbySrwTW+T6a--
