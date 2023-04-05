@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F27756D72F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 06:06:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2A16D72F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 06:06:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236791AbjDEEGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 00:06:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47826 "EHLO
+        id S236801AbjDEEGY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 00:06:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236772AbjDEEGV (ORCPT
+        with ESMTP id S236782AbjDEEGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 00:06:21 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6F23A9C;
-        Tue,  4 Apr 2023 21:06:20 -0700 (PDT)
+        Wed, 5 Apr 2023 00:06:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2E830ED;
+        Tue,  4 Apr 2023 21:06:21 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4873563961;
-        Wed,  5 Apr 2023 04:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F124CC433D2;
-        Wed,  5 Apr 2023 04:06:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 440CB63AF5;
+        Wed,  5 Apr 2023 04:06:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF530C4339B;
+        Wed,  5 Apr 2023 04:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680667579;
-        bh=br2N9hNb3hz+1mZ0Sb+v1Erc46TdP+Tsn0xefJ+rDmA=;
+        s=k20201202; t=1680667580;
+        bh=hEaErDu5fSOt+0cd2ChJ0Anyal99mcV0yfCmSzyt6dA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=GJxv8OKgWJgUvUorCvCjF/3UdjBsqFxjPqm0RVCbMtxbfJGZP8BZpsCiYR5Wdn5mQ
-         A7oBEmVrqq5HuPG9TVTv+qgTA7QuwnRtQGziD8mf3O5EA6Vp9AkT3F30IOXzM1cqpi
-         ByfXKDw5aMVua60O5Nfu685qcv3UcMW/YjXTnXMU2pmZJHsZbVykBkOFemnGpA7uqb
-         J2I/+dqIF/LcO0Y/MY5cZ9pmlFhM/Eeh445JGbg7ouggz0/0hi1Us89Izz2+QC+STf
-         0yg9C6jcP8gJyobuPu2cfAqooCB9GhUVdOHjzKKuJxLZNP6jo2dIsCPFKCNfxYuQOT
-         ainzVakRpgG6A==
+        b=gQS74kUaK5ZegEUoLCw1SyX12BV8j/sBduKk8KRLGSJCTkOE1p9tfFSjG4tMV1oIX
+         cPdHjpUYH7N6tFBjHbByMh9UUxTnOLSCAzlLN0s6+StJ5wBBtx9ouM7b1rIK3t9XNd
+         WX2vcjbVK4i0WuuFJlXgEC3RyfXJl7JJjS9/+r+obuY06sBf6rmz7/0cblC+TJwk+h
+         zf5R98WpEJIU5/AUkxpemV3Uc9+62Q7G6MD8YFdrvfGIB2hjDojRWW+T5axQcVYmI8
+         UyrHJwXKHO0Z/Sl0mUcSmoXGt+eOQEW4MDjGeoaW4HKOKsjwtpLessvuwCgXF7MecD
+         93UfSUUapObFw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Yang Xiwen <forbidden405@foxmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-Subject: Re: (subset) [PATCH 1/3] dt-bindings: vendor-prefixes: Add Henan Yiming Technology Co., Ltd.
-Date:   Tue,  4 Apr 2023 21:08:51 -0700
-Message-Id: <168066774410.443656.16595050579634358657.b4-ty@kernel.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-xiaomi-beryllium: add notification LED
+Date:   Tue,  4 Apr 2023 21:08:52 -0700
+Message-Id: <168066774413.443656.10543782498804265465.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <tencent_27DD0718C3FD9C5F7D6E2FBA225CAA760405@qq.com>
-References: <20230310143330.9485-1-forbidden405@foxmail.com> <tencent_27DD0718C3FD9C5F7D6E2FBA225CAA760405@qq.com>
+In-Reply-To: <20230313154226.136726-1-joelselvaraj.oss@gmail.com>
+References: <20230313154226.136726-1-joelselvaraj.oss@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,17 +59,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 10 Mar 2023 22:33:28 +0800, Yang Xiwen wrote:
-> Henan Yiming Technology Co., Ltd. was established in 2021. The business
-> scope of the company includes: communication equipment (excluding radio
-> control equipment).
+On Mon, 13 Mar 2023 10:42:26 -0500, Joel Selvaraj wrote:
+> The Poco F1 has a single color white notification LED. Enable the
+> Qualcomm Light Pulse Generator (LPG) driver based notification LED.
 > 
 > 
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: msm8916-yiming-uz801v3: Add initial device tree
-      commit: 7a888e143f0c87017d91490ea9d0ecc2dc21f2a9
+[1/1] arm64: dts: qcom: sdm845-xiaomi-beryllium: add notification LED
+      commit: d20ad168b7d024d8cbe6b54e9c029537aa412576
 
 Best regards,
 -- 
