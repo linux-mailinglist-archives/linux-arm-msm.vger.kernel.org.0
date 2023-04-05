@@ -2,111 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AE006D720F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 03:36:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB776D721C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 03:43:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236647AbjDEBf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 21:35:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51812 "EHLO
+        id S233678AbjDEBni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 21:43:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235365AbjDEBf5 (ORCPT
+        with ESMTP id S230489AbjDEBnh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 21:35:57 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417D4199
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 18:35:56 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id c9so34240163lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 18:35:56 -0700 (PDT)
+        Tue, 4 Apr 2023 21:43:37 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A462D30EB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 18:43:36 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id j2so11043472ila.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 18:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680658554;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=chromium.org; s=google; t=1680659015;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UwyKfYot14ilHFAuMsDSrEnz1jRBc3hhgB3iT23xYhE=;
-        b=ONIpd1vjARZP+35nzzjgfUh4PEVlWWC35WPRmcVal4ZdGeEvj9PqWXFJH5xXCyExCI
-         qMf0C7IU9UAHRUV0I9sN3QPuebaOsuftGBUzKouXsZQQB/HgkdTB2LmwdGSFZAFk18TC
-         7Z0X2Maidg3ZYhOWLfRXsScJyJ+J9KZqpkE9iqiIUEIex5NxKxBls0UOuIv9kAmJLRD9
-         H2xybN1ynIak8Ec8VS5zDV3TmXdcyaO56zSaYS3XNTGaBCPluAvYufSRxmyIKCJFeQYl
-         nSzAUmZrQdRmpELm4iwubEZC1cKmlu41B7hoJnriKdLcsghZT0dCNgqeYWjBZCNbGI/q
-         YUyg==
+        bh=jwpFUC847/YFt/XfpeQoDJ4SxIEry2tnTeuETvaZGB8=;
+        b=ceGedfB4nBUKRviOIAXmDDYh1n9HsSC90QpHtsDAOfEUeyD70QD5sekdiD7GlnjeQO
+         P2bfmbNOhTg8KcmfMeDHESn8moVnofIAJwwarzddMeHhpuyT0xerdLUNM7TprW+6MoWt
+         Y4ISj1+FR5I7HLnU7blWBfYZG+PSwLjX8PemA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680658554;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1680659015;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UwyKfYot14ilHFAuMsDSrEnz1jRBc3hhgB3iT23xYhE=;
-        b=zkKMgdsseQOP5Rze+gxqx3ARRQ5Y3m9pYKGB/1cYZnt4hcJcTk0eYssjiiVQzZc/8r
-         TFENRiEnjisY1SQCDmxiRP9oF86BYHrHe8SVW9XnCQ1/zX9qpp+S9G5peyHYpNRwwlN1
-         BLtWFepqN3bLHCslo/tYcuAup0zN5uC5OpGgPmPqv1FlbiDQb7WBDZzpL74wKm6lwqo+
-         T6DqIMZtp5CU3d59JhEV3QoAUUNoNpe96co6qASStmApe9kszFpS4Y16cVoP/htbeY7M
-         D0V6vTrThASiTAAKdG+c0tivV5w2NTGiPeC9zD2mQ7cuUTbrUJbPVYwqXz4UNHy5kUTQ
-         BVPA==
-X-Gm-Message-State: AAQBX9f+x8idvnfRFSzb0nkUXgUae7UUo0KihZpK/vImKyfW4FX0yewU
-        Bz6oIwqDyInd5s8GxcJJFWyEug==
-X-Google-Smtp-Source: AKy350boE/H6gPEad6PwVsvSiLw29ItUe8nLR83QFFV6AmP5ydeMXJNTR7nzAlkA1vPgqFHsALYpgg==
-X-Received: by 2002:ac2:5a0c:0:b0:4e8:43a4:2baf with SMTP id q12-20020ac25a0c000000b004e843a42bafmr1009075lfn.33.1680658554618;
-        Tue, 04 Apr 2023 18:35:54 -0700 (PDT)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v26-20020ac2561a000000b004cb8de497ffsm2572326lfd.154.2023.04.04.18.35.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 18:35:54 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        javierm@redhat.com, airlied@gmail.com, daniel@ffwll.ch,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 0/8] drm/msm: Convert fbdev to DRM client
-Date:   Wed,  5 Apr 2023 04:35:51 +0300
-Message-Id: <168065850333.1260361.14774983089161239922.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230403124538.8497-1-tzimmermann@suse.de>
-References: <20230403124538.8497-1-tzimmermann@suse.de>
+        bh=jwpFUC847/YFt/XfpeQoDJ4SxIEry2tnTeuETvaZGB8=;
+        b=OkkYUZkxtZXBlED2/v6P0VHrX2+9A8QoX1A8yT6ARYgg6nNbBkCy4ceCyWJPe2DseL
+         FTjTX2GdLMFQRm+LXfdeWkg+722us9QBuz/j20ojZ3DhPAabOURPzd9pC4tuGdRY+eg6
+         yvxGcQnIJybQ1elAN3iIYDTtYMWcN0LTveZuNKFIPSB5P05dgU2P2hhm8puKq4cLIels
+         G2imUuE3pWNayIPeQ9iDmms70CrAK7+pBwXaArMflNm+bRiKket/b9dsZMI/Vk12orh5
+         seH8PX9TH+/ZOiYzOKNPOj7GTyaN8CP9yB8O0xKmzwNVJo1PhdI0caW1isAugmLCs6cR
+         TE5Q==
+X-Gm-Message-State: AAQBX9cY8aSi3Tio2Iej6Rw4lXtscb3RaoINPnQD+uuffUBt+hFVn0ZW
+        u5Avh1TKI89P5Ip0077Q40gsXWF3Zk94172+w2o=
+X-Google-Smtp-Source: AKy350ZB6ZBd+ozrl4rZNeDJzb2BoLZHKERUbJ6m5vFlKofEZKCWEtnyXJWPgvXc9DhmUgBFWHJkHA==
+X-Received: by 2002:a92:c8c9:0:b0:326:489c:8cd2 with SMTP id c9-20020a92c8c9000000b00326489c8cd2mr3338057ilq.7.1680659015326;
+        Tue, 04 Apr 2023 18:43:35 -0700 (PDT)
+Received: from mail-il1-f176.google.com (mail-il1-f176.google.com. [209.85.166.176])
+        by smtp.gmail.com with ESMTPSA id r19-20020a924413000000b0032670541724sm1928729ila.74.2023.04.04.18.43.33
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Apr 2023 18:43:34 -0700 (PDT)
+Received: by mail-il1-f176.google.com with SMTP id k7so5331339ils.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 18:43:33 -0700 (PDT)
+X-Received: by 2002:a05:6e02:1d9a:b0:325:dd36:7451 with SMTP id
+ h26-20020a056e021d9a00b00325dd367451mr2720800ila.1.1680659013319; Tue, 04 Apr
+ 2023 18:43:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com> <1680271114-1534-2-git-send-email-quic_vpolimer@quicinc.com>
+In-Reply-To: <1680271114-1534-2-git-send-email-quic_vpolimer@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 4 Apr 2023 18:43:21 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XV4yjUb2ufQZjOTYsgFXE0Ghnor3f8FCSdpV_pcZd1yg@mail.gmail.com>
+Message-ID: <CAD=FV=XV4yjUb2ufQZjOTYsgFXE0Ghnor3f8FCSdpV_pcZd1yg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/3] drm/msm/dpu: set dirty_fb flag while in self
+ refresh mode
+To:     Vinod Polimera <quic_vpolimer@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        swboyd@chromium.org, quic_kalyant@quicinc.com,
+        dmitry.baryshkov@linaro.org, quic_khsieh@quicinc.com,
+        quic_vproddut@quicinc.com, quic_bjorande@quicinc.com,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-On Mon, 03 Apr 2023 14:45:30 +0200, Thomas Zimmermann wrote:
-> Convert msm' fbdev code to struct drm_client. Replaces the current
-> ad-hoc integration. The conversion includes a number of cleanups. As
-> with most other drivers' fbdev emulation, fbdev in msm is now just
-> another DRM client that runs after the DRM device has been registered.
-> 
-> Once all drivers' fbdev emulation has been converted to struct drm_client,
-> we can attempt to add additional in-kernel clients. A DRM-based dmesg
-> log or a bootsplash are commonly mentioned. DRM can then switch easily
-> among the existing clients if/when required.
-> 
-> [...]
+On Fri, Mar 31, 2023 at 6:59=E2=80=AFAM Vinod Polimera
+<quic_vpolimer@quicinc.com> wrote:
+>
+> While in virtual terminal mode with PSR enabled, there will be
+> no atomic commits triggered without dirty_fb being set. This
+> will create a notion of no screen update. Allow atomic commit
+> when dirty_fb ioctl is issued, so that it can trigger a PSR exit
+> and shows update on the screen.
+>
+> Reported-by: Bjorn Andersson <andersson@kernel.org>
+> Link: https://lore.kernel.org/all/20230326162723.3lo6pnsfdwzsvbhj@ripper/
+> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-Applied, thanks!
+I can confirm that this patch plus patch #2 fixes the typing problems
+seen on VT2 on a Chromebook using PSR.
 
-[1/8] drm/msm: Include <linux/io.h>
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/62c58ffe011d
-[2/8] drm/msm: Clear aperture ownership outside of fbdev code
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/f4de16da5b40
-[3/8] drm/msm: Remove fb from struct msm_fbdev
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/a5ddc0f1a7bc
-[4/8] drm/msm: Remove struct msm_fbdev
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/09cbdbafbe9f
-[5/8] drm/msm: Remove fbdev from struct msm_drm_private
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/37e8bad3ae5d
-[6/8] drm/msm: Move module parameter 'fbdev' to fbdev code
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/2fa4748b5ad8
-[7/8] drm/msm: Initialize fbdev DRM client
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/7e563538d210
-[8/8] drm/msm: Implement fbdev emulation as in-kernel client
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/5ba5b96d3327
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+-Doug
