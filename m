@@ -2,112 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C7846D8217
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 17:37:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BD4E6D825A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 17:46:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238760AbjDEPhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 11:37:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42666 "EHLO
+        id S239037AbjDEPqX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 11:46:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237845AbjDEPhj (ORCPT
+        with ESMTP id S238980AbjDEPqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 11:37:39 -0400
-Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com [207.171.184.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E6761990;
-        Wed,  5 Apr 2023 08:37:37 -0700 (PDT)
+        Wed, 5 Apr 2023 11:46:08 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 163146A41
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 08:46:03 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id q16so47210542lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 08:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1680709058; x=1712245058;
-  h=date:from:to:cc:message-id:references:mime-version:
-   in-reply-to:subject;
-  bh=QSFaPQEqFWauuwq5wK1tuBUPV8rypqU+umcss/29/Qo=;
-  b=BSVurwVHjPYmzJ1VUMxJr7R+HZIyyI52nz/01pVGHpmVoS2i9Kxn50PH
-   +iAf4cy3/rLdqhOZenkGFKWPe6ax4ofbQ/iVEqpxHiwQAL4n3gC5YxLoQ
-   Q8+FcIPd8DQDEKE14TVibTyl9khtvC3pBNaEqu15Y800Ew2Nb5SMfSb4t
-   4=;
-X-IronPort-AV: E=Sophos;i="5.98,321,1673913600"; 
-   d="scan'208";a="326412703"
-Subject: Re: [PATCH] drm/msm: Check for the GPU IOMMU during bind
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO email-inbound-relay-pdx-2a-m6i4x-d47337e0.us-west-2.amazon.com) ([10.25.36.210])
-  by smtp-border-fw-9102.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2023 15:37:37 +0000
-Received: from EX19MTAUWC001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
-        by email-inbound-relay-pdx-2a-m6i4x-d47337e0.us-west-2.amazon.com (Postfix) with ESMTPS id 83D7F60AEF;
-        Wed,  5 Apr 2023 15:37:35 +0000 (UTC)
-Received: from EX19D047UWB002.ant.amazon.com (10.13.138.34) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.25; Wed, 5 Apr 2023 15:37:35 +0000
-Received: from amazon.com (10.88.210.141) by EX19D047UWB002.ant.amazon.com
- (10.13.138.34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1118.26; Wed, 5 Apr 2023
- 15:37:33 +0000
-Date:   Wed, 5 Apr 2023 09:37:31 -0600
-From:   Jordan Crouse <jorcrous@amazon.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, "Sean Paul" <sean@poorly.run>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Message-ID: <20230405153731.7pd2qygz2psowkeh@amazon.com>
-Mail-Followup-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230309222049.4180579-1-jorcrous@amazon.com>
- <e08cad22-09fe-1c65-a329-802b116e7503@linaro.org>
+        d=linaro.org; s=google; t=1680709561;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2JzMgw/KxIFuJD1bDGN/iTTK0mFIW8/fSipuo0OLvMo=;
+        b=vV5AnKvy7C6OmT0GHc7Wd17jVaT9e4C4dZIiY51QpsN4SrEWfoAt4wj/Vk/ukWS8xs
+         NGKtQBpxYGPbiGlM8ay4QTaSawkPkiWbXLymQmboAlgurqMSK17iixf7pNivZCpLUScy
+         PzQbg1EWOBOZ78Zc7Ij0GUyaRkMrkq4yZdkXbjP9WYIW1fFyd4Cgr1a9p7leXmK8qDtN
+         BysvK4i2lPwC+yR5kRLwH5Wj78TX3VteIToKmNCOMRvPcl5zN1OvhEAlabsX/a1uDnbr
+         1iyGTcY+MBKBTNcE9CU5jrRMHBOQWh6pWsAoGZSxRoH7UrcvBbgyiQwRoeDRIh+AHJ/4
+         xTLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680709561;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2JzMgw/KxIFuJD1bDGN/iTTK0mFIW8/fSipuo0OLvMo=;
+        b=AeF/kfu0cA5nrKtY1Umj7I95k5Tbs0ugt4zgYCDFejpOY1m5Vsfv/c/NjT1yGG1VbF
+         DM1BniksjofAcnUU8D9fdZvn1SqATzK/aiWjs44Bxbm4MQQtQ1v6o25BkHta0LrWy7UA
+         zsq+019zIZ1ef/gSEn01f9xcaX9dsZDRX7zJ6fsRhndXhrWeWXecrtxv/0soOynLuMC4
+         MCEq9oa0H9RaxounSNMHjuQfLjdesfkHEIDpirKVmDM+6n4C3x2B+XXYtoxwsyyzTCK6
+         6qR90lB8rI2o37fLemvMot7A8eeIoezgUFfLxhFk7y8HKzw2RZWJGfOlKwXqy0E4yHXZ
+         mfAw==
+X-Gm-Message-State: AAQBX9esrvtIFEfbfT5qlPLrjsKmfGa5sSHKZhUaya4hzZQHRpcby7Wq
+        FCGb30fozpguniT5RhB7HMHOhQ==
+X-Google-Smtp-Source: AKy350bjTYshRZn4kx0HvRnINKUxdPrUxQmyITyx2Bj+QoWEURaWHKvTaLCdaBpNPcpHMbmRaerVaA==
+X-Received: by 2002:ac2:5482:0:b0:4e9:9c76:1b85 with SMTP id t2-20020ac25482000000b004e99c761b85mr1574656lfk.3.1680709561239;
+        Wed, 05 Apr 2023 08:46:01 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id x11-20020a19f60b000000b004eaf2291dcdsm2880736lfe.102.2023.04.05.08.46.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Apr 2023 08:46:00 -0700 (PDT)
+Message-ID: <fcfaccb2-bf93-091d-d3d7-81fed6fb62fe@linaro.org>
+Date:   Wed, 5 Apr 2023 17:45:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <e08cad22-09fe-1c65-a329-802b116e7503@linaro.org>
-X-Originating-IP: [10.88.210.141]
-X-ClientProxiedBy: EX19D035UWA003.ant.amazon.com (10.13.139.86) To
- EX19D047UWB002.ant.amazon.com (10.13.138.34)
-X-Spam-Status: No, score=-10.0 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_SPF_WL
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v3] arm64: dts: qcom: sm8550: add Soundwire controllers
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230405061129.143553-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230405061129.143553-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Mar 10, 2023 at 01:05:36AM +0200, Dmitry Baryshkov wrote:
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
-> 
-> 
-> 
-> On 10/03/2023 00:20, Jordan Crouse wrote:
-> > While booting with amd,imageon on a headless target the GPU probe was
-> > failing with -ENOSPC in get_pages() from msm_gem.c.
-> > 
-> > Investigation showed that the driver was using the default 16MB VRAM
-> > carveout because msm_use_mmu() was returning false since headless devices
-> > use a dummy parent device. Avoid this by extending the existing is_a2xx
-> > priv member to check the GPU IOMMU state on all platforms and use that
-> > check in msm_use_mmu().
-> 
-> I wonder if we can fix this by setting 'dummy_dev'->of_node to adreno's
-> of_node. Did you check that possibility?
 
-I said I would check and then never looped back around. This will stick
-on my todo list for now and I'll check on the next cycle. If anybody
-else wants to jump in the meantime then please go for it.
 
-Jordan
+On 5.04.2023 08:11, Krzysztof Kozlowski wrote:
+> Add nodes for LPASS Soundwire v2.0.0 controllers.  Use labels with
+> indices matching downstream DTS, to make any comparisons easier.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> 
+> Changes since v2:
+> 1. Use labels instead of comments (Konrad).
+> 2. Use interrupts instead of interupts-extended (Konrad)
+> 
+> Changes since v1:
+> 1. Correct IO range length.
+> 
+> The bindings and driver are here:
+> https://lore.kernel.org/linux-arm-msm/20230403132503.62090-1-krzysztof.kozlowski@linaro.org/T/#t
+> 
+> Cc: Patrick Lai <quic_plai@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 109 +++++++++++++++++++++++++++
+>  1 file changed, 109 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index dc6150e97d46..f9eaede39b5b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -2004,6 +2004,33 @@ lpass_wsa2macro: codec@6aa0000 {
+>  			#sound-dai-cells = <1>;
+>  		};
+>  
+> +		swr3: soundwire-controller@6ab0000 {
+> +			compatible = "qcom,soundwire-v2.0.0";
+> +			reg = <0 0x06ab0000 0 0x10000>;
+> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&lpass_wsa2macro>;
+> +			clock-names = "iface";
+> +			label = "WSA2";
+> +
+> +			qcom,din-ports = <4>;
+> +			qcom,dout-ports = <9>;
+> +
+> +			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
+> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x18>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0x00 0x01 0x01 0x00 0x01 0x01 0x00 0x00 0x00 0x01 0x01 0x00 0x00>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +			status = "disabled";
+> +		};
+> +
+>  		lpass_rxmacro: codec@6ac0000 {
+>  			compatible = "qcom,sm8550-lpass-rx-macro";
+>  			reg = <0 0x06ac0000 0 0x1000>;
+> @@ -2023,6 +2050,33 @@ lpass_rxmacro: codec@6ac0000 {
+>  			#sound-dai-cells = <1>;
+>  		};
+>  
+> +		swr1: soundwire-controller@6ad0000 {
+> +			compatible = "qcom,soundwire-v2.0.0";
+> +			reg = <0 0x06ad0000 0 0x10000>;
+> +			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&lpass_rxmacro>;
+> +			clock-names = "iface";
+> +			label = "RX";
+> +
+> +			qcom,din-ports = <0>;
+> +			qcom,dout-ports = <10>;
+> +
+> +			qcom,ports-sinterval =		<0x03 0x3f 0x1f 0x07 0x00 0x18f 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x00 0x00 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00 0x00 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0x06 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-word-length =	/bits/ 8 <0x01 0x07 0x04 0xff 0xff 0x0f 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0x00 0x01 0xff 0xff 0x00 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0x00 0x00 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x00 0x00 0x00 0x00 0x00 0xff 0xff 0xff 0xff>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +			status = "disabled";
+> +		};
+> +
+>  		lpass_txmacro: codec@6ae0000 {
+>  			compatible = "qcom,sm8550-lpass-tx-macro";
+>  			reg = <0 0x06ae0000 0 0x1000>;
+> @@ -2061,6 +2115,61 @@ lpass_wsamacro: codec@6b00000 {
+>  			#sound-dai-cells = <1>;
+>  		};
+>  
+> +		swr0: soundwire-controller@6b10000 {
+> +			compatible = "qcom,soundwire-v2.0.0";
+> +			reg = <0 0x06b10000 0 0x10000>;
+> +			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&lpass_wsamacro>;
+> +			clock-names = "iface";
+> +			label = "WSA";
+> +
+> +			qcom,din-ports = <4>;
+> +			qcom,dout-ports = <9>;
+> +
+> +			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
+> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x18>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0x00 0x01 0x01 0x00 0x01 0x01 0x00 0x00 0x00 0x01 0x01 0x00 0x00>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +			status = "disabled";
+> +		};
+> +
+> +		swr2: soundwire-controller@6d30000 {
+> +			compatible = "qcom,soundwire-v2.0.0";
+> +			reg = <0 0x06d30000 0 0x10000>;
+> +			interrupts = <GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 520 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "core", "wakeup";
+> +			clocks = <&lpass_vamacro>;
+> +			clock-names = "iface";
+> +			label = "TX";
+> +
+> +			qcom,din-ports = <4>;
+> +			qcom,dout-ports = <0>;
+> +			qcom,ports-sinterval-low =	/bits/ 8 <0x01 0x01 0x03 0x03>;
+> +			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x01 0x01>;
+> +			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x00 0x00>;
+> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-pack-mode =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff>;
+> +			qcom,ports-lane-control =	/bits/ 8 <0x01 0x02 0x00 0x00>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <0>;
+> +			#sound-dai-cells = <1>;
+> +			status = "disabled";
+> +		};
+> +
+>  		lpass_vamacro: codec@6d44000 {
+>  			compatible = "qcom,sm8550-lpass-va-macro";
+>  			reg = <0 0x06d44000 0 0x1000>;
