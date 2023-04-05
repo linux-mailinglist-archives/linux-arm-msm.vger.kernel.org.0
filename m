@@ -2,96 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A6C66D7B4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 13:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A298F6D7B6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 13:35:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237725AbjDEL3I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 07:29:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
+        id S237586AbjDELfw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 07:35:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237413AbjDEL3H (ORCPT
+        with ESMTP id S237538AbjDELfv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 07:29:07 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8AA61FFE;
-        Wed,  5 Apr 2023 04:28:57 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id er13so99216612edb.9;
-        Wed, 05 Apr 2023 04:28:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680694136;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T5eAJVoqmmI7lTCLbPh2e296K+euo10TqUqJzhersgI=;
-        b=fXyLG972/NY4uXU909bYoiJAUtMYNzJ9moIn5qqM/xeZk6E6LyWg2Rr6f2N0B9cI2p
-         8SlD03RZyRt+G+e1ue+DpuJ9NgKBWCAOVbltb6jAvz8NFKCKepcDFGDKEQ/FCC9Sl7MN
-         ZsbvyeDro1lDU987pPOU+Pm8nuCbF9V52LGK74p4MmjbCF+tP6wvHoy4ad9RVa/ZdeOB
-         CrSiq75+8W7Tc0wMr2fKvY4l49/zqhmdgoeZrokk4g3VAqgrKt3T4fQFhQKldmkNDibN
-         kG2yEuEQruFWTI6+j1FYwF/EXc+w1LxYQuW/qqpLz0n/7QCVg7MYYS4OqoafEVJSTe22
-         8ooA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680694136;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T5eAJVoqmmI7lTCLbPh2e296K+euo10TqUqJzhersgI=;
-        b=uZO1Joot6pv/S5a1DAYnLCXunVknaSHMzEbm42mhXWDmJPbwjyRdrncyLPfdgD7OGj
-         XWxhAwwGuiEqAwfkD1wi+mTxK0e69UoRMpY7tfU3nqt8gIAjzmyPdwQD6RQEshpW0WYh
-         mQbfl+e5N7cBh+cBhgMKgvEP7gvh0bsvDIKcZmsgNf/jE9uLA//eunNxRHV7qIaNPi6N
-         lJP7DJrW06HJ992OnxqZhYGIUNqltLD5MkPIUWV0vl5bnccnYskWmjWhbNHQFA4wzCH1
-         Uwn9ZeO27PW5U8iTH4zLmiEfPqgDQK1KAWSKpsrHB4jg7Hc2QNIzbeYSDVwZWKFk6FQR
-         8rCA==
-X-Gm-Message-State: AAQBX9cTST06JPssgwUjwz9oODf5UApwX3XN/KPab39dkFXxqoSmKkKU
-        mkigXa9nHIPEtCK32ehuYJRbvbQOK8RETA==
-X-Google-Smtp-Source: AKy350aso3okZsidvo7XA1g1M3bGESXKSPp6WNIsrHhdE4t98PuILhLEPrlBukKNoAZwg6HuHqomcQ==
-X-Received: by 2002:a17:906:52c3:b0:944:6d88:206 with SMTP id w3-20020a17090652c300b009446d880206mr2720247ejn.71.1680694136003;
-        Wed, 05 Apr 2023 04:28:56 -0700 (PDT)
-Received: from skbuf ([188.27.184.189])
-        by smtp.gmail.com with ESMTPSA id ss5-20020a170907038500b00933c52c2a0esm7357914ejb.173.2023.04.05.04.28.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 04:28:55 -0700 (PDT)
-Date:   Wed, 5 Apr 2023 14:28:53 +0300
-From:   Vladimir Oltean <olteanv@gmail.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: net: ethernet-switch: Make
- "#address-cells/#size-cells" required
-Message-ID: <20230405112853.v7eqmiganvxtn5ge@skbuf>
-References: <20230404204213.635773-1-robh@kernel.org>
- <20230404204213.635773-1-robh@kernel.org>
+        Wed, 5 Apr 2023 07:35:51 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD87230ED;
+        Wed,  5 Apr 2023 04:35:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 43D7F638A5;
+        Wed,  5 Apr 2023 11:35:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B23C4339B;
+        Wed,  5 Apr 2023 11:35:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680694549;
+        bh=N42vKwPQpUIupvynklxUyAnnLu6zzFjrSXXRLaZg/fY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Gx8dsTBHCpRbuAfcq1O0Y5Fpgr1DQDue3HT7scEALTFp7pUvSQmhFdsn/Hb5ilf1M
+         PC48TiFwMIBKp+DwBwds8bikkKAPYZlOS5kOZ1OoaGEfDSHN/icpl97vXVRq0DYIQd
+         XOLlWb9AB+0glIS914Tpbj6m/PLMzi97oCeQYFtZDkpSmbNW5aQvcE7p0Y5ij8ll5m
+         s7TzdpzxQfG07R7EGnN1W5HUbCx3ylVe0Q7eh1QAP1eUyDyUw0MLNXrn8fI+mq3xVl
+         MZABA9XHORt8OvCV/sXdrR9/v8PwdqFMt5ZRQ/BpypoOW75oFJ4BRLJyjYrOa/G5rF
+         xedpWfoD61n2w==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pk1R5-00042y-1L; Wed, 05 Apr 2023 13:36:19 +0200
+Date:   Wed, 5 Apr 2023 13:36:19 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v7 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+Message-ID: <ZC1dM3CP5sAfga16@hovoldconsulting.com>
+References: <cover.1680688209.git.quic_varada@quicinc.com>
+ <a66878525affbc5db9fe1423018ba6250c03ae19.1680688209.git.quic_varada@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230404204213.635773-1-robh@kernel.org>
- <20230404204213.635773-1-robh@kernel.org>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+In-Reply-To: <a66878525affbc5db9fe1423018ba6250c03ae19.1680688209.git.quic_varada@quicinc.com>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 04, 2023 at 03:42:13PM -0500, Rob Herring wrote:
-> The schema doesn't allow for a single (unaddressed) ethernet port node
-> nor does a single port switch make much sense. So if there's always
-> multiple child nodes, "#address-cells" and "#size-cells" should be
-> required.
+On Wed, Apr 05, 2023 at 03:24:04PM +0530, Varadarajan Narayanan wrote:
+> Add USB phy and controller related nodes
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
+>  Changes in v7:
+> 	- Change com_aux -> cfg_ahb
+>  Changes in v6:
+> 	- Introduce fixed regulators for the phy
+> 	- Resolved all 'make dtbs_check' messages
 
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+> +		usb_0_qmpphy: phy@7d000 {
+> +			compatible = "qcom,ipq9574-qmp-usb3-phy";
+> +			reg = <0x0007d000 0xa00>;
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&gcc GCC_USB0_AUX_CLK>,
+> +				 <&xo_board_clk>,
+> +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> +				 <&gcc GCC_USB0_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "ref",
+> +				      "cfg_ahb",
+
+You still did not update the binding to match this clock. So this is
+essentially the third time I'm pointing out the same issue. This is
+simply not acceptable.
+
+Just slow down, and don't rush out new revisions of series before
+you've had time to review them yourself (and preferably internally at
+qualcomm) to make sure that you have addressed all review comments you
+have received.
+
+Maintainer and reviewer time is scarce. Our development model really
+does not scale unless people take more care.
+
+Johan
