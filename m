@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 355A76D7157
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 02:33:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B71A46D715A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 02:35:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236671AbjDEAdw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 20:33:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49628 "EHLO
+        id S236669AbjDEAfm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 4 Apr 2023 20:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235003AbjDEAdv (ORCPT
+        with ESMTP id S236592AbjDEAfk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 20:33:51 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A924C0C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 17:33:48 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id y15so44521512lfa.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 17:33:47 -0700 (PDT)
+        Tue, 4 Apr 2023 20:35:40 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 498984200
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 17:35:38 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id a11so35710531lji.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 17:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680654826;
+        d=linaro.org; s=google; t=1680654936;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w63JRY8tbcBhqvTZv7o6qB1aZCRvTTAvd6xKqzxt8kc=;
-        b=o+ucd5r9cGIEgqGw59Rpb7Ge4TrucQaen+CoIWrWoUAVVU95cCUtCssjP/jFKlXY6Y
-         qkjTFzpyCCUwM+jfNmVlI5qd4YnGCTmI+f2r3rPfGDmDQwX7VApS5w/vVJC4QUflq+gz
-         SK1759j4ZeQXrS2qYgkpSJ03JXqlKmACVT7+xvZH3THQDpV6r971+itS+ufKZ8c9lS3N
-         +WmhtDwxipYpapRDXO0uz519nQueSJn9aNveF9mpjbo7hT+qxxLQixI6Dj3mU27mVoVH
-         fL91cWqZ5TonUUtnkupCikNRueNoaPEIDbNhA07Oa16TrgO4h7gQLqfEc6tOSVp9cm7z
-         mgzg==
+        bh=+FyiraeumRvn9lWhsqVqlc5idZJ3mN1HddRn347ZxeU=;
+        b=tDcur6hQq8gbQ2tTKuacPs8wWNMtuXhdNZjaQTX1lVlbhqvqOz1O0YmX5CSm12D5J2
+         uGNcLX6WiO7HphJ2GeytYeGNQsiuYN38F/TgprkDBrBFO0nJDwyOnLo4Ow6l959Cgxuc
+         w/Ds8DXxnPVkSzXyZGkgFX0rjRcE85hUbp5rI95CS7/59BqIS+3dhH67slzWVHW3QInh
+         mNUwfcMXEl6uPBXQaZ+qtYoT3ZJgMKcmjfEti/32xOTes9U1fyVnAHm8qvT6seUset9n
+         CnfTv9rGwJZCe11wgro+QQIPNRLEhHDoWGLytN+1bK6P6s7jNwx5ybxrVtte6V+FpEox
+         +2Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680654826;
+        d=1e100.net; s=20210112; t=1680654936;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w63JRY8tbcBhqvTZv7o6qB1aZCRvTTAvd6xKqzxt8kc=;
-        b=m7OID4ubJgkvmu1YNH456nwI0gW7/++HWvr082MnHK+JAid4gLBOPMKZ1zEe33AP2H
-         3C+Y1e+LJOdLmzFF8Hp3HTJqEQ/CX4MGdO+Ir/uIuaITaj2hP6eVxQCrZSjpaKV+8Z/3
-         KfGoVDx4DqXfRV8CmtnqoG+9LUG6IvkXTGaodVzOwLr2Cg/8YRLSzhYR+ahd3GkI2L4w
-         Gp+ivTI31yc+Uh6ZwePe5sIyKoGKwtwcN2i60VpV3IWP+eKdyabxWdWLOKNay4mvV0RM
-         7i2tC7UFIeyC0IihQcyv8a6XvcCb0Pd6MljQEujXjSceVPy+fDfjP32muk3SEXbeS5Ak
-         B8Ag==
-X-Gm-Message-State: AAQBX9cyePkTlgRXr0sQ4CH/UKLVveyE2q6k6YrHBOgHOT0R676X8O4A
-        A14IX4z3/60D8uIz67+D58ZrOA==
-X-Google-Smtp-Source: AKy350ZnKLDX5DKSAjAjahYtlmQeRhgeyCrOnVe0cRNLRQrNkzzQh+O2/0RySYfE+ZTT290uhkHgPQ==
-X-Received: by 2002:ac2:494e:0:b0:4e9:85e5:23ff with SMTP id o14-20020ac2494e000000b004e985e523ffmr1105691lfi.40.1680654826246;
-        Tue, 04 Apr 2023 17:33:46 -0700 (PDT)
+        bh=+FyiraeumRvn9lWhsqVqlc5idZJ3mN1HddRn347ZxeU=;
+        b=D8Fx2m5bVJCF7ISdGLG84LpG9cGvcQT/ZhoZdA7yotKzbkLt1PkBT4wwLtFy4JFzBf
+         JJ38k7otW00I7p2YRb3z5wIzpbo8BoEcr3ECgOGnb5peXNeUkTnh7j5FPJQddACtWcer
+         aRvU57I8f+mxEtuDrIXPQlAGOBPkNSUsDyTb7kgytDA9TYQwCXFVOpUaoZCpbwU2u2oj
+         gl39Nscg9NZ5CUkWy0HM7/w8ktO19IfxDqUzChvhN7WJBjrYKdg5H7YCZoXY1P4eUGz3
+         5GBadCNsDE4K0HuvZcKR/mjo201Q7fH3ZaUvf1zkR3W/XDCoR9xkCU1+1TGkpVnutpjx
+         ONaA==
+X-Gm-Message-State: AAQBX9es3CfB2ATtozj0Zuwakq1Quouc8B8MTkZICHENuOn3BTG7ef05
+        ftCCznQuBzQuD2wumqK9/7E/L9Qv95kfs5JifOzKHg==
+X-Google-Smtp-Source: AKy350YLeRc6KY2le+IjjR/XGprQsv1A2gpFyYvLi1D+1ckPJ2xme/FjlbB7ZbchrqG8F5b2V8vJOQ==
+X-Received: by 2002:a2e:8ec2:0:b0:2a4:4ce4:1f52 with SMTP id e2-20020a2e8ec2000000b002a44ce41f52mr1405441ljl.34.1680654936570;
+        Tue, 04 Apr 2023 17:35:36 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id l10-20020ac24a8a000000b004db3e445f1fsm2579191lfp.97.2023.04.04.17.33.45
+        by smtp.gmail.com with ESMTPSA id n20-20020a2e86d4000000b00295a8c68585sm2608774ljj.56.2023.04.04.17.35.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 17:33:45 -0700 (PDT)
-Message-ID: <6948fe29-af08-9164-4cec-a6564dbb1e1a@linaro.org>
-Date:   Wed, 5 Apr 2023 03:33:45 +0300
+        Tue, 04 Apr 2023 17:35:36 -0700 (PDT)
+Message-ID: <4fa6cbad-4daa-e030-9d41-4f9caa2d8a28@linaro.org>
+Date:   Wed, 5 Apr 2023 03:35:35 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v4 01/42] drm/msm/dpu: use CTL_SC7280_MASK for sm8450's
- ctl_0
+Subject: Re: [PATCH v4 02/42] drm/msm/dpu: Allow variable SSPP_BLK size
 Content-Language: en-GB
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
@@ -65,14 +64,15 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 References: <20230404130622.509628-1-dmitry.baryshkov@linaro.org>
- <20230404130622.509628-2-dmitry.baryshkov@linaro.org>
- <aa3175ec-e381-7211-3bf1-ca8bb9ef696b@quicinc.com>
+ <20230404130622.509628-3-dmitry.baryshkov@linaro.org>
+ <72915d9e-dbba-7391-28d8-cbbca479da76@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <aa3175ec-e381-7211-3bf1-ca8bb9ef696b@quicinc.com>
+In-Reply-To: <72915d9e-dbba-7391-28d8-cbbca479da76@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -83,54 +83,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/04/2023 01:12, Abhinav Kumar wrote:
+On 05/04/2023 01:19, Abhinav Kumar wrote:
 > 
 > 
 > On 4/4/2023 6:05 AM, Dmitry Baryshkov wrote:
->> On sm8450 platform the CTL_0 doesn't differ from the rest of CTL blocks,
->> so switch it to CTL_SC7280_MASK too.
+>> From: Konrad Dybcio <konrad.dybcio@linaro.org>
 >>
->> Some background: original commit 100d7ef6995d ("drm/msm/dpu: add support
->> for SM8450") had all (relevant at that time) bit spelled individually.
->> Then commit 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog"),
->> despite being a mismerge, correctly changed all other CTL entries to use
->> CTL_SC7280_MASK, except CTL_0.
+>> These blocks are of variable length on different SoCs. Set the
+>> correct values where I was able to retrieve it from downstream
+>> DTs and leave the old defaults (0x1c8) otherwise.
 >>
-> 
-> I think having it spelled individually is better. If we start using one 
-> chipset's mask for another, we are again going down the same path of 
-> this becoming one confused file.
-> 
-> So, even though I agree that 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to 
-> hw catalog") corrected the mask to re-use sc7280, with the individual 
-> catalog file, its better to have it separate and spelled individually.
-> 
-> This change is not heading in the direction of the rest of the series.
-
-I didn't create duplicates of all the defines. This is done well in the 
-style of patch37. I'm not going to add all per-SoC feature masks.
-
-> 
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> [DB: fixed some of lengths, split the INTF changes away]
 >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index 6840b22a4159..83f8f83e2b29 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -975,7 +975,7 @@ static const struct dpu_ctl_cfg sm8450_ctl[] = {
->>       {
->>       .name = "ctl_0", .id = CTL_0,
->>       .base = 0x15000, .len = 0x204,
->> -    .features = BIT(DPU_CTL_ACTIVE_CFG) | BIT(DPU_CTL_SPLIT_DISPLAY) 
->> | BIT(DPU_CTL_FETCH_ACTIVE),
->> +    .features = BIT(DPU_CTL_SPLIT_DISPLAY) | CTL_SC7280_MASK,
->>       .intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
->>       },
->>       {
+> 
+> Everything is fine except sm8450. As I already wrote in the previous 
+> version's review, it should be 0x32c for sm8450.
+> 
+
+Ack, please excuse me for missing you comment. I'll fix this in v5.
 
 -- 
 With best wishes
