@@ -2,94 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CD0D6D7DEB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:43:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E3AB6D7E03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:47:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238324AbjDENnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 09:43:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
+        id S237880AbjDENrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 09:47:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237920AbjDENnb (ORCPT
+        with ESMTP id S237141AbjDENra (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 09:43:31 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127FB4C28
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 06:43:30 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id l12so36239624wrm.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 06:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680702208;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=91zpGfc1a4L74i5yjY800PRBiUccdNyLDZUTPZtClIM=;
-        b=fYuMeQ/jyRYzCPZSwSv+LxC+ky2mQ+a8Vsojki1W1EUk4o0Qxf8UehggIl0LPruQHk
-         bDlJCGe46tinBLb34DAlpGqlxlSfq13oD44hc6tZyJ6oEUEjWE/mGYQs+6VLF46BlfT8
-         leZEKJvqcO7ENOVpHQhg+U2Rwv6B+gvs55IV9+JX8AFsp1F0k6p6XBNFhREXxum7WJkQ
-         hDjJ+50b3KA9ni2WKyD2hRaeeGs7MOxrJbCJZu8QMZw7fvwDjr2T8YbpzVeSRh6jB4M1
-         xLpT2KXx2MZc+tU1Cg6VklfnUd42yPAlVKJJNAhFZFH6sTpjz2XwsyGLXd+NN8Y+I37D
-         QUtQ==
+        Wed, 5 Apr 2023 09:47:30 -0400
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 457A54C17;
+        Wed,  5 Apr 2023 06:47:29 -0700 (PDT)
+Received: by mail-oi1-f175.google.com with SMTP id w13so15280233oik.2;
+        Wed, 05 Apr 2023 06:47:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680702208;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=91zpGfc1a4L74i5yjY800PRBiUccdNyLDZUTPZtClIM=;
-        b=bzkTtm/vt4Dsb8SzdfCWBlMmLURj8gvlM4wpoNIOYzYznzY+A2PttbnWG8wnotha1g
-         tsTGYbj7KR7NSZuSi72+/2gwGpH/7IeIBMWjSjIYXgvRlRQNIpeoFpB/f516pftE1NBD
-         EUMpUenqkjOLcXwqADzy87vlesWodxYfvsf/CNThXTmL8M/w0pqMGWe4LVSTCDFOOa4Y
-         bl8lbc0DRwND48JNmQ1RIPdJ30JuzsXoOYbBL2fvnYam7SKrrwGKeH6HbJ4eHcx9Cd5z
-         3Nf7o/zi8mBXWFRNL9IVcCR5/2V7gUhZeP4wopr5xMOlg8ELPFSEEOWvqEt9U3c6Dp0I
-         Quww==
-X-Gm-Message-State: AAQBX9dqbnK6xFAvZ2vjYZK+Q3zEuBdFuD2aQtpFbgVXJxYAge7Mv0Kg
-        Cm3LTfJOwJzBPAikFcvLUze0oOcpNHG04lHbkoo4HQ==
-X-Google-Smtp-Source: AKy350ZaLcMHG+5zgfFflSVokVyqata0DNKN7cBymBE0f4C4IzGeqoPndhBChYUnv8Dyl5UEhEkAps+0WiJAzKlYhwo=
-X-Received: by 2002:a5d:4572:0:b0:2ce:ad09:4d47 with SMTP id
- a18-20020a5d4572000000b002cead094d47mr1176570wrc.4.1680702208456; Wed, 05 Apr
- 2023 06:43:28 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680702448;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mAAPpJ9+2MB888vDbRAKOF1E3qNq6qV500x+hsvJt50=;
+        b=iLHOak7kziuU7YAYw79yeYGIhlBn9ORnbD2hgpzDnKSq9DzMFZVoypw9ZJbXYI7aPv
+         KOOXKYPq3A3UzhFMazWs8uTdLBKg3yPxPkqqpYayfbu22lmn5zqA7EjBlnhY5XA4pX6H
+         UpK5akd9UjIUaw2l0XVODUCdQn58IPX4tq81yTV2ggqPhf0lgFJJnLH0Kw7JSmbLczlF
+         Azjf8IrDuMtoJ3ciNESU6GAffOPEBMe1tkZvAbYSYHBiJFPspYm5rcn1j9KxBUlnAXmB
+         Z889ZvDe9K+d70TmVFX3ZCePpHmPzYjRtrsjJ7xHQnmUXVNHvmSVU4y9xO7pDth5QJQv
+         6gcA==
+X-Gm-Message-State: AAQBX9c+CNRuxA2vw1k5qiL6/WvsnCmBXM+V1sfNErMk796nHk7eroyv
+        aV/yVc+bM9mocWVSpBiJgc0oOQ/Uwg==
+X-Google-Smtp-Source: AKy350ZyMRVpMnQOsF1iV3FWwWGv6ohmW/4j8PAYZNCrnzEVb80BKWCSQhmHHlGBV8f4E9fEkjLZLg==
+X-Received: by 2002:a05:6808:19a5:b0:389:ad7:95d7 with SMTP id bj37-20020a05680819a500b003890ad795d7mr3039016oib.29.1680702448473;
+        Wed, 05 Apr 2023 06:47:28 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m24-20020a05680806d800b0037b6f5d6309sm6305619oih.2.2023.04.05.06.47.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 06:47:28 -0700 (PDT)
+Received: (nullmailer pid 2491083 invoked by uid 1000);
+        Wed, 05 Apr 2023 13:47:27 -0000
+Date:   Wed, 5 Apr 2023 08:47:27 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
+Message-ID: <20230405134727.GA2461305-robh@kernel.org>
+References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
+ <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+ <168069726278.2356075.14351594478003012447.robh@kernel.org>
 MIME-Version: 1.0
-References: <20230401154725.1059563-1-bhupesh.sharma@linaro.org>
- <20230401154725.1059563-2-bhupesh.sharma@linaro.org> <1403741d-ef51-a9c5-821f-358c8f470dab@linaro.org>
-In-Reply-To: <1403741d-ef51-a9c5-821f-358c8f470dab@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 5 Apr 2023 19:13:17 +0530
-Message-ID: <CAH=2NtykGGcYHUTTzHMA7ft3eKAbGtrO4tN4dnLdg5cjE-N9Gw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom,qmp-usb: Fix phy subnode
- for SM6115 & QCM2290 USB3 PHY
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <168069726278.2356075.14351594478003012447.robh@kernel.org>
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 5 Apr 2023 at 15:11, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 01/04/2023 17:47, Bhupesh Sharma wrote:
-> > The USB3 SS (QMP) PHY found on Qualcomm SM6115 & QCM2290 SoCs is
-> > similar to sm8150 QMP PHY in the sense that the phy subnode supports
-> > 6 regs, namely TX lane 1, RX lane 1, PCS, TX lane 2, RX lane 2 and
-> > PCS_MISC.
-> >
-> > Update the dt-bindings document to reflect the same.
->
->
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> Bhupesh,
->
-> Can you use scripts/get_maintainers.pl to get the Cc addresses instead
-> of writing them manually or inventing?
+On Wed, Apr 05, 2023 at 07:22:40AM -0500, Rob Herring wrote:
+> 
+> On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
+> > Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
+> > use 'reg' to point to the MPM's slice of Message RAM without cutting into
+> > an already-defined RPM MSG RAM node used for GLINK and SMEM.
+> > 
+> > Document passing the register space as a slice of SRAM through the
+> > qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
+> > 
+> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > ---
+> >  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
+> >  1 file changed, 9 insertions(+), 3 deletions(-)
+> > 
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
 
-Sure Krzysztof, will do.
+Looks like this is colliding with the example template which has to 
+craft an interrupt provider for 'interrupts' properties. Either adding a 
+parent node or using interrupts-extended instead should work-around it.
 
-Thanks,
-Bhupesh
+Rob
