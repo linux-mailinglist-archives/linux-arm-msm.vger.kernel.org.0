@@ -2,130 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E99806D880D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 22:17:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E4876D88D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 22:41:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231230AbjDEURO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 16:17:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59764 "EHLO
+        id S234614AbjDEUlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 16:41:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbjDEURM (ORCPT
+        with ESMTP id S233563AbjDEUko (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 16:17:12 -0400
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AEEF12D;
-        Wed,  5 Apr 2023 13:17:11 -0700 (PDT)
-Received: by mail-oo1-f45.google.com with SMTP id w13-20020a4aca0d000000b0053b8aa32089so5861117ooq.5;
-        Wed, 05 Apr 2023 13:17:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680725830;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4OQOX6eGu/Msze5vAJMDaVTPdFAjqpUW6bhbOsSGAyY=;
-        b=bPwaOlO+SJwEuYM2mkZWE8kCY8wfRU23IM2r5yaxBfeTIziRsJJy1tiv1+40/bzouB
-         F4s/qmiKKIh2uY/IzZNkE1Od0mkgw4RHojKLzblW7HG/LNTKjnWHZBDzgHLMtrkrkfOr
-         iCRz5B9qd6FabqHS2rIQUpsYWa2JSCDmCFSxtMYuNqVARmI45ILc17+DdSaEK2r3V81U
-         zugosi3r3VCCMUB/ZJjR/OIoSMlkXtPvG5KLIS97RPmoIQ6x2BGeY30jvDvI0hSfCmVT
-         snkfU9lsqa7yOG4TH9d5+tIIPDK/2DiruLQo56EIUBwbjUYVS9HbVHe7lXArsK18ZVsV
-         xJYA==
-X-Gm-Message-State: AAQBX9cZZIi3wGlvcVV/TJ0BREVsF07tfFedmj+d1tBHxBW3RzZNKUnw
-        Egqo8Pk0Br8SvgkQTWQ/lw==
-X-Google-Smtp-Source: AKy350YyfRc5VOBijOdtqIuvlBwkwOVQvAsMScMxJVO/NQJb6Ghh39BLxjbMtDwi5xdb+WK9fiQYoQ==
-X-Received: by 2002:a05:6820:1341:b0:53b:1086:7a09 with SMTP id b1-20020a056820134100b0053b10867a09mr1601609oow.3.1680725830623;
-        Wed, 05 Apr 2023 13:17:10 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i7-20020a9d6507000000b0069436b64bb1sm7188405otl.79.2023.04.05.13.17.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 13:17:10 -0700 (PDT)
-Received: (nullmailer pid 414310 invoked by uid 1000);
-        Wed, 05 Apr 2023 20:17:09 -0000
-Date:   Wed, 5 Apr 2023 15:17:09 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com,
-        Bjorn Andersson <quic_bjorande@quicinc.com>
-Subject: Re: [PATCH v6 1/8] dt-bindings: usb: Add bindings for multiport
- properties on DWC3 controller
-Message-ID: <20230405201709.GA397286-robh@kernel.org>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
- <20230405125759.4201-2-quic_kriskura@quicinc.com>
- <63bfaa1e-c627-bfe1-0bef-d001dae41014@linaro.org>
- <c18db964-1af7-7bbf-0d0f-cbb037f7500a@quicinc.com>
+        Wed, 5 Apr 2023 16:40:44 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E585086B1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 13:39:46 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 335KaE5I016550;
+        Wed, 5 Apr 2023 20:39:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xKojwkrbLVuuB+GLIH2O88EU75DH9K1culwn4sx9p4M=;
+ b=Sjxk2XRxHO8+OGhZCEEVzS15azB5Ay40YOLe/m5hj89KGmr0SMxIsw7jX/g3N+EF6dP5
+ dS8io9yVdz7pwZHg7d9wmgAMJ4KXqtTfbJjCOxyu7MCHrmW0QmxX+0CBto3nATliUyeY
+ GFnQXQKUs3jB3++0Rfu3CpjBE/pkpSfINXZR6+35E51ZbIwdFTO3QhQjIH/bfyGFGsne
+ /7Xe4izsAT0d9Gj5s2Q1KxIsYTPMBWgvj8tfFFJVwwwbcZ4r+Anu94Fqv6AEziMkn6LJ
+ 8JJB4kMkbTBU7BsfbBgYtTOUGbZ5L9qHfucnetBIczSCnCRxaGozoqEYdTUg335Fqdjt Qw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prn7qkx1q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Apr 2023 20:39:29 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335KdSkc001775
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Apr 2023 20:39:28 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 5 Apr 2023
+ 13:39:27 -0700
+Message-ID: <89b15ad1-773e-314f-a7f1-e03169ca9195@quicinc.com>
+Date:   Wed, 5 Apr 2023 13:39:27 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c18db964-1af7-7bbf-0d0f-cbb037f7500a@quicinc.com>
-X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v4 4/6] drm/msm/dsi: Use MSM and DRM DSC helper methods
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v4-0-1b79c78b30d7@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v4-4-1b79c78b30d7@quicinc.com>
+ <1cf2d02a-e8d7-1aa8-de3f-3321295d2d09@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <1cf2d02a-e8d7-1aa8-de3f-3321295d2d09@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wqItgUEBPYRjWwaRI1Eq9i9bUqIV-Usr
+X-Proofpoint-GUID: wqItgUEBPYRjWwaRI1Eq9i9bUqIV-Usr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-05_14,2023-04-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
+ bulkscore=0 mlxscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304050184
+X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 05, 2023 at 07:45:07PM +0530, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 4/5/2023 7:31 PM, Krzysztof Kozlowski wrote:
-> > On 05/04/2023 14:57, Krishna Kurapati wrote:
-> > > Add bindings to indicate properties required to support multiport
-> > > on Snps Dwc3 controller.
-> > > 
-> > > Suggested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > > ---
-> > > Link to v5: https://lore.kernel.org/all/20230310163420.7582-2-quic_kriskura@quicinc.com/
-> > 
-> > You did not test it at v4 and you got report for this. Your changelog in
-> > commit msg does not mention fixing it.
-> > 
-> > It looks like you did not test it for the second time (or sixth time).
-> > 
-> > Best regards,
-> > Krzysztof
-> > 
-> Hi Krzysztof,
-> 
->   I did do a dt_binding_check and I got the following result:
-> 
-> kriskura@hu-kriskura-hyd:/local/mnt/workspace/krishna/skales2/skales/kernel$
-> make DT_CHECKER_FLAGS=-m dt_binding_check
-> DT_SCHEMA_FILES=Documentation/devicetree/bindings/usb/snps,dwc3.yaml
->   HOSTCC  scripts/basic/fixdep
->   HOSTCC  scripts/dtc/dtc.o
->   HOSTCC  scripts/dtc/flattree.o
->   HOSTCC  scripts/dtc/fstree.o
->   HOSTCC  scripts/dtc/data.o
->   HOSTCC  scripts/dtc/livetree.o
->   HOSTCC  scripts/dtc/treesource.o
->   HOSTCC  scripts/dtc/srcpos.o
->   HOSTCC  scripts/dtc/checks.o
->   HOSTCC  scripts/dtc/util.o
->   LEX     scripts/dtc/dtc-lexer.lex.c
->   YACC    scripts/dtc/dtc-parser.tab.[ch]
->   HOSTCC  scripts/dtc/dtc-lexer.lex.o
->   HOSTCC  scripts/dtc/dtc-parser.tab.o
->   HOSTLD  scripts/dtc/dtc
->   LINT    Documentation/devicetree/bindings
-> invalid config: unknown option "max-spaces-inside-empty" for rule "brackets"
-> xargs: /usr/bin/yamllint: exited with status 255; aborting
 
-This indicates your yamllint version is too old.
 
-Rob
+On 4/5/2023 12:27 PM, Dmitry Baryshkov wrote:
+> On 05/04/2023 03:41, Jessica Zhang wrote:
+>> Use MSM and DRM DSC helper methods to configure DSC for DSI.
+>>
+>> Changes in V2:
+>> - *_calculate_initial_scale_value --> *_set_initial_scale_value
+>> - Split pkt_per_line and eol_byte_num changes to a separate patch
+>> - Moved pclk_per_line calculation to hdisplay adjustment in `if (dsc)`
+>>    block of dsi_update_dsc_timing()
+>>
+>> Changes in v3:
+>> - Split pclk_per_intf calculation into a separate patch
+>> - Added slice_width check to dsi_timing_setup
+>> - Used MSM DSC helper to calculate total_bytes_per_intf
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 13 ++++++++++---
+>>   1 file changed, 10 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
+>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 74d38f90398a..6a6218a9655f 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -28,6 +28,7 @@
+>>   #include "dsi.xml.h"
+>>   #include "sfpb.xml.h"
+>>   #include "dsi_cfg.h"
+>> +#include "msm_dsc_helper.h"
+>>   #include "msm_kms.h"
+>>   #include "msm_gem.h"
+>>   #include "phy/dsi_phy.h"
+>> @@ -848,7 +849,7 @@ static void dsi_update_dsc_timing(struct 
+>> msm_dsi_host *msm_host, bool is_cmd_mod
+>>       /* first calculate dsc parameters and then program
+>>        * compress mode registers
+>>        */
+>> -    slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+>> +    slice_per_intf = msm_dsc_get_slice_per_intf(dsc, hdisplay);
+>>       /*
+>>        * If slice_count is greater than slice_per_intf
+>> @@ -858,7 +859,7 @@ static void dsi_update_dsc_timing(struct 
+>> msm_dsi_host *msm_host, bool is_cmd_mod
+>>       if (dsc->slice_count > slice_per_intf)
+>>           dsc->slice_count = 1;
+>> -    total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+>> +    total_bytes_per_intf = msm_dsc_get_bytes_per_intf(dsc, hdisplay);
+>>       eol_byte_num = total_bytes_per_intf % 3;
+>>       pkt_per_line = slice_per_intf / dsc->slice_count;
+>> @@ -936,6 +937,12 @@ static void dsi_timing_setup(struct msm_dsi_host 
+>> *msm_host, bool is_bonded_dsi)
+>>               return;
+>>           }
+>> +        if (!dsc->slice_width || (mode->hdisplay < dsc->slice_width)) {
+>> +            pr_err("DSI: invalid slice width %d (pic_width: %d)\n",
+>> +                   dsc->slice_width, mode->hdisplay);
+>> +            return;
+>> +        }
+> 
+> This is not the "use of MSM and DRM DSC helper methods" and thus should 
+> be moved to a separate patch.
+
+Hi Dmitry,
+
+Acked.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>> +
+>>           dsc->pic_width = mode->hdisplay;
+>>           dsc->pic_height = mode->vdisplay;
+>>           DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
+>> @@ -1759,7 +1766,7 @@ static int dsi_populate_dsc_params(struct 
+>> msm_dsi_host *msm_host, struct drm_dsc
+>>           return ret;
+>>       }
+>> -    dsc->initial_scale_value = 32;
+>> +    drm_dsc_set_initial_scale_value(dsc);
+>>       dsc->line_buf_depth = dsc->bits_per_component + 1;
+>>       return drm_dsc_compute_rc_parameters(dsc);
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
