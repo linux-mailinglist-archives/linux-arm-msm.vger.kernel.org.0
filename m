@@ -2,173 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EC226D86B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 21:19:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD8B86D86CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 21:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234574AbjDETTd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 15:19:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42148 "EHLO
+        id S229492AbjDET0U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 15:26:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234521AbjDETTa (ORCPT
+        with ESMTP id S229473AbjDET0T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 15:19:30 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FCF17282
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 12:19:22 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso40578771pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 12:19:22 -0700 (PDT)
+        Wed, 5 Apr 2023 15:26:19 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 306574ED2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 12:26:18 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id h25so48051477lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 12:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680722361;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0XxX9v4o0e9A74KVKINLnIuAStvu5tpKtcGeS/xTyjw=;
-        b=r1mhd2GF/+9tjdL87AbcmzOd3rkhNQV3KxOpogVAVFo6FU6ZsRwSgp8KQYMOVXLixh
-         PwJw5uUAkRxgRk2gDFcm3oVKXidT+XVIVFIVDzaA0oM+Nfv5TFi9lst4S6uwuMiEaZCu
-         zZeo2pIzSvAsXStGJ6aySOim5IRqZXz1wqbD4VYRdHiTUM+POVdtvj2XKeXZRtvpXrvx
-         vUqy5/1BG/EnCMlDwJenhiH0HqCG59WA85iTkCDRVG7JRm+5jR6Diyfj0Thi+tbOSU2B
-         cZLMx4VQ1gpiGV35Eb6OEgF2kKHdtQK7EokKWI02pWEJJW43v0D8m72a1/GjHPNdVoUo
-         dPOQ==
+        d=linaro.org; s=google; t=1680722776;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AW2SsPz/H2No+z431I2MLnRYWxZXcAmTMNErQ6Wb7Zo=;
+        b=Ca6uRRCCuPzQhojSUWAc84VZ95cDh6R6erkSzXMCYzSy8eVEiq6ayTEDz4ffG3hYl6
+         JJAQ0hNxgpmfy3ZTTT7FkqKwzGTlHaLMMmWg3YdZZOIYMr2VkbNc3Xcn5q7HTZUYqdEM
+         lr6pL7ZZPm9KLz2UKZZyATcmXf7zhylVaJ3HpscWNWxJf8GBPJNWQfar8c5MlV/fxYRY
+         VMkt+R5U6bO81OfH8+LS+fVkdk1Fa1VZljwMDdYU1EapUM57bog8COSJfRAHS4mgZmYO
+         qnyoOab1feRUIbMTYE+CrH9dMQ/7uqqsQZs1Mm/4orGXvZU3fSM+oz/s7MN6aTvasCIQ
+         KseQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680722361;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0XxX9v4o0e9A74KVKINLnIuAStvu5tpKtcGeS/xTyjw=;
-        b=DUbby+j5HT+FQdNZ1vqkPz8QMw0YnzDL+ag9sLT0aoc9uner5wgm8dAtVtfUElkH++
-         N5KmMDZ81SvOI1RvZOgdtrQDdEmTk02gwxd+wPaq6Jt9XT52+yAlDSDaQrbP57l2lzfg
-         Vf6IaUoEali0iIq/ov8ZnPRXJwXfyioRMyRHlLjQkTP/gv55WdYAbQIUAmUXvaqPpAVk
-         g43V4Vc3Aiia2uhauw1b2FUI+Qt2PmouBSwYTAWCDXQDtfXOmF4eyKEmf4OWhs6yMGj9
-         AHgYx/l3kUy49s+FX/fHJlbJUznME7eze3uHgzvx3BXAdmcOCTZvwz8PuAutSIaJQoKW
-         zzuw==
-X-Gm-Message-State: AAQBX9cXJp6CYLj5h85qPlxbOUJc3J56v7jVrBE7aw1rp0pWpi1u/tLv
-        ovM1xtuUQ6bwlk//YKrfSYCwgmqzOJ/YlX3Xh20=
-X-Google-Smtp-Source: AKy350bW7kORq9ng9TSwhF++9ITY36DTz8cCbabmYwBSnB2TYNOCb94n80FxqeGGQTsYBt5H/92SPg==
-X-Received: by 2002:a17:90a:3ec3:b0:23d:39e:6054 with SMTP id k61-20020a17090a3ec300b0023d039e6054mr3679223pjc.5.1680722361664;
-        Wed, 05 Apr 2023 12:19:21 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.67.41])
-        by smtp.gmail.com with ESMTPSA id d9-20020a170902aa8900b001a1d7329235sm10478097plr.234.2023.04.05.12.19.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 12:19:21 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        andersson@kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
-        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Subject: [PATCH v5 2/2] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-Date:   Thu,  6 Apr 2023 00:46:33 +0530
-Message-Id: <20230405191633.1864671-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230405191633.1864671-1-bhupesh.sharma@linaro.org>
-References: <20230405191633.1864671-1-bhupesh.sharma@linaro.org>
+        d=1e100.net; s=20210112; t=1680722776;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AW2SsPz/H2No+z431I2MLnRYWxZXcAmTMNErQ6Wb7Zo=;
+        b=RG92Iigy6h+V0oYK3dcVVJuhJd2dcToPsp9+Ob1zr5DP+07iqzb+xro1OEvR3tsU5J
+         I8jBoLN8L141lTUpHnd6pU8/qeL6x84O8JP8ga/gsWqq3JdtKkrx4RyWXVActh6/4dMY
+         GnkN+lnrrbQyRyaGLqhU2kfNiX0hcgY3Gy0gNJodTrDxnzBCdgg9JGxV0e2Ef7XA33Xz
+         tbUNzo20pAPcVWCoKQDE6PnjtyjH9nExgnN/r0+6sYdxExiWPHiy8Gdf8j1WPEDm4zUV
+         b+Nas0l8jSKEUKopzfk8vweVXSw/9hN2KXuMP8JZd+M+UMgnLJ1TSh/bbJojT46xZ5Rx
+         AiQg==
+X-Gm-Message-State: AAQBX9eW3QToiGKinczwlF6NRRStmKvx1sViLwnhrut695ENVYKacr6z
+        dd3OAIj6gUJIQ5RR3UOsEu2EkZyA0yzTprtfXucPtQ==
+X-Google-Smtp-Source: AKy350b9A/w23O2wScHKIzqz8WM1/ZkM367Bdqh/niolXb3L6CiGIaLCFqo3WhjXER83zkCz24bZgg==
+X-Received: by 2002:ac2:48aa:0:b0:4b3:d6e1:26bb with SMTP id u10-20020ac248aa000000b004b3d6e126bbmr1844372lfg.29.1680722776344;
+        Wed, 05 Apr 2023 12:26:16 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id u23-20020ac25197000000b004d865c781eesm2944633lfi.24.2023.04.05.12.26.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Apr 2023 12:26:15 -0700 (PDT)
+Message-ID: <dd8dcaf7-acc0-69cc-9c7e-bcbd270fb845@linaro.org>
+Date:   Wed, 5 Apr 2023 22:26:15 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v4 1/6] drm/msm: Add MSM-specific DSC helper methods
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230329-rfc-msm-dsc-helper-v4-0-1b79c78b30d7@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v4-1-1b79c78b30d7@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v4-1-1b79c78b30d7@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add USB superspeed qmp phy node to dtsi.
+On 05/04/2023 03:41, Jessica Zhang wrote:
+> Introduce MSM-specific DSC helper methods, as some calculations are
+> common between DP and DSC.
+> 
+> Changes in v2:
+> - Moved files up to msm/ directory
+> - Dropped get_comp_ratio() helper
+> - Used drm_int2fixp() to convert to integers to fp
+> - Style changes to improve readability
+> - Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
+> - Changed msm_dsc_get_slice_per_intf() to a static inline method
+> - Dropped last division step of msm_dsc_get_pclk_per_line() and changed
+>    method name accordingly
+> - Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
+> - Fixed some math issues caused by passing in incorrect types to
+>    drm_fixed methods in get_bytes_per_soft_slice()
+> 
+> Changes in v3:
+> - Dropped src_bpp parameter from all methods -- src_bpp can be
+>    calculated as dsc->bits_per_component * 3
+> - Dropped intf_width parameter from get_bytes_per_soft_slice()
+> - Moved dsc->bits_per_component to numerator calculation in
+>    get_bytes_per_soft_slice()
+> - Renamed msm_dsc_get_uncompressed_pclk_per_line to
+>    *_get_uncompressed_pclk_per_intf()
+> - Removed dsc->slice_width check from
+>    msm_dsc_get_uncompressed_pclk_per_intf()
+> - Made get_bytes_per_soft_slice() a public method (this will be called
+>    later to help calculate DP pclk params)
+> - Added documentation in comments
+> - Moved extra_eol_bytes math out of msm_dsc_get_eol_byte_num() and
+>    renamed msm_dsc_get_eol_byte_num to *_get_bytes_per_intf.
+> 
+> Changes in v4:
+> - Changed msm_dsc_get_uncompressed_pclk_per_intf to
+>    msm_dsc_get_pclk_per_intf
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/Makefile         |  1 +
+>   drivers/gpu/drm/msm/msm_dsc_helper.c | 47 ++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/msm_dsc_helper.h | 70 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 118 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 7274c41228ed..b814fc80e2d5 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -94,6 +94,7 @@ msm-y += \
+>   	msm_atomic_tracepoints.o \
+>   	msm_debugfs.o \
+>   	msm_drv.o \
+> +	msm_dsc_helper.o \
+>   	msm_fb.o \
+>   	msm_fence.o \
+>   	msm_gem.o \
+> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.c b/drivers/gpu/drm/msm/msm_dsc_helper.c
+> new file mode 100644
+> index 000000000000..0539221eb09d
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.c
+> @@ -0,0 +1,47 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/errno.h>
+> +#include <drm/drm_fixed.h>
+> +
+> +#include "msm_drv.h"
+> +#include "msm_dsc_helper.h"
+> +
+> +s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc)
+> +{
+> +	int bpp = msm_dsc_get_bpp_int(dsc);
+> +	s64 numerator_fp, denominator_fp;
+> +	s64 comp_ratio_fp = drm_fixp_from_fraction(dsc->bits_per_component * 3, bpp);
+> +
+> +	numerator_fp = drm_int2fixp(dsc->slice_width * 3 * dsc->bits_per_component);
+> +	denominator_fp = drm_fixp_mul(comp_ratio_fp, drm_int2fixp(8));
+> +
+> +	return drm_fixp_div(numerator_fp, denominator_fp);
 
-Make sure that the various board dts files (which include sm4250.dtsi file)
-continue to work as intended.
+If we remove 3 * dsc->bits_per_components from both numerator and 
+denominator, this whole function seems to be as simple as 
+DIV_ROUND_UP(dsc->slice_width * bpp, 8)
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
- arch/arm64/boot/dts/qcom/sm6115.dtsi          | 36 +++++++++++++++++--
- .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
- 3 files changed, 40 insertions(+), 2 deletions(-)
+Or, if you prefer FP math, drm_fixp_from_fraction(dsc->slice_width * 
+bpp, 8).
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-index a1f0622db5a0..75951fd439df 100644
---- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-@@ -242,6 +242,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 2a51c938bbcb..b2fa565e4816 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -650,6 +650,38 @@ usb_hsphy: phy@1613000 {
- 			status = "disabled";
- 		};
- 
-+		usb_qmpphy: phy@1615000 {
-+			compatible = "qcom,sm6115-qmp-usb3-phy";
-+			reg = <0x0 0x01615000 0x0 0x200>;
-+			clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
-+				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-+			clock-names = "cfg_ahb",
-+				      "ref",
-+				      "com_aux";
-+			resets = <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>,
-+				 <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>;
-+			reset-names = "phy_phy", "phy";
-+			status = "disabled";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			usb_ssphy: phy@1615200 {
-+				reg = <0x0 0x01615200 0x0 0x200>,
-+				      <0x0 0x01615400 0x0 0x200>,
-+				      <0x0 0x01615c00 0x0 0x400>,
-+				      <0x0 0x01615600 0x0 0x200>,
-+				      <0x0 0x01615800 0x0 0x200>,
-+				      <0x0 0x01615a00 0x0 0x100>;
-+				#clock-cells = <0>;
-+				#phy-cells = <0>;
-+				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "usb3_phy_pipe_clk_src";
-+			};
-+		};
-+
- 		qfprom@1b40000 {
- 			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
- 			reg = <0x0 0x01b40000 0x0 0x7000>;
-@@ -1100,8 +1132,8 @@ usb_dwc3: usb@4e00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0 0x04e00000 0x0 0xcd00>;
- 				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
--				phys = <&usb_hsphy>;
--				phy-names = "usb2-phy";
-+				phys = <&usb_hsphy>, <&usb_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
- 				iommus = <&apps_smmu 0x120 0x0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-index 10c9d338446c..d60cc024749b 100644
---- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -280,6 +280,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
+> +}
+> +
+> +u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int intf_width)
+> +{
+> +	u32 bytes_per_soft_slice, bytes_per_intf;
+> +	s64 bytes_per_soft_slice_fp;
+> +	int slice_per_intf = msm_dsc_get_slice_per_intf(dsc, intf_width);
+> +
+> +	bytes_per_soft_slice_fp = get_bytes_per_soft_slice(dsc);
+> +	bytes_per_soft_slice = drm_fixp2int_ceil(bytes_per_soft_slice_fp);
+> +
+> +	bytes_per_intf = bytes_per_soft_slice * slice_per_intf;
+> +
+> +	return bytes_per_intf;
+> +}
+> +
+> +int msm_dsc_get_pclk_per_intf(struct drm_dsc_config *dsc)
+> +{
+> +	s64 data_width;
+> +
+> +	data_width = drm_fixp_mul(drm_int2fixp(dsc->slice_count),
+> +			get_bytes_per_soft_slice(dsc));
+
+And this is then DIV_ROUND_UP(dsc->slice_width * dsc->slice_count * bpp, 8)
+
+> +
+> +	return drm_fixp2int_ceil(data_width);
+> +}
+> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h b/drivers/gpu/drm/msm/msm_dsc_helper.h
+> new file mode 100644
+> index 000000000000..31116a31090f
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+> @@ -0,0 +1,70 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
+> + */
+> +
+> +#ifndef MSM_DSC_HELPER_H_
+> +#define MSM_DSC_HELPER_H_
+> +
+> +#include <drm/display/drm_dsc_helper.h>
+> +#include <drm/drm_modes.h>
+> +
+> +/*
+> + * Helper methods for MSM specific DSC calculations that are common between timing engine,
+> + * DSI, and DP.
+> + */
+> +
+> +/**
+> + * msm_dsc_get_bpp_int - get bits per pixel integer value
+> + * @dsc: Pointer to drm dsc config struct
+> + */
+> +static inline int msm_dsc_get_bpp_int(struct drm_dsc_config *dsc)
+> +{
+> +	WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
+> +	return dsc->bits_per_pixel >> 4;
+> +}
+> +
+> +/**
+> + * msm_dsc_get_slice_per_intf - get number of slices per interface
+> + * @dsc: Pointer to drm dsc config struct
+> + * @intf_width: interface width
+> + */
+> +static inline int msm_dsc_get_slice_per_intf(struct drm_dsc_config *dsc, int intf_width)
+> +{
+> +	return DIV_ROUND_UP(intf_width, dsc->slice_width);
+> +}
+> +
+> +/**
+> + * msm_dsc_get_dce_bytes_per_line - get bytes per line to help calculate data width
+> + *	when configuring the timing engine
+> + * @dsc: Pointer to drm dsc config struct
+> + * @intf_width: interface width
+> + */
+> +static inline u32 msm_dsc_get_dce_bytes_per_line(struct drm_dsc_config *dsc, int intf_width)
+> +{
+> +	return DIV_ROUND_UP(msm_dsc_get_bpp_int(dsc) * intf_width, 8);
+> +}
+> +
+> +/**
+> + * get_bytes_per_soft_slice - get size of each soft slice for dsc
+> + * @dsc: Pointer to drm dsc config struct
+> + */
+> +s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc);
+> +
+> +/**
+> + * msm_dsc_get_bytes_per_intf - get total bytes per interface
+> + * @dsc: Pointer to drm dsc config struct
+> + * @intf_width: interface width
+> + */
+> +u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int intf_width);
+> +
+> +/**
+> + * msm_dsc_get_pclk_per_intf - Calculate pclk per interface.
+> + * @dsc: Pointer to drm dsc config struct
+> + *
+> + * Note: This value will then be passed along to DSI and DP for some more
+> + * calculations. This is because DSI and DP divide the pclk_per_intf value
+> + * by different values depending on if widebus is enabled.
+> + */
+> +int msm_dsc_get_pclk_per_intf(struct drm_dsc_config *dsc);
+
+empty line, please
+
+> +#endif /* MSM_DSC_HELPER_H_ */
+> 
+
 -- 
-2.38.1
+With best wishes
+Dmitry
 
