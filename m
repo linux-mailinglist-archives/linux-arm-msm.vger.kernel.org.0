@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5548A6D724C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 04:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1232A6D72EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 06:06:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232835AbjDECKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 4 Apr 2023 22:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37496 "EHLO
+        id S236760AbjDEEGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 00:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232695AbjDECKT (ORCPT
+        with ESMTP id S229559AbjDEEGU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 4 Apr 2023 22:10:19 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB2C3C0A;
-        Tue,  4 Apr 2023 19:10:18 -0700 (PDT)
+        Wed, 5 Apr 2023 00:06:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C921C30ED;
+        Tue,  4 Apr 2023 21:06:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C70263986;
-        Wed,  5 Apr 2023 02:10:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B7CB7C433D2;
-        Wed,  5 Apr 2023 02:10:17 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 64F5963965;
+        Wed,  5 Apr 2023 04:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F99C433EF;
+        Wed,  5 Apr 2023 04:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680660617;
-        bh=4zJ4kLaeaZbHgZtylnXU4eUVkHyBkUaet36sI15YNo8=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=MtjY6CQPKm7hzi4jCZ8G4ZOL70G+tRaFbgX3Qo1mjQaCWGGszB8J+6X6ckYA1cCV9
-         D/uDMZy3uroXe8iDIyGvCA+nt5eBFAC4kdREUHIIHjiAq5rWKLFt7Z23UMMKUs3tEI
-         tdkvEB4bDgwNUXA/VL8U5DY3nIdHFxZRHzEmI6YIA8RmeH7C4DR/faW2p/caJAhYgp
-         jEe2rLGDO29zc6uAcLkqNgAOoUkWajZQvYf4V/W+fMge/vnekc+dJ1Pbh7GjrXQ97+
-         yBrcxsdVgPWvtpq8npBOlH+BuXyJFzeaa9ZKCiXuflPBMz1Pwm3Dir4aHm3SglcKD4
-         h9TZ/FwmeFW1w==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 97249E4D02D;
-        Wed,  5 Apr 2023 02:10:17 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1680667577;
+        bh=qjrgDVDa5fPmLzogqlbGWIXUX3IHvG/mEgP6jyFc9U4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=VB2ma9b65mcKZzx6vfJffxl2Y4m6rs34Uvvwhr+1uCqV0tvAxrihAzmGzpxFi6gWY
+         LAcAZGmxJ314S/bPCspKDCb6MgKhvCOyGP4r0Cu+7OD33NhnOV1OKtLP4tedneBD/u
+         Kjm2Urynnngii28CKxMtvi8nQtEawo3QQ9ecZ+FyLiR09WI0DH5t14S/DVn02pEUUQ
+         lSdsqchxIS+Fx1a8SBpsxrqv/xW9FUXcm1qBAI7QuZae3g43/mcUcEeePTsFusZuKB
+         AnOqTCOjqcWSE+UKF7X9wkN7AXE6MAtqhXl5YVjBpxCqhkSEREWsiHL3fUscLHMnRe
+         V5+BEjHGG6UxA==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Adam Skladowski <a39.skl@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: (subset) [PATCH 1/4] arm64: dts: msm8953: Replace xo_board with rpmcc sourced xo
+Date:   Tue,  4 Apr 2023 21:08:49 -0700
+Message-Id: <168066774416.443656.12283295998891742657.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230325112852.18841-1-a39.skl@gmail.com>
+References: <20230325112852.18841-1-a39.skl@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: qrtr: correct types of trace event
- parameters
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <168066061761.16096.17994837774956890281.git-patchwork-notify@kernel.org>
-Date:   Wed, 05 Apr 2023 02:10:17 +0000
-References: <20230402-qrtr-trace-types-v1-1-92ad55008dd3@kernel.org>
-In-Reply-To: <20230402-qrtr-trace-types-v1-1-92ad55008dd3@kernel.org>
-To:     Simon Horman <horms@kernel.org>
-Cc:     kuba@kernel.org, davem@davemloft.net, edumazet@google.com,
-        pabeni@redhat.com, mani@kernel.org, rostedt@goodmis.org,
-        mhiramat@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,37 +60,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Mon, 03 Apr 2023 17:43:16 +0200 you wrote:
-> The arguments passed to the trace events are of type unsigned int,
-> however the signature of the events used __le32 parameters.
+On Sat, 25 Mar 2023 12:28:49 +0100, Adam Skladowski wrote:
+> Assign RPM_SMD_XO_CLK_SRC from rpmcc in place
+> of fixed-clock where possible.
 > 
-> I may be missing the point here, but sparse flagged this and it
-> does seem incorrect to me.
 > 
->   net/qrtr/ns.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, include/trace/events/qrtr.h):
->   ./include/trace/events/qrtr.h:11:1: warning: cast to restricted __le32
->   ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
->   ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
->   ... (a lot more similar warnings)
->   net/qrtr/ns.c:115:47:    expected restricted __le32 [usertype] service
->   net/qrtr/ns.c:115:47:    got unsigned int service
->   net/qrtr/ns.c:115:61: warning: incorrect type in argument 2 (different base types)
->   ... (a lot more similar warnings)
-> 
-> [...]
 
-Here is the summary with links:
-  - [net-next] net: qrtr: correct types of trace event parameters
-    https://git.kernel.org/netdev/net-next/c/054fbf7ff814
+Applied, thanks!
 
-You are awesome, thank you!
+[1/4] arm64: dts: msm8953: Replace xo_board with rpmcc sourced xo
+      commit: 3042fb4b61c8a6ce692a4914b1970daa56e6f04e
+[2/4] arm64: dts: msm8953: Provide dsi_phy clocks to gcc
+      commit: 635abd877516f6d5e35343d3c3eb233ab195ebc5
+[3/4] arm64: dts: msm8953: Drop unsupported dwc3 flag
+      commit: c0494df2cdac723f4c7df834c05d548ea3a804e9
+[4/4] arm64: dts: msm8953: Pad regs to 8 digits
+      commit: 26aae2310fd7375a5ca0dd772cd3bc57cf5e02bb
+
+Best regards,
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Bjorn Andersson <andersson@kernel.org>
