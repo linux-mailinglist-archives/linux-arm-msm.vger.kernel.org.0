@@ -2,92 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 013F96D7337
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 06:08:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 073A96D73E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 07:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237044AbjDEEI3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 00:08:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47902 "EHLO
+        id S236842AbjDEFrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 01:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236904AbjDEEHa (ORCPT
+        with ESMTP id S229542AbjDEFro (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 00:07:30 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A954558E;
-        Tue,  4 Apr 2023 21:06:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 760A463AF7;
-        Wed,  5 Apr 2023 04:06:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19089C43324;
-        Wed,  5 Apr 2023 04:06:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680667602;
-        bh=F35Yo8CMdTUZ+xGUntt/U4RBF4z2aepfzc1/ck9Ojxw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JdCshkzEhkUcabh3ygObV5AxGeiLE0Okvfc91ka2CufTi/UjCM8Y4k6kI/R+Hd0Tq
-         M8y+4ujE0Af8VrxBK6upf7RGU+hgRXQRIb2AEyLYdRAZP3uCGWjv/mXOAEcl39rNXK
-         dP2RX6PzQ25bdLHZOnppJ3huYrVZeIY3R4aGIrDdIct76sBXW1FAtnFmPzE7/FTFp4
-         LWUfohWz3JMhkCk2He0rDqoELE8EzADxOogt7uTIeWOBg+5sqIj7eIijLa4LA4xgz3
-         MH37HL3rvP/Qx8+2sZfW80KC0Pwdo5gjrAyb3WHfTspMGO7XmWEVDvt9DeIANL5uuO
-         3eDKFIBUGPTgQ==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        linux-phy@lists.infradead.org,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-scsi@vger.kernel.org, Bart Van Assche <bvanassche@acm.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: Re: (subset) [PATCH v2 00/12] Introduce the SC8180x devices
-Date:   Tue,  4 Apr 2023 21:09:11 -0700
-Message-Id: <168066774419.443656.6508694636390869164.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230325122444.249507-1-vkoul@kernel.org>
-References: <20230325122444.249507-1-vkoul@kernel.org>
+        Wed, 5 Apr 2023 01:47:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06BC0170C;
+        Tue,  4 Apr 2023 22:47:44 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3351tnGo007823;
+        Wed, 5 Apr 2023 05:47:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TLKJHdc3VccYlSywWH1a0S5oQcjXUBe78mOuAGfTabU=;
+ b=JEjTogwnXtJ40GUDihd0ZlEiqh3TZWbaqlzlDz1eMpifeb6sZPuXrNtoJ7ZPVTKFcXx+
+ 8T6ej6o1dQL9OCY5ry8JBRbh0NviAmwWdbHXduCOY7rJ2xKg1JWcen3GBhGM3hWDkfD5
+ 8XRdoxk+e4nwn/4peRobTGQkf+4Fwie+a3E/3s/tupZjFJIKfsIpcj+ZlQn4H5avtVEq
+ of9czsSBx9spY60uNYlW2lzr0sFopUFIOEXyByGG16A8S6VewFhTbGZAcgZytyV9RVxI
+ eV5q+EejqZ8zvrzjVlRXU201Shi/ZWuykJBFvD5DyEPz5rF0Zq4DwSEThl+cQS2v9i9J SA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prpg21sfg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Apr 2023 05:47:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3355lAW4006120
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Apr 2023 05:47:10 GMT
+Received: from [10.50.42.101] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 4 Apr 2023
+ 22:47:06 -0700
+Message-ID: <ac3faf07-7974-fb26-2d58-0ddc014fce66@quicinc.com>
+Date:   Wed, 5 Apr 2023 11:16:41 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/3] venus: enable sufficient sequence change support for
+ vp9
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-media@vger.kernel.org>, <stanimir.k.varbanov@gmail.com>,
+        <quic_vgarodia@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <mchehab@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Viswanath Boma" <quic_vboma@quicinc.com>
+References: <1680589032-26046-1-git-send-email-quic_dikshita@quicinc.com>
+ <1680589032-26046-3-git-send-email-quic_dikshita@quicinc.com>
+ <8f0404d0-659d-0855-15dd-8a45f6fd1871@linaro.org>
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <8f0404d0-659d-0855-15dd-8a45f6fd1871@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RKpY77CEjftV9kZosu9ZKOVMtam58ZM9
+X-Proofpoint-ORIG-GUID: RKpY77CEjftV9kZosu9ZKOVMtam58ZM9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-05_02,2023-04-04_05,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 mlxscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304050053
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 25 Mar 2023 17:54:32 +0530, Vinod Koul wrote:
-> This introduces Qualcomm SC8180x SoC which features in Lenovo Flex 5G
-> laptop. This also adds support for Primus platform as well as Lenovo Flex 5G
-> laptop.
-> 
-> I would be great if submaintainers can ack the binding patch so that
-> everything can go thru qcom tree
-> 
-> [...]
 
-Applied, thanks!
+On 4/4/2023 11:52 PM, Konrad Dybcio wrote:
+>
+> On 4.04.2023 08:17, Dikshita Agarwal wrote:
+>> VP9 supports resolution change at interframe.
+>> Currenlty, if sequence change is detected at interframe and
+>> resources are sufficient, sequence change event is not raised
+>> by firmware to driver until the next keyframe.
+>> This change add the HFI to notify the sequence change in this
+>> case to driver.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+>> Tested-by: Nathan Hebert <nhebert@chromium.org>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_cmds.c   | 1 +
+>>   drivers/media/platform/qcom/venus/hfi_helper.h | 2 ++
+>>   drivers/media/platform/qcom/venus/vdec.c       | 8 ++++++++
+>>   3 files changed, 11 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> index 930b743..e2539b5 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
+>>   		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
+>>   		break;
+>>   	}
+>> +	case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
+>>   	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
+>>   		struct hfi_enable *in = pdata;
+>>   		struct hfi_enable *en = prop_data;
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+>> index d2d6719..20516b4 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+>> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+>> @@ -469,6 +469,8 @@
+>>   #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH			0x1003007
+>>   #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT			0x1003009
+>>   #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE			0x100300a
+>> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
+>> +								0x0100300b
+>>   
+>>   /*
+>>    * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
+>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+>> index 4ceaba3..f0394b9 100644
+>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>> @@ -671,6 +671,14 @@ static int vdec_set_properties(struct venus_inst *inst)
+>>   			return ret;
+>>   	}
+>>   
+>> +	/* Enabling sufficient sequence change support for VP9 */
+>> +	if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
+>> +		ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
+>> +		ret = hfi_session_set_property(inst, ptype, &en);
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+> Does it never have to be turned off? Or does it happen automatically
+> at session closure?
+>
+> Konrad
 
-[01/12] dt-bindings: firmware: document Qualcomm SC8180X SCM
-        commit: c78ad8597ed961e822bf86ce7f1916dbfba255ef
+Any property set to FW is applied for entire video session and it 
+doesn't need to change so
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+there is no need to turn it off or unset it.
+
+Thanks,
+
+Dikshita
+
+>> +
+>>   	ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
+>>   	conceal = ctr->conceal_color & 0xffff;
+>>   	conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
