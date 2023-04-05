@@ -2,64 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48A2C6D77CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 11:10:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 310046D77E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 11:15:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236821AbjDEJKe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 05:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41860 "EHLO
+        id S237224AbjDEJPN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 05:15:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231742AbjDEJKd (ORCPT
+        with ESMTP id S231742AbjDEJPM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 05:10:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B27D890;
-        Wed,  5 Apr 2023 02:10:32 -0700 (PDT)
+        Wed, 5 Apr 2023 05:15:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B5702D7D;
+        Wed,  5 Apr 2023 02:15:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 47E2062304;
-        Wed,  5 Apr 2023 09:10:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76596C4339B;
-        Wed,  5 Apr 2023 09:10:31 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C56B9638E4;
+        Wed,  5 Apr 2023 09:15:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AB1C433D2;
+        Wed,  5 Apr 2023 09:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680685831;
-        bh=l5sX60iJEeJFjkbQM2H90cOtD2sNI6yhbFlyNek5as0=;
+        s=k20201202; t=1680686111;
+        bh=1WC5vJKuvluemVN0pPhdXxQ0pptk2co2rAHuQbcKB5o=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=c5fuoR7XGt0dvomYiWEBhKEeQHabvQDQU0uohPQ8wFj7RAAMz7Kf7zfxFZenfhOPg
-         EvqSHrYHA6arxtZ4LB0UbDNC3NHqX4MmWaRk47c2VlMzpMHxViHsg2Lux+BbOxI7hf
-         vXiwPAhdUq9Nu0lgAJNUaONcN/t+t/YniXbMiMv8w9Ee1tvvYO19gj5C+3wNjOZxoA
-         T4m3hJzzhS62QMTtk0PhovTRE4jMirivKLYnq1EmGo/k1S5NGp0KGxDy3jyxj4mEru
-         JPtxyV6LbCtmHNZqIETkgY4f0gLlHexjY+VYIpsURrsZHBUk6cPu5hAKtKO1gKYGA4
-         wEqcBKzXbXaPA==
+        b=npzp0IapxWh2AC21LFOQLZpCmgK2L4U/NaHNpP/Fy9po3DwbKKR6LWB2do4soCC8v
+         c3Zpxfvm1cBBonKB/NJ09lRt2BGDnXn+WbsQMGgt2mnuxX7YEBqDXO31TWbAMi68eS
+         8T3LUQTHxM1Pa2qAbbGeDzZxQoR1istR9JHBv1qcAGire8SdiYZu8NUYyZ6tVJvZch
+         Knd4e8KH3pBvnT3FtwWuGT3jBr9pfDBZouF+wDBl/GlN2eb+/crxCZI0oCBJWN9v3W
+         xBa98ADF9Alsi+f9SqJ7q9ww6zqZpg1S72CiTtGgasVhWxm2V9CgAqD74gEpm3vMUL
+         ZylnA/wFEkQgQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pjzAT-0001xl-G8; Wed, 05 Apr 2023 11:11:01 +0200
-Date:   Wed, 5 Apr 2023 11:11:01 +0200
+        id 1pjzEz-00020g-0w; Wed, 05 Apr 2023 11:15:41 +0200
+Date:   Wed, 5 Apr 2023 11:15:41 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
         mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v5 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <ZC07JU/F46L9Z9y2@hovoldconsulting.com>
-References: <cover.1680162377.git.quic_varada@quicinc.com>
- <c46b542b112b59002ab965be1d3fcae8c372d545.1680162377.git.quic_varada@quicinc.com>
- <CAA8EJpo_ckJtYV4aU613X5L6+wj-1i9vZkud5p72PLdCSnj5ng@mail.gmail.com>
- <20230331092710.GB19162@varda-linux.qualcomm.com>
- <ZCaznloORtzgioOP@hovoldconsulting.com>
- <20230405085831.GA26156@varda-linux.qualcomm.com>
+Subject: Re: [PATCH v6 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+Message-ID: <ZC08PfY+TN3+lBT4@hovoldconsulting.com>
+References: <cover.1680682939.git.quic_varada@quicinc.com>
+ <aaf44ceccef9c7b20a08b8c9fa534f99468f8856.1680682939.git.quic_varada@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230405085831.GA26156@varda-linux.qualcomm.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+In-Reply-To: <aaf44ceccef9c7b20a08b8c9fa534f99468f8856.1680682939.git.quic_varada@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,34 +62,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 05, 2023 at 02:28:32PM +0530, Varadarajan Narayanan wrote:
-> On Fri, Mar 31, 2023 at 12:19:10PM +0200, Johan Hovold wrote:
-
-> > > > > +               ssphy_0: phy@7d000 {
-> > > >
-> > > > Nit: usually the label usb_0_qmpphy
-> > > >
-> > > > > +                       compatible = "qcom,ipq9574-qmp-usb3-phy";
-> > > > > +                       reg = <0x0007d000 0xa00>;
-> > > > > +                       #phy-cells = <0>;
-> > > > > +
-> > > > > +                       clocks = <&gcc GCC_USB0_AUX_CLK>,
-> > > > > +                                <&xo_board_clk>,
-> > > > > +                                <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> > > > > +                                <&gcc GCC_USB0_PIPE_CLK>;
-> > > > > +                       clock-names = "aux",
-> > > > > +                                     "ref",
-> > > > > +                                     "com_aux",
-> >
-> > This is not the right name for this clock so you need to update the
-> > binding first.
-> >
-> > Please be more careful.
+On Wed, Apr 05, 2023 at 02:26:42PM +0530, Varadarajan Narayanan wrote:
+> Add USB phy and controller related nodes
 > 
-> Thanks for your feedback. Have posted v6 with the above corrections.
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Changes in v6:
+> 	- Introduce fixed regulators for the phy
+> 	- Resolved all 'make dtbs_check' messages
+ 
 
-Thanks for the heads up. But for future submission, please try to
-remember to add people that have provided feedback on CC when posting
-new revisions.
+> +		usb_0_qmpphy: phy@7d000 {
+> +			compatible = "qcom,ipq9574-qmp-usb3-phy";
+> +			reg = <0x0007d000 0xa00>;
+> +			#phy-cells = <0>;
+> +
+> +			clocks = <&gcc GCC_USB0_AUX_CLK>,
+> +				 <&xo_board_clk>,
+> +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
+> +				 <&gcc GCC_USB0_PIPE_CLK>;
+> +			clock-names = "aux",
+> +				      "ref",
+> +				      "com_aux",
+
+Looks like you just ignored my comment that you need to rename this
+clock (and update the binding). :(
+
+	https://lore.kernel.org/lkml/ZCaznloORtzgioOP@hovoldconsulting.com/
+
+> +				      "pipe";
+> +
+> +			resets = <&gcc GCC_USB0_PHY_BCR>,
+> +				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
+> +			reset-names = "phy",
+> +				      "phy_phy";
+> +
+> +			vdda-pll-supply = <&reg_usb_1p8>;
+> +			vdda-phy-supply = <&reg_usb_0p925>;
+> +
+> +			status = "disabled";
+> +
+> +			#clock-cells = <0>;
+> +			clock-output-names = "usb0_pipe_clk";
+> +		};A
 
 Johan
