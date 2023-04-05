@@ -2,159 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D93B56D73FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 07:55:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 863936D742C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 08:09:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236901AbjDEFzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 01:55:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48318 "EHLO
+        id S237031AbjDEGJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 02:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236860AbjDEFzE (ORCPT
+        with ESMTP id S237037AbjDEGJQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 01:55:04 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D58212A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 22:55:02 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id r11so138340405edd.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 22:55:02 -0700 (PDT)
+        Wed, 5 Apr 2023 02:09:16 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D86746B7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 23:09:11 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id i5so138583187eda.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 23:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680674101;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/3QuqF+VUImX1V5KpitdapwWJCPNXUqbEanRNw7dR5I=;
-        b=mGgBLifE2V3m6QfJ3/xgYZp6oJDkrqAEJQhU01ExR+0FTmcJL5AxKvR6LGIu96DeXv
-         9/iI1w6f5DDmpwJPEClgomFqQOwvYaHzWUzjae1itmsulZZ6y9M7A0tZy2FwQAZlrHZw
-         EPkFyTPOHHlf1OZ0Pf6yQiwACv4m6WUdTPJqN1WK756K47vba3oFg74pzaLRiu72xsB/
-         3ODGSzc3o/kPPnypNx3JZQAa4nlv2AxgFfn3KUTQ6CzdJOn9z2nRHS2ZQj8eLX7TfQSO
-         yq46+6ClvuMTigEpSSTJs/v276FbRBYXWQBFg8KdQWwq9m+Wi8zCL6wfGOnlEHWQcQ/+
-         IKqg==
+        d=linaro.org; s=google; t=1680674950;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fKOHZ4MQMBlECxVqPXJNUiZJCuFcQs1gN16XzuqrzEY=;
+        b=yNEfCEn0/n/8B7NkqBFQygLxdzqnz/fbMOTtrwt4TH/R23jQlDVm9oDnhwh9Zbho3z
+         P2phrnLIDJHfkK0/P6T4cPWQaJE0vRRzKA5oMuCyeLniTllCBnxq+TFNM8AQFBhKssfo
+         REwGZCKyk9joh56zuFHieqQbtqb4mR7DcpYbgC+mMBgvif5592JW6Qom9ez0NYd1hC53
+         AXwKbLHrkNHSjtPx+Y0wcIxSEOa+YrtFQFLxLrFZspBIHGUdQAUWmDrBHa1Wr72hQ1Jj
+         EKiG10siewoBgmBJT052eOfZVPFUgSxYtlNGH7LmFvd/BE+FxgnCSEmXxmYywgD6C8eJ
+         hW5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680674101;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/3QuqF+VUImX1V5KpitdapwWJCPNXUqbEanRNw7dR5I=;
-        b=VXHqF7JDIFL5AWWN/+DDPISnANHXY9O8sWf5dhekGbmNv5LU/I/KWoXVsOIZhOS0tM
-         qhTg6jJIwIuIHtdqnYDknOUuQE24qYDdVQze1lHHiHQTxTwntBiOrYO4Ot+WGuifdai7
-         9Z6HBshHMdb0jpiHJeqZHCcTGkKHzm90TzXvYA53+IYmSuRLBZlLSfGVmMknRLOq+JJC
-         wyKFivUQgAlfiwkeYehHmCVo2vTmKv6DUquW1xNnXBsrjkqscBW/rtRBLj6c3KcD5rp1
-         SEvayk2G/yLsgc4kQe+OXRuyF1bNFalqe9VOZbJPP3bbDktkecxuUGPv/LgPvOn4vX2C
-         whcw==
-X-Gm-Message-State: AAQBX9e50wAFJcZdyopl2V4hpn8gDEdg8uqtZnT+FjG+ZzhTDRfllef2
-        rlyYAAywYFrLniJ8t/eoPJQSnA==
-X-Google-Smtp-Source: AKy350arSlAk4kVthIv++2B8xcUpK5sIrMPiq3sRcfqef32uwJ6Np+4A7B049HjtI6zQ3Wj6ymq+xA==
-X-Received: by 2002:a17:906:d929:b0:92c:8e4a:1a42 with SMTP id rn9-20020a170906d92900b0092c8e4a1a42mr1902655ejb.32.1680674101329;
-        Tue, 04 Apr 2023 22:55:01 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:3f:6b2:54cd:498e? ([2a02:810d:15c0:828:3f:6b2:54cd:498e])
-        by smtp.gmail.com with ESMTPSA id tq24-20020a170907c51800b00947abb70c93sm6555688ejc.112.2023.04.04.22.55.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 22:55:00 -0700 (PDT)
-Message-ID: <c49a2dbf-ea5a-f70f-1508-47e821942c9d@linaro.org>
-Date:   Wed, 5 Apr 2023 07:54:59 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: add Soundwire controllers
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20210112; t=1680674950;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fKOHZ4MQMBlECxVqPXJNUiZJCuFcQs1gN16XzuqrzEY=;
+        b=d6qXunUqWRi0nqnyV93wKsd65bPh1gPDSwAGeuDasOSMGsW+6BKNxLEVBMFQmgFIlL
+         hmaA1PXObvLIdCZVPgNOqu52IMKrSJUc3DGOoCt8HXgkguuG/sSz/216osdSn5wY/mks
+         7lsMMKyPjOAOXvVFvBRTEiMQ6+zdA3JoG+rOCGu3k6OC5wiSOxA0HCJlzJ4v+xxAzFLi
+         IE/XBSTUylilIDQ8/EWKhQF3mte3qt8sjLJDY3Nm7hJ8jYE8I+9O6nwVBZtQzACrRf0+
+         ja/H452R3T3iR24v7ThtME1xmZLfg7esrXCVQDftHv8oYi81O62L3cwBX8eIg6F2Ozzl
+         jkCA==
+X-Gm-Message-State: AAQBX9dHwJEdY+C+RBduOFLm3f9yEYTk16FRAmk8sSN2Xpupm8nCadGj
+        R9oUAD1UnAjEVEgE/nGDjgumyA==
+X-Google-Smtp-Source: AKy350ZimhW6RQ6HhnrHDs2rDfxf+6UVUWygtJG0UZXftN8/0bZ4Wl8yqS5wDIXQeAbaI9Km3l5RgA==
+X-Received: by 2002:a17:906:bc46:b0:884:9217:4536 with SMTP id s6-20020a170906bc4600b0088492174536mr1680572ejv.64.1680674950011;
+        Tue, 04 Apr 2023 23:09:10 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:3f:6b2:54cd:498e])
+        by smtp.gmail.com with ESMTPSA id z12-20020a1709064e0c00b00882f9130eafsm6784643eju.26.2023.04.04.23.09.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 23:09:09 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230404073915.61779-1-krzysztof.kozlowski@linaro.org>
- <305fcdae-84f5-7edb-26e4-588162fed018@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <305fcdae-84f5-7edb-26e4-588162fed018@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/5] arm64: dts: qcom: sc8280xp: label the Soundwire nodes
+Date:   Wed,  5 Apr 2023 08:09:02 +0200
+Message-Id: <20230405060906.143058-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/04/2023 19:55, Konrad Dybcio wrote:
-> 
-> 
-> On 4.04.2023 09:39, Krzysztof Kozlowski wrote:
->> Add nodes for LPASS Soundwire v2.0.0 controllers.  Use labels with
->> indices matching downstream DTS, to make any comparisons easier.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Changes since v1:
->> 1. Correct IO range length.
->>
->> The bindings and driver are here:
->> https://lore.kernel.org/linux-arm-msm/20230403132503.62090-1-krzysztof.kozlowski@linaro.org/T/#t
->> ---
->>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 109 +++++++++++++++++++++++++++
->>  1 file changed, 109 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> index dc6150e97d46..14e4de7a1a0e 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> @@ -2004,6 +2004,33 @@ lpass_wsa2macro: codec@6aa0000 {
->>  			#sound-dai-cells = <1>;
->>  		};
->>  
->> +		/* WSA2 */
->> +		swr3: soundwire-controller@6ab0000 {
->> +			compatible = "qcom,soundwire-v2.0.0";
->> +			reg = <0 0x06ab0000 0 0x10000>;
->> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&lpass_wsa2macro>;
->> +			clock-names = "iface";
->> +
-> Any reason this and swr0 have comments instead of labels?
+Use labels, instead of comments, for Soundwire controllers.  Naming them
+is useful, because they are specialized and have also naming in
+datasheet/programming guide.
 
-Actually no, I can go with label consistently. It's not actually used
-for anything...
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-> 
->> +			qcom,din-ports = <4>;
->> +			qcom,dout-ports = <9>;
->> +
->> +			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
->> +			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
->> +			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
->> +			qcom,ports-hstop =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
->> +			qcom,ports-word-length =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x18>;
->> +			qcom,ports-block-pack-mode =	/bits/ 8 <0x00 0x01 0x01 0x00 0x01 0x01 0x00 0x00 0x00 0x01 0x01 0x00 0x00>;
->> +			qcom,ports-block-group-count =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +			qcom,ports-lane-control =	/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->> +
->> +			#address-cells = <2>;
->> +			#size-cells = <0>;
->> +			#sound-dai-cells = <1>;
->> +			status = "disabled";
->> +		};
-> [...]
-> 
-> 
->> +		swr2: soundwire-controller@6d30000 {
->> +			compatible = "qcom,soundwire-v2.0.0";
->> +			reg = <0 0x06d30000 0 0x10000>;
->> +			interrupts-extended = <&intc GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 520 IRQ_TYPE_LEVEL_HIGH>;
-> There's no different interrupt-parent, so -extended seems excessive.
-> Unless that was maybe supposed to use some PDC-mapped irq?
-> 
-
-Eh, apparently copy-pasta. Thanks,
-
-
-Best regards,
-Krzysztof
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index cd38320dafda..c195a57fd180 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -2497,7 +2497,6 @@ rxmacro: rxmacro@3200000 {
+ 			status = "disabled";
+ 		};
+ 
+-		/* RX */
+ 		swr1: soundwire-controller@3210000 {
+ 			compatible = "qcom,soundwire-v1.6.0";
+ 			reg = <0 0x03210000 0 0x2000>;
+@@ -2572,13 +2571,13 @@ wsamacro: codec@3240000 {
+ 			status = "disabled";
+ 		};
+ 
+-		/* WSA */
+ 		swr0: soundwire-controller@3250000 {
+ 			reg = <0 0x03250000 0 0x2000>;
+ 			compatible = "qcom,soundwire-v1.6.0";
+ 			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&wsamacro>;
+ 			clock-names = "iface";
++			label = "WSA";
+ 
+ 			qcom,din-ports = <2>;
+ 			qcom,dout-ports = <6>;
+@@ -2600,7 +2599,6 @@ swr0: soundwire-controller@3250000 {
+ 			status = "disabled";
+ 		};
+ 
+-		/* TX */
+ 		swr2: soundwire-controller@3330000 {
+ 			compatible = "qcom,soundwire-v1.6.0";
+ 			reg = <0 0x03330000 0 0x2000>;
+-- 
+2.34.1
 
