@@ -2,75 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3F116D7DB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CD0D6D7DEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:43:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237881AbjDEN1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 09:27:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41752 "EHLO
+        id S238324AbjDENnd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 09:43:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237141AbjDEN1e (ORCPT
+        with ESMTP id S237920AbjDENnb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 09:27:34 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A1D271E
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 06:27:33 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5029d4d90fbso52299a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 06:27:33 -0700 (PDT)
+        Wed, 5 Apr 2023 09:43:31 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127FB4C28
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 06:43:30 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id l12so36239624wrm.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 06:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1680701252; x=1683293252;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=XqX1N9AwIcXh3tEpxCe94h+1QEhsxAem/vTybjTN11k=;
-        b=JXSAfvOtNFzK6tv8vKIgjAj2QxudkNTN+gOdh2IAHy0MotU6InrYYubzWWC4V5brU8
-         +Iwz08yS0ZLc1ZEFGhg9fpD4K3avpKoWG+Rf2Aw4mDHJXV6tZSo2upS+nG1jDlo0Tylh
-         /V9pl+Fa0Mjb6GSn/l601xafWZR6leIYeocfA=
+        d=linaro.org; s=google; t=1680702208;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=91zpGfc1a4L74i5yjY800PRBiUccdNyLDZUTPZtClIM=;
+        b=fYuMeQ/jyRYzCPZSwSv+LxC+ky2mQ+a8Vsojki1W1EUk4o0Qxf8UehggIl0LPruQHk
+         bDlJCGe46tinBLb34DAlpGqlxlSfq13oD44hc6tZyJ6oEUEjWE/mGYQs+6VLF46BlfT8
+         leZEKJvqcO7ENOVpHQhg+U2Rwv6B+gvs55IV9+JX8AFsp1F0k6p6XBNFhREXxum7WJkQ
+         hDjJ+50b3KA9ni2WKyD2hRaeeGs7MOxrJbCJZu8QMZw7fvwDjr2T8YbpzVeSRh6jB4M1
+         xLpT2KXx2MZc+tU1Cg6VklfnUd42yPAlVKJJNAhFZFH6sTpjz2XwsyGLXd+NN8Y+I37D
+         QUtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680701252; x=1683293252;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XqX1N9AwIcXh3tEpxCe94h+1QEhsxAem/vTybjTN11k=;
-        b=4qSY1Ggug0yem3ON90fnprpBAzoQj17CAqVj3mVXFCo/kPw7qhwNKlxLzx05KmqlXd
-         oEdSDgmHpGhlHFgQuI3DdrAz3XyNB2q0G3O9KgsF29/UheZPnusAVL7yvS82z/HdB8KD
-         kZYjG9PkU0RDVpBPbmcqv5Kc/HJu0a8Mo81NtpM0PSLE4fRarcSr5ehBCs5e1HXoUEH8
-         PSFDqfPhmboH3WdPT0fOXpOUCWSVvyf+2n3VMZsb3Zqc1Js0faUjidor0cHsjgVYAW21
-         oxtPZKHYZodTYbYP2Po+AMaRsIUDK51je/IMc3ppBM4q6BLErOvCVre40iP383cKU23p
-         QRfA==
-X-Gm-Message-State: AAQBX9f8GDPhcbkpUpoervJgTw7hJmE+i6OIN8jqQSSGcaQHRMkvnpPb
-        p0m1ZiOnpxG+FMztvr4PnDLNOw==
-X-Google-Smtp-Source: AKy350YswyL/2WjlpsmEdGmBnqipwym85alKiP+KkghBft5Jy1eR+adZL60tPSX8iCmHKGIo3/jCOQ==
-X-Received: by 2002:a05:6402:524e:b0:4fd:2978:d80 with SMTP id t14-20020a056402524e00b004fd29780d80mr2007567edd.1.1680701251733;
-        Wed, 05 Apr 2023 06:27:31 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id q17-20020a50c351000000b004bf76fdfdb3sm7246880edb.26.2023.04.05.06.27.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 06:27:31 -0700 (PDT)
-Date:   Wed, 5 Apr 2023 15:27:29 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Oded Gabbay <ogabbay@kernel.org>
-Cc:     Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>, airlied@gmail.com,
-        daniel@ffwll.ch, mani@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-doc@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
-        stanislaw.gruszka@linux.intel.com, quic_carlv@quicinc.com,
-        bagasdotme@gmail.com
-Subject: Re: [PATCH v5 0/8] QAIC accel driver
-Message-ID: <ZC13QdSRybIe3nvk@phenom.ffwll.local>
-References: <1679932497-30277-1-git-send-email-quic_jhugo@quicinc.com>
- <857db3fb-b006-4aa8-a7f8-2ae0b8a160c9@quicinc.com>
- <c5d11a88-351a-8eaf-f1d2-d7cf37cdf81c@linux.intel.com>
- <CAFCwf12iVZkcPKOEc911-fCd4-YzHYJzs_p36jfBiT=VkcO9uQ@mail.gmail.com>
+        d=1e100.net; s=20210112; t=1680702208;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=91zpGfc1a4L74i5yjY800PRBiUccdNyLDZUTPZtClIM=;
+        b=bzkTtm/vt4Dsb8SzdfCWBlMmLURj8gvlM4wpoNIOYzYznzY+A2PttbnWG8wnotha1g
+         tsTGYbj7KR7NSZuSi72+/2gwGpH/7IeIBMWjSjIYXgvRlRQNIpeoFpB/f516pftE1NBD
+         EUMpUenqkjOLcXwqADzy87vlesWodxYfvsf/CNThXTmL8M/w0pqMGWe4LVSTCDFOOa4Y
+         bl8lbc0DRwND48JNmQ1RIPdJ30JuzsXoOYbBL2fvnYam7SKrrwGKeH6HbJ4eHcx9Cd5z
+         3Nf7o/zi8mBXWFRNL9IVcCR5/2V7gUhZeP4wopr5xMOlg8ELPFSEEOWvqEt9U3c6Dp0I
+         Quww==
+X-Gm-Message-State: AAQBX9dqbnK6xFAvZ2vjYZK+Q3zEuBdFuD2aQtpFbgVXJxYAge7Mv0Kg
+        Cm3LTfJOwJzBPAikFcvLUze0oOcpNHG04lHbkoo4HQ==
+X-Google-Smtp-Source: AKy350ZaLcMHG+5zgfFflSVokVyqata0DNKN7cBymBE0f4C4IzGeqoPndhBChYUnv8Dyl5UEhEkAps+0WiJAzKlYhwo=
+X-Received: by 2002:a5d:4572:0:b0:2ce:ad09:4d47 with SMTP id
+ a18-20020a5d4572000000b002cead094d47mr1176570wrc.4.1680702208456; Wed, 05 Apr
+ 2023 06:43:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFCwf12iVZkcPKOEc911-fCd4-YzHYJzs_p36jfBiT=VkcO9uQ@mail.gmail.com>
-X-Operating-System: Linux phenom 6.1.0-7-amd64 
+References: <20230401154725.1059563-1-bhupesh.sharma@linaro.org>
+ <20230401154725.1059563-2-bhupesh.sharma@linaro.org> <1403741d-ef51-a9c5-821f-358c8f470dab@linaro.org>
+In-Reply-To: <1403741d-ef51-a9c5-821f-358c8f470dab@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Wed, 5 Apr 2023 19:13:17 +0530
+Message-ID: <CAH=2NtykGGcYHUTTzHMA7ft3eKAbGtrO4tN4dnLdg5cjE-N9Gw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom,qmp-usb: Fix phy subnode
+ for SM6115 & QCM2290 USB3 PHY
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,47 +70,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 05, 2023 at 03:35:19PM +0300, Oded Gabbay wrote:
-> On Wed, Apr 5, 2023 at 2:26 PM Jacek Lawrynowicz
-> <jacek.lawrynowicz@linux.intel.com> wrote:
+On Wed, 5 Apr 2023 at 15:11, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 01/04/2023 17:47, Bhupesh Sharma wrote:
+> > The USB3 SS (QMP) PHY found on Qualcomm SM6115 & QCM2290 SoCs is
+> > similar to sm8150 QMP PHY in the sense that the phy subnode supports
+> > 6 regs, namely TX lane 1, RX lane 1, PCS, TX lane 2, RX lane 2 and
+> > PCS_MISC.
 > >
-> > Hi,
-> >
-> > On 03.04.2023 19:22, Jeffrey Hugo wrote:
-> > > On 3/27/2023 9:54 AM, Jeffrey Hugo wrote:
-> > >> This series introduces a driver under the accel subsystem (QAIC -
-> > >> Qualcomm AIC) for the Qualcomm Cloud AI 100 product (AIC100).  AIC100 is
-> > >> a PCIe adapter card that hosts a dedicated machine learning inference
-> > >> accelerator.
-> > >>
-> > >> The previous version (v4) can be found at:
-> > >> https://lore.kernel.org/all/1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com/
-> > >
-> > > Looks like things have been silent on this revision and we have a number of review tags already.  Seems like this series is ready for merge.
-> > >
-> > > I'd like to see this queued for 6.4 if possible.  Given that we are at 6.3-rc5, it seems like this would need to be merged now(ish) to make 6.4.
-> > >
-> > > Jacek, since you have commit permissions in drm-misc and are an active Accel maintainer, I wonder if it would be appropriate for you to merge this series to drm-misc.  Thoughts?
-> >
-> > I'm would be happy to merge it but I think it needs to be acked by Oded first.
-> >
-> > Regards,
-> > Jacek
-> 
-> Hi,
-> Entire patch-set is:
-> Acked-by: Oded Gabbay <ogabbay@kernel.org>
+> > Update the dt-bindings document to reflect the same.
+>
+>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Bhupesh,
+>
+> Can you use scripts/get_maintainers.pl to get the Cc addresses instead
+> of writing them manually or inventing?
 
-Once Jacke has pushed this I htink it would also be good to get Jeffrey
-commit rights for drm-misc, so that in the future bugfixes for the qaic
-driver can be pushed directly by the qaic team. Still with acks/r-b
-requirements as per usual, and I guess for anything bigger/new uapi an ack
-from oded is needed.
+Sure Krzysztof, will do.
 
-https://drm.pages.freedesktop.org/maintainer-tools/commit-access.html#drm-misc
-
-Cheers, Daniel
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Thanks,
+Bhupesh
