@@ -2,136 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8345D6D870B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 21:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11A336D8776
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 21:55:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233489AbjDETjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 15:39:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58516 "EHLO
+        id S229756AbjDETzV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 15:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjDETjK (ORCPT
+        with ESMTP id S233431AbjDETzS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 15:39:10 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D1967DB0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 12:38:33 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id z42so38378282ljq.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 12:38:33 -0700 (PDT)
+        Wed, 5 Apr 2023 15:55:18 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F2514EDB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 12:55:15 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id r29so37303207wra.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 12:55:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680723505;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5f0mC+vCbK8/t6861d0Rm2iLKPedST0RJhiJavXpidc=;
-        b=O9u3HSfoQYfNm6hUe5TGddkA7cx/XjoVwsGfqDgI7F3H+tUYOwSbPAseA3xNdBIIDK
-         bBRAR5iK7zjnYQ3VOKqF700zJn4FuPbmEr8/GvFUm6YArkvGYHpcSh4oaisU2ezPOXOT
-         sUHslTba6C7mypK/br5++omC6AonLN5v0G4WjZOMmo9iRNdZFYrtliDA/4vQWQV8um05
-         NQhUBRstoghlaBAD7zIObzOfXVS3o5aAw+gBgmGviJCC4CborHlJg0hTc/KmNVUz7omK
-         4ibETRW+fJ6DFbqcoiPFVyt20L7IYuTKdgROvdWw4pQlQxbWvx1GDh+r1rzq3JMz9b4F
-         aDKQ==
+        d=linaro.org; s=google; t=1680724513;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ksXkmq2smhHgv1sUdzO5vfRJBokvvn2sm+WWkFQyrM=;
+        b=UuN0IN9aVIlNHBJdqSp0sMuA/m7oRprsHlZii5e5i5mAZtGML0tfoy5gToZi0ixSRO
+         GoGCh50gBOhjkUzt5Ho591h8D36M52O0eJjzocfz9PSLDDKZlaov+FZ45qk4cQeK3A9y
+         vvBJU05qJbMORSQji7RDAsndEvaDj241LAjDO2O/LR37EaJGjpraWZLDpRjrtcpbX+dI
+         UHB86uX0910Ak7YlUm7bIipvBr9zrz0MpvjiCHQNlm4I6gpOHmFijJ5PrT/Ixa1qhROv
+         ltfOWHFK/M95wZ+lCbvogDTyPIUyadT9Jl+ccjXagaHG2RKI+SgiPbYeehRqewVWJ+6z
+         zYaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680723505;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5f0mC+vCbK8/t6861d0Rm2iLKPedST0RJhiJavXpidc=;
-        b=WtJH5pIenQ9q3dLzfFS6GpUZhLCkddrGe8YWOmYMwmKw+j6rJj9ZIKvhsRJO3g6NC/
-         1pso4pnGoEtj82blTJ5IuhWEZFzwfELW3LFiFlh9wzHdQyXWnj0kz+Cq/OViyKD2Xcti
-         XNf3+rW+w2jcsOkXykwPItnzv6dxrrz7v77PiGsrI42NszNwPjW4ZbC64eeMN0J7JZWA
-         ueEzqh+NY3zie3LZ9nT9BiCwv7IazAqrvsOyvuKhds58qYP3lqWzfQoNmnEBiYRVdi0m
-         rK4Li93Mjb55RVYa9m7GnsfpcV/k46vzSer6RjYn2fOIPckRjtlwo6HC2fYriC4b3oCH
-         GoEg==
-X-Gm-Message-State: AAQBX9diWbH6Dz2VBNsQiPYBb5CpS6D6+1qyo4d0EAlG0WZbJ0tC4iB5
-        EMwjmp8mFk9VMVXTLBep5t739g==
-X-Google-Smtp-Source: AKy350aAERgJC0es3w+VWzIC+SauE/zhEA0eNoS8iq5QTbMpYVHS9MuKuSDX22w+FZJxFPZwvr9Ggw==
-X-Received: by 2002:a2e:8085:0:b0:29a:95d8:3e04 with SMTP id i5-20020a2e8085000000b0029a95d83e04mr2084998ljg.50.1680723504998;
-        Wed, 05 Apr 2023 12:38:24 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id x23-20020a2e9c97000000b002934febffe4sm2966662lji.128.2023.04.05.12.38.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Apr 2023 12:38:24 -0700 (PDT)
-Message-ID: <374d3d19-2459-064c-c7e6-7e13b4dc368d@linaro.org>
-Date:   Wed, 5 Apr 2023 22:38:24 +0300
+        d=1e100.net; s=20210112; t=1680724513;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2ksXkmq2smhHgv1sUdzO5vfRJBokvvn2sm+WWkFQyrM=;
+        b=UrIkZ5SxjRIZ+T50QR/mfuYYphGZF36WvfIssKOmLSSaaoy8SZnnNBkVyVRSZiY0O+
+         vThcHKtiKKAFU+0GL8AIG7eT5RkPB/IE9vtZ5qR2XApV2q/zLfy8QTTf7R/gFUk0NmLc
+         RkH9CXIQBpVMrRJasg6GJpRL8VZnucPNhRi46LsbLHjzjnttStQ9poLNpIcn23+4MRf8
+         SjvUxD8Cn5I05aUb3OuXnp/BwfZLDrcttAiA7EHlwHfiiRfgNM40q+Qwt+v0zovNwmYl
+         TAV3NVwaExoflImEraFE592cT3PU2V3P/tzTbjpEDXZgr50aE3gJ9X/4/T/qm+zjB+5P
+         XC6A==
+X-Gm-Message-State: AAQBX9cpTp+/jdQn/ffGnaNEVbewZi/8fMHrRwQAMPdWacXT9Wq1YTsU
+        psWjSka51ELOXdZzKXnXm05eX7JsvHbiywtZpORIIQ==
+X-Google-Smtp-Source: AKy350a+WR5HnIxkBJY1P8g+NaepzvHYZgg9l7RYM1p+GA2Vi83nA1ON10/P6Hr+Qwmmu9YcAGs/mrCa4R7btbO1PGE=
+X-Received: by 2002:a5d:51c7:0:b0:2ce:a8d6:570f with SMTP id
+ n7-20020a5d51c7000000b002cea8d6570fmr1546955wrv.4.1680724513613; Wed, 05 Apr
+ 2023 12:55:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v5 1/2] dt-bindings: phy: qcom,qmp-usb: Fix phy subnode
- for SM6115 & QCM2290 USB3 PHY
-Content-Language: en-GB
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        andersson@kernel.org, bhupesh.linux@gmail.com,
-        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, kishon@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
 References: <20230405191633.1864671-1-bhupesh.sharma@linaro.org>
- <20230405191633.1864671-2-bhupesh.sharma@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230405191633.1864671-2-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+ <20230405191633.1864671-3-bhupesh.sharma@linaro.org> <CAA8EJppfRvc7nJ+AeUjrqfmZ8aLWPma-Ecda-tjOwezqWVueuw@mail.gmail.com>
+In-Reply-To: <CAA8EJppfRvc7nJ+AeUjrqfmZ8aLWPma-Ecda-tjOwezqWVueuw@mail.gmail.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Thu, 6 Apr 2023 01:25:02 +0530
+Message-ID: <CAH=2Nty_EAyLVQfKhczJDhurvvTubotm44iitmWPNMQAe-fRLA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
+        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
+        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/04/2023 22:16, Bhupesh Sharma wrote:
-> The USB3 SS (QMP) PHY found on Qualcomm SM6115 & QCM2290 SoCs is
-> similar to sm8150 QMP PHY (which is named as 'usb_1_qmpphy' in
-> sm8150 dtsi file, see [1]) in the sense that the phy subnode supports
+On Thu, 6 Apr 2023 at 01:06, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Wed, 5 Apr 2023 at 22:19, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+> >
+> > Add USB superspeed qmp phy node to dtsi.
+> >
+> > Make sure that the various board dts files (which include sm4250.dtsi file)
+> > continue to work as intended.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
+> >  arch/arm64/boot/dts/qcom/sm6115.dtsi          | 36 +++++++++++++++++--
+> >  .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
+> >  3 files changed, 40 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> > index a1f0622db5a0..75951fd439df 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> > @@ -242,6 +242,9 @@ &usb {
+> >  &usb_dwc3 {
+> >         maximum-speed = "high-speed";
+> >         dr_mode = "peripheral";
+> > +
+> > +       phys = <&usb_hsphy>;
+> > +       phy-names = "usb2-phy";
+> >  };
+> >
+> >  &usb_hsphy {
+> > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > index 2a51c938bbcb..b2fa565e4816 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > @@ -650,6 +650,38 @@ usb_hsphy: phy@1613000 {
+> >                         status = "disabled";
+> >                 };
+> >
+> > +               usb_qmpphy: phy@1615000 {
+> > +                       compatible = "qcom,sm6115-qmp-usb3-phy";
+> > +                       reg = <0x0 0x01615000 0x0 0x200>;
+> > +                       clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
+> > +                                <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> > +                                <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
+> > +                       clock-names = "cfg_ahb",
+> > +                                     "ref",
+> > +                                     "com_aux";
+> > +                       resets = <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>,
+> > +                                <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>;
+> > +                       reset-names = "phy_phy", "phy";
+> > +                       status = "disabled";
+> > +                       #address-cells = <2>;
+> > +                       #size-cells = <2>;
+> > +                       ranges;
+> > +
+> > +                       usb_ssphy: phy@1615200 {
+> > +                               reg = <0x0 0x01615200 0x0 0x200>,
+> > +                                     <0x0 0x01615400 0x0 0x200>,
+> > +                                     <0x0 0x01615c00 0x0 0x400>,
+> > +                                     <0x0 0x01615600 0x0 0x200>,
+> > +                                     <0x0 0x01615800 0x0 0x200>,
+> > +                                     <0x0 0x01615a00 0x0 0x100>;
+> > +                               #clock-cells = <0>;
+> > +                               #phy-cells = <0>;
+> > +                               clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> > +                               clock-names = "pipe0";
+> > +                               clock-output-names = "usb3_phy_pipe_clk_src";
+> > +                       };
+> > +               };
+>
+> I can repeat previous message:
+>
+> Please update this to newer style bindings (see
+> qcom,sc8280xp-qmp-usb3-uni-phy.yaml).
+>
+> We are going to switch all QMP PHYs to use a newer style of bindings.
+> I have started the work to convert existing usecases. As you are
+> adding a new DT node, please add it in a good shape from the
+> beginning.
 
-usb_1_qmpphy on sm8150 is a USB+DP PHY, see 
-https://patchwork.kernel.org/project/linux-phy/patch/20230324215550.1966809-4-dmitry.baryshkov@linaro.org/
+Your earlier message was not clear and I sent out a reply for the
+cover letter query you had, but got no reply. I think a pointer to
+<https://patchwork.kernel.org/project/linux-phy/list/?series=733714>
+would have been more clear.
 
-> 6 regs, namely TX lane 1, RX lane 1, PCS, TX lane 2, RX lane 2 and
-> PCS_MISC.
-> 
-> Update the dt-bindings document to reflect the same.
-> 
-> [1]. https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/sm8150.dtsi#n3394
-> 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->   .../devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml    | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> index e81a38281f8c..1575dc70bcf2 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> @@ -276,7 +276,9 @@ allOf:
->           compatible:
->             contains:
->               enum:
-> +              - qcom,qcm2290-qmp-usb3-phy
->                 - qcom,sdm845-qmp-usb3-phy
-> +              - qcom,sm6115-qmp-usb3-phy
->                 - qcom,sm8150-qmp-usb3-phy
->                 - qcom,sm8350-qmp-usb3-phy
->                 - qcom,sm8450-qmp-usb3-phy
-> @@ -318,12 +320,10 @@ allOf:
->               enum:
->                 - qcom,ipq6018-qmp-usb3-phy
->                 - qcom,ipq8074-qmp-usb3-phy
-> -              - qcom,qcm2290-qmp-usb3-phy
->                 - qcom,sc7180-qmp-usb3-phy
->                 - qcom,sc8180x-qmp-usb3-phy
->                 - qcom,sdx55-qmp-usb3-uni-phy
->                 - qcom,sdx65-qmp-usb3-uni-phy
-> -              - qcom,sm6115-qmp-usb3-phy
->                 - qcom,sm8150-qmp-usb3-uni-phy
->                 - qcom,sm8250-qmp-usb3-phy
->       then:
+I will rework and send v6 accordingly.
 
--- 
-With best wishes
-Dmitry
-
+Thanks,
+Bhupesh
