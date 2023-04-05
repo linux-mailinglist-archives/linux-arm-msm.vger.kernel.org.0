@@ -2,47 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E3AB6D7E03
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:47:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4EDF6D7E0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:49:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237880AbjDENrb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 09:47:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57690 "EHLO
+        id S237804AbjDENta (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 09:49:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237141AbjDENra (ORCPT
+        with ESMTP id S237148AbjDENt3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 09:47:30 -0400
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 457A54C17;
-        Wed,  5 Apr 2023 06:47:29 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id w13so15280233oik.2;
-        Wed, 05 Apr 2023 06:47:29 -0700 (PDT)
+        Wed, 5 Apr 2023 09:49:29 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5289A7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 06:49:27 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id bi9so46694125lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 06:49:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680702566;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tRVYRoa8ozshD72EL4Ot+Yf75tZYAgHGaKUZVJ5Hh1w=;
+        b=weOOOXL6zAOO6ZNgdEln5WMvuA7Spho/qmQx+TOdv0rshX/YS2p666TA1/1/WkLrsu
+         K4/FQ11SnU43VuVe8UKNzL4fpKX9mQAvpk4AklJYemjkou1QDTFol8e1apPWMKDtLHxn
+         9z2pgaMs26TypTYA+x07EHEdW7AcfCZYwfSjhoS97sG7eNO8wjAFAc3kt/3+6pGfjTMu
+         v69LzUZUq8X+ATu7xvt4c2m5SDX5UTLJHKkUY8H+k7wS2ZuoSYAHOmGeEq5rePEwDDc0
+         koXrU97O37/pa59/VU+B69PBV2jqs18YcG0hkGt7I0DNzW5eP0JZVTJKQ1Y2rlci401e
+         GR+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680702448;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mAAPpJ9+2MB888vDbRAKOF1E3qNq6qV500x+hsvJt50=;
-        b=iLHOak7kziuU7YAYw79yeYGIhlBn9ORnbD2hgpzDnKSq9DzMFZVoypw9ZJbXYI7aPv
-         KOOXKYPq3A3UzhFMazWs8uTdLBKg3yPxPkqqpYayfbu22lmn5zqA7EjBlnhY5XA4pX6H
-         UpK5akd9UjIUaw2l0XVODUCdQn58IPX4tq81yTV2ggqPhf0lgFJJnLH0Kw7JSmbLczlF
-         Azjf8IrDuMtoJ3ciNESU6GAffOPEBMe1tkZvAbYSYHBiJFPspYm5rcn1j9KxBUlnAXmB
-         Z889ZvDe9K+d70TmVFX3ZCePpHmPzYjRtrsjJ7xHQnmUXVNHvmSVU4y9xO7pDth5QJQv
-         6gcA==
-X-Gm-Message-State: AAQBX9c+CNRuxA2vw1k5qiL6/WvsnCmBXM+V1sfNErMk796nHk7eroyv
-        aV/yVc+bM9mocWVSpBiJgc0oOQ/Uwg==
-X-Google-Smtp-Source: AKy350ZyMRVpMnQOsF1iV3FWwWGv6ohmW/4j8PAYZNCrnzEVb80BKWCSQhmHHlGBV8f4E9fEkjLZLg==
-X-Received: by 2002:a05:6808:19a5:b0:389:ad7:95d7 with SMTP id bj37-20020a05680819a500b003890ad795d7mr3039016oib.29.1680702448473;
-        Wed, 05 Apr 2023 06:47:28 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id m24-20020a05680806d800b0037b6f5d6309sm6305619oih.2.2023.04.05.06.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 06:47:28 -0700 (PDT)
-Received: (nullmailer pid 2491083 invoked by uid 1000);
-        Wed, 05 Apr 2023 13:47:27 -0000
-Date:   Wed, 5 Apr 2023 08:47:27 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+        d=1e100.net; s=20210112; t=1680702566;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tRVYRoa8ozshD72EL4Ot+Yf75tZYAgHGaKUZVJ5Hh1w=;
+        b=xpfA8A67Fn6+8vrJgnucC7LOb3h9p5ZaBx8fo/Wfc/EyTOuPGgO3lhJ858nlSdMjuX
+         bjoyu108lc10awbCQ0n6lCvgQwutIZa25AhwdsK7iLQVri9zSeqrcdZi7DRXEVp8I3Jd
+         Jaugint0I1jwHz8B0j4U8spi6I8cSWOEcZBoYcGE00yh33SY2HByHQVxXmmAxQ0Bcvqu
+         vxQUTXnzEfPH2Yj8wR6YebFzguP+nbL+b8wyH8xU8BYWAhaiB5Gynqb3QNFgsZaH8Gir
+         ZMr9RstPFxoOP7ZeWaW1BQpodI2qnn/oH3X4vZehsi/z+MtsQ4HYgV8vJeNwSs51nGTw
+         Z77A==
+X-Gm-Message-State: AAQBX9escnUCmQLcR0jTBGnKLaiNRCyxWQta3OVO6W2qRPEz0d0zoC0K
+        XdAF7VXCR8ole1bMJjYTD4Sxmg==
+X-Google-Smtp-Source: AKy350Zrsq00SJ1pSF7aBbAAZy+BMtnGVtMGVGvo5B8KXlB3hq08yM/IsAok5T3J68qTwznWVAdxRw==
+X-Received: by 2002:ac2:5106:0:b0:4eb:2523:e929 with SMTP id q6-20020ac25106000000b004eb2523e929mr1499378lfb.43.1680702565968;
+        Wed, 05 Apr 2023 06:49:25 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id v8-20020a056512096800b004bb766e01a4sm2846881lft.245.2023.04.05.06.49.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Apr 2023 06:49:25 -0700 (PDT)
+Message-ID: <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
+Date:   Wed, 5 Apr 2023 15:49:24 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
 Cc:     Thomas Gleixner <tglx@linutronix.de>,
         Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
         Shawn Guo <shawn.guo@linaro.org>,
@@ -51,52 +67,60 @@ Cc:     Thomas Gleixner <tglx@linutronix.de>,
         Bjorn Andersson <andersson@kernel.org>,
         Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
-Message-ID: <20230405134727.GA2461305-robh@kernel.org>
 References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
  <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
  <168069726278.2356075.14351594478003012447.robh@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <168069726278.2356075.14351594478003012447.robh@kernel.org>
-X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+ <20230405134727.GA2461305-robh@kernel.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230405134727.GA2461305-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 05, 2023 at 07:22:40AM -0500, Rob Herring wrote:
-> 
-> On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
-> > Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
-> > use 'reg' to point to the MPM's slice of Message RAM without cutting into
-> > an already-defined RPM MSG RAM node used for GLINK and SMEM.
-> > 
-> > Document passing the register space as a slice of SRAM through the
-> > qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
-> > 
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> >  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
-> >  1 file changed, 9 insertions(+), 3 deletions(-)
-> > 
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
 
-Looks like this is colliding with the example template which has to 
-craft an interrupt provider for 'interrupts' properties. Either adding a 
-parent node or using interrupts-extended instead should work-around it.
 
-Rob
+On 5.04.2023 15:47, Rob Herring wrote:
+> On Wed, Apr 05, 2023 at 07:22:40AM -0500, Rob Herring wrote:
+>>
+>> On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
+>>> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
+>>> use 'reg' to point to the MPM's slice of Message RAM without cutting into
+>>> an already-defined RPM MSG RAM node used for GLINK and SMEM.
+>>>
+>>> Document passing the register space as a slice of SRAM through the
+>>> qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
+>>>  1 file changed, 9 insertions(+), 3 deletions(-)
+>>>
+>>
+>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>>
+>> yamllint warnings/errors:
+>>
+>> dtschema/dtc warnings/errors:
+>> Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
+> 
+> Looks like this is colliding with the example template which has to 
+> craft an interrupt provider for 'interrupts' properties. Either adding a 
+> parent node or using interrupts-extended instead should work-around it.
+Check the devicetree-org issue linked in the cover letter, please!
+
+I suppose wrapping it in a parent node could work as a temporary
+measure, but since it belongs outside /soc, I'd have to make up
+a bogus simple-bus, I think.
+
+Konrad
+> 
+> Rob
