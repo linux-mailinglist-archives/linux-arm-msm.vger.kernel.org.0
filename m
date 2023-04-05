@@ -2,189 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62C356D83BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 18:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5CDE6D840B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 18:49:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230237AbjDEQbg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 12:31:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39378 "EHLO
+        id S233498AbjDEQtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 12:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbjDEQbe (ORCPT
+        with ESMTP id S233485AbjDEQs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 12:31:34 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7FFE2115;
-        Wed,  5 Apr 2023 09:31:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680712292; x=1712248292;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+wBw0wnzu4XdIkQvANOn4jcZNTmE4P0o1YbVmHEHd38=;
-  b=gdUvBd9W2m6uk9WzbNOm/47LAyvkf9Bs9JvQPedwix/913elttnI87qm
-   PkWWZl8g59v4nJA79hVd8WwY5TDwH8NU+laQv9gQV9B2RAWp9vjhQ/5+5
-   80p2mtDRlMMwBoUgb5NOjy3h6/gbVqJONLjLFyKya/DBYp9dnPp94TNJV
-   RAbBJHdkeR8lEwGl8jxWk6VJeBzpBWzLyncY019T5TtGzvwTOFMq1Ub4K
-   Qt/RQNEGrYEujcYXLz4ijBbq1deZGu9kur6ZXahTtaXPC/BDZIJbjSRWc
-   6lP9tnN3JwIUS266A8kdeFk9v04uPm/8LaU0LK5kcr5C20B+JfaxyQeRU
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10671"; a="339994355"
-X-IronPort-AV: E=Sophos;i="5.98,321,1673942400"; 
-   d="scan'208";a="339994355"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2023 09:31:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10671"; a="932890851"
-X-IronPort-AV: E=Sophos;i="5.98,321,1673942400"; 
-   d="scan'208";a="932890851"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 05 Apr 2023 09:31:18 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pk62Y-000Qdx-0p;
-        Wed, 05 Apr 2023 16:31:18 +0000
-Date:   Thu, 6 Apr 2023 00:30:48 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 2/2] soc: qcom: Introduce RPM master stats driver
-Message-ID: <202304060002.HLUjkH63-lkp@intel.com>
-References: <20230405-topic-master_stats-v1-2-1b1fa2739953@linaro.org>
+        Wed, 5 Apr 2023 12:48:59 -0400
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2804D3AAB;
+        Wed,  5 Apr 2023 09:48:59 -0700 (PDT)
+Received: by mail-oo1-f41.google.com with SMTP id h1-20020a4adcc1000000b0053e9796cc7dso2931235oou.4;
+        Wed, 05 Apr 2023 09:48:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680713338;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7txYggN2JwlOgtYe4eHEvjrkY9LG17YWZv5dce4ogFI=;
+        b=GXEJvW3djiNayPMTxsGpFxIlM0lWiVIKINTpF/VTSa4fNP0eRS113FsTd5XNrTmaRG
+         sU0ATEllhVd5fPES/4wnoKzRZCKgEGAQVYDAiiZ/IA5ruFm0hQBJdchAg0+tw34ELM6g
+         roVM63bxiKfs9BLBpG2+m1895ruCP55+ay5Y5ZVBQKaCcV0mkCLdYlPe7m6u3stbMmw2
+         rvtRSiNdH880V7anY0ZypcC+VGqs8IQyqBDRh4ZNhxRj2B6X6jzS2O6vCHx7VoXxTpgP
+         6RY2ZgfI2cw4QJ3pYPDvwOqtqZIMkuxxFLjnevmd5YFaBLQtQowNGvjnNXVag5w8rWmo
+         CCgQ==
+X-Gm-Message-State: AAQBX9fY/XAbRIC1i8xV40nUkbxDEBJtBU5QWVRjoCJdROtt8uYtgG54
+        aqxDEQwxgZNeQwv8F97aey6Zyjn35Q==
+X-Google-Smtp-Source: AKy350ZOWsoXuIh71UIF2+sLLrwOl+BpqIIgKkgejqQBZ32ulm5gvnnvuwY3zC6rOomi+M4QLEKW3A==
+X-Received: by 2002:a4a:418e:0:b0:538:242e:803a with SMTP id x136-20020a4a418e000000b00538242e803amr3420413ooa.0.1680713338369;
+        Wed, 05 Apr 2023 09:48:58 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id c5-20020a4aacc5000000b00524f381f681sm6880102oon.27.2023.04.05.09.48.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 09:48:58 -0700 (PDT)
+Received: (nullmailer pid 2821002 invoked by uid 1000);
+        Wed, 05 Apr 2023 16:48:57 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230405-topic-master_stats-v1-2-1b1fa2739953@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>, ahalaney@redhat.com,
+        linux-kernel@vger.kernel.org, quic_harshq@quicinc.com,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_pkondeti@quicinc.com,
+        Andy Gross <agross@kernel.org>, quic_shazhuss@quicinc.com,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        quic_wcheng@quicinc.com, Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>, quic_jackp@quicinc.com,
+        quic_ppratap@quicinc.com
+In-Reply-To: <20230405125759.4201-2-quic_kriskura@quicinc.com>
+References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+ <20230405125759.4201-2-quic_kriskura@quicinc.com>
+Message-Id: <168071287318.2812205.17997019926296843813.robh@kernel.org>
+Subject: Re: [PATCH v6 1/8] dt-bindings: usb: Add bindings for multiport
+ properties on DWC3 controller
+Date:   Wed, 05 Apr 2023 11:48:57 -0500
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
 
-kernel test robot noticed the following build warnings:
+On Wed, 05 Apr 2023 18:27:52 +0530, Krishna Kurapati wrote:
+> Add bindings to indicate properties required to support multiport
+> on Snps Dwc3 controller.
+> 
+> Suggested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+> Link to v5: https://lore.kernel.org/all/20230310163420.7582-2-quic_kriskura@quicinc.com/
+> 
+>  .../devicetree/bindings/usb/snps,dwc3.yaml          | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+> 
 
-[auto build test WARNING on 8417c8f5007bf4567ccffda850a3157c7d905f67]
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Konrad-Dybcio/dt-bindings-soc-qcom-Add-RPM-Master-stats/20230405-230341
-base:   8417c8f5007bf4567ccffda850a3157c7d905f67
-patch link:    https://lore.kernel.org/r/20230405-topic-master_stats-v1-2-1b1fa2739953%40linaro.org
-patch subject: [PATCH 2/2] soc: qcom: Introduce RPM master stats driver
-config: loongarch-allyesconfig (https://download.01.org/0day-ci/archive/20230406/202304060002.HLUjkH63-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/76fec5cd8630399cfdb8612093bfa0a5d0d98ea9
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Konrad-Dybcio/dt-bindings-soc-qcom-Add-RPM-Master-stats/20230405-230341
-        git checkout 76fec5cd8630399cfdb8612093bfa0a5d0d98ea9
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=loongarch olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=loongarch SHELL=/bin/bash drivers/soc/
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/usb/snps,dwc3.yaml:90:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202304060002.HLUjkH63-lkp@intel.com/
+dtschema/dtc warnings/errors:
 
-All warnings (new ones prefixed by >>):
+doc reference errors (make refcheckdocs):
 
-   drivers/soc/qcom/rpm_master_stats.c: In function 'master_stats_probe':
->> drivers/soc/qcom/rpm_master_stats.c:92:83: warning: format '%s' expects argument of type 'char *', but argument 4 has type 'int' [-Wformat=]
-      92 |                                              "Couldn't parse MSG RAM phandle idx %s", i);
-         |                                                                                  ~^   ~
-         |                                                                                   |   |
-         |                                                                                   |   int
-         |                                                                                   char *
-         |                                                                                  %d
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230405125759.4201-2-quic_kriskura@quicinc.com
 
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-vim +92 drivers/soc/qcom/rpm_master_stats.c
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-    66	
-    67	static int master_stats_probe(struct platform_device *pdev)
-    68	{
-    69		struct device *dev = &pdev->dev;
-    70		struct device_node *msgram_np;
-    71		struct master_stats_data *d;
-    72		struct dentry *dent, *root;
-    73		struct resource res;
-    74		int count, i, ret;
-    75	
-    76		count = of_property_count_strings(dev->of_node, "qcom,master-names");
-    77		if (count < 0)
-    78			return count;
-    79	
-    80		d = devm_kzalloc(dev, count * sizeof(*d), GFP_KERNEL);
-    81		if (!d)
-    82			return -ENOMEM;
-    83	
-    84		root = debugfs_create_dir("rpm_master_stats", NULL);
-    85		platform_set_drvdata(pdev, root);
-    86	
-    87		for (i = 0; i < count; i++) {
-    88			msgram_np = of_parse_phandle(dev->of_node, "qcom,rpm-msg-ram", i);
-    89			if (!msgram_np) {
-    90				debugfs_remove_recursive(root);
-    91				return dev_err_probe(dev, -EINVAL,
-  > 92						     "Couldn't parse MSG RAM phandle idx %s", i);
-    93			}
-    94	
-    95			/*
-    96			 * Purposefully skip devm_platform helpers as we're using a
-    97			 * shared resource.
-    98			 */
-    99			ret = of_address_to_resource(msgram_np, 0, &res);
-   100			if (ret < 0) {
-   101				debugfs_remove_recursive(root);
-   102				return ret;
-   103			}
-   104	
-   105			d[i].base = devm_ioremap(dev, res.start, resource_size(&res));
-   106			if (IS_ERR(d[i].base)) {
-   107				debugfs_remove_recursive(root);
-   108				return dev_err_probe(dev, -EINVAL,
-   109						     "Could not map the MSG RAM slice idx %d!\n", i);
-   110			}
-   111	
-   112			ret = of_property_read_string_index(dev->of_node, "qcom,master-names", i,
-   113							    &d[i].label);
-   114			if (ret < 0) {
-   115				debugfs_remove_recursive(root);
-   116				return dev_err_probe(dev, ret,
-   117						     "Could not read name idx %d!\n", i);
-   118			}
-   119	
-   120			/*
-   121			 * Generally it's not advised to fail on debugfs errors, but this
-   122			 * driver's only job is exposing data therein.
-   123			 */
-   124			dent = debugfs_create_file(d[i].label, 0444, root,
-   125						   &d[i], &master_stats_fops);
-   126			if (!dent) {
-   127				debugfs_remove_recursive(root);
-   128				return -EINVAL;
-   129			}
-   130		}
-   131	
-   132		device_set_pm_not_required(dev);
-   133	
-   134		return 0;
-   135	}
-   136	
+pip3 install dtschema --upgrade
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
