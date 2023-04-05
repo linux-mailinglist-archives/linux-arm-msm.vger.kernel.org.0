@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C8A46D7929
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 12:00:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E7B16D7A4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 12:48:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237022AbjDEKAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 06:00:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48526 "EHLO
+        id S237865AbjDEKsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 06:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231624AbjDEKAh (ORCPT
+        with ESMTP id S237769AbjDEKsl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 06:00:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D41A6;
-        Wed,  5 Apr 2023 03:00:36 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3359cUWa002449;
-        Wed, 5 Apr 2023 10:00:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=RcU5QX2H+naJU/RnfYHZlRtFeE/30+0/6/b4AeyX1+s=;
- b=W/B+J02YJ2TrNlMViira1wQagewemDFqr2kMzEqkInVtYMi1JRAENkmOj49T52RJUQVz
- Qftqmz42ZbcKKIJjSO+4VFLz1e4+bKNivNJzIFfX9c30n8E+pN2/CIKdr08+srj0bH0m
- 5rUH6Hw9LIhXnuZw/ZJA4ipS0bjRcAuoUZgxB+PKLyEQcNDeWQRW5zeP4nhs1V4avG+X
- g4gLz/tAyo3cRtUvoKgzp72bODCnPgxS2+5BY1yHXG4TDlOAmtjPVDg5oB5lTm1Rt7+i
- 4pPys54PYCSAAvMhy/+EJ7V11VwKh19G6U0wk8Q71caYjHdfGEX7eAQbcy7ELNXwVg30 JA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prnvg2dnn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Apr 2023 10:00:27 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335A0PhX002702
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Apr 2023 10:00:26 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 5 Apr 2023 03:00:20 -0700
-Date:   Wed, 5 Apr 2023 15:30:16 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Johan Hovold <johan@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v6 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <20230405100015.GA11731@varda-linux.qualcomm.com>
-References: <cover.1680682939.git.quic_varada@quicinc.com>
- <aaf44ceccef9c7b20a08b8c9fa534f99468f8856.1680682939.git.quic_varada@quicinc.com>
- <ZC08PfY+TN3+lBT4@hovoldconsulting.com>
+        Wed, 5 Apr 2023 06:48:41 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 914255592
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 03:48:38 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id s20so16520257ljp.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 03:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680691717;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZG2HCtNxlgwN2tmS23WngsoPcjjiHvvoCCuFSy8KcdU=;
+        b=tMb0fkkc8uT0wd4kgaghM5StLPoEDgwCBmUZ70raGVJ3a1NkpO1ZTe6kPry7hLpv5P
+         GFOlCWOi8d/QIzAVUDiDuKvcmmn7ZFz7n4K55wAogNZNred2qCX0Pq2LuaLa4MAuxu4N
+         ogjT5XozqnKc1EXwbOtkvT22DqHbkDjnJDIqfUyYlK018/lQvmN0Hd39aQwI8MWEty6h
+         3CkDaW+6mZqLEDdbodG8ojkKjeQkXe2A09YoshyDeD004VZ+LOlal19utadAqfGp+8r7
+         dnLJhuYeQdUn0iRCzRufvY3cbSHO03lIT7dWQaQ45Qm7WLbhNGHaHedYnXRdLa/EVaiv
+         +PNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680691717;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZG2HCtNxlgwN2tmS23WngsoPcjjiHvvoCCuFSy8KcdU=;
+        b=ZgXgojl45TfF3MtpmmPkiyhTNrHHMU31Izqm9dABiCvFk+XXB35cywwprfDjfl2vHM
+         I0ikKqTKoVE9FTkGOKQQRSQRY6FAH2YkVU/yODOZMJNhNsRN/2aKoLyn6FAdHQ0xi4LC
+         RWJLrwHu2ftOcPt5u5ZZ0gKAJD7YgBc1HYII4EAI43R5/i/xuunKDri/tiQIKP1z2ni2
+         EfqIEz2t9NuqPy9dQqCkygIWLRMuFiXkWEAnqaU0Y36SEwU1QOQzeO89RtopbyDtlQeo
+         p8sJYqBqcbG1wbeU0X+Qe8G62NyytWvAwXJyxB5ONp3AOCrptA5PJRLlE6LdXtCFlpUD
+         wMoA==
+X-Gm-Message-State: AAQBX9cPJjvUJn/FDTur6qY6acHYmAylAHypLfUJMcbEdNrDd/GK3+p/
+        UoiYfhBKsN0fzw8dssO7seN1+A==
+X-Google-Smtp-Source: AKy350YKyZEdK7pLHgd5YB2Bd5YC6pZqq+CkwOXKtrhPPd0UKP4XdNNIoXlNEXBxtxBLHqLsj+wEJw==
+X-Received: by 2002:a2e:9d83:0:b0:298:9fb5:9f20 with SMTP id c3-20020a2e9d83000000b002989fb59f20mr1957018ljj.26.1680691716773;
+        Wed, 05 Apr 2023 03:48:36 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id u4-20020a2e9b04000000b00295a3a64816sm2777299lji.2.2023.04.05.03.48.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 03:48:36 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/2] Resolve MPM register space situation
+Date:   Wed, 05 Apr 2023 12:48:33 +0200
+Message-Id: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZC08PfY+TN3+lBT4@hovoldconsulting.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lfx1yn7mrgcHaXzzz0_KPmdmKXrrlXZx
-X-Proofpoint-ORIG-GUID: lfx1yn7mrgcHaXzzz0_KPmdmKXrrlXZx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-05_06,2023-04-04_05,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 mlxscore=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 mlxlogscore=927
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304050091
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAFSLWQC/32NQQ6CMBAAv0L2bA20opWT/zDEbGuBTWhLtkg0h
+ L9beYDHmWQyKyTH5BI0xQrsFkoUQwZ5KMAOGHon6JkZZClVqaQWc5zICp96Rv/wkxf2rLVxylh
+ 5PUHODCYnDGOwQw7DaxyznNh19N4/9zbzQGmO/Nm3S/Wzfw5LJUpRmYvWWHc1KnUbKSDHY+Qe2
+ m3bviyDJTHGAAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680691715; l=2181;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=PGToSdNHkfoH7oxxoFUu9HnlKuR8i20PGmrHfAvQgnY=;
+ b=5Av9gDhmhgmJn0VA+nRwiin3TUmgFd55mTdHow3w2FRnEPpBNUjRrUGoQ3AZ4JnM6WWhwflaydmZ
+ qa819xQ5BkSWsagI1LVXmxQ1PU1LOBzlgrxI9YNDg2Xd/EUUZIzK
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,55 +88,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 05, 2023 at 11:15:41AM +0200, Johan Hovold wrote:
-> On Wed, Apr 05, 2023 at 02:26:42PM +0530, Varadarajan Narayanan wrote:
-> > Add USB phy and controller related nodes
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  Changes in v6:
-> > 	- Introduce fixed regulators for the phy
-> > 	- Resolved all 'make dtbs_check' messages
->
->
-> > +		usb_0_qmpphy: phy@7d000 {
-> > +			compatible = "qcom,ipq9574-qmp-usb3-phy";
-> > +			reg = <0x0007d000 0xa00>;
-> > +			#phy-cells = <0>;
-> > +
-> > +			clocks = <&gcc GCC_USB0_AUX_CLK>,
-> > +				 <&xo_board_clk>,
-> > +				 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> > +				 <&gcc GCC_USB0_PIPE_CLK>;
-> > +			clock-names = "aux",
-> > +				      "ref",
-> > +				      "com_aux",
->
-> Looks like you just ignored my comment that you need to rename this
-> clock (and update the binding). :(
->
-> 	https://lore.kernel.org/lkml/ZCaznloORtzgioOP@hovoldconsulting.com/
+v1 -> v2:
+- deprecate 'reg', make qcom,rpm-msg-ram required [1/2]
+- Use devm_ioremap() [2/2]
 
-Sorry. My mistake. Will post a new patch.
-Ignore V7. Missed the update in the binding.
+Link to v1: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org
 
-Thanks
-Varada
->
-> > +				      "pipe";
-> > +
-> > +			resets = <&gcc GCC_USB0_PHY_BCR>,
-> > +				 <&gcc GCC_USB3PHY_0_PHY_BCR>;
-> > +			reset-names = "phy",
-> > +				      "phy_phy";
-> > +
-> > +			vdda-pll-supply = <&reg_usb_1p8>;
-> > +			vdda-phy-supply = <&reg_usb_0p925>;
-> > +
-> > +			status = "disabled";
-> > +
-> > +			#clock-cells = <0>;
-> > +			clock-output-names = "usb0_pipe_clk";
-> > +		};A
->
-> Johan
+Depends on resolution of https://github.com/devicetree-org/dt-schema/issues/104
+
+The MPM (and some other things, irrelevant to this patchset) resides
+(as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
+that's a portion of the RPM (low-power management core)'s RAM, known
+as the RPM Message RAM. Representing this relation in the Device Tree
+creates some challenges, as one would either have to treat a memory
+region as a bus, map nodes in a way such that their reg-s would be
+overlapping, or supply the nodes with a slice of that region.
+
+This series implements the third option, by adding a qcom,rpm-msg-ram
+property, which has been used for some drivers poking into this region
+before. Bindings ABI compatibility is preserved through keeping the
+"normal" (a.k.a read the reg property and map that region) way of
+passing the register space.
+
+Example representation with this patchset:
+
+/ {
+	[...]
+
+	mpm: interrupt-controller {
+		compatible = "qcom,mpm";
+		qcom,rpm-msg-ram = <&apss_mpm>;
+		[...]
+	};
+
+	[...]
+
+	soc: soc@0 {
+		[...]
+
+		rpm_msg_ram: sram@45f0000 {
+			compatible = "qcom,rpm-msg-ram", "mmio-sram";
+			reg = <0 0x045f0000 0 0x7000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x0 0x045f0000 0x7000>;
+
+			apss_mpm: sram@1b8 {
+				reg = <0x1b8 0x48>;
+			};
+		};
+	};
+};
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: interrupt-controller: mpm: Pass MSG RAM slice through phandle
+      irqchip: irq-qcom-mpm: Support passing a slice of SRAM as reg space
+
+ .../bindings/interrupt-controller/qcom,mpm.yaml     | 12 +++++++++---
+ drivers/irqchip/irq-qcom-mpm.c                      | 21 ++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 6 deletions(-)
+---
+base-commit: 8417c8f5007bf4567ccffda850a3157c7d905f67
+change-id: 20230328-topic-msgram_mpm-c688be3bc294
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
