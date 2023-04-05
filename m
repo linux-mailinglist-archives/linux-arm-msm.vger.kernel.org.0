@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0CA26D7D41
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:02:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3F116D7DB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:27:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238097AbjDENCl convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 5 Apr 2023 09:02:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44952 "EHLO
+        id S237881AbjDEN1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 09:27:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238059AbjDENCk (ORCPT
+        with ESMTP id S237141AbjDEN1e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 09:02:40 -0400
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3397565BC;
-        Wed,  5 Apr 2023 06:02:17 -0700 (PDT)
-Received: from ip4d1634d3.dynamic.kabel-deutschland.de ([77.22.52.211] helo=diego.localnet)
-        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <heiko@sntech.de>)
-        id 1pk2lE-0006xn-Nr; Wed, 05 Apr 2023 15:01:12 +0200
-From:   Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vincent Shih <vincent.sunplus@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Alessandro Zummo <a.zummo@towertech.it>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Evgeniy Polyakov <zbr@ioremap.net>,
-        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-amlogic@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
-        Michael Walle <michael@walle.cc>,
-        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Subject: Re: [PATCH V4] nvmem: add explicit config option to read old syntax fixed OF
- cells
-Date:   Wed, 05 Apr 2023 15:01:10 +0200
-Message-ID: <4767237.ejJDZkT8p0@diego>
-In-Reply-To: <20230403225540.1931-1-zajec5@gmail.com>
-References: <20230403225540.1931-1-zajec5@gmail.com>
+        Wed, 5 Apr 2023 09:27:34 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A1D271E
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 06:27:33 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5029d4d90fbso52299a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 06:27:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1680701252; x=1683293252;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XqX1N9AwIcXh3tEpxCe94h+1QEhsxAem/vTybjTN11k=;
+        b=JXSAfvOtNFzK6tv8vKIgjAj2QxudkNTN+gOdh2IAHy0MotU6InrYYubzWWC4V5brU8
+         +Iwz08yS0ZLc1ZEFGhg9fpD4K3avpKoWG+Rf2Aw4mDHJXV6tZSo2upS+nG1jDlo0Tylh
+         /V9pl+Fa0Mjb6GSn/l601xafWZR6leIYeocfA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680701252; x=1683293252;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XqX1N9AwIcXh3tEpxCe94h+1QEhsxAem/vTybjTN11k=;
+        b=4qSY1Ggug0yem3ON90fnprpBAzoQj17CAqVj3mVXFCo/kPw7qhwNKlxLzx05KmqlXd
+         oEdSDgmHpGhlHFgQuI3DdrAz3XyNB2q0G3O9KgsF29/UheZPnusAVL7yvS82z/HdB8KD
+         kZYjG9PkU0RDVpBPbmcqv5Kc/HJu0a8Mo81NtpM0PSLE4fRarcSr5ehBCs5e1HXoUEH8
+         PSFDqfPhmboH3WdPT0fOXpOUCWSVvyf+2n3VMZsb3Zqc1Js0faUjidor0cHsjgVYAW21
+         oxtPZKHYZodTYbYP2Po+AMaRsIUDK51je/IMc3ppBM4q6BLErOvCVre40iP383cKU23p
+         QRfA==
+X-Gm-Message-State: AAQBX9f8GDPhcbkpUpoervJgTw7hJmE+i6OIN8jqQSSGcaQHRMkvnpPb
+        p0m1ZiOnpxG+FMztvr4PnDLNOw==
+X-Google-Smtp-Source: AKy350YswyL/2WjlpsmEdGmBnqipwym85alKiP+KkghBft5Jy1eR+adZL60tPSX8iCmHKGIo3/jCOQ==
+X-Received: by 2002:a05:6402:524e:b0:4fd:2978:d80 with SMTP id t14-20020a056402524e00b004fd29780d80mr2007567edd.1.1680701251733;
+        Wed, 05 Apr 2023 06:27:31 -0700 (PDT)
+Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
+        by smtp.gmail.com with ESMTPSA id q17-20020a50c351000000b004bf76fdfdb3sm7246880edb.26.2023.04.05.06.27.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 06:27:31 -0700 (PDT)
+Date:   Wed, 5 Apr 2023 15:27:29 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Oded Gabbay <ogabbay@kernel.org>
+Cc:     Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, airlied@gmail.com,
+        daniel@ffwll.ch, mani@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-doc@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        quic_ajitpals@quicinc.com, quic_pkanojiy@quicinc.com,
+        stanislaw.gruszka@linux.intel.com, quic_carlv@quicinc.com,
+        bagasdotme@gmail.com
+Subject: Re: [PATCH v5 0/8] QAIC accel driver
+Message-ID: <ZC13QdSRybIe3nvk@phenom.ffwll.local>
+References: <1679932497-30277-1-git-send-email-quic_jhugo@quicinc.com>
+ <857db3fb-b006-4aa8-a7f8-2ae0b8a160c9@quicinc.com>
+ <c5d11a88-351a-8eaf-f1d2-d7cf37cdf81c@linux.intel.com>
+ <CAFCwf12iVZkcPKOEc911-fCd4-YzHYJzs_p36jfBiT=VkcO9uQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_PASS,T_SPF_HELO_TEMPERROR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFCwf12iVZkcPKOEc911-fCd4-YzHYJzs_p36jfBiT=VkcO9uQ@mail.gmail.com>
+X-Operating-System: Linux phenom 6.1.0-7-amd64 
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,51 +78,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Dienstag, 4. April 2023, 00:55:40 CEST schrieb Rafał Miłecki:
-> From: Rafał Miłecki <rafal@milecki.pl>
+On Wed, Apr 05, 2023 at 03:35:19PM +0300, Oded Gabbay wrote:
+> On Wed, Apr 5, 2023 at 2:26 PM Jacek Lawrynowicz
+> <jacek.lawrynowicz@linux.intel.com> wrote:
+> >
+> > Hi,
+> >
+> > On 03.04.2023 19:22, Jeffrey Hugo wrote:
+> > > On 3/27/2023 9:54 AM, Jeffrey Hugo wrote:
+> > >> This series introduces a driver under the accel subsystem (QAIC -
+> > >> Qualcomm AIC) for the Qualcomm Cloud AI 100 product (AIC100).  AIC100 is
+> > >> a PCIe adapter card that hosts a dedicated machine learning inference
+> > >> accelerator.
+> > >>
+> > >> The previous version (v4) can be found at:
+> > >> https://lore.kernel.org/all/1679325074-5494-1-git-send-email-quic_jhugo@quicinc.com/
+> > >
+> > > Looks like things have been silent on this revision and we have a number of review tags already.  Seems like this series is ready for merge.
+> > >
+> > > I'd like to see this queued for 6.4 if possible.  Given that we are at 6.3-rc5, it seems like this would need to be merged now(ish) to make 6.4.
+> > >
+> > > Jacek, since you have commit permissions in drm-misc and are an active Accel maintainer, I wonder if it would be appropriate for you to merge this series to drm-misc.  Thoughts?
+> >
+> > I'm would be happy to merge it but I think it needs to be acked by Oded first.
+> >
+> > Regards,
+> > Jacek
 > 
-> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
-> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
-> layout binding.
-> 
-> New syntax is meant to be clearer and should help avoiding imprecise
-> bindings.
-> 
-> NVMEM subsystem already supports the new binding. It should be a good
-> idea to limit support for old syntax to existing drivers that actually
-> support & use it (we can't break backward compatibility!). That way we
-> additionally encourage new bindings & drivers to ignore deprecated
-> binding.
-> 
-> It wasn't clear (to me) if rtc and w1 code actually uses old syntax
-> fixed cells. I enabled them to don't risk any breakage.
-> 
-> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-> [for meson-{efuse,mx-efuse}.c]
-> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-> [for mtk-efuse.c, nvmem/core.c, nvmem-provider.h]
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> [MT8192, MT8195 Chromebooks]
-> Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> [for microchip-otpc.c]
-> Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-> [SAMA7G5-EK]
-> Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+> Hi,
+> Entire patch-set is:
+> Acked-by: Oded Gabbay <ogabbay@kernel.org>
 
-> diff --git a/drivers/nvmem/rockchip-efuse.c b/drivers/nvmem/rockchip-efuse.c
-> index e4579de5d014..adc8bc70cffa 100644
-> --- a/drivers/nvmem/rockchip-efuse.c
-> +++ b/drivers/nvmem/rockchip-efuse.c
-> @@ -205,6 +205,7 @@ static int rockchip_rk3399_efuse_read(void *context, unsigned int offset,
->  
->  static struct nvmem_config econfig = {
->  	.name = "rockchip-efuse",
-> +	.add_legacy_fixed_of_cells = true,
->  	.stride = 1,
->  	.word_size = 1,
->  	.read_only = true,
+Once Jacke has pushed this I htink it would also be good to get Jeffrey
+commit rights for drm-misc, so that in the future bugfixes for the qaic
+driver can be pushed directly by the qaic team. Still with acks/r-b
+requirements as per usual, and I guess for anything bigger/new uapi an ack
+from oded is needed.
 
-for rockchip-efuse.c
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+https://drm.pages.freedesktop.org/maintainer-tools/commit-access.html#drm-misc
 
-
+Cheers, Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
