@@ -2,132 +2,320 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDED96D8AFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 01:14:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7586D6D8B1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 01:34:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231474AbjDEXOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 19:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53494 "EHLO
+        id S229623AbjDEXey (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 19:34:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230497AbjDEXOg (ORCPT
+        with ESMTP id S231611AbjDEXeu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 19:14:36 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E02F46B7;
-        Wed,  5 Apr 2023 16:14:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680736475; x=1712272475;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=FKhsDwBgWocxbDBm71IX9YxYgh4XGnM3GUQYRhxeNgQ=;
-  b=aH44hVKWcHMGqpaDDNa35ciWwmCvPRrv4RFYby3nVCcBMjRWuDBW6dXH
-   nCY23xzlvqJRSXBqoRt17caMdlc6wXL2BGa75VZNyY7QlMJm/e0hCl/N5
-   moit6dOkft1G4Ve1sVU3RLc1cO2REfBj8MC9iMbdnrsjbKwH/aexI4ztC
-   9lPU2SdhQyp4CM926Fa2rNMOF4rdK4imPN77iwTi+Q8CYzzmXe0odW2wx
-   5hDUKO0lDDyobVPByPXlIFao9lqFd7Z6NBQOvWsyQbK1codTxIeCWmIPF
-   WwbKu46i0gX5+hWKcIH+Xebl9MUcrYOHOD4RT2eCmtNHUoMfyvgODf6Y8
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10671"; a="341318982"
-X-IronPort-AV: E=Sophos;i="5.98,322,1673942400"; 
-   d="scan'208";a="341318982"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Apr 2023 16:14:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10671"; a="798099746"
-X-IronPort-AV: E=Sophos;i="5.98,322,1673942400"; 
-   d="scan'208";a="798099746"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 05 Apr 2023 16:14:30 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pkCKj-000QtT-0M;
-        Wed, 05 Apr 2023 23:14:29 +0000
-Date:   Thu, 6 Apr 2023 07:14:13 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com, quic_shazhuss@quicinc.com,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH v6 2/8] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <202304060712.gqBA4oqQ-lkp@intel.com>
-References: <20230405125759.4201-3-quic_kriskura@quicinc.com>
+        Wed, 5 Apr 2023 19:34:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9062A30DF
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 16:34:42 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 335K5jjB012114;
+        Wed, 5 Apr 2023 23:34:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=fFHXMKsRvtEiiWz8rpnDkePmOJZ/Ld4AQSOVjOh9NKQ=;
+ b=TGYMslcgsC45aseK3JWzLPTZoih5bbMOw9zzfaLweYD4lo3d8Hx2UmuhlZ72qtY0qCxQ
+ e+SWWMMk/woR3kyw3UWIO7IAAtgq/u8n2ZVzpG9a4n3WmNV/9CTlPlIgv9g9UOOCeuk9
+ m6HN/mbyCyi5FgBoM2ayUPAxZZ976LiVmV+3lnFIvrGFtTrkr4fyqLAlWU2tKxs85iRV
+ umvxnAIU5m0P8VvpGARgTCNLPrX26ZBVH3Xtc0Ty1wwZV+7YyIdtBDxp3NYAnqqlfgVb
+ tzAFwcBTaxvKS+lxWyJP/wB1eKst0yjMQox1OPzmjlXA6lSv/U6yMcLbI+m8fpJbNgHS 2Q== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prgvevwut-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Apr 2023 23:34:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335NYDEN020092
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Apr 2023 23:34:13 GMT
+Received: from [10.110.59.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 5 Apr 2023
+ 16:34:12 -0700
+Message-ID: <c49756fb-75d3-45b4-f78c-2e2e18f71821@quicinc.com>
+Date:   Wed, 5 Apr 2023 16:34:12 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230405125759.4201-3-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v4 1/6] drm/msm: Add MSM-specific DSC helper methods
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        <freedreno@lists.freedesktop.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v4-0-1b79c78b30d7@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v4-1-1b79c78b30d7@quicinc.com>
+ <dd8dcaf7-acc0-69cc-9c7e-bcbd270fb845@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <dd8dcaf7-acc0-69cc-9c7e-bcbd270fb845@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 02XLYTLm8CqVKAtdgRVZNi_Zfh_ZVb8Z
+X-Proofpoint-GUID: 02XLYTLm8CqVKAtdgRVZNi_Zfh_ZVb8Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-05_15,2023-04-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=840
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304050211
+X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
 
-kernel test robot noticed the following build warnings:
 
-[auto build test WARNING on usb/usb-linus]
-[also build test WARNING on robh/for-next linus/master v6.3-rc5 next-20230405]
-[cannot apply to usb/usb-testing usb/usb-next pza/reset/next pza/imx-drm/next]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On 4/5/2023 12:26 PM, Dmitry Baryshkov wrote:
+> On 05/04/2023 03:41, Jessica Zhang wrote:
+>> Introduce MSM-specific DSC helper methods, as some calculations are
+>> common between DP and DSC.
+>>
+>> Changes in v2:
+>> - Moved files up to msm/ directory
+>> - Dropped get_comp_ratio() helper
+>> - Used drm_int2fixp() to convert to integers to fp
+>> - Style changes to improve readability
+>> - Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
+>> - Changed msm_dsc_get_slice_per_intf() to a static inline method
+>> - Dropped last division step of msm_dsc_get_pclk_per_line() and changed
+>>    method name accordingly
+>> - Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
+>> - Fixed some math issues caused by passing in incorrect types to
+>>    drm_fixed methods in get_bytes_per_soft_slice()
+>>
+>> Changes in v3:
+>> - Dropped src_bpp parameter from all methods -- src_bpp can be
+>>    calculated as dsc->bits_per_component * 3
+>> - Dropped intf_width parameter from get_bytes_per_soft_slice()
+>> - Moved dsc->bits_per_component to numerator calculation in
+>>    get_bytes_per_soft_slice()
+>> - Renamed msm_dsc_get_uncompressed_pclk_per_line to
+>>    *_get_uncompressed_pclk_per_intf()
+>> - Removed dsc->slice_width check from
+>>    msm_dsc_get_uncompressed_pclk_per_intf()
+>> - Made get_bytes_per_soft_slice() a public method (this will be called
+>>    later to help calculate DP pclk params)
+>> - Added documentation in comments
+>> - Moved extra_eol_bytes math out of msm_dsc_get_eol_byte_num() and
+>>    renamed msm_dsc_get_eol_byte_num to *_get_bytes_per_intf.
+>>
+>> Changes in v4:
+>> - Changed msm_dsc_get_uncompressed_pclk_per_intf to
+>>    msm_dsc_get_pclk_per_intf
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/Makefile         |  1 +
+>>   drivers/gpu/drm/msm/msm_dsc_helper.c | 47 ++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/msm_dsc_helper.h | 70 
+>> ++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 118 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+>> index 7274c41228ed..b814fc80e2d5 100644
+>> --- a/drivers/gpu/drm/msm/Makefile
+>> +++ b/drivers/gpu/drm/msm/Makefile
+>> @@ -94,6 +94,7 @@ msm-y += \
+>>       msm_atomic_tracepoints.o \
+>>       msm_debugfs.o \
+>>       msm_drv.o \
+>> +    msm_dsc_helper.o \
+>>       msm_fb.o \
+>>       msm_fence.o \
+>>       msm_gem.o \
+>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.c 
+>> b/drivers/gpu/drm/msm/msm_dsc_helper.c
+>> new file mode 100644
+>> index 000000000000..0539221eb09d
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.c
+>> @@ -0,0 +1,47 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>> reserved
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/errno.h>
+>> +#include <drm/drm_fixed.h>
+>> +
+>> +#include "msm_drv.h"
+>> +#include "msm_dsc_helper.h"
+>> +
+>> +s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc)
+>> +{
+>> +    int bpp = msm_dsc_get_bpp_int(dsc);
+>> +    s64 numerator_fp, denominator_fp;
+>> +    s64 comp_ratio_fp = 
+>> drm_fixp_from_fraction(dsc->bits_per_component * 3, bpp);
+>> +
+>> +    numerator_fp = drm_int2fixp(dsc->slice_width * 3 * 
+>> dsc->bits_per_component);
+>> +    denominator_fp = drm_fixp_mul(comp_ratio_fp, drm_int2fixp(8));
+>> +
+>> +    return drm_fixp_div(numerator_fp, denominator_fp);
+> 
+> If we remove 3 * dsc->bits_per_components from both numerator and 
+> denominator, this whole function seems to be as simple as 
+> DIV_ROUND_UP(dsc->slice_width * bpp, 8)
+> 
+> Or, if you prefer FP math, drm_fixp_from_fraction(dsc->slice_width * 
+> bpp, 8).
+> 
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/dt-bindings-usb-Add-bindings-for-multiport-properties-on-DWC3-controller/20230405-210221
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-linus
-patch link:    https://lore.kernel.org/r/20230405125759.4201-3-quic_kriskura%40quicinc.com
-patch subject: [PATCH v6 2/8] usb: dwc3: core: Access XHCI address space temporarily to read port info
-reproduce:
-        # https://github.com/intel-lab-lkp/linux/commit/a0de434ac81429422ecdf84fe968bd8c3f73445b
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Krishna-Kurapati/dt-bindings-usb-Add-bindings-for-multiport-properties-on-DWC3-controller/20230405-210221
-        git checkout a0de434ac81429422ecdf84fe968bd8c3f73445b
-        make menuconfig
-        # enable CONFIG_COMPILE_TEST, CONFIG_WARN_MISSING_DOCUMENTS, CONFIG_WARN_ABI_ERRORS
-        make htmldocs
+True and thats not really surprising because bytes_per_soft_slice is 
+eventually (dsc->slice_width * bpp, 8)
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202304060712.gqBA4oqQ-lkp@intel.com/
+I also thought about it after you mentioned that they will cancel out 
+then why was downstream code and our programming guide doing this way.
 
-All warnings (new ones prefixed by >>):
+So i thought a bit more and the reason from what I can see is that its 
+showing that compression ratio was factored into the math while 
+calculating it. If we just go with (dsc->slice_width * bpp, 8), it does 
+not really show that this was actually compressed bytes per slice 
+leading to the earlier confusion that it was uncompressed pclk while it 
+actually was.
 
->> ./drivers/usb/dwc3/core.h:1666: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
-
-vim +1666 ./drivers/usb/dwc3/core.h
-
-  1664	
-  1665	/**
-> 1666	 * Find the offset of the extended capabilities with capability ID id.
-  1667	 *
-  1668	 * @base	PCI MMIO registers base address.
-  1669	 * @start	address at which to start looking, (0 or HCC_PARAMS to start at
-  1670	 *		beginning of list)
-  1671	 * @id		Extended capability ID to search for, or 0 for the next
-  1672	 *		capability
-  1673	 *
-  1674	 * Returns the offset of the next matching extended capability structure.
-  1675	 * Some capabilities can occur several times, e.g., the XHCI_EXT_CAPS_PROTOCOL,
-  1676	 * and this provides a way to find them all.
-  1677	 */
-  1678	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+>> +}
+>> +
+>> +u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int 
+>> intf_width)
+>> +{
+>> +    u32 bytes_per_soft_slice, bytes_per_intf;
+>> +    s64 bytes_per_soft_slice_fp;
+>> +    int slice_per_intf = msm_dsc_get_slice_per_intf(dsc, intf_width);
+>> +
+>> +    bytes_per_soft_slice_fp = get_bytes_per_soft_slice(dsc);
+>> +    bytes_per_soft_slice = drm_fixp2int_ceil(bytes_per_soft_slice_fp);
+>> +
+>> +    bytes_per_intf = bytes_per_soft_slice * slice_per_intf;
+>> +
+>> +    return bytes_per_intf;
+>> +}
+>> +
+>> +int msm_dsc_get_pclk_per_intf(struct drm_dsc_config *dsc)
+>> +{
+>> +    s64 data_width;
+>> +
+>> +    data_width = drm_fixp_mul(drm_int2fixp(dsc->slice_count),
+>> +            get_bytes_per_soft_slice(dsc));
+> 
+> And this is then DIV_ROUND_UP(dsc->slice_width * dsc->slice_count * bpp, 8)
+> 
+>> +
+>> +    return drm_fixp2int_ceil(data_width);
+>> +}
+>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h 
+>> b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> new file mode 100644
+>> index 000000000000..31116a31090f
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> @@ -0,0 +1,70 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>> reserved
+>> + */
+>> +
+>> +#ifndef MSM_DSC_HELPER_H_
+>> +#define MSM_DSC_HELPER_H_
+>> +
+>> +#include <drm/display/drm_dsc_helper.h>
+>> +#include <drm/drm_modes.h>
+>> +
+>> +/*
+>> + * Helper methods for MSM specific DSC calculations that are common 
+>> between timing engine,
+>> + * DSI, and DP.
+>> + */
+>> +
+>> +/**
+>> + * msm_dsc_get_bpp_int - get bits per pixel integer value
+>> + * @dsc: Pointer to drm dsc config struct
+>> + */
+>> +static inline int msm_dsc_get_bpp_int(struct drm_dsc_config *dsc)
+>> +{
+>> +    WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
+>> +    return dsc->bits_per_pixel >> 4;
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_slice_per_intf - get number of slices per interface
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + */
+>> +static inline int msm_dsc_get_slice_per_intf(struct drm_dsc_config 
+>> *dsc, int intf_width)
+>> +{
+>> +    return DIV_ROUND_UP(intf_width, dsc->slice_width);
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_dce_bytes_per_line - get bytes per line to help 
+>> calculate data width
+>> + *    when configuring the timing engine
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + */
+>> +static inline u32 msm_dsc_get_dce_bytes_per_line(struct 
+>> drm_dsc_config *dsc, int intf_width)
+>> +{
+>> +    return DIV_ROUND_UP(msm_dsc_get_bpp_int(dsc) * intf_width, 8);
+>> +}
+>> +
+>> +/**
+>> + * get_bytes_per_soft_slice - get size of each soft slice for dsc
+>> + * @dsc: Pointer to drm dsc config struct
+>> + */
+>> +s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc);
+>> +
+>> +/**
+>> + * msm_dsc_get_bytes_per_intf - get total bytes per interface
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + */
+>> +u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int 
+>> intf_width);
+>> +
+>> +/**
+>> + * msm_dsc_get_pclk_per_intf - Calculate pclk per interface.
+>> + * @dsc: Pointer to drm dsc config struct
+>> + *
+>> + * Note: This value will then be passed along to DSI and DP for some 
+>> more
+>> + * calculations. This is because DSI and DP divide the pclk_per_intf 
+>> value
+>> + * by different values depending on if widebus is enabled.
+>> + */
+>> +int msm_dsc_get_pclk_per_intf(struct drm_dsc_config *dsc);
+> 
+> empty line, please
+> 
+>> +#endif /* MSM_DSC_HELPER_H_ */
+>>
+> 
