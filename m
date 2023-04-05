@@ -2,143 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 113D86D7BC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 13:43:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 777B26D7C55
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 14:22:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237866AbjDELnu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 07:43:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55544 "EHLO
+        id S237879AbjDEMWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 08:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237894AbjDELnt (ORCPT
+        with ESMTP id S237801AbjDEMWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 07:43:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E725FD8;
-        Wed,  5 Apr 2023 04:43:20 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 335BQKMt015464;
-        Wed, 5 Apr 2023 11:42:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=2u1bt7sISW7gYR56t/sEB8xayuIhGFjBWFB7FY5nIho=;
- b=kRIHBKevPXWIgKQZLuz0h0Tk05ns77bzHnDwj6AwZFGKWel+YUG40bITSkY/jjDdFk11
- 1MjmGUGTmJd36f141wMuYweHn74wZy8N/L2OxX1sKxgGYMpYcaYz0ONsCn2pJOg6Awed
- quv1tMLPvIAihDr/UUKOEIHqTeXo4qAj8wtYknUpAXcqV9cjUoB61P04pYol9qWS81Ux
- PM9KTPGRZXpFMlvDFl86Du6ymqujptR+0ijwskZljtBHQ8Dp0kEAx6/VybVJ0nvcey4q
- dmGLOrqrUP246pxQ3SwmtdWJAr/SOFtNrlaNb7Wj5s+q9Cz1yggiJ9JkQ66TPiPDJ84E Ng== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prwc79bx0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Apr 2023 11:42:27 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335BgRh1027969
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Apr 2023 11:42:27 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 5 Apr 2023 04:42:21 -0700
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: [PATCH v8 8/8] arm64: dts: qcom: ipq9574: Enable USB
-Date:   Wed, 5 Apr 2023 17:11:27 +0530
-Message-ID: <a1d3329d53af5d0abb978e71c1cde1ed3b9c91df.1680693149.git.quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1680693149.git.quic_varada@quicinc.com>
-References: <cover.1680693149.git.quic_varada@quicinc.com>
+        Wed, 5 Apr 2023 08:22:44 -0400
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0F2840D3;
+        Wed,  5 Apr 2023 05:22:43 -0700 (PDT)
+Received: by mail-ot1-f42.google.com with SMTP id w15-20020a056830410f00b006a386a0568dso3637490ott.4;
+        Wed, 05 Apr 2023 05:22:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680697363;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LeDwDvXYhfA2d71gl7rb1f+QkWdueZ1TNdSOE+YoWCs=;
+        b=NYdptZnyHmJDDcVnZkzcrdfxt0fk5wdF7UDsOcgk69rH5uty+CAnVP1hafvmwaXi6r
+         Cjai8sMSgIOHULC+uotNgXS6Li9xiNvDFWZEwwGLdZcurvr7ktBi675qfaeqa/A/RieR
+         4x/wnYxTj4z1iFmURhFgffZpyXjcwEhCdAk6eqxSEfctcXsV3pV8pIUvXuuigZAEdYmz
+         Z1ygHk2B4D+oCveQQyfjblBVFZ2cvvjPSWisAShNyiwkk6ERivOD8y965fzra78Z1JOY
+         d1YVHvv2fbstA2ZGpu0cKMVXrHYjeUEOJN+Mg1uZujK2khbgoy97tipFR9vjMEHy2IqD
+         /iQQ==
+X-Gm-Message-State: AAQBX9dMGwjpA8eCgEJc6vwbQmahqAFbaebiqoc6w8Pauzl3wf2upWgQ
+        LUyLBMtHePRr4ZVjzNa83ezphMMXkQ==
+X-Google-Smtp-Source: AKy350advWfK1nMJuw8VfMt4TKtlETE0dqxbRHGp16j+kEQuzhMCVGrqjhHB4nYSAFOd2RPsHUhbEA==
+X-Received: by 2002:a9d:744f:0:b0:69c:1ca2:90f2 with SMTP id p15-20020a9d744f000000b0069c1ca290f2mr2725647otk.13.1680697362651;
+        Wed, 05 Apr 2023 05:22:42 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k17-20020a9d7dd1000000b0069f8ff38bcbsm6736083otn.16.2023.04.05.05.22.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 05:22:42 -0700 (PDT)
+Received: (nullmailer pid 2357974 invoked by uid 1000);
+        Wed, 05 Apr 2023 12:22:40 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ePSz6AGMWaSZfUlPeFFpaRYyLraPuMsB
-X-Proofpoint-ORIG-GUID: ePSz6AGMWaSZfUlPeFFpaRYyLraPuMsB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-05_07,2023-04-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=668
- adultscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304050106
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+In-Reply-To: <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
+ <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+Message-Id: <168069726278.2356075.14351594478003012447.robh@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass
+ MSG RAM slice through phandle
+Date:   Wed, 05 Apr 2023 07:22:40 -0500
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Turn on USB related nodes
 
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- Changes in v5:
-	- Move "host" mode specification to board dts
-	- Due to dependency with earlier patches board dts
-	  filename changed ipq9574-al02-c7.dts -> ipq9574-rdp433.dts
+On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
+> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
+> use 'reg' to point to the MPM's slice of Message RAM without cutting into
+> an already-defined RPM MSG RAM node used for GLINK and SMEM.
+> 
+> Document passing the register space as a slice of SRAM through the
+> qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+> 
 
- Changes in v2:
-	- Fix node placement and coding style
-	- "ok" -> "okay"
----
- arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-index 859973b..92ff7ee 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-@@ -44,6 +44,10 @@
- 	};
- };
- 
-+&dwc_0 {
-+	dr_mode = "host";
-+};
-+
- &pcie1_phy {
- 	status = "okay";
- };
-@@ -107,6 +111,14 @@
- 	clock-frequency = <32000>;
- };
- 
-+&usb_0_qmpphy {
-+	status = "okay";
-+};
-+
-+&usb_0_qusbphy {
-+	status = "okay";
-+};
-+
- &tlmm {
- 
- 	pcie_1_pin: pcie-1-state {
-@@ -173,6 +185,10 @@
- 	};
- };
- 
-+&usb3 {
-+	status = "okay";
-+};
-+
- &xo_board_clk {
- 	clock-frequency = <24000000>;
- };
--- 
-2.7.4
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
