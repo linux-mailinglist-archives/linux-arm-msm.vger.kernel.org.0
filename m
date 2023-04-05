@@ -2,84 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 977416D74D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 08:59:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 578916D7509
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 09:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237038AbjDEG7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 02:59:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56946 "EHLO
+        id S237034AbjDEHNf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 03:13:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236911AbjDEG7B (ORCPT
+        with ESMTP id S229544AbjDEHNe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 02:59:01 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0289446B7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  4 Apr 2023 23:59:00 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-93071f06aa7so23786566b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 04 Apr 2023 23:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680677938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ge5tZ9KDzAcz+JwWlyHU3EWycDUOLBemzfQQA19mRWg=;
-        b=YMIQo8YkmwBb6P+OGjuYO1WXzdBweIi2Y9+BX+C+/kXe5iH+V896NMvfco3//uos7u
-         C0/JpSV7XK5y4nPJ+JxPoukF9kEzF3vdSOimcaYrQp7mUnAqVGq/mt8QK9ThSQ2Ek/3r
-         7PRU3fe4tjLaf3TDqObZ7PIAzNhvyMSaRh12rCGkQVecARcZLyhrDF6lrXUEtVYJZ41f
-         zW+qqYnRd6hC059vdRuhFmClVxvyynzjeOXzagE4JByU8Vn3wG3DP4tsQAlySbTZGKCC
-         TsbSk7neQooFmn/m39OR9NoohtRFaeBPP9uQ19SfNJo5jCwvkUuO13BUDO//8/9wqjkM
-         FPbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680677938;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ge5tZ9KDzAcz+JwWlyHU3EWycDUOLBemzfQQA19mRWg=;
-        b=D2UlE9igbsa2V8uaAd3JaGW2WUk+gnMpJ8KFC+uF2Z5Ar1P1PJfCX/LfjMohHX5Yfd
-         MMTqrm0lmUDbiAOVgZUQDsSSELNbZHGskIPmFrRNrLOyp+dArViBoOK6VsTK7LOhW60n
-         ZJwze094rrD3YWQhkljyQl3bJnbNQD8evYxveDtQWq0WziWQK1H67+YCOBLrM95uQ0+5
-         oizop/CpWIyMru1cMEPuD2s3xt8zG3e0kWTiMghTtoQpK+SuqcN+r/7ydGG2axhnJES9
-         v+mbze6ik+VnxiB4zhVU+Hm4+aDXQayRCbJUtXK2lWP9AaEj+8J980tphu06O8Cxu4P/
-         Q4Sg==
-X-Gm-Message-State: AAQBX9eEXifrLP/Fy7lzwmNJqKroU+lqAWY9YuuJBtSqsyQGklr2XU6H
-        /g/Zagx/DgRekuX9jYIbQQt84Q==
-X-Google-Smtp-Source: AKy350Z/ugZFHsOXP6wXHv4FffyN3fDhJJCINwRAzsn82Xp0UViumtoK44fbCd5Nln9hyNPOjd0iUg==
-X-Received: by 2002:aa7:de07:0:b0:4fd:2675:3785 with SMTP id h7-20020aa7de07000000b004fd26753785mr962704edv.22.1680677938487;
-        Tue, 04 Apr 2023 23:58:58 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:3f:6b2:54cd:498e? ([2a02:810d:15c0:828:3f:6b2:54cd:498e])
-        by smtp.gmail.com with ESMTPSA id kd24-20020a17090798d800b00933d64cd447sm6913431ejc.121.2023.04.04.23.58.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 23:58:58 -0700 (PDT)
-Message-ID: <445ed49a-9ea6-0851-b0c5-bdd1d420689e@linaro.org>
-Date:   Wed, 5 Apr 2023 08:58:56 +0200
+        Wed, 5 Apr 2023 03:13:34 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4332010E3
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 00:13:33 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id F26FE204F8;
+        Wed,  5 Apr 2023 07:13:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1680678812; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Y6nwM3LCDtVXMYz5k9qTAErXpLxm41nHq1feYI8c6PM=;
+        b=i8MdvOj2wZonI8sutQRhQOmdbmjQrTOuiVXJ4f8oKXAVMOB+TNdb9+ylfzmWcSpjst2Z8M
+        MU8HBHaG20Z1eb/jhPzOFq9R5WU2E4gj6kWhhqwc+B4L4iLdkdxYwj8GMWPh+oz5KoqheD
+        m6MiBaC7RV5QHS8p3UDT+dCwye9jU6A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1680678812;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Y6nwM3LCDtVXMYz5k9qTAErXpLxm41nHq1feYI8c6PM=;
+        b=LCDYewlS70zPGwZwmnEvlVRShMrFQGUcRZTjiTCGZHEjwcjjG+yenOnssu3LmhMvxWJd5n
+        B+CguhbcnE8X03CQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id BCF3D13A31;
+        Wed,  5 Apr 2023 07:13:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 8lM5LZsfLWR7GAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Wed, 05 Apr 2023 07:13:31 +0000
+Message-ID: <92ed4d8f-d233-2ecf-3330-7920fcd3b01b@suse.de>
+Date:   Wed, 5 Apr 2023 09:13:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH V2 6/9] dt-bindings: pinctrl: qcom: Add few missing
- functions
+Subject: Re: [PATCH v2 0/8] drm/msm: Convert fbdev to DRM client
 Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org, mani@kernel.org, p.zabel@pengutronix.de,
-        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_ipkumar@quicinc.com
-References: <20230404164828.8031-1-quic_devipriy@quicinc.com>
- <20230404164828.8031-7-quic_devipriy@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230404164828.8031-7-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
+        javierm@redhat.com, airlied@gmail.com, daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+References: <20230403124538.8497-1-tzimmermann@suse.de>
+ <168065850333.1260361.14774983089161239922.b4-ty@linaro.org>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <168065850333.1260361.14774983089161239922.b4-ty@linaro.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------EuP4jWJn1oMAEScGkWgZTmyl"
+X-Spam-Status: No, score=-4.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,21 +76,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/04/2023 18:48, Devi Priya wrote:
-> Added the missing functions cri_trng2, gpio and removed the
-> duplicate entry qdss_tracedata_b
-> 
-> Fixes: 5b63ccb69ee8 ("dt-bindings: pinctrl: qcom: Add support for IPQ9574")
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------EuP4jWJn1oMAEScGkWgZTmyl
+Content-Type: multipart/mixed; boundary="------------9dH0JSXrR3e8BvAVls5aqKlt";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, robdclark@gmail.com,
+ quic_abhinavk@quicinc.com, sean@poorly.run, javierm@redhat.com,
+ airlied@gmail.com, daniel@ffwll.ch
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org
+Message-ID: <92ed4d8f-d233-2ecf-3330-7920fcd3b01b@suse.de>
+Subject: Re: [PATCH v2 0/8] drm/msm: Convert fbdev to DRM client
+References: <20230403124538.8497-1-tzimmermann@suse.de>
+ <168065850333.1260361.14774983089161239922.b4-ty@linaro.org>
+In-Reply-To: <168065850333.1260361.14774983089161239922.b4-ty@linaro.org>
 
-Fixes are either separate patches or sent as first in the series. This
-is not really related to PCI, so it should be separate patchset.
+--------------9dH0JSXrR3e8BvAVls5aqKlt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  Changes in V2:
+DQoNCkFtIDA1LjA0LjIzIHVtIDAzOjM1IHNjaHJpZWIgRG1pdHJ5IEJhcnlzaGtvdjoNCj4g
+DQo+IE9uIE1vbiwgMDMgQXByIDIwMjMgMTQ6NDU6MzAgKzAyMDAsIFRob21hcyBaaW1tZXJt
+YW5uIHdyb3RlOg0KPj4gQ29udmVydCBtc20nIGZiZGV2IGNvZGUgdG8gc3RydWN0IGRybV9j
+bGllbnQuIFJlcGxhY2VzIHRoZSBjdXJyZW50DQo+PiBhZC1ob2MgaW50ZWdyYXRpb24uIFRo
+ZSBjb252ZXJzaW9uIGluY2x1ZGVzIGEgbnVtYmVyIG9mIGNsZWFudXBzLiBBcw0KPj4gd2l0
+aCBtb3N0IG90aGVyIGRyaXZlcnMnIGZiZGV2IGVtdWxhdGlvbiwgZmJkZXYgaW4gbXNtIGlz
+IG5vdyBqdXN0DQo+PiBhbm90aGVyIERSTSBjbGllbnQgdGhhdCBydW5zIGFmdGVyIHRoZSBE
+Uk0gZGV2aWNlIGhhcyBiZWVuIHJlZ2lzdGVyZWQuDQo+Pg0KPj4gT25jZSBhbGwgZHJpdmVy
+cycgZmJkZXYgZW11bGF0aW9uIGhhcyBiZWVuIGNvbnZlcnRlZCB0byBzdHJ1Y3QgZHJtX2Ns
+aWVudCwNCj4+IHdlIGNhbiBhdHRlbXB0IHRvIGFkZCBhZGRpdGlvbmFsIGluLWtlcm5lbCBj
+bGllbnRzLiBBIERSTS1iYXNlZCBkbWVzZw0KPj4gbG9nIG9yIGEgYm9vdHNwbGFzaCBhcmUg
+Y29tbW9ubHkgbWVudGlvbmVkLiBEUk0gY2FuIHRoZW4gc3dpdGNoIGVhc2lseQ0KPj4gYW1v
+bmcgdGhlIGV4aXN0aW5nIGNsaWVudHMgaWYvd2hlbiByZXF1aXJlZC4NCj4+DQo+PiBbLi4u
+XQ0KPiANCj4gQXBwbGllZCwgdGhhbmtzIQ0KDQpHcmVhdCwgdGhhbmtzIGEgbG90IQ0KDQpC
+ZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IA0KPiBbMS84XSBkcm0vbXNtOiBJbmNsdWRlIDxs
+aW51eC9pby5oPg0KPiAgICAgICAgaHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL2x1
+bWFnL21zbS8tL2NvbW1pdC82MmM1OGZmZTAxMWQNCj4gWzIvOF0gZHJtL21zbTogQ2xlYXIg
+YXBlcnR1cmUgb3duZXJzaGlwIG91dHNpZGUgb2YgZmJkZXYgY29kZQ0KPiAgICAgICAgaHR0
+cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL2x1bWFnL21zbS8tL2NvbW1pdC9mNGRlMTZk
+YTViNDANCj4gWzMvOF0gZHJtL21zbTogUmVtb3ZlIGZiIGZyb20gc3RydWN0IG1zbV9mYmRl
+dg0KPiAgICAgICAgaHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Aub3JnL2x1bWFnL21zbS8t
+L2NvbW1pdC9hNWRkYzBmMWE3YmMNCj4gWzQvOF0gZHJtL21zbTogUmVtb3ZlIHN0cnVjdCBt
+c21fZmJkZXYNCj4gICAgICAgIGh0dHBzOi8vZ2l0bGFiLmZyZWVkZXNrdG9wLm9yZy9sdW1h
+Zy9tc20vLS9jb21taXQvMDljYmRiYWZiZTlmDQo+IFs1LzhdIGRybS9tc206IFJlbW92ZSBm
+YmRldiBmcm9tIHN0cnVjdCBtc21fZHJtX3ByaXZhdGUNCj4gICAgICAgIGh0dHBzOi8vZ2l0
+bGFiLmZyZWVkZXNrdG9wLm9yZy9sdW1hZy9tc20vLS9jb21taXQvMzdlOGJhZDNhZTVkDQo+
+IFs2LzhdIGRybS9tc206IE1vdmUgbW9kdWxlIHBhcmFtZXRlciAnZmJkZXYnIHRvIGZiZGV2
+IGNvZGUNCj4gICAgICAgIGh0dHBzOi8vZ2l0bGFiLmZyZWVkZXNrdG9wLm9yZy9sdW1hZy9t
+c20vLS9jb21taXQvMmZhNDc0OGI1YWQ4DQo+IFs3LzhdIGRybS9tc206IEluaXRpYWxpemUg
+ZmJkZXYgRFJNIGNsaWVudA0KPiAgICAgICAgaHR0cHM6Ly9naXRsYWIuZnJlZWRlc2t0b3Au
+b3JnL2x1bWFnL21zbS8tL2NvbW1pdC83ZTU2MzUzOGQyMTANCj4gWzgvOF0gZHJtL21zbTog
+SW1wbGVtZW50IGZiZGV2IGVtdWxhdGlvbiBhcyBpbi1rZXJuZWwgY2xpZW50DQo+ICAgICAg
+ICBodHRwczovL2dpdGxhYi5mcmVlZGVza3RvcC5vcmcvbHVtYWcvbXNtLy0vY29tbWl0LzVi
+YTViOTZkMzMyNw0KPiANCj4gQmVzdCByZWdhcmRzLA0KDQotLSANClRob21hcyBaaW1tZXJt
+YW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3YXJlIFNvbHV0aW9u
+cyBHZXJtYW55IEdtYkgNCk1heGZlbGRzdHIuIDUsIDkwNDA5IE7DvHJuYmVyZywgR2VybWFu
+eQ0KKEhSQiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0KR2VzY2jDpGZ0c2bDvGhyZXI6IEl2byBU
+b3Rldg0K
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+--------------9dH0JSXrR3e8BvAVls5aqKlt--
 
-Best regards,
-Krzysztof
+--------------EuP4jWJn1oMAEScGkWgZTmyl
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmQtH5sFAwAAAAAACgkQlh/E3EQov+C6
+0g/+Nwis7K+p8DZSr+yjQXWE20AZspXGhXK3eJgAKG/kxv65UXhdzhGb1PyLU56bQJUVhStQ98PO
+KnE+KFriSajQxd5dX03KUQVpxMw/LuUiawK9EPaUAh1BLep+NEYfNe956C/6p2HtXZN8PPVy58fY
+Vr8T82aU9x96EkYJi45XkrKb2XdaqnV8gX9mUXKJjZ9yaM0jsbL5DIrBZB5a8du6wuPXbE0J+pOx
+SXMWXZ9TvPAJ+4BrYkJzKihg4VdlWFPaKQvxOqfYzHrxbt7LzoRbvQcNL4N9TXXX6vAa4pzYHfBL
++PNC9ddGt20GBhNrnWOU3REEEVWhHfpx4lI3kEbHM+Hc2V6BIq5IaZWZrzDKZ4OuuX7FSxFoqBtb
+Gq9ID1JyY/ZKXtAPGfQ5o5m3JzaSRZEz7bmlPAbHTKCs6gN5T0nA63jt7MTPKju9shrLdGR6JEPJ
+/cpM/ixPCmyAiGYxvnISTGsdtBITcKIjaHvycEQp5dcQmgKe9yM6aoPqto3WSfkeue9r44yRckLz
+kBuzhqN5/0+AMVKlCipeuiBntrZGkhUxqKJ7LpP7tvpNEYFfUd1rQl6zmDSe4yzUlo4oXlZu6IFn
+Aw4BhnWrNW8bVb/3nq2+9I3glskXobJkJ4rvG406o948SXQU6XYuLQ0/enItqmNZencFaRjgbsH5
+lm4=
+=RZZL
+-----END PGP SIGNATURE-----
+
+--------------EuP4jWJn1oMAEScGkWgZTmyl--
