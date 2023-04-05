@@ -2,85 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAC346D7D36
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:00:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0CA26D7D41
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 15:02:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238167AbjDENA1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 09:00:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40636 "EHLO
+        id S238097AbjDENCl convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 5 Apr 2023 09:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238145AbjDENAW (ORCPT
+        with ESMTP id S238059AbjDENCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 09:00:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0CB61A8;
-        Wed,  5 Apr 2023 05:59:59 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 335CUO9g012790;
-        Wed, 5 Apr 2023 12:59:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=YBWaOnwT5YJNpPa/0yezlfPekdQBfPUbrPh+Y8j4d5Q=;
- b=HA7IU1X+CP0DQkMyxcEcAmHKJniwMA3Nk4cg5xKHw0u8pF5UYUhuyJN65k1fOBlogwXx
- y2oJZlyeUETSgYDt8zPBzyGFkXZda+/Jkg114EkVuRALK+GHwsjVwAVSTF54q4HA/YE/
- DpEIg28z6yVgbVftWvWJxqw5UurMIlJTh9whg4Rw6OelUCxXHDJxz73VKNgZc+0m55at
- /bDh0owQleYhUfAtK65Kfs7iQgJVeObczojwJnC6Bw2+YnjCgmQW+w1uhdux5hcebkoX
- vwffchWrl5b+nvXz4XvybViULxG61geANciCnFoBwtBJWMqiI/BkYajfdatKFrnME02U sQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prwc79gp8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Apr 2023 12:59:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335CxIqK007669
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Apr 2023 12:59:18 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 5 Apr 2023 05:59:12 -0700
-From:   Krishna Kurapati <quic_kriskura@quicinc.com>
-To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
+        Wed, 5 Apr 2023 09:02:40 -0400
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3397565BC;
+        Wed,  5 Apr 2023 06:02:17 -0700 (PDT)
+Received: from ip4d1634d3.dynamic.kabel-deutschland.de ([77.22.52.211] helo=diego.localnet)
+        by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <heiko@sntech.de>)
+        id 1pk2lE-0006xn-Nr; Wed, 05 Apr 2023 15:01:12 +0200
+From:   Heiko =?ISO-8859-1?Q?St=FCbner?= <heiko@sntech.de>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
+Cc:     Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
-        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v6 8/8] arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb controller
-Date:   Wed, 5 Apr 2023 18:27:59 +0530
-Message-ID: <20230405125759.4201-9-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230405125759.4201-1-quic_kriskura@quicinc.com>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Evgeniy Polyakov <zbr@ioremap.net>,
+        linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-sunxi@lists.linux.dev, linux-rtc@vger.kernel.org,
+        Michael Walle <michael@walle.cc>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+Subject: Re: [PATCH V4] nvmem: add explicit config option to read old syntax fixed OF
+ cells
+Date:   Wed, 05 Apr 2023 15:01:10 +0200
+Message-ID: <4767237.ejJDZkT8p0@diego>
+In-Reply-To: <20230403225540.1931-1-zajec5@gmail.com>
+References: <20230403225540.1931-1-zajec5@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: F1bW7jzLHmuIkNgUv2jozTfyaYJAFitj
-X-Proofpoint-ORIG-GUID: F1bW7jzLHmuIkNgUv2jozTfyaYJAFitj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-05_08,2023-04-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0 mlxlogscore=982
- adultscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304050118
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_PASS,T_SPF_HELO_TEMPERROR
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,53 +86,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable first port of Quad port Tertiary USB controller for SA8540 Ride.
+Am Dienstag, 4. April 2023, 00:55:40 CEST schrieb Rafał Miłecki:
+> From: Rafał Miłecki <rafal@milecki.pl>
+> 
+> Binding for fixed NVMEM cells defined directly as NVMEM device subnodes
+> has been deprecated. It has been replaced by the "fixed-layout" NVMEM
+> layout binding.
+> 
+> New syntax is meant to be clearer and should help avoiding imprecise
+> bindings.
+> 
+> NVMEM subsystem already supports the new binding. It should be a good
+> idea to limit support for old syntax to existing drivers that actually
+> support & use it (we can't break backward compatibility!). That way we
+> additionally encourage new bindings & drivers to ignore deprecated
+> binding.
+> 
+> It wasn't clear (to me) if rtc and w1 code actually uses old syntax
+> fixed cells. I enabled them to don't risk any breakage.
+> 
+> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+> [for meson-{efuse,mx-efuse}.c]
+> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+> [for mtk-efuse.c, nvmem/core.c, nvmem-provider.h]
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> [MT8192, MT8195 Chromebooks]
+> Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> [for microchip-otpc.c]
+> Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+> [SAMA7G5-EK]
+> Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
-Link to v5: https://lore.kernel.org/all/20230310163420.7582-9-quic_kriskura@quicinc.com/
+> diff --git a/drivers/nvmem/rockchip-efuse.c b/drivers/nvmem/rockchip-efuse.c
+> index e4579de5d014..adc8bc70cffa 100644
+> --- a/drivers/nvmem/rockchip-efuse.c
+> +++ b/drivers/nvmem/rockchip-efuse.c
+> @@ -205,6 +205,7 @@ static int rockchip_rk3399_efuse_read(void *context, unsigned int offset,
+>  
+>  static struct nvmem_config econfig = {
+>  	.name = "rockchip-efuse",
+> +	.add_legacy_fixed_of_cells = true,
+>  	.stride = 1,
+>  	.word_size = 1,
+>  	.read_only = true,
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+for rockchip-efuse.c
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 24fa449d48a6..53d47593306e 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -309,6 +309,19 @@ &usb_2_qmpphy0 {
- 	status = "okay";
- };
- 
-+&usb_2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&usb2_en_state>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
-+	phy-names = "usb2-port0", "usb3-port0";
-+	phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
-+};
-+
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-@@ -401,4 +414,13 @@ wake-pins {
- 			bias-pull-up;
- 		};
- 	};
-+
-+	usb2_en_state: usb2-en-state {
-+		/* TS3USB221A USB2.0 mux select */
-+		pins = "gpio24";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
- };
--- 
-2.40.0
 
