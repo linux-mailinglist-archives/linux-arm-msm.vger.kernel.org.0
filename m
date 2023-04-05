@@ -2,72 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E24536D7F7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 16:30:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530E96D803D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 17:01:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232698AbjDEOaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 10:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35308 "EHLO
+        id S238455AbjDEPBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 11:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238665AbjDEO3x (ORCPT
+        with ESMTP id S238293AbjDEPBq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 10:29:53 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3858F61A9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 07:29:33 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id ew6so141469524edb.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 07:29:33 -0700 (PDT)
+        Wed, 5 Apr 2023 11:01:46 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4252359D6
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 08:01:42 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id k37so47090481lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 08:01:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680704970;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Bjq5zDxQyCkbnAUsg6zX1gfO+rxaxBPGXjBwDghiQE=;
-        b=H4hC3GDaNY44R/lZfk9Ppbm04ZMF5VnKXQo5sU2rs19jEBD1Dyv2ix/zvRT4NLrrsa
-         gKUAAoBHb/y2VkC+zquiud4T86UODXw2uIb0xpw9Zk5c5yoHuYbA+VWMH4M3c2Wf27MV
-         dlTlbX3nwRy1R8cC+JsuXrmFGrA5+GU5cZejIqv443Ffl6j16h+DEzwiUl9yDIjHpruh
-         bDgn2edhzmivIj6V01L+h6g1vaanKpJn4K1aGSYr11MWd2swUep5dbnfXf+vHBsrAuFe
-         7GJ8vXWNrep9nDx2niSXc2l7fLZJetgFmGBMctRaVsGSPjanVvi6f9NItyO/YtymZBXj
-         dFlw==
+        d=linaro.org; s=google; t=1680706900;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=InCAPoKb7nXqVzt45DrhtDsezJaeGfAT3p2E+j2WBiQ=;
+        b=a04wPNLyVNBH0DDZmfY14/ypEXwgCxdYLy6h73WscSpl9iN1YZ7Pnoh7dT97r9tj8B
+         HzxuhESN6U8bwe6UqFdOCF9ty8NNRyJ0ddhl6VllJTxq7Sf/BKKC2VztWlgPgFuCsQQA
+         toY9fSHT9fiFTQwLekA7QcWk4WIbVKUZih8Qm2LRWopmXWdNFPqwhGjDcRPgIzXQ1Lzl
+         IoTsRk5mP9p9AETRHWyre1FD1PAWy352wed15V+STbcsQJK0Qgs4/2RguwitzRX/B1Kc
+         GKgKaZt8tklpRIhCoDX4X8VaeaE1Hl5jE7GVwQxzyngRSZQMRpMPGMDfYolx4RXkLgac
+         LQKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680704970;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1680706900;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1Bjq5zDxQyCkbnAUsg6zX1gfO+rxaxBPGXjBwDghiQE=;
-        b=M3UoHBdirWtH+bEPvHQZFstPCODPXf9UplzyFaOxTAs8byAljFEug6EAUou6+kUwzb
-         4OGfHhKa6+M/RwROB6GsKE/4GuAYBKlaHqKkkpG4Lx8lqYiCP01W37kqNuZl8bbxn1IP
-         VHNa7mYJLJ6SZHb0d0aXfZ9sCDsZgD/OL/wnf7543nen+MtlkF6ioRvjb7nWiA7UJ+fd
-         YsKGzmlWgB1zIz8Vxm2iOMPKph8wq6Fjhj5TLtCRD+Gd/guEQ27956TCkqsujDLioOrP
-         pinfkEF/Cef6Hd70b7dq30sKtB6b/FyXSX4b5jOLTMikMSv6xXB/G7HRquZXgFrQWrPe
-         NQVA==
-X-Gm-Message-State: AAQBX9dV4qzqf8aEkDJmbaBhe6roPq/MAxD9+Cf5edVVohYmtM0nuuv6
-        pp7zFT8C9bhBSfjWHq4DCnD6GQ==
-X-Google-Smtp-Source: AKy350bdNfN0ijKa36g6weBhlJu2OQB7Xk7REHbQEoBD/66q2jMFOaL9TSIUlG21GWdW2wFWZjG6Qw==
-X-Received: by 2002:a17:907:a413:b0:91d:9745:407a with SMTP id sg19-20020a170907a41300b0091d9745407amr3450196ejc.14.1680704969847;
-        Wed, 05 Apr 2023 07:29:29 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:3f:6b2:54cd:498e])
-        by smtp.gmail.com with ESMTPSA id h13-20020a1709063c0d00b008b176df2899sm7454367ejg.160.2023.04.05.07.29.28
+        bh=InCAPoKb7nXqVzt45DrhtDsezJaeGfAT3p2E+j2WBiQ=;
+        b=yiqHIAfJ4sH1P7KEHRMGzSvK+B8Ds1w3haUhv/x9Tx2FYjmVeD0bg8rnDKWi5ofywz
+         xCwUQlUQ4fKZK4bXn+pgywaTA4lx8AWrbh6XWIe2ANnZ1MWgyDNgdMckXNNuvOXvE+58
+         rrnO0X51Yb5mjxhzvM1RtJrpuWGe458U6E8bWvYm/9XDBXiRtfNKuYhak2CLNxmgWg7R
+         lBU9ar6KKfoh39ofpQnsGWmMAe3E9+Mc9PEWqr1mssE5uNTGVGsQMNoLiax6cHMgGum8
+         pWVuPr/IJ0ps9mtEyzAwMLznlmwmrZHrFejbyz9EWgtyAdOa8//nUSXR2uTU609VT1Zr
+         62VQ==
+X-Gm-Message-State: AAQBX9f18QnYy+gW5VbJRzxZx2JLOZF0K509LdJvB6+9WYZhETgrbkR+
+        nzGoJCO6vdqjs+osv3lIs7MNVA==
+X-Google-Smtp-Source: AKy350ZnUnp+ndTfSd3cBb7U2tFRydWFJHUuvzlhA0x8eAdms8NerYv4BtqzyEp7Fbln7MKkIhEzFA==
+X-Received: by 2002:ac2:596b:0:b0:4e9:609c:e901 with SMTP id h11-20020ac2596b000000b004e9609ce901mr1629436lfp.21.1680706900447;
+        Wed, 05 Apr 2023 08:01:40 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id 16-20020ac25690000000b004e84896253asm2833994lfr.251.2023.04.05.08.01.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 07:29:29 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Wed, 05 Apr 2023 08:01:39 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] Introduce RPM Master stats
+Date:   Wed, 05 Apr 2023 17:01:34 +0200
+Message-Id: <20230405-topic-master_stats-v1-0-1b1fa2739953@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE6NLWQC/x2NQQqDQAwAvyI5N7Cu9mC/UkrJrrEG7CrJthTEv
+ zd4nIFhdjBWYYNbs4PyV0zW4tBeGsgzlRejjM4QQ+xCH65Y100yvskq69MqVcNEMbQ00DR0I3i
+ YyBiTUsmzp+WzLC435Ul+5+n+OI4/aRZrdXkAAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        stable@vger.kernel.org, Patrick Lai <quic_plai@quicinc.com>
-Subject: [PATCH] soundwire: qcom: Fix enumeration of second device on the bus
-Date:   Wed,  5 Apr 2023 16:29:26 +0200
-Message-Id: <20230405142926.842173-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680706899; l=1192;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=14q4AT8u/IwWpTVamu6McL0Que9EQK9+tnHVqVGCza4=;
+ b=V9FO4W9wrnVv7FQTMDwPWeUJn+ZMGby6qW6rhJdnqp9sVBnwJwJ8yMERt2zOd3n04sT5txwnQoMc
+ DnMorEupDnl3teN0hfy+QII6hDx0rfQAAk4Xg5/V21YqLb03mmss
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -77,44 +84,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some Soundwire buses (like &swr0 on Qualcomm HDK8450) have two devices,
-which can be brought from powerdown state one after another.  We need to
-keep enumerating them on each slave attached interrupt, otherwise only
-first will appear.
+The RPM MSG ram includes per-subsystem low-power mode entry/exit/
+residence/etc. statistics which are very useful for trying to debug
+what I'd call "SoC insomnia", or IOW the plaftorm refusing to drop
+the voltage rails to a minimum and gate the non-critical clocks.
 
-Cc: <stable@vger.kernel.org>
-Fixes: a6e6581942ca ("soundwire: qcom: add auto enumeration support")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This series adds a very short and simple driver to query that data
+and expose it through debugfs.
 
+The base used for writing this driver is:
+https://github.com/sonyxperiadev/kernel/blob/aosp/LA.UM.9.14.r1/drivers/soc/qcom/rpm_master_stat.c
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
+Konrad Dybcio (2):
+      dt-bindings: soc: qcom: Add RPM Master stats
+      soc: qcom: Introduce RPM master stats driver
 
-Cc: Patrick Lai <quic_plai@quicinc.com>
+ .../bindings/soc/qcom/rpm-master-stats.yaml        |  53 +++++++
+ drivers/soc/qcom/Kconfig                           |  11 ++
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/rpm_master_stats.c                | 160 +++++++++++++++++++++
+ 4 files changed, 225 insertions(+)
 ---
- drivers/soundwire/qcom.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+base-commit: 8417c8f5007bf4567ccffda850a3157c7d905f67
+change-id: 20230405-topic-master_stats-ba201a9af93d
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index c296e0bf897b..1e5077d91f59 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -587,14 +587,9 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
- 			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
- 				dev_dbg_ratelimited(swrm->dev, "SWR new slave attached\n");
- 				swrm->reg_read(swrm, SWRM_MCP_SLV_STATUS, &slave_status);
--				if (swrm->slave_status == slave_status) {
--					dev_dbg(swrm->dev, "Slave status not changed %x\n",
--						slave_status);
--				} else {
--					qcom_swrm_get_device_status(swrm);
--					qcom_swrm_enumerate(&swrm->bus);
--					sdw_handle_slave_status(&swrm->bus, swrm->status);
--				}
-+				qcom_swrm_get_device_status(swrm);
-+				qcom_swrm_enumerate(&swrm->bus);
-+				sdw_handle_slave_status(&swrm->bus, swrm->status);
- 				break;
- 			case SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET:
- 				dev_err_ratelimited(swrm->dev,
+Best regards,
 -- 
-2.34.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
