@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E4876D88D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 22:41:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 306616D8A3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 00:02:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234614AbjDEUlO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 16:41:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57746 "EHLO
+        id S229590AbjDEWC1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 18:02:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233563AbjDEUko (ORCPT
+        with ESMTP id S229587AbjDEWC0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 16:40:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E585086B1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 13:39:46 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 335KaE5I016550;
-        Wed, 5 Apr 2023 20:39:29 GMT
+        Wed, 5 Apr 2023 18:02:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 609687692
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 15:02:25 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 335Lvr2B027476;
+        Wed, 5 Apr 2023 22:02:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=xKojwkrbLVuuB+GLIH2O88EU75DH9K1culwn4sx9p4M=;
- b=Sjxk2XRxHO8+OGhZCEEVzS15azB5Ay40YOLe/m5hj89KGmr0SMxIsw7jX/g3N+EF6dP5
- dS8io9yVdz7pwZHg7d9wmgAMJ4KXqtTfbJjCOxyu7MCHrmW0QmxX+0CBto3nATliUyeY
- GFnQXQKUs3jB3++0Rfu3CpjBE/pkpSfINXZR6+35E51ZbIwdFTO3QhQjIH/bfyGFGsne
- /7Xe4izsAT0d9Gj5s2Q1KxIsYTPMBWgvj8tfFFJVwwwbcZ4r+Anu94Fqv6AEziMkn6LJ
- 8JJB4kMkbTBU7BsfbBgYtTOUGbZ5L9qHfucnetBIczSCnCRxaGozoqEYdTUg335Fqdjt Qw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prn7qkx1q-1
+ bh=mjYTGSj/m12tKzgxTMc0g21f17ZbpqjGdqRLt6bFuLs=;
+ b=Oca38XE0/3ev2gb6DfLsgM/26hqL0aZsIcyz3/X9kksmNeT3whOpoF8MTN8mt5PmXVAJ
+ o7xTgoGa6QPKHilvzXS8nFa0tbw8PUd+2RvWVilYq9dWNh3Jif1c0J2limDs0NQ4PYua
+ q3w/qct1qlrKAH31+FbysxcTlx6NJihb+9cfdIm1x3YthbAjjS2YrFLbfge8YdFReUzA
+ sVwOCRd4ttkqKd6g0cGptscwYCfg3zSOVzAqEbZi9K/5QTOG3h641Sk9vPQSOTDqp4ik
+ 6RZW9Yyy8TgTWGHaCYGIe1OVXOcmI9aqs18oGC+G5iyzoTWdSQbJeVUhNZAECJjBa/g0 gg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3psgehg3y7-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 05 Apr 2023 20:39:29 +0000
+        Wed, 05 Apr 2023 22:02:17 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335KdSkc001775
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335M2Gks029771
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 5 Apr 2023 20:39:28 GMT
+        Wed, 5 Apr 2023 22:02:16 GMT
 Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 5 Apr 2023
- 13:39:27 -0700
-Message-ID: <89b15ad1-773e-314f-a7f1-e03169ca9195@quicinc.com>
-Date:   Wed, 5 Apr 2023 13:39:27 -0700
+ 15:02:15 -0700
+Message-ID: <d7fd8ce3-93c3-1eaf-aaaf-d0df553e053d@quicinc.com>
+Date:   Wed, 5 Apr 2023 15:02:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH v4 4/6] drm/msm/dsi: Use MSM and DRM DSC helper methods
+Subject: Re: [Freedreno] [PATCH v4 1/6] drm/msm: Add MSM-specific DSC helper
+ methods
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         <freedreno@lists.freedesktop.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
+CC:     <linux-arm-msm@vger.kernel.org>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
+        <dri-devel@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>
 References: <20230329-rfc-msm-dsc-helper-v4-0-1b79c78b30d7@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v4-4-1b79c78b30d7@quicinc.com>
- <1cf2d02a-e8d7-1aa8-de3f-3321295d2d09@linaro.org>
+ <20230329-rfc-msm-dsc-helper-v4-1-1b79c78b30d7@quicinc.com>
+ <dd8dcaf7-acc0-69cc-9c7e-bcbd270fb845@linaro.org>
 From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <1cf2d02a-e8d7-1aa8-de3f-3321295d2d09@linaro.org>
+In-Reply-To: <dd8dcaf7-acc0-69cc-9c7e-bcbd270fb845@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -67,19 +69,20 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wqItgUEBPYRjWwaRI1Eq9i9bUqIV-Usr
-X-Proofpoint-GUID: wqItgUEBPYRjWwaRI1Eq9i9bUqIV-Usr
+X-Proofpoint-GUID: MjpafqJo5MmZU1T0X7tM_Ax86eiWBlr4
+X-Proofpoint-ORIG-GUID: MjpafqJo5MmZU1T0X7tM_Ax86eiWBlr4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-05_14,2023-04-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- bulkscore=0 mlxscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304050184
-X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+ definitions=2023-04-05_15,2023-04-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 spamscore=0 mlxlogscore=999 phishscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304050196
+X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,70 +91,228 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4/5/2023 12:27 PM, Dmitry Baryshkov wrote:
+On 4/5/2023 12:26 PM, Dmitry Baryshkov wrote:
 > On 05/04/2023 03:41, Jessica Zhang wrote:
->> Use MSM and DRM DSC helper methods to configure DSC for DSI.
+>> Introduce MSM-specific DSC helper methods, as some calculations are
+>> common between DP and DSC.
 >>
->> Changes in V2:
->> - *_calculate_initial_scale_value --> *_set_initial_scale_value
->> - Split pkt_per_line and eol_byte_num changes to a separate patch
->> - Moved pclk_per_line calculation to hdisplay adjustment in `if (dsc)`
->>    block of dsi_update_dsc_timing()
+>> Changes in v2:
+>> - Moved files up to msm/ directory
+>> - Dropped get_comp_ratio() helper
+>> - Used drm_int2fixp() to convert to integers to fp
+>> - Style changes to improve readability
+>> - Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
+>> - Changed msm_dsc_get_slice_per_intf() to a static inline method
+>> - Dropped last division step of msm_dsc_get_pclk_per_line() and changed
+>>    method name accordingly
+>> - Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
+>> - Fixed some math issues caused by passing in incorrect types to
+>>    drm_fixed methods in get_bytes_per_soft_slice()
 >>
 >> Changes in v3:
->> - Split pclk_per_intf calculation into a separate patch
->> - Added slice_width check to dsi_timing_setup
->> - Used MSM DSC helper to calculate total_bytes_per_intf
+>> - Dropped src_bpp parameter from all methods -- src_bpp can be
+>>    calculated as dsc->bits_per_component * 3
+>> - Dropped intf_width parameter from get_bytes_per_soft_slice()
+>> - Moved dsc->bits_per_component to numerator calculation in
+>>    get_bytes_per_soft_slice()
+>> - Renamed msm_dsc_get_uncompressed_pclk_per_line to
+>>    *_get_uncompressed_pclk_per_intf()
+>> - Removed dsc->slice_width check from
+>>    msm_dsc_get_uncompressed_pclk_per_intf()
+>> - Made get_bytes_per_soft_slice() a public method (this will be called
+>>    later to help calculate DP pclk params)
+>> - Added documentation in comments
+>> - Moved extra_eol_bytes math out of msm_dsc_get_eol_byte_num() and
+>>    renamed msm_dsc_get_eol_byte_num to *_get_bytes_per_intf.
+>>
+>> Changes in v4:
+>> - Changed msm_dsc_get_uncompressed_pclk_per_intf to
+>>    msm_dsc_get_pclk_per_intf
 >>
 >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 >> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 13 ++++++++++---
->>   1 file changed, 10 insertions(+), 3 deletions(-)
+>>   drivers/gpu/drm/msm/Makefile         |  1 +
+>>   drivers/gpu/drm/msm/msm_dsc_helper.c | 47 ++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/msm_dsc_helper.h | 70 
+>> ++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 118 insertions(+)
 >>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 74d38f90398a..6a6218a9655f 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -28,6 +28,7 @@
->>   #include "dsi.xml.h"
->>   #include "sfpb.xml.h"
->>   #include "dsi_cfg.h"
+>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+>> index 7274c41228ed..b814fc80e2d5 100644
+>> --- a/drivers/gpu/drm/msm/Makefile
+>> +++ b/drivers/gpu/drm/msm/Makefile
+>> @@ -94,6 +94,7 @@ msm-y += \
+>>       msm_atomic_tracepoints.o \
+>>       msm_debugfs.o \
+>>       msm_drv.o \
+>> +    msm_dsc_helper.o \
+>>       msm_fb.o \
+>>       msm_fence.o \
+>>       msm_gem.o \
+>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.c 
+>> b/drivers/gpu/drm/msm/msm_dsc_helper.c
+>> new file mode 100644
+>> index 000000000000..0539221eb09d
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.c
+>> @@ -0,0 +1,47 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>> reserved
+>> + */
+>> +
+>> +#include <linux/kernel.h>
+>> +#include <linux/errno.h>
+>> +#include <drm/drm_fixed.h>
+>> +
+>> +#include "msm_drv.h"
 >> +#include "msm_dsc_helper.h"
->>   #include "msm_kms.h"
->>   #include "msm_gem.h"
->>   #include "phy/dsi_phy.h"
->> @@ -848,7 +849,7 @@ static void dsi_update_dsc_timing(struct 
->> msm_dsi_host *msm_host, bool is_cmd_mod
->>       /* first calculate dsc parameters and then program
->>        * compress mode registers
->>        */
->> -    slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
->> +    slice_per_intf = msm_dsc_get_slice_per_intf(dsc, hdisplay);
->>       /*
->>        * If slice_count is greater than slice_per_intf
->> @@ -858,7 +859,7 @@ static void dsi_update_dsc_timing(struct 
->> msm_dsi_host *msm_host, bool is_cmd_mod
->>       if (dsc->slice_count > slice_per_intf)
->>           dsc->slice_count = 1;
->> -    total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
->> +    total_bytes_per_intf = msm_dsc_get_bytes_per_intf(dsc, hdisplay);
->>       eol_byte_num = total_bytes_per_intf % 3;
->>       pkt_per_line = slice_per_intf / dsc->slice_count;
->> @@ -936,6 +937,12 @@ static void dsi_timing_setup(struct msm_dsi_host 
->> *msm_host, bool is_bonded_dsi)
->>               return;
->>           }
->> +        if (!dsc->slice_width || (mode->hdisplay < dsc->slice_width)) {
->> +            pr_err("DSI: invalid slice width %d (pic_width: %d)\n",
->> +                   dsc->slice_width, mode->hdisplay);
->> +            return;
->> +        }
+>> +
+>> +s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc)
+>> +{
+>> +    int bpp = msm_dsc_get_bpp_int(dsc);
+>> +    s64 numerator_fp, denominator_fp;
+>> +    s64 comp_ratio_fp = 
+>> drm_fixp_from_fraction(dsc->bits_per_component * 3, bpp);
+>> +
+>> +    numerator_fp = drm_int2fixp(dsc->slice_width * 3 * 
+>> dsc->bits_per_component);
+>> +    denominator_fp = drm_fixp_mul(comp_ratio_fp, drm_int2fixp(8));
+>> +
+>> +    return drm_fixp_div(numerator_fp, denominator_fp);
 > 
-> This is not the "use of MSM and DRM DSC helper methods" and thus should 
-> be moved to a separate patch.
+> If we remove 3 * dsc->bits_per_components from both numerator and 
+> denominator, this whole function seems to be as simple as 
+> DIV_ROUND_UP(dsc->slice_width * bpp, 8)
+> 
+> Or, if you prefer FP math, drm_fixp_from_fraction(dsc->slice_width * 
+> bpp, 8).
 
 Hi Dmitry,
+
+Sounds good.
+
+> 
+>> +}
+>> +
+>> +u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int 
+>> intf_width)
+>> +{
+>> +    u32 bytes_per_soft_slice, bytes_per_intf;
+>> +    s64 bytes_per_soft_slice_fp;
+>> +    int slice_per_intf = msm_dsc_get_slice_per_intf(dsc, intf_width);
+>> +
+>> +    bytes_per_soft_slice_fp = get_bytes_per_soft_slice(dsc);
+>> +    bytes_per_soft_slice = drm_fixp2int_ceil(bytes_per_soft_slice_fp);
+>> +
+>> +    bytes_per_intf = bytes_per_soft_slice * slice_per_intf;
+>> +
+>> +    return bytes_per_intf;
+>> +}
+>> +
+>> +int msm_dsc_get_pclk_per_intf(struct drm_dsc_config *dsc)
+>> +{
+>> +    s64 data_width;
+>> +
+>> +    data_width = drm_fixp_mul(drm_int2fixp(dsc->slice_count),
+>> +            get_bytes_per_soft_slice(dsc));
+> 
+> And this is then DIV_ROUND_UP(dsc->slice_width * dsc->slice_count * bpp, 8)
+
+I would prefer to keep the FP math/get_bytes_per_soft_slice() call here 
+and leave the ceil() until the end.
+
+> 
+>> +
+>> +    return drm_fixp2int_ceil(data_width);
+>> +}
+>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h 
+>> b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> new file mode 100644
+>> index 000000000000..31116a31090f
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> @@ -0,0 +1,70 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>> reserved
+>> + */
+>> +
+>> +#ifndef MSM_DSC_HELPER_H_
+>> +#define MSM_DSC_HELPER_H_
+>> +
+>> +#include <drm/display/drm_dsc_helper.h>
+>> +#include <drm/drm_modes.h>
+>> +
+>> +/*
+>> + * Helper methods for MSM specific DSC calculations that are common 
+>> between timing engine,
+>> + * DSI, and DP.
+>> + */
+>> +
+>> +/**
+>> + * msm_dsc_get_bpp_int - get bits per pixel integer value
+>> + * @dsc: Pointer to drm dsc config struct
+>> + */
+>> +static inline int msm_dsc_get_bpp_int(struct drm_dsc_config *dsc)
+>> +{
+>> +    WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
+>> +    return dsc->bits_per_pixel >> 4;
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_slice_per_intf - get number of slices per interface
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + */
+>> +static inline int msm_dsc_get_slice_per_intf(struct drm_dsc_config 
+>> *dsc, int intf_width)
+>> +{
+>> +    return DIV_ROUND_UP(intf_width, dsc->slice_width);
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_dce_bytes_per_line - get bytes per line to help 
+>> calculate data width
+>> + *    when configuring the timing engine
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + */
+>> +static inline u32 msm_dsc_get_dce_bytes_per_line(struct 
+>> drm_dsc_config *dsc, int intf_width)
+>> +{
+>> +    return DIV_ROUND_UP(msm_dsc_get_bpp_int(dsc) * intf_width, 8);
+>> +}
+>> +
+>> +/**
+>> + * get_bytes_per_soft_slice - get size of each soft slice for dsc
+>> + * @dsc: Pointer to drm dsc config struct
+>> + */
+>> +s64 get_bytes_per_soft_slice(struct drm_dsc_config *dsc);
+>> +
+>> +/**
+>> + * msm_dsc_get_bytes_per_intf - get total bytes per interface
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + */
+>> +u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int 
+>> intf_width);
+>> +
+>> +/**
+>> + * msm_dsc_get_pclk_per_intf - Calculate pclk per interface.
+>> + * @dsc: Pointer to drm dsc config struct
+>> + *
+>> + * Note: This value will then be passed along to DSI and DP for some 
+>> more
+>> + * calculations. This is because DSI and DP divide the pclk_per_intf 
+>> value
+>> + * by different values depending on if widebus is enabled.
+>> + */
+>> +int msm_dsc_get_pclk_per_intf(struct drm_dsc_config *dsc);
+> 
+> empty line, please
 
 Acked.
 
@@ -160,18 +321,7 @@ Thanks,
 Jessica Zhang
 
 > 
->> +
->>           dsc->pic_width = mode->hdisplay;
->>           dsc->pic_height = mode->vdisplay;
->>           DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
->> @@ -1759,7 +1766,7 @@ static int dsi_populate_dsc_params(struct 
->> msm_dsi_host *msm_host, struct drm_dsc
->>           return ret;
->>       }
->> -    dsc->initial_scale_value = 32;
->> +    drm_dsc_set_initial_scale_value(dsc);
->>       dsc->line_buf_depth = dsc->bits_per_component + 1;
->>       return drm_dsc_compute_rc_parameters(dsc);
+>> +#endif /* MSM_DSC_HELPER_H_ */
 >>
 > 
 > -- 
