@@ -2,112 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4F106D7CE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 14:45:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84E5A6D7D12
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  5 Apr 2023 14:58:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237845AbjDEMpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 08:45:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53934 "EHLO
+        id S238074AbjDEM6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 5 Apr 2023 08:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238085AbjDEMpH (ORCPT
+        with ESMTP id S232576AbjDEM62 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 08:45:07 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C9F1BC5;
-        Wed,  5 Apr 2023 05:45:06 -0700 (PDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pk2Vc-0005Va-JN; Wed, 05 Apr 2023 14:45:04 +0200
-Message-ID: <92c59571-2df0-026b-ea8e-f693c2ecfd69@leemhuis.info>
-Date:   Wed, 5 Apr 2023 14:45:04 +0200
+        Wed, 5 Apr 2023 08:58:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED79930EB;
+        Wed,  5 Apr 2023 05:58:27 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3359bQAm023813;
+        Wed, 5 Apr 2023 12:58:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=05IOrEB36y/92KD5YJSo3M0Ij4hqtEsrvDA7qFPJTeI=;
+ b=pJZCGCiWSysr3nNLOnGQLKEH0Hisg+q7fSI+1JwtG7IjfOD7Bqz6sV3Jp6sgxfKvD2ev
+ 5RlA+qmkHcCRmjcgpY3GpBS72w49M8Z69Gnp+Rnc87rrYsx4cIB+hcOt9NrbfcLFfjCg
+ RnhbgwIcElZcF8EuoUn0R2j6/Cw70xS7JeNjcBkPfi0JyAYMIaj0jbTJ66q05gI9laIH
+ bn1gkm4tjDdg26folol9oBBES8ww+xXtIe7p5N2WYuJjR88euNK3oLQFTpDzOCcTpXh7
+ JnUEqkgLFRy1Sr4CM9dlWmYi9IafOcR0TkTTZhVNAUQMlyg32jcVsO9XstJbkKzRw0EJ 6A== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3prgveup91-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 05 Apr 2023 12:58:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 335CwEvR030315
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 5 Apr 2023 12:58:14 GMT
+Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 5 Apr 2023 05:58:08 -0700
+From:   Krishna Kurapati <quic_kriskura@quicinc.com>
+To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: [PATCH v6 0/8] Add multiport support for DWC3 controllers
+Date:   Wed, 5 Apr 2023 18:27:51 +0530
+Message-ID: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 2/3] venus: firmware: Correct non-pix start and end
- addresses
-Content-Language: en-US, de-DE
-From:   "Linux regression tracking #update (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Fritz Koenig <frkoenig@chromium.org>,
-        Nathan Hebert <nhebert@chromium.org>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>,
-          Linux regressions mailing list 
-          <regressions@lists.linux.dev>
-References: <20221005083730.963322-1-stanimir.varbanov@linaro.org>
- <20221005083730.963322-3-stanimir.varbanov@linaro.org>
- <Y9LSMap+jRxbtpC8@google.com>
- <b2007bc9-b05f-eb17-a373-9587b01d3788@leemhuis.info>
-In-Reply-To: <b2007bc9-b05f-eb17-a373-9587b01d3788@leemhuis.info>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1680698706;98d2f05d;
-X-HE-SMSGID: 1pk2Vc-0005Va-JN
-X-Spam-Status: No, score=-1.4 required=5.0 tests=NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: N8EN52w7JWUW8spJ-bTiofBBUfRyXVea
+X-Proofpoint-GUID: N8EN52w7JWUW8spJ-bTiofBBUfRyXVea
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-05_08,2023-04-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=970
+ clxscore=1011 impostorscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304050117
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[TLDR: This mail in primarily relevant for Linux kernel regression
-tracking. See link in footer if these mails annoy you.]
+Currently the DWC3 driver supports only single port controller which
+requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
+DWC3 controller with multiple ports that can operate in host mode.
+Some of the port supports both SS+HS and other port supports only HS
+mode.
 
-On 05.02.23 12:00, Linux kernel regression tracking (#adding) wrote:
+This change primarily refactors the Phy logic in core driver to allow
+multiport support with Generic Phy's.
 
-> On 26.01.23 20:19, Matthias Kaehlcke wrote:
-> 
->> On Wed, Oct 05, 2022 at 11:37:29AM +0300, Stanimir Varbanov wrote:
->>> The default values for those registers are zero.
->>>
->>> Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
->>> ---
->>>  drivers/media/platform/qcom/venus/firmware.c | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
->>> index 3851cedc3329..71e43611d1cf 100644
->>> --- a/drivers/media/platform/qcom/venus/firmware.c
->>> +++ b/drivers/media/platform/qcom/venus/firmware.c
->>> @@ -38,8 +38,8 @@ static void venus_reset_cpu(struct venus_core *core)
->>>  	writel(fw_size, wrapper_base + WRAPPER_FW_END_ADDR);
->>>  	writel(0, wrapper_base + WRAPPER_CPA_START_ADDR);
->>>  	writel(fw_size, wrapper_base + WRAPPER_CPA_END_ADDR);
->>> -	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
->>> -	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
->>> +	writel(0, wrapper_base + WRAPPER_NONPIX_START_ADDR);
->>> +	writel(0, wrapper_base + WRAPPER_NONPIX_END_ADDR);
->>>  
->>>  	if (IS_V6(core)) {
->>>  		/* Bring XTSS out of reset */
->>
->> I found that this commit prevents the AOSS from entering sleep mode during
->> system suspend at least on sc7180 and sc7280. AOSS not entering sleep mode
->> leads to a (apparently significant) increase in S3 power consumption, on
->> trogdor and herobrine it prevents the system from staying suspended, because
->> the embedded controller detect the condition and wakes the sytem up again.
-> 
-> Thanks for the report. To be sure the issue doesn't fall through the
-> cracks unnoticed, I'm adding it to regzbot, the Linux kernel regression
-> tracking bot:
-> 
-> #regzbot ^introduced a837e5161cfffbb32
-> #regzbot title meida: venus: firmware: AOSS doesn't seel anymore on at
-> least sc7180 and sc7280
-> #regzbot ignore-activity
-	
-#regzbot fix: f95b8ea79c47c0ad
-#regzbot ignore-activity
+Chananges have been tested on  QCOM SoC SA8295P which has 4 ports (2
+are HS+SS capable and 2 are HS only capable).
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-That page also explains what to do if mails like this annoy you.
+Changes in v6:
+Updated comments in code after.
+Updated variables names appropriately as per review comments.
+Updated commit text in patch-2 and added additional info as per review
+comments.
+The patch header in v5 doesn't have "PATHCH v5" notation present. Corrected
+it in this version.
 
+Changes in v5:
+Added DT support for first port of Teritiary USB controller on SA8540-Ride
+Added support for reading port info from XHCI Extended Params registers.
+
+Changes in RFC v4:
+Added DT support for SA8295p.
+
+Changes in RFC v3:
+Incase any PHY init fails, then clear/exit the PHYs that
+are already initialized.
+
+Changes in RFC v2:
+Changed dwc3_count_phys to return the number of PHY Phandles in the node.
+This will be used now in dwc3_extract_num_phys to increment num_usb2_phy 
+and num_usb3_phy.
+
+Added new parameter "ss_idx" in dwc3_core_get_phy_ny_node and changed its
+structure such that the first half is for HS-PHY and second half is for
+SS-PHY.
+
+In dwc3_core_get_phy, for multiport controller, only if SS-PHY phandle is
+present, pass proper SS_IDX else pass -1.
+
+Link to v5: https://lore.kernel.org/all/20230310163420.7582-1-quic_kriskura@quicinc.com/
+Link to RFC v4: https://lore.kernel.org/all/20230115114146.12628-1-quic_kriskura@quicinc.com/
+Link to RFC v3: https://lore.kernel.org/all/1654709787-23686-1-git-send-email-quic_harshq@quicinc.com/#r
+Link to RFC v2: https://lore.kernel.org/all/1653560029-6937-1-git-send-email-quic_harshq@quicinc.com/#r
+
+Krishna Kurapati (8):
+  dt-bindings: usb: Add bindings for multiport properties on DWC3
+    controller
+  usb: dwc3: core: Access XHCI address space temporarily to read port
+    info
+  usb: dwc3: core: Skip setting event buffers for host only controllers
+  usb: dwc3: core: Refactor PHY logic to support Multiport Controller
+  usb: dwc3: qcom: Add multiport controller support for qcom wrapper
+  arm64: dts: qcom: sc8280xp: Add multiport controller node for SC8280
+  arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
+    ports
+  arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb
+    controller
+
+ .../devicetree/bindings/usb/snps,dwc3.yaml    |  13 +-
+ arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  47 +++
+ arch/arm64/boot/dts/qcom/sa8540p-ride.dts     |  22 ++
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  58 +++
+ drivers/usb/dwc3/core.c                       | 373 ++++++++++++++----
+ drivers/usb/dwc3/core.h                       |  71 +++-
+ drivers/usb/dwc3/drd.c                        |  13 +-
+ drivers/usb/dwc3/dwc3-qcom.c                  |  28 +-
+ 8 files changed, 523 insertions(+), 102 deletions(-)
+
+-- 
+2.40.0
 
