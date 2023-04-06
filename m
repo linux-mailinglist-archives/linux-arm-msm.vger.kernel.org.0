@@ -2,91 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B58BA6D9EDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:34:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16A996D9EF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:37:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240064AbjDFRee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 13:34:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53050 "EHLO
+        id S230015AbjDFRhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 13:37:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240150AbjDFReN (ORCPT
+        with ESMTP id S239166AbjDFRhc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 13:34:13 -0400
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444AFA5E9;
-        Thu,  6 Apr 2023 10:33:55 -0700 (PDT)
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4PspWg6VqLz9sT1;
-        Thu,  6 Apr 2023 19:33:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1680802431;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ECZ8dJrYNeEUE2kyi4AeyJJ/4vy98zA9JMEzzgeWDeg=;
-        b=Z53vxVABfOEmiJmbO56NEw3teCOgD1zG9Qd3dixKn4i3iTmBs3u9DRu6EC8GBzVisljcs4
-        cskbVsIvKgtuIsJlmfj6o92XV1SbDj5YlxO3R8Bt5ZSp7DKOhCrImf6xeVrevs87zEVKf7
-        L1fiw87xATBgsiarT7+Lgda/MdvN/bT5obakgy7w4Tn1SDc1rFUTW+jWkyTjAxc/bTlhWA
-        JiNvf9NJ60nfX0mhuN9SvDGDduNh6nUNLdlnikAE9pCowZEV/LvXsIeYFY7Avs98WP5Vle
-        2Qfqq+7FT11O6NIr7OzRosC0uFT7OtUVfBrVzLPNkc9PUpD/JJ19ZQNyJ2NjoA==
-From:   Dylan Van Assche <me@dylanvanassche.be>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Dylan Van Assche <me@dylanvanassche.be>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v5 5/5] arm64: dts: qcom: sdm845-shift-axolotl: enable SLPI
-Date:   Thu,  6 Apr 2023 19:31:48 +0200
-Message-Id: <20230406173148.28309-6-me@dylanvanassche.be>
-In-Reply-To: <20230406173148.28309-1-me@dylanvanassche.be>
-References: <20230406173148.28309-1-me@dylanvanassche.be>
+        Thu, 6 Apr 2023 13:37:32 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444D8A5E1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 10:37:04 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id k18so3053594lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 10:37:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680802615;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EL9yquePtYEiERyhjKWEZPtOxoBoLwSKVd0TEyJIKhg=;
+        b=Dfdy5+tuV5r8IFrjsJnxR0DflxzONcCDsGCq2RTKEQYhpAaSZDMp4xwCqZwpzN32HA
+         iRmBxFKzSgI0jcIMaSYkTQb9MGL66xP6TuR/pVa6V3W3N7TmYfZZpjG6eJG860Vm44XF
+         D/uMDp/T8DdH3+9iwgbRlsIL6NDZVRtX06XK6u+Y8wWJ1yIl2MEprxrtxrPDXrBo14r6
+         tuhGsMx5alQW8pGaapC6MlXDK59qWmFGwv/sK284BzikqgyrxGYfB6zWseK0lyGDGIIQ
+         dk5jbivH1v4FgZOebCpV4sJfMN90MYRkP8wBJT/2aZ2R9eP9SQznxIy1/AI+bPt5gB6x
+         HPBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680802615;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EL9yquePtYEiERyhjKWEZPtOxoBoLwSKVd0TEyJIKhg=;
+        b=7J/7c3zV0bEMFbx8tllCUHHuyMzFgyK8SjMYS2dsvVB6tf57R23Yf17nR8qity/IMI
+         C+VarnMdhcgB9006k30KAR1aOQffu9MNXnAd1PQmI/25CXrlu+cUVjqvTBAtCvOWX1nM
+         E5vHI6rPNVK8lIlU6wshnuR61GxszamimT7xW6tawnZynp/iXxbQw7ZLi0vHkQLXWiPl
+         s+mWh4AIySe/042IcYC/20fIhH67U6tVxEH9OhdqhI+KsSAihxP7OvU08+vSjO9njXti
+         ctLoFfjjB38FX2pcWMFO1lakgXbWd3IVa2Gf4TsrsbIUojEvGsxXMiSMIjQWpCs1QAHF
+         oFrQ==
+X-Gm-Message-State: AAQBX9fwHHcQSp98oN4sXeseQQd80Bl7yxSaizPTcpC8lB4jIgCrrbH6
+        fMGVVvgoG+oL9Pzrr0z24kL28A==
+X-Google-Smtp-Source: AKy350ZPNrYFAh53ZXFv05ITtGKxdTXYvISU7K6VGWUd117vMCVH+yxZq4XuuS2NIDNpOX44o81HNA==
+X-Received: by 2002:ac2:5fcb:0:b0:4dd:fd4e:5a20 with SMTP id q11-20020ac25fcb000000b004ddfd4e5a20mr5272lfg.58.1680802615536;
+        Thu, 06 Apr 2023 10:36:55 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id f16-20020a056512093000b004a91df49508sm352032lft.177.2023.04.06.10.36.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Apr 2023 10:36:55 -0700 (PDT)
+Message-ID: <2f6dc990-cc4a-e5b0-3d4f-bd8064b3333e@linaro.org>
+Date:   Thu, 6 Apr 2023 20:36:54 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4PspWg6VqLz9sT1
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 1/3] thermal/drivers/tsens: Add error/debug prints to
+ calibration read
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, amitk@kernel.org,
+        thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230406145850.357296-1-bryan.odonoghue@linaro.org>
+ <20230406145850.357296-2-bryan.odonoghue@linaro.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230406145850.357296-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the SLPI DSP on the SHIFTPHONES SHIFT6mq phone with a
-Qualcomm SDM845 SoC.
+On 06/04/2023 17:58, Bryan O'Donoghue wrote:
+> Add in some dev_dbg() to aid in viewing of raw calibration data extracted.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   drivers/thermal/qcom/tsens.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
 
-Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index b54e304abf71..bd9571a258cf 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -572,6 +572,11 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&slpi_pas {
-+	firmware-name = "qcom/sdm845/axolotl/slpi.mbn";
-+	status = "okay";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
 -- 
-2.39.2
+With best wishes
+Dmitry
 
