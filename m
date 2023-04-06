@@ -2,72 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B20DA6D9B6F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 16:59:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C4B6D9BC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 17:07:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239167AbjDFO7D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 10:59:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43438 "EHLO
+        id S231464AbjDFPHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 11:07:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239038AbjDFO67 (ORCPT
+        with ESMTP id S239614AbjDFPHU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 10:58:59 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 252D326B2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 07:58:58 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id d17so39790718wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 07:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680793136; x=1683385136;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RYyNPnzqae4khg3KV2Lt1ECRlr8f32FnQfafbs3QB5I=;
-        b=vtPP+7phDU/ux5+X1AMnqZmBs1GAc2PM6+xWc18/6ktYNlGaOycSjJMMyF1BBXC+nu
-         4QZDU9v9WinnH1FsOEkpH4dmI5ellAVQizYtvNkBWHZFWaYZaZboK1o65kSN/SeLRIaX
-         Mc1eGzGQBy9IOVt2PAdVYiujotTNItSEkduNACho30kG6upWUZ0lrSRT61tPUh/3f0n7
-         qxnxt4EZgiDFO/6sSBUmmG/CiRcw1mtKZGIDPbZ3k1i+ZEonu9CtMIGyfolTacyKP4O8
-         3/1dkQ0GqFz2waoLRBVnZiAL0B9aHM715lDxWSH6vZnD/GKwTBzx5eejjgRH/DV1TzpG
-         owRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680793136; x=1683385136;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RYyNPnzqae4khg3KV2Lt1ECRlr8f32FnQfafbs3QB5I=;
-        b=m7fz3PFESX68ljfJPfpFzf4OQlah8LOoYw8Z8/6O9ij8A4e5zufHoRqRzW1TbmIVQR
-         mqopNkbZt7Xht1c9HvsGF+rWbdVjJ6a7e+BPrS6xIZ1ua3iFn+z6/OYb16xzHVIWhg6T
-         Pj+owkBFri4/CX0I5r4oFR4D+fZ9XtVnSl7j7L6g1VFxrEBbqzQQ8mcqZk6o+Kh6gt/p
-         gPY16NXwLR01cTqsv3/HWywOdjSfd+EEA+1+qOvRB4PiaO0TW31KKJdgI6idoGaU7f3b
-         ewPs5BvXVjWWuVUy5o3rerpbRQ2l+sylTNT0d6sKU17Fe5Q7lJvhHNVw3jTr6nNsIfJw
-         zLYQ==
-X-Gm-Message-State: AAQBX9ejvNJeZ0oTintrKl0krXimhSEeuFuIDYExJBVfqmOR4224Yt5J
-        gyC9JRIlfh7ETfIXDku3iiV6fA==
-X-Google-Smtp-Source: AKy350YVmezFAiNqfMgn8vCKeCz1co1VaJgEQqfzy5k/qQyVn240yKSvpXq066F1GHjVmN8wzocQ6A==
-X-Received: by 2002:adf:ce0a:0:b0:2c8:9cfe:9e29 with SMTP id p10-20020adfce0a000000b002c89cfe9e29mr6532039wrn.38.1680793136560;
-        Thu, 06 Apr 2023 07:58:56 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id d10-20020a1c730a000000b003f0373d077csm1768160wmb.47.2023.04.06.07.58.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 07:58:56 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     amitk@kernel.org, thara.gopinath@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        dmitry.baryshkov@linaro.org
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Thu, 6 Apr 2023 11:07:20 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6D8A5FD;
+        Thu,  6 Apr 2023 08:06:57 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id A1464403BA;
+        Thu,  6 Apr 2023 20:06:53 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1680793614; bh=kNSzackFP9sVV72mw7JFHHvEqaWcDjWJibxovJeXYdI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=4oN7ikRkexVGKdOdkng5/aD5KLqtB2LqlTgMC33M3L/gkCg7+37Z20/BQ9kBVQVFL
+         weLvLAe+aKj7cKsZzrxRNDPo+DUZtRGOKRoxgj+FDEYBPiRt+HQ/7xrpl1N4vkW02X
+         IIJ29NDc3dtywjyseploTyB+psjhEbYX/Y5hgP7YCSwnFLKyHR2BqaEGekOulzb+75
+         te7S8c3kAsRP+jK9TBFX/ixhWkVLPA0SbwqhcPGMBw+GjXVLERKqUCeZC4O0H7JCey
+         mYQforMqD70okivI/92nqESwRQMZr2t66qvC9s2rSfAzEs0YNs0fLAE5R3NY0TKb78
+         6fkK0StgeKd+Q==
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     agross@kernel.org, andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, quic_srivasam@quicinc.com,
+        judyhsiao@chromium.org, mka@chromium.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH 3/3] thermal/drivers/tsens: Extract and shift-in optional MSB
-Date:   Thu,  6 Apr 2023 15:58:50 +0100
-Message-Id: <20230406145850.357296-4-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230406145850.357296-1-bryan.odonoghue@linaro.org>
-References: <20230406145850.357296-1-bryan.odonoghue@linaro.org>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v4 0/4] Add Acer Aspire 1
+Date:   Thu,  6 Apr 2023 20:06:29 +0500
+Message-Id: <20230406150633.83351-1-nikita@trvn.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,87 +52,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In msm8939 some of the sensor calibration data traverses byte boundaries.
-Two examples of this are thermal sensor 2 point 1 and sensor 9 point 2.
+This series introduces Acer Aspire 1 - A WoA laptop with sc7180.
 
-For sensor 2 point 1 we can get away with a simple read traversing byte
-boundaries as the calibration most significant bits are adjacent to the
-least significant across the byte boundary.
+The dts adds mostly complite support for the hardware and the device,
+with minor patches on top, can be used as a normal laptop daily.
 
-In this case a read starting at the end of the first byte for nine bits
-will deliver up the data we want.
+Notable features absent from this patch:
+- Sound
+   While the dedicated sound components are defined, since the
+   ADSP must be used, sound requires additions of that remoteproc
+   as well some extra "glue" to connect the i2s outputs to it.
+   I was able to hack together some sound based on sm8250 stuff
+   but it needs more work.
+- Embedded Controller
+   The laptop has a dedicated EC that controls, notably,
+   battery/charger and notifies the device about the USB-C DisplayPort
+   HPD events. As per this patch, there is no battery status
+   indication and external display support. Also, due to the EC
+   defaults, the fn key is disabled. I have an experimental driver that
+   implements all of that, which needs more work and will be submitted
+   at a later date.
+- PSCI OSI Mode
+   Firmware on this laptop does not support the PC mode, as is usual
+   for Qualcomm. This change would require adding OSI related
+   power-domains to the SoC dtsi and is omitted in expectation that
+   this can be handled when (if?) CrOS team handles their tf-a, like
+   they did with sc7280.
 
-In the case of sensor 9 point 2 however, the most significant bits are not
-adjacent and so therefore we need to perform two reads and or the bits
-together.
+Changed in v3:
+ - Disable lpass clocks by default (Konrad)
+ - Drop status=disabled for mdp in the common soc dtsi (Konrad)
 
-If reg.p1_shift or reg.p2_shift is set then automatically search for
-pX_sY_msb in the dts applying pX_shift as a right shift or into the pX_sY
-value.
+Changed in v4:
+ - Resend with picked up tags, no other change.
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/thermal/qcom/tsens.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+Nikita Travkin (4):
+  arm64: dts: qcom: sc7180: Don't enable lpass clocks by default
+  arm64: dts: qcom: sc7180: Drop redundant disable in mdp
+  dt-bindings: arm: qcom: Add Acer Aspire 1
+  arm64: dts: qcom: Add Acer Aspire 1
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index a260f563b4889..eff2c8671c343 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -74,6 +74,7 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
- {
- 	u32 mode;
- 	u32 base1, base2;
-+	u32 msb;
- 	char name[] = "sXX_pY_backup"; /* s10_p1_backup */
- 	int i, ret;
- 
-@@ -122,6 +123,22 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
- 
- 		dev_dbg(priv->dev, "%s 0x%x\n", name, p1[i]);
- 
-+		if (priv->reg && priv->reg[i].p1_shift) {
-+			ret = snprintf(name, sizeof(name), "s%d_p1_msb",
-+				       priv->sensor[i].hw_id);
-+			if (ret < 0)
-+				return ret;
-+
-+			ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &msb);
-+			if (ret) {
-+				dev_err(priv->dev, "Failed to read %s\n", name);
-+				return ret;
-+			}
-+
-+			dev_dbg(priv->dev, "%s 0x%x\n", name, msb);
-+			p1[i] |= msb >> priv->reg[i].p1_shift;
-+		}
-+
- 		ret = snprintf(name, sizeof(name), "s%d_p2%s", priv->sensor[i].hw_id,
- 			       backup ? "_backup" : "");
- 		if (ret < 0)
-@@ -134,6 +151,22 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
- 		}
- 
- 		dev_dbg(priv->dev, "%s 0x%x\n", name, p2[i]);
-+
-+		if (priv->reg && priv->reg[i].p2_shift) {
-+			ret = snprintf(name, sizeof(name), "s%d_p2_msb",
-+				       priv->sensor[i].hw_id);
-+			if (ret < 0)
-+				return ret;
-+
-+			ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &msb);
-+			if (ret) {
-+				dev_err(priv->dev, "Failed to read %s\n", name);
-+				return ret;
-+			}
-+
-+			dev_dbg(priv->dev, "%s 0x%x\n", name, msb);
-+			p2[i] |= msb >> priv->reg[i].p2_shift;
-+		}
- 	}
- 
- 	switch (mode) {
+ .../devicetree/bindings/arm/qcom.yaml         |   4 +-
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 859 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |   4 -
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  12 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   6 +-
+ 6 files changed, 874 insertions(+), 12 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+
 -- 
 2.39.2
 
