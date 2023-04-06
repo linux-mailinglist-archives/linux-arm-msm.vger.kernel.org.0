@@ -2,73 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B7736DA1F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 21:51:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 652506DA207
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 21:55:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237969AbjDFTvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 15:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57614 "EHLO
+        id S238308AbjDFTzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 15:55:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238064AbjDFTvO (ORCPT
+        with ESMTP id S229664AbjDFTzr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 15:51:14 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C5DAE5F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 12:51:13 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id h11so45259989lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 12:51:13 -0700 (PDT)
+        Thu, 6 Apr 2023 15:55:47 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2786D5BA9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 12:55:46 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id g19so39116972lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 12:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680810671;
+        d=linaro.org; s=google; t=1680810944;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=EcXs2SGxl8yT2WI08MaUsydieqFeN/OG4gvIutKSaIM=;
-        b=uUgBhfwK1lYS/bWyIW7HZord9ImkwgZGvW6pk74imNsO407GInv9+MsCeOTfnjiLb0
-         ZZqD82AM9rEYP3sXTJ7V2sguRGQiXcUMuxVSSNlhFsSM5ICjzzawCyjAdml9cZkJP1K9
-         wrU359qabplJ4zwBrOdzjF76ho9Ww+AcVCpWaqnCbkSCHF/MijNEKvX0xNdg6r9zL0KU
-         qe92e5y+NWXljN6mOQxqmvX6NQp1dIqO4qLYVQiQy6Tfgq1N3xqeD9KDhKvzrJ/WuzfA
-         vi1JV5LCE6jE2ygnsy5saK5FPihAqUgJROiECa/djW6YGepKTZ9810Awgh/CbWZRh/O/
-         Gwpw==
+        bh=4e1AWlyBcKR3I5ILtwI72cSCBL6y95j52yQauXVOOT4=;
+        b=Zsrv5K3FHfPUlnAL4tM0QO4XO4TcKMRkr6dlWxS3c689yhPdxiv74jcFDVkZ/++FKe
+         Aj9rESwM+6elJgC6xmYnmx1pRuK/0fw3XztXgJa281VLTq5j2Cg2YErERSatkX7MknPS
+         qXDl72lYtrqkcnYCGlrsF2g5gNn+f6dppe53A9CdTl7rg2ciKvWHgTivf5mKhBl+J00A
+         41rRghCUuxyfYQ7tEQqY/CjKpPf5vPU4PQXifwkN8C5gsmr0+L1eDxuEQbGykLLHnD8Z
+         +83e5LvqHRdu6/jEnC01Ej0zCF71Z8DF7ZJovx2c39KdQtWXoZiFoVbfBulzAoikmHmb
+         T+tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680810671;
+        d=1e100.net; s=20210112; t=1680810944;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EcXs2SGxl8yT2WI08MaUsydieqFeN/OG4gvIutKSaIM=;
-        b=lHmg4jc460KpbCs9WmDeQiWJr0JYgZK4pQoeEj63EORx6oUov1ekys496/tTFV+sGX
-         PLGpqZ7inSDGZZWDgY2wIm9RmhfF5D078WHZvJ3YtKLSgTfb1kF3mOf1t54OxMtfhOZk
-         38CIoJNnnJHhqP+5VFMc11ZrLEWlgJzEFeuwwJt8AQjn7nXAiYj+Lw2FS1YvsKov0c0k
-         vDFF/4KH17HEhVfGf75hiksK7uAIBmxl2L7sNLMUofUUaXZ3/Wy8bkEWO3vBNMAKEmn+
-         OLfR7zsOVSbgGZ5gtUOmvSlglVzAaS6+GtJiJoWvEuMSCdVvceK/O/pDpUBvtuxEz5fS
-         tWjQ==
-X-Gm-Message-State: AAQBX9dsQkmgVqTDLvF6VV3GLes7ChuPWzy3EWPGTvUlyN351S3x37Jw
-        u6Rp9ygUqT3dDlU09E2n7rreEw==
-X-Google-Smtp-Source: AKy350YeQOs8GOsdJTBw35OhrEjXDHpv/rUNEqD962WbLnKUZUV5yuiX4L1S+GgeVXz3GaYOeQHh/Q==
-X-Received: by 2002:ac2:48b1:0:b0:4db:513b:6ef4 with SMTP id u17-20020ac248b1000000b004db513b6ef4mr90249lfg.11.1680810671327;
-        Thu, 06 Apr 2023 12:51:11 -0700 (PDT)
+        bh=4e1AWlyBcKR3I5ILtwI72cSCBL6y95j52yQauXVOOT4=;
+        b=am7Fi7NWkzqqX0V6wvVPWzBh/3dVjzDXezOP4vJPmrKkLkIrufXb+4wcZCOJhhBMIr
+         EoljRcRZQQh5bjjtK542Po/WCwa32xxPQmlTwGx85le3GtDOC8hYv8lXhCtGHolJYN2t
+         O4GS5mKrhswB0cKRbuQaTpJGwApS9diC4yd+DlRks4zqPn4UaIBeBQGoHjKZdxl8MOOw
+         EqzGcPt0htDNrYHAozxoQkB2xIoFQu6Qqhx+nBTTzvVcGSr99/n3XIM8F19w7MdxX5r6
+         T8LxXwC2w85dNJthCSUMxuPalxQQ1pQpewgV6qGW+x9+Q/EDfU4X4VaeCFdJCaiNfAdj
+         FXqg==
+X-Gm-Message-State: AAQBX9czQprkEZgq5eEwpZjealvRZybadziPQUTuL0MZFmzkiUA8cEMy
+        nshq3Rsisfs86UPtQKR2qHMlKw==
+X-Google-Smtp-Source: AKy350YHCUi8OdmwLOFkttGbLhbPMWeS/ZJvAxLuiglxSYenCnEaHo3KOjeTDn8ks4gRqkuYUnVILA==
+X-Received: by 2002:ac2:54a5:0:b0:4eb:e7f:945 with SMTP id w5-20020ac254a5000000b004eb0e7f0945mr50291lfk.41.1680810944382;
+        Thu, 06 Apr 2023 12:55:44 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id u11-20020ac248ab000000b004dc4af9089bsm390646lfg.231.2023.04.06.12.51.09
+        by smtp.gmail.com with ESMTPSA id b6-20020a056512218600b004b5480edf67sm393504lft.36.2023.04.06.12.55.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 12:51:10 -0700 (PDT)
-Message-ID: <18eb5708-bf51-26c3-51a0-70a5069ffdbe@linaro.org>
-Date:   Thu, 6 Apr 2023 21:51:08 +0200
+        Thu, 06 Apr 2023 12:55:43 -0700 (PDT)
+Message-ID: <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
+Date:   Thu, 6 Apr 2023 21:55:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH V3 5/5] arm64: dts: qcom: ipq9574: Add cpufreq support
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
 Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+Cc:     Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
-References: <20230406070032.22243-1-quic_devipriy@quicinc.com>
- <20230406070032.22243-6-quic_devipriy@quicinc.com>
+References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
+ <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+ <168069726278.2356075.14351594478003012447.robh@kernel.org>
+ <20230405134727.GA2461305-robh@kernel.org>
+ <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
+ <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230406070032.22243-6-quic_devipriy@quicinc.com>
+In-Reply-To: <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -83,124 +90,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6.04.2023 09:00, Devi Priya wrote:
-> Add cpu freq nodes in the device tree to bump cpu frequency above 800MHz.
+On 6.04.2023 19:45, Krzysztof Kozlowski wrote:
+> On 05/04/2023 15:49, Konrad Dybcio wrote:
+>>
+>>
+>> On 5.04.2023 15:47, Rob Herring wrote:
+>>> On Wed, Apr 05, 2023 at 07:22:40AM -0500, Rob Herring wrote:
+>>>>
+>>>> On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
+>>>>> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
+>>>>> use 'reg' to point to the MPM's slice of Message RAM without cutting into
+>>>>> an already-defined RPM MSG RAM node used for GLINK and SMEM.
+>>>>>
+>>>>> Document passing the register space as a slice of SRAM through the
+>>>>> qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
+>>>>>
+>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> ---
+>>>>>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
+>>>>>  1 file changed, 9 insertions(+), 3 deletions(-)
+>>>>>
+>>>>
+>>>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>>>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>>>>
+>>>> yamllint warnings/errors:
+>>>>
+>>>> dtschema/dtc warnings/errors:
+>>>> Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
+>>>
+>>> Looks like this is colliding with the example template which has to 
+>>> craft an interrupt provider for 'interrupts' properties. Either adding a 
+>>> parent node or using interrupts-extended instead should work-around it.
+>> Check the devicetree-org issue linked in the cover letter, please!
+>>
+>> I suppose wrapping it in a parent node could work as a temporary
+>> measure, but since it belongs outside /soc, I'd have to make up
+>> a bogus simple-bus, I think.
 > 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  Changes in V3:
-> 	- No change
-> 
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 58 +++++++++++++++++++++++++++
->  1 file changed, 58 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 1f9b7529e7ed..cfef87b5fd22 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -6,6 +6,7 @@
->   * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
-> +#include <dt-bindings/clock/qcom,apss-ipq.h>
->  #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> @@ -37,6 +38,10 @@
->  			reg = <0x0>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		CPU1: cpu@1 {
-> @@ -45,6 +50,10 @@
->  			reg = <0x1>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		CPU2: cpu@2 {
-> @@ -53,6 +62,10 @@
->  			reg = <0x2>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		CPU3: cpu@3 {
-> @@ -61,6 +74,10 @@
->  			reg = <0x3>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-> +			clock-names = "cpu";
-> +			operating-points-v2 = <&cpu_opp_table>;
-> +			cpu-supply = <&ipq9574_s1>;
->  		};
->  
->  		L2_0: l2-cache {
-> @@ -75,6 +92,47 @@
->  		reg = <0x0 0x40000000 0x0 0x0>;
->  	};
->  
-> +	cpu_opp_table: opp-table-cpu {
-This is not sorted properly. It should probably come
-after memory alphabetically ('o' > 'm')
+> I don't think your issue in dtschema is accurate. As Rob suggested, you
+> need wrapping node.
+I don't really know what kind.. I can add something like:
+
+rpm {
+	compatible = "qcom,rpm", "simple-mfd";
+
+	mpm: interrupt-controller {
+	...
+};
+
+And then only introduce a very simple YAML for "qcom,rpm"
+describing what it is and documenting the compatible.
+
+Or I can push it under rpm-requests{}.
 
 Konrad
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-936000000 {
-> +			opp-hz = /bits/ 64 <936000000>;
-> +			opp-microvolt = <725000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1104000000 {
-> +			opp-hz = /bits/ 64 <1104000000>;
-> +			opp-microvolt = <787500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1416000000 {
-> +			opp-hz = /bits/ 64 <1416000000>;
-> +			opp-microvolt = <862500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1488000000 {
-> +			opp-hz = /bits/ 64 <1488000000>;
-> +			opp-microvolt = <925000>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-1800000000 {
-> +			opp-hz = /bits/ 64 <1800000000>;
-> +			opp-microvolt = <987500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +
-> +		opp-2208000000 {
-> +			opp-hz = /bits/ 64 <2208000000>;
-> +			opp-microvolt = <1062500>;
-> +			clock-latency-ns = <200000>;
-> +		};
-> +	};
-> +
->  	firmware {
->  		scm {
->  			compatible = "qcom,scm-ipq9574", "qcom,scm";
+> 
+> Best regards,
+> Krzysztof
+> 
