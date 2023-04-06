@@ -2,93 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A5756D9CDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 17:59:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDF706D9D12
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 18:07:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239552AbjDFP7J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 11:59:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34928 "EHLO
+        id S239860AbjDFQHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 12:07:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239575AbjDFP7E (ORCPT
+        with ESMTP id S239844AbjDFQHQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 11:59:04 -0400
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9A09755;
-        Thu,  6 Apr 2023 08:59:03 -0700 (PDT)
-Received: by mail-oi1-f181.google.com with SMTP id w133so29403411oib.1;
-        Thu, 06 Apr 2023 08:59:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680796743; x=1683388743;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Oh7h3jMxLokPLKNPs7kQpXzC9xXuYjOjp2sgIXgC2jU=;
-        b=rvbeNofsvZDZLb0ltwxN+lET8hbSlB+dPnBYG8RF4o3SIKPepcCgQWCkFXSvQ+7+C2
-         KdY3O3XYvojYgDgMsQBpXFUkuELNo4seklJgh3neIcijPhREbUr7i1G0t+how6mYuyDT
-         6GqrM6GLicc1r0oSVxV2Yk2IgGAaG4s6IUrNMBhQLlJEc+B7AtNzSJXAyVPxKkXOrFSc
-         XRv4qLk5F4e93hP2u9H56MgBR0dGuT0BpKbkneYcEpB2kqNb/hp5IYp1x8+emHWIqw+v
-         uLaCXwFE2C7DoyMoI3pjXd2HbvnnCqynfvnXhiQxWtz14h95QXJHp5qgthLBEN5nOH/d
-         jdUQ==
-X-Gm-Message-State: AAQBX9ew6QVWoQhBBfKWksjieZuE9lEL0NymtNcHfmt7RNWYyv6aKwUg
-        fT+IxTefBP8+VXkrLnRYrHwHFIYzpg==
-X-Google-Smtp-Source: AKy350arKIELgvEJntEgvZm0kaiU+d+z/2nRm9Qv5wpmftvqcCoU9kxkvuhMhE6BIYSSc7apiG4Jew==
-X-Received: by 2002:a05:6808:5:b0:383:e1f3:fef6 with SMTP id u5-20020a056808000500b00383e1f3fef6mr2910633oic.18.1680796743189;
-        Thu, 06 Apr 2023 08:59:03 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id z7-20020aca6707000000b0038755008179sm780181oix.26.2023.04.06.08.59.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 08:59:02 -0700 (PDT)
-Received: (nullmailer pid 3159384 invoked by uid 1000);
-        Thu, 06 Apr 2023 15:59:02 -0000
-Date:   Thu, 6 Apr 2023 10:59:02 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Patrick Lai <quic_plai@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Thu, 6 Apr 2023 12:07:16 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8819EE4;
+        Thu,  6 Apr 2023 09:07:00 -0700 (PDT)
+Received: from workpc.. (109-252-119-170.nat.spd-mgts.ru [109.252.119.170])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: dmitry.osipenko)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id D662966031C6;
+        Thu,  6 Apr 2023 17:06:56 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1680797218;
+        bh=Hk90072+fNtMk6bzJlUk3vMa94X4jOPr38sjSqJGC68=;
+        h=From:To:Cc:Subject:Date:From;
+        b=TH08idU5sasycPk66wdrwrZWcxg/7Zyy0vnU/rvtWLMSQCnWqR9sufNIHDMt1NqCI
+         kaSdKDy4CLUXpyyJnsgkHHbnJpWjoG1seTkqmqiaw3TtIb/jzh8dN59CvqgSDAWuXd
+         dLiGDkamMv2gWwTj0Gwrv/dJq65b4oTMWtbrdQ/+ssBKv79x8rDhe84Wv/HegpkjtO
+         rv0vjx5/VXtvIXjIGo1VEl/oZaUrK9794lnBIJLMrt0FHAV65ixcCun5Za6l+nL+jH
+         wWz94cfPKOR7sTmMBaomC3wlLst5l5yTJonZyYboDwfPi9jpS+fmiMXB+64tbt8c+J
+         0g82VUu1eSmvw==
+From:   Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To:     Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        Liam Mark <lmark@codeaurora.org>,
+        Brian Starkey <Brian.Starkey@arm.com>,
+        John Stultz <jstultz@google.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Subject: Re: [PATCH v2 2/7] dt-bindings: soundwire: qcom: add 16-bit sample
- interval
-Message-ID: <168079674130.3159330.8680786687198930722.robh@kernel.org>
-References: <20230403132503.62090-1-krzysztof.kozlowski@linaro.org>
- <20230403132503.62090-3-krzysztof.kozlowski@linaro.org>
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>
+Cc:     linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        kernel@collabora.com
+Subject: [PATCH v2 0/7] Move dma-buf mmap() reservation locking down to exporters
+Date:   Thu,  6 Apr 2023 19:06:30 +0300
+Message-Id: <20230406160637.541702-1-dmitry.osipenko@collabora.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230403132503.62090-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This patchset makes dma-buf exporters responisble for taking care of
+the reservation lock. I also included patch that moves drm-shmem to use
+reservation lock, to let CI test the whole set. I'm going to take all
+the patches via the drm-misc tree, please give an ack.
 
-On Mon, 03 Apr 2023 15:24:58 +0200, Krzysztof Kozlowski wrote:
-> The port sample interval was always 16-bit, split into low and high
-> bytes.  This split was unnecessary, although harmless for older devices
-> because all of them used only lower byte (so values < 0xff).  With
-> support for Soundwire controller on Qualcomm SM8550 and its devices,
-> both bytes will be used, thus add a new 'qcom,ports-sinterval' property
-> to allow 16-bit sample intervals.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/soundwire/qcom,soundwire.yaml    | 22 +++++++++++++++++--
->  1 file changed, 20 insertions(+), 2 deletions(-)
-> 
+Previous policy stated that dma-buf core takes the lock around mmap()
+callback. Which meant that both importers and exporters shouldn't touch
+the reservation lock in the mmap() code path. This worked well until
+Intel-CI found a deadlock problem in a case of self-imported dma-buf [1].
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+The problem happens when userpace mmaps a self-imported dma-buf, i.e.
+mmaps the dma-buf FD. DRM core treats self-imported dma-bufs as own GEMs
+[2]. There is no way to differentiate a prime GEM from a normal GEM for
+drm-shmem in drm_gem_shmem_mmap(), which resulted in a deadlock problem
+for drm-shmem mmap() code path once it's switched to use reservation lock.
+
+It was difficult to fix the drm-shmem problem without adjusting dma-buf
+locking policy. In parctice not much changed from importers perspective
+because previosly dma-buf was taking the lock in between of importers
+and exporters. Now this lock is shifted down to exporters.
+
+[1] https://intel-gfx-ci.01.org/tree/drm-tip/Patchwork_114671v2/shard-snb5/igt@prime_vgem@sync@rcs0.html
+[2] https://elixir.bootlin.com/linux/v6.3-rc4/source/drivers/gpu/drm/drm_prime.c#L924
+
+Changelog:
+
+v2: - Added ack from Christian König to the DRM patch.
+
+    - Dropped "fixes" tag from the patches, like was requested by
+      Christian König. The patches don't actually need a backport
+      and merely improve the locking policy.
+
+    - Dropped "reverts" from the patch titles to prevent them from
+      auto-backporting by the stable bot based on the title.
+
+    - Added r-b from Emil Velikov and placed the drm_WARN in the
+      drm-shmem patch like he suggested in a comment to v1.
+
+    - Corrected drm-shmem patch dma_resv_lock(obj->resv) inconsistently
+      used with dma_resv_unlock(shmem->base.resv). Now shmem->base.resv
+      variant is used for all locks/unlocks.
+
+Dmitry Osipenko (7):
+  media: videobuf2: Don't assert held reservation lock for dma-buf
+    mmapping
+  dma-buf/heaps: Don't assert held reservation lock for dma-buf mmapping
+  udmabuf: Don't assert held reservation lock for dma-buf mmapping
+  fastrpc: Don't assert held reservation lock for dma-buf mmapping
+  drm: Don't assert held reservation lock for dma-buf mmapping
+  dma-buf: Change locking policy for mmap()
+  drm/shmem-helper: Switch to reservation lock
+
+ drivers/dma-buf/dma-buf.c                     |  17 +-
+ drivers/dma-buf/heaps/cma_heap.c              |   3 -
+ drivers/dma-buf/heaps/system_heap.c           |   3 -
+ drivers/dma-buf/udmabuf.c                     |   2 -
+ drivers/gpu/drm/drm_gem_shmem_helper.c        | 208 ++++++++----------
+ drivers/gpu/drm/drm_prime.c                   |   2 -
+ drivers/gpu/drm/i915/gem/i915_gem_dmabuf.c    |   2 -
+ drivers/gpu/drm/lima/lima_gem.c               |   8 +-
+ drivers/gpu/drm/omapdrm/omap_gem_dmabuf.c     |   2 -
+ drivers/gpu/drm/panfrost/panfrost_drv.c       |   7 +-
+ .../gpu/drm/panfrost/panfrost_gem_shrinker.c  |   6 +-
+ drivers/gpu/drm/panfrost/panfrost_mmu.c       |  19 +-
+ drivers/gpu/drm/tegra/gem.c                   |   2 -
+ .../common/videobuf2/videobuf2-dma-contig.c   |   3 -
+ .../media/common/videobuf2/videobuf2-dma-sg.c |   3 -
+ .../common/videobuf2/videobuf2-vmalloc.c      |   3 -
+ drivers/misc/fastrpc.c                        |   3 -
+ include/drm/drm_gem_shmem_helper.h            |  14 +-
+ 18 files changed, 117 insertions(+), 190 deletions(-)
+
+-- 
+2.39.2
 
