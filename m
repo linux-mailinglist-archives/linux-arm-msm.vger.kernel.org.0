@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4EC56D901A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 09:05:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32ACF6D90AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 09:42:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236037AbjDFHFu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 03:05:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39076 "EHLO
+        id S236169AbjDFHmq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 03:42:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235823AbjDFHFM (ORCPT
+        with ESMTP id S236164AbjDFHmV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 03:05:12 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722BBAD22
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 00:03:40 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id y4so147026866edo.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 00:03:40 -0700 (PDT)
+        Thu, 6 Apr 2023 03:42:21 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0CCB83E6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 00:41:52 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id er13so106154838edb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 00:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680764611;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1680766911;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xt6w7DBEEp2oP9gq6uM1fJrHBdn8VFiv3bhU+Z8knvc=;
-        b=hVmARTOWOi8zcXg/wquYPGxpaxjcdvjoCiWvCn/vQkTDpU56ZAhW4rutJ//Xzx6vz6
-         sk3iRLVpvhW3aaX6lykCTeKgQdHEX3JMgzS3Fd8W/zp/KAEo3Uym7g3mEqBTKJ918jtL
-         ZptyNafVhadzQfCoJ9p/gMqw2crPzdyyUqSqaxzOQBoP36R43wjUYT0BWvOWLp/G4g4r
-         w2MNwZyMW99BYuaI53XP55LtMnPpEKKSs3VklWerLWaPLAqduIdjf2PAm+v4eSgUnQ3P
-         4jdU3H4yFFIg4N6F6dc7AXYvM5/+VezfVxrJ8j51k/LsJlDEj4wZKerHQUaes0qBUMwa
-         FFTQ==
+        bh=hpp+0JOz+FKGY7fsBLSsdfNUNXwCqAnXR6glr6qNRMw=;
+        b=U9/EmzMV+No/XF5Nq4LYvmSGD7hlHQqob5/GLw7OH9v6PeKs+BIbVHC4yEqvo3zLIM
+         ewwpZeEJXgJJICeVEqDaWdKohsl5KIMAZuYGR7CgDPjCq1y3vV8etQO+WiSNRj+qmNEW
+         Rjf/rCSk22jFq/DmvYb2cnlASTRzytXbuTVClOVDAhm1CxAMtuLT6RgUnkxcSvKQj2Cn
+         eV03fmlQsJ8QyuN+/0Ul+K5dZvyTx2+dhtU2prTABH4Bf/7VsuzHIEXHeW9mVABRH3fJ
+         QK9U5oMPUAguypNu/vx3B8jF5ZlHBPKr9evFQieqkQKvQ0lHM3kaZNvm6ywNXt4uhuy5
+         o3aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680764611;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1680766911;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xt6w7DBEEp2oP9gq6uM1fJrHBdn8VFiv3bhU+Z8knvc=;
-        b=Ba0s5dDafRRNtGp18QObLzOwHaG4rdEui59hwhZIpZpgzaqENMj/whgBBRdUoT1AQd
-         7EB8lfFolgYAVDGYRBVnFL22LsdRtrf7N0xYguaQbQHzAp9Rt7rcusXvvNjWLQMq30UR
-         oqHZnUsfb5yAYsn+DKONloogsTYXXUjoN0ziZ1gu/7t9n9w6FHu82WAFt/8nis3QmGGO
-         5fuYMN2SBJGjc490S4k//tyZdteIvf58RJ2oNXZSIw+7f15jREMpfAwkqjCNPf/eMsXX
-         KHjZ3p2Ns/0iKvG/CtEGYyf8gAg8CtRIUhECToSD4aOIo0BzauvAmaNlt8AXRb/2tNs3
-         fUyw==
-X-Gm-Message-State: AAQBX9c6QlXHb8KQ0epz2+3vzb0SG+1fxvXFevvKAVDkOGz9Nc0RTAu7
-        RSwl0jyM2b2amssYdVQCD3U2KQ==
-X-Google-Smtp-Source: AKy350YnhKpndWCuKkoEX1F9XMUWGFxBZSXdLPSCgbRgT7xN4Z0Df2myKsprNtK3DO5NAXHENav20w==
-X-Received: by 2002:a17:906:9145:b0:931:df8d:113 with SMTP id y5-20020a170906914500b00931df8d0113mr4673121ejw.26.1680764611021;
-        Thu, 06 Apr 2023 00:03:31 -0700 (PDT)
+        bh=hpp+0JOz+FKGY7fsBLSsdfNUNXwCqAnXR6glr6qNRMw=;
+        b=FiT4MFXAMhCbBDwNp5I2NsBbUHH07sUDnJtSb5Q5ao94mI1rF2BQTKJ7MQSm5RPF3O
+         DYDjEVKTAWeEM2hMinOz7oP3u6/TXIgtVN4JpB9cYMfaH3Epfc1fWr5qOMrTVTyl64lO
+         CZFWNuFRnzagO45g58fytCscYHiPB9TmH4PsTdOZzJwyup9AylVXw3ekCjn212kSzp/m
+         IBuNTi9O5vvsv7X6dpGJ26gedzskMDJ8kSGqj060DoHurbraGvGIOfsjqUu3hzYDh9u3
+         f6X0VOdEdV/5eXVeqBdf5mJdxFlUxPHIZq+LKMXD1S1dE3GBGI/a+pD834L9JWzjDsuX
+         v+TQ==
+X-Gm-Message-State: AAQBX9cAZkcw8C+itH1TP90xfYQ/KJRcdor5ucQPrq87sgJwtArOK6qk
+        dtnXMtDHgmYMO4UDfLVxj48i6OBWmMrefhr7O0o=
+X-Google-Smtp-Source: AKy350bkNdf5O2eZ4KmOp+DCXA33pjr3OARoKNaTAwi7CozBGDwR42LmdRmdeTHeYyrr7Aa+Kp1SBA==
+X-Received: by 2002:a17:906:c014:b0:947:c8d5:bfab with SMTP id e20-20020a170906c01400b00947c8d5bfabmr5034771ejz.35.1680766910962;
+        Thu, 06 Apr 2023 00:41:50 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed? ([2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed])
-        by smtp.gmail.com with ESMTPSA id f13-20020a170906c08d00b0092f289b6fdbsm390050ejz.181.2023.04.06.00.03.30
+        by smtp.gmail.com with ESMTPSA id y11-20020a17090629cb00b00949173c1dcfsm455419eje.18.2023.04.06.00.41.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 00:03:30 -0700 (PDT)
-Message-ID: <11de8706-5753-472b-1fe0-de80bb3d8c8c@linaro.org>
-Date:   Thu, 6 Apr 2023 09:03:29 +0200
+        Thu, 06 Apr 2023 00:41:50 -0700 (PDT)
+Message-ID: <0a66e291-a86d-1ff9-e674-839b8cc8f1da@linaro.org>
+Date:   Thu, 6 Apr 2023 09:41:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH] soundwire: qcom: Fix enumeration of second device on the
- bus
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org, Patrick Lai <quic_plai@quicinc.com>
-References: <20230405142926.842173-1-krzysztof.kozlowski@linaro.org>
- <ecc13046-1a4f-77e7-c4dc-a5a4c1248572@linux.intel.com>
+Subject: Re: [PATCH v8 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
+ PHY
 Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+References: <cover.1680693149.git.quic_varada@quicinc.com>
+ <1efa9a64499767d939efadd0aef897ac4a6e54eb.1680693149.git.quic_varada@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ecc13046-1a4f-77e7-c4dc-a5a4c1248572@linux.intel.com>
+In-Reply-To: <1efa9a64499767d939efadd0aef897ac4a6e54eb.1680693149.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -85,48 +82,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/04/2023 17:01, Pierre-Louis Bossart wrote:
+On 05/04/2023 13:41, Varadarajan Narayanan wrote:
+> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
 > 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Changes in v8:
+> 	- Update clock names for ipq9574
 > 
-> On 4/5/23 09:29, Krzysztof Kozlowski wrote:
->> Some Soundwire buses (like &swr0 on Qualcomm HDK8450) have two devices,
->> which can be brought from powerdown state one after another.  We need to
->> keep enumerating them on each slave attached interrupt, otherwise only
->> first will appear.
->>
->> Cc: <stable@vger.kernel.org>
->> Fixes: a6e6581942ca ("soundwire: qcom: add auto enumeration support")
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Cc: Patrick Lai <quic_plai@quicinc.com>
->> ---
->>  drivers/soundwire/qcom.c | 11 +++--------
->>  1 file changed, 3 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index c296e0bf897b..1e5077d91f59 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -587,14 +587,9 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
->>  			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
->>  				dev_dbg_ratelimited(swrm->dev, "SWR new slave attached\n");
->>  				swrm->reg_read(swrm, SWRM_MCP_SLV_STATUS, &slave_status);
->> -				if (swrm->slave_status == slave_status) {
->> -					dev_dbg(swrm->dev, "Slave status not changed %x\n",
->> -						slave_status);
+>  Changes in v6:
+> 	- Made power-domains optional
 > 
-> it's not clear to me how removing this test helps with the two-device
-> configuration?
+> Note: In the earlier patch sets, had used the (legacy)
+> specification available in qcom,msm8996-qmp-usb3-phy.yaml. Moved
+> to newer specification in qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> ---
+>  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 43 +++++++++++++++++++---
+>  1 file changed, 37 insertions(+), 6 deletions(-)
 > 
-> Or is this a case where the status for both devices changes at the same
-> time but the interrupt status remains set, so the next iteration of the
-> loop is ignored?
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> index 16fce10..e902a0d 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+> @@ -16,6 +16,7 @@ description:
+>  properties:
+>    compatible:
+>      enum:
+> +      - qcom,ipq9574-qmp-usb3-phy
+>        - qcom,sc8280xp-qmp-usb3-uni-phy
+>  
+>    reg:
+> @@ -25,11 +26,7 @@ properties:
+>      maxItems: 4
+>  
+>    clock-names:
+> -    items:
+> -      - const: aux
+> -      - const: ref
+> -      - const: com_aux
+> -      - const: pipe
+> +    maxItems: 4
+>  
+>    power-domains:
+>      maxItems: 1
+> @@ -60,7 +57,6 @@ required:
+>    - reg
+>    - clocks
+>    - clock-names
+> -  - power-domains
+>    - resets
+>    - reset-names
+>    - vdda-phy-supply
+> @@ -71,6 +67,41 @@ required:
+>  
+>  additionalProperties: false
+>  
+> +allOf:
 
-I think the patch is not correct. I misinterpreted the slave status
-field and after double checking I see two speakers bound. Please ignore
-for now.
+As you can see in example-schema, allOf goes before
+additionalProperties: false.
+
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq9574-qmp-usb3-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 4
+
+Don't need clocks here.
+
+> +        clock-names:
+> +          items:
+> +            - const: aux
+> +            - const: ref
+> +            - const: cfg_ahb
+> +            - const: pipe
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sc8280xp-qmp-usb3-uni-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 4
+
+Neither here.
+
+> +        clock-names:
+> +          items:
+> +            - const: aux
+> +            - const: ref
+> +            - const: com_aux
+
+Can anyone explain me why do we name these (here and other Qualcomm
+bindings) based on clock name, not input? Just because different clock
+is fed to the block, does not necessarily mean the input should be named
+differently.
+
+> +            - const: pipe
+> +
+>  examples:
+>    - |
+>      #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
 
 Best regards,
 Krzysztof
