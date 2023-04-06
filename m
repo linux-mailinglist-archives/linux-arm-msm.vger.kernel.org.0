@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83B126DA272
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 023916DA291
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:23:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238659AbjDFUQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 16:16:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51514 "EHLO
+        id S239255AbjDFUXL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 16:23:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238444AbjDFUQk (ORCPT
+        with ESMTP id S239087AbjDFUW4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 16:16:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DF756592;
-        Thu,  6 Apr 2023 13:16:38 -0700 (PDT)
+        Thu, 6 Apr 2023 16:22:56 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA267976B;
+        Thu,  6 Apr 2023 13:22:33 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CD7CC64C01;
-        Thu,  6 Apr 2023 20:16:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C57C433EF;
-        Thu,  6 Apr 2023 20:16:36 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 72BEA6434E;
+        Thu,  6 Apr 2023 20:22:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE1BC433D2;
+        Thu,  6 Apr 2023 20:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680812197;
-        bh=Ro81oFs2ERAZEjBoyQDuaMoEroanaW6iQPKQU7mVPEU=;
+        s=k20201202; t=1680812552;
+        bh=QbU1tiiVtHmL+PJo3an08Q0eap2Dp32ICrXVxmaFXMM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eRkFDdcqoGk64bp4sT+M9/sjnM3oJqqqFa2dofyP1WAn1JhXccOhbdpxbyTmu8TMS
-         JWnOy2uQeOiJODNWHP7bJUSzb4d5M7BCWqCs3JwxfAeXj7OxEyBgXU0nbYifzB7Se4
-         5XGHJ5HCAU04iATsAYymN3/hh0YExMF56CzNN0aTMLVlA2xTSHz6p0xjjHSsGduug8
-         zVCShD2Cv7sBYRv2vbj9r+g1Caq3c/JbwfdMEKnmRwq0QPPM1+4Ecc/xuVIp0YCPGj
-         /8z0S7YvyK3861/A3gyEaFP6Nr5J7g+cY6gyRo9dZXllu9MSv+FassMFU7aSFthh3E
-         fMXJZCq8wDVPQ==
-Date:   Thu, 6 Apr 2023 13:16:34 -0700
+        b=OTyOeiezNd9LajC1COfog+DUblRjvVWaWdgSE/lh87jYEAg0XWWIlzI44HlLh5Rs5
+         K4Oe+I6TEL7tgVRZbgOEOpWU7nPh/6jRRa9sfhogVV9bsTJIt/Q/ktHis3mhRPBcoj
+         uWdebuQBK+1WHU8qaILAHsncwVGDbE0XNVeYDUAUrlRrrzfJP3r+6cT0Ra+Vj1RVFi
+         jAhfooNC9IAFxgw/7Q4jFMfauJQML0of5074/Yog2DLxSmTd+rzHSlLfdzE5+CWiLo
+         lM3740EvfiGjstKT8J9TOrTXqC3mpibEGeZZUo9OglYfD/bZOvVAYRz9arLNYQXbvG
+         5BLNVFSt02/Pw==
+Date:   Thu, 6 Apr 2023 13:22:30 -0700
 From:   Eric Biggers <ebiggers@kernel.org>
 To:     Abel Vesa <abel.vesa@linaro.org>
 Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
@@ -54,16 +54,16 @@ Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v5 4/6] scsi: ufs: ufs-qcom: Switch to the new ICE API
-Message-ID: <20230406201634.GA20288@sol.localdomain>
+Subject: Re: [PATCH v5 5/6] mmc: sdhci-msm: Switch to the new ICE API
+Message-ID: <20230406202230.GB20288@sol.localdomain>
 References: <20230403200530.2103099-1-abel.vesa@linaro.org>
- <20230403200530.2103099-5-abel.vesa@linaro.org>
+ <20230403200530.2103099-6-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230403200530.2103099-5-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+In-Reply-To: <20230403200530.2103099-6-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,34 +71,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abel,
+On Mon, Apr 03, 2023 at 11:05:29PM +0300, Abel Vesa wrote:
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 8ac81d57a3df..1a6e63b7af12 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -19,6 +19,8 @@
+>  #include <linux/firmware/qcom/qcom_scm.h>
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/interconnect.h>
+>  #include <linux/pinctrl/consumer.h>
+>  #include <linux/reset.h>
+>  
+> +#include <soc/qcom/ice.h>
 
-On Mon, Apr 03, 2023 at 11:05:28PM +0300, Abel Vesa wrote:
-> Now that there is a new dedicated ICE driver, drop the ufs-qcom-ice and
-> use the new ICE api provided by the Qualcomm soc driver ice. The platforms
-> that already have ICE support will use the API as library since there will
-> not be a devicetree node, but instead they have reg range. In this case,
-> the of_qcom_ice_get will return an ICE instance created for the consumer's
-> device. But if there are platforms that do not have ice reg in the
-> consumer devicetree node and instead provide a dedicated ICE devicetree
-> node, the of_qcom_ice_get will look up the device based on qcom,ice
-> property and will get the ICE instance registered by the probe function
-> of the ice driver.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+The include of <linux/firmware/qcom/qcom_scm.h> should be removed.
 
-This is still silent about how the ICE clock behavior is being changed.
+>  static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+>  			      struct cqhci_host *cq_host)
+>  {
+>  	struct mmc_host *mmc = msm_host->mmc;
+>  	struct device *dev = mmc_dev(mmc);
+> -	struct resource *res;
+>  
+>  	if (!(cqhci_readl(cq_host, CQHCI_CAP) & CQHCI_CAP_CS))
+>  		return 0;
+>  
+> -	res = platform_get_resource_byname(msm_host->pdev, IORESOURCE_MEM,
+> -					   "ice");
+> -	if (!res) {
+> -		dev_warn(dev, "ICE registers not found\n");
+> -		goto disable;
+> -	}
+> -
+> -	if (!qcom_scm_ice_available()) {
+> -		dev_warn(dev, "ICE SCM interface not found\n");
+> -		goto disable;
+> +	msm_host->ice = of_qcom_ice_get(dev);
+> +	if (msm_host->ice == ERR_PTR(-EOPNOTSUPP)) {
+> +		dev_warn(dev, "Disabling inline encryption support\n");
+> +		msm_host->ice = NULL;
+>  	}
+>  
+> -	msm_host->ice_mem = devm_ioremap_resource(dev, res);
+> -	if (IS_ERR(msm_host->ice_mem))
+> -		return PTR_ERR(msm_host->ice_mem);
+> -
+> -	if (!sdhci_msm_ice_supported(msm_host))
+> -		goto disable;
+> +	if (IS_ERR(msm_host->ice))
+> +		return PTR_ERR(msm_host->ice);
+>  
+>  	mmc->caps2 |= MMC_CAP2_CRYPTO;
+> -	return 0;
+>  
+> -disable:
+> -	dev_warn(dev, "Disabling inline encryption support\n");
+>  	return 0;
+>  }
 
-I'm still trying to understand all this myself, so please bear with me, but my
-understanding is that the UFS clocks can be disabled even while the host
-controller is runtime-resumed.  This is called "clock gating" in the code.
+This is sometimes setting MMC_CAP2_CRYPTO when ICE is unsupported.
 
-Before, the ICE clock was just listed as one of the UFS clocks.  So, it was just
-managed like the other UFS clocks.
+BTW, it would be better to set not msm_host->ice until it's known that it will
+have a valid value:
 
-Now, it appears that the ICE clock is always enabled while the host controller
-is runtime-resumed.  So, this patch removes support for gating of the ICE clock.
+	ice = of_qcom_ice_get(dev);
+	if (ice == ERR_PTR(-EOPNOTSUPP)) {
+		dev_warn(dev, "Disabling inline encryption support\n");
+		return 0;
+	}
+	if (IS_ERR_OR_NULL(ice))
+		return PTR_ERR_OR_ZERO(ice);
 
-Is that intended?
+	msm_host->ice = ice;
+	mmc->caps2 |= MMC_CAP2_CRYPTO;
+	return 0;
 
 - Eric
