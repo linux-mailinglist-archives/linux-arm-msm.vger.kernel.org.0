@@ -2,105 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D9D16DA4AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 23:31:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EC456DA577
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 00:00:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbjDFVbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 17:31:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
+        id S239173AbjDFWAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 18:00:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232134AbjDFVbI (ORCPT
+        with ESMTP id S239802AbjDFV7e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 17:31:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1D886EAF;
-        Thu,  6 Apr 2023 14:31:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 89B1064B8F;
-        Thu,  6 Apr 2023 21:31:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796A1C4339E;
-        Thu,  6 Apr 2023 21:31:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680816667;
-        bh=Uv3tMKE9Fzx6ToyFtH3AoI5OOQ8Bp2qXHLBUseV7EsA=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=a/AJ1JQZs5/i0TV2CAMV0hjhWEuLS/J4Fcd+Y9FG8iYIGxDhdu2BJ3uZX3eal4wUB
-         7LM8bhe3/x2zM/hSSw7Fv+79LLGdZSn1q94KFvCLV0KONHEvMGusbBLl1BzdBUQTXo
-         ujgAjsh/OqUFHVSiTrcSfStKNl7H2fwL/dN02Wku0RlMJIQQT/oqVjDJdElAacAUcn
-         odr55c/X2cDJuiVEkN5hELHWCUWQlcP1ul/4ulYv+dQHJzlRkrWQdwlUZ9XDXloVKu
-         enpvC5/ZxjW1jNSSDc0cX9yPrCJR1Zsix97cgeUvUurBKVga57nD674YRf5UtV1h1P
-         t/ZPysQFEQ9iw==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-In-Reply-To: <20230406192811.460888-1-brgl@bgdev.pl>
-References: <20230406192811.460888-1-brgl@bgdev.pl>
-Subject: Re: (subset) [PATCH 0/3] arm64: qcom: add PMIC regulators for
- sa8775p
-Message-Id: <168081666418.315518.2405515023822683417.b4-ty@kernel.org>
-Date:   Thu, 06 Apr 2023 22:31:04 +0100
+        Thu, 6 Apr 2023 17:59:34 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CA1B47B;
+        Thu,  6 Apr 2023 14:59:32 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id e15-20020a17090ac20f00b0023d1b009f52so44176280pjt.2;
+        Thu, 06 Apr 2023 14:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680818372;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sh/cSP01X7baGcBhRNO/UI6rxYCvlWhn8fT2Xxx8V1w=;
+        b=azChA4iepORRwqBwYlga8jmqES47PmBJA5H4jRgGIU3000G70/o9VhARuDB1XtGsBc
+         mH8UaxWpwVLdiaLlBaJaU55y4KuwD9IKO9Ua3KkuHO+LNup8POI2vC3l9CingB0a0eu9
+         nWVoSeBc8hrKvw1nfAAPnDs20BeohnBGxnO7eFF6yGE8jfDH03BImspXFCQ/xyc+jP/U
+         IPhGxj1EVBH2GxK69LIGwDmemiYftXGPY146TYIXu9BfECVe1ElHW7Oh03WIXB5iGqU/
+         asZ41EYXFuQJDgQRDOZW07YbL24980B2UX2NHmrVRLIHlkFcf62y5ROmZkLW8H098J2Q
+         sD1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680818372;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Sh/cSP01X7baGcBhRNO/UI6rxYCvlWhn8fT2Xxx8V1w=;
+        b=OAzBhhpWrpNIKLzl7gjijqyrcwIvlIfPTUi2a1LwUZPDFS9m3dw8lnBbbNHw7p0n2a
+         pk6WvCCuu79JoALkfPS1hFHbUspAG/zCu5TjSGHNYALbXPqJLrHuSMIdji2FTrMqh0/q
+         f0sfoSsKkGZ3eW8c7g8CYuLbTXj/NhJ3viJjifqg5PpJaXRUILqSWSfqfHVjeZ/VdM10
+         wq+6Y7R6fvqOziFgh51Ok27pVMjkrhMmAwIrd4j0PAnyAMqCVpjHm3cCOwRivueZXNPw
+         NORrkRypMBKqP21itXKTBYb51fShEL8uNho6Fprqgo7zPMnuRBxwElNIINe5QnEsURwA
+         h7gA==
+X-Gm-Message-State: AAQBX9dFSVwMLoie7VBy0g8BpkWT1zzG3TX35M5X4Jp/7aDbeHaWoPgF
+        DiAy1gD4k8EsBzzsK2IiSeQ=
+X-Google-Smtp-Source: AKy350bo4KJeNsRKbrWCg7w+eKRCQynE4zWn4ZdEYUZrNEVMBtjR+F8D6ulk5dyu7iGJS3DU+v2I3A==
+X-Received: by 2002:a05:6a20:8bb0:b0:d9:4c19:fe6a with SMTP id m48-20020a056a208bb000b000d94c19fe6amr746759pzh.9.1680818372270;
+        Thu, 06 Apr 2023 14:59:32 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id x53-20020a056a000bf500b005a87d636c70sm1790621pfu.130.2023.04.06.14.59.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 14:59:31 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Christopher Healy <healych@amazon.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
+        linux-kernel@vger.kernel.org (open list),
+        Sean Paul <sean@poorly.run>
+Subject: [RFC 0/2] drm: fdinfo memory stats
+Date:   Thu,  6 Apr 2023 14:59:15 -0700
+Message-Id: <20230406215917.1475704-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-00303
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 06 Apr 2023 21:28:08 +0200, Bartosz Golaszewski wrote:
-> Here are the remaining patches from the big PMIC series that add the DT
-> bindings for RPMH regulators for SA8775P platforms, implement relevant
-> support in the driver and add the regulator nodes to the sa8775p-ride
-> board .dts.
-> 
-> Since the first submission:
-> - the DT bindings now contain the missing supply properties
-> - the ldo8 min voltage has been increased
-> 
-> [...]
+From: Rob Clark <robdclark@chromium.org>
 
-Applied to
+Similar motivation to other similar recent attempt[1].  But with an
+attempt to have some shared code for this.  As well as documentation.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+It is probably a bit UMA-centric, I guess devices with VRAM might want
+some placement stats as well.  But this seems like a reasonable start.
 
-Thanks!
+TODO gputop support?
 
-[1/3] dt-bindings: regulator: qcom,rpmh: add compatible for pmm8654au RPMH
-      commit: ba0887a6b94ea7f77df1e464aeca45758b4d92c3
-[2/3] regulator: qcom-rpmh: add support for pmm8654au regulators
-      commit: 65f1b1dc0cc90236ed9be3970f4a763e853f3aab
+[1] https://patchwork.freedesktop.org/series/112397/
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Rob Clark (2):
+  drm: Add fdinfo memory stats
+  drm/msm: Add memory stats to fdinfo
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+ Documentation/gpu/drm-usage-stats.rst | 21 +++++++
+ drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.c         | 26 ++++++++-
+ drivers/gpu/drm/msm/msm_gpu.c         |  2 -
+ include/drm/drm_file.h                | 10 ++++
+ 5 files changed, 135 insertions(+), 3 deletions(-)
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.39.2
 
