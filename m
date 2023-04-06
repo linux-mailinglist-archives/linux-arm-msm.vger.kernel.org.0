@@ -2,212 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A43726D9493
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 12:59:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FB166D94A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 13:04:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236617AbjDFK7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 06:59:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54150 "EHLO
+        id S237451AbjDFLEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 07:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236821AbjDFK7t (ORCPT
+        with ESMTP id S236992AbjDFLEn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 06:59:49 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 860437A8F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 03:59:47 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-545cb3c9898so656804477b3.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 03:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680778786;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nD1WTAK58/vqm28JkhVU6GZOl4ufBXsw089tkC+xpWw=;
-        b=rstXWKv7UVHpBvrj+D64aEpmhqkUePscquDSERUiqCo/2kvTPcISLn9/T2z9bf71N5
-         y0F67VeMCuWYtTzRt5GraOjnIm0DMkNgtxlH3xUKfYpi+g9eqKFeWWifs/ffvnsshV8M
-         zfXSNfMUBkYgvZx5x8XwfQELCVomMs8nyj8GHtdNZPBpsBLi068gpr7siuqqTOgoYdIM
-         dRmcs9prAopv9R3upqAW3YKcWonOSqYQKnyvCcP3BQuCoUmQq7vqqSgiaXBXdZgbVh/9
-         8pnZ/+3XBphz+u92hF1zMFIvv1FTUubcEn4lCz1GlGMus7rbkeBCuajJ/JNYDZzTsGUV
-         edxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680778786;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nD1WTAK58/vqm28JkhVU6GZOl4ufBXsw089tkC+xpWw=;
-        b=U0fevjkwpPTI/sIfJJPWw+LHFD1xPlzrIcIejqejqX+6h8m5d4qkjTHllktNWdNe+s
-         JUMu6RUhdlG9cPLFSRX6OYcn1BUTD8sHdgtPtZuG3rg9ULBC8Z3CglSZlG6J9XqbvUr1
-         iXePjLBAGUi16+l8dxxumHoMFbp/xG1beeybfM74ztIllHIL26odwKEEw+MGK75WbMI/
-         7PilXQ9cEr11m5egnFDatQRYrG49d1o4IQ1p2Paz+x8qefkyAvICDgjAfM7sn6/qQoBN
-         eNR43gBqCVd6zEdZ8rkxNK6FkZRyik7dEe0qTOaN0eETmXnOV6nI//JGriuyJVxQXHO/
-         gGng==
-X-Gm-Message-State: AAQBX9cSkS/yz4Z6NU5yV+XKSpQnvHqHGOm/B/JayhZLIS1cUo//PtwJ
-        +6S214yS4N5xQdKLRwbolvO0G68dwdDCRbhWh+MnSg==
-X-Google-Smtp-Source: AKy350ZACGkl1itmcqbB+J8+S3w/c5Fd4Xstg5YxzxM0WeHeUtq63AtbTh7cY2Mf2KPnXQ8bjOeG3IRZrGTmICYhEDs=
-X-Received: by 2002:a81:c509:0:b0:549:143f:3d3 with SMTP id
- k9-20020a81c509000000b00549143f03d3mr5573053ywi.0.1680778786661; Thu, 06 Apr
- 2023 03:59:46 -0700 (PDT)
+        Thu, 6 Apr 2023 07:04:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70FA91703;
+        Thu,  6 Apr 2023 04:04:25 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 336B4KCZ019975;
+        Thu, 6 Apr 2023 11:04:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=YYcev94yQdsqVZnRqJnBM1uuqYiJhHnnxfI5yles50E=;
+ b=LLfE6rQu4eBtAkWY2KlhevqrvueFGgvVxmFfVC2/dtaxT9s9jR15jgDRk1eMigYhZmlh
+ m/N4C95zkrOSFe8ADsYKhgC87xZNPhcVds3x6s4zKbHDfMf3p3GIZU5e2ToF47WsPglG
+ JJOpgJh74s1cX4kPvCcWFxVqBZBUKZqr/Jesq+HiBK0q4LmTAp52busFum2dlhZi26XK
+ zngcY01lg5/m+9EFFUxh0IF56onOTnho/iGcizKU1/4kzFbSbAq4x6uCRJQPM7FnV2Tu
+ 9u4UajnCaU07BLFqAkHk0Jpf7j/K8Oh3nss0IfL4epoon1xD0LFBXGE25xTzzTNPksNo qA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3psnmj0ya7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Apr 2023 11:04:21 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 336B44OQ013696
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Apr 2023 11:04:04 GMT
+Received: from [10.216.2.94] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
+ 04:03:59 -0700
+Message-ID: <54e8f7b6-12ae-aac5-9092-7d1fef300db8@quicinc.com>
+Date:   Thu, 6 Apr 2023 16:33:56 +0530
 MIME-Version: 1.0
-References: <20230327193829.3756640-1-abel.vesa@linaro.org>
- <CAGETcx9f1p2esfyzyfU04EAB1FXh=d9-U81DaGyZNjL_Vti3oQ@mail.gmail.com>
- <ZCVyBuKMvDV0gQPW@linaro.org> <CAGETcx-mxzzZ_FU6Agju9gMhFOEDhY6Rj78BnvAVJjNtZhif=w@mail.gmail.com>
- <ZCZolyDL/awnt73K@linaro.org> <CAPDyKFprQwBfya-TpaVJfn82LgM9N_iE8npO9r-HzAyJXpb-hQ@mail.gmail.com>
- <ZC6QLZOldOLNaCSg@linaro.org>
-In-Reply-To: <ZC6QLZOldOLNaCSg@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 6 Apr 2023 12:59:10 +0200
-Message-ID: <CAPDyKFo+_qxjMaQyT9=zDOuTYjF35G2q=DfS+AhHr+PdJZJz6g@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Allow genpd providers to power off domains on sync state
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Saravana Kannan <saravanak@google.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 2/5] dt-bindings: arm: msm: Add bindings for multi
+ channel DDR in LLCC
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Android Kernel Team <kernel-team@android.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Abel Vesa <abel.vesa@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20230313124040.9463-1-quic_kbajaj@quicinc.com>
+ <20230313124040.9463-3-quic_kbajaj@quicinc.com>
+ <2b3e39b9-ea70-db9b-89f7-09054df363c3@linaro.org>
+ <20230315134814.GA98488@thinkpad>
+ <c8f3499f-d927-6657-c7c6-732ed2222525@quicinc.com>
+ <f9728472-0dda-2fb2-1753-e9c039afa4c1@linaro.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <f9728472-0dda-2fb2-1753-e9c039afa4c1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LruhRa6HfjYKtX6uWzwHewu6Jd5GizGq
+X-Proofpoint-ORIG-GUID: LruhRa6HfjYKtX6uWzwHewu6Jd5GizGq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-06_05,2023-04-06_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 spamscore=0
+ bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304060097
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 6 Apr 2023 at 11:26, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> On 23-04-05 16:11:18, Ulf Hansson wrote:
-> > Abel, Saravana,
-> >
-> > On Fri, 31 Mar 2023 at 06:59, Abel Vesa <abel.vesa@linaro.org> wrote:
-> > >
-> > > On 23-03-30 12:50:44, Saravana Kannan wrote:
-> > > > On Thu, Mar 30, 2023 at 4:27=E2=80=AFAM Abel Vesa <abel.vesa@linaro=
-.org> wrote:
-> > > > >
-> > > > > On 23-03-27 17:17:28, Saravana Kannan wrote:
-> > > > > > On Mon, Mar 27, 2023 at 12:38=E2=80=AFPM Abel Vesa <abel.vesa@l=
-inaro.org> wrote:
-> > > > > > >
-> > > > > > > There have been already a couple of tries to make the genpd "=
-disable
-> > > > > > > unused" late initcall skip the powering off of domains that m=
-ight be
-> > > > > > > needed until later on (i.e. until some consumer probes). The =
-conclusion
-> > > > > > > was that the provider could return -EBUSY from the power_off =
-callback
-> > > > > > > until the provider's sync state has been reached. This patch =
-series tries
-> > > > > > > to provide a proof-of-concept that is working on Qualcomm pla=
-tforms.
-> > > > > >
-> > > > > > I'm giving my thoughts in the cover letter instead of spreading=
- it
-> > > > > > around all the patches so that there's context between the comm=
-ents.
-> > > > > >
-> > > > > > 1) Why can't all the logic in this patch series be implemented =
-at the
-> > > > > > framework level? And then allow the drivers to opt into this be=
-havior
-> > > > > > by setting the sync_state() callback.
-> > > > > >
-> > > > > > That way, you can land it only for QC drivers by setting up
-> > > > > > sync_state() callback only for QC drivers, but actually have th=
-e same
-> > > > > > code function correctly for non-QC drivers too. And then once w=
-e have
-> > > > > > this functionality working properly for QC drivers for one kern=
-el
-> > > > > > version (or two), we'll just have the framework set the device'=
-s
-> > > > > > driver's sync_state() if it doesn't have one already.
-> > > > >
-> > > > > I think Ulf has already NACK'ed that approach here:
-> > > > > [1] https://lore.kernel.org/lkml/CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y=
-1Sir-G+GoxkCvpN=3DiiA@mail.gmail.com/
-> > > >
-> > > > I would have NACK'ed that too because that's an incomplete fix. As =
-I
-> > > > said further below, the fix needs to be at the aggregation level wh=
-ere
-> > > > you aggregate all the current consumer requests. In there, you need=
- to
-> > > > add in the "state at boot" input that gets cleared out after a
-> > > > sync_state() call is received for that power domain.
-> > > >
-> > >
-> > > So, just to make sure I understand your point. You would rather have =
-the
-> > > genpd_power_off check if 'state at boot' is 'on' and return busy and
-> > > then clear then, via a generic genpd sync state you would mark 'state=
- at
-> > > boot' as 'off' and queue up a power off request for each PD from ther=
-e.
-> > > And as for 'state at boot' it would check the enable bit through
-> > > provider.
-> > >
-> > > Am I right so far?
-> >
-> > I am not sure I completely follow what you are suggesting here.
->
-> Please have a look at this:
-> https://git.kernel.org/pub/scm/linux/kernel/git/abelvesa/linux.git/commit=
-/?h=3Dqcom/genpd/ignore_unused_until_sync_state&id=3D4f9e6140dfe77884012383=
-f8ba2140cadb62ca4a
->
-> Keep in mind that is WIP for now. Once I have something, I'll post it on
-> mailing list. Right now, there is a missing piece mentioned in that
-> commit message.
 
-I had a quick look and it seems rather promising, but I will have a
-closer look when you post it.
 
->
-> >
-> > Although, let me point out that there is no requirement from the genpd
-> > API point of view, that the provider needs to be a driver. This means
-> > that the sync_state callback may not even be applicable for all genpd
-> > providers.
->
-> Yes, I'm considering that case too.
+On 4/6/2023 3:04 PM, Krzysztof Kozlowski wrote:
+> On 06/04/2023 11:19, Komal Bajaj wrote:
+>>
+>>>>>    
+>>>>>      interrupts:
+>>>>>        maxItems: 1
+>>>>>    
+>>>>> +  multi-ch-bit-off:
+>>>>> +    items:
+>>>>> +      - description: Specifies the offset in bits into the multi_channel_register
+>>>>> +                     and the number of bits used to decide which LLCC configuration
+>>>>> +                     to use
+>>>> There are here few issues.
+>>>> First, I don't fully understand the property. What is an LLCC
+>>>> configuration? Like some fused values?
+>>
+>> There are different configuration for LLCC based on the number of
+>> DDR channel it uses. Here, we are basically trying to get information
+>> about the same.
+>>
+>>>>
+>>>> Second, don't make it a register specific, it will not scale easily to
+>>>> any new version of this interface. Although how this should look like
+>>>> depends on what is it.
+>>
+>> LLCC driver can only get DDR channel information from the register.
 
-Good.
+Actually, any one can read this property there is no boundation to that.
+However, some of the bits information of this register only matters to 
+LLCC to make decision.
 
->
-> >
-> > In other words, it looks to me that we may need some new genpd helper
-> > functions, no matter what. More importantly, it looks like we need an
-> > opt-in behaviour, unless we can figure out a common way for genpd to
-> > understand whether the sync_state thing is going to be applicable or
-> > not. Maybe Saravana has some ideas around this?
-> >
-> > Note that, I don't object to extending genpd to be more clever and to
-> > share common code, of course. We could, for example, make
-> > genpd_power_off() to bail out earlier, rather than calling the
-> > ->power_off() callback and waiting for it to return -EBUSY. Both of
-> > you have pointed this out to me, in some of the earlier
-> > replies/discussions too.
->
-> The above link basically does this. I hope this is what Saravana has in
-> mind as well.
+> And why would that exactly matter to DT? How does it solve my concern
+> that your approach does not scale?
 
-Okay, let's see what Saravana thinks.
+I understand your concern about not making it register specific, however 
+this register is a secure fuse register where the interested bits are
+known to us and should only be used by llcc to select right slice 
+configuration table to apply.
 
-Maybe it's easier to post an RFC, based upon the above and continue
-the discussion around that?
+How about something like this,
 
-Kind regards
-Uffe
+Add another property like qcom,tcsr_feature_config under qcom,scm
+and read this property under qcom_scm driver and expose
+read exported symbol for LLCC driver. LLCC driver can use API and
+apply bit offset/bit size to get right value inside the target driver 
+data(e.g .data = &XXXX_cfg }) or maintain it inside same 
+tcsr_feature_config DT (this can be discussed)
+Also, we can have a yaml file for tcsr_feature_config.
+
+e.g..
+
+
+scm: scm {
+         compatible = "qcom,scm-sm8450", "qcom,scm";
+         qcom,dload-mode = <&tcsr 0x13000>;
+         ...
+	qcom,tcsr_feature_config = <&tcsr_feature_config>
+};
+
+tcsr_feature_config: syscon@fd484000 {
+	compatible = "qcom, XXXX", qcom,tcsr-featureconfig";
+	reg = <0xXXXXXXXX 0xYYYY>;
+};
+
+
+-- Mukesh
+
+> 
+> Best regards,
+> Krzysztof
+> 
