@@ -2,207 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4189D6D9E4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:15:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EC096D9ECD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:33:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239417AbjDFRPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 13:15:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53600 "EHLO
+        id S240053AbjDFRdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 13:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbjDFRPe (ORCPT
+        with ESMTP id S239980AbjDFRdk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 13:15:34 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CFF77DB1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 10:15:28 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-93071b2952bso127764866b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 10:15:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680801326;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6/acLh4KOig99xCm/V9WrFZvIgzSBqVUp64UT391SRw=;
-        b=JIwo5ZGRMeYyE/7IQxTnC3A+fotsrn9neIdNq6E4NRFpsndyz0JehvXFSIylJBK8ub
-         LoTdXHdIv2pb2QHJk08i423+1ZXsWKfwfXardNdMMYqjl8XGrTBflzMzgYxYb8Dq8cZY
-         wmFzjrSzL7x8l6aUC8Q4BP2jrAE/YIwbG/XNaUI+kc4U0I8JRag7J4iMb9aYymowQB4C
-         IUMSUOHYgOMSvXKup2jBydbq1nnvIb4coRAOpHIxHHhYUfJPfZczqErwZQwFsbNvUrlg
-         8WAFrQaSH9sYi2CpuOlwjZ0y97RysFZID/bdh+9H5ozb+Xki4QUP1xWCMvxjMZPB/Qv0
-         SMdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680801326;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6/acLh4KOig99xCm/V9WrFZvIgzSBqVUp64UT391SRw=;
-        b=XrQWGibLIJDvsfQ4QSOF32uC5Q9jsLfd/5g0/OBpfr5bq1n/DEoVi/68BZOGl/0+kD
-         LFvQR6P2HNun5/jRX8+Emt9hQURXPOIbZqcJBMmqUNNgVrNvTXM2IitPDnKc3z+AGGeH
-         12nEWkCd6Ly3VI1olVFdUTp0JM2//4GRpYx7LeiEj5wmGqGkh25V4eO7IeAmD11yZEwM
-         XSfG1v0TrD4laMX05GwvXh81JsBqhIXbXPr/Baiuo+T2ea31VJr8tA+m3G23HHhOXTzR
-         zheXzQPuiB9CkTlZuVUcwjqsAex4o7sR5EeOzQrpx3aQ2DAb7NMdr5awUT9PGE8XfWAz
-         j7nA==
-X-Gm-Message-State: AAQBX9flngXcRzjrZNfk8fyEhXcJQEnpyAr8C/7ajdnYXR7ifIgcqLjd
-        pfYFg7P8YjjByCGku0a0NuB7hg==
-X-Google-Smtp-Source: AKy350bE/vnELTyryVtVPyEHqcyqo0/nGsw5Ao9XOGbN+UWCla4cqusv78f8aqXGcfYpdxMYmQ7eyw==
-X-Received: by 2002:a05:6402:611:b0:502:4c82:9b4d with SMTP id n17-20020a056402061100b005024c829b4dmr347667edv.15.1680801326585;
-        Thu, 06 Apr 2023 10:15:26 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed? ([2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed])
-        by smtp.gmail.com with ESMTPSA id k30-20020a508ade000000b005024aff3bb5sm965527edk.80.2023.04.06.10.15.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 10:15:26 -0700 (PDT)
-Message-ID: <223892d0-9b1b-9459-dec1-574875f7c1c6@linaro.org>
-Date:   Thu, 6 Apr 2023 19:15:25 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: net: Convert ATH10K to YAML
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kalle Valo <kvalo@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+        Thu, 6 Apr 2023 13:33:40 -0400
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [IPv6:2001:67c:2050:0:465::102])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EB428A7A;
+        Thu,  6 Apr 2023 10:33:19 -0700 (PDT)
+Received: from smtp2.mailbox.org (unknown [10.196.197.2])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4PspVz3fYyz9sW5;
+        Thu,  6 Apr 2023 19:33:15 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
+        s=MBO0001; t=1680802395;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=n+QKer/py7TYF0+btZiVdHF6Qql5Af4f0rRDFyBjvgQ=;
+        b=0px1b44FXUtpEGPBbZvIv/ua7v0eB3wWbTazLPw5Vvfkc6rYUy6p8UhAf0k55Mi8GEx3Lh
+        8XStSOj9DFdsk3/sfc3krFf5h2QlRw1SNXuggRlySY2m+ElAIN89EIPyAyB8tlueBrcjze
+        FvUhUg/ETbgM24lM3/pyYgliv3PElfrTXZXNQF94/3EQeCF0f6tJHEIx4zdO/axmu+jr3j
+        6EEkKVqdksa+hREgMSwI572PLY5+4bZOVGGhI7nJ/9seRa9lpe7yac45ViQJf0jqhsPV3Y
+        kiBkxIRoCO8giYsAX4gVlgHSmC3UhxP7Y+KBXm5FA83911SY6lvqEFc7vdPzOQ==
+From:   Dylan Van Assche <me@dylanvanassche.be>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230406-topic-ath10k_bindings-v3-0-00895afc7764@linaro.org>
- <20230406-topic-ath10k_bindings-v3-1-00895afc7764@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230406-topic-ath10k_bindings-v3-1-00895afc7764@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Dylan Van Assche <me@dylanvanassche.be>
+Subject: [PATCH v5 0/5] arm64: dts: qcom: sdm845: add SLPI remoteproc
+Date:   Thu,  6 Apr 2023 19:31:43 +0200
+Message-Id: <20230406173148.28309-1-me@dylanvanassche.be>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/04/2023 14:55, Konrad Dybcio wrote:
-> Convert the ATH10K bindings to YAML.
-> 
-> Dropped properties that are absent at the current state of mainline:
-> - qcom,msi_addr
-> - qcom,msi_base
-> 
-> qcom,coexist-support and qcom,coexist-gpio-pin do very little and should
-> be reconsidered on the driver side, especially the latter one.
-> 
-> Somewhat based on the ath11k bindings.
+* About *
 
+The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+DSP for sensors connected to the SoC which is responsible for exposing
+sensors to userspace, power saving, and other features. 
+While sensors are connected to GPIOs of the SoC, they cannot be used
+because the hypervisor blocks direct access to the sensors, thus the 
+DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+GLink edge (dsps) to communicate with the host and has a FastRPC interface
+to load files from the host filesystem such as sensor configuration files.
+The FastRPC interface does not use regular FastRPC Compute Banks
+but instead uses an allocated CMA region through which communication happens.
 
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,ipq4019-wifi
-> +    then:
-> +      properties:
-> +        interrupts:
-> +          minItems: 17
-> +          maxItems: 17
-> +
-> +        interrupt-names:
-> +          minItems: 17
+* Changes *
 
-Drop minItems (the number of items is defined by listing them below, as
-you did).
+This patchseries completes support for the SLPI in the Qualcomm SDM845 SoC
+by adding the SLPI to the SDM845 DTS and enable it for 2 hardware devices:
+- Oneplus 6
+- SHIFTPHONES SHIFT6mq
 
-> +          items:
-> +            - const: msi0
-> +            - const: msi1
-> +            - const: msi2
-> +            - const: msi3
-> +            - const: msi4
-> +            - const: msi5
-> +            - const: msi6
-> +            - const: msi7
-> +            - const: msi8
-> +            - const: msi9
-> +            - const: msi10
-> +            - const: msi11
-> +            - const: msi12
-> +            - const: msi13
-> +            - const: msi14
-> +            - const: msi15
-> +            - const: legacy
-> +
-> +        clocks:
-> +          items:
-> +            - description: Wi-Fi command clock
-> +            - description: Wi-Fi reference clock
-> +            - description: Wi-Fi RTC clock
-> +
-> +        clock-names:
-> +          items:
-> +            - const: wifi_wcss_cmd
-> +            - const: wifi_wcss_ref
-> +            - const: wifi_wcss_rtc
-> +
-> +      required:
-> +        - clocks
-> +        - clock-names
-> +        - interrupts
-> +        - interrupt-names
-> +        - resets
-> +        - reset-names
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,wcn3990-wifi
-> +
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 1
-> +          items:
-> +            - description: XO reference clock
-> +            - description: Qualcomm Debug Subsystem clock
-> +
-> +        clock-names:
-> +          minItems: 1
-> +          items:
-> +            - const: cxo_ref_clk_pin
-> +            - const: qdss
-> +
-> +        interrupts:
-> +          items:
-> +            - description: CE0
-> +            - description: CE1
-> +            - description: CE2
-> +            - description: CE3
-> +            - description: CE4
-> +            - description: CE5
-> +            - description: CE6
-> +            - description: CE7
-> +            - description: CE8
-> +            - description: CE9
-> +            - description: CE10
-> +            - description: CE11
+* Related patches *
 
-What about interrupt-names here? If they are not expected, then just
-interrupt-names: false
+1. Remoteproc changes (v3) to support the SLPI DSP in SDM845:
+https://lore.kernel.org/linux-remoteproc/20230330164633.117335-1-me@dylanvanassche.be
+2. FastRPC changes (v2) to support the SLPI DSP in SDM845:
+https://lore.kernel.org/linux-arm-msm/20230327184204.498032-1-me@dylanvanassche.be/
 
+This serie does not depend on any serie, but all of them are necessary
+to enable the feature in the end.
 
+* Changelog *
 
-Best regards,
-Krzysztof
+Changes in v2:
+
+- Removed double blank lines
+- Enforce alphabetically order for 'slpi_pas'
+- Reordered 'slpi_pas' properties
+- Fixed FastRPC syntax
+- Dropped qcom,assign-all-mem property as this is not necessary anymore
+
+Changes in v3:
+
+- Dropped FastRPC dt-bindings change, unnecessary to relax the bindings
+- Add reg property to compute-cb for the SLPI on SDM845
+
+Changes in v4:
+- Moved SLPI node in sdm845.dtsi to honor sorting by unit address
+- Reordered FastRPC memory nodes to have a reverse-Christmas-tree layout
+- Use 0x0 instead of 0 for memory addresses
+- Add SSC_Q6 (0x5) and ADSP_Q6 (0x6) VMIDs to qcom,scm.h
+- Replace magic VMID values by the qcom,scm.h in sdm845.dtsi
+- Added Reviewed-by tags for patches:
+  - 'dts: arm64: qcom: sdm845-oneplus: enable SLPI'
+  - 'dts: arm64: qcom: sdm845-shift-axolotl: enable SLPI'
+  as these are unchanged in v4.
+
+Changes in v5:
+- Squashed patch 'dts: qcom: arm64: qcom: sdm845: use defines for VMIDs'
+  into 'dts: arm64: qcom: sdm845: add SLPI FastRPC support'.
+- Reordered patches do make sure we first define the additional VMIDs
+  in dt-bindings before using them.
+- Added Acked-by for
+  'dt-bindings: firmware: qcom: scm: add SSC_Q6 and ADSP_Q6 VMIDs'.
+- Fix order of 'arm64' and 'dts' in patch subjects to match tree.
+
+Kind regards,
+Dylan Van Assche
+
+Dylan Van Assche (5):
+  arm64: dts: qcom: sdm845: add SLPI remoteproc
+  dt-bindings: firmware: qcom: scm: add SSC_Q6 and ADSP_Q6 VMIDs
+  arm64: dts: qcom: sdm845: add SLPI FastRPC support
+  arm64: dts: qcom: sdm845-oneplus: enable SLPI
+  arm64: dts: qcom: sdm845-shift-axolotl: enable SLPI
+
+ .../boot/dts/qcom/sdm845-oneplus-common.dtsi  |  5 ++
+ .../boot/dts/qcom/sdm845-shift-axolotl.dts    |  5 ++
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 62 +++++++++++++++++++
+ include/dt-bindings/firmware/qcom,scm.h       |  2 +
+ 4 files changed, 74 insertions(+)
+
+-- 
+2.39.2
 
