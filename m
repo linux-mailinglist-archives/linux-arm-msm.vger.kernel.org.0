@@ -2,342 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF2506DA12F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 21:28:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FF2F6DA14F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 21:31:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230091AbjDFT21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 15:28:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55764 "EHLO
+        id S235542AbjDFTbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 15:31:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235437AbjDFT20 (ORCPT
+        with ESMTP id S229842AbjDFTbi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 15:28:26 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94E15FC8
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 12:28:24 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id d17so40554817wrb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 12:28:24 -0700 (PDT)
+        Thu, 6 Apr 2023 15:31:38 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E0E5243
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 12:31:37 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id q16so52152092lfe.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 12:31:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1680809303;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UScSyF/9yEg+A+J27SvMF7EuXswm03inLw2PjZuGBjo=;
-        b=j0B+CJu9c+VLrNQhDuTysYaA+454n1tYHdWjFhG1aKymQ30c6fCvit0cWNj+7dOD7J
-         a0rs+nT7kfwWdt6aunpkcTRWrcQWxHhd5XgLsLisMhgWw+HgxmwpXDtFOrwszM+l06IV
-         rKyFcYEvtEX0W7V9fKRrIDBiXFPzLOtIq3OoXhRiI9kw5Q7vb3xa1X8DnCZHzLI9WStQ
-         quX8rB552TLybcvNZqWpIFHqQeaD5nWMNhbn1BVs/4w7KTAxAJehj9QT8C3PNiQYCXoR
-         7HPgXfzSNwRR9U/te3Z8kXIbVdnKXxQSTm82CYdmMR2TnYFw3/YInz39+j4A8Y77Rjus
-         +X9g==
+        d=linaro.org; s=google; t=1680809495;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9kZ8mEB2dJOlrXABGLSLHAbWryJP74zULnJHHBI7aEk=;
+        b=wzIf24UpJ/GF648SVbmBSebcn5SIf/+o6UZI/JS5M4IeYsJckfSRVlBqac+bHfPYhd
+         SbxRtwZR4sobuPygpG7kD71pdBd1U2oKpYJ74K2ohi0RNiVi79vlUw5qGBikLaO0umXY
+         r2gEEfI1xZN1hDc/ut/Fgl1Nnl4vf+lkt4UU+14Y1Q2yJmidAhn8eRJdIhxWwlI2VGow
+         +puimkG4TMxQOL2INCMIDivLSf1lX1qh9pzcSeGNO392baJn+f4pl9atEzuPBtATkNOu
+         pt99AqRMM6i3kPxcAwzVN3OM6bnSgK+g6wzNscdzPb1hoXDFWtYc+W8jpgahQgzaL+Kq
+         Cp/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680809303;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UScSyF/9yEg+A+J27SvMF7EuXswm03inLw2PjZuGBjo=;
-        b=njhXr8jxY9Nrx1vN6phpAxbxqXTBQRp0SpLZgkBchHaBFNt6z0E3LMfqNa7/HAjGDK
-         3qnNiaTpAmpTposzcBWqlgRdAcWFJn7hUIkQSSSVDpCO+VX6Pe2ZxxC0WZNV+AKo3HtM
-         6Frg9qamvB8YzjCxrYQEQtVolYpyWa6CYLq3k/EnmN8Ae3mMtX0D8K2DSs0N7T+QWUSR
-         HyTVfkH8BRPJzyoET8PBlYcxEaAbdBLbkReuqVDuhkXm0fCv3VIN8SOOh5UgF50XFuMJ
-         JpMRmqYz+IypAI3g34KHCcJITTjm4OaQA1rliRtfK6xM4klEhzOnEDRpNP0gVuD0ROPb
-         4INg==
-X-Gm-Message-State: AAQBX9fojX4bXIOxNjVJyS2zi/9jetdB6pDoKe66qKRo/pgkGsazkkT7
-        Rb0wfQvbOWjM4EJ/t9xRGAWwXA==
-X-Google-Smtp-Source: AKy350YVe9VObZl+bSTAuzIJIauD8tgrZatglE43VVckkYmxGh9XOdt1T2AOdaNZn2N/Zj8d3sVXDQ==
-X-Received: by 2002:adf:cc8e:0:b0:2e3:99d3:7a5 with SMTP id p14-20020adfcc8e000000b002e399d307a5mr8525092wrj.24.1680809303490;
-        Thu, 06 Apr 2023 12:28:23 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4793:cb9a:340b:2f72])
-        by smtp.gmail.com with ESMTPSA id c11-20020adfe74b000000b002d89e113691sm2489321wrn.52.2023.04.06.12.28.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 12:28:23 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sa8775p-ride: add PMIC regulators
-Date:   Thu,  6 Apr 2023 21:28:11 +0200
-Message-Id: <20230406192811.460888-4-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20230406192811.460888-1-brgl@bgdev.pl>
-References: <20230406192811.460888-1-brgl@bgdev.pl>
+        d=1e100.net; s=20210112; t=1680809495;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9kZ8mEB2dJOlrXABGLSLHAbWryJP74zULnJHHBI7aEk=;
+        b=rBEkXqNTqB53TGD09kEYGyvFwjiMiQWdz021d38FDcgJ8BELW6KohiXgQD6nBGK3lw
+         uB/N8KADVLlylbrfbBDALX6Lkw863cuDoAAhPRNT3RmGjHCJlmBKGNxdIBjG8M7M2DhH
+         3RDaqIZIIHgj8//9xWO8eMjq5/9ZrHIYChiSay+uPyTSLXg8a4pAtK0hqmhOKjRcQmE4
+         3Iw8vfFje8FCONPosAxUs/ulAa7OfF+1Y+Qxiw9G0PnBWA5Cxwmg7VuIL2l8hHVb7aT2
+         n31VbU8CuldfUuJ9Que2+lMXFrkfrXXBGewkyouQ/ekD0BjOhZj0+QuwvM88DVHgmP1g
+         9dlA==
+X-Gm-Message-State: AAQBX9frXCKnYpU8QJHsY0YQgCaodZISTQ65RtPUiDcWjFb0AvIgX/si
+        TgdROdaFjNg1ovhnwAR4oMoJzH77DibgNt1Kxs4=
+X-Google-Smtp-Source: AKy350aEPxyYUMVmnkeGGTET+LX64v+Q7tAsrZnc9V4iE6ZUyMveIR/EWMUewYONFengBe7qUB62Ww==
+X-Received: by 2002:a05:6512:3744:b0:4ea:e6b9:a8f with SMTP id a4-20020a056512374400b004eae6b90a8fmr1633953lfs.28.1680809495402;
+        Thu, 06 Apr 2023 12:31:35 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id u26-20020ac243da000000b004e84896253asm384580lfl.251.2023.04.06.12.31.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Apr 2023 12:31:35 -0700 (PDT)
+Message-ID: <7bec0262-8a20-9b6a-599f-5ba759e6bd6b@linaro.org>
+Date:   Thu, 6 Apr 2023 21:31:32 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v4 1/4] arm64: dts: qcom: sc7180: Don't enable lpass
+ clocks by default
+Content-Language: en-US
+To:     Nikita Travkin <nikita@trvn.ru>, agross@kernel.org,
+        andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        quic_srivasam@quicinc.com, judyhsiao@chromium.org,
+        mka@chromium.org, dianders@chromium.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20230406150633.83351-1-nikita@trvn.ru>
+ <20230406150633.83351-2-nikita@trvn.ru>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230406150633.83351-2-nikita@trvn.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Add PMIC regulators for sa8775p-ride.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 233 ++++++++++++++++++++++
- 1 file changed, 233 insertions(+)
+On 6.04.2023 17:06, Nikita Travkin wrote:
+> lpass clocks are usually blocked from HLOS by the firmware and
+> instead are managed by the ADSP. Mark them as reserved and explicitly
+> enable in the CrOS boards that have special, cooperative firmware.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++++++
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi         | 4 ++++
+>  2 files changed, 12 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 423630c4d02c..26def6e12723 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -785,6 +785,14 @@ alc5682: codec@1a {
+>  	};
+>  };
+>  
+> +&lpasscc {
+> +	status = "okay";
+> +};
+> +
+> +&lpass_hm {
+> +	status = "okay";
+> +};
+> +
+>  &lpass_cpu {
+>  	status = "okay";
+>  
+_hm should come after _cpu alphabetically
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index a0d2024a69df..f238a02a5448 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -5,6 +5,8 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
- #include "sa8775p.dtsi"
- #include "sa8775p-pmics.dtsi"
- 
-@@ -25,6 +27,237 @@ chosen {
- 	};
- };
- 
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pmm8654au-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vreg_s4a: smps4 {
-+			regulator-name = "vreg_s4a";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1816000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s5a: smps5 {
-+			regulator-name = "vreg_s5a";
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1996000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s9a: smps9 {
-+			regulator-name = "vreg_s9a";
-+			regulator-min-microvolt = <535000>;
-+			regulator-max-microvolt = <1120000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4a: ldo4 {
-+			regulator-name = "vreg_l4a";
-+			regulator-min-microvolt = <788000>;
-+			regulator-max-microvolt = <1050000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5a: ldo5 {
-+			regulator-name = "vreg_l5a";
-+			regulator-min-microvolt = <870000>;
-+			regulator-max-microvolt = <950000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6a: ldo6 {
-+			regulator-name = "vreg_l6a";
-+			regulator-min-microvolt = <870000>;
-+			regulator-max-microvolt = <970000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a: ldo7 {
-+			regulator-name = "vreg_l7a";
-+			regulator-min-microvolt = <720000>;
-+			regulator-max-microvolt = <950000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8a: ldo8 {
-+			regulator-name = "vreg_l8a";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9a: ldo9 {
-+			regulator-name = "vreg_l9a";
-+			regulator-min-microvolt = <2970000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pmm8654au-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vreg_l1c: ldo1 {
-+			regulator-name = "vreg_l1c";
-+			regulator-min-microvolt = <1140000>;
-+			regulator-max-microvolt = <1260000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2c: ldo2 {
-+			regulator-name = "vreg_l2c";
-+			regulator-min-microvolt = <900000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3c: ldo3 {
-+			regulator-name = "vreg_l3c";
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4c: ldo4 {
-+			regulator-name = "vreg_l4c";
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			/*
-+			 * FIXME: This should have regulator-allow-set-load but
-+			 * we're getting an over-current fault from the PMIC
-+			 * when switching to LPM.
-+			 */
-+		};
-+
-+		vreg_l5c: ldo5 {
-+			regulator-name = "vreg_l5c";
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6c: ldo6 {
-+			regulator-name = "vreg_l6c";
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7c: ldo7 {
-+			regulator-name = "vreg_l7c";
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8c: ldo8 {
-+			regulator-name = "vreg_l8c";
-+			regulator-min-microvolt = <2400000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9c: ldo9 {
-+			regulator-name = "vreg_l9c";
-+			regulator-min-microvolt = <1650000>;
-+			regulator-max-microvolt = <2700000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pmm8654au-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vreg_s4e: smps4 {
-+			regulator-name = "vreg_s4e";
-+			regulator-min-microvolt = <970000>;
-+			regulator-max-microvolt = <1520000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s7e: smps7 {
-+			regulator-name = "vreg_s7e";
-+			regulator-min-microvolt = <1010000>;
-+			regulator-max-microvolt = <1170000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s9e: smps9 {
-+			regulator-name = "vreg_s9e";
-+			regulator-min-microvolt = <300000>;
-+			regulator-max-microvolt = <570000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6e: ldo6 {
-+			regulator-name = "vreg_l6e";
-+			regulator-min-microvolt = <1280000>;
-+			regulator-max-microvolt = <1450000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8e: ldo8 {
-+			regulator-name = "vreg_l8e";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1950000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
- &i2c18 {
- 	clock-frequency = <400000>;
- 	pinctrl-0 = <&qup_i2c18_default>;
--- 
-2.37.2
+w/ that
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 3c799b564b64..6f40301faa1c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -3621,6 +3621,8 @@ lpasscc: clock-controller@62d00000 {
+>  			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+>  			#clock-cells = <1>;
+>  			#power-domain-cells = <1>;
+> +
+> +			status = "reserved"; /* Controlled by ADSP */
+>  		};
+>  
+>  		lpass_cpu: lpass@62d87000 {
+> @@ -3669,6 +3671,8 @@ lpass_hm: clock-controller@63000000 {
+>  
+>  			#clock-cells = <1>;
+>  			#power-domain-cells = <1>;
+> +
+> +			status = "reserved"; /* Controlled by ADSP */
+>  		};
+>  	};
+>  
