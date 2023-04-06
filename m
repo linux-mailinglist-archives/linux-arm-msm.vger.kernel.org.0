@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B9CC6D90B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 09:43:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 280186D90B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 09:44:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236042AbjDFHnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 03:43:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52070 "EHLO
+        id S234102AbjDFHoe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 03:44:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233497AbjDFHm5 (ORCPT
+        with ESMTP id S233947AbjDFHoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 03:42:57 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D1337A8F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 00:42:35 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-94748e41044so82718666b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 00:42:35 -0700 (PDT)
+        Thu, 6 Apr 2023 03:44:09 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37FDA10C1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 00:43:52 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id b20so147185745edd.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 00:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680766953;
+        d=linaro.org; s=google; t=1680767030;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2CeMX83G7CI+LCtzmkNB4MbhW1kr0GUu8L33N5bnhLc=;
-        b=F0nX+SvXYvsdr0a233FjCqVMoLV5+3k7r+csjEw4U9Ah6AIbz8Pd6Cs3cA/k3VbRps
-         /lUyakfE9cdeYjue/v2Fs2HO2Vfyxg41+4rqsWY53zr47IjPMeXxkD63v86CQOME/v8U
-         dzFP5+Ae18a0SaaHm4Hw0nAhTCZBiNO7vXHf23+0RdHyV1OmKqs5IbQlWKduJIHZicAo
-         mjnhXmW4PJMzIlxYdU7BrSR/MeDPIst+5pY2zuXdrhOqMvQlXbhX6bZpia4Az6B5kXzG
-         eCoUl6V80id62O0F5VlqP774Hv4zuuWO9Uh4kio+vP3PdNOZUkbKiuMso6r1TJ6TjHWo
-         CQCQ==
+        bh=uaae/Gf1/6wg+LDa+ygkgJGlypxcIUaHAsaoRhlT34o=;
+        b=oXPhlK+Jp0n/xdreEycT0BU+UJH6W9xVaby3EULDTFHAz2yHsR8lYbX8zW4k/44/7H
+         GMVW8mvM+/g/uyhBGczPsO9l7u07KGv0QeMItpug//0pEAuiGM4IPWtekhOpZGn9TPmx
+         nvpx0JHMZQFQFIp/mjEtPutTlrQFx9MvZnb6hCPJaQniZQu5sC1yOXJ8kJDMRyxjkSiQ
+         T0Fwx6nxyQ/LYMsDppw5D0vfEh9+DCA3wTdIorI6tB4uf2wF8Pjy8PysVe6Dq3fSVAm6
+         tnckOPPaimKZUKnnIma4C8oKxdM0jrqhhyf86omiQZnZmlMBU2wTTsGN4Tr8Z3KMfcs6
+         3VoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680766953;
+        d=1e100.net; s=20210112; t=1680767030;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2CeMX83G7CI+LCtzmkNB4MbhW1kr0GUu8L33N5bnhLc=;
-        b=Y0BALcpEAt70h2FVWygDRu+gdpZb7kj0eZhjJOVDwJKxIKfDwcUImxxZIuOO9ERIJi
-         PHSBzu+GlcW1Z+vFkZlPTz9oSGvWOqqM8aAnYt/vexFWaAmbUArpgf6n1EH8TWqZJjY5
-         DX32r2N4K66ceRXuQq+Vugs58QoY3CSZat4AQxX4ZjJ+E9nq2uf06PBeSR6izWIWrYha
-         iHv0202v4uGhIhy4c/nZJsV0XaawVYY7fcIPZLa2S4QH8fW7sD27box3wPjyOunL9Ow6
-         PhpSeuGomkPlL5tATBhOmNhK+BLzfBJiRp6Smx/6jBKqGG7HRFoVQoeWi+Jf4+MjFmFv
-         cuQw==
-X-Gm-Message-State: AAQBX9c8m5PpbTR6cFpXTCD6BSuxrVeTlArfJ8Whf/xALE6KD0liRdDP
-        EsJAlBy53D+vLPf+3NH+8+447A==
-X-Google-Smtp-Source: AKy350atbynXL3zs3eE1PYHo+8dQrh+MY7FEjoP+cVC0eI0NqgnAQYJsPpawDRy1Ph70Zky/dGiDrQ==
-X-Received: by 2002:aa7:df99:0:b0:502:2f3:abd3 with SMTP id b25-20020aa7df99000000b0050202f3abd3mr4200119edy.35.1680766953612;
-        Thu, 06 Apr 2023 00:42:33 -0700 (PDT)
+        bh=uaae/Gf1/6wg+LDa+ygkgJGlypxcIUaHAsaoRhlT34o=;
+        b=awAJCr3gJh/vWzPOgKfREnO/ZTKuZPV03FYfLZAZ0LRhNBv/seepJIcPiTbeYQPLib
+         LCsclmARIPrAPjfeCGUkjuSGiuxHmmIqI8R5VbCr2u2d0smT+RXYzBGCicjIDE1tFP/m
+         FWge8A8XvPuG4K2Y7qKXet9pWvMVEkt5z0sS+/DG3MGoyUQe+nBwKGE9HOnCNP9Z/MJ3
+         cYnRdje+mlWD2VSYP67wc7f7UR9N45PEIC+eRWew3tOBCYKHLcydlunWj4DVU7l1G6Wo
+         8KH84TmRbAQ+c6MbvuSW+HEv8fwfuBWvw5BfRETGSQwakvvuKgcAb5/kIKaZ4BKNRfDJ
+         /hjQ==
+X-Gm-Message-State: AAQBX9dJXKoi0I9/gJ+NY/g2FFCwmUdacbwgiTH5I/8xNDXwaOhjFd/g
+        F1iYxagtlwOzhQdFRLF17k5spA==
+X-Google-Smtp-Source: AKy350aoGvLE98pNqsudQV1mmoNS4KNifIl0+eEz3ycTrvouiOMXIacvp9zYbbwm8qYxno+2SD352A==
+X-Received: by 2002:a17:907:118a:b0:948:aac6:7def with SMTP id uz10-20020a170907118a00b00948aac67defmr4854533ejb.19.1680767030731;
+        Thu, 06 Apr 2023 00:43:50 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed? ([2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed])
-        by smtp.gmail.com with ESMTPSA id l22-20020a50d6d6000000b004bf7905559asm362400edj.44.2023.04.06.00.42.32
+        by smtp.gmail.com with ESMTPSA id h7-20020a50cdc7000000b004fa99a22c3bsm359770edj.61.2023.04.06.00.43.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 00:42:33 -0700 (PDT)
-Message-ID: <b9763bee-c0c8-86be-14de-2ed077b1f1d5@linaro.org>
-Date:   Thu, 6 Apr 2023 09:42:31 +0200
+        Thu, 06 Apr 2023 00:43:49 -0700 (PDT)
+Message-ID: <533651bb-e72a-c899-5b64-16d000819e20@linaro.org>
+Date:   Thu, 6 Apr 2023 09:43:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v8 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
- PHY
+Subject: Re: [PATCH v8 3/8] dt-bindings: usb: dwc3: Add IPQ9574 compatible
 Content-Language: en-US
 To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
@@ -67,9 +66,9 @@ To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
 References: <cover.1680693149.git.quic_varada@quicinc.com>
- <1efa9a64499767d939efadd0aef897ac4a6e54eb.1680693149.git.quic_varada@quicinc.com>
+ <3ee3163e6933b52e3eb4144c8041062dbd15e6c2.1680693149.git.quic_varada@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1efa9a64499767d939efadd0aef897ac4a6e54eb.1680693149.git.quic_varada@quicinc.com>
+In-Reply-To: <3ee3163e6933b52e3eb4144c8041062dbd15e6c2.1680693149.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -83,56 +82,65 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/04/2023 13:41, Varadarajan Narayanan wrote:
-> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
+> Document the IPQ9574 dwc3 compatible.
 > 
 > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  Changes in v8:
-> 	- Update clock names for ipq9574
-> 
 >  Changes in v6:
-> 	- Made power-domains optional
+> 	- Made power-domains as optional
+> 	- Resolved all 'make dtbs_check' messages
 > 
-> Note: In the earlier patch sets, had used the (legacy)
-> specification available in qcom,msm8996-qmp-usb3-phy.yaml. Moved
-> to newer specification in qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+>  Changes in v5:
+> 	- Restore removed constraints
+> 
+>  Changes in v4:
+> 	- Update other relevant sections
+> 	- Remove constraints not applicable to IPQ9574
 > ---
->  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 43 +++++++++++++++++++---
->  1 file changed, 37 insertions(+), 6 deletions(-)
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml         | 22 +++++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> index 16fce10..e902a0d 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> @@ -16,6 +16,7 @@ description:
->  properties:
->    compatible:
->      enum:
-> +      - qcom,ipq9574-qmp-usb3-phy
->        - qcom,sc8280xp-qmp-usb3-uni-phy
->  
->    reg:
-> @@ -25,11 +26,7 @@ properties:
->      maxItems: 4
->  
->    clock-names:
-> -    items:
-> -      - const: aux
-> -      - const: ref
-> -      - const: com_aux
-> -      - const: pipe
-> +    maxItems: 4
->  
->    power-domains:
->      maxItems: 1
-> @@ -60,7 +57,6 @@ required:
->    - reg
->    - clocks
->    - clock-names
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index d842819..f5dd268 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -17,6 +17,7 @@ properties:
+>            - qcom,ipq6018-dwc3
+>            - qcom,ipq8064-dwc3
+>            - qcom,ipq8074-dwc3
+> +          - qcom,ipq9574-dwc3
+>            - qcom,msm8953-dwc3
+>            - qcom,msm8994-dwc3
+>            - qcom,msm8996-dwc3
+> @@ -133,7 +134,6 @@ required:
+>    - "#address-cells"
+>    - "#size-cells"
+>    - ranges
 > -  - power-domains
+
 
 Power domains are required. Commit msg does not explain why this should
 be now optional.
+
+>    - clocks
+>    - clock-names
+>    - interrupts
+> @@ -197,6 +197,26 @@ allOf:
+>              - const: iface
+>              - const: sleep
+>              - const: mock_utmi
+> +      required:
+> +        - power-domains
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq9574-dwc3
+
+You do not need new entry. Just open the file and file respective
+existing if.
 
 Best regards,
 Krzysztof
