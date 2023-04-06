@@ -2,83 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5649B6D9B4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 16:54:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25A7F6D9B66
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 16:59:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236270AbjDFOyi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 10:54:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33730 "EHLO
+        id S239203AbjDFO67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 10:58:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237173AbjDFOyY (ORCPT
+        with ESMTP id S238972AbjDFO64 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 10:54:24 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4C5AD0F;
-        Thu,  6 Apr 2023 07:53:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 336BRajb021527;
-        Thu, 6 Apr 2023 14:53:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=144/9a5w4d6LMS2VG/A2VeehwMyub5orrM6ryH5vSzA=;
- b=J+K+Ze8PA5u+MJC7HXuh+dxN1IhnHTo9csUarNPAgwgxcG4NRbUaSsT8c6WCw1KgLKI0
- 4leEgn9e9jsEwcVdCPWmCabfHk6Gi6apAPxTXrGIPKGzglD5xltTjOgww10iUsIzPTUB
- QPWbYMXgvLaAHr33EJwj16fVlJ4k9RlEv49bYTPFFCl/6lPjC6f8HHs2QY3/lh73pBhF
- TedWSBwfVVE5WD8okBHYI87MofwROQcuGn6shIbRAXhLPcTkSCMjpYdN1UZmXSOhz/Y7
- HIfljQQlvMobJ5/5WVYbeoLWNnOyQeEPQCeIFQmXj6orvabXQ/PbeUCzxaasioVtzAR5 vA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3psnp99f19-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Apr 2023 14:53:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 336ErTmH006376
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Apr 2023 14:53:29 GMT
-Received: from [10.242.7.141] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
- 07:53:24 -0700
-Message-ID: <0b182a36-0254-6720-4a35-f9e617c12797@quicinc.com>
-Date:   Thu, 6 Apr 2023 20:23:21 +0530
+        Thu, 6 Apr 2023 10:58:56 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E822D44
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 07:58:54 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id d11-20020a05600c3acb00b003ef6e6754c5so20247104wms.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 07:58:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680793133; x=1683385133;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BUz8JFX9S/A4V6+0uhPV3N5OL753V9MWdLlczHDK+Qw=;
+        b=EmKEsePSa12I22VXLdcQPwIk7w+aW6135rugfnphhQwQvQgTxpPmyhDBErSGUvb6yM
+         j9oDCHqtVI3oINcUxiiIlFy/VrYF8vSnCwuR2K5F9eWCloQUu2NnuCCQKCPrplUSDqc0
+         3pYWZ39VtQbjSJPoPu+6UV3mUuz4Vdf1WR/ACuF00yWL1eHJxdNukznZmr91SciPfmqA
+         okM0FPKQyUvboPD0s1Wt72RI8Zw0qcHFcdGnCTgkBuyIV31XQLN97sIT3qo1hcnMYaGG
+         FUD43Du7AEzDI/nnwSW5E1tvqnHC9AxFst/h24+IlJKNo277RYgD9vWVcc0rS3mMm+yd
+         YLUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680793133; x=1683385133;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BUz8JFX9S/A4V6+0uhPV3N5OL753V9MWdLlczHDK+Qw=;
+        b=E79SqdU+4rnTQl2hlQhxzzrSAQLbj1/mhKmOQbkh5Hjybo7SrjDIQ8oFnbgk1TdlPj
+         VFC/vjbA5cCm/FL9Y97n8d4/5Ppp2UylUw9SHR5pR6ZRqrWq3oFgAMZ/2MCYvxEpLLJY
+         Yvo5DcOVLTlbCqD0rAOSyRNYsMQYt6jKxAxt6i99L4Zjiah0kY8/wI8lI2w3IYK+rDhN
+         7nFzlT6EcHl+khTTNReNkezo7khCJMVoA224ILnOESDIo9mWvZV2vcUbW9LAYDa0ZtAm
+         KykpzCafF4F4/qJMkx3AWSRu9M2Z/76AayXYtBwLvLn8RZv69GI5rk60Z75M5gaWrCfY
+         /0zQ==
+X-Gm-Message-State: AAQBX9eG5rIgPWHlJzGisRNIPvlBuYV+EW+gSGp7ygDDlcPcj9BmLe3n
+        7waAYGie4yam/O0aA84/qcx6lA==
+X-Google-Smtp-Source: AKy350boASzJJb3JPCYtYb2ebNRQ2MIT1itORqZ3f27s88CsaAxEEQ2rP5/3FJishPx54VwS8vehOA==
+X-Received: by 2002:a05:600c:b54:b0:3ed:6c71:9dc8 with SMTP id k20-20020a05600c0b5400b003ed6c719dc8mr8532591wmr.22.1680793132814;
+        Thu, 06 Apr 2023 07:58:52 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id d10-20020a1c730a000000b003f0373d077csm1768160wmb.47.2023.04.06.07.58.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 07:58:52 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     amitk@kernel.org, thara.gopinath@gmail.com, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com,
+        dmitry.baryshkov@linaro.org
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 0/3] drivers/thermal/qcom/tsens: Add ability to read and shift-in non-contiguous calibration data
+Date:   Thu,  6 Apr 2023 15:58:47 +0100
+Message-Id: <20230406145850.357296-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH 2/2] spi: spi-qcom-qspi: Add DMA mode support
-Content-Language: en-CA
-To:     Mark Brown <broonie@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <quic_msavaliy@quicinc.com>, <dianders@chromium.org>,
-        <mka@chromium.org>, <swboyd@chromium.org>,
-        <quic_vtanuku@quicinc.com>
-References: <1680631400-28865-1-git-send-email-quic_vnivarth@quicinc.com>
- <1680631400-28865-3-git-send-email-quic_vnivarth@quicinc.com>
- <d784dab7-a1a6-4db7-aa13-e39e9904f342@sirena.org.uk>
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-In-Reply-To: <d784dab7-a1a6-4db7-aa13-e39e9904f342@sirena.org.uk>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FTB515xfMnRXxct9cx3YcW6-tO07eMVz
-X-Proofpoint-GUID: FTB515xfMnRXxct9cx3YcW6-tO07eMVz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-06_08,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=909
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 spamscore=0
- bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0 mlxscore=0
- adultscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304060132
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,103 +72,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All reviewers,
+On MSM8939 the last sensor has calibration data that cannot be extracted in
+one big read.
 
-Thank you very much for your time and review...
+Rather than have a lot of MSM8939 specific code this series makes a generic
+modification to allow any other calibration data that is non-contiguous to
+be extracted and recovered.
 
-While I am addressing other comments, below are some responses...
+For example s9-p2 takes bits 1-5 from @4b and bit 13 from @4d. The bit from
+bit13 then becomes the sixth bit in the calibration data.
 
+tsens_s9_p2: s9-p2@4b {
+    reg = <0x4b 0x1>;
+    bits = <1 5>;
+};
 
-On 4/4/2023 11:47 PM, Mark Brown wrote:
-> On Tue, Apr 04, 2023 at 11:33:20PM +0530, Vijaya Krishna Nivarthi wrote:
->
-> A few quick review comments, mostly coding style though.
->
->> +struct qspi_cmd_desc {
->> +	uint32_t data_address;
->> +	uint32_t next_descriptor;
->> +	uint32_t direction:1;
->> +	uint32_t multi_io_mode:3;
->> +	uint32_t reserved1:4;
->> +	uint32_t fragment:1;
->> +	uint32_t reserved2:7;
->> +	uint32_t length:16;
->> +	//------------------------//
-> What does this mean?
+tsens_s9_p2_msb: s9-p2-msb@4d {
+    reg = <0x4d 0x1>;
+    bits = <13 1>;
+};
 
-That separates the part of cmd_desc that is visible to the HW and the 
-part that is required by the SW after xfer is complete.
-I can add a comment in v2?
+A register desciptor is introduced in the driver which takes the place of
+the previous unsigned int hw_ids array in struct tsens_plat_data.
 
+This new structure contains the previous hardware id and two variables
+p1_shift and p2_shift.
 
->
->> +	uint8_t *bounce_src;
->> +	uint8_t *bounce_dst;
->> +	uint32_t bounce_length;
->> +};
->> +
->> +#define QSPI_MAX_NUM_DESC 5
->>   struct qspi_xfer {
-> Missing blank line after the define...
+If p1_shift or p2_shift is non-zero then this tells
+tsens_read_calibration() to search for sX-pY-msb where msb means "most
+significant bits".
 
+The value at p1_shift/p2_shift is then used to right shift the value read
+from sX-pY-msb and or that value into the base value from sX-pY.
 
-Will address in v2
+The nvmem 'bits' field provides the mask.
 
->
->> +	for (ii = 0; ii < sgt->nents; ii++)
->> +		sg_total_len += sg_dma_len(sgt->sgl + ii);
-> Why are we calling the iterator ii here?
+Bryan O'Donoghue (3):
+  thermal/drivers/tsens: Add error/debug prints to calibration read
+  thermal/drivers/tsens: Describe sensor registers via a structure
+  thermal/drivers/tsens: Extract and shift-in optional MSB
 
+ drivers/thermal/qcom/tsens-v0_1.c | 56 +++++++++++++++++++++++++++++--
+ drivers/thermal/qcom/tsens.c      | 50 ++++++++++++++++++++++++---
+ drivers/thermal/qcom/tsens.h      | 16 ++++++++-
+ 3 files changed, 115 insertions(+), 7 deletions(-)
 
-Calling it ii helps in finding iterator more easily in code.
-
-should I stick to i in v2?
-
->
->> +	if (ctrl->xfer.dir == QSPI_READ)
->> +		byte_ptr = (uint8_t *)xfer->rx_buf;
->> +	else
->> +		byte_ptr = (uint8_t *)xfer->tx_buf;
-> If we need to cast to or from void * there's some sort of problem.
-
-
-the tx_buf is a const void*
-
-in v2 I will cast for tx_buf only?
-
->
->> +/* Switch to DMA if transfer length exceeds this */
->> +#define QSPI_MAX_BYTES_FIFO 64
->> +#define NO_TX_DATA_DELAY_FOR_DMA 1
->> +#define DMA_CONDITIONAL (xfer->len > QSPI_MAX_BYTES_FIFO)
->> +
-> DMA_CONDITIONAL absolutely should not be a define, this just makes
-> things harder to read.  Just have everything call can_dma() when needed.
-
-
-Will address in v2
-
->
->> +#if NO_TX_DATA_DELAY_FOR_DMA
->> +		mstr_cfg &= ~(TX_DATA_OE_DELAY_MSK | TX_DATA_DELAY_MSK);
->> +#endif
-> Why would we add extra delays if we don't need them, might someone set
-> this and if so when?
-
-
-I believe its used when some slave devices need a delay between clock 
-and data.
-
-Its configured as 1 for PIO_MODE(FIFO) right now.
-
-For DMA_MODE we are not using same, both seem to work for DMA.
-
->
->> +	if (ctrl->xfer_mode == QSPI_FIFO) {
->> +	} else if (ctrl->xfer_mode == QSPI_DMA) {
->>   	}
-> This should be a switch statement.
-
-
-Will address in v2
+-- 
+2.39.2
 
