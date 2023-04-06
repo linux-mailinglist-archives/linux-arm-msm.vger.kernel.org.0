@@ -2,143 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6E0D6D975E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 14:53:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F180E6D976C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 14:55:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238150AbjDFMxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 08:53:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50352 "EHLO
+        id S238194AbjDFMzz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 08:55:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238070AbjDFMxD (ORCPT
+        with ESMTP id S237807AbjDFMzy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 08:53:03 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B9361AA
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 05:53:00 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id k18so1932493lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 05:53:00 -0700 (PDT)
+        Thu, 6 Apr 2023 08:55:54 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE3D5FC7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 05:55:51 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id y7so8177759ljp.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 05:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680785579;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lbC+iDQolRLSwOunJ/j7FQP3aZrBUa7C2T5gWVYhv6I=;
-        b=zvpzUfUNH0GaukXLBpAPf+hyShEdxGxtOyRluKQdxEtL4QovW/AkW/ylzw1ZaXMDtA
-         k/3W7Pick4ECwKGVjnf06RQCkdb0mN2xE5IeE5sv9Gw2IIutccQwQx/++EOHPlzdMsH6
-         GsjLFOKt7NNvQhsfj8bEYMC27jBNpDMUcg91xXE1rK0VCaBb+iA0U8R/0NIO1JRQKZ2m
-         LPtPSJirHSB05LBpEne3q/R8NhgqnwbqW+Plwu7B8Bst4cKi8Sd/lyZiZVytq/9e9P70
-         kPjQK++aERFwC1g5gXjSODs39UIli3d8luM642smqM6GgAauZWGZh+n0ekiDfxoBeyrW
-         TNZA==
+        d=linaro.org; s=google; t=1680785750;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MaSH6VKVyllvIVoyulNJHcX5Zf384xhMFQwlL1Td7+E=;
+        b=wBrcBeQW24D98uTBGo0EznIAoclKHU1IAdAx6zY8SbvuSxF7gXlCdn7qAL1Fj293ew
+         t6dDJAUTDlHKP8YDw4TqyykclcRLZn+5dY/G7JVAgDJb3uNISUGeERl2l2VpColLO33e
+         08yUE/E3+8Ijpb3avjmTnjQ2HPIaR3ONP5ZX+DspKQKmJQdBCD7zlGwzvCpsrWx98a7k
+         qXOWH44C4j84hPyACXmZbh0ofkdxA4qFHi7UygRagHt3M3hgvVvQ8RcNBqn4ovvc0C5u
+         RDz7FYVWHkYwHbROAG48RXjuxKyiy6+wDC3UwzTrbZtsKE3U5QWoLbntn0SKLHT/l6ou
+         X01Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680785579;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lbC+iDQolRLSwOunJ/j7FQP3aZrBUa7C2T5gWVYhv6I=;
-        b=4Hd9saiayV55rXbISLaWmAolYChan/YFO8Qd/Kan+dLvR+Si9X9h461bmOxdQ1lf9w
-         N+0CmkxtsOnJdb+HZAzdqF+eKYCQUmsTTdFxnYVbjRw+8uqijUbcfN8cp7miFSywr+Io
-         7nclkfcsqUjmFFO8CtHun34NoXVrYHyqmflAUnNDUqoliYWP92RHS51mGuq/3pTrHVVS
-         hiiQYvtwmhq2MY61I/1UxJr/Nz/9RYyD/8gGnR4braxCydIDJ5dpqlrnikJ+y/vlsA11
-         N7pKXySYzrHKAXnx3Colp5eEWn55l5kTBeW6XgTFBqrXMGRy1h16gKPFrWWF/u/6ugrz
-         c7CQ==
-X-Gm-Message-State: AAQBX9dx7r0iHlbG0J8ZtpSQOnR9KXh9NqBi4c+WzKQkR2FmDwhaIaET
-        sFhIV0laRMDQ6Q+lcqmpp6aNAw==
-X-Google-Smtp-Source: AKy350b/+CKd1ZodmBJD15FdPa3PXTOhvJljgBnSb42oOTa4LlbkXPdGlX4ifOYVKBresOlnli8ugA==
-X-Received: by 2002:a19:ae03:0:b0:4ec:5648:70e4 with SMTP id f3-20020a19ae03000000b004ec564870e4mr158178lfc.12.1680785578924;
-        Thu, 06 Apr 2023 05:52:58 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680785750;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MaSH6VKVyllvIVoyulNJHcX5Zf384xhMFQwlL1Td7+E=;
+        b=iZ/Oyo+MYDrli8Rgk6861oIUA9YwiaLpoZMCJ0c2UtRqM+nDcMS58hM0jxsZ2edu5Q
+         62LMBdnXj37j0rKnjAJE2ARe5SNHQDO1C5poHeqCLS153Pg6H6N1dem0WSxJ71RAmyh/
+         OfAMAALtThD7+bt0DVYnv67LTKUSOxgC/CHIIjlokN6b4LWgh84YTTEHAp4d4Ztx86ez
+         06nbvzhhVBmnIRvBuXrO3EMzLRKfH2mwEee1PUYqsy1YxLBvivXJ+n27r/4pNh8l/vT2
+         X8pjvtQu7R3V++3MXfpLzl1273TX597Uhm1kug7Ix5uWeqCOe7OIEbhZVCs23lMMdVHy
+         ftfw==
+X-Gm-Message-State: AAQBX9epOzMl+NzrD1J0HRfTIbDBa40n4rtAWi1H3ocOrkBhn6glQLLm
+        K8iuYTUthopKA4VQD7hVzmQhqA==
+X-Google-Smtp-Source: AKy350Z1qNP61kw9TRZ4XNYACGWroatf156KUNP22OewSG5oObfBOG2l+kpUy85buNwqWEyoITzSog==
+X-Received: by 2002:a2e:9001:0:b0:2a1:bcd5:f2ff with SMTP id h1-20020a2e9001000000b002a1bcd5f2ffmr2885913ljg.21.1680785750152;
+        Thu, 06 Apr 2023 05:55:50 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id y2-20020ac24462000000b004db1a7e6decsm249856lfl.205.2023.04.06.05.52.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 05:52:58 -0700 (PDT)
-Message-ID: <857aa6c9-3dcb-d5f7-14bb-6c69c9167b09@linaro.org>
-Date:   Thu, 6 Apr 2023 14:52:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: net: Convert ATH10K to YAML
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Eric Dumazet <edumazet@google.com>, linux-wireless@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        linux-kernel@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>, netdev@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kalle Valo <kvalo@kernel.org>, Andy Gross <agross@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
-        ath10k@lists.infradead.org
-References: <20230406-topic-ath10k_bindings-v2-0-557f884a65d1@linaro.org>
- <20230406-topic-ath10k_bindings-v2-1-557f884a65d1@linaro.org>
- <168078494959.2736424.13312532374051031538.robh@kernel.org>
+        by smtp.gmail.com with ESMTPSA id i13-20020a2e864d000000b00295765966d9sm276513ljj.86.2023.04.06.05.55.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 05:55:49 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <168078494959.2736424.13312532374051031538.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH v3 0/2] ATH10K YAML conversion
+Date:   Thu, 06 Apr 2023 14:55:43 +0200
+Message-Id: <20230406-topic-ath10k_bindings-v3-0-00895afc7764@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-B4-Tracking: v=1; b=H4sIAE/BLmQC/42Nyw7CIBREf8WwFsOj1OrK/zDG3FIoNzbQQCWap
+ v8u7c6VLmcyc85MkoloEjnvZhJNxoTBlyD3O6Id+N5Q7EomggnJKlbTKYyoKUyOs8e9Rd+h7xM
+ 9gVUWGlkJqUj5tpAMbSN47crbP4ehlGM0Fl+b7Hor2WGaQnxv7szX9pcmc8ooN5Y3XKsyrS8De
+ ojhEGJPVmQWf2FEwSh1tE1TQa06/oVZluUDESuN/RcBAAA=
+To:     Kalle Valo <kvalo@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680785748; l=1681;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=9PQjGqgVuPrZuUbC6cUZqXg2lX9Q/iqPOnarm0Ir/U4=;
+ b=QbX/IDeOvgPZmPLMuVm3A9jtVdyfC3mGd5j5WoF0iWQmtp0i76rX/IjzRRXkNMrWmz/Wk7/ZVWt/
+ iFPFoGnsCmiA5N8Wxs3bp9f9TR7mX9bI4fl2n1CklFsuD4GgybXY
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+v2 -> v3:
+- Ran dt_binding_check explicitly to uncover an issue with the
+  example - I had 2 levels of wifi-firmware{}.. Fixed that..
 
+I hope you folks don't mind me resending so quickly, but it was a
+trivial issue. Patch 2 unchanged.
 
-On 6.04.2023 14:47, Rob Herring wrote:
-> 
-> On Thu, 06 Apr 2023 13:54:04 +0200, Konrad Dybcio wrote:
->> Convert the ATH10K bindings to YAML.
->>
->> Dropped properties that are absent at the current state of mainline:
->> - qcom,msi_addr
->> - qcom,msi_base
->>
->> qcom,coexist-support and qcom,coexist-gpio-pin do very little and should
->> be reconsidered on the driver side, especially the latter one.
->>
->> Somewhat based on the ath11k bindings.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../bindings/net/wireless/qcom,ath10k.txt          | 215 ------------
->>  .../bindings/net/wireless/qcom,ath10k.yaml         | 359 +++++++++++++++++++++
->>  2 files changed, 359 insertions(+), 215 deletions(-)
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.example.dtb: wifi@18800000: wifi-firmware: 'wifi-firmware' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.example.dtb: wifi@18800000: wifi-firmware: 'iommus' is a required property
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml
-> 
-> doc reference errors (make refcheckdocs):
-> MAINTAINERS: Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt
-> 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230406-topic-ath10k_bindings-v2-1-557f884a65d1@linaro.org
-Oh, CHECK_DTBS=1 doesn't run dt_binding_check and I didn't run that
-explicitly before resending.. my bad..
+v2: https://lore.kernel.org/r/20230406-topic-ath10k_bindings-v2-0-557f884a65d1@linaro.org
 
-Konrad
-> 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+v1 -> v2:
+
+Dropped:
+- '|' in /description
+- /properties/resets/minItems
+- Unnecessary level of 'items:' in /properties/ext-fem-name
+- reserved-memory in examples
+- status in examples
+- labels in examples
+
+Added:
+- /properties/wifi-firmware/additionalProperties: false
+- /properties/wifi-firmware/properties/iommus
+- /properties/qcom,coexist-support/enum (and reworded the description)
+- wifi-firmware and supplies in the SNoC example
+
+Patch 2 is unchanged, picked up rb.
+
+v1: https://lore.kernel.org/r/20230406-topic-ath10k_bindings-v1-0-1ef181c50236@linaro.org
+
+This is my attempt at (finally) moving ATH10K to YAML.
+One inexistent dt property came out as part of that.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: net: Convert ATH10K to YAML
+      arm64: dts: qcom: sdm845-polaris: Drop inexistent properties
+
+ .../bindings/net/wireless/qcom,ath10k.txt          | 215 -------------
+ .../bindings/net/wireless/qcom,ath10k.yaml         | 357 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts |   2 -
+ 3 files changed, 357 insertions(+), 217 deletions(-)
+---
+base-commit: 8417c8f5007bf4567ccffda850a3157c7d905f67
+change-id: 20230406-topic-ath10k_bindings-9af5fa834235
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
