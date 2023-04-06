@@ -2,89 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 843BC6D9684
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 13:58:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAD296D969E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 14:00:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235777AbjDFL5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 07:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51216 "EHLO
+        id S237453AbjDFMAy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 08:00:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238233AbjDFL47 (ORCPT
+        with ESMTP id S236785AbjDFMAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 07:56:59 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1453E903D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 04:54:22 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id c9so40033462lfb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 04:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680782052;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vr7hvDh/glr30Yw4qpt5Kbr2lkI/viKC3PQIzjAY6io=;
-        b=NT0z1D54Jz23Qd8QBqW5y4LUgbLtaQiI1TTTYvzoNpqNjsOnHncu4tIm1w0PLSWfus
-         FcGnKVh4sD4n20MNNi8iHuadPLgpCDZy3tNxNa+3prJ768N6bKVXy5ptvrYhfmmP153M
-         nQT/Rvmq+0VrCWP7UfX/LVCU0QvOlyKPLKiaKC76p+4gyYfBcH048wCc/sJ0dGjmFB12
-         SBH7ATZwDZgnf+2p8rbb5dnINgkFDUZxaevgSsqVaCXU8PiAW0dN9GX/a9MPcCZQT9dy
-         jsjn0PO7g5uIHM+UuOO0VqtmQ9vqvErlM/XEs0HeE7HRYS2ojiPvPbuUXnSNbBXOHhoI
-         tfuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680782052;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vr7hvDh/glr30Yw4qpt5Kbr2lkI/viKC3PQIzjAY6io=;
-        b=OBoxtDz7nxjChvn1XNp8nXPGCQpcBvvqbPSgq5ciMm3m97JZVmbO2WWEUYpCaD9MQ/
-         WIxk3b3s+QOJZwdpq/7g0xxWb4apoKuQLE3l9cRNvlMJWPlul8rkkT7/mzerl8BihC0l
-         5q69KP++WIzzTOPljVGFSIcexBV8eCBL9aIbZ+z73GHp1uuwx5uo6sIxMC/1RXYIlPxE
-         pnfNIzxB5ktCiUSr6TPo5F/zsUSpTclKht2YfUxXFQtAHQ0+5/y8cPyvYx6PdBm7PT23
-         vLYjKi+X1G7tXmfRCHmIwEbjqDH7uiAJ6MVeshro03a4TPWcOmJcEa5imsuyE8QnEsej
-         QNYg==
-X-Gm-Message-State: AAQBX9edi1f2XNMN8HIrsxmitD9Yz0S4igt5F4qKzNtLMCGHjZ7jLGuw
-        F7kY6Gzt5QP6wgRYqkZuoQUhHg==
-X-Google-Smtp-Source: AKy350YOJBBOhvLdzYhTyarkDYK/pXLiXR2cWg4R6nvYfiOFuIxo3sv/hjwJhsRRoIA0DWwgZVofkQ==
-X-Received: by 2002:ac2:596b:0:b0:4e9:609c:e901 with SMTP id h11-20020ac2596b000000b004e9609ce901mr2444588lfp.21.1680782051848;
-        Thu, 06 Apr 2023 04:54:11 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac246fb000000b004eb2cc16342sm237513lfo.21.2023.04.06.04.54.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 04:54:11 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 06 Apr 2023 13:54:05 +0200
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sdm845-polaris: Drop inexistent
- properties
+        Thu, 6 Apr 2023 08:00:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E94CA5EA;
+        Thu,  6 Apr 2023 04:57:54 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33651gm9015184;
+        Thu, 6 Apr 2023 11:57:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=1yteelog3Wl7kwUh4NMc2dyQp6RkZQkjQy5qXHC4OPs=;
+ b=H7z+6UOU+jaSvC+xYGQfhcR6gJMRhVmjD/X6wzMthCir6ZuUktiGQrQUOIhpYC+Z1nCz
+ w5FGUhI9s4Ma8FYHwBP53oZSITK6OdvkemEuGhj0fCDcq9FYlWC/0t+mTZ0pwxwRUOhp
+ bFpUeNXRuzatytUGj1E2XshvX3vC4vf1z2cERc2U2LsB2ukcSczuibLh+Cnnt0sM6IHY
+ xpnOJhSeA7MblWdlNgXgdXKV28+BcOzEK3/OiXnxEBDG7yFbGHKUB94uq5yVk72Musc+
+ lSqBmllr4jKDcjzge6Oujc+r0FlfbZrOEeg0i0AbQMPB8dZLbeKwv/6cvS1KftavS3Sl /Q== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ps8h0ar84-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Apr 2023 11:57:51 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 336BvpAg005206
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Apr 2023 11:57:51 GMT
+Received: from hu-tnimkar-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 6 Apr 2023 04:57:48 -0700
+From:   Tushar Nimkar <quic_tnimkar@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_lsrao@quicinc.com>, <quic_mkshah@quicinc.com>,
+        <abel.vesa@linaro.org>, Tushar Nimkar <quic_tnimkar@quicinc.com>
+Subject: [PATCH] soc: qcom: rpmh-rsc: Support RSC v3 minor versions
+Date:   Thu, 6 Apr 2023 17:27:32 +0530
+Message-ID: <20230406115732.9293-1-quic_tnimkar@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230406-topic-ath10k_bindings-v2-2-557f884a65d1@linaro.org>
-References: <20230406-topic-ath10k_bindings-v2-0-557f884a65d1@linaro.org>
-In-Reply-To: <20230406-topic-ath10k_bindings-v2-0-557f884a65d1@linaro.org>
-To:     Kalle Valo <kvalo@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680782047; l=826;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=A+cHJo96LANW/mYlLiz68VJ9kDkIsUWUlAaAZ/obM9g=;
- b=JZKiZ4o7YkofUMsu2AgB8TAPweZ+TM2wSK7+a4qVZ4XupOfbVVCCqYRW+YkwYuRfcRV1vwF/Z5lp
- cZVP38w6DVmxGIdjnblGj2CeL8CJgzyfVanJardNzq2u/QMMqRgn
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DzVQL5mav8pmZ2SNF7m-JKzADzxYKEyC
+X-Proofpoint-ORIG-GUID: DzVQL5mav8pmZ2SNF7m-JKzADzxYKEyC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-06_06,2023-04-06_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
+ priorityscore=1501 clxscore=1011 mlxscore=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304060104
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,28 +73,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop the qcom,snoc-host-cap-skip-quirk that was never introduced to
-solve schema warnings.
+RSC v3 register offsets are same for all minor versions of v3. Fix a
+minor version check to pick correct offsets for all v3 minor versions.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: 40482e4f7364 ("soc: qcom: rpmh-rsc: Add support for RSC v3 register offsets")
+Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index 1b7fdbae6a2b..56f2d855df78 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -712,7 +712,5 @@ &wifi {
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
- 	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
--
--	qcom,snoc-host-cap-skip-quirk;
- 	status = "okay";
- };
-
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index 0f8b2249f889..f93544f6d796 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1073,7 +1073,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
+ 
+-	if (drv->ver.major == 3 && drv->ver.minor == 0)
++	if (drv->ver.major == 3 && drv->ver.minor >= 0)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
-2.40.0
+2.17.1
 
