@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6D9B6D9F4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:54:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77BFD6D9F7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 20:07:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238247AbjDFRyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 13:54:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47616 "EHLO
+        id S239416AbjDFSHv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 14:07:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236627AbjDFRyO (ORCPT
+        with ESMTP id S229845AbjDFSHt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 13:54:14 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2606D1701
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 10:54:12 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id br6so51835706lfb.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 10:54:12 -0700 (PDT)
+        Thu, 6 Apr 2023 14:07:49 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF102710
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 11:07:47 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id n21so3433069ejz.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 11:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680803650;
+        d=linaro.org; s=google; t=1680804465;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5/zXT571t+D7DOAkgC59pj3zGw7qdHH2ZzYRuKyFt5c=;
-        b=gh2bCyChznvmAoXtartGrmeSLRaZ1qlPlyaFEOqyY6Ez2RDGjjL8YUJCvI4kIjZ9ht
-         Z7jkgNSGbOaTd99KKphoDplLDwBIDaPzHecV2KmlHNkOX1TsM5xVHq8hWMTxu1mE33UC
-         LY0OEuQlK/z+/qwAmKce65AqtiPVYnopn7XwHi/o8Q5jsiwZMnNSQjcNf6qb1/bgnoSN
-         9aAhshWpwK22/5MVrQabM+SMFmRU3gYnwkwwf7DdfTpiTLn+ocjZzZcPQ1B66tzcAZGz
-         3WOsbXkycz6SYukQfAU3675kFRFNQB82Pgn3+6Rm2+GEPl1C0tWFF8vSl9CAnpJ29Wj0
-         qRUA==
+        bh=1weO9qyyCQy8+b4IcRBkB70UCGhmywO6NJQrtwS0SGI=;
+        b=Q39KSHVK0vW4i5Ni8OS1x1qezXczm35jO/kx/LP48M/yhIJzxCsjlEkGkpPsBZrkdu
+         6KzuKgQrC6cGI46YZBIvBAz05m7Byijj31TWFGRrOGmJZg6AS/nfYc8j5wRnkZB+ixHT
+         lFFMw0oOfjoYDKfQEkE3xHvbtU5dqfFqKLULKu4HhJ4Y1SJJBemueE8xAzsPtrAliZuW
+         jkl0cYlfZSsnFzcXtZlOKWEkGOFlToS+hK+aVsnF/4Xv9xceCGGPgIPHlvMy0gTdqZih
+         VZqacRRlgRvOeOeMTeCDyD/H4o9AHH2XYkdqqmn72aS0I5JxZWlPt/G67JdARodtQVq6
+         uVIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680803650;
+        d=1e100.net; s=20210112; t=1680804465;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5/zXT571t+D7DOAkgC59pj3zGw7qdHH2ZzYRuKyFt5c=;
-        b=x4QnDyhHS1q1uph/+Ifm3UOtTEDTAqumrvhpE0iBzlewO63sc/cU419VKnw/iBOmqc
-         JzKlMvvU7wDUD/Q5bBr04ptOkiuFvqPsziG0yeRQPbKk9B2g+SgnkGCDox3agssAoEh5
-         QPG1J0gVBWdxNN/XdPqFw0C5pZ+Qq3t17ltsUspSbE6TlBz1uMXEOj42Wk6mtCR5/z7G
-         88ipvhr2VOO3Wz+5UQMynAJL2cIA7XmFfl9SM+NUTomeB8B8aKUoofqlUFaLWzVlWXkj
-         bqKGC83fGUi1THgjuC0XrPY530/sW5BrARcCprTgBSXk1v4CmgL44a1/i/dyrKFMPppX
-         oQoQ==
-X-Gm-Message-State: AAQBX9d3NXkJwTgtm8lGGgLu81ZklvZB04Q0MZBteg3/SdQnc6s9E1cA
-        Ebnd68lbjxdhnBEAW1H0ZtEB8Q==
-X-Google-Smtp-Source: AKy350b11aqh7bMWmNTTHgegnWEvTfCO0FqsH1PYTmHGbt1cUK8tBqJ648WGDx7oactx22PLI5J7Dg==
-X-Received: by 2002:ac2:410a:0:b0:4e8:6261:58bd with SMTP id b10-20020ac2410a000000b004e8626158bdmr23803lfi.37.1680803650321;
-        Thu, 06 Apr 2023 10:54:10 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id r10-20020a19ac4a000000b004e90dee5469sm355833lfc.157.2023.04.06.10.54.09
+        bh=1weO9qyyCQy8+b4IcRBkB70UCGhmywO6NJQrtwS0SGI=;
+        b=d1mAV6Gv7bYqFbOZrXXa7KtxezOiU78JOliPUtJaseUqQ3dzo48XrjgPOtsIa3vgim
+         ZXhtZrxVtjvc6A/ysQFXcj/PJcqQ5Dd2HeiVXns9Fo+a5LvemlSAtdT83KfbVaTQ1NlD
+         bs77J4OTNC20674Fy4zsJqCffalSD/4GoQZG7uR2G77PHalyS/tXn8EJKgjzdKwQMGfh
+         NDckGU/p50gb8L/wmvQPiypRaFP6CGv/yO2M9VQSmS8kv+CctVLcl2XW6civVks/HoDB
+         4NX9IOZ0b3ir/wqeMSWGB9GIIxoXJIeZQ81hNqd8lYCqwWJhVRptJPXoayZsN4LMqJ3w
+         WK7Q==
+X-Gm-Message-State: AAQBX9dSU8sTrOIVS6HDJkV+KA9gnlhKtNSn6JKjHTne2KUIGU2plUxk
+        9QdeIwT5T+uP6NL+Yxn4tEeQZQ==
+X-Google-Smtp-Source: AKy350aHt9yU8Ez/wQQLBkXXBqBOR8IO147QPcgI9LDFf7/LZvdMbuHrlfbxBzBf2DPp21fb0ciawA==
+X-Received: by 2002:a17:906:f897:b0:8b1:7eba:de5 with SMTP id lg23-20020a170906f89700b008b17eba0de5mr6211680ejb.10.1680804465711;
+        Thu, 06 Apr 2023 11:07:45 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed? ([2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed])
+        by smtp.gmail.com with ESMTPSA id r7-20020a50c007000000b005021d210899sm1022641edb.23.2023.04.06.11.07.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 10:54:09 -0700 (PDT)
-Message-ID: <9554be2b-c80d-8c5b-48e3-2508a7b4ecd1@linaro.org>
-Date:   Thu, 6 Apr 2023 20:54:09 +0300
+        Thu, 06 Apr 2023 11:07:45 -0700 (PDT)
+Message-ID: <cc5ee0e5-5cc7-bf80-68cc-2d38b1118c6d@linaro.org>
+Date:   Thu, 6 Apr 2023 20:07:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm6115-j606f: Add ramoops node
-Content-Language: en-GB
+Subject: Re: [PATCH v2] dt-bindings: iommu: Convert QCOM IOMMU to YAML
+Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20230406-topic-lenovo_features-v1-0-c73a5180e48e@linaro.org>
- <20230406-topic-lenovo_features-v1-1-c73a5180e48e@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230406-topic-lenovo_features-v1-1-c73a5180e48e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230406-topic-qciommu-v2-1-b8547622b2a4@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230406-topic-qciommu-v2-1-b8547622b2a4@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -84,46 +82,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/04/2023 18:25, Konrad Dybcio wrote:
-> Add a ramoops node to enable retrieving crash logs.
+On 06/04/2023 13:58, Konrad Dybcio wrote:
+> Convert the Qualcomm IOMMU bindings to YAML.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> index 10c9d338446c..fd064899791c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-> @@ -52,6 +52,17 @@ key-volume-up {
->   			wakeup-source;
->   		};
->   	};
+> v1 -> v2:
+
+Thank you for your patch. There is something to discuss/improve.
+
 > +
-> +	reserved-memory {
-> +		ramoops@ffc00000 {
-> +			compatible = "ramoops";
-> +			reg = <0x0 0xffc00000 0x0 0x100000>;
-> +			record-size = <0x1000>;
-> +			console-size = <0x40000>;
+> +patternProperties:
+> +  "^iommu-ctx@[0-9a-f]+$":
+> +    type: object
 
-no ftrace-size?
+On this level:
+additionalProperties: false
 
-> +			ecc-size = <16>;
-> +			no-map;
+> +    properties:
+> +      compatible:
+> +        enum:
+> +          - qcom,msm-iommu-v1-ns
+> +          - qcom,msm-iommu-v1-sec
+> +
+> +      interrupts:
+> +        maxItems: 1
+> +
+> +      reg:
+> +        maxItems: 1
 
-I see that other ramoops defines are not marked with no-map. Is there 
-any reason for that?
+On this level:
+    required:
+      - compatible
+      - interrupts
+      - reg
 
-> +		};
-> +	};
->   };
->   
->   &dispcc {
-> 
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - ranges
+> +  - '#address-cells'
+> +  - '#size-cells'
+> +  - '#iommu-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    apps_iommu: iommu@1e20000 {
+> +      compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
+> +      reg = <0x01ef0000 0x3000>;
+> +      clocks = <&gcc GCC_SMMU_CFG_CLK>,
+> +               <&gcc GCC_APSS_TCU_CLK>;
+> +      clock-names = "iface", "bus";
+> +      qcom,iommu-secure-id = <17>;
+> +      #address-cells = <1>;
+> +      #size-cells = <1>;
+> +      #iommu-cells = <1>;
+> +      ranges = <0 0x01e20000 0x40000>;
+> +
+> +      /* mdp_0: */
+> +      iommu-ctx@4000 {
+> +        compatible = "qcom,msm-iommu-v1-ns";
+> +        reg = <0x4000 0x1000>;
+> +        interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+> +      };
+> +    };
+> +
+> +    mdp: mdp@1a01000 {
+> +      reg = <0x01a01000 0x1000>;
+> +      iommus = <&apps_iommu 4>;
 
--- 
-With best wishes
-Dmitry
+Drop mdp node. Consumers should not be in provider bindings.
+
+
+
+Best regards,
+Krzysztof
 
