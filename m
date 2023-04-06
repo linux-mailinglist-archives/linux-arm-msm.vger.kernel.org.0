@@ -2,220 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E1EF6D9DED
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 18:51:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9BAB6D9E2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:10:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239440AbjDFQvD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 12:51:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36132 "EHLO
+        id S239069AbjDFRKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 13:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229975AbjDFQvB (ORCPT
+        with ESMTP id S229518AbjDFRKC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 12:51:01 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.84])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BA512D;
-        Thu,  6 Apr 2023 09:50:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1680799857; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=Ezge/2AnwPX5r7ux3WkH950by4dkB1CzEVgkZxD5lzsm/GEJP7G+LrDOnwz0SDkYap
-    YB1UOEYWnNknQ7yw7LnXQ6vKXDFhGPsyIDlV3Z28ZMojPHTGkgcT+Tv7WyaModxOQ1O/
-    cKPtAk4gSDi6YyohyNfVFgn0k/shO+7YJZq0+Ze0DUPWGVXjH7SPStilp/vyc+IMNe7g
-    EMnRUXbRUxN7YJ4cG8ZrJbt9t3P39WueVKk+6GHHg00Sgg3PQC7QYTZRVXxzXCBYKmxO
-    OBdyAU0NVa4vyZUdC9WHf6x06c/u0F0rkrOWebUJm5P09/Rj9XdF+QYwAT+mWP2bXynW
-    /qtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1680799857;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Po4jB73TIWWBeTAu+d62FJCT3IfHXN2fw64y3NL8YUc=;
-    b=aV395fsbPeYRwUiAwjsP9tuMnca0N+9XkG0nOVroT8iyyugokDE3mH+x6p55jt9Y7S
-    4gs0lygo01KNrnh7G76A6h/Q+AjLTmrEcKRWxufV5muGWrYtmaOSE468AoTkWJZ6u0KC
-    dKi4h5i4dcHuUZ6qh7FTmIxVhjxuOkskFFeu6J+wuejoy4Am8q42h1u8a+Miq0AmgR/g
-    ylSu/JDAkgWP673L/wdZlmZnzsVIU1CSaDsQA0KwQfmV5Z4rAulKoYTsuZeDBUXCvKUC
-    d09csuP+s2YuDC/7n9xaon5Z2fGS4t4rxcZjHTr8uBTewqHAv1tHnsMH7LRsMPMqmxSh
-    kikA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1680799857;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Po4jB73TIWWBeTAu+d62FJCT3IfHXN2fw64y3NL8YUc=;
-    b=n3MYu7GrIGkxlvVqFPJH9wiGavr8VtfgcBaEL4ygpW/VdHgqSS5BE1wpOmYuKFajAJ
-    U+KOozF+HPNq88s6NiiQff+h49P54dvj6aT9bT1Jom3LmwA4ylfKhbfNts4Lcr4R8h/C
-    d4U8KDRzhJd5zmDEDUEP4E24UFg1ZBpa6L25y61KSGrdgm5WbZtgSjjduuItbac02RHX
-    QqlyGGY5rnWCvyHKOBq16q3H7SIC5iqbC4H81GVRx6/kZ5YTQoSa1iRKwu6ST4uziOfn
-    Yq6gdVk1irxPaytGQrclRn5B1kYuabXGhfR0nOHEXF0YYO0AApWbUedcRw7OWzsJgyEj
-    Tc1A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1680799857;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Po4jB73TIWWBeTAu+d62FJCT3IfHXN2fw64y3NL8YUc=;
-    b=CHwxO3gV/nAVL2Pzv8pVYh8O+4Rxm0O01IA+AJdV+FikoTfdTpbdJg8/8I1ILYbAYe
-    gpfdaZOg9GBTuKeK1BBw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA+pvh"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az36GovD50
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 6 Apr 2023 18:50:57 +0200 (CEST)
-Date:   Thu, 6 Apr 2023 18:50:55 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        djakov@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, benl@squareup.com,
-        shawn.guo@linaro.org, fabien.parent@linaro.org, leo.yan@linaro.org,
-        dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v8 5/5] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
-Message-ID: <ZC74b5yR2PF2_sYy@gerhold.net>
-References: <20230330153222.2875121-1-bryan.odonoghue@linaro.org>
- <20230330153222.2875121-6-bryan.odonoghue@linaro.org>
+        Thu, 6 Apr 2023 13:10:02 -0400
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4EAB83F2;
+        Thu,  6 Apr 2023 10:10:00 -0700 (PDT)
+Received: by mail-oi1-f169.google.com with SMTP id q27so28811513oiw.0;
+        Thu, 06 Apr 2023 10:10:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680801000; x=1683393000;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aznOVjaPJTvuXKx1gmzX1wmBBoPOixwVKU/ceJyrGsk=;
+        b=Vbr6Un3XAa1weLdqNkvXUSffebCUdacMfBv/HpDkhSjusZnG5H82+Sq4pLQPZTniw1
+         CyaQA8uX3Qhlfhp+D757Vlrln8zvRzPbTlybMem3gW63EZi66C07MKUjqiHoqpwE9KP7
+         uzu37hn9jVeWEKqiRK9ZmBV093A+i+5mb4psR5LRkpzarpGsra96Z274ApOMe3agtnxI
+         s72UBIurS+FKBxqvZFUXq8YFhljz253Ayi+QWfyPmfzpWQ+RKC0NWuGOAtDKmfa+QbU3
+         y3zdj7z8JUDkZ9A10nLgrjIHlYpM80hynvrh3UdHr6rFnGnkxfUhPUxtIv0yFUajSR/A
+         pcCA==
+X-Gm-Message-State: AAQBX9cI5Fw3QraHNQO/Pd7uVSxb9Zq33zFdnWa3IwBB8rqMD+Ma3ro+
+        MdK+46Pjq67vRkWe0fp/916Ex4yMyQ==
+X-Google-Smtp-Source: AKy350aJ6h65ENKDGuv6javi5hpdIYx3FtFdawgKK8IQG5QLN2+FWPP1Sks4yTp40K/P+Ldr/TLnNQ==
+X-Received: by 2002:aca:1a09:0:b0:387:3239:61fa with SMTP id a9-20020aca1a09000000b00387323961famr4415278oia.30.1680800998716;
+        Thu, 06 Apr 2023 10:09:58 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k9-20020acaba09000000b00387367989d7sm878253oif.23.2023.04.06.10.09.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 10:09:58 -0700 (PDT)
+Received: (nullmailer pid 3363580 invoked by uid 1000);
+        Thu, 06 Apr 2023 17:09:57 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230330153222.2875121-6-bryan.odonoghue@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-wireless@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Kalle Valo <kvalo@kernel.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>, netdev@vger.kernel.org,
+        Paolo Abeni <pabeni@redhat.com>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Eric Dumazet <edumazet@google.com>,
+        ath10k@lists.infradead.org, Bjorn Andersson <andersson@kernel.org>
+In-Reply-To: <20230406-topic-ath10k_bindings-v3-1-00895afc7764@linaro.org>
+References: <20230406-topic-ath10k_bindings-v3-0-00895afc7764@linaro.org>
+ <20230406-topic-ath10k_bindings-v3-1-00895afc7764@linaro.org>
+Message-Id: <168080086267.3336076.3393733023108971913.robh@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: net: Convert ATH10K to YAML
+Date:   Thu, 06 Apr 2023 12:09:57 -0500
+X-Spam-Status: No, score=0.7 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Mar 30, 2023 at 04:32:22PM +0100, Bryan O'Donoghue wrote:
-> Add a basic booting DTS for the Sony Xperia M4 Aqua aka "tulip".
+
+On Thu, 06 Apr 2023 14:55:44 +0200, Konrad Dybcio wrote:
+> Convert the ATH10K bindings to YAML.
 > 
-> Tulip is paired with:
+> Dropped properties that are absent at the current state of mainline:
+> - qcom,msi_addr
+> - qcom,msi_base
 > 
-> - wcn3660
-> - smb1360 battery charger
-> - 720p Truly NT35521 Panel
+> qcom,coexist-support and qcom,coexist-gpio-pin do very little and should
+> be reconsidered on the driver side, especially the latter one.
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Somewhat based on the ath11k bindings.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../qcom/msm8939-sony-xperia-kanuti-tulip.dts | 184 ++++++++++++++++++
->  2 files changed, 185 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
+>  .../bindings/net/wireless/qcom,ath10k.txt          | 215 -------------
+>  .../bindings/net/wireless/qcom,ath10k.yaml         | 357 +++++++++++++++++++++
+>  2 files changed, 357 insertions(+), 215 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 31e0ac97fc088..3f8321ecb7e5f 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -30,6 +30,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-> new file mode 100644
-> index 0000000000000..cb47bb2413a7c
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts
-> @@ -0,0 +1,184 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2015, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022-2023, Bryan O'Donoghue.
-> + *
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "msm8939.dtsi"
-> +#include "msm8939-pm8916.dtsi"
-> +#include <dt-bindings/arm/qcom,ids.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +
-> +/ {
-> +	model = "Sony Xperia M4 Aqua";
-> +	compatible = "sony,kanuti-tulip", "qcom,msm8939";
-> +
-> +	qcom,board-id = <QCOM_BOARD_ID_MTP 0>;
-> +	qcom,msm-id = <QCOM_ID_MSM8939 0>, <QCOM_ID_MSM8939 0x30000>;
-> +
-> +	aliases {
-> +		mmc0 = &sdhc_1; /* SDC1 eMMC slot */
-> +		mmc1 = &sdhc_2; /* SDC2 SD card slot */
-> +		serial0 = &blsp1_uart2;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	usb_id: usb-id {
-> +		compatible = "linux,extcon-usb-gpio";
-> +		id-gpio = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-0 = <&usb_id_default>;
-> +		pinctrl-names = "default";
-> +	};
-> +};
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&tlmm {
-> +	usb_id_default: usb-id-default-state {
-> +		pins = "gpio110";
-> +		function = "gpio";
-> +		bias-pull-up;
-> +		drive-strength = <8>;
-> +	};
-> +};
 
-FWIW the node order seems wrong here (m -> t -> p).
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-> +
-> +&pronto {
-> +	status = "okay";
-> +
-> +	iris {
-> +		compatible = "qcom,wcn3660";
-> +	};
-> +};
-> +
-> [...]
-> +&sdhc_1 {
-> +	pinctrl-0 = <&sdc1_default_state>;
-> +	pinctrl-1 = <&sdc1_sleep_state>;
-> +	pinctrl-names = "default", "sleep";
-> +	status = "okay";
-> +};
-> +
-> +&sdhc_2 {
-> +	pinctrl-0 = <&sdc2_default_state>;
-> +	pinctrl-1 = <&sdc2_sleep_state>;
-> +	pinctrl-names = "default", "sleep";
-> +	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
-> +	status = "okay";
-> +};
-> +
-> +&usb {
-> +	dr_mode = "device";
-> +	extcon = <&usb_id>, <&usb_id>;
-> +	status = "okay";
-> +};
-> +
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-Hm is there a special reason for forcing dr_mode = "device" here?
-If the USB ID GPIO works properly you should be in device mode all the
-time unless you plug in an USB OTG adapter. Seems a bit strange.
+Full log is available here: https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230406-topic-ath10k_bindings-v3-1-00895afc7764@linaro.org
 
-Thanks,
-Stephan
+
+wifi@0,0: reg: [[65536, 0, 0, 0, 0], [50397200, 0, 0, 0, 2097152]] is too long
+	arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dtb
+
+wifi@18800000: 'qcom,snoc-host-cap-skip-quirk' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dtb
+
