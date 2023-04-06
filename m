@@ -2,131 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C57F96D94FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 13:21:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 070BB6D94FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 13:23:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237581AbjDFLVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 07:21:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51898 "EHLO
+        id S236776AbjDFLXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 07:23:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjDFLVH (ORCPT
+        with ESMTP id S229953AbjDFLXJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 07:21:07 -0400
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 924C793DE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 04:20:45 -0700 (PDT)
-Received: by mail-vs1-xe2f.google.com with SMTP id g17so34058540vst.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 04:20:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1680780044;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Ne77xaqbtLGoxF/3ZhDrpD5vvfWoYyoJmdpcIYFNEQ=;
-        b=k6I0+4BXskzhRAwmd43QNMVzFMrPVNOkbwwXevTPqhk0D8YtPACw3R0r5oUZIcMPVv
-         Y5BUW4ArX1KppvMqptjnxTQn8Eg44+0ZQbizMDjOHAqI9XfPy9ky1Y5/sUTSgx9/3FRG
-         GR5QFc6MPGSsDoUOxRB5gBdVgCLmVxbo9cbOTuympKKj/3m64qK3GAZCfrJM9pQXJcku
-         pvfwlQ1j6C33FTc8uKtsSlENf9ePLJrXjcA1JInY3DAKtB/WJMRZSF/W23COOL1TWHxe
-         TSC2bb+7xWVyX3JOmd+CRHjYYjZg/2CHUVzK5aidd/2lKi4HS6aRnEedqroKaBR6YcFQ
-         KZ2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680780044;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1Ne77xaqbtLGoxF/3ZhDrpD5vvfWoYyoJmdpcIYFNEQ=;
-        b=7U/7wTicQhdbE+CvsukinPTPoVYhoHVgTweN7SPozHB+8bXtOgyBka40zDMsgJKcOw
-         PYEwMgO37Ni3+JsFA0AJ/e50IdxxcUhLqq18266UWGAEVf+rmIlGTaEasaas7M9y6/Zv
-         Azh6uUZf5LhDA6tcf19QbHity/m9H+DeMfPkuqALO6qkGfxHzohPYBrWNPKofP4WDvtY
-         hRM7psWjsmCyyJZRkceMjv7HOU76bEZKl7U1PFk5EjBF6EVJKuC885XLNwtCdOOv8jS7
-         6ZErkOQT8m4PvL9McTlK44AyLvOKdn79Ac5eHxHJ5oEOKvUfsWBxHDlxdS67BmxxZk+5
-         AGQQ==
-X-Gm-Message-State: AAQBX9eOcPv6cJDE0gQgEVldCB9uLRk63GGt/Fb7taQqA2EFy5l4YJUY
-        au3w6EU+8HZ7wYSFlTaDABKTdm37f9SBSAVdPTDpew==
-X-Google-Smtp-Source: AKy350bXUnbyNurB9zPd2ZQDGbD2zJLY7NQCuR5Vz4KL/7JSPzMrGSkVI2JVi1D35K2mHZB5WX3gQMWRx9D513knC9w=
-X-Received: by 2002:a67:c19a:0:b0:426:b051:1c4 with SMTP id
- h26-20020a67c19a000000b00426b05101c4mr7770691vsj.0.1680780044683; Thu, 06 Apr
- 2023 04:20:44 -0700 (PDT)
+        Thu, 6 Apr 2023 07:23:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 603AF19AF;
+        Thu,  6 Apr 2023 04:23:08 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 336AWu52004927;
+        Thu, 6 Apr 2023 11:23:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BzMPYlTxxXBfHEULtkkKX2NInG+vQ7gKm/cq+yJMqQU=;
+ b=d8eTDB/ZzWmI/eaGP8WVFxS5aZykBrmBMzpMgBn2iBaNuX9OJ2RW5luu+SGUP879JhH8
+ SuDwfeyGFzTtHf7HbC7ZuXWOq8/MI0WVu/0H8JFBHvlHyc/oyM9nH9/msi3GFIRJbqSu
+ A7/wgCYDYE9A+WVGL1INdKwbxXXNvrKjvSBOcb5lZvfLu0z44s/TimwzMyR3TPdufh+l
+ lZmtwRRzdAuBg3lJwyn3zz0zzq8VyJLs5rGcvU8a1ZxG26z+GlMiD8wMonnZIqU4H0Py
+ UN2o55IJJCvV4S8usoT7hGcxA36zQWz4KxEMfV9pcGna1yOIB2B4avTvYFi0ITbTU93M /w== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3psmyx12ce-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Apr 2023 11:23:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 336BN4rV001928
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Apr 2023 11:23:04 GMT
+Received: from [10.50.18.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
+ 04:22:54 -0700
+Message-ID: <147f58fc-75d2-708c-1392-f76fa380b6ed@quicinc.com>
+Date:   Thu, 6 Apr 2023 16:52:51 +0530
 MIME-Version: 1.0
-References: <20230328193632.226095-1-brgl@bgdev.pl> <20230328193632.226095-3-brgl@bgdev.pl>
- <72286603300630b890705c99b42f05a4.sboyd@kernel.org>
-In-Reply-To: <72286603300630b890705c99b42f05a4.sboyd@kernel.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Thu, 6 Apr 2023 13:20:33 +0200
-Message-ID: <CAMRc=McM1DfCoMmuUYcChFFBG=H1PgZFAWcuxnQsdhRdYrT+yA@mail.gmail.com>
-Subject: Re: [PATCH 2/7] clk: qcom: add the GPUCC driver for sa8775p
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2 0/2] Add initial support for RDP468 of IPQ5332 family
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230323093120.20558-1-quic_kathirav@quicinc.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230323093120.20558-1-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _RNGdXeHSw4o9h9AXcXI9M6N7__s3UxB
+X-Proofpoint-ORIG-GUID: _RNGdXeHSw4o9h9AXcXI9M6N7__s3UxB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-06_05,2023-04-06_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 impostorscore=0 adultscore=0 clxscore=1015 mlxlogscore=887
+ bulkscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304060099
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 4:15=E2=80=AFAM Stephen Boyd <sboyd@kernel.org> wro=
-te:
->
-> Quoting Bartosz Golaszewski (2023-03-28 12:36:27)
-> > diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> > index 449bc8314d21..5e1919738aeb 100644
-> > --- a/drivers/clk/qcom/Kconfig
-> > +++ b/drivers/clk/qcom/Kconfig
-> > @@ -437,6 +437,14 @@ config SA_GCC_8775P
-> >           Say Y if you want to use peripheral devices such as UART, SPI=
-,
-> >           I2C, USB, UFS, SDCC, etc.
-> >
-> > +config SA_GPUCC_8775P
-> > +       tristate "SA8775P Graphics clock controller"
-> > +       select SA_GCC_8775P
->
-> Should select QCOM_GDSC as well.
->
 
-Why if it's already selected indirectly by SA_GCC_8775P? Other GPUCCs
-in here don't select it either.
-
-Bart
-
-> > +       help
-> > +         Support for the graphics clock controller on SA8775P devices.
-> > +         Say Y if you want to support graphics controller devices and
-> > +         functionality such as 3D graphics.
-> > +
-> >  config SC_GCC_7180
-> >         tristate "SC7180 Global Clock Controller"
-> >         select QCOM_GDSC
-> > diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-=
-sa8775p.c
-> > new file mode 100644
-> > index 000000000000..46d73bd0199b
-> > --- /dev/null
-> > +++ b/drivers/clk/qcom/gpucc-sa8775p.c
-> > @@ -0,0 +1,633 @@
-> > +// SPDX-License-Identifier: GPL-2.0-only
-> > +/*
-> > + * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All right=
-s reserved.
-> > + * Copyright (c) 2023, Linaro Limited
-> > + */
-> > +
-> > +#include <linux/clk.h>
+On 3/23/2023 3:01 PM, Kathiravan T wrote:
+> Add the initial device tree support for the RDP(Reference Design
+> Platform)468 based on IPQ5332 family of SoCs. This patch carries the
+> support for Console UART, SPI NOR, eMMC.
 >
-> Is this include used? If not, remove it as this is a clk provider and
-> not a clk consumer.
+> This series depends on the below which adds support the SPI NOR
+> https://lore.kernel.org/linux-arm-msm/20230320104530.30411-1-quic_kathirav@quicinc.com/
+>
+> V1 can be found here
+> https://lore.kernel.org/linux-arm-msm/20230323044929.8694-1-quic_kathirav@quicinc.com/
+
+
+Gentle Reminder...
+
+
+>
+> Kathiravan T (2):
+>    dt-bindings: arm: qcom: document MI01.6 board based on IPQ5332 family
+>    arm64: dts: qcom: ipq5332: add support for the RDP468 variant
+>
+>   .../devicetree/bindings/arm/qcom.yaml         |   2 +
+>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>   arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts   | 103 ++++++++++++++++++
+>   3 files changed, 106 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
+>
