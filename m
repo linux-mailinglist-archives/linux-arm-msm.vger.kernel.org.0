@@ -2,201 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F3556D935F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 11:56:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A43726D9493
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 12:59:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236738AbjDFJ40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 05:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46116 "EHLO
+        id S236617AbjDFK7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 06:59:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236507AbjDFJ4A (ORCPT
+        with ESMTP id S236821AbjDFK7t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 05:56:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80053A268;
-        Thu,  6 Apr 2023 02:54:02 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3368Q17c022412;
-        Thu, 6 Apr 2023 09:52:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jZgMGdmZaVAzkO0q+pB6WHfwcscuTH1O+8bqLAYLeyc=;
- b=Zwl4k/j1cjaHvl2by5ChTWp8ZGbwPG+BRgzzQxrt5OgN9o+Rr+X8SetOu7KKn8B5uC27
- aNd+0FJvUPZs0a52AVNkXZPQTh9j3150AsbL4IJqI/sKfU/mc+vE90prcN6dmtXAPOs6
- wD/lVXK0ruONC254vvN2wtugU3XIxfAOU3s7Qsy4J7z14QgXVhsJgu5DG2T+cjGPski8
- 3Z7oZhkBTovHWicnpaDklaxbRe1m9bWva4k9UkGaHxBeOPK4pZzbUpcqRPGeZGeq6TRg
- WiIO8PH94//HnUeC+1EokYIzpwNqnVUvQVkp0F6CdN/CI3YAToirra3zgIjUmEZml5rt eg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3psnmj0uh4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Apr 2023 09:52:47 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3369qlbP009820
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Apr 2023 09:52:47 GMT
-Received: from [10.216.2.94] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
- 02:52:42 -0700
-Message-ID: <d7d03e81-03d6-b643-a2e6-0867bab7e0ef@quicinc.com>
-Date:   Thu, 6 Apr 2023 15:22:39 +0530
+        Thu, 6 Apr 2023 06:59:49 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 860437A8F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 03:59:47 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-545cb3c9898so656804477b3.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 03:59:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680778786;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nD1WTAK58/vqm28JkhVU6GZOl4ufBXsw089tkC+xpWw=;
+        b=rstXWKv7UVHpBvrj+D64aEpmhqkUePscquDSERUiqCo/2kvTPcISLn9/T2z9bf71N5
+         y0F67VeMCuWYtTzRt5GraOjnIm0DMkNgtxlH3xUKfYpi+g9eqKFeWWifs/ffvnsshV8M
+         zfXSNfMUBkYgvZx5x8XwfQELCVomMs8nyj8GHtdNZPBpsBLi068gpr7siuqqTOgoYdIM
+         dRmcs9prAopv9R3upqAW3YKcWonOSqYQKnyvCcP3BQuCoUmQq7vqqSgiaXBXdZgbVh/9
+         8pnZ/+3XBphz+u92hF1zMFIvv1FTUubcEn4lCz1GlGMus7rbkeBCuajJ/JNYDZzTsGUV
+         edxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680778786;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nD1WTAK58/vqm28JkhVU6GZOl4ufBXsw089tkC+xpWw=;
+        b=U0fevjkwpPTI/sIfJJPWw+LHFD1xPlzrIcIejqejqX+6h8m5d4qkjTHllktNWdNe+s
+         JUMu6RUhdlG9cPLFSRX6OYcn1BUTD8sHdgtPtZuG3rg9ULBC8Z3CglSZlG6J9XqbvUr1
+         iXePjLBAGUi16+l8dxxumHoMFbp/xG1beeybfM74ztIllHIL26odwKEEw+MGK75WbMI/
+         7PilXQ9cEr11m5egnFDatQRYrG49d1o4IQ1p2Paz+x8qefkyAvICDgjAfM7sn6/qQoBN
+         eNR43gBqCVd6zEdZ8rkxNK6FkZRyik7dEe0qTOaN0eETmXnOV6nI//JGriuyJVxQXHO/
+         gGng==
+X-Gm-Message-State: AAQBX9cSkS/yz4Z6NU5yV+XKSpQnvHqHGOm/B/JayhZLIS1cUo//PtwJ
+        +6S214yS4N5xQdKLRwbolvO0G68dwdDCRbhWh+MnSg==
+X-Google-Smtp-Source: AKy350ZACGkl1itmcqbB+J8+S3w/c5Fd4Xstg5YxzxM0WeHeUtq63AtbTh7cY2Mf2KPnXQ8bjOeG3IRZrGTmICYhEDs=
+X-Received: by 2002:a81:c509:0:b0:549:143f:3d3 with SMTP id
+ k9-20020a81c509000000b00549143f03d3mr5573053ywi.0.1680778786661; Thu, 06 Apr
+ 2023 03:59:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 2/5] dt-bindings: arm: msm: Add bindings for multi
- channel DDR in LLCC
-Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
+References: <20230327193829.3756640-1-abel.vesa@linaro.org>
+ <CAGETcx9f1p2esfyzyfU04EAB1FXh=d9-U81DaGyZNjL_Vti3oQ@mail.gmail.com>
+ <ZCVyBuKMvDV0gQPW@linaro.org> <CAGETcx-mxzzZ_FU6Agju9gMhFOEDhY6Rj78BnvAVJjNtZhif=w@mail.gmail.com>
+ <ZCZolyDL/awnt73K@linaro.org> <CAPDyKFprQwBfya-TpaVJfn82LgM9N_iE8npO9r-HzAyJXpb-hQ@mail.gmail.com>
+ <ZC6QLZOldOLNaCSg@linaro.org>
+In-Reply-To: <ZC6QLZOldOLNaCSg@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 6 Apr 2023 12:59:10 +0200
+Message-ID: <CAPDyKFo+_qxjMaQyT9=zDOuTYjF35G2q=DfS+AhHr+PdJZJz6g@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] Allow genpd providers to power off domains on sync state
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Saravana Kannan <saravanak@google.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
-        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20230313124040.9463-1-quic_kbajaj@quicinc.com>
- <20230313124040.9463-3-quic_kbajaj@quicinc.com>
- <2b3e39b9-ea70-db9b-89f7-09054df363c3@linaro.org>
- <20230315134814.GA98488@thinkpad>
- <c8f3499f-d927-6657-c7c6-732ed2222525@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <c8f3499f-d927-6657-c7c6-732ed2222525@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8zsLpEULLto8r0fDRQMYpqpfDWjio-uH
-X-Proofpoint-ORIG-GUID: 8zsLpEULLto8r0fDRQMYpqpfDWjio-uH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-06_04,2023-04-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 spamscore=0
- bulkscore=0 phishscore=0 clxscore=1011 priorityscore=1501 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304060086
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Mike Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-pm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Android Kernel Team <kernel-team@android.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 6 Apr 2023 at 11:26, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> On 23-04-05 16:11:18, Ulf Hansson wrote:
+> > Abel, Saravana,
+> >
+> > On Fri, 31 Mar 2023 at 06:59, Abel Vesa <abel.vesa@linaro.org> wrote:
+> > >
+> > > On 23-03-30 12:50:44, Saravana Kannan wrote:
+> > > > On Thu, Mar 30, 2023 at 4:27=E2=80=AFAM Abel Vesa <abel.vesa@linaro=
+.org> wrote:
+> > > > >
+> > > > > On 23-03-27 17:17:28, Saravana Kannan wrote:
+> > > > > > On Mon, Mar 27, 2023 at 12:38=E2=80=AFPM Abel Vesa <abel.vesa@l=
+inaro.org> wrote:
+> > > > > > >
+> > > > > > > There have been already a couple of tries to make the genpd "=
+disable
+> > > > > > > unused" late initcall skip the powering off of domains that m=
+ight be
+> > > > > > > needed until later on (i.e. until some consumer probes). The =
+conclusion
+> > > > > > > was that the provider could return -EBUSY from the power_off =
+callback
+> > > > > > > until the provider's sync state has been reached. This patch =
+series tries
+> > > > > > > to provide a proof-of-concept that is working on Qualcomm pla=
+tforms.
+> > > > > >
+> > > > > > I'm giving my thoughts in the cover letter instead of spreading=
+ it
+> > > > > > around all the patches so that there's context between the comm=
+ents.
+> > > > > >
+> > > > > > 1) Why can't all the logic in this patch series be implemented =
+at the
+> > > > > > framework level? And then allow the drivers to opt into this be=
+havior
+> > > > > > by setting the sync_state() callback.
+> > > > > >
+> > > > > > That way, you can land it only for QC drivers by setting up
+> > > > > > sync_state() callback only for QC drivers, but actually have th=
+e same
+> > > > > > code function correctly for non-QC drivers too. And then once w=
+e have
+> > > > > > this functionality working properly for QC drivers for one kern=
+el
+> > > > > > version (or two), we'll just have the framework set the device'=
+s
+> > > > > > driver's sync_state() if it doesn't have one already.
+> > > > >
+> > > > > I think Ulf has already NACK'ed that approach here:
+> > > > > [1] https://lore.kernel.org/lkml/CAPDyKFon35wcQ+5kx3QZb-awN_S_q8y=
+1Sir-G+GoxkCvpN=3DiiA@mail.gmail.com/
+> > > >
+> > > > I would have NACK'ed that too because that's an incomplete fix. As =
+I
+> > > > said further below, the fix needs to be at the aggregation level wh=
+ere
+> > > > you aggregate all the current consumer requests. In there, you need=
+ to
+> > > > add in the "state at boot" input that gets cleared out after a
+> > > > sync_state() call is received for that power domain.
+> > > >
+> > >
+> > > So, just to make sure I understand your point. You would rather have =
+the
+> > > genpd_power_off check if 'state at boot' is 'on' and return busy and
+> > > then clear then, via a generic genpd sync state you would mark 'state=
+ at
+> > > boot' as 'off' and queue up a power off request for each PD from ther=
+e.
+> > > And as for 'state at boot' it would check the enable bit through
+> > > provider.
+> > >
+> > > Am I right so far?
+> >
+> > I am not sure I completely follow what you are suggesting here.
+>
+> Please have a look at this:
+> https://git.kernel.org/pub/scm/linux/kernel/git/abelvesa/linux.git/commit=
+/?h=3Dqcom/genpd/ignore_unused_until_sync_state&id=3D4f9e6140dfe77884012383=
+f8ba2140cadb62ca4a
+>
+> Keep in mind that is WIP for now. Once I have something, I'll post it on
+> mailing list. Right now, there is a missing piece mentioned in that
+> commit message.
 
+I had a quick look and it seems rather promising, but I will have a
+closer look when you post it.
 
-On 4/6/2023 2:49 PM, Komal Bajaj wrote:
-> Didn't see my reply on the list, so sending it again.
-> And also I see that the dt patch is already applied.
+>
+> >
+> > Although, let me point out that there is no requirement from the genpd
+> > API point of view, that the provider needs to be a driver. This means
+> > that the sync_state callback may not even be applicable for all genpd
+> > providers.
+>
+> Yes, I'm considering that case too.
 
-The reason why you are not seeing your replies at
+Good.
 
-https://lore.kernel.org/lkml/20230313124040.9463-1-quic_kbajaj@quicinc.com/
+>
+> >
+> > In other words, it looks to me that we may need some new genpd helper
+> > functions, no matter what. More importantly, it looks like we need an
+> > opt-in behaviour, unless we can figure out a common way for genpd to
+> > understand whether the sync_state thing is going to be applicable or
+> > not. Maybe Saravana has some ideas around this?
+> >
+> > Note that, I don't object to extending genpd to be more clever and to
+> > share common code, of course. We could, for example, make
+> > genpd_power_off() to bail out earlier, rather than calling the
+> > ->power_off() callback and waiting for it to return -EBUSY. Both of
+> > you have pointed this out to me, in some of the earlier
+> > replies/discussions too.
+>
+> The above link basically does this. I hope this is what Saravana has in
+> mind as well.
 
-is because your reply cc-list contain some invalid domain 
-(codeaurora.org) email id's and any list/email mentioned
-after that would not be getting your emails.
+Okay, let's see what Saravana thinks.
 
--- Mukesh
+Maybe it's easier to post an RFC, based upon the above and continue
+the discussion around that?
 
-> 
-> Thanks Krzysztof and Manivannan for reviewing the patch.
-> 
-> 
-> On 3/15/2023 7:18 PM, Manivannan Sadhasivam wrote:
->> On Wed, Mar 15, 2023 at 08:41:21AM +0100, Krzysztof Kozlowski wrote:
->>> On 13/03/2023 13:40, Komal Bajaj wrote:
->>>> Add description for additional nodes needed to support
->>>> mulitple channel DDR configurations in LLCC.
->>>>
->>>> Signed-off-by: Komal Bajaj<quic_kbajaj@quicinc.com>
->>> +Cc Mani,
->>>
->> Thanks, Krzysztof!
->>
->>> This will conflict with:
->>> https://lore.kernel.org/all/20230314080443.64635-3-manivannan.sadhasivam@linaro.org/
->>>
->>> Please rebase on top of Mani's patches (assuming they are not
->>> conflicting in principle)
->>>
->>>> ---
->>>>   Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml | 9 +++++++++
->>>>   1 file changed, 9 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
->>>> index 38efcad56dbd..9a4a76caf490 100644
->>>> --- a/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
->>>> +++ b/Documentation/devicetree/bindings/arm/msm/qcom,llcc.yaml
->>>> @@ -37,15 +37,24 @@ properties:
->>>>       items:
->>> minItems: 2
->>>
->>>>         - description: LLCC base register region
->>>>         - description: LLCC broadcast base register region
->>>> +      - description: Feature register to decide which LLCC configuration
->>>> +                     to use, this is optional
->>>>   
->>>>     reg-names:
->>> minItems: 2
->>>
->>>>       items:
->>>>         - const: llcc_base
->>>>         - const: llcc_broadcast_base
->>>> +      - const: multi_channel_register
->> Is this the actual register region or a specific register offset? We generally
->> try to pass the base address of the region along with the size and use the
->> offset inside the driver to access any specific registers.
->>
->> Thanks,
->> Mani
-> 
-> This is a specific register offset outside the LLCC register region which has the
-> information of number of DDR channel.
-> 
->>>>   
->>>>     interrupts:
->>>>       maxItems: 1
->>>>   
->>>> +  multi-ch-bit-off:
->>>> +    items:
->>>> +      - description: Specifies the offset in bits into the multi_channel_register
->>>> +                     and the number of bits used to decide which LLCC configuration
->>>> +                     to use
->>> There are here few issues.
->>> First, I don't fully understand the property. What is an LLCC
->>> configuration? Like some fused values?
-> 
-> There are different configuration for LLCC based on the number of
-> DDR channel it uses. Here, we are basically trying to get information
-> about the same.
-> 
->>> Second, don't make it a register specific, it will not scale easily to
->>> any new version of this interface. Although how this should look like
->>> depends on what is it.
-> 
-> LLCC driver can only get DDR channel information from the register.
-> 
->>> Third, you need vendor prefix and type (unless this is a generic
->>> property, but does not look like). Then "items" is probably wrong. Line
->>> break after "description: "
-> 
-> Noted, will take care of this in the next patchset.
-> 
-> Thanks
-> Komal
-> 
->>> Best regards,
->>> Krzysztof
->>>
-> 
+Kind regards
+Uffe
