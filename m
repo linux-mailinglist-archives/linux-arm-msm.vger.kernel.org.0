@@ -2,77 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9300A6D98D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 16:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D23D56D991C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 16:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238887AbjDFOAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 10:00:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42026 "EHLO
+        id S239060AbjDFOJe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 10:09:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238976AbjDFN7w (ORCPT
+        with ESMTP id S239123AbjDFOIy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 09:59:52 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7443359E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 06:59:47 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id k37so50995704lfv.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 06:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680789586;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ahOtErsAZTwjnxvLm+Q7vFYLyLF4PgdNHJFRQu9gQIE=;
-        b=kmt4M8Hx4w/t+axa3WrnxHX+1XcH/Csa7PEULn+hnUQNZeqU1vfcpgKvdXbL/8QOxC
-         I1CSGA2cglCL00n+FGfB5L0fcO2hL22Yf4raMBmrht4fzO7lZx72TZ55IOAhsFlDWsEl
-         wY2xiymIVcZbMRlKj+rEtpruZhTtBq7467tW7PkvpEfGqTaTc4gbg9ANzsRsvHSFEm3S
-         djbk4UQmDvDn1WJY9vBvFaCT6Rv265DYIRwtkH4Z/IS9IXtb8PG6GHTaIDtV9bWJxRkt
-         o70V7sNMM8ZdRx2IVfykopTkjF86wDJOWIPRg8b/b3NsJW4DKwT9fQfwgTjDolpf4zD/
-         7x6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680789586;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ahOtErsAZTwjnxvLm+Q7vFYLyLF4PgdNHJFRQu9gQIE=;
-        b=ZR4bLYiB0vr1F6bWN8jpxACUH6IG+KTS/CnMc3VaxerJFazT9RPKZTUsGIQoPfpaLI
-         MlGe7ESIBf8Aov2QClmtLv2Byg1R0vCn+DGqPLE288FKG1H6YJND1SSCiuawECGEzzx3
-         2YDBH3OlTxZgznFA041uKY8SwknX5SjP9hFAWefQst8JRDFvDWDAv1aQArCM4DHAMwhu
-         HSApS5Qqb8aHXMKcR8kqRBhK9V45wZXy66KOwk9xC4tm8IdhiGSf87ICutASSobkm5d7
-         QMjmEYw65rsiFS54VbSwo5VfWvvN+21mBobXs50UkUjW77j46HAYYm3jjxnTRg/soZ5p
-         NEfw==
-X-Gm-Message-State: AAQBX9ciL0wMSNEeHicwbGscfA25jBRKsP7vlXzGg7G/OZuSoUiTAHzC
-        4QKnCEnPeyPjXBV83pmEz0s3+w==
-X-Google-Smtp-Source: AKy350aoUklCC061oW2drNDEOT/plxqF0kMjER+zJgHC6nWb/WxYQP5DpTC1JTzNFAyC748GebfEYg==
-X-Received: by 2002:a05:6512:503:b0:4e7:fa9a:4d3c with SMTP id o3-20020a056512050300b004e7fa9a4d3cmr2374207lfb.16.1680789585933;
-        Thu, 06 Apr 2023 06:59:45 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id z1-20020a2e8e81000000b00295a8c68585sm299658ljk.56.2023.04.06.06.59.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 06:59:45 -0700 (PDT)
-Message-ID: <af22628c-e54b-f7e1-16a6-6534f4526cd5@linaro.org>
-Date:   Thu, 6 Apr 2023 15:59:40 +0200
+        Thu, 6 Apr 2023 10:08:54 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9BCA246;
+        Thu,  6 Apr 2023 07:08:34 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 336BpXij002789;
+        Thu, 6 Apr 2023 14:08:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=aKFvk1JtXx2S9NUKKALGnrNEGdO96VrOsyhOMvOmCRQ=;
+ b=fF3u35ei2sQTkzYRX5bmRlbmDI6B4CY6uZBw+TVfQdR5LGERtKNBM72KAnTOcz5mWGGg
+ HKHJ7BflOWzaWdC0GIgmt5+wdDH4lWzRrsCZQY+g5gSspA6rsX/4vjuQ803TCJ7g+jMH
+ PBS+ApI3mo6PBX9waueRWBxwcLm9KDWMr+GguoJE5fAcdss6KEZQXYdcHBILjubwTlwh
+ JYIGL82C7MG+u2Ci6B4nI6Z4tJrADoL5F9ZJ3sHZikExI9/6aEptmdetdsMLSUFZbxKO
+ 8AwpxosdsrNrFhEZOKcluyoKyLv1uNFybr1RFLSO3YHkScKhiq0DHAk7zxWmEBDnvzel xw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3psnmj1cc8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 06 Apr 2023 14:08:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 336E88BF009755
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 6 Apr 2023 14:08:08 GMT
+Received: from [10.216.10.176] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
+ 07:08:00 -0700
+Message-ID: <fa8838de-7d7e-71dd-9f9f-2604bd0faf1a@quicinc.com>
+Date:   Thu, 6 Apr 2023 19:37:56 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v6 09/11] arm64: dts: qcom: sm8250: Add Crypto Engine
- support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: [PATCH v6 1/8] dt-bindings: usb: Add bindings for multiport
+ properties on DWC3 controller
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, vladimir.zapolskiy@linaro.org,
-        rfoss@kernel.org, neil.armstrong@linaro.org, djakov@kernel.org
-References: <20230405072836.1690248-1-bhupesh.sharma@linaro.org>
- <20230405072836.1690248-10-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230405072836.1690248-10-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     Rob Herring <robh@kernel.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+ <20230405125759.4201-2-quic_kriskura@quicinc.com>
+ <63bfaa1e-c627-bfe1-0bef-d001dae41014@linaro.org>
+ <c18db964-1af7-7bbf-0d0f-cbb037f7500a@quicinc.com>
+ <20230405201709.GA397286-robh@kernel.org>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <20230405201709.GA397286-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Xyl_e54sFDmZnliyj18Hs0Viud3qGZjz
+X-Proofpoint-ORIG-GUID: Xyl_e54sFDmZnliyj18Hs0Viud3qGZjz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-06_07,2023-04-06_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=869 adultscore=0 malwarescore=0 spamscore=0
+ bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304060125
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,49 +99,60 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.04.2023 09:28, Bhupesh Sharma wrote:
-> Add crypto engine (CE) and CE BAM related nodes and definitions to
-> 'sm8250.dtsi'.
+On 4/6/2023 1:47 AM, Rob Herring wrote:
+> On Wed, Apr 05, 2023 at 07:45:07PM +0530, Krishna Kurapati PSSNV wrote:
+>>
+>>
+>> On 4/5/2023 7:31 PM, Krzysztof Kozlowski wrote:
+>>> On 05/04/2023 14:57, Krishna Kurapati wrote:
+>>>> Add bindings to indicate properties required to support multiport
+>>>> on Snps Dwc3 controller.
+>>>>
+>>>> Suggested-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>>> ---
+>>>> Link to v5: https://lore.kernel.org/all/20230310163420.7582-2-quic_kriskura@quicinc.com/
+>>>
+>>> You did not test it at v4 and you got report for this. Your changelog in
+>>> commit msg does not mention fixing it.
+>>>
+>>> It looks like you did not test it for the second time (or sixth time).
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>> Hi Krzysztof,
+>>
+>>    I did do a dt_binding_check and I got the following result:
+>>
+>> kriskura@hu-kriskura-hyd:/local/mnt/workspace/krishna/skales2/skales/kernel$
+>> make DT_CHECKER_FLAGS=-m dt_binding_check
+>> DT_SCHEMA_FILES=Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+>>    HOSTCC  scripts/basic/fixdep
+>>    HOSTCC  scripts/dtc/dtc.o
+>>    HOSTCC  scripts/dtc/flattree.o
+>>    HOSTCC  scripts/dtc/fstree.o
+>>    HOSTCC  scripts/dtc/data.o
+>>    HOSTCC  scripts/dtc/livetree.o
+>>    HOSTCC  scripts/dtc/treesource.o
+>>    HOSTCC  scripts/dtc/srcpos.o
+>>    HOSTCC  scripts/dtc/checks.o
+>>    HOSTCC  scripts/dtc/util.o
+>>    LEX     scripts/dtc/dtc-lexer.lex.c
+>>    YACC    scripts/dtc/dtc-parser.tab.[ch]
+>>    HOSTCC  scripts/dtc/dtc-lexer.lex.o
+>>    HOSTCC  scripts/dtc/dtc-parser.tab.o
+>>    HOSTLD  scripts/dtc/dtc
+>>    LINT    Documentation/devicetree/bindings
+>> invalid config: unknown option "max-spaces-inside-empty" for rule "brackets"
+>> xargs: /usr/bin/yamllint: exited with status 255; aborting
 > 
-> Co-developed-by and Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+> This indicates your yamllint version is too old.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 7b78761f2041..2f6b8d4a2d41 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2222,6 +2222,28 @@ ufs_mem_phy_lanes: phy@1d87400 {
->  			};
->  		};
->  
-> +		cryptobam: dma-controller@1dc4000 {
-> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> +			reg = <0 0x01dc4000 0 0x24000>;
-> +			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> +			#dma-cells = <1>;
-> +			qcom,ee = <0>;
-> +			qcom,controlled-remotely;
-> +			iommus = <&apps_smmu 0x594 0x0011>,
-> +				 <&apps_smmu 0x596 0x0011>;
-> +		};
-> +
-> +		crypto: crypto@1dfa000 {
-> +			compatible = "qcom,sm8250-qce", "qcom,sm8150-qce", "qcom,qce";
-> +			reg = <0 0x01dfa000 0 0x6000>;
-> +			dmas = <&cryptobam 4>, <&cryptobam 5>;
-> +			dma-names = "rx", "tx";
-> +			iommus = <&apps_smmu 0x594 0x0011>,
-> +				 <&apps_smmu 0x596 0x0011>;
-> +			interconnects = <&aggre2_noc MASTER_CRYPTO_CORE_0 &mc_virt SLAVE_EBI_CH0>;
-> +			interconnect-names = "memory";
-Shouldn't we also attach the contexts from qcom_cedev_ns_cb{}?
+> Rob
 
-Konrad
-> +		};
-> +
->  		tcsr_mutex: hwlock@1f40000 {
->  			compatible = "qcom,tcsr-mutex";
->  			reg = <0x0 0x01f40000 0x0 0x40000>;
+Let me give a try with latest version.
+Thanks for pointing it out. 🙂
+
+Regards,
+Krishna,
