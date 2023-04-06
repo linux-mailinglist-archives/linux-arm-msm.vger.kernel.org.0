@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D93F66DA243
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:08:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2F526DA246
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:08:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238880AbjDFUIG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 16:08:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43418 "EHLO
+        id S238914AbjDFUIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 16:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238696AbjDFUID (ORCPT
+        with ESMTP id S238715AbjDFUID (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 6 Apr 2023 16:08:03 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D63089766
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 13:07:53 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id h17so40638476wrt.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 13:07:53 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B902F6A44
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 13:07:54 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id g5so709369wrb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 13:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1680811672;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1680811673;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5rfkTef0ZdTkMKzZCQdBC5k73nnYAxbztufMSetHz8w=;
-        b=mCMuhp+j3/ZIScGPav1F7wnjUdBKQG5tZsAQswaFdMzngFC6npciIIEQZWbzH1gUFQ
-         sg8VJVfPvTwPYRZwV2oF9L74hvJYVNCm7Vjfrk7zqOToVWKTpVoJNXjOvyGNLXI2ELTf
-         5xNe6Fs/wThBc1JdbSTEN/p3afVWtSY8t8rNAais0fU9QIKJTyYPkMDRWLoaBf3roGFo
-         L4/23jTn/8M7RZQcgjSpOrX/RE4j76jyG2UhsRVR/78khJaTdT8d/Uh/SftSPDPZtZhX
-         Y6SQRyTynq4hutVQY4Af36TZaXOt80jMT59ZX6yT3CYLlE3nApobe28AmebrSqbSh3s/
-         F/EQ==
+        bh=O1/oUoOoXzFLIDuVwB7zkIe10EEDYrgRxMWetDqWBpE=;
+        b=2RH0iODE5yV5snEGmF/NcTs3u43ObqS+wZHN/5GuwZHx8zSuEfdui2FTInRAsmsqTW
+         8F9e9Gax53GN5DAQNCQOBZmZfaSa61/PGQG0WNRtsfQtEAENO+vEeFsqZvrx0ZlmDVEE
+         1stXr44L7Z8mcLYEjEpgl4sWT+mJPusE76+iUaXK0oy1a5w1+1Mc6uveIWW4uX9YerwR
+         LYCsZGunRrjYvPw6K8Wxd7qrjg/0LPJijjuJgeCay0sPltZQzWhC4sFpyGhf/P6Nnt9D
+         0YScB/tIdeblYuHt4GaVzvCIQe25ub5IW7K7VaNf6BF18+okXEajwJEsNhpy9y9RLoXG
+         3Dng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680811672;
+        d=1e100.net; s=20210112; t=1680811673;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5rfkTef0ZdTkMKzZCQdBC5k73nnYAxbztufMSetHz8w=;
-        b=OrBiBPsLoVWwwbbv61YlhwdwWma+KhdoxffvEfSkrGQXQmAH8A2feE+bzwvfz8dVno
-         /ci83gr5iQz6mh1EYRf3rA3f/5CtUWrfC748KOLOqSOtcmtFjZ+x2K2jZzgrvqq7kHkJ
-         xk4ErhMBCfDjG5Vn3NihhGUENIlIpa6L8zGkTEVHfSQfOKAYoISnn7sR9ltOy+7ZLgwS
-         /KuXRG10R5hi9MaTkbjIheozE/U1eTsi+CLr7GQIgjyIjrnEcARLuJK6BT6qNfzYPBDQ
-         yKPA0zkVPkFHr+f4ITP77pPlhZQJcjxreRpxp5UrBVYytbuAN0jKrCZ2+5TYCWWRzhrk
-         Q5TQ==
-X-Gm-Message-State: AAQBX9cFErtRr/eiflDBTvsZRxMmZXroKOvmGGhbecPd8Y83ldkR7epZ
-        jJto7Ve14Kt1fGuwxWBeWp5ncw==
-X-Google-Smtp-Source: AKy350YKkQTWxX+kH1yWryMZ/grGykBiuDsvJYQJSRjDnKkKwqTJ7J8Pu6b3BMhV3BCqCxqelyxfUw==
-X-Received: by 2002:adf:e70b:0:b0:2ef:5560:bae9 with SMTP id c11-20020adfe70b000000b002ef5560bae9mr1435908wrm.68.1680811672178;
-        Thu, 06 Apr 2023 13:07:52 -0700 (PDT)
+        bh=O1/oUoOoXzFLIDuVwB7zkIe10EEDYrgRxMWetDqWBpE=;
+        b=feTqBoRyxA3kAEL+9L+IzYqBfyYuqTyQdzdUN2dz54A2O3ZrzxSlfifV49V1fkBVl/
+         I9By+RMAJkMYlHOq4mvKYOl3JFB52fqHKRiorvc8gYCUIxqvuz5pPcGvKkIhbup1XP5X
+         4IzIfMcRIQbaBgGkEFhtdjPzJn6kXWHMtXiRXSnHrZ0qCoCpbeHXJfSL9WUZa1zC5q81
+         RUNlV68s3TD3SHwIjRJNRXHLaErwSN7weNUVFL89B0IqsgWnVJYwn7esDYmsr3cUl15T
+         3Ry74XgROp0Gw0SddGFrG7Jb77cAcTu25SxA8CcWAkcVvjQgUA1LNIn5Xznc+XlFggJ5
+         wTag==
+X-Gm-Message-State: AAQBX9f/71QkNAQ2p4gxcHemPIsNXv5C+zSbq1Pdajxai7E5Clpbbj8p
+        f/M44OSFQJi6Jxm62ephLioUBg==
+X-Google-Smtp-Source: AKy350ah/ZGZpM48sk760l0k+q6ScZHUAAvznXjFlCAGMoMiakB0ataAG2BNJdi0UfKg5ii+Q1kRlQ==
+X-Received: by 2002:a5d:480b:0:b0:2d7:998c:5aee with SMTP id l11-20020a5d480b000000b002d7998c5aeemr7418614wrq.17.1680811673258;
+        Thu, 06 Apr 2023 13:07:53 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4793:cb9a:340b:2f72])
-        by smtp.gmail.com with ESMTPSA id c11-20020adfe74b000000b002d89e113691sm2560506wrn.52.2023.04.06.13.07.51
+        by smtp.gmail.com with ESMTPSA id c11-20020adfe74b000000b002d89e113691sm2560506wrn.52.2023.04.06.13.07.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 13:07:51 -0700 (PDT)
+        Thu, 06 Apr 2023 13:07:52 -0700 (PDT)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
@@ -67,9 +67,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v2 3/7] arm64: defconfig: enable the SA8775P GPUCC driver
-Date:   Thu,  6 Apr 2023 22:07:19 +0200
-Message-Id: <20230406200723.552644-4-brgl@bgdev.pl>
+Subject: [PATCH v2 4/7] dt-bindings: iommu: arm,smmu: enable clocks for sa8775p
+Date:   Thu,  6 Apr 2023 22:07:20 +0200
+Message-Id: <20230406200723.552644-5-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <20230406200723.552644-1-brgl@bgdev.pl>
 References: <20230406200723.552644-1-brgl@bgdev.pl>
@@ -86,25 +86,37 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Enable the GPUCC module for SA8775P platforms in the arm64 defconfig.
+The KGSL iommu will require the clocks property to be set. Enable it for
+sa8775p in the bindings.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 1e7021ead7f5..aaeccedd49bb 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1162,6 +1162,7 @@ CONFIG_MSM_GCC_8998=y
- CONFIG_QCS_GCC_404=y
- CONFIG_SA_GCC_8775P=y
- CONFIG_SC_DISPCC_8280XP=m
-+CONFIG_SA_GPUCC_8775P=m
- CONFIG_SC_GCC_7180=y
- CONFIG_SC_GCC_7280=y
- CONFIG_SC_GCC_8180X=y
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index 807cb511fe18..cb569ee4ca4b 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -317,7 +317,9 @@ allOf:
+       properties:
+         compatible:
+           contains:
+-            const: qcom,sc7280-smmu-500
++            enum:
++              - qcom,sa8775p-smmu-500
++              - qcom,sc7280-smmu-500
+     then:
+       properties:
+         clock-names:
+@@ -375,7 +377,6 @@ allOf:
+               - nvidia,smmu-500
+               - qcom,qcm2290-smmu-500
+               - qcom,qdu1000-smmu-500
+-              - qcom,sa8775p-smmu-500
+               - qcom,sc7180-smmu-500
+               - qcom,sc8180x-smmu-500
+               - qcom,sc8280xp-smmu-500
 -- 
 2.37.2
 
