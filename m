@@ -2,150 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 652506DA207
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 21:55:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F170A6DA23A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:07:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238308AbjDFTzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 15:55:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33044 "EHLO
+        id S238667AbjDFUHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 16:07:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjDFTzr (ORCPT
+        with ESMTP id S238706AbjDFUHw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 15:55:47 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2786D5BA9
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 12:55:46 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id g19so39116972lfr.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 12:55:46 -0700 (PDT)
+        Thu, 6 Apr 2023 16:07:52 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 567CB93C9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 13:07:50 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id t4so35412722wra.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 13:07:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680810944;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4e1AWlyBcKR3I5ILtwI72cSCBL6y95j52yQauXVOOT4=;
-        b=Zsrv5K3FHfPUlnAL4tM0QO4XO4TcKMRkr6dlWxS3c689yhPdxiv74jcFDVkZ/++FKe
-         Aj9rESwM+6elJgC6xmYnmx1pRuK/0fw3XztXgJa281VLTq5j2Cg2YErERSatkX7MknPS
-         qXDl72lYtrqkcnYCGlrsF2g5gNn+f6dppe53A9CdTl7rg2ciKvWHgTivf5mKhBl+J00A
-         41rRghCUuxyfYQ7tEQqY/CjKpPf5vPU4PQXifwkN8C5gsmr0+L1eDxuEQbGykLLHnD8Z
-         +83e5LvqHRdu6/jEnC01Ej0zCF71Z8DF7ZJovx2c39KdQtWXoZiFoVbfBulzAoikmHmb
-         T+tg==
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1680811669;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7SImv1Rdk/+kE5EteKBqsurf3m5xVNf7BO/4yX5HUIM=;
+        b=WjeHYe0vmiAkeua0VT7ZVcJlF+Tnlz4iYE2OEXOy+OvmP4Ud89Kz7xAz4rtag4h26a
+         I23SMRAiz7875kUZ5VCa8FysC35Ny5SWMXJKEQSfiXc6Am4pHX6PwpZor8IFq/Ipinu1
+         wfOUcEhsShJfMew+6uQyu5WY1RKRBgdWNjJYy8kS8jWboL05splsbv/yjipH0X23f0wC
+         sBmZ3lb5ye8WmgEx1l6gS8DyA1OI/imHst38pOe5px8cA5BqNsCOKyIzEJo+XyCc/HBk
+         hhVB7hV4hGxRxTR/YweB1sXuSlYvzdnS9TeWrVDbbyDzKcc06/cWX6y5wgXjaZyJ3TML
+         OEKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680810944;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4e1AWlyBcKR3I5ILtwI72cSCBL6y95j52yQauXVOOT4=;
-        b=am7Fi7NWkzqqX0V6wvVPWzBh/3dVjzDXezOP4vJPmrKkLkIrufXb+4wcZCOJhhBMIr
-         EoljRcRZQQh5bjjtK542Po/WCwa32xxPQmlTwGx85le3GtDOC8hYv8lXhCtGHolJYN2t
-         O4GS5mKrhswB0cKRbuQaTpJGwApS9diC4yd+DlRks4zqPn4UaIBeBQGoHjKZdxl8MOOw
-         EqzGcPt0htDNrYHAozxoQkB2xIoFQu6Qqhx+nBTTzvVcGSr99/n3XIM8F19w7MdxX5r6
-         T8LxXwC2w85dNJthCSUMxuPalxQQ1pQpewgV6qGW+x9+Q/EDfU4X4VaeCFdJCaiNfAdj
-         FXqg==
-X-Gm-Message-State: AAQBX9czQprkEZgq5eEwpZjealvRZybadziPQUTuL0MZFmzkiUA8cEMy
-        nshq3Rsisfs86UPtQKR2qHMlKw==
-X-Google-Smtp-Source: AKy350YHCUi8OdmwLOFkttGbLhbPMWeS/ZJvAxLuiglxSYenCnEaHo3KOjeTDn8ks4gRqkuYUnVILA==
-X-Received: by 2002:ac2:54a5:0:b0:4eb:e7f:945 with SMTP id w5-20020ac254a5000000b004eb0e7f0945mr50291lfk.41.1680810944382;
-        Thu, 06 Apr 2023 12:55:44 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id b6-20020a056512218600b004b5480edf67sm393504lft.36.2023.04.06.12.55.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 12:55:43 -0700 (PDT)
-Message-ID: <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
-Date:   Thu, 6 Apr 2023 21:55:40 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        d=1e100.net; s=20210112; t=1680811669;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7SImv1Rdk/+kE5EteKBqsurf3m5xVNf7BO/4yX5HUIM=;
+        b=bJ4g6XuKyB8XHkTG/V3mjT40aCMM+nSzEIs20ndPpAv7jUWjiYKYusaEattBfbQ88N
+         CxYQI0lt3BfflM684eBx8WH5glirvUVMe6ZK5P4ZzeDivJQc2Au4SYnBXEsUE3NGdPX3
+         kIG871dQfBgCfd6lIN/qOIDtjphmZCMdpu+rK9GtIqPQAgtxkpAMgu3bXXkVvRm7cSIF
+         lKzE10gU+ndGHPcbYKu5fja76DrEqHVKuB/BFlmuWniF6ZPySgHhHe4xsTs+2+2+a2cb
+         j2wYFQT1s+7Qz6zhjHBq64AO0RttfBhZlpDSpcKH08qpEb5uzKLgbTkxGRI2MAYzrboQ
+         X4Ew==
+X-Gm-Message-State: AAQBX9fseNs9lOzFRvIJFCLEsxqSsdlJrJ8914QjPez5IiLgamQq0zKj
+        eq72P7zkk36172ROU7TZpVHNdg==
+X-Google-Smtp-Source: AKy350aqh8Akw7hp7e53sm6ji/MH7B41I+AjfxnjeOwFkxczT7A+0E2LkoY06UBce0pl07AQwayx1Q==
+X-Received: by 2002:a05:6000:508:b0:2d7:89ce:8319 with SMTP id a8-20020a056000050800b002d789ce8319mr6475533wrf.27.1680811668794;
+        Thu, 06 Apr 2023 13:07:48 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4793:cb9a:340b:2f72])
+        by smtp.gmail.com with ESMTPSA id c11-20020adfe74b000000b002d89e113691sm2560506wrn.52.2023.04.06.13.07.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 13:07:48 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
- <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
- <168069726278.2356075.14351594478003012447.robh@kernel.org>
- <20230405134727.GA2461305-robh@kernel.org>
- <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
- <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v2 0/7] arm64: dts: qcom: sa8775p: add more IOMMUs
+Date:   Thu,  6 Apr 2023 22:07:16 +0200
+Message-Id: <20230406200723.552644-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+Add the GPU and PCIe IOMMUs for sa8775p platforms as well as the required
+GPU clock controller driver.
 
-On 6.04.2023 19:45, Krzysztof Kozlowski wrote:
-> On 05/04/2023 15:49, Konrad Dybcio wrote:
->>
->>
->> On 5.04.2023 15:47, Rob Herring wrote:
->>> On Wed, Apr 05, 2023 at 07:22:40AM -0500, Rob Herring wrote:
->>>>
->>>> On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
->>>>> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
->>>>> use 'reg' to point to the MPM's slice of Message RAM without cutting into
->>>>> an already-defined RPM MSG RAM node used for GLINK and SMEM.
->>>>>
->>>>> Document passing the register space as a slice of SRAM through the
->>>>> qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
->>>>>
->>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>> ---
->>>>>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
->>>>>  1 file changed, 9 insertions(+), 3 deletions(-)
->>>>>
->>>>
->>>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
->>>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->>>>
->>>> yamllint warnings/errors:
->>>>
->>>> dtschema/dtc warnings/errors:
->>>> Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
->>>
->>> Looks like this is colliding with the example template which has to 
->>> craft an interrupt provider for 'interrupts' properties. Either adding a 
->>> parent node or using interrupts-extended instead should work-around it.
->> Check the devicetree-org issue linked in the cover letter, please!
->>
->> I suppose wrapping it in a parent node could work as a temporary
->> measure, but since it belongs outside /soc, I'd have to make up
->> a bogus simple-bus, I think.
-> 
-> I don't think your issue in dtschema is accurate. As Rob suggested, you
-> need wrapping node.
-I don't really know what kind.. I can add something like:
+v1 -> v2:
+- remove unused include in the GPUCC driver
+- remove unused clock from the GPUCC driver and make it compatible
+  with the generic QCom GPUCC bindings
+- put the new defconfig option in the right place (as per savedefconfig)
+  and make the GPUCC driver a module rather than built-in
+- describe the smmu clocks for sa8775p in dt-bindings
 
-rpm {
-	compatible = "qcom,rpm", "simple-mfd";
+Bartosz Golaszewski (6):
+  dt-bindings: clock: qcom: describe the GPUCC clock for SA8775P
+  arm64: defconfig: enable the SA8775P GPUCC driver
+  dt-bindings: iommu: arm,smmu: enable clocks for sa8775p
+  arm64: dts: qcom: sa8775p: add the pcie smmu node
+  arm64: dts: qcom: sa8775p: add the GPU clock controller node
+  arm64: dts: qcom: sa8775p: add the GPU IOMMU node
 
-	mpm: interrupt-controller {
-	...
-};
+Shazad Hussain (1):
+  clk: qcom: add the GPUCC driver for sa8775p
 
-And then only introduce a very simple YAML for "qcom,rpm"
-describing what it is and documenting the compatible.
+ .../devicetree/bindings/clock/qcom,gpucc.yaml |   2 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   5 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 124 ++++
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/clk/qcom/Kconfig                      |   8 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/gpucc-sa8775p.c              | 625 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,sa8775p-gpucc.h    |  50 ++
+ 8 files changed, 814 insertions(+), 2 deletions(-)
+ create mode 100644 drivers/clk/qcom/gpucc-sa8775p.c
+ create mode 100644 include/dt-bindings/clock/qcom,sa8775p-gpucc.h
 
-Or I can push it under rpm-requests{}.
+-- 
+2.37.2
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
