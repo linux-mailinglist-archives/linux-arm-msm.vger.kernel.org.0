@@ -2,82 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D33A6D9FC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 20:26:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 409656D9FD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 20:30:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240167AbjDFS0k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 14:26:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43252 "EHLO
+        id S240191AbjDFSaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 14:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240141AbjDFS0h (ORCPT
+        with ESMTP id S240150AbjDFSaB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 14:26:37 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8A086B4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 11:26:29 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id d7so6963199lfj.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 11:26:29 -0700 (PDT)
+        Thu, 6 Apr 2023 14:30:01 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD146618B
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 11:29:59 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id c9so41554564lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 11:29:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680805588;
+        d=linaro.org; s=google; t=1680805798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VrPZiBBEPnTeAG4ijDo3nsObeCJTrwIJDTUCNITg5iI=;
-        b=CqY6xF+cOM6sbxvjz1Ff7fcQTniOYKz25DBG6qwejTmMEtsmz5R30IcQ4sXU09agqz
-         P2PmuH6Zw2bKIlZNN6pfWhu8qqUxSJLAvzstuk0VDd9a90kRfEe2y3Ik22OCGmhp2uHV
-         qModnBJcJBhDhgSwuY5jGg+eLZ4iDFenf1vxh/bGXh9z+V8icUiD9i5qAT/VXwbu7flL
-         0KZIFha7SMukx/q98vET3mn+TYaju71P93US6xA8xhFUfIfhX8gZPoiCqVs9APcBPung
-         hX3ctOJ+/HYMko8xKotKi0hFQXT2S9ekgcGnI/ptduyfF+3ahLqbNXocC5t04IHUe9Me
-         q0nQ==
+        bh=Neijv2zq96R0GfdQjQwNKcSFKV86CYJRcfc1aaFu1qk=;
+        b=XlOX4iBsYDzB8wgJK6e2EygD58sqmxulgjX5qqPLTfJEt8z15r/HdkriynKKcYX2Bq
+         Msof2eYI5neCNb+upoBnjZHBmUVqRYQHHGYJctHDxezQ4Cb9QfWZzNAq/MetS9UXCAgd
+         AdnCCJmHS/gE6xkAUmP7rR5yETIcYFo5XIMXKbK+khXUj12Jqx5BVIqCi0XL/f+/Wwv6
+         lAbd/OFVk9+4dNyuccCRWlfk48MwAQMQga7khS4+oI1Gq1pvaRyvlMYYRM5Uw+Wr8wa5
+         4FsvJziidvPZmQeAMtyo6xWUS1iLQaI5TSLJ/dGUfel7N/MHZrd95B0d5YoeFnrHlrJk
+         r3uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680805588;
+        d=1e100.net; s=20210112; t=1680805798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VrPZiBBEPnTeAG4ijDo3nsObeCJTrwIJDTUCNITg5iI=;
-        b=yUzQcValjPzTPOWxmUtKcEI/1NTw3l55Jj3tHYJcjZtBRTBmDy/ri0bNZoLHOeTsGx
-         XuSU0jPqI2tgvBUWO8QMUHZm8MbJRfeEWV+nblZNbhkQSQeBUeskhKYJ/U0bToliC/qK
-         Ajr10T+Nd8NsUkaGQEhHNW+wd7yKCvDg2D0UdWtTAL+YnBZxIyq4IDwBuRsPa/pQaTtv
-         hw9dc/7DLRLxsHs82Ly4sevTZLadHHaFs5wZDzoDYuE0Ukq6WtNLniIL8W7363COoyLf
-         bF2hiJD6aYv8eGRO7Lm4k5cXgh/3bYia+B4292prVNg7NriAIRjiAWevSnLKd2wceFE1
-         oL/g==
-X-Gm-Message-State: AAQBX9drlSOxjYhD9hUZHMVM3mq7J7DMvrh/MzQBoXkU9zgPXJVxTYMf
-        R/rdvjijRP1UskxdGbFaUFKnXA==
-X-Google-Smtp-Source: AKy350Zoz7gSPFtYZOf28QyZRifSrImimrPXqKp3I11ff3EWM5EclgyEAjZIR1qhjTDNBFSIbmszqQ==
-X-Received: by 2002:ac2:43d7:0:b0:4eb:3b7c:233 with SMTP id u23-20020ac243d7000000b004eb3b7c0233mr18951lfl.16.1680805587873;
-        Thu, 06 Apr 2023 11:26:27 -0700 (PDT)
+        bh=Neijv2zq96R0GfdQjQwNKcSFKV86CYJRcfc1aaFu1qk=;
+        b=LTgRRkACk3DE8pdenieiY31E7qW0ksBFLN/52ud7hoYBuQpOUTdjKXem42gv3j3eNU
+         W1VaUqQTJEs5TqQ7gJ5RGj8SJE5N0Q8YcLHrSHD7VBIRMOr2y2fCj1QGexD9IHjMdRHH
+         7WOG+5eS/p096sOZe71yutij+kwK0hgkf2L5wqkiI3BrZZiugTajfsCwSM9WKFoNFPj2
+         i2InI9FdUwPO77j9MHAoC/Mz3A4M2GlXy5KhCY9ku0XPN2FbNhVrYnlV5SrZgMJM/THw
+         qWVYQ1GCKlzWtoyyR1ClcLInNmSq3p05QxnjesFOFo+a0sJwrIw+Vzk7Ss7UZnM7X+nw
+         NZoQ==
+X-Gm-Message-State: AAQBX9fzseAvyVG+woDUf4TWp9tV2IZrbZOcFB+XuEqJM6MH/9enNzFT
+        GwyeQ0F55AFZlu5m0C5hQemUCw==
+X-Google-Smtp-Source: AKy350ZEODeEm9sOvgyuO0IIzT81OsrB7gbD3ClS6luG0xT13OBKwnwD8262UKlr8jcIal295NttLw==
+X-Received: by 2002:a19:f508:0:b0:4db:3a70:e9f3 with SMTP id j8-20020a19f508000000b004db3a70e9f3mr35061lfb.69.1680805797945;
+        Thu, 06 Apr 2023 11:29:57 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id w26-20020a05651204da00b004e88a166eb6sm368106lfq.46.2023.04.06.11.26.24
+        by smtp.gmail.com with ESMTPSA id r15-20020ac25a4f000000b004e848782e2esm371641lfn.57.2023.04.06.11.29.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 11:26:27 -0700 (PDT)
-Message-ID: <8c818f95-b4a4-658f-701d-3151afdd5179@linaro.org>
-Date:   Thu, 6 Apr 2023 20:26:20 +0200
+        Thu, 06 Apr 2023 11:29:57 -0700 (PDT)
+Message-ID: <eacc380a-aa33-5b1d-0a11-124b584cd1aa@linaro.org>
+Date:   Thu, 6 Apr 2023 20:29:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v3 1/2] dt-bindings: net: Convert ATH10K to YAML
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm6115-j606f: Add ramoops node
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Kalle Valo <kvalo@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230406-topic-ath10k_bindings-v3-0-00895afc7764@linaro.org>
- <20230406-topic-ath10k_bindings-v3-1-00895afc7764@linaro.org>
- <223892d0-9b1b-9459-dec1-574875f7c1c6@linaro.org>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20230406-topic-lenovo_features-v1-0-c73a5180e48e@linaro.org>
+ <20230406-topic-lenovo_features-v1-1-c73a5180e48e@linaro.org>
+ <9554be2b-c80d-8c5b-48e3-2508a7b4ecd1@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <223892d0-9b1b-9459-dec1-574875f7c1c6@linaro.org>
+In-Reply-To: <9554be2b-c80d-8c5b-48e3-2508a7b4ecd1@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -90,133 +87,46 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6.04.2023 19:15, Krzysztof Kozlowski wrote:
-> On 06/04/2023 14:55, Konrad Dybcio wrote:
->> Convert the ATH10K bindings to YAML.
+On 6.04.2023 19:54, Dmitry Baryshkov wrote:
+> On 06/04/2023 18:25, Konrad Dybcio wrote:
+>> Add a ramoops node to enable retrieving crash logs.
 >>
->> Dropped properties that are absent at the current state of mainline:
->> - qcom,msi_addr
->> - qcom,msi_base
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
 >>
->> qcom,coexist-support and qcom,coexist-gpio-pin do very little and should
->> be reconsidered on the driver side, especially the latter one.
->>
->> Somewhat based on the ath11k bindings.
-> 
-> 
->> +  - reg
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>> index 10c9d338446c..fd064899791c 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>> @@ -52,6 +52,17 @@ key-volume-up {
+>>               wakeup-source;
+>>           };
+>>       };
 >> +
->> +additionalProperties: false
->> +
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,ipq4019-wifi
->> +    then:
->> +      properties:
->> +        interrupts:
->> +          minItems: 17
->> +          maxItems: 17
->> +
->> +        interrupt-names:
->> +          minItems: 17
+>> +    reserved-memory {
+>> +        ramoops@ffc00000 {
+>> +            compatible = "ramoops";
+>> +            reg = <0x0 0xffc00000 0x0 0x100000>;
+>> +            record-size = <0x1000>;
+>> +            console-size = <0x40000>;
 > 
-> Drop minItems (the number of items is defined by listing them below, as
-> you did).
-OK
+> no ftrace-size?
+It could use some!
 
 > 
->> +          items:
->> +            - const: msi0
->> +            - const: msi1
->> +            - const: msi2
->> +            - const: msi3
->> +            - const: msi4
->> +            - const: msi5
->> +            - const: msi6
->> +            - const: msi7
->> +            - const: msi8
->> +            - const: msi9
->> +            - const: msi10
->> +            - const: msi11
->> +            - const: msi12
->> +            - const: msi13
->> +            - const: msi14
->> +            - const: msi15
->> +            - const: legacy
->> +
->> +        clocks:
->> +          items:
->> +            - description: Wi-Fi command clock
->> +            - description: Wi-Fi reference clock
->> +            - description: Wi-Fi RTC clock
->> +
->> +        clock-names:
->> +          items:
->> +            - const: wifi_wcss_cmd
->> +            - const: wifi_wcss_ref
->> +            - const: wifi_wcss_rtc
->> +
->> +      required:
->> +        - clocks
->> +        - clock-names
->> +        - interrupts
->> +        - interrupt-names
->> +        - resets
->> +        - reset-names
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,wcn3990-wifi
->> +
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 1
->> +          items:
->> +            - description: XO reference clock
->> +            - description: Qualcomm Debug Subsystem clock
->> +
->> +        clock-names:
->> +          minItems: 1
->> +          items:
->> +            - const: cxo_ref_clk_pin
->> +            - const: qdss
->> +
->> +        interrupts:
->> +          items:
->> +            - description: CE0
->> +            - description: CE1
->> +            - description: CE2
->> +            - description: CE3
->> +            - description: CE4
->> +            - description: CE5
->> +            - description: CE6
->> +            - description: CE7
->> +            - description: CE8
->> +            - description: CE9
->> +            - description: CE10
->> +            - description: CE11
+>> +            ecc-size = <16>;
+>> +            no-map;
 > 
-> What about interrupt-names here? If they are not expected, then just
-> interrupt-names: false
-They obviously wouldn't hurt, but they're unused on the driver side:
-
-for (i = 0; i < CE_COUNT; i++) {
-		ret = platform_get_irq(ar_snoc->dev, i);
-
-So I will forbid them.
+> I see that other ramoops defines are not marked with no-map. Is there any reason for that?
+Hm, not really. I can get rid of it for v2.
 
 Konrad
 > 
-> 
-> 
-> Best regards,
-> Krzysztof
+>> +        };
+>> +    };
+>>   };
+>>     &dispcc {
+>>
 > 
