@@ -2,233 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97A7C6D9222
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 10:58:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2DE316D9288
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 11:18:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235844AbjDFI6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 04:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42290 "EHLO
+        id S236257AbjDFJSh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 05:18:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235753AbjDFI6A (ORCPT
+        with ESMTP id S235372AbjDFJSg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 04:58:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39C1E526C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 01:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680771437;
+        Thu, 6 Apr 2023 05:18:36 -0400
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADDD61BF;
+        Thu,  6 Apr 2023 02:18:35 -0700 (PDT)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 4A05B1C0AB2; Thu,  6 Apr 2023 11:18:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+        t=1680772712;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=srqW/Zc6uyMlDdpAQsQE29ZbVva96BUjEhTIphyrjK4=;
-        b=cGQLijeXAwaotJj8sYX2LMskkFkIkr0eszku0KHVQ4S7g+hUwbxR9s5zDdfqtWsPskx+wV
-        Wl3vjgkWz9It10d0Thgc9uhwJ5Iv+SccvwhxE6aJH9wj8Gv5qP25ucnGtPiHS8iKklHFUK
-        pn9Ks1D8XIfUYa3Aq9F8hd3UY5uDa+c=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-369-lBMXhpSgNRujLl8LRfQgAQ-1; Thu, 06 Apr 2023 04:57:16 -0400
-X-MC-Unique: lBMXhpSgNRujLl8LRfQgAQ-1
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-3e2daffa0d4so13711831cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 01:57:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680771436;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=srqW/Zc6uyMlDdpAQsQE29ZbVva96BUjEhTIphyrjK4=;
-        b=J2jQzvoPVq9O+qKb1f1/EEMP7Hwb75WPX1gSrtuawCQRwFXvCvx/NWmhsNURBoOgvH
-         Uaesp3CZ8B5+lE8jSZV0U4mPH+inARFjFNcpXq44igewvl+sg3cg/59v5ePtWx1QyhwM
-         TAFT9wjkxml2jf3lnMRNO9V7F4ZGsdZ/xTBaRVzLqwTiAj6DubYkpOBhnC18F6Wq3Ips
-         kRFvcSPlJreztmRX5zsoku86qFU1fOGW/lFJ1N2WPDPyx3o8pmpEYgRpcT707li2qbfl
-         cbAWQpy80YRkxjm/MjoGgb5Ph3PbaGzT2zDn9vWLf7iIcDtYRfzH0+WD/pMoVJaSWYFy
-         o4kg==
-X-Gm-Message-State: AAQBX9djDnuKSGsnuKcUEejTmnodk4yuEAxI8FvNr0mHr+QerwiiIqa+
-        ijJzBozlgIfvJcmWKLHG2ScZcCPKClOhcQSlNqFXTZjWU/m8RbAV6zTemb1PUtvSnRYAZpUm8aN
-        ZqJ9g+JuDyDwA6rPDrPPG1uGnQg==
-X-Received: by 2002:a05:622a:1815:b0:3e4:eb39:eb8b with SMTP id t21-20020a05622a181500b003e4eb39eb8bmr11113079qtc.5.1680771435684;
-        Thu, 06 Apr 2023 01:57:15 -0700 (PDT)
-X-Google-Smtp-Source: AKy350bzXKpcq5d/id+6ZQprS3naXkWcpRtP62YORjWExdv5Im2GPPasqjiU0Vii9Sx8y+GhdWYImw==
-X-Received: by 2002:a05:622a:1815:b0:3e4:eb39:eb8b with SMTP id t21-20020a05622a181500b003e4eb39eb8bmr11113044qtc.5.1680771435377;
-        Thu, 06 Apr 2023 01:57:15 -0700 (PDT)
-Received: from gerbillo.redhat.com (146-241-227-151.dyn.eolo.it. [146.241.227.151])
-        by smtp.gmail.com with ESMTPSA id 15-20020a05620a040f00b0073b8512d2dbsm318849qkp.72.2023.04.06.01.57.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 01:57:15 -0700 (PDT)
-Message-ID: <d9f969cfc020a29a4ad74d3726c1fc322f8eb9a8.camel@redhat.com>
-Subject: Re: [PATCH net-next v3 12/12] net: stmmac: dwmac-qcom-ethqos: Add
- EMAC3 support
-From:   Paolo Abeni <pabeni@redhat.com>
-To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        vkoul@kernel.org, bhupesh.sharma@linaro.org, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        mturquette@baylibre.com, peppe.cavallaro@st.com,
-        alexandre.torgue@foss.st.com, joabreu@synopsys.com,
-        mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
-        linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Date:   Thu, 06 Apr 2023 10:57:08 +0200
-In-Reply-To: <20230403165229.4jhpo2xs7tuclekw@halaney-x13s>
-References: <20230331214549.756660-1-ahalaney@redhat.com>
-         <20230403165229.4jhpo2xs7tuclekw@halaney-x13s>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
+        bh=2LI2f/ixAsF1xEcVqPiJM0HMEuhAr1HeJpruxWNwBHI=;
+        b=p5Nw802cTjRP6Znbb6g1y2PRtV6D7WbcwF9APljpEDb++sMNQ+ZdbAMXvdJQZIqX1L7LgV
+        SNUeI1nJYQR2xDCf9OOlYAId/A7wwL3eFcqRsNJnRHGqpcEpagi7WXxvPeIBYdWWWLiTAv
+        BLOzDz1+E2qS4QzFHDilkLesPhC2sXQ=
+Date:   Thu, 6 Apr 2023 11:18:31 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v6 16/16] arm: mvebu: dt: Add PHY LED support
+ for 370-rd WAN port
+Message-ID: <ZC6OZ2f/NLJxZgle@duo.ucw.cz>
+References: <20230327141031.11904-1-ansuelsmth@gmail.com>
+ <20230327141031.11904-17-ansuelsmth@gmail.com>
+ <ZCKl1A9dZOIAdMY8@duo.ucw.cz>
+ <2e5c6dfb-5f55-416f-a934-6fa3997783b7@lunn.ch>
+ <ZCsu4qD8k947kN7v@duo.ucw.cz>
+ <7cadf888-8d6e-4b7d-8f94-7e869fd49ee2@lunn.ch>
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha1;
+        protocol="application/pgp-signature"; boundary="lnbJBEJceP2MrxSb"
+Content-Disposition: inline
+In-Reply-To: <7cadf888-8d6e-4b7d-8f94-7e869fd49ee2@lunn.ch>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Mon, 2023-04-03 at 11:52 -0500, Andrew Halaney wrote:
-> @@ -327,9 +370,17 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqo=
-s *ethqos)
->  			      RGMII_CONFIG2_RX_PROG_SWAP,
->  			      RGMII_IO_MACRO_CONFIG2);
-> =20
-> -		/* Set PRG_RCLK_DLY to 57 for 1.8 ns delay */
-> -		rgmii_updatel(ethqos, SDCC_DDR_CONFIG_PRG_RCLK_DLY,
-> -			      57, SDCC_HC_REG_DDR_CONFIG);
-> +		/* PRG_RCLK_DLY =3D TCXO period * TCXO_CYCLES_CNT / 2 * RX delay ns,
-> +		 * in practice this becomes PRG_RCLK_DLY =3D 52 * 4 / 2 * RX delay ns
-> +		 */
-> +		if (ethqos->has_emac3)
-> +			/* 0.9 ns */
-> +			rgmii_updatel(ethqos, SDCC_DDR_CONFIG_PRG_RCLK_DLY,
-> +				      115, SDCC_HC_REG_DDR_CONFIG);
-> +		else
-> +			/* 1.8 ns */
-> +			rgmii_updatel(ethqos, SDCC_DDR_CONFIG_PRG_RCLK_DLY,
-> +				      57, SDCC_HC_REG_DDR_CONFIG);
+--lnbJBEJceP2MrxSb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The only (very minor) comment I have is that AFAIK the preferred style
-for the above block is:=20
+Hi!
 
-		if (ethqos->has_emac3) {
-			/* 0.9 ns */
-			rgmii_updatel(ethqos, SDCC_DDR_CONFIG_PRG_RCLK_DLY,
-				      115, SDCC_HC_REG_DDR_CONFIG);
-		} else {
-			...
+> > Acceptance criteria would be "consistent with documentation and with
+> > other similar users". If the LED is really white, it should be
+> > f1072004.mdio-mii\:white\:WAN, but you probably want
+> > f1072004.mdio-mii\:white\:LAN (or :activity), as discussed elsewhere in=
+ the thread.
+>=20
+> Hi Pavel
+>=20
+> What i ended up with is:
+>=20
+> f1072004.mdio-mii:00:white:wan
+>=20
+> The label on the box is WAN, since it is meant to be a WiFi routers,
+> and this port should connected to your WAN. And this is what the LED
+> code came up with, given my DT description for this device.
 
-due to the comment presence this should be threaded as a multi-line stateme=
-nt.
-(even if checkpatch does not complain).
+Ok, thanks for explanation.
 
-Cheers,
+> > Documentation is in Documentation/leds/well-known-leds.txt , so you
+> > should probably add a new section about networking, and explain naming
+> > scheme for network activity LEDs. When next users appear, I'll point
+> > them to the documentation.
+>=20
+> I added a patch with the following text:
+>=20
+> * Ethernet LEDs
+>=20
+> Currently two types of Network LEDs are support, those controlled by
+> the PHY and those by the MAC. In theory both can be present at the
+> same time for one Linux netdev, hence the names need to differ between
+> MAC and PHY.
+>=20
+> Do not use the netdev name, such as eth0, enp1s0. These are not stable
+> and are not unique. They also don't differentiate between MAC and PHY.
+>=20
+> ** MAC LEDs
+>=20
+> Good: f1070000.ethernet:white:WAN
+> Good: mdio_mux-0.1:00:green:left
+> Good: 0000:02:00.0:yellow:top
 
-Paolo
+> The first part must uniquely name the MAC controller. Then follows the
+> colour.  WAN/LAN should be used for a single LED. If there are
+> multiple LEDs, use left/right, or top/bottom to indicate their
+> position on the RJ45 socket.
 
->  			      SDCC_HC_REG_DDR_CONFIG);
-> @@ -355,8 +406,15 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqo=
-s *ethqos)
->  			      BIT(6), RGMII_IO_MACRO_CONFIG);
->  		rgmii_updatel(ethqos, RGMII_CONFIG2_RSVD_CONFIG15,
->  			      0, RGMII_IO_MACRO_CONFIG2);
-> -		rgmii_updatel(ethqos, RGMII_CONFIG2_RX_PROG_SWAP,
-> -			      0, RGMII_IO_MACRO_CONFIG2);
-> +
-> +		if (ethqos->has_emac3)
-> +			rgmii_updatel(ethqos, RGMII_CONFIG2_RX_PROG_SWAP,
-> +				      RGMII_CONFIG2_RX_PROG_SWAP,
-> +				      RGMII_IO_MACRO_CONFIG2);
-> +		else
-> +			rgmii_updatel(ethqos, RGMII_CONFIG2_RX_PROG_SWAP,
-> +				      0, RGMII_IO_MACRO_CONFIG2);
-> +
->  		/* Write 0x5 to PRG_RCLK_DLY_CODE */
->  		rgmii_updatel(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_CODE,
->  			      (BIT(29) | BIT(27)), SDCC_HC_REG_DDR_CONFIG);
-> @@ -389,8 +447,13 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqo=
-s *ethqos)
->  			      RGMII_IO_MACRO_CONFIG);
->  		rgmii_updatel(ethqos, RGMII_CONFIG2_RSVD_CONFIG15,
->  			      0, RGMII_IO_MACRO_CONFIG2);
-> -		rgmii_updatel(ethqos, RGMII_CONFIG2_RX_PROG_SWAP,
-> -			      0, RGMII_IO_MACRO_CONFIG2);
-> +		if (ethqos->has_emac3)
-> +			rgmii_updatel(ethqos, RGMII_CONFIG2_RX_PROG_SWAP,
-> +				      RGMII_CONFIG2_RX_PROG_SWAP,
-> +				      RGMII_IO_MACRO_CONFIG2);
-> +		else
-> +			rgmii_updatel(ethqos, RGMII_CONFIG2_RX_PROG_SWAP,
-> +				      0, RGMII_IO_MACRO_CONFIG2);
->  		/* Write 0x5 to PRG_RCLK_DLY_CODE */
->  		rgmii_updatel(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_CODE,
->  			      (BIT(29) | BIT(27)), SDCC_HC_REG_DDR_CONFIG);
-> @@ -433,6 +496,17 @@ static int ethqos_configure(struct qcom_ethqos *ethq=
-os)
->  	rgmii_updatel(ethqos, SDCC_DLL_CONFIG_PDN,
->  		      SDCC_DLL_CONFIG_PDN, SDCC_HC_REG_DLL_CONFIG);
-> =20
-> +	if (ethqos->has_emac3) {
-> +		if (ethqos->speed =3D=3D SPEED_1000) {
-> +			rgmii_writel(ethqos, 0x1800000, SDCC_TEST_CTL);
-> +			rgmii_writel(ethqos, 0x2C010800, SDCC_USR_CTL);
-> +			rgmii_writel(ethqos, 0xA001, SDCC_HC_REG_DLL_CONFIG2);
-> +		} else {
-> +			rgmii_writel(ethqos, 0x40010800, SDCC_USR_CTL);
-> +			rgmii_writel(ethqos, 0xA001, SDCC_HC_REG_DLL_CONFIG2);
-> +		}
-> +	}
-> +
->  	/* Clear DLL_RST */
->  	rgmii_updatel(ethqos, SDCC_DLL_CONFIG_DLL_RST, 0,
->  		      SDCC_HC_REG_DLL_CONFIG);
-> @@ -452,7 +526,9 @@ static int ethqos_configure(struct qcom_ethqos *ethqo=
-s)
->  			      SDCC_HC_REG_DLL_CONFIG);
-> =20
->  		/* Set USR_CTL bit 26 with mask of 3 bits */
-> -		rgmii_updatel(ethqos, GENMASK(26, 24), BIT(26), SDCC_USR_CTL);
-> +		if (!ethqos->has_emac3)
-> +			rgmii_updatel(ethqos, GENMASK(26, 24), BIT(26),
-> +				      SDCC_USR_CTL);
-> =20
->  		/* wait for DLL LOCK */
->  		do {
-> @@ -547,6 +623,7 @@ static int qcom_ethqos_probe(struct platform_device *=
-pdev)
->  	ethqos->por =3D data->por;
->  	ethqos->num_por =3D data->num_por;
->  	ethqos->rgmii_config_loopback_en =3D data->rgmii_config_loopback_en;
-> +	ethqos->has_emac3 =3D data->has_emac3;
-> =20
->  	ethqos->rgmii_clk =3D devm_clk_get(&pdev->dev, "rgmii");
->  	if (IS_ERR(ethqos->rgmii_clk)) {
-> @@ -566,6 +643,7 @@ static int qcom_ethqos_probe(struct platform_device *=
-pdev)
->  	plat_dat->fix_mac_speed =3D ethqos_fix_mac_speed;
->  	plat_dat->dump_debug_regs =3D rgmii_dump;
->  	plat_dat->has_gmac4 =3D 1;
-> +	plat_dat->dwmac4_addrs =3D &data->dwmac4_addrs;
->  	plat_dat->pmt =3D 1;
->  	plat_dat->tso_en =3D of_property_read_bool(np, "snps,tso");
->  	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
-> @@ -603,6 +681,7 @@ static int qcom_ethqos_remove(struct platform_device =
-*pdev)
-> =20
->  static const struct of_device_id qcom_ethqos_match[] =3D {
->  	{ .compatible =3D "qcom,qcs404-ethqos", .data =3D &emac_v2_3_0_data},
-> +	{ .compatible =3D "qcom,sc8280xp-ethqos", .data =3D &emac_v3_0_0_data},
->  	{ .compatible =3D "qcom,sm8150-ethqos", .data =3D &emac_v2_1_0_data},
->  	{ }
->  };
+I don't think basing stuff on position is reasonable. (And am not sure
+if making difference between MAC and PHY leds is good idea).
 
+Normally, there's ethernet port with two LEDs, one is usually green
+and indicates link, second being yellow and indicates activity,
+correct?
+
+On devices like ADSL modems, there is one LED per port, typically on
+with link and blinking with activity. =20
+
+Could we use that distinction instead? (id):green:link,
+(id):yellow:activity, (id):?:linkact -- for combined LED as it seems.
+
+Are there any other common leds? I seem to remember "100mbps" lights
+=66rom time where 100mbit was fast...?
+
+Best regards,
+								Pavel
+--=20
+People of Russia, stop Putin before his war on Ukraine escalates.
+
+--lnbJBEJceP2MrxSb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZC6OZwAKCRAw5/Bqldv6
+8h1QAJ9FtbGdRJcGzTml7Avdfr5VrMyV+ACeLDhyEz6nLaH6LXMXyofdCwWoYQ8=
+=9p5m
+-----END PGP SIGNATURE-----
+
+--lnbJBEJceP2MrxSb--
