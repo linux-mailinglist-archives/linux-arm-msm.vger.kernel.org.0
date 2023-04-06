@@ -2,81 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB9C86D8CBE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 03:31:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CF026D8E32
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 06:04:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234296AbjDFBbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 5 Apr 2023 21:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35090 "EHLO
+        id S235302AbjDFEEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 00:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231828AbjDFBbS (ORCPT
+        with ESMTP id S234753AbjDFEEp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 5 Apr 2023 21:31:18 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CDE2658B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 18:31:14 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id t14so39216127ljd.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 18:31:14 -0700 (PDT)
+        Thu, 6 Apr 2023 00:04:45 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D1D0902D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  5 Apr 2023 21:04:42 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id kq3so36374705plb.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 05 Apr 2023 21:04:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680744673;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CSrRjCQsmbqj/wv/a1/yZMyMyqp5mxIsDwyF+FffW3g=;
-        b=kFm9KveG/fJDA4W4W2wdeLQxpwWCg/5RNbNE6GIrRqW/iGGSKKCEL1st+FEvAjGk7R
-         8SpWI8n5JIjguFZ2uhq3nvguMe6CzuAKbz9bG+M8HDZ7uguB0PvpDqo26tf8gqD10vr+
-         hI0nYbKjixH+fjudoaME+uytxkHVpAt0LLvO8OigXP3ZgTO3Ij4O9vpHopG5/MNWFFnp
-         aUOG84r+7S6HXKXTMLxg7w7HmTywc+TFLGzon9ZUjI0Feo54b9NHwvM0gif49YTixG9T
-         6W+THaVUF28UUkUYl2jKD4iy6I7NnMfzrnvbLwKuDGZMwjZYurYiI1VYNjAlQlYFVSf7
-         MJDw==
+        d=linaro.org; s=google; t=1680753881;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=RwLGYJpkSUvkezkjBSZxDdx6SLvlS1QDZ05xZHf9C8s=;
+        b=f5TVPL/AF/lWTHvhMDuOC7QySlTjg7gYCRAjhBH4uQ62esYtlqAxldfcLCuYSApMGZ
+         Mv7PvEMGxpnPzatDGQClsf9PlRGCZsXAsM8rgrlIF0I0mdWcL8GGX7P/Mt6nlRJOZQUD
+         ZhIUw/eM1Vktn7UqPHDeefC5nY7tO9Qxl4L1WHPd1hJMvdMHRrUyacOlYwdCz+gHovO9
+         7EqLdICzAcSuGWKhzbk0mSMiSx++3fMvkvUGdHRZBcbINfdkZx3YxBPwFScZ/VpaGFk8
+         GyC3KPHZaDCbp2W+BUo6W1RP8eY9gjATzCzFRO05zK6SaQ+oSfuGFM38J9AiTRILrC9G
+         X3SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680744673;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CSrRjCQsmbqj/wv/a1/yZMyMyqp5mxIsDwyF+FffW3g=;
-        b=pvqVhL/cgP0a7UTaDg/UKsnw1a53vtKY+BwZi5AIOjjIYj603mP3MWr/4Yy6lj7Y2u
-         q3OcMXNQuNGkSUNrrduQd57N410GaDajWQ6ih/qX7KmYnRVa8FozWQi/sjyixlf0NqUm
-         cxHPmF38gAfg2EsPdWx5+zPYqHtRpSGGwBehsAV10KmE636xFAIupEITcn27629js+IY
-         qR4isY6KVGTiVtRUnyXeIC8FRpW7Rl2/1XnZVFQ4CtO0AzrNE6SAjGdvWwy2hWLO4/bx
-         wJe+AiXuV1u5QmuqByKHPBL8+qAFO8dwe6qsEC7kEwsRliR6tazzX4AGlJXllyK/Cv6j
-         La5A==
-X-Gm-Message-State: AAQBX9caiaIpWxHGRZbC9hoYt9x2jNxieUjcMUVLtwdIjwEj3D0UtwxV
-        zcCNRt0On7GN15gIWXe9kzTxZA==
-X-Google-Smtp-Source: AKy350Y4TY0FmFDViv5jfvptjRz6lI7gqXueo0pWn90UcUx3RJ3mD/1bBurBI/Agh0gjoD7sv8BZZw==
-X-Received: by 2002:a2e:8507:0:b0:29f:390:6641 with SMTP id j7-20020a2e8507000000b0029f03906641mr2578983lji.11.1680744672711;
-        Wed, 05 Apr 2023 18:31:12 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id z4-20020a2e8404000000b002a483f01d9csm14222ljg.85.2023.04.05.18.31.11
+        d=1e100.net; s=20210112; t=1680753881;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RwLGYJpkSUvkezkjBSZxDdx6SLvlS1QDZ05xZHf9C8s=;
+        b=z3Nm+gyseJVKS4PvCcdXwwg5scPQ1P4HUYpv21GhbT225u88tkAVBB4QHqNs9u0BsU
+         1POCpn+1ynZMyvTxTAfORE53FBX+C7GoFnHXvVztSnnQVPQp3maN5APa9xWy1q36HFN4
+         mhM5njH2CzebqvSxSD98XScR5p+n8tFopmlYTX+3bRyShiVz6EDQMUJKOSSHAqsyPCtg
+         xfnm9t92yRIy7TCI5beHFo+xaDNII6LOcsz8OG4txQnFO7b9yw17gGoMk6jjtPqFTSgM
+         QCVi+vY8FzEegfAcFLGx7kWosgvx4qQVgHkZQv2Ed3+w1Qr/5g/Lye7SXupBVvYWC2F/
+         3Jww==
+X-Gm-Message-State: AAQBX9cCQsME8e3DpjdxQASetQiY/TgQm9gCaP6qBtS9KcbGoS93GqFC
+        6e/xzuYTM5JL7z5iyMyUNPPhcg==
+X-Google-Smtp-Source: AKy350ZNp41dp/n2ozwLSh2ZspXcNbVwAuoURK+zspTfFxPXT9Vj2fU+SeUuGtC7FtsjNSbfA1Npjw==
+X-Received: by 2002:a17:902:cf52:b0:1a2:23f7:1fe with SMTP id e18-20020a170902cf5200b001a223f701femr7122770plg.44.1680753881501;
+        Wed, 05 Apr 2023 21:04:41 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id o11-20020a170902bccb00b001898ee9f723sm320489pls.2.2023.04.05.21.04.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 18:31:12 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 06 Apr 2023 03:31:08 +0200
-Subject: [PATCH] dt-bindings: iommu: Convert QCOM IOMMU to YAML
+        Wed, 05 Apr 2023 21:04:40 -0700 (PDT)
+Date:   Thu, 6 Apr 2023 12:04:33 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, marijn.suijten@somainline.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-qcm2290: Mark RCGs shared where applicable
+Message-ID: <20230406040433.GA111746@dragon>
+References: <20230403174807.345185-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230406-topic-qciommu-v1-1-03f17717a447@linaro.org>
-X-B4-Tracking: v=1; b=H4sIANsgLmQC/x2NywqDMBAAf0X23IX4QFt/pXiI60YXNNFERRD/v
- UuPMzDMDYmjcII2uyHyKUmCV8hfGdBk/cgogzIUpihNZWrcwyqEG0lYlgMbavJy4LdzHwZteps
- Y+2g9TVr5Y55VrpGdXP/Jt3ueH6F0Bs50AAAA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680744671; l=7256;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=z8HCrPvi1fKv6OJnTFPhKhw+sxnsX3KR5dCrGbmbmoY=;
- b=fr4XqlN1G29CA4GNNexEwZpf4A4qxp8Elf3nNHjh5xumdpyKPN+bT11jryh6bKZ32gjWcNuSRCc0
- VtidLQ7UCvidzyC9YveUTjlezUUtFdicPTIt7OfJkuxV3DfUP6kg
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230403174807.345185-1-konrad.dybcio@linaro.org>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -86,266 +73,307 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the Qualcomm IOMMU bindings to YAML.
+On Mon, Apr 03, 2023 at 07:48:07PM +0200, Konrad Dybcio wrote:
+> The vast majority of shared RCGs were not marked as such. Fix it.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-foobar b4 requires I put some text here
----
- .../devicetree/bindings/iommu/qcom,iommu.txt       | 122 ---------------------
- .../devicetree/bindings/iommu/qcom,iommu.yaml      | 110 +++++++++++++++++++
- 2 files changed, 110 insertions(+), 122 deletions(-)
+It seems we completely missed this shared RCG thing, as vendor drivers
+do not use it.  Could you help me understand a couple of things?
 
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-deleted file mode 100644
-index e6cecfd360eb..000000000000
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-+++ /dev/null
-@@ -1,122 +0,0 @@
--* QCOM IOMMU v1 Implementation
--
--Qualcomm "B" family devices which are not compatible with arm-smmu have
--a similar looking IOMMU but without access to the global register space,
--and optionally requiring additional configuration to route context irqs
--to non-secure vs secure interrupt line.
--
--** Required properties:
--
--- compatible       : Should be one of:
--
--                        "qcom,msm8916-iommu"
--                        "qcom,msm8953-iommu"
--
--                     Followed by "qcom,msm-iommu-v1".
--
--- clock-names      : Should be a pair of "iface" (required for IOMMUs
--                     register group access) and "bus" (required for
--                     the IOMMUs underlying bus access).
--
--- clocks           : Phandles for respective clocks described by
--                     clock-names.
--
--- #address-cells   : must be 1.
--
--- #size-cells      : must be 1.
--
--- #iommu-cells     : Must be 1.  Index identifies the context-bank #.
--
--- ranges           : Base address and size of the iommu context banks.
--
--- qcom,iommu-secure-id  : secure-id.
--
--- List of sub-nodes, one per translation context bank.  Each sub-node
--  has the following required properties:
--
--  - compatible     : Should be one of:
--        - "qcom,msm-iommu-v1-ns"  : non-secure context bank
--        - "qcom,msm-iommu-v1-sec" : secure context bank
--  - reg            : Base address and size of context bank within the iommu
--  - interrupts     : The context fault irq.
--
--** Optional properties:
--
--- reg              : Base address and size of the SMMU local base, should
--                     be only specified if the iommu requires configuration
--                     for routing of context bank irq's to secure vs non-
--                     secure lines.  (Ie. if the iommu contains secure
--                     context banks)
--
--
--** Examples:
--
--	apps_iommu: iommu@1e20000 {
--		#address-cells = <1>;
--		#size-cells = <1>;
--		#iommu-cells = <1>;
--		compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
--		ranges = <0 0x1e20000 0x40000>;
--		reg = <0x1ef0000 0x3000>;
--		clocks = <&gcc GCC_SMMU_CFG_CLK>,
--			 <&gcc GCC_APSS_TCU_CLK>;
--		clock-names = "iface", "bus";
--		qcom,iommu-secure-id = <17>;
--
--		// mdp_0:
--		iommu-ctx@4000 {
--			compatible = "qcom,msm-iommu-v1-ns";
--			reg = <0x4000 0x1000>;
--			interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
--		};
--
--		// venus_ns:
--		iommu-ctx@5000 {
--			compatible = "qcom,msm-iommu-v1-sec";
--			reg = <0x5000 0x1000>;
--			interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
--		};
--	};
--
--	gpu_iommu: iommu@1f08000 {
--		#address-cells = <1>;
--		#size-cells = <1>;
--		#iommu-cells = <1>;
--		compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
--		ranges = <0 0x1f08000 0x10000>;
--		clocks = <&gcc GCC_SMMU_CFG_CLK>,
--			 <&gcc GCC_GFX_TCU_CLK>;
--		clock-names = "iface", "bus";
--		qcom,iommu-secure-id = <18>;
--
--		// gfx3d_user:
--		iommu-ctx@1000 {
--			compatible = "qcom,msm-iommu-v1-ns";
--			reg = <0x1000 0x1000>;
--			interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
--		};
--
--		// gfx3d_priv:
--		iommu-ctx@2000 {
--			compatible = "qcom,msm-iommu-v1-ns";
--			reg = <0x2000 0x1000>;
--			interrupts = <GIC_SPI 242 IRQ_TYPE_LEVEL_HIGH>;
--		};
--	};
--
--	...
--
--	venus: video-codec@1d00000 {
--		...
--		iommus = <&apps_iommu 5>;
--	};
--
--	mdp: mdp@1a01000 {
--		...
--		iommus = <&apps_iommu 4>;
--	};
--
--	gpu@1c00000 {
--		...
--		iommus = <&gpu_iommu 1>, <&gpu_iommu 2>;
--	};
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-new file mode 100644
-index 000000000000..b33236c0f9ef
---- /dev/null
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-@@ -0,0 +1,110 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies legacy IOMMU implementations
-+
-+maintainers:
-+  - Konrad Dybcio <konrad.dybcio@linaro.org>
-+
-+description: |
-+  Qualcomm "B" family devices which are not compatible with arm-smmu have
-+  a similar looking IOMMU, but without access to the global register space
-+  and optionally requiring additional configuration to route context IRQs
-+  to non-secure vs secure interrupt line.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,msm8916-iommu
-+          - qcom,msm8953-iommu
-+      - const: qcom,msm-iommu-v1
-+
-+  clocks:
-+    items:
-+      - description: Clock required for IOMMU register group access
-+      - description: Clock required for underlying bus access
-+
-+  clock-names:
-+    items:
-+      - const: iface
-+      - const: bus
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  reg:
-+    maxItems: 1
-+
-+  ranges: true
-+
-+  qcom,iommu-secure-id:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      The SCM secure ID of the IOMMU instance.
-+
-+  '#address-cells':
-+    const: 1
-+
-+  '#size-cells':
-+    const: 1
-+
-+  '#iommu-cells':
-+    const: 1
-+
-+patternProperties:
-+  "^iommu-ctx@[0-9a-f]+$":
-+    type: object
-+    properties:
-+      compatible:
-+        enum:
-+          - qcom,msm-iommu-v1-ns
-+          - qcom,msm-iommu-v1-sec
-+
-+      interrupts:
-+        maxItems: 1
-+
-+      reg:
-+        maxItems: 1
-+
-+required:
-+  - compatible
-+  - clocks
-+  - clock-names
-+  - ranges
-+  - '#address-cells'
-+  - '#size-cells'
-+  - '#iommu-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    apps_iommu: iommu@1e20000 {
-+      compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
-+      reg = <0x1ef0000 0x3000>;
-+      clocks = <&gcc GCC_SMMU_CFG_CLK>,
-+               <&gcc GCC_APSS_TCU_CLK>;
-+      clock-names = "iface", "bus";
-+      qcom,iommu-secure-id = <17>;
-+      #address-cells = <1>;
-+      #size-cells = <1>;
-+      #iommu-cells = <1>;
-+      ranges = <0 0x1e20000 0x40000>;
-+
-+      /* mdp_0: */
-+      iommu-ctx@4000 {
-+        compatible = "qcom,msm-iommu-v1-ns";
-+        reg = <0x4000 0x1000>;
-+        interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-+      };
-+    };
-+
-+    mdp: mdp@1a01000 {
-+      iommus = <&apps_iommu 4>;
-+    };
+- How does vendor driver handle shared RCGs?
+- How did you find out these shared RCGs?
 
----
-base-commit: 8417c8f5007bf4567ccffda850a3157c7d905f67
-change-id: 20230406-topic-qciommu-7c713de8ff9e
+Shawn
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+> 
+> Fixes: 496d1a13d405 ("clk: qcom: Add Global Clock Controller driver for QCM2290")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/clk/qcom/gcc-qcm2290.c | 62 +++++++++++++++++-----------------
+>  1 file changed, 31 insertions(+), 31 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
+> index 096deff2ba25..48995e50c6bd 100644
+> --- a/drivers/clk/qcom/gcc-qcm2290.c
+> +++ b/drivers/clk/qcom/gcc-qcm2290.c
+> @@ -650,7 +650,7 @@ static struct clk_rcg2 gcc_usb30_prim_mock_utmi_clk_src = {
+>  		.name = "gcc_usb30_prim_mock_utmi_clk_src",
+>  		.parent_data = gcc_parents_0,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -686,7 +686,7 @@ static struct clk_rcg2 gcc_camss_axi_clk_src = {
+>  		.name = "gcc_camss_axi_clk_src",
+>  		.parent_data = gcc_parents_4,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_4),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -706,7 +706,7 @@ static struct clk_rcg2 gcc_camss_cci_clk_src = {
+>  		.name = "gcc_camss_cci_clk_src",
+>  		.parent_data = gcc_parents_9,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_9),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -728,7 +728,7 @@ static struct clk_rcg2 gcc_camss_csi0phytimer_clk_src = {
+>  		.name = "gcc_camss_csi0phytimer_clk_src",
+>  		.parent_data = gcc_parents_5,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_5),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -742,7 +742,7 @@ static struct clk_rcg2 gcc_camss_csi1phytimer_clk_src = {
+>  		.name = "gcc_camss_csi1phytimer_clk_src",
+>  		.parent_data = gcc_parents_5,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_5),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -764,7 +764,7 @@ static struct clk_rcg2 gcc_camss_mclk0_clk_src = {
+>  		.parent_data = gcc_parents_3,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.flags = CLK_OPS_PARENT_ENABLE,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -779,7 +779,7 @@ static struct clk_rcg2 gcc_camss_mclk1_clk_src = {
+>  		.parent_data = gcc_parents_3,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.flags = CLK_OPS_PARENT_ENABLE,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -794,7 +794,7 @@ static struct clk_rcg2 gcc_camss_mclk2_clk_src = {
+>  		.parent_data = gcc_parents_3,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.flags = CLK_OPS_PARENT_ENABLE,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -809,7 +809,7 @@ static struct clk_rcg2 gcc_camss_mclk3_clk_src = {
+>  		.parent_data = gcc_parents_3,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_3),
+>  		.flags = CLK_OPS_PARENT_ENABLE,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -830,7 +830,7 @@ static struct clk_rcg2 gcc_camss_ope_ahb_clk_src = {
+>  		.name = "gcc_camss_ope_ahb_clk_src",
+>  		.parent_data = gcc_parents_6,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_6),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -854,7 +854,7 @@ static struct clk_rcg2 gcc_camss_ope_clk_src = {
+>  		.parent_data = gcc_parents_6,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_6),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -888,7 +888,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_clk_src = {
+>  		.name = "gcc_camss_tfe_0_clk_src",
+>  		.parent_data = gcc_parents_7,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_7),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -912,7 +912,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_csid_clk_src = {
+>  		.name = "gcc_camss_tfe_0_csid_clk_src",
+>  		.parent_data = gcc_parents_8,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_8),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -926,7 +926,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_clk_src = {
+>  		.name = "gcc_camss_tfe_1_clk_src",
+>  		.parent_data = gcc_parents_7,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_7),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -940,7 +940,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_csid_clk_src = {
+>  		.name = "gcc_camss_tfe_1_csid_clk_src",
+>  		.parent_data = gcc_parents_8,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_8),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -963,7 +963,7 @@ static struct clk_rcg2 gcc_camss_tfe_cphy_rx_clk_src = {
+>  		.parent_data = gcc_parents_10,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_10),
+>  		.flags = CLK_OPS_PARENT_ENABLE,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -984,7 +984,7 @@ static struct clk_rcg2 gcc_camss_top_ahb_clk_src = {
+>  		.name = "gcc_camss_top_ahb_clk_src",
+>  		.parent_data = gcc_parents_4,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_4),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1006,7 +1006,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
+>  		.name = "gcc_gp1_clk_src",
+>  		.parent_data = gcc_parents_2,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_2),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1020,7 +1020,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
+>  		.name = "gcc_gp2_clk_src",
+>  		.parent_data = gcc_parents_2,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_2),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1034,7 +1034,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
+>  		.name = "gcc_gp3_clk_src",
+>  		.parent_data = gcc_parents_2,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_2),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1054,7 +1054,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
+>  		.name = "gcc_pdm2_clk_src",
+>  		.parent_data = gcc_parents_0,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1082,7 +1082,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
+>  	.name = "gcc_qupv3_wrap0_s0_clk_src",
+>  	.parent_data = gcc_parents_1,
+>  	.num_parents = ARRAY_SIZE(gcc_parents_1),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>  };
+>  
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
+> @@ -1098,7 +1098,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
+>  	.name = "gcc_qupv3_wrap0_s1_clk_src",
+>  	.parent_data = gcc_parents_1,
+>  	.num_parents = ARRAY_SIZE(gcc_parents_1),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>  };
+>  
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
+> @@ -1114,7 +1114,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
+>  	.name = "gcc_qupv3_wrap0_s2_clk_src",
+>  	.parent_data = gcc_parents_1,
+>  	.num_parents = ARRAY_SIZE(gcc_parents_1),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>  };
+>  
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
+> @@ -1130,7 +1130,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
+>  	.name = "gcc_qupv3_wrap0_s3_clk_src",
+>  	.parent_data = gcc_parents_1,
+>  	.num_parents = ARRAY_SIZE(gcc_parents_1),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>  };
+>  
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
+> @@ -1146,7 +1146,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
+>  	.name = "gcc_qupv3_wrap0_s4_clk_src",
+>  	.parent_data = gcc_parents_1,
+>  	.num_parents = ARRAY_SIZE(gcc_parents_1),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>  };
+>  
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
+> @@ -1162,7 +1162,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
+>  	.name = "gcc_qupv3_wrap0_s5_clk_src",
+>  	.parent_data = gcc_parents_1,
+>  	.num_parents = ARRAY_SIZE(gcc_parents_1),
+> -	.ops = &clk_rcg2_ops,
+> +	.ops = &clk_rcg2_shared_ops,
+>  };
+>  
+>  static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
+> @@ -1219,7 +1219,7 @@ static struct clk_rcg2 gcc_sdcc1_ice_core_clk_src = {
+>  		.name = "gcc_sdcc1_ice_core_clk_src",
+>  		.parent_data = gcc_parents_0,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1266,7 +1266,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
+>  		.name = "gcc_usb30_prim_master_clk_src",
+>  		.parent_data = gcc_parents_0,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_0),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1280,7 +1280,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
+>  		.name = "gcc_usb3_prim_phy_aux_clk_src",
+>  		.parent_data = gcc_parents_13,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_13),
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> @@ -1303,7 +1303,7 @@ static struct clk_rcg2 gcc_video_venus_clk_src = {
+>  		.parent_data = gcc_parents_14,
+>  		.num_parents = ARRAY_SIZE(gcc_parents_14),
+>  		.flags = CLK_SET_RATE_PARENT,
+> -		.ops = &clk_rcg2_ops,
+> +		.ops = &clk_rcg2_shared_ops,
+>  	},
+>  };
+>  
+> -- 
+> 2.40.0
+> 
