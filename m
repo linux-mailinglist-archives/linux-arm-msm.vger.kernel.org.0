@@ -2,82 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACD126DA048
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 20:48:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DB7B6DA06A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 20:56:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240285AbjDFSsW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 14:48:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38110 "EHLO
+        id S239786AbjDFS4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 14:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240212AbjDFSsB (ORCPT
+        with ESMTP id S240283AbjDFS4f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 14:48:01 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22575B460
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 11:47:41 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id a44so22979392ljr.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 11:47:41 -0700 (PDT)
+        Thu, 6 Apr 2023 14:56:35 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8521C9012
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 11:56:33 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id p15so47196028ybl.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 11:56:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680806859;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CvX4uOfDerQJEiGG++jroZtpgDOEVq0GfGUeYaZgx8s=;
-        b=v/BHjuwL/W3yJBdECVyZD7LaGC2CHy6gj97JcJ1wRz6HR7EGBNJiesD6gj2KAxn405
-         4yoggUPu/hRFqvwE1f5LoC+RFlJ5dcA2LPPqFYy3Xm40pfpLErANR7IyOUzRZkMQFGgR
-         qkB0WSmLlfY6DR4qxRHWy26PLkyFRI8zfI7rDm5XSj/rn7Fb81WN4MkdbweK2IDIx4Qd
-         vhGwjPCAaU9oFw2XI1SNhQinhVmzDznr5ZFXax3hAQDtu7kjphS6Ubef4RMenMlW9wmB
-         71LhHubgOBlC3yk3poATD3A1rcraA33UjizvcWeE2ZKnrHfwH5F8D+VO2mhamUSTaMP1
-         xHaQ==
+        d=linaro.org; s=google; t=1680807392;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ucnAW8w35vol8Pg57OLPiTr9yW6zisn9tO1ygQITttI=;
+        b=biLsD71bt/4qhOiC+fjKpXwMJ7DLuQs+qj3u1Sm3s/qCNkrktChSmO29ZgGtDVliSq
+         gzoFMDRfEEJ1Id8nivsrn+6O2Bm9wkSqLZRb/Z4MGRDMuQeGoV46EtSSmF50tPOQx0qw
+         m4ZIY3q50IWmZPapaUOGPmVxbiKyoEz4TmtOxpH98EC3Fmo3VpqOd4AcPfubhe4dXsOZ
+         Ma6IJj+keATFHXQvx1xtILQ8Pt8JGRCtihK6+VaQyuog4KgGxKfPg7FaUzFgxnyGr2lB
+         qWpfjWGeReUfg1lDInoDgjJ2Ey/TplX3Fv0IH6fda92c2lYRCWfL3iWfv8ZADggCSPPd
+         nk+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680806859;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1680807392;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CvX4uOfDerQJEiGG++jroZtpgDOEVq0GfGUeYaZgx8s=;
-        b=FYzoEjmXnfLYro2/BYaE12dVfoCUnc9PheOe9c/UpFmnhCU7lmO57PCSBRyOxlINQX
-         5/tlM5TNvNRCT1v9hp9Ic9PApSWf1kwoPusoSJBNnDt864FFflOwTf8/TtONFNK3PBev
-         Y075hrXgsbgTVi/AOcRQZ/dR1dKrnY6/XmsrEWT4KhiVhrgcmRaHuYd6IgtL9G8/C41S
-         WMYrjjt+4t1peGR3XNlNhXoOf5bpGEUM6UIsQICJGQ7vegM4HSSXFHIspG1urVne4Ylm
-         WyfwYPnbu1L595jUAasObs8eMWdQXO6krk/p2ewmDOlR03m9XyXR74mbQhdR7qBToZJz
-         wLQQ==
-X-Gm-Message-State: AAQBX9fuuR4kEmw03uGnTqnMJQpRhsSry2+unEDmlgHbKm3SkW76shUg
-        iYgez056Ysht8sRW3OK/UbumbA==
-X-Google-Smtp-Source: AKy350ZUVNs5nFG3t5xqZrgCAwKWlrsZSt1QoIp3BKwXk/yZf4HiXWPS5g61CaPCGdZgatLUoCDl3g==
-X-Received: by 2002:a2e:2e14:0:b0:298:b365:81c with SMTP id u20-20020a2e2e14000000b00298b365081cmr3420662lju.15.1680806858779;
-        Thu, 06 Apr 2023 11:47:38 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id h2-20020a2e3a02000000b002a618eb72b1sm388878lja.98.2023.04.06.11.47.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 11:47:38 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 06 Apr 2023 20:47:28 +0200
-Subject: [PATCH v3] dt-bindings: iommu: Convert QCOM IOMMU to YAML
+        bh=ucnAW8w35vol8Pg57OLPiTr9yW6zisn9tO1ygQITttI=;
+        b=tgtalNi3CfKMBa1KmXXAZ3DHCYbQ0gX9Ox3LlSpVpLmGEPD4Y2XeJ3+/vPko6ado4Y
+         9KWOglk4yjoZ60YGZtwhOkw5zWlYaDbFDO3rt5Yd74nwE1CeMYDvohNWo2c9FZL0Jr1Y
+         U9RlG3EcmRpU24+k/CrHOOGWwrY2mhwvm+AdMcP2lBhWOZinV+k9lyD09jpsTsBgNINE
+         8rvC8lbl6eSjrXmghsqJ8a1OAvglNnrbr6iDyuRCe1aVwVXe19hx1Ny4uxSCDSkRuKgm
+         8DKrDewtqgdd4585kwNELCUupXDvgud2zqCajw0tzvFIVnadZydV4xdOX7mxxncrRjfJ
+         e05A==
+X-Gm-Message-State: AAQBX9dInpbwuT1ZIeoLV4eqoceA8helXhUwmJJ8+UAK3I7dr6TFR+8Z
+        xZraByo0Cskn3AG7CfYBpviEpuSoUyEm/zp0CQXiwA==
+X-Google-Smtp-Source: AKy350aLyY8waJyCoRar/QqAuHJLAJ4vbrM/5IkmzmLH9JFqvplgiFfoD5QooPuJEJQ83FPjVX8k1FVTGH4xULbcZa8=
+X-Received: by 2002:a25:d64e:0:b0:b8b:f02b:ba20 with SMTP id
+ n75-20020a25d64e000000b00b8bf02bba20mr210452ybg.9.1680807392707; Thu, 06 Apr
+ 2023 11:56:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230406-topic-qciommu-v3-1-aa0e4f018191@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAL8TL2QC/32NTQ7CIBgFr2JYi+HPUl15D+MCKLRf0kKFlmia3
- l3anQtdzktm3oKSjWATuh4WFG2GBMEX4McDMp3yrcXQFEaMME4EqfAURjD4aSAMw4ylkZQ3tnb
- uYlFxtEoW66i86Yrl574v4xitg9d+cn8U7iBNIb73z0y39Vc+U0wx4Y5KSaUSQt568CqGU4gt2
- lKZ/dVZ0XV9FrJiTDMlvvR1XT+O3BT7/wAAAA==
-To:     Andy Gross <agross@kernel.org>,
+References: <20230406-topic-lenovo_features-v1-0-c73a5180e48e@linaro.org>
+ <20230406-topic-lenovo_features-v1-4-c73a5180e48e@linaro.org>
+ <7476b5ba-426c-3701-c4aa-d3e2db3de112@linaro.org> <bceb91fa-c94b-a0bf-a612-19fc5778810e@linaro.org>
+In-Reply-To: <bceb91fa-c94b-a0bf-a612-19fc5778810e@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 6 Apr 2023 21:56:21 +0300
+Message-ID: <CAA8EJprmzibdarZCKDtAa14HTShxTwQ6FQfi665hbVR_=5MLaQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm6115p-j606f: Enable ATH10K WiFi
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680806855; l=7713;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=trP7jAYihw9MB02Y8nwMb0R/A9JM9SNGCT+bkmwUPqM=;
- b=Y0D4lt4ge+lgZeQV4osnobm6mkMdSo1ILo+BXILaH/IS8ilbLXb/r0c+rxjZGMVCaV7AUIBTtzA0
- s7x+3GmoBCm+UPTiyPdJT1F+ERPpMi9uBPXmOEAw2iLVHlidGsVC
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -87,280 +76,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Convert the Qualcomm IOMMU bindings to YAML.
+On Thu, 6 Apr 2023 at 21:32, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 6.04.2023 19:51, Dmitry Baryshkov wrote:
+> > On 06/04/2023 18:25, Konrad Dybcio wrote:
+> >> Enable the onboard QCA Wi-Fi. HW identifiers for reference:
+> >> qmi chip_id 0x320 chip_family 0x4001 board_id 0xff soc_id 0x400e0000
+> >>
+> >> Firmware sources:
+> >> /vendor/firmware_mnt/image/wlanmdsp.bin -> qcom/.../wlanmdsp.mbn
+> >> /vendor/firmware_mnt/image/bdwlan.bXX [1] -> [2] -> ath10k/.../board-2.bin
+> >> [3] -> ath10k/.../firmware-5.bin
+> >>
+> >> Not sure where 3 comes from on the device itself, gotta investigate that..
+> >>
+> >> According to [4], it's called WCN3990_STRAIT.
+> >>
+> >> [1] XX = board_id printed when the file is missing or by your downstream
+> >> kernel firmware loader in the dmesg; if XX=ff, use bdwlan.bin
+> >
+> > Since the board_id is 0xff, please add qcom,ath10k-calibration-variant
+> Do I make up a name, or is there some convention?
+>
+> I see Johan used "LE_X13S" in commit 2702f54f400ad3979632cdb76553772414f4c5e3.
+> Should I go with "LE_P11"?
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-v2 -> v3:
-- Add additionalProperties:false & required for ctx subnodes
-- Drop the IOMMU consumer device from the DT example
+I think Lenovo_P11 or LENOVO_P11 might be better.
 
-v2: https://lore.kernel.org/r/20230406-topic-qciommu-v2-1-b8547622b2a4@linaro.org
+>
+> >
+> > Ideally, could you please send the bdwlan to ath10k for inclusion, see https://wireless.wiki.kernel.org/en/users/drivers/ath10k/boardfiles .
+> The legal situation is ambiguous at best :/
 
-v1 -> v2:
-- Include missing header
-- pad the addresses to 8 hex digits
-- add 'reg' to the mdp device
+As usual :-(
 
-v1: https://lore.kernel.org/r/20230406-topic-qciommu-v1-1-03f17717a447@linaro.org
----
- .../devicetree/bindings/iommu/qcom,iommu.txt       | 122 ---------------------
- .../devicetree/bindings/iommu/qcom,iommu.yaml      | 113 +++++++++++++++++++
- 2 files changed, 113 insertions(+), 122 deletions(-)
+>
+> Konrad
+> >
+> >>
+> >> [2] https://github.com/jhugo/linux/blob/5.5rc2_wifi/README
+> >> [3] https://github.com/kvalo/ath10k-firmware/blob/master/WCN3990/hw1.0/HL3.1/WLAN.HL.3.1-01040-QCAHLSWMTPLZ-1/firmware-5.bin
+> >> [4] https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/-/blob/LA.VENDOR.1.0.r1-20700-WAIPIO.QSSI13.0/hif/src/hif_hw_version.h#L55
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 8 ++++++++
+> >>   1 file changed, 8 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+> >> index 2aac25171dec..4ba8e59a27d8 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+> >> @@ -315,6 +315,14 @@ &usb_hsphy {
+> >>       status = "okay";
+> >>   };
+> >>   +&wifi {
+> >> +    vdd-0.8-cx-mx-supply = <&pm6125_l8>;
+> >> +    vdd-1.8-xo-supply = <&pm6125_l16>;
+> >> +    vdd-1.3-rfa-supply = <&pm6125_l17>;
+> >> +    vdd-3.3-ch0-supply = <&pm6125_l23>;
+> >> +    status = "okay";
+> >> +};
+> >> +
+> >>   &xo_board {
+> >>       clock-frequency = <19200000>;
+> >>   };
+> >>
+> >
 
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt b/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-deleted file mode 100644
-index e6cecfd360eb..000000000000
---- a/Documentation/devicetree/bindings/iommu/qcom,iommu.txt
-+++ /dev/null
-@@ -1,122 +0,0 @@
--* QCOM IOMMU v1 Implementation
--
--Qualcomm "B" family devices which are not compatible with arm-smmu have
--a similar looking IOMMU but without access to the global register space,
--and optionally requiring additional configuration to route context irqs
--to non-secure vs secure interrupt line.
--
--** Required properties:
--
--- compatible       : Should be one of:
--
--                        "qcom,msm8916-iommu"
--                        "qcom,msm8953-iommu"
--
--                     Followed by "qcom,msm-iommu-v1".
--
--- clock-names      : Should be a pair of "iface" (required for IOMMUs
--                     register group access) and "bus" (required for
--                     the IOMMUs underlying bus access).
--
--- clocks           : Phandles for respective clocks described by
--                     clock-names.
--
--- #address-cells   : must be 1.
--
--- #size-cells      : must be 1.
--
--- #iommu-cells     : Must be 1.  Index identifies the context-bank #.
--
--- ranges           : Base address and size of the iommu context banks.
--
--- qcom,iommu-secure-id  : secure-id.
--
--- List of sub-nodes, one per translation context bank.  Each sub-node
--  has the following required properties:
--
--  - compatible     : Should be one of:
--        - "qcom,msm-iommu-v1-ns"  : non-secure context bank
--        - "qcom,msm-iommu-v1-sec" : secure context bank
--  - reg            : Base address and size of context bank within the iommu
--  - interrupts     : The context fault irq.
--
--** Optional properties:
--
--- reg              : Base address and size of the SMMU local base, should
--                     be only specified if the iommu requires configuration
--                     for routing of context bank irq's to secure vs non-
--                     secure lines.  (Ie. if the iommu contains secure
--                     context banks)
--
--
--** Examples:
--
--	apps_iommu: iommu@1e20000 {
--		#address-cells = <1>;
--		#size-cells = <1>;
--		#iommu-cells = <1>;
--		compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
--		ranges = <0 0x1e20000 0x40000>;
--		reg = <0x1ef0000 0x3000>;
--		clocks = <&gcc GCC_SMMU_CFG_CLK>,
--			 <&gcc GCC_APSS_TCU_CLK>;
--		clock-names = "iface", "bus";
--		qcom,iommu-secure-id = <17>;
--
--		// mdp_0:
--		iommu-ctx@4000 {
--			compatible = "qcom,msm-iommu-v1-ns";
--			reg = <0x4000 0x1000>;
--			interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
--		};
--
--		// venus_ns:
--		iommu-ctx@5000 {
--			compatible = "qcom,msm-iommu-v1-sec";
--			reg = <0x5000 0x1000>;
--			interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
--		};
--	};
--
--	gpu_iommu: iommu@1f08000 {
--		#address-cells = <1>;
--		#size-cells = <1>;
--		#iommu-cells = <1>;
--		compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
--		ranges = <0 0x1f08000 0x10000>;
--		clocks = <&gcc GCC_SMMU_CFG_CLK>,
--			 <&gcc GCC_GFX_TCU_CLK>;
--		clock-names = "iface", "bus";
--		qcom,iommu-secure-id = <18>;
--
--		// gfx3d_user:
--		iommu-ctx@1000 {
--			compatible = "qcom,msm-iommu-v1-ns";
--			reg = <0x1000 0x1000>;
--			interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
--		};
--
--		// gfx3d_priv:
--		iommu-ctx@2000 {
--			compatible = "qcom,msm-iommu-v1-ns";
--			reg = <0x2000 0x1000>;
--			interrupts = <GIC_SPI 242 IRQ_TYPE_LEVEL_HIGH>;
--		};
--	};
--
--	...
--
--	venus: video-codec@1d00000 {
--		...
--		iommus = <&apps_iommu 5>;
--	};
--
--	mdp: mdp@1a01000 {
--		...
--		iommus = <&apps_iommu 4>;
--	};
--
--	gpu@1c00000 {
--		...
--		iommus = <&gpu_iommu 1>, <&gpu_iommu 2>;
--	};
-diff --git a/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-new file mode 100644
-index 000000000000..d9fabdf930d9
---- /dev/null
-+++ b/Documentation/devicetree/bindings/iommu/qcom,iommu.yaml
-@@ -0,0 +1,113 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies legacy IOMMU implementations
-+
-+maintainers:
-+  - Konrad Dybcio <konrad.dybcio@linaro.org>
-+
-+description: |
-+  Qualcomm "B" family devices which are not compatible with arm-smmu have
-+  a similar looking IOMMU, but without access to the global register space
-+  and optionally requiring additional configuration to route context IRQs
-+  to non-secure vs secure interrupt line.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,msm8916-iommu
-+          - qcom,msm8953-iommu
-+      - const: qcom,msm-iommu-v1
-+
-+  clocks:
-+    items:
-+      - description: Clock required for IOMMU register group access
-+      - description: Clock required for underlying bus access
-+
-+  clock-names:
-+    items:
-+      - const: iface
-+      - const: bus
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  reg:
-+    maxItems: 1
-+
-+  ranges: true
-+
-+  qcom,iommu-secure-id:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      The SCM secure ID of the IOMMU instance.
-+
-+  '#address-cells':
-+    const: 1
-+
-+  '#size-cells':
-+    const: 1
-+
-+  '#iommu-cells':
-+    const: 1
-+
-+patternProperties:
-+  "^iommu-ctx@[0-9a-f]+$":
-+    type: object
-+    additionalProperties: false
-+    properties:
-+      compatible:
-+        enum:
-+          - qcom,msm-iommu-v1-ns
-+          - qcom,msm-iommu-v1-sec
-+
-+      interrupts:
-+        maxItems: 1
-+
-+      reg:
-+        maxItems: 1
-+
-+    required:
-+      - compatible
-+      - interrupts
-+      - reg
-+
-+required:
-+  - compatible
-+  - clocks
-+  - clock-names
-+  - ranges
-+  - '#address-cells'
-+  - '#size-cells'
-+  - '#iommu-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    apps_iommu: iommu@1e20000 {
-+      compatible = "qcom,msm8916-iommu", "qcom,msm-iommu-v1";
-+      reg = <0x01ef0000 0x3000>;
-+      clocks = <&gcc GCC_SMMU_CFG_CLK>,
-+               <&gcc GCC_APSS_TCU_CLK>;
-+      clock-names = "iface", "bus";
-+      qcom,iommu-secure-id = <17>;
-+      #address-cells = <1>;
-+      #size-cells = <1>;
-+      #iommu-cells = <1>;
-+      ranges = <0 0x01e20000 0x40000>;
-+
-+      /* mdp_0: */
-+      iommu-ctx@4000 {
-+        compatible = "qcom,msm-iommu-v1-ns";
-+        reg = <0x4000 0x1000>;
-+        interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-+      };
-+    };
 
----
-base-commit: 8417c8f5007bf4567ccffda850a3157c7d905f67
-change-id: 20230406-topic-qciommu-7c713de8ff9e
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+With best wishes
+Dmitry
