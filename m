@@ -2,116 +2,350 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D5A66DA36E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:38:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B9356DA395
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:41:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240241AbjDFUig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 16:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54380 "EHLO
+        id S239785AbjDFUlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 16:41:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240257AbjDFUiW (ORCPT
+        with ESMTP id S240296AbjDFUk4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 16:38:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A807FB47B;
-        Thu,  6 Apr 2023 13:34:53 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E014C6471F;
-        Thu,  6 Apr 2023 20:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E7CC433D2;
-        Thu,  6 Apr 2023 20:34:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680813275;
-        bh=piwLBENh4irhNGFJSxnTnkgU+tz4S7Qx3VDC5mBsLow=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=eKmaeMCgUMeITeDCNa33PhQDb7Ra//T9u6ZrmomOXgtwhrr6fphYxLIU4OQN4QXGe
-         KYEDTQUr+Ag83EPbtj7/mOs71LKexZ8aUpqf/3Ds8OM+NRZiCV7Yz9fVJEHG0I5pXG
-         4d5T45oQeqHxxxN9mfQT6g+a7MHaryvDunWV91pt9w3XTHSR8o0XjuQKZtRhdepfal
-         BJy2EVQTh0hqfLeKXaHaHjRRU1giIX/KarfNTuF3poLm/C5EzASATDPHZOWyphetxl
-         QRq7rFce1sH2MOhvQNmVa7pc8pLJBrwbrcpIyun52nycMADa89n+aCJkePKpTxkduL
-         mADB0NIRV4Izw==
-Date:   Thu, 6 Apr 2023 13:34:32 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thu, 6 Apr 2023 16:40:56 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373F0BDD0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 13:37:00 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id h25so52358958lfv.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 13:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680813418;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VFmASjlFzfA6uoUbB1Ooy6y166slMERC99CSnyagka4=;
+        b=LqiQsmhKn7dbnyaYbvTs/5jdjZOlO5BbYAs65idRtwF5Hk0JJ4tCkHBqjG03XxDyeO
+         6EF2l882myiiWua7fqyHsadzDL9/prIulQ1RNX01rqUVuRodnEvjylA6b6MeMrmGWPJI
+         3U8RVXshQGjBTJejuHLWHVbggmAxpesszqvGA5QApZdMzIRCNvd9Ez+cJ7mGFwrnMOtV
+         c2PYrWrYXopEtVg+nKD6t1vKBBS+3f+lz71ZL4aCE7ElzEnFaBcqdJ79rgzYuIRjZVvR
+         yvNkSayT763hk8IkQseGcem215wgxxyfsvqoAvswecZpIYZgdMlw9gd6VLYBYeSwXurf
+         yi4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680813418;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VFmASjlFzfA6uoUbB1Ooy6y166slMERC99CSnyagka4=;
+        b=kV/tpLFZHpVhXohUubEmzdijuOYDnW84ztyYioSzuq8l0kz5eEtDojLUNDHCbAT7yH
+         cIEKfuZy4UYqxdCo43rB9y5i7Z6uvP7Ftof7fCW36tgrRwJKPIMpByq2rzhftt6Er/Ke
+         4CefvymHjLYnfO8HDi35Q0A3QLwOOg73YFWfOboqkTGhk6hs0510FJc370sNUuMWT8e2
+         rBL0HKbGx2HGCRJbTJsRzpwxpYdoo4CJeIThOKX/5z0aXPoH5f5FFfiy9dg4IDLG69hk
+         zb5tDrjq5jErZma+p0vZ7R5SrIisiije2AtVCveIPi3BZmsbJdN57KyeK43TuOV+xhZT
+         gHsg==
+X-Gm-Message-State: AAQBX9cgvuhUvNgjFlwBWogKccSvFSOIE+QYw2Q1EihdHehw/NJgc81r
+        jvJPYqLrsZnVPzuRtr1fO4oCfA==
+X-Google-Smtp-Source: AKy350ZGCDYL/IhpP9avgV8z8oHQwA5tvxdCsLHNLCZEhh3s29VmEmhM1XoKCHUaOwKOSME2iCcfWg==
+X-Received: by 2002:a05:6512:244:b0:4b5:649a:9105 with SMTP id b4-20020a056512024400b004b5649a9105mr62505lfo.65.1680813418477;
+        Thu, 06 Apr 2023 13:36:58 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id p12-20020a19f00c000000b004eaf8613bc3sm401814lfc.284.2023.04.06.13.36.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Apr 2023 13:36:58 -0700 (PDT)
+Message-ID: <46279cd7-711c-1011-8d11-b90839015f53@linaro.org>
+Date:   Thu, 6 Apr 2023 22:36:55 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sa8775p-ride: add PMIC regulators
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v5 3/6] soc: qcom: Make the Qualcomm UFS/SDCC ICE a
- dedicated driver
-Message-ID: <20230406203432.GC20288@sol.localdomain>
-References: <20230403200530.2103099-1-abel.vesa@linaro.org>
- <20230403200530.2103099-4-abel.vesa@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230403200530.2103099-4-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230406192811.460888-1-brgl@bgdev.pl>
+ <20230406192811.460888-4-brgl@bgdev.pl>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230406192811.460888-4-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 03, 2023 at 11:05:27PM +0300, Abel Vesa wrote:
-> This takes the already existing duplicated support in both ufs-qcom
-> and sdhci-msm drivers and makes it a dedicated driver that can be used
-> by both mentioned drivers. The reason for this is because, staring with
-> SM8550, the ICE IP block is shared between UFS and SDCC, which means we
-> need to probe a dedicated device and share it between those two
-> consumers. So let's add the ICE dedicated driver as a soc driver.
-> Platforms that already have ICE supported, will use it as a library
-> as the of_qcom_ice_get will return an ICE instance created for the
-> consumer device. This allows the backwards compatibility with old-style
-> devicetree approach. Also, add support to HW version 4.x since it
-> works out-of-the-box with the current driver. The 4.x HW version is
-> found on SM8550 platform.
 
-Can you please split up long paragraphs like this into multiple paragraphs?
 
-> +	pdev = of_find_device_by_node(node);
-> +	if (!pdev) {
-> +		dev_err(dev, "Cannot find device node %s\n", node->name);
-> +		ice = ERR_PTR(-EPROBE_DEFER);
-> +		goto out;
-> +	}
+On 6.04.2023 21:28, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Add PMIC regulators for sa8775p-ride.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 233 ++++++++++++++++++++++
+>  1 file changed, 233 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> index a0d2024a69df..f238a02a5448 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
+> @@ -5,6 +5,8 @@
+>  
+>  /dts-v1/;
+>  
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 > +
-> +	ice = platform_get_drvdata(pdev);
-> +	if (!ice) {
-> +		dev_err(dev, "Cannot get ice instance from %s\n",
-> +			dev_name(&pdev->dev));
-> +		platform_device_put(pdev);
-> +		ice = ERR_PTR(-EPROBE_DEFER);
-> +		goto out;
-> +	}
+>  #include "sa8775p.dtsi"
+>  #include "sa8775p-pmics.dtsi"
+>  
+> @@ -25,6 +27,237 @@ chosen {
+>  	};
+>  };
+>  
+> +&apps_rsc {
+> +	regulators-0 {
+> +		compatible = "qcom,pmm8654au-rpmh-regulators";
+> +		qcom,pmic-id = "a";
 > +
-> +	ice->link = device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_SUPPLIER);
-> +	if (!ice->link) {
-> +		dev_err(&pdev->dev,
-> +			"Failed to create device link to consumer %s\n",
-> +			dev_name(dev));
-> +		ice = ERR_PTR(-EINVAL);
-> +	}
-
-Is a call to platform_device_put() missing above?
-
-- Eric
+> +		vreg_s4a: smps4 {
+> +			regulator-name = "vreg_s4a";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1816000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s5a: smps5 {
+> +			regulator-name = "vreg_s5a";
+> +			regulator-min-microvolt = <1850000>;
+> +			regulator-max-microvolt = <1996000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s9a: smps9 {
+> +			regulator-name = "vreg_s9a";
+> +			regulator-min-microvolt = <535000>;
+> +			regulator-max-microvolt = <1120000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l4a: ldo4 {
+> +			regulator-name = "vreg_l4a";
+> +			regulator-min-microvolt = <788000>;
+> +			regulator-max-microvolt = <1050000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l5a: ldo5 {
+> +			regulator-name = "vreg_l5a";
+> +			regulator-min-microvolt = <870000>;
+> +			regulator-max-microvolt = <950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6a: ldo6 {
+> +			regulator-name = "vreg_l6a";
+> +			regulator-min-microvolt = <870000>;
+> +			regulator-max-microvolt = <970000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7a: ldo7 {
+> +			regulator-name = "vreg_l7a";
+> +			regulator-min-microvolt = <720000>;
+> +			regulator-max-microvolt = <950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8a: ldo8 {
+> +			regulator-name = "vreg_l8a";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <3300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l9a: ldo9 {
+> +			regulator-name = "vreg_l9a";
+> +			regulator-min-microvolt = <2970000>;
+> +			regulator-max-microvolt = <3544000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-1 {
+> +		compatible = "qcom,pmm8654au-rpmh-regulators";
+> +		qcom,pmic-id = "c";
+> +
+> +		vreg_l1c: ldo1 {
+> +			regulator-name = "vreg_l1c";
+> +			regulator-min-microvolt = <1140000>;
+> +			regulator-max-microvolt = <1260000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2c: ldo2 {
+> +			regulator-name = "vreg_l2c";
+> +			regulator-min-microvolt = <900000>;
+> +			regulator-max-microvolt = <1100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3c: ldo3 {
+> +			regulator-name = "vreg_l3c";
+> +			regulator-min-microvolt = <1100000>;
+> +			regulator-max-microvolt = <1300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l4c: ldo4 {
+> +			regulator-name = "vreg_l4c";
+> +			regulator-min-microvolt = <1100000>;
+> +			regulator-max-microvolt = <1300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			/*
+> +			 * FIXME: This should have regulator-allow-set-load but
+> +			 * we're getting an over-current fault from the PMIC
+> +			 * when switching to LPM.
+> +			 */
+> +		};
+> +
+> +		vreg_l5c: ldo5 {
+> +			regulator-name = "vreg_l5c";
+> +			regulator-min-microvolt = <1100000>;
+> +			regulator-max-microvolt = <1300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6c: ldo6 {
+> +			regulator-name = "vreg_l6c";
+> +			regulator-min-microvolt = <1620000>;
+> +			regulator-max-microvolt = <1980000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7c: ldo7 {
+> +			regulator-name = "vreg_l7c";
+> +			regulator-min-microvolt = <1620000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8c: ldo8 {
+> +			regulator-name = "vreg_l8c";
+> +			regulator-min-microvolt = <2400000>;
+> +			regulator-max-microvolt = <3300000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l9c: ldo9 {
+> +			regulator-name = "vreg_l9c";
+> +			regulator-min-microvolt = <1650000>;
+> +			regulator-max-microvolt = <2700000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	regulators-2 {
+> +		compatible = "qcom,pmm8654au-rpmh-regulators";
+> +		qcom,pmic-id = "e";
+> +
+> +		vreg_s4e: smps4 {
+> +			regulator-name = "vreg_s4e";
+> +			regulator-min-microvolt = <970000>;
+> +			regulator-max-microvolt = <1520000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s7e: smps7 {
+> +			regulator-name = "vreg_s7e";
+> +			regulator-min-microvolt = <1010000>;
+> +			regulator-max-microvolt = <1170000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s9e: smps9 {
+> +			regulator-name = "vreg_s9e";
+> +			regulator-min-microvolt = <300000>;
+> +			regulator-max-microvolt = <570000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6e: ldo6 {
+> +			regulator-name = "vreg_l6e";
+> +			regulator-min-microvolt = <1280000>;
+> +			regulator-max-microvolt = <1450000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8e: ldo8 {
+> +			regulator-name = "vreg_l8e";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1950000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
+> +						   RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +};
+> +
+>  &i2c18 {
+>  	clock-frequency = <400000>;
+>  	pinctrl-0 = <&qup_i2c18_default>;
