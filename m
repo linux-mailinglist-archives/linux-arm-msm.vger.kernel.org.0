@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B9356DA395
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:41:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BDB56DA3BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 22:42:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239785AbjDFUlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 16:41:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
+        id S240385AbjDFUmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 16:42:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240296AbjDFUk4 (ORCPT
+        with ESMTP id S239772AbjDFUmG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 16:40:56 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373F0BDD0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 13:37:00 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id h25so52358958lfv.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 13:37:00 -0700 (PDT)
+        Thu, 6 Apr 2023 16:42:06 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE1FC66A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 13:38:58 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id s20so21587117ljp.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 13:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680813418;
+        d=linaro.org; s=google; t=1680813536;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VFmASjlFzfA6uoUbB1Ooy6y166slMERC99CSnyagka4=;
-        b=LqiQsmhKn7dbnyaYbvTs/5jdjZOlO5BbYAs65idRtwF5Hk0JJ4tCkHBqjG03XxDyeO
-         6EF2l882myiiWua7fqyHsadzDL9/prIulQ1RNX01rqUVuRodnEvjylA6b6MeMrmGWPJI
-         3U8RVXshQGjBTJejuHLWHVbggmAxpesszqvGA5QApZdMzIRCNvd9Ez+cJ7mGFwrnMOtV
-         c2PYrWrYXopEtVg+nKD6t1vKBBS+3f+lz71ZL4aCE7ElzEnFaBcqdJ79rgzYuIRjZVvR
-         yvNkSayT763hk8IkQseGcem215wgxxyfsvqoAvswecZpIYZgdMlw9gd6VLYBYeSwXurf
-         yi4w==
+        bh=Ev5hN9s8w8JulYzATwh7JsfqAzOtHOwmwJARepKyeMw=;
+        b=uNfdk0aordhm2U+uez5lxiSDLS/E8esBnea+IgMtiNchJog0+I5Qz1K0nQtDN04f0W
+         MvantI/obc5ZeUBW4v0d+LJrObwS/cKin/EJ1uXiRzdu3JcoZ0jYcCPenmIXGDcnEZqA
+         PaI+jIV0JhEsBjb6pI1VHbdnkYx+pcmJjozykULCEc4qwzTWsyI85O+rLgLhIMYaPbt2
+         NDMJxAJ+Hv6+2/LxAhehu5kEL/eae6SskCFlAZK5RI1BGWjd7OE+fqTjqzerPB8D9kuv
+         dF31PDSKQCBGFCpbyQlKkH75wPzmrc7c1bhzng4lxeqDWm4muX6ThgyBmO8tAHi6Le8M
+         d/BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680813418;
+        d=1e100.net; s=20210112; t=1680813536;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VFmASjlFzfA6uoUbB1Ooy6y166slMERC99CSnyagka4=;
-        b=kV/tpLFZHpVhXohUubEmzdijuOYDnW84ztyYioSzuq8l0kz5eEtDojLUNDHCbAT7yH
-         cIEKfuZy4UYqxdCo43rB9y5i7Z6uvP7Ftof7fCW36tgrRwJKPIMpByq2rzhftt6Er/Ke
-         4CefvymHjLYnfO8HDi35Q0A3QLwOOg73YFWfOboqkTGhk6hs0510FJc370sNUuMWT8e2
-         rBL0HKbGx2HGCRJbTJsRzpwxpYdoo4CJeIThOKX/5z0aXPoH5f5FFfiy9dg4IDLG69hk
-         zb5tDrjq5jErZma+p0vZ7R5SrIisiije2AtVCveIPi3BZmsbJdN57KyeK43TuOV+xhZT
-         gHsg==
-X-Gm-Message-State: AAQBX9cgvuhUvNgjFlwBWogKccSvFSOIE+QYw2Q1EihdHehw/NJgc81r
-        jvJPYqLrsZnVPzuRtr1fO4oCfA==
-X-Google-Smtp-Source: AKy350ZGCDYL/IhpP9avgV8z8oHQwA5tvxdCsLHNLCZEhh3s29VmEmhM1XoKCHUaOwKOSME2iCcfWg==
-X-Received: by 2002:a05:6512:244:b0:4b5:649a:9105 with SMTP id b4-20020a056512024400b004b5649a9105mr62505lfo.65.1680813418477;
-        Thu, 06 Apr 2023 13:36:58 -0700 (PDT)
+        bh=Ev5hN9s8w8JulYzATwh7JsfqAzOtHOwmwJARepKyeMw=;
+        b=DXqzMD63BGiygfRN6xc92Z0X6e6mlIUWIJvBJGNbpgBfErH47ExF4uUcYcL+g+gtmn
+         0mUUkZ0kWQLTcCklnHQZOdF5YPbpUekGvCbcIeLhFleR2Qyh3hFk+XZGHo8AeRIjGeOB
+         4FwoTeYHQLHQrmEnFF0waw/BZS7jeUM42ShXRs/fbig4pfmzhvJwHcaph0YyHFuiOYsf
+         t8SrACBtXMcdi6cT7CJ0LMMRAb9cD30zxEiPc4ACPPBF/zrW9QBdFfvP3r9DYgEKj5j9
+         fd8xQziPi0ro5TUOuLpyoOu9Cg6OL4OJpHmoPDv+XxOF1ICBy6BGDEHw89NutK8JC9x/
+         tZtw==
+X-Gm-Message-State: AAQBX9d/ZqRrah2ktmhaAL51Z5eHbE49TtqTJxubFoplXzmhNXvGg5p4
+        3+ZqH0G1SZKWRsu6sIqQK9hr6Q==
+X-Google-Smtp-Source: AKy350aLZqM5dDvzHdfZEM/juTBxRGBJKWn1U+UKEnBo8v9epMrGGWEy59cQT9Ueb/raFbSaz2xtIg==
+X-Received: by 2002:a2e:a408:0:b0:29c:44f1:c1df with SMTP id p8-20020a2ea408000000b0029c44f1c1dfmr2944844ljn.41.1680813536458;
+        Thu, 06 Apr 2023 13:38:56 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id p12-20020a19f00c000000b004eaf8613bc3sm401814lfc.284.2023.04.06.13.36.56
+        by smtp.gmail.com with ESMTPSA id z4-20020a2e8404000000b002a483f01d9csm428053ljg.85.2023.04.06.13.38.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 13:36:58 -0700 (PDT)
-Message-ID: <46279cd7-711c-1011-8d11-b90839015f53@linaro.org>
-Date:   Thu, 6 Apr 2023 22:36:55 +0200
+        Thu, 06 Apr 2023 13:38:56 -0700 (PDT)
+Message-ID: <ae04df79-10d6-6a38-715b-8f00e8764d85@linaro.org>
+Date:   Thu, 6 Apr 2023 22:38:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sa8775p-ride: add PMIC regulators
+Subject: Re: [PATCH V3 2/5] clk: qcom: apss-ipq-pll: Add support for IPQ9574
 Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230406192811.460888-1-brgl@bgdev.pl>
- <20230406192811.460888-4-brgl@bgdev.pl>
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        jassisinghbrar@gmail.com, catalin.marinas@arm.com, will@kernel.org,
+        dmitry.baryshkov@linaro.org, arnd@arndb.de,
+        geert+renesas@glider.be, nfraprado@collabora.com,
+        broonie@kernel.org, rafal@milecki.pl,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
+References: <20230406061314.10916-1-quic_devipriy@quicinc.com>
+ <20230406061314.10916-3-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230406192811.460888-4-brgl@bgdev.pl>
+In-Reply-To: <20230406061314.10916-3-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -85,267 +88,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6.04.2023 21:28, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 6.04.2023 08:13, Devi Priya wrote:
+> Add the compatible and configuration values for A73 Huayra PLL found
+> on IPQ9574.
 > 
-> Add PMIC regulators for sa8775p-ride.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 233 ++++++++++++++++++++++
->  1 file changed, 233 insertions(+)
+>  Changes in V3:
+> 	- Updated the subject and aligned the commit message
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index a0d2024a69df..f238a02a5448 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -5,6 +5,8 @@
->  
->  /dts-v1/;
->  
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +
->  #include "sa8775p.dtsi"
->  #include "sa8775p-pmics.dtsi"
->  
-> @@ -25,6 +27,237 @@ chosen {
->  	};
+>  drivers/clk/qcom/apss-ipq-pll.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+> index cf4f0d340cbf..ce28d882ee78 100644
+> --- a/drivers/clk/qcom/apss-ipq-pll.c
+> +++ b/drivers/clk/qcom/apss-ipq-pll.c
+> @@ -111,6 +111,18 @@ static const struct alpha_pll_config ipq8074_pll_config = {
+>  	.test_ctl_hi_val = 0x4000,
 >  };
 >  
-> +&apps_rsc {
-> +	regulators-0 {
-> +		compatible = "qcom,pmm8654au-rpmh-regulators";
-> +		qcom,pmic-id = "a";
-> +
-> +		vreg_s4a: smps4 {
-> +			regulator-name = "vreg_s4a";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1816000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s5a: smps5 {
-> +			regulator-name = "vreg_s5a";
-> +			regulator-min-microvolt = <1850000>;
-> +			regulator-max-microvolt = <1996000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s9a: smps9 {
-> +			regulator-name = "vreg_s9a";
-> +			regulator-min-microvolt = <535000>;
-> +			regulator-max-microvolt = <1120000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l4a: ldo4 {
-> +			regulator-name = "vreg_l4a";
-> +			regulator-min-microvolt = <788000>;
-> +			regulator-max-microvolt = <1050000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l5a: ldo5 {
-> +			regulator-name = "vreg_l5a";
-> +			regulator-min-microvolt = <870000>;
-> +			regulator-max-microvolt = <950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6a: ldo6 {
-> +			regulator-name = "vreg_l6a";
-> +			regulator-min-microvolt = <870000>;
-> +			regulator-max-microvolt = <970000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7a: ldo7 {
-> +			regulator-name = "vreg_l7a";
-> +			regulator-min-microvolt = <720000>;
-> +			regulator-max-microvolt = <950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8a: ldo8 {
-> +			regulator-name = "vreg_l8a";
-> +			regulator-min-microvolt = <2504000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l9a: ldo9 {
-> +			regulator-name = "vreg_l9a";
-> +			regulator-min-microvolt = <2970000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-1 {
-> +		compatible = "qcom,pmm8654au-rpmh-regulators";
-> +		qcom,pmic-id = "c";
-> +
-> +		vreg_l1c: ldo1 {
-> +			regulator-name = "vreg_l1c";
-> +			regulator-min-microvolt = <1140000>;
-> +			regulator-max-microvolt = <1260000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2c: ldo2 {
-> +			regulator-name = "vreg_l2c";
-> +			regulator-min-microvolt = <900000>;
-> +			regulator-max-microvolt = <1100000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3c: ldo3 {
-> +			regulator-name = "vreg_l3c";
-> +			regulator-min-microvolt = <1100000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l4c: ldo4 {
-> +			regulator-name = "vreg_l4c";
-> +			regulator-min-microvolt = <1100000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			/*
-> +			 * FIXME: This should have regulator-allow-set-load but
-> +			 * we're getting an over-current fault from the PMIC
-> +			 * when switching to LPM.
-> +			 */
-> +		};
-> +
-> +		vreg_l5c: ldo5 {
-> +			regulator-name = "vreg_l5c";
-> +			regulator-min-microvolt = <1100000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6c: ldo6 {
-> +			regulator-name = "vreg_l6c";
-> +			regulator-min-microvolt = <1620000>;
-> +			regulator-max-microvolt = <1980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7c: ldo7 {
-> +			regulator-name = "vreg_l7c";
-> +			regulator-min-microvolt = <1620000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8c: ldo8 {
-> +			regulator-name = "vreg_l8c";
-> +			regulator-min-microvolt = <2400000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l9c: ldo9 {
-> +			regulator-name = "vreg_l9c";
-> +			regulator-min-microvolt = <1650000>;
-> +			regulator-max-microvolt = <2700000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-2 {
-> +		compatible = "qcom,pmm8654au-rpmh-regulators";
-> +		qcom,pmic-id = "e";
-> +
-> +		vreg_s4e: smps4 {
-> +			regulator-name = "vreg_s4e";
-> +			regulator-min-microvolt = <970000>;
-> +			regulator-max-microvolt = <1520000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s7e: smps7 {
-> +			regulator-name = "vreg_s7e";
-> +			regulator-min-microvolt = <1010000>;
-> +			regulator-max-microvolt = <1170000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_s9e: smps9 {
-> +			regulator-name = "vreg_s9e";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <570000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6e: ldo6 {
-> +			regulator-name = "vreg_l6e";
-> +			regulator-min-microvolt = <1280000>;
-> +			regulator-max-microvolt = <1450000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8e: ldo8 {
-> +			regulator-name = "vreg_l8e";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-> +						   RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
+> +static const struct alpha_pll_config ipq9574_pll_config = {
+> +	.l = 0x3b,
+> +	.config_ctl_val = 0x200d4828,
+> +	.config_ctl_hi_val = 0x6,
+> +	.early_output_mask = BIT(3),
+> +	.aux2_output_mask = BIT(2),
+> +	.aux_output_mask = BIT(1),
+> +	.main_output_mask = BIT(0),
+> +	.test_ctl_val = 0x0,
+> +	.test_ctl_hi_val = 0x4000,
 > +};
 > +
->  &i2c18 {
->  	clock-frequency = <400000>;
->  	pinctrl-0 = <&qup_i2c18_default>;
+>  struct apss_pll_data {
+>  	int pll_type;
+>  	struct clk_alpha_pll *pll;
+> @@ -135,6 +147,12 @@ static struct apss_pll_data ipq6018_pll_data = {
+>  	.pll_config = &ipq6018_pll_config,
+>  };
+>  
+> +static struct apss_pll_data ipq9574_pll_data = {
+> +	.pll_type = CLK_ALPHA_PLL_TYPE_HUAYRA,
+> +	.pll = &ipq_pll_huayra,
+> +	.pll_config = &ipq9574_pll_config,
+> +};
+> +
+>  static const struct regmap_config ipq_pll_regmap_config = {
+>  	.reg_bits		= 32,
+>  	.reg_stride		= 4,
+> @@ -180,6 +198,7 @@ static const struct of_device_id apss_ipq_pll_match_table[] = {
+>  	{ .compatible = "qcom,ipq5332-a53pll", .data = &ipq5332_pll_data },
+>  	{ .compatible = "qcom,ipq6018-a53pll", .data = &ipq6018_pll_data },
+>  	{ .compatible = "qcom,ipq8074-a53pll", .data = &ipq8074_pll_data },
+> +	{ .compatible = "qcom,ipq9574-a73pll", .data = &ipq9574_pll_data },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, apss_ipq_pll_match_table);
