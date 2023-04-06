@@ -2,80 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF86F6D9F23
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:45:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73C7F6D9F29
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 19:47:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239956AbjDFRpp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 13:45:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39106 "EHLO
+        id S240086AbjDFRrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 13:47:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239665AbjDFRpo (ORCPT
+        with ESMTP id S240088AbjDFRrQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 13:45:44 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB6DDE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 10:45:43 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-946a769ae5cso125879466b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 10:45:43 -0700 (PDT)
+        Thu, 6 Apr 2023 13:47:16 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3541BC5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 10:47:14 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id c9so41407005lfb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 10:47:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680803141;
+        d=linaro.org; s=google; t=1680803232;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=iDtxzvUg1yWLifiB6kB+sDRZj/DJwVq/5cG70JDnEHc=;
-        b=j333mUs9ZlR7d+yes5ED7p4biRa4m4REkB5fiwfVdhMuiEgPauY0zg+0eWFZSGrbia
-         vGeNOn6vkeUpvG9Ky74BCI7+/NUTyTNyJ6CZhmu6CnbNG9377jeTd3sF5Aq+iQZPePgX
-         ftZCAvgGpa1XCoetxNQC6SvfaqvIPecA0Lp/LHoPiAc4iSnQLCPv4OiqCpv/SmeVVtN7
-         Z2+gOVgOlMR2aBRGICgTpu6X3dSiTQ4xSqogum90KvWNiSXoluCiPzQ2YhSFkq0CSvln
-         fniEYI+BsnMrke/X8S+mCUKCm0nfHi6KBPQ/Z30ejf12aMk0dotmgTN/YeWJMZXhJcB9
-         49AQ==
+        bh=g2kphCzdyI8pFLM0XEcu5T4v/H3byCGSRbAeet3UKsQ=;
+        b=wDBvHwA7TFNy7JGBWgBcjPeqww2KMYjGxDTyJpfdjbn0yRz8IK9VkJ4QLV8oYvMcNS
+         UY+DsmQUN6SprUkBpgwlb6AdcA3jCYnvT2SComMrNGqJcJmgST5wbMpZ7ime7Gg/iRgI
+         k4OxRtFGDhZRrnuisEoVwNZg2ZjVStRNpIrGLL/yM/OtLIgBR61+udnwaw4a+2FAgTzB
+         tXRjfrpy6amxqkiAd6Oc5f6PF0/5qxN7Iino3SXatzD63d64Wvw2PP6ion3O9tFZIpVv
+         vKZbRKu0Wm/LP81xZ4aGpcVt45fXpnm/NYXLMUU+bO7cyER01JU1lNUzspPSJmtETmzr
+         3O5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680803141;
+        d=1e100.net; s=20210112; t=1680803232;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iDtxzvUg1yWLifiB6kB+sDRZj/DJwVq/5cG70JDnEHc=;
-        b=XaWnmpRl5lnitXmE91xD8ryN5gjKEkJbZZxPDs0axyRLFHkSlJa5G+VlUfAZFXG8T0
-         ITEuYL2kaedygICW/lFLtj0cVed/+NfJ1AY7FZwbVdBNou53JzTETTWU/s8er/6d5u5t
-         4aFcbVxZrVioATRZlP4+hGcoDgXskCd/CuC+MnASA+AbjRkcWNwHtLkF0LVrQrqMFgiX
-         dNGjytysB2opldr7EaL7oyoVZXNH9AKYPTxBlqTa5l4RVd8/CLRB6L1KQQ8B6ejFyCV8
-         FyZpJZPRFAjt6EKJ2XQvFyBFHpOPBqSDi9YOkm08/itPhwc6/PTrhfbB164LpuuzAURc
-         C2Tg==
-X-Gm-Message-State: AAQBX9cg5l6WvSkJHt1bVOKGfRzFgidkttFkcWgbJEFO0Kebrovo/HoJ
-        l1BZziOB0AXh9Wji6PTqsD7Aig==
-X-Google-Smtp-Source: AKy350av2omisW9B8G4Q3lstD+cTmNqSjHONZdE8w0j8lPdV10ZP4RupsYnNz/GjneZIWMl944Mnhg==
-X-Received: by 2002:aa7:c0ca:0:b0:4fa:ba60:8188 with SMTP id j10-20020aa7c0ca000000b004faba608188mr304985edp.8.1680803141624;
-        Thu, 06 Apr 2023 10:45:41 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed? ([2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed])
-        by smtp.gmail.com with ESMTPSA id a29-20020a509b5d000000b004fd204d180dsm994752edj.64.2023.04.06.10.45.40
+        bh=g2kphCzdyI8pFLM0XEcu5T4v/H3byCGSRbAeet3UKsQ=;
+        b=25fT9m4TuHvMNhAZRfhoaX4+67y8sVl7VOUnyj6cI2no5fDajM+m+Chi1dDoV8HM3W
+         SOtCnU3zwD6SfDmdgMqPRj8mm3qXSKrfi6dbwf5i4j2/SbUoC36TrQJGZNykbtkWw00x
+         6GaORxcv9E1HPQz7218uAWv8XvFNUZ+9jVcJlshG/dXJ9iqMDhWb3eB4ZxQ6H1XI1kRl
+         xsGlOceO0SPjb1DJ57gvNKRafQm0BliyIXxOxC3oXo2CT9YSG8kqJIuiEkE5vbO6cN19
+         Yv7gOxuOaiBeybJ2+VuAS6NQJliotBb7+O+A4knOFawbLH1sTe2oamhCy6W772m8IF2K
+         QJiw==
+X-Gm-Message-State: AAQBX9d7UH0q+XLNx/JDkz18IEPpBEcY8ppHbN4yaCLA5NkM4O7JkjG2
+        lib7yVIDd0/NNYYQtGUd54WXNw==
+X-Google-Smtp-Source: AKy350aFVxyM/ori3/dci0NsR1+uV42sLIEpq5lHD/+dBdDEqIdqvBj1dMatOXAgwjo45isQTkIfpg==
+X-Received: by 2002:a05:6512:991:b0:4dd:cb1d:b3cc with SMTP id w17-20020a056512099100b004ddcb1db3ccmr27761lft.11.1680803232479;
+        Thu, 06 Apr 2023 10:47:12 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id z17-20020a19f711000000b004ec634b0e26sm50398lfe.307.2023.04.06.10.47.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 10:45:41 -0700 (PDT)
-Message-ID: <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
-Date:   Thu, 6 Apr 2023 19:45:40 +0200
+        Thu, 06 Apr 2023 10:47:12 -0700 (PDT)
+Message-ID: <ecf48eaf-b4b9-3749-894d-0f06d0b954e3@linaro.org>
+Date:   Thu, 6 Apr 2023 20:47:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>
-Cc:     Thomas Gleixner <tglx@linutronix.de>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
- <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
- <168069726278.2356075.14351594478003012447.robh@kernel.org>
- <20230405134727.GA2461305-robh@kernel.org>
- <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 3/3] thermal/drivers/tsens: Extract and shift-in optional
+ MSB
+Content-Language: en-GB
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, amitk@kernel.org,
+        thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230406145850.357296-1-bryan.odonoghue@linaro.org>
+ <20230406145850.357296-4-bryan.odonoghue@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230406145850.357296-4-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -87,46 +80,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/04/2023 15:49, Konrad Dybcio wrote:
+On 06/04/2023 17:58, Bryan O'Donoghue wrote:
+> In msm8939 some of the sensor calibration data traverses byte boundaries.
+> Two examples of this are thermal sensor 2 point 1 and sensor 9 point 2.
 > 
+> For sensor 2 point 1 we can get away with a simple read traversing byte
+> boundaries as the calibration most significant bits are adjacent to the
+> least significant across the byte boundary.
 > 
-> On 5.04.2023 15:47, Rob Herring wrote:
->> On Wed, Apr 05, 2023 at 07:22:40AM -0500, Rob Herring wrote:
->>>
->>> On Wed, 05 Apr 2023 12:48:34 +0200, Konrad Dybcio wrote:
->>>> Due to the wild nature of the Qualcomm RPM Message RAM, we can't really
->>>> use 'reg' to point to the MPM's slice of Message RAM without cutting into
->>>> an already-defined RPM MSG RAM node used for GLINK and SMEM.
->>>>
->>>> Document passing the register space as a slice of SRAM through the
->>>> qcom,rpm-msg-ram property. This also makes 'reg' deprecated.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>  .../devicetree/bindings/interrupt-controller/qcom,mpm.yaml   | 12 +++++++++---
->>>>  1 file changed, 9 insertions(+), 3 deletions(-)
->>>>
->>>
->>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
->>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->>>
->>> yamllint warnings/errors:
->>>
->>> dtschema/dtc warnings/errors:
->>> Documentation/devicetree/bindings/interrupt-controller/qcom,mpm.example.dts:22.35-38.11: Warning (node_name_vs_property_name): /example-0/interrupt-controller: node name and property name conflict
->>
->> Looks like this is colliding with the example template which has to 
->> craft an interrupt provider for 'interrupts' properties. Either adding a 
->> parent node or using interrupts-extended instead should work-around it.
-> Check the devicetree-org issue linked in the cover letter, please!
+> In this case a read starting at the end of the first byte for nine bits
+> will deliver up the data we want.
 > 
-> I suppose wrapping it in a parent node could work as a temporary
-> measure, but since it belongs outside /soc, I'd have to make up
-> a bogus simple-bus, I think.
+> In the case of sensor 9 point 2 however, the most significant bits are not
+> adjacent and so therefore we need to perform two reads and or the bits
+> together.
+> 
+> If reg.p1_shift or reg.p2_shift is set then automatically search for
+> pX_sY_msb in the dts applying pX_shift as a right shift or into the pX_sY
+> value.
 
-I don't think your issue in dtschema is accurate. As Rob suggested, you
-need wrapping node.
+I think that having this in the common code is a bit of an overkill. No 
+other platform has this 'peculiarity' up to now. So, it might be better 
+to add 8939-specific calibration function that calls 
+tsens_read_calibration(), mixes in the s10_p2_msb and then calls 
+compute_intercept_slope().
 
-Best regards,
-Krzysztof
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   drivers/thermal/qcom/tsens.c | 33 +++++++++++++++++++++++++++++++++
+>   1 file changed, 33 insertions(+)
+> 
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index a260f563b4889..eff2c8671c343 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -74,6 +74,7 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
+>   {
+>   	u32 mode;
+>   	u32 base1, base2;
+> +	u32 msb;
+>   	char name[] = "sXX_pY_backup"; /* s10_p1_backup */
+>   	int i, ret;
+>   
+> @@ -122,6 +123,22 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
+>   
+>   		dev_dbg(priv->dev, "%s 0x%x\n", name, p1[i]);
+>   
+> +		if (priv->reg && priv->reg[i].p1_shift) {
+> +			ret = snprintf(name, sizeof(name), "s%d_p1_msb",
+> +				       priv->sensor[i].hw_id);
+> +			if (ret < 0)
+> +				return ret;
+> +
+> +			ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &msb);
+> +			if (ret) {
+> +				dev_err(priv->dev, "Failed to read %s\n", name);
+> +				return ret;
+> +			}
+> +
+> +			dev_dbg(priv->dev, "%s 0x%x\n", name, msb);
+> +			p1[i] |= msb >> priv->reg[i].p1_shift;
+> +		}
+> +
+>   		ret = snprintf(name, sizeof(name), "s%d_p2%s", priv->sensor[i].hw_id,
+>   			       backup ? "_backup" : "");
+>   		if (ret < 0)
+> @@ -134,6 +151,22 @@ int tsens_read_calibration(struct tsens_priv *priv, int shift, u32 *p1, u32 *p2,
+>   		}
+>   
+>   		dev_dbg(priv->dev, "%s 0x%x\n", name, p2[i]);
+> +
+> +		if (priv->reg && priv->reg[i].p2_shift) {
+> +			ret = snprintf(name, sizeof(name), "s%d_p2_msb",
+> +				       priv->sensor[i].hw_id);
+> +			if (ret < 0)
+> +				return ret;
+> +
+> +			ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &msb);
+> +			if (ret) {
+> +				dev_err(priv->dev, "Failed to read %s\n", name);
+> +				return ret;
+> +			}
+> +
+> +			dev_dbg(priv->dev, "%s 0x%x\n", name, msb);
+> +			p2[i] |= msb >> priv->reg[i].p2_shift;
+> +		}
+>   	}
+>   
+>   	switch (mode) {
+
+-- 
+With best wishes
+Dmitry
 
