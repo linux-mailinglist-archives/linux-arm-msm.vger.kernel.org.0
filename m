@@ -2,201 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAFF06D9001
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 09:02:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4EC56D901A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  6 Apr 2023 09:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235941AbjDFHCo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 6 Apr 2023 03:02:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40514 "EHLO
+        id S236037AbjDFHFu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 6 Apr 2023 03:05:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235540AbjDFHCD (ORCPT
+        with ESMTP id S235823AbjDFHFM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 6 Apr 2023 03:02:03 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40993AD0B;
-        Thu,  6 Apr 2023 00:01:24 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3366dnsH031473;
-        Thu, 6 Apr 2023 07:01:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=c5n0Io+nI3jAJhMEhIDADWL55PCDRw/hMJE8Y3nCFpg=;
- b=DaDCCSJ4lFnFj6O9LRcUVR0zVk1Rtwiy5YImYKrGA/FvMKy2I7XD/Lm4MQqJ7L2L5vi/
- ig5p3MDfvKz1BFwUmePpHZTbRfLtb/lwwphzZcLn4GLN/+kfT7FTUfV9HTk69MdOLMXJ
- 1SgC6qTvBsNIsVMXiSvIhLhg/P3b+fzvnPBgEV4Vup199Q+FOnjL+OZOOZ0FyV4wd1rE
- clTpi+CY5nz/Wt8+z2ALIMMe6Rsv3F7IB6iY/UAHXA+WyDoN/9Po5/blUX09ZWnHG73z
- KbO3bow8/ZrRCQHYDL0pVTlYiMiWYAI7wSVNJH5nfJdK0z2ZtIDVS46luirGlUyggmln lA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pss0rr1kg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 06 Apr 2023 07:01:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33671KVr015058
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 6 Apr 2023 07:01:20 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 6 Apr 2023 00:01:14 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
-Subject: [PATCH V3 5/5] arm64: dts: qcom: ipq9574: Add cpufreq support
-Date:   Thu, 6 Apr 2023 12:30:32 +0530
-Message-ID: <20230406070032.22243-6-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230406070032.22243-1-quic_devipriy@quicinc.com>
-References: <20230406070032.22243-1-quic_devipriy@quicinc.com>
+        Thu, 6 Apr 2023 03:05:12 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722BBAD22
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 00:03:40 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id y4so147026866edo.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 00:03:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680764611;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xt6w7DBEEp2oP9gq6uM1fJrHBdn8VFiv3bhU+Z8knvc=;
+        b=hVmARTOWOi8zcXg/wquYPGxpaxjcdvjoCiWvCn/vQkTDpU56ZAhW4rutJ//Xzx6vz6
+         sk3iRLVpvhW3aaX6lykCTeKgQdHEX3JMgzS3Fd8W/zp/KAEo3Uym7g3mEqBTKJ918jtL
+         ZptyNafVhadzQfCoJ9p/gMqw2crPzdyyUqSqaxzOQBoP36R43wjUYT0BWvOWLp/G4g4r
+         w2MNwZyMW99BYuaI53XP55LtMnPpEKKSs3VklWerLWaPLAqduIdjf2PAm+v4eSgUnQ3P
+         4jdU3H4yFFIg4N6F6dc7AXYvM5/+VezfVxrJ8j51k/LsJlDEj4wZKerHQUaes0qBUMwa
+         FFTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680764611;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xt6w7DBEEp2oP9gq6uM1fJrHBdn8VFiv3bhU+Z8knvc=;
+        b=Ba0s5dDafRRNtGp18QObLzOwHaG4rdEui59hwhZIpZpgzaqENMj/whgBBRdUoT1AQd
+         7EB8lfFolgYAVDGYRBVnFL22LsdRtrf7N0xYguaQbQHzAp9Rt7rcusXvvNjWLQMq30UR
+         oqHZnUsfb5yAYsn+DKONloogsTYXXUjoN0ziZ1gu/7t9n9w6FHu82WAFt/8nis3QmGGO
+         5fuYMN2SBJGjc490S4k//tyZdteIvf58RJ2oNXZSIw+7f15jREMpfAwkqjCNPf/eMsXX
+         KHjZ3p2Ns/0iKvG/CtEGYyf8gAg8CtRIUhECToSD4aOIo0BzauvAmaNlt8AXRb/2tNs3
+         fUyw==
+X-Gm-Message-State: AAQBX9c6QlXHb8KQ0epz2+3vzb0SG+1fxvXFevvKAVDkOGz9Nc0RTAu7
+        RSwl0jyM2b2amssYdVQCD3U2KQ==
+X-Google-Smtp-Source: AKy350YnhKpndWCuKkoEX1F9XMUWGFxBZSXdLPSCgbRgT7xN4Z0Df2myKsprNtK3DO5NAXHENav20w==
+X-Received: by 2002:a17:906:9145:b0:931:df8d:113 with SMTP id y5-20020a170906914500b00931df8d0113mr4673121ejw.26.1680764611021;
+        Thu, 06 Apr 2023 00:03:31 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed? ([2a02:810d:15c0:828:49e6:bb8c:a05b:c4ed])
+        by smtp.gmail.com with ESMTPSA id f13-20020a170906c08d00b0092f289b6fdbsm390050ejz.181.2023.04.06.00.03.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Apr 2023 00:03:30 -0700 (PDT)
+Message-ID: <11de8706-5753-472b-1fe0-de80bb3d8c8c@linaro.org>
+Date:   Thu, 6 Apr 2023 09:03:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: HuYSwljrkVIFJUQ2hsY6631WxfTeLVFI
-X-Proofpoint-ORIG-GUID: HuYSwljrkVIFJUQ2hsY6631WxfTeLVFI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-06_02,2023-04-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=939
- clxscore=1015 phishscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304060061
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] soundwire: qcom: Fix enumeration of second device on the
+ bus
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Cc:     stable@vger.kernel.org, Patrick Lai <quic_plai@quicinc.com>
+References: <20230405142926.842173-1-krzysztof.kozlowski@linaro.org>
+ <ecc13046-1a4f-77e7-c4dc-a5a4c1248572@linux.intel.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ecc13046-1a4f-77e7-c4dc-a5a4c1248572@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cpu freq nodes in the device tree to bump cpu frequency above 800MHz.
+On 05/04/2023 17:01, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 4/5/23 09:29, Krzysztof Kozlowski wrote:
+>> Some Soundwire buses (like &swr0 on Qualcomm HDK8450) have two devices,
+>> which can be brought from powerdown state one after another.  We need to
+>> keep enumerating them on each slave attached interrupt, otherwise only
+>> first will appear.
+>>
+>> Cc: <stable@vger.kernel.org>
+>> Fixes: a6e6581942ca ("soundwire: qcom: add auto enumeration support")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Cc: Patrick Lai <quic_plai@quicinc.com>
+>> ---
+>>  drivers/soundwire/qcom.c | 11 +++--------
+>>  1 file changed, 3 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>> index c296e0bf897b..1e5077d91f59 100644
+>> --- a/drivers/soundwire/qcom.c
+>> +++ b/drivers/soundwire/qcom.c
+>> @@ -587,14 +587,9 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
+>>  			case SWRM_INTERRUPT_STATUS_CHANGE_ENUM_SLAVE_STATUS:
+>>  				dev_dbg_ratelimited(swrm->dev, "SWR new slave attached\n");
+>>  				swrm->reg_read(swrm, SWRM_MCP_SLV_STATUS, &slave_status);
+>> -				if (swrm->slave_status == slave_status) {
+>> -					dev_dbg(swrm->dev, "Slave status not changed %x\n",
+>> -						slave_status);
+> 
+> it's not clear to me how removing this test helps with the two-device
+> configuration?
+> 
+> Or is this a case where the status for both devices changes at the same
+> time but the interrupt status remains set, so the next iteration of the
+> loop is ignored?
 
-Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- Changes in V3:
-	- No change
+I think the patch is not correct. I misinterpreted the slave status
+field and after double checking I see two speakers bound. Please ignore
+for now.
 
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 58 +++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 1f9b7529e7ed..cfef87b5fd22 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -6,6 +6,7 @@
-  * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-@@ -37,6 +38,10 @@
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -45,6 +50,10 @@
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -53,6 +62,10 @@
- 			reg = <0x2>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -61,6 +74,10 @@
- 			reg = <0x3>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -75,6 +92,47 @@
- 		reg = <0x0 0x40000000 0x0 0x0>;
- 	};
- 
-+	cpu_opp_table: opp-table-cpu {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-936000000 {
-+			opp-hz = /bits/ 64 <936000000>;
-+			opp-microvolt = <725000>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1104000000 {
-+			opp-hz = /bits/ 64 <1104000000>;
-+			opp-microvolt = <787500>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1416000000 {
-+			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <862500>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1488000000 {
-+			opp-hz = /bits/ 64 <1488000000>;
-+			opp-microvolt = <925000>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1800000000 {
-+			opp-hz = /bits/ 64 <1800000000>;
-+			opp-microvolt = <987500>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-2208000000 {
-+			opp-hz = /bits/ 64 <2208000000>;
-+			opp-microvolt = <1062500>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq9574", "qcom,scm";
--- 
-2.17.1
+Best regards,
+Krzysztof
 
