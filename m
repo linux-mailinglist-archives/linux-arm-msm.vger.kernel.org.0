@@ -2,67 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 523D16DB1E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:39:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 548BB6DB216
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231183AbjDGRj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:39:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
+        id S230011AbjDGRwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230369AbjDGRjH (ORCPT
+        with ESMTP id S229589AbjDGRwd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:39:07 -0400
+        Fri, 7 Apr 2023 13:52:33 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B90C3C155;
-        Fri,  7 Apr 2023 10:38:44 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF7E11D;
+        Fri,  7 Apr 2023 10:52:32 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1491E65329;
-        Fri,  7 Apr 2023 17:38:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B8EC4339E;
-        Fri,  7 Apr 2023 17:38:41 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 44DB464F8D;
+        Fri,  7 Apr 2023 17:52:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727BAC433EF;
+        Fri,  7 Apr 2023 17:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680889123;
-        bh=ShYE/NmpoSW62Nvk+UDzbzXRAyY8hKK3U9ol2L/cDjg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=M0dcZC1PwRN2HkRpAf18Y8Sc3xtdV99EC+vxYRCkvNNAP+f919nIOyOf5C1k+lysA
-         DsIPR1Qt8nC4oUYnjInR8TIxqXfTv7etNNAZFIr8N3Z4pgJcnzOnfgGSt+8WWdyUnl
-         AtCK3R+vmetr+XaPeV8TeeBy7ElBS52aIWcd/f+6IC92wBZ6VtySpHzS+akBWGLAPm
-         9FGQ7rTD0MB43HTwT8UqysfMbMPTFlPqN0cgjcBIFUJ0L4OURVzzGJE92PFWqiUUkv
-         QzbufEidnsWI3M3Syk9Vjk2T1AbA0NyhHej5ZBtJs+zEboLXJ09NMin4l6aPtNNsSc
-         ndslYUpGWzB9w==
+        s=k20201202; t=1680889951;
+        bh=MhhhjQ4pSBGhisBxx2pTmj4G3V0rJ5AYrElhbkgEyTg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TIWEXxa5qaYy98D7lMCS2Nguhnjc1UBLgmdsAkbLOs0dNwa/zlTnzMi6HCxONFS+T
+         iDR1UK4RO4azx9yp7GgD5tQPDGJkfkYRx0aBQy8W46gAXHH7pZ1R/TDh7oCq2OSGKg
+         DcPODIeofjHMkf0+6e22VZEwhuWvYNSXACBuHpT5uNYBDIUsxekig4oW+FSiLVm8Fx
+         gX+NdQ2ZNgHxO9IlX3y28S1LCJyeGTyxaiFBvqSEOxt2cAXv1kg9Lxl2Mz7/uJC7D2
+         B7SRouokA2wlLGVlbinDj8sAfSY866TJ6qSgn1Y0kAvnmLYnZy7tvs4M73S1R2TOlA
+         3m2KAoyQjCYxQ==
+Date:   Fri, 7 Apr 2023 10:55:20 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Maximilian Luz <luzmaximilian@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Chia-I Wu <olvaffe@gmail.com>, Luca Weiss <luca@z3ntu.xyz>,
-        Sean Paul <sean@poorly.run>,
-        Nathan Chancellor <nathan@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "open list:DEVICE FREQUENCY DEVFREQ" <linux-pm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>, Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org,
-        "Joel Fernandes (Google)" <joel@joelfernandes.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 00/23] drm/msm+PM+icc: Make job_run() reclaim-safe
-Date:   Fri,  7 Apr 2023 10:41:19 -0700
-Message-Id: <168088927578.2561591.14585371270684166515.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230320144356.803762-1-robdclark@gmail.com>
-References: <20230320144356.803762-1-robdclark@gmail.com>
+        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rajesh Patil <rajpat@codeaurora.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/14] Control Quad SPI pinctrl better on Qualcomm
+ Chromebooks
+Message-ID: <20230407175520.75f5z4hhzeq6qnnr@ripper>
+References: <20230323173019.3706069-1-dianders@chromium.org>
+ <CACRpkdaGpaiOVjEN6Ftq5=-yuAyD0xb7OcvtEsoqbTzias-xxw@mail.gmail.com>
+ <CAD=FV=W6QKfQxGcSrQdgp4VHYxfk7aYZOkYx4ve7QSpoZ-LM=A@mail.gmail.com>
+ <CACRpkdaUZbyEfkcHsNuQ=KhyuiKpunZJgvrnq90kQK8Z2V4jtg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdaUZbyEfkcHsNuQ=KhyuiKpunZJgvrnq90kQK8Z2V4jtg@mail.gmail.com>
 X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
@@ -72,24 +69,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Mar 2023 07:43:22 -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On Wed, Mar 29, 2023 at 10:50:34AM +0200, Linus Walleij wrote:
+> On Mon, Mar 27, 2023 at 11:51 PM Doug Anderson <dianders@chromium.org> wrote:
 > 
-> Inspired by https://lore.kernel.org/dri-devel/20200604081224.863494-10-daniel.vetter@ffwll.ch/
-> it seemed like a good idea to get rid of memory allocation in job_run()
-> fence signaling path, and use lockdep annotations to yell at us about
-> anything that could deadlock against shrinker/reclaim.  Anything that
-> can trigger reclaim, or block on any other thread that has triggered
-> reclaim, can block the GPU shrinker from releasing memory if it is
-> waiting the job to complete, causing deadlock.
+> > 1. Mark could land the SPI patch at any time, assuming he's OK with
+> > it. It can land totally independently.
 > 
-> [...]
+> OK this happened.
+> 
+> > Option A:
+> >
+> > 3. You land the pinctrl and binding patches in an immutable branch and
+> > merge into pinctrl.
+> >
+> > 4. Bjorn merges the immutable branch into the Qulacomm tree and places
+> > the last 3 dts patches atop.
+> 
+> Looks most appetizing.
+> 
+> I have applied patches 6,7,8 to this immutable branch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git/log/?h=ib-qcom-quad-spi
+> 
+> and I merged that into my "devel" branch for v6.4.
+> 
+> Bjorn can grab the branch if he wants it.
+> 
 
-Applied, thanks!
+Thank you,
+Bjorn
 
-[20/23] soc: qcom: smd-rpm: Use GFP_ATOMIC in write path
-        commit: 5808c532ca0a983d643319caca44f2bcb148298f
-
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+> Yours,
+> Linus Walleij
