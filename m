@@ -2,102 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 279B06DAB2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 12:00:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB4386DAB6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 12:22:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240250AbjDGKAz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 06:00:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38788 "EHLO
+        id S240434AbjDGKWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 06:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240252AbjDGKAw (ORCPT
+        with ESMTP id S233426AbjDGKWD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 06:00:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B5E7ED8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 03:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680861604;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=vxzX051vG79fA2lg01PCCeNW25HR0i9loTgMaHJhE/0=;
-        b=YrSJU5CrKkNRA5V12Gesr7zDYvHfkyBzPRE9+GOhOgzF2oZ1Vvbmanay7UdJMXpg5ROPkM
-        H54ZJmGuFwEFr0UJcrW9ENQ1/BQCza5uoL+es5YX1BbsmaMCFEa78W1HLH31C5p/O5NEXS
-        EdxM4c/pj/iuC6P62o1cMEYglWNn9ac=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-x2-PdFO4O2C9-1tacdkQmw-1; Fri, 07 Apr 2023 06:00:00 -0400
-X-MC-Unique: x2-PdFO4O2C9-1tacdkQmw-1
-Received: by mail-wm1-f69.google.com with SMTP id bg33-20020a05600c3ca100b003ef6d684105so16984197wmb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 03:00:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680861599;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vxzX051vG79fA2lg01PCCeNW25HR0i9loTgMaHJhE/0=;
-        b=jjdrZnDr/Heh3QmJUB7PDgwjKhSDni4N8DBIpmXiOplvUEEIhk74eLuDGZvR5qcr8C
-         TF+IQrFSCWmeexG4FM1Z3iVU9/KrCnKMq/WbSfsSp2CCXuQsijT0qb1Qsw8aj/nQX2gM
-         4GJo5gTo+/ljpgkTznyoG3ffuZlPjuYGgI8tSjDEO1vXjkA8TlvLzYkBMgNeLKYwsu1b
-         0KRUmFaNrTwXYp6lhjydVQeHbuBnFQ5tjCTc7UDhZ9WcYaUMbhLTr2KIqL0dvCU0ws9u
-         y+Z1KVAjtE9oEvWzn540D4dkLooaT9EzFEZPNiUaL4UJI2JeGLLjEdDF52AamqXNJQvy
-         sClw==
-X-Gm-Message-State: AAQBX9fFKbRugU1raGbVlQvFVV+zm58yRbSR5pb18qW56yKXT6SJzHUK
-        oVKk1a6ksrtzHD89GLxB32GjwmucYvDm5MxMB4r4uL0Hrjrztg7I4kX4N5yUDeu42SBbevmepPk
-        t45XsPoabQ7+dkU08/NM3QTUoBA==
-X-Received: by 2002:a7b:c7d1:0:b0:3eb:38b0:e757 with SMTP id z17-20020a7bc7d1000000b003eb38b0e757mr1043874wmk.10.1680861599792;
-        Fri, 07 Apr 2023 02:59:59 -0700 (PDT)
-X-Google-Smtp-Source: AKy350ZAbkcTuKHHx1PTF9JjuVOy7h+gk03bYHMX2Dd+d/sWYJgdy2EcgK92+pjvlc6XSCkqiq+Z6Q==
-X-Received: by 2002:a7b:c7d1:0:b0:3eb:38b0:e757 with SMTP id z17-20020a7bc7d1000000b003eb38b0e757mr1043856wmk.10.1680861599506;
-        Fri, 07 Apr 2023 02:59:59 -0700 (PDT)
-Received: from localhost (205.pool92-176-231.dynamic.orange.es. [92.176.231.205])
-        by smtp.gmail.com with ESMTPSA id h11-20020adff18b000000b002e40d124460sm4075512wro.97.2023.04.07.02.59.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 02:59:59 -0700 (PDT)
-From:   Javier Martinez Canillas <javierm@redhat.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH] drm/msm/adreno: fix sparse warnings in a6xx code
-In-Reply-To: <20230407010741.2033800-1-dmitry.baryshkov@linaro.org>
-References: <20230407010741.2033800-1-dmitry.baryshkov@linaro.org>
-Date:   Fri, 07 Apr 2023 11:59:58 +0200
-Message-ID: <87355c8129.fsf@minerva.mail-host-address-is-not-set>
+        Fri, 7 Apr 2023 06:22:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FB967ED3;
+        Fri,  7 Apr 2023 03:22:02 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3377MXI5013040;
+        Fri, 7 Apr 2023 10:21:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=q0vpDgVuiJJwQzilV7Uvd/VJSZtDHMxv30kgg5UkQB0=;
+ b=cHa4WkRp32n3m4HroUn/SROrrZlDqhZuR9nC9hfI+6+2iw/EAyUIylF2kwokFpHi6Azx
+ h89N3pD6pw1kURyv3IvOE9htGLD+x56cTkVdIOvdNDIrlpnUfumrdBJFKbkbbq2/yfBJ
+ 0w/P++SJnyhH92fxQN/RHpYWkRMpz5yRQCzp2Q9BEKCl0uEzLoCk/x2eCEjethOEfjCP
+ 94ArvfeOlqQt6y6wVw4J38ae+P4SNe0I/2BDmGcjXZT0tErWoVcGeMhSdWdaAwVOxDAv
+ 8tQ5L0BlfEAGBlPI03KtB1cnOyb/8/ZhNryvuz7Ticsa7GtvD+Gn6MPn1skLIy+MKTQr rA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pssmw34th-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Apr 2023 10:21:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 337ALP1A015330
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Apr 2023 10:21:25 GMT
+Received: from [10.216.18.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 7 Apr 2023
+ 03:21:15 -0700
+Message-ID: <c74b40fe-92b9-9a53-1a9f-b19a7090a12c@quicinc.com>
+Date:   Fri, 7 Apr 2023 15:51:12 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V11 3/4] arm64: dts: qcom: Add support for ipq9574 SoC and
+ RDP433 variant
+Content-Language: en-US
+To:     Marc Zyngier <maz@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
+        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
+        <geert+renesas@glider.be>, <rafal@milecki.pl>,
+        <nfraprado@collabora.com>, <broonie@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230404101622.5394-1-quic_devipriy@quicinc.com>
+ <20230404101622.5394-4-quic_devipriy@quicinc.com>
+ <d410c51ee4beeb4dfee80e13d54d598b@kernel.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <d410c51ee4beeb4dfee80e13d54d598b@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tyNx0KBWHNmsGSGr_4E5QkhMMB__RRFu
+X-Proofpoint-ORIG-GUID: tyNx0KBWHNmsGSGr_4E5QkhMMB__RRFu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-07_06,2023-04-06_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ suspectscore=0 mlxscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011
+ priorityscore=1501 impostorscore=0 mlxlogscore=707 malwarescore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304070095
+X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-> Sparse reports plenty of warnings against the a6xx code because of
-> a6xx_gmu::mmio and a6xx_gmu::rscc members. For some reason they were
-> defined as __iomem pointers rather than pointers to __iomem memory.
-> Correct the __iomem attribute.
->
-> Fixes: 02ef80c54e7c ("drm/msm/a6xx: update pdc/rscc GMU registers for A640/A650")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Link: https://lore.kernel.org/oe-kbuild-all/202304070550.NrbhJCvP-lkp@intel.com/
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+On 4/4/2023 4:33 PM, Marc Zyngier wrote:
+> On 2023-04-04 11:16, Devi Priya wrote:
+>> Add initial device tree support for Qualcomm IPQ9574 SoC and
+>> Reference Design Platform(RDP) 433 which is based on IPQ9574
+>> family of SoCs
+>>
+>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> ---
+>>  Changes in V11:
+>>     - Dropped the unused backup clock source bias_pll_ubi_nc_clk
+>>
+>>  arch/arm64/boot/dts/qcom/Makefile           |   1 +
+>>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts |  84 +++++++
+>>  arch/arm64/boot/dts/qcom/ipq9574.dtsi       | 263 ++++++++++++++++++++
+>>  3 files changed, 348 insertions(+)
+>>  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>>  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574.dtsi
+>>
+> 
+> [...]
+> 
+>> +        intc: interrupt-controller@b000000 {
+>> +            compatible = "qcom,msm-qgic2";
+>> +            reg = <0x0b000000 0x1000>,  /* GICD */
+>> +                  <0x0b002000 0x1000>,  /* GICC */
+> 
+> This is definitely wrong. The GICC region cannot be less than
+> 8kB, as the GICC_DIR register is in the second 4kB region.
+> 
+> I'm pretty sure the kernel shouts at you when booting at EL2.
+Got it, will update the size to 8kB
+> 
+>> +                  <0x0b001000 0x1000>,  /* GICH */
+>> +                  <0x0b004000 0x1000>;  /* GICV */
+> 
+> Same thing here.
+okay
+> 
+>> +            #address-cells = <1>;
+>> +            #size-cells = <1>;
+>> +            interrupt-controller;
+>> +            #interrupt-cells = <3>;
+>> +            interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> 
+> Missing target CPU encoding.
+Okay, will update the interrupts as below. Hope this is the expectation?
+Please let us know if we are missing something
+interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+> 
+>          M.
+Best Regards,
+Devi Priya
