@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9989C6DB485
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:55:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 465C16DB487
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:55:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbjDGTy6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 15:54:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50500 "EHLO
+        id S230367AbjDGTy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 15:54:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231342AbjDGTyx (ORCPT
+        with ESMTP id S231360AbjDGTyy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 15:54:53 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC56A5CB
+        Fri, 7 Apr 2023 15:54:54 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD62A5D6
         for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 12:54:52 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id k37so55708633lfv.0
+Received: by mail-lf1-x133.google.com with SMTP id h11so48686531lfu.8
         for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680897290;
+        d=linaro.org; s=google; t=1680897292;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HrrXtbRkA/TPN5iifxIhcwLiJb4rv7pfySUS4qMYehs=;
-        b=Uf1E/REFFX5GFkeXVT1+e3z009N8o23rDUvS1gCMi+LubcZG/stiFQFgN+9Rn4TJLm
-         hCrsIsiJkjMzj8oninsA7fKuH/6niBTkjA/yqzDj01W11mgLJ1QGFuw2K2IuB3aAfLsx
-         HBucvmcZrpmbePIK7iRpvSmUq6uBBO/OgiZBes0kfbSNGH/TDwRdj9g6IXNpXp2bpBgV
-         uhgJq9tx6or7+Bt7L+1d5yQ+8fSichKQI8NviZ0NbI+AtdTQk90rJrGLm7jaSn/xGNQf
-         Yz+WKC3n1mK2Of0hPwm3NVaTB2Cxrs8Nj8medEIZCda41pJkLFw7cd4uAEbpYsnfL6FI
-         p4kw==
+        bh=UnW6A28IKcreFUAfuKike2SwwSqJ7t/qMOojsEiWd3o=;
+        b=MwmFmghBv6y4HhNOaxXFNNuzkqK19RmVnmxCLV9ziJFoBJj36Uyj22QNGse8V10FED
+         Ycn7rsZiJL7XOKtpf2EWV4qpPMfUhdv759rK9a2kBagd+9O0MfW2SvdgHXF+DUTidvs6
+         0NuHdJn3tVfqdpCDpOulLjBicpoCTzr3Z76kGINvmk9J8UjgMozQcjVmuJe1r162BW8k
+         xPPpd9R1EejUZmmFLIXV0Fs3gJ58IpJjXaP2QB7wdOKDHWeyecXoDyo9R5jEoEolHS/L
+         9TsgTijFoz1ncDgN4P1a1yY63cg2NdIvwe9c3BJ1gmk8w49kPK3Pyl/XcLIrZN90ocYf
+         MEJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680897290;
+        d=1e100.net; s=20210112; t=1680897292;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HrrXtbRkA/TPN5iifxIhcwLiJb4rv7pfySUS4qMYehs=;
-        b=zDISf6YT5nvB8brZ7j7lDY84kajuB5ZHbAWrbgJCLed9i+mobfONyFULj+KF5GT4Xx
-         W+zKWrL4vSo4WdL4E1DqOt53MF+lN9qO38FznX5LuV2gRQvnBJwdGZhHb2qiHPhciHrZ
-         ymy/ou0ZQjZUu+cPoKHsrC3UcQN95oyG+bm88Y1FPc1WsAIrs4T65W2Frp1sfc0vdXfj
-         O+/V4F53ysIqwDxmoARJ0WgGxachwAwr0WXnOeXyzk7wJbkvljl2R6PyFc5ry+shAGEj
-         GRF29+18FFfFnM4VGHdWK7MVFl37bjR6Yy+ZtCPl+juKX16u6HWlpDf9tJKq/C74siwM
-         Cs/g==
-X-Gm-Message-State: AAQBX9fKlXRJEtf0yhP4GEoQ9Z/v9TwCG1DyCnuuKKy0k2EhdZVpUIDS
-        EEIdR2Vp2pjNdbm4a9sg6KpmCw==
-X-Google-Smtp-Source: AKy350b+PGdCiTvI6mSRe18Rp5mHPr19pLPZR+kKF0m5RE0EfhXSl3nXExaaisfhoEmAhbf6ogJHhw==
-X-Received: by 2002:ac2:5290:0:b0:4b6:ecfb:ee98 with SMTP id q16-20020ac25290000000b004b6ecfbee98mr1028200lfm.41.1680897290751;
-        Fri, 07 Apr 2023 12:54:50 -0700 (PDT)
+        bh=UnW6A28IKcreFUAfuKike2SwwSqJ7t/qMOojsEiWd3o=;
+        b=X2vLbMeu9yBzK01PvoaOHRTIrAMz7k4bljtTDG+UcxJVRx1T3VcSbhRJhjdjLA+dtJ
+         Tta4xpXfQM5t008EmDcMAgebUungsuAsU/Oqy5jjM8ksfU91cpQdF5SyMLa8APjsJzX3
+         HmR/SbfZ8s/DalUhPlTtbJ4cGcmTdiNEgapdqLMuSNe/odHLD2/tchk+KAxZpkytURn+
+         3h7lk1B5XFKHF5QoLRDkkaJ0jTSHVCSfDyJ4Df+WrphMgWWF3i+9dbRwQQq19AhIMiUq
+         PvFgUsovB5yMrBnN4cI/6tBORpDmbsB29nK/uEQQIzLum+z4Rx069NIHqXsnP94vP48+
+         gx0A==
+X-Gm-Message-State: AAQBX9fRVfD4vwv3EzNV6lSN4uRBYRBsV0YbKCPbFfX8asEGiHKPoIVn
+        xjQoIr1UNEfMm0wHnuOhlsnDh9pBcR5PapeadQo=
+X-Google-Smtp-Source: AKy350ZZhBTnloXL3RG6GqwZQd81A/jMWiVaAxZ9A4Rr9J2WSc8pzQlD5NC/nIpe1C+nfs6cMJsEPw==
+X-Received: by 2002:ac2:5f0f:0:b0:4eb:13ff:6ca7 with SMTP id 15-20020ac25f0f000000b004eb13ff6ca7mr918254lfq.16.1680897292119;
+        Fri, 07 Apr 2023 12:54:52 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004d856fe5121sm839981lfg.194.2023.04.07.12.54.49
+        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004d856fe5121sm839981lfg.194.2023.04.07.12.54.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 12:54:50 -0700 (PDT)
+        Fri, 07 Apr 2023 12:54:51 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 07 Apr 2023 21:54:43 +0200
-Subject: [PATCH v2 3/4] arm64: dts: qcom: sm6115p-j606f: Enable remoteprocs
+Date:   Fri, 07 Apr 2023 21:54:44 +0200
+Subject: [PATCH v2 4/4] arm64: dts: qcom: sm6115p-j606f: Enable ATH10K WiFi
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230406-topic-lenovo_features-v2-3-625d7cb4a944@linaro.org>
+Message-Id: <20230406-topic-lenovo_features-v2-4-625d7cb4a944@linaro.org>
 References: <20230406-topic-lenovo_features-v2-0-625d7cb4a944@linaro.org>
 In-Reply-To: <20230406-topic-lenovo_features-v2-0-625d7cb4a944@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -69,14 +69,13 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680897283; l=1042;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680897283; l=1763;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=LheeN2mshsAs8brSHZ+At1/DkO/Urs9BzGBJSfcH0V0=;
- b=n7GkBgoMqoqy2+U6y+lxt6w26SMGcXHwa4SOBOfhJ9tg7oDFeyBsaWpfojbP797Ad6ZC63v276w3
- bphMEjZgALDUYvIIIAiHSM4TQYLqph0NqSasINjVr2ajYzf7XbH7
+ bh=b3Zu3ZZnDQhyKIftWOiLA89iYJJNHGbq+oJ3wY2oUSk=;
+ b=eVPsQfPvLHPeKGN8di7rL5TOwfLtMuC4wjd3d03xaNYMEJ9N8wylr+p90aUi7lfQEjG2NeH+8QY4
+ XrznSAhtCYgwlrLVRl/DbslgdBrm3qdA/s64o9xWOM3fnCnTixe/
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -88,40 +87,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the [AC]DSP and MPSS and specify the firmware paths.
+Enable the onboard QCA Wi-Fi. HW identifiers for reference:
+qmi chip_id 0x320 chip_family 0x4001 board_id 0xff soc_id 0x400e0000
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Firmware sources:
+/vendor/firmware_mnt/image/wlanmdsp.bin -> qcom/.../wlanmdsp.mbn
+/vendor/firmware_mnt/image/bdwlan.bXX [1] -> [2] -> ath10k/.../board-2.bin
+[3] -> ath10k/.../firmware-5.bin
+
+Not sure where 3 comes from on the device itself, gotta investigate that..
+
+According to [4], it's called WCN3990_STRAIT.
+
+[1] XX = board_id printed when the file is missing or by your downstream
+kernel firmware loader in the dmesg; if XX=ff, use bdwlan.bin
+
+[2] https://github.com/jhugo/linux/blob/5.5rc2_wifi/README
+[3] https://github.com/kvalo/ath10k-firmware/blob/master/WCN3990/hw1.0/HL3.1/WLAN.HL.3.1-01040-QCAHLSWMTPLZ-1/firmware-5.bin
+[4] https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/-/blob/LA.VENDOR.1.0.r1-20700-WAIPIO.QSSI13.0/hif/src/hif_hw_version.h#L55
+
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-index cd47fbc993ba..bc232deb802b 100644
+index bc232deb802b..ea3340d31110 100644
 --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
 +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -89,6 +89,21 @@ &pon_resin {
+@@ -315,6 +315,15 @@ &usb_hsphy {
  	status = "okay";
  };
  
-+&remoteproc_adsp {
-+	firmware-name = "qcom/sm6115/LENOVO/J606F/adsp.mbn";
++&wifi {
++	vdd-0.8-cx-mx-supply = <&pm6125_l8>;
++	vdd-1.8-xo-supply = <&pm6125_l16>;
++	vdd-1.3-rfa-supply = <&pm6125_l17>;
++	vdd-3.3-ch0-supply = <&pm6125_l23>;
++	qcom,ath10k-calibration-variant = "Lenovo_P11";
 +	status = "okay";
 +};
 +
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm6115/LENOVO/J606F/cdsp.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_mpss {
-+	firmware-name = "qcom/sm6115/LENOVO/J606F/modem.mbn";
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators-0 {
- 		compatible = "qcom,rpm-pm6125-regulators";
+ &xo_board {
+ 	clock-frequency = <19200000>;
+ };
 
 -- 
 2.40.0
