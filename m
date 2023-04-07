@@ -2,145 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE6C6DB481
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:54:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2818A6DB48C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:55:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbjDGTyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 15:54:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49496 "EHLO
+        id S231247AbjDGTzB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 15:55:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjDGTyG (ORCPT
+        with ESMTP id S230261AbjDGTyt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 15:54:06 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A7B8976D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 12:54:05 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-54c12009c30so100135817b3.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:54:05 -0700 (PDT)
+        Fri, 7 Apr 2023 15:54:49 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2FE6A5D6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 12:54:47 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id g19so42539953lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680897242; x=1683489242;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mrOIisSFZPNWCByFT5woSVh3MP9puEjylwTuN1wcUU0=;
-        b=Hm3wXNUYtgb92h2GrSrdaDeM23KBQ6T5btlKTrZcHl9apmKhVLjulmhxiib705qd26
-         RzzLkHW7szbTDKUrWf2w9IFFTYoRqqIa6wWixy4X0PuChpv/G/S8BGjLqoRXPdFpytB2
-         CPkpi2lPWdsIDCuPzbLQuZqiBc3kChl2AX0e0=
+        d=linaro.org; s=google; t=1680897286;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+AFb5wfJ9U1U6y3PYFeGEqZliVIyqi+6YzMhEDe6CJc=;
+        b=P7ZjaEaTvMs1BcDqx1TVJyQbDfbs0tD4f/GJNOMFWjvTuwh6bf+UOyxTianQsBbQJC
+         M6Hyl/9++/kNx9ycYamEW0R/3vt0ukQJwxUszl6wtnaDxy/+oSbGrqgZdfbjhjf1nx19
+         pmX5FHB+eqtcSMxRUs9rWayPmZ9SjIZEBi/ueWYyVwcxqYb2TuIKz2AwLgGJFO12ttGS
+         wT+b6KCadywhuFGRp6DCIZ82g3ijRahiGvjMH8G8YV+IU15RdvOk1vhv5YAyGohT4DSr
+         wCfyOgLsuT6sXPK6j7aEp8Lk3iHctoomiQO2oCCq8Opbl6PnfrtsfM/FiQQzgnK6qLpF
+         hHHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680897242; x=1683489242;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mrOIisSFZPNWCByFT5woSVh3MP9puEjylwTuN1wcUU0=;
-        b=RpgFVBq0WCQoTgZ8ata1rOu2txknlYa0m+paK5k7/jMQGc1+MW+6OyFwfBWiiwEJeJ
-         CfS2ZRO/juvYGIXRUdHoPdR9Ay8NAkcjzzEkrYQQGIxUbBu+8Vcc/OCLrmWhGM6WYVIj
-         tyE5+h87W52e8nbaVnhjyRQvqTbYMB0EvHy7fgSFh2U38L+gIybPnqJq6Au0X+OQ8VqT
-         cLke3adkAc+UWm5nDTEiKYcdjf2LITnKUwptccyje4OEaCX21hUwc8nygT4723TDFv+V
-         ahEaAse+j5bm5JS45+1IH8lN5A29HOl5OvvXUmt7mVw/VkxInloulIq4rQrwUWAI3yiZ
-         gTfw==
-X-Gm-Message-State: AAQBX9cqOM+C0AggUb7cyYVqHixPP9ds5tvM5BgQ1lv54dy5I/DZQ6Iq
-        CJZ3wk791bR9/q/8k5VsOTi2XZ+EMdL3duQynt8=
-X-Google-Smtp-Source: AKy350acFNK189dZMUMJZH8yKtnfEpG2OVs+hjpZMvlIFkoreJqyniSEFUSArDsS6gtUOxMIt5SMqQ==
-X-Received: by 2002:a81:92cc:0:b0:54c:29d6:bba4 with SMTP id j195-20020a8192cc000000b0054c29d6bba4mr3062588ywg.28.1680897242112;
-        Fri, 07 Apr 2023 12:54:02 -0700 (PDT)
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com. [209.85.128.174])
-        by smtp.gmail.com with ESMTPSA id cj3-20020a05690c0b0300b00545a08184b9sm1208754ywb.73.2023.04.07.12.53.59
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Apr 2023 12:54:00 -0700 (PDT)
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-5416698e889so813392467b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:53:59 -0700 (PDT)
-X-Received: by 2002:a81:e20a:0:b0:54d:4a49:ba22 with SMTP id
- p10-20020a81e20a000000b0054d4a49ba22mr1345371ywl.7.1680897239277; Fri, 07 Apr
- 2023 12:53:59 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680897286;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+AFb5wfJ9U1U6y3PYFeGEqZliVIyqi+6YzMhEDe6CJc=;
+        b=QMvP+NfoqLwh6DL18I59TPJXZCadi6AsK+PT7DZuj3YO67T8oArBqMdwAyH0uLFRvx
+         pSGS+YTfcYRVDuGAZIzX8UqAZ5noiHgXk9LzMjzaELO7/YZ/UdlSPsoA0MLl2tiwtNWY
+         zPYdUbCrOZ7x8Upzi199HvvXoUfVKXU/DLWLI08QRVIEubcUYgT4iyIaPMGeJufjIJcE
+         eZ8SsUDEvpX+UlSrqW1ZlSz1Jkuje1d5qA/NNa2HJeqGsvOOsWu/su5Sdp9z2lfEWJvN
+         NwZHsJCfBkbB0b4O7IgTRpBwcsHaSiMgaFmIjQsfMeNz1NJcRDc6ASEV97YVBqdqdkBf
+         9/4w==
+X-Gm-Message-State: AAQBX9c4kv6PIpZQLCA9wNWtj8JKdGHtONBK6RTJHHUOLkXM15dnSX6I
+        qSP0VeTNwu/wm+i0o5UfKEGjdw==
+X-Google-Smtp-Source: AKy350Yig0hO9NGzEF3/rRaCn3/Y8UIVoiFM4pMUN2LM2+WmpLzFxVCp9dnLp3B0VHCGAjs6snj4rg==
+X-Received: by 2002:ac2:5f0f:0:b0:4d7:ccef:6b52 with SMTP id 15-20020ac25f0f000000b004d7ccef6b52mr1019597lfq.39.1680897285900;
+        Fri, 07 Apr 2023 12:54:45 -0700 (PDT)
+Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
+        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004d856fe5121sm839981lfg.194.2023.04.07.12.54.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Apr 2023 12:54:45 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/4] Tab P11 features
+Date:   Fri, 07 Apr 2023 21:54:40 +0200
+Message-Id: <20230406-topic-lenovo_features-v2-0-625d7cb4a944@linaro.org>
 MIME-Version: 1.0
-References: <20230323173019.3706069-1-dianders@chromium.org>
- <20230323102605.12.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid> <43b74b3f-e607-ba55-a5fa-326fb4b5519d@linaro.org>
-In-Reply-To: <43b74b3f-e607-ba55-a5fa-326fb4b5519d@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 7 Apr 2023 12:53:47 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VvgbPKQsOirMa-k0PE-KAvjWy+iMWd0TCbysYirwEH7w@mail.gmail.com>
-Message-ID: <CAD=FV=VvgbPKQsOirMa-k0PE-KAvjWy+iMWd0TCbysYirwEH7w@mail.gmail.com>
-Subject: Re: [PATCH 12/14] arm64: dts: qcom: sc7180: Fix trogdor qspi pin config
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAB1MGQC/42N0QqDIBRAfyV8nkOzUva0/xgxbnorITS0ZCP69
+ 1lPe9sez4HD2UjEYDGSW7GRgMlG612G8lIQPYIbkFqTmZSsFKxiDV38bDWd0Pnknz3CsgaM1Ei
+ msOYaQCLJbQcRaRfA6THXbp2mLOeAvX2ds0ebebRx8eF9vhM/7K9N4pRRYwQXBkqlZHOfrIPgr
+ z4Mx/afXEsBNVcMK4Xfebvv+wfVXxfbDwEAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680897283; l=1028;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=0hnuSRNhOLqupAv3AXDiTRWpTdMlZAZTpQkLVrqvS0w=;
+ b=fCKUp4CYhU2DuPrrZVXj2GpZnDnN7tiV1vHJB9vV1SNCPpajGeQP5lYo41o7qshkbMz9mzLmV3VT
+ jsPYdJBMB2BCzKx1d1PN3iHpsIo+ioSX8eXUFvZKHFxgLsh7ImP+
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+v1 -> v2:
+- Add ftrace-size and drop no-map under pstore [1/4]
+- Add qcom,ath10k-calibration-variant [4/4]
+- Pick up rbs
 
-On Fri, Apr 7, 2023 at 11:11=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 23/03/2023 18:30, Douglas Anderson wrote:
-> > In commit 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial
-> > trogdor and lazor dt") we specified the pull settings on the boot SPI
-> > (the qspi) data lines as pullups to "park" the lines. This seemed like
-> > the right thing to do, but I never really probed the lines to confirm.
-> >
->
->
-> >  &qup_i2c2_default {
-> > @@ -1336,6 +1340,22 @@ p_sensor_int_l: p-sensor-int-l-state {
-> >               bias-disable;
-> >       };
-> >
-> > +     qspi_sleep: qspi-sleep-state {
-> > +             pins =3D "gpio63", "gpio64", "gpio65", "gpio68";
-> > +
-> > +             /*
-> > +              * When we're not actively transferring we want pins as G=
-PIOs
-> > +              * with output disabled so that the quad SPI IP block sto=
-ps
-> > +              * driving them. We rely on the normal pulls configured i=
-n
-> > +              * the active state and don't redefine them here. Also no=
-te
-> > +              * that we don't need the reverse (output-enable) in the
-> > +              * normal mode since the "output-enable" only matters for
-> > +              * GPIO function.
-> > +              */
-> > +             function =3D "gpio";
-> > +             output-disable;
->
-> Doug,
->
-> I acked some of your patches, but I assumed you tested all this. It
-> turns out you never run dtbs_check on the patches you sent.
+v1: https://lore.kernel.org/r/20230406-topic-lenovo_features-v1-0-c73a5180e48e@linaro.org
 
-I'm fairly certain that I ran dtbs_check and confirmed that no new
-errors were introduced on the device tree files that this patch series
-cleaned up. Did I miss one? I did not try to go through and fix all
-examples of people using "input-enable" across all Qualcomm device
-trees, though. Those old device trees still work even if they're using
-the now-deprecated bindings. When deprecating something my
-understanding is that it's not required to go back and immediately
-transition all old device tree files.
+This short series brings a couple of "nice" features to the Tab P11:
+- Wi-Fi
+- remoteprocs (+RMTFS)
+- ramoops
 
-If having the "input-enable: false" in the bindings is causing huge
-problems we could do a blank search-and-replace to rename it to
-"output-disable", at least for places under "tlmm". Even if there are
-cases where it's superfluous it would at least make the bindings
-validate.
+No external dependencies.
 
--Doug
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (4):
+      arm64: dts: qcom: sm6115-j606f: Add ramoops node
+      arm64: dts: qcom: sm6115: Add RMTFS
+      arm64: dts: qcom: sm6115p-j606f: Enable remoteprocs
+      arm64: dts: qcom: sm6115p-j606f: Enable ATH10K WiFi
+
+ arch/arm64/boot/dts/qcom/sm6115.dtsi              | 10 +++++++
+ arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 35 +++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
+---
+base-commit: e134c93f788fb93fd6a3ec3af9af850a2048c7e6
+change-id: 20230406-topic-lenovo_features-d708e51caa7e
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
