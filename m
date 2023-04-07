@@ -2,126 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D907D6DB50D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 22:15:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CD806DB516
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 22:17:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230359AbjDGUPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 16:15:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
+        id S230210AbjDGURg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 16:17:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbjDGUPM (ORCPT
+        with ESMTP id S230250AbjDGURd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 16:15:12 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B18C2BDDD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 13:14:56 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id j11so55659692lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 13:14:56 -0700 (PDT)
+        Fri, 7 Apr 2023 16:17:33 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61FA0C66B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 13:17:22 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id j11so55665181lfg.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 13:17:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680898496;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UK324XxVLyW7Zcb2CZ/1jAhmypGps1orFHLyigBwr5Y=;
-        b=yqZEBUvNVCoCG1kYbv6BCn4D0Qcr92VlfzKmglVvZYkEdbsKkM9eX6zrAes/n5toqv
-         Qu4xR1oXPF3iW2PlmWZM4PiNnoYT7pHivkuEumgtKq5oW0+xNraiZVR+iFd5Ap7YE0Md
-         UkYReMEbtTgol8JUCdn1e8AY4R+sRqVF/1vPdymDn8yog1HL/noqOd4oUik9koaXGWDM
-         aJxPdG1AYb7uanLSnaNK9gtfH0YsPqphnes0NrEHCEV34cS1XsFJH7f1pxDIx4dyQ3nS
-         Usmcqh5IhlWzI049CC/jJCuLBE7JkBk6R0LE1A9G8lLMyhYBGzmc+c9y9yqTy0CEw844
-         RMbw==
+        d=linaro.org; s=google; t=1680898640;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t1Dozau9Cfq9VYaMqEkVJAHlGg5EPFMV8ybCE21m3s4=;
+        b=UolUM2z0Wpfky7Un5OucPfkBEOdsVm1Ssn36f5GawY6zPNERQejvKqaz6qgAipqlAa
+         ot0uvIKN+3DbX643XKOk3diLo9BDHlUV8ssCmM8hkWRC3maxIH72tY5T/fdR4ti8We8/
+         +adignQsho73jcfInhXv3Y1XLJS3xyN8pnY2ZEiHuoqqS4cyeHOyj93d7pqVpjdvxyop
+         mI3T0Jt3WCeHTUrO08x7rO2/DFJ6MAPvYNfq5ICcmeHyh8k9EvWLK2tASVjXreNnITHj
+         ZwsQZVxyPwmm34EjJbiiBoJS1aj77pSBSO3ZhkaFkRh+u1AEYQSXMxQ0vG2GBW4LITp2
+         hyfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680898496;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UK324XxVLyW7Zcb2CZ/1jAhmypGps1orFHLyigBwr5Y=;
-        b=GQW5qMsthg75Lz5uv8rhajfkW2g7jdmm9r1CONRCwB8BJ8Xs6lRVt0CSg7Qrq4GBAv
-         b5F5GjFb9B9K+Gf1G2usrdIMe2ug+tOWUQN08Hw3TCY+eF0/nh+PJlbRJVlHNN2EKwNa
-         8IcXdr+JnCFSs/x/4esr9BaMVEjg17pkTlY5sQPEZ31U6fVZNEfg1JbIbplpW+9BH3F8
-         Atce5UcyZ7SGwh+NS/swQjmlBMmkCX2LyyiCKp0p4sgWBJQNrVifYRKAMJ/m5PHJVhZ8
-         HoaxPJXC1iJ0n6Xfr1Y58ib4OEMlWjfpp9hupwi1KQTJobJNoUUs/PrnJIr2NtN2xhHo
-         6Pcg==
-X-Gm-Message-State: AAQBX9exQo9Qsx2LCJEjObFnXYZOYAtt3Qi5bRodYukQ3nbusBVA4IUm
-        xRQsz7PfM+yHEU3UHCX5D4oR5g==
-X-Google-Smtp-Source: AKy350ZqCC2EWpi54zjCAZha/wQjOAUazAPsrcEJ8ES8x2YGJmj/5Oaf+q9Y20lANUCgsRiqOL1KlA==
-X-Received: by 2002:ac2:48b1:0:b0:4db:513b:6ef4 with SMTP id u17-20020ac248b1000000b004db513b6ef4mr1437520lfg.11.1680898496200;
-        Fri, 07 Apr 2023 13:14:56 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680898640;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t1Dozau9Cfq9VYaMqEkVJAHlGg5EPFMV8ybCE21m3s4=;
+        b=vO8TDJXsB2bGeiEfI33F01cFy4W7aSZbNHlnWxDg0BTS2C3wRVPgb31bxGu+6jdPDn
+         lukWAqZAhog7oB/157RrlLE4TkHSVLFW+T3AqwdqbKcUwn3naMtCxJEmbyYDff12DKo9
+         HZ/WZAbFgTtKOArtqU+KxJOSH/8FKkSsdmzQJP2p1Muyz+AQZxHYJ+MPbnBr4xLL3cAD
+         ZOZ3e4CuP5BUa/b1o8Ar2BCxU//g6Z4MInqixtm99CBhraszm76d1+xtdeU94UL6Vjgg
+         1cDrjocyC8Oh7tkdk4gbn/02xD/lXpcVdblFn7G0UcJLVFPIVrg5UQlIYoaDU1i83j5v
+         +7dA==
+X-Gm-Message-State: AAQBX9eP4kuDBj+mWf7bl3FPgsEtyWv0tKb5UenAOZEKm0hGf4a3qMSF
+        g5Io8/K+fXPo7EgjaK1AiS7CDQ==
+X-Google-Smtp-Source: AKy350Z2JIekhTaqs1ClXrFa4SIlxWK9pWuzvd4Kdy8PeMZb0+IMYtMfKBSGlsY6ENxMpNpmx3raUg==
+X-Received: by 2002:a19:7418:0:b0:4db:3a92:2c85 with SMTP id v24-20020a197418000000b004db3a922c85mr761822lfe.67.1680898640661;
+        Fri, 07 Apr 2023 13:17:20 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id u3-20020ac243c3000000b004eaf6181a32sm842436lfl.75.2023.04.07.13.14.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 13:14:55 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 07 Apr 2023 22:14:50 +0200
-Subject: [PATCH v8 8/8] interconnect: qcom: msm8996: Promote to
- core_initcall
+        by smtp.gmail.com with ESMTPSA id w1-20020ac24421000000b004eb51cf49d0sm854624lfl.306.2023.04.07.13.17.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Apr 2023 13:17:20 -0700 (PDT)
+Message-ID: <422abc8b-5c01-238b-7793-212597dbffc8@linaro.org>
+Date:   Fri, 7 Apr 2023 22:17:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230228-topic-qos-v8-8-ee696a2c15a9@linaro.org>
-References: <20230228-topic-qos-v8-0-ee696a2c15a9@linaro.org>
-In-Reply-To: <20230228-topic-qos-v8-0-ee696a2c15a9@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way to
+ enable unused clock cleanup
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680898484; l=1279;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=BYfX0jKxH/0PCjBpNTo0aggPX+DBVTo1e00pUoIo7lE=;
- b=Q3wauYfS7gq5URur71wgmqfygzW5MSoxMThsPbY1kwefMc+i7/CpNJfllJopgOxt5+m5bsnSWzun
- FU/S2NiNDMRstqmR5b2r2pmOwfx7MCLGGf7tcxHLHdcPc7OV9ijd
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
+ <20230316225803.GA4036689-robh@kernel.org>
+ <62533d5a-f39a-0806-b4d9-932e2af6beef@linaro.org>
+ <5601e0edc19dc03d0fc516f9ffe4d1aa.sboyd@kernel.org>
+ <2a379401-fe87-9e30-5449-513dd23c52f5@linaro.org>
+In-Reply-To: <2a379401-fe87-9e30-5449-513dd23c52f5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The interconnect driver is (or soon will be) vital to many other
-devices, as it's not a given that the bootloader will set up enough
-bandwidth for us or that the values we come into are reasonable.
 
-Promote the driver to core_initcall to ensure the consumers (i.e.
-most "meaningful" parts of the SoC) can probe without deferrals.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/msm8996.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+On 6.04.2023 16:44, Konrad Dybcio wrote:
+> 
+> 
+> On 17.03.2023 19:20, Stephen Boyd wrote:
+>> Quoting Konrad Dybcio (2023-03-16 17:31:34)
+>>>
+>>> On 16.03.2023 23:58, Rob Herring wrote:
+>>>> On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
+>>>>>  
+>>>>> +  qcom,clk-disable-unused:
+>>>>> +    type: boolean
+>>>>> +    description:
+>>>>> +      Indicates whether unused RPM clocks can be shut down with the common
+>>>>> +      unused clock cleanup. Requires a functional interconnect driver.
+>>>>
+>>>> I don't think this should be QCom specific. Come up with something 
+>>>> common (which will probably have some debate). 
+>>> Generally the opposite (ignoring unused clocks during the cleanup) is
+>>> the thing you need to opt into.
+>>>
+>>> I can however see how (especially with the focus on not breaking things
+>>> for older DTs) somebody else may also decide to only allow them to be
+>>> cleaned up conditionally (by marking the clocks that were enabled earlier
+>>> as enabled in Linux OR not addding clk.flags |= CLK_IGNORE_UNUSED) as we
+>>> do here.
+>>>
+>>> Stephen, Rob, would `clk-disable-unused` be a fitting generic property
+>>> name for that? Should we also think about `clk-ignore-unused` as a
+>>> clock-controller-specific alternative to the CCF-wide clk_ignore_unused
+>>> cmdline?
+>>>
+>>
+>> There are multiple threads on the list about disabling unused clks.
+>> Moving the decision to disable unused clks to a DT property is yet
+>> another approach. I'd rather not do that, because it really isn't
+>> describing the hardware configuration. If anything, I'd expect the
+>> property to be describing which clks are enabled by the firmware and
+>> then leave the decision to disable them because they're unused up to the
+>> software.
+> After some more thinking, I realized that this could be made opt-in
+> simply with driver_data..
+> 
+> WDYT?
+..on a re-evaluation, obviously not a great idea.. Old DTBs will not
+be happy about that.
 
-diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
-index dc9959a87df2..20340fb62fe6 100644
---- a/drivers/interconnect/qcom/msm8996.c
-+++ b/drivers/interconnect/qcom/msm8996.c
-@@ -2108,7 +2108,17 @@ static struct platform_driver qnoc_driver = {
- 		.sync_state = icc_sync_state,
- 	}
- };
--module_platform_driver(qnoc_driver);
-+static int __init qnoc_driver_init(void)
-+{
-+	return platform_driver_register(&qnoc_driver);
-+}
-+core_initcall(qnoc_driver_init);
-+
-+static void __exit qnoc_driver_exit(void)
-+{
-+	platform_driver_unregister(&qnoc_driver);
-+}
-+module_exit(qnoc_driver_exit);
- 
- MODULE_AUTHOR("Yassine Oudjana <y.oudjana@protonmail.com>");
- MODULE_DESCRIPTION("Qualcomm MSM8996 NoC driver");
-
--- 
-2.40.0
-
+Konrad
+> 
+> Konrad
