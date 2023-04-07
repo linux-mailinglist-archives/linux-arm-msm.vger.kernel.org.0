@@ -2,55 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C9746DB1D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38CA46DB1DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:39:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbjDGRjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:39:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42020 "EHLO
+        id S230408AbjDGRjN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:39:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230217AbjDGRi4 (ORCPT
+        with ESMTP id S230158AbjDGRjA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:38:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B3ABB9B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:38:38 -0700 (PDT)
+        Fri, 7 Apr 2023 13:39:00 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90F0DC178;
+        Fri,  7 Apr 2023 10:38:41 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 56CB8652B1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 17:38:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C1FC4339B;
-        Fri,  7 Apr 2023 17:38:36 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8B8BA65330;
+        Fri,  7 Apr 2023 17:38:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34E0C4339C;
+        Fri,  7 Apr 2023 17:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680889117;
-        bh=KPIevUfhOCnsYWGl++KgpaVzp3iMelMgZUHcaQzbHrE=;
+        s=k20201202; t=1680889120;
+        bh=i289+hl/QqcGgL1+leVcwWwADguaW9LS68DYAjdH9Mo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=NhzB+Ima+sIrbFEAGM90EVhtvmotJR+DjUqi6rvvECD6iojuImvFKYeqNca9XhBXr
-         lSCgD5jqsgM2S+FDIXuxInq2hwEZooNzT6ZMLvK+aorFe27YQZuyhyQIbb3xcq0vJ0
-         OiQnQ3kZNRtGDBUZwSSuobnqk/fEe8hIOok/Kjy/T7UTcGnLqDB8lCxjYy3bS51k7X
-         MpH4JrsHptqhTL/+eaFYR9kMLcRMkuivCRQl+TBGx+ax1xfBiqoesHqks0BhHSWsVK
-         51H1RO5cn/VdBaQE5Ydf7baah/ChiyfAUJe5ty5avOdAezjYNpOmnZM1DnqjPrpZkL
-         bnXsmTin8r/iA==
+        b=JWLeHXHmokaY2r3rykciN0xUhAeEamO9zMzY4WWx/3SkbcE9EcKR2dSIK/j+iZQ//
+         OvHAPTbx51/BnOxM6YBN0K3t6FzE6S92HmeiRRCtDYU3yNQIJ2d+GOLrgIQIGEEQoy
+         jDdU9P205AqyxhOj15IIIwDbH2hIkjO0V3r8wRk6KFPk4HJQTzffRQmN4UkGRXMGFn
+         f2i2xTzEv7gkPrzhjkpC06Kg7vPh5Lmhf5wLIgQKSlg76JohKSkZFWl00IQ8Zx7U5e
+         lWFk6lmBSJObibkqbm3zj0O/5U86f0D2JmnBZ5S4RtqNij8WPJtBmTBrQWDVfJY222
+         57jr7wThylOpw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+To:     mturquette@baylibre.com, robh+dt@kernel.org,
+        p.zabel@pengutronix.de, linux-arm-kernel@lists.infradead.org,
+        linux-gpio@vger.kernel.org, will@kernel.org,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        shawnguo@kernel.org, arnd@arndb.de, catalin.marinas@arm.com,
+        linux-clk@vger.kernel.org, agross@kernel.org,
+        linus.walleij@linaro.org, dmitry.baryshkov@linaro.org,
+        nfraprado@collabora.com, linux-kernel@vger.kernel.org,
+        konrad.dybcio@linaro.org, Devi Priya <quic_devipriy@quicinc.com>,
+        broonie@kernel.org, sboyd@kernel.org, marcel.ziswiler@toradex.com,
         linux-arm-msm@vger.kernel.org
-Cc:     dianders@chromium.org, quic_khsieh@quicinc.com,
-        seanpaul@chromium.org, robdclark@gmail.com, swboyd@chromium.org,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        freedreno@lists.freedesktop.org, konrad.dybcio@linaro.org,
-        quic_bjorande@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: remove hbr3 support on herobrine boards
-Date:   Fri,  7 Apr 2023 10:41:15 -0700
-Message-Id: <168088927579.2561591.16300478555888489452.b4-ty@kernel.org>
+Cc:     quic_poovendh@quicinc.com, quic_kathirav@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_gokulsri@quicinc.com
+Subject: Re: (subset) [PATCH V9 0/6] Add minimal boot support for IPQ9574
+Date:   Fri,  7 Apr 2023 10:41:16 -0700
+Message-Id: <168088927579.2561591.423595679057929869.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230329233416.27152-1-quic_abhinavk@quicinc.com>
-References: <20230329233416.27152-1-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230316072940.29137-1-quic_devipriy@quicinc.com>
+References: <20230316072940.29137-1-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
         SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -58,20 +66,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 29 Mar 2023 16:34:16 -0700, Abhinav Kumar wrote:
-> There are some interop issues seen across a few DP monitors with
-> HBR3 and herobrine boards where the DP display stays blank with hbr3.
-> This is still under investigation but in preparation for supporting
-> higher resolutions, its better to disable HBR3 till the issues are
-> root-caused as there is really no guarantee which monitors will show
-> the issue and which would not.
+On Thu, 16 Mar 2023 12:59:34 +0530, Devi Priya wrote:
+> The IPQ9574 is Qualcomm's 802.11ax SoC for Routers,
+> Gateways and Access Points
+> 
+> This series adds minimal board boot support for ipq9574-al02-c7 board
+> 
+> V8 can be found at:
+> https://lore.kernel.org/linux-arm-kernel/20230214163116.9924-1-quic_devipriy@quicinc.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc7280: remove hbr3 support on herobrine boards
-      commit: 75eab749e7aec0b7b515d7c50ed429ef4e1c5f3f
+[6/6] arm64: defconfig: Enable IPQ9574 SoC base configs
+      commit: 34d1a90bdb8a2759b9646c8596eea495b4cb02ac
 
 Best regards,
 -- 
