@@ -2,169 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3A8C6DAA6C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 10:48:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D39F36DAAC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 11:23:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232724AbjDGIs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 04:48:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37912 "EHLO
+        id S240502AbjDGJXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 05:23:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240562AbjDGIsI (ORCPT
+        with ESMTP id S240396AbjDGJXo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 04:48:08 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 982CC1B3
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 01:47:57 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id g18so6998993ejx.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 01:47:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680857276;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=isknrhl7Ozvk9X2AHSK4BNf2Ami8lH42t6zYtaIblto=;
-        b=X1I0/H6UGHdKgeMaP/rmuueGasci7yEZbHv1ElHhgQm6C+DxyLztboqN+eMnJMv9zs
-         bRHSr4EkyHysK/fLOQsRJpCpVeFJYSmudkD2oNEQ6UGTfR5dA9QcBrJhfLJv3240lXoY
-         qV8kuT+B6WbKLMJ7/tEKkTXh81qMJxxeCvX9L7meBE+HimWc8n6kZ93u0hh+fER7yDxu
-         VfpJz7vGB4Erdh5nqTZI7+pl7DjPj/o/86KJBrqPV3xAq6tX6ZoVzxIIjtoULC1qkGoS
-         GthZTMKntifN3XObhsHWHixeQyIcJy5IdAcuHphYrCD6n/pO9mwhm0Tbp0bJs6grnhS4
-         kbLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680857276;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=isknrhl7Ozvk9X2AHSK4BNf2Ami8lH42t6zYtaIblto=;
-        b=DIXsf5MrckDTkbGgNDppk6HKx2ddTE8eoRnGiivIF7qO9MNaJsHLFil5wkhdf+Ffy1
-         9nUKHt4yUIvty8xoCbioaRvU+qk+B+rzHHTnVp1FR5pV88Knb8ZhmOevWX2rkQM7a3BG
-         f10MCuf3T5rzeDuC42v17MmFzMVW7vjAG+PoYWuh/sro7JEhSEkFGu1F4AnxU/+6ZuR8
-         xGrWG4GzLICb36I6xViYscyZyhMd/2o9JHJjVmnkb6spGWxqecJOkTUmHsW4kDkA/OrN
-         zEjNwlS1/SpllIUWfHg7WVYNBTUsObQScs1MeGK0EzHemgFbqGM1vmF/tlrHsDuDuquN
-         EDyw==
-X-Gm-Message-State: AAQBX9crfKZR72F8S1yMKSoT51Q9jEG/hU68o+o7ernJgDhikfLg1tv4
-        CNf9Fxxm9VfYDlZ5Zlfalm73GQ==
-X-Google-Smtp-Source: AKy350aVBNxf/rWJt3ZqXMKvTuUvnSB1Lreq8iG8swX1X8Q+ImyfVs42UjDFFR5LihOTseZ8WSogbQ==
-X-Received: by 2002:a17:906:6da:b0:93a:f977:e0fe with SMTP id v26-20020a17090606da00b0093af977e0femr1404701ejb.20.1680857276039;
-        Fri, 07 Apr 2023 01:47:56 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:14a3:366:3172:3c37? ([2a02:810d:15c0:828:14a3:366:3172:3c37])
-        by smtp.gmail.com with ESMTPSA id fy36-20020a1709069f2400b00927f6c799e6sm1794361ejc.132.2023.04.07.01.47.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Apr 2023 01:47:55 -0700 (PDT)
-Message-ID: <4b972e89-8023-8ed7-cd18-fb935be50c64@linaro.org>
-Date:   Fri, 7 Apr 2023 10:47:54 +0200
+        Fri, 7 Apr 2023 05:23:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9166283C0;
+        Fri,  7 Apr 2023 02:23:43 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3377ME9R028672;
+        Fri, 7 Apr 2023 09:23:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=cuzmSQCjSKwcDD9KbSa3FwHIeHuBiI4YqOnU2J0y1c4=;
+ b=YR0TzhrJc47dYMcGAJhiXrId7RM/nZCW/vNJqoEQEW+valhgk7vOUVj6TatJ05G5wwyY
+ O4XAT/eX27QFloRwbekHIwNF7Yy1O9Ft148aPpfUyYzGfYo5KUugQUGWk2k53zLtT4c1
+ Ipsrb96g5tVw0VBXV3j/vv3TB16OEzNXKAeGkltl6T3JRUmHFaZ2MYk3t/T2QN/V/ZmE
+ Ws4Zcaz40YjyJZ2JhXzfnrBXPN/KGZ/WCXUrlqCoqCQWmilPmuVcjWRSItfRjV73Esxi
+ vzyScTX57/4FC9J3Bv0LQZ5oWZ74EYDisCIegkhHKdEFBQ9QivI8r5Bye6pClbMSJoYb ZA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ptcrn0dn8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Apr 2023 09:23:28 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3379NRi6009216
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Apr 2023 09:23:27 GMT
+Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 7 Apr 2023 02:23:22 -0700
+From:   Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+To:     <swboyd@chromium.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <broonie@kernel.org>, <quic_plai@quicinc.com>,
+        <konrad.dybcio@somainline.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohkumar@quicinc.com>, <quic_visr@quicinc.com>
+CC:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Subject: [PATCH v11 0/3] Add resets for ADSP based audio clock controller driver
+Date:   Fri, 7 Apr 2023 14:52:52 +0530
+Message-ID: <20230407092255.119690-1-quic_mohs@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 2/5] dt-bindings: phy: qmp-ufs: describe the UFS PHY
- for sa8775p
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230406194703.495836-1-brgl@bgdev.pl>
- <20230406194703.495836-3-brgl@bgdev.pl>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230406194703.495836-3-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vXCWGOL1dPv692pcAyJBUB1cYjleCJXg
+X-Proofpoint-GUID: vXCWGOL1dPv692pcAyJBUB1cYjleCJXg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-07_05,2023-04-06_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 bulkscore=0 mlxscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 mlxlogscore=974 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304070086
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/04/2023 21:47, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Add a new compatible for the QMP UFS PHY found on sa8775p platforms and
-> update the clocks property to accommodate three clocks.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        | 26 ++++++++++++++++++-
->  1 file changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> index cd0fbbd3593d..5bc93acccbad 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-> @@ -16,6 +16,7 @@ description:
->  properties:
->    compatible:
->      enum:
-> +      - qcom,sa8775p-qmp-ufs-phy
->        - qcom,sc8280xp-qmp-ufs-phy
->        - qcom,sm6125-qmp-ufs-phy
->        - qcom,sm7150-qmp-ufs-phy
-> @@ -25,12 +26,15 @@ properties:
->      maxItems: 1
->  
->    clocks:
-> -    maxItems: 2
-> +    minItems: 2
-> +    maxItems: 3
->  
->    clock-names:
-> +    minItems: 2
->      items:
->        - const: ref
->        - const: ref_aux
-> +      - const: qref
->  
->    power-domains:
->      maxItems: 1
-> @@ -52,6 +56,26 @@ properties:
->    "#phy-cells":
->      const: 0
->  
-> +allOf:
+Add resets and remove qdsp6ss clock controller for audioreach based platforms.
 
-I should notice wrong different placement before.
-allOf: blocks goes just like in example-schema, so after required:.
+Changes since v10:
+    -- drop #define macro for max_register.
+    -- Add max_register value for top_cc register.
+Changes since v9:
+    -- Drop "clk: qcom: lpassaudiocc-sc7280: Modify qcom_cc_probe" patch.
+    -- Update Fixes tag in Add the required gdsc's in lpass_cc_sc7280_desc patch.
+    -- Add the max_register value in Skip qdsp6ss clock registration patch.
+Changes since v8:
+    -- Add the required gdsc's in lpass_cc_sc7280_desc structure.
+    -- Modify qcom_cc_probe to qcom_cc_probe_by_index.
+    -- Update the commit message for v8,4/5 patch, which is not required for new logic.
+    -- Drop "Add binding headers for lpasscc" patch.
+    -- Drop "Skip lpass_aon_cc_pll config" patch.
+Changes since v7:
+    -- Modiy AHB clock probing method in "Merge lpasscc into lpass_aon patch".
+    -- Fix Typo errors in "Merge lpasscc into lpass_aon patch".
+    -- Update commit message in "Merge lpasscc into lpass_aon patch"
+Changes since v6:
+    -- Update commit message in "Merge lpasscc into lpass_aon patch" patch.
+    -- Drop "Skip lpasscorecc registration" patch.
+    -- Add comment in the code in "Skip lpass_aon_cc_pll config" patch.
+Changes since v5:
+    -- Fix compilation issue.
+Changes since v4:
+    -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
+    -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
+Changes since v3:
+    -- Remove duplicate clock resets patch.
+    -- Add binding headers for q6 clocks.
+    -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
+    -- Create new patches for handling conflicts of ADSP and bypass solution.
+Changes since v2:
+    -- Revert removing qdsp6ss clock control.
+    -- Add Conditional check for qdsp6ss clock registration.
+Changes since v1:
+    -- Update commit message.
+    -- Remove qdsp6ss clock control.
 
+Mohammad Rafi Shaik (1):
+  clk: qcom: lpassaudiocc-sc7280: Add required gdsc power domain clks in
+    lpass_cc_sc7280_desc
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Srinivasa Rao Mandadapu (2):
+  dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode
+    property
+  clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
 
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sa8775p-qmp-ufs-phy
-> +    then:
-> +      properties:
-> +        clocks:
-> +          maxItems: 3
-> +        clock-names:
-> +          maxItems: 3
-> +    else:
-> +      properties:
-> +        clocks:
-> +          maxItems: 2
-> +        clock-names:
-> +          maxItems: 2
-> +
->  required:
->    - compatible
->    - reg
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml      |  7 +++++++
+ drivers/clk/qcom/lpassaudiocc-sc7280.c           |  2 ++
+ drivers/clk/qcom/lpasscc-sc7280.c                | 16 ++++++++++------
+ 3 files changed, 19 insertions(+), 6 deletions(-)
 
-Best regards,
-Krzysztof
+-- 
+2.25.1
 
