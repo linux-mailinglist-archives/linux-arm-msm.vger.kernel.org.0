@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6296B6DB447
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:36:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22E8E6DB44E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:37:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjDGTgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 15:36:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
+        id S230321AbjDGThN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 15:37:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjDGTgp (ORCPT
+        with ESMTP id S230211AbjDGThJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 15:36:45 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D0D59DA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 12:36:42 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id j11so55563484lfg.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:36:42 -0700 (PDT)
+        Fri, 7 Apr 2023 15:37:09 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFAB28A73
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 12:37:06 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id br6so55582872lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680896201;
+        d=linaro.org; s=google; t=1680896225;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TKYRcl+d8w5lofbNEMKNydH5lmt1IjXJEdkQVh+xrI4=;
-        b=J6OW0erYAmJG7NOOvdaxo2cSQlrnxa0EW0kawWyVUeSr/MrnnFwTaW0dBqWUELritq
-         f0o4I3DeP86Jp6bzj2VQ4i4Kb4zq2xAr3s02oZdOmu8aZ2HwHt77x4+DSOTuEtFM/NLK
-         0ccUfcAqbmvLuKUV/DiL0CfEjG+Ybb0Eoy+q2mCVy6RZjvUNQeLlCsd0IaPUEviAk5sg
-         A+p/E+7ykm8DoZUuqxMUyNWypx7HNz5WzoAxrx8HCd+Yoc6Hmfef1pV2wSKNnLPW07wf
-         sI8W1NELfaV+lQC2De0TEywIpvgJySQdeLHxwujRaeUWYe1jTpEg9M526ZUpqcr4k++t
-         GH5Q==
+        bh=DdfpGVYiIH49UkIzv2GHvV1XFU18RQJaEQNhzCtq13M=;
+        b=SUsmQp2SAqGZcCP8dwzO8b5RWoOCShD5HGQZ8kh2bmRsn8kPulNesx8rOH8iaS2ZoA
+         gM/IrQAEbbGzbs1UxXjonexmSc8JGBEvKUiNrQPAkb2ipIP8ejk6DLU308UWeg3ES+sL
+         mDR1loVbl7pjOOcbltu71B+qi9wFO+A4B70DMNKl+ERuYCSCOef8vGZP/gx2xkFIOwk4
+         g/mXQ4QXgYGRS4ERI7THLQm087iCuwNG+NvsWaaP/1O0xDZI8DHkbO+w14HUM5Rimhyz
+         9MClG9nh/GF4f3lRrwlSiXFz4eIHnHD8CvSIcKGXlgUbDypr1CXeQsOw+N6R9xuOUCJ/
+         rsag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680896201;
+        d=1e100.net; s=20210112; t=1680896225;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TKYRcl+d8w5lofbNEMKNydH5lmt1IjXJEdkQVh+xrI4=;
-        b=F9eT8AYpzE2AkroOTz0cRk24bUGGkcBCqstOqlyG7KMdRbC38PX1qThsb5WwRrJCr1
-         GnOYUhOqb0HI+eCXVDGm58zoHIQVlS+Asp5OqnNvwTOeh66bYMKd5VuD26nwSGRevDF9
-         99r79vX6V2RkI6budbp+D8iCl/7mysrtkRJd7rg45GApFPdtkXPaEfVEGsk1PrttDh8Y
-         y7OfJlsw8A7pv5Z16QsCQTAxkvUXcxcxsjlzh/ttZLo0MSNKHhgrtjHgDkuUgpVBHaVB
-         3rg3BP/Pv/CPhptNP0+NlXQcMoCrkBi1yQj4VBnp1k1kCZuHzzl/vIfHStZt6QQdpskj
-         Ou3g==
-X-Gm-Message-State: AAQBX9fiZUu+Igue0RkbM5Z6dlR+AI3z2ZLIAyOW2sZKk5OMJttrxLfI
-        RwojF+dT9tBB8uRWS5iUHwL3pA==
-X-Google-Smtp-Source: AKy350YBR6zNVDEar+oV1BSDq/1Y8u/fnKTZ8b9oW3xMoF5v8rx+6HcUbkBOB7TQSRiNhoyKS+KJFw==
-X-Received: by 2002:ac2:5485:0:b0:4eb:11dc:d9a5 with SMTP id t5-20020ac25485000000b004eb11dcd9a5mr1021070lfk.32.1680896200757;
-        Fri, 07 Apr 2023 12:36:40 -0700 (PDT)
+        bh=DdfpGVYiIH49UkIzv2GHvV1XFU18RQJaEQNhzCtq13M=;
+        b=g6HMEH/W+HHOmxKGR1/q5A0Pz0rDFuk4RtOLNHMfcpQypT+BzzdSCwDF82VNkU/6s3
+         Nf9TPIQI7ZXobmkqIz8jNUoLcRcfF6d026McXTl3mYBtINduSz2+ztoFMZuLcRwqdXJ2
+         0jUKbDAQ/wBuLoNGgOP4tqde8cthQxXpzdvkCzRDh/0334/8fLm0JatN5DQdxj9cUwFr
+         mjVS91ksPThqvRs1HAiQY/ATz+tlWo02a4cXMeHFpusesB42UWUn28Nq//tOT0bngPjD
+         tN7JRA4PT5qbehftV2guoMuhSpQ4aBo6ZHFFazI0SSi8ss28m7z3xXVnoyu7eYWZG46z
+         yCCw==
+X-Gm-Message-State: AAQBX9eNwrH3/oCk4HXEfdFx7GntSUN3uEVDiIfZfN7yBfH1gJodYyMB
+        7PUPQyZTDPvkwAZtGV6zleSK+A==
+X-Google-Smtp-Source: AKy350ZQ15H7KLZBjASa/i2jAVoikKumGXTpFkE8mHSl+jgIfK82QhNHdBDxJkLugnfG+uWiRsjymg==
+X-Received: by 2002:a19:5503:0:b0:4d8:8273:ec with SMTP id n3-20020a195503000000b004d8827300ecmr833199lfe.20.1680896224936;
+        Fri, 07 Apr 2023 12:37:04 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id k18-20020a2e8892000000b002958a51df76sm957200lji.92.2023.04.07.12.36.39
+        by smtp.gmail.com with ESMTPSA id i13-20020a056512006d00b004e83edd8ce8sm840581lfo.196.2023.04.07.12.37.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Apr 2023 12:36:40 -0700 (PDT)
-Message-ID: <d935029e-9ba1-a89e-67e8-79e832d7c736@linaro.org>
-Date:   Fri, 7 Apr 2023 21:36:38 +0200
+        Fri, 07 Apr 2023 12:37:04 -0700 (PDT)
+Message-ID: <db168415-74b0-c83e-248a-a70b1c9b71b7@linaro.org>
+Date:   Fri, 7 Apr 2023 21:37:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH V4 2/5] regulator: qcom_smd: Add MP5496 S1 regulator
+Subject: Re: [PATCH V4 4/5] arm64: dts: qcom: ipq9574: Add SMPA1 regulator
+ node
 Content-Language: en-US
 To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
@@ -66,9 +67,9 @@ Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
         quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
         quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
 References: <20230407155727.20615-1-quic_devipriy@quicinc.com>
- <20230407155727.20615-3-quic_devipriy@quicinc.com>
+ <20230407155727.20615-5-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230407155727.20615-3-quic_devipriy@quicinc.com>
+In-Reply-To: <20230407155727.20615-5-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -84,7 +85,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 7.04.2023 17:57, Devi Priya wrote:
-> Adding support for MP5496 S1 regulator on IPQ9574 SoC.
+> Add support for SMPA1 regulator node in IPQ9574.
 > 
 > Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
 > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
@@ -94,32 +95,40 @@ Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 >  Changes in V4:
-> 	- Dropped struct mp5496_smpa1 which was the same as mp5496_smpa2
-> 	  and renamed mp5496_smpa2 to mp5496_smps as suggested by Konrad
-> 	
->  drivers/regulator/qcom_smd-regulator.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> 	- Updated the comment as suggested by konrad
+> 	  s/Updating/Update
+> 	  s/725000uV/725mV
 > 
-> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
-> index 6f722b2d682e..18189f35db68 100644
-> --- a/drivers/regulator/qcom_smd-regulator.c
-> +++ b/drivers/regulator/qcom_smd-regulator.c
-> @@ -749,7 +749,7 @@ static const struct regulator_desc pms405_pldo600 = {
->  	.ops = &rpm_smps_ldo_ops,
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> index 3ae38cf327ea..bdc1434fbe67 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> @@ -44,6 +44,25 @@
+>  	};
 >  };
 >  
-> -static const struct regulator_desc mp5496_smpa2 = {
-> +static const struct regulator_desc mp5496_smps = {
->  	.linear_ranges = (struct linear_range[]) {
->  		REGULATOR_LINEAR_RANGE(600000, 0, 127, 12500),
->  	},
-> @@ -794,7 +794,8 @@ struct rpm_regulator_data {
->  };
->  
->  static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
-> -	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smpa2, "s2" },
-> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &mp5496_smps, "s1" },
-> +	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smps, "s2" },
->  	{ "l2", QCOM_SMD_RPM_LDOA, 2, &mp5496_ldoa2, "l2" },
->  	{}
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-mp5496-regulators";
+> +
+> +		ipq9574_s1: s1 {
+> +		/*
+> +		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
+> +		 * During regulator registration, kernel not knowing the initial voltage,
+> +		 * considers it as zero and brings up the regulators with minimum supported voltage.
+> +		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
+> +		 * the regulators are brought up with 725mV which is sufficient for all the
+> +		 * corner parts to operate at 800MHz
+> +		 */
+> +			regulator-min-microvolt = <725000>;
+> +			regulator-max-microvolt = <1075000>;
+> +		};
+> +	};
+> +};
+> +
+>  &pcie1_phy {
+>  	status = "okay";
 >  };
