@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1BB66DABAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 12:51:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4A286DABB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 12:51:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240662AbjDGKvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 06:51:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41600 "EHLO
+        id S240687AbjDGKvC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 06:51:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231285AbjDGKup (ORCPT
+        with ESMTP id S240646AbjDGKus (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 06:50:45 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98BAAA5FA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 03:50:42 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id v1so41993374wrv.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 03:50:42 -0700 (PDT)
+        Fri, 7 Apr 2023 06:50:48 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44EB6AD2C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 03:50:44 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id eo6-20020a05600c82c600b003ee5157346cso636697wmb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 03:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680864641; x=1683456641;
+        d=linaro.org; s=google; t=1680864642; x=1683456642;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nU/yphFY/brnvT8pyeHTqL0FHqwuTdveAK5097Yxf5M=;
-        b=wkQaGNlivZjUxdi0Uvp81wH0UIN4Z7VmgY2cR4J3I4UdLSLeb9qXt5wi+IpMLpS45g
-         sYjZsoapnUQK0C6baq45oGHKLUPt3TEl1cnu4brLQBZ/kxsoRSfBGqadpvRYAUwjCVSu
-         cwybVpDgtiTtwt3LD7azzhYDozmITkk03bhJ9Egr7w1zIv3hUdiIuXmvL9GauqBjRaXI
-         rcRs3gib+dC2G2ZqaKSAfO2M9X5zsx7/Jl1adlAh7gZCcXqn+WK8XMcARn7V311V6iA0
-         94z0b+CAkXqkgWrAY9vzI10i3PNpHy+JWDCsHaWbvV+AJOVw3olMJfjJBabzcQIQM4Cn
-         18GA==
+        bh=+AoJwb3uiC7XvXnq9Cv6Yi3/auRbCXXml6xp1v+5NAQ=;
+        b=ImJosRLr6cpfZxxfAvHh3FuP1UDctl5bNsG7L7v0kNVn8a1u6zf7uie565hVY4VU8/
+         1sFAOdrjycvRq+rdVPBertPJk/lt7kvLp3y8eqBymKflDkC8lfk+06m080d2DFO9kt+l
+         ptjGTKDdEzZ6lo4m272ysLpL5mPJpG12Drab4M97O0oIPl/Q5xPSjgDPToXTzz0l0BCQ
+         uJE5yppDrUSL+b6Wr8r4EF468IzrkPw7GNLQ/YEzfgTC+FEvdSymoPDEd+PyFd0pg0Ek
+         ZBGZQ5fgaX5k92FtcAzlf4o5yT3RzZ8vfp/l6BUFhPj7U2h99SMkG42qPiK1ubgqi29A
+         ZI4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680864641; x=1683456641;
+        d=1e100.net; s=20210112; t=1680864642; x=1683456642;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nU/yphFY/brnvT8pyeHTqL0FHqwuTdveAK5097Yxf5M=;
-        b=M3Xl3+4UHYCC6MtCjOALD3GysWkD9AtLfb22L4+WHx5D8Svn0IHvsBCUXfKEeWCla6
-         ifZAsRH784VpbWePXZxJS5hHIUhkuZsafQGEsCGhdSUzYw5TaZ6xWU7Up7/kv/toghw2
-         x0y8U38MOc6SCzjNaORxDs2mTSHC9xJraUs6Wo6ka8WHkX5D8FgGdkIttGnUmO1GjKRT
-         rbXdopuU9XGiUXR2Bu94bWm8XibBpKg+2vJwfFWlijcfJKrL/JxiclwM4Z1Wa2WGeX5x
-         sqesx3MI14p33zfJv8n38rBb8klzGzv0RbmzzWD7D/PqCxkZNDg31lblbuVobq8Dt1Z7
-         Y1lg==
-X-Gm-Message-State: AAQBX9fMJAgiWCA/mZO0mzD35Z4OP9f5tISwuaDRA2+y67M8HUpHeA3Y
-        YDIzkl53qNrT7gaI75E6sFnb9w==
-X-Google-Smtp-Source: AKy350aQWMU/oZEkCE3WmgisVy1qKBuHAqfk4gyyXdRSSkJRS1RihuemTI7nHUfKvB+PmDIUyAZtUA==
-X-Received: by 2002:a5d:6b02:0:b0:2c7:1d0d:7184 with SMTP id v2-20020a5d6b02000000b002c71d0d7184mr1111061wrw.11.1680864640867;
-        Fri, 07 Apr 2023 03:50:40 -0700 (PDT)
+        bh=+AoJwb3uiC7XvXnq9Cv6Yi3/auRbCXXml6xp1v+5NAQ=;
+        b=fIqfOkofRV+e2SSwkDHLOv0prf/kgsMA+J0yKKslt4ECE00tg4Ve23yvNIfiq8G1+n
+         7v9T16dwOtvnHCzLFVJWSS/28hZY0yvTD+10CrjKvdCV1ks4YGq+p7pHXrtIaL//bd9i
+         YZwr6XyQhuHBpmgidqTMk7ckB4npbTOVRmDVe81pzttTGmqqPxHn5ucihqqMNGxl5y9P
+         fIyXg928fxc3diNWwtkGZTqJYZPgMD5Fd0RUHM758tCpPjOffF4nOoBYGqxj62c2PvXo
+         gnQFlRr+mgixdegpqpEDOqHroyjgJGXTutDvlYTMHJKtnkWBGm4rRIwSDMMOInf/X0jg
+         GJsA==
+X-Gm-Message-State: AAQBX9cf0vJ3VlxCPLdgCsxQnIvXnFqkEYM2NWa8pt5l8vsDMikQ0R+M
+        MGCo4PcIUoE0DQLmWgAQGWXHpQ==
+X-Google-Smtp-Source: AKy350ZGMq6FqyYpcpPwyGasQ3zXfUjoGqvbNEbFh5ND4lxo6ouDY+z+yl+oGLluNLUadwGxj/Unkg==
+X-Received: by 2002:a05:600c:2182:b0:3ee:3fd7:5f85 with SMTP id e2-20020a05600c218200b003ee3fd75f85mr1016584wme.11.1680864642510;
+        Fri, 07 Apr 2023 03:50:42 -0700 (PDT)
 Received: from localhost.localdomain ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id i16-20020a05600c355000b003ede6540190sm8131909wmq.0.2023.04.07.03.50.39
+        by smtp.gmail.com with ESMTPSA id i16-20020a05600c355000b003ede6540190sm8131909wmq.0.2023.04.07.03.50.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 03:50:40 -0700 (PDT)
+        Fri, 07 Apr 2023 03:50:42 -0700 (PDT)
 From:   Abel Vesa <abel.vesa@linaro.org>
 To:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -70,12 +70,10 @@ To:     Ulf Hansson <ulf.hansson@linaro.org>,
 Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Eric Biggers <ebiggers@google.com>
-Subject: [PATCH v6 1/6] dt-bindings: crypto: Add Qualcomm Inline Crypto Engine
-Date:   Fri,  7 Apr 2023 13:50:24 +0300
-Message-Id: <20230407105029.2274111-2-abel.vesa@linaro.org>
+        linux-scsi@vger.kernel.org
+Subject: [PATCH v6 2/6] dt-bindings: ufs: qcom: Add ICE phandle
+Date:   Fri,  7 Apr 2023 13:50:25 +0300
+Message-Id: <20230407105029.2274111-3-abel.vesa@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230407105029.2274111-1-abel.vesa@linaro.org>
 References: <20230407105029.2274111-1-abel.vesa@linaro.org>
@@ -90,83 +88,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add schema file for new Qualcomm Inline Crypto Engine driver.
+Starting with SM8550, the ICE will have its own devicetree node
+so add the qcom,ice property to reference it.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
 ---
 
 The v5 is here:
-https://lore.kernel.org/all/20230403200530.2103099-2-abel.vesa@linaro.org/
+https://lore.kernel.org/all/20230403200530.2103099-3-abel.vesa@linaro.org/
 
 Changes since v5:
- * none
+ * dropped the sm8550 specific subschema and replaced it with one that
+   mutually excludes the qcom,ice vs both the ICE specific reg range
+   and the ICE clock
 
 Changes since v4:
- * added Eric's R-b tag
+ * Added check for sm8550 compatible w.r.t. qcom,ice in order to enforce
+   it while making sure none of the other platforms are allowed to use it
 
 Changes since v3:
- * added Krzysztof's R-b tag
+ * dropped the "and drop core clock" part from subject line
 
 Changes since v2:
- * moved the file to crypto dir
- * added soc specific compatible
- * dropped top level description
- * renamed node to crypto and dropped label in example
+ * dropped all changes except the qcom,ice property
 
- .../crypto/qcom,inline-crypto-engine.yaml     | 42 +++++++++++++++++++
- 1 file changed, 42 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-new file mode 100644
-index 000000000000..92e1d76e29ee
---- /dev/null
-+++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-@@ -0,0 +1,42 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/crypto/qcom,inline-crypto-engine.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     | 26 +++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index c5a06c048389..71aa79eac6b4 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -70,6 +70,10 @@ properties:
+   power-domains:
+     maxItems: 1
+ 
++  qcom,ice:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: phandle to the Inline Crypto Engine node
 +
-+title: Qualcomm Technologies, Inc. (QTI) Inline Crypto Engine
+   reg:
+     minItems: 1
+     maxItems: 2
+@@ -187,6 +191,28 @@ allOf:
+ 
+     # TODO: define clock bindings for qcom,msm8994-ufshc
+ 
++  - if:
++      properties:
++        qcom,ice:
++          minItems: 1
++          maxItems: 1
++    then:
++      properties:
++        reg:
++          minItems: 1
++          maxItems: 1
++        clocks:
++          minItems: 8
++          maxItems: 8
++    else:
++      properties:
++        reg:
++          minItems: 2
++          maxItems: 2
++        clocks:
++          minItems: 9
++          maxItems: 11
 +
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - qcom,sm8550-inline-crypto-engine
-+      - const: qcom,inline-crypto-engine
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,sm8550-gcc.h>
-+
-+    crypto@1d88000 {
-+      compatible = "qcom,sm8550-inline-crypto-engine",
-+                   "qcom,inline-crypto-engine";
-+      reg = <0x01d88000 0x8000>;
-+      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+    };
-+...
+ unevaluatedProperties: false
+ 
+ examples:
 -- 
 2.34.1
 
