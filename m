@@ -2,48 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1982A6DB1D7
+	by mail.lfdr.de (Postfix) with ESMTP id 4C9746DB1D8
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:39:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230330AbjDGRjB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:39:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42014 "EHLO
+        id S230049AbjDGRjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:39:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230173AbjDGRiv (ORCPT
+        with ESMTP id S230217AbjDGRi4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:38:51 -0400
+        Fri, 7 Apr 2023 13:38:56 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A72AB45D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:38:37 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15B3ABB9B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:38:38 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3CEF1612B8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 17:38:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2D9C433AF;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 56CB8652B1
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 17:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C1FC4339B;
         Fri,  7 Apr 2023 17:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680889116;
-        bh=hE091Hc24zXy/mwHsxoB3IlJDCBXR69MzEJfr7kUpYM=;
+        s=k20201202; t=1680889117;
+        bh=KPIevUfhOCnsYWGl++KgpaVzp3iMelMgZUHcaQzbHrE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=p+GYGgLfJ+QhoPZYFV3j9VrGQH+V6d83DMFfYcELl4P86uKp1FVNW9ZX/kQYtDh5y
-         F8LIlXVlYyB98nYUqdoQXJwFWvziRYFb28OD3DSBaEVB5Z3Rouz7B6RivoyjSpaUBt
-         tygfRMlP1sPo+cOeOE0+oqRdgqmo6ICS6uJlndAZ4IwsyX7KsvKqdC+0v60CcB6vMq
-         m6g6xrvkpOV2ipVl7i+gYDpUumo9OXohCIHyXKKvbpZrDFgmGYGlFjpBu/o/jNPJLn
-         kz6pLbeXaLrieZbc5qheFzbvn54BMrD32eIi6IX1ctkXm/TBowiqrH2Y8AqcjjbDP0
-         zfqcIGMRN7kcg==
+        b=NhzB+Ima+sIrbFEAGM90EVhtvmotJR+DjUqi6rvvECD6iojuImvFKYeqNca9XhBXr
+         lSCgD5jqsgM2S+FDIXuxInq2hwEZooNzT6ZMLvK+aorFe27YQZuyhyQIbb3xcq0vJ0
+         OiQnQ3kZNRtGDBUZwSSuobnqk/fEe8hIOok/Kjy/T7UTcGnLqDB8lCxjYy3bS51k7X
+         MpH4JrsHptqhTL/+eaFYR9kMLcRMkuivCRQl+TBGx+ax1xfBiqoesHqks0BhHSWsVK
+         51H1RO5cn/VdBaQE5Ydf7baah/ChiyfAUJe5ty5avOdAezjYNpOmnZM1DnqjPrpZkL
+         bnXsmTin8r/iA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Dominik Kobinski <dominikkobinski314@gmail.com>,
-        Jamie Douglass <jamiemdouglass@gmail.com>,
-        Konrad Dybcio <konradybcio@gmail.com>
-Subject: Re: [PATCH 0/2] msm8994-angler memory overlap fixes
-Date:   Fri,  7 Apr 2023 10:41:14 -0700
-Message-Id: <168088927579.2561591.11641262449620000771.b4-ty@kernel.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     dianders@chromium.org, quic_khsieh@quicinc.com,
+        seanpaul@chromium.org, robdclark@gmail.com, swboyd@chromium.org,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        freedreno@lists.freedesktop.org, konrad.dybcio@linaro.org,
+        quic_bjorande@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: remove hbr3 support on herobrine boards
+Date:   Fri,  7 Apr 2023 10:41:15 -0700
+Message-Id: <168088927579.2561591.16300478555888489452.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230131200414.24373-1-pvorel@suse.cz>
-References: <20230131200414.24373-1-pvorel@suse.cz>
+In-Reply-To: <20230329233416.27152-1-quic_abhinavk@quicinc.com>
+References: <20230329233416.27152-1-quic_abhinavk@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -56,23 +58,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 31 Jan 2023 21:04:12 +0100, Petr Vorel wrote:
-> NOTE: this should be applied on the top of Jamie's patch [1].
-> (I'll rebase it if changes needed.)
-> 
-> Kind regards,
-> Petr
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20230128055214.33648-1-jamiemdouglass@gmail.com/
+On Wed, 29 Mar 2023 16:34:16 -0700, Abhinav Kumar wrote:
+> There are some interop issues seen across a few DP monitors with
+> HBR3 and herobrine boards where the DP display stays blank with hbr3.
+> This is still under investigation but in preparation for supporting
+> higher resolutions, its better to disable HBR3 till the issues are
+> root-caused as there is really no guarantee which monitors will show
+> the issue and which would not.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: msm8994-angler: Fix cont_splash_mem mapping
-      commit: fe88480a6be92ecbf6f205ff3a7d7e5ded0562dd
-[2/2] arm64: dts: msm8994-angler: removed clash with smem_region
-      commit: c85c8a992794dfcd7cea7a41871710c27c5592a6
+[1/1] arm64: dts: qcom: sc7280: remove hbr3 support on herobrine boards
+      commit: 75eab749e7aec0b7b515d7c50ed429ef4e1c5f3f
 
 Best regards,
 -- 
