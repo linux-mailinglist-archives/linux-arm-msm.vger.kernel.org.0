@@ -2,77 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6951A6DAC72
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 13:59:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDE436DAD6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 15:27:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240454AbjDGL7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 07:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37430 "EHLO
+        id S240519AbjDGN1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 09:27:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240293AbjDGL7W (ORCPT
+        with ESMTP id S240762AbjDGN1S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 07:59:22 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBDB983F0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 04:59:19 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id b6so23298770ljr.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 04:59:19 -0700 (PDT)
+        Fri, 7 Apr 2023 09:27:18 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0702A5CB
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 06:27:13 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id br6so54480137lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 06:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680868758;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1680874032;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wyNciRuuESIaKZEY8Qa86obLOtLCt19xSQ+LjBWVyjQ=;
-        b=x6t4GkePT4JZJ8ZgtSOSGs26QhXMjRbSyqg/eMVLLWn4zVRxKrxl5K/BgF+DrHZuds
-         s0jW3zyiwUl/LnZAih0GzV/X/1Yps9wU0ws51V8XXiC7LGAh/g4dxNtNwLdb15crQUc0
-         UwR7GcC+qebSayaEPaFwBe8FBh3Jko6hrhaUwDVm2EhKHm5yURJALcbFXl+dAbNGkZDO
-         c+jEhsEZG1Iq/c/pZdsOrQFyym9+iodZUZXLoUP4tecBl+dCpf2kwvZr3saMHm9UgPNV
-         9fBa1sIS11zPyUf5IQC1zSYK/oeWeRX+S/84SWlAYY4BYvnmtQQasWB1j3bKyB6kujM3
-         8JDg==
+        bh=CMS58S0zRr0RBsuH0FUy+WC/JEamPVFrvmqlnUgullw=;
+        b=q+Hn6eEk4bLUPus4fBt4715Hy9Fj6bzImQBHQqMlmBvO6lKWrYb5LPyPwz64ylZay6
+         sNVvjPeeuk53/ZLj93ZsQs4F+Gcmr9T9GG7IDYn9IdGIYaxeZ1R6g/RK53eCmh4eRonO
+         5vswpBfaJeo3ejh7EGnjkZwE7Xud3Y4GFLTHRE6P0hRJxM72Xcb13hmg/BCBMKxTJH1h
+         IBUmybj5YMpw8fF0VtAbwPgOuDpfvcd3C4wvKcrHWlXzZ0g4NvF4OfXFx5eqWFV9wQxJ
+         DfnXswpvw5UHFBzMgBfse+lqEmbXfIxJohQCG5b+jQK+etanZOrNHFTAvo43ZFPV19Pv
+         sZ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680868758;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1680874032;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wyNciRuuESIaKZEY8Qa86obLOtLCt19xSQ+LjBWVyjQ=;
-        b=u6QqCHtVyEk1jyeNmcaknjhdB+yNiSDrSickzF0LLpDfxuLxr514uKUGUNMAGO02aA
-         gkjYw+MoNgafpXUgpOzxrpSb+7GPV7Vi1KyIIqh5CJ/+BFu3cMSyQy/ZGB7Pul/ITHb9
-         TD3DfpA/1aDRIauseCsazQoeq49OCkt887/9EfM0p7cNiZrSGeh306oQ8gczmNt/+HyI
-         Z1Wkc8jYSP8r5kj5w16jTab4I1u0AeMSJCgCINJ9UE+pfZpozOr5caCR01O8SEzCW27g
-         /O/K+lYB2XWnrkmC3j9h5kucfxPEwv0BnpUnGovFbwfDrvx9mJgbyPxUys27Aflv6EgE
-         WuaQ==
-X-Gm-Message-State: AAQBX9euotO0VmSvS53GPvi1mf/Ht/qx9Y118WOlp5WlrqPMMB/kPnXc
-        j++19zJq8FJt2PKtoaf+ZkZXvA==
-X-Google-Smtp-Source: AKy350Y/DseiDOs/iuLqIXCJWd8Opwq/gvW1OI6u7YlYkagveYzVKg33OhOzFmfNjp8MwWfARVgJ4A==
-X-Received: by 2002:a05:651c:ba5:b0:2a6:13f:5f6c with SMTP id bg37-20020a05651c0ba500b002a6013f5f6cmr419351ljb.5.1680868757969;
-        Fri, 07 Apr 2023 04:59:17 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id b8-20020a2e9888000000b0029571d505a1sm774904ljj.80.2023.04.07.04.59.16
+        bh=CMS58S0zRr0RBsuH0FUy+WC/JEamPVFrvmqlnUgullw=;
+        b=iLoyPtUDxjip1e0Y87eoNwf/QPYtfX+kyNc/7DUpomFtRCZpbUrblrRtOFrfQWv7hZ
+         3QNmRaFTyuwd9eoBua2fGP6ISZSI9QasHG68cOugVBxZF5msVMPNVct0v7pMkBSdIec5
+         FpVou5LhSgFDT/VS32qTm+1KkfwQD0srLlPmfI8EZYfZmsd1mzRPiPAEOH+C6BmsKUX1
+         OmU0ivfW08ACXCd06LRCwXSuoQdT1Qux07zqdByYWRf7yo6wvFr7qW9EtEA/iu6daiCE
+         40XhnzyS919WALZdWZat+e5DX6xHrdSUdm8YJNqtRAnSsV40GsEGYX5rsTGcvVJDMjHe
+         sUvA==
+X-Gm-Message-State: AAQBX9eqi9wRuLXVR1/Z8ofLyXHBxFleUc7OGXH/5NvQPYBCcCSph7vw
+        0EzAvWB9WHx8QTuEU5QGoHpr2Q==
+X-Google-Smtp-Source: AKy350Y/3/7phel9U34KHUDJ11+cY5mHaThhqp/iCmNPO4bPF2mSDqrx4zMDcFz5+tOtCJb7zd6e7w==
+X-Received: by 2002:ac2:44ae:0:b0:4eb:982:ad3 with SMTP id c14-20020ac244ae000000b004eb09820ad3mr818826lfm.24.1680874031966;
+        Fri, 07 Apr 2023 06:27:11 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id i13-20020a056512006d00b004e83edd8ce8sm709658lfo.196.2023.04.07.06.27.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Apr 2023 04:59:17 -0700 (PDT)
-Message-ID: <de8d228f-36b9-e35e-2f08-880c96a39267@linaro.org>
-Date:   Fri, 7 Apr 2023 13:59:15 +0200
+        Fri, 07 Apr 2023 06:27:11 -0700 (PDT)
+Message-ID: <32274c8e-43e5-f58d-3d4f-80425d55f5b3@linaro.org>
+Date:   Fri, 7 Apr 2023 16:27:10 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH V3 5/5] arm64: dts: qcom: ipq9574: Add cpufreq support
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
-References: <20230406070032.22243-1-quic_devipriy@quicinc.com>
- <20230406070032.22243-6-quic_devipriy@quicinc.com>
- <18eb5708-bf51-26c3-51a0-70a5069ffdbe@linaro.org>
- <c1d916f0-514e-5ad8-d474-4d6fa9842364@quicinc.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <c1d916f0-514e-5ad8-d474-4d6fa9842364@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm6115p-j606f: Enable ATH10K WiFi
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20230406-topic-lenovo_features-v1-0-c73a5180e48e@linaro.org>
+ <20230406-topic-lenovo_features-v1-4-c73a5180e48e@linaro.org>
+ <7476b5ba-426c-3701-c4aa-d3e2db3de112@linaro.org>
+ <bceb91fa-c94b-a0bf-a612-19fc5778810e@linaro.org>
+ <CAA8EJprmzibdarZCKDtAa14HTShxTwQ6FQfi665hbVR_=5MLaQ@mail.gmail.com>
+In-Reply-To: <CAA8EJprmzibdarZCKDtAa14HTShxTwQ6FQfi665hbVR_=5MLaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -83,138 +87,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7.04.2023 06:53, Devi Priya wrote:
+On 06/04/2023 21:56, Dmitry Baryshkov wrote:
+> On Thu, 6 Apr 2023 at 21:32, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>>
+>> On 6.04.2023 19:51, Dmitry Baryshkov wrote:
+>>> On 06/04/2023 18:25, Konrad Dybcio wrote:
+>>>> Enable the onboard QCA Wi-Fi. HW identifiers for reference:
+>>>> qmi chip_id 0x320 chip_family 0x4001 board_id 0xff soc_id 0x400e0000
+>>>>
+>>>> Firmware sources:
+>>>> /vendor/firmware_mnt/image/wlanmdsp.bin -> qcom/.../wlanmdsp.mbn
+>>>> /vendor/firmware_mnt/image/bdwlan.bXX [1] -> [2] -> ath10k/.../board-2.bin
+>>>> [3] -> ath10k/.../firmware-5.bin
+>>>>
+>>>> Not sure where 3 comes from on the device itself, gotta investigate that..
+>>>>
+>>>> According to [4], it's called WCN3990_STRAIT.
+>>>>
+>>>> [1] XX = board_id printed when the file is missing or by your downstream
+>>>> kernel firmware loader in the dmesg; if XX=ff, use bdwlan.bin
+>>>
+>>> Since the board_id is 0xff, please add qcom,ath10k-calibration-variant
+>> Do I make up a name, or is there some convention?
+>>
+>> I see Johan used "LE_X13S" in commit 2702f54f400ad3979632cdb76553772414f4c5e3.
+>> Should I go with "LE_P11"?
 > 
+> I think Lenovo_P11 or LENOVO_P11 might be better.
+
+
+An update here:
+
+Kalle added a board file for Yoga C630 using the id 
+'bus=snoc,qmi-board-id=ff,qmi-chip-id=30214,variant=Lenovo_C630'. So, I 
+think, we should use 'Lenovo_P11' here.
+
 > 
-> On 4/7/2023 1:21 AM, Konrad Dybcio wrote:
 >>
+>>>
+>>> Ideally, could you please send the bdwlan to ath10k for inclusion, see https://wireless.wiki.kernel.org/en/users/drivers/ath10k/boardfiles .
+>> The legal situation is ambiguous at best :/
+> 
+> As usual :-(
+> 
 >>
->> On 6.04.2023 09:00, Devi Priya wrote:
->>> Add cpu freq nodes in the device tree to bump cpu frequency above 800MHz.
->>>
->>> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->>> ---
->>>   Changes in V3:
->>>     - No change
->>>
->>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 58 +++++++++++++++++++++++++++
->>>   1 file changed, 58 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>> index 1f9b7529e7ed..cfef87b5fd22 100644
->>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>> @@ -6,6 +6,7 @@
->>>    * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>    */
->>>   +#include <dt-bindings/clock/qcom,apss-ipq.h>
->>>   #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->>>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>>   #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
->>> @@ -37,6 +38,10 @@
->>>               reg = <0x0>;
->>>               enable-method = "psci";
->>>               next-level-cache = <&L2_0>;
->>> +            clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->>> +            clock-names = "cpu";
->>> +            operating-points-v2 = <&cpu_opp_table>;
->>> +            cpu-supply = <&ipq9574_s1>;
->>>           };
->>>             CPU1: cpu@1 {
->>> @@ -45,6 +50,10 @@
->>>               reg = <0x1>;
->>>               enable-method = "psci";
->>>               next-level-cache = <&L2_0>;
->>> +            clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->>> +            clock-names = "cpu";
->>> +            operating-points-v2 = <&cpu_opp_table>;
->>> +            cpu-supply = <&ipq9574_s1>;
->>>           };
->>>             CPU2: cpu@2 {
->>> @@ -53,6 +62,10 @@
->>>               reg = <0x2>;
->>>               enable-method = "psci";
->>>               next-level-cache = <&L2_0>;
->>> +            clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->>> +            clock-names = "cpu";
->>> +            operating-points-v2 = <&cpu_opp_table>;
->>> +            cpu-supply = <&ipq9574_s1>;
->>>           };
->>>             CPU3: cpu@3 {
->>> @@ -61,6 +74,10 @@
->>>               reg = <0x3>;
->>>               enable-method = "psci";
->>>               next-level-cache = <&L2_0>;
->>> +            clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->>> +            clock-names = "cpu";
->>> +            operating-points-v2 = <&cpu_opp_table>;
->>> +            cpu-supply = <&ipq9574_s1>;
->>>           };
->>>             L2_0: l2-cache {
->>> @@ -75,6 +92,47 @@
->>>           reg = <0x0 0x40000000 0x0 0x0>;
->>>       };
->>>   +    cpu_opp_table: opp-table-cpu {
->> This is not sorted properly. It should probably come
->> after memory alphabetically ('o' > 'm')
->>
-> Yes, But I see that opp-table-cpu node is already placed after
-> memory@40000000
-
-Oh you're right, the diff doesn't really show that very
-well and I didn't notice..
-
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
 >> Konrad
->>> +        compatible = "operating-points-v2";
->>> +        opp-shared;
->>> +
->>> +        opp-936000000 {
->>> +            opp-hz = /bits/ 64 <936000000>;
->>> +            opp-microvolt = <725000>;
->>> +            clock-latency-ns = <200000>;
->>> +        };
->>> +
->>> +        opp-1104000000 {
->>> +            opp-hz = /bits/ 64 <1104000000>;
->>> +            opp-microvolt = <787500>;
->>> +            clock-latency-ns = <200000>;
->>> +        };
->>> +
->>> +        opp-1416000000 {
->>> +            opp-hz = /bits/ 64 <1416000000>;
->>> +            opp-microvolt = <862500>;
->>> +            clock-latency-ns = <200000>;
->>> +        };
->>> +
->>> +        opp-1488000000 {
->>> +            opp-hz = /bits/ 64 <1488000000>;
->>> +            opp-microvolt = <925000>;
->>> +            clock-latency-ns = <200000>;
->>> +        };
->>> +
->>> +        opp-1800000000 {
->>> +            opp-hz = /bits/ 64 <1800000000>;
->>> +            opp-microvolt = <987500>;
->>> +            clock-latency-ns = <200000>;
->>> +        };
->>> +
->>> +        opp-2208000000 {
->>> +            opp-hz = /bits/ 64 <2208000000>;
->>> +            opp-microvolt = <1062500>;
->>> +            clock-latency-ns = <200000>;
->>> +        };
->>> +    };
->>> +
->>>       firmware {
->>>           scm {
->>>               compatible = "qcom,scm-ipq9574", "qcom,scm";
-> Best Regards,
-> Devi Priya
+>>>
+>>>>
+>>>> [2] https://github.com/jhugo/linux/blob/5.5rc2_wifi/README
+>>>> [3] https://github.com/kvalo/ath10k-firmware/blob/master/WCN3990/hw1.0/HL3.1/WLAN.HL.3.1-01040-QCAHLSWMTPLZ-1/firmware-5.bin
+>>>> [4] https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/-/blob/LA.VENDOR.1.0.r1-20700-WAIPIO.QSSI13.0/hif/src/hif_hw_version.h#L55
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 8 ++++++++
+>>>>    1 file changed, 8 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>>>> index 2aac25171dec..4ba8e59a27d8 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
+>>>> @@ -315,6 +315,14 @@ &usb_hsphy {
+>>>>        status = "okay";
+>>>>    };
+>>>>    +&wifi {
+>>>> +    vdd-0.8-cx-mx-supply = <&pm6125_l8>;
+>>>> +    vdd-1.8-xo-supply = <&pm6125_l16>;
+>>>> +    vdd-1.3-rfa-supply = <&pm6125_l17>;
+>>>> +    vdd-3.3-ch0-supply = <&pm6125_l23>;
+>>>> +    status = "okay";
+>>>> +};
+>>>> +
+>>>>    &xo_board {
+>>>>        clock-frequency = <19200000>;
+>>>>    };
+>>>>
+>>>
+> 
+> 
+> 
+
+-- 
+With best wishes
+Dmitry
+
