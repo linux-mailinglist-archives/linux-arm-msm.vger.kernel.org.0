@@ -2,135 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 460556DB197
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:28:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C12F6DB1AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:35:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbjDGR2e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:28:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33560 "EHLO
+        id S229729AbjDGRfu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:35:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjDGR2d (ORCPT
+        with ESMTP id S229776AbjDGRfp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:28:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 678A8A5FA;
-        Fri,  7 Apr 2023 10:28:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 04B4365230;
-        Fri,  7 Apr 2023 17:28:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA1BC433D2;
-        Fri,  7 Apr 2023 17:28:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680888511;
-        bh=idDlc8ZJaRbDwkcyJQzHCf0qlNbEXgjDa3puNQw4N9c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mtBo5tg3cXKg1cI2/vhx9WamdcOwjH8ylXUHOfZVQsAdN5yBfGzf1oiHOC5v+ZWAK
-         OdyC9vP3M+bOKFJpA/p4IA8YWTmzSewUlKlVulK3AQGjjBs/eME276YiXn47k/uyzP
-         ZDhxRPgiqhH8QVUO1MMKbp1rUk7ZIw8CaDgYYCVriHLS4gtWMBuMFvszA1JKiygBJY
-         g6QYxVv84iIQr5Wy+S9O4UFRpKPyuWp351KbwQikrVkS+ajyF9nQ28WVIiDKnvSVyp
-         iqS7g3X4sJmdfdP7rWwRwJSK+VZuBPOO/JMlP2JMBVeiUahrwpirsJ4DJF4jmakBnp
-         B6fqfgaLfbbmw==
-Date:   Fri, 7 Apr 2023 17:28:29 +0000
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v5 4/6] scsi: ufs: ufs-qcom: Switch to the new ICE API
-Message-ID: <ZDBSvVIIq6cMTf1Y@gmail.com>
-References: <20230403200530.2103099-1-abel.vesa@linaro.org>
- <20230403200530.2103099-5-abel.vesa@linaro.org>
- <20230406201634.GA20288@sol.localdomain>
- <ZC/ADOlol2XO7ACL@linaro.org>
+        Fri, 7 Apr 2023 13:35:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DF0B45D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1680888899;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=VgSBn4v63sH/hPEOpjuOfluIneyO592ey/flc3R1Lws=;
+        b=WqF/oCk6brDf9/ddFHn7OBva1Il+Q+gpY+YtszZbRf0UTgrBOhZ+mJfZxYF4PVv8IwDbft
+        OnV6UGrAjwjGEMcfiF0pZeHoKV9Fp25vzmOcIc27IWtM7QVL2ZnpJiRBOngZLqB3xyEyRz
+        8rIYSTNcFvkZh8XvC3DfCdPVpGHs07g=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-465-VmNHNeMFO1OiILM00KBwVw-1; Fri, 07 Apr 2023 13:34:57 -0400
+X-MC-Unique: VmNHNeMFO1OiILM00KBwVw-1
+Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-17e7104c589so22505866fac.19
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 10:34:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680888897;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VgSBn4v63sH/hPEOpjuOfluIneyO592ey/flc3R1Lws=;
+        b=q/QAmzNx4uS7sC3T8eMrwOR0GuFV/t3WaxNWlVGsLq++dzSDu+Iqtc6Y8sl2Vt4WVW
+         E4ROSoFLGWXhq+I958PSftUNE0XQiz25kJCoy5RrQDWrC9A4rq6G0oN6HLZCZN7JhdZ2
+         f+X5kZ8G6wMyemY6d1m0FQ2ggeKb2Oab0ux2qbKuA7IW/H54ZbQq0qyHtQbUnT2bixp9
+         xw2qniB9tD29CJ5jiuZ8bnZWLhixiZxyzRPyF41RaL+BoYLRvs3az3Lm0W3evDMTXTfF
+         I5V942pliupAQx6icIh6Rjkre62HKXCd0AVdszBh4aa5uu7Sbl/6EdLSapOfiynrwm0S
+         od+w==
+X-Gm-Message-State: AAQBX9dIzGU2STOut6rtoH81PFIel/z6LcmpeTpzeul5Md+5nAJSPcmT
+        89Bdql0rKHnwDMdBHpPG/9Juraduxby45NT8XYoefiYvZwUSfA3hLgwWyYSOWOFMdInyXfKQr/e
+        caYefv5lQsvGxAHkGqfRb9Y/DJg==
+X-Received: by 2002:a05:6871:828:b0:17a:ce6b:726 with SMTP id q40-20020a056871082800b0017ace6b0726mr1927773oap.57.1680888897187;
+        Fri, 07 Apr 2023 10:34:57 -0700 (PDT)
+X-Google-Smtp-Source: AKy350YXsTSTagUzg6KkiTKxiPA0gPNgmGx86bP9YtG1X657Q3uhpK3CFF1WVzwPqGtc/1IMJf5fWg==
+X-Received: by 2002:a05:6871:828:b0:17a:ce6b:726 with SMTP id q40-20020a056871082800b0017ace6b0726mr1927741oap.57.1680888896927;
+        Fri, 07 Apr 2023 10:34:56 -0700 (PDT)
+Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
+        by smtp.gmail.com with ESMTPSA id y1-20020a056870458100b001777244e3f9sm1822096oao.8.2023.04.07.10.34.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Apr 2023 10:34:56 -0700 (PDT)
+Date:   Fri, 7 Apr 2023 12:34:53 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Simon Horman <simon.horman@corigine.com>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        bhupesh.sharma@linaro.org, wens@csie.org, jernej.skrabec@gmail.com,
+        samuel@sholland.org, mturquette@baylibre.com,
+        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
+        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
+        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
+Subject: Re: [PATCH net-next v3 08/12] net: stmmac: Pass stmmac_priv in some
+ callbacks
+Message-ID: <20230407173453.hsfhbr66254z57ym@halaney-x13s>
+References: <20230331214549.756660-1-ahalaney@redhat.com>
+ <20230331214549.756660-9-ahalaney@redhat.com>
+ <ZChIbc6TnQyZ/Fiu@corigine.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZC/ADOlol2XO7ACL@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <ZChIbc6TnQyZ/Fiu@corigine.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 07, 2023 at 10:02:36AM +0300, Abel Vesa wrote:
-> On 23-04-06 13:16:34, Eric Biggers wrote:
-> > Hi Abel,
+On Sat, Apr 01, 2023 at 05:06:21PM +0200, Simon Horman wrote:
+> On Fri, Mar 31, 2023 at 04:45:45PM -0500, Andrew Halaney wrote:
+> > Passing stmmac_priv to some of the callbacks allows hwif implementations
+> > to grab some data that platforms can customize. Adjust the callbacks
+> > accordingly in preparation of such a platform customization.
 > > 
-> > On Mon, Apr 03, 2023 at 11:05:28PM +0300, Abel Vesa wrote:
-> > > Now that there is a new dedicated ICE driver, drop the ufs-qcom-ice and
-> > > use the new ICE api provided by the Qualcomm soc driver ice. The platforms
-> > > that already have ICE support will use the API as library since there will
-> > > not be a devicetree node, but instead they have reg range. In this case,
-> > > the of_qcom_ice_get will return an ICE instance created for the consumer's
-> > > device. But if there are platforms that do not have ice reg in the
-> > > consumer devicetree node and instead provide a dedicated ICE devicetree
-> > > node, the of_qcom_ice_get will look up the device based on qcom,ice
-> > > property and will get the ICE instance registered by the probe function
-> > > of the ice driver.
-> > > 
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > 
-> > This is still silent about how the ICE clock behavior is being changed.
+> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 > 
-> Right, I'll add the some more info into the commit message about the
-> clock being handled by the ICE driver.
+> ...
 > 
-> > 
-> > I'm still trying to understand all this myself, so please bear with me, but my
-> > understanding is that the UFS clocks can be disabled even while the host
-> > controller is runtime-resumed.  This is called "clock gating" in the code.
+> >  #define stmmac_reset(__priv, __args...) \
+> > @@ -223,59 +240,59 @@ struct stmmac_dma_ops {
+> >  #define stmmac_dma_init(__priv, __args...) \
+> >  	stmmac_do_void_callback(__priv, dma, init, __args)
+> >  #define stmmac_init_chan(__priv, __args...) \
+> > -	stmmac_do_void_callback(__priv, dma, init_chan, __args)
+> > +	stmmac_do_void_callback(__priv, dma, init_chan, __priv, __args)
 > 
-> The ICE clock is now being controlled by the new driver.
-> > 
-> > Before, the ICE clock was just listed as one of the UFS clocks.  So, it was just
-> > managed like the other UFS clocks.
-> > 
-> > Now, it appears that the ICE clock is always enabled while the host controller
-> > is runtime-resumed.  So, this patch removes support for gating of the ICE clock.
+> Hi Andrew,
 > 
-> I just tested this and it works as expected, which is:
+> Rather than maintaining these macros can we just get rid of them?
+> I'd be surprised if things aren't nicer with functions in their place [1].
 > 
-> ICE clock gets enable on qcom_ice_create (via *clk_get*_enabled) and
-> then, on the runtime suspend of the UFS, the qcom_ice_suspend is called
-> which will disable the clock. Then, every time UFS runtime
-> resumes/suspends the clock gets enabled/disabled.
+> f.e., we now have (__priv, ..., __priv, ...) due to a generalisation
+>       that seems to take a lot more than it gives.
 > 
-> Hope that makes sense.
-> 
-> Let me know if you think I'm missing something here.
+> [1] https://lore.kernel.org/linux-arm-kernel/ZBst1SzcIS4j+t46@corigine.com/
 > 
 
-Well, it's better than v4 and earlier of this patchset, where the clock was
-never turned off.
+Thanks for the pointer. I think that makes sense, I'll take that
+approach for these functions (and maybe in a follow-up series I'll
+tackle all of them just because the lack of consistency will eat me up).
 
-But, this patchset still seems to be a regression from the status quo, since it
-makes the ICE clock no longer be disabled when "UFS clock gating" disables the
-other UFS clocks.  Instead, it will only be disabled on runtime-suspend.
+Sorry for the delay, had some issues around the house that became
+urgent.
 
-Now, I don't know whether anyone ever confirmed that the current behavior is
-actually optimal and works as intended.  So, it *might* actually be fine to
-change it!  But I was hoping that you at least had some thoughts about this,
-whereas currently this patchset just ignores the issue entirely.
+Thanks,
+Andrew
 
-- Eric
