@@ -2,173 +2,305 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CD156DA8C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 08:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D9606DA8E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 08:24:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233562AbjDGGLw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 02:11:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42766 "EHLO
+        id S238501AbjDGGYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 02:24:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233748AbjDGGLt (ORCPT
+        with ESMTP id S231508AbjDGGYt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 02:11:49 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F8CA245
-        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 23:11:44 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-62dcfd6ce33so104955b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 23:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680847903;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=211/WQndq/0dIl4SBYP+HR+YcyINuvXrDMq+d+OBMX0=;
-        b=lIm2dOTV1ZyuKjez2fSI0LPbQVa4KKfwrbjvSJegqX/etzx4+UuDyt4VMVUuOmqXZh
-         eYtKJ+tY+5EnH4q3WvFr6YsnG8hZSVYA6dcUENfbDukd1+PtsFY/TNQcfNZ9UJbMCZXl
-         H04QxaDhreuEVjVgjrtUzMMZSt99NE62IDD+POwPQlMk9DG2GNkiqqP2OIHoL1GQtYGq
-         lFYdHzjq2xjmwm2W+GTP90JFxWBTZdTFil+23TQkZQEcf4+hRvuaUSarLliAGVn0GAhW
-         RRyej4c0zdtxcSmzg1+mGRxqgVw6SqBgxvHLB9AhqWbYs2g0907aEOvPnzGG51nNo005
-         I2ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680847903;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=211/WQndq/0dIl4SBYP+HR+YcyINuvXrDMq+d+OBMX0=;
-        b=mLOJbfeK+QuI/fLrPemiej2MOqYy63jgVzSyE6S17IB109E+M913QgfFeA+BZRi3ya
-         YsL2rwiAznAzgBKEJ4NC1JGQYw/eg6bo4P2RHgGhru+vqFy8f6kib+gjdYtjD4p2+Dc0
-         7wbkAEruY9Bit5WOASvsAgcobEMvOciEv6J7YumjRpZfC53W8k35iBAYPris7s7H3Vx/
-         aiHjNfddbWJ0I56UdBvpcIKwO3dFsnItqEMv1RkWOhgkaSQx04grTVSvBc0+eYnn5yTf
-         P5cNXY4LYhIdBqKwN6i311l6O8hiMzrQUUdRkPxJjR/GiK4RmdmhB9GHceWz+jMIOUKk
-         KWdw==
-X-Gm-Message-State: AAQBX9eojCaMvmecVzE+V+Qnp2qsux/lgmSURf+GTQxyTgebMIRMYNfd
-        d3ixfxDa4qu/fHsTjusd3hX4E9iAji9CqKpTxhc=
-X-Google-Smtp-Source: AKy350bzkyU/L95q1La6S7UbwY2cS2FuyGPLUXtdRiLUdUhCCWKIm6ciLc7IhgzxzDKXjvMjwoFsBQ==
-X-Received: by 2002:a62:7b50:0:b0:62a:5769:25f9 with SMTP id w77-20020a627b50000000b0062a576925f9mr1420730pfc.28.1680847903256;
-        Thu, 06 Apr 2023 23:11:43 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c60:6a11:8ba1:beba:def7:a4ae])
-        by smtp.gmail.com with ESMTPSA id u25-20020aa78399000000b0062d7e9bb17asm2253879pfm.81.2023.04.06.23.11.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 23:11:42 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        andersson@kernel.org, bhupesh.sharma@linaro.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
-        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Subject: [PATCH v6 2/2] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-Date:   Fri,  7 Apr 2023 11:41:22 +0530
-Message-Id: <20230407061122.2036838-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230407061122.2036838-1-bhupesh.sharma@linaro.org>
-References: <20230407061122.2036838-1-bhupesh.sharma@linaro.org>
+        Fri, 7 Apr 2023 02:24:49 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BB2AD3A;
+        Thu,  6 Apr 2023 23:24:34 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3374KJOV027393;
+        Fri, 7 Apr 2023 06:23:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0OJ/jSYziRv5Ytnzvca+2yIZwCushE9cQrL2Pin+XQU=;
+ b=Zh8as3vpQiD56/z4ChZMlF/auZtxhlE3CpJu26/RXzfkDd7nCLBofca9HY+YOmU0VhFs
+ oOxo/BgQ8bLXQipPw0P+vdU0SrLwVeGr/7ocWeH+0YtfGakTcYr6R4QVnkm99gLoVwFW
+ EhlesBFc+iJhaHHe3oJPPN7OxWdNnfbnd3fbN7hcynrrhXZ++VQkugDB1D86UnqfqeyG
+ MNG/MxeDojO3EKOb9DK3TqLo1lyAqSfEC8eg+i3SHwVfmWYZBvgPUi3BKYLbP8OeE7/4
+ 4s66+UzpherJKTeFx4kuw7XTBfrmPAHuhrh1ZiRzDB3vxptselIdZrYpf2XUN7bMzD/F GQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pt8t58h65-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Apr 2023 06:23:50 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3376NnVQ012007
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Apr 2023 06:23:49 GMT
+Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
+ 23:23:43 -0700
+Message-ID: <d24c14e4-46f2-dbea-96ca-5b665effcea3@quicinc.com>
+Date:   Fri, 7 Apr 2023 14:23:41 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+From:   Hao Zhang <quic_hazha@quicinc.com>
+Subject: Re: [PATCH v2 2/3] dt-bindings: arm: Add Coresight Dummy Trace YAML
+ schema
+To:     Rob Herring <robh@kernel.org>
+CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Paul Walmsley" <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>, Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20230324061608.33609-1-quic_hazha@quicinc.com>
+ <20230324061608.33609-3-quic_hazha@quicinc.com>
+ <20230331184700.GA1920623-robh@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20230331184700.GA1920623-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Iwvvw_971ySGM9DcoK2VmBdsrh4fD1kw
+X-Proofpoint-GUID: Iwvvw_971ySGM9DcoK2VmBdsrh4fD1kw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-07_03,2023-04-06_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 suspectscore=0 malwarescore=0 mlxscore=0 impostorscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304070058
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add USB superspeed qmp phy node to dtsi.
+Hi Rob,
 
-Make sure that the various board dts files (which include sm4250.dtsi file)
-continue to work as intended.
+On 4/1/2023 2:47 AM, Rob Herring wrote:
+> On Fri, Mar 24, 2023 at 02:16:07PM +0800, Hao Zhang wrote:
+>> Add new coresight-dummy.yaml file describing the bindings required
+>> to define coresight dummy trace in the device trees.
+> 
+> The diff tells me all this. Please explain why this is needed and needs
+> to be in DT here.
+> 
+Sure, will add more details to describe it.
+>>
+>> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
+>> ---
+>>   .../bindings/arm/qcom,coresight-dummy.yaml    | 118 ++++++++++++++++++
+>>   1 file changed, 118 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
+>> new file mode 100644
+>> index 000000000000..7b719b084d72
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
+>> @@ -0,0 +1,118 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+>> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/arm/qcom,coresight-dummy.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: QCOM Coresight Dummy component
+>> +
+>> +description: |
+>> +  The Coresight Dummy component is for the specific devices that HLOS don't have
+>> +  permission to access or configure. Such as Coresight sink EUD, some TPDMs etc.
+> 
+> EUD? TPDM?
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
- arch/arm64/boot/dts/qcom/sm6115.dtsi          | 36 +++++++++++++++++--
- .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
- 3 files changed, 40 insertions(+), 2 deletions(-)
+The term EUD stand for Embedded USB debugger, it will be connected to 
+coresight replicator component to receive and store coresight data. It 
+would be configured by NON-HLOS, and need HLOS(Kernel) to configure the 
+last coresight components. So we will use dummy sink to replace it in 
+kernel side for building the whole path(from source to sink).
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-index a1f0622db5a0..75951fd439df 100644
---- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-@@ -242,6 +242,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 2505c815c65a..f42065a0a71d 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -651,6 +651,38 @@ usb_hsphy: phy@1613000 {
- 			status = "disabled";
- 		};
- 
-+		usb_qmpphy: phy@1615000 {
-+			compatible = "qcom,sm6115-qmp-usb3-phy";
-+			reg = <0x0 0x01615000 0x0 0x200>;
-+			clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
-+				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-+				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-+			clock-names = "cfg_ahb",
-+				      "ref",
-+				      "com_aux";
-+			resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
-+				 <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
-+			reset-names = "phy", "phy_phy";
-+			status = "disabled";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			usb_ssphy: phy@1615200 {
-+				reg = <0x0 0x01615200 0x0 0x200>,
-+				      <0x0 0x01615400 0x0 0x200>,
-+				      <0x0 0x01615c00 0x0 0x400>,
-+				      <0x0 0x01615600 0x0 0x200>,
-+				      <0x0 0x01615800 0x0 0x200>,
-+				      <0x0 0x01615a00 0x0 0x100>;
-+				#clock-cells = <0>;
-+				#phy-cells = <0>;
-+				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "usb3_phy_pipe_clk_src";
-+			};
-+		};
-+
- 		qfprom@1b40000 {
- 			compatible = "qcom,sm6115-qfprom", "qcom,qfprom";
- 			reg = <0x0 0x01b40000 0x0 0x7000>;
-@@ -1101,8 +1133,8 @@ usb_dwc3: usb@4e00000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x0 0x04e00000 0x0 0xcd00>;
- 				interrupts = <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
--				phys = <&usb_hsphy>;
--				phy-names = "usb2-phy";
-+				phys = <&usb_hsphy>, <&usb_ssphy>;
-+				phy-names = "usb2-phy", "usb3-phy";
- 				iommus = <&apps_smmu 0x120 0x0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-index 10c9d338446c..d60cc024749b 100644
---- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -280,6 +280,9 @@ &usb {
- &usb_dwc3 {
- 	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
-+
-+	phys = <&usb_hsphy>;
-+	phy-names = "usb2-phy";
- };
- 
- &usb_hsphy {
--- 
-2.38.1
+The TPDM is Trace Profiling and Diagnostics Monitor, it is a coresight 
+trace source which could get hardware events from the IP subsystem.
 
+> 
+> I don't really love 'dummy' used here. Maybe the OS still wants/needs to
+> know where the sink goes to even if not configurable.
+> 
+> You *can* have multiple compatibles for a single generic driver if those
+> compatibles might be useful some day.
+> 
+
+Yes, we want to take it as a generic framework for coresight dummy sink 
+and source. I think we could add one more compatible to indicate the 
+type of it.
+
+>> +  So there need driver to register dummy devices as Coresight devices. Provide
+>> +  Coresight API for dummy device operations, such as enabling and disabling
+>> +  dummy devices. Build the Coresight path for dummy sink or dummy source for
+>> +  debugging.
+>> +
+>> +  The primary use case of the coresight dummy is to build path for dummy sink or
+>> +  dummy source.
+>> +
+>> +maintainers:
+>> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+>> +  - Tao Zhang <quic_taozha@quicinc.com>
+>> +  - Hao Zhang <quic_hazha@quicinc.com>
+>> +
+>> +select:
+>> +  properties:
+>> +    compatible:
+>> +      contains:
+>> +        enum:
+>> +          - qcom,coresight-dummy
+>> +  required:
+>> +    - compatible
+>> +
+>> +properties:
+>> +  $nodename:
+>> +    pattern: "^dummy_.*(sink|source)_[0-9]+.*$"
+> 
+> Don't use '_' in node names.
+> 
+> Convention for multiple instances without 'reg' is '-[0-9]+' on the end,
+> but you are allowing anything after that.
+> 
+
+OK, I will update it in the next version of patch.
+
+>> +  compatible:
+>> +    items:
+>> +      - const: qcom,coresight-dummy
+>> +
+>> +  qcom,dummy-sink:
+>> +    type: boolean
+>> +    description:
+>> +      Indicates that the type of this coresight node is dummy sink.
+>> +
+>> +  qcom,dummy-source:
+> 
+> Incorporate source or sink into the compatible strings.
+> 
+
+OK, I will update it in the next version of patch.
+
+> It's also somewhat redundant with 'in-ports' vs. 'out-ports'.
+
+I think I could add more details to describe it.
+
+> 
+>> +    type: boolean
+>> +    description:
+>> +      Indicates that the type of this coresight node is dummy source.
+>> +
+>> +  out-ports:
+>> +    description: |
+> 
+> Don't need '|' unless you need to preserve formatting.
+
+I will remove it.
+
+Thanks for your comments, I will take your advice and update it in the 
+next version of patch.
+
+Thanks,
+Hao
+
+> 
+>> +      Output connections from the dummy source to Coresight Trace bus.
+>> +    $ref: /schemas/graph.yaml#/properties/ports
+>> +
+>> +    properties:
+>> +      port:
+>> +        description: Output connection from the dummy source to Coresight
+>> +            Trace bus.
+>> +        $ref: /schemas/graph.yaml#/properties/port
+>> +
+>> +  in-ports:
+>> +    description: |
+>> +      Input connections from the CoreSight Trace bus to dummy sink.
+>> +    $ref: /schemas/graph.yaml#/properties/ports
+>> +
+>> +    properties:
+>> +      port:
+>> +        description: Input connection from the Coresight Trace bus to
+>> +            dummy sink.
+>> +        $ref: /schemas/graph.yaml#/properties/port
+>> +
+>> +required:
+>> +  - compatible
+>> +
+>> +additionalProperties: false
+>> +
+>> +oneOf:
+>> +  - required:
+>> +      - qcom,dummy-sink
+>> +  - required:
+>> +      - qcom,dummy-source
+>> +
+>> +examples:
+>> +  # minimum dummy sink definition. dummy sink connect to coresight replicator.
+>> +  - |
+>> +    dummy_sink_1 {
+>> +      compatible = "qcom,coresight-dummy";
+>> +      qcom,dummy-sink;
+>> +
+>> +      in-ports {
+>> +        port {
+>> +          eud_in_replicator_swao: endpoint {
+>> +            remote-endpoint =
+>> +              <&replicator_swao_out_eud>;
+>> +          };
+>> +        };
+>> +      };
+>> +    };
+>> +
+>> +  # minimum dummy source definition. dummy source connect to coresight funnel.
+>> +  - |
+>> +    dummy_source_1 {
+>> +      compatible = "qcom,coresight-dummy";
+>> +      qcom,dummy-source;
+>> +
+>> +      out-ports {
+>> +        port {
+>> +          dummy_riscv_out_funnel_swao: endpoint {
+>> +            remote-endpoint =
+>> +              <&funnel_swao_in_dummy_riscv>;
+>> +          };
+>> +        };
+>> +      };
+>> +    };
+>> +
+>> +...
+>> -- 
+>> 2.17.1
+>>
