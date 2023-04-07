@@ -2,150 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CA2C6DAF08
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 16:59:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54A3F6DAF76
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 17:15:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232076AbjDGO7u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 10:59:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60776 "EHLO
+        id S240922AbjDGPPE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 11:15:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231585AbjDGO7i (ORCPT
+        with ESMTP id S231445AbjDGPOp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 10:59:38 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D508DAD3C;
-        Fri,  7 Apr 2023 07:59:36 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 337BhJTT017122;
-        Fri, 7 Apr 2023 14:59:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=42AWNZrJGFZAap6ISs7RG705e5t13E4Fct0XAHfa+6U=;
- b=lW6LbmgotNgxfuB1HheSo8ABKKr997SqSusYhyt0hE10ZYVSzNnbjpioqzkaH3Ab3MS5
- fyL+klerdsMFCiDmCGXMmTkIwtGE/D584b8Et9KQhPe2jsQeQH6NXvlX7uNSVQHOzFWf
- 8aQap9MERod8AG6v+5hR1tJdAmxGC2oIRLAYE46KMV8GFlnCEw7Ua2OGL1MoLG7Vlodv
- aQxoU5yl1jrAlUlZGlDJ4Oc2MeeHsmW+n/T5iq5rZuiNailwXhaFTRnTA6sHIgh62mRi
- Y0LYYo1gCXLXr7Dbbmv2LW374tvM2aI4wP5omFvszthIx+f0Aly4a35YPPRzzCrkpavx xQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pth8brfey-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Apr 2023 14:59:30 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 337ExTgr020506
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Apr 2023 14:59:29 GMT
-Received: from [10.216.18.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 7 Apr 2023
- 07:59:23 -0700
-Message-ID: <4e888460-65b1-dc60-071a-4b9c88e38818@quicinc.com>
-Date:   Fri, 7 Apr 2023 20:29:20 +0530
+        Fri, 7 Apr 2023 11:14:45 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7BBF4C3C;
+        Fri,  7 Apr 2023 08:14:40 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 95CAC40142;
+        Fri,  7 Apr 2023 20:14:37 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1680880478; bh=pRR81jr9N1+Ri/oh0oUv0RKjpsOeFlOGNPLXoan9pic=;
+        h=From:To:Cc:Subject:Date:From;
+        b=GIyylw7UBd7T0T/vOh+HL6PBQUW2B8vLfRK22bZ1Dp1Lb4gfa/KTQHMurcbFVDr71
+         0rQ4kgxZmkRW1TN9XYT+IiQG/wqbzg5VBUoW/N/oUsM5Omu1RgUQDO5gWfGvJAfzJa
+         yt5c0G8KOUAIcTWxKI06DRp3myiyxpkH8aUeZ88jQYbXDNV2cFrzQZxHU6+x7lz7LI
+         g7KADURK+/t5j33NpCC1LQtNQ9XfOHNe8BO6h9GlCnNZDD5oOTMaAg1uxIRafGASnh
+         xw9CRiUeodA8eizdSklyQI+7XXwWr0yyyMPGvOYC3p1hwISPBZAcwWjwdsRC8XNixC
+         TFHJNBCBcPXFg==
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     agross@kernel.org, andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, quic_srivasam@quicinc.com,
+        judyhsiao@chromium.org, mka@chromium.org, dianders@chromium.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v5 0/4] Add Acer Aspire 1
+Date:   Fri,  7 Apr 2023 20:14:19 +0500
+Message-Id: <20230407151423.59993-1-nikita@trvn.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH V3 2/5] regulator: qcom_smd: Add MP5496 S1 regulator
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230406070032.22243-1-quic_devipriy@quicinc.com>
- <20230406070032.22243-3-quic_devipriy@quicinc.com>
- <714f4c97-d157-1402-1217-19e43daf645f@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <714f4c97-d157-1402-1217-19e43daf645f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CZEq8c0yj8-3IWh0SQKUVhKIQfeHDKSF
-X-Proofpoint-ORIG-GUID: CZEq8c0yj8-3IWh0SQKUVhKIQfeHDKSF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-07_10,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 mlxscore=0 mlxlogscore=913
- bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304070136
-X-Spam-Status: No, score=-2.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series introduces Acer Aspire 1 - A WoA laptop with sc7180.
 
+The dts adds mostly complite support for the hardware and the device,
+with minor patches on top, can be used as a normal laptop daily.
 
-On 4/7/2023 1:07 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 6.04.2023 09:00, Devi Priya wrote:
->> Adding support for MP5496 S1 regulator on IPQ9574 SoC.
->>
->> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   Changes in V3:
->> 	- No change
->>
->>   drivers/regulator/qcom_smd-regulator.c | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
->> diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
->> index 6f722b2d682e..cb77b3bd1723 100644
->> --- a/drivers/regulator/qcom_smd-regulator.c
->> +++ b/drivers/regulator/qcom_smd-regulator.c
->> @@ -749,6 +749,15 @@ static const struct regulator_desc pms405_pldo600 = {
->>   	.ops = &rpm_smps_ldo_ops,
->>   };
->>   
->> +static const struct regulator_desc mp5496_smpa1 = {
->> +	.linear_ranges = (struct linear_range[]) {
->> +		REGULATOR_LINEAR_RANGE(600000, 0, 127, 12500),
->> +	},
->> +	.n_linear_ranges = 1,
->> +	.n_voltages = 128,
->> +	.ops = &rpm_mp5496_ops,
->> +};
->> +
-> As far as I can tell, this is identical to struct mp5496_smpa2, so
-> this patch could come down to:
-> 
-> - static const struct regulator_desc mp5496_smpa1 = {
-> + static const struct regulator_desc mp5496_smps = {
-> 
-> 
-> 
-> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &mp5496_smps, "s1" },
-> -  	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smpa2, "s2" },
-> +	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smps, "s2" },
-> 
-Yes, right. Will update it
-> Konrad
->>   static const struct regulator_desc mp5496_smpa2 = {
->>   	.linear_ranges = (struct linear_range[]) {
->>   		REGULATOR_LINEAR_RANGE(600000, 0, 127, 12500),
->> @@ -794,6 +803,7 @@ struct rpm_regulator_data {
->>   };
->>   
->>   static const struct rpm_regulator_data rpm_mp5496_regulators[] = {
->> +	{ "s1", QCOM_SMD_RPM_SMPA, 1, &mp5496_smpa1, "s1" },
->>   	{ "s2", QCOM_SMD_RPM_SMPA, 2, &mp5496_smpa2, "s2" },
->>   	{ "l2", QCOM_SMD_RPM_LDOA, 2, &mp5496_ldoa2, "l2" },
->>   	{}
-Best Regards,
-Devi Priya
+Notable features absent from this patch:
+- Sound
+   While the dedicated sound components are defined, since the
+   ADSP must be used, sound requires additions of that remoteproc
+   as well some extra "glue" to connect the i2s outputs to it.
+   I was able to hack together some sound based on sm8250 stuff
+   but it needs more work.
+- Embedded Controller
+   The laptop has a dedicated EC that controls, notably,
+   battery/charger and notifies the device about the USB-C DisplayPort
+   HPD events. As per this patch, there is no battery status
+   indication and external display support. Also, due to the EC
+   defaults, the fn key is disabled. I have an experimental driver that
+   implements all of that, which needs more work and will be submitted
+   at a later date.
+- PSCI OSI Mode
+   Firmware on this laptop does not support the PC mode, as is usual
+   for Qualcomm. This change would require adding OSI related
+   power-domains to the SoC dtsi and is omitted in expectation that
+   this can be handled when (if?) CrOS team handles their tf-a, like
+   they did with sc7280.
+
+Changed in v3:
+ - Disable lpass clocks by default (Konrad)
+ - Drop status=disabled for mdp in the common soc dtsi (Konrad)
+
+Changed in v4:
+ - Resend with picked up tags, no other change.
+
+Changed in v5:
+ - Minor style issues fixed. (Konrad)
+
+Nikita Travkin (4):
+  arm64: dts: qcom: sc7180: Don't enable lpass clocks by default
+  arm64: dts: qcom: sc7180: Drop redundant disable in mdp
+  dt-bindings: arm: qcom: Add Acer Aspire 1
+  arm64: dts: qcom: Add Acer Aspire 1
+
+ .../devicetree/bindings/arm/qcom.yaml         |   4 +-
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 854 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |   4 -
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |   6 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   6 +-
+ 6 files changed, 866 insertions(+), 9 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+
+-- 
+2.39.2
+
