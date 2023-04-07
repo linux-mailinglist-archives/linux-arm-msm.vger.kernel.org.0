@@ -2,84 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 465C16DB487
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 21:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56AF06DB4DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 22:09:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230367AbjDGTy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 15:54:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50508 "EHLO
+        id S230430AbjDGUJ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 16:09:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231360AbjDGTyy (ORCPT
+        with ESMTP id S231210AbjDGUJR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 15:54:54 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD62A5D6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 12:54:52 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id h11so48686531lfu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 12:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680897292;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UnW6A28IKcreFUAfuKike2SwwSqJ7t/qMOojsEiWd3o=;
-        b=MwmFmghBv6y4HhNOaxXFNNuzkqK19RmVnmxCLV9ziJFoBJj36Uyj22QNGse8V10FED
-         Ycn7rsZiJL7XOKtpf2EWV4qpPMfUhdv759rK9a2kBagd+9O0MfW2SvdgHXF+DUTidvs6
-         0NuHdJn3tVfqdpCDpOulLjBicpoCTzr3Z76kGINvmk9J8UjgMozQcjVmuJe1r162BW8k
-         xPPpd9R1EejUZmmFLIXV0Fs3gJ58IpJjXaP2QB7wdOKDHWeyecXoDyo9R5jEoEolHS/L
-         9TsgTijFoz1ncDgN4P1a1yY63cg2NdIvwe9c3BJ1gmk8w49kPK3Pyl/XcLIrZN90ocYf
-         MEJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680897292;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UnW6A28IKcreFUAfuKike2SwwSqJ7t/qMOojsEiWd3o=;
-        b=X2vLbMeu9yBzK01PvoaOHRTIrAMz7k4bljtTDG+UcxJVRx1T3VcSbhRJhjdjLA+dtJ
-         Tta4xpXfQM5t008EmDcMAgebUungsuAsU/Oqy5jjM8ksfU91cpQdF5SyMLa8APjsJzX3
-         HmR/SbfZ8s/DalUhPlTtbJ4cGcmTdiNEgapdqLMuSNe/odHLD2/tchk+KAxZpkytURn+
-         3h7lk1B5XFKHF5QoLRDkkaJ0jTSHVCSfDyJ4Df+WrphMgWWF3i+9dbRwQQq19AhIMiUq
-         PvFgUsovB5yMrBnN4cI/6tBORpDmbsB29nK/uEQQIzLum+z4Rx069NIHqXsnP94vP48+
-         gx0A==
-X-Gm-Message-State: AAQBX9fRVfD4vwv3EzNV6lSN4uRBYRBsV0YbKCPbFfX8asEGiHKPoIVn
-        xjQoIr1UNEfMm0wHnuOhlsnDh9pBcR5PapeadQo=
-X-Google-Smtp-Source: AKy350ZZhBTnloXL3RG6GqwZQd81A/jMWiVaAxZ9A4Rr9J2WSc8pzQlD5NC/nIpe1C+nfs6cMJsEPw==
-X-Received: by 2002:ac2:5f0f:0:b0:4eb:13ff:6ca7 with SMTP id 15-20020ac25f0f000000b004eb13ff6ca7mr918254lfq.16.1680897292119;
-        Fri, 07 Apr 2023 12:54:52 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id u5-20020ac248a5000000b004d856fe5121sm839981lfg.194.2023.04.07.12.54.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 12:54:51 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 07 Apr 2023 21:54:44 +0200
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sm6115p-j606f: Enable ATH10K WiFi
+        Fri, 7 Apr 2023 16:09:17 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6829BDDC;
+        Fri,  7 Apr 2023 13:09:02 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 337JmN7F007066;
+        Fri, 7 Apr 2023 20:08:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0i4E0u1XrBmYLxbZU4JAuV5AftLWTvm18wKoplfBlyQ=;
+ b=KIqxzP30AS/HBh4IyZlRK4JRmDdbUPPehWf77ln+GD16+tUvTjdOZLA/GykPzdc5aCYc
+ +rB9Dw9ZMeIUfDlP6Ok/qk3nrIJD/6A1IXaTW8PlTpodtBDnFv7r7WNpVxKteMlOnPOS
+ 3xIxtn6C3U7MZjkIRC6L0KWKduKVaGb8TivX4oMFtMncxSCJeiupC3MeBhRR8LEZbwvG
+ /nG/+tkYLLckof3QnYFACS3ICD7do+Sxfz41m6VYXbiOWXR8cLYk9zRcZjsoIfoG01QI
+ YNi3NKfJiBG9euhAboqOhnZGmERH8YNeyit437fQ+qxX+jq2ePu15lANeNia7mOCdoZD eA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ptb241yer-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 07 Apr 2023 20:08:39 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 337K8bAW003467
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 7 Apr 2023 20:08:37 GMT
+Received: from [10.110.116.85] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 7 Apr 2023
+ 13:08:35 -0700
+Message-ID: <98faa8f0-4b84-0d34-f3e8-06aee6bb7511@quicinc.com>
+Date:   Fri, 7 Apr 2023 13:08:34 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230406-topic-lenovo_features-v2-4-625d7cb4a944@linaro.org>
-References: <20230406-topic-lenovo_features-v2-0-625d7cb4a944@linaro.org>
-In-Reply-To: <20230406-topic-lenovo_features-v2-0-625d7cb4a944@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v4 1/2] check-uapi: Introduce check-uapi.sh
+To:     Masahiro Yamada <masahiroy@kernel.org>
+CC:     Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Nicolas Schier <nicolas@fjasle.eu>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Arnd Bergmann <arnd@arndb.de>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680897283; l=1763;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=b3Zu3ZZnDQhyKIftWOiLA89iYJJNHGbq+oJ3wY2oUSk=;
- b=eVPsQfPvLHPeKGN8di7rL5TOwfLtMuC4wjd3d03xaNYMEJ9N8wylr+p90aUi7lfQEjG2NeH+8QY4
- XrznSAhtCYgwlrLVRl/DbslgdBrm3qdA/s64o9xWOM3fnCnTixe/
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, <libabigail@sourceware.org>,
+        Jordan Crouse <jorcrous@amazon.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>
+References: <20230327174140.8169-1-quic_johmoo@quicinc.com>
+ <20230327174140.8169-2-quic_johmoo@quicinc.com>
+ <CAK7LNAQ26HVA-oMwOqAg-diZ7dRa_41hjmRb88Vcv-GcQsFfqg@mail.gmail.com>
+Content-Language: en-US
+From:   John Moon <quic_johmoo@quicinc.com>
+In-Reply-To: <CAK7LNAQ26HVA-oMwOqAg-diZ7dRa_41hjmRb88Vcv-GcQsFfqg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kgvN6zU9XNRNiSHXP1POHFzxZxKBGNO0
+X-Proofpoint-GUID: kgvN6zU9XNRNiSHXP1POHFzxZxKBGNO0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-07_12,2023-04-06_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ bulkscore=0 mlxlogscore=797 impostorscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304070180
+X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,51 +97,143 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the onboard QCA Wi-Fi. HW identifiers for reference:
-qmi chip_id 0x320 chip_family 0x4001 board_id 0xff soc_id 0x400e0000
+On 4/7/2023 12:19 PM, Masahiro Yamada wrote:
+> On Tue, Mar 28, 2023 at 2:42 AM John Moon <quic_johmoo@quicinc.com> wrote:
+>>
+>> While the kernel community has been good at maintaining backwards
+>> compatibility with kernel UAPIs, it would be helpful to have a tool
+>> to check if a commit introduces changes that break backwards
+>> compatibility.
+>>
+>> To that end, introduce check-uapi.sh: a simple shell script that
+>> checks for changes to UAPI headers using libabigail.
+>>
+>> libabigail is "a framework which aims at helping developers and
+>> software distributors to spot some ABI-related issues like interface
+>> incompatibility in ELF shared libraries by performing a static
+>> analysis of the ELF binaries at hand."
+>>
+>> The script uses one of libabigail's tools, "abidiff", to compile the
+>> changed header before and after the commit to detect any changes.
+>>
+>> abidiff "compares the ABI of two shared libraries in ELF format. It
+>> emits a meaningful report describing the differences between the two
+>> ABIs."
+>>
+>> The script also includes the ability to check the compatibility of
+>> all UAPI headers across commits. This allows developers to inspect
+>> the stability of the UAPIs over time.
+>>
+>> Signed-off-by: John Moon <quic_johmoo@quicinc.com>
+>> ---
+>>      - Refactored to exclusively check headers installed by make
+>>        headers_install. This simplified the code dramatically and removed
+>>        the need to perform complex git diffs.
+>>      - Removed the "-m" flag. Since we're checking all installed headers
+>>        every time, a flag to check only modified files didn't make sense.
+>>      - Added info message when usr/include/Makefile is not present that
+>>        it's likely because that file was only introduced in v5.3.
+>>      - Changed default behavior of log file. Now, the script will not
+>>        create a log file unless you pass "-l <file>".
+>>      - Simplified exit handler.
+>>      - Added -j $MAX_THREADS to make headers_install to improve speed.
+>>      - Cleaned up variable references.
+>>
+>>   scripts/check-uapi.sh | 488 ++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 488 insertions(+)
+>>   create mode 100755 scripts/check-uapi.sh
+>>
+> 
+>> +
+>> +# Save the current git tree state, stashing if needed
+>> +save_tree_state() {
+>> +       printf "Saving current tree state... "
+>> +       current_ref="$(git rev-parse HEAD)"
+>> +       readonly current_ref
+>> +       if tree_is_dirty; then
+>> +               unstash="true"
+>> +               git stash push --quiet
+>> +       fi
+>> +       printf "OK\n"
+>> +}
+>> +
+>> +# Restore the git tree state, unstashing if needed
+>> +restore_tree_state() {
+>> +       if [ -z "$current_ref" ]; then
+>> +               return 0
+>> +       fi
+>> +
+>> +       printf "Restoring current tree state... "
+>> +       git checkout --quiet "$current_ref"
+> 
+> 
+> This does not restore the original state.
+> 
+> I was on a branch before running this script.
+> After everything is finished, I am on a detached commit
+> because $current_ref is not a branch.
+> 
+> 
 
-Firmware sources:
-/vendor/firmware_mnt/image/wlanmdsp.bin -> qcom/.../wlanmdsp.mbn
-/vendor/firmware_mnt/image/bdwlan.bXX [1] -> [2] -> ath10k/.../board-2.bin
-[3] -> ath10k/.../firmware-5.bin
+Good point. I think doing this should address:
 
-Not sure where 3 comes from on the device itself, gotta investigate that..
+current_ref="$(git symbolic-ref --short HEAD 2> /dev/null || git rev 
+parse HEAD)"
 
-According to [4], it's called WCN3990_STRAIT.
+Will fix in v5.
 
-[1] XX = board_id printed when the file is missing or by your downstream
-kernel firmware loader in the dmesg; if XX=ff, use bdwlan.bin
+> 
+> 
+>> +       if ! do_compile "$(get_header_tree "$past_ref")/include" "$past_header" "${past_header}.bin" 2> "$log"; then
+>> +               eprintf "error - couldn't compile version of UAPI header %s at %s\n" "$file" "$past_ref"
+>> +               cat "$log" >&2
+>> +               exit "$FAIL_COMPILE"
+>> +       fi
+>> +
+>> +       "$ABIDIFF" --non-reachable-types "${past_header}.bin" "${base_header}.bin" > "$log" && ret="$?" || ret="$?"
+> 
+> 
+> [bikeshed] I might want to write like this:
+> 
+>     ret=0
+>     "$ABIDIFF" --non-reachable-types "${past_header}.bin"
+> "${base_header}.bin" > "$log" || ret="$?"
+> 
+> 
+> 
 
-[2] https://github.com/jhugo/linux/blob/5.5rc2_wifi/README
-[3] https://github.com/kvalo/ath10k-firmware/blob/master/WCN3990/hw1.0/HL3.1/WLAN.HL.3.1-01040-QCAHLSWMTPLZ-1/firmware-5.bin
-[4] https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/-/blob/LA.VENDOR.1.0.r1-20700-WAIPIO.QSSI13.0/hif/src/hif_hw_version.h#L55
+Sure, will do.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+> 
+> 
+> 
+> 
+>> +
+>> +
+>> +       if [ "$quiet" = "true" ]; then
+>> +               run "$base_ref" "$past_ref" "$abi_error_log" "$@" > /dev/null
+>> +       else
+>> +               run "$base_ref" "$past_ref" "$abi_error_log" "$@"
+>> +       fi
+> 
+> 
+> 
+>      if [ "$quiet" = "true" ]; then
+>              exec > /dev/null
+>      fi
+> 
+>      run "$base_ref" "$past_ref" "$abi_error_log" "$@"
+> 
+> 
+> 
+> is more elegant because this is the last line of main()
+> and exit_handler() does not print anything.
+> 
+> 
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-index bc232deb802b..ea3340d31110 100644
---- a/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6115p-lenovo-j606f.dts
-@@ -315,6 +315,15 @@ &usb_hsphy {
- 	status = "okay";
- };
- 
-+&wifi {
-+	vdd-0.8-cx-mx-supply = <&pm6125_l8>;
-+	vdd-1.8-xo-supply = <&pm6125_l16>;
-+	vdd-1.3-rfa-supply = <&pm6125_l17>;
-+	vdd-3.3-ch0-supply = <&pm6125_l23>;
-+	qcom,ath10k-calibration-variant = "Lenovo_P11";
-+	status = "okay";
-+};
-+
- &xo_board {
- 	clock-frequency = <19200000>;
- };
+Agreed, will do.
 
--- 
-2.40.0
-
+> 
+> 
+> 
