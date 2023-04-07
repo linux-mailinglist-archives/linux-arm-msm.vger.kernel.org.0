@@ -2,202 +2,361 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA7B6DAFF9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 17:58:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A8666DB03E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 18:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239509AbjDGP6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 11:58:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58464 "EHLO
+        id S229942AbjDGQKP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 12:10:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230173AbjDGP6a (ORCPT
+        with ESMTP id S230242AbjDGQKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 11:58:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB354BB86;
-        Fri,  7 Apr 2023 08:58:17 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 337Fr1kL027041;
-        Fri, 7 Apr 2023 15:58:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=ZLaW8DB/9vUmOO4NtVwP0HZhPklWTpAyTk7jxdCY6SM=;
- b=ITWsPiSMjs+jHYRoSIW4HmwaYLbHXMLf4+h27J0xuH8ErloJecLQ8FJmXfRfntR9l0mC
- Z63AIfTuRf1xwr3Ga54ScRdls7ohs8CC3ua8GcuVJ5GrfBYjelBuBOVyVSYwaZ7WBTqH
- 0yNJS10M43qdK8M3nTu9B7gCwwCNlesenT+DG2udU0IYxKj309r1E2qfKDnTPW2mBYsY
- rSCx0fG2pwVh6xHsGjESHZgniA3bopfClGwZQrfsdY5KjiLMGTZ2B4sq4GqZSW/65XeV
- Gwm1YfnQzvZjwFk9KplzDqrARPkLYOn5lgKBbLu/DEdTilfcjKRfgsgntc9W6D8LfuG6 tw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pt5s9swh1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Apr 2023 15:58:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 337FwDXv008215
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Apr 2023 15:58:13 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 7 Apr 2023 08:58:08 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>
-Subject: [PATCH V4 5/5] arm64: dts: qcom: ipq9574: Add cpufreq support
-Date:   Fri, 7 Apr 2023 21:27:27 +0530
-Message-ID: <20230407155727.20615-6-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230407155727.20615-1-quic_devipriy@quicinc.com>
-References: <20230407155727.20615-1-quic_devipriy@quicinc.com>
+        Fri, 7 Apr 2023 12:10:09 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F3D10C1;
+        Fri,  7 Apr 2023 09:09:53 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0AF2A64F13;
+        Fri,  7 Apr 2023 16:09:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3C5C433D2;
+        Fri,  7 Apr 2023 16:09:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680883792;
+        bh=HmNQ9RlHMgSZYT5CKlY9VdPfprafu+PBbMSI+csJyZY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ify7NMubEUiq7okkL+7pscbemiPLigKHytqN2bcQVAUHMVhSyOjIpkeA7RqEaeUsr
+         k+eqwKqGJWiLDqfw17F9ekmOwzaQvCsBN8x/rKuMLHlzyYxFsxRWlpcNI94fAbWb37
+         gCKtKEWvQDKcdRjPJ3kU4KXWxwSqOn/vmMwkCp34cK3ZOJD5xBbK46lhKdsXSYBCFq
+         8OhqvEJSjiX7aEbqIQ/9rcJ7st426X9gilbiSUEbTETX9179BcZJSnV9INEXYgOlCN
+         vlLgttU9WESV6NKWljwa3yNpVYJpPWkuQPRMHUY/1bcJQZioelhUBxBI76GnhwrEi0
+         BBn1gEn1V3M2g==
+Date:   Fri, 7 Apr 2023 09:12:42 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, quic_hbandi@quicinc.com,
+        quic_hemantg@quicinc.com, mka@chromium.org
+Subject: Re: [PATCH v1] Bluetooth: btusb: Add WCN6855 devcoredump support
+Message-ID: <20230407161242.hydjluny5y6bttmh@ripper>
+References: <20230407032936.14799-1-quic_tjiang@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: x7iJqwycrajhJsifSQ40WX7zSZk6mx3J
-X-Proofpoint-ORIG-GUID: x7iJqwycrajhJsifSQ40WX7zSZk6mx3J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-07_10,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- mlxlogscore=964 priorityscore=1501 clxscore=1015 spamscore=0
- malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304070146
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230407032936.14799-1-quic_tjiang@quicinc.com>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cpu freq nodes in the device tree to bump cpu frequency above 800MHz.
+On Fri, Apr 07, 2023 at 11:29:36AM +0800, Tim Jiang wrote:
+> WCN6855 will report memdump via ACL data or HCI event when
+> it get crashed, so we collect memdump to debug firmware.
+> 
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+> ---
+>  drivers/bluetooth/btusb.c | 221 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 221 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 2303b0a66323..ecc346d8b2ea 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -752,6 +752,7 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
+>  #define BTUSB_WAKEUP_AUTOSUSPEND	14
+>  #define BTUSB_USE_ALT3_FOR_WBS	15
+>  #define BTUSB_ALT6_CONTINUOUS_TX	16
+> +#define BTUSB_HW_SSR_ACTIVE	17
+>  
+>  struct btusb_data {
+>  	struct hci_dev       *hdev;
+> @@ -904,6 +905,11 @@ static void btusb_qca_cmd_timeout(struct hci_dev *hdev)
+>  	struct btusb_data *data = hci_get_drvdata(hdev);
+>  	struct gpio_desc *reset_gpio = data->reset_gpio;
+>  
+> +	if (test_bit(BTUSB_HW_SSR_ACTIVE, &data->flags)) {
+> +		bt_dev_info(hdev, "Defer cmd_timeout due to dump active");
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- Changes in V4:
-	- Picked up the R-b tag
+"Ramdump in progress, defer cmd_timeout"
 
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 58 +++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+> +		return;
+> +	}
+> +
+>  	if (++data->cmd_timeout_cnt < 5)
+>  		return;
+>  
+> @@ -3294,6 +3300,213 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+>  	return 0;
+>  }
+>  
+> +#define QCA_MEMDUMP_ACL_HANDLE 0x2EDD
+> +#define QCA_MEMDUMP_SIZE_MAX  0x100000
+> +#define QCA_MEMDUMP_VSE_CLASS 0x01
+> +#define QCA_MEMDUMP_MSG_TYPE 0x08
+> +struct qca_dump_hdr {
+> +	u8 vse_class;
+> +	u8 msg_type;
+> +	__le16 seqno;
+> +	u8 reserved;
+> +	union {
+> +		u8 data[0];
+> +		struct {
+> +			__le32 ram_dump_size;
+> +			u8 data0[0];
+> +		} __packed;
+> +	};
+> +} __packed;
+> +
+> +struct qca_dump_info {
+> +	/* fields for dump collection */
+> +	u16 id_vendor;
+> +	u16 id_product;
+> +	u32 fw_version;
+> +	u32 controller_id;
+> +	u32 ram_dump_size;
+> +	u32 ram_dump_offs;
+> +	u16 ram_dump_seqno;
+> +};
+> +
+> +static struct qca_dump_info qca_dump = {0};
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index 1f9b7529e7ed..cfef87b5fd22 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -6,6 +6,7 @@
-  * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-@@ -37,6 +38,10 @@
- 			reg = <0x0>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		CPU1: cpu@1 {
-@@ -45,6 +50,10 @@
- 			reg = <0x1>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -53,6 +62,10 @@
- 			reg = <0x2>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -61,6 +74,10 @@
- 			reg = <0x3>;
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
-+			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
-+			clock-names = "cpu";
-+			operating-points-v2 = <&cpu_opp_table>;
-+			cpu-supply = <&ipq9574_s1>;
- 		};
- 
- 		L2_0: l2-cache {
-@@ -75,6 +92,47 @@
- 		reg = <0x0 0x40000000 0x0 0x0>;
- 	};
- 
-+	cpu_opp_table: opp-table-cpu {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp-936000000 {
-+			opp-hz = /bits/ 64 <936000000>;
-+			opp-microvolt = <725000>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1104000000 {
-+			opp-hz = /bits/ 64 <1104000000>;
-+			opp-microvolt = <787500>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1416000000 {
-+			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <862500>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1488000000 {
-+			opp-hz = /bits/ 64 <1488000000>;
-+			opp-microvolt = <925000>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-1800000000 {
-+			opp-hz = /bits/ 64 <1800000000>;
-+			opp-microvolt = <987500>;
-+			clock-latency-ns = <200000>;
-+		};
-+
-+		opp-2208000000 {
-+			opp-hz = /bits/ 64 <2208000000>;
-+			opp-microvolt = <1062500>;
-+			clock-latency-ns = <200000>;
-+		};
-+	};
-+
- 	firmware {
- 		scm {
- 			compatible = "qcom,scm-ipq9574", "qcom,scm";
--- 
-2.17.1
+Do you really need to keep track of this across the individual packets?
 
+What if I connect two btqca devices to my machine?
+
+> +
+> +static void btusb_dump_hdr_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	char buf[128];
+> +
+> +	snprintf(buf, sizeof(buf), "Controller Name: 0x%x\n",
+> +			qca_dump.controller_id);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "Firmware Version: 0x%x\n",
+> +			qca_dump.fw_version);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "Driver: %s\nVendor: qca\n",
+> +			btusb_driver.name);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "VID: 0x%x\nPID:0x%x\n",
+> +			qca_dump.id_vendor, qca_dump.id_product);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "Lmp Subversion: 0x%x\n",
+> +			hdev->lmp_subver);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +}
+> +
+> +static void btusb_coredump_qca(struct hci_dev *hdev)
+> +{
+> +	static const u8 param[] = { 0x26 };
+> +	struct sk_buff *skb;
+> +
+> +	skb = __hci_cmd_sync(hdev, 0xfc0c, 1, param, HCI_CMD_TIMEOUT);
+> +	if (IS_ERR(skb))
+> +		bt_dev_err(hdev, "%s: triggle crash failed (%ld)", __func__, PTR_ERR(skb));
+> +	kfree_skb(skb);
+> +}
+> +
+> +/*
+> + * ==0: not a dump pkt.
+> + * < 0: fails to handle a dump pkt
+> + * > 0: otherwise.
+> + */
+> +static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	int ret = 0;
+> +	u8 pkt_type;
+> +	u8 *sk_ptr;
+> +	unsigned int sk_len;
+> +	u16 seqno;
+> +	u32 ram_dump_size;
+> +
+> +	struct hci_event_hdr *event_hdr;
+> +	struct hci_acl_hdr *acl_hdr;
+> +	struct qca_dump_hdr *dump_hdr;
+> +	struct btusb_data *btdata = hci_get_drvdata(hdev);
+> +	struct usb_device *udev = btdata->udev;
+> +
+> +	pkt_type = hci_skb_pkt_type(skb);
+> +	sk_ptr = skb->data;
+> +	sk_len = skb->len;
+> +
+> +	if (pkt_type == HCI_ACLDATA_PKT) {
+> +		acl_hdr = hci_acl_hdr(skb);
+> +		if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
+> +			return 0;
+> +		sk_ptr += HCI_ACL_HDR_SIZE;
+> +		sk_len -= HCI_ACL_HDR_SIZE;
+> +		event_hdr = (struct hci_event_hdr *)sk_ptr;
+> +	} else {
+> +		event_hdr = hci_event_hdr(skb);
+> +	}
+> +
+> +	if (event_hdr->evt != HCI_VENDOR_PKT)
+> +		return 0;
+> +	if (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE))
+> +		return 0;
+> +	sk_ptr += HCI_EVENT_HDR_SIZE;
+> +	sk_len -= HCI_EVENT_HDR_SIZE;
+> +
+> +	if (sk_len < offsetof(struct qca_dump_hdr, data))
+> +		return 0;
+> +	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
+> +	if ((dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
+> +	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
+> +		return 0;
+> +
+> +	/*it is dump pkt now*/
+> +	ret = 1;
+
+Perhaps you can redesign this so that you don't need to set ret = 1 in
+multiple places?
+
+> +	seqno = le16_to_cpu(dump_hdr->seqno);
+> +	if (seqno == 0) {
+> +		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
+> +		ram_dump_size = le32_to_cpu(dump_hdr->ram_dump_size);
+> +		if (!ram_dump_size || (ram_dump_size > QCA_MEMDUMP_SIZE_MAX)) {
+> +			ret = -EILSEQ;
+> +			bt_dev_err(hdev, "Invalid memdump size(%u)",
+> +				   ram_dump_size);
+> +			goto out;
+> +		}
+> +
+> +		ret = hci_devcd_init(hdev, ram_dump_size);
+> +		if (ret < 0) {
+> +			bt_dev_err(hdev, "memdump init error(%d)", ret);
+> +			goto out;
+> +		}
+> +		ret = 1;
+> +
+> +		qca_dump.ram_dump_size = ram_dump_size;
+> +		qca_dump.ram_dump_offs = 0;
+> +		qca_dump.ram_dump_seqno = 0;
+> +		sk_ptr += offsetof(struct qca_dump_hdr, data0);
+> +		sk_len -= offsetof(struct qca_dump_hdr, data0);
+> +
+> +		usb_disable_autosuspend(udev);
+> +		bt_dev_info(hdev, "%s memdump size(%u)\n",
+> +			    (pkt_type == HCI_ACLDATA_PKT) ? "ACL" : "event",
+> +			    ram_dump_size);
+> +	} else {
+> +		sk_ptr += offsetof(struct qca_dump_hdr, data);
+> +		sk_len -= offsetof(struct qca_dump_hdr, data);
+> +	}
+> +
+> +	if (!qca_dump.ram_dump_size) {
+> +		ret = -EINVAL;
+> +		bt_dev_err(hdev, "memdump is not active");
+> +		goto out;
+> +	}
+> +
+> +	if ((seqno != qca_dump.ram_dump_seqno) && (seqno != 0xFFFF)) {
+> +		ret = -EILSEQ;
+> +		bt_dev_err(hdev,
+> +			   "expected memdump seqno(%u) is not received(%u)\n",
+> +			   qca_dump.ram_dump_seqno, seqno);
+> +		hci_devcd_abort(hdev);
+> +		goto out;
+> +	}
+> +
+> +	skb_pull(skb, skb->len - sk_len);
+> +	hci_devcd_append(hdev, skb);
+> +	qca_dump.ram_dump_offs += sk_len;
+> +	qca_dump.ram_dump_seqno++;
+> +	if (seqno != 0xFFFF)
+> +		return ret;
+
+It wasn't immediately clear to me that this means "return OK, but we're
+waiting for more data".
+
+How about turning this the other way around?
+
+if (all_data_received) {
+	bt_dev_info("memdump done");
+	hci_devcd_complete();
+	...
+}
+
+...
+
+> +	hci_devcd_complete(hdev);
+> +
+> +out:
+> +	if (qca_dump.ram_dump_size) {
+
+So if I get seqno == 0, followed by seqno == 2 we will print memdump
+Done and return -EILSEQ?
+
+Regards,
+Bjorn
+
+> +		usb_enable_autosuspend(udev);
+> +		bt_dev_info(hdev,
+> +				"memdump Done: pkts(%u), dumped(%u)/total(%u)\n",
+> +				qca_dump.ram_dump_seqno, qca_dump.ram_dump_offs,
+> +				qca_dump.ram_dump_size);
+> +	}
+> +	qca_dump.ram_dump_size = 0;
+> +	qca_dump.ram_dump_offs = 0;
+> +	qca_dump.ram_dump_seqno = 0;
+> +	clear_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
+> +
+> +	if (ret < 0)
+> +		kfree_skb(skb);
+> +	return ret;
+> +}
+> +
+> +static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	if (handle_dump_pkt_qca(hdev, skb))
+> +		return 0;
+> +	return hci_recv_frame(hdev, skb);
+> +}
+> +
+> +static int btusb_recv_evt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	if (handle_dump_pkt_qca(hdev, skb))
+> +		return 0;
+> +	return hci_recv_frame(hdev, skb);
+> +}
+> +
+> +
+>  #define QCA_DFU_PACKET_LEN	4096
+>  
+>  #define QCA_GET_TARGET_VERSION	0x09
+> @@ -3628,6 +3841,9 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+>  	if (err < 0)
+>  		return err;
+>  
+> +	qca_dump.fw_version = le32_to_cpu(ver.patch_version);
+> +	qca_dump.controller_id = le32_to_cpu(ver.rom_version);
+> +
+>  	if (!(status & QCA_SYSCFG_UPDATED)) {
+>  		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+>  		if (err < 0)
+> @@ -4117,6 +4333,11 @@ static int btusb_probe(struct usb_interface *intf,
+>  	}
+>  
+>  	if (id->driver_info & BTUSB_QCA_WCN6855) {
+> +		qca_dump.id_vendor = id->idVendor;
+> +		qca_dump.id_product = id->idProduct;
+> +		data->recv_event = btusb_recv_evt_qca;
+> +		data->recv_acl = btusb_recv_acl_qca;
+> +		hci_devcd_register(hdev, btusb_coredump_qca, btusb_dump_hdr_qca, NULL);
+>  		data->setup_on_usb = btusb_setup_qca;
+>  		hdev->shutdown = btusb_shutdown_qca;
+>  		hdev->set_bdaddr = btusb_set_bdaddr_wcn6855;
+> -- 
+> 2.17.1
+> 
