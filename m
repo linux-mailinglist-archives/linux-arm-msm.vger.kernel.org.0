@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B0366DB5E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 23:47:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4122A6DB5E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 23:48:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230113AbjDGVr2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 17:47:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44572 "EHLO
+        id S230357AbjDGVs1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 17:48:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjDGVr1 (ORCPT
+        with ESMTP id S229724AbjDGVs0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 17:47:27 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 607FBC17E
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 14:47:26 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id o20so41707810ljp.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 14:47:26 -0700 (PDT)
+        Fri, 7 Apr 2023 17:48:26 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47EF7C650
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 14:48:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id g19so42798804lfr.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 14:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680904044;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QKr1VFdANaH910gTqIuF+QQoeNNCvbMtK24RJzAeJ1s=;
-        b=BERlpGeiqyFM0KnKvmiUU8mdGnHlblFPFC9arB92MIKu/seqPM4ZnZ+MjWIffcIQ70
-         6nPyThcFs0Y78oeP9UgGSbD2pf7HcmqNZsT/SdCz5Ye+azz5dajvX/5PxgoJCBPCtu3v
-         G+EIWBDM5fL18cgxwDPF6NQRIZQNPX68rprMQ=
+        d=chromium.org; s=google; t=1680904103;
+        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DllG90e1WWVTHQdAKRkXXv+zJvR74w4Quq11ghlPJtY=;
+        b=OVyB1bAFGN0vaGLmVCCfIH5/O4EAIz104DNP3AiG1HqDZ6ggD45bD6puMR+66SwJSK
+         4ZUAKjMTvJqwjpGxxauYTX3B3Qsy5NOfW3GSp6NCJY1Dbq0SiP8vRE2nv87+iJxdV3Ff
+         b4b2Gr4tI95SF2pvloDwpvasMCAXEcUsELAo8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680904044;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QKr1VFdANaH910gTqIuF+QQoeNNCvbMtK24RJzAeJ1s=;
-        b=lJNEEn3AGsgtd5fVLaN1o9eSs/h2S+bv8JZu6bxaTpuazgcQ5dVJaDVQ/JlQechZ42
-         6bqcc1vpyTXNWfgdBL+u7FeY8riKbWkydGjqYTUSh81bo7g8DbGhClagC2SLk2900yGP
-         goD3qNXO/PHhtIZMRrb5Ro5wu3qaU9LRcIsQDIAl5eJ1q1CAXiH4w6Iq0wB+I03kR1/v
-         C7akvr9p5pi220utewg3Ma8QCYEdk42O2/CRDFzz6JjS7aPPOS6bWkjLrQ3nm48+CHcy
-         j17UDqcXhM3wS4lPuY8T4BsY26J8dguC+i94eUkOw1K0wM5899A6o4oBMA55Avnz0h0U
-         etsQ==
-X-Gm-Message-State: AAQBX9f0ti7Lei1SV2dAfCrrc2qB6bxnidUiexMHinCt2SFKZx9ejDRF
-        mG0lzVm+xSPJI6/U4wNtSB+li6Cegv2hHv6deI4odw==
-X-Google-Smtp-Source: AKy350ZkmDyMUF2lwovyh7fmUX0Xqi/7P8gpx4vAUkL98n181sdNQCjwfzR/32ySpWV+vBM0DQ4nXhrXJTY5+W6hCOQ=
-X-Received: by 2002:a2e:be9d:0:b0:298:b378:961f with SMTP id
- a29-20020a2ebe9d000000b00298b378961fmr1072284ljr.0.1680904044665; Fri, 07 Apr
- 2023 14:47:24 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680904103;
+        h=to:subject:message-id:date:user-agent:from:references:in-reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DllG90e1WWVTHQdAKRkXXv+zJvR74w4Quq11ghlPJtY=;
+        b=6SQgPr7+fvNvGkrghwv9LUkYVt3YtCn/af7ahMiCCixhSkoVYMyZY9ys7FRKwq3MQV
+         gfM7pfkFHmzz30Tucree9N2mri+qv9FIk0lnLKjx81J0T+qM45ohigrwT0QbX2uXSpre
+         hiomBHBRXQ3on1bAO17RgkWZzzqur80i8gKh74s6QeCw13mf8fn6tpN46Fyb957WJljO
+         34mXyLAj2KhWYmD6b42IdlIvh9SBPUW6FfMvOy22k0FdpCI14SXjz3PhkYsLyoktciVy
+         wwO346ZAydHjsgT/waW8UwFt2hTprDCv0HCiwFTWNacIAg9v/1Hjr+P5Pyxh+5q99JCB
+         +AiA==
+X-Gm-Message-State: AAQBX9c6DPiHXMr95AawKL3VvZsTUW+Q1kRr0cLBcsTa1pxIUwBNWhub
+        6drLOlcaShDkuU60iBlJLOKWbMmYQ2g21jiPrPlF3A==
+X-Google-Smtp-Source: AKy350Yu9m9x8GYDbA/5kgPKVUoE6uvF5g/lH6PO8SorwlwARoXyVdIMeX0FCOQzbIDqgqm+YxpKrwGoFLvyzeXjW/I=
+X-Received: by 2002:ac2:4c14:0:b0:4eb:eaf:aa00 with SMTP id
+ t20-20020ac24c14000000b004eb0eafaa00mr1109097lfq.4.1680904103550; Fri, 07 Apr
+ 2023 14:48:23 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 7 Apr 2023 14:47:24 -0700
+ HTTPREST; Fri, 7 Apr 2023 14:48:23 -0700
 MIME-Version: 1.0
-In-Reply-To: <20230407142859.1.Ia5d70e320b60d6707c6182879097708e49b8b519@changeid>
-References: <20230407142859.1.Ia5d70e320b60d6707c6182879097708e49b8b519@changeid>
+In-Reply-To: <20230407092255.119690-4-quic_mohs@quicinc.com>
+References: <20230407092255.119690-1-quic_mohs@quicinc.com> <20230407092255.119690-4-quic_mohs@quicinc.com>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
-Date:   Fri, 7 Apr 2023 14:47:24 -0700
-Message-ID: <CAE-0n534cJ-=WdE81oDfGHS=6i5CsW5M8UgYZKrUxLeuO3a9aQ@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: Add "and" to PIN_CONFIG_INPUT_ENABLE comment
-To:     Douglas Anderson <dianders@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Fri, 7 Apr 2023 14:48:23 -0700
+Message-ID: <CAE-0n539B++ynhR04xEDiszz7u718QGLyN4KukrPE3ya6_m9Zg@mail.gmail.com>
+Subject: Re: [PATCH v11 3/3] clk: qcom: lpassaudiocc-sc7280: Add required gdsc
+ power domain clks in lpass_cc_sc7280_desc
+To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, broonie@kernel.org,
+        konrad.dybcio@somainline.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
+        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
+        quic_visr@quicinc.com, robh+dt@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -72,15 +72,13 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Douglas Anderson (2023-04-07 14:29:14)
-> The comment recently added talking about PIN_CONFIG_INPUT_ENABLE is
-> clearly missing the word "and". Comments live forever, so let's fix
-> it.
+Quoting Mohammad Rafi Shaik (2023-04-07 02:22:55)
+> Add GDSCs in lpass_cc_sc7280_desc struct.
+> When qcom,adsp-pil-mode is enabled, GDSCs required to solve
+> dependencies in lpass_audiocc probe().
 >
-> Fixes: e49eabe3e13f ("pinctrl: qcom: Support OUTPUT_ENABLE; deprecate INPUT_ENABLE")
-> Reported-by: Stephen Boyd <swboyd@chromium.org>
-> Link: https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/4409769/comment/9a1d5def_e1e71db7/
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Fixes: 0cbcfbe50cbf ("clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon")
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
