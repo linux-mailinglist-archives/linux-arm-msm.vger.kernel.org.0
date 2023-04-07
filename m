@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C12F6DB1AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:35:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EDCA6DB1B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:37:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjDGRfu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38426 "EHLO
+        id S229907AbjDGRg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:36:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbjDGRfp (ORCPT
+        with ESMTP id S229452AbjDGRg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:35:45 -0400
+        Fri, 7 Apr 2023 13:36:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DF0B45D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:34:59 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C8B6BB8F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680888899;
+        s=mimecast20190719; t=1680888969;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          in-reply-to:in-reply-to:references:references;
-        bh=VgSBn4v63sH/hPEOpjuOfluIneyO592ey/flc3R1Lws=;
-        b=WqF/oCk6brDf9/ddFHn7OBva1Il+Q+gpY+YtszZbRf0UTgrBOhZ+mJfZxYF4PVv8IwDbft
-        OnV6UGrAjwjGEMcfiF0pZeHoKV9Fp25vzmOcIc27IWtM7QVL2ZnpJiRBOngZLqB3xyEyRz
-        8rIYSTNcFvkZh8XvC3DfCdPVpGHs07g=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=girDT/3e1iBfq8YfqylLYXxjOSDey8dBT/Mp5wOCRPk=;
+        b=UviER/VAxClIrkOFWwi9D7NCrDBJUvSROYGQ1n1GlbcD3eYK1ZOU55gCuQNHuZQd7oCPBA
+        JznFj4COT3R6x9pfeprrM/aulUQ+gm53e1u/jv5P/gz7RMZPP0GyNwyvZmHMypdEjhAkeZ
+        /gUD83rvSyfJu+sX1GkRajd71gGS5+s=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-VmNHNeMFO1OiILM00KBwVw-1; Fri, 07 Apr 2023 13:34:57 -0400
-X-MC-Unique: VmNHNeMFO1OiILM00KBwVw-1
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-17e7104c589so22505866fac.19
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 10:34:57 -0700 (PDT)
+ us-mta-593-yq2ZJv4dNU23htgpQbVjUA-1; Fri, 07 Apr 2023 13:36:08 -0400
+X-MC-Unique: yq2ZJv4dNU23htgpQbVjUA-1
+Received: by mail-ot1-f72.google.com with SMTP id a16-20020a9d3e10000000b0069fba0320c3so15638536otd.20
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 10:36:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680888897;
+        d=1e100.net; s=20210112; t=1680888967;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VgSBn4v63sH/hPEOpjuOfluIneyO592ey/flc3R1Lws=;
-        b=q/QAmzNx4uS7sC3T8eMrwOR0GuFV/t3WaxNWlVGsLq++dzSDu+Iqtc6Y8sl2Vt4WVW
-         E4ROSoFLGWXhq+I958PSftUNE0XQiz25kJCoy5RrQDWrC9A4rq6G0oN6HLZCZN7JhdZ2
-         f+X5kZ8G6wMyemY6d1m0FQ2ggeKb2Oab0ux2qbKuA7IW/H54ZbQq0qyHtQbUnT2bixp9
-         xw2qniB9tD29CJ5jiuZ8bnZWLhixiZxyzRPyF41RaL+BoYLRvs3az3Lm0W3evDMTXTfF
-         I5V942pliupAQx6icIh6Rjkre62HKXCd0AVdszBh4aa5uu7Sbl/6EdLSapOfiynrwm0S
-         od+w==
-X-Gm-Message-State: AAQBX9dIzGU2STOut6rtoH81PFIel/z6LcmpeTpzeul5Md+5nAJSPcmT
-        89Bdql0rKHnwDMdBHpPG/9Juraduxby45NT8XYoefiYvZwUSfA3hLgwWyYSOWOFMdInyXfKQr/e
-        caYefv5lQsvGxAHkGqfRb9Y/DJg==
-X-Received: by 2002:a05:6871:828:b0:17a:ce6b:726 with SMTP id q40-20020a056871082800b0017ace6b0726mr1927773oap.57.1680888897187;
-        Fri, 07 Apr 2023 10:34:57 -0700 (PDT)
-X-Google-Smtp-Source: AKy350YXsTSTagUzg6KkiTKxiPA0gPNgmGx86bP9YtG1X657Q3uhpK3CFF1WVzwPqGtc/1IMJf5fWg==
-X-Received: by 2002:a05:6871:828:b0:17a:ce6b:726 with SMTP id q40-20020a056871082800b0017ace6b0726mr1927741oap.57.1680888896927;
-        Fri, 07 Apr 2023 10:34:56 -0700 (PDT)
+        bh=girDT/3e1iBfq8YfqylLYXxjOSDey8dBT/Mp5wOCRPk=;
+        b=3vAD5ScQCoVV10g2DQu6gpKdYMTtRz95FI8M0xGztle+AnShQL4mVEuOqt2f7rqfQv
+         +4XisuouBxo3E6TlfPS960cuXu2LkInHnJuh5tXXWiGpQo0AVnu7LeY1MgpY5sfcKoa1
+         yS+Q2Ha8zrsb4BZ6fhHixPeMhqIBcuTh1VO2vcjNoIxKPfQYUPlsIe97srLV41v6i8+t
+         Z+LO1WDDMREyrBjLZSRcNypkZy5ns4+vLXinuuJPyIUKfWD+ypjaCkN4CvGLzZb7BcQ+
+         htr+qnpjDFMIkGenn3WZPuxk30PUCN3b2nReYVbbPLRqoJJQOH8CSQyBRgHEfkl6UFDb
+         4otg==
+X-Gm-Message-State: AAQBX9fx9ioEHj/jNSQ2nUmwMiifg3Ysmp/S859qikpquaqPrFZXuzR7
+        CK54+WEonMa/F209w7/rEwVBG8vru0m8qRsTl87Eysoak0P8EliGUzjVtQPYE74PcmcH2Qh0X13
+        OLFTbo8eS/k9IvaQg9iCmLo3tKQ==
+X-Received: by 2002:a05:6870:b690:b0:17f:8da0:ce51 with SMTP id cy16-20020a056870b69000b0017f8da0ce51mr1898802oab.13.1680888967288;
+        Fri, 07 Apr 2023 10:36:07 -0700 (PDT)
+X-Google-Smtp-Source: AKy350aTgPrp2NCi7zwwA49Thy6Fhgfj8/rEUQEZAp6wz3jWRG4d8C8CLe9Z0+wJS8A8Vn22KfosIA==
+X-Received: by 2002:a05:6870:b690:b0:17f:8da0:ce51 with SMTP id cy16-20020a056870b69000b0017f8da0ce51mr1898768oab.13.1680888966976;
+        Fri, 07 Apr 2023 10:36:06 -0700 (PDT)
 Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id y1-20020a056870458100b001777244e3f9sm1822096oao.8.2023.04.07.10.34.54
+        by smtp.gmail.com with ESMTPSA id an19-20020a056871b19300b00183fbbe8cdfsm1294396oac.31.2023.04.07.10.36.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 10:34:56 -0700 (PDT)
-Date:   Fri, 7 Apr 2023 12:34:53 -0500
+        Fri, 07 Apr 2023 10:36:06 -0700 (PDT)
+Date:   Fri, 7 Apr 2023 12:36:03 -0500
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     Simon Horman <simon.horman@corigine.com>
 Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
@@ -75,16 +75,16 @@ Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
         jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Subject: Re: [PATCH net-next v3 08/12] net: stmmac: Pass stmmac_priv in some
- callbacks
-Message-ID: <20230407173453.hsfhbr66254z57ym@halaney-x13s>
+Subject: Re: [PATCH net-next v3 09/12] net: stmmac: dwmac4: Allow platforms
+ to specify some DMA/MTL offsets
+Message-ID: <20230407173603.lyj5fjox23uhn2gb@halaney-x13s>
 References: <20230331214549.756660-1-ahalaney@redhat.com>
- <20230331214549.756660-9-ahalaney@redhat.com>
- <ZChIbc6TnQyZ/Fiu@corigine.com>
+ <20230331214549.756660-10-ahalaney@redhat.com>
+ <ZChGswjgAOkT0jvY@corigine.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZChIbc6TnQyZ/Fiu@corigine.com>
+In-Reply-To: <ZChGswjgAOkT0jvY@corigine.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
@@ -95,41 +95,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 01, 2023 at 05:06:21PM +0200, Simon Horman wrote:
-> On Fri, Mar 31, 2023 at 04:45:45PM -0500, Andrew Halaney wrote:
-> > Passing stmmac_priv to some of the callbacks allows hwif implementations
-> > to grab some data that platforms can customize. Adjust the callbacks
-> > accordingly in preparation of such a platform customization.
+On Sat, Apr 01, 2023 at 04:58:59PM +0200, Simon Horman wrote:
+> On Fri, Mar 31, 2023 at 04:45:46PM -0500, Andrew Halaney wrote:
+> > Some platforms have dwmac4 implementations that have a different
+> > address space layout than the default, resulting in the need to define
+> > their own DMA/MTL offsets.
+> > 
+> > Extend the functions to allow a platform driver to indicate what its
+> > addresses are, overriding the defaults.
 > > 
 > > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> > ---
+> > 
+> > This patch (and the prior patch) are replacements for
+> > https://lore.kernel.org/netdev/20230320204153.21736840@kernel.org/
+> > as was requested. Hopefully I was understanding the intent correctly :)
+> > 
+> > I'm pretty sure further refinement will be requested for this one, but
+> > it is the best I could come up with myself! Specifically some of the
+> > naming, dealing with spacing in some older spots of dwmac4,
+> > where the addresses should live in the structure hierarchy, etc are
+> > things I would not be surprised to have to rework if this is still
+> > preferred over the wrapper approach.
+> > 
+> > Changes since v2:
+> >     * New, replacing old wrapper approach
+> > 
+> >  drivers/net/ethernet/stmicro/stmmac/dwmac4.h  |  91 ++++++++--
+> >  .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  36 ++--
+> >  .../net/ethernet/stmicro/stmmac/dwmac4_dma.c  | 157 ++++++++++--------
+> >  .../net/ethernet/stmicro/stmmac/dwmac4_dma.h  |  51 +++---
+> >  .../net/ethernet/stmicro/stmmac/dwmac4_lib.c  |  67 +++++---
+> >  include/linux/stmmac.h                        |  19 +++
+> >  6 files changed, 279 insertions(+), 142 deletions(-)
+> > 
+> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
+> > index ccd49346d3b3..a0c0ee1dc13f 100644
+> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
+> > @@ -336,14 +336,23 @@ enum power_event {
+> >  
+> >  #define MTL_CHAN_BASE_ADDR		0x00000d00
+> >  #define MTL_CHAN_BASE_OFFSET		0x40
+> > -#define MTL_CHANX_BASE_ADDR(x)		(MTL_CHAN_BASE_ADDR + \
+> > -					(x * MTL_CHAN_BASE_OFFSET))
+> > -
+> > -#define MTL_CHAN_TX_OP_MODE(x)		MTL_CHANX_BASE_ADDR(x)
+> > -#define MTL_CHAN_TX_DEBUG(x)		(MTL_CHANX_BASE_ADDR(x) + 0x8)
+> > -#define MTL_CHAN_INT_CTRL(x)		(MTL_CHANX_BASE_ADDR(x) + 0x2c)
+> > -#define MTL_CHAN_RX_OP_MODE(x)		(MTL_CHANX_BASE_ADDR(x) + 0x30)
+> > -#define MTL_CHAN_RX_DEBUG(x)		(MTL_CHANX_BASE_ADDR(x) + 0x38)
+> > +#define MTL_CHANX_BASE_ADDR(addrs, x)  \
+> > +({ \
+> > +	const struct dwmac4_addrs *__addrs = addrs; \
+> > +	const u32 __x = x; \
+> > +	u32 __addr; \
+> > +	if (__addrs) \
+> > +		__addr = __addrs->mtl_chan + (__x * __addrs->mtl_chan_offset); \
+> > +	else \
+> > +		__addr = MTL_CHAN_BASE_ADDR + (__x * MTL_CHAN_BASE_OFFSET); \
+> > +	__addr; \
+> > +})
 > 
-> ...
-> 
-> >  #define stmmac_reset(__priv, __args...) \
-> > @@ -223,59 +240,59 @@ struct stmmac_dma_ops {
-> >  #define stmmac_dma_init(__priv, __args...) \
-> >  	stmmac_do_void_callback(__priv, dma, init, __args)
-> >  #define stmmac_init_chan(__priv, __args...) \
-> > -	stmmac_do_void_callback(__priv, dma, init_chan, __args)
-> > +	stmmac_do_void_callback(__priv, dma, init_chan, __priv, __args)
-> 
-> Hi Andrew,
-> 
-> Rather than maintaining these macros can we just get rid of them?
-> I'd be surprised if things aren't nicer with functions in their place [1].
-> 
-> f.e., we now have (__priv, ..., __priv, ...) due to a generalisation
->       that seems to take a lot more than it gives.
-> 
-> [1] https://lore.kernel.org/linux-arm-kernel/ZBst1SzcIS4j+t46@corigine.com/
+> Could this and similar macros added by this patch be functions?
+> From my pov a benefit would be slightly more type safety.
+> And as a bonus there wouldn't be any need to handle aliasing of input.
 > 
 
-Thanks for the pointer. I think that makes sense, I'll take that
-approach for these functions (and maybe in a follow-up series I'll
-tackle all of them just because the lack of consistency will eat me up).
-
-Sorry for the delay, had some issues around the house that became
-urgent.
+Sure, to be honest I'll be much more comfortable coding that up anyways.
+I don't do a ton of macro programming and had to refamiliarize myself of
+the pitfalls that comes with it when doing this.
 
 Thanks,
 Andrew
