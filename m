@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7285A6DA92D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 09:02:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0141B6DA97A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 09:46:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237645AbjDGHCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 03:02:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43674 "EHLO
+        id S231765AbjDGHqQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 03:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjDGHCm (ORCPT
+        with ESMTP id S230373AbjDGHqP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 03:02:42 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75BD97EE1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 00:02:40 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id n19so23600627wms.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 00:02:40 -0700 (PDT)
+        Fri, 7 Apr 2023 03:46:15 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E77A26A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 00:46:13 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id l15so6717797ejq.10
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 00:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680850959; x=1683442959;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yDRZJb+gw9WKl+q/YP3+9vfEWrdxXYb08xE3KjrncwY=;
-        b=TlUNuHXhE7dkX3ma2znO7zdAacJiO27ghArmpkXlH8c3ATv+KBTc8LUhyVrkypI+mP
-         0zQlggzvEemyf2P17MWTNYZVT5pEmY7G8l0KpU4b0QsyPvMfMJZshCs5c4HdBgpV6MQP
-         XN2grzseW68CfcpULpwxh3ynO/USV/6im6FxHW40/svQL+ApI5uK1eCRpcAHn1PqPRYE
-         iwww25egOIvVPfxbt4pMX674CTKLbiVEO/0Ip1e+6ahSlHwFQkQF7naCFmxlgJCIHPZU
-         6QypBjxTNvF8oRGQexdGN9PM2UNsP9cuq6GQxZBhFfnm80WY+czp/4FjLGOZC9ZJW9dw
-         8zbg==
+        d=fairphone.com; s=fair; t=1680853572; x=1683445572;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ftmddGPtFC0OTnDCGzcglP4ydtKIcTHHa+H1nmoP5dM=;
+        b=3zYvbAUxfQl1T1iXWWK/b/4iQfGwPmYuHQQJhlEOARJmvTorlhBaVKR3N+YdqnCBA8
+         RMQQY06XcBr68/2krbtiQRNgYRnodFEQ4AZt+VLkIbDOWWDuD8od/KPmqPI+4Avyyejd
+         krRqbNPIp2wiKM+Ome6nm6logR4sGDaSNjgJwgGkqaSvpbsgrDh4b753ltXW9xL77Wh9
+         okGWnbDo/w4kylJbWZa7CZJirIsgO6zqzYXX2OF63upCQNPxiXK6/L2MRZELwsyT+Imd
+         tTWvuapU6fntnTtLgu2Y/Intf3lMS6Ntx5zHP3PXARJ08Q6QBrGUjVLqPfvimTiupeCG
+         mgRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680850959; x=1683442959;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yDRZJb+gw9WKl+q/YP3+9vfEWrdxXYb08xE3KjrncwY=;
-        b=u/ru8OZrCu/06FgHh6SppPKticBEH3LSvDz70E0379oX3c7OMaSGNJM8Pr0jy0QQ5Y
-         yvD7vBYSrzckwqR8I8tL494Mq/OD/jEysZZW4JcbeYqjxH0u8jpNIoCTerjFpdDsGiNO
-         jNIbYAwbL3tlLWPXkeatUZ/pCCCwuqUtdw7zBy9K7RNtcoWWqQ32fxabXOvJFkXCEqfS
-         uvd5n+d6cGPhJzS7sSA12zQQPs7smPhsNkKl00phfFhgKYIjCQ6D/4sdnq4aWywv4f8U
-         9MYyjB4iwqXnx4V25zLhnMmUv48TL0t8aJesAul0ygywdY52lSKZbJ+PFddg8iu9HjVc
-         GSLw==
-X-Gm-Message-State: AAQBX9dwsGfI3MpwS6Romyh0w0uPB+f0gSy8laEGaNhJ+8nXITO0b8qs
-        R4Ca9g3SGV1sP1mO8GrzaJ229A==
-X-Google-Smtp-Source: AKy350Yf7cZzWZgOSGchAXM9/7IoYqhc4Z0zpcrhQUgBsDYEyMpw3OS/oAAO8/EgLIduuLczRZdj6g==
-X-Received: by 2002:a05:600c:2202:b0:3ee:289a:3c3a with SMTP id z2-20020a05600c220200b003ee289a3c3amr566623wml.30.1680850958894;
-        Fri, 07 Apr 2023 00:02:38 -0700 (PDT)
-Received: from linaro.org ([94.52.112.99])
-        by smtp.gmail.com with ESMTPSA id i42-20020a05600c4b2a00b003f0321c22basm7224793wmp.12.2023.04.07.00.02.37
+        d=1e100.net; s=20210112; t=1680853572; x=1683445572;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ftmddGPtFC0OTnDCGzcglP4ydtKIcTHHa+H1nmoP5dM=;
+        b=8LkrKrNn5rhXLANrH2EOXGtsvuJo8Vp0fQohQbT3RDQe+GG8MU2yvwsPOWCaLWAec5
+         /kjbpWg9JeeYQuNDOS2CaGzAP8PfeYFp3Mu8D/iw88vX6NJP/n/r7/qGc5tDj0wryqzt
+         5pChl4S6QZFRknjH1WLO6/bmieNOoHMmEi1XCoDsn4J4pn73dg3ZpBC6B251E+ainhow
+         EeswpNui14p5DDD2kUaw0woyX3sFkBK2qk1O7Hrdv4qNmL8l06JmCSzVebB4ayaMgQgk
+         1G2Is1EZ9wTSX/VhKpBV2SUeH7JtnhAK+teb6FTMlachhv5qge30dI4TGG8Xx7zuptia
+         eIhQ==
+X-Gm-Message-State: AAQBX9f2lOxpe6/4NvnC/Iy2qHmW6PgDlmjTXAFyC1QuZrNLxqvLNa23
+        G1VmXQW6eTZjbbq+g+q8INTYZw==
+X-Google-Smtp-Source: AKy350aaeK7fo3tEE05vaiCic/7YqE8qTPAIvPh6+RnEHZlIyJK91TKReawucVGXgZFmrxM7P8FTBA==
+X-Received: by 2002:a17:906:e41:b0:947:c7f4:2342 with SMTP id q1-20020a1709060e4100b00947c7f42342mr814426eji.4.1680853572016;
+        Fri, 07 Apr 2023 00:46:12 -0700 (PDT)
+Received: from [172.16.220.24] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id sa28-20020a1709076d1c00b00949c04d1c64sm1762378ejc.41.2023.04.07.00.46.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 00:02:38 -0700 (PDT)
-Date:   Fri, 7 Apr 2023 10:02:36 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Fri, 07 Apr 2023 00:46:11 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH 0/2] Make SID for PM7250B configurable (and a small fixup)
+Date:   Fri, 07 Apr 2023 09:45:43 +0200
+Message-Id: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACfKL2QC/x2NQQqAIBAAvxJ7bsHUMvpKdNDaag9ZuBBB9Pes4
+ wwMc4NQYhLoihsSnSy8xwxVWcC4+rgQ8pQZtNJGWeXw2JyuVUDhCZuWjPN1q60lyEXwQhiSj+P
+ 6NZ86Es18/YN+eJ4XQxop5XAAAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v5 4/6] scsi: ufs: ufs-qcom: Switch to the new ICE API
-Message-ID: <ZC/ADOlol2XO7ACL@linaro.org>
-References: <20230403200530.2103099-1-abel.vesa@linaro.org>
- <20230403200530.2103099-5-abel.vesa@linaro.org>
- <20230406201634.GA20288@sol.localdomain>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230406201634.GA20288@sol.localdomain>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -89,53 +78,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-04-06 13:16:34, Eric Biggers wrote:
-> Hi Abel,
-> 
-> On Mon, Apr 03, 2023 at 11:05:28PM +0300, Abel Vesa wrote:
-> > Now that there is a new dedicated ICE driver, drop the ufs-qcom-ice and
-> > use the new ICE api provided by the Qualcomm soc driver ice. The platforms
-> > that already have ICE support will use the API as library since there will
-> > not be a devicetree node, but instead they have reg range. In this case,
-> > the of_qcom_ice_get will return an ICE instance created for the consumer's
-> > device. But if there are platforms that do not have ice reg in the
-> > consumer devicetree node and instead provide a dedicated ICE devicetree
-> > node, the of_qcom_ice_get will look up the device based on qcom,ice
-> > property and will get the ICE instance registered by the probe function
-> > of the ice driver.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> 
-> This is still silent about how the ICE clock behavior is being changed.
+Like other Qualcomm PMICs the PM7250B can be used on different addresses
+on the SPMI bus. Use similar defines like the PMK8350 to make this
+possible.
 
-Right, I'll add the some more info into the commit message about the
-clock being handled by the ICE driver.
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Luca Weiss (2):
+      arm64: dts: qcom: pm7250b: add missing spmi-vadc include
+      arm64: dts: qcom: pm7250b: make SID configurable
 
-> 
-> I'm still trying to understand all this myself, so please bear with me, but my
-> understanding is that the UFS clocks can be disabled even while the host
-> controller is runtime-resumed.  This is called "clock gating" in the code.
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+---
+base-commit: 7e364e56293bb98cae1b55fd835f5991c4e96e7d
+change-id: 20230407-pm7250b-sid-68e37a58244e
 
-The ICE clock is now being controlled by the new driver.
-> 
-> Before, the ICE clock was just listed as one of the UFS clocks.  So, it was just
-> managed like the other UFS clocks.
-> 
-> Now, it appears that the ICE clock is always enabled while the host controller
-> is runtime-resumed.  So, this patch removes support for gating of the ICE clock.
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
-I just tested this and it works as expected, which is:
-
-ICE clock gets enable on qcom_ice_create (via *clk_get*_enabled) and
-then, on the runtime suspend of the UFS, the qcom_ice_suspend is called
-which will disable the clock. Then, every time UFS runtime
-resumes/suspends the clock gets enabled/disabled.
-
-Hope that makes sense.
-
-Let me know if you think I'm missing something here.
-
-> 
-> Is that intended?
-> 
-> - Eric
