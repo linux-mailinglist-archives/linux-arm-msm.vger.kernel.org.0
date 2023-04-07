@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2E056DAD77
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 15:28:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B0676DAD78
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 15:28:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbjDGN2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 09:28:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35988 "EHLO
+        id S240816AbjDGN2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 09:28:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240702AbjDGN2i (ORCPT
+        with ESMTP id S240795AbjDGN2i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 7 Apr 2023 09:28:38 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E434A8A5B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 06:28:35 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id s20so23250080ljp.7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 06:28:35 -0700 (PDT)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2374483F8
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 06:28:37 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id by14so24370943ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 06:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680874114;
+        d=linaro.org; s=google; t=1680874115;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OgDPlYdeyBN5Ce+XKNF10sW0zXkUfnHdpMsUaHXHsmA=;
-        b=wirQaUgP7v7X9GkaF1EOA3FI0ORRUf7xGwFC1cy6YoAraBNvAlvmvGjhnAJDkkJB2r
-         uEpoM7BlqdARZP4E6zm0ElxaniNBG8TUOQgyBgLlH9oyG/GkUot7bkSOhfKu4kg2PIfW
-         MC/5dtto7NIM9pfMMlFuPz37CEFYSdwQi4MWsMHhDai9CdJ4wbZXgD4m9nC9QOAF+c9F
-         6bhwD9YSE2tyQ1lvJ1G0g9OulLfzd1vGicOsdEoFI62iMU8FefVZFML8E17BgTaSlW0k
-         ZslYXcOhRvkKdwkSB1k4ifDjqKiYZDatJGNaX/tUDAeFB6uPmSo617/LKO8eZ/wQ8C1L
-         E9Mg==
+        bh=llePgOmhGh4IWb8LWhk+RajPlS7CDIy7UmsGMTBqzaA=;
+        b=cO5lYLU5ym4dGfjzsNgK5ZlP8ePOHNfsRx9h+f8eHM/HC7LyE529BTqTknOrvQlJ+g
+         ZAkrgOb5Z4e26L3cntz7DBdNcUm0MJmkG6l5MEIEOFHY6K7sm3KW++34p3p8gzcuidV9
+         HEpV4gj7Hw7jKgF+cKhSFUK+WQDGeMGSAEEKLGl3BOOOj5eWouTZWawpiENhZ9aOHS4G
+         y8EQB/5AOT19+OoT5XKdPYjcm+q+qvQYz8S8hzUlnF1Wej7hrfrLEZosqKUwhino+Mkp
+         boVxM/H8EQx0UjZtv93ATw+qXKWPKAQ22LIQ8mOtTlYLsQ+Od9p04+JWUXnnDmcqobKh
+         TB7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680874114;
+        d=1e100.net; s=20210112; t=1680874115;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OgDPlYdeyBN5Ce+XKNF10sW0zXkUfnHdpMsUaHXHsmA=;
-        b=t7fONqSkr4Yrt7T87xDp5RSFdim2lhj+4eknb1NCujYFKUWkg5fnl+9qE13LQPhYNR
-         C53Kk9s4Mif2FhS9WJBLjXuNTBqeuzW0lnW9rlqghjnn7U2XqtV8cawNzSCU7/+XeFht
-         yoOCW5ofY5+9CgJcGnZg15do6GO35se+t1Djo5mt2ai0WDPDJ45kG212CFtZAXDapPzW
-         Hc3hRx+kAes/Svsnd4n5sYn9ElAo3O8MRK94mReME4TMJMpSqxFhpwB+yQK+pA5t2rrs
-         +2S2qBj++y0vQ+mlcLfxpr7QtHbdVkTdkTmxLXNt31BA95NUCS8Rsr/dYjlGLs7eabkj
-         B+6g==
-X-Gm-Message-State: AAQBX9d/ZYTjCGVWNUG+nsNGL219Ici8qs0/ITG7UO3pOmeG4N6VqEr6
-        qvxgrshVzGCQ1FfPEkD6jCsw9w==
-X-Google-Smtp-Source: AKy350bNk4BbC2iWXByZtDbKjEm7psxi4oI5hkztB0J+/AmIB7wZjpS7vBo0MXMRy4vW3Ihhy0bUag==
-X-Received: by 2002:a2e:a232:0:b0:295:9517:b98f with SMTP id i18-20020a2ea232000000b002959517b98fmr520908ljm.15.1680874113953;
-        Fri, 07 Apr 2023 06:28:33 -0700 (PDT)
+        bh=llePgOmhGh4IWb8LWhk+RajPlS7CDIy7UmsGMTBqzaA=;
+        b=yR+IceVFdXoYgwq4V8hbLV2K4imhtHgrMOJFG4X5moNONhJCquZQ7PdQ/VJ6gEF4b6
+         s8fRFed+ifgg4vdgCm00T270qGUvpRyeVrpygTNXbTXeYJwmbRfaHZLVfgxBdmieU682
+         0l4oKbff216NouIUbJQcnAMzpUXijvPVF73jGqGRw4GKQUIPq7t0qbR2uxoIOUjimbu1
+         qO5o6bP+DhSNekRd7b0PAuZTUg4xI0nFrtXwlMTsi9Uu5sqYyMdL6dgu5uPzMP1CyK9f
+         QKnST7i5bSZeN+9TOuDO1UPtXwqzPtMHA0W+OGsEQXYg7kGPROX5ax8QVRgluNGtqKi+
+         Agtg==
+X-Gm-Message-State: AAQBX9ffDnpGFESvsxSrW6xxLJtUSGnQAviIQA1OxGsfPRW0fu+hUaSW
+        0yM4elchNeRJoQ9WL6s+u+ENeA==
+X-Google-Smtp-Source: AKy350ZBU2+IVi4EkhIGy4Up7yOAsxRsnKvkuQMm67ALbuKqLn0D4GUuOG3n3GgoleU/9qzFInWv+A==
+X-Received: by 2002:a2e:3607:0:b0:295:a16f:c893 with SMTP id d7-20020a2e3607000000b00295a16fc893mr613024lja.18.1680874115534;
+        Fri, 07 Apr 2023 06:28:35 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id h2-20020a2e3a02000000b002a618eb72b1sm811031lja.98.2023.04.07.06.28.32
+        by smtp.gmail.com with ESMTPSA id h2-20020a2e3a02000000b002a618eb72b1sm811031lja.98.2023.04.07.06.28.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 06:28:33 -0700 (PDT)
+        Fri, 07 Apr 2023 06:28:35 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 07 Apr 2023 15:28:31 +0200
-Subject: [PATCH 1/6] dt-bindings: media: qcom,sdm845-venus-v2: Allow
- interconnect properties
+Date:   Fri, 07 Apr 2023 15:28:32 +0200
+Subject: [PATCH 2/6] dt-bindings: remoteproc: qcom: adsp: Allow
+ firmware-name
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230407-topic-msm_dtb-v1-1-6efb4196f51f@linaro.org>
+Message-Id: <20230407-topic-msm_dtb-v1-2-6efb4196f51f@linaro.org>
 References: <20230407-topic-msm_dtb-v1-0-6efb4196f51f@linaro.org>
 In-Reply-To: <20230407-topic-msm_dtb-v1-0-6efb4196f51f@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -78,11 +78,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680874110; l=861;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680874110; l=1008;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=x0byFv9Tpffmv4tOybuaTsG0ZSBjTbBYI411ExiSp0g=;
- b=EC0ulUC65d17dKo7Frq3qvRwtteTFJ96VnOc/0CNt8p2Q4VjwS1FYzNm0SXw46wcRgHOjaIbmIgv
- Kj4//+sjBJiJGMl+QYDIACI6Jj3QJUxsi1yT/0yTAj8lHjuSa1KO
+ bh=dWnjAZMJzqjimRi8bQ9g3R4fQYhXM8ZgJZOOjsidZPo=;
+ b=ZQ8LDsV8IFCj7oNIKdE4Wf/XjVIGpWft9setIb/PWvyNs02B1LepgKLs5g40HQi1fh9+DtmdRNQT
+ VsMDX0bxDcq+DhkC6P7f2SLCCWNKlpVc/en0jMqXufIW1K02/jFi
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -94,32 +94,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Allow the interconnect properties, which have been in use for ages.
+firmware-name has been with us for a long long time. Allow it to fix
+warnings like this:
+
+qcom/sdm845-oneplus-enchilada.dtb: remoteproc-cdsp: Unevaluated properties
+are not allowed ('firmware-name' was unexpected)
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-index d5f80976f4cf..6228fd2b3246 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
-@@ -48,6 +48,14 @@ properties:
-   iommus:
-     maxItems: 2
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+index 643ee787a81f..d99618a9ca2e 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+@@ -44,6 +44,10 @@ properties:
+     maxItems: 1
+     description: Reference to the reserved-memory for the Hexagon core
  
-+  interconnects:
-+    maxItems: 2
++  firmware-name:
++    $ref: /schemas/types.yaml#/definitions/string
++    description: Relative path to the DSP firmware binary
 +
-+  interconnect-names:
-+    items:
-+      - const: video-mem
-+      - const: cpu-cfg
-+
-   operating-points-v2: true
-   opp-table:
-     type: object
+ required:
+   - compatible
+ 
 
 -- 
 2.40.0
