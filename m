@@ -2,95 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 744A16DB23E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:59:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEC196DB220
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:57:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbjDGR7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:59:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36272 "EHLO
+        id S229697AbjDGR5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:57:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbjDGR6x (ORCPT
+        with ESMTP id S229600AbjDGR5c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:58:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5BCC16E;
-        Fri,  7 Apr 2023 10:58:37 -0700 (PDT)
+        Fri, 7 Apr 2023 13:57:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4091B5B8B;
+        Fri,  7 Apr 2023 10:57:31 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8C5F16119E;
-        Fri,  7 Apr 2023 17:58:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9958C433AC;
-        Fri,  7 Apr 2023 17:58:33 +0000 (UTC)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CFC7E612B8;
+        Fri,  7 Apr 2023 17:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CCFC433D2;
+        Fri,  7 Apr 2023 17:57:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680890250;
+        bh=+m7f6bVkDRrtJizfJO9yPDVpd1csXnph50i1ewrtQos=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Hlu74vfp1I+OxfCdzNZK/2n/sKn4eD0mL1gWOJhirz4Q1uzTswxaU50B1HadtFrwB
+         XYcDNpTddCtEDZ/UhBuG1O3s/V6erAw6uKU6Id7Vu3JnXcZbLoU3Yx1swoh5bnCvwQ
+         eHWZKcx6an6GjVq9H9Q41AD5bXDwxLcQjQ+NC8TqITtUImxAKV7iVopHiWK1WWTwRn
+         lM2dW6jH9yDjXaWvduCt3gMWDCqH6wvwLhRbh8ZVDP76I5pZBJ3VxV2cJoCCAucgo/
+         1OIAN5k6qr7AzhZ7rn5okIOUYsy9rj7rnVG5XORUv3phWxUN2hZQ7YPjeoxBVS8v2u
+         ak3yzCSGknuHQ==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 10/10] arm64: dts: qcom: sm8450: remove superfluous "input-enable"
-Date:   Fri,  7 Apr 2023 19:58:07 +0200
-Message-Id: <20230407175807.124394-10-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230407175807.124394-1-krzysztof.kozlowski@linaro.org>
-References: <20230407175807.124394-1-krzysztof.kozlowski@linaro.org>
+        Douglas Anderson <dianders@chromium.org>
+Cc:     Roja Rani Yarubandi <rojay@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Rajesh Patil <rajpat@codeaurora.org>,
+        linux-gpio@vger.kernel.org, linux-spi@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/14] Control Quad SPI pinctrl better on Qualcomm Chromebooks
+Date:   Fri,  7 Apr 2023 11:00:20 -0700
+Message-Id: <168089041192.2611193.5973417729822285001.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230323173019.3706069-1-dianders@chromium.org>
+References: <20230323173019.3706069-1-dianders@chromium.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pin configuration property "input-enable" was used with the intention to
-disable the output, but this is done by default by Linux drivers.  Since
-patch ("dt-bindings: pinctrl: qcom: tlmm should use output-disable, not
-input-enable") the property is not accepted anymore.
+On Thu, 23 Mar 2023 10:30:04 -0700, Douglas Anderson wrote:
+> The main goal of this series is to do a better job of controling the
+> pins related to the "Quad SPI" IP block on Qualcomm Chromebooks. This
+> is essentially 'v2' of my previous attempt in the patch ("arm64: dts:
+> qcom: sc7180: Fix trogdor qspi pull direction") [1] but since it's
+> spiraled out a bit and there are no patches that are exactly the same
+> I've reset to v1.
+> 
+> [...]
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi | 1 -
- arch/arm64/boot/dts/qcom/sm8450.dtsi                    | 2 --
- 2 files changed, 3 deletions(-)
+Applied, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-index 67538b5a557e..001fb2723fbb 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450-sony-xperia-nagara.dtsi
-@@ -754,7 +754,6 @@ ts_int_default: ts-int-default-state {
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
--		input-enable;
- 	};
- 
- 	telec_pwr_en: telec-pwr-en-state {
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index c59a922ce9f8..2b92ac697d8a 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3690,7 +3690,6 @@ data-pins {
- 					pins = "gpio7";
- 					function = "dmic1_data";
- 					drive-strength = <8>;
--					input-enable;
- 				};
- 			};
- 
-@@ -3706,7 +3705,6 @@ data-pins {
- 					pins = "gpio9";
- 					function = "dmic2_data";
- 					drive-strength = <8>;
--					input-enable;
- 				};
- 			};
- 
+[01/14] arm64: dts: sc7180: Rename qspi data12 as data23
+        commit: d84f8f2687bdc67f20262e822b206419bcfd0038
+[02/14] arm64: dts: sc7280: Rename qspi data12 as data23
+        commit: 14acf21c0d3f7b7298ffcd2e5b5db4a476ec6202
+[03/14] arm64: dts: sdm845: Rename qspi data12 as data23
+        commit: 37f7349b56decc91c66f8039712e63740b1f25f9
+[04/14] arm64: dts: qcom: sc7180: Annotate l13a on trogdor to always-on
+        commit: ced32c299e5d6c447ad0b80d7a16b44e0e72e8e0
+[09/14] arm64: dts: qcom: sc7180: Remove superfluous "input-enable"s from trogdor
+        commit: e8df226339fa032c49f8db4281903930d018a22c
+[10/14] arm64: dts: qcom: sc7280: Remove superfluous "input-enable"s from idp-ec-h1
+        commit: 6d4794d658a0967a7f257f16d6a7a48afb8c8e05
+[11/14] arm64: dts: qcom: sdm845: Remove superfluous "input-enable"s from cheza
+        commit: 406fed87083578d07c7cea9483b85b51469594e0
+[12/14] arm64: dts: qcom: sc7180: Fix trogdor qspi pin config
+        commit: ab752f03e2feb3323dfd9c1ce161ac759ce09634
+[13/14] arm64: dts: qcom: sc7280: Fix qspi pin config
+        commit: 5f89df31096d67c244d8f36502f651ce701ddcde
+[14/14] arm64: dts: qcom: sdm845: Fix cheza qspi pin config
+        commit: 9f5cdeb7031062a36e135ebb88bd99c03f32e5ee
+
+Best regards,
 -- 
-2.34.1
-
+Bjorn Andersson <andersson@kernel.org>
