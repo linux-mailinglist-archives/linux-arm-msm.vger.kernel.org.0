@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B0676DAD78
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 15:28:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 921E16DAD84
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 15:28:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240816AbjDGN2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 09:28:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36100 "EHLO
+        id S240798AbjDGN2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 09:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240795AbjDGN2i (ORCPT
+        with ESMTP id S240808AbjDGN2j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 09:28:38 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2374483F8
+        Fri, 7 Apr 2023 09:28:39 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D047C86B0
         for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 06:28:37 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id by14so24370943ljb.12
+Received: by mail-lj1-x235.google.com with SMTP id a11so43565064lji.6
         for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 06:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680874115;
+        d=linaro.org; s=google; t=1680874117;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=llePgOmhGh4IWb8LWhk+RajPlS7CDIy7UmsGMTBqzaA=;
-        b=cO5lYLU5ym4dGfjzsNgK5ZlP8ePOHNfsRx9h+f8eHM/HC7LyE529BTqTknOrvQlJ+g
-         ZAkrgOb5Z4e26L3cntz7DBdNcUm0MJmkG6l5MEIEOFHY6K7sm3KW++34p3p8gzcuidV9
-         HEpV4gj7Hw7jKgF+cKhSFUK+WQDGeMGSAEEKLGl3BOOOj5eWouTZWawpiENhZ9aOHS4G
-         y8EQB/5AOT19+OoT5XKdPYjcm+q+qvQYz8S8hzUlnF1Wej7hrfrLEZosqKUwhino+Mkp
-         boVxM/H8EQx0UjZtv93ATw+qXKWPKAQ22LIQ8mOtTlYLsQ+Od9p04+JWUXnnDmcqobKh
-         TB7g==
+        bh=grmIxSUAU0kBA7EJgdolRxlhvAD6xuuLCo/DeTKPOd4=;
+        b=cOMmHlrGEbtO3yZ2betrRfYyhgeHSJqYgebKGG1sn5LOU3ZBjFwpqxrUgC4Dn2h+8S
+         NofaV0W0HOITCig0UgxmDmjccOZe/hp967GmdVHkGZy3p7yMgnqr169PSOp6jBwaZcLh
+         61IJuBtGB8EDgmTlzBlz7PunAp4XVGhE+OzDRid7GmPyA01dfw/UPoLuyguHpG89ofpk
+         YT/57yooGXrwitCugYgAdvGauTV98U6auEpQrg0NGFKFX96eSTjos3xGqYfCB0smxFcy
+         wLwNq1BqI9101d6XoYCft/VuULBvSj/oSAbmXhaNv1jSZarDlO5kascO3KDW1Xv8Eqyh
+         IKHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680874115;
+        d=1e100.net; s=20210112; t=1680874117;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=llePgOmhGh4IWb8LWhk+RajPlS7CDIy7UmsGMTBqzaA=;
-        b=yR+IceVFdXoYgwq4V8hbLV2K4imhtHgrMOJFG4X5moNONhJCquZQ7PdQ/VJ6gEF4b6
-         s8fRFed+ifgg4vdgCm00T270qGUvpRyeVrpygTNXbTXeYJwmbRfaHZLVfgxBdmieU682
-         0l4oKbff216NouIUbJQcnAMzpUXijvPVF73jGqGRw4GKQUIPq7t0qbR2uxoIOUjimbu1
-         qO5o6bP+DhSNekRd7b0PAuZTUg4xI0nFrtXwlMTsi9Uu5sqYyMdL6dgu5uPzMP1CyK9f
-         QKnST7i5bSZeN+9TOuDO1UPtXwqzPtMHA0W+OGsEQXYg7kGPROX5ax8QVRgluNGtqKi+
-         Agtg==
-X-Gm-Message-State: AAQBX9ffDnpGFESvsxSrW6xxLJtUSGnQAviIQA1OxGsfPRW0fu+hUaSW
-        0yM4elchNeRJoQ9WL6s+u+ENeA==
-X-Google-Smtp-Source: AKy350ZBU2+IVi4EkhIGy4Up7yOAsxRsnKvkuQMm67ALbuKqLn0D4GUuOG3n3GgoleU/9qzFInWv+A==
-X-Received: by 2002:a2e:3607:0:b0:295:a16f:c893 with SMTP id d7-20020a2e3607000000b00295a16fc893mr613024lja.18.1680874115534;
-        Fri, 07 Apr 2023 06:28:35 -0700 (PDT)
+        bh=grmIxSUAU0kBA7EJgdolRxlhvAD6xuuLCo/DeTKPOd4=;
+        b=f4irr+aSiqKvOW92KZpqd7pov+7bG9ThFrBOyFP1ZjceoySahPiWJSaS8oERBIeF1L
+         asdfk+l1s/Clu3y2C6dHg+2jqazbF7evrVeGZlaEBp7MZvAgHcYPoHD1qB1Wov6qnBlW
+         Azy3f9uYuTBMSKI3Ws+He+M0+jxV99sproke5nW988UCuH4SSH2L/ynWO2GOKWkfjHgY
+         AOziAzyJBde8ULBqR6lsFz+XKwLDkHjhwnzZRKbC26zC/BuNEwaWJCwpDECJ+3A888uJ
+         oDzgFMszTbdL9ibwXX2EBU2P949x1+xPVzsG+/ITv0M/SV5wx4h50NtAI+AtGe6QyEPd
+         8OjA==
+X-Gm-Message-State: AAQBX9dfyHk8zYGKYQ+IB/vTgEuBAgngkFDhA8Wewl6b1NulrstJxZNr
+        86i96qyftFSLNTGgRewfX6FMHA==
+X-Google-Smtp-Source: AKy350aaMgbaCCdcjWNyNhLf9oPTZzXicz8SmfDjO3HAgT62Q3Pdw3TK2UNh5tKA3icr4u1hUazx7g==
+X-Received: by 2002:a2e:9851:0:b0:298:a8bf:a65 with SMTP id e17-20020a2e9851000000b00298a8bf0a65mr558843ljj.13.1680874117346;
+        Fri, 07 Apr 2023 06:28:37 -0700 (PDT)
 Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id h2-20020a2e3a02000000b002a618eb72b1sm811031lja.98.2023.04.07.06.28.34
+        by smtp.gmail.com with ESMTPSA id h2-20020a2e3a02000000b002a618eb72b1sm811031lja.98.2023.04.07.06.28.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 06:28:35 -0700 (PDT)
+        Fri, 07 Apr 2023 06:28:37 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 07 Apr 2023 15:28:32 +0200
-Subject: [PATCH 2/6] dt-bindings: remoteproc: qcom: adsp: Allow
- firmware-name
+Date:   Fri, 07 Apr 2023 15:28:33 +0200
+Subject: [PATCH 3/6] dt-bindings: usb: dwc3: Allow dma-ranges
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230407-topic-msm_dtb-v1-2-6efb4196f51f@linaro.org>
+Message-Id: <20230407-topic-msm_dtb-v1-3-6efb4196f51f@linaro.org>
 References: <20230407-topic-msm_dtb-v1-0-6efb4196f51f@linaro.org>
 In-Reply-To: <20230407-topic-msm_dtb-v1-0-6efb4196f51f@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -78,11 +77,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1680874110; l=1008;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1680874110; l=844;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=dWnjAZMJzqjimRi8bQ9g3R4fQYhXM8ZgJZOOjsidZPo=;
- b=ZQ8LDsV8IFCj7oNIKdE4Wf/XjVIGpWft9setIb/PWvyNs02B1LepgKLs5g40HQi1fh9+DtmdRNQT
- VsMDX0bxDcq+DhkC6P7f2SLCCWNKlpVc/en0jMqXufIW1K02/jFi
+ bh=2wRiR7WEXmQZpYv5SNBYk0HTq2/eu6+iUQ50kZacv00=;
+ b=0WYZFFcb41FKVZEjr+Rt3QZBW3WacDCF7a8sYWN6zVRRSIzFFLbR9KfDvAF4VFO4EuK1ln6sUm89
+ L3qPPGO2AKdPUmSfhgE9qEydOzLILrexSR6oMm8BuEeOZutzOv9t
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -94,32 +93,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-firmware-name has been with us for a long long time. Allow it to fix
-warnings like this:
+Allow the common dma-ranges property to silence warning like this:
 
-qcom/sdm845-oneplus-enchilada.dtb: remoteproc-cdsp: Unevaluated properties
-are not allowed ('firmware-name' was unexpected)
+qcom/sc7280-herobrine-evoker.dtb: usb@a6f8800: 'dma-ranges' does not
+match any of the regexes: '^usb@[0-9a-f]+$', 'pinctrl-[0-9]+'
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-index 643ee787a81f..d99618a9ca2e 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
-@@ -44,6 +44,10 @@ properties:
-     maxItems: 1
-     description: Reference to the reserved-memory for the Hexagon core
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index d84281926f10..3c3548f55797 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -55,6 +55,8 @@ properties:
  
-+  firmware-name:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: Relative path to the DSP firmware binary
+   ranges: true
+ 
++  dma-ranges: true
 +
- required:
-   - compatible
- 
+   power-domains:
+     description: specifies a phandle to PM domain provider node
+     maxItems: 1
 
 -- 
 2.40.0
