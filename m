@@ -2,100 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D9606DA8E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 08:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93C676DA8E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 08:26:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238501AbjDGGYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 02:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50674 "EHLO
+        id S237561AbjDGG0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 02:26:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231508AbjDGGYt (ORCPT
+        with ESMTP id S238786AbjDGG0Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 02:24:49 -0400
+        Fri, 7 Apr 2023 02:26:16 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BB2AD3A;
-        Thu,  6 Apr 2023 23:24:34 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3374KJOV027393;
-        Fri, 7 Apr 2023 06:23:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0OJ/jSYziRv5Ytnzvca+2yIZwCushE9cQrL2Pin+XQU=;
- b=Zh8as3vpQiD56/z4ChZMlF/auZtxhlE3CpJu26/RXzfkDd7nCLBofca9HY+YOmU0VhFs
- oOxo/BgQ8bLXQipPw0P+vdU0SrLwVeGr/7ocWeH+0YtfGakTcYr6R4QVnkm99gLoVwFW
- EhlesBFc+iJhaHHe3oJPPN7OxWdNnfbnd3fbN7hcynrrhXZ++VQkugDB1D86UnqfqeyG
- MNG/MxeDojO3EKOb9DK3TqLo1lyAqSfEC8eg+i3SHwVfmWYZBvgPUi3BKYLbP8OeE7/4
- 4s66+UzpherJKTeFx4kuw7XTBfrmPAHuhrh1ZiRzDB3vxptselIdZrYpf2XUN7bMzD/F GQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pt8t58h65-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CBBD9EE5;
+        Thu,  6 Apr 2023 23:26:12 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3375kqrZ012832;
+        Fri, 7 Apr 2023 06:26:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=XvsZKToWHHxcajhQsIn52m03LpgI9mW76ofF6MiWscU=;
+ b=VEpYEpX83mh6FTDPP3vmJb3vkThLL/FiKz1P6ITVrqsyVGLZmGrMO2XJ5ysxUofqeDHR
+ rNpZMuuHI9Ef3mGEhWaySqnxeGcB/3JK/qffBEb/Ko4LB0xcWY+We6tACY04ahoDph7+
+ xBJzVegRQCL8NhWxDhgAnyPyVmCeE6y7w/kw7dyBlcb9WcMQsjrzknyzxPlmQ5XJwsLI
+ 5kW6EZDCtFZWATi7AyrXGWE24PF7duGxB7906MKs4o9gZcSdVVxsyEz3AKCGyfZE/F1R
+ T16ep36QPsEJh8ofoimRfZCIUBT0Gy5A7D4R0/cmApfGUzgtBHgi6/edmv45fRMyT6j4 7A== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pt5s9rvmy-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Apr 2023 06:23:50 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3376NnVQ012007
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Apr 2023 06:23:49 GMT
-Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
- 23:23:43 -0700
-Message-ID: <d24c14e4-46f2-dbea-96ca-5b665effcea3@quicinc.com>
-Date:   Fri, 7 Apr 2023 14:23:41 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-From:   Hao Zhang <quic_hazha@quicinc.com>
-Subject: Re: [PATCH v2 2/3] dt-bindings: arm: Add Coresight Dummy Trace YAML
- schema
-To:     Rob Herring <robh@kernel.org>
-CC:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Paul Walmsley" <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>, Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20230324061608.33609-1-quic_hazha@quicinc.com>
- <20230324061608.33609-3-quic_hazha@quicinc.com>
- <20230331184700.GA1920623-robh@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20230331184700.GA1920623-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+        Fri, 07 Apr 2023 06:26:08 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3376Q3x7014080;
+        Fri, 7 Apr 2023 06:26:03 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3ppdpm5y8j-1;
+        Fri, 07 Apr 2023 06:26:03 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3376Q3r2014075;
+        Fri, 7 Apr 2023 06:26:03 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3376Q3Vt014072;
+        Fri, 07 Apr 2023 06:26:03 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+        id B43D81310; Fri,  7 Apr 2023 11:56:02 +0530 (+0530)
+From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
+To:     linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH v2 0/3] fix decoder issues with firmware version check
+Date:   Fri,  7 Apr 2023 11:55:55 +0530
+Message-Id: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Iwvvw_971ySGM9DcoK2VmBdsrh4fD1kw
-X-Proofpoint-GUID: Iwvvw_971ySGM9DcoK2VmBdsrh4fD1kw
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6HPN_x1U5gsTJzfXEBs3p5DXhRJGz8o-
+X-Proofpoint-ORIG-GUID: 6HPN_x1U5gsTJzfXEBs3p5DXhRJGz8o-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-07_03,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 suspectscore=0 malwarescore=0 mlxscore=0 impostorscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304070058
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ mlxlogscore=837 priorityscore=1501 clxscore=1015 spamscore=0
+ malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304070059
+X-Spam-Status: No, score=-0.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_NONE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -103,204 +78,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+This series includes the changes to
+  - add firmware version based check to enable/disable some feature.
+  - add support of new HFI to notify sequence change event to
+    driver during resolution change at interframe.
+  - use firmware version based check to fix EOS handling for different
+    firmware versions.
 
-On 4/1/2023 2:47 AM, Rob Herring wrote:
-> On Fri, Mar 24, 2023 at 02:16:07PM +0800, Hao Zhang wrote:
->> Add new coresight-dummy.yaml file describing the bindings required
->> to define coresight dummy trace in the device trees.
-> 
-> The diff tells me all this. Please explain why this is needed and needs
-> to be in DT here.
-> 
-Sure, will add more details to describe it.
->>
->> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
->> ---
->>   .../bindings/arm/qcom,coresight-dummy.yaml    | 118 ++++++++++++++++++
->>   1 file changed, 118 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
->> new file mode 100644
->> index 000000000000..7b719b084d72
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-dummy.yaml
->> @@ -0,0 +1,118 @@
->> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
->> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/arm/qcom,coresight-dummy.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: QCOM Coresight Dummy component
->> +
->> +description: |
->> +  The Coresight Dummy component is for the specific devices that HLOS don't have
->> +  permission to access or configure. Such as Coresight sink EUD, some TPDMs etc.
-> 
-> EUD? TPDM?
+With this series, divided the previous version [1] into
+multiple patches as suggested in review comments.
 
-The term EUD stand for Embedded USB debugger, it will be connected to 
-coresight replicator component to receive and store coresight data. It 
-would be configured by NON-HLOS, and need HLOS(Kernel) to configure the 
-last coresight components. So we will use dummy sink to replace it in 
-kernel side for building the whole path(from source to sink).
+[1] https://patchwork.kernel.org/project/linux-media/list/?series=733169
 
-The TPDM is Trace Profiling and Diagnostics Monitor, it is a coresight 
-trace source which could get hardware events from the IP subsystem.
+change since v1:
+  addressed coding comments.
 
-> 
-> I don't really love 'dummy' used here. Maybe the OS still wants/needs to
-> know where the sink goes to even if not configurable.
-> 
-> You *can* have multiple compatibles for a single generic driver if those
-> compatibles might be useful some day.
-> 
+Dikshita Agarwal (3):
+  venus: add firmware version based check
+  venus: enable sufficient sequence change support for vp9
+  venus: fix EOS handling in decoder stop command
 
-Yes, we want to take it as a generic framework for coresight dummy sink 
-and source. I think we could add one more compatible to indicate the 
-type of it.
+ drivers/media/platform/qcom/venus/core.h       | 20 ++++++++++++++++++++
+ drivers/media/platform/qcom/venus/hfi_cmds.c   |  1 +
+ drivers/media/platform/qcom/venus/hfi_helper.h |  2 ++
+ drivers/media/platform/qcom/venus/hfi_msgs.c   | 11 +++++++++--
+ drivers/media/platform/qcom/venus/vdec.c       | 10 +++++++++-
+ 5 files changed, 41 insertions(+), 3 deletions(-)
 
->> +  So there need driver to register dummy devices as Coresight devices. Provide
->> +  Coresight API for dummy device operations, such as enabling and disabling
->> +  dummy devices. Build the Coresight path for dummy sink or dummy source for
->> +  debugging.
->> +
->> +  The primary use case of the coresight dummy is to build path for dummy sink or
->> +  dummy source.
->> +
->> +maintainers:
->> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
->> +  - Tao Zhang <quic_taozha@quicinc.com>
->> +  - Hao Zhang <quic_hazha@quicinc.com>
->> +
->> +select:
->> +  properties:
->> +    compatible:
->> +      contains:
->> +        enum:
->> +          - qcom,coresight-dummy
->> +  required:
->> +    - compatible
->> +
->> +properties:
->> +  $nodename:
->> +    pattern: "^dummy_.*(sink|source)_[0-9]+.*$"
-> 
-> Don't use '_' in node names.
-> 
-> Convention for multiple instances without 'reg' is '-[0-9]+' on the end,
-> but you are allowing anything after that.
-> 
+-- 
+2.7.4
 
-OK, I will update it in the next version of patch.
-
->> +  compatible:
->> +    items:
->> +      - const: qcom,coresight-dummy
->> +
->> +  qcom,dummy-sink:
->> +    type: boolean
->> +    description:
->> +      Indicates that the type of this coresight node is dummy sink.
->> +
->> +  qcom,dummy-source:
-> 
-> Incorporate source or sink into the compatible strings.
-> 
-
-OK, I will update it in the next version of patch.
-
-> It's also somewhat redundant with 'in-ports' vs. 'out-ports'.
-
-I think I could add more details to describe it.
-
-> 
->> +    type: boolean
->> +    description:
->> +      Indicates that the type of this coresight node is dummy source.
->> +
->> +  out-ports:
->> +    description: |
-> 
-> Don't need '|' unless you need to preserve formatting.
-
-I will remove it.
-
-Thanks for your comments, I will take your advice and update it in the 
-next version of patch.
-
-Thanks,
-Hao
-
-> 
->> +      Output connections from the dummy source to Coresight Trace bus.
->> +    $ref: /schemas/graph.yaml#/properties/ports
->> +
->> +    properties:
->> +      port:
->> +        description: Output connection from the dummy source to Coresight
->> +            Trace bus.
->> +        $ref: /schemas/graph.yaml#/properties/port
->> +
->> +  in-ports:
->> +    description: |
->> +      Input connections from the CoreSight Trace bus to dummy sink.
->> +    $ref: /schemas/graph.yaml#/properties/ports
->> +
->> +    properties:
->> +      port:
->> +        description: Input connection from the Coresight Trace bus to
->> +            dummy sink.
->> +        $ref: /schemas/graph.yaml#/properties/port
->> +
->> +required:
->> +  - compatible
->> +
->> +additionalProperties: false
->> +
->> +oneOf:
->> +  - required:
->> +      - qcom,dummy-sink
->> +  - required:
->> +      - qcom,dummy-source
->> +
->> +examples:
->> +  # minimum dummy sink definition. dummy sink connect to coresight replicator.
->> +  - |
->> +    dummy_sink_1 {
->> +      compatible = "qcom,coresight-dummy";
->> +      qcom,dummy-sink;
->> +
->> +      in-ports {
->> +        port {
->> +          eud_in_replicator_swao: endpoint {
->> +            remote-endpoint =
->> +              <&replicator_swao_out_eud>;
->> +          };
->> +        };
->> +      };
->> +    };
->> +
->> +  # minimum dummy source definition. dummy source connect to coresight funnel.
->> +  - |
->> +    dummy_source_1 {
->> +      compatible = "qcom,coresight-dummy";
->> +      qcom,dummy-source;
->> +
->> +      out-ports {
->> +        port {
->> +          dummy_riscv_out_funnel_swao: endpoint {
->> +            remote-endpoint =
->> +              <&funnel_swao_in_dummy_riscv>;
->> +          };
->> +        };
->> +      };
->> +    };
->> +
->> +...
->> -- 
->> 2.17.1
->>
