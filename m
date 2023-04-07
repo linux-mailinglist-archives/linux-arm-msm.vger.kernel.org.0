@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A6B396DB084
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 18:24:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD9AE6DB0AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 18:34:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230459AbjDGQYB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 12:24:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34564 "EHLO
+        id S229643AbjDGQeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 12:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230246AbjDGQXw (ORCPT
+        with ESMTP id S229454AbjDGQeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 12:23:52 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 822882121
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 09:23:47 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id p203so49436517ybb.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 09:23:47 -0700 (PDT)
+        Fri, 7 Apr 2023 12:34:12 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B121119AF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 09:34:05 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id br6so55073658lfb.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 09:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1680884625; x=1683476625;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HRsDrLkJSi5dpaXKk+z5BAwMDpasj80dVc8aix8QPCQ=;
-        b=Y7M/kTwQ5lNHgNqBfWEIszgGGW5eI54Bvv0/EmjKPCaQYVCbAg8tHbPBO44wIcAdXf
-         rntVJuX+edKeAEkjR9SjuJvSLcgDh6TQUKw6ZLR7Zu/WB7zanr9DoUk9/pQxjDr9mxLB
-         /Vjzd//WOtV3hgR9j9Tt8s28Zu7IzlD9D1O7M=
+        d=linaro.org; s=google; t=1680885244;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ns5LOSHu/7rt5El0gaG0VOdBa6A5/wehdLEQPfWFNHE=;
+        b=mreYxKmu7Qa1bKhb0dlbcqmjd5mvNHJiWaY50cJ10nht3hVDars6QEXLXzT6VTsJe+
+         NvVwJDMppTlB2XpvB3ZxqP5pz6ETnaX/4XvIuNlnmI7VIFE9TKZSaXfgvE8Boh/0JiJV
+         l62T2IEjQpJY8EQyoJ9qObQzFizN+JABL6NRYPN9YrjyusUlbFxAM1AxidabgyB5SstI
+         kffiZ90QekZb5gtEvxxh8fPCzr9aTMafRzNCiXFSosns5x10+pkllVVlliRuvMdyMuu0
+         YmCVSUyZEdB7pRWpLR+7IqAJtFlhckngThMwZufS0LjouQti3UMOzbmhIMtbVDha0oTH
+         YX4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680884625; x=1683476625;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HRsDrLkJSi5dpaXKk+z5BAwMDpasj80dVc8aix8QPCQ=;
-        b=Zf0vQOiLD9EwaStJ+nUZkiquvgLOcX+zOC4y40mFkOzByS8Ji0qnQRat/6dh91AINs
-         uVPZ2X2gZJuQ7Xhz4bjzRD2fSUQcoQtkGBEg4MIz3cYfW3PlVqw0XG3i0NBIZ48mglPO
-         RQij+ct5Vz+KUIIBtiaU7YBxL6gvL92XProqzQmt2pVzXeefBxQfmSkWNRKkPs6FX7SB
-         JWJX2/J8NByd5Ad7IqUt42yk5P9gEJkA0FKJl+1HkxquxsUvrzzyBN6bEwFkYk2bVigZ
-         +evtL5QwHXexaFzdquNvvlB53S1LkqvKOfYTnSwpPV5ccRczNMiYFaf6VMa9Mzx3j/1t
-         1jVQ==
-X-Gm-Message-State: AAQBX9edyo5am2C5ekrJrNCPqMTkgS0kABVVvXRmgLcHMAndheMEEobE
-        DaanARjgnY1odv8jm1KqVTyf1YQMduTMkot8Lvk=
-X-Google-Smtp-Source: AKy350ZQRycpW1TAT+8ATni+ccFT8fKw16BENaBW9UC+AIlW0J28waCRwMJS1jj2vSLpohfVsRvPfQ==
-X-Received: by 2002:a25:1185:0:b0:b8b:ecb2:3c77 with SMTP id 127-20020a251185000000b00b8becb23c77mr3077284ybr.26.1680884625012;
-        Fri, 07 Apr 2023 09:23:45 -0700 (PDT)
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
-        by smtp.gmail.com with ESMTPSA id ck21-20020a05690218d500b00b8bf5dd53b1sm1194825ybb.10.2023.04.07.09.23.43
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20210112; t=1680885244;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ns5LOSHu/7rt5El0gaG0VOdBa6A5/wehdLEQPfWFNHE=;
+        b=Euv80iBtx/m/qW/E2/8t0cge6oNaKupF/KsUt7gpMO8hESBZCUVlQhCvFbsc+RA7mT
+         u12W+GIjL7Zz5q68wQo+tP5n13qudgUwgfZPMwztTV9Vogjpa/4/DN7J9ZZF01/gHwjO
+         GXafH4cLKqYfcaeh7WW4YwGk9oGvF185LMvrif9QJyj2SVolBRyZ9JfwyeA0HXkCCkw0
+         M1Um/rtwtRqVh54Y2//TnLlsY/1YvHxqLY15XvcEPT/8I5ufbzRkeA2a2abZaT3EjQYu
+         PBsDdUh28TOYKM22Rkjdac8FOptD0C0l2po94YrfbyHjPMCK6ZVJOHvgWd/dip0FP4It
+         U19Q==
+X-Gm-Message-State: AAQBX9fyJeWcLYWiReBTIrnOIjNLdDqICqyvgBf/DNuSx2PX7xeXOe6V
+        Cdk5EMEBYYPK5VoVo+L1LFdMBQ==
+X-Google-Smtp-Source: AKy350YiJHTNXXb7fD+W+VfSVc1OojuyNSt8JSxB25sutoPPaP/XveG/bQwJt4kq/eupW1E01yk3yw==
+X-Received: by 2002:ac2:5f0f:0:b0:4eb:13ff:6ca7 with SMTP id 15-20020ac25f0f000000b004eb13ff6ca7mr791005lfq.16.1680885243956;
+        Fri, 07 Apr 2023 09:34:03 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id o23-20020a2e90d7000000b002934fe524d2sm894103ljg.83.2023.04.07.09.34.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Apr 2023 09:23:44 -0700 (PDT)
-Received: by mail-yb1-f182.google.com with SMTP id i6so49506686ybu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 09:23:43 -0700 (PDT)
-X-Received: by 2002:a25:6c07:0:b0:b8b:eea7:525b with SMTP id
- h7-20020a256c07000000b00b8beea7525bmr2049650ybc.7.1680884623153; Fri, 07 Apr
- 2023 09:23:43 -0700 (PDT)
+        Fri, 07 Apr 2023 09:34:03 -0700 (PDT)
+Message-ID: <7745f5c7-9dd0-3010-ae21-b269e059620f@linaro.org>
+Date:   Fri, 7 Apr 2023 19:34:03 +0300
 MIME-Version: 1.0
-References: <20230407151423.59993-1-nikita@trvn.ru> <20230407151423.59993-5-nikita@trvn.ru>
-In-Reply-To: <20230407151423.59993-5-nikita@trvn.ru>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 7 Apr 2023 09:23:31 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UCJoz1E4wErJawQjpBRiXw0C0-J4TTWO1+uRiDsdzSUg@mail.gmail.com>
-Message-ID: <CAD=FV=UCJoz1E4wErJawQjpBRiXw0C0-J4TTWO1+uRiDsdzSUg@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: Add Acer Aspire 1
-To:     Nikita Travkin <nikita@trvn.ru>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        quic_srivasam@quicinc.com, judyhsiao@chromium.org,
-        mka@chromium.org, cros-qcom-dts-watchers@chromium.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v8 09/10] arm64: dts: qcom: sc7180: Add support for HDCP
+ in dp-controller
+Content-Language: en-GB
+To:     Mark Yacoub <markyacoub@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     seanpaul@chromium.org, suraj.kandpal@intel.com,
+        dianders@chromium.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-kernel@vger.kernel.org
+References: <20230331221213.1691997-1-markyacoub@google.com>
+ <20230331221213.1691997-10-markyacoub@google.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230331221213.1691997-10-markyacoub@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,117 +85,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 01/04/2023 01:12, Mark Yacoub wrote:
+> From: Sean Paul <seanpaul@chromium.org>
+> 
+> Add the register ranges required for HDCP key injection and
+> HDCP TrustZone interaction as described in the dt-bindings for the
+> sc7180 dp controller.
+> 
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+> Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+> 
+> ---
+> Changes in v3:
+> -Split off into a new patch containing just the dts change (Stephen)
+> -Add hdcp compatible string (Stephen)
+> Changes in v4:
+> -Rebase on Bjorn's multi-dp patchset
+> Changes in v5:
+> -Put the tz register offsets in trogdor dtsi (Rob C)
+> Changes in v6:
+> -Rebased: Removed modifications in sc7180.dtsi as it's already upstream
+> Changes in v7:
+> -Change registers offset
+> Changes in v8:
+> -None
+> 
+>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 
-I didn't do too thorough of a review, but I noticed your comment about
-the panel power and took a look...
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On Fri, Apr 7, 2023 at 8:14=E2=80=AFAM Nikita Travkin <nikita@trvn.ru> wrot=
-e:
->
-> +       reg_lcm_3p3: panel-regulator {
-> +               compatible =3D "regulator-fixed";
-> +               regulator-name =3D "lcm_3p3";
-> +               regulator-min-microvolt =3D <3300000>;
-> +               regulator-max-microvolt =3D <3300000>;
-> +
-> +               /*
-> +                * HACK: Display fails with
-> +                *
-> +                * *ERROR* Unexpected max rate (0x0); assuming 5.4 GHz
-> +                * *ERROR* Link training failed, link is off (-5)
-> +                *
-> +                * if the power to the panel was ever cut
-> +                */
-> +               regulator-always-on;
+-- 
+With best wishes
+Dmitry
 
-I'm curious if `off-on-delay-us =3D <500000>;` would help you avoid the
-hack. The eDP driver should already enforce stuff like this but I
-think in some esoteric -EPROBE_DEFER cases it can end up violating
-things. Any chance that's what you hit?
-
-Oh, or maybe it's HPD. See below. Even if it's HPD, having an
-'off-on-delay-us' specified here isn't a bad idea.
-
-> +&i2c10 {
-> +       clock-frequency =3D <400000>;
-> +       status =3D "okay";
-> +
-> +       sn65dsi86_bridge: bridge@2c {
-> +               compatible =3D "ti,sn65dsi86";
-> +               reg =3D <0x2c>;
-> +               gpio-controller;
-> +               #gpio-cells =3D <2>;
-> +               #pwm-cells =3D <1>;
-> +
-> +               interrupt-parent =3D <&tlmm>;
-> +               interrupts =3D <11 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +               enable-gpios =3D <&tlmm 51 GPIO_ACTIVE_HIGH>;
-> +               suspend-gpios =3D <&tlmm 22 GPIO_ACTIVE_LOW>;
-> +
-> +               pinctrl-0 =3D <&bridge_en_default>,
-> +                           <&edp_bridge_irq_default>,
-> +                           <&bridge_suspend_default>;
-> +               pinctrl-names =3D "default";
-> +
-> +               vpll-supply =3D <&reg_brij_1p8>;
-> +               vccio-supply =3D <&reg_brij_1p8>;
-> +               vcca-supply =3D <&reg_brij_1p2>;
-> +               vcc-supply =3D <&reg_brij_1p2>;
-> +
-> +               clocks =3D <&rpmhcc RPMH_LN_BB_CLK3>;
-> +               clock-names =3D "refclk";
-
-You want "no-hpd;" here somewhere. See below.
-
-
-> +
-> +               ports {
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <0>;
-> +
-> +                       port@0 {
-> +                               reg =3D <0>;
-> +
-> +                               sn65dsi86_in: endpoint {
-> +                                       remote-endpoint =3D <&dsi0_out>;
-> +                               };
-> +                       };
-> +
-> +                       port@1 {
-> +                               reg =3D <1>;
-> +
-> +                               sn65dsi86_out: endpoint {
-> +                                       data-lanes =3D <0 1>;
-> +                                       remote-endpoint =3D <&panel_in_ed=
-p>;
-> +                               };
-> +                       };
-> +               };
-> +
-> +               aux-bus {
-> +                       panel: panel {
-> +                               compatible =3D "edp-panel";
-> +                               power-supply =3D <&reg_lcm_3p3>;
-> +                               backlight =3D <&backlight>;
-
-I think you want:
-
-no-hpd;
-hpd-absent-delay-ms =3D <200>;
-
-...and yes, you end up with "no-hpd" in both the panel node and the
-ti-sn65dsi86 node. See sdm845-cheza.
-
-HPD might very well be hooked up on your board, but the current Linux
-ti-sn65dsi86 driver does not look at its own HPD line because it's
-actually slower than just pretending that HPD isn't there. On trogdor
-boards we ended up routing HPD to a GPIO.
-
-I guess your other option would be to implement HPD support in
-ti-sn65dsi86. That would probably be an overall slower boot for you,
-but is technically more correct. In the past people have posted up
-patches to get ti-sn65dsi86 working as a full DP port and they added
-HPD support for that, but none of those patch series ever go to the
-point of landing...
