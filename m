@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 131916DA861
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 06:53:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B0356DA89B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 07:52:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233135AbjDGEx3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 00:53:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42176 "EHLO
+        id S231773AbjDGFwP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 01:52:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229610AbjDGEx2 (ORCPT
+        with ESMTP id S230298AbjDGFwO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 00:53:28 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A391903F;
-        Thu,  6 Apr 2023 21:53:26 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3372sXjT021729;
-        Fri, 7 Apr 2023 04:53:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PTxx3TaVUUJkb1GmwlALitix/2uQjzjDylJzHktpdAs=;
- b=la1hrVfieracVHdHuBnp/JCdCu4mbHzqbvCyZlJH+nPZhYIG3R9cJcGzmgt55FEUOIX9
- JRph0V+Z/H0DYAJOXC//A7mHBtWfVhnFYq4kJHrs4F+IROKc417EdqvNkz+yQM2yVCjg
- PuAMppCYOJzvcl+AYtf+BwMEFSkPxxJYxkrjKfmKZU0m7XbwjmiajL9sl7O9tThDpYlG
- 8D9icW9dylyKAQk052NbtFeoEQ7WA1XHAEVbvXICeYvVsj2SZgnGHFPucf2DTO+sKXqs
- exQr5TtFOntJbYPrdyrNl0fEZTEY4fAG7f8rXS8WdNSafqPvwxoTb/guyLCrX/3daYZ1 YQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pss7eajyj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 07 Apr 2023 04:53:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3374rLTn022162
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 7 Apr 2023 04:53:21 GMT
-Received: from [10.216.18.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 6 Apr 2023
- 21:53:15 -0700
-Message-ID: <c1d916f0-514e-5ad8-d474-4d6fa9842364@quicinc.com>
-Date:   Fri, 7 Apr 2023 10:23:11 +0530
+        Fri, 7 Apr 2023 01:52:14 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C170986A6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  6 Apr 2023 22:52:11 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id n9-20020a05600c4f8900b003f05f617f3cso5555682wmq.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 06 Apr 2023 22:52:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680846730; x=1683438730;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=N85jrvvXyD9fHkvKb/3/oJj/HF/PifZiFmuCM3M4Pjs=;
+        b=u1TFdX7fv7gXqeGkS3FZ2pijuds6NGsuWOLE0kxlwH4A+do7EIvSpEPydBGmUAULUD
+         goa8zLGLVsSrq8EAIe6uU0vK5DwX7CGApuDjIv4khw5cQujK8O9YIbQubWB1pHqqb9HX
+         jQGy0jhiHHKj+L0ENBNgni8H6kphMJ8qJ0oesw10CFn3UoZIJiBBKwB6nVjTvVmz5WUu
+         ZoxyYm+MGM6skYk+0ZdH8pMGu0Zcf3RJ3t9kvVr0n+72igx0qkjak6+OhhmnQI+g2tis
+         tFRpKyrew5jTsI4Uv2se4DHQg999JrITI9bipdgG+3Q6hkGq8tpTRpfzO1Wc7roprM00
+         z45Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680846730; x=1683438730;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=N85jrvvXyD9fHkvKb/3/oJj/HF/PifZiFmuCM3M4Pjs=;
+        b=vnnc74JiMJ9h5knpHEqcbCdlx5f1BMco0NTryHsiIqw16SJtYeRRy3cOz6/65aFkQI
+         B/VdYzR3F2S22UA3c8ybZjEc/leO4IykBGPWnwzgrxLOG2frKRI5/ccRJeXHKniw33D0
+         1u50ZXZPX6Tya8fYFagnoHZ+YZMuArdw+bnx5lilk2mTYVosIOwWxeISFJf1x0Bc4uCr
+         bvpqCYg1yyW40TnRax9pIruCYesOLxKLqM7sKWKvNZdd/L6z7C47dZpn81Us09BvmfAO
+         C5YqHuADgnPKghQEMY89HdfHQofXY/WcpjzTlhWTBiT971575bCh40jP/ZI0iFRgV09q
+         6u9g==
+X-Gm-Message-State: AAQBX9d2uFJ/q0chwfaoNdq9U4yf6fxhhqxZtH1Bpqk1Xy+QJZEGFoFQ
+        lE98FeIxZnTTftoXbltYZJ2Xog==
+X-Google-Smtp-Source: AKy350ZGeZWg3kfEOsRAKHRLRfqytP+ssITGSZmZoPdlv66cizXKdo8hN4eDF/FYbjn+3KPWlPsbfg==
+X-Received: by 2002:a7b:ce99:0:b0:3ef:672a:2c93 with SMTP id q25-20020a7bce99000000b003ef672a2c93mr363926wmj.36.1680846730106;
+        Thu, 06 Apr 2023 22:52:10 -0700 (PDT)
+Received: from linaro.org ([94.52.112.99])
+        by smtp.gmail.com with ESMTPSA id y10-20020a7bcd8a000000b003e203681b26sm3421659wmj.29.2023.04.06.22.52.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 22:52:09 -0700 (PDT)
+Date:   Fri, 7 Apr 2023 08:52:08 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rishabh Bhatnagar <rishabhb@codeaurora.org>,
+        Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] soc: qcom: llcc: Refactor llcc driver to support
+ multiple configuration
+Message-ID: <ZC+viDZTelCJiuBJ@linaro.org>
+References: <20230313124040.9463-1-quic_kbajaj@quicinc.com>
+ <20230313124040.9463-2-quic_kbajaj@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH V3 5/5] arm64: dts: qcom: ipq9574: Add cpufreq support
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <lgirdwood@gmail.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230406070032.22243-1-quic_devipriy@quicinc.com>
- <20230406070032.22243-6-quic_devipriy@quicinc.com>
- <18eb5708-bf51-26c3-51a0-70a5069ffdbe@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <18eb5708-bf51-26c3-51a0-70a5069ffdbe@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6akIfhx64FLOFFFgjTklmPNHEaWposSU
-X-Proofpoint-ORIG-GUID: 6akIfhx64FLOFFFgjTklmPNHEaWposSU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-07_02,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- clxscore=1015 priorityscore=1501 suspectscore=0 mlxlogscore=921
- adultscore=0 mlxscore=0 bulkscore=0 phishscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304070044
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230313124040.9463-2-quic_kbajaj@quicinc.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,133 +78,255 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/7/2023 1:21 AM, Konrad Dybcio wrote:
+On 23-03-13 18:10:36, Komal Bajaj wrote:
+> Refactor driver to support multiple configuration for llcc on a target.
 > 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+
+LGTM.
+
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+
+> ---
+>  drivers/soc/qcom/llcc-qcom.c | 191 ++++++++++++++++++++---------------
+>  1 file changed, 112 insertions(+), 79 deletions(-)
 > 
-> On 6.04.2023 09:00, Devi Priya wrote:
->> Add cpu freq nodes in the device tree to bump cpu frequency above 800MHz.
->>
->> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   Changes in V3:
->> 	- No change
->>
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 58 +++++++++++++++++++++++++++
->>   1 file changed, 58 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 1f9b7529e7ed..cfef87b5fd22 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -6,6 +6,7 @@
->>    * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>   
->> +#include <dt-bindings/clock/qcom,apss-ipq.h>
->>   #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
->> @@ -37,6 +38,10 @@
->>   			reg = <0x0>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			clock-names = "cpu";
->> +			operating-points-v2 = <&cpu_opp_table>;
->> +			cpu-supply = <&ipq9574_s1>;
->>   		};
->>   
->>   		CPU1: cpu@1 {
->> @@ -45,6 +50,10 @@
->>   			reg = <0x1>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			clock-names = "cpu";
->> +			operating-points-v2 = <&cpu_opp_table>;
->> +			cpu-supply = <&ipq9574_s1>;
->>   		};
->>   
->>   		CPU2: cpu@2 {
->> @@ -53,6 +62,10 @@
->>   			reg = <0x2>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			clock-names = "cpu";
->> +			operating-points-v2 = <&cpu_opp_table>;
->> +			cpu-supply = <&ipq9574_s1>;
->>   		};
->>   
->>   		CPU3: cpu@3 {
->> @@ -61,6 +74,10 @@
->>   			reg = <0x3>;
->>   			enable-method = "psci";
->>   			next-level-cache = <&L2_0>;
->> +			clocks = <&apcs_glb APCS_ALIAS0_CORE_CLK>;
->> +			clock-names = "cpu";
->> +			operating-points-v2 = <&cpu_opp_table>;
->> +			cpu-supply = <&ipq9574_s1>;
->>   		};
->>   
->>   		L2_0: l2-cache {
->> @@ -75,6 +92,47 @@
->>   		reg = <0x0 0x40000000 0x0 0x0>;
->>   	};
->>   
->> +	cpu_opp_table: opp-table-cpu {
-> This is not sorted properly. It should probably come
-> after memory alphabetically ('o' > 'm')
->
-Yes, But I see that opp-table-cpu node is already placed after
-memory@40000000
-> Konrad
->> +		compatible = "operating-points-v2";
->> +		opp-shared;
->> +
->> +		opp-936000000 {
->> +			opp-hz = /bits/ 64 <936000000>;
->> +			opp-microvolt = <725000>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +
->> +		opp-1104000000 {
->> +			opp-hz = /bits/ 64 <1104000000>;
->> +			opp-microvolt = <787500>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +
->> +		opp-1416000000 {
->> +			opp-hz = /bits/ 64 <1416000000>;
->> +			opp-microvolt = <862500>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +
->> +		opp-1488000000 {
->> +			opp-hz = /bits/ 64 <1488000000>;
->> +			opp-microvolt = <925000>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +
->> +		opp-1800000000 {
->> +			opp-hz = /bits/ 64 <1800000000>;
->> +			opp-microvolt = <987500>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +
->> +		opp-2208000000 {
->> +			opp-hz = /bits/ 64 <2208000000>;
->> +			opp-microvolt = <1062500>;
->> +			clock-latency-ns = <200000>;
->> +		};
->> +	};
->> +
->>   	firmware {
->>   		scm {
->>   			compatible = "qcom,scm-ipq9574", "qcom,scm";
-Best Regards,
-Devi Priya
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 23ce2f78c4ed..00699a0c047e 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -416,92 +416,125 @@ static const u32 llcc_v2_1_reg_offset[] = {
+>  	[LLCC_COMMON_STATUS0]	= 0x0003400c,
+>  };
+>  
+> -static const struct qcom_llcc_config sc7180_cfg = {
+> -	.sct_data	= sc7180_data,
+> -	.size		= ARRAY_SIZE(sc7180_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sc7180_cfg[] = {
+> +	{
+> +		.sct_data	= sc7180_data,
+> +		.size		= ARRAY_SIZE(sc7180_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sc7280_cfg = {
+> -	.sct_data	= sc7280_data,
+> -	.size		= ARRAY_SIZE(sc7280_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sc7280_cfg[] = {
+> +	{
+> +		.sct_data	= sc7280_data,
+> +		.size		= ARRAY_SIZE(sc7280_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sc8180x_cfg = {
+> -	.sct_data	= sc8180x_data,
+> -	.size		= ARRAY_SIZE(sc8180x_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sc8180x_cfg[] = {
+> +	{
+> +		.sct_data	= sc8180x_data,
+> +		.size		= ARRAY_SIZE(sc8180x_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sc8280xp_cfg = {
+> -	.sct_data	= sc8280xp_data,
+> -	.size		= ARRAY_SIZE(sc8280xp_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sc8280xp_cfg[] = {
+> +	{
+> +		.sct_data	= sc8280xp_data,
+> +		.size		= ARRAY_SIZE(sc8280xp_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sdm845_cfg = {
+> -	.sct_data	= sdm845_data,
+> -	.size		= ARRAY_SIZE(sdm845_data),
+> -	.need_llcc_cfg	= false,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sdm845_cfg[] = {
+> +	{
+> +		.sct_data	= sdm845_data,
+> +		.size		= ARRAY_SIZE(sdm845_data),
+> +		.need_llcc_cfg	= false,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sm6350_cfg = {
+> -	.sct_data	= sm6350_data,
+> -	.size		= ARRAY_SIZE(sm6350_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sm6350_cfg[] = {
+> +	{
+> +		.sct_data	= sm6350_data,
+> +		.size		= ARRAY_SIZE(sm6350_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sm8150_cfg = {
+> -	.sct_data       = sm8150_data,
+> -	.size           = ARRAY_SIZE(sm8150_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sm8150_cfg[] = {
+> +	{
+> +		.sct_data       = sm8150_data,
+> +		.size           = ARRAY_SIZE(sm8150_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sm8250_cfg = {
+> -	.sct_data       = sm8250_data,
+> -	.size           = ARRAY_SIZE(sm8250_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sm8250_cfg[] = {
+> +	{
+> +		.sct_data       = sm8250_data,
+> +		.size           = ARRAY_SIZE(sm8250_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sm8350_cfg = {
+> -	.sct_data       = sm8350_data,
+> -	.size           = ARRAY_SIZE(sm8350_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v1_reg_offset,
+> -	.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +static const struct qcom_llcc_config sm8350_cfg[] = {
+> +	{
+> +		.sct_data       = sm8350_data,
+> +		.size           = ARRAY_SIZE(sm8350_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v1_reg_offset,
+> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sm8450_cfg = {
+> -	.sct_data       = sm8450_data,
+> -	.size           = ARRAY_SIZE(sm8450_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v2_1_reg_offset,
+> -	.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +static const struct qcom_llcc_config sm8450_cfg[] = {
+> +	{
+> +		.sct_data       = sm8450_data,
+> +		.size           = ARRAY_SIZE(sm8450_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+> -static const struct qcom_llcc_config sm8550_cfg = {
+> -	.sct_data       = sm8550_data,
+> -	.size           = ARRAY_SIZE(sm8550_data),
+> -	.need_llcc_cfg	= true,
+> -	.reg_offset	= llcc_v2_1_reg_offset,
+> -	.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +static const struct qcom_llcc_config sm8550_cfg[] = {
+> +	{
+> +		.sct_data       = sm8550_data,
+> +		.size           = ARRAY_SIZE(sm8550_data),
+> +		.need_llcc_cfg	= true,
+> +		.reg_offset	= llcc_v2_1_reg_offset,
+> +		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +	},
+> +	{ },
+>  };
+>  
+>  static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+> @@ -966,8 +999,8 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  	num_banks >>= LLCC_LB_CNT_SHIFT;
+>  	drv_data->num_banks = num_banks;
+>  
+> -	llcc_cfg = cfg->sct_data;
+> -	sz = cfg->size;
+> +	llcc_cfg = cfg[0].sct_data;
+> +	sz = cfg[0].size;
+>  
+>  	for (i = 0; i < sz; i++)
+>  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
+> @@ -1016,17 +1049,17 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  }
+>  
+>  static const struct of_device_id qcom_llcc_of_match[] = {
+> -	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfg },
+> -	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfg },
+> -	{ .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfg },
+> -	{ .compatible = "qcom,sc8280xp-llcc", .data = &sc8280xp_cfg },
+> -	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfg },
+> -	{ .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfg },
+> -	{ .compatible = "qcom,sm8150-llcc", .data = &sm8150_cfg },
+> -	{ .compatible = "qcom,sm8250-llcc", .data = &sm8250_cfg },
+> -	{ .compatible = "qcom,sm8350-llcc", .data = &sm8350_cfg },
+> -	{ .compatible = "qcom,sm8450-llcc", .data = &sm8450_cfg },
+> -	{ .compatible = "qcom,sm8550-llcc", .data = &sm8550_cfg },
+> +	{ .compatible = "qcom,sc7180-llcc", .data = sc7180_cfg },
+> +	{ .compatible = "qcom,sc7280-llcc", .data = sc7280_cfg },
+> +	{ .compatible = "qcom,sc8180x-llcc", .data = sc8180x_cfg },
+> +	{ .compatible = "qcom,sc8280xp-llcc", .data = sc8280xp_cfg },
+> +	{ .compatible = "qcom,sdm845-llcc", .data = sdm845_cfg },
+> +	{ .compatible = "qcom,sm6350-llcc", .data = sm6350_cfg },
+> +	{ .compatible = "qcom,sm8150-llcc", .data = sm8150_cfg },
+> +	{ .compatible = "qcom,sm8250-llcc", .data = sm8250_cfg },
+> +	{ .compatible = "qcom,sm8350-llcc", .data = sm8350_cfg },
+> +	{ .compatible = "qcom,sm8450-llcc", .data = sm8450_cfg },
+> +	{ .compatible = "qcom,sm8550-llcc", .data = sm8550_cfg },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_llcc_of_match);
+> -- 
+> 2.39.1
+> 
