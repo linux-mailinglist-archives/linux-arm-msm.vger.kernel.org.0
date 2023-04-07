@@ -2,170 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EDCA6DB1B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:37:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 198656DB1B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 19:38:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229907AbjDGRg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 13:36:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39966 "EHLO
+        id S229908AbjDGRib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 13:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjDGRg4 (ORCPT
+        with ESMTP id S229826AbjDGRia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 13:36:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C8B6BB8F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 10:36:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1680888969;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=girDT/3e1iBfq8YfqylLYXxjOSDey8dBT/Mp5wOCRPk=;
-        b=UviER/VAxClIrkOFWwi9D7NCrDBJUvSROYGQ1n1GlbcD3eYK1ZOU55gCuQNHuZQd7oCPBA
-        JznFj4COT3R6x9pfeprrM/aulUQ+gm53e1u/jv5P/gz7RMZPP0GyNwyvZmHMypdEjhAkeZ
-        /gUD83rvSyfJu+sX1GkRajd71gGS5+s=
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-yq2ZJv4dNU23htgpQbVjUA-1; Fri, 07 Apr 2023 13:36:08 -0400
-X-MC-Unique: yq2ZJv4dNU23htgpQbVjUA-1
-Received: by mail-ot1-f72.google.com with SMTP id a16-20020a9d3e10000000b0069fba0320c3so15638536otd.20
-        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 10:36:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680888967;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=girDT/3e1iBfq8YfqylLYXxjOSDey8dBT/Mp5wOCRPk=;
-        b=3vAD5ScQCoVV10g2DQu6gpKdYMTtRz95FI8M0xGztle+AnShQL4mVEuOqt2f7rqfQv
-         +4XisuouBxo3E6TlfPS960cuXu2LkInHnJuh5tXXWiGpQo0AVnu7LeY1MgpY5sfcKoa1
-         yS+Q2Ha8zrsb4BZ6fhHixPeMhqIBcuTh1VO2vcjNoIxKPfQYUPlsIe97srLV41v6i8+t
-         Z+LO1WDDMREyrBjLZSRcNypkZy5ns4+vLXinuuJPyIUKfWD+ypjaCkN4CvGLzZb7BcQ+
-         htr+qnpjDFMIkGenn3WZPuxk30PUCN3b2nReYVbbPLRqoJJQOH8CSQyBRgHEfkl6UFDb
-         4otg==
-X-Gm-Message-State: AAQBX9fx9ioEHj/jNSQ2nUmwMiifg3Ysmp/S859qikpquaqPrFZXuzR7
-        CK54+WEonMa/F209w7/rEwVBG8vru0m8qRsTl87Eysoak0P8EliGUzjVtQPYE74PcmcH2Qh0X13
-        OLFTbo8eS/k9IvaQg9iCmLo3tKQ==
-X-Received: by 2002:a05:6870:b690:b0:17f:8da0:ce51 with SMTP id cy16-20020a056870b69000b0017f8da0ce51mr1898802oab.13.1680888967288;
-        Fri, 07 Apr 2023 10:36:07 -0700 (PDT)
-X-Google-Smtp-Source: AKy350aTgPrp2NCi7zwwA49Thy6Fhgfj8/rEUQEZAp6wz3jWRG4d8C8CLe9Z0+wJS8A8Vn22KfosIA==
-X-Received: by 2002:a05:6870:b690:b0:17f:8da0:ce51 with SMTP id cy16-20020a056870b69000b0017f8da0ce51mr1898768oab.13.1680888966976;
-        Fri, 07 Apr 2023 10:36:06 -0700 (PDT)
-Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id an19-20020a056871b19300b00183fbbe8cdfsm1294396oac.31.2023.04.07.10.36.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 10:36:06 -0700 (PDT)
-Date:   Fri, 7 Apr 2023 12:36:03 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Simon Horman <simon.horman@corigine.com>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, wens@csie.org, jernej.skrabec@gmail.com,
-        samuel@sholland.org, mturquette@baylibre.com,
-        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
-        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
-        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Subject: Re: [PATCH net-next v3 09/12] net: stmmac: dwmac4: Allow platforms
- to specify some DMA/MTL offsets
-Message-ID: <20230407173603.lyj5fjox23uhn2gb@halaney-x13s>
-References: <20230331214549.756660-1-ahalaney@redhat.com>
- <20230331214549.756660-10-ahalaney@redhat.com>
- <ZChGswjgAOkT0jvY@corigine.com>
+        Fri, 7 Apr 2023 13:38:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7FDB45D;
+        Fri,  7 Apr 2023 10:38:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 55A54652AB;
+        Fri,  7 Apr 2023 17:38:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB83C433EF;
+        Fri,  7 Apr 2023 17:38:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1680889108;
+        bh=5i2sjxQYf0zwELjWzTDgKKiTMFUoohXEOL6uaROMG3M=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=a6OhYFsiQVVfZPmAZ5bdc+SMI8ysLrmSiWjJzFVP9znTza0FDgRP9QEnAtjedOGaD
+         Djmcu7HoY62WPZVsOXC9jBZOpcCbef01GEVEagHJlOCYNDqw3MJjwesOD2/OyraqY+
+         cWEBMo0sHBxtpiUxUZPrhZ2flNnh987sRGmffaL0l0/zs6j31x9jMCF+mJO3Bx5bBv
+         6EzNOKFUWDDTEJPt3YvgkkPvJoJn0iBW6l5gTyNwrEchBJ8zoYBACEkFykNaW0soCA
+         cn9+1ZUyd3n+sSu5Chi2MfztH0SXnNzyXBF8PJQM71L+orKpsdo0t1M0833dwEXDE8
+         EfpYn4bidsvCg==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-kernel@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] MAINTAINERS: qcom: Add reviewer for Qualcomm Chromebooks
+Date:   Fri,  7 Apr 2023 10:41:06 -0700
+Message-Id: <168088927579.2561591.14968697147567854507.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
+References: <20230330141051.1.If8eb4f30cb53a00a5bef1b7d3cc645c3536615ec@changeid>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZChGswjgAOkT0jvY@corigine.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 01, 2023 at 04:58:59PM +0200, Simon Horman wrote:
-> On Fri, Mar 31, 2023 at 04:45:46PM -0500, Andrew Halaney wrote:
-> > Some platforms have dwmac4 implementations that have a different
-> > address space layout than the default, resulting in the need to define
-> > their own DMA/MTL offsets.
-> > 
-> > Extend the functions to allow a platform driver to indicate what its
-> > addresses are, overriding the defaults.
-> > 
-> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > ---
-> > 
-> > This patch (and the prior patch) are replacements for
-> > https://lore.kernel.org/netdev/20230320204153.21736840@kernel.org/
-> > as was requested. Hopefully I was understanding the intent correctly :)
-> > 
-> > I'm pretty sure further refinement will be requested for this one, but
-> > it is the best I could come up with myself! Specifically some of the
-> > naming, dealing with spacing in some older spots of dwmac4,
-> > where the addresses should live in the structure hierarchy, etc are
-> > things I would not be surprised to have to rework if this is still
-> > preferred over the wrapper approach.
-> > 
-> > Changes since v2:
-> >     * New, replacing old wrapper approach
-> > 
-> >  drivers/net/ethernet/stmicro/stmmac/dwmac4.h  |  91 ++++++++--
-> >  .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  36 ++--
-> >  .../net/ethernet/stmicro/stmmac/dwmac4_dma.c  | 157 ++++++++++--------
-> >  .../net/ethernet/stmicro/stmmac/dwmac4_dma.h  |  51 +++---
-> >  .../net/ethernet/stmicro/stmmac/dwmac4_lib.c  |  67 +++++---
-> >  include/linux/stmmac.h                        |  19 +++
-> >  6 files changed, 279 insertions(+), 142 deletions(-)
-> > 
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-> > index ccd49346d3b3..a0c0ee1dc13f 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-> > @@ -336,14 +336,23 @@ enum power_event {
-> >  
-> >  #define MTL_CHAN_BASE_ADDR		0x00000d00
-> >  #define MTL_CHAN_BASE_OFFSET		0x40
-> > -#define MTL_CHANX_BASE_ADDR(x)		(MTL_CHAN_BASE_ADDR + \
-> > -					(x * MTL_CHAN_BASE_OFFSET))
-> > -
-> > -#define MTL_CHAN_TX_OP_MODE(x)		MTL_CHANX_BASE_ADDR(x)
-> > -#define MTL_CHAN_TX_DEBUG(x)		(MTL_CHANX_BASE_ADDR(x) + 0x8)
-> > -#define MTL_CHAN_INT_CTRL(x)		(MTL_CHANX_BASE_ADDR(x) + 0x2c)
-> > -#define MTL_CHAN_RX_OP_MODE(x)		(MTL_CHANX_BASE_ADDR(x) + 0x30)
-> > -#define MTL_CHAN_RX_DEBUG(x)		(MTL_CHANX_BASE_ADDR(x) + 0x38)
-> > +#define MTL_CHANX_BASE_ADDR(addrs, x)  \
-> > +({ \
-> > +	const struct dwmac4_addrs *__addrs = addrs; \
-> > +	const u32 __x = x; \
-> > +	u32 __addr; \
-> > +	if (__addrs) \
-> > +		__addr = __addrs->mtl_chan + (__x * __addrs->mtl_chan_offset); \
-> > +	else \
-> > +		__addr = MTL_CHAN_BASE_ADDR + (__x * MTL_CHAN_BASE_OFFSET); \
-> > +	__addr; \
-> > +})
+On Thu, 30 Mar 2023 14:11:00 -0700, Douglas Anderson wrote:
+> Developers on the ChromeOS team generally want to be notified to
+> review changes that affect Chromebook device tree files. While we
+> could individually add developers, the set of developers and the time
+> each one has available to review patches will change over time. Let's
+> try adding a group list as a reviewer and see if that's an effective
+> way to manage things.
 > 
-> Could this and similar macros added by this patch be functions?
-> From my pov a benefit would be slightly more type safety.
-> And as a bonus there wouldn't be any need to handle aliasing of input.
-> 
+> [...]
 
-Sure, to be honest I'll be much more comfortable coding that up anyways.
-I don't do a ton of macro programming and had to refamiliarize myself of
-the pitfalls that comes with it when doing this.
+Applied, thanks!
 
-Thanks,
-Andrew
+[1/1] MAINTAINERS: qcom: Add reviewer for Qualcomm Chromebooks
+      commit: cb5d1dd3a74a7c7c3ad31d5fa2cc00e86c209dcc
 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
