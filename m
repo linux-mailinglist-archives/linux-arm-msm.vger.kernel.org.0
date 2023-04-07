@@ -2,159 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A544C6DA9CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 10:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 030ED6DAA0E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  7 Apr 2023 10:27:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239780AbjDGIL2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 7 Apr 2023 04:11:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51356 "EHLO
+        id S232606AbjDGI1p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 7 Apr 2023 04:27:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239610AbjDGILM (ORCPT
+        with ESMTP id S231528AbjDGI1p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 7 Apr 2023 04:11:12 -0400
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::223])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69DEBA5DC;
-        Fri,  7 Apr 2023 01:11:01 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id D70776000C;
-        Fri,  7 Apr 2023 08:10:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1680855059;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=k62lE0Z84brwUbN0RTewMQPHSeeiOVUlnJEgkCzQsvo=;
-        b=R9CLiy5G5LdE9BO36N204fuspyAxiiF7TmcabLrbwrQPeoEl5Pn0pcw2pa9LFURAj+yhqS
-        Ku6ulo+yoPDqo0ywa6hZxIhfMa2hfrKY6oIoCe+v26HM6BlIqcgn8p8u0WJDFU+gYVyAOT
-        iWOVTokLobBTMlDhc5L2oqSRq3pJIdqQ+s5IqSFwu1iEWL1rH1J0xX63ZpwsrUgxYtF5VC
-        JMA7zniKULdwaW97f/g6p4Ec2AzETlg0EBYuF+OIU67+xs5aqnBUa8bo0FWsfGskdfArda
-        sO7wxwa4nSLUU/oHmfv/0zUTbea+upPaTGkKYKQ1Sq0BSBr1Ah5yUIuIzPRbHA==
-Date:   Fri, 7 Apr 2023 10:10:43 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Uwe =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= 
-        <u.kleine-koenig@pengutronix.de>
-Cc:     Vignesh Raghavendra <vigneshr@ti.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Naga Sureshkumar Relli <nagasure@xilinx.com>,
-        Tudor Ambarus <tudor.ambarus@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Valentin Korenblit <vkorenblit@sequans.com>,
-        Wang Weiyang <wangweiyang2@huawei.com>,
-        Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
-        Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>,
-        Han Xu <han.xu@nxp.com>,
-        Harvey Hunt <harveyhuntnexus@gmail.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Liang Yang <liang.yang@amlogic.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Phil Edworthy <phil.edworthy@renesas.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Chuanhong Guo <gch981213@gmail.com>,
-        Roger Quadros <rogerq@kernel.org>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Miaoqian Lin <linmq006@gmail.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Christophe Kerello <christophe.kerello@foss.st.com>,
-        Jack Wang <jinpu.wang@ionos.com>, Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Stefan Agner <stefan@agner.ch>, Lucas Stach <dev@lynxeye.de>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Richard Weinberger <richard@nod.at>,
-        linux-mtd@lists.infradead.org, kernel@pengutronix.de,
-        linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        linux-amlogic@lists.infradead.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        linux-mediatek@lists.infradead.org, linux-oxnas@groups.io,
-        linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 00/49] mtd: nand: Convert to platform remove callback
- returning void
-Message-ID: <20230407101043.299f5e22@xps-13>
-In-Reply-To: <20230401161938.2503204-1-u.kleine-koenig@pengutronix.de>
-References: <20230401161938.2503204-1-u.kleine-koenig@pengutronix.de>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Fri, 7 Apr 2023 04:27:45 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96FCD7EC5
+        for <linux-arm-msm@vger.kernel.org>; Fri,  7 Apr 2023 01:27:43 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id l17so6916914ejp.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 07 Apr 2023 01:27:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680856062;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EOxBeWYxQ8XZ4tdMHB/PL/AFlnITgyGbSOH6JFHFiqs=;
+        b=dR9Ryb8hOtnrXIAs9iDm0N8f9QOg9UZSiYHrUWZcqnVpq9BM6hK/hf/5LwG3x2k2D0
+         tx6GSsTPdttJCW3EKDfg7S1N+uvHU14Y+6/EsV8Z/7MxMRdCMwzP6XRlqJ9B214k5gjL
+         LwvZ84LH/I3SYBg68618sjbnR45zKKFlvdypr7H8gc6VO9BReT3HoNYAh83BRKu279jl
+         yvZGR9HzDOn2KA56l03rvnEBeAMhWQK6EI7xgpxyx3HfoXwcfMV6LloffDgl4kzLV8F7
+         iZI8oejGZyj/pXyujjj1xlIxwLAIhGM8i2HxYko5oSHgV8lNuCeuVGZh7lXLFTtXteVG
+         iPGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680856062;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EOxBeWYxQ8XZ4tdMHB/PL/AFlnITgyGbSOH6JFHFiqs=;
+        b=l2REllUsp1fLS6x7KfeeZdPDUZCQjt4BCouYS5Fe39w/2RvfR803v2zoDCWW570VgT
+         0nWvZ1tNh+E1LHIouJutjEKzAeCUpi4twWhJRukAjGrnm53bTPe2uARVIvOFpuO39P7T
+         xF+y+b/wrQqSUn1HYUndA6n6Ki8Cl7HYUgIF0d7cQmni8I/lseSb5nbg1u62+SqnAn3R
+         zZVuDGET15GX+YX6Hrkf8H4bLyFcTux1Wo7y/2CgFnlFFFXynSp0CZQmA2B3yKWd11Xd
+         ReEAbmFEQ9j6IaV+HndtALC5Pi15MQfESSgy+adsVNYspazmIYZsvukIrpPEFZ56GTzk
+         nI/g==
+X-Gm-Message-State: AAQBX9fTFbAtGBEkttIkwyt5YGfay2xrE/p3izDGnSVQo3VZt7Sf2J+6
+        dXp57FUGKFJ5GOb+bXNqDS+O+g==
+X-Google-Smtp-Source: AKy350Y2IAv/DaY8eKeXOsM95YhNdt0YYyfsH8iC5W7cYwp+ow3Up8CZkleLoYpRRgptZ5G5IGH1ug==
+X-Received: by 2002:a17:906:9f0f:b0:947:9dd3:d750 with SMTP id fy15-20020a1709069f0f00b009479dd3d750mr1791844ejc.64.1680856062043;
+        Fri, 07 Apr 2023 01:27:42 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:14a3:366:3172:3c37? ([2a02:810d:15c0:828:14a3:366:3172:3c37])
+        by smtp.gmail.com with ESMTPSA id jg17-20020a170907971100b009316783c92csm1832281ejc.12.2023.04.07.01.27.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 07 Apr 2023 01:27:41 -0700 (PDT)
+Message-ID: <f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org>
+Date:   Fri, 7 Apr 2023 10:27:40 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: pm7250b: make SID configurable
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
+ <20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Uwe,
+On 07/04/2023 09:45, Luca Weiss wrote:
+> Like other Qualcomm PMICs the PM7250B can be used on different addresses
+> on the SPMI bus. Use similar defines like the PMK8350 to make this
+> possible.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
+>  1 file changed, 16 insertions(+), 7 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> index daa6f1d30efa..eeb476edc79a 100644
+> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> @@ -7,6 +7,15 @@
+>  #include <dt-bindings/interrupt-controller/irq.h>
+>  #include <dt-bindings/spmi/spmi.h>
+>  
+> +/* This PMIC can be configured to be at different SIDs */
+> +#ifndef PM7250B_SID
+> +	#define PM7250B_SID 2
 
-u.kleine-koenig@pengutronix.de wrote on Sat,  1 Apr 2023 18:18:49 +0200:
+Drop indentation, although anyway I am against this. Please don't bring
+new patterns of this at least till we settle previous discussion.
 
-> Hello,
->=20
-> this series adapts the platform drivers below drivers/mtd/nand to use the
-> .remove_new() callback. Compared to the traditional .remove() callback
-> .remove_new() returns no value. This is a good thing because the driver c=
-ore
-> doesn't (and cannot) cope for errors during remove. The only effect of a
-> non-zero return value in .remove() is that the driver core emits a warnin=
-g. The
-> device is removed anyhow and an early return from .remove() usually yield=
-s a
-> resource leak.
->=20
-> By changing the remove callback to return void driver authors cannot
-> reasonably assume any more that there is some kind of cleanup later.
->=20
-> As all drivers already return 0 in their .remove callback, they can be
-> converted trivially.
+https://lore.kernel.org/linux-arm-msm/46658cbb-fff5-e98b-fdad-88fa683a9c75@linaro.org/
 
-I've looked at the different patches, they look good to me but as they
-are all trivial and exactly identical, would you mind sending this
-again all squashed in a single patch? A subsystem-wide conversion seems
-appropriate. In all cases I plan to take this for the next merge
-window.
 
-I've collected the tags received so far if you want:
+Best regards,
+Krzysztof
 
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com> # atmel
-Reviewed-by: Paul Cercueil <paul@crapouillou.net> # ingenic
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> # ingenic
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com> # intel
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com> # mes=
-on
-Acked-by: Roger Quadros <rogerq@kernel.org> # omap
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be> # renesas
-Reviewed-by: Heiko Stuebner <heiko@sntech.de> # rockchip
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com> # sunxi
-Acked-by: Thierry Reding <treding@nvidia.com> # tegra
-
-BTW, thanks to all of you who reviewed and answered to this thread!
-This is highly appreciated.=20
-
-Thanks,
-Miqu=C3=A8l
