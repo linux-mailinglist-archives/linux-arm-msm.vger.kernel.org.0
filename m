@@ -2,181 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9ACC26DB944
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 09:16:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A6B36DB95D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 09:51:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbjDHHP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Apr 2023 03:15:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46564 "EHLO
+        id S229572AbjDHHu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Apr 2023 03:50:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjDHHP6 (ORCPT
+        with ESMTP id S229558AbjDHHu5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Apr 2023 03:15:58 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DB1D53E
-        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Apr 2023 00:15:56 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id z26so650480lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Apr 2023 00:15:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680938154;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LUNMkqYPA7+zF4YxnREdArCgZKwdLy10k/38MRYMHX8=;
-        b=rAd0fN1zSuD5cUKXGgg/AITm4qh0a1JH/cQeCa+k90d4LLcYxh9QEvLRSdRnG86leX
-         9dbxElTwR7kzpvzwHVTI6J044N5J5XSJ/mWpg0qAzsefMOr3EQhg4XMawHTCc918M4HI
-         RMN4ID4ztWQRP2Pgwo64FzCj7kSK3AERPd2OYHhlqfvX3VLf4qDqQQYUdqZTVpUDv/1n
-         enjhCAew+Cx5lhIrLVG1fhh045XhIKGjdET6Znf2OBnzaf8IJoXX8NIpTtz87iCSuiyf
-         tnCHzcna+WB7pXRhuI0q39JZxrFOcP90Hq2YHLLNCDm0CtvV992qCt+6GhZRoDJz9GpP
-         o+hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680938154;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LUNMkqYPA7+zF4YxnREdArCgZKwdLy10k/38MRYMHX8=;
-        b=eZ1O0gDedlrYvFkdCmZFSFKuPzra911zLnAKN4EWIhfUcJCwezT5aUzZ0Jo647ObSA
-         IFEf4k0Nd5s2116PcLCGVLbNYhltI+s7UhDa3JEEVkfVLymixnAoOZtpVIXe1gBYmPSg
-         NVhT0T6hFmKZOlTCANSy3Ixq2CK1uzZ+iIkPL3e82SDBNlnCJE3lR0ShDvDbfbhbkvSJ
-         H585JONrk9rMjgaC7c1pg8fkYEvsuP449LjUHG1Fbbk9a6sRF1D9V9fWeMv6W7ow1/kd
-         OKBn5ztGLzz6R9La73cnssgXXzQyByNPitRc6VghZu2l7qSX5Ut6VfiDFU0wG/QBgj89
-         Wrsw==
-X-Gm-Message-State: AAQBX9egNaFvH9ROSWDI8XZ+sy7Ffnnj7Sg9hVMW5ocz6H1uWfH4LKOk
-        gc4NJpKpYFYwss2UYVoCntUhoA==
-X-Google-Smtp-Source: AKy350Z3JLwZSIqbFDcjhwWm3GDt0G6SowXpfJDa2y8R0DOZ/ZHY6IxekzFiQJjq2LlIKVwkfIzC+A==
-X-Received: by 2002:ac2:4c39:0:b0:4eb:c85:bdc2 with SMTP id u25-20020ac24c39000000b004eb0c85bdc2mr1430582lfq.2.1680938154480;
-        Sat, 08 Apr 2023 00:15:54 -0700 (PDT)
-Received: from [192.168.1.101] (abxh37.neoplus.adsl.tpnet.pl. [83.9.1.37])
-        by smtp.gmail.com with ESMTPSA id a14-20020a056512020e00b004cc8207741fsm1075807lfo.93.2023.04.08.00.15.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Apr 2023 00:15:53 -0700 (PDT)
-Message-ID: <514c5c33-df0a-8b4b-a5a2-67abff538efa@linaro.org>
-Date:   Sat, 8 Apr 2023 09:15:52 +0200
+        Sat, 8 Apr 2023 03:50:57 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D83C142;
+        Sat,  8 Apr 2023 00:50:55 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id 95400403B9;
+        Sat,  8 Apr 2023 12:50:53 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1680940253; bh=24srqlrig7Z6+LCxxJMtJVGkp1cP18k/U//f6Z0J2mI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=ZP024pPQrtFlI6gRj8N5+XqqCRV+h4EaZVykWB8PHf8cFt5dBp3BYDyeyaemRFuxa
+         4oq9lW6XpQbxBNNZoLbeHASz1k4XorwQ6VKLJbNzEEr5fkMZ/PoE+woVwigmWkDNWd
+         df3fp7tY4uK5Lue68IBTub9a1c7LZ8uwJmM2nWbHVoKyVKk26EVAziJ8Qb7ovViC3+
+         mEKESGyZkpVxqxxxMU2ncSweuRYPmWzvddsVilL5+LRRH9Vtnofyl6mHvytc6LTaYG
+         qCXekx/hDHvM1meSQaOLo6/oDYtlY1cZO1fmm+EsOFncOM77VeqyLpgQ87cWwtEyBR
+         GTAwGrAUDyyKQ==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/3] venus: add firmware version based check
-Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Viswanath Boma <quic_vboma@quicinc.com>
-References: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
- <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
+Date:   Sat, 08 Apr 2023 12:50:52 +0500
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+        quic_srivasam@quicinc.com, judyhsiao@chromium.org,
+        mka@chromium.org, cros-qcom-dts-watchers@chromium.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: Add Acer Aspire 1
+In-Reply-To: <CAD=FV=VR7sKsquE25eF7joc7gPApu-vqwduZzjE=wFCoXjMYnQ@mail.gmail.com>
+References: <20230407151423.59993-1-nikita@trvn.ru>
+ <20230407151423.59993-5-nikita@trvn.ru>
+ <CAD=FV=UCJoz1E4wErJawQjpBRiXw0C0-J4TTWO1+uRiDsdzSUg@mail.gmail.com>
+ <499bbd8cb7783b86108f3e6d9cc07a8a@trvn.ru>
+ <CAD=FV=VR7sKsquE25eF7joc7gPApu-vqwduZzjE=wFCoXjMYnQ@mail.gmail.com>
+Message-ID: <476b27c4a77118837931dc65ab511d75@trvn.ru>
+X-Sender: nikita@trvn.ru
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7.04.2023 08:25, Dikshita Agarwal wrote:
-> Add firmware version based checks to enable/disable
-> features for different SOCs.
+Doug Anderson писал(а) 07.04.2023 22:06:
+> Hi,
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-> Tested-by: Nathan Hebert <nhebert@chromium.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-One extra question: some firmware builds have a TYPE-n suffix like
-PROD-1 in:
-
-14:VIDEO.VE.6.0-00042-PROD-1
-
-Is the -1 a sign of an incremental build, or some "point release" of a
-given fw revision? Does it matter as far as this checking function
-goes?
-
-Konrad
->  drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
->  drivers/media/platform/qcom/venus/hfi_msgs.c | 11 +++++++++--
->  2 files changed, 29 insertions(+), 2 deletions(-)
+> On Fri, Apr 7, 2023 at 9:46 AM Nikita Travkin <nikita@trvn.ru> wrote:
+>>
+>> > HPD might very well be hooked up on your board, but the current Linux
+>> > ti-sn65dsi86 driver does not look at its own HPD line because it's
+>> > actually slower than just pretending that HPD isn't there. On trogdor
+>> > boards we ended up routing HPD to a GPIO.
+>> >
+>>
+>> Oh, this makes so much sense then! The line is hooked up on
+>> the board indeed and I remember being confused why trogdor boards
+>> don't use it.
+>>
+>> I will try to add the suggestions (annotating the reason)
+>> and verify that it works, would prefer the panel power to be
+>> gated when possible. I hope this would also fix the initial
+>> EDID reading issues I occasionally have and carry a hack for
+>> as of now...
+>>
+>> Thank you a lot for this insight!
+>>
+>> Nikita
+>>
+>> > I guess your other option would be to implement HPD support in
+>> > ti-sn65dsi86. That would probably be an overall slower boot for you,
+>> > but is technically more correct. In the past people have posted up
+>> > patches to get ti-sn65dsi86 working as a full DP port and they added
+>> > HPD support for that, but none of those patch series ever go to the
+>> > point of landing...
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 32551c2..9d1e4b2 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -202,6 +202,11 @@ struct venus_core {
->  	unsigned int core0_usage_count;
->  	unsigned int core1_usage_count;
->  	struct dentry *root;
-> +	struct venus_img_version {
-> +		u32 major;
-> +		u32 minor;
-> +		u32 rev;
-> +	} venus_ver;
->  };
->  
->  struct vdec_controls {
-> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->  	return NULL;
->  }
->  
-> +static inline int
-> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +	return ((core)->venus_ver.major == vmajor &&
-> +		(core)->venus_ver.minor == vminor &&
-> +		(core)->venus_ver.rev >= vrev);
-> +}
-> +
-> +static inline int
-> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +	return ((core)->venus_ver.major == vmajor &&
-> +		(core)->venus_ver.minor == vminor &&
-> +		(core)->venus_ver.rev <= vrev);
-> +}
->  #endif
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index df96db3..07ac0fc 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->  }
->  
->  static void
-> -sys_get_prop_image_version(struct device *dev,
-> +sys_get_prop_image_version(struct venus_core *core,
->  			   struct hfi_msg_sys_property_info_pkt *pkt)
->  {
-> +	struct device *dev = core->dev;
->  	u8 *smem_tbl_ptr;
->  	u8 *img_ver;
->  	int req_bytes;
-> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
->  		return;
->  
->  	img_ver = pkt->data;
-> +	if (IS_V4(core))
-> +		sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
-> +		       &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
-> +	else if (IS_V6(core))
-> +		sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
-> +		       &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->  
->  	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->  
-> @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->  
->  	switch (pkt->property) {
->  	case HFI_PROPERTY_SYS_IMAGE_VERSION:
-> -		sys_get_prop_image_version(dev, pkt);
-> +		sys_get_prop_image_version(core, pkt);
->  		break;
->  	default:
->  		dev_dbg(dev, VDBGL "unknown property data\n");
+> Yeah, see the big comment in ti_sn65dsi86_enable_comms().
+> 
+> Actually, looking at how the code has evolved in the meantime, you
+> could probably get away with:
+> 
+> 1. Making sure you have an "hpd-absent-delay-ms" in the device tree
+> for the panel.
+> 
+> 2. Implement "wait_hpd_asserted" in ti-sn65dsi86 to simply be a msleep
+> with the passed in delay.
+> 
+> Then I think you don't need "no-hpd" anywhere which keeps the device
+> tree pretty.
+> 
+
+Yes, implementing a dummy wait_hpd_asserted seems to indeed fix my
+issues here. (Can actually see the panel dying for 200ms on boot
+due to the violent takeover if the backlight driver was not built
+in, so had to change my kernel config a little)
+
+Will have the "hpd-absent-delay-ms" in v6 and submit a driver fix
+alongside it.
+
+Thanks!
+Nikita
+
+> 
+> -Doug
