@@ -2,69 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95F886DBACF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 14:20:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C0E36DBAE8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 14:29:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbjDHMUR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Apr 2023 08:20:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57442 "EHLO
+        id S230381AbjDHM31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Apr 2023 08:29:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229756AbjDHMUQ (ORCPT
+        with ESMTP id S230519AbjDHM30 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Apr 2023 08:20:16 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2926F5B9B;
-        Sat,  8 Apr 2023 05:20:15 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id h198so7325972ybg.12;
-        Sat, 08 Apr 2023 05:20:15 -0700 (PDT)
+        Sat, 8 Apr 2023 08:29:26 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8657FFF00;
+        Sat,  8 Apr 2023 05:28:57 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id ch3so1921225ybb.4;
+        Sat, 08 Apr 2023 05:28:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680956414; x=1683548414;
+        d=gmail.com; s=20210112; t=1680956896; x=1683548896;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qhbv7Y5Jgs9ftPKleaknEhF4CyhB+GwqEo6U+Rr9mIc=;
-        b=kewdyz87bq2iHid5EObeNKszKFtBaD+7IqwhaAlfkh4BXU43XHG0n2XFhE+8I64XoZ
-         5vf/WXHewQ2r1JosqkV7cmmaF7Xo3YvF0R2w4N6H6HLcWl1GoA2FLD4ofgwx0JxaTTrq
-         CSipUN6RQEUZwSJzL3lwv1Zny4ZWY4oDtBZPqBNHgqwrrBaVhKwRgM/zpeASYlW2SZhI
-         71EqJEbs7Yhe+LjUaohEKTrE1vaWHdE4ojLs8Vewlr/uKsjzGq2f9FzNuRbS0G7zV1WF
-         3SXZPxBoJCq5Ci9ZklpxYDXRQs/JwtNjqxDNdLTG9w7dTOcoV2GFEBeH5krYm5I5IZ02
-         8ApA==
+        bh=xesmN7ACvFsONZVtIWgg/NPtUmXwqhWd4yT+IAnjfP4=;
+        b=qZAg5MBr717O6bx0hgvhFUHBeDocPLLbIuA4KYCL38V8KmSODY3s29neoV0F+KxB+t
+         uVdJRLOkJJ/TFr4CqqAFxKHHyIZiAQYiFHOvIpDwZ7RfFS8lTjrA68zg68wyKX3/XOeS
+         ils7qUiFHh3I1dzvFQqWhiIgcc3Qk59aHiQA5gqJjP/i1RnyH1bYLu2SiINjgmHZ8l+N
+         9cItVocN4nwDjALaZDuOIKRIScblnBOByJbDfHd0sTg3KyBmDPhNTvfGe+2gRsF/ouUn
+         XdzsbLap+ojWLYG2FRj8jeLCQ/WaGGKCb7db7/oUCAfwxs8oAJjm3599KC6+fNxRUVkp
+         usug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680956414; x=1683548414;
+        d=1e100.net; s=20210112; t=1680956896; x=1683548896;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qhbv7Y5Jgs9ftPKleaknEhF4CyhB+GwqEo6U+Rr9mIc=;
-        b=pumuHHWSGmqMJKFRATlfHF/uMsquMuoGpGwUW0vTbwRJAWkBY/QIienUhMI9SPpRDh
-         74sBcE+MsGXV7Bncwdfia8gsUQ7PTzG9fzXG55ZxwYVFQUFdd1EepmihLu3yjpFBO9ts
-         J/au2EmGKo3lc5RB5mQFWtFdyOJJHbiMDV0zfPupkEqs6iE5FEISmhTOLvy6n30bTuq2
-         QsqI4FNOQ/IGt0YxCuHHfsi8o7kFvTg41FeoFVbjADeaIi0UdT+xOJB0j6O8m1L+Kifb
-         HKFPVkZ6FuagEKDNAgYJ1qg2rB12xt141O17lNpvFk34rg7rGXlQdZKMfUWrBbE8RMPz
-         VuOg==
-X-Gm-Message-State: AAQBX9e2Hw99HCQMPZb9YYPN00EfRbTaBATVkl/uk/TfPg7NqGFibxHe
-        TbF3bdbJShH3IkYxEGtccWDFThNPuJTAW6hdhJI=
-X-Google-Smtp-Source: AKy350byafsIIuMRDAbzbtG99qHBwJjc6HbvgeYdBJg3DC7Y1cC2snm+nm7ja1eD+czjeKKSwOkkAYx2grZ+GMjtYY4=
-X-Received: by 2002:a25:be11:0:b0:b7d:4c96:de0 with SMTP id
- h17-20020a25be11000000b00b7d4c960de0mr993477ybk.5.1680956414354; Sat, 08 Apr
- 2023 05:20:14 -0700 (PDT)
+        bh=xesmN7ACvFsONZVtIWgg/NPtUmXwqhWd4yT+IAnjfP4=;
+        b=5X1i6uA/48wHoC58ReukSkhfdeJbf1tXVLf8XWXSBHiBwrxyHXtIMaMSF+9Wncdn4d
+         5LnngYTtQZzGb0twBr7Rs3M10gBbJpqscmk8oMsXQjxHGNQ1X9CK7sprrDLI47uwWdeO
+         mOlYg9KCc6WsvyxIYBByKvunLkvt/GDRPLvSr2gWEMBPM4xPd3IhzwoPE+qDSNUwlXp1
+         d3/tkcHFHlOne7yZ3frOjVGBblJgPxSH52T6NAucPpwbn4rQnnSH9Ep20MnZ0FeA/Cwi
+         /lEViatDcymV8yJbSPerAHFh8OpkjZozQcPmzBbma6qXCj6PgeGrZiCLwDsaRO1YcNdr
+         xCpw==
+X-Gm-Message-State: AAQBX9cN29O2PGpbUbf9MaNRDcwl/Qo+jBuErZA+EIH6FQRMn2zq78vG
+        9MM/KRLxONOGNvx4Lv09Y6QMVJcO38K6+PQFLNY=
+X-Google-Smtp-Source: AKy350aY3jUZf5q2Y/64Ci72Ay5Sn65XYDDQWcwgFPC3PiVDm2NdvEfKa52juQSG5IL+Fu7hfyN+4JOB9Rn/BlI+5m4=
+X-Received: by 2002:a25:d657:0:b0:b76:ae61:b68b with SMTP id
+ n84-20020a25d657000000b00b76ae61b68bmr2784453ybg.5.1680956896058; Sat, 08 Apr
+ 2023 05:28:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230406215917.1475704-1-robdclark@gmail.com> <20230406215917.1475704-2-robdclark@gmail.com>
-In-Reply-To: <20230406215917.1475704-2-robdclark@gmail.com>
+References: <20230406215917.1475704-1-robdclark@gmail.com> <20230406215917.1475704-3-robdclark@gmail.com>
+In-Reply-To: <20230406215917.1475704-3-robdclark@gmail.com>
 From:   Emil Velikov <emil.l.velikov@gmail.com>
-Date:   Sat, 8 Apr 2023 13:20:03 +0100
-Message-ID: <CACvgo50nOw-82pc2mEbydWH3=RDXuOKwnBnjmOhV-UYcbjRKQA@mail.gmail.com>
-Subject: Re: [RFC 1/2] drm: Add fdinfo memory stats
+Date:   Sat, 8 Apr 2023 13:28:04 +0100
+Message-ID: <CACvgo50FEYhdpp3nqX-AyAvLK8hJnK2xynTtLnCb9A+GSeHCvg@mail.gmail.com>
+Subject: Re: [RFC 2/2] drm/msm: Add memory stats to fdinfo
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     dri-devel@lists.freedesktop.org,
         Rob Clark <robdclark@chromium.org>,
         Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Jonathan Corbet <corbet@lwn.net>,
         linux-arm-msm@vger.kernel.org,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
         Christopher Healy <healych@amazon.com>,
-        open list <linux-kernel@vger.kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
         Boris Brezillon <boris.brezillon@collabora.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        freedreno@lists.freedesktop.org
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
@@ -76,81 +76,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Rob,
-
 On Thu, 6 Apr 2023 at 22:59, Rob Clark <robdclark@gmail.com> wrote:
-
-> +- drm-purgeable-memory: <uint> [KiB|MiB]
-> +
-> +The total size of buffers that are purgable.
-
-s/purgable/purgeable/
-
-
-> +static void print_size(struct drm_printer *p, const char *stat, size_t sz)
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Use the new helper to export stats about memory usage.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/msm_drv.c | 26 +++++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/msm_gpu.c |  2 --
+>  2 files changed, 25 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 9b6f17b1261f..385776f6a531 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -1043,17 +1043,40 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
+>         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
+>  };
+>
+> +enum drm_gem_object_status gem_status(struct drm_gem_object *obj)
 > +{
-> +       const char *units[] = {"B", "KiB", "MiB", "GiB"};
-
-The documentation says:
-
-> Default unit shall be bytes with optional unit specifiers of 'KiB' or 'MiB'
-> indicating kibi- or mebi-bytes.
-
-So I would drop the B and/or update the documentation to mention B && GiB.
-
-> +       unsigned u;
+> +       struct msm_gem_object *msm_obj = to_msm_bo(obj);
+> +       enum drm_gem_object_status status = 0;
 > +
-> +       for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
-> +               if (sz < SZ_1K)
-> +                       break;
-> +               sz /= SZ_1K;
-
-IIRC size_t can be 64bit, so we should probably use do_div() here.
-
-> +       }
+> +       if (!dma_resv_test_signaled(obj->resv, dma_resv_usage_rw(true)))
+> +               status |= DRM_GEM_OBJECT_ACTIVE;
 > +
-> +       drm_printf(p, "%s:\t%lu %s\n", stat, sz, units[u]);
+> +       if (msm_obj->pages)
+> +               status |= DRM_GEM_OBJECT_RESIDENT;
+> +
+> +       if (msm_obj->madv == MSM_MADV_DONTNEED)
+> +               status |= DRM_GEM_OBJECT_PURGEABLE;
+> +
+> +       return status;
 > +}
 > +
-> +/**
-> + * drm_print_memory_stats - Helper to print standard fdinfo memory stats
-> + * @file: the DRM file
-> + * @p: the printer to print output to
-> + * @status: callback to get driver tracked object status
-> + *
-> + * Helper to iterate over GEM objects with a handle allocated in the specified
-> + * file.  The optional status callback can return additional object state which
-
-s/return additional/return an additional/
-
-> + * determines which stats the object is counted against.  The callback is called
-> + * under table_lock.  Racing against object status change is "harmless", and the
-> + * callback can expect to not race against object destroy.
-
-s/destroy/destruction/
-
-> + */
-> +void drm_print_memory_stats(struct drm_file *file, struct drm_printer *p,
-> +                           enum drm_gem_object_status (*status)(struct drm_gem_object *))
-> +{
-
-> +               if (s & DRM_GEM_OBJECT_RESIDENT) {
-> +                       size.resident += obj->size;
-> +                       s &= ~DRM_GEM_OBJECT_PURGEABLE;
-
-Is MSM capable of marking the object as both purgeable and resident or
-is this to catch other drivers? Should we add a note to the
-documentation above - resident memory cannot be purgeable
-
-> +               }
+>  static void msm_fop_show_fdinfo(struct seq_file *m, struct file *f)
+>  {
+>         struct drm_file *file = f->private_data;
+>         struct drm_device *dev = file->minor->dev;
+>         struct msm_drm_private *priv = dev->dev_private;
+> +       struct msm_file_private *ctx = file->driver_priv;
+>         struct drm_printer p = drm_seq_file_printer(m);
+>
+>         if (!priv->gpu)
+>                 return;
+>
+> -       msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, &p);
+> +       drm_printf(&p, "drm-driver:\t%s\n", dev->driver->name);
+> +       drm_printf(&p, "drm-client-id:\t%u\n", ctx->seqno);
 > +
-> +               if (s & DRM_GEM_OBJECT_ACTIVE) {
-> +                       size.active += obj->size;
-> +                       s &= ~DRM_GEM_OBJECT_PURGEABLE;
+> +       msm_gpu_show_fdinfo(priv->gpu, ctx, &p);
+> +
+> +       drm_print_memory_stats(file, &p, gem_status);
+>  }
+>
+>  static const struct file_operations fops = {
+> @@ -1067,6 +1090,7 @@ static const struct drm_driver msm_driver = {
+>                                 DRIVER_RENDER |
+>                                 DRIVER_ATOMIC |
+>                                 DRIVER_MODESET |
+> +                               DRIVER_SYNCOBJ_TIMELINE |
 
-Ditto.
+This line should probably be its own patch. AFAICT it was supported
+since ab723b7a992a19b843f798b183f53f7472f598c8, although explicitly
+kept disabled until there's userspace/turnip support.
 
-With the above nits, the patch is:
+With the above line removed, the patch is:
 Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
 
 HTH
