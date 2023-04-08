@@ -2,82 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FB686DBA46
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 12:55:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD53B6DBA72
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 13:36:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230217AbjDHKzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Apr 2023 06:55:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57906 "EHLO
+        id S230216AbjDHLgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Apr 2023 07:36:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230486AbjDHKyt (ORCPT
+        with ESMTP id S230194AbjDHLga (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Apr 2023 06:54:49 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B7811E8D
-        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Apr 2023 03:53:15 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id ga37so2487492ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Apr 2023 03:53:15 -0700 (PDT)
+        Sat, 8 Apr 2023 07:36:30 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490B1B443
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Apr 2023 04:36:28 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id g17so2579922ejt.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Apr 2023 04:36:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1680951144;
+        d=linaro.org; s=google; t=1680953787;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xzlcPDdhLXiZUIT0eAmMiOCXXvUXvy1/5/KTBOdWAJA=;
-        b=X5IMUAXYOYOQUvk4BIOf4N93LRNKbzaBZ2CCaJlIorV7qKi1LeZi04eJHS5Y3tWRI9
-         T1rvvMAeehVALKOuMV6OQEPhffODCKMrenoUs52NodUA1kM/l0kCte3CQlnNtZlMyvpt
-         R7bH9G53BVQzSYzTH3ZYx+wGWGaIb+7nT+CwrTXecydJqyoI0QeVm90bLpCVumFP551C
-         mXJdQ8QLGFmKlQ++S7Uo0YSHpVnN2c1pAgF6dXtgA54YFCUO3pNQLmyAoLBYnGaqdCMn
-         FELx3+JtWHumMo7a+70dX8wNMpcSZnOjh1fPf/AcWA8ACtrT4o5JA4tZNTdmQ2QS3s8r
-         fPjg==
+        bh=6KMCVN4L9ldklrxsAVU+YsdQxCGvFHVbNDAEiVGPna8=;
+        b=bM8PxqxodCpdHWxRqzqVx0Cgn3TYN3yuyV7ntN6AyozvP5C6fZxPV//yW/PQZGufix
+         3bQ3dAkqukP444e1E1NvWps5tw8nZM35cW0mZCcRnT/eTOamXjchwMWIxbJdUVd1TSzp
+         WCHojVUaIZd5Moav5opWP6rDgbROlmEKDPRByOEk9joJFq2m/NMzyL4xsSrMqbIi3KNS
+         rVJ+qLuZJL+Xh5lIRsF0yhYpQG3OGvtjTQpeUPkBvOIgLl5KWsFwrBfrCn3Fnb24sw24
+         r7zdvV87LMmkpOq1XpW/CpoFHoylIONBitJbZFY1CCjOF5wD3eNTXtUP0UMAGZ2/Bniw
+         PqDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680951144;
+        d=1e100.net; s=20210112; t=1680953787;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xzlcPDdhLXiZUIT0eAmMiOCXXvUXvy1/5/KTBOdWAJA=;
-        b=itVXLlf/ruWgcynLwATCHdAxLseTGwqW+K7k5eQ8WhS+/GECYxBQzXojqC0wvHmY+R
-         jm401qj9GMK+WUKoLajKfOAmhJxgjb0fpX8k8PIgR2lY6ypjSoxifXUYVeCwm3eQ56Rs
-         KaEUOGlMmYwrC0siMAldX6LNg+2D0WI1rr+Pi90Acz7qeU/mnZ2OVjkKoaHFjBHuSXv0
-         HkYJD2a+slVu/WPkVf0jog8KtCooOc1zjacCTjgWK5xrXtxU7+iQQ0hJJf4pFfwPUS+m
-         n7AL/kO4i2bQAG1jBn/rkaFNN3Ry5ZBnEIje7m59BaWbXYc/HlEk7cTpaihkhRd8UC0N
-         Udcg==
-X-Gm-Message-State: AAQBX9dwaKsF5GnFyshJvL1ET2PiH6nC1kt3U+emH4BBuxMszdkgmtiQ
-        LI9OZ7HF0DHE4F1/ONNr0+YChg==
-X-Google-Smtp-Source: AKy350anWXnwjZ5u8PEeIytE4Zu/+haX07IcVOOwbe2BuzCnQbj9FO4aSCg0Qqbw/RWcoxWvWSjjqQ==
-X-Received: by 2002:a17:906:c085:b0:949:7c05:71b6 with SMTP id f5-20020a170906c08500b009497c0571b6mr2242272ejz.44.1680951144449;
-        Sat, 08 Apr 2023 03:52:24 -0700 (PDT)
+        bh=6KMCVN4L9ldklrxsAVU+YsdQxCGvFHVbNDAEiVGPna8=;
+        b=1Vod2VEzORVHLHNzLaZr7R2+DmrGwNKVD/2+CAtXKacXumLYuIocCBAoDRHzAkfT0c
+         wRdqiCFeGwS8XSEJeJWNgGw70enaA0AeHyWxk5S+DY6J3vZ5xqQjOxTUI+2lIfpcl8G5
+         GfT8qxE7qAipiOXUpkEjfM9v/FiZas3nKDn/YR3jAPwa7OKW7egOsU8JcBp/+R0Gu4Tk
+         dArrUaX1ZE54SfCmi3nsbmm+OSkMAnQzamhdXuADQFTYCENtGUJnsbAZJ2mayRsdxp06
+         jqtI2vliNeXf+qTGrdE4Xmg+j1JBinJvLoeT2wdfzXL4bTgmTp8hCs2Yf+BebWuja0lz
+         XPgw==
+X-Gm-Message-State: AAQBX9edl8YM60RLu6ntt7Cj0LmuQ8lkflgfFr3c6RGMoXjrVGRHRnYY
+        0dvW89g4RU1TE2KjgMajbluZCQ==
+X-Google-Smtp-Source: AKy350ZjUl26qCzn/b2R5qoeTLSeScfNvPyM4mr4GcK4curXt7xM05OURsWwQqKojqOFAxaux0orWw==
+X-Received: by 2002:a17:907:2157:b0:914:4277:f3e1 with SMTP id rk23-20020a170907215700b009144277f3e1mr2016161ejb.53.1680953786790;
+        Sat, 08 Apr 2023 04:36:26 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:4c06:aac9:100f:9d7f? ([2a02:810d:15c0:828:4c06:aac9:100f:9d7f])
-        by smtp.gmail.com with ESMTPSA id i19-20020a170906091300b00923f05b2931sm3023452ejd.118.2023.04.08.03.52.23
+        by smtp.gmail.com with ESMTPSA id y11-20020a17090629cb00b00949173c1dcfsm3090237eje.18.2023.04.08.04.36.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Apr 2023 03:52:24 -0700 (PDT)
-Message-ID: <6127f21a-9101-9739-f798-0a181d8a5fcb@linaro.org>
-Date:   Sat, 8 Apr 2023 12:52:22 +0200
+        Sat, 08 Apr 2023 04:36:26 -0700 (PDT)
+Message-ID: <70dd6449-06d2-7182-9922-ddc3476ba472@linaro.org>
+Date:   Sat, 8 Apr 2023 13:36:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 12/14] arm64: dts: qcom: sc7180: Fix trogdor qspi pin
- config
+Subject: Re: [PATCH v6 0/8] Add multiport support for DWC3 controllers
 Content-Language: en-US
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-kernel@vger.kernel.org
-References: <20230323173019.3706069-1-dianders@chromium.org>
- <20230323102605.12.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid>
- <43b74b3f-e607-ba55-a5fa-326fb4b5519d@linaro.org>
- <CAD=FV=VvgbPKQsOirMa-k0PE-KAvjWy+iMWd0TCbysYirwEH7w@mail.gmail.com>
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "quic_pkondeti@quicinc.com" <quic_pkondeti@quicinc.com>,
+        "quic_ppratap@quicinc.com" <quic_ppratap@quicinc.com>,
+        "quic_wcheng@quicinc.com" <quic_wcheng@quicinc.com>,
+        "quic_jackp@quicinc.com" <quic_jackp@quicinc.com>,
+        "quic_harshq@quicinc.com" <quic_harshq@quicinc.com>,
+        "ahalaney@redhat.com" <ahalaney@redhat.com>,
+        "quic_shazhuss@quicinc.com" <quic_shazhuss@quicinc.com>
+References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+ <20230408014251.6cyjwuvsgu7dmz53@synopsys.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAD=FV=VvgbPKQsOirMa-k0PE-KAvjWy+iMWd0TCbysYirwEH7w@mail.gmail.com>
+In-Reply-To: <20230408014251.6cyjwuvsgu7dmz53@synopsys.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -88,88 +93,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/04/2023 21:53, Doug Anderson wrote:
-> Hi,
+On 08/04/2023 03:42, Thinh Nguyen wrote:
+>> Krishna Kurapati (8):
+>>   dt-bindings: usb: Add bindings for multiport properties on DWC3
+>>     controller
+>>   usb: dwc3: core: Access XHCI address space temporarily to read port
+>>     info
+>>   usb: dwc3: core: Skip setting event buffers for host only controllers
+>>   usb: dwc3: core: Refactor PHY logic to support Multiport Controller
+>>   usb: dwc3: qcom: Add multiport controller support for qcom wrapper
+>>   arm64: dts: qcom: sc8280xp: Add multiport controller node for SC8280
+>>   arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
+>>     ports
+>>   arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb
+>>     controller
+>>
+>>  .../devicetree/bindings/usb/snps,dwc3.yaml    |  13 +-
+>>  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  47 +++
+>>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts     |  22 ++
+>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  58 +++
+>>  drivers/usb/dwc3/core.c                       | 373 ++++++++++++++----
+>>  drivers/usb/dwc3/core.h                       |  71 +++-
+>>  drivers/usb/dwc3/drd.c                        |  13 +-
+>>  drivers/usb/dwc3/dwc3-qcom.c                  |  28 +-
+>>  8 files changed, 523 insertions(+), 102 deletions(-)
+>>
+>> -- 
+>> 2.40.0
+>>
 > 
-> On Fri, Apr 7, 2023 at 11:11 AM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 23/03/2023 18:30, Douglas Anderson wrote:
->>> In commit 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial
->>> trogdor and lazor dt") we specified the pull settings on the boot SPI
->>> (the qspi) data lines as pullups to "park" the lines. This seemed like
->>> the right thing to do, but I never really probed the lines to confirm.
->>>
->>
->>
->>>  &qup_i2c2_default {
->>> @@ -1336,6 +1340,22 @@ p_sensor_int_l: p-sensor-int-l-state {
->>>               bias-disable;
->>>       };
->>>
->>> +     qspi_sleep: qspi-sleep-state {
->>> +             pins = "gpio63", "gpio64", "gpio65", "gpio68";
->>> +
->>> +             /*
->>> +              * When we're not actively transferring we want pins as GPIOs
->>> +              * with output disabled so that the quad SPI IP block stops
->>> +              * driving them. We rely on the normal pulls configured in
->>> +              * the active state and don't redefine them here. Also note
->>> +              * that we don't need the reverse (output-enable) in the
->>> +              * normal mode since the "output-enable" only matters for
->>> +              * GPIO function.
->>> +              */
->>> +             function = "gpio";
->>> +             output-disable;
->>
->> Doug,
->>
->> I acked some of your patches, but I assumed you tested all this. It
->> turns out you never run dtbs_check on the patches you sent.
-> 
-> I'm fairly certain that I ran dtbs_check and confirmed that no new
-> errors were introduced on the device tree files that this patch series
-> cleaned up. Did I miss one?
+> Please check if your patches and mailing client. Looks like they are
+> corrupted.
 
-You missed everything.
-Before the patchset almost all pinctrl bindings were passing on arm64
-DTS. Just one or two things to fix.
-
-After the patchset: many new warnings.
-
->  I did not try to go through and fix all
-> examples of people using "input-enable" across all Qualcomm device
-> trees, though. 
-
-You introduced new warnings, so it is expected to do.
-
-> Those old device trees still work even if they're using
-> the now-deprecated bindings. When deprecating something my
-> understanding is that it's not required to go back and immediately
-> transition all old device tree files.
-
-You did not deprecate anything. You disallowed property causing many new
-warnings to pop up.
-
-> 
-> If having the "input-enable: false" in the bindings is causing huge
-> problems we could do a blank search-and-replace to rename it to
-> "output-disable", at least for places under "tlmm". Even if there are
-> cases where it's superfluous it would at least make the bindings
-> validate.
-
-There are different ways to fix it, the point is that none of the ways
-were used.
-
-I fixed it up:
-https://lore.kernel.org/linux-arm-msm/574d3aa5-21f4-014a-8cc7-7549df59ff3c@linaro.org/
-
-https://lore.kernel.org/linux-arm-msm/20230407180655.128771-1-krzysztof.kozlowski@linaro.org/
-
-https://lore.kernel.org/linux-arm-msm/20230407180045.126952-1-krzysztof.kozlowski@linaro.org/
-
-https://lore.kernel.org/linux-arm-msm/20230407175807.124394-1-krzysztof.kozlowski@linaro.org/
-
+All patches look from patch-syntax and apply fine. What is exactly
+corrupted?
 
 Best regards,
 Krzysztof
