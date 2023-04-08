@@ -2,147 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB0A96DB9AD
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 10:35:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FB686DBA46
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 12:55:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229669AbjDHIfl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Apr 2023 04:35:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59708 "EHLO
+        id S230217AbjDHKzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Apr 2023 06:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjDHIfi (ORCPT
+        with ESMTP id S230486AbjDHKyt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Apr 2023 04:35:38 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0A2FD31C;
-        Sat,  8 Apr 2023 01:35:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 887EC61426;
-        Sat,  8 Apr 2023 08:35:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3044C433D2;
-        Sat,  8 Apr 2023 08:35:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1680942935;
-        bh=8N/YwgLq5LfLgtpC+OLko9oMhafvlVE3EIP0uDM75Tw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YawUP8vd0D0lLUx0a7USyyU1jftL6VsuCD4gg9Ou0yNnjXPdnBYyzgkfL46CGp6Os
-         a/3MxsUZTGs6VZ05XqtNU6/r4Sz7avCTjGYOk4rJg9vONHEcjYVhBz/5zTIJoPxOyf
-         /n7nD01GaHWPgzXpUtiE3OEoACwFrBNzjAEIvEbdZn1hJBscwNZYw/GqUEnHOF1p3c
-         tUphGaxAiu94xHByQLCG0AhbJ9c0l+Cs2T2A5vIoAcZFEPOOyE70XIqiwZrzU2KSSa
-         o6K/BD0Fg33dtXwMv+cf0p7ZZlIGA7voVmHw6l67ZTJCCljnPS1lbeJL4xbLapAlbk
-         fI+0b2uPBEl9A==
-Date:   Sat, 8 Apr 2023 14:05:28 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Ziyang Xuan <william.xuanziyang@huawei.com>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, andersson@kernel.org, luca@z3ntu.xyz,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH net] net: qrtr: Fix an uninit variable access bug in
- qrtr_tx_resume()
-Message-ID: <20230408083528.GA11124@thinkpad>
-References: <20230403075417.2244203-1-william.xuanziyang@huawei.com>
+        Sat, 8 Apr 2023 06:54:49 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B7811E8D
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Apr 2023 03:53:15 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id ga37so2487492ejc.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Apr 2023 03:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1680951144;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xzlcPDdhLXiZUIT0eAmMiOCXXvUXvy1/5/KTBOdWAJA=;
+        b=X5IMUAXYOYOQUvk4BIOf4N93LRNKbzaBZ2CCaJlIorV7qKi1LeZi04eJHS5Y3tWRI9
+         T1rvvMAeehVALKOuMV6OQEPhffODCKMrenoUs52NodUA1kM/l0kCte3CQlnNtZlMyvpt
+         R7bH9G53BVQzSYzTH3ZYx+wGWGaIb+7nT+CwrTXecydJqyoI0QeVm90bLpCVumFP551C
+         mXJdQ8QLGFmKlQ++S7Uo0YSHpVnN2c1pAgF6dXtgA54YFCUO3pNQLmyAoLBYnGaqdCMn
+         FELx3+JtWHumMo7a+70dX8wNMpcSZnOjh1fPf/AcWA8ACtrT4o5JA4tZNTdmQ2QS3s8r
+         fPjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680951144;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xzlcPDdhLXiZUIT0eAmMiOCXXvUXvy1/5/KTBOdWAJA=;
+        b=itVXLlf/ruWgcynLwATCHdAxLseTGwqW+K7k5eQ8WhS+/GECYxBQzXojqC0wvHmY+R
+         jm401qj9GMK+WUKoLajKfOAmhJxgjb0fpX8k8PIgR2lY6ypjSoxifXUYVeCwm3eQ56Rs
+         KaEUOGlMmYwrC0siMAldX6LNg+2D0WI1rr+Pi90Acz7qeU/mnZ2OVjkKoaHFjBHuSXv0
+         HkYJD2a+slVu/WPkVf0jog8KtCooOc1zjacCTjgWK5xrXtxU7+iQQ0hJJf4pFfwPUS+m
+         n7AL/kO4i2bQAG1jBn/rkaFNN3Ry5ZBnEIje7m59BaWbXYc/HlEk7cTpaihkhRd8UC0N
+         Udcg==
+X-Gm-Message-State: AAQBX9dwaKsF5GnFyshJvL1ET2PiH6nC1kt3U+emH4BBuxMszdkgmtiQ
+        LI9OZ7HF0DHE4F1/ONNr0+YChg==
+X-Google-Smtp-Source: AKy350anWXnwjZ5u8PEeIytE4Zu/+haX07IcVOOwbe2BuzCnQbj9FO4aSCg0Qqbw/RWcoxWvWSjjqQ==
+X-Received: by 2002:a17:906:c085:b0:949:7c05:71b6 with SMTP id f5-20020a170906c08500b009497c0571b6mr2242272ejz.44.1680951144449;
+        Sat, 08 Apr 2023 03:52:24 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:4c06:aac9:100f:9d7f? ([2a02:810d:15c0:828:4c06:aac9:100f:9d7f])
+        by smtp.gmail.com with ESMTPSA id i19-20020a170906091300b00923f05b2931sm3023452ejd.118.2023.04.08.03.52.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 Apr 2023 03:52:24 -0700 (PDT)
+Message-ID: <6127f21a-9101-9739-f798-0a181d8a5fcb@linaro.org>
+Date:   Sat, 8 Apr 2023 12:52:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 12/14] arm64: dts: qcom: sc7180: Fix trogdor qspi pin
+ config
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-gpio@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        linux-kernel@vger.kernel.org
+References: <20230323173019.3706069-1-dianders@chromium.org>
+ <20230323102605.12.I6f03f86546e6ce9abb1d24fd9ece663c3a5b950c@changeid>
+ <43b74b3f-e607-ba55-a5fa-326fb4b5519d@linaro.org>
+ <CAD=FV=VvgbPKQsOirMa-k0PE-KAvjWy+iMWd0TCbysYirwEH7w@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAD=FV=VvgbPKQsOirMa-k0PE-KAvjWy+iMWd0TCbysYirwEH7w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230403075417.2244203-1-william.xuanziyang@huawei.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 03, 2023 at 03:54:17PM +0800, Ziyang Xuan wrote:
-> Syzbot reported a bug as following:
+On 07/04/2023 21:53, Doug Anderson wrote:
+> Hi,
 > 
-> =====================================================
-> BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
->  qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
->  qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
->  qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
->  call_write_iter include/linux/fs.h:2189 [inline]
->  aio_write+0x63a/0x950 fs/aio.c:1600
->  io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
->  __do_sys_io_submit fs/aio.c:2078 [inline]
->  __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
->  __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
->  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
->  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
->  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+> On Fri, Apr 7, 2023 at 11:11 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 23/03/2023 18:30, Douglas Anderson wrote:
+>>> In commit 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial
+>>> trogdor and lazor dt") we specified the pull settings on the boot SPI
+>>> (the qspi) data lines as pullups to "park" the lines. This seemed like
+>>> the right thing to do, but I never really probed the lines to confirm.
+>>>
+>>
+>>
+>>>  &qup_i2c2_default {
+>>> @@ -1336,6 +1340,22 @@ p_sensor_int_l: p-sensor-int-l-state {
+>>>               bias-disable;
+>>>       };
+>>>
+>>> +     qspi_sleep: qspi-sleep-state {
+>>> +             pins = "gpio63", "gpio64", "gpio65", "gpio68";
+>>> +
+>>> +             /*
+>>> +              * When we're not actively transferring we want pins as GPIOs
+>>> +              * with output disabled so that the quad SPI IP block stops
+>>> +              * driving them. We rely on the normal pulls configured in
+>>> +              * the active state and don't redefine them here. Also note
+>>> +              * that we don't need the reverse (output-enable) in the
+>>> +              * normal mode since the "output-enable" only matters for
+>>> +              * GPIO function.
+>>> +              */
+>>> +             function = "gpio";
+>>> +             output-disable;
+>>
+>> Doug,
+>>
+>> I acked some of your patches, but I assumed you tested all this. It
+>> turns out you never run dtbs_check on the patches you sent.
 > 
-> Uninit was created at:
->  slab_post_alloc_hook mm/slab.h:766 [inline]
->  slab_alloc_node mm/slub.c:3452 [inline]
->  __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
->  __do_kmalloc_node mm/slab_common.c:967 [inline]
->  __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
->  kmalloc_reserve net/core/skbuff.c:492 [inline]
->  __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
->  __netdev_alloc_skb+0x120/0x7d0 net/core/skbuff.c:630
->  qrtr_endpoint_post+0xbd/0x11b0 net/qrtr/af_qrtr.c:446
->  qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
->  call_write_iter include/linux/fs.h:2189 [inline]
->  aio_write+0x63a/0x950 fs/aio.c:1600
->  io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
->  __do_sys_io_submit fs/aio.c:2078 [inline]
->  __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
->  __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
->  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
->  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
->  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+> I'm fairly certain that I ran dtbs_check and confirmed that no new
+> errors were introduced on the device tree files that this patch series
+> cleaned up. Did I miss one?
+
+You missed everything.
+Before the patchset almost all pinctrl bindings were passing on arm64
+DTS. Just one or two things to fix.
+
+After the patchset: many new warnings.
+
+>  I did not try to go through and fix all
+> examples of people using "input-enable" across all Qualcomm device
+> trees, though. 
+
+You introduced new warnings, so it is expected to do.
+
+> Those old device trees still work even if they're using
+> the now-deprecated bindings. When deprecating something my
+> understanding is that it's not required to go back and immediately
+> transition all old device tree files.
+
+You did not deprecate anything. You disallowed property causing many new
+warnings to pop up.
+
 > 
-> It is because that skb->len requires at least sizeof(struct qrtr_ctrl_pkt)
-> in qrtr_tx_resume(). And skb->len equals to size in qrtr_endpoint_post().
-> But size is less than sizeof(struct qrtr_ctrl_pkt) when qrtr_cb->type
-> equals to QRTR_TYPE_RESUME_TX in qrtr_endpoint_post() under the syzbot
-> scenario. This triggers the uninit variable access bug.
-> 
-> Add size check when qrtr_cb->type equals to QRTR_TYPE_RESUME_TX in
-> qrtr_endpoint_post() to fix the bug.
-> 
-> Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
-> Reported-by: syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com
-> Link: https://syzkaller.appspot.com/bug?id=c14607f0963d27d5a3d5f4c8639b500909e43540
-> Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+> If having the "input-enable: false" in the bindings is causing huge
+> problems we could do a blank search-and-replace to rename it to
+> "output-disable", at least for places under "tlmm". Even if there are
+> cases where it's superfluous it would at least make the bindings
+> validate.
 
-Looks good to me. But I have a small suggestion below.
+There are different ways to fix it, the point is that none of the ways
+were used.
 
-> ---
->  net/qrtr/af_qrtr.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-> index 3a70255c8d02..631e81a8a368 100644
-> --- a/net/qrtr/af_qrtr.c
-> +++ b/net/qrtr/af_qrtr.c
-> @@ -498,6 +498,10 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->  	if (!size || len != ALIGN(size, 4) + hdrlen)
->  		goto err;
->  
-> +	if (cb->type == QRTR_TYPE_RESUME_TX &&
-> +	    size < sizeof(struct qrtr_ctrl_pkt))
+I fixed it up:
+https://lore.kernel.org/linux-arm-msm/574d3aa5-21f4-014a-8cc7-7549df59ff3c@linaro.org/
 
-There is already a check for QRTR_TYPE_NEW_SERVER below. So you can combine both:
+https://lore.kernel.org/linux-arm-msm/20230407180655.128771-1-krzysztof.kozlowski@linaro.org/
 
-	if ((cb->type == QRTR_TYPE_NEW_SERVER ||
-	     cb->type == QRTR_TYPE_RESUME_TX)
-	     && size < sizeof(struct qrtr_ctrl_pkt))
-		goto err;
+https://lore.kernel.org/linux-arm-msm/20230407180045.126952-1-krzysztof.kozlowski@linaro.org/
 
-- Mani
+https://lore.kernel.org/linux-arm-msm/20230407175807.124394-1-krzysztof.kozlowski@linaro.org/
 
-> +		goto err;
-> +
->  	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
->  	    cb->type != QRTR_TYPE_RESUME_TX)
->  		goto err;
-> -- 
-> 2.25.1
-> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+Best regards,
+Krzysztof
+
