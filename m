@@ -2,53 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A6B36DB95D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 09:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 967096DB983
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 10:14:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjDHHu5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Apr 2023 03:50:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56828 "EHLO
+        id S229782AbjDHIOT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Apr 2023 04:14:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjDHHu5 (ORCPT
+        with ESMTP id S229457AbjDHIOS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Apr 2023 03:50:57 -0400
+        Sat, 8 Apr 2023 04:14:18 -0400
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D83C142;
-        Sat,  8 Apr 2023 00:50:55 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E24849CB;
+        Sat,  8 Apr 2023 01:14:17 -0700 (PDT)
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 95400403B9;
-        Sat,  8 Apr 2023 12:50:53 +0500 (+05)
+        by box.trvn.ru (Postfix) with ESMTPSA id 9BFA7403B9;
+        Sat,  8 Apr 2023 13:14:14 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1680940253; bh=24srqlrig7Z6+LCxxJMtJVGkp1cP18k/U//f6Z0J2mI=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=ZP024pPQrtFlI6gRj8N5+XqqCRV+h4EaZVykWB8PHf8cFt5dBp3BYDyeyaemRFuxa
-         4oq9lW6XpQbxBNNZoLbeHASz1k4XorwQ6VKLJbNzEEr5fkMZ/PoE+woVwigmWkDNWd
-         df3fp7tY4uK5Lue68IBTub9a1c7LZ8uwJmM2nWbHVoKyVKk26EVAziJ8Qb7ovViC3+
-         mEKESGyZkpVxqxxxMU2ncSweuRYPmWzvddsVilL5+LRRH9Vtnofyl6mHvytc6LTaYG
-         qCXekx/hDHvM1meSQaOLo6/oDYtlY1cZO1fmm+EsOFncOM77VeqyLpgQ87cWwtEyBR
-         GTAwGrAUDyyKQ==
-MIME-Version: 1.0
-Date:   Sat, 08 Apr 2023 12:50:52 +0500
+        t=1680941655; bh=7ypwQpfzYbwP9zkuvkd1wuczBoIHgDyxmN9zJNBqqz4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=LKEiVWLaJBAh4l0ZYdMg0OQx2RLPxqrE3VMbE8OJR1gnrNdzHByV0IJq6Mn+ApJYU
+         pP8QNY7ne2qBVa923c7s5NwrEzkMCs+fhnmT1COMSHEOOlFoVYJ63dE8praLxc/b6n
+         0c3HTmQck6SVTRI5SOsXVbZc/6/C4qfbi+x7NCMUg2ehZn69mzeCur4n8CNNs8UZpM
+         fbygv4EVeBOyfY5NzlGAjoilUPJn6DgSsP0xo+9SbOxfXR8gJeIuBIBNRBzZi9D+is
+         cbNF+N7brtx6YTvPE3PIdzvWjSVNqHcz0h14ZgWAhrbzMc4FTiWsstFTIjqC9rjJt9
+         86OIIjiiQVTHA==
 From:   Nikita Travkin <nikita@trvn.ru>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
-        quic_srivasam@quicinc.com, judyhsiao@chromium.org,
-        mka@chromium.org, cros-qcom-dts-watchers@chromium.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: Add Acer Aspire 1
-In-Reply-To: <CAD=FV=VR7sKsquE25eF7joc7gPApu-vqwduZzjE=wFCoXjMYnQ@mail.gmail.com>
-References: <20230407151423.59993-1-nikita@trvn.ru>
- <20230407151423.59993-5-nikita@trvn.ru>
- <CAD=FV=UCJoz1E4wErJawQjpBRiXw0C0-J4TTWO1+uRiDsdzSUg@mail.gmail.com>
- <499bbd8cb7783b86108f3e6d9cc07a8a@trvn.ru>
- <CAD=FV=VR7sKsquE25eF7joc7gPApu-vqwduZzjE=wFCoXjMYnQ@mail.gmail.com>
-Message-ID: <476b27c4a77118837931dc65ab511d75@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
+To:     agross@kernel.org, andersson@kernel.org
+Cc:     robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        konrad.dybcio@linaro.org, quic_srivasam@quicinc.com,
+        judyhsiao@chromium.org, mka@chromium.org, dianders@chromium.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v6 0/4] Add Acer Aspire 1
+Date:   Sat,  8 Apr 2023 13:13:12 +0500
+Message-Id: <20230408081316.234293-1-nikita@trvn.ru>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS
@@ -59,63 +52,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Doug Anderson писал(а) 07.04.2023 22:06:
-> Hi,
-> 
-> On Fri, Apr 7, 2023 at 9:46 AM Nikita Travkin <nikita@trvn.ru> wrote:
->>
->> > HPD might very well be hooked up on your board, but the current Linux
->> > ti-sn65dsi86 driver does not look at its own HPD line because it's
->> > actually slower than just pretending that HPD isn't there. On trogdor
->> > boards we ended up routing HPD to a GPIO.
->> >
->>
->> Oh, this makes so much sense then! The line is hooked up on
->> the board indeed and I remember being confused why trogdor boards
->> don't use it.
->>
->> I will try to add the suggestions (annotating the reason)
->> and verify that it works, would prefer the panel power to be
->> gated when possible. I hope this would also fix the initial
->> EDID reading issues I occasionally have and carry a hack for
->> as of now...
->>
->> Thank you a lot for this insight!
->>
->> Nikita
->>
->> > I guess your other option would be to implement HPD support in
->> > ti-sn65dsi86. That would probably be an overall slower boot for you,
->> > but is technically more correct. In the past people have posted up
->> > patches to get ti-sn65dsi86 working as a full DP port and they added
->> > HPD support for that, but none of those patch series ever go to the
->> > point of landing...
-> 
-> Yeah, see the big comment in ti_sn65dsi86_enable_comms().
-> 
-> Actually, looking at how the code has evolved in the meantime, you
-> could probably get away with:
-> 
-> 1. Making sure you have an "hpd-absent-delay-ms" in the device tree
-> for the panel.
-> 
-> 2. Implement "wait_hpd_asserted" in ti-sn65dsi86 to simply be a msleep
-> with the passed in delay.
-> 
-> Then I think you don't need "no-hpd" anywhere which keeps the device
-> tree pretty.
-> 
+This series introduces Acer Aspire 1 - A WoA laptop with sc7180.
 
-Yes, implementing a dummy wait_hpd_asserted seems to indeed fix my
-issues here. (Can actually see the panel dying for 200ms on boot
-due to the violent takeover if the backlight driver was not built
-in, so had to change my kernel config a little)
+The dts adds mostly complite support for the hardware and the device,
+with minor patches on top, can be used as a normal laptop daily.
 
-Will have the "hpd-absent-delay-ms" in v6 and submit a driver fix
-alongside it.
+Notable features absent from this patch:
+- Sound
+   While the dedicated sound components are defined, since the
+   ADSP must be used, sound requires additions of that remoteproc
+   as well some extra "glue" to connect the i2s outputs to it.
+   I was able to hack together some sound based on sm8250 stuff
+   but it needs more work.
+- Embedded Controller
+   The laptop has a dedicated EC that controls, notably,
+   battery/charger and notifies the device about the USB-C DisplayPort
+   HPD events. As per this patch, there is no battery status
+   indication and external display support. Also, due to the EC
+   defaults, the fn key is disabled. I have an experimental driver that
+   implements all of that, which needs more work and will be submitted
+   at a later date.
+- PSCI OSI Mode
+   Firmware on this laptop does not support the PC mode, as is usual
+   for Qualcomm. This change would require adding OSI related
+   power-domains to the SoC dtsi and is omitted in expectation that
+   this can be handled when (if?) CrOS team handles their tf-a, like
+   they did with sc7280.
 
-Thanks!
-Nikita
+Changed in v3:
+ - Disable lpass clocks by default (Konrad)
+ - Drop status=disabled for mdp in the common soc dtsi (Konrad)
 
-> 
-> -Doug
+Changed in v4:
+ - Resend with picked up tags, no other change.
+
+Changed in v5:
+ - Minor style issues fixed. (Konrad)
+
+Changed in v6:
+ - Fix eDP HPD hack (Doug)
+
+Nikita Travkin (4):
+  arm64: dts: qcom: sc7180: Don't enable lpass clocks by default
+  arm64: dts: qcom: sc7180: Drop redundant disable in mdp
+  dt-bindings: arm: qcom: Add Acer Aspire 1
+  arm64: dts: qcom: Add Acer Aspire 1
+
+ .../devicetree/bindings/arm/qcom.yaml         |   4 +-
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 845 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sc7180-idp.dts       |   4 -
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |   6 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |   6 +-
+ 6 files changed, 857 insertions(+), 9 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
+
+-- 
+2.39.2
+
