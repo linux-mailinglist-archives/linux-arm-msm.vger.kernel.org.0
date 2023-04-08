@@ -2,72 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C0E36DBAE8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 14:29:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 983956DBB0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  8 Apr 2023 15:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230381AbjDHM31 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 8 Apr 2023 08:29:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39040 "EHLO
+        id S229935AbjDHNE7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 8 Apr 2023 09:04:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbjDHM30 (ORCPT
+        with ESMTP id S229486AbjDHNE6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 8 Apr 2023 08:29:26 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8657FFF00;
-        Sat,  8 Apr 2023 05:28:57 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id ch3so1921225ybb.4;
-        Sat, 08 Apr 2023 05:28:57 -0700 (PDT)
+        Sat, 8 Apr 2023 09:04:58 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DD2C14E
+        for <linux-arm-msm@vger.kernel.org>; Sat,  8 Apr 2023 06:04:56 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id g17so2891338ejt.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 08 Apr 2023 06:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680956896; x=1683548896;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xesmN7ACvFsONZVtIWgg/NPtUmXwqhWd4yT+IAnjfP4=;
-        b=qZAg5MBr717O6bx0hgvhFUHBeDocPLLbIuA4KYCL38V8KmSODY3s29neoV0F+KxB+t
-         uVdJRLOkJJ/TFr4CqqAFxKHHyIZiAQYiFHOvIpDwZ7RfFS8lTjrA68zg68wyKX3/XOeS
-         ils7qUiFHh3I1dzvFQqWhiIgcc3Qk59aHiQA5gqJjP/i1RnyH1bYLu2SiINjgmHZ8l+N
-         9cItVocN4nwDjALaZDuOIKRIScblnBOByJbDfHd0sTg3KyBmDPhNTvfGe+2gRsF/ouUn
-         XdzsbLap+ojWLYG2FRj8jeLCQ/WaGGKCb7db7/oUCAfwxs8oAJjm3599KC6+fNxRUVkp
-         usug==
+        d=linaro.org; s=google; t=1680959095;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Xh6bkPStbSQ1dpU7KkzU52JsHTt879N0HimG72vQ3b8=;
+        b=nC2gVPZl249RFf3lqlnEwLwWaSnSBhNAAtAGz51eClGxhAosm6fjUWZPeTiE8fQAcN
+         onc0QiQ86NbO04Ch6QpqEmeAa4xq2it6BIgeVTutKtZbQO7L5+fHcbBaHl1yI5ZW0TSY
+         VbT/ntcEB21JGFm7srOvxNoqHU/DcHZlMu1hfYbExArDiLDB6DYMlB5YH0uFXkVCykFV
+         QLJtz87vdQvGne7zLWLfOJ1LmMpYiWR9X9LvfqxgZSdeN49ARPnZ/cDzxLhmRF5Sy7yk
+         66k4XbOQDgpQP1hQ8yzswguZYWQkV2SGe7IVN+c6VCWRXWYv5LMlqxzLagN1olSjk4Cy
+         yyUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680956896; x=1683548896;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xesmN7ACvFsONZVtIWgg/NPtUmXwqhWd4yT+IAnjfP4=;
-        b=5X1i6uA/48wHoC58ReukSkhfdeJbf1tXVLf8XWXSBHiBwrxyHXtIMaMSF+9Wncdn4d
-         5LnngYTtQZzGb0twBr7Rs3M10gBbJpqscmk8oMsXQjxHGNQ1X9CK7sprrDLI47uwWdeO
-         mOlYg9KCc6WsvyxIYBByKvunLkvt/GDRPLvSr2gWEMBPM4xPd3IhzwoPE+qDSNUwlXp1
-         d3/tkcHFHlOne7yZ3frOjVGBblJgPxSH52T6NAucPpwbn4rQnnSH9Ep20MnZ0FeA/Cwi
-         /lEViatDcymV8yJbSPerAHFh8OpkjZozQcPmzBbma6qXCj6PgeGrZiCLwDsaRO1YcNdr
-         xCpw==
-X-Gm-Message-State: AAQBX9cN29O2PGpbUbf9MaNRDcwl/Qo+jBuErZA+EIH6FQRMn2zq78vG
-        9MM/KRLxONOGNvx4Lv09Y6QMVJcO38K6+PQFLNY=
-X-Google-Smtp-Source: AKy350aY3jUZf5q2Y/64Ci72Ay5Sn65XYDDQWcwgFPC3PiVDm2NdvEfKa52juQSG5IL+Fu7hfyN+4JOB9Rn/BlI+5m4=
-X-Received: by 2002:a25:d657:0:b0:b76:ae61:b68b with SMTP id
- n84-20020a25d657000000b00b76ae61b68bmr2784453ybg.5.1680956896058; Sat, 08 Apr
- 2023 05:28:16 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680959095;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xh6bkPStbSQ1dpU7KkzU52JsHTt879N0HimG72vQ3b8=;
+        b=ThK3YxLU1WV1Y9pyGShVV3ZnunFSWClWxBsllOJ11AoC4pYL+3YQ1aTP67b/oOlAJN
+         Q+QSzGuV7t43H/DOk1f9T9Iygxm8dTAv1T4T8UsuXvne0rt/Z6JIZAvkE3OW2SoHV38i
+         9OlIX8LY66qb3ImFPoi7V/94ak7HRKre2XMoNtyVRXCYFmQTX1Yf9445TbZKVusVtP9O
+         ylfpzA+NfSiq9micb1XqX2ISjG7yI7a2UeSoR9N7frrhbcnQuJ6zUZL8T2FgvbwlZLLp
+         b0Zg4HPP/9eNpTjUDkdVdI6UM5rehrl7xwMroT6AvtTx9fjUo3JdPeR9P1b4f6S7hx61
+         31aw==
+X-Gm-Message-State: AAQBX9cf0QPwI9J58wSiqAOclYDOjpb/HoDWsBBgoK6T5GyX/LD67P+h
+        lZDF1Zrk/+W0rX4F0HVStzNLKg==
+X-Google-Smtp-Source: AKy350boyGnKqw7hqq5JoG0wMx75lTrgQ0trInMINpWhZDplgYwWd4Yao3TWoUpRzku1t20dTYUkNw==
+X-Received: by 2002:a17:906:4b14:b0:94a:52bf:b820 with SMTP id y20-20020a1709064b1400b0094a52bfb820mr458098eju.46.1680959094876;
+        Sat, 08 Apr 2023 06:04:54 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:7ecc:a9b7:a95b:bbea? ([2a02:810d:15c0:828:7ecc:a9b7:a95b:bbea])
+        by smtp.gmail.com with ESMTPSA id xa16-20020a170907b9d000b00948aae5e3d3sm3104065ejc.184.2023.04.08.06.04.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 08 Apr 2023 06:04:53 -0700 (PDT)
+Message-ID: <0a5729a8-9fd8-a084-3932-cf8ebf00860b@linaro.org>
+Date:   Sat, 8 Apr 2023 15:04:52 +0200
 MIME-Version: 1.0
-References: <20230406215917.1475704-1-robdclark@gmail.com> <20230406215917.1475704-3-robdclark@gmail.com>
-In-Reply-To: <20230406215917.1475704-3-robdclark@gmail.com>
-From:   Emil Velikov <emil.l.velikov@gmail.com>
-Date:   Sat, 8 Apr 2023 13:28:04 +0100
-Message-ID: <CACvgo50FEYhdpp3nqX-AyAvLK8hJnK2xynTtLnCb9A+GSeHCvg@mail.gmail.com>
-Subject: Re: [RFC 2/2] drm/msm: Add memory stats to fdinfo
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Christopher Healy <healych@amazon.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8250-xiaomi-elish-boe: Add
+ mdss and dsi panel
+To:     Jianhua Lu <lujianhua000@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230323005925.23179-1-lujianhua000@gmail.com>
+ <20230323005925.23179-2-lujianhua000@gmail.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230323005925.23179-2-lujianhua000@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,76 +83,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 6 Apr 2023 at 22:59, Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> Use the new helper to export stats about memory usage.
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+On 23/03/2023 01:59, Jianhua Lu wrote:
+> Add nodes for BOE NT36523 panel found in xiaomi-elish. This panel
+> is a dual dsi mode panel and the dsi phy type is cphy.
+> 
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 > ---
->  drivers/gpu/drm/msm/msm_drv.c | 26 +++++++++++++++++++++++++-
->  drivers/gpu/drm/msm/msm_gpu.c |  2 --
->  2 files changed, 25 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 9b6f17b1261f..385776f6a531 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -1043,17 +1043,40 @@ static const struct drm_ioctl_desc msm_ioctls[] = {
->         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_query, DRM_RENDER_ALLOW),
+> Changes in v2:
+>   - Include missing <dt-bindings/phy/phy.h> for phy-type property.
+> 
+> Changes in v3:
+>   - Sort include header.
+>   - Move qcom,sync-dual-dsi to the front of qcom,master-dsi 
+>   - Add newline before subnode.
+> 
+>  .../boot/dts/qcom/sm8250-xiaomi-elish-boe.dts |  5 ++
+>  .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 75 +++++++++++++++++++
+>  2 files changed, 80 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
+> index bd9ad109daf9..8b2ae39950ff 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-boe.dts
+> @@ -11,3 +11,8 @@ / {
+>  	model = "Xiaomi Mi Pad 5 Pro (BOE)";
+>  	compatible = "xiaomi,elish", "qcom,sm8250";
 >  };
->
-> +enum drm_gem_object_status gem_status(struct drm_gem_object *obj)
-> +{
-> +       struct msm_gem_object *msm_obj = to_msm_bo(obj);
-> +       enum drm_gem_object_status status = 0;
 > +
-> +       if (!dma_resv_test_signaled(obj->resv, dma_resv_usage_rw(true)))
-> +               status |= DRM_GEM_OBJECT_ACTIVE;
-> +
-> +       if (msm_obj->pages)
-> +               status |= DRM_GEM_OBJECT_RESIDENT;
-> +
-> +       if (msm_obj->madv == MSM_MADV_DONTNEED)
-> +               status |= DRM_GEM_OBJECT_PURGEABLE;
-> +
-> +       return status;
-> +}
-> +
->  static void msm_fop_show_fdinfo(struct seq_file *m, struct file *f)
->  {
->         struct drm_file *file = f->private_data;
->         struct drm_device *dev = file->minor->dev;
->         struct msm_drm_private *priv = dev->dev_private;
-> +       struct msm_file_private *ctx = file->driver_priv;
->         struct drm_printer p = drm_seq_file_printer(m);
->
->         if (!priv->gpu)
->                 return;
->
-> -       msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, &p);
-> +       drm_printf(&p, "drm-driver:\t%s\n", dev->driver->name);
-> +       drm_printf(&p, "drm-client-id:\t%u\n", ctx->seqno);
-> +
-> +       msm_gpu_show_fdinfo(priv->gpu, ctx, &p);
-> +
-> +       drm_print_memory_stats(file, &p, gem_status);
->  }
->
->  static const struct file_operations fops = {
-> @@ -1067,6 +1090,7 @@ static const struct drm_driver msm_driver = {
->                                 DRIVER_RENDER |
->                                 DRIVER_ATOMIC |
->                                 DRIVER_MODESET |
-> +                               DRIVER_SYNCOBJ_TIMELINE |
+> +&display_panel {
+> +	compatible = "xiaomi,elish-boe-nt36523";
 
-This line should probably be its own patch. AFAICT it was supported
-since ab723b7a992a19b843f798b183f53f7472f598c8, although explicitly
-kept disabled until there's userspace/turnip support.
+If you add new bindings and new nodes using these - in this case this
+panel - please test it. This is why we have DT schema, so you can verify
+your DTS. Sending DTS which is entirely different than the bindings you
+sent, is adding quite an effort for us later to fix it.
 
-With the above line removed, the patch is:
-Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+Best regards,
+Krzysztof
 
-HTH
-Emil
