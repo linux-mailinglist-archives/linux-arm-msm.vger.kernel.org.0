@@ -2,234 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 122BD6DC18B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 23:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BD946DC206
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 01:42:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbjDIVwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Apr 2023 17:52:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35706 "EHLO
+        id S229548AbjDIXmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Apr 2023 19:42:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjDIVwb (ORCPT
+        with ESMTP id S229522AbjDIXmF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Apr 2023 17:52:31 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82B9B270F
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Apr 2023 14:52:30 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id bv15so1257524ybb.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Apr 2023 14:52:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681077149;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y/jGq0FSTDv2xs7Sa4DaEoj/KRSBV0zzZOnL8RRZyzs=;
-        b=VRJKTFO0pTMrIZtoQtEXotwF56H4bqNgQ4Le2wiZ8tLwkVx/wFakYLYiDn/C7nmMNq
-         U8Q2KEjl22QNLv8IgdK9N8PaOW3bW2XRrQFTpW65K9tgB6nDrg3uEaGJeYsK5UlSIhpy
-         b9laQWz10lHkDLLhjR7UFOSimrQeDy/236NR8O+OiRBW5kPlqqyEplDwBbWQkWPY20oO
-         YFRS4AWMOdKnShB/QbcG58U6YthHh414YeenLp79g0aAKh+G6gbh4S8yjynjIxLUk1gx
-         R6vLUmfOZiirs/S5jxI2scBVJl5DjhzBeyQvd4+iprVLsOCIJFnTSbrLN5joF+0mrRXi
-         uZzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681077149;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y/jGq0FSTDv2xs7Sa4DaEoj/KRSBV0zzZOnL8RRZyzs=;
-        b=UJBYSBVsThCKgoVcMwcTKt3gfJne2zhnrOii7OnL+HjGrNnMjPz95PFnpci2no7aRR
-         Nj6gc2dsePPQv3Izctv2rtOf9VgSfmibAZuqMuMBA6BQIFH27bjvYV1LgrwmYk7Zy1uE
-         KYtAzaoHHJwIcmqdqNbYRo5crMC93qoEMv8c76uTAlMTkiUkRp16hHEZEc2FMWcSgug2
-         uS7XD0a2gJn0ulD1CnQe1Nywe3iNIqtcwEZfuZpbHN6pwMRTZU2tQb99oE23Cdq/SYiX
-         yDlLbmU9nsOeOkpNDTR9GGCywP2lbd+mezW9Cu01dkM/ifvJSM0x6WlfVA+RsHqE3q/Z
-         MNCw==
-X-Gm-Message-State: AAQBX9cySQbYBmvXL8dcbBSJFxGk/JZ7XXFsDxvi1pTyZjnSPf7KbwTq
-        YX/IXKEbxbEsJLrdpv+l0Xd+yh12qRU1kzZbJm0/y/qMk3XEMZPLFiE=
-X-Google-Smtp-Source: AKy350YNUGymoPDIvC+b0gHPeU80xXcrFegU+jP+3S0MjlIY6eHRoJ3nja98sEY/CKrzdBlcfdINW7cbB5v7w2/Dfvg=
-X-Received: by 2002:a25:c905:0:b0:b86:92c0:6433 with SMTP id
- z5-20020a25c905000000b00b8692c06433mr5938891ybf.9.1681077148876; Sun, 09 Apr
- 2023 14:52:28 -0700 (PDT)
+        Sun, 9 Apr 2023 19:42:05 -0400
+X-Greylist: delayed 591 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 09 Apr 2023 16:42:00 PDT
+Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA9933595;
+        Sun,  9 Apr 2023 16:42:00 -0700 (PDT)
+Received: from newone.lan (unknown [10.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id A26B416181D;
+        Mon, 10 Apr 2023 01:32:06 +0200 (CEST)
+From:   David Heidelberg <david.heidelberg@collabora.com>
+To:     konrad.dybcio@linaro.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        devicetree@vger.kernel.org, dmitry.baryshkov@linaro.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+        quic_abhinavk@quicinc.com, rfoss@kernel.org, robh+dt@kernel.org,
+        sean@poorly.run, David Heidelberg <david@ixit.cz>
+Subject: Re: [PATCH] dt-bindings: display: msm: sm8350-mdss: Fix DSI compatible
+Date:   Mon, 10 Apr 2023 01:31:55 +0200
+Message-Id: <20230409233154.135495-1-david.heidelberg@collabora.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230321213557.1737905-1-konrad.dybcio@linaro.org>
+References: <20230321213557.1737905-1-konrad.dybcio@linaro.org>
 MIME-Version: 1.0
-References: <20230409200934.2329297-1-bhupesh.sharma@linaro.org> <20230409200934.2329297-2-bhupesh.sharma@linaro.org>
-In-Reply-To: <20230409200934.2329297-2-bhupesh.sharma@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 10 Apr 2023 00:52:18 +0300
-Message-ID: <CAA8EJpp8LMab+bXWd5p_8SZ_-Oa18WGYaqG0_6=phreL_LvteA@mail.gmail.com>
-Subject: Re: [PATCH v7 1/2] dt-bindings: phy: qcom,qmp-usb: Drop legacy
- bindings and move to newer one (SM6115 & QCM2290)
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
-        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.7 required=5.0 tests=FORGED_SPF_HELO,
+        KHOP_HELO_FCRDNS,RDNS_DYNAMIC,SPF_FAIL,SPF_HELO_PASS autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 9 Apr 2023 at 23:09, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> 'qcom,msm8996-qmp-usb3-phy.yaml' defines bindings for several PHYs
-> which predate USB -> USB+DP migration. Since SM6115 and QCM2290
-> nodes for USB QMP phy are being added to dtsi files by followup patches,
-> move these bindings instead to the newer style
-> 'qcom,sc8280xp-qmp-usb3-uni-phy.yaml' file.
->
-> Since no device trees use these bindings presently, so we have no ABI breakages
-> with this patch.
->
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->  .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 27 -----------
->  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 45 ++++++++++++++++---
->  2 files changed, 40 insertions(+), 32 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> index e81a38281f8c..4c96dab5b9e3 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
-> @@ -23,14 +23,12 @@ properties:
->        - qcom,ipq8074-qmp-usb3-phy
->        - qcom,msm8996-qmp-usb3-phy
->        - qcom,msm8998-qmp-usb3-phy
-> -      - qcom,qcm2290-qmp-usb3-phy
->        - qcom,sc7180-qmp-usb3-phy
->        - qcom,sc8180x-qmp-usb3-phy
->        - qcom,sdm845-qmp-usb3-phy
->        - qcom,sdm845-qmp-usb3-uni-phy
->        - qcom,sdx55-qmp-usb3-uni-phy
->        - qcom,sdx65-qmp-usb3-uni-phy
-> -      - qcom,sm6115-qmp-usb3-phy
->        - qcom,sm8150-qmp-usb3-phy
->        - qcom,sm8150-qmp-usb3-uni-phy
->        - qcom,sm8250-qmp-usb3-phy
-> @@ -248,29 +246,6 @@ allOf:
->              - const: phy
->              - const: common
->
-> -  - if:
-> -      properties:
-> -        compatible:
-> -          contains:
-> -            enum:
-> -              - qcom,qcm2290-qmp-usb3-phy
-> -              - qcom,sm6115-qmp-usb3-phy
-> -    then:
-> -      properties:
-> -        clocks:
-> -          maxItems: 3
-> -        clock-names:
-> -          items:
-> -            - const: cfg_ahb
-> -            - const: ref
-> -            - const: com_aux
-> -        resets:
-> -          maxItems: 2
-> -        reset-names:
-> -          items:
-> -            - const: phy_phy
-> -            - const: phy
-> -
->    - if:
->        properties:
->          compatible:
-> @@ -318,12 +293,10 @@ allOf:
->              enum:
->                - qcom,ipq6018-qmp-usb3-phy
->                - qcom,ipq8074-qmp-usb3-phy
-> -              - qcom,qcm2290-qmp-usb3-phy
->                - qcom,sc7180-qmp-usb3-phy
->                - qcom,sc8180x-qmp-usb3-phy
->                - qcom,sdx55-qmp-usb3-uni-phy
->                - qcom,sdx65-qmp-usb3-uni-phy
-> -              - qcom,sm6115-qmp-usb3-phy
->                - qcom,sm8150-qmp-usb3-uni-phy
->                - qcom,sm8250-qmp-usb3-phy
->      then:
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> index 16fce1038285..aa16d50c7c4e 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> @@ -16,20 +16,20 @@ description:
->  properties:
->    compatible:
->      enum:
-> +      - qcom,qcm2290-qmp-usb3-phy
->        - qcom,sc8280xp-qmp-usb3-uni-phy
-> +      - qcom,sm6115-qmp-usb3-phy
->
->    reg:
->      maxItems: 1
->
->    clocks:
-> +    minItems: 3
->      maxItems: 4
->
->    clock-names:
-> -    items:
-> -      - const: aux
-> -      - const: ref
-> -      - const: com_aux
-> -      - const: pipe
-> +    minItems: 3
-> +    maxItems: 4
->
->    power-domains:
->      maxItems: 1
-> @@ -71,6 +71,41 @@ required:
->
->  additionalProperties: false
->
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,qcm2290-qmp-usb3-phy
-> +              - qcom,sm6115-qmp-usb3-phy
-> +    then:
-> +      properties:
-> +        clocks:
-> +          maxItems: 3
-> +        clock-names:
-> +          items:
-> +            - const: cfg_ahb
-> +            - const: ref
-> +            - const: com_aux
-
-Doesn't it also need a pipe clock? It surely does: gcc_usb3_prim_phy_pipe_clk
-
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,sc8280xp-qmp-usb3-uni-phy
-> +    then:
-> +      properties:
-> +        clocks:
-> +          maxItems: 4
-> +        clock-names:
-> +          items:
-> +            - const: aux
-> +            - const: ref
-> +            - const: com_aux
-> +            - const: pipe
-> +
->  examples:
->    - |
->      #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
-> --
-> 2.38.1
->
-
-
--- 
-With best wishes
-Dmitry
+Reviewed-by: David Heidelberg <david@ixit.cz>
