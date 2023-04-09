@@ -2,184 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38B2B6DBEB9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 07:18:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E99FF6DBEFC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 09:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229452AbjDIFSw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Apr 2023 01:18:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54006 "EHLO
+        id S229469AbjDIHCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Apr 2023 03:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjDIFSw (ORCPT
+        with ESMTP id S229436AbjDIHCd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Apr 2023 01:18:52 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A6CB4681;
-        Sat,  8 Apr 2023 22:18:51 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-94a34d34fcfso42497366b.2;
-        Sat, 08 Apr 2023 22:18:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681017529; x=1683609529;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yWzsHmFTsiaq+FneBSH/AIWJGL7w8YvOi69R91dSNa0=;
-        b=KuvZi04ZpXTayRLEwKZmLOPlLbianewIJBv2eFCbNgUdoDpyE5XDEmajhrZa61bCMr
-         i9Hd4s+Q51V8nAOA4eGbZFAVmUoUUvcqhvPzkYgvNSTeggC2mfe7/E4mSn/+nBme5NFg
-         CffBmvb0m145RobIJAJJKU7WTfAFp+JHt+RUhQRFkjck3mxVlQ3APB164gVXU0gC3uby
-         oOmbWsuZWy9P/S/hX9iqRvFl3tmnyeUAdR8UB2ZOdlX4GkVls8O72MYETrcY4gQRHdUh
-         mKeqah8NV3aS9vMQpy9sptLytJmU5snCpgxe06hSqAJV1vE/L+i8PHj3875UJeum+yj/
-         t3rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681017529; x=1683609529;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yWzsHmFTsiaq+FneBSH/AIWJGL7w8YvOi69R91dSNa0=;
-        b=5y/AejhK5q5WA9Vr5RMpdf0Zi1AbQJu1vYc48xwRb+R+W1VW81WAlIYwaIj4bUG97p
-         uJUmL9nllUSvcMCnfsrDYHRgVCluakj/o7ec91hGTOSIqseQdDBF8fWHoMnCU/HH1QQL
-         Hc5TrOjYa7M7D0xwZVkk50NrBeEZdOZCMeyIY8KkDFO3IWbyKa9GhutWeqzXCG4dCgYR
-         Ga0GwXUha1Dp2Y8GcNqln2V73V7sk2DtncuuL+h8cBFsuikxpxHdpm5C39N/lFZqOq6d
-         ucf1W+gw9QozVGHjU/LJfGznlSujKEkPuWHLdjiBU0eQVj7UYJPIG53q+sH50ngKVCW+
-         CpSA==
-X-Gm-Message-State: AAQBX9epxtLHddemPpF/Dmk+sh1rqk+dAT4d4KC9jl1LqM2m93o7pxKl
-        iAcwBgtfOvK0W6AOc12+fnY=
-X-Google-Smtp-Source: AKy350YpKZlVxKMGgqChtL+x06xB+HKUfuCkDHHkqVaVaNxd9109cJXAB18UcXYtH/+Cw3i9yidY9Q==
-X-Received: by 2002:a50:ed99:0:b0:4ab:d1f4:4b88 with SMTP id h25-20020a50ed99000000b004abd1f44b88mr6569670edr.41.1681017529329;
-        Sat, 08 Apr 2023 22:18:49 -0700 (PDT)
-Received: from [192.168.1.45] (hst-221-10.medicom.bg. [84.238.221.10])
-        by smtp.gmail.com with ESMTPSA id w17-20020a1709062f9100b009331450d04esm3817424eji.178.2023.04.08.22.18.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Apr 2023 22:18:49 -0700 (PDT)
-Message-ID: <6c3002ad-ff78-8818-0e68-a151d33b0fca@gmail.com>
-Date:   Sun, 9 Apr 2023 08:18:45 +0300
+        Sun, 9 Apr 2023 03:02:33 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C91524D;
+        Sun,  9 Apr 2023 00:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681023752; x=1712559752;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=J11a3LKHFUg+rZr7msg9Wtw0US+dnw019wkvKcGQG6w=;
+  b=GF0wp178kDVSV84rEDgfqlTJj+3u7pYVTcY8HOoOfrfj5r/WGHDbqTwt
+   7AVjL6/XbpT1nzD5WKoJ5NPL181FEiR4FcksqI35E5zIYWOrzR4T735Dv
+   gYvbHN6pvB7ingFjVgZN2+Xf7LGaRv0lcU7tyhnZ8iir0dY1m64GdSZ0v
+   GwbXxCT48q9OJVT0bR9x6FOwvwvKwqcWS5oOk8iO1RW5OC0ZsT6c4ay5F
+   17Ham3fB+Ag+/JEqNoORg1ZLwjFOP6qgq0yf5nhrnDO+xn0M1fW85WbVU
+   egScErKereWSYBosVqkm/UTU1nLhVZXiEbJItlFL0RdiODfEpFHhphXtT
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10674"; a="340689355"
+X-IronPort-AV: E=Sophos;i="5.98,330,1673942400"; 
+   d="scan'208";a="340689355"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Apr 2023 00:02:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10674"; a="681419525"
+X-IronPort-AV: E=Sophos;i="5.98,330,1673942400"; 
+   d="scan'208";a="681419525"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 09 Apr 2023 00:02:25 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1plP4C-000UOh-2p;
+        Sun, 09 Apr 2023 07:02:24 +0000
+Date:   Sun, 9 Apr 2023 15:01:30 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v7 2/3] scsi: ufs: ufs-qcom: Switch to the new ICE API
+Message-ID: <202304091444.8AV915DU-lkp@intel.com>
+References: <20230408214041.533749-3-abel.vesa@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 1/3] venus: add firmware version based check
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Viswanath Boma <quic_vboma@quicinc.com>
-References: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
- <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
-Content-Language: en-US, bg-BG
-From:   Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-In-Reply-To: <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230408214041.533749-3-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dikshita,
+Hi Abel,
 
-Thanks for the patch.
+kernel test robot noticed the following build errors:
 
-On 7.04.23 г. 9:25 ч., Dikshita Agarwal wrote:
-> Add firmware version based checks to enable/disable
-> features for different SOCs.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-> Tested-by: Nathan Hebert <nhebert@chromium.org>
-> ---
->   drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
->   drivers/media/platform/qcom/venus/hfi_msgs.c | 11 +++++++++--
->   2 files changed, 29 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 32551c2..9d1e4b2 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -202,6 +202,11 @@ struct venus_core {
->   	unsigned int core0_usage_count;
->   	unsigned int core1_usage_count;
->   	struct dentry *root;
-> +	struct venus_img_version {
-> +		u32 major;
-> +		u32 minor;
-> +		u32 rev;
-> +	} venus_ver;
->   };
->   
->   struct vdec_controls {
-> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->   	return NULL;
->   }
->   
-> +static inline int
-> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +	return ((core)->venus_ver.major == vmajor &&
-> +		(core)->venus_ver.minor == vminor &&
-> +		(core)->venus_ver.rev >= vrev);
-> +}
-> +
-> +static inline int
-> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
-> +{
-> +	return ((core)->venus_ver.major == vmajor &&
-> +		(core)->venus_ver.minor == vminor &&
-> +		(core)->venus_ver.rev <= vrev);
-> +}
+[auto build test ERROR on mkp-scsi/for-next]
+[also build test ERROR on jejb-scsi/for-next robh/for-next linus/master v6.3-rc5 next-20230406]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-IMO those two should return bool
+url:    https://github.com/intel-lab-lkp/linux/commits/Abel-Vesa/dt-bindings-ufs-qcom-Add-ICE-phandle/20230409-054151
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git for-next
+patch link:    https://lore.kernel.org/r/20230408214041.533749-3-abel.vesa%40linaro.org
+patch subject: [PATCH v7 2/3] scsi: ufs: ufs-qcom: Switch to the new ICE API
+config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20230409/202304091444.8AV915DU-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/496cc31572753aac0d53c5e0666bcc6c3f323938
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Abel-Vesa/dt-bindings-ufs-qcom-Add-ICE-phandle/20230409-054151
+        git checkout 496cc31572753aac0d53c5e0666bcc6c3f323938
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
 
->   #endif
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index df96db3..07ac0fc 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->   }
->   
->   static void
-> -sys_get_prop_image_version(struct device *dev,
-> +sys_get_prop_image_version(struct venus_core *core,
->   			   struct hfi_msg_sys_property_info_pkt *pkt)
->   {
-> +	struct device *dev = core->dev;
->   	u8 *smem_tbl_ptr;
->   	u8 *img_ver;
->   	int req_bytes;
-> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
->   		return;
->   
->   	img_ver = pkt->data;
-> +	if (IS_V4(core))
-> +		sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
-> +		       &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
-> +	else if (IS_V6(core))
-> +		sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
-> +		       &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->   
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202304091444.8AV915DU-lkp@intel.com/
 
-what about if IS_V1?
+All errors (new ones prefixed by >>):
 
->   	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
+>> drivers/ufs/host/ufs-qcom.c:18:10: fatal error: soc/qcom/ice.h: No such file or directory
+      18 | #include <soc/qcom/ice.h>
+         |          ^~~~~~~~~~~~~~~~
+   compilation terminated.
 
-this will crash for v1.
 
->   
-> @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->   
->   	switch (pkt->property) {
->   	case HFI_PROPERTY_SYS_IMAGE_VERSION:
-> -		sys_get_prop_image_version(dev, pkt);
-> +		sys_get_prop_image_version(core, pkt);
->   		break;
->   	default:
->   		dev_dbg(dev, VDBGL "unknown property data\n");
+vim +18 drivers/ufs/host/ufs-qcom.c
+
+    17	
+  > 18	#include <soc/qcom/ice.h>
+    19	
 
 -- 
-regards,
-Stan
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
