@@ -2,125 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9B396DC0AA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 18:41:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0980C6DC0C9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 19:10:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229462AbjDIQlo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Apr 2023 12:41:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54434 "EHLO
+        id S229519AbjDIRKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Apr 2023 13:10:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjDIQln (ORCPT
+        with ESMTP id S229450AbjDIRKF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Apr 2023 12:41:43 -0400
-X-Greylist: delayed 1572 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 09 Apr 2023 09:41:42 PDT
-Received: from the.earth.li (the.earth.li [IPv6:2a00:1098:86:4d:c0ff:ee:15:900d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C54AD3AA0;
-        Sun,  9 Apr 2023 09:41:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=earth.li;
-        s=the; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
-        Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=sdepJt36gVqn4e9O8k96DKAcVGbB3Ag8s1S8ozt6leE=; b=wjx+ZV2adD5NJnDN6wA4IAXFzq
-        MjT7yYfOHgjdIbZHbukuMC/U8i2J8Dt2lsBlh0xtX0+c2TM937j17BwY15wBeb4aeYBymI05yVWNj
-        2MDvrL/GPbzuf0EOnJd+0vkbBxhM8zoQC6nchKr7uI+dp8+R+sDeU0DBGEeOjK9npdSo0Lxb6hU5R
-        tJ+B4RNXvqd/whwA5AmcrJvr+2Uz2cxWgVuCrj+hIrGp8cqDAzwBeD5cnBD5FN1siBHmuBlLBUHBy
-        pDRziWgJyHSt+lGg0/XtQv+Ir2uUMm2DsMmi2gQr3u15AI+Lr3awxWuWL3uRgR5hpOIk/iTu7cwjr
-        8y5BOPBA==;
-Received: from noodles by the.earth.li with local (Exim 4.94.2)
-        (envelope-from <noodles@earth.li>)
-        id 1plXh5-009uJS-Ht; Sun, 09 Apr 2023 17:15:07 +0100
-Date:   Sun, 9 Apr 2023 17:15:07 +0100
-From:   Jonathan McDowell <noodles@earth.li>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v6 13/16] ARM: dts: qcom: ipq8064-rb3011: Drop
- unevaluated properties in switch nodes
-Message-ID: <ZDLki3CYBxQ+uqUJ@earth.li>
-References: <20230327141031.11904-1-ansuelsmth@gmail.com>
- <20230327141031.11904-14-ansuelsmth@gmail.com>
+        Sun, 9 Apr 2023 13:10:05 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F8DE30DB
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Apr 2023 10:10:04 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id by8so3043465ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Apr 2023 10:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681060202;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5uCMXg3qktyRsiu4kaOaI9ivh//X7GtEehAzDrbc2ME=;
+        b=TzTEX6yDh1XKr7Lf6+zCMXYxsCPludeRQxOSZIvW7IcRjb75zyNKUmXp/uNv+HRS13
+         YaxahZU6eQKmbNgo6kJ9bFWfrvTIkDRJA0EPArnsb2D5YE0mNTyfJoQ2aBYCt6vJZW6K
+         FJSL/Sz0DRYzXQ8T1I2uFZjdOivJulBQTyVcynYBTVtjR3YmpYWUEqm+S6UP1v3lnGac
+         2bUuBkOiBq8+uEHvdMsHGdqw7WDztqGufjwog3QrvtC2Y9YD+ar7dxfHDvKALRgT2OsI
+         DjRiaBLinsAKY66cFU04BjAWuCQ5AIAfdvQd/nFh/JcQP70nISV0r/gW7rklPKAfg6zL
+         mxTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681060202;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5uCMXg3qktyRsiu4kaOaI9ivh//X7GtEehAzDrbc2ME=;
+        b=LwZlKlahZA2llP9nPynHhRd7PyDkxx2aCp3/2MWWKt/9NEYzo8Q8OtY6BPh9bcoUeY
+         yjEnRzuvSCAiB3f4vCNCrJtPbD5E9GtTJN+NuLoM4sXiLI7Zq1olzTttbhWhGjKcMdm7
+         mO46k0el196JpJs1dSNXikvA23MOFNEtSANlG3lMoKyIr5MQA2yaWtWI17v2EXnB7j04
+         RXBTbrY5xUBdaPWMQmrcPpqRR7ytXfSN5/J2WKVHGdgSlLsM2OXKvzKLUHuJVQQBGXuz
+         vTsRiM8N5tPEbblKm7E+glRklpU74dBfQW9IGf8OosbBvYP/xtlm9LZismvRCSXXZJuK
+         HFpw==
+X-Gm-Message-State: AAQBX9daLkOeeuoSYaj0W3DpL/DjogROfpjT4I6WWrTsCwSJjBpYOJ2C
+        kvw6z/sKctplLqINS3syqBfmeg==
+X-Google-Smtp-Source: AKy350bhaQbNkHbZKI6ZhxOOPajs7ZcQwLq5npTcqkh7MGlNK5WWLXvyyDDc1hKZq8WdvocVH2qQ0g==
+X-Received: by 2002:a2e:3812:0:b0:2a4:fe3d:d4b2 with SMTP id f18-20020a2e3812000000b002a4fe3dd4b2mr2179483lja.17.1681060202404;
+        Sun, 09 Apr 2023 10:10:02 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id z14-20020a2e9b8e000000b00298a81f5d70sm1849710lji.136.2023.04.09.10.10.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Apr 2023 10:10:01 -0700 (PDT)
+Message-ID: <ccbf905b-2c0b-e5e2-1ee2-485d3af52247@linaro.org>
+Date:   Sun, 9 Apr 2023 20:10:01 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230327141031.11904-14-ansuelsmth@gmail.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 3/3] venus: fix EOS handling in decoder stop command
+Content-Language: en-GB
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Viswanath Boma <quic_vboma@quicinc.com>
+References: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
+ <1680848758-3947-4-git-send-email-quic_dikshita@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1680848758-3947-4-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 04:10:28PM +0200, Christian Marangi wrote:
-> IPQ8064 MikroTik RB3011UiAS-RM DT have currently unevaluted properties
-> in the 2 switch nodes. The bindings #address-cells and #size-cells are
-> redundant and cause warning for 'Unevaluated properties are not
-> allowed'.
+On 07/04/2023 09:25, Dikshita Agarwal wrote:
+> Use firmware version based check to assign correct
+> device address for EOS buffer to fix the EOS handling
+> with different firmware version.
 > 
-> Drop these bindings to mute these warning as they should not be there
-> from the start.
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
 
-Looks legit (and no particular reason it needs to wait for the rest of
-the series).
+Order of sign-offs is incorrect. The SoB of the sender should be the 
+last one.
 
-Reviewed-By: Jonathan McDowell <noodles@earth.li>
-Tested-By: Jonathan McDowell <noodles@earth.li>
-
-> Cc: Jonathan McDowell <noodles@earth.li>
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Tested-by: Nathan Hebert <nhebert@chromium.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts | 4 ----
->  1 file changed, 4 deletions(-)
+>   drivers/media/platform/qcom/venus/vdec.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
-> index f908889c4f95..47a5d1849c72 100644
-> --- a/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
-> +++ b/arch/arm/boot/dts/qcom-ipq8064-rb3011.dts
-> @@ -38,8 +38,6 @@ mdio0: mdio-0 {
->  
->  		switch0: switch@10 {
->  			compatible = "qca,qca8337";
-> -			#address-cells = <1>;
-> -			#size-cells = <0>;
->  
->  			dsa,member = <0 0>;
->  
-> @@ -105,8 +103,6 @@ mdio1: mdio-1 {
->  
->  		switch1: switch@14 {
->  			compatible = "qca,qca8337";
-> -			#address-cells = <1>;
-> -			#size-cells = <0>;
->  
->  			dsa,member = <1 0>;
->  
-> -- 
-> 2.39.2
-> 
-
-J.
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index f0394b9..c59b34f 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -545,7 +545,7 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+>   
+>   		fdata.buffer_type = HFI_BUFFER_INPUT;
+>   		fdata.flags |= HFI_BUFFERFLAG_EOS;
+> -		if (IS_V6(inst->core))
+> +		if (IS_V6(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
+>   			fdata.device_addr = 0;
+>   		else
+>   			fdata.device_addr = 0xdeadb000;
 
 -- 
-Are you happy with your wash?
+With best wishes
+Dmitry
+
