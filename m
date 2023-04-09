@@ -2,166 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8FE96DC09C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 18:00:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48E156DC09E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  9 Apr 2023 18:10:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbjDIQAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Apr 2023 12:00:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49620 "EHLO
+        id S229450AbjDIQKc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Apr 2023 12:10:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjDIQAA (ORCPT
+        with ESMTP id S229445AbjDIQKb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Apr 2023 12:00:00 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5804C30FA;
-        Sun,  9 Apr 2023 08:59:57 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id z16so1577583oib.9;
-        Sun, 09 Apr 2023 08:59:57 -0700 (PDT)
+        Sun, 9 Apr 2023 12:10:31 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0743590
+        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Apr 2023 09:10:29 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id n22so1456975ljq.8
+        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Apr 2023 09:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681055996;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OKSx+BThSiB9jUyMzJ/mVQaX8wNZeNkLCwm7ggA60Lo=;
-        b=I8xNdWVHMLyxojtPZ7QS+y0Q1R2JpZ+SlKbyhW63/HECNN4q3aFFVyrBsT34WK2PmY
-         HBx7SjD62wgjmgZJFZkMsAQEEOQLHXxrKhAiouSya3YduwrWOs11E8lB15a0JxxrR4zy
-         C3RurE3rwJXewaN4A0bUyIpdrSMBgUyivBFKgw2Wp0yU3g04zgaXNyXgC7ULnXQBsg1m
-         LiPKKgghnYhrrQeQXNaQy8yBT48bcskfxrNxFpD/87Tyehui3YeeU666M5x9R8y2CdTW
-         XtJzjh5paWEJKLwyDeVIaHPcW60HeVtiuy6u6NlGnFyg/7l7H5tcRt+HuawSZwLwfYl1
-         WFkg==
+        d=gmail.com; s=20210112; t=1681056627; x=1683648627;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sZREeCBr///Shiq8jdwSn0p5JZZF5ydSiJvYkwH+KoQ=;
+        b=RusavgALAATkpcX03rmvi5j99Xg9ZjHCWQk+vMeGZHh1jy5rOXpEPDE5AhXid7U5Pt
+         gFYWkBLXoNRK9P0igG2zk0TiPLBwjkV5a2XhQj6LRp1tSGyvu3BXmlMbQgGKGfHijD3o
+         SNtcjEUPsDK3/6RZch1MTnSB62p3QyGACfCFhYOENOGOrvr0ttdU2MaZy2Fe5mj/kJD+
+         3PMGx3RSB34lTQPFLhJzZJ6nFNPlwHRH9d1VQANAKYx/rKKp41unXQEHktrJob5eMNdq
+         KWCCiAskqgqLGDnxqmlME0JWXjcmyXko1U58NeJzxO6fz9P9LCr5MO3uS3BN0j/yM94R
+         gLiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681055996;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OKSx+BThSiB9jUyMzJ/mVQaX8wNZeNkLCwm7ggA60Lo=;
-        b=Mhro+j0K9io2Tx91O9SB4J0S00aZbsfemiWXj0yaTEhQG3w+3qo6K3u5a13wjt9gTF
-         x86TO6BU+msPNQ/8h1zHWZNgHkdh01TB9jL2TlLVJJANYNqlvC1YbGawQp+fDQCGHAno
-         mI6F7BCQ/CRyoD8JZG67DfIX9NfHsgRWA7hAIO7AbhKEy2/IbVtYVv/DG2l8/pFeaLZL
-         lISN3GP2NGy2E9wdya0SUJJRTaxBJR7rq8/ajR3wZCTiW2adW8p+UknJQ4+q359eqp2g
-         VdVYUavwbwAHFjbw2x+uhd28oLMOVoCU/D5cKK+NEwGGZ2eltKb+TmRxvUeHm58nTrwu
-         DN/w==
-X-Gm-Message-State: AAQBX9dIMGdS5SFSHtgtqebYicwx91kfNvzMaI5x7VlPJLphyu2KCVMT
-        0ypvxFE9Am2mviSgISW+61p00kpNXHvuvHGNKsk=
-X-Google-Smtp-Source: AKy350ZaZjhvnKfo1yDx5wAVpP/ZXGLLNI1FUxzWsAm6DKPw50DEDVYlVUIM2GJ4EBeKyJ/M4yDf7ZYqzK/buWBmAs4=
-X-Received: by 2002:aca:171a:0:b0:386:e7e7:d93d with SMTP id
- j26-20020aca171a000000b00386e7e7d93dmr2328119oii.5.1681055996599; Sun, 09 Apr
- 2023 08:59:56 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1681056627; x=1683648627;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sZREeCBr///Shiq8jdwSn0p5JZZF5ydSiJvYkwH+KoQ=;
+        b=qn/5snzmSKRZuUDu0sHdqMSa6PTnfpbpeBL8ExoBPsiuHVozm8a7TFK4RpXWbQEHDP
+         C4AThXeD1SKwxQ8UYZT+PEPNVTria5aj1xKyySIRNIIyE21D5ZEnjpnqzejIulU4SIq/
+         QkF+K575TIX+uYc87K7zmi7293HxnlGTEXoZzZudbpuXF/pHKWJ8GJmEbXHvHaas5h2n
+         l7lC1TRLZ7nY0OyPryXfwLKat5gQ5bf95/i7zPmWgf388+0MPY1Lj87qBRpDfLn4oXBK
+         1zig4kvonKV4A/Ocq80Ffu5m/CF9XRTbBArJSFcF3bJn/ivSamrUhUNKzSVlMlnF4FPL
+         RSQQ==
+X-Gm-Message-State: AAQBX9dCCq+H24O0uWvUTP44nU8Mt5Yn+0K+VHQKnnrzhYIWt5WT4Qo5
+        OZ67S7Aj68DhtlvdI18q5gc=
+X-Google-Smtp-Source: AKy350ZxrjVC65CacRj+DQu/msGQpYSlVaHr/3NhIsTGmFIWOMxrPMXfH8C930zX49GwpeEO8J2Prg==
+X-Received: by 2002:a2e:9c90:0:b0:298:aa96:55c2 with SMTP id x16-20020a2e9c90000000b00298aa9655c2mr2775935lji.44.1681056627532;
+        Sun, 09 Apr 2023 09:10:27 -0700 (PDT)
+Received: from [192.168.1.107] (byy157.neoplus.adsl.tpnet.pl. [83.30.44.157])
+        by smtp.gmail.com with ESMTPSA id u7-20020a2e9f07000000b002a76f63a657sm555210ljk.105.2023.04.09.09.10.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Apr 2023 09:10:27 -0700 (PDT)
+Message-ID: <7affdcfd-1e75-4a96-1110-83cfdb3e596e@gmail.com>
+Date:   Sun, 9 Apr 2023 18:10:25 +0200
 MIME-Version: 1.0
-References: <20230406215917.1475704-1-robdclark@gmail.com> <20230406215917.1475704-3-robdclark@gmail.com>
- <CACvgo50FEYhdpp3nqX-AyAvLK8hJnK2xynTtLnCb9A+GSeHCvg@mail.gmail.com>
-In-Reply-To: <CACvgo50FEYhdpp3nqX-AyAvLK8hJnK2xynTtLnCb9A+GSeHCvg@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 9 Apr 2023 08:59:45 -0700
-Message-ID: <CAF6AEGuyu5AoCTneqZQLasTfb5YEotVr35hSBvYhRTMaTbYPUw@mail.gmail.com>
-Subject: Re: [RFC 2/2] drm/msm: Add memory stats to fdinfo
-To:     Emil Velikov <emil.l.velikov@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        linux-arm-msm@vger.kernel.org,
-        Christopher Healy <healych@amazon.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RFC PATCH] drm/msm/a5xx: really check for A510 in a5xx_gpu_init
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230409011329.2365570-1-dmitry.baryshkov@linaro.org>
+From:   Adam Skl <a39.skl@gmail.com>
+In-Reply-To: <20230409011329.2365570-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 8, 2023 at 5:28=E2=80=AFAM Emil Velikov <emil.l.velikov@gmail.c=
-om> wrote:
->
-> On Thu, 6 Apr 2023 at 22:59, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Use the new helper to export stats about memory usage.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/gpu/drm/msm/msm_drv.c | 26 +++++++++++++++++++++++++-
-> >  drivers/gpu/drm/msm/msm_gpu.c |  2 --
-> >  2 files changed, 25 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_dr=
-v.c
-> > index 9b6f17b1261f..385776f6a531 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -1043,17 +1043,40 @@ static const struct drm_ioctl_desc msm_ioctls[]=
- =3D {
-> >         DRM_IOCTL_DEF_DRV(MSM_SUBMITQUEUE_QUERY, msm_ioctl_submitqueue_=
-query, DRM_RENDER_ALLOW),
-> >  };
-> >
-> > +enum drm_gem_object_status gem_status(struct drm_gem_object *obj)
-> > +{
-> > +       struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
-> > +       enum drm_gem_object_status status =3D 0;
-> > +
-> > +       if (!dma_resv_test_signaled(obj->resv, dma_resv_usage_rw(true))=
-)
-> > +               status |=3D DRM_GEM_OBJECT_ACTIVE;
-> > +
-> > +       if (msm_obj->pages)
-> > +               status |=3D DRM_GEM_OBJECT_RESIDENT;
-> > +
-> > +       if (msm_obj->madv =3D=3D MSM_MADV_DONTNEED)
-> > +               status |=3D DRM_GEM_OBJECT_PURGEABLE;
-> > +
-> > +       return status;
-> > +}
-> > +
-> >  static void msm_fop_show_fdinfo(struct seq_file *m, struct file *f)
-> >  {
-> >         struct drm_file *file =3D f->private_data;
-> >         struct drm_device *dev =3D file->minor->dev;
-> >         struct msm_drm_private *priv =3D dev->dev_private;
-> > +       struct msm_file_private *ctx =3D file->driver_priv;
-> >         struct drm_printer p =3D drm_seq_file_printer(m);
-> >
-> >         if (!priv->gpu)
-> >                 return;
-> >
-> > -       msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, &p);
-> > +       drm_printf(&p, "drm-driver:\t%s\n", dev->driver->name);
-> > +       drm_printf(&p, "drm-client-id:\t%u\n", ctx->seqno);
-> > +
-> > +       msm_gpu_show_fdinfo(priv->gpu, ctx, &p);
-> > +
-> > +       drm_print_memory_stats(file, &p, gem_status);
-> >  }
-> >
-> >  static const struct file_operations fops =3D {
-> > @@ -1067,6 +1090,7 @@ static const struct drm_driver msm_driver =3D {
-> >                                 DRIVER_RENDER |
-> >                                 DRIVER_ATOMIC |
-> >                                 DRIVER_MODESET |
-> > +                               DRIVER_SYNCOBJ_TIMELINE |
->
-> This line should probably be its own patch. AFAICT it was supported
-> since ab723b7a992a19b843f798b183f53f7472f598c8, although explicitly
-> kept disabled until there's userspace/turnip support.
 
-ahh, yes, that wasn't intended to be part of this patch, just a local
-thing I happened to be testing
+On 9.04.2023 03:13, Dmitry Baryshkov wrote:
 
-BR,
--R
-
-> With the above line removed, the patch is:
-> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+> The commit 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno
+> 510") added special handling for a510 (this SKU doesn't seem to support
+> preemption, so the driver should clamp nr_rings to 1). However the
+> gpu->revn is not yet set (it is set later, in adreno_gpu_init()) and
+> thus the condition is always false. Check config->rev instead.
 >
-> HTH
-> Emil
+> Fixes: 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno 510")
+> Reported-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> index 1e8d2982d603..a99310b68793 100644
+> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> @@ -1743,6 +1743,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>  {
+>  	struct msm_drm_private *priv = dev->dev_private;
+>  	struct platform_device *pdev = priv->gpu_pdev;
+> +	struct adreno_platform_config *config = pdev->dev.platform_data;
+>  	struct a5xx_gpu *a5xx_gpu = NULL;
+>  	struct adreno_gpu *adreno_gpu;
+>  	struct msm_gpu *gpu;
+> @@ -1769,7 +1770,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+>  
+>  	nr_rings = 4;
+>  
+> -	if (adreno_is_a510(adreno_gpu))
+> +	if (adreno_cmp_rev(ADRENO_REV(5, 1, 0, ANY_ID), config->rev))
+>  		nr_rings = 1;
+>  
+>  	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, nr_rings);
+
+After testing on Leeco S2 it appears to work as intended now, thanks.
+
+Tested-by: Adam Skladowski <a39.skl@gmail.com>
+
