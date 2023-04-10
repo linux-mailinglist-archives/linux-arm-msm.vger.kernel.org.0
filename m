@@ -2,67 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54A766DCBD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 21:54:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E2B36DCBE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 22:00:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229697AbjDJTys (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 15:54:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39604 "EHLO
+        id S229801AbjDJUAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 16:00:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229693AbjDJTyr (ORCPT
+        with ESMTP id S229780AbjDJUAU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 15:54:47 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAA8EE73
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 12:54:46 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-54c12009c30so225591847b3.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 12:54:46 -0700 (PDT)
+        Mon, 10 Apr 2023 16:00:20 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A1FC1FCA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 13:00:17 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id by8so6059823ljb.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 13:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681156486;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hVSuxMbAqEPyVi9yC8m6tq1S+nROIsHX2hkvUDvRI/o=;
-        b=YOBTOqGxNCmNhgEmYv0FNp0qxvtNLFWoU6pCg8staBFs6JHY3hDi7xVDJPoLCc3H1C
-         EprPsB5Pt8sGVU1O+P7VbUX/VGdSszLu4mheYIHdzJCot9D1XI6gtEpMBsuNUfFcK+YF
-         jzUv+cp5t0W60N1uC28sAV4Ek5bCr7nk0ZhgZkRAfY0edgUb8RKJVfh1sCe3Rf3PjZQp
-         4fiAPJX8c5yBAJbuXSjy8GgkMXam0KpQRXxPu+vXu3p3/jZhhtBR7nKRJKdgxSsvWit9
-         yNJyGfcFGeyKXFfJjQF54Yhs0VuRYHNrG2UCMm7ZRNFVhUXFkQfOmQHjAZlqfdkCs5/V
-         px8g==
+        d=linaro.org; s=google; t=1681156816;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NDUmxVAjrN5Lm56sfIfKZCJ3s39s5f7ghbzYII7MHLU=;
+        b=Xwk58mvNOAEThz0tCz/+DvXFoFZThEXonHnTDUVuCl2SOEfphJir0rbYJ25J0Kzr8F
+         ok7CndbCSGTngNsYMFoTxUWXRIf4NciNULHL9i4bWgml3sezCiV2QriGMMAjMLwL3n+f
+         fXYmE/xSWlxjY2jEzgfgtiLux4f3qpyNcnQkGydeo2Wqhu9n1mtsXkttj+oSGaMpErk/
+         nZGFWU20TkCpuvsYwmkwkbY/AobvVW4b90dpjWigh4gk91Bakdat9U6SboVej1W0GnSn
+         keTN8QXRB6vnH/qWFWCX0eqfRzhDs4LNpiMxaH/OVmFghZEq6ixTzHwe2600XL+V8Tm2
+         32og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681156486;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20210112; t=1681156816;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hVSuxMbAqEPyVi9yC8m6tq1S+nROIsHX2hkvUDvRI/o=;
-        b=Ffbodj5bS4sQ2R+amffHCnK2y5szSJKhhkWGZVs74LPioz17AoF/dsg/bf8IyRzt5a
-         Q5t6L5UY5jlcNsMVi1rdPJFiWV8AEn2DOEH7VXTS/6cMtbxvNv2LLOT5PljxCVxuvUUg
-         730nSnyRBZXvzT+vbwZYo9U2Yn3S0DEUhDvI6yAJ4X5Zadm79RHPZht3rZiibT+ZVjhE
-         aW+2b39FqwBLJ35kAybB2/40eQZaBTDMH0lzXQTYNT4GNRVBE0x4/CzUzOhfFm+asHcJ
-         HVJw95B3SdEuudQqAer5y0tzJdXTbMh8ryFeVlt14QfxT/4HYKOx5QrUNL40Ihx4DKgO
-         Et/A==
-X-Gm-Message-State: AAQBX9f9GysS/0UCoM5unRFGygy37wTZXGWA0NOBHfbadvetFCtvY+2u
-        hTR2xq1q4O68DkAtaQEpOFfnQsOKQOBW+7sq7CMT/nAUd9rIypqN
-X-Google-Smtp-Source: AKy350ZgRZcZYpWJQUeIosylHkgPa4AxB8416V8GRr7Kq8Bb3lqiDtKZkIPHZeIbY0SdqCZNDCk2b/r4BVo2IMy4MwM=
-X-Received: by 2002:a81:ae51:0:b0:54c:1ab:6aaf with SMTP id
- g17-20020a81ae51000000b0054c01ab6aafmr6290994ywk.5.1681156485968; Mon, 10 Apr
- 2023 12:54:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230409011329.2365570-1-dmitry.baryshkov@linaro.org> <CAE-0n51mkvb0nmF19NTXeLegzJJU=53ywUOqEP0skMtU3Oh3xA@mail.gmail.com>
-In-Reply-To: <CAE-0n51mkvb0nmF19NTXeLegzJJU=53ywUOqEP0skMtU3Oh3xA@mail.gmail.com>
+        bh=NDUmxVAjrN5Lm56sfIfKZCJ3s39s5f7ghbzYII7MHLU=;
+        b=sr5ThCcknJEooLBRSmHAojCk30gb5bOfrOHO4utXD3Hdvz7Y/G+xxG9iUjyh9BXHAB
+         7cbW/jU/fIt5Mjj2j3AqNEqXtbl3EpOcg50bT+OF5DfIiKNUGIvHUWNWwPqHX/I5IwwV
+         weelNqh7EPdoVi8hY2zqQroLYaWZkIPb9c1lZpuKumfH0TiEFEdeMB6O9BU+KB/qvFpo
+         /4huBJlJSa0f/sWSJRaOdVrgRlZafLDBUYH4z/PwbJaT5/fQy+rekXhE7K35y88yKAIc
+         QSPNOCL0V6Z5MxYmoA6i0Su7wK9R6UKmevTDYcsfFA8LM0Boq5G6XVIrYHMF5NTvvfTQ
+         ZSgw==
+X-Gm-Message-State: AAQBX9fITzica1oe3HO6sdB3KPYrlcOKsMm5EVgKRQ0o4jI2M8WKjFEJ
+        yyr1rwpwUiC4Sgd2xqJFDmynyA==
+X-Google-Smtp-Source: AKy350aY8e+m/utQRn0nylzqrQ0eVD9Obve+qoEOy7oznsYS3j1jDYePOZDcdEdNdlEgsYCmt211pA==
+X-Received: by 2002:a2e:a268:0:b0:2a0:5a99:65d8 with SMTP id k8-20020a2ea268000000b002a05a9965d8mr3507440ljm.18.1681156815839;
+        Mon, 10 Apr 2023 13:00:15 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id z2-20020a2e8e82000000b002a7729eea3dsm973482ljk.88.2023.04.10.13.00.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 13:00:15 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 10 Apr 2023 22:54:35 +0300
-Message-ID: <CAA8EJpqvuOTd-_aLDxoRnBx1rFg2scwGEH=W76G0aEUEX9uOgA@mail.gmail.com>
-Subject: Re: [RFC PATCH] drm/msm/a5xx: really check for A510 in a5xx_gpu_init
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Adam Skladowski <a39.skl@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v5 0/4] clk: qcom: msm8996: add support for the CBF clock
+Date:   Mon, 10 Apr 2023 23:00:10 +0300
+Message-Id: <20230410200014.432418-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -72,25 +74,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 Apr 2023 at 22:28, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Dmitry Baryshkov (2023-04-08 18:13:29)
-> > The commit 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno
-> > 510") added special handling for a510 (this SKU doesn't seem to support
-> > preemption, so the driver should clamp nr_rings to 1). However the
-> > gpu->revn is not yet set (it is set later, in adreno_gpu_init()) and
-> > thus the condition is always false. Check config->rev instead.
-> >
-> > Fixes: 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno 510")
-> > Reported-by: Adam Skladowski <a39.skl@gmail.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
->
-> Maybe as a followup you can put a WARN_ON_ONCE() inside a new function
-> that gets gpu->revn and warns if the value is 0?
+On MSM8996 two CPU clusters are interconnected using the Core Bus
+Fabric (CBF). In order for the CPU clusters to function properly, it
+should be clocked following the core's frequencies to provide adequate
+bandwidth.
 
-Sounds like a good idea.
+Register CBF as a clock (required for CPU to boot) and add a tiny
+interconnect layer on top of it to let cpufreq/opp scale the CBF clock.
+
+Changes since v4:
+- Fixed typos in commit messages
+
+Changes since v3:
+- Dropped merged patches
+- Moved interconnect shim to drivers/interconnect/icc-clk.c
+
+Changes since v2:
+- Added interconnect-related bindings
+- Switched CPU and CBF clocks to RPM_SMD_XO_A_CLK_SRC
+
+Changes since v1:
+- Relicensed schema to GPL-2.0 + BSD-2-Clause (Krzysztof)
+- Changed clock driver to use parent_hws (Konrad)
+- Fixed indentation in CBF clock driver (Konrad)
+- Changed MODULE_LICENSE of CBF clock driver to GPL from GPL-v2
+- Switched CBF to use RPM_SMD_XO_CLK_SRC as one of the parents
+- Enabled RPM_SMD_XO_CLK_SRC on msm8996 platform and switch to it from
+  RPM_SMD_BB_CLK1 clock
+
+
+Dmitry Baryshkov (4):
+  dt-bindings: interconnect/msm8996-cbf: add defines to be used by CBF
+  interconnect: add clk-based icc provider support
+  clk: qcom: cbf-msm8996: scale CBF clock according to the CPUfreq
+  arm64: dts: qcom: msm8996: scale CBF clock according to the CPUfreq
+
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  51 ++++++
+ drivers/clk/qcom/Kconfig                      |   1 +
+ drivers/clk/qcom/clk-cbf-8996.c               |  59 +++++-
+ drivers/interconnect/Kconfig                  |   6 +
+ drivers/interconnect/Makefile                 |   2 +
+ drivers/interconnect/icc-clk.c                | 168 ++++++++++++++++++
+ .../interconnect/qcom,msm8996-cbf.h           |  12 ++
+ include/linux/interconnect-clk.h              |  22 +++
+ 8 files changed, 320 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/interconnect/icc-clk.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8996-cbf.h
+ create mode 100644 include/linux/interconnect-clk.h
 
 -- 
-With best wishes
-Dmitry
+2.30.2
+
