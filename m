@@ -2,168 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D03B6DC9D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 19:14:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F4F86DC9EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 19:22:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbjDJROz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 13:14:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
+        id S230312AbjDJRWT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 13:22:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229711AbjDJROy (ORCPT
+        with ESMTP id S230304AbjDJRWS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 13:14:54 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C21210D;
-        Mon, 10 Apr 2023 10:14:53 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33AFuo4M020232;
-        Mon, 10 Apr 2023 17:14:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=xdgv48S2+WPNyzZk0JpYPKZH0H+r6IYvnFJk2oxQuGI=;
- b=Rwr/ACHYd1sG4PAW9B9ErfHDyFl5ZUgrHV3iJHY58NBYUGUZXPKzLumNTV3FunchmpUH
- SFpHPEWe6OrTxbcA8gmWjMhGmbO7rUpHRpzfJZQucaqVVBsrq+uwEwRttR5KS09rGe9x
- urt73+QvFCFnCNJq3s4Bp+q3VLt/LIvyMYWGOJDyM/RUxido1CB6I9k6Bs548z2bllmh
- HlU/ksKzCYSLisyF2BeziehCBAM/J1is+eaTWi++PRSK815/B0GIOlN/aIv45TVZA1iU
- RdSItfUdKqGDxPLOB7ibZ1Z26bRtiuB8lIpz7wJ2tZNelqj8n+sUlIAf6bWm/dJyansy zQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pvm97gcay-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Apr 2023 17:14:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33AHEm8a001728
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Apr 2023 17:14:48 GMT
-Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 10 Apr 2023 10:14:47 -0700
-From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>
-CC:     Andy Gross <agross@kernel.org>,
+        Mon, 10 Apr 2023 13:22:18 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000FE26A9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 10:22:16 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-50489c6171dso1543983a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 10:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681147335;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aF4gu0RaNrTTFCvcYQcWRArSpPeebO9/4yLFj3PI3mY=;
+        b=fWCOpX7/SwjuHyqJLAqClg3voZ5jnOfmERlA2t3+Wdt9T0LUdPTYVjAYkiEPr99UP2
+         Nx8wnItxxh0CdR0zx6rkW0veQhlk7VxWS5zTmRO0dzt7ojT1RYshEkgPSquRabUVM+Ya
+         dHJ7o4zREoGZ/ccqzPge9HqhFAOi/MIsI4QoXEWtHuUxBiKXcnhN3unjMjlv356KPCEu
+         PJii2cjj5EbSPOeVYME5nVy2k0DoyEcMbWlniNuwM5+ttHHgciawikdWbFw3uZUd1vlZ
+         w8rE6Ep82LRdkZkdxQRb5K/92nPikFsWfYi41qGwZC1PTvf0dWBevYf8xjGNnFTdhEXo
+         3q4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681147335;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aF4gu0RaNrTTFCvcYQcWRArSpPeebO9/4yLFj3PI3mY=;
+        b=IblkJnrvS5Ko+JMlQydmrGuBEMvdKsMtHazbGPnz+X4yyeza+iMIWtwY0YXloyg5/u
+         SzTvvhoMe3KRHoPZwhpcl36CtmeYT+EKoduaxYx3RM95xP79gWCqB0vHMkMsydX6To7K
+         n6SHMjGURcqan2nkI8APu/RiH4xJXUIvrEnFU9rkDmz21eJ75R6mFF1Ieju3lxVUYD8e
+         5dS7T05vXKTgMJSWqK3OuCzOckJmW+rWxycN+LbxEJ/jJyvLG/P13gqV5z+oypNL9oLA
+         D3Tugcvcdi9K0Y3vP2Le3z/AoM/HpQFrZFOT3IddqsWHhlXMZpOuthXXPUZn01RFGpe8
+         T1tQ==
+X-Gm-Message-State: AAQBX9fpbzXuLwyCBgdjo6MIO4C6U8ukDvNgLAG7klQ2wc6qhf6vEMuh
+        2B/VfBuhaqt+HQgSSP9DcQDNxw==
+X-Google-Smtp-Source: AKy350aNsSC8fqZ/yvuVJrmsoq1jKWAOxaKpue1KeRo5d69Vg7dnLJrE0uJOHhunMzUrshZGuWOHOQ==
+X-Received: by 2002:aa7:d14f:0:b0:4be:b39b:ea8f with SMTP id r15-20020aa7d14f000000b004beb39bea8fmr6554535edo.2.1681147335445;
+        Mon, 10 Apr 2023 10:22:15 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:1a6c:6968:e633:48df? ([2a02:810d:15c0:828:1a6c:6968:e633:48df])
+        by smtp.gmail.com with ESMTPSA id h10-20020aa7de0a000000b005023ddb37eesm4875429edv.8.2023.04.10.10.22.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Apr 2023 10:22:14 -0700 (PDT)
+Message-ID: <5d5e5030-7db7-447e-e5a4-2157171d7575@linaro.org>
+Date:   Mon, 10 Apr 2023 19:22:13 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v7 1/3] dt-bindings: ufs: qcom: Add ICE phandle
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        "Guru Das Srinagesh" <quic_gurus@quicinc.com>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Subject: [PATCH v5 1/1] soc: qcom: mdt_loader: Enhance split binary detection
-Date:   Mon, 10 Apr 2023 10:14:32 -0700
-Message-ID: <20230410171432.19046-1-quic_gokukris@quicinc.com>
-X-Mailer: git-send-email 2.39.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QgBz8lDrWg-Y0BFJkTogsBHeIynZrowI
-X-Proofpoint-ORIG-GUID: QgBz8lDrWg-Y0BFJkTogsBHeIynZrowI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-10_12,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- adultscore=0 mlxlogscore=999 lowpriorityscore=0 mlxscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304100148
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+References: <20230408214041.533749-1-abel.vesa@linaro.org>
+ <20230408214041.533749-2-abel.vesa@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230408214041.533749-2-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It may be that the offset of the first program header lies inside the mdt's
-filesize, in this case the loader would incorrectly assume that the bins
-were not split. The loading would then continue on to fail for split bins.
-This change updates the logic used by the mdt loader to understand whether
-the firmware images are split or not. It figures this out by checking if
-each programs header's segment lies within the file or not.
+On 08/04/2023 23:40, Abel Vesa wrote:
+> Starting with SM8550, the ICE will have its own devicetree node
+> so add the qcom,ice property to reference it.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
-Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
----
-V5: Removes extra empty lines from V4.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-V4: Removes the unneceessary change in qcom_mdt_read_metadata(), the
-exisiting check holds good in case the hash segment is in the loaded image.
-
-V3 is separated out from [1] and includes
-changes addressing comments from that patch set.
-
-[1] https://lore.kernel.org/all/20230306231202.12223-5-quic_molvera@quicinc.com/
----
- drivers/soc/qcom/mdt_loader.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index 33dd8c315eb7..814646ce41e5 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -258,6 +258,26 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
- }
- EXPORT_SYMBOL_GPL(qcom_mdt_pas_init);
- 
-+static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char* fw_name)
-+{
-+	const struct elf32_phdr *phdrs;
-+	const struct elf32_hdr *ehdr;
-+	uint64_t seg_start, seg_end;
-+	int i;
-+
-+	ehdr = (struct elf32_hdr *)fw->data;
-+	phdrs = (struct elf32_phdr *)(ehdr + 1);
-+
-+	for (i = 0; i < ehdr->e_phnum; i++) {
-+		seg_start = phdrs[i].p_offset;
-+		seg_end = phdrs[i].p_offset + phdrs[i].p_filesz;
-+		if (seg_start > fw->size || seg_end > fw->size)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 			   const char *fw_name, int pas_id, void *mem_region,
- 			   phys_addr_t mem_phys, size_t mem_size,
-@@ -270,6 +290,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 	phys_addr_t min_addr = PHYS_ADDR_MAX;
- 	ssize_t offset;
- 	bool relocate = false;
-+	bool is_split;
- 	void *ptr;
- 	int ret = 0;
- 	int i;
-@@ -277,6 +298,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 	if (!fw || !mem_region || !mem_phys || !mem_size)
- 		return -EINVAL;
- 
-+	is_split = qcom_mdt_bins_are_split(fw, fw_name);
- 	ehdr = (struct elf32_hdr *)fw->data;
- 	phdrs = (struct elf32_phdr *)(ehdr + 1);
- 
-@@ -330,8 +352,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
- 
- 		ptr = mem_region + offset;
- 
--		if (phdr->p_filesz && phdr->p_offset < fw->size &&
--		    phdr->p_offset + phdr->p_filesz <= fw->size) {
-+		if (phdr->p_filesz && !is_split) {
- 			/* Firmware is large enough to be non-split */
- 			if (phdr->p_offset + phdr->p_filesz > fw->size) {
- 				dev_err(dev, "file %s segment %d would be truncated\n",
--- 
-2.39.2
+Best regards,
+Krzysztof
 
