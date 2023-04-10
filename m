@@ -2,162 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 795F06DCCCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 23:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 105B66DCCE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 23:48:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbjDJVZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 17:25:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33330 "EHLO
+        id S229721AbjDJVsn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 17:48:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229886AbjDJVZP (ORCPT
+        with ESMTP id S229536AbjDJVsn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 17:25:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBCC41FD3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 14:24:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1681161868;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=guIPUS4b/KI5jRIGt0RS4kaJQ4UcCDM9VQ9qZvewB+Q=;
-        b=BfqpFF2zXOWyGwNcj8ooUjwRs1YtJGoVJRsmdR3oArqUOoZz9gXgiLZsMPbDuRA4/em/Lt
-        OfBPnS7pCc1m9XcUG0bJgNKaj53zlQQ9Jvn8GOMfTdpOLWxFWhwySoPBYX9zzdf7m/xGKF
-        Dp2QcdawAbR4X9ssld+7e+4nkHa2dK0=
-Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
- [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-396-cjluYCTcMX2VzeuC760djw-1; Mon, 10 Apr 2023 17:24:27 -0400
-X-MC-Unique: cjluYCTcMX2VzeuC760djw-1
-Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-1842ccf7ae4so3659275fac.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 14:24:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681161866;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=guIPUS4b/KI5jRIGt0RS4kaJQ4UcCDM9VQ9qZvewB+Q=;
-        b=0uHMtXOqXsBNASLMalI5ATGAHJvKqvFo4OyFFft3qQOyo0HlAsGMjgOn2QAsZJBKoL
-         HdHDV7z3zHQdeS0Ljml/abcz128VRtaegLNPs6rKi9ExGpYLxKnOYIheSo98xhxGsajj
-         lM2GVQuu7cd65VS2OodK3Gea3hTgz6uO3TEhgoczujhCOCxuj5QBUoLo7qt2SO6XURMR
-         EQ0HMVXpPgrNp3Vv0D/O2zFirvpN+T4pUChgJ0Vq9lfudHH4IRe8SxivZ/Cl8vW67hRr
-         aa0zWhzriTf501PGuiDDfp0/ttxP44EiRixe3y5Y9JS6qJZylOvcpTn1iGZX5sLODmo0
-         jbVQ==
-X-Gm-Message-State: AAQBX9fjtuIBlNmZ12t4gIs7gDic85/bTUM58dzSQE5cs+ok9gTQuFbF
-        Y6A1KTZLdlZXDUNQnzi1XKbbpdS8IVfF1AF2dbtkD2esVETPKjBDPVoS05m1GB5BiDVjIJ1Z5Gm
-        oBZL66QwZVDfvMpYqoY5mYLo+ng==
-X-Received: by 2002:a05:6808:1a27:b0:38b:c1b4:6af9 with SMTP id bk39-20020a0568081a2700b0038bc1b46af9mr2735735oib.4.1681161866108;
-        Mon, 10 Apr 2023 14:24:26 -0700 (PDT)
-X-Google-Smtp-Source: AKy350bgc7ZX4XjpSwPu1lYDObg75z6mEqgIGHBCnCkz1NdyheSPE+5IoVPpSan2LLi+1tqeOtiR4Q==
-X-Received: by 2002:a05:6808:1a27:b0:38b:c1b4:6af9 with SMTP id bk39-20020a0568081a2700b0038bc1b46af9mr2735718oib.4.1681161865851;
-        Mon, 10 Apr 2023 14:24:25 -0700 (PDT)
-Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id w127-20020a4a5d85000000b00525398a1144sm5117502ooa.32.2023.04.10.14.24.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 14:24:25 -0700 (PDT)
-Date:   Mon, 10 Apr 2023 16:24:22 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Simon Horman <simon.horman@corigine.com>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, wens@csie.org, jernej.skrabec@gmail.com,
-        samuel@sholland.org, mturquette@baylibre.com,
-        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
-        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
-        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Subject: Re: [PATCH net-next v3 08/12] net: stmmac: Pass stmmac_priv in some
- callbacks
-Message-ID: <20230410212422.2rztlqspw5vjtb4d@halaney-x13s>
-References: <20230331214549.756660-1-ahalaney@redhat.com>
- <20230331214549.756660-9-ahalaney@redhat.com>
- <ZChIbc6TnQyZ/Fiu@corigine.com>
- <20230407173453.hsfhbr66254z57ym@halaney-x13s>
+        Mon, 10 Apr 2023 17:48:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A197198B;
+        Mon, 10 Apr 2023 14:48:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A78C361889;
+        Mon, 10 Apr 2023 21:48:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14185C433EF;
+        Mon, 10 Apr 2023 21:48:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681163321;
+        bh=NKTkZrzP5KsL7fLtTeMMwSEi1SSUYvQdhMEdquN4XTk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PNRYhIuPANLPsJW+YtLqf5nNmlz4X36vVsZatRaqdIe+crJ6XiS4dKhJS6hdlpsgG
+         bQdIveMDRE1NR0v/Qzi0HWT7/zow/e0YD5DXBcBDyonBTHB4LXitflFQV7HHFdvYsL
+         kUbBym1uq8rFS56MLGueccs9ikB+TUKw1akoxxLe/Sp5R+himMBbXHmoL1pM8YVk58
+         iS3pqcS4mittb4axXQVOZ0YZ9LZxRet4CQobk9UcCF1onodF4IUkjtqatCj6F1GfXb
+         o4E6OpHeiyRI6xJ2MQ72IDxD6U4MJPIna1QB6h9YfoE628rCGqGAnK4k3Kn7y8fmRF
+         YjL30b51RM2HQ==
+Date:   Mon, 10 Apr 2023 14:52:23 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>
+Subject: Re: [PATCH v5 1/1] soc: qcom: mdt_loader: Enhance split binary
+ detection
+Message-ID: <20230410215223.3xcctjsq5qqbqvs2@ripper>
+References: <20230410171432.19046-1-quic_gokukris@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230407173453.hsfhbr66254z57ym@halaney-x13s>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230410171432.19046-1-quic_gokukris@quicinc.com>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 07, 2023 at 12:34:53PM -0500, Andrew Halaney wrote:
-> On Sat, Apr 01, 2023 at 05:06:21PM +0200, Simon Horman wrote:
-> > On Fri, Mar 31, 2023 at 04:45:45PM -0500, Andrew Halaney wrote:
-> > > Passing stmmac_priv to some of the callbacks allows hwif implementations
-> > > to grab some data that platforms can customize. Adjust the callbacks
-> > > accordingly in preparation of such a platform customization.
-> > > 
-> > > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > 
-> > ...
-> > 
-> > >  #define stmmac_reset(__priv, __args...) \
-> > > @@ -223,59 +240,59 @@ struct stmmac_dma_ops {
-> > >  #define stmmac_dma_init(__priv, __args...) \
-> > >  	stmmac_do_void_callback(__priv, dma, init, __args)
-> > >  #define stmmac_init_chan(__priv, __args...) \
-> > > -	stmmac_do_void_callback(__priv, dma, init_chan, __args)
-> > > +	stmmac_do_void_callback(__priv, dma, init_chan, __priv, __args)
-> > 
-> > Hi Andrew,
-> > 
-> > Rather than maintaining these macros can we just get rid of them?
-> > I'd be surprised if things aren't nicer with functions in their place [1].
-> > 
-> > f.e., we now have (__priv, ..., __priv, ...) due to a generalisation
-> >       that seems to take a lot more than it gives.
-> > 
-> > [1] https://lore.kernel.org/linux-arm-kernel/ZBst1SzcIS4j+t46@corigine.com/
-> > 
+On Mon, Apr 10, 2023 at 10:14:32AM -0700, Gokul krishna Krishnakumar wrote:
+> It may be that the offset of the first program header lies inside the mdt's
+> filesize, in this case the loader would incorrectly assume that the bins
+> were not split. The loading would then continue on to fail for split bins.
+> This change updates the logic used by the mdt loader to understand whether
+> the firmware images are split or not. It figures this out by checking if
+> each programs header's segment lies within the file or not.
 > 
-> Thanks for the pointer. I think that makes sense, I'll take that
-> approach for these functions (and maybe in a follow-up series I'll
-> tackle all of them just because the lack of consistency will eat me up).
+> Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+
+Please read Documentation/process/submitting-patches.rst section about
+Developer's Certificate of Origin 1.1, then apply that for each person
+in the S-o-b chain from the top. Finally consider how Melody's name can
+be the last one in this list, while the patch is coming from you.
+
+> ---
+> V5: Removes extra empty lines from V4.
+
+That's nice, but what about the other changes I asked for?
+
+Regards,
+Bjorn
+
 > 
-
-I tried taking this approach for a spin, and I'm not so sure about it
-now!
-
-1. Implementing the functions as static inline requires us to know
-   about stmmac_priv, but that's getting into circular dependency land
-2. You could define them in hwif.c, but then they're not inlined
-3. There's still a good bit of boilerplate that's repeated all over
-   with the approach. Ignoring 1 above, you get something like this:
-
-static inline int stmmac_init_chan(struct stmmac_priv *priv,
-				   void __iomem *ioaddr,
-				   struct stmmac_dma_cfg *dma_cfg, u32 chan)
-{
-	if (priv->hw->dma && priv->hw->dma->init_chan) {
-		priv->hw->dma->init_chan(priv, ioaddr, dma_cfg, chan);
-		return 0;
-	}
-	return -EINVAL;
-}
-
-that is then repeated for every function... which is making me actually
-appreciate the macros some for reducing boilerplate.
-
-Am I suffering from a case of holiday brain, and 1-3 above are silly
-points with obvious answers, or do they make you reconsider continuing
-with the current approach in hwif.h?
-
-Thanks,
-Andrew
-
+> V4: Removes the unneceessary change in qcom_mdt_read_metadata(), the
+> exisiting check holds good in case the hash segment is in the loaded image.
+> 
+> V3 is separated out from [1] and includes
+> changes addressing comments from that patch set.
+> 
+> [1] https://lore.kernel.org/all/20230306231202.12223-5-quic_molvera@quicinc.com/
+> ---
+>  drivers/soc/qcom/mdt_loader.c | 25 +++++++++++++++++++++++--
+>  1 file changed, 23 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+> index 33dd8c315eb7..814646ce41e5 100644
+> --- a/drivers/soc/qcom/mdt_loader.c
+> +++ b/drivers/soc/qcom/mdt_loader.c
+> @@ -258,6 +258,26 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_mdt_pas_init);
+>  
+> +static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char* fw_name)
+> +{
+> +	const struct elf32_phdr *phdrs;
+> +	const struct elf32_hdr *ehdr;
+> +	uint64_t seg_start, seg_end;
+> +	int i;
+> +
+> +	ehdr = (struct elf32_hdr *)fw->data;
+> +	phdrs = (struct elf32_phdr *)(ehdr + 1);
+> +
+> +	for (i = 0; i < ehdr->e_phnum; i++) {
+> +		seg_start = phdrs[i].p_offset;
+> +		seg_end = phdrs[i].p_offset + phdrs[i].p_filesz;
+> +		if (seg_start > fw->size || seg_end > fw->size)
+> +			return true;
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>  static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  			   const char *fw_name, int pas_id, void *mem_region,
+>  			   phys_addr_t mem_phys, size_t mem_size,
+> @@ -270,6 +290,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  	phys_addr_t min_addr = PHYS_ADDR_MAX;
+>  	ssize_t offset;
+>  	bool relocate = false;
+> +	bool is_split;
+>  	void *ptr;
+>  	int ret = 0;
+>  	int i;
+> @@ -277,6 +298,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  	if (!fw || !mem_region || !mem_phys || !mem_size)
+>  		return -EINVAL;
+>  
+> +	is_split = qcom_mdt_bins_are_split(fw, fw_name);
+>  	ehdr = (struct elf32_hdr *)fw->data;
+>  	phdrs = (struct elf32_phdr *)(ehdr + 1);
+>  
+> @@ -330,8 +352,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+>  
+>  		ptr = mem_region + offset;
+>  
+> -		if (phdr->p_filesz && phdr->p_offset < fw->size &&
+> -		    phdr->p_offset + phdr->p_filesz <= fw->size) {
+> +		if (phdr->p_filesz && !is_split) {
+>  			/* Firmware is large enough to be non-split */
+>  			if (phdr->p_offset + phdr->p_filesz > fw->size) {
+>  				dev_err(dev, "file %s segment %d would be truncated\n",
+> -- 
+> 2.39.2
+> 
