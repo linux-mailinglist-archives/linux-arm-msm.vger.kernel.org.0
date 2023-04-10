@@ -2,99 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F050A6DCC14
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 22:27:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD3736DCC1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 22:29:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbjDJU1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 16:27:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49380 "EHLO
+        id S229785AbjDJU3e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 16:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjDJU1F (ORCPT
+        with ESMTP id S229741AbjDJU3d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 16:27:05 -0400
-X-Greylist: delayed 420 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 10 Apr 2023 13:27:01 PDT
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8A23173E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 13:27:01 -0700 (PDT)
-Received: from [10.0.0.182] (unknown [10.0.0.1])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+        Mon, 10 Apr 2023 16:29:33 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A596173C;
+        Mon, 10 Apr 2023 13:29:31 -0700 (PDT)
+Received: from localhost.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 0284D160253;
-        Mon, 10 Apr 2023 22:19:58 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1681157999;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=tK1fS7WZzvvvankCDxJqwLIZVccAi2HoGM4FvYMsA7I=;
-        b=Fgfyqh6b4VkyRhSlbXeHtTn4EDpJyVogidZY1idLd8hy0wawIXr/sYTOkl0nzf86iwJybg
-        XS4uKhVBWKofCMMkyoNY5cKl0+XBu5Rj54qmTUkEo+2gFnEMSc8dBy5xy0vw63tQkXs0/y
-        ePPOBJ3lXMo34vN7TsrdoW3WfKBGyYE=
-Message-ID: <47ec8cd0-4aa9-1062-6e4f-159e62e62fb5@ixit.cz>
-Date:   Mon, 10 Apr 2023 22:19:58 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:104.0) Gecko/20100101
- Thunderbird/104.0
-Subject: Re: [PATCH] drm/msm/a6xx: don't set IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
- with coherent SMMU
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EBB9A3FA35;
+        Mon, 10 Apr 2023 22:29:26 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
-Content-Language: en-US
-From:   David Heidelberg <david@ixit.cz>
-In-Reply-To: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RDNS_DYNAMIC,SPF_HELO_PASS,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v4 0/5] dts: qcom: Use labels with generic node names for ADC channels
+Date:   Mon, 10 Apr 2023 22:29:12 +0200
+Message-Id: <20230410202917.247666-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.40.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thank you!
+As discussed in [1] it is more convenient to use a generic `channel`
+node name for ADC channels while storing a friendly - board-specific
+instead of PMIC-specific - name in the label, if/when desired to
+overwrite the channel description already contained (but previously
+unused) in the driver [2].
 
-Tested-by: David Heidelberg <david@ixit.cz>
+The same `channel` node name pattern has also been set in
+iio/adc/adc.yaml, but this generic binding is not inherited as base for
+qcom,spmi-vadc bindings due to not having any other generic elements in
+common, besides the node name rule and reg property.
 
-On 10/04/2023 20:52, Dmitry Baryshkov wrote:
-> If the Adreno SMMU is dma-coherent, allocation will fail unless we
-> disable IO_PGTABLE_QUIRK_ARM_OUTER_WBWA. Skip setting this quirk for the
-> coherent SMMUs (like we have on sm8350 platform).
->
-> Fixes: 54af0ceb7595 ("arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and SMMU nodes")
-> Reported-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 2942d2548ce6..f74495dcbd96 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1793,7 +1793,8 @@ a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
->   	 * This allows GPU to set the bus attributes required to use system
->   	 * cache on behalf of the iommu page table walker.
->   	 */
-> -	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
-> +	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice) &&
-> +	    !device_iommu_capable(&pdev->dev, IOMMU_CAP_CACHE_COHERENCY))
->   		quirks |= IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
->   
->   	return adreno_iommu_create_address_space(gpu, pdev, quirks);
+Replace the .* name pattern with the `channel` literal, but leave the
+label property optional for bindings to choose to fall back a channel
+label hardcoded in the driver [2] instead.
 
--- 
-David Heidelberg
-Consultant Software Engineer
+[1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
+[2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
+
+Changes since v3:
+- Switch generic node name to `channel`, matching iio/adc/adc.yaml;
+- Besides switching arbitrary names to `channel`, now also rename all
+  existing `adc-chan` names to `channel`, including ARM tree;
+- Rebase on next-20230406 and apply rename to newer PMIC files.
+
+v3: https://lore.kernel.org/linux-arm-msm/20230201204447.542385-1-marijn.suijten@somainline.org/T/#u
+
+Changes since v2:
+- Reorder DT changes before dt-bindings changes;
+- Update adc-chan generic node name in tm5 example bindings.
+
+v2: https://lore.kernel.org/linux-arm-msm/20230119212632.185881-1-marijn.suijten@somainline.org/T/#u
+
+Changes since v1:
+- Require adc-chan name in dt-bindings;
+- Replace more node names with adc-chan and a descriptive label, that
+  were found by running dtbs_check on adjusted bindings;
+- sm8250-mtp.dts: Fix accidental adc-chan2 node name with pa_therm
+  label, which should have been adc-chan with pa_therm2 label.
+
+v1: https://lore.kernel.org/linux-arm-msm/20221209215308.1781047-1-marijn.suijten@somainline.org/
+
+
+Marijn Suijten (5):
+  ARM: dts: qcom: Use labels with generic node names for ADC channels
+  arm64: dts: qcom: Use labels with generic node names for ADC channels
+  dt-bindings: thermal: Use generic ADC node name in examples
+  dt-bindings: mfd: qcom,spmi-pmic: Use generic ADC node name in
+    examples
+  dt-bindings: iio: adc: Require generic `channel` name for channel
+    nodes
+
+ .../bindings/iio/adc/qcom,spmi-vadc.yaml      | 26 +++++++------
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |  4 +-
+ .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml |  4 +-
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml   |  9 +++--
+ arch/arm/boot/dts/qcom-pm8226.dtsi            | 12 +++---
+ arch/arm/boot/dts/qcom-pm8941.dtsi            | 14 +++----
+ arch/arm/boot/dts/qcom-pma8084.dtsi           | 12 +++---
+ arch/arm/boot/dts/qcom-pmx55.dtsi             |  8 ++--
+ arch/arm64/boot/dts/qcom/pm6125.dtsi          | 18 ++++++---
+ arch/arm64/boot/dts/qcom/pm6150.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/pm6150l.dtsi         |  8 ++--
+ arch/arm64/boot/dts/qcom/pm660.dtsi           | 33 ++++++++++------
+ arch/arm64/boot/dts/qcom/pm7250b.dtsi         | 24 ++++++------
+ arch/arm64/boot/dts/qcom/pm8150.dtsi          |  6 +--
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         |  8 ++--
+ arch/arm64/boot/dts/qcom/pm8150l.dtsi         |  6 +--
+ arch/arm64/boot/dts/qcom/pm8916.dtsi          | 14 +++----
+ arch/arm64/boot/dts/qcom/pm8950.dtsi          | 39 ++++++++++++-------
+ arch/arm64/boot/dts/qcom/pm8953.dtsi          | 12 +++---
+ arch/arm64/boot/dts/qcom/pm8994.dtsi          | 12 +++---
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/pmi8950.dtsi         | 12 +++---
+ arch/arm64/boot/dts/qcom/pmm8155au_1.dtsi     |  6 +--
+ arch/arm64/boot/dts/qcom/pmm8155au_2.dtsi     |  6 +--
+ arch/arm64/boot/dts/qcom/pmp8074.dtsi         | 27 ++++++++-----
+ arch/arm64/boot/dts/qcom/pms405.dtsi          | 21 ++++++----
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      | 15 ++++---
+ .../dts/qcom/sc7180-trogdor-coachz-r1.dts     |  4 +-
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  3 +-
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  3 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  2 +-
+ .../dts/qcom/sc7180-trogdor-pompom-r1.dts     |  2 +-
+ .../dts/qcom/sc7180-trogdor-pompom-r2.dts     |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  3 +-
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  3 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  3 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts       |  2 +-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi      |  2 +-
+ arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi    |  4 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 26 ++++++-------
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi    | 10 ++---
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts       | 12 +++---
+ .../qcom/sm6125-sony-xperia-seine-pdx201.dts  | 15 ++++---
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |  6 +--
+ arch/arm64/boot/dts/qcom/sm8250-mtp.dts       | 21 ++++++----
+ 45 files changed, 278 insertions(+), 205 deletions(-)
+
+--
+2.40.0
 
