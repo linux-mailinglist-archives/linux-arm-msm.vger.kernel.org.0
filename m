@@ -2,133 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C9C46DC6D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 14:45:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AB396DC734
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 15:14:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229600AbjDJMpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 08:45:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54630 "EHLO
+        id S229872AbjDJNO6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 09:14:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjDJMon (ORCPT
+        with ESMTP id S229614AbjDJNO5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 08:44:43 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 312B24C0A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 05:44:42 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id o18so4399009wro.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 05:44:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681130680; x=1683722680;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CeQWpKy8+NJXDpJHdtsTgj9dRfzdRMrlkZK72BPPZGE=;
-        b=poutZvt8NTIlxL4QYU+98F+kPPH3SiSQFVjddaHqftnTeaP7lx/j/MtR58NQdf1tQp
-         etB7RxBCwiKFOIkyurJjhEyuljvWf1ROFCTY2nIwcXI3aJ0VlYh2a5wkE7hFjL8I+Z3Q
-         7tlEKrChfdPjU3gy72qSjEqR2swie2NVAv4j222XIiyP20cEeQUtdnHL797QsCmHhPnd
-         oCzOkmqy6vbZEb5H4HsgMZSpyTXKejPu6Z3rDaY748dSSfGyl2BLmA+l3zyQ0Q/zB+y7
-         ETjx8xuRyCNYPCaGOuvU3WXV7YCwb4qUevlVs598RwNuBAWvhFfG8d8OsndmUAI4hhXJ
-         iG0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681130680; x=1683722680;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CeQWpKy8+NJXDpJHdtsTgj9dRfzdRMrlkZK72BPPZGE=;
-        b=FQlJYcHPeA8lM7pqWxH48kYvI5HdvSKDCjK/S0GlpbDaJRral0oGXesdZtIbFNaI/S
-         xQB5wAOwDJWzyoolA3kOKp7wSrRie3atOC6nRnb27mZAtRXwekJX7DfyzNELJFkNkVyK
-         CZGRYgu+PNQfTrInOMlXqxYz34UQ2eWtH4K94NGBlaIDpS/9NlHw+O5RFwJjIVcEZfqf
-         ZqJoAqiacZ1z3kvUjq+MW6QxQb4ZFwlu2eB2Fznu6L3V46wstB7yhIXufOrPnRteWtDn
-         rgf6EtGLqC6FvxuJw+OCnp+CqinKd72neZ675Dk4rIabmibdG126p8B4YSSJzVmJN9vo
-         mMfQ==
-X-Gm-Message-State: AAQBX9fyFj/e88jYvBhGM8/5q9x8UEluvvc32fRx4zxfTwIQOjM2Ow1r
-        x5bCjtDcueh5AUx6Q6MgC0loeA==
-X-Google-Smtp-Source: AKy350bP2iMtSjzqZsBNOo+UEpuonp4bSfFS0XjcHtZlhUd3xlVhrfsH/nOuGeK6A4ysjF2R9W1gPg==
-X-Received: by 2002:adf:f887:0:b0:2cf:e74f:2957 with SMTP id u7-20020adff887000000b002cfe74f2957mr7219231wrp.33.1681130680673;
-        Mon, 10 Apr 2023 05:44:40 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id e17-20020adffc51000000b002ef2e148d59sm11054966wrs.16.2023.04.10.05.44.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Apr 2023 05:44:40 -0700 (PDT)
-Message-ID: <e10f7b87-0bc7-5e13-1757-bbf74c9cac86@linaro.org>
-Date:   Mon, 10 Apr 2023 13:44:39 +0100
+        Mon, 10 Apr 2023 09:14:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B425E4ECF;
+        Mon, 10 Apr 2023 06:14:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 48F4C60F55;
+        Mon, 10 Apr 2023 13:14:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E30CC433EF;
+        Mon, 10 Apr 2023 13:14:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681132495;
+        bh=W7rc4tAnnkDF+jqiSqVFhUih0Hb85Hq/IAnA8/Fl6wc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uwds1kNB3HtTwdCpSbG1OP3oAWrx/VpYSONB6hkkKPKVnV9NrYMq824H8Hqj2rD2m
+         J7bWBbhsKRXjJ/zoku+2fFKlg9gwgHM3t00M0KU2ymXCNWEh52CFt6BOYz14O0idRx
+         zXqA6u5LLoUv/kk+42jVMuoKPVBnuW4V29S18sBZh88eYZFcpS30CvOORrOguiOStn
+         utw2eQMkOma7h98QuDvWMJgKcVbPKhQE99B5ie6RMEYMyT/YP1ccPXLnzCnDOyZgGA
+         FY/MqIVx2FwsLreNY9jNIVYSPOPWlxaaFSEG+aIwHpf9nJPvqlTTGSlDE2KZSzuvMc
+         quvgenwnZv47g==
+Date:   Mon, 10 Apr 2023 18:44:46 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Vivek Pernamitta <quic_vpernami@quicinc.com>
+Cc:     mhi@lists.linux.dev, quic_qianyu@quicinc.com,
+        manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
+        quic_krichai@quicinc.com, quic_skananth@quicinc.com,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        "open list:MHI BUS" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH V6] bus: mhi: host: Avoid ringing EV DB if there is no
+ elements to process
+Message-ID: <20230410131446.GA4630@thinkpad>
+References: <1680601458-9105-1-git-send-email-quic_vpernami@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Mark cont splash memory
- region as reserved
-Content-Language: en-US
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <20230124182857.1524912-1-amit.pundir@linaro.org>
- <39751511-3f06-7c39-9c21-208d4c272113@linaro.org>
- <CAA8EJppLBuA08hkqTrZx_wwbtCxK9sAjv48c9_DxgPENgo7a8Q@mail.gmail.com>
- <1a840d88-e5b1-711c-b980-f57620c54472@linaro.org>
- <8508e3d5-7468-0b2f-5a43-7c439ecf2d8b@linaro.org>
- <CAMi1Hd2UNxXHUVWO-=sWh=-bVnrqE3UdLguFOq+62SfvUiEs0A@mail.gmail.com>
- <b2307e91-3373-539a-ecfb-e2542b9f83db@linaro.org>
- <CAMi1Hd2xfH-=htvHFQRktdgtDwiXKKvFo+9hook4HCJCPY6ydA@mail.gmail.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <CAMi1Hd2xfH-=htvHFQRktdgtDwiXKKvFo+9hook4HCJCPY6ydA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1680601458-9105-1-git-send-email-quic_vpernami@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/04/2023 09:54, Amit Pundir wrote:
-> On Thu, 9 Feb 2023 at 16:33, Bryan O'Donoghue
-> <bryan.odonoghue@linaro.org> wrote:
->>
->> On 09/02/2023 09:05, Amit Pundir wrote:
->>> Hi, So what is the verdict on this patch?
->>>
->>> I submitted this fix to make sure UFS don't map and crash on it, which
->>> I have seen happening occassionaly on db845c and Caleb reported
->>> similar issues on his sdm845 device iirc. I should have probably put
->>> that in my commit message as well.
->>>
->>> Regards,
->>> Amit Pundir
->>
->> So the memory _is_ being used by ... continuous splash on an Android
->> image, i.e. your Android ? limited to Android - image continues on with
->> the splash but other blocks erroneously reuse the memory then, UFS as an
->> example ?
+On Tue, Apr 04, 2023 at 03:14:16PM +0530, Vivek Pernamitta wrote:
+> currently mhi_process_data_event_ring()/mhi_process_ctrl_ev_ring()
+> will ring DB even if there no ring elements to process.
+> This could cause doorbell event to be processed by MHI device
+> to check for any ring elements even it is none.
+> So ring event DB only if any event ring elements are processed.
 > 
-> Hi Bryan,
+> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+
+Slightly reworded the commit message and applied to mhi-next!
+
+- Mani
+
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> changes since v6:
+> 	updating the commit text.
+> changes since v5:
+> 	updating the commit text.
+> changes since v4:
+> 	updating the commit text with more information.
+> changes since v3:
+> 	- Updating commit text for multiple versions of patches.
+> changes since v2:
+> 	- Updated comments in code.
+> changes since v1:
+> 	- Add an check to avoid ringing EV DB in mhi_process_ctrl_ev_ring().
+> ---
+>  drivers/bus/mhi/host/main.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> Yes UFS (reported only on v5.10) tries to map this reserved memory and
-> system crash and reboot. Plan is to backport this patch to v5.10.y.
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index df0fbfe..1bbdb75 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -961,7 +961,9 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+>  	}
+>  
+>  	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> +
+> +	/* Ring EV DB only if there is any pending element to process */
+> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+>  		mhi_ring_er_db(mhi_event);
+>  	read_unlock_bh(&mhi_cntrl->pm_lock);
+>  
+> @@ -1031,7 +1033,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+>  		count++;
+>  	}
+>  	read_lock_bh(&mhi_cntrl->pm_lock);
+> -	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)))
+> +
+> +	/* Ring EV DB only if there is any pending element to process */
+> +	if (likely(MHI_DB_ACCESS_VALID(mhi_cntrl)) && count)
+>  		mhi_ring_er_db(mhi_event);
+>  	read_unlock_bh(&mhi_cntrl->pm_lock);
+>  
+> -- 
+> 2.7.4
 > 
-> Regards,
-> Amit Pundir
-> 
->>
->> ---
->> bod
 
-Personally I'm fine with this patch on the proviso we somehow associate 
-it the memory MDP - even if its just a comment in the dts with the MDP.
-
-i.e. if we run headless we want to be able to use that RAM for something.
-
-A dts comment would do
-
----
-bod
+-- 
+மணிவண்ணன் சதாசிவம்
