@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4D126DCC24
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 22:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F159D6DCC30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 22:29:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229842AbjDJU3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 16:29:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50132 "EHLO
+        id S229640AbjDJU3l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 16:29:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjDJU3g (ORCPT
+        with ESMTP id S229831AbjDJU3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 10 Apr 2023 16:29:36 -0400
 Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17FAA171C;
-        Mon, 10 Apr 2023 13:29:33 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94FC7173A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 13:29:34 -0700 (PDT)
 Received: from localhost.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 68F883FAAE;
-        Mon, 10 Apr 2023 22:29:31 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 621BF3FA99;
+        Mon, 10 Apr 2023 22:29:32 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     phone-devel@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
@@ -39,15 +39,10 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Manivannan Sadhasivam <mani@kernel.org>,
         linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org
-Subject: [PATCH v4 3/5] dt-bindings: thermal: Use generic ADC node name in examples
-Date:   Mon, 10 Apr 2023 22:29:15 +0200
-Message-Id: <20230410202917.247666-4-marijn.suijten@somainline.org>
+        Lee Jones <lee@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH v4 4/5] dt-bindings: mfd: qcom,spmi-pmic: Use generic ADC node name in examples
+Date:   Mon, 10 Apr 2023 22:29:16 +0200
+Message-Id: <20230410202917.247666-5-marijn.suijten@somainline.org>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230410202917.247666-1-marijn.suijten@somainline.org>
 References: <20230410202917.247666-1-marijn.suijten@somainline.org>
@@ -68,63 +63,28 @@ of the channel in a label instead.
 
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- .../devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml | 4 ++--
- .../devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml   | 9 ++++++---
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
-index 8273ac55b63f..01253d58bf9f 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
-@@ -124,8 +124,8 @@ examples:
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+index 84620ebc1efe..9f4c75c35aae 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+@@ -283,12 +283,12 @@ examples:
              #size-cells = <0>;
              #io-channel-cells = <1>;
  
--            /* Other propreties are omitted */
--            adc-chan@4c {
-+            /* Other properties are omitted */
-+            channel@4c {
-                 reg = <ADC5_XO_THERM_100K_PU>;
+-            adc-chan@6 {
++            channel@6 {
+                 reg = <ADC5_DIE_TEMP>;
+                 label = "die_temp";
              };
-         };
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-index 52ec18cf1eda..3c81def03c84 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml
-@@ -178,10 +178,11 @@ examples:
-             #io-channel-cells = <1>;
  
-             /* Other properties are omitted */
--            conn-therm@4f {
+-            adc-chan@4f {
 +            channel@4f {
                  reg = <ADC5_AMUX_THM3_100K_PU>;
                  qcom,ratiometric;
                  qcom,hw-settle-time = <200>;
-+                label = "conn_therm";
-             };
-         };
- 
-@@ -217,16 +218,18 @@ examples:
-             #io-channel-cells = <1>;
- 
-             /* Other properties are omitted */
--            xo-therm@44 {
-+            channel@44 {
-                 reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
-                 qcom,ratiometric;
-                 qcom,hw-settle-time = <200>;
-+                label = "xo_therm";
-             };
- 
--            conn-therm@147 {
-+            channel@147 {
-                 reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
-                 qcom,ratiometric;
-                 qcom,hw-settle-time = <200>;
-+                label = "conn_therm";
-             };
-         };
- 
 -- 
 2.40.0
 
