@@ -2,164 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BF186DC203
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 01:34:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C0586DC23B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 02:58:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229445AbjDIXeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 9 Apr 2023 19:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50960 "EHLO
+        id S229485AbjDJA63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 9 Apr 2023 20:58:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjDIXeA (ORCPT
+        with ESMTP id S229575AbjDJA61 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 9 Apr 2023 19:34:00 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A2E3598
-        for <linux-arm-msm@vger.kernel.org>; Sun,  9 Apr 2023 16:33:58 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id r27so4630931lfe.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 09 Apr 2023 16:33:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681083236;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FmWyTtqXagmJ+EkdgpkYkNzA/ON4CgrTaGNlpRFCRVk=;
-        b=K3fQ+IUfklflf52cmwFwjdiSg5vkh0CtJmPEiL793fhb13Zgd2N4SlO9Cl195RFLAo
-         OdqPj1Z9lIDWv7m7XDzejQ78mcnUSVr2mxRleX29i1oXovL/m2+2Bh4Hx0ah8KR7XSKi
-         tGQEO46p1Vffykaqa6LQHJyIn6RYxLvuIsZoPwhjMTHdv+cj0Cj/c34Cvc0ON0X3CYbg
-         y+6yh0JMGWITy0VgqiFedDMJPhSnNGxLO/uBZnfVW80cl8z1MHSRh90LxZwP4mT3FT+Y
-         DQUf+50MV7TJn0RLeDttgQe6lPv++SsMTE9tWhL1F1w3KbNvUOJoJdhVrHnWYTOMg4YT
-         rtqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681083236;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FmWyTtqXagmJ+EkdgpkYkNzA/ON4CgrTaGNlpRFCRVk=;
-        b=5Hz13Kq/kFBD7HPq+Dd29tonjcm4YyDTuiGi01XleC9/A1WkiOX104N+BCUd+hmOGI
-         AFcCSRY/sqU3+WvMqTmp7le1b8pN7+ZJYkd7Hr7PET+nyjrl92lUdRApt97A5QR/yabf
-         5IbiIjlzmP5g/GAw92VscpoGp/sdvYtTWf4T2WyAs5aftC2FoCiOkfiMlrc+li3lqGzz
-         5saO1/tfZjIb6+LO5pZiFs2jbK5MfWzc5Hkq0mGveyKIvjn3cS7JYAoacXSvgudDRW1R
-         qLPTAVe713rIVrXBldq26o5m64KpWrFkEo7ia7S+qrxlwH1ji1fiIFL/1NPhK1ZLff/0
-         UFzA==
-X-Gm-Message-State: AAQBX9fvF8/eMuCi68Ftjchs62DR5rPIjPc8XN5EBpI0h7bbyMYZerGO
-        XhmfGb2KfUSKFJ+ElmG0bLNDRg==
-X-Google-Smtp-Source: AKy350ZJFp4ygYt5vVOWkodzw/xs2MxAjKShCd6Z56Llw2RpJamb1SWiNIImBRaDaAaiQUHWqwZiLA==
-X-Received: by 2002:a05:6512:39c4:b0:4dc:8049:6f36 with SMTP id k4-20020a05651239c400b004dc80496f36mr1980200lfu.1.1681083236366;
-        Sun, 09 Apr 2023 16:33:56 -0700 (PDT)
-Received: from lothlorien.lan (dzccz6yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::ab2])
-        by smtp.gmail.com with ESMTPSA id d14-20020ac2544e000000b004e844eeb555sm1805321lfn.214.2023.04.09.16.33.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Apr 2023 16:33:55 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: [PATCH] dma: gpi: remove spurious unlock in gpi_ch_init
-Date:   Mon, 10 Apr 2023 02:33:55 +0300
-Message-Id: <20230409233355.453741-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        Sun, 9 Apr 2023 20:58:27 -0400
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE4A835AD;
+        Sun,  9 Apr 2023 17:58:24 -0700 (PDT)
+Received: from canpemm500006.china.huawei.com (unknown [172.30.72.56])
+        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Pvr970HMGznbQf;
+        Mon, 10 Apr 2023 08:54:51 +0800 (CST)
+Received: from [10.174.179.200] (10.174.179.200) by
+ canpemm500006.china.huawei.com (7.192.105.130) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.23; Mon, 10 Apr 2023 08:58:22 +0800
+Subject: Re: [PATCH net] net: qrtr: Fix an uninit variable access bug in
+ qrtr_tx_resume()
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <andersson@kernel.org>, <luca@z3ntu.xyz>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>
+References: <20230403075417.2244203-1-william.xuanziyang@huawei.com>
+ <20230408083528.GA11124@thinkpad>
+From:   "Ziyang Xuan (William)" <william.xuanziyang@huawei.com>
+Message-ID: <bf012f37-57b8-4d66-9222-5b86e86393cd@huawei.com>
+Date:   Mon, 10 Apr 2023 08:58:21 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230408083528.GA11124@thinkpad>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.174.179.200]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ canpemm500006.china.huawei.com (7.192.105.130)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-5.2 required=5.0 tests=NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-gpi_ch_init() doesn't lock the ctrl_lock mutex, so there is no need to
-unlock it too. Instead the mutex is handled by the funcion
-gpi_alloc_chan_resources(), which properly locks and unlocks the mutex.
+> On Mon, Apr 03, 2023 at 03:54:17PM +0800, Ziyang Xuan wrote:
+>> Syzbot reported a bug as following:
+>>
+>> =====================================================
+>> BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+>>  qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+>>  qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
+>>  qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+>>  call_write_iter include/linux/fs.h:2189 [inline]
+>>  aio_write+0x63a/0x950 fs/aio.c:1600
+>>  io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+>>  __do_sys_io_submit fs/aio.c:2078 [inline]
+>>  __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+>>  __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+>>  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+>>  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+>>  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+>>
+>> Uninit was created at:
+>>  slab_post_alloc_hook mm/slab.h:766 [inline]
+>>  slab_alloc_node mm/slub.c:3452 [inline]
+>>  __kmem_cache_alloc_node+0x71f/0xce0 mm/slub.c:3491
+>>  __do_kmalloc_node mm/slab_common.c:967 [inline]
+>>  __kmalloc_node_track_caller+0x114/0x3b0 mm/slab_common.c:988
+>>  kmalloc_reserve net/core/skbuff.c:492 [inline]
+>>  __alloc_skb+0x3af/0x8f0 net/core/skbuff.c:565
+>>  __netdev_alloc_skb+0x120/0x7d0 net/core/skbuff.c:630
+>>  qrtr_endpoint_post+0xbd/0x11b0 net/qrtr/af_qrtr.c:446
+>>  qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+>>  call_write_iter include/linux/fs.h:2189 [inline]
+>>  aio_write+0x63a/0x950 fs/aio.c:1600
+>>  io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+>>  __do_sys_io_submit fs/aio.c:2078 [inline]
+>>  __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+>>  __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+>>  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+>>  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+>>  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+>>
+>> It is because that skb->len requires at least sizeof(struct qrtr_ctrl_pkt)
+>> in qrtr_tx_resume(). And skb->len equals to size in qrtr_endpoint_post().
+>> But size is less than sizeof(struct qrtr_ctrl_pkt) when qrtr_cb->type
+>> equals to QRTR_TYPE_RESUME_TX in qrtr_endpoint_post() under the syzbot
+>> scenario. This triggers the uninit variable access bug.
+>>
+>> Add size check when qrtr_cb->type equals to QRTR_TYPE_RESUME_TX in
+>> qrtr_endpoint_post() to fix the bug.
+>>
+>> Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
+>> Reported-by: syzbot+4436c9630a45820fda76@syzkaller.appspotmail.com
+>> Link: https://syzkaller.appspot.com/bug?id=c14607f0963d27d5a3d5f4c8639b500909e43540
+>> Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+> 
+> Looks good to me. But I have a small suggestion below.
+> 
+>> ---
+>>  net/qrtr/af_qrtr.c | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>>
+>> diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+>> index 3a70255c8d02..631e81a8a368 100644
+>> --- a/net/qrtr/af_qrtr.c
+>> +++ b/net/qrtr/af_qrtr.c
+>> @@ -498,6 +498,10 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+>>  	if (!size || len != ALIGN(size, 4) + hdrlen)
+>>  		goto err;
+>>  
+>> +	if (cb->type == QRTR_TYPE_RESUME_TX &&
+>> +	    size < sizeof(struct qrtr_ctrl_pkt))
+> 
+> There is already a check for QRTR_TYPE_NEW_SERVER below. So you can combine both:
+> 
+> 	if ((cb->type == QRTR_TYPE_NEW_SERVER ||
+> 	     cb->type == QRTR_TYPE_RESUME_TX)
+> 	     && size < sizeof(struct qrtr_ctrl_pkt))
+> 		goto err;
+> 
+> - Mani
+That's good. Thank you for your suggestion!
 
-=====================================
-WARNING: bad unlock balance detected!
-6.3.0-rc5-00253-g99792582ded1-dirty #15 Not tainted
--------------------------------------
-kworker/u16:0/9 is trying to release lock (&gpii->ctrl_lock) at:
-[<ffffb99d04e1284c>] gpi_alloc_chan_resources+0x108/0x5bc
-but there are no more locks to release!
+v2 will be sent.
 
-other info that might help us debug this:
-6 locks held by kworker/u16:0/9:
- #0: ffff575740010938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x220/0x594
- #1: ffff80000809bdd0 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x220/0x594
- #2: ffff575740f2a0f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x188
- #3: ffff57574b5570f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x188
- #4: ffffb99d06a2f180 (of_dma_lock){+.+.}-{3:3}, at: of_dma_request_slave_channel+0x138/0x280
- #5: ffffb99d06a2ee20 (dma_list_mutex){+.+.}-{3:3}, at: dma_get_slave_channel+0x28/0x10c
-
-stack backtrace:
-CPU: 7 PID: 9 Comm: kworker/u16:0 Not tainted 6.3.0-rc5-00253-g99792582ded1-dirty #15
-Hardware name: Google Pixel 3 (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
- dump_backtrace+0xa0/0xfc
- show_stack+0x18/0x24
- dump_stack_lvl+0x60/0xac
- dump_stack+0x18/0x24
- print_unlock_imbalance_bug+0x130/0x148
- lock_release+0x270/0x300
- __mutex_unlock_slowpath+0x48/0x2cc
- mutex_unlock+0x20/0x2c
- gpi_alloc_chan_resources+0x108/0x5bc
- dma_chan_get+0x84/0x188
- dma_get_slave_channel+0x5c/0x10c
- gpi_of_dma_xlate+0x110/0x1a0
- of_dma_request_slave_channel+0x174/0x280
- dma_request_chan+0x3c/0x2d4
- geni_i2c_probe+0x544/0x63c
- platform_probe+0x68/0xc4
- really_probe+0x148/0x2ac
- __driver_probe_device+0x78/0xe0
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- device_add+0x60c/0x7d8
- of_device_add+0x44/0x60
- of_platform_device_create_pdata+0x90/0x124
- of_platform_bus_create+0x15c/0x3c8
- of_platform_populate+0x58/0xf8
- devm_of_platform_populate+0x58/0xbc
- geni_se_probe+0xf0/0x164
- platform_probe+0x68/0xc4
- really_probe+0x148/0x2ac
- __driver_probe_device+0x78/0xe0
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- deferred_probe_work_func+0x8c/0xc8
- process_one_work+0x2bc/0x594
- worker_thread+0x228/0x438
- kthread+0x108/0x10c
- ret_from_fork+0x10/0x20
-
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/dma/qcom/gpi.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 59a36cbf9b5f..932628b319c8 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1966,7 +1966,6 @@ static int gpi_ch_init(struct gchan *gchan)
- error_config_int:
- 	gpi_free_ring(&gpii->ev_ring, gpii);
- exit_gpi_init:
--	mutex_unlock(&gpii->ctrl_lock);
- 	return ret;
- }
- 
--- 
-2.39.2
-
+William Xuan
+> 
+>> +		goto err;
+>> +
+>>  	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
+>>  	    cb->type != QRTR_TYPE_RESUME_TX)
+>>  		goto err;
+>> -- 
+>> 2.25.1
+>>
+> 
