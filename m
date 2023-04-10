@@ -2,185 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7260D6DCC2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 22:29:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93AE36DCC93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 23:06:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbjDJU3k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 16:29:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50174 "EHLO
+        id S229938AbjDJVGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 17:06:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjDJU3i (ORCPT
+        with ESMTP id S230064AbjDJVGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 16:29:38 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A402125
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 13:29:35 -0700 (PDT)
-Received: from localhost.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CC58A3FA84;
-        Mon, 10 Apr 2023 22:29:33 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 5/5] dt-bindings: iio: adc: Require generic `channel` name for channel nodes
-Date:   Mon, 10 Apr 2023 22:29:17 +0200
-Message-Id: <20230410202917.247666-6-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230410202917.247666-1-marijn.suijten@somainline.org>
-References: <20230410202917.247666-1-marijn.suijten@somainline.org>
+        Mon, 10 Apr 2023 17:06:21 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7974D1737;
+        Mon, 10 Apr 2023 14:06:20 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id ik20so5645953plb.3;
+        Mon, 10 Apr 2023 14:06:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1681160780;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mw7PIDF324rj5JmiBp3Gcc4Fg2iuz1Tt4YTUd4kugdk=;
+        b=a68QFzn1xixO15odT51vAd9u8PE/r3KgLLy3lgULiikNLxbWZc1f7JczaJVfAKkZQI
+         pyUH/X3rpI0J+idTdkgL0jPeK847Y/6kFnjXjCA0hm/Uq7AL1NZYR4tfmge2JNjCq7oX
+         rGVGYVunI3aFL+9V1gkWlzCAYY9qSrUoG543VJZfTf7GXytYKAGiCUHVb6CAo5J3Fgeq
+         0GNZS4cgqC/53a+Q6ZjdEG7JHGkntMEBZruSqBH7tOCcycBWoWoMLzrwtSBTaJN0EIuL
+         IW1cmGWfMw5Yhhl8uU/8rify1v7DkpSS1526TkroQrtSK1L4s0g6/CPS3nqbOA/5aT4B
+         fOzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681160780;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mw7PIDF324rj5JmiBp3Gcc4Fg2iuz1Tt4YTUd4kugdk=;
+        b=oKjcadyVnhO62Yd1LoeBSIvx5CcVF98rF0pZozdL3pDQutUGhqA2rw6wz7xAHA4LAy
+         upKRLOhj7pAaArUkt8aMCorYFZ5tHgddRxvQRZz0oeAMl5BIrhuqSLl101eHAcNRQUkk
+         ctfhxi04RZoNDANHbb3oyAsEx8GCcGf8a1CFSjumgvP+NxsS+E28bB/89rWGDDK9jclk
+         02I9iKv9s+Uat38OuQL1x/1vcNpt2m8pdk1VIhfvtb2sS/HMaH4DqSMis7ma3UYpd4f8
+         ekrj6LjeyC4HUdD8H0TgceNzFomPVTl7zbMOA0xfVGD3hfFveTq2NTnvq5QX2P6IC/GK
+         DvIA==
+X-Gm-Message-State: AAQBX9fTIIMmbuajkq+WtFaGlU1weCcxwBQOmmbAyLPLhwtwC0k5Pi9G
+        XcN1ild/WVCOKImAuc3C+r9A5Vly9fo=
+X-Google-Smtp-Source: AKy350ZeqUgG7R7usICFzaYvDiaV5ajgBpKig+9DQsFboh4/q+hNdEvXbo7HjMPoHIBYsXHdB4ZACg==
+X-Received: by 2002:a17:903:124f:b0:1a5:5e7:a1c9 with SMTP id u15-20020a170903124f00b001a505e7a1c9mr347008plh.61.1681160779826;
+        Mon, 10 Apr 2023 14:06:19 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id 3-20020a170902c20300b001a647709864sm1812180pll.155.2023.04.10.14.06.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 14:06:19 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
+        linux-kernel@vger.kernel.org (open list),
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH v2 0/2] drm: fdinfo memory stats
+Date:   Mon, 10 Apr 2023 14:06:05 -0700
+Message-Id: <20230410210608.1873968-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As discussed in [1] it is more convenient to use a generic `channel`
-node name for ADC channels while storing a friendly - board-specific
-instead of PMIC-specific - name in the label, if/when desired to
-overwrite the channel description already contained (but previously
-unused) in the driver [2].
+From: Rob Clark <robdclark@chromium.org>
 
-The same `channel` node name pattern has also been set in
-iio/adc/adc.yaml, but this generic binding is not inherited as base for
-qcom,spmi-vadc bindings due to not having any other generic elements in
-common, besides the node name rule and reg property.
+Similar motivation to other similar recent attempt[1].  But with an
+attempt to have some shared code for this.  As well as documentation.
 
-Replace the .* name pattern with the `channel` literal, but leave the
-label property optional for bindings to choose to fall back a channel
-label hardcoded in the driver [2] instead.
+It is probably a bit UMA-centric, I guess devices with VRAM might want
+some placement stats as well.  But this seems like a reasonable start.
 
-[1]: https://lore.kernel.org/linux-arm-msm/20221106193018.270106-1-marijn.suijten@somainline.org/T/#u
-[2]: https://lore.kernel.org/linux-arm-msm/20230116220909.196926-4-marijn.suijten@somainline.org/
+Basic gputop support: https://patchwork.freedesktop.org/series/116236/
+And already nvtop support: https://github.com/Syllo/nvtop/pull/204
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- .../bindings/iio/adc/qcom,spmi-vadc.yaml      | 26 ++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+[1] https://patchwork.freedesktop.org/series/112397/
 
-diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-index bd6e0d6f6e0c..f30114424b92 100644
---- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-@@ -54,7 +54,7 @@ required:
-   - '#io-channel-cells'
- 
- patternProperties:
--  "^.*@[0-9a-f]+$":
-+  "^channel@[0-9a-f]+$":
-     type: object
-     additionalProperties: false
-     description: |
-@@ -148,7 +148,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^channel@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 512, 1024, 2048, 4096 ]
-@@ -171,7 +171,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^channel@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 256, 512, 1024 ]
-@@ -194,7 +194,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^channel@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 250, 420, 840 ]
-@@ -217,7 +217,7 @@ allOf:
- 
-     then:
-       patternProperties:
--        "^.*@[0-9a-f]+$":
-+        "^channel@[0-9a-f]+$":
-           properties:
-             qcom,decimation:
-               enum: [ 85, 340, 1360 ]
-@@ -249,7 +249,7 @@ examples:
-             #io-channel-cells = <1>;
- 
-             /* Channel node */
--            adc-chan@39 {
-+            channel@39 {
-                 reg = <0x39>;
-                 qcom,decimation = <512>;
-                 qcom,ratiometric;
-@@ -258,19 +258,19 @@ examples:
-                 qcom,pre-scaling = <1 3>;
-             };
- 
--            adc-chan@9 {
-+            channel@9 {
-                 reg = <0x9>;
-             };
- 
--            adc-chan@a {
-+            channel@a {
-                 reg = <0xa>;
-             };
- 
--            adc-chan@e {
-+            channel@e {
-                 reg = <0xe>;
-             };
- 
--            adc-chan@f {
-+            channel@f {
-                 reg = <0xf>;
-             };
-         };
-@@ -292,16 +292,18 @@ examples:
-             #io-channel-cells = <1>;
- 
-             /* Other properties are omitted */
--            xo-therm@44 {
-+            channel@44 {
-                 reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
-                 qcom,ratiometric;
-                 qcom,hw-settle-time = <200>;
-+                label = "xo_therm";
-             };
- 
--            conn-therm@47 {
-+            channel@47 {
-                 reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
-                 qcom,ratiometric;
-                 qcom,hw-settle-time = <200>;
-+                label = "conn_therm";
-             };
-         };
-     };
+Rob Clark (2):
+  drm: Add fdinfo memory stats
+  drm/msm: Add memory stats to fdinfo
+
+ Documentation/gpu/drm-usage-stats.rst | 21 +++++++
+ drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.c         | 25 ++++++++-
+ drivers/gpu/drm/msm/msm_gpu.c         |  2 -
+ include/drm/drm_file.h                | 10 ++++
+ 5 files changed, 134 insertions(+), 3 deletions(-)
+
 -- 
-2.40.0
+2.39.2
 
