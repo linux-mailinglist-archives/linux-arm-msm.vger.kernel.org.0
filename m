@@ -2,112 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA8AC6DCD95
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 00:40:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59FD66DCE05
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 01:27:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229763AbjDJWkj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 18:40:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37760 "EHLO
+        id S229874AbjDJX1J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 19:27:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229746AbjDJWki (ORCPT
+        with ESMTP id S229884AbjDJX1G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 18:40:38 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8493F1BCC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 15:40:37 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id bx15so4692741ljb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 15:40:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681166436;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ExpMxaiAsYSC/kxMJmZJo/lYKKpscHCMufENOoO0Jss=;
-        b=LQtBg78Rc3RIjK/NZdxj45la/WmU3KKsbqGoThwHmVhqr3sy6wHRVnWkYRDTAvL1gj
-         A2QPJYb0iISeYpolqz32lfMnFZD/beoqQMmWmbFbG7qE2qZCv+23MhSJwlY3i3nkd+FW
-         JW7nTn8cza7x6vw/Rw8fOH/gM97LocbXHoy91RAP7ewNzl7zhNHjIupJbPT3yhi6jwbc
-         jQjCtBOZ7GK4ODk6HkE1XaL27zXdUCOA4T0iI5sCn1hXsWa0SvbpPg6glS7ou/9QTrHR
-         YW32M0rBskdbBsueG1Ba+I6KTSG1jJaFNxErCLgEvFOjO2KSn9OoBmkTcJQ6YAvJ4Oa/
-         yXPw==
+        Mon, 10 Apr 2023 19:27:06 -0400
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B862706;
+        Mon, 10 Apr 2023 16:27:00 -0700 (PDT)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-1842d8976d9so7873569fac.9;
+        Mon, 10 Apr 2023 16:27:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681166436;
+        d=1e100.net; s=20210112; t=1681169219; x=1683761219;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ExpMxaiAsYSC/kxMJmZJo/lYKKpscHCMufENOoO0Jss=;
-        b=hmXPi5uUsImsswj113NNMgPt4nrziPgegxFCMsAjiqklMhuEKTTF/kDidjIDP0WGiR
-         9/RCFXsUH/0DeexQFXjccKNIcLfa7TxdcWTnJfgziIn2CDuCX/YQAdW3pdz1O+zpPo7n
-         3JNojVQ/H1nXXzM7wDWZQRbWj3IomBMpT3CNlKuhlwswoS0UY4KD9jb/uaH9tLItpJE+
-         gX0NXBSLqjzJN+6IgVHfgOLFIdqU78L2lAud5BItAhFQFY+y/L78yh3F5dYQ3v6ISrj+
-         bFY86sAva34APRs1Ug8jPsuYKJLo0sNiFnHH8Ioa9ItsaeOoeLqD9eNh4X4qc9XjalOq
-         EvGQ==
-X-Gm-Message-State: AAQBX9fixkzRt37ihwxfScRg7y7/kJo94isw8su0MJpbnFOJJJvpBZLl
-        yk9aKskQ5Z6JTWYjRc9avAZZKg==
-X-Google-Smtp-Source: AKy350aZM/Dm9IAVjkzrpnrNGKkAnyaxL3kEvMMKkv5S1Zqvl3B8sQgi0Z5WHmQ0jjUxAcOa5vxccg==
-X-Received: by 2002:a2e:9d08:0:b0:29a:1f7d:38b1 with SMTP id t8-20020a2e9d08000000b0029a1f7d38b1mr3633969lji.28.1681166435783;
-        Mon, 10 Apr 2023 15:40:35 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id y4-20020a2e95c4000000b002a77e01c3a0sm518102ljh.23.2023.04.10.15.40.35
+        bh=9BKmejGlMSUvRsKggdx7LuEDnr/YS/2ZplY03ssRG4U=;
+        b=movUC3gAmlCoYuQyb+6/LgXnSkvWz0ZpjW/9frQ35wmkqVFunKmlj0CFOAgE61qxTf
+         YNtnH1Ju83lgVcb3I72M6dzff3Ho6Dc/5uF4zr5YsrVQB7/VwTgIeCFuBh29XitpWbKD
+         g/jxTGoLQIScUsAeWqOsfADR+YMASb3NFAo8q8AKdp6unygsvxXIEv1/llpLQyFEZCv9
+         lCOnJTCN3CjQg8mbxJHjK0D/ZnLqUFXpN5JEcAQORYgpgC2ceZAaFS2UADyTC+zSt9Ae
+         WgVO/Cg6PTigJtnBmIOZGGxoVURRFonqLzvwSQDuii4kTCIguo1e/L1d5kKYTcPpaxmS
+         ahyQ==
+X-Gm-Message-State: AAQBX9db/0wHGGESV04iBffx+c1PQ5EXRwR7htUExn4CVtxjwsqrR70v
+        YYyZzodcQ1BPvD45lIOjAA==
+X-Google-Smtp-Source: AKy350YP1HVw5NSXCcsMrWBxIWHH6ye4QiUs/PQqLrcEaVkbdo/4RTY7AvL9YnboAJMGeir0LFPdIQ==
+X-Received: by 2002:a05:6871:54e:b0:184:5395:4e44 with SMTP id t14-20020a056871054e00b0018453954e44mr2445990oal.28.1681169219638;
+        Mon, 10 Apr 2023 16:26:59 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id f5-20020a056870d30500b0017ae1aede32sm379829oag.46.2023.04.10.16.26.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 15:40:35 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Mon, 10 Apr 2023 16:26:59 -0700 (PDT)
+Received: (nullmailer pid 1561553 invoked by uid 1000);
+        Mon, 10 Apr 2023 23:26:58 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel test robot <lkp@intel.com>,
-        Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH v2] drm/msm/adreno: fix sparse warnings in a6xx code
-Date:   Tue, 11 Apr 2023 01:40:34 +0300
-Message-Id: <20230410224034.443210-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom_hidma: Add explicit platform_device.h and of_device.h includes
+Date:   Mon, 10 Apr 2023 18:26:54 -0500
+Message-Id: <20230410232654.1561462-1-robh@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sparse reports plenty of warnings against the a6xx code because of
-a6xx_gmu::mmio and a6xx_gmu::rscc members. For some reason they were
-defined as __iomem pointers rather than pointers to __iomem memory.
-Correct the __iomem attribute.
+qcom_hidma uses of_dma_configure() which is declared in of_device.h.
+platform_device.h and of_device.h get implicitly included by of_platform.h,
+but that is going to be removed soon.
 
-Fixes: 02ef80c54e7c ("drm/msm/a6xx: update pdc/rscc GMU registers for A640/A650")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304070550.NrbhJCvP-lkp@intel.com/
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
 ---
+ drivers/dma/qcom/hidma_mgmt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes since v1: removed whispace after the star (Stephen)
-
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-index 0bc3eb443fec..4759a8ce51e4 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
-@@ -51,8 +51,8 @@ struct a6xx_gmu {
- 
- 	struct msm_gem_address_space *aspace;
- 
--	void * __iomem mmio;
--	void * __iomem rscc;
-+	void __iomem *mmio;
-+	void __iomem *rscc;
- 
- 	int hfi_irq;
- 	int gmu_irq;
+diff --git a/drivers/dma/qcom/hidma_mgmt.c b/drivers/dma/qcom/hidma_mgmt.c
+index 62026607f3f8..05e96b31d871 100644
+--- a/drivers/dma/qcom/hidma_mgmt.c
++++ b/drivers/dma/qcom/hidma_mgmt.c
+@@ -12,6 +12,8 @@
+ #include <linux/of_address.h>
+ #include <linux/of_irq.h>
+ #include <linux/of_platform.h>
++#include <linux/of_device.h>
++#include <linux/platform_device.h>
+ #include <linux/module.h>
+ #include <linux/uaccess.h>
+ #include <linux/slab.h>
 -- 
-2.30.2
+2.39.2
 
