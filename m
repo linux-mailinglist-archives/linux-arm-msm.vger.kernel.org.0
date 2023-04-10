@@ -2,71 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 147186DCA84
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 20:11:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38DE96DCAC9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 20:32:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230141AbjDJSK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 14:10:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56798 "EHLO
+        id S229764AbjDJSc0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 14:32:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230155AbjDJSK5 (ORCPT
+        with ESMTP id S229722AbjDJScZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 14:10:57 -0400
+        Mon, 10 Apr 2023 14:32:25 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71532D41;
-        Mon, 10 Apr 2023 11:10:42 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5BA41FE5;
+        Mon, 10 Apr 2023 11:32:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 528A26136E;
-        Mon, 10 Apr 2023 18:10:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DC3C433EF;
-        Mon, 10 Apr 2023 18:10:39 +0000 (UTC)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] dt-bindings: soc: qcom: smd-rpm: allow MSM8226 over SMD
-Date:   Mon, 10 Apr 2023 20:10:36 +0200
-Message-Id: <20230410181036.25943-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 717B36136F;
+        Mon, 10 Apr 2023 18:32:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5544EC433D2;
+        Mon, 10 Apr 2023 18:32:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1681151543;
+        bh=3QWPxBcsm+oipo174o68W4BMe5Acm5YHNXM0zmTK5dY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=IOjTJv4s+2i/v1OgD9PWedrYomTdBhFsysZcwp9MWSw7tTqwagiMK5Ikrh+cRNmjk
+         3bMmaJPQZ8csBpw8WP9oUyuSvT+XmE7EoKPOHT80fIMbqyvKZnwH+D3n0pH4GzY0R/
+         uSZZ34tUu/GnWH8osBrKGEQsH2zQS5ljkgx7StsY=
+Date:   Mon, 10 Apr 2023 20:32:20 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>, bp@alien8.de,
+        mchehab@kernel.org, james.morse@arm.com, rric@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_saipraka@quicinc.com,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] EDAC/qcom: Get rid of hardcoded register offsets
+Message-ID: <2023041047-oboe-playmaker-ca1b@gregkh>
+References: <20230314064032.16433-1-manivannan.sadhasivam@linaro.org>
+ <20230314064032.16433-3-manivannan.sadhasivam@linaro.org>
+ <20230315222242.hbe3z2d3c2i6psuw@ripper>
+ <20230410155111.GB4630@thinkpad>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230410155111.GB4630@thinkpad>
+X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The MSM8226 RPM uses SMD, so it must allow qcom,smd-channels:
+On Mon, Apr 10, 2023 at 09:21:11PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Mar 15, 2023 at 03:22:42PM -0700, Bjorn Andersson wrote:
+> > On Tue, Mar 14, 2023 at 12:10:32PM +0530, Manivannan Sadhasivam wrote:
+> > > The LLCC EDAC register offsets varies between each SoC. Hardcoding the
+> > > register offsets won't work and will often result in crash due to
+> > > accessing the wrong locations.
+> > > 
+> > > Hence, get the register offsets from the LLCC driver matching the
+> > > individual SoCs.
+> > > 
+> > > Cc: <stable@vger.kernel.org> # 6.0: 5365cea199c7 ("soc: qcom: llcc: Rename reg_offset structs to reflect LLCC version")
+> > > Cc: <stable@vger.kernel.org> # 6.0: c13d7d261e36 ("soc: qcom: llcc: Pass LLCC version based register offsets to EDAC driver")
+> > > Cc: <stable@vger.kernel.org> # 6.0
+> > 
+> > Why is there three Cc: stable here, is this a new format for Fixes:?
+> > 
+> 
+> This is to specify the dependencies to the stable maintainers during backport.
 
-  qcom-msm8226-samsung-s3ve3g.dtb: rpm-requests: qcom,smd-channels: False schema does not allow ['rpm_requests']
+And that format has been documented for well over a decade in:
+    https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 1 +
- 1 file changed, 1 insertion(+)
+This is nothing new :)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-index 94765fbc868e..18dfb85b57ca 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
-@@ -81,6 +81,7 @@ if:
-       contains:
-         enum:
-           - qcom,rpm-apq8084
-+          - qcom,rpm-msm8226
-           - qcom,rpm-msm8916
-           - qcom,rpm-msm8936
-           - qcom,rpm-msm8974
--- 
-2.34.1
+thanks,
 
+greg k-h
