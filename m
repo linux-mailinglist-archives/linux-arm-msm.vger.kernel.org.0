@@ -2,79 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97E456DC7D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 16:23:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 763AA6DC7E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 16:35:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbjDJOXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 10:23:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60262 "EHLO
+        id S229663AbjDJOfW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 10:35:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjDJOXu (ORCPT
+        with ESMTP id S229536AbjDJOfV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 10:23:50 -0400
+        Mon, 10 Apr 2023 10:35:21 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3790527B;
-        Mon, 10 Apr 2023 07:23:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D64524E;
+        Mon, 10 Apr 2023 07:35:20 -0700 (PDT)
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33ADRMUD008939;
-        Mon, 10 Apr 2023 14:23:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=8S/GHR+g9lweayB9bbfVo8imVnARdZbV+nOs7TD9erw=;
- b=eefmnvBHrXmnx7FaK2z7gfRIrJ5WrKwhlMz5G62S9a51N9iwPY8lvZ0kULwpqugddc9x
- pD/euaR4fbnzvyudlLl/U0xWmkY6E6A6uRCwDoQkoiT2e5D7ZUMYcsSUf3aIIB25znW7
- jru9AFmO4mtkd3PHUKM24WTKUbSek5Z/79jQXPgIx3+wL9btFZnOT0REJOH3IkygYwxY
- Jr6X9h4PBpeV0XmeOXO5WP+0HMvl5am5SrIWQ9slQm5iZ6kYai7pFJg06fV+ddswkbc9
- D2Nmvk1PEkC13aUMH21EcwIoD0XCo6yA5NFwpPKgjBZfDCB5M8JGtLGJ5pBiCavggIhH ww== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ptyktk5r5-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33AEUM3F013007;
+        Mon, 10 Apr 2023 14:35:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UMgwG8hgDhYMcCE1N2y8m6s3Gz6llWV5GsBaLDYEGGI=;
+ b=i2KQebFTfm3MY4r5aAcmqpKbP69brZ3Cowt6x00Bv5N2pKHPrZz2HKWWMa4M4h6uWZNm
+ 7OWVI5fC6U/Kh5MwdcUGMSIOTf4qTfrAKFar+7HeQluRn49VniEQ0Rw6DRdNMmTXra0c
+ sar0xryuz4Zp1DvIILYcPCgPj4ILTBUZhbTsyI+92CtHAUcRp2oC7mIRggmmTtM8i/TQ
+ KfCGaNmZTO1FpXQ7PKsZ/RBiC1lY5pugH63+ySKiRbO70hdQPIQJrJ57wOpi/MmeOMZw
+ XdwjvfNGMZFCrGECq0BM6ozU8Vq+0Oh3F9FsID/cW6zSJ3QYV5nVqEF61QcRx6nyhBBf nA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pvm97g0c1-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Apr 2023 14:23:42 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33AENfZv024935
+        Mon, 10 Apr 2023 14:35:13 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33AEZCwK028213
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 10 Apr 2023 14:23:41 GMT
-Received: from mmitkov.eu.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 10 Apr 2023 07:23:37 -0700
-From:   <quic_mmitkov@quicinc.com>
-To:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <hverkuil-cisco@xs4all.nl>, <bryan.odonoghue@linaro.org>,
-        <akapatra@quicinc.com>, <jzala@quicinc.com>, <todor.too@gmail.com>
-CC:     <agross@kernel.org>, <konrad.dybcio@somainline.org>,
-        <mchehab@kernel.org>, <cgera@qti.qualcomm.com>,
-        <gchinnab@quicinc.com>, <ayasan@qti.qualcomm.com>,
-        <laurent.pinchart@ideasonboard.com>,
-        Milen Mitkov <quic_mmitkov@quicinc.com>,
-        Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v8 4/4] media: camss: sm8250: Pipeline starting and stopping for multiple virtual channels
-Date:   Mon, 10 Apr 2023 17:22:32 +0300
-Message-ID: <20230410142232.2135-5-quic_mmitkov@quicinc.com>
-X-Mailer: git-send-email 2.37.3.windows.1
-In-Reply-To: <20230410142232.2135-1-quic_mmitkov@quicinc.com>
-References: <20230410142232.2135-1-quic_mmitkov@quicinc.com>
+        Mon, 10 Apr 2023 14:35:12 GMT
+Received: from [10.216.41.177] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 10 Apr
+ 2023 07:35:09 -0700
+Message-ID: <4b54b75c-f604-5323-942e-4701e31f47d6@quicinc.com>
+Date:   Mon, 10 Apr 2023 20:04:44 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v6 0/5] Refactor to support multiple download mode
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>
+References: <1680076012-10785-1-git-send-email-quic_mojha@quicinc.com>
+Content-Language: en-US
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <1680076012-10785-1-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LP3yb63yZrxbaja6RkrtIulY8QAd6Qv6
-X-Proofpoint-ORIG-GUID: LP3yb63yZrxbaja6RkrtIulY8QAd6Qv6
+X-Proofpoint-GUID: hnLcWnoNpdjo3V97U9CGe9Zv9-dDVwVt
+X-Proofpoint-ORIG-GUID: hnLcWnoNpdjo3V97U9CGe9Zv9-dDVwVt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-10_09,2023-04-06_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
- clxscore=1015 mlxscore=0 impostorscore=0 mlxlogscore=727 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304100122
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=999 lowpriorityscore=0 mlxscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304100123
+X-Spam-Status: No, score=-3.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,120 +79,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Milen Mitkov <quic_mmitkov@quicinc.com>
+Bjorn and others,
 
-Use the multistream series function video_device_pipeline_alloc_start
-to allows multiple clients of the same pipeline.
+Any further comments on this series ?
 
-If the VFE entity is used by another instance of the pipeline,
-the pipeline won't be stopped. This allows for stopping and starting
-streams at any point without disrupting the other running streams.
+-- Mukesh
 
-To prepare and start multiple virtual channels each CSID source pad
-corresponding to a virtual channel must be linked to the corresponding
-IFE entity. CSID pad 1 (1st source pad) corresponds to virtual
-channel 0, CSID pad 2 corresponds to virtual channel 1 and so on.
-Each of these must be linked to corresponding IFE RDI port.
-E.g. to enable vc 0 on CSID0:
-
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-
-To enable vc1 on CSID0:
-
-media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
-
-And so on. Note that on SM8250 each CSID is connected, at the
-hardware level, to only one IFE. Thus, you must link CSID0
-with IFE0, you can't link it with IFE1.
-
-Example: the following media controller setup expects multiplexed
-sensor data on CSIPHY2. Data will be passed on to CSID0, which will
-demux it to 2 streams - for RDI0 and RD1 ports of IFE0:
-
-media-ctl -v -d /dev/media0 -V '"imx577 '22-001a'":0[fmt:SRGGB10/3840x2160 field:none]'
-media-ctl -V '"msm_csiphy2":0[fmt:SRGGB10/3840x2160]'
-media-ctl -V '"msm_csid0":0[fmt:SRGGB10/3840x2160]'
-media-ctl -V '"msm_csid0":1[fmt:SRGGB10/3840x2160]'
-media-ctl -V '"msm_csid0":2[fmt:SRGGB10/3840x2160]'
-media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/3840x2160]'
-media-ctl -V '"msm_vfe0_rdi1":0[fmt:SRGGB10/3840x2160]'
-media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
-
-Note: CSID's entity pad 0 is a sink pad, pads 1..4 are source pads
-To start streaming a v4l2 client must open the corresponding
-/dev/videoN node. For example, with yavta:
-
-yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 3840x2160 -F /dev/video0
-yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 3840x2160 -F /dev/video1
-
-Note that IFEs (vfe0, vfe1) on SM8250 have 3 RDI ports and a single
-PIX port and IFELites (vfe2, vfe3) have 4 RDI ports and no PIX port.
-
-Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Robert Foss <robert.foss@linaro.org>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- .../media/platform/qcom/camss/camss-video.c   | 21 ++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 41deda232e4a..12ac7d4d755e 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -351,6 +351,7 @@ static int video_get_subdev_format(struct camss_video *video,
- 	if (subdev == NULL)
- 		return -EPIPE;
- 
-+	memset(&fmt, 0, sizeof(fmt));
- 	fmt.pad = pad;
- 	fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
- 
-@@ -493,9 +494,11 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- 	struct v4l2_subdev *subdev;
- 	int ret;
- 
--	ret = video_device_pipeline_start(vdev, &video->pipe);
--	if (ret < 0)
-+	ret = video_device_pipeline_alloc_start(vdev);
-+	if (ret < 0) {
-+		dev_err(video->camss->dev, "Failed to start media pipeline: %d\n", ret);
- 		goto flush_buffers;
-+	}
- 
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -537,6 +540,7 @@ static void video_stop_streaming(struct vb2_queue *q)
- 	struct media_entity *entity;
- 	struct media_pad *pad;
- 	struct v4l2_subdev *subdev;
-+	int ret;
- 
- 	entity = &vdev->entity;
- 	while (1) {
-@@ -551,7 +555,18 @@ static void video_stop_streaming(struct vb2_queue *q)
- 		entity = pad->entity;
- 		subdev = media_entity_to_v4l2_subdev(entity);
- 
--		v4l2_subdev_call(subdev, video, s_stream, 0);
-+		ret = v4l2_subdev_call(subdev, video, s_stream, 0);
-+
-+		if (entity->use_count > 1) {
-+			/* Don't stop if other instances of the pipeline are still running */
-+			dev_dbg(video->camss->dev, "Video pipeline still used, don't stop streaming.\n");
-+			return;
-+		}
-+
-+		if (ret) {
-+			dev_err(video->camss->dev, "Video pipeline stop failed: %d\n", ret);
-+			return;
-+		}
- 	}
- 
- 	video_device_pipeline_stop(vdev);
--- 
-2.37.3
-
+On 3/29/2023 1:16 PM, Mukesh Ojha wrote:
+> Intention of this series to support multiple download mode and
+> only modify the required bits during setting tcsr register.
+> 
+> Other download modes are minidump, full dump, both fulldump + minidump, nodump.
+> 
+> Latest minidump kernel driver patches has been sent here
+> https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> Also, this series should be applied on
+> https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+> 
+> Changes in v6:
+>    - Applied suggested API change(at v4) by [dmitry.baryshkov]
+> 
+> Changes in v5: https://lore.kernel.org/lkml/1680017869-22421-1-git-send-email-quic_mojha@quicinc.com/
+>    - Tried to fix the issue reported by kernel test robot
+>      https://lore.kernel.org/lkml/202303280535.acb66sQT-lkp@intel.com/
+> 
+>    - Applied some of the improvement suggested by [Bjorn.andersson]
+>   
+>      . Dropped 'both' instead support full,mini or mini,full for setting download
+>      mode to collect both minidump and full dump.
+>      
+>      . logging improvement.
+>      
+> 
+> Changes in v4: https://lore.kernel.org/lkml/1679935281-18445-1-git-send-email-quic_mojha@quicinc.com/
+>    - val should be shifted within the function [srinivas.kandagatla]
+>      i.e new = (old & ~mask) | (val << ffs(mask) - 1);
+>    - Added Acked-by [linus.walleij] on pinctrl change.
+> 
+> Changes in v3 : https://lore.kernel.org/lkml/1679070482-8391-1-git-send-email-quic_mojha@quicinc.com/
+>   - Removed [1] from the series and sent as a separate patch[2], although this series
+>     should be applied on top [2].
+>    [1] https://lore.kernel.org/lkml/1677664555-30191-2-git-send-email-quic_mojha@quicinc.com/
+>    [2] https://lore.kernel.org/lkml/1678979666-551-1-git-send-email-quic_mojha@quicinc.com/
+>   - Introduce new exported symbol on suggestion from [srinivas.kandagatla]
+>   - Use the symbol from drivers/pinctrl/qcom/pinctrl-msm.c.
+>   - Addressed comment given by [dmitry.baryshkov]
+>   - Converted non-standard Originally-by to Signed-off-by.
+> 
+> Changes in v2: https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+>   - Addressed comment made by [bjorn]
+>   - Added download mask.
+>   - Passed download mode as parameter
+>   - Accept human accepatable download mode string.
+>   - enable = !!dload_mode
+>   - Shifted module param callback to somewhere down in
+>     the file so that it no longer need to know the
+>     prototype of qcom_scm_set_download_mode()
+>   - updated commit text.
+> 
+> Mukesh Ojha (5):
+>    firmware: qcom_scm: provide a read-modify-write function
+>    pinctrl: qcom: Use qcom_scm_io_update_field()
+>    firmware: scm: Modify only the download bits in TCSR register
+>    firmware: qcom_scm: Refactor code to support multiple download mode
+>    firmware: qcom_scm: Add multiple download mode support
+> 
+>   drivers/firmware/Kconfig               | 11 -----
+>   drivers/firmware/qcom_scm.c            | 88 ++++++++++++++++++++++++++++++----
+>   drivers/pinctrl/qcom/pinctrl-msm.c     | 11 ++---
+>   include/linux/firmware/qcom/qcom_scm.h |  2 +
+>   4 files changed, 86 insertions(+), 26 deletions(-)
+> 
