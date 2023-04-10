@@ -2,59 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93C0E6DCB9A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 21:32:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 240DE6DCBA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 10 Apr 2023 21:34:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbjDJTcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 15:32:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
+        id S229711AbjDJTeD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 15:34:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229831AbjDJTcL (ORCPT
+        with ESMTP id S229523AbjDJTeC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 15:32:11 -0400
+        Mon, 10 Apr 2023 15:34:02 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF3CB1BC8;
-        Mon, 10 Apr 2023 12:32:01 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F2C1BD1;
+        Mon, 10 Apr 2023 12:34:01 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5F2A8617BC;
-        Mon, 10 Apr 2023 19:32:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA70C4339B;
-        Mon, 10 Apr 2023 19:32:00 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4DA59617BC;
+        Mon, 10 Apr 2023 19:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DFEC433EF;
+        Mon, 10 Apr 2023 19:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681155120;
-        bh=RuJg2qNfDloS0SyYVWeynpsl+tqf76ntUxl/yumbHG4=;
+        s=k20201202; t=1681155240;
+        bh=D6YU7sRE8nbRBi9Uu64NQEqv/ZbXRVGET4eYI4J8/Ls=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=nRbTM89s6sCipXKJYLD+60FifraXFcHoaBrLZsL9ncNdW2ycqRFey4LohnlzltJNk
-         gujrKd0h96tvITxU7IDFTpaPmYt8pgNK7E2e+Yk7hUYIy0qtGM649U5ty1FONktl2j
-         Xt5OEXFhkNzkfk4PX4Kcufq/MX5IgcKYx+XqrRRyo2Bp536jMFn1L9fzcBb2y8yP9z
-         eqwFVjk9L7dQHW6VTl7u5pbtJLBnMJCQxoS7S8vt1iVv+J+ELD4meRzrzgW+eQL+Rd
-         o9Vkxpb/lkY3Yiqjchzs07TtELLzDk0/bIHfruVQW2iyBge9nlA5x+YvcJdiogapoV
-         g7NjaeMgk2xJQ==
-Message-ID: <6b765034ee5245e81cd8e735a7b2d5be.sboyd@kernel.org>
+        b=f5CtC+7ZyczqM7xhdpd8SRa/270zF7uhAGlvD4qxzSsIT+dl2FRiRkZmcWGzc1/jn
+         0Yssu8mTM9+T28IZLs3L9T6AyGQSEzH+Bv0ruGxkYYV1WOnuM4ZXDY5ditCpuEtCat
+         Y1H3kETkigppAQCeDs0nGYor7e//lFdzJNae7ukVp6KR1W3ECp08lc7bvJ/ByQRISP
+         +qmES7ZNi8pZL963vU3qHuFxW1zki+reIFHfQayoEhEe1oi1IwO8V/2mzw/zG+7KBB
+         qzfTqRFevZB3zLz1eEAkCBLaU/ULktoQ5l3iJ0JOfythFuN1X3DQxlOlzJuYkcQ0Uj
+         aUEtY4aF8YfQg==
+Message-ID: <5cc6625ccee772346660b775da341335.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230406061314.10916-3-quic_devipriy@quicinc.com>
-References: <20230406061314.10916-1-quic_devipriy@quicinc.com> <20230406061314.10916-3-quic_devipriy@quicinc.com>
-Subject: Re: [PATCH V3 2/5] clk: qcom: apss-ipq-pll: Add support for IPQ9574
+In-Reply-To: <20230408134820.76050-1-krzysztof.kozlowski@linaro.org>
+References: <20230408134820.76050-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom,gcc-sm8250: add missing bi_tcxo_ao clock
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, arnd@arndb.de, broonie@kernel.org,
-        catalin.marinas@arm.com, devicetree@vger.kernel.org,
-        dmitry.baryshkov@linaro.org, geert+renesas@glider.be,
-        jassisinghbrar@gmail.com, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-kernel@lists.infradead.org,
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mturquette@baylibre.com,
-        nfraprado@collabora.com, rafal@milecki.pl, robh+dt@kernel.org,
-        will@kernel.org
-Date:   Mon, 10 Apr 2023 12:31:58 -0700
+        linux-kernel@vger.kernel.org
+Date:   Mon, 10 Apr 2023 12:33:58 -0700
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
@@ -65,13 +63,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Devi Priya (2023-04-05 23:13:11)
-> Add the compatible and configuration values for A73 Huayra PLL found
-> on IPQ9574.
+Quoting Krzysztof Kozlowski (2023-04-08 06:48:18)
+> Without actual explanation commit 76bd127e6ca5 ("arm64: dts: qcom:
+> sm8250: add bi_tcxo_ao to gcc clocks") added bi_tcxo_ao clock input to
+> the GCC clock controller, so update the bindings hoping this is really
+> needed.  This fixes warnings like:
 >=20
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>   sm8250-xiaomi-elish-csot.dtb: clock-controller@100000: clock-names: ['b=
+i_tcxo', 'bi_tcxo_ao', 'sleep_clk'] is too long
+>=20
+> Fixes: 76bd127e6ca5 ("arm64: dts: qcom: sm8250: add bi_tcxo_ao to gcc clo=
+cks")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
 
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
