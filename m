@@ -2,70 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C3FB6DCD46
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 00:09:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D3816DCD6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 00:23:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229950AbjDJWJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 10 Apr 2023 18:09:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48664 "EHLO
+        id S229624AbjDJWXP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 10 Apr 2023 18:23:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229935AbjDJWJf (ORCPT
+        with ESMTP id S229727AbjDJWXN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 10 Apr 2023 18:09:35 -0400
+        Mon, 10 Apr 2023 18:23:13 -0400
 Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5868E70
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 15:09:32 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54c12009c30so231713757b3.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 15:09:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B131737
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 15:23:12 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54bfa5e698eso278666327b3.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 10 Apr 2023 15:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681164572;
+        d=linaro.org; s=google; t=1681165392;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ExqCcoy3bWj9jdGV9Q3NacWOqs4Dtk8vHL8H1J12RJY=;
-        b=BKqvHMuHlRPIU7wXVr5olsFhIZQX++5QDybdKhcnOhN4x4kl0/zeY+UqXC+V8SjSiG
-         jruquk5A1NRODV6/T+RII1S8IJ+qQAEVFbsKDjCQuadaVc8MC0d7fOIH2mzsShe1SHne
-         niX+lSoCCi9RrDLsYAqtH4S98S9BKsDGPhfhCOhqgE1QjGuHBarkz9zCOFBKjkba+zDO
-         ZAg5AY1YZPOFE5zCKJxCQlUa7nQzZr9GSrziAkjpr6RZetzTNZVqCSQhhE9MxuabRnvX
-         LSPqpT9Ua+N+xcIpy/Dtc4Kd+jDSogAAt597r+bscFQ3DGoCFEPhE6hqHWNNiOX659sg
-         4bgQ==
+        bh=TqzijXan3tbsRD035Gip+Q2/1907zc8S6CEtVT7zJ+o=;
+        b=qxQ3TGut0CDdZg7WfjGFwsLUaIvbZS/P76q6rQUaI0tTClhQ1SiVKZAQDDmid+ncqg
+         PpZAePtYwUKUbZpDJhpphnnyuOE7QWtQQJAbvf7FR8pQpMzEglKpW/L80CxMiwhoVlFn
+         8wNmks/g5Ay8L/jIHqDpAN0CYLYnP5nhYOxRwFWsv++1HuyD48O2/niQFjtKsiCKcvj+
+         ll75Ou2hHDu7jc1LInVif44jVm7ASeLc6LwHNZK39awSjcZouVHYlhBKmLiOn/ecgt6V
+         UnZisOgTJybUqdYM8wgDVFF49xcji+rymGGz8O4Rd3OBpaVGcCu/mc9l8GXJTZDjV9gn
+         ckjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681164572;
+        d=1e100.net; s=20210112; t=1681165392;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ExqCcoy3bWj9jdGV9Q3NacWOqs4Dtk8vHL8H1J12RJY=;
-        b=G9GmD+xXCkdAUalrhNxQ0Vjiw4rOUUAyKg5Bv3QVqXjQSLVuuQ3g34A3cX6YOjA4oK
-         FofMAMFpQFjB7+9z6wQ3x/BGom4/VSjN5S6vPI9ZcMNOd42vnPwqZbWMU5RcXFPQWOfr
-         kfh7fjPrHbDHjJtWft0FwK9rPBBzJF3tXqfJzmjeyodD7c6pwt6uQSPek8DY6OPfEkmv
-         qSO13gC6uRrTPP64uNByrtk6Mkn1x0E1bxFFGnJ5LHpUeD+2wuDOlurq0RkSx/tck0SB
-         TEhnqL/QEQikmBOmIvr4D1VLmM73JhZmsTNiUY3ymlTe70qhXQ8YryRHvsfPwKUSCAXd
-         sVAw==
-X-Gm-Message-State: AAQBX9dgU3oyxWydvTJkHvYIZ7XLt1oAokfnuEO3bl3atf6dR22VY9UB
-        AAIvgLtFfhx9J2L+76xDv27QzCUDgj4e7dGERq08G6AxIb3UPTQl
-X-Google-Smtp-Source: AKy350a26EOdXNrw4MlpwtY9Dz/Z+hhGFiC4d9G8eVMorvZSwWjglGmlnnmKRrMbFTj8viOMnnU18qFJFz1Fh/3VdYo=
-X-Received: by 2002:a81:c904:0:b0:534:d71f:14e6 with SMTP id
- o4-20020a81c904000000b00534d71f14e6mr6436772ywi.9.1681164572146; Mon, 10 Apr
- 2023 15:09:32 -0700 (PDT)
+        bh=TqzijXan3tbsRD035Gip+Q2/1907zc8S6CEtVT7zJ+o=;
+        b=KoJ3vsa7i7cTtoL7fABU39Aghbushbk2m2M8QMoZ7KkFtxpNrwOpBoM8qRxWnuCjtF
+         4uW4s6qUEkN2Qca4/w6qSmRBzETstaLTafBaCHDTjjHsBT8tM66D64hkaM7a9GV0tZKx
+         qX5Y2jflgr5ARoobH4yqNnwFealP+GWIVFjf5Pj+fkutJe5VYKXeSw0hmBoFLh8qbIX9
+         dMPgri+vKvgYIZxlrzSmqv0LX5aBXlBorL1jJTjUh1cNYXlB1H9J7iQFa8lOIXf4YOis
+         D6XhMahpFJNfPAo3zSQjFX/Fne0Fq/bf9k4kRfC7j6VoFJA+GIuawXHxvBAGQ0uaxdiL
+         vi9w==
+X-Gm-Message-State: AAQBX9dt1ReHF7YysZ8HKXsPakrhycLIPaDNADkHMvJ8WVpv+lwyo2FZ
+        AvHbRyDb8vZ7nFMiCS4d80M6j3LHhestRAU5aesaKw==
+X-Google-Smtp-Source: AKy350ZlEYOLCGErRvEJNnVaXWgyMcgVUP+9FL3bH6XvLfYW6GMr55R37YmMlKd2Pw88yL58x2v6zAv5WJAAQ6eUVuA=
+X-Received: by 2002:a81:c409:0:b0:545:8202:bbcf with SMTP id
+ j9-20020a81c409000000b005458202bbcfmr6407198ywi.9.1681165392023; Mon, 10 Apr
+ 2023 15:23:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230327125316.210812-1-brgl@bgdev.pl> <20230327125316.210812-13-brgl@bgdev.pl>
- <CACRpkdaYHaJMn7w_q12V3Q0WW71-U_kb+XsR1tNsirF35xYEoQ@mail.gmail.com> <CAMRc=Mf3d+ZmRs+Rj2HeWifoL0Vqzszxh_hUFDFq4eyvfgKQ4w@mail.gmail.com>
-In-Reply-To: <CAMRc=Mf3d+ZmRs+Rj2HeWifoL0Vqzszxh_hUFDFq4eyvfgKQ4w@mail.gmail.com>
+References: <20230407142859.1.Ia5d70e320b60d6707c6182879097708e49b8b519@changeid>
+In-Reply-To: <20230407142859.1.Ia5d70e320b60d6707c6182879097708e49b8b519@changeid>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 11 Apr 2023 00:09:20 +0200
-Message-ID: <CACRpkdYZj69yVitTGV9h5ytec5pFKKQwGbhPu1Ahc2HBfsqp1Q@mail.gmail.com>
-Subject: Re: [PATCH v3 12/18] dt-bindings: pinctrl: qcom,pmic-gpio: add
- compatible for pmm8654au-gpio
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Andy Gross <agross@kernel.org>,
+Date:   Tue, 11 Apr 2023 00:23:00 +0200
+Message-ID: <CACRpkdZH=EKoVjvDz4Er9XS6TSAGLYS=daZFb+bc2LpONz2Vgw@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Add "and" to PIN_CONFIG_INPUT_ENABLE comment
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Rob Herring <robh@kernel.org>
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -77,35 +71,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 6, 2023 at 4:09=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl> =
-wrote:
-> On Tue, Mar 28, 2023 at 3:24=E2=80=AFPM Linus Walleij <linus.walleij@lina=
-ro.org> wrote:
-> > On Mon, Mar 27, 2023 at 2:53=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev=
-.pl> wrote:
-> >
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > Add a new compatible for the GPIO controller on the pm8654au PMIC. It
-> > > has 12 pins with no holes.
-> > >
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > > Acked-by: Rob Herring <robh@kernel.org>
-> >
-> > Acked-by: Linus Walleij <linus.walleij@linaro.org>
-> >
-> > Counting on Bjorn to pick this up.
-> >
-> > Yours,
-> > Linus Walleij
->
-> Linus,
->
-> Bjorn picked up the arm64 patches but these two were skipped. Can you
-> take it through the pinctrl tree?
+On Fri, Apr 7, 2023 at 11:29=E2=80=AFPM Douglas Anderson <dianders@chromium=
+.org> wrote:
 
-OK patches 12 and 13 applied to the pinctrl tree!
+> The comment recently added talking about PIN_CONFIG_INPUT_ENABLE is
+> clearly missing the word "and". Comments live forever, so let's fix
+> it.
+>
+> Fixes: e49eabe3e13f ("pinctrl: qcom: Support OUTPUT_ENABLE; deprecate INP=
+UT_ENABLE")
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Link: https://chromium-review.googlesource.com/c/chromiumos/third_party/k=
+ernel/+/4409769/comment/9a1d5def_e1e71db7/
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+
+Patch applied!
 
 Yours,
 Linus Walleij
