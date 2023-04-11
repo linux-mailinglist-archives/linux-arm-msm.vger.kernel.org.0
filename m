@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 683FF6DE1A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 18:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F65B6DE1DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 19:07:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229556AbjDKQ6k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 12:58:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39834 "EHLO
+        id S229697AbjDKRH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 13:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjDKQ6j (ORCPT
+        with ESMTP id S229638AbjDKRHZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 12:58:39 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 999C13C17
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:58:36 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-504a131087aso1755841a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:58:36 -0700 (PDT)
+        Tue, 11 Apr 2023 13:07:25 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D332C1991
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:07:23 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id gb34so22337864ejc.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:07:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681232315;
+        d=linaro.org; s=google; t=1681232842;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PCI8HZ/sqT8uZruNEoU64IrLVLV76Tr4mIJ2/SDzWnM=;
-        b=jacvY4gWemomibfBu07AFC2MVhBs3LlhuquyvAbQJqh/4L7lCMzcsoJPDoL1M+sZZa
-         kEhdQ8QFCV+xq0biYjjhFn8JzL+8o65zRoZXZppdGguY/ajAPcUNK5Dvb3zFygF6wA0y
-         xpjihEE6Mz20z+STJ1ketHrXVAgUPliJ7WtPCtpbO1jWP+7di5P8Ddyl67lLIKpdAPww
-         bgRmPFMsqJOKBvPjkwZTphsnKAQKEd+3cSwOlGEuDcPCEHvHffjKMgXeFBjj5w7SKA1O
-         cHrAvsF3IEcGrAxsmFr1H/TxEAAXW4QnUW6d2rsKise3W5f0SfV9NOEv1lWd0Xp0MLCQ
-         vljQ==
+        bh=XdfzJIKkFxIWGY1rkF0F0muLgVM5DAQIuMkjMd6tTQw=;
+        b=HSvS5GsLxSDwYhUMkn8c5rNLPwwT8unZWVQGHgnG0LcXiufU5iO5BySuWj7sVjuP/9
+         8kyBwgbW36zuTom5JtFLIHG8Yn2PLYphgV8BD1RbEQsD2+wewb8EHqEamtsSBEjx/smJ
+         zLgsllKhpG6UEYfW50c86I7PIrhW4qG0qX0E4J3Q9+ttfxfsNLZpqEvACeS753WDd06E
+         X/IxFfINba8DTpM8hNRzfVGiTy28UkOg16gY9paSub5NGBnaV7eYb8k4T2ZtzCV5g/d5
+         o1EdlCGkceESd7bfe9OrKSBPHYZ9a/DTfoRGhcfw2gZito5pMR+xxPNw7XDLrdnNoivS
+         X1wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681232315;
+        d=1e100.net; s=20210112; t=1681232842;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PCI8HZ/sqT8uZruNEoU64IrLVLV76Tr4mIJ2/SDzWnM=;
-        b=Utl54Cwntlug3uyP2OvmZvPsLchYZ9znfUoUxAktN+WykyyWTz2/NJFIQUz6upUSO9
-         36mbbpIcwLMgEqtKl4/lhjFW6r/L+BeZ7209CfErE9BFtKiSp744mn1ZSijIS0uYsEPz
-         P5wLy9dwmWWSvBqdM8HI+XrPMNFrksGgLRRdGBKZXau+2MstgPD57BegSZqlKeYxxNNQ
-         DfCTS3Vcf8HreNWHNeFkybJC0NHF/UnghnNT6SEOgJSMVUHlUyvqxWuBm6F5ExAn+AnP
-         iTq37+PiKtaaAW5uvZEOZx6ceo2AZ/MDBBsJnQ6nGYQ7V1am8CwOHEFy5o77UKP/wXus
-         TJyw==
-X-Gm-Message-State: AAQBX9cCySbZfW1+CAzzfHYnY2OVqbYIIAwKxnwzHzgsnj54LylkQMby
-        hMFfvTcdy18T/41t4mBVUi2/vQ==
-X-Google-Smtp-Source: AKy350ZmQF7p/rWRn51SIVkwSxIVCC0CafdQC9hc9b9qr25n6qkB8eJbp4GoDTSBoMglCVeZbR/CFA==
-X-Received: by 2002:aa7:c2d2:0:b0:4fa:fcee:1727 with SMTP id m18-20020aa7c2d2000000b004fafcee1727mr10878208edp.13.1681232315042;
-        Tue, 11 Apr 2023 09:58:35 -0700 (PDT)
+        bh=XdfzJIKkFxIWGY1rkF0F0muLgVM5DAQIuMkjMd6tTQw=;
+        b=UNMsCNTSTEjTd6BGzsSlJ01g5OK5Mxgg5WJ1yTcfed9CjwCUjM4L2p4oI6obR+iV/Q
+         yxPB9jJymoriOzfJuqvQU62IbWVV3DvaqEh6lT+wUt98n9bmNd5SEJmRYTz12AihdLnV
+         Fcxnc1xsAZZ1WMAJvMXqPU3VY1pj2wWof3vr1/LQJPS6V8mfR8pqYrH1yDSjX60GfNUY
+         PlwMtx0WiZsNac7lJsAMN8jsHC2GnZecj93xXTqdPkKilbWm3/OJdrRoqv1grw9ipx4+
+         s56kGCN3gpARiT5yKWwAnZXyrdGMuhVkIXTA+HtaTa4CZugq+fQ3lvXN4TRtDLL0WI0L
+         Ld3A==
+X-Gm-Message-State: AAQBX9c5c2KfTht4ieK6u3CXNLXP6LLEG5Sy8fT5hlEQzFt7uCitYxej
+        gLNsFlFdf30PSuX+0V6loSM/XlhIQEvi+HPTh4o=
+X-Google-Smtp-Source: AKy350YUHA8noLFxB77M1WrwMp3h3S22CgVFDg9e5wFnchjY210tZ+OCaYJzVNhF67XiuxFuudOouA==
+X-Received: by 2002:a17:906:2a48:b0:933:4d37:82b2 with SMTP id k8-20020a1709062a4800b009334d3782b2mr10790107eje.57.1681232842328;
+        Tue, 11 Apr 2023 10:07:22 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:f1da:c117:3657:c8a? ([2a02:810d:15c0:828:f1da:c117:3657:c8a])
-        by smtp.gmail.com with ESMTPSA id e14-20020a50d4ce000000b00502b0b0d75csm6075033edj.46.2023.04.11.09.58.34
+        by smtp.gmail.com with ESMTPSA id u10-20020a17090657ca00b0094a64f6b78fsm2902162ejr.20.2023.04.11.10.07.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 09:58:34 -0700 (PDT)
-Message-ID: <887eb9f6-9882-37c6-4332-ddae7a354187@linaro.org>
-Date:   Tue, 11 Apr 2023 18:58:33 +0200
+        Tue, 11 Apr 2023 10:07:21 -0700 (PDT)
+Message-ID: <b7c9ac38-6f9b-8d05-39c6-fee9058209a9@linaro.org>
+Date:   Tue, 11 Apr 2023 19:07:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad: correct pin
- drive-strength
+Subject: Re: [PATCH 05/10] arm64: dts: qcom: sc8280xp: remove superfluous
+ "input-enable"
 Content-Language: en-US
 To:     Johan Hovold <johan@kernel.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -66,10 +66,11 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
- <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
+References: <20230407175807.124394-1-krzysztof.kozlowski@linaro.org>
+ <20230407175807.124394-5-krzysztof.kozlowski@linaro.org>
+ <ZDVq1b0TjXH5LTYx@hovoldconsulting.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
+In-Reply-To: <ZDVq1b0TjXH5LTYx@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -82,23 +83,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 16:23, Johan Hovold wrote:
-> On Fri, Apr 07, 2023 at 08:07:10PM +0200, Krzysztof Kozlowski wrote:
->> Fix typo in drive-strength property name.
+On 11/04/2023 16:12, Johan Hovold wrote:
+> On Fri, Apr 07, 2023 at 07:58:02PM +0200, Krzysztof Kozlowski wrote:
+>> Pin configuration property "input-enable" was used with the intention to
+>> disable the output, but this is done by default by Linux drivers.  Since
+>> patch ("dt-bindings: pinctrl: qcom: tlmm should use output-disable, not
+>> input-enable") the property is not accepted anymore.
 > 
-> In the future, please try to use the established commit-summary prefix.
-> In this case:
+> This description does not seem to match the pin configurations that you
+> are changing below which use the "qcom,sc8280xp-lpass-lpi-pinctrl"
+> binding for which 'input-enable' is still accepted AFAICT.
 > 
-> 	arm64: dts: qcom: sc8280xp-x13s:
+> Perhaps you can fix up the lpass bindings (and driver?) to match?
 
-Sure.
-
-commit ca1ce7207e53cfe69aee5002eb3795069668da53
-Author: Johan Hovold <johan+linaro@kernel.org>
-Date:   Fri Aug 5 11:23:17 2022 +0200
-
-    arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate touchpad
-
+Thanks for spotting this. This change is wrong.
 
 Best regards,
 Krzysztof
