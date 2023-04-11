@@ -2,78 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 954916DE10B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 18:36:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 772016DE12A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 18:43:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229687AbjDKQgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 12:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40242 "EHLO
+        id S229654AbjDKQnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 12:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjDKQgR (ORCPT
+        with ESMTP id S229516AbjDKQnK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 12:36:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7A93A8F;
-        Tue, 11 Apr 2023 09:36:17 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9886A62943;
-        Tue, 11 Apr 2023 16:36:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A3EC433D2;
-        Tue, 11 Apr 2023 16:36:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681230976;
-        bh=HM31XqmcqFK6TzHcoHGA4AUt5rkxraVJvBHJzTof4i0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kV5E8XdYH5V8jW/d8A1V8otct1REBr/Eg5rho9x5nxEUmJrIfJyuJbDV/5nwmylgE
-         QvnyQ2EqrpEQqnR0rEECdeg65MoDCftOqUgSg/N36pppO3kKrfAqvJj2Shk9TfXCMr
-         QARh7AJAiZzX7ikKsT2wekeC741G9Go/GoWZ4n+54C6uA2/ipQzbMJdN3y5fWV2BHr
-         N7PAp0m2TdApGpbfmLRDP4/VXZWnb9BNhFuq7x7HCKF43Em+o0EZWEidcW1wEVjwI7
-         IYgwQ4XWLBQUJ22LSwOjqmLmshxSnLrIgBktuslNGqgM/78N7H52ay8GmAjSGx3ZXn
-         +m0Vukch8NVQQ==
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>, bhelgaas@google.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Revert "dt-bindings: PCI: qcom: Add iommu-map properties"
-Date:   Tue, 11 Apr 2023 18:36:08 +0200
-Message-Id: <168123095198.29829.10981583872399699588.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230411121533.22454-1-manivannan.sadhasivam@linaro.org>
-References: <20230411121533.22454-1-manivannan.sadhasivam@linaro.org>
+        Tue, 11 Apr 2023 12:43:10 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32EE6172C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:43:09 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id e9so38418032ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681231387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f+Yn3w4i6ERhJRbEalDkX81nXU5W6d0rrV0jXP7xE40=;
+        b=QFgUdLSiBrEwNbHQ04X1boTAoorIGTiF6sCjmJuNEhDh5YRYplW2HFsR/8qPj/zRH6
+         bFS+gA3Kcbkf5sO/PY5yrQ2o2ENpG6g4z5qxUGFRBvtZSFGdmi6K/UO+W6AEXlEjWD31
+         Pr50qHaLDkwLcPVUVVGO/FK9xlZ+qAwk6dBMFFp5pmfikoC8gr1g29K6Didkx5KkdYsJ
+         OEgBDmqZ1qAXNZ9EcusjJDJ1R9zA76y0Nngb0ZJtx7apwCfRD8zhizpFLAj5q31eZXl2
+         qWAXXNYtMDXsNjdtbojR9WBVyRNxyw2y2pbxV3Sb2WrvPyD17LGjevDRBLeTLq0tDcp9
+         c1Dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681231387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f+Yn3w4i6ERhJRbEalDkX81nXU5W6d0rrV0jXP7xE40=;
+        b=Mo7Y8dVI/cY4HbKDHclOgGh17lKmHtoTwRkyOz6uv6quwTYvCdkv1ykkTBkhqB6aUr
+         Q/MaL6yjZjD9IfWG+xtar9zL8/7rZAvrxODshvFd/WJCGkuSe9SrYPpypqEn+u59W55c
+         bEmfjNfraotRDIhAfSvo32SNLTB2sCSz6NeIKqB5W3KLoMdBI8zx2XVQjillIFTtlqa5
+         nEyyIVXera8XCH7etifoBW/7p9iTsI5uGZSYEgjRWxcPCYFxT2O8dy9xWdA2ktnYUIG4
+         gr8bnXTW4CABCWvKUc73M3+mtXZAxvp2VEMFXNDlPH4aF5L9SEWjhJNRbXOHtQSlHDou
+         cR7Q==
+X-Gm-Message-State: AAQBX9dVevoMl/Oopv5aUUCkJbrPqlCPPzp8Z4fP4iiKL7uY6gGfTH76
+        uY+r3iITVAaMDtVaw2OOcbMWhw==
+X-Google-Smtp-Source: AKy350bMk4SkskVqv2ia31J+GxA0ArmyEzCNBnop1DJ9H7MWNk8XMD336eB/RYppFHgASDqtT8IemQ==
+X-Received: by 2002:a2e:82ce:0:b0:2a2:ca91:a99e with SMTP id n14-20020a2e82ce000000b002a2ca91a99emr4943313ljh.39.1681231387322;
+        Tue, 11 Apr 2023 09:43:07 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id x28-20020ac25ddc000000b004e8017a2510sm2606561lfq.183.2023.04.11.09.43.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Apr 2023 09:43:06 -0700 (PDT)
+Message-ID: <90f32378-fa1c-a23e-2db2-2e83a42fd45e@linaro.org>
+Date:   Tue, 11 Apr 2023 19:43:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH] drm/msm/dpu: Delete a variable initialisation before a
+ null pointer check in two functions
+Content-Language: en-GB
+To:     Markus Elfring <Markus.Elfring@web.de>,
+        kernel-janitors@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Archit Taneja <architt@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     cocci@inria.fr, LKML <linux-kernel@vger.kernel.org>
+References: <40c60719-4bfe-b1a4-ead7-724b84637f55@web.de>
+ <1a11455f-ab57-dce0-1677-6beb8492a257@web.de>
+ <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <13566308-9a80-e4aa-f64e-978c02b1406d@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 Apr 2023 17:45:33 +0530, Manivannan Sadhasivam wrote:
-> This reverts commit 6ebfa40b63ae65eac20834ef4f45355fc5ef6899.
+On 11/04/2023 19:38, Markus Elfring wrote:
+> Date: Tue, 11 Apr 2023 18:24:24 +0200
 > 
-> "iommu-map" property is already documented in commit
-> ("dt-bindings: PCI: qcom: Add SM8550 compatible") along with the "iommus"
-> property.
+> The address of a data structure member was determined before
+> a corresponding null pointer check in the implementation of
+> the functions “dpu_hw_pp_enable_te” and “dpu_hw_pp_get_vsync_info”.
 > 
-> So let's revert the commit that just added "iommu-map" to avoid
-> duplication.
+> Thus avoid the risk for undefined behaviour by removing extra
+> initialisations for the variable “c” (also because it was already
+> reassigned with the same value behind this pointer check).
 > 
-> [...]
+> This issue was detected by using the Coccinelle software.
+> 
+> Fixes: 25fdd5933e4c0f5fe2ea5cd59994f8ac5fbe90ef ("drm/msm: Add SDM845 DPU support")
 
-Applied to controller/qcom, thanks!
+Plese follow the format for the Fixes tags and limit the hash to 12 
+chars. Proper tag:
 
-[1/1] Revert "dt-bindings: PCI: qcom: Add iommu-map properties"
-      https://git.kernel.org/pci/pci/c/dc8d33452b36
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 
-Thanks,
-Lorenzo
+Other than that LGTM.
+
+> Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> index 0fcad9760b6f..870ab3ebbc94 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> @@ -176,7 +176,7 @@ static int dpu_hw_pp_enable_te(struct dpu_hw_pingpong *pp, bool enable)
+>   static int dpu_hw_pp_connect_external_te(struct dpu_hw_pingpong *pp,
+>   		bool enable_external_te)
+>   {
+> -	struct dpu_hw_blk_reg_map *c = &pp->hw;
+> +	struct dpu_hw_blk_reg_map *c;
+>   	u32 cfg;
+>   	int orig;
+> 
+> @@ -221,7 +221,7 @@ static int dpu_hw_pp_get_vsync_info(struct dpu_hw_pingpong *pp,
+> 
+>   static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
+>   {
+> -	struct dpu_hw_blk_reg_map *c = &pp->hw;
+> +	struct dpu_hw_blk_reg_map *c;
+>   	u32 height, init;
+>   	u32 line = 0xFFFF;
+> 
+> --
+> 2.40.0
+> 
+
+-- 
+With best wishes
+Dmitry
+
