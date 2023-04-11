@@ -2,82 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B12F06DDCC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 15:49:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A56866DDD1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 16:01:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230458AbjDKNt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 09:49:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37380 "EHLO
+        id S231216AbjDKOBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 10:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbjDKNtZ (ORCPT
+        with ESMTP id S231246AbjDKOBf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 09:49:25 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 139BC2736
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:49:24 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id z8so12308705lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:49:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681220963;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uHtWgJFHIhaJVA6LiMJBMJU0hICshc5Lm8ByCpWkf/w=;
-        b=KTJSSGL0yuAsLkW0Ws8NUpXCYKloY0mQEaB9RREuwahxQ72lqe2vz2ZgsA4rN2PDCi
-         U3EdyCjvIApkBpmw/N6jiPlbQN3vlPbj+cOHBWRLwDfVTlaMIgCQzT02Ou23ulJ/E2s6
-         WCEhVNbO/4n6xEE5D+PtHlCaVwkiErKQ/HfTs6F0ze/tpwzQG6jXG4cW40WDxQmKgMWK
-         4g+kt8TpB45+HnkbMBLolAp3n3GNlVI5tvYdx8XIpMG3tCu2pcUP/87UTnZK7EEun+Ck
-         UUvcofYFie8GlkisWxghfczBwgxtSK4xr+55NCftBZ/vPt33SQ3Jh/0FqqVcA42J5wxB
-         mV6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681220963;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uHtWgJFHIhaJVA6LiMJBMJU0hICshc5Lm8ByCpWkf/w=;
-        b=GI8KmMeoqAcIxOlI1l4jnjtUQ6UyprkEx2kqaZLJ5rf7poWGCaeTctAFh/vp86g+nF
-         iypjaidieCyREbPwlFViZMEdzJ+8iz9RiH/6k6A8Hzz20Iqvnj/JpFc0O+MgsQgOQ4x4
-         yL9t3XsNZ1rdmub7s9aGD2M20hiuGjj9IVnPbZhAmR7DaVDLvisg1qz1TM5dMTvuzmxD
-         Z5Us2G0/1iSCItT3kaxglxJ6MHUwn9mUVws9cEHztr+xdKGEouEsbCrPj+eVeSHFE6Kb
-         +/nM+uzqZW5lunAlSFQJ06KnhHyq9+gJw0FQ98i/pbQxVRayNGWQheIv3Kh2VKtlmnbI
-         kNWw==
-X-Gm-Message-State: AAQBX9fjb9yojKZbOL3AYLLCx4ZTk6OP25mXaRmDznt0mvMdPoYaOwbt
-        SiJbf9mpR7UPYTgEJDSTYZdAjA==
-X-Google-Smtp-Source: AKy350a1PFzOwUfLsdcxQQ1pdCVrf7WhWBjcq5r1wi0ojAgjZbb9DJfubVyraaH/otwwY4xiVBUUow==
-X-Received: by 2002:ac2:4c81:0:b0:4e9:6097:add3 with SMTP id d1-20020ac24c81000000b004e96097add3mr4731332lfl.61.1681220963648;
-        Tue, 11 Apr 2023 06:49:23 -0700 (PDT)
-Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id y9-20020ac255a9000000b004eb2d6160a4sm2563707lfg.32.2023.04.11.06.49.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 06:49:23 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 11 Apr 2023 15:49:18 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8150-kumano: Enable SDHCI2
+        Tue, 11 Apr 2023 10:01:35 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 732D53C26;
+        Tue, 11 Apr 2023 07:01:22 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BDREG7000410;
+        Tue, 11 Apr 2023 14:00:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=i4JXZ/+C19m2J5iqS6POWClSCNVPg9jd/RyGMq+Bk6Y=;
+ b=UD9pjPxeXir2p/IXG0Hn+4Ij9yyTcgvXdK/7RLwSHldFk+900CZt0EvF1H8HVg9Hu43/
+ f1vuyKdiKJb83W57c/mT3Zv7lowMsUIvnjLhGu8Xu5JVXFxMv0fdAuw+xmAduA1Pwibt
+ vjwQWq8+JsTv/ncvkLbacHviS19fpSeSNbFdlhaOU4vX8kOuk/l85vYCzCfpF5CanFDd
+ wxfo/LxumMsBrk/lriNdO7+fXsUxUbXHkrJZm+Y+6qjjr3tcBnhs+UWW0n9C+ddxLOSw
+ CxzgnG+PXr6L/IraAhSuv9rMyLo6pr8oa0Ycgee0dwB3vColi5ruwRE8kIzXsZTs6fDj uw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pvvux1j00-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 14:00:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BE0Tt7025460
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 14:00:29 GMT
+Received: from [10.216.4.20] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 07:00:19 -0700
+Message-ID: <9fd81c81-7d54-80ef-3054-9dc3b0c379e1@quicinc.com>
+Date:   Tue, 11 Apr 2023 19:30:15 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 5/9] dt-bindings: PCI: qcom: Add IPQ9574
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
+        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <p.zabel@pengutronix.de>, <linus.walleij@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-clk@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
+References: <20230404164828.8031-1-quic_devipriy@quicinc.com>
+ <20230404164828.8031-6-quic_devipriy@quicinc.com>
+ <79ddaff0-00a9-36db-2bc0-4c844ffd9528@linaro.org>
+ <999dfe1c-3b0d-1cc1-7407-e0917fc62d77@quicinc.com>
+ <20230411115201.GM5333@thinkpad>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <20230411115201.GM5333@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230315-topic-kumano_dts0-v1-4-f1852c2a2378@linaro.org>
-References: <20230315-topic-kumano_dts0-v1-0-f1852c2a2378@linaro.org>
-In-Reply-To: <20230315-topic-kumano_dts0-v1-0-f1852c2a2378@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681220957; l=921;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=gxjJ6YGpLan1OIOLNTh/xyzJg8bMee6dGyJiV+tpg98=;
- b=rqX9idewh+MKrObT4whA4e2QmK0L5hgfn542WlrlHCE88WamDPMQBItmcIGikS3F7gpmkSdLyX50
- oVjpPCV7A6mwC5Lc5Ol9Mj6CSzoRXfRHakxaTIelrmZ2GCNGbOuo
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vHMpBYB7vrtU41ZLYNZaDoGP4xpUEXGe
+X-Proofpoint-ORIG-GUID: vHMpBYB7vrtU41ZLYNZaDoGP4xpUEXGe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-11_09,2023-04-11_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304110130
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,39 +94,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-Set up and enable SDHCI2 to enable the microSD slot on Kumano
-devices.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+On 4/11/2023 5:22 PM, Manivannan Sadhasivam wrote:
+> On Tue, Apr 11, 2023 at 04:27:23PM +0530, Devi Priya wrote:
+>>
+>>
+>> On 4/5/2023 12:28 PM, Krzysztof Kozlowski wrote:
+>>> On 04/04/2023 18:48, Devi Priya wrote:
+>>>> Add bindings for PCIe hosts on IPQ9574 platform and allow
+>>>> msi-parent property
+>>>
+>>> Missing full stop. Also in your other patches.
+>> Okay
+>>>
+>>>>
+>>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>>> ---
+>>>>    Changes in V2:
+>>>> 	- Updated the commit message and dropped the aggr_noc entries
+>>>> 	  as it will be handled via interconnect driver
+>>>>
+>>>>    .../devicetree/bindings/pci/qcom,pcie.yaml    | 48 +++++++++++++++++++
+>>>>    1 file changed, 48 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>> index fb32c43dd12d..8657ab65008c 100644
+>>>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>>>> @@ -26,6 +26,7 @@ properties:
+>>>>              - qcom,pcie-ipq8064-v2
+>>>>              - qcom,pcie-ipq8074
+>>>>              - qcom,pcie-ipq8074-gen3
+>>>> +          - qcom,pcie-ipq9574
+>>>>              - qcom,pcie-msm8996
+>>>>              - qcom,pcie-qcs404
+>>>>              - qcom,pcie-sa8540p
+>>>> @@ -105,6 +106,8 @@ properties:
+>>>>        items:
+>>>>          - const: pciephy
+>>>> +  msi-parent: true
+>>>
+>>
+>> Yes right, will rebase it on Mani's series.
+>> But, as you have pointed out don't see the binding changes
+>> in linux-next/master
+>> Mani, could you please provide the tree details onto which the
+>> binding change is merged?
+>>
+> 
+> Looks like the initial msi-map binding's patch [1] never got merged even though
+> the dts patch went in.
+> 
+> I'll squash the later fix to this, post v4 and CC you.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
-index 5fa0a83a4b2c..9dca22cf3eb6 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
-@@ -618,6 +618,17 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&sdhc_2 {
-+	vmmc-supply = <&vreg_l9c_2p9>;
-+	vqmmc-supply = <&vreg_l6c_2p9>;
-+	cd-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+	bus-width = <4>;
-+	no-sdio;
-+	no-emmc;
-+
-+	status = "okay";
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <126 4>;
- 	gpio-line-names = "NFC_ESE_SPI_MISO", /* GPIO_0 */
-
--- 
-2.40.0
-
+Thanks for that..I could see V4 posted!
+> 
+> - Mani
+> 
+> [1] https://lore.kernel.org/all/20230102105821.28243-3-manivannan.sadhasivam@linaro.org/
+> 
+>>> Isn't this conflicting with Mani's series:
+>>> https://lore.kernel.org/all/20230108203340.GA229573-robh@kernel.org/
+>>> https://lore.kernel.org/all/20230111123004.21048-1-manivannan.sadhasivam@linaro.org/#t
+>>>
+>>> Although for some reason Mani's patch references non-existing commit and
+>>> hunk...
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>> Best Regards,
+>> Devi Priya
+> 
