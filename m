@@ -2,97 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C08B6DE406
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:37:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB4A96DE418
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:42:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjDKShc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 14:37:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56674 "EHLO
+        id S229778AbjDKSmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 14:42:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjDKShc (ORCPT
+        with ESMTP id S229713AbjDKSml (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 14:37:32 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD4E3A98;
-        Tue, 11 Apr 2023 11:37:30 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BHCUb6008150;
-        Tue, 11 Apr 2023 18:36:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=oJe2Li55wC5pjAdZ7BIhyOmj3PqDZqQ1WfnBAszZ1TA=;
- b=WfbIawjvAGvsMU8ukUfgdIcRsYI5KYc9IqrG/IJBRAtb8oPCOqrklV1RNgHUrM0m8k7t
- 6PCQoviGzAMhWwUAV5euL3SP7v47++spd5oYNJg0abDTKAhzcQRbfgMrD04pAuVBZ3N/
- eLyz0zxqsKUN+4gBXqwuCcv749inak6sjjFGd9vfNVZlMnEYYJDBLXzq/tyLxFzPe9BU
- D0FhAhCa4eKz6pOCZzqLTh02jK/05zth47iejBHzNDzsgszthTvhKJgkUhXCepV6Ji3e
- jJX/h6cWof84po37zOFTrr+16q7ejbHx8SUwjx+3yNu7xPC2z3qcjrgI40XuwNIJgEE1 /g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pw0jpsrnr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Apr 2023 18:36:52 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BIaogG020184
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Apr 2023 18:36:50 GMT
-Received: from [10.110.49.239] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
- 2023 11:36:49 -0700
-Message-ID: <bcdcee9b-f213-bc3c-d300-92a1e0138187@quicinc.com>
-Date:   Tue, 11 Apr 2023 11:36:48 -0700
+        Tue, 11 Apr 2023 14:42:41 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 564065B8D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:42:39 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-5140926a867so650544a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:42:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681238559;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=x6Ng2/ghiTU1RM0IxflD5v/hgT5kdOcuikWRftBe35E=;
+        b=ahNrwYahrHR2Jo7NjpCTb5sYo+Mj3oe8k9O63DFO478m+0sZ9zMQxZkaLsjXmmW2ig
+         ChX+7s/cOrMHL/p77BLrySaaBlgxSdQCppoTbEkJ7mTEp87pDRLSTSyrIOK6R4PfNRoo
+         8BpRm33IvLsWBk6UgBFfwT+AqTb9GAGqz3K8QyRKm5Eieice1l8x1XEXWXY0rv6jHAra
+         7r5UDZMN7Der+7QbDh49hAs2O9Nq6z2q9eduHsJbzBetpd9f17C1ZkhQgL4US8Im4cMf
+         TebHazSea/AcFItmyKzT+tv3msPAhY390OpH80TjOFmMF9c8ImPX40oY5QgoJb2oqKNP
+         zHtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681238559;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=x6Ng2/ghiTU1RM0IxflD5v/hgT5kdOcuikWRftBe35E=;
+        b=LcLYqfK5j2H3rKbMeZT0nEX08M72eMb5RwLZ/LmrhbVpdNfvDyX2ubKL716KLGhKp2
+         m4NduV2YGFvrfnYXc+QnMW52luPwEDBr/udLwXoXUVGoYImbFcccg2qVFAMD8uEWhHxT
+         bBlRvh+JCeSpagw8iSL9nuqQz2wJTU806e+wVsbBaZWbAx1xJAwwcGf2i/E3DGds6KiT
+         Escjq51Roc1LCeXEUcvS5sessyzQvKO4sOVANAzm4PirlyYDk/a+bIMy3+OXOy1gKLQM
+         wVaOyXEhglU33ORYNHGj1yygoa03cBHTwsAQzC4DEuIx9scISR4MVZYBs3R5caak5Bqd
+         AYWg==
+X-Gm-Message-State: AAQBX9dIn8WfeBCSGjQiU3py2O+22oV0uFDsu55H2rUwQ9NDPCtU+gNY
+        k+NrspuL2LXk0vqbnGTeEqTC
+X-Google-Smtp-Source: AKy350YuewgbMxHLTq7svnSq/upuotlWATNQt9z8vk4sDQ7z4m078rGm4F9+KcvFHKaiLPWMWZiZLQ==
+X-Received: by 2002:aa7:9739:0:b0:63a:fadd:3479 with SMTP id k25-20020aa79739000000b0063afadd3479mr951955pfg.19.1681238558577;
+        Tue, 11 Apr 2023 11:42:38 -0700 (PDT)
+Received: from thinkpad ([117.216.120.128])
+        by smtp.gmail.com with ESMTPSA id g2-20020a056a001a0200b006281273f1f5sm10105283pfv.8.2023.04.11.11.42.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 11:42:38 -0700 (PDT)
+Date:   Wed, 12 Apr 2023 00:12:31 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        bhelgaas@google.com, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        lpieralisi@kernel.org
+Subject: Re: [PATCH] Revert "dt-bindings: PCI: qcom: Add iommu-map properties"
+Message-ID: <20230411184231.GA59982@thinkpad>
+References: <20230411121533.22454-1-manivannan.sadhasivam@linaro.org>
+ <20230411174742.GA3428751-robh@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v5 1/2] check-uapi: Introduce check-uapi.sh
-Content-Language: en-US
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Nicolas Schier" <nicolas@fjasle.eu>,
-        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        "Arnd Bergmann" <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        <kernel-team@android.com>, <libabigail@sourceware.org>,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
-References: <20230407203456.27141-1-quic_johmoo@quicinc.com>
- <20230407203456.27141-2-quic_johmoo@quicinc.com>
- <CAK7LNAQQmoyUx+0Jk3c7iqY20KokrHEOPwHNb2doZOOA8RWBDA@mail.gmail.com>
- <2023041015-lunar-dandelion-1b4e@gregkh>
- <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
- <2023041136-donator-faceplate-5f91@gregkh>
-From:   John Moon <quic_johmoo@quicinc.com>
-In-Reply-To: <2023041136-donator-faceplate-5f91@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hlN2L9npwgxOYiye6LLp0KUxZ8pjtuci
-X-Proofpoint-ORIG-GUID: hlN2L9npwgxOYiye6LLp0KUxZ8pjtuci
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-11_11,2023-04-11_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- impostorscore=0 bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0
- adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304110169
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230411174742.GA3428751-robh@kernel.org>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -100,89 +76,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/10/2023 11:34 PM, Greg Kroah-Hartman wrote:
-> On Mon, Apr 10, 2023 at 04:32:49PM -0700, John Moon wrote:
->>>> According to this tool, it looks like we broke a lot of UAPI
->>>> headers in the previous MW (between v6.2 and v6.3-rc1).
->>>
->>> That's not ok, and needs to be fixed, otherwise this is useless as no
->>> one can rely on it at all.
->>>
->>
->> Right, there are several classes of false positives that we've documented
->> and when examining thousands of commits at time, it'll flag many things.
->>
->> For some comparison, if you run checkpatch on the same changeset
->> (v6.2..v6.3-rc1), you get 995 errors and 7,313 warnings. Still, checkpatch
->> is helpful for spot-checks.
+On Tue, Apr 11, 2023 at 12:47:42PM -0500, Rob Herring wrote:
+> On Tue, Apr 11, 2023 at 05:45:33PM +0530, Manivannan Sadhasivam wrote:
+> > This reverts commit 6ebfa40b63ae65eac20834ef4f45355fc5ef6899.
+> > 
+> > "iommu-map" property is already documented in commit
 > 
-> checkpatch.pl does not matter, it is a "hint", and many patches
-> explicitly ignore it (think about patches in the staging tree, you could
-> fix up one checkpatch issue for a line, but ignore another one as you
-> are not supposed to mix them up.)
+> Need the commit hash here.
 > 
-> Also for some subsystems, checkpatch does not matter because their
-> codebase is old and follows different rules.  And in some places,
-> checkpatch is just wrong, because it's a perl script and can not really
-> parse code.
+> > ("dt-bindings: PCI: qcom: Add SM8550 compatible") along with the "iommus"
+> > property.
 > 
-> So NEVER use that as a comparison to the user/kernel abi please.  It's a
-> false comparison.
->
-
-Fair enough. I was just trying to frame this tool as a "hint" as well. :)
-
->>
->> Others do not seem to be intentional:
->>
->>   Addition/use of flex arrays:
->>     - include/uapi/linux/rseq.h (f7b01bb0b57f)
->>     - include/uapi/scsi/scsi_bsg_mpi3mr.h (c6f2e6b6eaaf)
+> Shouldn't there be a patch removing "iommus" as discussed?
 > 
-> That is not a breakage, that's a tool problem.
-> 
->>   Type change:
->>     - include/uapi/scsi/scsi_bsg_ufs.h (3f5145a615238)
-> 
-> Again, not a real breakage, size is still the same.
->
 
-Would you find the tool more useful if it simply filtered out all 
-instances where the size of the type did not change? This would filter 
-out the following which the tool currently flags:
+Yeah, that was my intention after the dts patches were merged. And since the
+dts patches are in linux-next now, I could finally send the patch.
 
-- enum expansions
-- reserved field expansions
-- expansions of a struct with a flex array at the end
-- type changes
-- re-ordering of existing members
-- ...others?
+- Mani
 
-These changes aren't _always_ safe, but if you assume the kernel 
-developer is doing something reasonable, then maybe it's okay. Maybe we 
-could hide these checks behind something like a "--pedantic" flag?
+> > 
+> > So let's revert the commit that just added "iommu-map" to avoid
+> > duplication.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 --
+> >  1 file changed, 2 deletions(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > index 5d236bac99b6..a1318a4ecadf 100644
+> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > @@ -78,8 +78,6 @@ properties:
+> >  
+> >    dma-coherent: true
+> >  
+> > -  iommu-map: true
+> > -
+> >    interconnects:
+> >      maxItems: 2
+> >  
+> > -- 
+> > 2.25.1
+> > 
 
-This logic is actually trivial to add. Filtering out issues where the 
-type size stays the same brings us down to 14 failures in that same MW 
-changeset. 8 of them are file removals and the 6 remaining flags are 
-additions to existing structs or intentional removals of APIs.
-
-LMK what you think and I can work this into a v6 patch.
-
->>   Additions into existing struct:
->>     - include/uapi/drm/amdgpu_drm.h (b299221faf9b)
->>     - include/uapi/linux/perf_event.h (09519ec3b19e)
->>     - include/uapi/linux/virtio_blk.h (95bfec41bd3d)
-> 
-> Adding data to the end of a structure is a well-known way to extend the
-> api, in SOME instances if it is used properly.
-> 
-> So again, not a break.
->
-
-I don't know of a way the tool could be smart enough to decide if the 
-additions are done properly in the proper instances. Seems appropriate 
-that the tool would flag these changes for closer human review.
-
-Thanks,
-John
+-- 
+மணிவண்ணன் சதாசிவம்
