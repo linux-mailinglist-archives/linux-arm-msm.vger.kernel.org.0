@@ -2,225 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 256786DE3E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C08B6DE406
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:37:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229659AbjDKS3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 14:29:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50480 "EHLO
+        id S229541AbjDKShc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 14:37:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjDKS3G (ORCPT
+        with ESMTP id S229452AbjDKShc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 14:29:06 -0400
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A74CEA;
-        Tue, 11 Apr 2023 11:29:05 -0700 (PDT)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-1842e8a8825so10804954fac.13;
-        Tue, 11 Apr 2023 11:29:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681237745;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=04BQWUwBxDZ2Ggq7BQgfuwgR7cIa0rI/ETFyOfLGigY=;
-        b=adR1pap581Si5eUy20kOKPZF+9sdl0vkghbMvZWluaR2MaugneQRN0zU6SAi61kDzv
-         ohsvMWx6DU8krs4e8Dw4ch9e8pRuumtRyYCsKqJlA06lAH/aPab1WpvVhY1U49ZL+oRu
-         9LUBqPrlgzx5AdGz/Q9Yo6f4UCetoXT/KbTydaEjGgWeF5w2JnYXC1Wq3XhPN3aeNfuW
-         yBR5C6+erhkLFaNIU1IELQQ9xcyrjuk1g/OqGArd0vezAII6GLja7T+jBA3oXTRjSpiE
-         I9gnuKtw3R3ImHTkbN1ygQumqawu50x7d6BsG2aTr9fdhTAzfo8R5pqNv6qkQY2bnqet
-         j/vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681237745;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=04BQWUwBxDZ2Ggq7BQgfuwgR7cIa0rI/ETFyOfLGigY=;
-        b=43WL2AbqAu7iv3SkPZ58L/QNGBzUHZHDJbMbQ62MNk8+IG0ZfM2HYUXCeWr6iuLtVi
-         WZcTZmLiXlZUTJyH4BnKaL9ZTkTOXO2KxB39M9KcHx3/AxixmCtYzLRlI7ZbD40t33IZ
-         jb2jQEYaDp/p9rATOs6Ej6zBe27s+lEaun0E8BzW/pSoWkcNs5ZCrOEOAJiqv9DMRuza
-         weIcQcl9IjsP3zCXXqdSBLaJ12ZFtkraTMxLNeqgSo8su8ljt7RR0ZAPhVBJ8TT/qwg5
-         hV5x7T+krdLANW+F7J0JyVV4xWo8LOx7gNAqGYQnlpp0ARUg2qY7tlbQzswuTlSL9ZAD
-         SqQw==
-X-Gm-Message-State: AAQBX9fkXXU5cifb5ctZ80KxIzu9O2ERcQr1vW3UdCYyzF+AyTwSv7ON
-        NVtJxvCFsRtOly45X89bIbCE+RPfXi31uZnBROw=
-X-Google-Smtp-Source: AKy350ZnxwLNoHMLAsnDrCIdVf4NqYNyx45hAU4P8O3GSVtWQDN1PG+sS9eukL4lgWdlEXuom0she3fyNoi/MMwTQXw=
-X-Received: by 2002:a05:6870:5625:b0:180:b4c1:dfce with SMTP id
- m37-20020a056870562500b00180b4c1dfcemr5580747oao.5.1681237744881; Tue, 11 Apr
- 2023 11:29:04 -0700 (PDT)
+        Tue, 11 Apr 2023 14:37:32 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD4E3A98;
+        Tue, 11 Apr 2023 11:37:30 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BHCUb6008150;
+        Tue, 11 Apr 2023 18:36:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oJe2Li55wC5pjAdZ7BIhyOmj3PqDZqQ1WfnBAszZ1TA=;
+ b=WfbIawjvAGvsMU8ukUfgdIcRsYI5KYc9IqrG/IJBRAtb8oPCOqrklV1RNgHUrM0m8k7t
+ 6PCQoviGzAMhWwUAV5euL3SP7v47++spd5oYNJg0abDTKAhzcQRbfgMrD04pAuVBZ3N/
+ eLyz0zxqsKUN+4gBXqwuCcv749inak6sjjFGd9vfNVZlMnEYYJDBLXzq/tyLxFzPe9BU
+ D0FhAhCa4eKz6pOCZzqLTh02jK/05zth47iejBHzNDzsgszthTvhKJgkUhXCepV6Ji3e
+ jJX/h6cWof84po37zOFTrr+16q7ejbHx8SUwjx+3yNu7xPC2z3qcjrgI40XuwNIJgEE1 /g== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pw0jpsrnr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 18:36:52 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BIaogG020184
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 18:36:50 GMT
+Received: from [10.110.49.239] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 11:36:49 -0700
+Message-ID: <bcdcee9b-f213-bc3c-d300-92a1e0138187@quicinc.com>
+Date:   Tue, 11 Apr 2023 11:36:48 -0700
 MIME-Version: 1.0
-References: <20230410210608.1873968-1-robdclark@gmail.com> <CAF6AEGvs4XMggPMthiJ89SiaUj3k+nY95OhxLZ5cD-01XPco4Q@mail.gmail.com>
- <ZDWQfbUBhyJf1Ezx@phenom.ffwll.local> <CAF6AEGtYw4Dn80OtrnJESkkDXxhUdAr6Nuva+Jo3ExW8MXH++Q@mail.gmail.com>
- <CAA8EJppnEwcHM++YUYZGrNXEha=-ZVAexBdkMVsU52PTOs4VnA@mail.gmail.com>
-In-Reply-To: <CAA8EJppnEwcHM++YUYZGrNXEha=-ZVAexBdkMVsU52PTOs4VnA@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 11 Apr 2023 11:28:53 -0700
-Message-ID: <CAF6AEGsE3NOe9TkEzrk5rr-D2PoKaxF5Yn3W8wWew8um6r2EXw@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 0/2] drm: fdinfo memory stats
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Christopher Healy <healych@amazon.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v5 1/2] check-uapi: Introduce check-uapi.sh
+Content-Language: en-US
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Nicolas Schier" <nicolas@fjasle.eu>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        "Arnd Bergmann" <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, <libabigail@sourceware.org>,
+        Jordan Crouse <jorcrous@amazon.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        "Guru Das Srinagesh" <quic_gurus@quicinc.com>
+References: <20230407203456.27141-1-quic_johmoo@quicinc.com>
+ <20230407203456.27141-2-quic_johmoo@quicinc.com>
+ <CAK7LNAQQmoyUx+0Jk3c7iqY20KokrHEOPwHNb2doZOOA8RWBDA@mail.gmail.com>
+ <2023041015-lunar-dandelion-1b4e@gregkh>
+ <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
+ <2023041136-donator-faceplate-5f91@gregkh>
+From:   John Moon <quic_johmoo@quicinc.com>
+In-Reply-To: <2023041136-donator-faceplate-5f91@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hlN2L9npwgxOYiye6LLp0KUxZ8pjtuci
+X-Proofpoint-ORIG-GUID: hlN2L9npwgxOYiye6LLp0KUxZ8pjtuci
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-11_11,2023-04-11_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ adultscore=0 spamscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304110169
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 10:36=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+On 4/10/2023 11:34 PM, Greg Kroah-Hartman wrote:
+> On Mon, Apr 10, 2023 at 04:32:49PM -0700, John Moon wrote:
+>>>> According to this tool, it looks like we broke a lot of UAPI
+>>>> headers in the previous MW (between v6.2 and v6.3-rc1).
+>>>
+>>> That's not ok, and needs to be fixed, otherwise this is useless as no
+>>> one can rely on it at all.
+>>>
+>>
+>> Right, there are several classes of false positives that we've documented
+>> and when examining thousands of commits at time, it'll flag many things.
+>>
+>> For some comparison, if you run checkpatch on the same changeset
+>> (v6.2..v6.3-rc1), you get 995 errors and 7,313 warnings. Still, checkpatch
+>> is helpful for spot-checks.
+> 
+> checkpatch.pl does not matter, it is a "hint", and many patches
+> explicitly ignore it (think about patches in the staging tree, you could
+> fix up one checkpatch issue for a line, but ignore another one as you
+> are not supposed to mix them up.)
+> 
+> Also for some subsystems, checkpatch does not matter because their
+> codebase is old and follows different rules.  And in some places,
+> checkpatch is just wrong, because it's a perl script and can not really
+> parse code.
+> 
+> So NEVER use that as a comparison to the user/kernel abi please.  It's a
+> false comparison.
 >
-> On Tue, 11 Apr 2023 at 20:13, Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Tue, Apr 11, 2023 at 9:53=E2=80=AFAM Daniel Vetter <daniel@ffwll.ch>=
- wrote:
-> > >
-> > > On Tue, Apr 11, 2023 at 09:47:32AM -0700, Rob Clark wrote:
-> > > > On Mon, Apr 10, 2023 at 2:06=E2=80=AFPM Rob Clark <robdclark@gmail.=
-com> wrote:
-> > > > >
-> > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > >
-> > > > > Similar motivation to other similar recent attempt[1].  But with =
-an
-> > > > > attempt to have some shared code for this.  As well as documentat=
-ion.
-> > > > >
-> > > > > It is probably a bit UMA-centric, I guess devices with VRAM might=
- want
-> > > > > some placement stats as well.  But this seems like a reasonable s=
-tart.
-> > > > >
-> > > > > Basic gputop support: https://patchwork.freedesktop.org/series/11=
-6236/
-> > > > > And already nvtop support: https://github.com/Syllo/nvtop/pull/20=
-4
-> > > >
-> > > > On a related topic, I'm wondering if it would make sense to report
-> > > > some more global things (temp, freq, etc) via fdinfo?  Some of this=
-,
-> > > > tools like nvtop could get by trawling sysfs or other driver specif=
-ic
-> > > > ways.  But maybe it makes sense to have these sort of things report=
-ed
-> > > > in a standardized way (even though they aren't really per-drm_file)
-> > >
-> > > I think that's a bit much layering violation, we'd essentially have t=
-o
-> > > reinvent the hwmon sysfs uapi in fdinfo. Not really a business I want=
- to
-> > > be in :-)
-> >
-> > I guess this is true for temp (where there are thermal zones with
-> > potentially multiple temp sensors.. but I'm still digging my way thru
-> > the thermal_cooling_device stuff)
->
-> It is slightly ugly. All thermal zones and cooling devices are virtual
-> devices (so, even no connection to the particular tsens device). One
-> can either enumerate them by checking
-> /sys/class/thermal/thermal_zoneN/type or enumerate them through
-> /sys/class/hwmon. For cooling devices again the only enumeration is
-> through /sys/class/thermal/cooling_deviceN/type.
->
-> Probably it should be possible to push cooling devices and thermal
-> zones under corresponding providers. However I do not know if there is
-> a good way to correlate cooling device (ideally a part of GPU) to the
-> thermal_zone (which in our case is provided by tsens / temp_alarm
-> rather than GPU itself).
->
-> >
-> > But what about freq?  I think, esp for cases where some "fw thing" is
-> > controlling the freq we end up needing to use gpu counters to measure
-> > the freq.
->
-> For the freq it is slightly easier: /sys/class/devfreq/*, devices are
-> registered under proper parent (IOW, GPU). So one can read
-> /sys/class/devfreq/3d00000.gpu/cur_freq or
-> /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq.
->
-> However because of the components usage, there is no link from
-> /sys/class/drm/card0
-> (/sys/devices/platform/soc@0/ae00000.display-subsystem/ae01000.display-co=
-ntroller/drm/card0)
-> to /sys/devices/platform/soc@0/3d00000.gpu, the GPU unit.
->
-> Getting all these items together in a platform-independent way would
-> be definitely an important but complex topic.
 
-But I don't believe any of the pci gpu's use devfreq ;-)
+Fair enough. I was just trying to frame this tool as a "hint" as well. :)
 
-And also, you can't expect the CPU to actually know the freq when fw
-is the one controlling freq.  We can, currently, have a reasonable
-approximation from devfreq but that stops if IFPC is implemented.  And
-other GPUs have even less direct control.  So freq is a thing that I
-don't think we should try to get from "common frameworks"
+>>
+>> Others do not seem to be intentional:
+>>
+>>   Addition/use of flex arrays:
+>>     - include/uapi/linux/rseq.h (f7b01bb0b57f)
+>>     - include/uapi/scsi/scsi_bsg_mpi3mr.h (c6f2e6b6eaaf)
+> 
+> That is not a breakage, that's a tool problem.
+> 
+>>   Type change:
+>>     - include/uapi/scsi/scsi_bsg_ufs.h (3f5145a615238)
+> 
+> Again, not a real breakage, size is still the same.
+>
 
-BR,
--R
+Would you find the tool more useful if it simply filtered out all 
+instances where the size of the type did not change? This would filter 
+out the following which the tool currently flags:
 
-> >
-> > > What might be needed is better glue to go from the fd or fdinfo to th=
-e
-> > > right hw device and then crawl around the hwmon in sysfs automaticall=
-y. I
-> > > would not be surprised at all if we really suck on this, probably mor=
-e
-> > > likely on SoC than pci gpus where at least everything should be under=
- the
-> > > main pci sysfs device.
-> >
-> > yeah, I *think* userspace would have to look at /proc/device-tree to
-> > find the cooling device(s) associated with the gpu.. at least I don't
-> > see a straightforward way to figure it out just for sysfs
-> >
-> > BR,
-> > -R
-> >
-> > > -Daniel
-> > >
-> > > >
-> > > > BR,
-> > > > -R
-> > > >
-> > > >
-> > > > > [1] https://patchwork.freedesktop.org/series/112397/
-> > > > >
-> > > > > Rob Clark (2):
-> > > > >   drm: Add fdinfo memory stats
-> > > > >   drm/msm: Add memory stats to fdinfo
-> > > > >
-> > > > >  Documentation/gpu/drm-usage-stats.rst | 21 +++++++
-> > > > >  drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++=
-++++++
-> > > > >  drivers/gpu/drm/msm/msm_drv.c         | 25 ++++++++-
-> > > > >  drivers/gpu/drm/msm/msm_gpu.c         |  2 -
-> > > > >  include/drm/drm_file.h                | 10 ++++
-> > > > >  5 files changed, 134 insertions(+), 3 deletions(-)
-> > > > >
-> > > > > --
-> > > > > 2.39.2
-> > > > >
-> > >
-> > > --
-> > > Daniel Vetter
-> > > Software Engineer, Intel Corporation
-> > > http://blog.ffwll.ch
+- enum expansions
+- reserved field expansions
+- expansions of a struct with a flex array at the end
+- type changes
+- re-ordering of existing members
+- ...others?
+
+These changes aren't _always_ safe, but if you assume the kernel 
+developer is doing something reasonable, then maybe it's okay. Maybe we 
+could hide these checks behind something like a "--pedantic" flag?
+
+This logic is actually trivial to add. Filtering out issues where the 
+type size stays the same brings us down to 14 failures in that same MW 
+changeset. 8 of them are file removals and the 6 remaining flags are 
+additions to existing structs or intentional removals of APIs.
+
+LMK what you think and I can work this into a v6 patch.
+
+>>   Additions into existing struct:
+>>     - include/uapi/drm/amdgpu_drm.h (b299221faf9b)
+>>     - include/uapi/linux/perf_event.h (09519ec3b19e)
+>>     - include/uapi/linux/virtio_blk.h (95bfec41bd3d)
+> 
+> Adding data to the end of a structure is a well-known way to extend the
+> api, in SOME instances if it is used properly.
+> 
+> So again, not a break.
 >
->
->
-> --
-> With best wishes
-> Dmitry
+
+I don't know of a way the tool could be smart enough to decide if the 
+additions are done properly in the proper instances. Seems appropriate 
+that the tool would flag these changes for closer human review.
+
+Thanks,
+John
