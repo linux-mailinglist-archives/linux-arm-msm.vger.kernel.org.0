@@ -2,78 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD1B86DD395
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 09:06:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE7AC6DD41A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 09:28:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbjDKHG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 03:06:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55008 "EHLO
+        id S229922AbjDKH24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 03:28:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjDKHGZ (ORCPT
+        with ESMTP id S229771AbjDKH2z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 03:06:25 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EE51998
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:06:23 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id 60-20020a17090a09c200b0023fcc8ce113so9908642pjo.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:06:23 -0700 (PDT)
+        Tue, 11 Apr 2023 03:28:55 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926B510DE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:28:54 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id g3so8374809pja.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681196782;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dg3py+d1d8voix5Nhdaz+jzbS21GJeHZT0Py1g4YyaM=;
-        b=LkxT9gO8/NppwcJwgE57gyk+V86zc0W5i5FL0G1ZCy3FQyPh+mOvkWTXTT+MUvEhnX
-         Y6dCNmOUoJFa/UYMXd9IQbwUUHLPupgOhVjGW4cJgYstyM6cQ/CpDWDHJnVaoWpwbzPI
-         LEwxvQ1kzRiofohUiVp+Y4Gjtnf7Vp0IJfE3vsh8/Alpn+fIXDEwIcNvBMgOtUD0lVNV
-         FWTI6l6nIYvZZG4HsretIdaNeDRl1cwWVe+dSNRn3zNQlnWtXc9ZDcIJUISlR7Ihxqdd
-         Ws/GZZzl9xOKehHnkMj/YwiYCddQjoHn61ySi3HK9cNLB2MRHc//r34ElCdu7wP4T8pe
-         lmGA==
+        d=linaro.org; s=google; t=1681198134;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gYIzKSwGvXgmY04hGg8wntK0YcMOF3CTzRnRLf+lmfo=;
+        b=e6OfinFL6B6gdg/sJAGuLAhGXAyEHGQoZxFCxUIg+v9m0JVdVVaV9DIHI4uJiIHqkU
+         5lw43+apQZR1B7d/GX2LyV0NikJvmvv4D+MtE4GFcUagGspsqEdHY4ZkAgakMI1x5HEx
+         NnD2hGbX+okDo3T4dF0ALSiQr3ScWMnfEclK/VueuB1FngF2hgHcUzQysAG5oSNlAw/D
+         h1lJNs1JKLB3p1hzkohhHCg9HtDHzEpeePkD1IEou3QsRpWvoI6uo0Y6jUPGMqu7Pdqw
+         fVBOdLXMgRriDdfpJB4kWbf7ZZXKSn5cEBRVM8TRK/nKrG0s+7zy1rpFiR199UV26UbZ
+         rs5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681196782;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dg3py+d1d8voix5Nhdaz+jzbS21GJeHZT0Py1g4YyaM=;
-        b=PfaKo+38wkrNVE8xAIbBAljEbNbh7JExYL+Fh5Vn0shYV/lbMrPlEFWRttYs6iJyAz
-         PTLI7wFLjnZkHUI6Yi5BBcGn4VMPkshjnLoFXVOkXydXDVUQ0ffbWJOhcsFX3UCUuNog
-         jkFiLk52c73ACVg8WP85YfG3g/gMhUr1kJmX4LX+JgtIWwAQ8UqES7OGk7i3delsl4VK
-         xJzymbQVJ88tKGJECzPF9vLAkNQnXwm4S1TRRyuHlv9zyCSCRfjrKyhPytWrWWOr8D1s
-         7cREUoZI/H+nhGLCyDTD6c6nWnmugon+e1c30+3bcYkjkrTjM74IDVQfpfdF7OjTvDdM
-         xOxA==
-X-Gm-Message-State: AAQBX9fwk7xcJu2pvMnAVyjsrZs+r3bkB+QkOQs78vZpFFF/zYnQN9Rj
-        1KSSZrd+0u9icjtlkQ6Qoudgri09jIBCPFcy4Q==
-X-Google-Smtp-Source: AKy350ZV5bF2x0y0NqljiX1IQdz7pjKc0oiwRZpHDDEkCTOeAcl4il9uZBO6/2P1eJYS5OQLRRObCg==
-X-Received: by 2002:a17:902:6b04:b0:1a2:87a2:c910 with SMTP id o4-20020a1709026b0400b001a287a2c910mr13291521plk.53.1681196782274;
-        Tue, 11 Apr 2023 00:06:22 -0700 (PDT)
-Received: from thinkpad ([117.248.3.87])
-        by smtp.gmail.com with ESMTPSA id a10-20020a170902b58a00b0019edc1b9eb2sm8969140pls.238.2023.04.11.00.06.16
+        d=1e100.net; s=20210112; t=1681198134;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gYIzKSwGvXgmY04hGg8wntK0YcMOF3CTzRnRLf+lmfo=;
+        b=UadXguj1IE8OPKRhQMJcquwmDzwUKSCHYpEfmKHEHNKrXZ9bEEa9qy4MQYPqi3w3rQ
+         NmcxBDsJGlGvD0Ubuz+hge5OGogMEYm2vpxc9XfZaSVufHylX+5qqqDGoPYlWVrYdcFy
+         q1cZlMjP7Ko5Kj555zJrOSzr9PxM5JrEmTx3/QpTFEW0DdQuV1wy0DOJ6TwCHDW2R/EK
+         zwa7IGGYZ4F1RJYepPUwyiqQEeETu097Dp6JuhiCQcx6b+fvokD7EU8fY1J3YLZ0qY/G
+         OTBfht1kkOp0QVFXSjA1y9IXdpYcAbnNGASMJZR690GJYQIobLn2gUeHI1vo37qJEYwd
+         1oaQ==
+X-Gm-Message-State: AAQBX9fcNZ0D0vHtQLbWF51CgosoJQRmkOOWWr0IuIdpWroHV9WFMe/U
+        t5L2ESBe1zxWfs7j2DqMktjTvYw3xPOlZ46bKoE=
+X-Google-Smtp-Source: AKy350ZJeDMak23Z7LaNvanfRFivkMlcjclZLWaRbaa7GoUajg5ks3HHywtS5GNqiNKPpeg5jf5QAw==
+X-Received: by 2002:a17:903:1c4:b0:1a0:7584:f46f with SMTP id e4-20020a17090301c400b001a07584f46fmr25167435plh.9.1681198133612;
+        Tue, 11 Apr 2023 00:28:53 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:6a11:8ba1:beba:def7:a4ae])
+        by smtp.gmail.com with ESMTPSA id s7-20020a170902988700b001a043e84bf0sm8946612plp.209.2023.04.11.00.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 00:06:21 -0700 (PDT)
-Date:   Tue, 11 Apr 2023 12:36:13 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc:     Luca Weiss <luca@z3ntu.xyz>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@somainline.org,
-        mturquette@baylibre.com, sboyd@kernel.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        johan+linaro@kernel.org, quic_kriskura@quicinc.com,
-        dianders@chromium.org, linux-clk@vger.kernel.org,
-        angelogioacchino.delregno@collabora.com,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
- support
-Message-ID: <20230411070613.GA5333@thinkpad>
-References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
- <5c2442d3-1f65-9106-2ef4-d6beec159538@quicinc.com>
- <2619574.X9hSmTKtgW@z3ntu.xyz>
- <2674085.mvXUDI8C0e@z3ntu.xyz>
- <016fd82f-b0a6-d8e8-769f-ddee63d22eb4@quicinc.com>
+        Tue, 11 Apr 2023 00:28:53 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org
+Subject: [PATCH v3 0/3] arm64: dts: qcom: Add Qualcomm RB2 board dts
+Date:   Tue, 11 Apr 2023 12:58:37 +0530
+Message-Id: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <016fd82f-b0a6-d8e8-769f-ddee63d22eb4@quicinc.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
         DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
@@ -83,192 +70,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 10:20:47AM +0530, Rajendra Nayak wrote:
-> 
-> 
-> On 4/11/2023 1:05 AM, Luca Weiss wrote:
-> > Hi Rajendra,
-> > 
-> > On Mittwoch, 1. Februar 2023 19:04:37 CEST Luca Weiss wrote:
-> > > On Montag, 23. Jänner 2023 05:30:55 CET Rajendra Nayak wrote:
-> > > > On 1/22/2023 5:45 AM, Luca Weiss wrote:
-> > > > > Hi Rajendra,
-> > > > > 
-> > > > > On Dienstag, 20. September 2022 13:15:15 CET Rajendra Nayak wrote:
-> > > > > > GDSCs cannot be transitioned into a Retention state in SW.
-> > > > > > When either the RETAIN_MEM bit, or both the RETAIN_MEM and
-> > > > > > RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
-> > > > > > takes care of retaining the memory/logic for the domain when
-> > > > > > the parent domain transitions to power collapse/power off state.
-> > > > > > 
-> > > > > > On some platforms where the parent domains lowest power state
-> > > > > > itself is Retention, just leaving the GDSC in ON (without any
-> > > > > > RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
-> > > > > > it to Retention.
-> > > > > > 
-> > > > > > The existing logic handling the PWRSTS_RET seems to set the
-> > > > > > RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
-> > > > > > but then explicitly turns the GDSC OFF as part of _gdsc_disable().
-> > > > > > Fix that by leaving the GDSC in ON state.
-> > > > > > 
-> > > > > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > > > > > Cc: AngeloGioacchino Del Regno
-> > > > > > <angelogioacchino.delregno@collabora.com>
-> > > > > > ---
-> > > > > > v3:
-> > > > > > Updated changelog
-> > > > > > 
-> > > > > > There are a few existing users of PWRSTS_RET and I am not
-> > > > > > sure if they would be impacted with this change
-> > > > > > 
-> > > > > > 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
-> > > > > > gdsc is actually transitioning to OFF and might be left
-> > > > > > ON as part of this change, atleast till we hit system wide
-> > > > > > low power state.
-> > > > > > If we really leak more power because of this
-> > > > > > change, the right thing to do would be to update .pwrsts for
-> > > > > > mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
-> > > > > > I dont have a msm8974 hardware, so if anyone who has can report
-> > > > > > any issues I can take a look further on how to fix it.
-> > > > > 
-> > > > > Unfortunately indeed this patch makes problems on msm8974, at least on
-> > > > > fairphone-fp2 hardware.
-> > > > > 
-> > > > > With this patch in place, the screen doesn't initialize correctly in
-> > > > > maybe
-> > > > > 80% of boots and is stuck in weird states, mostly just becomes
-> > > > > completely
-> > > > > blue.
-> > > > > 
-> > > > > Kernel log at least sometimes includes messages like this:
-> > > > > [   25.847541] dsi_cmds2buf_tx: cmd dma tx failed, type=0x39,
-> > > > > data0=0x51,
-> > > > > len=8, ret=-110
-> > > > > 
-> > > > > Do you have anything I can try on msm8974? For now, reverting this patch
-> > > > > makes display work again on v6.1
-> > > > 
-> > > > hmm, I was really expecting this to leak more power than break anything
-> > > > functionally, Did you try moving to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
-> > > > for mdss_gdsc?
-> > > 
-> > > Hi Rajendra,
-> > > 
-> > > yes with this change the display init works fine again. Do you think this is
-> > > the intended solution then? I also haven't tested really more than this
-> > > simple case.
-> > > 
-> > > Let me know what you think.
-> > 
-> > Any feedback on this? Would be great to get this fixed sometime soon, quite
-> > annoying to carry a patch for this locally.
-> 
-> Hi Luca, really sorry I seem to have completely missed your previous
-> email. Yes, moving the gdsc from PWRSTS_RET_ON to PWRSTS_OFF_ON seems to
-> be the right thing to do. The behavior of the RET state was same as that
-> of OFF prior to my patch, so the change should ideally make display go
-> back to having the same behavior as before.
-> I can certainly ack the change if you send in a patch.
+Changes since v2:
+-----------------
+- v2 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230315210145.2221116-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Bjorn about load conditions for vmmc
+  ldos and added [PATCH 3/3] accordingly in v3.
+- Collected Krzysztof's Ack for [PATCH 1/3].
 
-I fail to understand how enabling retention state affects a peripheral during
-boot. It could've some effect during suspend but an issue during boot fuzzies
-me.
+Changes since v1:
+-----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230314210828.2049720-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Konrad and fixed the board dts and also
+  added a new 'qcom,qrb4210' compatible.
+- Although Krzysztof provided an Ack for [PATCH 1/2] from the v1 series,
+  since this series introduces the new 'qcom,qrb4210' compatible, so I
+  have dropped the same for now.
+ 
+Add an initial device tree for Qualcomm RB2 board (see [1]).
+It is based on the Robotics version of the Snapdragon SM4250
+Soc, i.e. QRB4210.
 
-- Mani
+Currently it enables:
+    - eMMC via SDHC1,
+    - uSD card via SDHC2,
+    - RPM regulators,
+    - Debug UART (via micro USB port).
 
-> thanks,
-> Rajendra
-> 
-> > 
-> > Regards
-> > Luca
-> > 
-> > > 
-> > > Regards
-> > > Luca
-> > > 
-> > > diff --git a/drivers/clk/qcom/mmcc-msm8974.c
-> > > b/drivers/clk/qcom/mmcc-msm8974.c index 26f3f8f06edf..f95e38abde13 100644
-> > > --- a/drivers/clk/qcom/mmcc-msm8974.c
-> > > +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> > > @@ -2389,7 +2389,7 @@ static struct gdsc mdss_gdsc = {
-> > >   	.pd = {
-> > >   		.name = "mdss",
-> > >   	},
-> > > -	.pwrsts = PWRSTS_RET_ON,
-> > > +	.pwrsts = PWRSTS_OFF_ON,
-> > >   };
-> > > 
-> > >   static struct gdsc camss_jpeg_gdsc = {
-> > > 
-> > > > > Regards
-> > > > > Luca
-> > > > > 
-> > > > > > 2. gpu_gx_gdsc in gpucc-msm8998.c and
-> > > > > > 
-> > > > > >      gpu_gx_gdsc in gpucc-sdm660.c
-> > > > > > 
-> > > > > > Both of these seem to add support for 3 power state
-> > > > > > OFF, RET and ON, however I dont see any logic in gdsc
-> > > > > > driver to handle 3 different power states.
-> > > > > > So I am expecting that these are infact just transitioning
-> > > > > > between ON and OFF and RET state is never really used.
-> > > > > > The ideal fix for them would be to just update their resp.
-> > > > > > .pwrsts to PWRSTS_OFF_ON only.
-> > > > > > 
-> > > > > >    drivers/clk/qcom/gdsc.c | 10 ++++++++++
-> > > > > >    drivers/clk/qcom/gdsc.h |  5 +++++
-> > > > > >    2 files changed, 15 insertions(+)
-> > > > > > 
-> > > > > > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> > > > > > index d3244006c661..ccf63771e852 100644
-> > > > > > --- a/drivers/clk/qcom/gdsc.c
-> > > > > > +++ b/drivers/clk/qcom/gdsc.c
-> > > > > > @@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
-> > > > > > 
-> > > > > >    	if (sc->pwrsts & PWRSTS_OFF)
-> > > > > >    	
-> > > > > >    		gdsc_clear_mem_on(sc);
-> > > > > > 
-> > > > > > +	/*
-> > > > > > +	 * If the GDSC supports only a Retention state, apart from ON,
-> > > > > > +	 * leave it in ON state.
-> > > > > > +	 * There is no SW control to transition the GDSC into
-> > > > > > +	 * Retention state. This happens in HW when the parent
-> > > > > > +	 * domain goes down to a Low power state
-> > > > > > +	 */
-> > > > > > +	if (sc->pwrsts == PWRSTS_RET_ON)
-> > > > > > +		return 0;
-> > > > > > +
-> > > > > > 
-> > > > > >    	ret = gdsc_toggle_logic(sc, GDSC_OFF);
-> > > > > >    	if (ret)
-> > > > > >    	
-> > > > > >    		return ret;
-> > > > > > 
-> > > > > > diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
-> > > > > > index 5de48c9439b2..981a12c8502d 100644
-> > > > > > --- a/drivers/clk/qcom/gdsc.h
-> > > > > > +++ b/drivers/clk/qcom/gdsc.h
-> > > > > > @@ -49,6 +49,11 @@ struct gdsc {
-> > > > > > 
-> > > > > >    	const u8			pwrsts;
-> > > > > >    /* Powerdomain allowable state bitfields */
-> > > > > >    #define PWRSTS_OFF		BIT(0)
-> > > > > > 
-> > > > > > +/*
-> > > > > > + * There is no SW control to transition a GDSC into
-> > > > > > + * PWRSTS_RET. This happens in HW when the parent
-> > > > > > + * domain goes down to a low power state
-> > > > > > + */
-> > > > > > 
-> > > > > >    #define PWRSTS_RET		BIT(1)
-> > > > > >    #define PWRSTS_ON		BIT(2)
-> > > > > >    #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
-> > 
-> > 
-> > 
-> > 
+Subsequent patchset(s) will add more peripherals like USB, etc.
+
+This patchset is dependent on the QRB4210 SocInfo patchset sent out
+earlier (see [2]).
+
+To get a successful boot run:
+    
+   $ cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
+    qrb4210-rb2.dtb > ./Image-adp.gz+dtb
+
+   $ mkbootimg --kernel ./Image-adp.gz+dtb \
+     --ramdisk ./some-initramfs-image.rootfs.img \
+     --output ./rb2-boot.img --pagesize 4096 \
+     --base 0x80000000 --cmdline 'SOME_CMDLINE'
+    
+   $ fastboot boot ./rb2-boot.img
+
+[1]. https://www.qualcomm.com/products/internet-of-things/industrial/industrial-automation/qualcomm-robotics-rb2-platform#Overview
+[2]. https://lore.kernel.org/linux-arm-msm/20230315160151.2166861-1-bhupesh.sharma@linaro.org/
+
+Bhupesh Sharma (3):
+  dt-bindings: arm: qcom: Document the Qualcomm qrb4210-rb2 board
+  arm64: dts: qcom: Add base qrb4210-rb2 board dts
+  arm64: dts: qcom: qrb4210-rb2: Increase load on l22 and l24 for uSD
+    and eMMC
+
+ .../devicetree/bindings/arm/qcom.yaml         |   8 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 227 ++++++++++++++++++
+ 3 files changed, 236 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.38.1
+
