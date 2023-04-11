@@ -2,79 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BBB76DD838
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 12:45:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 854A36DD873
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 12:58:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbjDKKp0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 06:45:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36258 "EHLO
+        id S229982AbjDKK6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 06:58:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbjDKKpG (ORCPT
+        with ESMTP id S229758AbjDKK6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 06:45:06 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF464490
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 03:44:43 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id z8so11610341lfb.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 03:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681209878;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hirgcP29XHsNtIjSU+Al8iOAd2++V8Gniyy2xGUTSAE=;
-        b=IBbce+lN+Nr+vMoC0k9ByIAXwvFFmDnfFThOZ3mb6AR2zqxfAHisyc0aOOaSYbtBrY
-         52vr8d45/GQQZPm2GuUm4tltjHvzKNm1w5yPEaon1pI3pB/uXkQNRLc+1II0YnUp2VCE
-         WnMdReneoMAhDy24QDI4j3HWN0dC41jSNJ6W+aj7EjbhHt/WyVOSmrjKLG5NYMFJ0PVz
-         9bia98efJ9GZVpaaoAjBRSEi4XSiHYBWP2zrCfxjKM3iZh6LrhOud0INyhp+a6gvqSH5
-         ThY4E+dFA9feolSub4Xz1TgTazqA1tJnz8O5Q9TcfdvhpkhASWJpv3XsP12ro42azrwD
-         i6kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681209878;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hirgcP29XHsNtIjSU+Al8iOAd2++V8Gniyy2xGUTSAE=;
-        b=CNXM8HaYiC6WKUOUlHl2OXbbuCC6xpYovu0XwW6eojXrNlQJuqmyJjta4Cq7AM02Qz
-         PjW2NDc26BIDRZoW3EySocUbrUwL/kI5TmLZTj38YLcpBimHsOdXMiWVnljTt7gD8Alb
-         vbDj+YMlig6byfC1gsUZtVuVzpBJTJJgDmTAtOnl4KM2m2hCSVvx4YysKjNaBfUS1cGx
-         eN6LrJNUyZE9oEFihpNgn7eI4weXt8Vci0WdRZlMk+udT4PXb30R7VdvW42lB9EqFJCi
-         JcOsG68C6m1oA/EzVabJx5IKICwRun8QN3iA5guX0Rz7cFwOHV8lUqi4RxiL4LZd0UeQ
-         bt+A==
-X-Gm-Message-State: AAQBX9fccX3mVAb+Mgm9ysM1FdpChUOPsdBvHuTWExdjBSmtCVrmSVrw
-        WcnvJG0a5VlpragnrD6vgHufag==
-X-Google-Smtp-Source: AKy350aIHpbNzEiCyJm0KeFoDAJWdaDbLNPH4o/rRl+cwDyOgsuQ7YSupy1n6sfAf+Uy7vVFdGWf3g==
-X-Received: by 2002:a19:7010:0:b0:4ec:8853:136 with SMTP id h16-20020a197010000000b004ec88530136mr1672586lfc.12.1681209878356;
-        Tue, 11 Apr 2023 03:44:38 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id r26-20020ac252ba000000b004e048852377sm2502146lfm.263.2023.04.11.03.44.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 03:44:37 -0700 (PDT)
-Message-ID: <779fbc24-c307-f229-f8e8-874851604b76@linaro.org>
-Date:   Tue, 11 Apr 2023 13:44:37 +0300
+        Tue, 11 Apr 2023 06:58:11 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FBB03AAA;
+        Tue, 11 Apr 2023 03:58:10 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BAljGr018908;
+        Tue, 11 Apr 2023 10:57:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=14mScYbVQyWzJ/LrV2BGO+8sFIwuc83cAGGYkYjZpjA=;
+ b=d5mqj90HrxHyVDaA0URCPX12v6GueiJTRsIbIFutDDFiWXRdQYbMtP1uHktFqE7FHQO1
+ b1GpzmIjvizl5Tnpmiw3zw33fTzaCTA0J/XxdqEXi5BwH2G9oJJZK2i+N2JN2iFW28I7
+ trmjmSy70Prdl6JPbVBo90aXYFuBXmVZysMO/WtD8ByPnDm08AppNJeO21Ds1CUzkG7l
+ R5TiyaCId7hftJB35aN0RJC38N6Jw3Fro001ZZCd3azHf3IUByWL86DbqyAHEc0qouDT
+ D/UUgtJ5Dk3uh55/m6tdd/dzri/Abc15EQfLyOnSA+iSHw4i/Yhkt2vL5TmqEkCeeD56 fQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pvggntqxs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 10:57:48 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BAvlMN004561
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 10:57:47 GMT
+Received: from [10.216.4.20] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 03:57:37 -0700
+Message-ID: <999dfe1c-3b0d-1cc1-7407-e0917fc62d77@quicinc.com>
+Date:   Tue, 11 Apr 2023 16:27:23 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v5 4/4] drm/msm/dpu: use CTL_SC7280_MASK for sm8450's
- ctl_0
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230408002750.2722304-1-dmitry.baryshkov@linaro.org>
- <20230408002750.2722304-5-dmitry.baryshkov@linaro.org>
- <66ea8874-424f-e4d8-ff0b-26ffb5333f2d@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <66ea8874-424f-e4d8-ff0b-26ffb5333f2d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 5/9] dt-bindings: PCI: qcom: Add IPQ9574
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
+        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
+        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <mani@kernel.org>, <p.zabel@pengutronix.de>,
+        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-clk@vger.kernel.org>, <linux-gpio@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_ipkumar@quicinc.com>
+References: <20230404164828.8031-1-quic_devipriy@quicinc.com>
+ <20230404164828.8031-6-quic_devipriy@quicinc.com>
+ <79ddaff0-00a9-36db-2bc0-4c844ffd9528@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <79ddaff0-00a9-36db-2bc0-4c844ffd9528@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FO9cNzbKgPi3ECrYyo59DBGcwno5Oyfe
+X-Proofpoint-ORIG-GUID: FO9cNzbKgPi3ECrYyo59DBGcwno5Oyfe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-11_06,2023-04-11_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=878
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 mlxscore=0 bulkscore=0
+ malwarescore=0 adultscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304110103
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,58 +93,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 03:57, Abhinav Kumar wrote:
+
+
+On 4/5/2023 12:28 PM, Krzysztof Kozlowski wrote:
+> On 04/04/2023 18:48, Devi Priya wrote:
+>> Add bindings for PCIe hosts on IPQ9574 platform and allow
+>> msi-parent property
 > 
+> Missing full stop. Also in your other patches.
+Okay
 > 
-> On 4/7/2023 5:27 PM, Dmitry Baryshkov wrote:
->> On sm8450 platform the CTL_0 doesn't differ from the rest of CTL blocks,
->> so switch it to CTL_SC7280_MASK too.
 >>
->> Some background: original commit 100d7ef6995d ("drm/msm/dpu: add support
->> for SM8450") had all (relevant at that time) bit spelled individually.
->> Then commit 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog"),
->> despite being a mismerge, correctly changed all other CTL entries to use
->> CTL_SC7280_MASK, except CTL_0.
->>
->> While the current BLOCK_SOC_MASK style is not ideal (and while we are
->> working on a better scheme), let's follow its usage as a least minimal
->> surprise. For example, sc8280xp, a close associate of sm8450, also uses
->> CTL_SC7280_MASK.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 >> ---
+>>   Changes in V2:
+>> 	- Updated the commit message and dropped the aggr_noc entries
+>> 	  as it will be handled via interconnect driver
+>>
+>>   .../devicetree/bindings/pci/qcom,pcie.yaml    | 48 +++++++++++++++++++
+>>   1 file changed, 48 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> index fb32c43dd12d..8657ab65008c 100644
+>> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+>> @@ -26,6 +26,7 @@ properties:
+>>             - qcom,pcie-ipq8064-v2
+>>             - qcom,pcie-ipq8074
+>>             - qcom,pcie-ipq8074-gen3
+>> +          - qcom,pcie-ipq9574
+>>             - qcom,pcie-msm8996
+>>             - qcom,pcie-qcs404
+>>             - qcom,pcie-sa8540p
+>> @@ -105,6 +106,8 @@ properties:
+>>       items:
+>>         - const: pciephy
+>>   
+>> +  msi-parent: true
+>
+
+Yes right, will rebase it on Mani's series.
+But, as you have pointed out don't see the binding changes
+in linux-next/master
+Mani, could you please provide the tree details onto which the
+binding change is merged?
+
+> Isn't this conflicting with Mani's series:
+> https://lore.kernel.org/all/20230108203340.GA229573-robh@kernel.org/
+> https://lore.kernel.org/all/20230111123004.21048-1-manivannan.sadhasivam@linaro.org/#t
 > 
-> Although I dont totally agree with this, but because sc8280xp also uses 
-> the same, I am fine.
+> Although for some reason Mani's patch references non-existing commit and
+> hunk...
 > 
+> Best regards,
+> Krzysztof
 > 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> But either we need to work on a better scheme or expand the macros but 
-> not duplicate these for the next chipset which gets added.
-
-Yes. I'm also holding the rest of MASK renaming patches for now.
-
-I'd like to the following major items finalized and merged (probably a 
-goal for 6.5):
-
-- INTF_TE restructure
-- QSEED3/4 refactoring
-- Proper support for active CTLs (wip), removing the need for 
-DPU_CTL_SPLIT_DISPLAY on sm8150+
-- Pending platforms (2 from 6.x, one from 5.x, hopefully one from 4.x 
-too, 3.x if possible). Hopefully this will also include more platforms 
-from recent DPU generations (8.x, 9.x)
-- Ideally: also sort out max SSPP line widths for VIG vs DMA
-
-I think that after this we can return to the question of platform 
-similarities and differences.
-
-Anyway, with the current msm-next + this patchset we should have a 
-catalog which one can expand without fearing about conflicts or 
-incorrect data duplication.
-
--- 
-With best wishes
-Dmitry
-
+Best Regards,
+Devi Priya
