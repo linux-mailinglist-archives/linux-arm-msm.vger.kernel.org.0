@@ -2,64 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 725E16DD4A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 09:54:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C7DD6DD531
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 10:22:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbjDKHyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 03:54:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43036 "EHLO
+        id S230354AbjDKIWt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 04:22:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjDKHyj (ORCPT
+        with ESMTP id S230244AbjDKIWZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 03:54:39 -0400
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 584B2A4;
-        Tue, 11 Apr 2023 00:54:38 -0700 (PDT)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: bbrezillon)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 5068466031E2;
-        Tue, 11 Apr 2023 08:54:36 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1681199676;
-        bh=X5FXAGQ1m/4RCqH9j/r3vyunBli9jNcGliIagj4A9cs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=U+yVRMwKKR3Vkq9p6ta2qsvpVTxDrdCDJ0n7K6B/z+mLWszol+ZnKjaauz3VmYAca
-         NcnI4+5mmVN9Dz8DOGpALGePw98NqqlsKGMdui5PYjT06spn8j9MrmVm/rZhGIKhQj
-         hlwrrkGFyJygHwJVP1shyY553W8hJMV4rzsjSVmXkba95Mw7In6EEupaMWiyalt4b4
-         NmAGla243GyIgIAHJ4QFddVMQWzvvVRPLRVSCm2YJuxxeSVghD7p5uppnq2k1kdBWa
-         GHdvPAbIV6XFyGiuwmBU0slzxEvYF0Ji1BaZj+0yhpz0dglNfDyY9BtbSMUBSUCchc
-         c8rZP56V4KyCg==
-Date:   Tue, 11 Apr 2023 09:54:33 +0200
-From:   Boris Brezillon <boris.brezillon@collabora.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Christopher Healy <healych@amazon.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Corbet <corbet@lwn.net>,
-        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
-        linux-kernel@vger.kernel.org (open list)
-Subject: Re: [RFC 1/2] drm: Add fdinfo memory stats
-Message-ID: <20230411095433.243a256c@collabora.com>
-In-Reply-To: <20230406215917.1475704-2-robdclark@gmail.com>
-References: <20230406215917.1475704-1-robdclark@gmail.com>
- <20230406215917.1475704-2-robdclark@gmail.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.36; x86_64-redhat-linux-gnu)
+        Tue, 11 Apr 2023 04:22:25 -0400
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C004ECB;
+        Tue, 11 Apr 2023 01:21:04 -0700 (PDT)
+Received: (Authenticated sender: miquel.raynal@bootlin.com)
+        by mail.gandi.net (Postfix) with ESMTPSA id 86501C000B;
+        Tue, 11 Apr 2023 08:20:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1681201245;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=5dxn4NJiE3B4l0ky6etbuCAHmNrCsdSn8aiPhVJqzK0=;
+        b=ZsU8dYwTOc46TPHSbq5p16/9AQmMS/uUngPw/Ep3ffxRbxNAvDSBCBvcAy2pJthLsUo170
+        Rj2p9Mc9u19gW1370eOx7JvIAabcDATJDumAn+o4DLCQe7iYje0L16LYJobe4Ma8iY4S2M
+        hVT2XlKE7FDCpaVqWTtgFMG9mm77zh0cU7Io21vdLB2MKPq3F4zr/E7ECZswWoUCh/54s9
+        LxOZOxezaGsD/cMwwjzDu8L5qQzOGwesAiCNFf9eRpldZFKNpdmxXMmy52npYKIeX+l3mz
+        4g3Xo/1Q9fGa3R74wYDYHo17n1DEYEktLz9cH0XxSNGHCrcLqbBdY32P+qBBmQ==
+Date:   Tue, 11 Apr 2023 10:20:25 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Uwe =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Lucas Stach <dev@lynxeye.de>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Stefan Agner <stefan@agner.ch>, linux-mips@vger.kernel.org,
+        Paul Cercueil <paul@crapouillou.net>,
+        linux-tegra@vger.kernel.org, Liang Yang <liang.yang@amlogic.com>,
+        Naga Sureshkumar Relli <nagasure@xilinx.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        linux-amlogic@lists.infradead.org,
+        Chuanhong Guo <gch981213@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Heiko Stuebner <heiko@sntech.de>,
+        Marek =?UTF-8?B?QmVow7pu?= <kabel@kernel.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        linux-mediatek@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        linux-rockchip@lists.infradead.org,
+        Tudor Ambarus <tudor.ambarus@linaro.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Jack Wang <jinpu.wang@ionos.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        kernel@pengutronix.de, Arnd Bergmann <arnd@arndb.de>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Wang Weiyang <wangweiyang2@huawei.com>,
+        Harvey Hunt <harveyhuntnexus@gmail.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Han Xu <han.xu@nxp.com>, Chen-Yu Tsai <wens@csie.org>,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Christophe Kerello <christophe.kerello@foss.st.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Valentin Korenblit <vkorenblit@sequans.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        linux-renesas-soc@vger.kernel.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Richard Weinberger <richard@nod.at>,
+        linux-mtd@lists.infradead.org, linux-oxnas@groups.io,
+        Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>
+Subject: Re: [PATCH] mtd: nand: Convert to platform remove callback
+ returning void
+Message-ID: <20230411102025.6b2fdc9e@xps-13>
+In-Reply-To: <20230408185332.d2g2ao4tdp6ltm4i@pengutronix.de>
+References: <20230401161938.2503204-1-u.kleine-koenig@pengutronix.de>
+        <20230407101043.299f5e22@xps-13>
+        <20230408185332.d2g2ao4tdp6ltm4i@pengutronix.de>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -67,164 +112,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Hi Uwe,
 
-On Thu,  6 Apr 2023 14:59:16 -0700
-Rob Clark <robdclark@gmail.com> wrote:
+u.kleine-koenig@pengutronix.de wrote on Sat, 8 Apr 2023 20:53:32 +0200:
 
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Add a helper to dump memory stats to fdinfo.  For the things the drm
-> core isn't aware of, use a callback.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is (mostly) ignored
+> and this typically results in resource leaks. To improve here there is a
+> quest to make the remove callback return void. In the first step of this
+> quest all drivers are converted to .remove_new() which already returns
+> void.
+>=20
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+>=20
+> Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+> Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+> Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+> Acked-by: Roger Quadros <rogerq@kernel.org>
+> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+> Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+> Acked-by: Thierry Reding <treding@nvidia.com>
+> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
 > ---
->  Documentation/gpu/drm-usage-stats.rst | 21 +++++++
->  drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++++++++
->  include/drm/drm_file.h                | 10 ++++
->  3 files changed, 110 insertions(+)
-> 
-> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentation/gpu/drm-usage-stats.rst
-> index b46327356e80..56e3c95b6e0a 100644
-> --- a/Documentation/gpu/drm-usage-stats.rst
-> +++ b/Documentation/gpu/drm-usage-stats.rst
-> @@ -105,6 +105,27 @@ object belong to this client, in the respective memory region.
->  Default unit shall be bytes with optional unit specifiers of 'KiB' or 'MiB'
->  indicating kibi- or mebi-bytes.
->  
-> +- drm-shared-memory: <uint> [KiB|MiB]
-> +
-> +The total size of buffers that are shared with another file (ie. have more
-> +than a single handle).
-> +
-> +- drm-private-memory: <uint> [KiB|MiB]
-> +
-> +The total size of buffers that are not shared with another file.
-> +
-> +- drm-resident-memory: <uint> [KiB|MiB]
-> +
-> +The total size of buffers that are resident in system memory.
-> +
-> +- drm-purgeable-memory: <uint> [KiB|MiB]
-> +
-> +The total size of buffers that are purgable.
-> +
-> +- drm-active-memory: <uint> [KiB|MiB]
-> +
-> +The total size of buffers that are active on one or more rings.
-> +
->  - drm-cycles-<str> <uint>
->  
->  Engine identifier string must be the same as the one specified in the
-> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-> index a51ff8cee049..21911d6ff38d 100644
-> --- a/drivers/gpu/drm/drm_file.c
-> +++ b/drivers/gpu/drm/drm_file.c
-> @@ -42,6 +42,7 @@
->  #include <drm/drm_client.h>
->  #include <drm/drm_drv.h>
->  #include <drm/drm_file.h>
-> +#include <drm/drm_gem.h>
->  #include <drm/drm_print.h>
->  
->  #include "drm_crtc_internal.h"
-> @@ -868,6 +869,84 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
->  }
->  EXPORT_SYMBOL(drm_send_event);
->  
-> +static void print_size(struct drm_printer *p, const char *stat, size_t sz)
-> +{
-> +	const char *units[] = {"B", "KiB", "MiB", "GiB"};
-> +	unsigned u;
-> +
-> +	for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
-> +		if (sz < SZ_1K)
-> +			break;
-> +		sz /= SZ_1K;
-> +	}
-> +
-> +	drm_printf(p, "%s:\t%lu %s\n", stat, sz, units[u]);
-> +}
-> +
-> +/**
-> + * drm_print_memory_stats - Helper to print standard fdinfo memory stats
-> + * @file: the DRM file
-> + * @p: the printer to print output to
-> + * @status: callback to get driver tracked object status
-> + *
-> + * Helper to iterate over GEM objects with a handle allocated in the specified
-> + * file.  The optional status callback can return additional object state which
-> + * determines which stats the object is counted against.  The callback is called
-> + * under table_lock.  Racing against object status change is "harmless", and the
-> + * callback can expect to not race against object destroy.
-> + */
-> +void drm_print_memory_stats(struct drm_file *file, struct drm_printer *p,
-> +			    enum drm_gem_object_status (*status)(struct drm_gem_object *))
+>=20
+> Hey Miquel,
+>=20
+> On Fri, Apr 07, 2023 at 10:10:43AM +0200, Miquel Raynal wrote:
+> > I've looked at the different patches, they look good to me but as they
+> > are all trivial and exactly identical, would you mind sending this
+> > again all squashed in a single patch? A subsystem-wide conversion seems
+> > appropriate. In all cases I plan to take this for the next merge
+> > window. =20
+>=20
+> I slightly prefer them separately, because I like small patches and
+> because the Acks and Reviews only apply to the individual drivers.
+> But I don't mind seriously, so here comes the series squashed into one.
 
-Nit: status() returning an 'enum drm_gem_object_status' makes it look
-like it can only return one of the DRM_GEM_OBJECT_* flag, when it can
-actually be a combination of flags. Should we make it return an u32
-instead? At the very least this should be clarified in the function doc.
+For any non trivial change, I would definitely do that as well.
 
-> +{
-> +	struct drm_gem_object *obj;
-> +	struct {
-> +		size_t shared;
-> +		size_t private;
-> +		size_t resident;
-> +		size_t purgeable;
-> +		size_t active;
-> +	} size = {0};
-> +	int id;
-> +
-> +	spin_lock(&file->table_lock);
-> +	idr_for_each_entry (&file->object_idr, obj, id) {
-> +		enum drm_gem_object_status s = 0;
-> +
-> +		if (status)
-> +			s = status(obj);
-> +
-> +		if (obj->handle_count > 1) {
-> +			size.shared += obj->size;
-> +		} else {
-> +			size.private += obj->size;
-> +		}
-> +
-> +		if (s & DRM_GEM_OBJECT_RESIDENT) {
-> +			size.resident += obj->size;
-> +			s &= ~DRM_GEM_OBJECT_PURGEABLE;
-> +		}
-> +
-> +		if (s & DRM_GEM_OBJECT_ACTIVE) {
-> +			size.active += obj->size;
-> +			s &= ~DRM_GEM_OBJECT_PURGEABLE;
-> +		}
-> +
-> +		if (s & DRM_GEM_OBJECT_PURGEABLE)
-> +			size.purgeable += obj->size;
-> +	}
-> +	spin_unlock(&file->table_lock);
-> +
-> +	print_size(p, "drm-shared-memory", size.shared);
-> +	print_size(p, "drm-private-memory", size.private);
-> +
-> +	if (status) {
-> +		print_size(p, "drm-resident-memory", size.resident);
-> +		print_size(p, "drm-purgeable-memory", size.purgeable);
-> +		print_size(p, "drm-active-memory", size.active);
-> +	}
+The thing is, by collecting the tags with b4, you lost all the Acks and
+Reviews targets, while we could prevent this, see below.
 
-Should we assume that all users of this drm_print_memory_stats() helper
-support tracking all these non-standard stats as soon as they provide a
-status callback? If not, we should probably not print the
-`drm-xxx-memory` line when the driver is not tracking this state (can
-be done with a 'supported_status' mask passed to
-drm_print_memory_stats()).
+> While going through the changed, probably the s3c24xx driver (which
+> isn't exactly identical to the other changes) could benefit from an
+> additional change throwing out the early exit (which---I guess---cannot
+> be hit).
 
-Other than these 2 minor things, I think it's a perfect match for
-panfrost mem-tracking, and I certainly intend to use this helper in
-panfrost.
+Yes, I believe the 'info =3D=3D NULL' condition is useless, feel free to
+drop it in a second patch if you wish.
+
+> BTW, I constructed the lists of acks/reviews myself and found the same
+> set. However b4 wailed about each patch claiming:
+>=20
+> 	    =E2=9C=97 BADSIG: DKIM/infradead.org
+
+No idea what this means, any pointer?
+
+> And it didn't like you producing the tags, saying:
+>=20
+> 	NOTE: some trailers ignored due to from/email mismatches:
+> 	    ! Trailer: Acked-by: Roger Quadros <rogerq@kernel.org>
+> 	     Msg From: Miquel Raynal <miquel.raynal@bootlin.com>
+> 	    [...]
+
+Well, yes, I don't expect b4 to read plain english when I say "I
+collected them for you" ^^ But at least my list had a '# <area>' suffix
+for each of the Acked and Reviewed changes, which is now missing. I
+don't know  how useful they actually are, but it seems to me that the
+information was lost between v1 and v2?
 
 Thanks,
-
-Boris
+Miqu=C3=A8l
