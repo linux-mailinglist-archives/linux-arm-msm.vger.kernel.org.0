@@ -2,174 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 442D46DD2DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 08:34:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1B86DD395
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 09:06:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229882AbjDKGeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 02:34:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44876 "EHLO
+        id S229733AbjDKHG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 03:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjDKGeN (ORCPT
+        with ESMTP id S229485AbjDKHGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 02:34:13 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414259D;
-        Mon, 10 Apr 2023 23:34:12 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D0877621DE;
-        Tue, 11 Apr 2023 06:34:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4ADFC433D2;
-        Tue, 11 Apr 2023 06:34:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1681194851;
-        bh=x+oH/HMKu73BCpFd8IM0DhA30uUo8CLngL7hAosyFdY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MlONgH5GrXXlf5h6VLeHlLslNecKJZXb24RI+5PjWyd8gctDAHUuci4CEziLuXGtq
-         ewaqggQL3HcYvIxtsGPMLFguVDX4T6QoYzWaySXUAFwW6oGUV4NpGCU5wDooAyoTpZ
-         V6UB4TZttKhqX7K1BUZ8K+mivIMIoQO9yaYvO4Rk=
-Date:   Tue, 11 Apr 2023 08:34:08 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     John Moon <quic_johmoo@quicinc.com>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        kernel-team@android.com, libabigail@sourceware.org,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [PATCH v5 1/2] check-uapi: Introduce check-uapi.sh
-Message-ID: <2023041136-donator-faceplate-5f91@gregkh>
-References: <20230407203456.27141-1-quic_johmoo@quicinc.com>
- <20230407203456.27141-2-quic_johmoo@quicinc.com>
- <CAK7LNAQQmoyUx+0Jk3c7iqY20KokrHEOPwHNb2doZOOA8RWBDA@mail.gmail.com>
- <2023041015-lunar-dandelion-1b4e@gregkh>
- <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
+        Tue, 11 Apr 2023 03:06:25 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EE51998
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:06:23 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id 60-20020a17090a09c200b0023fcc8ce113so9908642pjo.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:06:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681196782;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=dg3py+d1d8voix5Nhdaz+jzbS21GJeHZT0Py1g4YyaM=;
+        b=LkxT9gO8/NppwcJwgE57gyk+V86zc0W5i5FL0G1ZCy3FQyPh+mOvkWTXTT+MUvEhnX
+         Y6dCNmOUoJFa/UYMXd9IQbwUUHLPupgOhVjGW4cJgYstyM6cQ/CpDWDHJnVaoWpwbzPI
+         LEwxvQ1kzRiofohUiVp+Y4Gjtnf7Vp0IJfE3vsh8/Alpn+fIXDEwIcNvBMgOtUD0lVNV
+         FWTI6l6nIYvZZG4HsretIdaNeDRl1cwWVe+dSNRn3zNQlnWtXc9ZDcIJUISlR7Ihxqdd
+         Ws/GZZzl9xOKehHnkMj/YwiYCddQjoHn61ySi3HK9cNLB2MRHc//r34ElCdu7wP4T8pe
+         lmGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681196782;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dg3py+d1d8voix5Nhdaz+jzbS21GJeHZT0Py1g4YyaM=;
+        b=PfaKo+38wkrNVE8xAIbBAljEbNbh7JExYL+Fh5Vn0shYV/lbMrPlEFWRttYs6iJyAz
+         PTLI7wFLjnZkHUI6Yi5BBcGn4VMPkshjnLoFXVOkXydXDVUQ0ffbWJOhcsFX3UCUuNog
+         jkFiLk52c73ACVg8WP85YfG3g/gMhUr1kJmX4LX+JgtIWwAQ8UqES7OGk7i3delsl4VK
+         xJzymbQVJ88tKGJECzPF9vLAkNQnXwm4S1TRRyuHlv9zyCSCRfjrKyhPytWrWWOr8D1s
+         7cREUoZI/H+nhGLCyDTD6c6nWnmugon+e1c30+3bcYkjkrTjM74IDVQfpfdF7OjTvDdM
+         xOxA==
+X-Gm-Message-State: AAQBX9fwk7xcJu2pvMnAVyjsrZs+r3bkB+QkOQs78vZpFFF/zYnQN9Rj
+        1KSSZrd+0u9icjtlkQ6Qoudgri09jIBCPFcy4Q==
+X-Google-Smtp-Source: AKy350ZV5bF2x0y0NqljiX1IQdz7pjKc0oiwRZpHDDEkCTOeAcl4il9uZBO6/2P1eJYS5OQLRRObCg==
+X-Received: by 2002:a17:902:6b04:b0:1a2:87a2:c910 with SMTP id o4-20020a1709026b0400b001a287a2c910mr13291521plk.53.1681196782274;
+        Tue, 11 Apr 2023 00:06:22 -0700 (PDT)
+Received: from thinkpad ([117.248.3.87])
+        by smtp.gmail.com with ESMTPSA id a10-20020a170902b58a00b0019edc1b9eb2sm8969140pls.238.2023.04.11.00.06.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 00:06:21 -0700 (PDT)
+Date:   Tue, 11 Apr 2023 12:36:13 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc:     Luca Weiss <luca@z3ntu.xyz>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@somainline.org,
+        mturquette@baylibre.com, sboyd@kernel.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        johan+linaro@kernel.org, quic_kriskura@quicinc.com,
+        dianders@chromium.org, linux-clk@vger.kernel.org,
+        angelogioacchino.delregno@collabora.com,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v3 1/3] clk: qcom: gdsc: Fix the handling of PWRSTS_RET
+ support
+Message-ID: <20230411070613.GA5333@thinkpad>
+References: <20220920111517.10407-1-quic_rjendra@quicinc.com>
+ <5c2442d3-1f65-9106-2ef4-d6beec159538@quicinc.com>
+ <2619574.X9hSmTKtgW@z3ntu.xyz>
+ <2674085.mvXUDI8C0e@z3ntu.xyz>
+ <016fd82f-b0a6-d8e8-769f-ddee63d22eb4@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <016fd82f-b0a6-d8e8-769f-ddee63d22eb4@quicinc.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 10, 2023 at 04:32:49PM -0700, John Moon wrote:
-> > > According to this tool, it looks like we broke a lot of UAPI
-> > > headers in the previous MW (between v6.2 and v6.3-rc1).
+On Tue, Apr 11, 2023 at 10:20:47AM +0530, Rajendra Nayak wrote:
+> 
+> 
+> On 4/11/2023 1:05 AM, Luca Weiss wrote:
+> > Hi Rajendra,
 > > 
-> > That's not ok, and needs to be fixed, otherwise this is useless as no
-> > one can rely on it at all.
+> > On Mittwoch, 1. Februar 2023 19:04:37 CEST Luca Weiss wrote:
+> > > On Montag, 23. Jänner 2023 05:30:55 CET Rajendra Nayak wrote:
+> > > > On 1/22/2023 5:45 AM, Luca Weiss wrote:
+> > > > > Hi Rajendra,
+> > > > > 
+> > > > > On Dienstag, 20. September 2022 13:15:15 CET Rajendra Nayak wrote:
+> > > > > > GDSCs cannot be transitioned into a Retention state in SW.
+> > > > > > When either the RETAIN_MEM bit, or both the RETAIN_MEM and
+> > > > > > RETAIN_PERIPH bits are set, and the GDSC is left ON, the HW
+> > > > > > takes care of retaining the memory/logic for the domain when
+> > > > > > the parent domain transitions to power collapse/power off state.
+> > > > > > 
+> > > > > > On some platforms where the parent domains lowest power state
+> > > > > > itself is Retention, just leaving the GDSC in ON (without any
+> > > > > > RETAIN_MEM/RETAIN_PERIPH bits being set) will also transition
+> > > > > > it to Retention.
+> > > > > > 
+> > > > > > The existing logic handling the PWRSTS_RET seems to set the
+> > > > > > RETAIN_MEM/RETAIN_PERIPH bits if the cxcs offsets are specified
+> > > > > > but then explicitly turns the GDSC OFF as part of _gdsc_disable().
+> > > > > > Fix that by leaving the GDSC in ON state.
+> > > > > > 
+> > > > > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> > > > > > Cc: AngeloGioacchino Del Regno
+> > > > > > <angelogioacchino.delregno@collabora.com>
+> > > > > > ---
+> > > > > > v3:
+> > > > > > Updated changelog
+> > > > > > 
+> > > > > > There are a few existing users of PWRSTS_RET and I am not
+> > > > > > sure if they would be impacted with this change
+> > > > > > 
+> > > > > > 1. mdss_gdsc in mmcc-msm8974.c, I am expecting that the
+> > > > > > gdsc is actually transitioning to OFF and might be left
+> > > > > > ON as part of this change, atleast till we hit system wide
+> > > > > > low power state.
+> > > > > > If we really leak more power because of this
+> > > > > > change, the right thing to do would be to update .pwrsts for
+> > > > > > mdss_gdsc to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+> > > > > > I dont have a msm8974 hardware, so if anyone who has can report
+> > > > > > any issues I can take a look further on how to fix it.
+> > > > > 
+> > > > > Unfortunately indeed this patch makes problems on msm8974, at least on
+> > > > > fairphone-fp2 hardware.
+> > > > > 
+> > > > > With this patch in place, the screen doesn't initialize correctly in
+> > > > > maybe
+> > > > > 80% of boots and is stuck in weird states, mostly just becomes
+> > > > > completely
+> > > > > blue.
+> > > > > 
+> > > > > Kernel log at least sometimes includes messages like this:
+> > > > > [   25.847541] dsi_cmds2buf_tx: cmd dma tx failed, type=0x39,
+> > > > > data0=0x51,
+> > > > > len=8, ret=-110
+> > > > > 
+> > > > > Do you have anything I can try on msm8974? For now, reverting this patch
+> > > > > makes display work again on v6.1
+> > > > 
+> > > > hmm, I was really expecting this to leak more power than break anything
+> > > > functionally, Did you try moving to PWRSTS_OFF_ON instead of PWRSTS_RET_ON
+> > > > for mdss_gdsc?
+> > > 
+> > > Hi Rajendra,
+> > > 
+> > > yes with this change the display init works fine again. Do you think this is
+> > > the intended solution then? I also haven't tested really more than this
+> > > simple case.
+> > > 
+> > > Let me know what you think.
 > > 
+> > Any feedback on this? Would be great to get this fixed sometime soon, quite
+> > annoying to carry a patch for this locally.
 > 
-> Right, there are several classes of false positives that we've documented
-> and when examining thousands of commits at time, it'll flag many things.
+> Hi Luca, really sorry I seem to have completely missed your previous
+> email. Yes, moving the gdsc from PWRSTS_RET_ON to PWRSTS_OFF_ON seems to
+> be the right thing to do. The behavior of the RET state was same as that
+> of OFF prior to my patch, so the change should ideally make display go
+> back to having the same behavior as before.
+> I can certainly ack the change if you send in a patch.
+
+I fail to understand how enabling retention state affects a peripheral during
+boot. It could've some effect during suspend but an issue during boot fuzzies
+me.
+
+- Mani
+
+> thanks,
+> Rajendra
 > 
-> For some comparison, if you run checkpatch on the same changeset
-> (v6.2..v6.3-rc1), you get 995 errors and 7,313 warnings. Still, checkpatch
-> is helpful for spot-checks.
+> > 
+> > Regards
+> > Luca
+> > 
+> > > 
+> > > Regards
+> > > Luca
+> > > 
+> > > diff --git a/drivers/clk/qcom/mmcc-msm8974.c
+> > > b/drivers/clk/qcom/mmcc-msm8974.c index 26f3f8f06edf..f95e38abde13 100644
+> > > --- a/drivers/clk/qcom/mmcc-msm8974.c
+> > > +++ b/drivers/clk/qcom/mmcc-msm8974.c
+> > > @@ -2389,7 +2389,7 @@ static struct gdsc mdss_gdsc = {
+> > >   	.pd = {
+> > >   		.name = "mdss",
+> > >   	},
+> > > -	.pwrsts = PWRSTS_RET_ON,
+> > > +	.pwrsts = PWRSTS_OFF_ON,
+> > >   };
+> > > 
+> > >   static struct gdsc camss_jpeg_gdsc = {
+> > > 
+> > > > > Regards
+> > > > > Luca
+> > > > > 
+> > > > > > 2. gpu_gx_gdsc in gpucc-msm8998.c and
+> > > > > > 
+> > > > > >      gpu_gx_gdsc in gpucc-sdm660.c
+> > > > > > 
+> > > > > > Both of these seem to add support for 3 power state
+> > > > > > OFF, RET and ON, however I dont see any logic in gdsc
+> > > > > > driver to handle 3 different power states.
+> > > > > > So I am expecting that these are infact just transitioning
+> > > > > > between ON and OFF and RET state is never really used.
+> > > > > > The ideal fix for them would be to just update their resp.
+> > > > > > .pwrsts to PWRSTS_OFF_ON only.
+> > > > > > 
+> > > > > >    drivers/clk/qcom/gdsc.c | 10 ++++++++++
+> > > > > >    drivers/clk/qcom/gdsc.h |  5 +++++
+> > > > > >    2 files changed, 15 insertions(+)
+> > > > > > 
+> > > > > > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+> > > > > > index d3244006c661..ccf63771e852 100644
+> > > > > > --- a/drivers/clk/qcom/gdsc.c
+> > > > > > +++ b/drivers/clk/qcom/gdsc.c
+> > > > > > @@ -368,6 +368,16 @@ static int _gdsc_disable(struct gdsc *sc)
+> > > > > > 
+> > > > > >    	if (sc->pwrsts & PWRSTS_OFF)
+> > > > > >    	
+> > > > > >    		gdsc_clear_mem_on(sc);
+> > > > > > 
+> > > > > > +	/*
+> > > > > > +	 * If the GDSC supports only a Retention state, apart from ON,
+> > > > > > +	 * leave it in ON state.
+> > > > > > +	 * There is no SW control to transition the GDSC into
+> > > > > > +	 * Retention state. This happens in HW when the parent
+> > > > > > +	 * domain goes down to a Low power state
+> > > > > > +	 */
+> > > > > > +	if (sc->pwrsts == PWRSTS_RET_ON)
+> > > > > > +		return 0;
+> > > > > > +
+> > > > > > 
+> > > > > >    	ret = gdsc_toggle_logic(sc, GDSC_OFF);
+> > > > > >    	if (ret)
+> > > > > >    	
+> > > > > >    		return ret;
+> > > > > > 
+> > > > > > diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+> > > > > > index 5de48c9439b2..981a12c8502d 100644
+> > > > > > --- a/drivers/clk/qcom/gdsc.h
+> > > > > > +++ b/drivers/clk/qcom/gdsc.h
+> > > > > > @@ -49,6 +49,11 @@ struct gdsc {
+> > > > > > 
+> > > > > >    	const u8			pwrsts;
+> > > > > >    /* Powerdomain allowable state bitfields */
+> > > > > >    #define PWRSTS_OFF		BIT(0)
+> > > > > > 
+> > > > > > +/*
+> > > > > > + * There is no SW control to transition a GDSC into
+> > > > > > + * PWRSTS_RET. This happens in HW when the parent
+> > > > > > + * domain goes down to a low power state
+> > > > > > + */
+> > > > > > 
+> > > > > >    #define PWRSTS_RET		BIT(1)
+> > > > > >    #define PWRSTS_ON		BIT(2)
+> > > > > >    #define PWRSTS_OFF_ON		(PWRSTS_OFF | PWRSTS_ON)
+> > 
+> > 
+> > 
+> > 
 
-checkpatch.pl does not matter, it is a "hint", and many patches
-explicitly ignore it (think about patches in the staging tree, you could
-fix up one checkpatch issue for a line, but ignore another one as you
-are not supposed to mix them up.)
-
-Also for some subsystems, checkpatch does not matter because their
-codebase is old and follows different rules.  And in some places,
-checkpatch is just wrong, because it's a perl script and can not really
-parse code.
-
-So NEVER use that as a comparison to the user/kernel abi please.  It's a
-false comparison.
-
-> "./scripts/check-uapi.sh -b v6.3-rc1 -p v6.2" flags 36 out of the 911 files
-> checked. Of those 36, 19 fell into the currently documented false positive
-> categories:
-> 
-> Enum expansion: 17
-> Expanding into padded/reserved fields: 2
-> 
-> Beyond those, the tool appears to be flagging legitimate breakages.
-> 
-> Some fit into the definition of "intentional breakages" where support is
-> being dropped or something is being refactored:
-> 
->  File removals:
->    - include/uapi/drm/i810_drm.h
->    - include/uapi/drm/mga_drm.h
->    - include/uapi/drm/r128_drm.h
->    - include/uapi/drm/savage_drm.h
->    - include/uapi/drm/sis_drm.h
->    - include/uapi/drm/via_drm.h
->    - include/uapi/linux/meye.h
-> 
->  File moves:
->    - include/uapi/misc/habanalabs.h
-> 
->  Removal of struct:
->    - include/uapi/linux/uuid.h (5e6a51787fef)
->      - include/uapi/linux/mei.h (failed due to uuid.h)
->      - include/uapi/linux/ublk_cmd.h (failed due to uuid.h)
-> 
-> Others do not seem to be intentional:
-> 
->  Addition/use of flex arrays:
->    - include/uapi/linux/rseq.h (f7b01bb0b57f)
->    - include/uapi/scsi/scsi_bsg_mpi3mr.h (c6f2e6b6eaaf)
-
-That is not a breakage, that's a tool problem.
-
->  Type change:
->    - include/uapi/scsi/scsi_bsg_ufs.h (3f5145a615238)
-
-Again, not a real breakage, size is still the same.
-
->  Additions into existing struct:
->    - include/uapi/drm/amdgpu_drm.h (b299221faf9b)
->    - include/uapi/linux/perf_event.h (09519ec3b19e)
->    - include/uapi/linux/virtio_blk.h (95bfec41bd3d)
-
-Adding data to the end of a structure is a well-known way to extend the
-api, in SOME instances if it is used properly.
-
-So again, not a break.
-
-> Is there something I'm missing that makes these changes false positives? If
-> so, I'd be happy to add on to the documentation and work towards a way to
-> filter them out.
-> 
-> In the mean time, we will start a thread on the libabigail mailing list to
-> see if there's a way to add flags such as --ignore-enum-expansion,
-> --ignore-expansion-into-reserved-fields, etc. Enum expansion seems to be
-> making up the largest portion of false positives, so would be the best thing
-> to filter out.
-
-Increasing enums is in no way an abi break unless the size of the
-structure changes.
-
-Using reserved fields too is not a breakage.
-
-So yes, it looks like the tooling needs some work in order for us to be
-able to use this properly, digging through false positives like this is
-going to make it not used at all.
-
-thanks,
-
-greg k-h
+-- 
+மணிவண்ணன் சதாசிவம்
