@@ -2,100 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A3416DDE3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 16:40:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C86676DDE46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 16:42:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbjDKOkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 10:40:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59282 "EHLO
+        id S229791AbjDKOmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 10:42:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbjDKOka (ORCPT
+        with ESMTP id S229639AbjDKOmF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 10:40:30 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA25DE;
-        Tue, 11 Apr 2023 07:40:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4BAC0627DB;
-        Tue, 11 Apr 2023 14:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C5AC4339B;
-        Tue, 11 Apr 2023 14:40:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681224028;
-        bh=G9AYU0WN9fwVHfpl+j9W/uxt+uCAfsbXK2gGwD+3R2U=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=eLyIa62oV66FBuzFpuVRcHuxaVvY97n2RorioenkTNckbs6KU04LWPu5nsx3N8/mP
-         o7gS3IKXUyUmbhRSpDkKFLenpQS6JcxpM/++rSjpgNU+sTJeSAa1+HdF9NfnSafeJp
-         KLYyN6abjCnWVH8rO/NHiFxNjf6ve5j35i0dMcvZdZgnS27t7LR+jCeadptVqOMtla
-         Y4nBnPP5EszUhCLSDXtjm9Vq2LmGUX2Kn/GolTliiz6o1oIeM06NMXa5uh+EdYwJap
-         UB/vTtyiU1jM5uqZcoQTraDvHUFxnQALBQ4OkEnAcHoRg5H5WwzuIkosruBEeYF7rq
-         fIdChet8zTN5w==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Devi Priya <quic_devipriy@quicinc.com>
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com
-In-Reply-To: <20230407155727.20615-1-quic_devipriy@quicinc.com>
-References: <20230407155727.20615-1-quic_devipriy@quicinc.com>
-Subject: Re: (subset) [PATCH V4 0/5] Add regulator support for IPQ9574 SoC
-Message-Id: <168122402434.58187.8959222946426668128.b4-ty@kernel.org>
-Date:   Tue, 11 Apr 2023 15:40:24 +0100
+        Tue, 11 Apr 2023 10:42:05 -0400
+Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F18840C5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 07:42:02 -0700 (PDT)
+Received: by mail-vs1-xe2b.google.com with SMTP id k11so4570151vsv.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 07:42:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20210112.gappssmtp.com; s=20210112; t=1681224121;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0IsUqzAOOGwTdW6oKTQYTYQ5rspex3tOJ/uzBmQs6E4=;
+        b=m67XMiBjyE3LGndoYzB34x0EN0by382QLFad3fSrEBAfHC1Y1WMZ6keTHWmp9WJgXr
+         JKscIfMjwcVQhjeq3BE359R9ISZ+NRUl8RoVQSYQL7GJ3AlYEsS1Nrqz9vNQvyRFMQ7d
+         R2kAd04SmmVwd2yCelv7dr9h5y/MWOuA/OqYkr7nX0CTYo50QHcDmxuzNpQBE8nSv6xK
+         5fV5HCu9aLJLa8iWTNfegA4tAIawXp2LFCBwAK4ZnyszQ7gYkywcoH302ircJq1aqUjP
+         F5L3FjuFkOSrdpTkkhS1r3UhVTmIekMMQEsT4goBX8K3AQ87VtvGrkZooWkwaS33VEJ7
+         bwpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681224121;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0IsUqzAOOGwTdW6oKTQYTYQ5rspex3tOJ/uzBmQs6E4=;
+        b=Eg86klOOHi0r3m5omO0GvG6jldHfVREq1IHt7aCbF1IlWSY+rq/gxnFZTQnuUPtoY1
+         Za1G3t9CKPwYsiXvgurELRz6t5g3ftsE2yYmIv9Bf4BzrGSrQeRXFR41PBFiry6lHHWQ
+         Ia/+2Q1qWTmGUkZ4xDiFk38lAVkW3z8DPKurNH9jUsJDgpjmCyGNxIYlwTcylAVt7+A1
+         363Xl9+RVWX9ytJcRxxxML/U1ZOWQDKtUQUplBh/9yhvjljD3lPhmELJ+V7uGZJ3Iv2l
+         3LH2YxNlI9PpDD3AW1KplH3wPOyaXghMNKD9KkjxeFzjI5JvScspF1/QNor0sfpSXbVu
+         LgxA==
+X-Gm-Message-State: AAQBX9eT665zdy2UPtcv7QXXYuQqvtcBn2v84N4TsFrzdK/S5luqbbyR
+        vRp30i7lReL06jb3yTU9xG0N9b2XGbEGuxzpMYeLeQ==
+X-Google-Smtp-Source: AKy350a1MTHqScxDS1gDZ+TEOp6sZEA+LrjI4KfWxPLlXutjQPKll5t0VC5GNPpg/ojsniiIfjxnn+OWFZwBml1l9PA=
+X-Received: by 2002:a67:e0c4:0:b0:42c:515f:4a48 with SMTP id
+ m4-20020a67e0c4000000b0042c515f4a48mr5688372vsl.0.1681224121594; Tue, 11 Apr
+ 2023 07:42:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-00303
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230411125910.401075-1-brgl@bgdev.pl> <20230411125910.401075-8-brgl@bgdev.pl>
+ <6c75d434-bb5d-278f-a125-d096fd6b387d@linaro.org>
+In-Reply-To: <6c75d434-bb5d-278f-a125-d096fd6b387d@linaro.org>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Tue, 11 Apr 2023 16:41:50 +0200
+Message-ID: <CAMRc=MdLckYzUjDQzbNUaaviuABEDXcs0ctW6+-3fZiCbvfYQA@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: sa8775p: add the GPU IOMMU node
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 07 Apr 2023 21:27:22 +0530, Devi Priya wrote:
-> IPQ9574 SoC uses the PMIC MP5496 and SMPA1 regulator for APSS voltage scaling.
-> This patch series adds support for the same and also enables the RPM
-> communication over the RPMSG framework.
-> 
-> DTS patch depends on the below series
-> https://lore.kernel.org/linux-arm-msm/20230406061314.10916-1-quic_devipriy@quicinc.com/
-> 
-> [...]
+On Tue, Apr 11, 2023 at 3:16=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+>
+>
+> On 11.04.2023 14:59, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Add the Adreno GPU IOMMU for sa8775p-based platforms.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 37 +++++++++++++++++++++++++++
+> >  1 file changed, 37 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dt=
+s/qcom/sa8775p.dtsi
+> > index 191b510b5a1a..11f3d80dd869 100644
+> > --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> > @@ -7,6 +7,7 @@
+> >  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> >  #include <dt-bindings/clock/qcom,rpmh.h>
+> >  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+> > +#include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
+> >  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
+> >  #include <dt-bindings/power/qcom-rpmpd.h>
+> >  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> > @@ -605,6 +606,42 @@ gpucc: clock-controller@3d90000 {
+> >                       #power-domain-cells =3D <1>;
+> >               };
+> >
+> > +             adreno_smmu: iommu@3da0000 {
+> > +                     compatible =3D "qcom,sa8775p-smmu-500", "qcom,adr=
+eno-smmu",
+> > +                                  "arm,mmu-500";
+> Err.. does it even boot like this? You dropped the qcom,smmu-500 compatib=
+le
+> which means it's getting bound to the generic SMMU driver (without
+> QC quirks). If that was a mistake, you should have had all 4
+>
+> "qcom,sa8775p-smmu-500", qcom,adreno-smmu, "qcom,smmu-500", "arm,mmu-500"
+>
+> Without falling into the qc-specific codepaths, the Adreno compat does
+> nothing.
+>
 
-Applied to
+I did that initially, then noticed dtbs_check fails because the
+existing adreno GPUs implementing "arm,smmu-500" expect three
+compatibles like in this commit. I did that and the driver still
+probed the same so I assumed all's good. You're right of course, the
+adreno impl is not being assigned without "qcom,smmu-500". Are the
+bindings wrong in this case and should it be something like the
+following?
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index d966dc65ce10..cd1b052a7242 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -84,6 +84,7 @@ properties:
+               - qcom,sm8150-smmu-500
+               - qcom,sm8250-smmu-500
+           - const: qcom,adreno-smmu
++          - const: qcom,smmu-500
+           - const: arm,mmu-500
+       - description: Qcom Adreno GPUs implementing "arm,smmu-v2"
+         items:
 
-Thanks!
+Bartosz
 
-[1/5] regulator: qcom_smd: Add s1 sub-node to mp5496 regulator
-      commit: e953450cf0f622e3249202e985c79d3faf9a58f2
-[2/5] regulator: qcom_smd: Add MP5496 S1 regulator
-      commit: 60bbee7db43b97bf8c0978cc91f78d1746351871
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> Konrad
+> > +                     reg =3D <0x0 0x03da0000 0x0 0x20000>;
+> > +                     #iommu-cells =3D <2>;
+> > +                     #global-interrupts =3D <2>;
+> > +                     dma-coherent;
+> > +                     power-domains =3D <&gpucc GPU_CC_CX_GDSC>;
+> > +                     clocks =3D <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> > +                              <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+> > +                              <&gpucc GPU_CC_AHB_CLK>,
+> > +                              <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+> > +                              <&gpucc GPU_CC_CX_GMU_CLK>,
+> > +                              <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> > +                              <&gpucc GPU_CC_HUB_AON_CLK>;
+> > +                     clock-names =3D "gcc_gpu_memnoc_gfx_clk",
+> > +                                   "gcc_gpu_snoc_dvm_gfx_clk",
+> > +                                   "gpu_cc_ahb_clk",
+> > +                                   "gpu_cc_hlos1_vote_gpu_smmu_clk",
+> > +                                   "gpu_cc_cx_gmu_clk",
+> > +                                   "gpu_cc_hub_cx_int_clk",
+> > +                                   "gpu_cc_hub_aon_clk";
+> > +                     interrupts =3D <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+> > +                                  <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
+> > +             };
+> > +
+> >               pdc: interrupt-controller@b220000 {
+> >                       compatible =3D "qcom,sa8775p-pdc", "qcom,pdc";
+> >                       reg =3D <0x0 0x0b220000 0x0 0x30000>,
