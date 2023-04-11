@@ -2,153 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72EFC6DDB3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 14:53:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 433D96DDB4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 14:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbjDKMxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 08:53:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45658 "EHLO
+        id S229482AbjDKM4N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 08:56:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbjDKMx1 (ORCPT
+        with ESMTP id S229514AbjDKM4M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 08:53:27 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D323A8F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 05:53:26 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5491fa028adso479475947b3.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 05:53:26 -0700 (PDT)
+        Tue, 11 Apr 2023 08:56:12 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD28140C1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 05:56:10 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id d7so21358480lfj.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 05:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681217606;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fFv74P1KCayojYjxtK5/a2IFMIj+yPaoo8Ew1qIsSEg=;
-        b=sMWRCSjOMPVp5si/XP2v82kjVrx83Nszx7XXfiUQ+4WWfr+Aun0q5zNh0TbCkLLrmv
-         55qBvqAizK9Ib/ushXLC3pixTWaCqBTWRq2OghKIZKAO3c8aB4NXecWVCi46LhnivDh6
-         rEH/S76ZH7I/zoDt9n95RFEryypfxnLPpohemb+RndwF3uYLOUa10SqfseE95Ih5aFwL
-         J5cBuiYPpSO3NPLjGDX4umb2eLJqU+lzKEcPPkgYspNOJm9bDJduGJCQUHTYKyr1wo0i
-         FOvd8m51xCg7kwV16LK3iJ7VO4v2z5el1fDOH4sWMg3kSwSvmhHg/f+WnFhkFhOwmdxm
-         INqQ==
+        d=linaro.org; s=google; t=1681217769;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p59U/MidztXKvUHX3x4iKgmMCkXfcEm0tuGKGeli3EQ=;
+        b=cucQ3h4DO0/QUJTeJK2Z6K1Y3AmBhtS9dIxDq9CZh2AOpGfoRVsKwU35FBq616tuED
+         Z6Q1cB1nEL0g+1qHs6Zdhn4YNWSm2HXqpjjxmbmDshXZ8T2Jvan1Q2b3cA0kR0hmPkko
+         asEGupj1WPZ43KapY4CTBn0ypdDXnlbRR1jOlakm+yFaR1mwq7MHf4qDSfuERBm/bMSI
+         OaI5gps5unremrp0xfuMx2HO0EsSxZ3a+SZewcQ7Pel99vKUQAXvxrYWNfLiVN3PFtFX
+         TXz6JJy1vUJNHeBQbDG1gSHkCs0Pmo8rBwBfMO4D7VwliY9YTXfblA4vNCoCbw2NkgSB
+         VQ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681217606;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fFv74P1KCayojYjxtK5/a2IFMIj+yPaoo8Ew1qIsSEg=;
-        b=zVds0ySaRt/h6QLwV1Ich4R2s3oMUJXjc0l4X5cxBK0eD68z7kRtqkw550nOSks3LO
-         vAvqHkASmPcl9wpWClf8QT7cJQOPQ7yBHVmemtmcGd/3bXHlf8/WpBRpktajXKKxaT3X
-         3ujnyS/IpaWLlvC00y6WeLdm3vYKgkBjJzIrc5I8SFdzQzuWhvLEhH1dPSUiUSWLCtuA
-         uQKiWPKuujPVIqmKPguEWPg79w5r2kjqwf7QWKMXQnLvvHBzzlo4wTbyTNxFBEa2caJX
-         VG/tLc615EbMspnO8Xj6A738FXZUIp9COx+7cb4r0J5WFMgFlJLnUOTizWAEwlDkXuUv
-         uZJg==
-X-Gm-Message-State: AAQBX9d2YARZH0GKTLWMvKvp7z7EuRVFVioNNZJ7g4sQzDF5WswywpkR
-        DJcEPxjBo4qj5ruRcvPaZMGy6ou+diGWx2Dx3r+NEA==
-X-Google-Smtp-Source: AKy350Y4X7sWd/sMQ10PeBq1usb+QKgdwjKDQyYcRyuD5lp1mmERKPgxY9L+t5XfRBFRr6SmHLi0cZYny6S114tUDXA=
-X-Received: by 2002:a81:ca53:0:b0:54c:a67:90b with SMTP id y19-20020a81ca53000000b0054c0a67090bmr8186037ywk.5.1681217605731;
- Tue, 11 Apr 2023 05:53:25 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1681217769;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p59U/MidztXKvUHX3x4iKgmMCkXfcEm0tuGKGeli3EQ=;
+        b=vmMRBeoa4BvUlDq9rPIrxWHRgQjFamWLXsTcrCBQv2iEekaBjzFHyhGbJj9w9UwUwN
+         T6tP1zHypsQGtlZIBxNK8KzMuRorPAjfyBE2b9l6zcP40PL6m5ve8dIaZnpom/fqU0uk
+         x7QLQoptxLxSwVxY5dr9Is8yb5X70z5JwUL3GCz3BvTV0bkIafGz4LiK1EmZ9H0NI9aB
+         b5FnUWAopKIX3WSD/Z+x2LgA9dnE1vJ1NS7q02z6+CxH1MNcxGMTg4rDeTr7/If6qh5r
+         N8zODBu7eP44Q4EsFpd9bZsudw58a+0Uc1W28GY5SnYbF21N77q7tfmgr273g0XIlSPd
+         toQg==
+X-Gm-Message-State: AAQBX9dSE3+nK+v1HKcfYt2A5DXjkkciwqpW1BcfQnEsGyca4/YVbzPU
+        sa5cQrO8zXiLUcU7soVeeS3iTG0E6gBZ+5Oan5Y=
+X-Google-Smtp-Source: AKy350a/nlAv6EQaVMDDtX7UwvD9JRmUg+BukSidmParaor5epxiPNDYQWuKjpm8YL65cdtci6mT9Q==
+X-Received: by 2002:a19:700b:0:b0:4e9:cb57:8fdc with SMTP id h11-20020a19700b000000b004e9cb578fdcmr4049342lfc.46.1681217768995;
+        Tue, 11 Apr 2023 05:56:08 -0700 (PDT)
+Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
+        by smtp.gmail.com with ESMTPSA id r7-20020ac25a47000000b004e846175329sm2522743lfn.202.2023.04.11.05.56.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Apr 2023 05:56:08 -0700 (PDT)
+Message-ID: <9130c1cb-4081-b21c-7c1b-2e0c9879e66a@linaro.org>
+Date:   Tue, 11 Apr 2023 14:56:07 +0200
 MIME-Version: 1.0
-References: <20230410171010.2561393-1-bhupesh.sharma@linaro.org>
- <20230410171010.2561393-3-bhupesh.sharma@linaro.org> <1552aad0-4b84-b508-bc05-610edb3cccff@linaro.org>
- <CAH=2NtyP8zkOetnH-i8TLBGBQnjH4f569PxjzW_84HZXeCFGNw@mail.gmail.com>
-In-Reply-To: <CAH=2NtyP8zkOetnH-i8TLBGBQnjH4f569PxjzW_84HZXeCFGNw@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 11 Apr 2023 15:53:14 +0300
-Message-ID: <CAA8EJprCUSvtC4Os0X==E418ZyPB1sBDP18Z5Ng-zPE0=+1rXQ@mail.gmail.com>
-Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
-        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: Add base qrb4210-rb2 board dts
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
+References: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
+ <20230411072840.2751813-3-bhupesh.sharma@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230411072840.2751813-3-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 Apr 2023 at 15:18, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
->
-> On Tue, 11 Apr 2023 at 13:17, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On 10/04/2023 20:10, Bhupesh Sharma wrote:
-> > > Add USB superspeed qmp phy node to dtsi.
-> > >
-> > > Make sure that the various board dts files (which include sm4250.dtsi file)
-> > > continue to work as intended.
-> > >
-> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > > ---
-> > >   .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
-> > >   arch/arm64/boot/dts/qcom/sm6115.dtsi          | 29 +++++++++++++++++--
-> > >   .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
-> > >   3 files changed, 33 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> > > index a1f0622db5a0..75951fd439df 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
-> > > @@ -242,6 +242,9 @@ &usb {
-> > >   &usb_dwc3 {
-> > >       maximum-speed = "high-speed";
-> > >       dr_mode = "peripheral";
-> > > +
-> > > +     phys = <&usb_hsphy>;
-> > > +     phy-names = "usb2-phy";
-> > >   };
-> > >
-> > >   &usb_hsphy {
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > > index 2505c815c65a..b2ea8f13e827 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > > @@ -651,6 +651,31 @@ usb_hsphy: phy@1613000 {
-> > >                       status = "disabled";
-> > >               };
-> > >
-> > > +             usb_qmpphy: phy@1615000 {
-> > > +                     compatible = "qcom,sm6115-qmp-usb3-phy";
-> > > +                     reg = <0x0 0x01615000 0x0 0x200>;
-> > > +
-> > > +                     clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
-> > > +                              <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-> > > +                              <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> > > +                              <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> > > +                     clock-names = "cfg_ahb",
-> > > +                                   "ref",
-> > > +                                   "com_aux",
-> > > +                                   "pipe";
-> > > +
-> > > +                     resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
-> > > +                              <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
-> > > +                     reset-names = "phy", "phy_phy";
-> > > +
-> > > +                     #clock-cells = <0>;
-> > > +                     clock-output-names = "usb3_phy_pipe_clk_src";
-> > > +
-> > > +                     #phy-cells = <0>;
-> > > +
-> > > +                     status = "disabled";
-> >
-> >
-> > Please excuse me if I'm wrong, but this will not work with the current
-> > PHY driver. It was not updated to handle new bindings. Please provide
-> > relevant driver patches too.
->
-> Oh.. from your previous emails, I got the feeling that you were
-> already reworking the existing PHY driver as part of enabling it for
-> newer bindings.
->
-> No issues, I will send the PHY patches as well in the next version.
-
-Then this dependency should have been declared in the cover letter.
 
 
--- 
-With best wishes
-Dmitry
+On 11.04.2023 09:28, Bhupesh Sharma wrote:
+> Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
+> 
+> This adds debug uart, emmc, uSD and tlmm support along with
+> regulators found on this board.
+> 
+> Also defines the 'xo_board' and 'sleep_clk' frequencies for
+> this board.
+> 
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile        |   1 +
+>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 223 +++++++++++++++++++++++
+>  2 files changed, 224 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index e0e2def48470..d42c59572ace 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -74,6 +74,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> new file mode 100644
+> index 000000000000..c9c6e3787462
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -0,0 +1,223 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023, Linaro Limited
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm4250.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
+> +	compatible = "qcom,qrb4210-rb2", "qcom,qrb4210", "qcom,sm4250";
+> +
+> +	aliases {
+> +		serial0 = &uart4;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-min-microvolt = <3700000>;
+> +		regulator-max-microvolt = <3700000>;
+> +
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +};
+> +
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-pm6125-regulators";
+> +
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +		vdd-s3-supply = <&vph_pwr>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +		vdd-s6-supply = <&vph_pwr>;
+> +		vdd-s7-supply = <&vph_pwr>;
+> +		vdd-s8-supply = <&vph_pwr>;
+> +		vdd-s9-supply = <&vph_pwr>;
+> +		vdd-s10-supply = <&vph_pwr>;
+> +
+> +		vdd-l1-l7-l17-l18-supply = <&vreg_s6a_1p352>;
+> +		vdd-l2-l3-l4-supply = <&vreg_s6a_1p352>;
+> +		vdd-l5-l15-l19-l20-l21-l22-supply = <&vph_pwr>;
+> +		vdd-l6-l8-supply = <&vreg_s5a_0p848>;
+> +		vdd-l9-l11-supply = <&vreg_s7a_2p04>;
+> +		vdd-l10-l13-l14-supply = <&vreg_s7a_2p04>;
+> +		vdd-l12-l16-supply = <&vreg_s7a_2p04>;
+> +		vdd-l23-l24-supply = <&vph_pwr>;
+> +
+> +		vreg_s5a_0p848: s5 {
+I think going with pmicname_regulatorname (e.g. pm6125_s5) here
+and adding:
+
+regulator-name = "vreg_s5a_0p848"
+
+would make this more maintainable.
+
+[...]
+
+> +&sdhc_1 {
+> +	vmmc-supply = <&vreg_l24a_2p96>;
+> +	vqmmc-supply = <&vreg_l11a_1p8>;
+> +	no-sdio;
+> +	non-removable;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
+This comment is still pretty much spam.
+
+> +	vmmc-supply = <&vreg_l22a_2p96>;
+> +	vqmmc-supply = <&vreg_l5a_2p96>;
+> +	no-sdio;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32000>;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
+> +			       <49 1>, <52 1>, <54 1>,
+> +			       <56 3>, <61 2>, <64 1>,
+> +			       <68 1>, <72 8>, <96 1>;
+> +};
+> +
+> +&uart4 {
+> +	status = "okay";
+> +};
+This is not the correct SE for the production board. People
+booting this will get a tz bite.
+
+LGTM otherwise.
+
+Konrad
+> +
+> +&xo_board {
+> +	clock-frequency = <19200000>;
+> +};
