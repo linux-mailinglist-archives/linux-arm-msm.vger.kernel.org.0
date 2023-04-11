@@ -2,127 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E31D6DE633
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:10:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4E936DE643
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:16:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229458AbjDKVJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 17:09:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35350 "EHLO
+        id S229714AbjDKVQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 17:16:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbjDKVJ5 (ORCPT
+        with ESMTP id S229710AbjDKVQq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 17:09:57 -0400
+        Tue, 11 Apr 2023 17:16:46 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6CB3594;
-        Tue, 11 Apr 2023 14:09:56 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BKsDoA007547;
-        Tue, 11 Apr 2023 21:09:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=i2rscoya1h2h5VboVRI66W0JlClFfDBueFYWIdsH+Lw=;
- b=mJzA60XMy6RRoAA3W8wu/hn8SBUW4JB/D/ktcBw31f3oWOqax1mVydzLaWtxQutwQA6o
- 4p1H2DMxsz6TnWVWVoQat3QtnCmn+eMPPiemyPDcnLElNhiWCtdY4WyG6ol0jFQpdKzD
- d8KzSZgUzOveqvj71NlURYYOp4mSnavx88jiTXzt+7Gu7cUo1rezh5GKXOYwzLD2YqAt
- 1ol9WxzO6+vTgo/Un4JK91uKg8qNa/ik/wHME0j9e7Gq6R40LzfxAToFO0PGPQPInBFz
- Y+ynSNaRAzWnHRRb69oXZ8zx+3cEcJzwdphInApe1Wz2lcp110eeTmTFz2J5jWSa86NO gw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwe6m03px-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2067630D0;
+        Tue, 11 Apr 2023 14:16:45 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BLFJRk026861;
+        Tue, 11 Apr 2023 21:16:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AqeZXbDuPPU1NM2ef0P3QOYcGlcGpgGNd5YIz4wkf1I=;
+ b=H5j4l0Am9Wn/nx1e4cbCGRftsLRN64BNTWjIb+7ZaCZ+xCPH6MJG89vWIMPJRkL9WrlM
+ ECy0bvvVa8DVPsdKiixDGVtBT+0YZzyfVhFp2YKOZb1aFQM6SnhRVh+B/b8oyWrYobr5
+ oxGfhCE5MxqyVyDGURmO8Z9M76ncqsg864RuLDXVx3FAiYhqt4MsuXdl/rBVFcz54DDC
+ LjZjMdtEfOw2Kt9QlfdRmXZFn3tabbbIiesVS7Q+cIuitxsHnJGDEaPbq8lTMyw6s2gZ
+ 4dDsfkktEx1jDHazFb3XVKn55fastipPJ2kTPDPXzj/qqC2xQP/ATY/0MfAQCq7T0EPR Rw== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pvvux2fh1-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Apr 2023 21:09:50 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BL9n4K023171
+        Tue, 11 Apr 2023 21:16:30 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BLGTji029549
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 11 Apr 2023 21:09:49 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 11 Apr 2023 14:09:48 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@gmail.com>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] drm/msm/dpu: add DSC range checking during resource reservation
-Date:   Tue, 11 Apr 2023 14:09:40 -0700
-Message-ID: <1681247380-1607-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Tue, 11 Apr 2023 21:16:29 GMT
+Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 14:16:28 -0700
+Message-ID: <d736d53b-e289-85ca-ee78-e1f77ccc08c6@quicinc.com>
+Date:   Tue, 11 Apr 2023 14:16:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v11 13/26] gunyah: vm_mgr: Add ioctls to support basic
+ non-proxy VM boot
+Content-Language: en-US
+To:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+ <20230304010632.2127470-14-quic_eberman@quicinc.com>
+ <3271fdf5-57cd-d962-fd20-01f5a5447232@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <3271fdf5-57cd-d962-fd20-01f5a5447232@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WKmBajXDpqpBM9OQIlelBY97t9wQLLFL
-X-Proofpoint-ORIG-GUID: WKmBajXDpqpBM9OQIlelBY97t9wQLLFL
+X-Proofpoint-GUID: PEYH6DlHNqcFCXzBIrr2VFnKQTkQ-SKy
+X-Proofpoint-ORIG-GUID: PEYH6DlHNqcFCXzBIrr2VFnKQTkQ-SKy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-11_14,2023-04-11_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0
- priorityscore=1501 mlxlogscore=999 suspectscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304110190
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304110191
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Perform DSC range checking to make sure correct DSC is requested before
-reserve resource for it.
 
-Fixes: c985d7bb64ff ("drm/msm/disp/dpu1: Add DSC support in RM")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index f4dda88..95e58f1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-  * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #define pr_fmt(fmt)	"[drm:%s] " fmt, __func__
-@@ -250,6 +251,11 @@ int dpu_rm_init(struct dpu_rm *rm,
- 		struct dpu_hw_dsc *hw;
- 		const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
- 
-+		if (dsc->id < DSC_0 || dsc->id >= DSC_MAX) {
-+			DPU_ERROR("skip dsc %d with invalid id\n", dsc->id);
-+			continue;
-+		}
-+
- 		hw = dpu_hw_dsc_init(dsc->id, mmio, cat);
- 		if (IS_ERR_OR_NULL(hw)) {
- 			rc = PTR_ERR(hw);
-@@ -557,8 +563,10 @@ static int _dpu_rm_make_reservation(
- 	}
- 
- 	ret  = _dpu_rm_reserve_dsc(rm, global_state, enc, &reqs->topology);
--	if (ret)
-+	if (ret) {
-+		DPU_ERROR("unable to find appropriate DSC\n");
- 		return ret;
-+	}
- 
- 	return ret;
- }
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+On 3/31/2023 7:26 AM, Alex Elder wrote:
+> On 3/3/23 7:06 PM, Elliot Berman wrote:
+>> diff --git a/include/linux/gunyah_rsc_mgr.h 
+>> b/include/linux/gunyah_rsc_mgr.h
+>> index 88a429dad09e..8b0b46f28e39 100644
+>> --- a/include/linux/gunyah_rsc_mgr.h
+>> +++ b/include/linux/gunyah_rsc_mgr.h
+>> @@ -29,6 +29,12 @@ struct gh_rm_vm_exited_payload {
+>>   #define GH_RM_NOTIFICATION_VM_EXITED         0x56100001
+>>   enum gh_rm_vm_status {
+>> +    /**
+>> +     * RM doesn't have a state where load partially failed because
+>> +     * only Linux
+> 
+> I have no idea what the comment above means...  Please fix.
+> 
+> Several of the values below are never explicitly assigned,
+> and some are used but not assigned.  The others apparently
+> might come back from the resource manager?  Why, for
+> example, are the PAUSED, AUTH, and RESETTING statuses
+> defined if we don't use them?
+> 
 
+I ended up no longer needing VM_STATUS_LOAD_FAILED.
+
+The other status values are defined by Gunyah resource manager. RM will 
+notify us about the state transitions.
+
+Some of the state transitions can be inferred by Linux directly. For 
+instance, gh_rm_vm_init() will transition the VM from 
+GH_RM_VM_STATUS_INIT to GH_RM_VM_STATUS_READY iff it returns 
+successfully. There is one instance where we wait for VM to exit during 
+the VM teardown as well.
+
+Thanks,
+Elliot
+
+>> +     */
+>> +    GH_RM_VM_STATUS_LOAD_FAILED    = -1,
+>> +
+>>       GH_RM_VM_STATUS_NO_STATE    = 0,
+>>       GH_RM_VM_STATUS_INIT        = 1,
+>>       GH_RM_VM_STATUS_READY        = 2,
+>> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
+>> index a19207e3e065..d6abd8605a2e 100644
+>> --- a/include/uapi/linux/gunyah.h
+>> +++ b/include/uapi/linux/gunyah.h
+>> @@ -49,4 +49,17 @@ struct gh_userspace_memory_region {
+>>   #define GH_VM_SET_USER_MEM_REGION    _IOW(GH_IOCTL_TYPE, 0x1, \
+>>                           struct gh_userspace_memory_region)
+>> +/**
+>> + * struct gh_vm_dtb_config - Set the location of the VM's devicetree 
+>> blob
+>> + * @guest_phys_addr: Address of the VM's devicetree in guest memory.
+>> + * @size: Maximum size of the devicetree.
+>> + */
+>> +struct gh_vm_dtb_config {
+>> +    __u64 guest_phys_addr;
+>> +    __u64 size;
+>> +};
+>> +#define GH_VM_SET_DTB_CONFIG    _IOW(GH_IOCTL_TYPE, 0x2, struct 
+>> gh_vm_dtb_config)
+>> +
+>> +#define GH_VM_START        _IO(GH_IOCTL_TYPE, 0x3)
+>> +
+>>   #endif
+> 
