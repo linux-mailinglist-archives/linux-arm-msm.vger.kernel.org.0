@@ -2,124 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB4A96DE418
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2836B6DE437
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:45:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjDKSmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 14:42:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33122 "EHLO
+        id S229635AbjDKSpz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 14:45:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbjDKSml (ORCPT
+        with ESMTP id S229634AbjDKSpy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 14:42:41 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 564065B8D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:42:39 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-5140926a867so650544a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:42:39 -0700 (PDT)
+        Tue, 11 Apr 2023 14:45:54 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAE8FED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:45:53 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id e9so38771980ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:45:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681238559;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=x6Ng2/ghiTU1RM0IxflD5v/hgT5kdOcuikWRftBe35E=;
-        b=ahNrwYahrHR2Jo7NjpCTb5sYo+Mj3oe8k9O63DFO478m+0sZ9zMQxZkaLsjXmmW2ig
-         ChX+7s/cOrMHL/p77BLrySaaBlgxSdQCppoTbEkJ7mTEp87pDRLSTSyrIOK6R4PfNRoo
-         8BpRm33IvLsWBk6UgBFfwT+AqTb9GAGqz3K8QyRKm5Eieice1l8x1XEXWXY0rv6jHAra
-         7r5UDZMN7Der+7QbDh49hAs2O9Nq6z2q9eduHsJbzBetpd9f17C1ZkhQgL4US8Im4cMf
-         TebHazSea/AcFItmyKzT+tv3msPAhY390OpH80TjOFmMF9c8ImPX40oY5QgoJb2oqKNP
-         zHtg==
+        d=chromium.org; s=google; t=1681238752;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kt2nTK/L2DMh4Zod0ujL6feEggrKXdzfpI6LEwT2JUk=;
+        b=Hs81WUoiVVFIM+ivFPb/jQA3EmIEneKSPEVpUp08IzmbfAww4C0KWAmhuzCDQdWke4
+         JyeLR5vVRVO9FjudX6lOApI6Ywfr8cn1X0PHR0kvAemCLBX74PYeyck85YfJnOvReWRP
+         tzL8xVJchOm3iJgFtKbDexvKRPhNCqCKZrEaE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681238559;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x6Ng2/ghiTU1RM0IxflD5v/hgT5kdOcuikWRftBe35E=;
-        b=LcLYqfK5j2H3rKbMeZT0nEX08M72eMb5RwLZ/LmrhbVpdNfvDyX2ubKL716KLGhKp2
-         m4NduV2YGFvrfnYXc+QnMW52luPwEDBr/udLwXoXUVGoYImbFcccg2qVFAMD8uEWhHxT
-         bBlRvh+JCeSpagw8iSL9nuqQz2wJTU806e+wVsbBaZWbAx1xJAwwcGf2i/E3DGds6KiT
-         Escjq51Roc1LCeXEUcvS5sessyzQvKO4sOVANAzm4PirlyYDk/a+bIMy3+OXOy1gKLQM
-         wVaOyXEhglU33ORYNHGj1yygoa03cBHTwsAQzC4DEuIx9scISR4MVZYBs3R5caak5Bqd
-         AYWg==
-X-Gm-Message-State: AAQBX9dIn8WfeBCSGjQiU3py2O+22oV0uFDsu55H2rUwQ9NDPCtU+gNY
-        k+NrspuL2LXk0vqbnGTeEqTC
-X-Google-Smtp-Source: AKy350YuewgbMxHLTq7svnSq/upuotlWATNQt9z8vk4sDQ7z4m078rGm4F9+KcvFHKaiLPWMWZiZLQ==
-X-Received: by 2002:aa7:9739:0:b0:63a:fadd:3479 with SMTP id k25-20020aa79739000000b0063afadd3479mr951955pfg.19.1681238558577;
-        Tue, 11 Apr 2023 11:42:38 -0700 (PDT)
-Received: from thinkpad ([117.216.120.128])
-        by smtp.gmail.com with ESMTPSA id g2-20020a056a001a0200b006281273f1f5sm10105283pfv.8.2023.04.11.11.42.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 11:42:38 -0700 (PDT)
-Date:   Wed, 12 Apr 2023 00:12:31 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        bhelgaas@google.com, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lpieralisi@kernel.org
-Subject: Re: [PATCH] Revert "dt-bindings: PCI: qcom: Add iommu-map properties"
-Message-ID: <20230411184231.GA59982@thinkpad>
-References: <20230411121533.22454-1-manivannan.sadhasivam@linaro.org>
- <20230411174742.GA3428751-robh@kernel.org>
+        d=1e100.net; s=20210112; t=1681238752;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Kt2nTK/L2DMh4Zod0ujL6feEggrKXdzfpI6LEwT2JUk=;
+        b=mp2s+xyxnZL5lcVWInFMIA22d9ms+G2gk19xCycqXMiMKmf/fKN9uy9DRmsDE2BsdI
+         iHPeo85uEUmqk/TN8uLKwLHlJSUXrUPLC9/cynn8KNz5OIsQEWYwjaL6N8VjvjXg4mc3
+         Jf5NvQX6d8R2VjWM/99o14RB9DXBFDg5BknpBSo43zV8npyl1E/kPpfq3o7Xqa/LXAOq
+         O7Yy8/qGsJtDwfT7xO0q520yTE5KzxGGXEf3Mn164nr/ctJNqrfRSf61rpvApflZtRFd
+         kIEkjpxFykliD2ZA7bsH2bwjGCvbtMl/SdYDcyvc11pWDohUyEbMsnOeV+Z9zHcXJ9wE
+         UWUA==
+X-Gm-Message-State: AAQBX9fu3y9ztx+fuBJuuGBMSbAiewX4AjLe/mCh76QqUeoMTKhDptBw
+        cLtkC8ZUJyrCRdHSU/bu7pwNGhz32bvVNJvAIpYiug==
+X-Google-Smtp-Source: AKy350YpHKHopzwKahp7ULmovKXZ2doN6DUUuycpVkj4o70reVBikNejCvg9q/0Hmnr3kFqrFu9jis5M6LrN1eYn65U=
+X-Received: by 2002:a2e:b0c4:0:b0:298:b320:ee2d with SMTP id
+ g4-20020a2eb0c4000000b00298b320ee2dmr71986ljl.0.1681238751946; Tue, 11 Apr
+ 2023 11:45:51 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 11 Apr 2023 11:45:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230411174742.GA3428751-robh@kernel.org>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <20230411161903.599222-1-dmitry.baryshkov@linaro.org>
+References: <20230411161903.599222-1-dmitry.baryshkov@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Tue, 11 Apr 2023 11:45:51 -0700
+Message-ID: <CAE-0n5370mhqN7egoTAWaLTHR-qYZu4R99aPJbrXe7snv3rerw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/adreno: warn if chip revn is verified
+ before being set
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 12:47:42PM -0500, Rob Herring wrote:
-> On Tue, Apr 11, 2023 at 05:45:33PM +0530, Manivannan Sadhasivam wrote:
-> > This reverts commit 6ebfa40b63ae65eac20834ef4f45355fc5ef6899.
-> > 
-> > "iommu-map" property is already documented in commit
-> 
-> Need the commit hash here.
-> 
-> > ("dt-bindings: PCI: qcom: Add SM8550 compatible") along with the "iommus"
-> > property.
-> 
-> Shouldn't there be a patch removing "iommus" as discussed?
-> 
+Quoting Dmitry Baryshkov (2023-04-11 09:19:02)
+> The commit 010c8bbad2cb ("drm: msm: adreno: Disable preemption on Adreno
+> 510") tried to check GPU's revn before revn being set. Add WARN_ON_ONCE
+> to prevent such bugs from happening again. A separate helper is
+> necessary so that the warning is displayed really just once instead of
+> being displayed for each of comparisons.
+>
+> Suggested-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
 
-Yeah, that was my intention after the dts patches were merged. And since the
-dts patches are in linux-next now, I could finally send the patch.
-
-- Mani
-
-> > 
-> > So let's revert the commit that just added "iommu-map" to avoid
-> > duplication.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 --
-> >  1 file changed, 2 deletions(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > index 5d236bac99b6..a1318a4ecadf 100644
-> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > @@ -78,8 +78,6 @@ properties:
-> >  
-> >    dma-coherent: true
-> >  
-> > -  iommu-map: true
-> > -
-> >    interconnects:
-> >      maxItems: 2
-> >  
-> > -- 
-> > 2.25.1
-> > 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
