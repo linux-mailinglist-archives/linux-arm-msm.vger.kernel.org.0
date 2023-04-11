@@ -2,78 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0C0A6DDAD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 14:30:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A5C46DDB08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 14:39:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjDKMai (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 08:30:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50278 "EHLO
+        id S230081AbjDKMjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 08:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjDKMah (ORCPT
+        with ESMTP id S230097AbjDKMjf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 08:30:37 -0400
-Received: from sp14.canonet.ne.jp (sp14.canonet.ne.jp [210.134.168.91])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 91FCF49E6;
-        Tue, 11 Apr 2023 05:30:06 -0700 (PDT)
-Received: from csp14.canonet.ne.jp (unknown [172.21.160.134])
-        by sp14.canonet.ne.jp (Postfix) with ESMTP id 9FFF61E02EC;
-        Tue, 11 Apr 2023 21:30:04 +0900 (JST)
-Received: from echeck14.canonet.ne.jp ([172.21.160.124])
-        by csp4 with ESMTP
-        id mD8Op1wRtVjWJmD8OpUdkg; Tue, 11 Apr 2023 21:30:04 +0900
-X-CNT-CMCheck-Reason: "undefined", "v=2.4 cv=WsmVjfTv c=1 sm=1 tr=0
- ts=643552cc cx=g_jp:t_eml p=ISLhRirdagkA:10 a=puqJfqqrwnhV2n3dwg+kWg==:117
- a=yr9NA9NbXb0B05yJHQEWeQ==:17 a=PlGk70OYzacA:10 a=kj9zAlcOel0A:10
- a=dKHAf1wccvYA:10 a=x7bEGLp0ZPQA:10 a=uUN0uIi2KnPteaT9AOsA:9
- a=CjuIK1q_8ugA:10"
-X-CNT-CMCheck-Score: 100.00
-Received: from echeck14.canonet.ne.jp (localhost [127.0.0.1])
-        by esets.canonet.ne.jp (Postfix) with ESMTP id 40B2A1C026B;
-        Tue, 11 Apr 2023 21:30:04 +0900 (JST)
-X-Virus-Scanner: This message was checked by ESET Mail Security
-        for Linux/BSD. For more information on ESET Mail Security,
-        please, visit our website: http://www.eset.com/.
-Received: from smtp14.canonet.ne.jp (unknown [172.21.160.104])
-        by echeck14.canonet.ne.jp (Postfix) with ESMTP id 1199F1C025B;
-        Tue, 11 Apr 2023 21:30:04 +0900 (JST)
-Received: from wakaba-foods.co.jp (webmail.canonet.ne.jp [210.134.169.250])
-        by smtp14.canonet.ne.jp (Postfix) with ESMTPA id E093115F967;
-        Tue, 11 Apr 2023 21:30:02 +0900 (JST)
+        Tue, 11 Apr 2023 08:39:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A101FE4;
+        Tue, 11 Apr 2023 05:39:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AC51061D98;
+        Tue, 11 Apr 2023 12:39:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7516DC433EF;
+        Tue, 11 Apr 2023 12:39:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681216752;
+        bh=WD5G8dd/ugfMV6qpUG9CIug356YcoMv3nLMJmwxq5Zs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=quqRXFEc/A8hl0a7talcM3w/aUNpdbuZ/BWrcwkOKU8zHrz2+MUDjywi/R9/UKr1d
+         MGjYiZDgL2iEPqa8Jw5Q2MCtRtwXeGdfne2IPNc6xMgJgtDvi2+55Jx1VfIVT1f2gg
+         rniRywNXVpsLeHRmQXkB9ASUx9ZRnpx/Q81BhtQp1tD4FZDi1AIC3LMDkTkWk/j9sL
+         d2wOS3oX/5iWtdRl+xr8ve26cv2kjiy8WeQJC+kPNtW+pG72XX3HROBudhR5K9/vSP
+         q7AtM1RvdeyPj0WGrlBXmjaoDinlXW+QTjTOgbmyck73QazZ8B+z5nDnmxev9Br4kI
+         YdFuFnNnhppPw==
+Date:   Tue, 11 Apr 2023 05:42:54 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: qrb4210-rb2: Increase load on
+ l22 and l24 for uSD and eMMC
+Message-ID: <20230411124254.r4sk7fn4wdrdt6qy@ripper>
+References: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
+ <20230411072840.2751813-4-bhupesh.sharma@linaro.org>
+ <ff5691b4-df1a-57a8-6e96-f997bbe340f4@linaro.org>
+ <CAH=2Ntytn2GnBJkiZ4+xBf1X-fUUTD4iHWv-Sv66Jp1ePUDV3A@mail.gmail.com>
 MIME-Version: 1.0
-Message-ID: <20230411123002.0000448C.0303@wakaba-foods.co.jp>
-Date:   Tue, 11 Apr 2023 21:30:02 +0900
-From:   "Mr. Jerry Chang" <tozawa@wakaba-foods.co.jp>
-To:     <jc@jc.jc>
-Reply-To: <c-genghis0@yandex.com>
-Subject: Best Regards..., 
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-ORGANIZATION: Banking
-X-MAILER: Active! mail
-X-EsetResult: clean, %VIRUSNAME%
-X-ESET-AS: R=SPAM;S=100;OP=CALC;TIME=1681216204;VERSION=7952;MC=1568820569;ID=1378267868;TRN=15;CRV=0;IPC=210.134.169.250;SP=4;SIPS=1;PI=5;F=0
-X-I-ESET-AS: RN=442,624:0;RNP=c-genghis0@yandex.com
-X-ESET-Antispam: SPAM
-X-Spam-Status: No, score=4.5 required=5.0 tests=FREEMAIL_FORGED_REPLYTO,
-        FREEMAIL_REPLYTO_END_DIGIT,HK_NAME_MR_MRS,SPF_HELO_NONE,SPF_PASS,
-        UNRESOLVED_TEMPLATE autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH=2Ntytn2GnBJkiZ4+xBf1X-fUUTD4iHWv-Sv66Jp1ePUDV3A@mail.gmail.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Apr 11, 2023 at 05:43:51PM +0530, Bhupesh Sharma wrote:
+> On Tue, 11 Apr 2023 at 17:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >
+> >
+> >
+> > On 11.04.2023 09:28, Bhupesh Sharma wrote:
+> > > Increase the l22 and l24 load used for uSD and eMMC VMMC.
+> > > These need to be increased in order to prevent any voltage drop
+> > > issues due to limited current happening during specific operations
+> > > (e.g. write).
+> > >
+> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > ---
+> > You could have simply squashed this into the patch where
+> > you enabled the controllers, so that that commit works
+> > reliably for e.g. bisect
+> 
+> Yes, but Bjorn asked me to send this separately (via irc).
+> I am fine with squashing this with the previous patch [PATCH 2/3] as
+> well, if Bjorn is OK with it.
+> 
 
-Hello! 
-Best Regards..., 
-How are you doing today? 
-I hope this email finds you in good health. 
-You have not responded to my previous emails to you regarding Mr. Husson. 
-Kindly acknowledge my proposal and let me know what your decisions are, if you are taking the offer. 
-Kindly get back to me as soon as possible for more details. 
-Best regards,
-Mr. Jerry Chang.
+I was trying to say that I was fine with you just fixing the small thing
+I had asked for and then you could send a separate patch for this when
+you found the time.
 
+I can squash the two while applying, unless anyone else have any
+concerns with the patches.
 
+Regards,
+Bjorn
