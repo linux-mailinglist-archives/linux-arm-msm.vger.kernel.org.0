@@ -2,104 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D40B46DE17F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 18:53:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 723296DE18D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 18:53:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbjDKQxR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 12:53:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
+        id S230271AbjDKQxk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 12:53:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230226AbjDKQxJ (ORCPT
+        with ESMTP id S230272AbjDKQxX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 12:53:09 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8951FC1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:53:05 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id ga37so22387786ejc.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:53:05 -0700 (PDT)
+        Tue, 11 Apr 2023 12:53:23 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92B9349F6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:53:21 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-2efbab42639so271426f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 09:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681231984;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ko41vrD9KbTzdwmwXur/3oq4iOAKnfjP+f6zFzEQLpE=;
-        b=B0TShScBPiEz2w8MEd7mw0DLKt3y2LY78FWeticyCMBj1Ix5JbpLQjUlbZSugS63Y4
-         zGN35IQpGAsuW3fsWcA0pCzAz6HRCRnlTliFdWfJtD6arDyJlbVD7uaAX/9N2wZFwZd+
-         LoMq+/w4XavyfQ0YucBRh9QfAT2cddM0hwpvbhnE/R/VuWTYRWsm5NNx/PKDEG4oC3HZ
-         3Aw3V1IBxqnb5577gSdeLOOukFY0kH9eHR4suBF082CpYN0UZNuZnc5rfgpRPEDHOyJb
-         3UZO3zSEkcmUTAwnod1ErIPjPIMsZmqiL+7PUiDXYv5nkROYYCZTLP3S1xUdt8+P80L8
-         EBHA==
+        d=ffwll.ch; s=google; t=1681232000;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+gfcS2tsX9XYUKArm1OCX22keoi76nV+AVghU8pmdeQ=;
+        b=ZHwBGcIXDowSL7P0mmBS86mEH7x4yQD/opnqA2YmT3uLGcV8wIz3w7kfDDiqRZH8wK
+         CvPWLRqV56VJ/fHFbywikIUe0WbQ4aqOlQbMcsWioRrumzFp7GM23LX4kQisKX4N65dC
+         bSyte7J7M300AOpKo4rtQgSP5iikR5XAeKqVY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681231984;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ko41vrD9KbTzdwmwXur/3oq4iOAKnfjP+f6zFzEQLpE=;
-        b=5V54/i87rIyblaHwg6x0DF7CwvE1pIw3Mg1BiteFAs78OJvrFQpg27D7Hw+LmeHp9r
-         wdjLV+05yy0r/FOdjGI7JaCe97SxFie0x6jjXElSrYN5PVsSRuPsQAJ9KdifJ7pTnoZF
-         x4hi7I5kveP8k99dTmj4emG++XDqBA+oPpvn0M0i2aXzU1xgVN85a6HIde874ykagz6u
-         9dsI+y+W3GPtFu/utSsNJYWTJqi7tr3c0V2keNlFN0fxzR+/e+epE0WHSGaB4VEMmFon
-         GdRHmRMpVgsoEo2xgYvkRrcEsXoiMkaoAkuhu/ododHxDqtmU7cvfR5ZmztD7C3iJPJR
-         RXJA==
-X-Gm-Message-State: AAQBX9d/Ha4TGCjl6Jz3QTjTwipQdU9CJtHpLH3v6u2rSfWeRnIeKe+9
-        k8RW83Kx5xviDMYf7j0OzF+oIA==
-X-Google-Smtp-Source: AKy350Y7xYN7SYqspnovV/HzkT7cFYXlUKEB2P/lKm2tKJGCDSg/SBoG/2m0t0rb3js7VF4rfj11Yw==
-X-Received: by 2002:a17:907:d07:b0:92b:69cd:34c7 with SMTP id gn7-20020a1709070d0700b0092b69cd34c7mr13515397ejc.40.1681231984156;
-        Tue, 11 Apr 2023 09:53:04 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:f1da:c117:3657:c8a? ([2a02:810d:15c0:828:f1da:c117:3657:c8a])
-        by smtp.gmail.com with ESMTPSA id u1-20020a17090617c100b00930b13f6abdsm6364830eje.98.2023.04.11.09.53.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 09:53:03 -0700 (PDT)
-Message-ID: <3bb9bbf1-97d9-7cc9-479d-1ec93c11056b@linaro.org>
-Date:   Tue, 11 Apr 2023 18:53:02 +0200
+        d=1e100.net; s=20210112; t=1681232000;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+gfcS2tsX9XYUKArm1OCX22keoi76nV+AVghU8pmdeQ=;
+        b=Y8IV4VjwmeoCCuf67X+21yNTJ2URX+Sg7A/pPk6rJAxNS7xTPrAJcr1NgUpcSx0nUI
+         axY2Bed0tBTKY4jRrGw1fPh4AaSytyOX4ryNlisXRJCiLbomlrb48+8NyLjytmvmr3gE
+         GqPzUY4OKa9uXOM+s2RxHe+/3iUc5sZxPEu8liOqNc3upWDIJhzWS29v/USooNcC9leb
+         wJF5ultlsublsNBI7DfHKo2MHVHOmYaS47m6ym5NUIWBG0m2XurXX8q+OrF9Tj9rDWAR
+         xi68h7W1DTD1rT2KoLrfMgY7bjbIPAwhsfmjZ5okp7KVc8wsnWHkDRzEBy1BHRMvp88k
+         zCDg==
+X-Gm-Message-State: AAQBX9dWiJwswqrqKROoo5K8QvwNVe8LgeotP1hZVKQ5Rs8STJ6q1YTo
+        WOncC9gUZui0pXj5V4iwSs1Drw==
+X-Google-Smtp-Source: AKy350br+rdKktY3gNnwuJRPjU8rT52r6Z6DA+ZmF+aY8UidhYk2IuG1US9rA79MkKG7FwSbsx8pVQ==
+X-Received: by 2002:a05:600c:3490:b0:3f0:7ec7:a71 with SMTP id a16-20020a05600c349000b003f07ec70a71mr8239096wmq.4.1681231999969;
+        Tue, 11 Apr 2023 09:53:19 -0700 (PDT)
+Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
+        by smtp.gmail.com with ESMTPSA id k23-20020a05600c0b5700b003ee44b2effasm17500892wmr.12.2023.04.11.09.53.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 09:53:19 -0700 (PDT)
+Date:   Tue, 11 Apr 2023 18:53:17 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Christopher Healy <healych@amazon.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 0/2] drm: fdinfo memory stats
+Message-ID: <ZDWQfbUBhyJf1Ezx@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@chromium.org>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Christopher Healy <healych@amazon.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        freedreno@lists.freedesktop.org
+References: <20230410210608.1873968-1-robdclark@gmail.com>
+ <CAF6AEGvs4XMggPMthiJ89SiaUj3k+nY95OhxLZ5cD-01XPco4Q@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sm8150-kumano: Set up camera fixed
- regulators
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230315-topic-kumano_dts0-v1-0-f1852c2a2378@linaro.org>
- <20230315-topic-kumano_dts0-v1-3-f1852c2a2378@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230315-topic-kumano_dts0-v1-3-f1852c2a2378@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGvs4XMggPMthiJ89SiaUj3k+nY95OhxLZ5cD-01XPco4Q@mail.gmail.com>
+X-Operating-System: Linux phenom 6.1.0-7-amd64 
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 15:49, Konrad Dybcio wrote:
-> +	rgbc_ir_pwr_en: rgbc-ir-pwr-en-state {
-> +		pins = "gpio29";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-disable;
-> +		output-low;
-> +	};
-> +
-> +	sub_cam_pwr_en: sub-cam-pwr-en-state {
-> +		pins = "gpio79";
-> +		function = "gpio";
-> +		drive-strength = <2>;
-> +		bias-pull-down;
-> +		input-enable;
+On Tue, Apr 11, 2023 at 09:47:32AM -0700, Rob Clark wrote:
+> On Mon, Apr 10, 2023 at 2:06 PM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Similar motivation to other similar recent attempt[1].  But with an
+> > attempt to have some shared code for this.  As well as documentation.
+> >
+> > It is probably a bit UMA-centric, I guess devices with VRAM might want
+> > some placement stats as well.  But this seems like a reasonable start.
+> >
+> > Basic gputop support: https://patchwork.freedesktop.org/series/116236/
+> > And already nvtop support: https://github.com/Syllo/nvtop/pull/204
+> 
+> On a related topic, I'm wondering if it would make sense to report
+> some more global things (temp, freq, etc) via fdinfo?  Some of this,
+> tools like nvtop could get by trawling sysfs or other driver specific
+> ways.  But maybe it makes sense to have these sort of things reported
+> in a standardized way (even though they aren't really per-drm_file)
 
-input-enable is not valid anymore.
+I think that's a bit much layering violation, we'd essentially have to
+reinvent the hwmon sysfs uapi in fdinfo. Not really a business I want to
+be in :-)
 
-Best regards,
-Krzysztof
+What might be needed is better glue to go from the fd or fdinfo to the
+right hw device and then crawl around the hwmon in sysfs automatically. I
+would not be surprised at all if we really suck on this, probably more
+likely on SoC than pci gpus where at least everything should be under the
+main pci sysfs device.
+-Daniel
 
+> 
+> BR,
+> -R
+> 
+> 
+> > [1] https://patchwork.freedesktop.org/series/112397/
+> >
+> > Rob Clark (2):
+> >   drm: Add fdinfo memory stats
+> >   drm/msm: Add memory stats to fdinfo
+> >
+> >  Documentation/gpu/drm-usage-stats.rst | 21 +++++++
+> >  drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++++++++
+> >  drivers/gpu/drm/msm/msm_drv.c         | 25 ++++++++-
+> >  drivers/gpu/drm/msm/msm_gpu.c         |  2 -
+> >  include/drm/drm_file.h                | 10 ++++
+> >  5 files changed, 134 insertions(+), 3 deletions(-)
+> >
+> > --
+> > 2.39.2
+> >
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
