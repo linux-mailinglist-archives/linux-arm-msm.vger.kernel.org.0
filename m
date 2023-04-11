@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C534A6DE3A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:14:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3AA26DE39F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 20:14:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbjDKSOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 14:14:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33688 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230347AbjDKSOx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S229711AbjDKSOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 11 Apr 2023 14:14:53 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6339630F2
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33642 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230342AbjDKSOw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 11 Apr 2023 14:14:52 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52F7A199C
         for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:14:51 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id m10so2022816lfq.1
+Received: by mail-lf1-x12a.google.com with SMTP id h12so6592037lfj.8
         for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 11:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681236889; x=1683828889;
+        d=linaro.org; s=google; t=1681236890;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j8YA0Knj+iRSv6lIV53CgVChHg21pEgDWQtJQQbMyVQ=;
-        b=cSHSoWKfd4X9dGuPyJGR0qg9Ewo4ZC5AFVzw3aZw7kJonr4H1Ei6NGZ1xbXrugQr5A
-         loieAKeXMuS0JwoIVwSsaW5k0fNQ8xsj5yD7yJy6RpYEkC/pOY2MK36FR+9gGYMO4DAZ
-         LRBZzI2u4/c5NphaztRdttbiAlxC5QwYkI3Ci3lnH6h+f8lFv6Je0HSd0RRnlGn8cNN3
-         cfJ1LaC+ODpdm/SS3un+FjMtDuSx7IlqSsaf6BeMUYjgwiQr0yD82muMXVhwvJ+HaOeH
-         +TzF6E42oeGEzRsUG6xa006QqS3X7xpr5MEKaCTqPjTRjYSH1YcQq8HfJB2ixHZTtkkS
-         8joA==
+        bh=iiD5eh4wW3G4xesVrmVIbN3es5cwbzUIQVn3CFJaryg=;
+        b=LRGK7y0F5/e3SImvRYMWSSK5wtxTPvMA1Xq8596BNYhMhhbOy4pmgCdku9jVxpsAhz
+         iSk7BVIx/Lo+ipjb4Z2RdEW3p4p+xrRPeIFEd634KKDhpoYFyNL+6ab+qVbqzwrq7ZP3
+         3kOFRdRaB/cUxftgiewlrPsrXrzV536j19E6YJ+Jx/dtRwIovbTstp1jfxj4aaD9JE6F
+         gM5eZALaxgcB1pkhDV0IsKfl4u/bMyt75oHfwpP6E1CIyx/m5QYPN1CaVuJDfDGJ7MJS
+         WUhstDFoQHCDvIExGE83oNzjGNXBq9NsavyQTOuBJdmOumNvCn8Xc9o0lE7t0dWqatdV
+         SpNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681236889; x=1683828889;
+        d=1e100.net; s=20210112; t=1681236890;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=j8YA0Knj+iRSv6lIV53CgVChHg21pEgDWQtJQQbMyVQ=;
-        b=k7zSMqb8bSfBZNhOZecnbMayByXVbdWvU3/fdpsVsKxa8djW9M0IQ6m7m5TnGIL97+
-         uQ3BngiBaw5frKSSjC/vLNqQVVxZRTOwwFlZUB3PU2uSwvaAPzKdaax/Ksmatmm5TObC
-         YV0346e/urw2Oy2PR5e0Kh4l/itVAUe9qbaKRWeNbDoA4mQivP+gxHUTWaBoKeaPsZPN
-         1VkgPpRls6u5xquxW7+QgPhxN6Dl+fkefn8afloBNVtH2fHXZPFo/OgJb64mRZDOnFbH
-         V3PZc0tRE7GbtbD0uYFizEGZ2y37X87pB4l96LkXJ/1ydE2EKyzhjt1Rzv/o6k3OGZyQ
-         8Kpw==
-X-Gm-Message-State: AAQBX9dcQ7VsMUb3uNg8j6pgQRGIbiafM55jkVeAS0uUh/GdVMz/hCls
-        lX9hAC2yKU5GmNWW4ietIlitCug2Fto430qt2ek=
-X-Google-Smtp-Source: AKy350aHFx0/pHpfaLs2eH5ZeCra+C/PLB20iGNx37oAWwAnq/nRbMW0s4YhIEI7MjkTPnA/YJw8Gw==
-X-Received: by 2002:a19:ad01:0:b0:4de:3f1e:cdc4 with SMTP id t1-20020a19ad01000000b004de3f1ecdc4mr916349lfc.13.1681236889354;
-        Tue, 11 Apr 2023 11:14:49 -0700 (PDT)
+        bh=iiD5eh4wW3G4xesVrmVIbN3es5cwbzUIQVn3CFJaryg=;
+        b=WH6Mho5aQ1kzb1AWfRe28n0noRNWTl7PxCzgvQ6MYDrbe7Bb672DiOQ2FOkXv6KiDS
+         Uy1w3hBoi6aiIqoBYuK3hnNzNRN/RzKGy+FX+gx3j8LaA8C9bH6gy8z5sumWO4TyljnW
+         42D356HGXY5tJ9Nfy3MDEDiTmA4VPDGB0Dt17adArDQGYxo8uo+CazBiTlbTNUKJcvOI
+         i3iutoV9KLZ971QxBbunifbJ8Tx0m8X2CXRs/+2hpvyi35YsdxJ+uernJAQaa3cd2XAC
+         cRc7W8lniYL9JhJnwDjKKzLImdZeGkopfaIsTlByi2YwGe+PQSlIC0pP/7ZxIpdlw1Go
+         qEKg==
+X-Gm-Message-State: AAQBX9dJrYqMD7ffulqv7ThZ84P1W0YFULcEb9rdKtDn95QX1IP3ifE4
+        ekS2Pv5Sn2FTJJEmnv1ZQIezexAEuBFwmd0v0Ws=
+X-Google-Smtp-Source: AKy350Yo70mIwGCik/1Yj4WDNItcQjZ/u7o+W1Lr5c5Xwql5YTksaqGogqAl83KrXH4wXMFekXUY5g==
+X-Received: by 2002:ac2:4a6e:0:b0:4ec:6b89:b0d0 with SMTP id q14-20020ac24a6e000000b004ec6b89b0d0mr3549383lfp.39.1681236890507;
+        Tue, 11 Apr 2023 11:14:50 -0700 (PDT)
 Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id u25-20020ac243d9000000b004da8168eba2sm2593868lfl.237.2023.04.11.11.14.48
+        by smtp.gmail.com with ESMTPSA id u25-20020ac243d9000000b004da8168eba2sm2593868lfl.237.2023.04.11.11.14.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 11:14:49 -0700 (PDT)
+        Tue, 11 Apr 2023 11:14:50 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 11 Apr 2023 20:14:43 +0200
-Subject: [PATCH v2 3/4] arm64: dts: qcom: sm8150-kumano: Set up camera
- fixed regulators
+Date:   Tue, 11 Apr 2023 20:14:44 +0200
+Subject: [PATCH v2 4/4] arm64: dts: qcom: sm8150-kumano: Enable SDHCI2
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230315-topic-kumano_dts0-v2-3-0ca7fa521b86@linaro.org>
+Message-Id: <20230315-topic-kumano_dts0-v2-4-0ca7fa521b86@linaro.org>
 References: <20230315-topic-kumano_dts0-v2-0-0ca7fa521b86@linaro.org>
 In-Reply-To: <20230315-topic-kumano_dts0-v2-0-0ca7fa521b86@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -67,13 +66,14 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681236884; l=3979;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1681236884; l=920;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=4Qcy6oAyM8zPF8mK5eHRI95hbEBvPmEJg9jGJaCAKqc=;
- b=nQoemCIsDwBjMjcWSS4hIbHig03q/Kwg6GLttifVvrJgVmM7T5hCT9H2gxdaxVxFqqbdU2JZ3iIk
- TSgIXwMQDQ2nQdvy0oUKB6VctPq5rvcRSqT1TfLZcbkdwHsogE5d
+ bh=SO4t4Kju7o37n3l63qOGDo0eIPu0YPJW7B1qvj76FR0=;
+ b=5ZSmLHpJ4XWnnfMy2+W+URDdep4E80Nrph0gOs9dyDRoJbcICMmNyB1POJmvEUHbjMeggCYW+qT5
+ Uyn3DtyjAcpTJs2nfxo+ou4LoLvejWZUXUjQul7ewnVGMAYd8h4L
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -85,164 +85,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sony - as per usual - used a whole bunch of GPIO-gated fixed
-voltage regulators for camera sensors on Kumano. Describe them
-and the corresponding pins.
+From: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+Set up and enable SDHCI2 to enable the microSD slot on Kumano
+devices.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- .../boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi   | 110 +++++++++++++++++++++
- 1 file changed, 110 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
-index d1a3ab836019..ad402f3a90c3 100644
+index ad402f3a90c3..baafea53770b 100644
 --- a/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8150-sony-xperia-kumano.dtsi
-@@ -6,6 +6,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8150.dtsi"
- #include "pm8150.dtsi"
-@@ -81,6 +82,66 @@ key-vol-down {
- 		};
- 	};
- 
-+	cam0_vdig_vreg: cam0-vdig-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "camera0_vdig_vreg";
-+		gpio = <&tlmm 22 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&main_cam_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam1_vdig_vreg: cam1-vdig-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "camera1_vdig_vreg";
-+		gpio = <&tlmm 79 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&sub_cam_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam2_vdig_vreg: cam2-vdig-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "camera2_vdig_vreg";
-+		gpio = <&tlmm 25 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&chat_cam_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam3_vdig_vreg: cam3-vdig-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "camera3_vdig_vreg";
-+		gpio = <&pm8150_gpios 7 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&supwc_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	cam_vmdr_vreg: cam-vmdr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "camera_vmdr_vreg";
-+		gpio = <&pm8150l_gpios 3 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&main_cam_pwr_vmdr_en>;
-+		pinctrl-names = "default";
-+	};
-+
-+	rgbcir_vreg: rgbcir-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "rgbcir_vreg";
-+		gpio = <&tlmm 29 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&rgbc_ir_pwr_en>;
-+		pinctrl-names = "default";
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -474,6 +535,15 @@ vol_down_n: vol-down-n-state {
- 		bias-pull-up;
- 		input-enable;
- 	};
-+
-+	supwc_pwr_en: supwc-pwr-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		qcom,drive-strength = <1>;
-+		power-source = <1>;
-+		drive-push-pull;
-+		output-low;
-+	};
+@@ -618,6 +618,17 @@ &qupv3_id_1 {
+ 	status = "okay";
  };
  
- &pm8150b_gpios {
-@@ -520,6 +590,15 @@ &pm8150l_gpios {
- 			  "NC", /* GPIO_10 */
- 			  "NC",
- 			  "NC";
++&sdhc_2 {
++	vmmc-supply = <&vreg_l9c_2p9>;
++	vqmmc-supply = <&vreg_l6c_2p9>;
++	cd-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
++	bus-width = <4>;
++	no-sdio;
++	no-mmc;
 +
-+	main_cam_pwr_vmdr_en: main-cam-pwr-vmdr-en-state {
-+		pins = "gpio3";
-+		function = "normal";
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+		power-source = <0>;
-+		drive-push-pull;
-+		output-low;
-+	};
- };
- 
- &pon_pwrkey {
-@@ -716,6 +795,37 @@ &tlmm {
- 			  "WL_CMD_DATA_CHAIN1",
- 			  "WL_BT_COEX_CLK",
- 			  "WL_BT_COEX_DATA";
++	status = "okay";
++};
 +
-+	main_cam_pwr_en: main-cam-pwr-en-state {
-+		pins = "gpio22";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	chat_cam_pwr_en: chat-cam-pwr-en-state {
-+		pins = "gpio25";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	rgbc_ir_pwr_en: rgbc-ir-pwr-en-state {
-+		pins = "gpio29";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	sub_cam_pwr_en: sub-cam-pwr-en-state {
-+		pins = "gpio79";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
- };
- 
- &uart2 {
+ &tlmm {
+ 	gpio-reserved-ranges = <126 4>;
+ 	gpio-line-names = "NFC_ESE_SPI_MISO", /* GPIO_0 */
 
 -- 
 2.40.0
