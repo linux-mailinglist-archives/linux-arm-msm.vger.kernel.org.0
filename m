@@ -2,225 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23ED36DE75B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 00:36:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF9E56DE76B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 00:43:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbjDKWg6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 18:36:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41778 "EHLO
+        id S229482AbjDKWnY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 18:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbjDKWg5 (ORCPT
+        with ESMTP id S229451AbjDKWnX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 18:36:57 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744BAE77
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 15:36:55 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id a29so10821635ljq.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 15:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681252614; x=1683844614;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6u3JzCEIV+MkTX89T9YhCkBiSU08RsEjj68tQ/W7rtw=;
-        b=zcWRQi94sRMWvJXpLTR+F+5jTYvF/7sjYpXBd+4gQhy5s3oBJ5AYpWbTOcTZMfGJwW
-         CayVvXN7HxPIa5fUD3zb5Mw5B19aBbYFSjoTeG/Et5GEddskS9GoeTSNhhUdAdxKgOaX
-         WxStGqboG7FeID9PCTP/UmgSUeT2pVtT0CfkH30HwdYLMbEJlmYPsOs7DnaWyQjQUpmt
-         EqeDdLvqcF3ggCpEwhL0uD61Hb+zu1xkSEypQeUqeSBC//6uKs2NsdWHpk3+G8OKHLwa
-         q7dZ9l3cpj87LbsBNUl8iKJcOVZcVG88WAmDOhapmV2L77JNNGiJ6KJdFG2UrCKoNwdJ
-         IUOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681252614; x=1683844614;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6u3JzCEIV+MkTX89T9YhCkBiSU08RsEjj68tQ/W7rtw=;
-        b=X7O1zi/blx7vv1K6LY5SI/W2+fmz/FtK0zwmkEGDO3FspPnutkudWo27dCYypqxej9
-         8CoTitPfF4TpfyXeg4huwxnicDYHG6C4IUJHUijXGKWWpjSfP+tdPqfQbEZwEryDb/Pu
-         4vOr4gHmgKvUWQzZHSEMw33knmG83JlqQMB+l740Z5jTH3VY8cJICJuFBpwT9dAf0qVL
-         5OWCBJ1m59DvZ+CV+Qvn4CRQ/adgWiSzfDwsWQF+mCahwFLfCAH2TdeceFbghBpIQ1Qe
-         C6soJToAIUT9VuqA3U3PSVrcTHAug2naE98LGlBKIRXQqrOk6NTn44/nNHZDRX3gzObR
-         X+Pw==
-X-Gm-Message-State: AAQBX9eGpo5mdk1PV2TefOje+9DYLHRvd7vRtt/vfuiU5kidaKa4cF/n
-        yNYlv8AgQqHm6B2fuEcFBGneHQ==
-X-Google-Smtp-Source: AKy350b6jo9+jCqflyoPDAC9ZiVvwGzn/MjSoc0PE/0cHY++8FF77SZJ8YjpeVxar0oYcvj0l2nQHw==
-X-Received: by 2002:a05:651c:170c:b0:2a7:6d1d:2815 with SMTP id be12-20020a05651c170c00b002a76d1d2815mr145554ljb.14.1681252613695;
-        Tue, 11 Apr 2023 15:36:53 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id k1-20020a2e2401000000b0029e967c1dfesm2961605ljk.8.2023.04.11.15.36.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 15:36:53 -0700 (PDT)
-Message-ID: <d93f4256-4554-e031-9730-4ca2a7de6aaf@linaro.org>
-Date:   Wed, 12 Apr 2023 01:36:52 +0300
+        Tue, 11 Apr 2023 18:43:23 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB144E7D;
+        Tue, 11 Apr 2023 15:43:22 -0700 (PDT)
+Received: from localhost.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2F7BE3FD61;
+        Wed, 12 Apr 2023 00:43:21 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH] MAINTAINERS: Add Marijn Suijten as drm/msm reviewer
+Date:   Wed, 12 Apr 2023 00:43:08 +0200
+Message-Id: <20230411224308.440550-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [Freedreno] [PATCH v2 0/2] drm: fdinfo memory stats
-Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Christopher Healy <healych@amazon.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        freedreno@lists.freedesktop.org
-References: <20230410210608.1873968-1-robdclark@gmail.com>
- <CAF6AEGvs4XMggPMthiJ89SiaUj3k+nY95OhxLZ5cD-01XPco4Q@mail.gmail.com>
- <ZDWQfbUBhyJf1Ezx@phenom.ffwll.local>
- <CAF6AEGtYw4Dn80OtrnJESkkDXxhUdAr6Nuva+Jo3ExW8MXH++Q@mail.gmail.com>
- <CAA8EJppnEwcHM++YUYZGrNXEha=-ZVAexBdkMVsU52PTOs4VnA@mail.gmail.com>
- <CAF6AEGsE3NOe9TkEzrk5rr-D2PoKaxF5Yn3W8wWew8um6r2EXw@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAF6AEGsE3NOe9TkEzrk5rr-D2PoKaxF5Yn3W8wWew8um6r2EXw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 21:28, Rob Clark wrote:
-> On Tue, Apr 11, 2023 at 10:36 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> On Tue, 11 Apr 2023 at 20:13, Rob Clark <robdclark@gmail.com> wrote:
->>>
->>> On Tue, Apr 11, 2023 at 9:53 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->>>>
->>>> On Tue, Apr 11, 2023 at 09:47:32AM -0700, Rob Clark wrote:
->>>>> On Mon, Apr 10, 2023 at 2:06 PM Rob Clark <robdclark@gmail.com> wrote:
->>>>>>
->>>>>> From: Rob Clark <robdclark@chromium.org>
->>>>>>
->>>>>> Similar motivation to other similar recent attempt[1].  But with an
->>>>>> attempt to have some shared code for this.  As well as documentation.
->>>>>>
->>>>>> It is probably a bit UMA-centric, I guess devices with VRAM might want
->>>>>> some placement stats as well.  But this seems like a reasonable start.
->>>>>>
->>>>>> Basic gputop support: https://patchwork.freedesktop.org/series/116236/
->>>>>> And already nvtop support: https://github.com/Syllo/nvtop/pull/204
->>>>>
->>>>> On a related topic, I'm wondering if it would make sense to report
->>>>> some more global things (temp, freq, etc) via fdinfo?  Some of this,
->>>>> tools like nvtop could get by trawling sysfs or other driver specific
->>>>> ways.  But maybe it makes sense to have these sort of things reported
->>>>> in a standardized way (even though they aren't really per-drm_file)
->>>>
->>>> I think that's a bit much layering violation, we'd essentially have to
->>>> reinvent the hwmon sysfs uapi in fdinfo. Not really a business I want to
->>>> be in :-)
->>>
->>> I guess this is true for temp (where there are thermal zones with
->>> potentially multiple temp sensors.. but I'm still digging my way thru
->>> the thermal_cooling_device stuff)
->>
->> It is slightly ugly. All thermal zones and cooling devices are virtual
->> devices (so, even no connection to the particular tsens device). One
->> can either enumerate them by checking
->> /sys/class/thermal/thermal_zoneN/type or enumerate them through
->> /sys/class/hwmon. For cooling devices again the only enumeration is
->> through /sys/class/thermal/cooling_deviceN/type.
->>
->> Probably it should be possible to push cooling devices and thermal
->> zones under corresponding providers. However I do not know if there is
->> a good way to correlate cooling device (ideally a part of GPU) to the
->> thermal_zone (which in our case is provided by tsens / temp_alarm
->> rather than GPU itself).
->>
->>>
->>> But what about freq?  I think, esp for cases where some "fw thing" is
->>> controlling the freq we end up needing to use gpu counters to measure
->>> the freq.
->>
->> For the freq it is slightly easier: /sys/class/devfreq/*, devices are
->> registered under proper parent (IOW, GPU). So one can read
->> /sys/class/devfreq/3d00000.gpu/cur_freq or
->> /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq.
->>
->> However because of the components usage, there is no link from
->> /sys/class/drm/card0
->> (/sys/devices/platform/soc@0/ae00000.display-subsystem/ae01000.display-controller/drm/card0)
->> to /sys/devices/platform/soc@0/3d00000.gpu, the GPU unit.
->>
->> Getting all these items together in a platform-independent way would
->> be definitely an important but complex topic.
-> 
-> But I don't believe any of the pci gpu's use devfreq ;-)
-> 
-> And also, you can't expect the CPU to actually know the freq when fw
-> is the one controlling freq.  We can, currently, have a reasonable
-> approximation from devfreq but that stops if IFPC is implemented.  And
-> other GPUs have even less direct control.  So freq is a thing that I
-> don't think we should try to get from "common frameworks"
+As I get more and more active in the drm/msm space, yet sometimes miss
+out on patches (where I was involved in previous discussions), add
+myself as reviewer to make this involvement clear.
 
-I think it might be useful to add another passive devfreq governor type 
-for external frequencies. This way we can use the same interface to 
-export non-CPU-controlled frequencies.
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
 
-> 
-> BR,
-> -R
-> 
->>>
->>>> What might be needed is better glue to go from the fd or fdinfo to the
->>>> right hw device and then crawl around the hwmon in sysfs automatically. I
->>>> would not be surprised at all if we really suck on this, probably more
->>>> likely on SoC than pci gpus where at least everything should be under the
->>>> main pci sysfs device.
->>>
->>> yeah, I *think* userspace would have to look at /proc/device-tree to
->>> find the cooling device(s) associated with the gpu.. at least I don't
->>> see a straightforward way to figure it out just for sysfs
->>>
->>> BR,
->>> -R
->>>
->>>> -Daniel
->>>>
->>>>>
->>>>> BR,
->>>>> -R
->>>>>
->>>>>
->>>>>> [1] https://patchwork.freedesktop.org/series/112397/
->>>>>>
->>>>>> Rob Clark (2):
->>>>>>    drm: Add fdinfo memory stats
->>>>>>    drm/msm: Add memory stats to fdinfo
->>>>>>
->>>>>>   Documentation/gpu/drm-usage-stats.rst | 21 +++++++
->>>>>>   drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++++++++
->>>>>>   drivers/gpu/drm/msm/msm_drv.c         | 25 ++++++++-
->>>>>>   drivers/gpu/drm/msm/msm_gpu.c         |  2 -
->>>>>>   include/drm/drm_file.h                | 10 ++++
->>>>>>   5 files changed, 134 insertions(+), 3 deletions(-)
->>>>>>
->>>>>> --
->>>>>> 2.39.2
->>>>>>
->>>>
->>>> --
->>>> Daniel Vetter
->>>> Software Engineer, Intel Corporation
->>>> http://blog.ffwll.ch
->>
->>
->>
->> --
->> With best wishes
->> Dmitry
+Note that this is only a slight commitment from my part to look at
+patches arriving in this area, most notably on the DPU1 driver and only
+if day-to-day workload allows for it.
 
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 04d7c816d46a..fd1b717c57d8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -6536,6 +6536,7 @@ M:	Rob Clark <robdclark@gmail.com>
+ M:	Abhinav Kumar <quic_abhinavk@quicinc.com>
+ M:	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ R:	Sean Paul <sean@poorly.run>
++R:	Marijn Suijten <marijn.suijten@somainline.org>
+ L:	linux-arm-msm@vger.kernel.org
+ L:	dri-devel@lists.freedesktop.org
+ L:	freedreno@lists.freedesktop.org
 -- 
-With best wishes
-Dmitry
+2.40.0
 
