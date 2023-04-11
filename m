@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4095E6DD420
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 09:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 477146DD423
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 09:29:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230064AbjDKH3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 03:29:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47086 "EHLO
+        id S230126AbjDKH3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 03:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230041AbjDKH3E (ORCPT
+        with ESMTP id S229964AbjDKH3L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 03:29:04 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97EAE1BD1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:29:02 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id y6so5941946plp.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:29:02 -0700 (PDT)
+        Tue, 11 Apr 2023 03:29:11 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C0473A9C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:29:07 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id pc4-20020a17090b3b8400b0024676052044so7145156pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 00:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681198141;
+        d=linaro.org; s=google; t=1681198146;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vaWjB1OFkYfTEHZyX0Qp1PEjyb5l7Vgp/2G5VFo8kWA=;
-        b=H9ldWAgQCNm1jw5Y8V9tLSdcXNP+C1QYSKRpk3QT5gH9k8bgdJuygoPsW+7jlySckX
-         b+1Q7HzNT7OcDILvVzCSjVBYzxWwajgfQ25PcIYFhEjFE1Bp3010Fl086r2MurBHyiTj
-         mfcIWx9p4V/pvN7ui5gVaVo/wODmxxoULU5ABhpsXD+gnW+B9Q2h99f71lJJGnDfAQJn
-         4vYVfNOVIO18w7WX9Ia0BdcivgBbdP8hf2nd5HixIuiQqzXIONGBD78qlWpPUW4G/hv9
-         Zw1yJeaNC0C2Xn9s73FUxUjuBvjP6RWHeRdyzSnEoOVP5r/ijT76RAHZ6sCLwbjpc0zL
-         XCSQ==
+        bh=ttg1M/y6XRWds7TOi5LMKQJ7a3u0jw8Op4Jljrrs1LY=;
+        b=lOdOF5GgGZiRgPcjxd57Qc4KWyITnjrrk5izHeqcMbkAAuRb9Vmk2trJ+oKUoeM6AV
+         1nAnEW+9e0PVqCLYLPPl6UsJ9DORPetiZvH+oaEUgBnNpvimNEZD+eh68YGf43M3LkVY
+         PAB7/M/rCVuv9GbT1v+Zv/brlLAiFGFgdNKPKXpTBQjV1FugZnViJ9dSuhZEXuhopc0p
+         6QpQk9ShDvcvM4FOvHrAM50qJJyVKY/iYkxTDUUi5friOJ+F5lYniwvFeURalXbxT0Jk
+         NKXfFaNTTtfFr395due6i/LLZjghiMAj6Uz3c+oCruCUaXl/Si6TiEv/NcaKss3MzGGS
+         pc3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681198141;
+        d=1e100.net; s=20210112; t=1681198146;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vaWjB1OFkYfTEHZyX0Qp1PEjyb5l7Vgp/2G5VFo8kWA=;
-        b=FQLMG9H7MaAPV2rYWdgxoHltdHMCSVlEVvVHFutT1i689QAIDWKeVlOhsL3B5w8sPb
-         fHLvmm5C0JkgpFJLLI24m8U3uyauz4n3PvQXqt8vRKlP5WpC9P1Ra/fK6fN05tMDLNoF
-         9/wZgkfwg5St/kjPunZtSIOwa+vBd7NCzuEqlKu//QwXJdW3TpUpH82TbdB5aiEfAPjj
-         PfOg/shgYFgXkbpSDLtSCd9QLGQe9j2sWQ0AAXV7JH3IYDmT9baojqurIex+xinRvCci
-         1ZMYiyYn5zd6gd1T5hNyGx9BG9lYeA2yzT2Gx6iBVf+GTOK39Rf2vow/5F6oFi4OS0kI
-         1cUQ==
-X-Gm-Message-State: AAQBX9dyLH2FaJ7Q4fAEyvXrvwUgbtDR2NTdi2cfGpxbPOkY/xVouH4Q
-        UZuYcAYrI+rXpz2FzlCOPMVTmtzsQbXvX6RfSvw=
-X-Google-Smtp-Source: AKy350YvPqLaQqI2R0n5uZ8d7E1DWo0kp6RG9sINbiq2wp3NpGVK6U7rFCnAd8GRDucbackWZ2YM4w==
-X-Received: by 2002:a17:902:cecb:b0:1a2:a904:c438 with SMTP id d11-20020a170902cecb00b001a2a904c438mr20045713plg.58.1681198141493;
-        Tue, 11 Apr 2023 00:29:01 -0700 (PDT)
+        bh=ttg1M/y6XRWds7TOi5LMKQJ7a3u0jw8Op4Jljrrs1LY=;
+        b=ViNhFK3ezkgQ0P81orPCNhy9yayrAqCNHHx2KQ385H67iuZeuVVlv9oZwgp9JByqZM
+         lVaz3z/K7upMLdy1IsOcq55uhraaVGnpeePgMIcJVTNRzaPBVWQoMtim8Uu5HO4NkPym
+         bzsdIwTHrUiWvgKwpLQVGqIYWem9vatGIEUNtFo+tosb+CyF4/5rjZVCs7MD331Mpp87
+         uagDd6oODtm3StU4jlk4GFz6q92dOH3DnUhkM2fh6i2/Sc/cX4djKDjaFNNeVPWBMplP
+         Div47u8oIc356UsloPElDttQMbLRXXaP/nTLLbSQ6/Jcvwxb4LrJsDJzZxj1TeXJkpGb
+         gpQQ==
+X-Gm-Message-State: AAQBX9dx1udrbj46J5TrhvMuH84Rg41nfGuTJ55D+uqPXFsNZmFdI1pg
+        OQeui+iMF7wRn9BQt8RH6XzA68eSPKUwcL99HcM=
+X-Google-Smtp-Source: AKy350a8gDRhfza1WigxIfqVURRUajmbjL8ibhT1MGiO4W1sH/ZgsiZmvD5VJVAtczmLfWk/7EmCdg==
+X-Received: by 2002:a17:902:ce85:b0:1a2:2091:ee8b with SMTP id f5-20020a170902ce8500b001a22091ee8bmr18057238plg.10.1681198145903;
+        Tue, 11 Apr 2023 00:29:05 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:1c60:6a11:8ba1:beba:def7:a4ae])
-        by smtp.gmail.com with ESMTPSA id s7-20020a170902988700b001a043e84bf0sm8946612plp.209.2023.04.11.00.28.58
+        by smtp.gmail.com with ESMTPSA id s7-20020a170902988700b001a043e84bf0sm8946612plp.209.2023.04.11.00.29.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 00:29:01 -0700 (PDT)
+        Tue, 11 Apr 2023 00:29:05 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
         bhupesh.sharma@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski@linaro.org
-Subject: [PATCH v3 2/3] arm64: dts: qcom: Add base qrb4210-rb2 board dts
-Date:   Tue, 11 Apr 2023 12:58:39 +0530
-Message-Id: <20230411072840.2751813-3-bhupesh.sharma@linaro.org>
+Subject: [PATCH v3 3/3] arm64: dts: qcom: qrb4210-rb2: Increase load on l22 and l24 for uSD and eMMC
+Date:   Tue, 11 Apr 2023 12:58:40 +0530
+Message-Id: <20230411072840.2751813-4-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
 References: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
@@ -73,262 +73,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
-
-This adds debug uart, emmc, uSD and tlmm support along with
-regulators found on this board.
-
-Also defines the 'xo_board' and 'sleep_clk' frequencies for
-this board.
+Increase the l22 and l24 load used for uSD and eMMC VMMC.
+These need to be increased in order to prevent any voltage drop
+issues due to limited current happening during specific operations
+(e.g. write).
 
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile        |   1 +
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 223 +++++++++++++++++++++++
- 2 files changed, 224 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index e0e2def48470..d42c59572ace 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -74,6 +74,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
 diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-new file mode 100644
-index 000000000000..c9c6e3787462
---- /dev/null
+index c9c6e3787462..dc80f0bca767 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
 +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -0,0 +1,223 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm4250.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
-+	compatible = "qcom,qrb4210-rb2", "qcom,qrb4210", "qcom,sm4250";
-+
-+	aliases {
-+		serial0 = &uart4;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm6125-regulators";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+
-+		vdd-l1-l7-l17-l18-supply = <&vreg_s6a_1p352>;
-+		vdd-l2-l3-l4-supply = <&vreg_s6a_1p352>;
-+		vdd-l5-l15-l19-l20-l21-l22-supply = <&vph_pwr>;
-+		vdd-l6-l8-supply = <&vreg_s5a_0p848>;
-+		vdd-l9-l11-supply = <&vreg_s7a_2p04>;
-+		vdd-l10-l13-l14-supply = <&vreg_s7a_2p04>;
-+		vdd-l12-l16-supply = <&vreg_s7a_2p04>;
-+		vdd-l23-l24-supply = <&vph_pwr>;
-+
-+		vreg_s5a_0p848: s5 {
-+			regulator-min-microvolt = <920000>;
-+			regulator-max-microvolt = <1128000>;
-+		};
-+
-+		vreg_s6a_1p352: s6 {
-+			regulator-min-microvolt = <304000>;
-+			regulator-max-microvolt = <1456000>;
-+		};
-+
-+		vreg_s7a_2p04: s7 {
-+			regulator-min-microvolt = <1280000>;
-+			regulator-max-microvolt = <2080000>;
-+		};
-+
-+		vreg_l1a_1p0: l1 {
-+			regulator-min-microvolt = <952000>;
-+			regulator-max-microvolt = <1152000>;
-+		};
-+
-+		vreg_l4a_0p9: l4 {
-+			regulator-min-microvolt = <488000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		vreg_l5a_2p96: l5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3056000>;
-+		};
-+
-+		vreg_l6a_0p6: l6 {
-+			regulator-min-microvolt = <576000>;
-+			regulator-max-microvolt = <656000>;
-+		};
-+
-+		vreg_l7a_1p256: l7 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		vreg_l8a_0p664: l8 {
-+			regulator-min-microvolt = <400000>;
-+			regulator-max-microvolt = <728000>;
-+		};
-+
-+		vreg_l9a_1p8: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		vreg_l10a_1p8: l10 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l11a_1p8: l11 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		vreg_l12a_1p8: l12 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <1984000>;
-+		};
-+
-+		vreg_l13a_1p8: l13 {
-+			regulator-min-microvolt = <1504000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		vreg_l14a_1p8: l14 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l15a_3p128: l15 {
-+			regulator-min-microvolt = <2920000>;
-+			regulator-max-microvolt = <3232000>;
-+		};
-+
-+		vreg_l16a_1p3: l16 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		vreg_l17a_1p3: l17 {
-+			regulator-min-microvolt = <1152000>;
-+			regulator-max-microvolt = <1384000>;
-+		};
-+
-+		vreg_l18a_1p232: l18 {
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1312000>;
-+		};
-+
-+		vreg_l19a_1p8: l19 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		vreg_l20a_1p8: l20 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		vreg_l21a_2p704: l21 {
-+			regulator-min-microvolt = <2400000>;
-+			regulator-max-microvolt = <3600000>;
-+		};
-+
-+		vreg_l22a_2p96: l22 {
-+			regulator-min-microvolt = <2952000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		vreg_l23a_3p3: l23 {
-+			regulator-min-microvolt = <3200000>;
-+			regulator-max-microvolt = <3400000>;
-+		};
-+
-+		vreg_l24a_2p96: l24 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <3600000>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&vreg_l24a_2p96>;
-+	vqmmc-supply = <&vreg_l11a_1p8>;
-+	no-sdio;
-+	non-removable;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
-+	vmmc-supply = <&vreg_l22a_2p96>;
-+	vqmmc-supply = <&vreg_l5a_2p96>;
-+	no-sdio;
-+
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32000>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
-+			       <49 1>, <52 1>, <54 1>,
-+			       <56 3>, <61 2>, <64 1>,
-+			       <68 1>, <72 8>, <96 1>;
-+};
-+
-+&uart4 {
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
+@@ -171,6 +171,8 @@ vreg_l21a_2p704: l21 {
+ 		vreg_l22a_2p96: l22 {
+ 			regulator-min-microvolt = <2952000>;
+ 			regulator-max-microvolt = <3304000>;
++			regulator-system-load = <100000>;
++			regulator-allow-set-load;
+ 		};
+ 
+ 		vreg_l23a_3p3: l23 {
+@@ -181,6 +183,8 @@ vreg_l23a_3p3: l23 {
+ 		vreg_l24a_2p96: l24 {
+ 			regulator-min-microvolt = <2704000>;
+ 			regulator-max-microvolt = <3600000>;
++			regulator-system-load = <100000>;
++			regulator-allow-set-load;
+ 		};
+ 	};
+ };
 -- 
 2.38.1
 
