@@ -2,116 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FEFD6DE601
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 22:50:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 305636DE61B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:04:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229817AbjDKUuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 16:50:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54558 "EHLO
+        id S229521AbjDKVEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 17:04:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjDKUuu (ORCPT
+        with ESMTP id S229515AbjDKVEr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 16:50:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C90E23C1F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 13:50:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1681246203;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=FnJ89Jr7frkhLpQ5e8FVQom59cKoMcGSZpquVEiks/w=;
-        b=cT6zhbtygNaO7Fa41W/yHNmH6M7R8ArCmeMdN/TxraDTE7bcqBUfa8mVvTK633gu6+4NkY
-        WdqbVwOO/vHxrqDoxQqeP1FVvICP7ANp2QH+8Pcs8ZGdATYKsQ1DBq4XmjA1hTC2G9IGud
-        xGWqbz08KE5EG0ZQiFgXH+VXo+gEAP4=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-7-9iYkKFqQPUGmz0lRANJVoA-1; Tue, 11 Apr 2023 16:50:01 -0400
-X-MC-Unique: 9iYkKFqQPUGmz0lRANJVoA-1
-Received: by mail-oo1-f70.google.com with SMTP id n2-20020a4ad622000000b0053e2e3db15dso2014516oon.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 13:50:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681246201;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FnJ89Jr7frkhLpQ5e8FVQom59cKoMcGSZpquVEiks/w=;
-        b=ExTJbyVQfp7eIobZJPPp5meir2CLUAHIvcaEA9kWoTFwFZGReDGwVi0qwOXhPcCMiB
-         lmKmWyR/3ZQcBcLDZStdO6cpZom/In6Gswptg7s+ue7pnnSKk6p7Ya3FtBQO0v4gY1Zj
-         Rjii8BSq9wk+HS0lLFXE/Cdl0sx4/7PDGYcooXVnQfKeW3AlW5GF0QD1Rof+vlr1OfMO
-         VI6LNBsFykB3CAyv7elZsakSjEZ/zwOrhQ5Lq0UO1dukCpy4QTcIoY/VAWx7zEHdDeJu
-         kdjm97gngU/bvP15TcjgTxtHjsbUYJoj4BIMwpBbSENpOl40GskWba/ZIu8N1rYG7qQF
-         MhFA==
-X-Gm-Message-State: AAQBX9d8gHLWyD0rAWChFy20wjU7AyKGL34Hm3TlR/eJUALvqFDKUlo9
-        SnCsQpxdGmzVnXoyyRQ8VuENIjJdLCjARk0W7pquvPPpINuMe4PzOCuxSK7fIjk2RgM6KBLgN8f
-        mq2QHGcI7CfeTVIYNb7DFZSNeXg==
-X-Received: by 2002:a05:6870:32c9:b0:17f:6909:1618 with SMTP id r9-20020a05687032c900b0017f69091618mr8385029oac.5.1681246201155;
-        Tue, 11 Apr 2023 13:50:01 -0700 (PDT)
-X-Google-Smtp-Source: AKy350a/jKcTh3Dg+IN29kMyFBcT98jFq7QbmEt+C4YJeNTF6M0ET6Rq1bJC/j+OEgYr3vcjHqKpaA==
-X-Received: by 2002:a05:6870:32c9:b0:17f:6909:1618 with SMTP id r9-20020a05687032c900b0017f69091618mr8385021oac.5.1681246200922;
-        Tue, 11 Apr 2023 13:50:00 -0700 (PDT)
-Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id s21-20020a056830149500b006a3e377f0d7sm499957otq.4.2023.04.11.13.49.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 13:50:00 -0700 (PDT)
-Date:   Tue, 11 Apr 2023 15:49:57 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
-        bhupesh.sharma@linaro.org, wens@csie.org, jernej.skrabec@gmail.com,
-        samuel@sholland.org, mturquette@baylibre.com,
-        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
-        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
-        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
-        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
-        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
-        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
-        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
-Subject: Re: [PATCH net-next v4 00/12] Add EMAC3 support for sa8540p-ride
-Message-ID: <20230411204957.kt5o4oraoxi7szts@halaney-x13s>
-References: <20230411200409.455355-1-ahalaney@redhat.com>
+        Tue, 11 Apr 2023 17:04:47 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14C9A30C4;
+        Tue, 11 Apr 2023 14:04:46 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BKOUZp029715;
+        Tue, 11 Apr 2023 21:04:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=b8ePNZOTICqSe+xK2ngJRni1H4oSJZNkfsVmf0MDt3Y=;
+ b=btva9PBOjaVDrEycZByrXlarkFQvrcrPlSgqdkO0JLFdQpZVNyB9M/L3wXzm34RCZkLW
+ nm8jfzfT0pChL5lRZxu/sBASC8Q7Z0M2UDeFIm4oDh4+UhYY6THG+gfAON2xr/E4dOgU
+ qsutNkCXhSOUemsoYFYaVhYntlMTVEbFQhd7nkYPD6D+d1dZDVAiHBJiwjb5mPyjM0Dk
+ X6v5dQXbYTbJ8sgmGVyTgBoU+qSIB0XrCo3sEFUhztJI40RXjUcG/R9WwOrQZhrk64TY
+ sXuzzFTYu+sa+Eu5jIkR7WQKMPVNjMrYpinJXZNN6p+3Jb7X4mERW0726iqvAfPcxLJm ag== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pw3cv9mg5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 21:04:32 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BL4DaS016655
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 21:04:13 GMT
+Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 14:04:13 -0700
+Message-ID: <1276ec4c-e177-aeb2-d493-93bd48634ee8@quicinc.com>
+Date:   Tue, 11 Apr 2023 14:04:12 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230411200409.455355-1-ahalaney@redhat.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v11 12/26] gunyah: vm_mgr: Add/remove user memory regions
+Content-Language: en-US
+To:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
+ <20230304010632.2127470-13-quic_eberman@quicinc.com>
+ <3b4e230c-6635-43f6-99ce-1ed51b55a450@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <3b4e230c-6635-43f6-99ce-1ed51b55a450@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Xn1is88OUJ6e3fH2xhPQpYYbaZDYmSH9
+X-Proofpoint-ORIG-GUID: Xn1is88OUJ6e3fH2xhPQpYYbaZDYmSH9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-11_14,2023-04-11_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 clxscore=1015 bulkscore=0
+ mlxlogscore=914 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304110190
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 03:03:57PM -0500, Andrew Halaney wrote:
-> This is a forward port / upstream refactor of code delivered
-> downstream by Qualcomm over at [0] to enable the DWMAC5 based
-> implementation called EMAC3 on the sa8540p-ride dev board.
+
+
+On 3/31/2023 7:26 AM, Alex Elder wrote:
+> On 3/3/23 7:06 PM, Elliot Berman wrote:
+>> +
+>> +    mem_entries = kcalloc(mapping->npages, sizeof(*mem_entries), 
+>> GFP_KERNEL);
+>> +    if (!mem_entries) {
+>> +        ret = -ENOMEM;
+>> +        goto reclaim;
+>> +    }
+>> +
+>> +    /* reduce number of entries by combining contiguous pages into 
+>> single memory entry */
 > 
-> From what I can tell with the board schematic in hand,
-> as well as the code delivered, the main changes needed are:
-> 
->     1. A new address space layout for dwmac5/EMAC3 MTL/DMA regs
->     2. A new programming sequence required for the EMAC3 based platforms
-> 
-> This series makes the changes above as well as other housekeeping items
-> such as converting dt-bindings to yaml, etc.
-> 
-> As requested[1], it has been split up by compilation deps / maintainer tree.
-> I will post a link to the associated devicetree changes that together
-> with this series get the hardware functioning.
+> Are you sure you need to do this?  I.e., does pin_user_pages_fast()
+> already take care of consolidating these pages?
 > 
 
-Link to the devicetree bits: https://lore.kernel.org/netdev/20230411202009.460650-1-ahalaney@redhat.com/T/#t
+pin_user_pages_fast wouldn't consolidate the page entries. There's a 
+speedup in sharing memory when pages are contiguous since less 
+information needs to be transmitted to Gunyah describing the memory.
 
-Thanks,
-Andrew
+>> +    prev_page = page_to_phys(mapping->pages[0]);
+>> +    mem_entries[0].ipa_base = cpu_to_le64(prev_page);
+>> +    entry_size = PAGE_SIZE;
+>> +    for (i = 1, j = 0; i < mapping->npages; i++) {
+>> +        curr_page = page_to_phys(mapping->pages[i]);
+> 
+> I think you can actually use the page frame numbers
+> here instead of the addresses.  If they are consecutive,
+> they are contiguous.  See pages_are_mergeable() for an
+> example of that.  Using PFNs might simplify this code.
+> 
 
+It did, thanks for the suggestion!
+
+>> +        if (curr_page - prev_page == PAGE_SIZE) {
+>> +            entry_size += PAGE_SIZE;
+>> +        } else {
+>> +            mem_entries[j].size = cpu_to_le64(entry_size);
+>> +            j++;
+>> +            mem_entries[j].ipa_base = cpu_to_le64(curr_page);
+>> +            entry_size = PAGE_SIZE;
+>> +        }
+>> +
+>> +        prev_page = curr_page;
+>> +    }
+>> +    mem_entries[j].size = cpu_to_le64(entry_size);
+> 
+> It might be messier, but it seems like you could scan the pages to
+> see how many you'll need (after combining), then allocate the array
+> of mem entries based on that.  That is, do that rather than allocating,
+> filling, then duplicating and freeing.
+> 
+>      count = 1;
+>      curr_page = mapping->pages[0];
+>      for (i = 1; i < mapping->npages; i++) {
+>          next_page = mapping->pages[i];
+>          if (page_to_pfn(next_page) !=
+>                  page_to_pfn(curr_page) + 1)
+>              count++;
+>          curr_page = next_page;
+>      }
+>      parcel->n_mem_entries = count;
+>      parcel->mem_entries = kcalloc(count, ...);
+>      /* Then fill them up */
+> 
+> (Not tested, but you get the idea.)
+> 
+
+It wasn't too messy IMO, I think this ended up simplifying the loop.
+
+>> +
+>> +    parcel->n_mem_entries = j + 1;
+>> +    parcel->mem_entries = kmemdup(mem_entries, sizeof(*mem_entries) * 
+>> parcel->n_mem_entries,
+>> +                    GFP_KERNEL);
+>> +    kfree(mem_entries);
+>> +    if (!parcel->mem_entries) {
+>> +        ret = -ENOMEM;
+>> +        goto reclaim;
+>> +    }
+>> +
+>> +    mutex_unlock(&ghvm->mm_lock);
+>> +    return 0;
+>> +reclaim:
+>> +    gh_vm_mem_reclaim(ghvm, mapping);
+>> +free_mapping:
+>> +    kfree(mapping);
+>> +    mutex_unlock(&ghvm->mm_lock);
+>> +    return ret;
+>> +}
+>> +
+>> +int gh_vm_mem_free(struct gh_vm *ghvm, u32 label)
+>> +{
+>> +    struct gh_vm_mem *mapping;
+>> +    int ret;
+>> +
+>> +    ret = mutex_lock_interruptible(&ghvm->mm_lock);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +    mapping = __gh_vm_mem_find_by_label(ghvm, label);
+>> +    if (!mapping)
+>> +        goto out;
+>> +
+>> +    gh_vm_mem_reclaim(ghvm, mapping);
+>> +    kfree(mapping);
+>> +out:
+>> +    mutex_unlock(&ghvm->mm_lock);
+>> +    return ret;
+>> +}
+>> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
+>> index 10ba32d2b0a6..a19207e3e065 100644
+>> --- a/include/uapi/linux/gunyah.h
+>> +++ b/include/uapi/linux/gunyah.h
+>> @@ -20,4 +20,33 @@
+>>    */
+>>   #define GH_CREATE_VM            _IO(GH_IOCTL_TYPE, 0x0) /* Returns a 
+>> Gunyah VM fd */
+>> +/*
+>> + * ioctls for VM fds
+>> + */
+>> +
+> 
+> I think you should define the following three values in an enum.
+> 
+>> +#define GH_MEM_ALLOW_READ    (1UL << 0)
+>> +#define GH_MEM_ALLOW_WRITE    (1UL << 1)
+>> +#define GH_MEM_ALLOW_EXEC    (1UL << 2)
+>> +
+>> +/**
+>> + * struct gh_userspace_memory_region - Userspace memory descripion 
+>> for GH_VM_SET_USER_MEM_REGION
+>> + * @label: Unique identifer to the region.
+> 
+> Unique with respect to what?  I think it's unique among memory
+> regions defined within a VM.  And I think it's arbitrary and
+> defined by the caller (right?).
+> 
+>> + * @flags: Flags for memory parcel behavior
+>> + * @guest_phys_addr: Location of the memory region in guest's memory 
+>> space (page-aligned)
+>> + * @memory_size: Size of the region (page-aligned)
+>> + * @userspace_addr: Location of the memory region in caller 
+>> (userspace)'s memory
+>> + *
+>> + * See Documentation/virt/gunyah/vm-manager.rst for further details.
+>> + */
+>> +struct gh_userspace_memory_region {
+>> +    __u32 label;
+>> +    __u32 flags;
+> 
+> Add a comment to indicate what types of values "flags" can have.
+> Maybe "flags" should be called "perms" or something?
+> 
+
+Added documentation for the valid values of flags. I'm anticipating 
+needing to add other flag values beyond permission bits.
+
+>> +    __u64 guest_phys_addr;
+>> +    __u64 memory_size;
+>> +    __u64 userspace_addr;
+> 
+> Why isn't userspace_addr just a (void *)?  That would be a more natural
+> thing to pass to the kernel.  Is it to avoid 32-bit/64-bit pointer
+> differences in the API?
+> 
+
+Yes, to avoid 32-bit/64-bit pointer differences in API.
+
+>> +};
+>> +
+>> +#define GH_VM_SET_USER_MEM_REGION    _IOW(GH_IOCTL_TYPE, 0x1, \
+>> +                        struct gh_userspace_memory_region)
+>> +
+> 
+> I think it's nicer to group the definitions of these IOCTL values.
+> Then in the struct definitions that follow, you can add comment that
+> indicates which IOCTL the struct is used for.
+> 
+>>   #endif
+> 
