@@ -2,167 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F22B66DDBE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 15:16:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6543B6DDBEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 15:17:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbjDKNQ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 09:16:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54904 "EHLO
+        id S230355AbjDKNRp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 09:17:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230319AbjDKNQ0 (ORCPT
+        with ESMTP id S230407AbjDKNRo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 09:16:26 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E8E46A4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:16:24 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id d7so21442201lfj.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:16:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681218982;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CcUTTOUcMW0dZnIqgtsXXko3U+fcNkeoSkY3ZJOPmXE=;
-        b=LYUd4gN0uvXVwbiLe+XaMSfZYrd+SwcY14tzEW5bLYbnCvbOjB/IB4sP6F1LfgFC7q
-         BSefua8JuXbOq7EDzM3b9LBcTQGaMqZAjneiOHp8G/rdIR43GAt4B6ZchiceXSFwWa07
-         xv+hX5RZbZpq5DoIIPl9x5aHvqBhYh1TbFKpe0gKwjKLVQcy+A+Yp6MCFft43Xuzk53a
-         8TBiENf2cer2zEgRynfAzy+gC6VszB9hwZCbV6aJjdGuQcA9Z1XfpgeNHciFodlwRcBr
-         HHzjrhwHuXKETo6CNUblAQs9jRzsoD8XM6zqjI7vlCIFUY2AqEi0T1Lx3sRC3Bk1szZ0
-         /eww==
+        Tue, 11 Apr 2023 09:17:44 -0400
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A43740C5;
+        Tue, 11 Apr 2023 06:17:43 -0700 (PDT)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-1845f865452so4452753fac.12;
+        Tue, 11 Apr 2023 06:17:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681218982;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CcUTTOUcMW0dZnIqgtsXXko3U+fcNkeoSkY3ZJOPmXE=;
-        b=lnr/4Nr2ctHNi2pMg2XMoDjuU3nBTmNmAi/SdScbAaIJbk+tgp62SdGvBLEHRigfCy
-         jN7m7ga+nBRKdtnp/6jQClfzUtvMVOkqrZBGm56Vf5CCfjAp7/y0KV+dIAknTnzXco15
-         8wA6dD2xbEyRE9HWIEbCfXLVrjGxsgMECnfzLmJP4jQ3mg++gR2n5SXQHon44oZchknS
-         pgW/6EPRFYsLWoE7/JQjCkjvRZURzmTg5U75Wjwm94FePIaDkcSSpEtT2lMrebfirLsk
-         P+mZbO6wg38AfZBvo6KJooglL2DwP77YFQbLlUzj/QtNwobhcmjyWTgESNcPdj3mJLPZ
-         cbvw==
-X-Gm-Message-State: AAQBX9elv4ZwhuiNIMJzgq8L7VHOy1cVDX7pF4akZTHSO7TPa4cK0Hi2
-        LSeTgX9TDmVKEk4i5ufDUq56SQ==
-X-Google-Smtp-Source: AKy350blhLpXLllc5IUc17Ff5DabLr3YrfUjg7JsGcKpnIEbMfXx9pu1SF8NEN24gpwptlidkj7IFg==
-X-Received: by 2002:ac2:414a:0:b0:4d5:978e:8bcf with SMTP id c10-20020ac2414a000000b004d5978e8bcfmr3481121lfi.33.1681218982568;
-        Tue, 11 Apr 2023 06:16:22 -0700 (PDT)
-Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id r26-20020ac252ba000000b004eb09820adbsm2557794lfm.105.2023.04.11.06.16.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 06:16:22 -0700 (PDT)
-Message-ID: <6c75d434-bb5d-278f-a125-d096fd6b387d@linaro.org>
-Date:   Tue, 11 Apr 2023 15:16:15 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v3 7/7] arm64: dts: qcom: sa8775p: add the GPU IOMMU node
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        d=1e100.net; s=20210112; t=1681219062; x=1683811062;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TMLSRWyO7youDUneN+C7njAPNFs3dU8flMJ2s0JdZA0=;
+        b=DFYLCQ2dAwIP15nfgTkurS5lmSAJqs33lkONFJ8+VFpKc7BYwZk9w3qGbB1wiUPSxB
+         AJj67DCr1ZN4h5G+Asthu+kY4ZKgLb20d6oDuwdkrhuKx7tZczW+qPuLiHZUveEOxNuu
+         HxvhDFHgxuQ0J7qtbtrSzCouKumi4zqlM6SQkzuEPk+8GIqdR11PISOl/IngOuUg7sXg
+         P9as961j06SzHyDKLtZgDV/nHB/j5g3jOFkX6tqu6JCH5WMG+ffIcFeXgJpR3hd9tPzQ
+         CJCgHJHJKsiTfFE5PlQYrMZ1PE+y+T7f+MBqWrXEcoBReLowW20mB+rJibWzgOliigK0
+         pTFA==
+X-Gm-Message-State: AAQBX9ccDY4dzTSxm/baewm5brz+awsqtCFpCg2YLaSXLNPDrGd0CrF7
+        V6eZ1EbFALTbJqjymc0oJg==
+X-Google-Smtp-Source: AKy350YA//UYYJ8sXvuwCAQ8mbEa46N6fYC1rhOajj2sQmniVNMtERZmWIhA2Bf01C2K7AO7TFp7lQ==
+X-Received: by 2002:a05:6870:8a1e:b0:17a:c83d:8f9d with SMTP id p30-20020a0568708a1e00b0017ac83d8f9dmr6442101oaq.19.1681219061723;
+        Tue, 11 Apr 2023 06:17:41 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id zp2-20020a0568718e0200b0017ae909afe8sm5024441oab.34.2023.04.11.06.17.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 06:17:41 -0700 (PDT)
+Received: (nullmailer pid 2915066 invoked by uid 1000);
+        Tue, 11 Apr 2023 13:17:40 -0000
+Date:   Tue, 11 Apr 2023 08:17:40 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        linux-scsi@vger.kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230411125910.401075-1-brgl@bgdev.pl>
- <20230411125910.401075-8-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230411125910.401075-8-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Subject: Re: [PATCH v2 2/5] dt-bindings: phy: qmp-ufs: describe the UFS PHY
+ for sa8775p
+Message-ID: <20230411131740.GA2913234-robh@kernel.org>
+References: <20230406194703.495836-1-brgl@bgdev.pl>
+ <20230406194703.495836-3-brgl@bgdev.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230406194703.495836-3-brgl@bgdev.pl>
+X-Spam-Status: No, score=0.8 required=5.0 tests=FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11.04.2023 14:59, Bartosz Golaszewski wrote:
+On Thu, Apr 06, 2023 at 09:47:00PM +0200, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add the Adreno GPU IOMMU for sa8775p-based platforms.
+> Add a new compatible for the QMP UFS PHY found on sa8775p platforms and
+> update the clocks property to accommodate three clocks.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 37 +++++++++++++++++++++++++++
->  1 file changed, 37 insertions(+)
+>  .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        | 26 ++++++++++++++++++-
+>  1 file changed, 25 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 191b510b5a1a..11f3d80dd869 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -7,6 +7,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
-> +#include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
->  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> @@ -605,6 +606,42 @@ gpucc: clock-controller@3d90000 {
->  			#power-domain-cells = <1>;
->  		};
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> index cd0fbbd3593d..5bc93acccbad 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+> @@ -16,6 +16,7 @@ description:
+>  properties:
+>    compatible:
+>      enum:
+> +      - qcom,sa8775p-qmp-ufs-phy
+>        - qcom,sc8280xp-qmp-ufs-phy
+>        - qcom,sm6125-qmp-ufs-phy
+>        - qcom,sm7150-qmp-ufs-phy
+> @@ -25,12 +26,15 @@ properties:
+>      maxItems: 1
 >  
-> +		adreno_smmu: iommu@3da0000 {
-> +			compatible = "qcom,sa8775p-smmu-500", "qcom,adreno-smmu",
-> +				     "arm,mmu-500";
-Err.. does it even boot like this? You dropped the qcom,smmu-500 compatible
-which means it's getting bound to the generic SMMU driver (without
-QC quirks). If that was a mistake, you should have had all 4
+>    clocks:
+> -    maxItems: 2
+> +    minItems: 2
+> +    maxItems: 3
+>  
+>    clock-names:
+> +    minItems: 2
+>      items:
+>        - const: ref
+>        - const: ref_aux
+> +      - const: qref
+>  
+>    power-domains:
+>      maxItems: 1
+> @@ -52,6 +56,26 @@ properties:
+>    "#phy-cells":
+>      const: 0
+>  
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sa8775p-qmp-ufs-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 3
+> +        clock-names:
+> +          maxItems: 3
 
-"qcom,sa8775p-smmu-500", qcom,adreno-smmu, "qcom,smmu-500", "arm,mmu-500"
+The max is already 3. Did you mean 'minItems: 3' or 2 or 3 clocks are 
+valid?
 
-Without falling into the qc-specific codepaths, the Adreno compat does
-nothing.
-
-Konrad
-> +			reg = <0x0 0x03da0000 0x0 0x20000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <2>;
-> +			dma-coherent;
-> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-> +				 <&gpucc GPU_CC_AHB_CLK>,
-> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
-> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
-> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
-> +				      "gcc_gpu_snoc_dvm_gfx_clk",
-> +				      "gpu_cc_ahb_clk",
-> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
-> +				      "gpu_cc_cx_gmu_clk",
-> +				      "gpu_cc_hub_cx_int_clk",
-> +				      "gpu_cc_hub_aon_clk";
-> +			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
+> +    else:
+> +      properties:
+> +        clocks:
+> +          maxItems: 2
+> +        clock-names:
+> +          maxItems: 2
 > +
->  		pdc: interrupt-controller@b220000 {
->  			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
->  			reg = <0x0 0x0b220000 0x0 0x30000>,
+>  required:
+>    - compatible
+>    - reg
+> -- 
+> 2.37.2
+> 
