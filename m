@@ -2,92 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A5C46DDB08
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 14:39:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72EFC6DDB3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 14:53:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230081AbjDKMjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 08:39:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
+        id S229680AbjDKMxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 08:53:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230097AbjDKMjf (ORCPT
+        with ESMTP id S230160AbjDKMx1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 08:39:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A101FE4;
-        Tue, 11 Apr 2023 05:39:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AC51061D98;
-        Tue, 11 Apr 2023 12:39:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7516DC433EF;
-        Tue, 11 Apr 2023 12:39:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681216752;
-        bh=WD5G8dd/ugfMV6qpUG9CIug356YcoMv3nLMJmwxq5Zs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=quqRXFEc/A8hl0a7talcM3w/aUNpdbuZ/BWrcwkOKU8zHrz2+MUDjywi/R9/UKr1d
-         MGjYiZDgL2iEPqa8Jw5Q2MCtRtwXeGdfne2IPNc6xMgJgtDvi2+55Jx1VfIVT1f2gg
-         rniRywNXVpsLeHRmQXkB9ASUx9ZRnpx/Q81BhtQp1tD4FZDi1AIC3LMDkTkWk/j9sL
-         d2wOS3oX/5iWtdRl+xr8ve26cv2kjiy8WeQJC+kPNtW+pG72XX3HROBudhR5K9/vSP
-         q7AtM1RvdeyPj0WGrlBXmjaoDinlXW+QTjTOgbmyck73QazZ8B+z5nDnmxev9Br4kI
-         YdFuFnNnhppPw==
-Date:   Tue, 11 Apr 2023 05:42:54 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org
-Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: qrb4210-rb2: Increase load on
- l22 and l24 for uSD and eMMC
-Message-ID: <20230411124254.r4sk7fn4wdrdt6qy@ripper>
-References: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
- <20230411072840.2751813-4-bhupesh.sharma@linaro.org>
- <ff5691b4-df1a-57a8-6e96-f997bbe340f4@linaro.org>
- <CAH=2Ntytn2GnBJkiZ4+xBf1X-fUUTD4iHWv-Sv66Jp1ePUDV3A@mail.gmail.com>
+        Tue, 11 Apr 2023 08:53:27 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D323A8F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 05:53:26 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5491fa028adso479475947b3.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 05:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681217606;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fFv74P1KCayojYjxtK5/a2IFMIj+yPaoo8Ew1qIsSEg=;
+        b=sMWRCSjOMPVp5si/XP2v82kjVrx83Nszx7XXfiUQ+4WWfr+Aun0q5zNh0TbCkLLrmv
+         55qBvqAizK9Ib/ushXLC3pixTWaCqBTWRq2OghKIZKAO3c8aB4NXecWVCi46LhnivDh6
+         rEH/S76ZH7I/zoDt9n95RFEryypfxnLPpohemb+RndwF3uYLOUa10SqfseE95Ih5aFwL
+         J5cBuiYPpSO3NPLjGDX4umb2eLJqU+lzKEcPPkgYspNOJm9bDJduGJCQUHTYKyr1wo0i
+         FOvd8m51xCg7kwV16LK3iJ7VO4v2z5el1fDOH4sWMg3kSwSvmhHg/f+WnFhkFhOwmdxm
+         INqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681217606;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fFv74P1KCayojYjxtK5/a2IFMIj+yPaoo8Ew1qIsSEg=;
+        b=zVds0ySaRt/h6QLwV1Ich4R2s3oMUJXjc0l4X5cxBK0eD68z7kRtqkw550nOSks3LO
+         vAvqHkASmPcl9wpWClf8QT7cJQOPQ7yBHVmemtmcGd/3bXHlf8/WpBRpktajXKKxaT3X
+         3ujnyS/IpaWLlvC00y6WeLdm3vYKgkBjJzIrc5I8SFdzQzuWhvLEhH1dPSUiUSWLCtuA
+         uQKiWPKuujPVIqmKPguEWPg79w5r2kjqwf7QWKMXQnLvvHBzzlo4wTbyTNxFBEa2caJX
+         VG/tLc615EbMspnO8Xj6A738FXZUIp9COx+7cb4r0J5WFMgFlJLnUOTizWAEwlDkXuUv
+         uZJg==
+X-Gm-Message-State: AAQBX9d2YARZH0GKTLWMvKvp7z7EuRVFVioNNZJ7g4sQzDF5WswywpkR
+        DJcEPxjBo4qj5ruRcvPaZMGy6ou+diGWx2Dx3r+NEA==
+X-Google-Smtp-Source: AKy350Y4X7sWd/sMQ10PeBq1usb+QKgdwjKDQyYcRyuD5lp1mmERKPgxY9L+t5XfRBFRr6SmHLi0cZYny6S114tUDXA=
+X-Received: by 2002:a81:ca53:0:b0:54c:a67:90b with SMTP id y19-20020a81ca53000000b0054c0a67090bmr8186037ywk.5.1681217605731;
+ Tue, 11 Apr 2023 05:53:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH=2Ntytn2GnBJkiZ4+xBf1X-fUUTD4iHWv-Sv66Jp1ePUDV3A@mail.gmail.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230410171010.2561393-1-bhupesh.sharma@linaro.org>
+ <20230410171010.2561393-3-bhupesh.sharma@linaro.org> <1552aad0-4b84-b508-bc05-610edb3cccff@linaro.org>
+ <CAH=2NtyP8zkOetnH-i8TLBGBQnjH4f569PxjzW_84HZXeCFGNw@mail.gmail.com>
+In-Reply-To: <CAH=2NtyP8zkOetnH-i8TLBGBQnjH4f569PxjzW_84HZXeCFGNw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 11 Apr 2023 15:53:14 +0300
+Message-ID: <CAA8EJprCUSvtC4Os0X==E418ZyPB1sBDP18Z5Ng-zPE0=+1rXQ@mail.gmail.com>
+Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, andersson@kernel.org,
+        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
+        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
+        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 05:43:51PM +0530, Bhupesh Sharma wrote:
-> On Tue, 11 Apr 2023 at 17:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Tue, 11 Apr 2023 at 15:18, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+>
+> On Tue, 11 Apr 2023 at 13:17, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 > >
-> >
-> >
-> > On 11.04.2023 09:28, Bhupesh Sharma wrote:
-> > > Increase the l22 and l24 load used for uSD and eMMC VMMC.
-> > > These need to be increased in order to prevent any voltage drop
-> > > issues due to limited current happening during specific operations
-> > > (e.g. write).
+> > On 10/04/2023 20:10, Bhupesh Sharma wrote:
+> > > Add USB superspeed qmp phy node to dtsi.
+> > >
+> > > Make sure that the various board dts files (which include sm4250.dtsi file)
+> > > continue to work as intended.
 > > >
 > > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > > > ---
-> > You could have simply squashed this into the patch where
-> > you enabled the controllers, so that that commit works
-> > reliably for e.g. bisect
-> 
-> Yes, but Bjorn asked me to send this separately (via irc).
-> I am fine with squashing this with the previous patch [PATCH 2/3] as
-> well, if Bjorn is OK with it.
-> 
+> > >   .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
+> > >   arch/arm64/boot/dts/qcom/sm6115.dtsi          | 29 +++++++++++++++++--
+> > >   .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
+> > >   3 files changed, 33 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> > > index a1f0622db5a0..75951fd439df 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sm4250-oneplus-billie2.dts
+> > > @@ -242,6 +242,9 @@ &usb {
+> > >   &usb_dwc3 {
+> > >       maximum-speed = "high-speed";
+> > >       dr_mode = "peripheral";
+> > > +
+> > > +     phys = <&usb_hsphy>;
+> > > +     phy-names = "usb2-phy";
+> > >   };
+> > >
+> > >   &usb_hsphy {
+> > > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > > index 2505c815c65a..b2ea8f13e827 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+> > > @@ -651,6 +651,31 @@ usb_hsphy: phy@1613000 {
+> > >                       status = "disabled";
+> > >               };
+> > >
+> > > +             usb_qmpphy: phy@1615000 {
+> > > +                     compatible = "qcom,sm6115-qmp-usb3-phy";
+> > > +                     reg = <0x0 0x01615000 0x0 0x200>;
+> > > +
+> > > +                     clocks = <&gcc GCC_AHB2PHY_USB_CLK>,
+> > > +                              <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
+> > > +                              <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
+> > > +                              <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> > > +                     clock-names = "cfg_ahb",
+> > > +                                   "ref",
+> > > +                                   "com_aux",
+> > > +                                   "pipe";
+> > > +
+> > > +                     resets = <&gcc GCC_USB3_PHY_PRIM_SP0_BCR>,
+> > > +                              <&gcc GCC_USB3PHY_PHY_PRIM_SP0_BCR>;
+> > > +                     reset-names = "phy", "phy_phy";
+> > > +
+> > > +                     #clock-cells = <0>;
+> > > +                     clock-output-names = "usb3_phy_pipe_clk_src";
+> > > +
+> > > +                     #phy-cells = <0>;
+> > > +
+> > > +                     status = "disabled";
+> >
+> >
+> > Please excuse me if I'm wrong, but this will not work with the current
+> > PHY driver. It was not updated to handle new bindings. Please provide
+> > relevant driver patches too.
+>
+> Oh.. from your previous emails, I got the feeling that you were
+> already reworking the existing PHY driver as part of enabling it for
+> newer bindings.
+>
+> No issues, I will send the PHY patches as well in the next version.
 
-I was trying to say that I was fine with you just fixing the small thing
-I had asked for and then you could send a separate patch for this when
-you found the time.
+Then this dependency should have been declared in the cover letter.
 
-I can squash the two while applying, unless anyone else have any
-concerns with the patches.
 
-Regards,
-Bjorn
+-- 
+With best wishes
+Dmitry
