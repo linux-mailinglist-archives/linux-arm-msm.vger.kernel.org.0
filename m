@@ -2,72 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECE526DDDAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 16:23:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C48D56DDE00
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 16:32:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230014AbjDKOXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 10:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59744 "EHLO
+        id S229469AbjDKOcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 10:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230113AbjDKOXc (ORCPT
+        with ESMTP id S229450AbjDKOcH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 10:23:32 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C611981;
-        Tue, 11 Apr 2023 07:23:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AF090622B8;
-        Tue, 11 Apr 2023 14:23:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D67C433EF;
-        Tue, 11 Apr 2023 14:23:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681223009;
-        bh=RYp9PSxqskSUe2q+xTZXJgu3eD5j3kMspk1QMyArBVc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=EZW4+YMK9xErYZ677MSbj6zEmKjeL567xcJXBQ2dLLi7+OZgFxoka8ZhybWB0FTIZ
-         Mx/21y40YfNKTOu715BWXXRiGF9WcjOo1Ta60ueNAvKlEiQSCd7E1gemdDVR/fbmdD
-         YsCCfLgwkzQCeBe1869hulrjfJBG2OS9om3wGuQH9WpkjXQ0Lah/k4wXWyLne7Mm+M
-         hnBbwIVOoeNGuJP3iUeNVxEW10Kwh+jtz03X2lyaeTIgrw2zoKwNp91aGdM+GRoyVz
-         mduSQ1RARZ1/NbrID228mp/SlPV0GK3u56noWFaq1mj/8VOgPHKW3iypspNXAxHHc/
-         1FcTJ7z3Ye+yA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pmEu6-0005Lc-5e; Tue, 11 Apr 2023 16:23:26 +0200
-Date:   Tue, 11 Apr 2023 16:23:26 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Tue, 11 Apr 2023 10:32:07 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A15BE56;
+        Tue, 11 Apr 2023 07:32:05 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id c10-20020a17090abf0a00b0023d1bbd9f9eso11166981pjs.0;
+        Tue, 11 Apr 2023 07:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1681223525; x=1683815525;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PXgLo5OVfNAMT7/smDiYjz0MFkV0iyCkx0eeELk7SYQ=;
+        b=nWRgNU6YMWDga7MwAbjU/V74AQGnljhjJKMzMvS5+zZe+eZkOWLvU0j0Kj2gkVbslF
+         JbJNdl6F3f4bhb7ulZcZ7RWGJMGc8jaBuEiPKZvhTbERDDQAp3gygl20Xuy9NntBgtab
+         CTzVb4XHhPYunKKJ6RDg+blRZY8agaSnfX9ZNLnVpbCyzzdGxi2aL3k3yrAoqxlxiWQF
+         +jm5uA5h3wLbKPyN0iM7oh0R/yPlC+O5PptXtwm5fvPK65cpjo0c8NMoTu7+CJWQtW0I
+         HDa4eqjUl6+tHKrogQqOms+cjKPdTF3c6dVBeFc/8iyo1ZJpDUegBw8XdYm3Aw+S3Lb+
+         hV8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681223525; x=1683815525;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PXgLo5OVfNAMT7/smDiYjz0MFkV0iyCkx0eeELk7SYQ=;
+        b=J48I/Vy3KO1ZINlpjh77nTE8F3jeSPs1MT0UPAZdF53kv6nndpWgeQEGH1v8nOtgEI
+         xNAv0Hya88NNWy3KT8LB6dutVOA4k5kh6Bi0W6JBJQVNPLs9WCmAa2aprs80bPzNFhwP
+         DXM0O+HOtfyMJGoGJ92jh798iyaI0qAnZ1irCkHU6cZ7az13dOQ3KKKUg7BOgwtSyhd4
+         Z36K/+BsQxnUidTPwjz3bCW60MFpuivOKBfXZp9UUy+tHvybdq6NZKXe0XyoXia0xUk4
+         3kIG+ktNbPcKA1bhXGuCmAkYAtX5n4Bbi86GGFkfh/wAoNAnw8dbSSkFLW5SNo3RyrX2
+         ajgQ==
+X-Gm-Message-State: AAQBX9cOL29fLFcE8wNN1MJWojXc1Z9hVm0A/NCPtUNi94hxQ86Vrzgm
+        018jMz91yvptXPwFkMLxU8aPv/Jk9tM=
+X-Google-Smtp-Source: AKy350ZvBkJkHrK+EOEBnmvu2iSV8npZ2azOJz2Iz/9s7a8goU5uQtXMWfijuKHhwAIu8hkJ7Kn6KA==
+X-Received: by 2002:a17:902:ecca:b0:1a1:ab85:1e1e with SMTP id a10-20020a170902ecca00b001a1ab851e1emr15137887plh.22.1681223524440;
+        Tue, 11 Apr 2023 07:32:04 -0700 (PDT)
+Received: from localhost.localdomain (n220246252240.netvigator.com. [220.246.252.240])
+        by smtp.gmail.com with ESMTPSA id jk1-20020a170903330100b0019ea9e5815bsm9829721plb.45.2023.04.11.07.31.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 07:32:04 -0700 (PDT)
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad: correct pin
- drive-strength
-Message-ID: <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
-References: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jianhua Lu <lujianhua000@gmail.com>
+Subject: [PATCH] dt-bindings: display/msm: dsi-controller-main: Document qcom,master-dsi and qcom,sync-dual-dsi
+Date:   Tue, 11 Apr 2023 22:31:49 +0800
+Message-Id: <20230411143149.16742-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 07, 2023 at 08:07:10PM +0200, Krzysztof Kozlowski wrote:
-> Fix typo in drive-strength property name.
+This fixes warning:
+  sm8250-xiaomi-elish-csot.dtb: dsi@ae94000: Unevaluated properties are not allowed ('qcom,master-dsi', 'qcom,sync-dual-dsi' were unexpected)
 
-In the future, please try to use the established commit-summary prefix.
-In this case:
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+ .../bindings/display/msm/dsi-controller-main.yaml    | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-	arm64: dts: qcom: sc8280xp-x13s:
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index e6c1ebfe8a32..940a506a289d 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -82,6 +82,18 @@ properties:
+       Indicates if the DSI controller is driving a panel which needs
+       2 DSI links.
+ 
++  qcom,master-dsi:
++    type: boolean
++    description: |
++      Indicates if the DSI controller is the master DSI controller when
++      qcom,dual-dsi-mode enabled.
++
++  qcom,sync-dual-dsi:
++    type: boolean
++    description: |
++      Indicates if the DSI controller need to sync the other DSI controller
++      with MIPI DCS commands when qcom,dual-dsi-mode enabled.
++
+   assigned-clocks:
+     minItems: 2
+     maxItems: 4
+-- 
+2.39.2
 
-Johan
