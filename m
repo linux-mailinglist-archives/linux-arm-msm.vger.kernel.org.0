@@ -2,131 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 747826DE2B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 19:37:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D96D6DE2C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 19:39:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbjDKRhe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 13:37:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36876 "EHLO
+        id S230184AbjDKRjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 13:39:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjDKRhd (ORCPT
+        with ESMTP id S230130AbjDKRjT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 13:37:33 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 512875FFE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:37:31 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-504dfc87927so206125a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:37:31 -0700 (PDT)
+        Tue, 11 Apr 2023 13:39:19 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA58665BA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:39:05 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id s8so5074845wmo.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681234650;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=e67OsrA9U7cNgwhSbSkMjvtmDyw6VsiFX86RzKi5f8Y=;
-        b=QVHjkeWsh4Yg8ah0fHhi8JaLOgDmKiCYyETDUHjbA3d1CUf5Xum4mC5O/fBT8rfRb8
-         vVifvyTwFffiwjKRFdFU3nSNFCyHTDT51IxHOJxvox/Hu3XM0PkKqGxlcQeb7yfHZsro
-         aLSspmmbpsv15cOzbjeTC0WFW6lQrFjd71+zpv7h/nuPb7gqa4I/NG+y6sc0aBDJ4n9n
-         ApH6Gh11aE0tbMzD0rZkyU8aW2E6MUiGZlOVykUMxt0i9VPNKFVdelWSrnEsJPaa34dE
-         nHaNZz5Ds1m+WF4jEVGM2aZRlZX3duKlyGod4RlmUWD2rhQmAh59nzxmio/24Nb6zb9T
-         Ll3A==
+        d=linaro.org; s=google; t=1681234744;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zYhbwOdBd3vMxKKBbYYrqI16ZcFTfZ8NDiAcQOEPvvg=;
+        b=V5kjk/z8OjMoh8qlAAJbfNt/7r5VaoXEnhLYPoeAV7ijJHAcUNaA85q6iKLYfw7IHr
+         u08GVN2wvrKwA9sy9iw+cb0HFnuAOTGp+qkHtfjkyXyfEKzUAMCBk7lPQ/x4633FK7P/
+         xZCg4A+lWaNh2RZM0JlNUgS0Lr3tjCkZxKPNhdWLhGLh2DbOGDuqIoUIKr4y5w+jHBje
+         LbmH5kgISlg1AGHC5UTsdLy+8fKEcPqiR7+p1TZQRKZxxyuwNeGkWwG64vVfTmdtE0V0
+         eoDu0JS70rT5BbrPzIVxGF8sQzFhXHkd1Wgk+o0hUA/IPpenHiA50dK2wTon6bC9pjmp
+         MiDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681234650;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=e67OsrA9U7cNgwhSbSkMjvtmDyw6VsiFX86RzKi5f8Y=;
-        b=pKlcAOW7nP3drhAsVkAzF/U9ytMF5u7mTRXqGwyVA/LeGLRNZ1f/9KUTHd34qgSX6E
-         jpmlJvCHbBDH63gxxW3GZssVKctgr47KPTN2+9XuI9NrhdGvssOH5mSPvCatFKadea0W
-         uEEETblIVdeYw3OmzWHXIZD+hkJWRC6gzCjZAdtKwFHAV6Wik+IClNM9Jy9gzcGTbz7v
-         QagANXBmVT4iTa09r7MbAOMPXujbP9Q0IJePNsJ7gqoE4WKwm0BpbHRJ8Ul9r37Z1DDj
-         8oWuAXcTr8otgx/rmbHe3z31JZZVNcahwL0TgFjkbKRsrB+h+vHUgCJu62dabl84Go8A
-         Bnww==
-X-Gm-Message-State: AAQBX9df0cQlV3xTKjcq2NGUtkP1kokCiDXShDQEfb43nQb7IiOCK8t0
-        T5BZJSoR1q5b3RvdjDguZzUyIA==
-X-Google-Smtp-Source: AKy350aCNa8PaJaXlZDqiO1amhq7ZH2fusJyFHDanpTvcAqTuWnv9TyCA4AnR/a2nBWV3hLkkd/d7g==
-X-Received: by 2002:a50:ec94:0:b0:4fd:2b0e:ce87 with SMTP id e20-20020a50ec94000000b004fd2b0ece87mr9084703edr.24.1681234649741;
-        Tue, 11 Apr 2023 10:37:29 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:f1da:c117:3657:c8a? ([2a02:810d:15c0:828:f1da:c117:3657:c8a])
-        by smtp.gmail.com with ESMTPSA id q11-20020a50aa8b000000b00504706aa54esm5665407edc.57.2023.04.11.10.37.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 10:37:29 -0700 (PDT)
-Message-ID: <f12d50a2-a9b0-5659-4224-2b7039ba058e@linaro.org>
-Date:   Tue, 11 Apr 2023 19:37:28 +0200
+        d=1e100.net; s=20210112; t=1681234744;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zYhbwOdBd3vMxKKBbYYrqI16ZcFTfZ8NDiAcQOEPvvg=;
+        b=L4DDRLKtXlPWn0OdJyoReeQ8YTPW1TJhG3aQNwIIhtdbAyJrQdmW8lAtRoy0e2ybna
+         K9dNRdKYhgd99I3/gWArJxf1fiHZlvak3DpBq/TEjUVwfwfzirguJrzYkcfZTtg0RElp
+         ktrVc5zN13JSD8VeH/gGN0RYSlFmhAjw4z8b3vL64fcoRuQCcMxeofANzTz2aeTidLio
+         uvLvu7YJm+GiSNr5F2x1kRi9pnUgfz4q1c6T5D9oknph860Tl4RObBCW1sgdwIJrcgpi
+         3/vccwNVtwSu/sZulckNOvpzthztmi1e04NL8Nja2Jpp9RPz7HoEVOP9Pzz6vD+K2xCg
+         lqbw==
+X-Gm-Message-State: AAQBX9ewyc8yOD9KkAlNGaAHcghaMMRdB5jitwAw6o2hvHtPuioc81cR
+        svNzwbeZXYfPfwNM1V3OcOza2IN+DqSKp2DZaz2veA==
+X-Google-Smtp-Source: AKy350Znyu1IvWROumlxai26nS+blIGNiWtQgPioqndo5D6ZQhJxK6Q/bngg+L8knrXBrCXblcPDGOtlhttj5QaVPv8=
+X-Received: by 2002:a7b:c7d0:0:b0:3ed:7664:6d7b with SMTP id
+ z16-20020a7bc7d0000000b003ed76646d7bmr889640wmk.8.1681234743849; Tue, 11 Apr
+ 2023 10:39:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: qcom,rpmpd: Add SA8155P
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20230411-topic-hanaau-v2-0-fd3d70844b31@linaro.org>
- <20230411-topic-hanaau-v2-1-fd3d70844b31@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230411-topic-hanaau-v2-1-fd3d70844b31@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+References: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
+ <20230411072840.2751813-3-bhupesh.sharma@linaro.org> <9130c1cb-4081-b21c-7c1b-2e0c9879e66a@linaro.org>
+In-Reply-To: <9130c1cb-4081-b21c-7c1b-2e0c9879e66a@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 11 Apr 2023 23:08:52 +0530
+Message-ID: <CAH=2NtzuN-0qgm7Hn6aJN+ZSRROFna09SHThVFbfKGVdsLzNWg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: Add base qrb4210-rb2 board dts
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 15:47, Konrad Dybcio wrote:
-> Add a compatible for SA8155P platforms and relevant defines to the
-> include file.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
->  include/dt-bindings/power/qcom-rpmpd.h                  | 9 +++++++++
->  2 files changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> index afad3135ed67..f9c211a9a938 100644
-> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-> @@ -29,6 +29,7 @@ properties:
->        - qcom,qcm2290-rpmpd
->        - qcom,qcs404-rpmpd
->        - qcom,qdu1000-rpmhpd
-> +      - qcom,sa8155p-rpmhpd
->        - qcom,sa8540p-rpmhpd
->        - qcom,sa8775p-rpmhpd
->        - qcom,sdm660-rpmpd
-> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-> index 1bf8e87ecd7e..867b18e041ea 100644
-> --- a/include/dt-bindings/power/qcom-rpmpd.h
-> +++ b/include/dt-bindings/power/qcom-rpmpd.h
-> @@ -90,6 +90,15 @@
->  #define SM8150_MMCX	9
->  #define SM8150_MMCX_AO	10
->  
-> +/* SA8155P is a special case, kept for backwards compatibility */
+On Tue, 11 Apr 2023 at 18:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> On 11.04.2023 09:28, Bhupesh Sharma wrote:
+> > Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
+> >
+> > This adds debug uart, emmc, uSD and tlmm support along with
+> > regulators found on this board.
+> >
+> > Also defines the 'xo_board' and 'sleep_clk' frequencies for
+> > this board.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile        |   1 +
+> >  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 223 +++++++++++++++++++++++
+> >  2 files changed, 224 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index e0e2def48470..d42c59572ace 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -74,6 +74,7 @@ dtb-$(CONFIG_ARCH_QCOM)     += qcs404-evb-1000.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += qcs404-evb-4000.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += qdu1000-idp.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += qrb2210-rb1.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)      += qrb4210-rb2.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += qrb5165-rb5.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += qrb5165-rb5-vision-mezzanine.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += qru1000-idp.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> > new file mode 100644
+> > index 000000000000..c9c6e3787462
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> > @@ -0,0 +1,223 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2023, Linaro Limited
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sm4250.dtsi"
+> > +
+> > +/ {
+> > +     model = "Qualcomm Technologies, Inc. QRB4210 RB2";
+> > +     compatible = "qcom,qrb4210-rb2", "qcom,qrb4210", "qcom,sm4250";
+> > +
+> > +     aliases {
+> > +             serial0 = &uart4;
+> > +     };
+> > +
+> > +     chosen {
+> > +             stdout-path = "serial0:115200n8";
+> > +     };
+> > +
+> > +     vph_pwr: vph-pwr-regulator {
+> > +             compatible = "regulator-fixed";
+> > +             regulator-name = "vph_pwr";
+> > +             regulator-min-microvolt = <3700000>;
+> > +             regulator-max-microvolt = <3700000>;
+> > +
+> > +             regulator-always-on;
+> > +             regulator-boot-on;
+> > +     };
+> > +};
+> > +
+> > +&qupv3_id_0 {
+> > +     status = "okay";
+> > +};
+> > +
+> > +&rpm_requests {
+> > +     regulators {
+> > +             compatible = "qcom,rpm-pm6125-regulators";
+> > +
+> > +             vdd-s1-supply = <&vph_pwr>;
+> > +             vdd-s2-supply = <&vph_pwr>;
+> > +             vdd-s3-supply = <&vph_pwr>;
+> > +             vdd-s4-supply = <&vph_pwr>;
+> > +             vdd-s5-supply = <&vph_pwr>;
+> > +             vdd-s6-supply = <&vph_pwr>;
+> > +             vdd-s7-supply = <&vph_pwr>;
+> > +             vdd-s8-supply = <&vph_pwr>;
+> > +             vdd-s9-supply = <&vph_pwr>;
+> > +             vdd-s10-supply = <&vph_pwr>;
+> > +
+> > +             vdd-l1-l7-l17-l18-supply = <&vreg_s6a_1p352>;
+> > +             vdd-l2-l3-l4-supply = <&vreg_s6a_1p352>;
+> > +             vdd-l5-l15-l19-l20-l21-l22-supply = <&vph_pwr>;
+> > +             vdd-l6-l8-supply = <&vreg_s5a_0p848>;
+> > +             vdd-l9-l11-supply = <&vreg_s7a_2p04>;
+> > +             vdd-l10-l13-l14-supply = <&vreg_s7a_2p04>;
+> > +             vdd-l12-l16-supply = <&vreg_s7a_2p04>;
+> > +             vdd-l23-l24-supply = <&vph_pwr>;
+> > +
+> > +             vreg_s5a_0p848: s5 {
+> I think going with pmicname_regulatorname (e.g. pm6125_s5) here
+> and adding:
+>
+> regulator-name = "vreg_s5a_0p848"
+>
+> would make this more maintainable.
 
-This is a new binding, thus I don't understand what is here backwards
-compatible?
+Ok.
 
-> +#define SA8155P_CX	SM8150_CX
-> +#define SA8155P_CX_AO	SM8150_CX_AO
-> +#define SA8155P_EBI	SM8150_EBI
-> +#define SA8155P_GFX	SM8150_GFX
-> +#define SA8155P_MSS	SM8150_MSS
-> +#define SA8155P_MX	SM8150_MX
-> +#define SA8155P_MX_AO	SM8150_MX_AO
-> +
+> > +&sdhc_1 {
+> > +     vmmc-supply = <&vreg_l24a_2p96>;
+> > +     vqmmc-supply = <&vreg_l11a_1p8>;
+> > +     no-sdio;
+> > +     non-removable;
+> > +
+> > +     status = "okay";
+> > +};
+> > +
+> > +&sdhc_2 {
+> > +     cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
+> This comment is still pretty much spam.
 
-Best regards,
-Krzysztof
+Ok.
 
+> > +     vmmc-supply = <&vreg_l22a_2p96>;
+> > +     vqmmc-supply = <&vreg_l5a_2p96>;
+> > +     no-sdio;
+> > +
+> > +     status = "okay";
+> > +};
+> > +
+> > +&sleep_clk {
+> > +     clock-frequency = <32000>;
+> > +};
+> > +
+> > +&tlmm {
+> > +     gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
+> > +                            <49 1>, <52 1>, <54 1>,
+> > +                            <56 3>, <61 2>, <64 1>,
+> > +                            <68 1>, <72 8>, <96 1>;
+> > +};
+> > +
+> > +&uart4 {
+> > +     status = "okay";
+> > +};
+> This is not the correct SE for the production board. People
+> booting this will get a tz bite.
+
+Hmm.. I can swap it, but the problem is that it's as the SE for my RB2
+board, so I would rather provide instructions in the cover letter as to how
+to swap it (say for a production board) and recompile the dts.
+
+Otherwise, it might break the debug uart console for even the test
+folks @ Qualcomm.
+I will send a v4 accordingly.
+
+Thanks,
+Bhupesh
