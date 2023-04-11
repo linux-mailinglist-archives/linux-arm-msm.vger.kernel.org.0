@@ -2,66 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D96D6DE2C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 19:39:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6E616DE2E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 19:43:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230184AbjDKRjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 13:39:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39670 "EHLO
+        id S229999AbjDKRn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 13:43:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230130AbjDKRjT (ORCPT
+        with ESMTP id S229703AbjDKRn4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 13:39:19 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA58665BA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:39:05 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id s8so5074845wmo.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 10:39:05 -0700 (PDT)
+        Tue, 11 Apr 2023 13:43:56 -0400
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2109.outbound.protection.outlook.com [40.107.223.109])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 697624C1D;
+        Tue, 11 Apr 2023 10:43:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DKOmZpMIafwVD9SqIMKmEFuhXQcuPfh4gQt2MKpKJTyKfUP6xT2gu0orK3T+W0dRlDFwGfLNyUadzt/OyAlUADNltadp101HQYh8EREbHzkyLAgNRsa8e3Y9vO/Yw1qzIGDsquQs+NUxMutKx65ps131qkgkqbVg0QXqc3gICHJn7MNtZFJENKLJZfy98+qmFPSKW9XCAoKtljsAYY2CJRYjAqgw6oBSvK0X7ESPvlR6Hiy/PgFAE5K6OFQPwgGsaHmH+CaYwPqITt4toQu+pYMHnfAp0gjcENGPJhlACx0mge63dQJvh1qRUblSVsQZ/AK6ZYFLMMB5PP+2mZjJyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FTThCp7diPj0G0CkPEZ1Hprp9i3GNg0w6hwWPy296nI=;
+ b=Duypa6AO2LoVOHs1a8E+Ba/+Z/SFqV1VqgSK5rJXDsyi7pEeA9674QJrFFQsztBkDXzMifOZpbSL55lsNg7Gyy8CUSlb6EdlmF/ZF8RClJRucal615iocvrma+GZb2Ph91HFG3qTjlwueIu2Z4TdLcalbvuqnnRnH66/bJGRibJ92A04zdTCh1cuyDi13GH0cbCEvPeEYURjg1nft8iC4eIvUi22ExLiO7Zt2KPa3uE8qJuO0cyMAdyXUwE59SfMVYuqGwPQFbEfKB7Hq5o6G5fB+tHbIFl9mVSyECc/W5bMTG4PiV2b/RBTCcRROwYTld/CUyIysFCUe8UfP1BjwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=corigine.com; dmarc=pass action=none header.from=corigine.com;
+ dkim=pass header.d=corigine.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681234744;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zYhbwOdBd3vMxKKBbYYrqI16ZcFTfZ8NDiAcQOEPvvg=;
-        b=V5kjk/z8OjMoh8qlAAJbfNt/7r5VaoXEnhLYPoeAV7ijJHAcUNaA85q6iKLYfw7IHr
-         u08GVN2wvrKwA9sy9iw+cb0HFnuAOTGp+qkHtfjkyXyfEKzUAMCBk7lPQ/x4633FK7P/
-         xZCg4A+lWaNh2RZM0JlNUgS0Lr3tjCkZxKPNhdWLhGLh2DbOGDuqIoUIKr4y5w+jHBje
-         LbmH5kgISlg1AGHC5UTsdLy+8fKEcPqiR7+p1TZQRKZxxyuwNeGkWwG64vVfTmdtE0V0
-         eoDu0JS70rT5BbrPzIVxGF8sQzFhXHkd1Wgk+o0hUA/IPpenHiA50dK2wTon6bC9pjmp
-         MiDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681234744;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zYhbwOdBd3vMxKKBbYYrqI16ZcFTfZ8NDiAcQOEPvvg=;
-        b=L4DDRLKtXlPWn0OdJyoReeQ8YTPW1TJhG3aQNwIIhtdbAyJrQdmW8lAtRoy0e2ybna
-         K9dNRdKYhgd99I3/gWArJxf1fiHZlvak3DpBq/TEjUVwfwfzirguJrzYkcfZTtg0RElp
-         ktrVc5zN13JSD8VeH/gGN0RYSlFmhAjw4z8b3vL64fcoRuQCcMxeofANzTz2aeTidLio
-         uvLvu7YJm+GiSNr5F2x1kRi9pnUgfz4q1c6T5D9oknph860Tl4RObBCW1sgdwIJrcgpi
-         3/vccwNVtwSu/sZulckNOvpzthztmi1e04NL8Nja2Jpp9RPz7HoEVOP9Pzz6vD+K2xCg
-         lqbw==
-X-Gm-Message-State: AAQBX9ewyc8yOD9KkAlNGaAHcghaMMRdB5jitwAw6o2hvHtPuioc81cR
-        svNzwbeZXYfPfwNM1V3OcOza2IN+DqSKp2DZaz2veA==
-X-Google-Smtp-Source: AKy350Znyu1IvWROumlxai26nS+blIGNiWtQgPioqndo5D6ZQhJxK6Q/bngg+L8knrXBrCXblcPDGOtlhttj5QaVPv8=
-X-Received: by 2002:a7b:c7d0:0:b0:3ed:7664:6d7b with SMTP id
- z16-20020a7bc7d0000000b003ed76646d7bmr889640wmk.8.1681234743849; Tue, 11 Apr
- 2023 10:39:03 -0700 (PDT)
+ d=corigine.onmicrosoft.com; s=selector2-corigine-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FTThCp7diPj0G0CkPEZ1Hprp9i3GNg0w6hwWPy296nI=;
+ b=KYkUT8lxUjDCX/62KV0OuH/rqNpNFHnjwgkiyhicGmcRw6Wh1f2NmstnFbSVaU6A2FRwn4RaGmOPeAOBRxGf/6ElU4oLnsCNSOP+TsVLB1LT8Oiye6qaB64kJxrG85r+53cQDMjNjfBceCjR7ePGgVKhLqlJrgov3ku2dVd5UO0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=corigine.com;
+Received: from PH0PR13MB4842.namprd13.prod.outlook.com (2603:10b6:510:78::6)
+ by MW5PR13MB5995.namprd13.prod.outlook.com (2603:10b6:303:1cc::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6277.36; Tue, 11 Apr
+ 2023 17:43:50 +0000
+Received: from PH0PR13MB4842.namprd13.prod.outlook.com
+ ([fe80::89d1:63f2:2ed4:9169]) by PH0PR13MB4842.namprd13.prod.outlook.com
+ ([fe80::89d1:63f2:2ed4:9169%5]) with mapi id 15.20.6277.038; Tue, 11 Apr 2023
+ 17:43:50 +0000
+Date:   Tue, 11 Apr 2023 19:43:39 +0200
+From:   Simon Horman <simon.horman@corigine.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        bhupesh.sharma@linaro.org, wens@csie.org, jernej.skrabec@gmail.com,
+        samuel@sholland.org, mturquette@baylibre.com,
+        peppe.cavallaro@st.com, alexandre.torgue@foss.st.com,
+        joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
+        richardcochran@gmail.com, linux@armlinux.org.uk, veekhee@apple.com,
+        tee.min.tan@linux.intel.com, mohammad.athari.ismail@intel.com,
+        jonathanh@nvidia.com, ruppala@nvidia.com, bmasney@redhat.com,
+        andrey.konovalov@linaro.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, ncai@quicinc.com,
+        jsuraj@qti.qualcomm.com, hisunil@quicinc.com, echanude@redhat.com
+Subject: Re: [PATCH net-next v3 08/12] net: stmmac: Pass stmmac_priv in some
+ callbacks
+Message-ID: <ZDWcSxNivNUHyDOR@corigine.com>
+References: <20230331214549.756660-1-ahalaney@redhat.com>
+ <20230331214549.756660-9-ahalaney@redhat.com>
+ <ZChIbc6TnQyZ/Fiu@corigine.com>
+ <20230407173453.hsfhbr66254z57ym@halaney-x13s>
+ <20230410212422.2rztlqspw5vjtb4d@halaney-x13s>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230410212422.2rztlqspw5vjtb4d@halaney-x13s>
+X-ClientProxiedBy: AS4P190CA0005.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5de::17) To PH0PR13MB4842.namprd13.prod.outlook.com
+ (2603:10b6:510:78::6)
 MIME-Version: 1.0
-References: <20230411072840.2751813-1-bhupesh.sharma@linaro.org>
- <20230411072840.2751813-3-bhupesh.sharma@linaro.org> <9130c1cb-4081-b21c-7c1b-2e0c9879e66a@linaro.org>
-In-Reply-To: <9130c1cb-4081-b21c-7c1b-2e0c9879e66a@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 11 Apr 2023 23:08:52 +0530
-Message-ID: <CAH=2NtzuN-0qgm7Hn6aJN+ZSRROFna09SHThVFbfKGVdsLzNWg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: Add base qrb4210-rb2 board dts
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-        DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR13MB4842:EE_|MW5PR13MB5995:EE_
+X-MS-Office365-Filtering-Correlation-Id: b480b3a7-a92c-4615-8585-08db3ab44f0e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: vYgVz4fr08fEhb3eklGSrGNH6bWmLehMNl+4AWqJYoW+in5wzLV0+J+3A3a6XXV1cv27FZJGBGNHEWZB3rOWWl0tYSpTwcVIxSFc4aUe9n4dblk345o8MsowJKdLTSD0oqBmTI5XI4PeY34n9aKW1c8+GeA9u7ImUwLPTM0Typvc6y39AgEWAQvkRV99paptyfBUIt7PrxdReRzVglCXRpIUtIui1vgopoDAMzsITk8U2XCt4zuSvBlyelgfKW9I/WSZOp3hbQHaSRelAJ5XisB5hvtJ05hICm1mv/N6pjM/Sx3xRTlSd3r5nJpfObSY4PuhxYi6ieOB3vNN4fAB/s5MNWggHPN2GZEzKT89p3sOm/N/IvxaI2TsruRDUAJf26ZTrmWPlJaZzJxe8SAX/1ghh9Odo2fvIyQ2jzeaZaJTtQE9aelcvMJ5eEJBKtfwPRCHaCksK5AvOxfODGTNsvOOzbV9kuj1HjIuV4gxkyoU2E5jTWmsHthldrPn6CiYy5z5z9z7NqdOXNbrsPeyNNSvcQ8eo/JAA3DS5KZmyjU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR13MB4842.namprd13.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(346002)(39850400004)(366004)(396003)(136003)(451199021)(36756003)(44832011)(7406005)(2906002)(5660300002)(7416002)(8936002)(86362001)(38100700002)(8676002)(966005)(6512007)(6486002)(6666004)(6506007)(478600001)(2616005)(186003)(66946007)(41300700001)(66556008)(66476007)(4326008)(6916009)(316002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?CUNX1cJ4HiSl1glHSAfvUlGpO45kduezSJR8Lggx5VImC2DjhG94itkhdhqr?=
+ =?us-ascii?Q?EqOr9Bho7YiVUBUbidlWcPcEFtz892UMK9WVW7XRbNSQsq/sFT4DuHjff0oy?=
+ =?us-ascii?Q?I7Xo3+sUE9L3c09sgLLuVQ+BR6N/xPXwJwxvqtI+VtfPNNk9zv5y4/74c4Jp?=
+ =?us-ascii?Q?4/x0SRIK5shr0JpY2g991uFgAQ4rFiRduzpFM9yQIqGkpyGyKSaBKwA2IKAC?=
+ =?us-ascii?Q?fxSaxG5I1liOAcdCUbmz0A6kQaReCDKzmP7njSUwV7AIfql7Xjzjk5JbPZfR?=
+ =?us-ascii?Q?OTm0dP0XynVX2lPcDsx9JJewYpyQvEE5LoB/4/Bry5BQUfVwdU/MoD2Qg1Nh?=
+ =?us-ascii?Q?uK2U61xC6oOUdkG8YyvbUMtP7NEi0m4atri1ojlYFDv9EsXWbHz3SAcEtAnp?=
+ =?us-ascii?Q?HTpyZSZJtqmFLPO6oofRitckn/vSTKs7dl5/kinKH3DOQVNlgrUPHItevKD+?=
+ =?us-ascii?Q?0chCM6sWofXPcpcTcZTwYYs33yk7AWDjrmMwmzMRWpQwu4P+Gw0jssg3EFi7?=
+ =?us-ascii?Q?bl2M1BzFzinMMWCyeDKtwQQQKX5cx5/PrKvJNwqExODb3RINEx7FuqByKxPd?=
+ =?us-ascii?Q?3QXPtTQAxoW0a6fykpb+xUKNyy0QRzlIk4/Db/yajyURdEqmHCfZyPxJQ07Y?=
+ =?us-ascii?Q?uoOaWwpSAlxioeiQWhX7cN8SIlyuzO0QO0C4alwKPg6rMesory6rIUdo6p7O?=
+ =?us-ascii?Q?squCNIqwO/kW+QC3mQrzo69cQsI/Wx+GmkTWyDTwldU1sAnbC+stf018ZvA9?=
+ =?us-ascii?Q?KfpBoCM1cWZKW24r4DURi4Cfo4hETGjOB5K5CukSvgcValqXzmNyxF6AXuN3?=
+ =?us-ascii?Q?5qokS4pEP+Lgbbzj/Gx0rRnD0UyLNf50U4DIHrdpR2AJ+85l4ds055pYwmYu?=
+ =?us-ascii?Q?yfFOv7AEWeibYbaQlTpqwKAs93BsWscM4gAxgWYmBL7bQ7n0nIL9X68SMYMt?=
+ =?us-ascii?Q?2V2UUaRP7g+39WbiSdk/dbER4tKFKhsluIUiqYZB0YtDyJ0JM+5jX347LREA?=
+ =?us-ascii?Q?M5kPtp9Vctlde6IP6MCFv54fYeNDxvc6gT33zXwFW0kxbd21rz7eKuRPviUm?=
+ =?us-ascii?Q?jO9veo1jBFsLv2pv2ccIGKA25M4XvEHp2qW8VLqdGSq1pcwoj6+VyRU7Ddck?=
+ =?us-ascii?Q?GuOQbl7lpys9m1zUSx8UHjW3ElWaI4mVF/86DWjxvVVgatfhCeOKp1heqTws?=
+ =?us-ascii?Q?MdekN3l6EyqnpVbJpIib1tsW/hoeTwOI27oxU1OwdzjEyMG5+vu0nD8kXHV4?=
+ =?us-ascii?Q?LsJEUSd8Yiy9NI0UoBvfBgkcFT3YX8VPPCItCcffCqkQZDn2k6wpAw/6mLzs?=
+ =?us-ascii?Q?yiw0I53hbct8BmGgYqg1bVaGJwpcvnsc53Bag44/iF+Bb2yET3+zzabsnYfg?=
+ =?us-ascii?Q?fqgoGjOz1vR4SEorvnCs/xIx9ViU++3HyVkvmcLcJML2fNerG30XDvX0+FHt?=
+ =?us-ascii?Q?dNTM6kEY96rvrhcxQ94ajGyI1CGDwB4qYnf54MT2yIcpDsmouxoY5gu/oYEw?=
+ =?us-ascii?Q?mL3Lv5QcAeP9VyDW61j6ZtoYEYr/6UE4sYXTkhmhdKNeOtOXlq+E+3zaveCX?=
+ =?us-ascii?Q?ictyRYORppVvmabY7O23XqwG/3cF93gXJcmWc3XSQkhBRBgVJzK26zywggxV?=
+ =?us-ascii?Q?gG+Qm0xIS8C6ifWdvfZz4mcl0svyPSg0oMlLk82N92oXN0cqcc+uvXznZiyU?=
+ =?us-ascii?Q?/hIhbw=3D=3D?=
+X-OriginatorOrg: corigine.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b480b3a7-a92c-4615-8585-08db3ab44f0e
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR13MB4842.namprd13.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Apr 2023 17:43:50.1006
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: fe128f2c-073b-4c20-818e-7246a585940c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: R1rNNDEZTOMkOzp/UmG2MGW5S4laPu9dhOffChMPHCcUowfNm4qgElAZDhG53yjCqQipilbLtNOCp34bTd4Q64jqd+Qr2+p792CGXgAt44k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR13MB5995
+X-Spam-Status: No, score=-0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,157 +134,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 11 Apr 2023 at 18:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> On 11.04.2023 09:28, Bhupesh Sharma wrote:
-> > Add DTS for Qualcomm qrb4210-rb2 board which uses SM4250 SoC.
-> >
-> > This adds debug uart, emmc, uSD and tlmm support along with
-> > regulators found on this board.
-> >
-> > Also defines the 'xo_board' and 'sleep_clk' frequencies for
-> > this board.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile        |   1 +
-> >  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 223 +++++++++++++++++++++++
-> >  2 files changed, 224 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index e0e2def48470..d42c59572ace 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -74,6 +74,7 @@ dtb-$(CONFIG_ARCH_QCOM)     += qcs404-evb-1000.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += qcs404-evb-4000.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += qdu1000-idp.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += qrb2210-rb1.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      += qrb4210-rb2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += qrb5165-rb5.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += qrb5165-rb5-vision-mezzanine.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += qru1000-idp.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > new file mode 100644
-> > index 000000000000..c9c6e3787462
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > @@ -0,0 +1,223 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) 2023, Linaro Limited
-> > + */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include "sm4250.dtsi"
-> > +
-> > +/ {
-> > +     model = "Qualcomm Technologies, Inc. QRB4210 RB2";
-> > +     compatible = "qcom,qrb4210-rb2", "qcom,qrb4210", "qcom,sm4250";
-> > +
-> > +     aliases {
-> > +             serial0 = &uart4;
-> > +     };
-> > +
-> > +     chosen {
-> > +             stdout-path = "serial0:115200n8";
-> > +     };
-> > +
-> > +     vph_pwr: vph-pwr-regulator {
-> > +             compatible = "regulator-fixed";
-> > +             regulator-name = "vph_pwr";
-> > +             regulator-min-microvolt = <3700000>;
-> > +             regulator-max-microvolt = <3700000>;
-> > +
-> > +             regulator-always-on;
-> > +             regulator-boot-on;
-> > +     };
-> > +};
-> > +
-> > +&qupv3_id_0 {
-> > +     status = "okay";
-> > +};
-> > +
-> > +&rpm_requests {
-> > +     regulators {
-> > +             compatible = "qcom,rpm-pm6125-regulators";
-> > +
-> > +             vdd-s1-supply = <&vph_pwr>;
-> > +             vdd-s2-supply = <&vph_pwr>;
-> > +             vdd-s3-supply = <&vph_pwr>;
-> > +             vdd-s4-supply = <&vph_pwr>;
-> > +             vdd-s5-supply = <&vph_pwr>;
-> > +             vdd-s6-supply = <&vph_pwr>;
-> > +             vdd-s7-supply = <&vph_pwr>;
-> > +             vdd-s8-supply = <&vph_pwr>;
-> > +             vdd-s9-supply = <&vph_pwr>;
-> > +             vdd-s10-supply = <&vph_pwr>;
-> > +
-> > +             vdd-l1-l7-l17-l18-supply = <&vreg_s6a_1p352>;
-> > +             vdd-l2-l3-l4-supply = <&vreg_s6a_1p352>;
-> > +             vdd-l5-l15-l19-l20-l21-l22-supply = <&vph_pwr>;
-> > +             vdd-l6-l8-supply = <&vreg_s5a_0p848>;
-> > +             vdd-l9-l11-supply = <&vreg_s7a_2p04>;
-> > +             vdd-l10-l13-l14-supply = <&vreg_s7a_2p04>;
-> > +             vdd-l12-l16-supply = <&vreg_s7a_2p04>;
-> > +             vdd-l23-l24-supply = <&vph_pwr>;
-> > +
-> > +             vreg_s5a_0p848: s5 {
-> I think going with pmicname_regulatorname (e.g. pm6125_s5) here
-> and adding:
->
-> regulator-name = "vreg_s5a_0p848"
->
-> would make this more maintainable.
+On Mon, Apr 10, 2023 at 04:24:22PM -0500, Andrew Halaney wrote:
+> On Fri, Apr 07, 2023 at 12:34:53PM -0500, Andrew Halaney wrote:
+> > On Sat, Apr 01, 2023 at 05:06:21PM +0200, Simon Horman wrote:
+> > > On Fri, Mar 31, 2023 at 04:45:45PM -0500, Andrew Halaney wrote:
+> > > > Passing stmmac_priv to some of the callbacks allows hwif implementations
+> > > > to grab some data that platforms can customize. Adjust the callbacks
+> > > > accordingly in preparation of such a platform customization.
+> > > > 
+> > > > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> > > 
+> > > ...
+> > > 
+> > > >  #define stmmac_reset(__priv, __args...) \
+> > > > @@ -223,59 +240,59 @@ struct stmmac_dma_ops {
+> > > >  #define stmmac_dma_init(__priv, __args...) \
+> > > >  	stmmac_do_void_callback(__priv, dma, init, __args)
+> > > >  #define stmmac_init_chan(__priv, __args...) \
+> > > > -	stmmac_do_void_callback(__priv, dma, init_chan, __args)
+> > > > +	stmmac_do_void_callback(__priv, dma, init_chan, __priv, __args)
+> > > 
+> > > Hi Andrew,
+> > > 
+> > > Rather than maintaining these macros can we just get rid of them?
+> > > I'd be surprised if things aren't nicer with functions in their place [1].
+> > > 
+> > > f.e., we now have (__priv, ..., __priv, ...) due to a generalisation
+> > >       that seems to take a lot more than it gives.
+> > > 
+> > > [1] https://lore.kernel.org/linux-arm-kernel/ZBst1SzcIS4j+t46@corigine.com/
+> > > 
+> > 
+> > Thanks for the pointer. I think that makes sense, I'll take that
+> > approach for these functions (and maybe in a follow-up series I'll
+> > tackle all of them just because the lack of consistency will eat me up).
+> > 
+> 
+> I tried taking this approach for a spin, and I'm not so sure about it
+> now!
+> 
+> 1. Implementing the functions as static inline requires us to know
+>    about stmmac_priv, but that's getting into circular dependency land
+> 2. You could define them in hwif.c, but then they're not inlined
+> 3. There's still a good bit of boilerplate that's repeated all over
+>    with the approach. Ignoring 1 above, you get something like this:
+> 
+> static inline int stmmac_init_chan(struct stmmac_priv *priv,
+> 				   void __iomem *ioaddr,
+> 				   struct stmmac_dma_cfg *dma_cfg, u32 chan)
+> {
+> 	if (priv->hw->dma && priv->hw->dma->init_chan) {
+> 		priv->hw->dma->init_chan(priv, ioaddr, dma_cfg, chan);
+> 		return 0;
+> 	}
+> 	return -EINVAL;
+> }
+> 
+> that is then repeated for every function... which is making me actually
+> appreciate the macros some for reducing boilerplate.
+> 
+> Am I suffering from a case of holiday brain, and 1-3 above are silly
+> points with obvious answers, or do they make you reconsider continuing
+> with the current approach in hwif.h?
 
-Ok.
+I'm about to embark to the holiday brain zone.
 
-> > +&sdhc_1 {
-> > +     vmmc-supply = <&vreg_l24a_2p96>;
-> > +     vqmmc-supply = <&vreg_l11a_1p8>;
-> > +     no-sdio;
-> > +     non-removable;
-> > +
-> > +     status = "okay";
-> > +};
-> > +
-> > +&sdhc_2 {
-> > +     cd-gpios = <&tlmm 88 GPIO_ACTIVE_HIGH>; /* card detect gpio */
-> This comment is still pretty much spam.
-
-Ok.
-
-> > +     vmmc-supply = <&vreg_l22a_2p96>;
-> > +     vqmmc-supply = <&vreg_l5a_2p96>;
-> > +     no-sdio;
-> > +
-> > +     status = "okay";
-> > +};
-> > +
-> > +&sleep_clk {
-> > +     clock-frequency = <32000>;
-> > +};
-> > +
-> > +&tlmm {
-> > +     gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
-> > +                            <49 1>, <52 1>, <54 1>,
-> > +                            <56 3>, <61 2>, <64 1>,
-> > +                            <68 1>, <72 8>, <96 1>;
-> > +};
-> > +
-> > +&uart4 {
-> > +     status = "okay";
-> > +};
-> This is not the correct SE for the production board. People
-> booting this will get a tz bite.
-
-Hmm.. I can swap it, but the problem is that it's as the SE for my RB2
-board, so I would rather provide instructions in the cover letter as to how
-to swap it (say for a production board) and recompile the dts.
-
-Otherwise, it might break the debug uart console for even the test
-folks @ Qualcomm.
-I will send a v4 accordingly.
-
-Thanks,
-Bhupesh
+But before I do I wanted to acknowledge your concerns and that, yes,
+it may be easier said than done.
