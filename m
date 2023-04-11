@@ -2,141 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6424D6DE677
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54F776DE681
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:35:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbjDKVdo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 17:33:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48724 "EHLO
+        id S229840AbjDKVfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 17:35:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjDKVdn (ORCPT
+        with ESMTP id S229902AbjDKVfI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 17:33:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB3330F5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 14:32:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1681248778;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+t+CxMKTyH/KF2IDw9V8sVAPX3jzq2X9B3VftBWKIM8=;
-        b=ci+HL+FCsQtt9Ka7u4mygfLU7vPVDQoO0IeVzLDjkMtw4E0R781kyudNQDJOXnzMJcE5FP
-        F75gLJmZ6+3F6eJgw0Ua0RnriBo1OPIfpOE7L977RSXq4Mz7ZWPBflin9m/FIAZprMD+Gb
-        hzL8QyUJaIf5ZhRdOFauawH+f6F8D38=
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-uJ4o25u7P8ajBY5aPrCN7g-1; Tue, 11 Apr 2023 17:32:56 -0400
-X-MC-Unique: uJ4o25u7P8ajBY5aPrCN7g-1
-Received: by mail-oa1-f69.google.com with SMTP id 586e51a60fabf-17fd0d597dcso20516526fac.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 14:32:56 -0700 (PDT)
+        Tue, 11 Apr 2023 17:35:08 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2369744A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 14:35:03 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id m4so11980572lfj.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 14:35:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681248901; x=1683840901;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vgjk5+7IjN8Jw3X+GOTozhyftZCcRJijaSMlBqwvNWk=;
+        b=WThnyX2+GwrspIZFSKQDpOX5ESi2oznurZGDtC/OQB6/11eIajgq27TLC0YuU5g8/m
+         B9rmC1mW4cP4jCQtkdeC2FIiQJPkjnxiwv2CWZ8Wsms9tKlWmKHgkPnZa6/ZI8JrDp2w
+         gzFp6KyiKU/n1ZL/EHcGfzqmOQyfDzX0HMOrJ6ElBFvVLZ7sB3MUYGKr6wCbdcC5nk3q
+         FQrBC6M1bPPDDNZ2Y740JTRmm3mXATVFc2QP+2GtPFWtxue6XQOgKKgrAEXVmMO4Q4re
+         TnnO7wz2BT61Io+P6QR9ppnBIHhGvM9Vy3cgsihmW+pQ1MLAioqevNMrDRlZCOLNf75C
+         oFRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681248776;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+t+CxMKTyH/KF2IDw9V8sVAPX3jzq2X9B3VftBWKIM8=;
-        b=K3hMONs6GMhiPAvkkNA0WjhTCucZCwDMsooYaRbeuvzwXNZeskK13F3wFIm10wWmFI
-         0XBixQxQcVNZJoivcIx3o5ZGDgTfroHuA/sPa78K37lIO4SUIcfIbZsq49mc0GWRBo37
-         T8iysDFy0rYN91vXrLU5HclRacadtYggVfzJTDuBiLgoqq9ozTgQn7IjdmQFT7+wU3Su
-         gEDjQzPunAwg2IqqYPnRo9Mv7he34i7MpLBBzeX0wQSfbKF/DZlse9vFNeV4UOArebiT
-         0qRngwW/MB9tyL4UFXgDpGLx3tt8S0rspbySbAAozKxLWM/ow/yO7Al2IjT64Cu2NHrK
-         vpAw==
-X-Gm-Message-State: AAQBX9eHrheD9M9i3elLTMuqoATkemcF0xjFzWpN7RPtmN7b71eUt7Mg
-        OzoUXu5lQFXbWaWroUGlEmCbf0iZyjlVDzcGi8rzEGDpqN989TkLhP44QTtArz+v+8FFNJ4w34m
-        ZWq1jx4p5RCFGyjDdPMatzROdQA==
-X-Received: by 2002:a05:6870:968a:b0:17e:e1ac:2f09 with SMTP id o10-20020a056870968a00b0017ee1ac2f09mr7337635oaq.47.1681248775876;
-        Tue, 11 Apr 2023 14:32:55 -0700 (PDT)
-X-Google-Smtp-Source: AKy350YKCSvz7scMdahh0PoFCkZ798gWjD4Hs7SmFZvehvpUk2bQfOgV9GhWwVgZIxZfad9VMP7s/g==
-X-Received: by 2002:a05:6870:968a:b0:17e:e1ac:2f09 with SMTP id o10-20020a056870968a00b0017ee1ac2f09mr7337629oaq.47.1681248775663;
-        Tue, 11 Apr 2023 14:32:55 -0700 (PDT)
-Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id tl19-20020a0568718a1300b0017f84f81f3csm5506089oab.52.2023.04.11.14.32.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 14:32:55 -0700 (PDT)
-Date:   Tue, 11 Apr 2023 16:32:52 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sa8155p-adp: Make compatible the first
- property
-Message-ID: <20230411213252.xdgt57msr5lwnbrf@halaney-x13s>
-References: <20230411203144.471192-1-ahalaney@redhat.com>
- <88d41729-86be-95cb-2fda-1b809f07ed6b@linaro.org>
+        d=1e100.net; s=20210112; t=1681248901; x=1683840901;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vgjk5+7IjN8Jw3X+GOTozhyftZCcRJijaSMlBqwvNWk=;
+        b=m/BjdF7LidLiJIkydxi9c4/i8RYtJ/DTe1wt9JYZbFdcUc0mTguQKB0NGGpKrqYCKy
+         3H7nwODTwE1f9QLHsQjdyau19bz/IiFgwGxDsVaJaBFpz5EfeNEfYZbc6uFjJ/S20Jwr
+         MWx6D5BNmdh27pJkff5pYuuxg/QG3nzpJ9qBeCkCI+tXyLepAoxC5j1IOwdF8ejVrUil
+         dQGLiFyBy7dHZXXvLGKxQYp13yPCQTJvEyH2Q4psLMTWik35y9g28ztZA5S7A2QD4XiS
+         uyHFOkKMWhOSVQ/yCXUK1UdXBC0/YhSLsmU+hA/777LAsnNoZcuzEJQPGghNCIjaeztW
+         v4uQ==
+X-Gm-Message-State: AAQBX9f42l7BK8PzWXfNMQjxQxdW4oeUynuGF34t0i8mrdUo7WzYwWQX
+        ijgYIGVbbsn5wj376NEqIH9kKA==
+X-Google-Smtp-Source: AKy350bd1PrnBQbb66BSBlCiFWEHWfiNqi7ZGdlXv9ZyKjsQ2ZAvnfRuDJ6wPwJyPzzuziqRfAcgIw==
+X-Received: by 2002:ac2:443c:0:b0:4ea:eadf:2a53 with SMTP id w28-20020ac2443c000000b004eaeadf2a53mr4534002lfl.63.1681248901323;
+        Tue, 11 Apr 2023 14:35:01 -0700 (PDT)
+Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
+        by smtp.gmail.com with ESMTPSA id q29-20020ac2515d000000b004ea018bb8f7sm2695471lfd.77.2023.04.11.14.35.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Apr 2023 14:35:00 -0700 (PDT)
+Message-ID: <a97aacb4-e880-9665-4837-7af207f0ac77@linaro.org>
+Date:   Tue, 11 Apr 2023 23:34:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <88d41729-86be-95cb-2fda-1b809f07ed6b@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way to
+ enable unused clock cleanup
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
+ <20230316225803.GA4036689-robh@kernel.org>
+ <62533d5a-f39a-0806-b4d9-932e2af6beef@linaro.org>
+ <5601e0edc19dc03d0fc516f9ffe4d1aa.sboyd@kernel.org>
+ <2a379401-fe87-9e30-5449-513dd23c52f5@linaro.org>
+ <422abc8b-5c01-238b-7793-212597dbffc8@linaro.org>
+In-Reply-To: <422abc8b-5c01-238b-7793-212597dbffc8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 10:44:36PM +0200, Konrad Dybcio wrote:
+
+
+On 7.04.2023 22:17, Konrad Dybcio wrote:
 > 
 > 
-> On 11.04.2023 22:31, Andrew Halaney wrote:
-> > As stated at the below link in another review, compatible is always the
-> > first property.
-> > 
-> > Follow suit here to avoid copying incorrectly in the future.
-> > 
-> > Link: https://lore.kernel.org/netdev/20230331215804.783439-1-ahalaney@redhat.com/T/#ma76b4116bbb9e49ee4bcf699e40935d80965b3f3
-> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> > ---
-> Thanks for this patch!
-> >  arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 5 ++---
-> >  1 file changed, 2 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> > index 459384ec8f23..8c773b856eb1 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-> > @@ -351,19 +351,18 @@ &ethernet {
-> >  	max-speed = <1000>;
-> >  
-> >  	mdio {
-> > +		compatible = "snps,dwmac-mdio";
-> >  		#address-cells = <0x1>;
-> >  		#size-cells = <0x0>;
-> Since you're already touching this file, can you make the
-> -cells values decimal..
-> >  
-> > -		compatible = "snps,dwmac-mdio";
-> > -
-> >  		/* Micrel KSZ9031RNZ PHY */
-> >  		rgmii_phy: phy@7 {
-> > +			compatible = "ethernet-phy-ieee802.3-c22";
-> >  			reg = <0x7>;
-> >  
-> >  			interrupt-parent = <&tlmm>;
-> ..remove the useless interrupt-parent..
-> 
-> >  			interrupts-extended = <&tlmm 124 IRQ_TYPE_EDGE_FALLING>; /* phy intr */
-> ...and the similarly not very useful comment here?
+> On 6.04.2023 16:44, Konrad Dybcio wrote:
+>>
+>>
+>> On 17.03.2023 19:20, Stephen Boyd wrote:
+>>> Quoting Konrad Dybcio (2023-03-16 17:31:34)
+>>>>
+>>>> On 16.03.2023 23:58, Rob Herring wrote:
+>>>>> On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
+>>>>>>  
+>>>>>> +  qcom,clk-disable-unused:
+>>>>>> +    type: boolean
+>>>>>> +    description:
+>>>>>> +      Indicates whether unused RPM clocks can be shut down with the common
+>>>>>> +      unused clock cleanup. Requires a functional interconnect driver.
+>>>>>
+>>>>> I don't think this should be QCom specific. Come up with something 
+>>>>> common (which will probably have some debate). 
+>>>> Generally the opposite (ignoring unused clocks during the cleanup) is
+>>>> the thing you need to opt into.
+>>>>
+>>>> I can however see how (especially with the focus on not breaking things
+>>>> for older DTs) somebody else may also decide to only allow them to be
+>>>> cleaned up conditionally (by marking the clocks that were enabled earlier
+>>>> as enabled in Linux OR not addding clk.flags |= CLK_IGNORE_UNUSED) as we
+>>>> do here.
+>>>>
+>>>> Stephen, Rob, would `clk-disable-unused` be a fitting generic property
+>>>> name for that? Should we also think about `clk-ignore-unused` as a
+>>>> clock-controller-specific alternative to the CCF-wide clk_ignore_unused
+>>>> cmdline?
+>>>>
+>>>
+>>> There are multiple threads on the list about disabling unused clks.
+>>> Moving the decision to disable unused clks to a DT property is yet
+>>> another approach. I'd rather not do that, because it really isn't
+>>> describing the hardware configuration. If anything, I'd expect the
+>>> property to be describing which clks are enabled by the firmware and
+>>> then leave the decision to disable them because they're unused up to the
+>>> software.
+>> After some more thinking, I realized that this could be made opt-in
+>> simply with driver_data..
+>>
+>> WDYT?
+> ..on a re-evaluation, obviously not a great idea.. Old DTBs will not
+> be happy about that.
+Another idea would be to yank out the not-very-useful "qcom,rpmcc"
+fallback compatible and present .is_enabled etc. when it's absent..
+
+Directly checking for the interconnect handle to rpmcc is not possible,
+as interconnect requires rpmcc.. And then somebody's interconnect
+driver may not be "good enough" (like 8996 and pre-6.3 DTs).
+
+Konrad
 > 
 > Konrad
-> 
-
-Gladly, I'll wait a few days in case someone points something else out
-before sending a v2 patch series tackling each of those little bits.
-
-Thanks,
-Andrew
-
-> >  			device_type = "ethernet-phy";
-> > -			compatible = "ethernet-phy-ieee802.3-c22";
-> >  		};
-> >  	};
-> >  };
-> 
-
+>>
+>> Konrad
