@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 309D86DDC96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 15:47:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E588A6DDC99
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 15:47:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbjDKNrX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 09:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33758 "EHLO
+        id S230311AbjDKNrZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 09:47:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230345AbjDKNrW (ORCPT
+        with ESMTP id S230365AbjDKNrY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 09:47:22 -0400
+        Tue, 11 Apr 2023 09:47:24 -0400
 Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D84911BDA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:47:21 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id a29so9308369ljq.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:47:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAC31BCE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:47:22 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id be27so8660794ljb.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 06:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681220840;
+        d=linaro.org; s=google; t=1681220841;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7u3cWIrv9ii7tk7AluAyAc28Sz76nQ4EdYUWb/87faI=;
-        b=jFgb4agX4lazt4/ZszyG08ELsETbvW3xLfgM0i1ouStqSP+Y9JAqhQoEJTrvSt438F
-         FOmWYogsRPjMbzL6YUfgpUW1Olfo6C6I38OQq2hHrFm+L9c7NiEPB6YwEabMc2LJUOV9
-         o7cLSMREy8g3A5Dip9viKPO4t7XiVYL16IJ61tPrVmcLiyVbh2EPhaXzhuGgh1oL0Qzr
-         m83uDro7GKL2aLlOhS1O0j51QekunK/Ur2DUp9ICMDZLp+czYGbvaYNcFTLNlnGHqLA+
-         8R0gSWs4D0r3507poUVxpYLjxWckZBpSNqf+oaOPGYLS6mpBXZuyJdtyEDUTPOvaliHP
-         pZ1w==
+        bh=aMpFnRGQLpD0/uI8QbJICzvLZYwTAUaXXk9QdFEBIQM=;
+        b=Ih1pAVETpfX6vFjZzsrU0nhzd9ooOsv4UtGhKo1SJ6Wb6JpfMUiUXnjPv8nyHl3Lj0
+         RGYILeR9gOPvstCnLS7AEkDv+HSTXSrCX4TOGAkF52s074/+NzvsrofUDJqCXaFC+Kj4
+         /pI0SU/zWbwGfVanqnk8XLgfMoS3got5TfRnQ34NYJ1rYZzoYWjc5BKSiNMt9nlwFKfa
+         +biZlJH3jPZWiRnXEDefTGSYlIaB5jxFM1/dxJmuHFbpySiblP+5gNwo/whO3O5DI9j9
+         g4I1kZfgkEzmSJzsYaR+iCjHTzhxgrEDnUqtg9LLiiqbM1yOHjTGM/8mOkFO9ETPOh3Y
+         BJwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681220840;
+        d=1e100.net; s=20210112; t=1681220841;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7u3cWIrv9ii7tk7AluAyAc28Sz76nQ4EdYUWb/87faI=;
-        b=Q7XrvuMwxTilhCXJNgaaID/omk/Ohpdl8hh4u8zN0UxvlepySZLIk2Krr8+XwTKaxo
-         YHQTwY4JCw/afjTJdWoeugYzZTS0tJlZ2sEkSQgrYrIlehWIwZWA+xCEDbUCtVCg8Dq/
-         MO4ZfbmTl8mZ84FEVPIMZGVYL74oSh2+LH+hnpumIRcKk2wu1kHJimdCwyhj2Eos38ST
-         4iatZMH+7wGPH7FQ1RbR8/Ac1u/azu3r02lh3z271Pm5Yxm7kDGxber/XgsjMpLW5jj9
-         q/0esp8wOKIwKSGcFFJLWNdna0hytI0ZP7bzwaPfeV8+QA4NejerUEmHG0Xg2XTxokiP
-         p71g==
-X-Gm-Message-State: AAQBX9dZwAm68ScefsqBjDQ6erZ0Gii/uT9qZ/NmbbDW9DGctbgk01O9
-        vmtGc/vWgNhhN0QFeZdSmyahyQ==
-X-Google-Smtp-Source: AKy350YYkyug7myhwYEEqkIYfm6neRPDD8G+4mIaKDqjpoSh5zOv+O4G8T55cOewfN97R+ZEMXOsBw==
-X-Received: by 2002:a05:651c:86:b0:2a7:8544:1e71 with SMTP id 6-20020a05651c008600b002a785441e71mr1007706ljq.3.1681220840146;
-        Tue, 11 Apr 2023 06:47:20 -0700 (PDT)
+        bh=aMpFnRGQLpD0/uI8QbJICzvLZYwTAUaXXk9QdFEBIQM=;
+        b=q0gB36n2Db5kZwz5GeQkdnG3FwxclSinT2IiET52e85nQb83OWQKiGpfAFaNZMXuF6
+         xgS7a04jmrRH5IUeWIigo+fg3cvqBa1qu0KnlH71ygmkHTFYlI4ZQka3kpO4ppQC7mTt
+         6CbwO1Ksl5+/sfXoTbceL/H27wuAC+Qw2ROn1/vqvOw9sVsNtw0Z3LcL2/M4nYISliEV
+         G4zSdxyxYxtMm/Kk526ccVdXGFjekKYPB/l7bLZ7YMHsMmcQOoX1HahcAa+aCWwBmNw/
+         xiyMp7/ltjRgtuDyYwO9a5/gZZ/bkC3c53zLqnKNt048uy+8W8hdWA4GA5LSZchAeiOy
+         de8A==
+X-Gm-Message-State: AAQBX9ca4W82fqI5FRkOvCuD0h8dOXWAghu2cm/YOZCvk1T90gEQFKqh
+        EpJEaHrHCWNfHs52Gx52gse6fg==
+X-Google-Smtp-Source: AKy350ZdFm6JWgIVntvxvvw0BYNveQRYcDbYv7tm8DTFsufdMyXUGH5TtnPH3MCU6j6pcULbMWXcHA==
+X-Received: by 2002:a05:651c:86:b0:2a7:8544:1e71 with SMTP id 6-20020a05651c008600b002a785441e71mr1007719ljq.3.1681220841307;
+        Tue, 11 Apr 2023 06:47:21 -0700 (PDT)
 Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id c10-20020a2e680a000000b002a77583b718sm1245887lja.12.2023.04.11.06.47.19
+        by smtp.gmail.com with ESMTPSA id c10-20020a2e680a000000b002a77583b718sm1245887lja.12.2023.04.11.06.47.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 06:47:19 -0700 (PDT)
+        Tue, 11 Apr 2023 06:47:21 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 11 Apr 2023 15:47:15 +0200
-Subject: [PATCH v2 1/3] dt-bindings: power: qcom,rpmpd: Add SA8155P
+Date:   Tue, 11 Apr 2023 15:47:16 +0200
+Subject: [PATCH v2 2/3] soc: qcom: rpmhpd: Add SA8155P power domains
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230411-topic-hanaau-v2-1-fd3d70844b31@linaro.org>
+Message-Id: <20230411-topic-hanaau-v2-2-fd3d70844b31@linaro.org>
 References: <20230411-topic-hanaau-v2-0-fd3d70844b31@linaro.org>
 In-Reply-To: <20230411-topic-hanaau-v2-0-fd3d70844b31@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -70,11 +70,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681220837; l=1558;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1681220837; l=1539;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=oNW0CgFyxBXeievXT87JHE+KppSisz4HMgd5P1GQgyc=;
- b=1gOb3wAz8sBLrYX3/bS5JEeK4J5PuGFWkLeVjGnuGJoLuky+eOYnSAc6VULEQjLEUBTpPCf8JMUF
- Sh/t7bqlDncO5N7MseZ90ARv39biQHBUWccpuA55CBT4K+ihKTin
+ bh=aleVgKoikHUj3PFLGGlVddGgNibZMFZrpZpiNyXETRk=;
+ b=sTkfdoeJEh0DLv2zaqWJnb+oFxlftDT0WFj/i98DJa74JgErgzZhzI5waUUQ52rYEuoiWN5KaCsP
+ L1IDuRb0DIARcCWp8ANRzoBTScTDCf/bC6qqT3HnqCeX9OgOhRMr
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -86,47 +86,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a compatible for SA8155P platforms and relevant defines to the
-include file.
+Add the power domains exposed by RPMh in the Qualcomm SA8155P platform.
+Turns out they differ from SM8150.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
- include/dt-bindings/power/qcom-rpmpd.h                  | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/soc/qcom/rpmhpd.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-index afad3135ed67..f9c211a9a938 100644
---- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-+++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-@@ -29,6 +29,7 @@ properties:
-       - qcom,qcm2290-rpmpd
-       - qcom,qcs404-rpmpd
-       - qcom,qdu1000-rpmhpd
-+      - qcom,sa8155p-rpmhpd
-       - qcom,sa8540p-rpmhpd
-       - qcom,sa8775p-rpmhpd
-       - qcom,sdm660-rpmpd
-diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index 1bf8e87ecd7e..867b18e041ea 100644
---- a/include/dt-bindings/power/qcom-rpmpd.h
-+++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -90,6 +90,15 @@
- #define SM8150_MMCX	9
- #define SM8150_MMCX_AO	10
+diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
+index f20e2a49a669..63c35a32065b 100644
+--- a/drivers/soc/qcom/rpmhpd.c
++++ b/drivers/soc/qcom/rpmhpd.c
+@@ -342,6 +342,21 @@ static const struct rpmhpd_desc sm8150_desc = {
+ 	.num_pds = ARRAY_SIZE(sm8150_rpmhpds),
+ };
  
-+/* SA8155P is a special case, kept for backwards compatibility */
-+#define SA8155P_CX	SM8150_CX
-+#define SA8155P_CX_AO	SM8150_CX_AO
-+#define SA8155P_EBI	SM8150_EBI
-+#define SA8155P_GFX	SM8150_GFX
-+#define SA8155P_MSS	SM8150_MSS
-+#define SA8155P_MX	SM8150_MX
-+#define SA8155P_MX_AO	SM8150_MX_AO
++static struct rpmhpd *sa8155p_rpmhpds[] = {
++	[SA8155P_CX] = &cx_w_mx_parent,
++	[SA8155P_CX_AO] = &cx_ao_w_mx_parent,
++	[SA8155P_EBI] = &ebi,
++	[SA8155P_GFX] = &gfx,
++	[SA8155P_MSS] = &mss,
++	[SA8155P_MX] = &mx,
++	[SA8155P_MX_AO] = &mx_ao,
++};
 +
- /* SM8250 Power Domain Indexes */
- #define SM8250_CX	0
- #define SM8250_CX_AO	1
++static const struct rpmhpd_desc sa8155p_desc = {
++	.rpmhpds = sa8155p_rpmhpds,
++	.num_pds = ARRAY_SIZE(sa8155p_rpmhpds),
++};
++
+ /* SM8250 RPMH powerdomains */
+ static struct rpmhpd *sm8250_rpmhpds[] = {
+ 	[SM8250_CX] = &cx_w_mx_parent,
+@@ -519,6 +534,7 @@ static const struct rpmhpd_desc sc8280xp_desc = {
+ 
+ static const struct of_device_id rpmhpd_match_table[] = {
+ 	{ .compatible = "qcom,qdu1000-rpmhpd", .data = &qdu1000_desc },
++	{ .compatible = "qcom,sa8155p-rpmhpd", .data = &sa8155p_desc },
+ 	{ .compatible = "qcom,sa8540p-rpmhpd", .data = &sa8540p_desc },
+ 	{ .compatible = "qcom,sa8775p-rpmhpd", .data = &sa8775p_desc },
+ 	{ .compatible = "qcom,sc7180-rpmhpd", .data = &sc7180_desc },
 
 -- 
 2.40.0
