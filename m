@@ -2,85 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54F776DE681
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:35:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D8326DE68F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 11 Apr 2023 23:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229840AbjDKVfK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 17:35:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50704 "EHLO
+        id S229506AbjDKVga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 17:36:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbjDKVfI (ORCPT
+        with ESMTP id S229549AbjDKVg2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 17:35:08 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2369744A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 14:35:03 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id m4so11980572lfj.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 14:35:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681248901; x=1683840901;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vgjk5+7IjN8Jw3X+GOTozhyftZCcRJijaSMlBqwvNWk=;
-        b=WThnyX2+GwrspIZFSKQDpOX5ESi2oznurZGDtC/OQB6/11eIajgq27TLC0YuU5g8/m
-         B9rmC1mW4cP4jCQtkdeC2FIiQJPkjnxiwv2CWZ8Wsms9tKlWmKHgkPnZa6/ZI8JrDp2w
-         gzFp6KyiKU/n1ZL/EHcGfzqmOQyfDzX0HMOrJ6ElBFvVLZ7sB3MUYGKr6wCbdcC5nk3q
-         FQrBC6M1bPPDDNZ2Y740JTRmm3mXATVFc2QP+2GtPFWtxue6XQOgKKgrAEXVmMO4Q4re
-         TnnO7wz2BT61Io+P6QR9ppnBIHhGvM9Vy3cgsihmW+pQ1MLAioqevNMrDRlZCOLNf75C
-         oFRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681248901; x=1683840901;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vgjk5+7IjN8Jw3X+GOTozhyftZCcRJijaSMlBqwvNWk=;
-        b=m/BjdF7LidLiJIkydxi9c4/i8RYtJ/DTe1wt9JYZbFdcUc0mTguQKB0NGGpKrqYCKy
-         3H7nwODTwE1f9QLHsQjdyau19bz/IiFgwGxDsVaJaBFpz5EfeNEfYZbc6uFjJ/S20Jwr
-         MWx6D5BNmdh27pJkff5pYuuxg/QG3nzpJ9qBeCkCI+tXyLepAoxC5j1IOwdF8ejVrUil
-         dQGLiFyBy7dHZXXvLGKxQYp13yPCQTJvEyH2Q4psLMTWik35y9g28ztZA5S7A2QD4XiS
-         uyHFOkKMWhOSVQ/yCXUK1UdXBC0/YhSLsmU+hA/777LAsnNoZcuzEJQPGghNCIjaeztW
-         v4uQ==
-X-Gm-Message-State: AAQBX9f42l7BK8PzWXfNMQjxQxdW4oeUynuGF34t0i8mrdUo7WzYwWQX
-        ijgYIGVbbsn5wj376NEqIH9kKA==
-X-Google-Smtp-Source: AKy350bd1PrnBQbb66BSBlCiFWEHWfiNqi7ZGdlXv9ZyKjsQ2ZAvnfRuDJ6wPwJyPzzuziqRfAcgIw==
-X-Received: by 2002:ac2:443c:0:b0:4ea:eadf:2a53 with SMTP id w28-20020ac2443c000000b004eaeadf2a53mr4534002lfl.63.1681248901323;
-        Tue, 11 Apr 2023 14:35:01 -0700 (PDT)
-Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id q29-20020ac2515d000000b004ea018bb8f7sm2695471lfd.77.2023.04.11.14.35.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 14:35:00 -0700 (PDT)
-Message-ID: <a97aacb4-e880-9665-4837-7af207f0ac77@linaro.org>
-Date:   Tue, 11 Apr 2023 23:34:59 +0200
+        Tue, 11 Apr 2023 17:36:28 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0BD930F5;
+        Tue, 11 Apr 2023 14:36:20 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33BLZoHq005235;
+        Tue, 11 Apr 2023 21:36:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=yi66xqTXmrXM4706RJ42Os6COYBm/l9WO25/oo1BeUg=;
+ b=A5JuXgOxleIaKb3vY9kfRLaWU3C7o67EYuyrtk519pHTuMFgQEXzFDd2H0J8Usyh0gqb
+ hhXAt53FswBRD2Rigx79w1rGN4EWz3RbjAfBo55LT9YhqDrxVN5pBeBDjAwrEx4BXqy1
+ w2c/omWnu2eYwgibgYxkTGGAuPTJR3tQ416nGWXLveyo0aXWLZjYVKBz0gCikc9cfhRb
+ An38Dx+6ANSOIrqolMD7LzEjMEGKuwC5SFXrZ6KXFvlo8h9AaX6wILq0gkJ4wBnzms9I
+ r0FzMp+q8cwqbH+usGpKDFy2h4FhdOpKFwCspOo+mJquKp6wBlxjsmOz3G++F2jpNcpb yg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwe5j857r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 21:36:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33BLaBm1020690
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 11 Apr 2023 21:36:11 GMT
+Received: from [10.110.115.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 14:36:10 -0700
+Message-ID: <a8deba9a-0be1-b70b-8a6d-4a35d5788b2f@quicinc.com>
+Date:   Tue, 11 Apr 2023 14:36:09 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way to
- enable unused clock cleanup
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH] drm/msm/dpu: add DSC range checking during resource
+ reservation
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
- <20230316225803.GA4036689-robh@kernel.org>
- <62533d5a-f39a-0806-b4d9-932e2af6beef@linaro.org>
- <5601e0edc19dc03d0fc516f9ffe4d1aa.sboyd@kernel.org>
- <2a379401-fe87-9e30-5449-513dd23c52f5@linaro.org>
- <422abc8b-5c01-238b-7793-212597dbffc8@linaro.org>
-In-Reply-To: <422abc8b-5c01-238b-7793-212597dbffc8@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1681247380-1607-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <1681247380-1607-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: oWsQaHGVlIiu9QRQ01kTCu0iF4WKLSrj
+X-Proofpoint-ORIG-GUID: oWsQaHGVlIiu9QRQ01kTCu0iF4WKLSrj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-11_14,2023-04-11_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
+ suspectscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304110193
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,63 +86,21 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7.04.2023 22:17, Konrad Dybcio wrote:
+On 4/11/2023 2:09 PM, Kuogee Hsieh wrote:
+> Perform DSC range checking to make sure correct DSC is requested before
+> reserve resource for it.
 > 
-> 
-> On 6.04.2023 16:44, Konrad Dybcio wrote:
->>
->>
->> On 17.03.2023 19:20, Stephen Boyd wrote:
->>> Quoting Konrad Dybcio (2023-03-16 17:31:34)
->>>>
->>>> On 16.03.2023 23:58, Rob Herring wrote:
->>>>> On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
->>>>>>  
->>>>>> +  qcom,clk-disable-unused:
->>>>>> +    type: boolean
->>>>>> +    description:
->>>>>> +      Indicates whether unused RPM clocks can be shut down with the common
->>>>>> +      unused clock cleanup. Requires a functional interconnect driver.
->>>>>
->>>>> I don't think this should be QCom specific. Come up with something 
->>>>> common (which will probably have some debate). 
->>>> Generally the opposite (ignoring unused clocks during the cleanup) is
->>>> the thing you need to opt into.
->>>>
->>>> I can however see how (especially with the focus on not breaking things
->>>> for older DTs) somebody else may also decide to only allow them to be
->>>> cleaned up conditionally (by marking the clocks that were enabled earlier
->>>> as enabled in Linux OR not addding clk.flags |= CLK_IGNORE_UNUSED) as we
->>>> do here.
->>>>
->>>> Stephen, Rob, would `clk-disable-unused` be a fitting generic property
->>>> name for that? Should we also think about `clk-ignore-unused` as a
->>>> clock-controller-specific alternative to the CCF-wide clk_ignore_unused
->>>> cmdline?
->>>>
->>>
->>> There are multiple threads on the list about disabling unused clks.
->>> Moving the decision to disable unused clks to a DT property is yet
->>> another approach. I'd rather not do that, because it really isn't
->>> describing the hardware configuration. If anything, I'd expect the
->>> property to be describing which clks are enabled by the firmware and
->>> then leave the decision to disable them because they're unused up to the
->>> software.
->> After some more thinking, I realized that this could be made opt-in
->> simply with driver_data..
->>
->> WDYT?
-> ..on a re-evaluation, obviously not a great idea.. Old DTBs will not
-> be happy about that.
-Another idea would be to yank out the not-very-useful "qcom,rpmcc"
-fallback compatible and present .is_enabled etc. when it's absent..
+> Fixes: c985d7bb64ff ("drm/msm/disp/dpu1: Add DSC support in RM")
 
-Directly checking for the interconnect handle to rpmcc is not possible,
-as interconnect requires rpmcc.. And then somebody's interconnect
-driver may not be "good enough" (like 8996 and pre-6.3 DTs).
+I cannot find any fixes tag with this hash.
 
-Konrad
-> 
-> Konrad
->>
->> Konrad
+This is the right one.
+
+Fixes: f2803ee91a41 ("drm/msm/disp/dpu1: Add DSC support in RM")
+
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+
+Otherwise, seems quite reasonable to me,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
