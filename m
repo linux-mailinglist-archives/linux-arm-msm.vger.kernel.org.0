@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D30EC6DFBE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 18:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D905D6DFC3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 19:06:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbjDLQy2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 12:54:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56534 "EHLO
+        id S229968AbjDLRGl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 13:06:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjDLQy1 (ORCPT
+        with ESMTP id S229765AbjDLRGj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 12:54:27 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C149E9757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 09:53:54 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id xi5so30504653ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 09:53:54 -0700 (PDT)
+        Wed, 12 Apr 2023 13:06:39 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A38F30DE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 10:06:28 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id z8so17422476lfb.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 10:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681318394;
+        d=linaro.org; s=google; t=1681319186; x=1683911186;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kG5Bp9G8GHRtnaihhtMcFrai7auGDwatUysUi5rRPM4=;
-        b=t3PMe32EZJV9cCoDIkveen1Mt0ZXC8V8Nwx01NlHfKa11Vx+CgCN03HLEdyF8L8B5N
-         oxOXpHaRyvfb6AHDx289+vJStY+EJwIsxz2SoGGR9JMf7YslsfW4HNlOOoo+dKnwip6n
-         n4ama1PFbDfxjtqwO9pD3cphtlWR6ziTaHcEeMg+nZ3IlSDCV/4n3PbMXeNk4kQBLG5j
-         HyJ10opdEQ2AkrTWCC35fBqxipAajjYHeKzzyPpWbYjyiLh5Q521hbEOmgX8gzX8F7cB
-         bjzUidW9notC7XkN9Ge7pxmkLJbN2txGTjI6U5bpvpvlXMT7gUpenEbW7xSWjhcUiFps
-         FqOQ==
+        bh=YMWU8Odwaeq/SVRM7bWqxudWTUga4vVKtqmtQDwWNBI=;
+        b=lePux3/Euo0n5p7HK3txuaSevsS1qwKPm+gky8y0kDybxkRMBAf/dWz0iw2YxuKSOL
+         VWaKlLwM2iw93KWc5LaSEcMWEoVqyYBN+1EBj9+cL9q9D82CAZujCViEG9Uh+8lrkwWj
+         u/dyXL18ES6oSzaQUrH3nYWDPH+tRZvpQihdQ9+kYNCeaTx5y+FG8hbsFH3kuEGtSggf
+         PJ+5nnsPxcSvL9RBemjWp0inmqZlJ4lVyrPZbxjfky7Mcmtp08/KaxZJYXweXSNv6Ov7
+         W/2fMjGN5OikTOwJKsAQLSi+02qzwbgpMfHJFE/hWFR2C/G9nk8RX4OI/qyfCgz2ly2z
+         /w0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681318394;
+        d=1e100.net; s=20221208; t=1681319186; x=1683911186;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kG5Bp9G8GHRtnaihhtMcFrai7auGDwatUysUi5rRPM4=;
-        b=YMs0tA97YXIVDf1bTJzZV+KifK4JaFIL1FXUXLtngEgUPSaYovmAqHbpUAij2elK9z
-         2gXIQk7f0tigTVAvDhRCNqtx+pVMe537hw/gYDz+/jiysAM66ynBqQnvnTA07m5sDCJE
-         8gWorKReZ0vUzphR44QMqGMnk+1thk/J0h4IFaiaxV4iuqwW3e+cbvYo57kIwNGmJFyF
-         0XzbFgNCYTh7xAKTvQArnLnmlNRLwK8h9y0qexylHzukQA1qGiOLcCALghx2Ykk29YYU
-         Sw83eQCMbteHJVdMHBMs10ReU5sgl6Xu9hzDdXfraF903FIazqj/3q66bQ9V48p4Pr0p
-         c89w==
-X-Gm-Message-State: AAQBX9ej7D1uxlX1pYWsVEjdfaGi62FAj4FMyj7iUhNVsfq28wgEVal7
-        ZwXLNPefAn7LKOdRcTX9rSm8IQ==
-X-Google-Smtp-Source: AKy350ZUDGBcr74cMS/N8WuiTB3okSg9uQJyGCy/5y+jKVibXQJYbcWciy75St+Vcb18YTNBYHTENQ==
-X-Received: by 2002:a17:906:686:b0:931:ed:e379 with SMTP id u6-20020a170906068600b0093100ede379mr2931945ejb.67.1681318394546;
-        Wed, 12 Apr 2023 09:53:14 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:938a:b3db:7c59:795e? ([2a02:810d:15c0:828:938a:b3db:7c59:795e])
-        by smtp.gmail.com with ESMTPSA id ta20-20020a1709078c1400b0094770cf8b1fsm7455180ejc.5.2023.04.12.09.53.13
+        bh=YMWU8Odwaeq/SVRM7bWqxudWTUga4vVKtqmtQDwWNBI=;
+        b=KiLNVl0JECY7dKVoTAEvgi9l+Yvn/EcIp71QIQUkUB3zF2/TwQN0p3u0W3N99Ah1Fg
+         ac8Z6laR86ymEtVa9FDGi+zyIN6uoW//Pd5Qwi3CuAhCbX5sziWyCQWfvs0bSpgNQnxa
+         fyFzeSgXAM3n74envLEpxpeMiqM88jkr1eSby6zHiepU+QtCj6mWhZ53y4uHDe/VKzMM
+         KQ/yN2L121m6cFK69Xucm6ehQRCkM8MzJO4C5g78hnRt6KuaCEHH7oRtX/CfC1hup/5W
+         DeZOdDd76WtFrasNzTXi0FM9S1rJs8yDZ0jUjmJjviSbQc1VrmBmMaFQ5t2qudy/L5g/
+         OxrQ==
+X-Gm-Message-State: AAQBX9cxGaZAOOPd04m8J4E/1S2FqUFi0hb+vilTP7WQ4rbmwj4tqt/F
+        S9P3bZaXSVFrvPcY/ye5bI0zMg==
+X-Google-Smtp-Source: AKy350bI4jPRNH/NAaU1a5TiN5ekPVZ5GXEu4ZAzGBUdq56HE44Rd4Ez9wd2aJGqc2KCFWuy+Cn2Wg==
+X-Received: by 2002:ac2:53b3:0:b0:4ec:9310:ad4e with SMTP id j19-20020ac253b3000000b004ec9310ad4emr768774lfh.33.1681319186301;
+        Wed, 12 Apr 2023 10:06:26 -0700 (PDT)
+Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
+        by smtp.gmail.com with ESMTPSA id q14-20020ac25a0e000000b004db48ae69cbsm3095120lfn.206.2023.04.12.10.06.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 09:53:14 -0700 (PDT)
-Message-ID: <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
-Date:   Wed, 12 Apr 2023 18:53:12 +0200
+        Wed, 12 Apr 2023 10:06:25 -0700 (PDT)
+Message-ID: <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
+Date:   Wed, 12 Apr 2023 19:06:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
 Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
  RAM slice through phandle
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Stephan Gerhold <stephan@gerhold.net>
 Cc:     Rob Herring <robh@kernel.org>,
         Thomas Gleixner <tglx@linutronix.de>,
@@ -80,56 +80,80 @@ References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
  <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
  <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
  <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
+ <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2023 14:09, Konrad Dybcio wrote:
-> 
-> 
-> On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
->> On 12/04/2023 13:47, Konrad Dybcio wrote:
->>>> For unrelated reasons I actually have some patches for this, that switch
->>>> the /smd top-level node to a "remoteproc-like" node dedicated to the
->>>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
->>>> add additional (optional) properties like "resets" and "iommus" for the
->>>> RPM, but it would allow adding arbitrary subnodes as well:
->>>>
->>>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
->>>>
->>>> I could finish those up and post them if that would help...
->>> Krzysztof, what do you think?
+
+
+On 12.04.2023 18:53, Krzysztof Kozlowski wrote:
+> On 12/04/2023 14:09, Konrad Dybcio wrote:
 >>
->> I don't know what is there in MSM8916 and how it should be represented.
-> Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
-> which communicates over the SMD protocol (or G-LINK on >=8996).
+>>
+>> On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
+>>> On 12/04/2023 13:47, Konrad Dybcio wrote:
+>>>>> For unrelated reasons I actually have some patches for this, that switch
+>>>>> the /smd top-level node to a "remoteproc-like" node dedicated to the
+>>>>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
+>>>>> add additional (optional) properties like "resets" and "iommus" for the
+>>>>> RPM, but it would allow adding arbitrary subnodes as well:
+>>>>>
+>>>>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
+>>>>>
+>>>>> I could finish those up and post them if that would help...
+>>>> Krzysztof, what do you think?
+>>>
+>>> I don't know what is there in MSM8916 and how it should be represented.
+>> Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
+>> which communicates over the SMD protocol (or G-LINK on >=8996).
+>>
+>> The Qualcomm firmware loads the RPM fw blob and sets it up early in
+>> the boot process, but msm8916-mainline folks managed to get TF-A
+>> going and due to it being less.. invasive.. than the Qualcomm TZ,
+>> RPM needs a bit more handling to be accessible.
+>>
+>> The M3 core is wired up through the CNoC bus and we communicate
+>> with it through the MSG RAM and the "APCS mailbox".
 > 
-> The Qualcomm firmware loads the RPM fw blob and sets it up early in
-> the boot process, but msm8916-mainline folks managed to get TF-A
-> going and due to it being less.. invasive.. than the Qualcomm TZ,
-> RPM needs a bit more handling to be accessible.
+> Thanks, that's actually good description. Yet I still do not know what
+> is exactly the problem and the question. Linking some out of tree
+> commits does not give me the answer, at least I cannot get that answer
+> form the link.
 > 
-> The M3 core is wired up through the CNoC bus and we communicate
-> with it through the MSG RAM and the "APCS mailbox".
+> For example what I don't understand is: why additional resources (like
+> resets) can be provided only in new binding, but not in the old.
+The old binding dictates that the rpm node (which in turn
+holds all "devices" that only interface with RPM, like RPMCC) is
+a child of smd{}, which does not make sense logically, as SMD is
+a protocol (e.g. we don't place devices connected over i2c under
+/i2c{}). The rpm node lacks a compatible, as it's representing
+an "smd channel", so there's no driver so there's no way to assert
+resets etc.
 
-Thanks, that's actually good description. Yet I still do not know what
-is exactly the problem and the question. Linking some out of tree
-commits does not give me the answer, at least I cannot get that answer
-form the link.
+On newer SoCs that still implement SMD RPM (like 8996), we do
+actually have a driver and a parent node which it binds to
+(rpm-glink).
 
-For example what I don't understand is: why additional resources (like
-resets) can be provided only in new binding, but not in the old.
+AFAIU:
+In both cases, the "final" drivers (rpmcc, rpmpd..) are bound
+after hitting a SMD/GLINK callback that tells Linux we're ready
+to rock. That's an issue for Stephan, as these callbacks won't
+ever happen if the RPM core is not initialized (and TF-A doesn't
+do that).
 
-Best regards,
-Krzysztof
-
+Konrad
+> 
+> Best regards,
+> Krzysztof
+> 
