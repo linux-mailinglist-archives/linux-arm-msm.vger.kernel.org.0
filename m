@@ -2,122 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11EF36DF4BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 14:11:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51ADA6DF4FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 14:22:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbjDLMLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 08:11:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52424 "EHLO
+        id S230332AbjDLMWH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 08:22:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjDLMLg (ORCPT
+        with ESMTP id S229764AbjDLMWG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 08:11:36 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DD2B4;
-        Wed, 12 Apr 2023 05:11:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1681301495; x=1712837495;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ewT/IrLeXzhwmk8e73q3/ULj13sZtuYMfUJ09TlK3Rs=;
-  b=mP7D6/EWOW7Nj1eRrJ251nO0kIpSGJlAVBjYkd9cAOC3vkz/5jRWa6Mq
-   KuTL0W1P/EI2qvVt1OzdWGALYqSSDIZIIPbbkW17rVE5pgnEy7T/SzDDl
-   o8sqAENnxzlPKJ/kcLfdAEIdkKr6JsCmO3aiKk88lNq80w9LYYnKCmNIx
-   DGXvLhgGvlAzilsfSHp9XnHN0vThviQdLhjsrd19/XvxZ/BaKVMhC3nri
-   H2BNdlSw/mWO7O9ip+rwAJrv7GqnV118y/Vj9+8ElHw5i7Uyf5uTCfNtT
-   N5E1UjpAKUYKbykgKg0ylPY4th5C4Hr8+jDQdvWVPkdlvRgbxaoyWPQjy
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10677"; a="346550590"
-X-IronPort-AV: E=Sophos;i="5.98,339,1673942400"; 
-   d="scan'208";a="346550590"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2023 05:11:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10677"; a="688934157"
-X-IronPort-AV: E=Sophos;i="5.98,339,1673942400"; 
-   d="scan'208";a="688934157"
-Received: from amurkovx-mobl.ger.corp.intel.com (HELO [10.213.229.123]) ([10.213.229.123])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2023 05:11:28 -0700
-Message-ID: <98bb3388-d671-dcf3-0247-649a702b5e11@linux.intel.com>
-Date:   Wed, 12 Apr 2023 13:10:22 +0100
+        Wed, 12 Apr 2023 08:22:06 -0400
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E6D3581
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 05:22:04 -0700 (PDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-54ee0b73e08so218104757b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 05:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681302123;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qRwIU1nvje0w0MPNeCJ53SnkupaFca63q36KxA4RSoo=;
+        b=AZRCj/Aw/LiaTxBZwUURrDKlq+avl5jdMbzccd3YtlPN/Mv6wcsUubJwKxCFHZ2FeE
+         R5PXL/FaXg8KlNrhYFoKhCZMSSl1ckSx8R+hNygCwEEtgRhJ2jszCneSWj/UhPcjmx5Z
+         UNkhGi+mLk4WpyFZHo76agmFnnQBs5XVfdvXQ+PWtmrLPBfDt6CGMvZ8+2Az7xWYlJoC
+         bobG8xH6OXEeY5ecWXRbOVNH4igoKkFQ90Q0cvF6Mms3Cj2lcGHdE/YL9zDeFp62MW+s
+         Jr3eOckFetgp2wGEgCCvVldmkEGwzri1+EtsZNLQDhDAo2JNkIOfp68kG2sR74PxdZ9y
+         819A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681302123;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qRwIU1nvje0w0MPNeCJ53SnkupaFca63q36KxA4RSoo=;
+        b=LvKTloYhjrfci6+Cgz34qOpVqq5071hFGNcpKbynNL+lm0AmyLX8dbyoVdq+JK7Nn6
+         RgJS+Q1bTmK1TjDF66m9GxTE7qZMT6Pe98E3XyYDlmVUWXL/ylT58WQXmFm6w6iedx1L
+         h3AJXacBHt77bi6JitZXAJu1FLv6s3kNPG6iQwzbfYY8h41O7mE9EfZ9cNzX0lXcRUgE
+         XUCOzNyP1HHQRAzy7l9RBa4G0t3yOyo6pXCNS5jVwbKwVtKw3yYcykCv8D7M+G5XEwuG
+         n2KBLEK08cb8abQJ3HHgpDNWwsyQ+L+9gmtJ0sBhlQpMkGLoQ30/WqnT/TuQibOIvSGS
+         ToPg==
+X-Gm-Message-State: AAQBX9eklGDEVDdviRUbtSwBb37zPni3sHktuQ/G8EWiDw+wtD/85GZC
+        YQPL/dZQ4bI+t5KA/qZJKcqqgjZp39/SdUqfv+UeoQ==
+X-Google-Smtp-Source: AKy350bO605bF7CmPj2jht5i/1RKefj2ZH1kk06s8caYQ2xMlwzktcBIiIVTXSBlPqu1bzWAe40DL6TQvkae11EoClo=
+X-Received: by 2002:a05:690c:730:b0:54f:899f:890f with SMTP id
+ bt16-20020a05690c073000b0054f899f890fmr1890721ywb.9.1681302123341; Wed, 12
+ Apr 2023 05:22:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 0/7] drm: fdinfo memory stats
-To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        "open list:RADEON and AMDGPU DRM DRIVERS" 
-        <amd-gfx@lists.freedesktop.org>,
-        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        "moderated list:DRM DRIVERS FOR VIVANTE GPU IP" 
-        <etnaviv@lists.freedesktop.org>, Evan Quan <evan.quan@amd.com>,
-        Guchun Chen <guchun.chen@amd.com>,
-        Hawking Zhang <Hawking.Zhang@amd.com>,
-        intel-gfx@lists.freedesktop.org,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Mario Limonciello <mario.limonciello@amd.com>,
-        =?UTF-8?Q?Michel_D=c3=a4nzer?= <mdaenzer@redhat.com>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Sean Paul <sean@poorly.run>,
-        Shashank Sharma <shashank.sharma@amd.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-        YiPeng Chai <YiPeng.Chai@amd.com>
-References: <20230411225725.2032862-1-robdclark@gmail.com>
- <bbbbbf34-2ea5-5344-30db-f976c5198d75@amd.com>
-Content-Language: en-US
-From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Organization: Intel Corporation UK Plc
-In-Reply-To: <bbbbbf34-2ea5-5344-30db-f976c5198d75@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230412114828.64043-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230412114828.64043-1-krzysztof.kozlowski@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 12 Apr 2023 14:21:52 +0200
+Message-ID: <CACRpkdY_ueo57PteZcOznhD7jN+hg+_Qk_9jruG8D5Z4goo=uQ@mail.gmail.com>
+Subject: Re: [GIT PULL] pinctrl: dt-bindings: qcom: unevaluatedProperties
+ cleanup for v6.4
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Apr 12, 2023 at 1:48=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-On 12/04/2023 10:34, Christian König wrote:
-> Am 12.04.23 um 00:56 schrieb Rob Clark:
->> From: Rob Clark <robdclark@chromium.org>
->>
->> Similar motivation to other similar recent attempt[1].  But with an
->> attempt to have some shared code for this.  As well as documentation.
->>
->> It is probably a bit UMA-centric, I guess devices with VRAM might want
->> some placement stats as well.  But this seems like a reasonable start.
->>
->> Basic gputop support: https://patchwork.freedesktop.org/series/116236/
->> And already nvtop support: https://github.com/Syllo/nvtop/pull/204
->>
->> [1] https://patchwork.freedesktop.org/series/112397/
-> 
-> I think the extra client id looks a bit superfluous since the ino of the 
-> file should already be unique and IIRC we have been already using that one.
+> The following changes since commit fe15c26ee26efa11741a7b632e9f23b01aca4c=
+c6:
+>
+>   Linux 6.3-rc1 (2023-03-05 14:52:03 -0800)
+>
+> are available in the Git repository at:
+>
+>   https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/=
+qcom-pinctrl-6.4
+>
+> for you to fetch changes up to 152674ab2e98bfd8677117314a77d223a2a1bedf:
+>
+>   dt-bindings: pinctrl: qcom,sm8550-tlmm: simplify with unevaluatedProper=
+ties (2023-04-12 10:59:11 +0200)
 
-Do you mean file_inode(struct drm_file->filp)->i_ino ? That one would be 
-the same number for all clients which open the same device node so 
-wouldn't work.
+Pulled into the pinctrl devel branch for v6.4!
 
-I also don't think the atomic_add_return for client id works either, 
-since it can alias on overflow.
-
-In i915 I use an xarray and __xa_alloc_cyclic.
-
-Regards,
-
-Tvrtko
+Great work as always, thanks!
+Linus Walleij
