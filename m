@@ -2,148 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCD6B6DECAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 09:38:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E0616DED07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 09:55:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbjDLHiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 03:38:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57758 "EHLO
+        id S229679AbjDLHzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 03:55:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229992AbjDLHia (ORCPT
+        with ESMTP id S229532AbjDLHza (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 03:38:30 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C763165BC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:38:13 -0700 (PDT)
-Received: from SoMainline.org (unknown [89.205.226.251])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 281932030B;
-        Wed, 12 Apr 2023 09:38:10 +0200 (CEST)
-Date:   Wed, 12 Apr 2023 09:38:08 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        freedreno@lists.freedesktop.org, quic_sbillaka@quicinc.com,
-        airlied@gmail.com, andersson@kernel.org, robdclark@gmail.com,
-        dri-devel@lists.freedesktop.org, dianders@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        sean@poorly.run, linux-kernel@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: add DSC range checking during
- resource reservation
-Message-ID: <tczt5alqbadkodgorqm4pljpqkn5bc4efpxiy3em7bgu7gqaka@3cdszu4k6rhk>
-References: <1681247380-1607-1-git-send-email-quic_khsieh@quicinc.com>
- <qvgbm3wimai3jytnikbcixipvwqn2uywqpg4mn6mjh5atergfx@wa4edsrp7y22>
- <96416911-bca3-b007-b036-1c4463e83aaa@quicinc.com>
- <24c5aa23-9b3c-787c-10aa-e9d5ad91512b@linaro.org>
- <49479b93-b364-d882-7a77-08223a94ed36@quicinc.com>
+        Wed, 12 Apr 2023 03:55:30 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE3D62100
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:55:27 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f0968734f6so798825e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google; t=1681286126;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MjkjPiJds6NhU+s5Yx2pUX02cx7dy7w1B7Hx/2j4ki8=;
+        b=lowDSLhpYz5oAZVa6OxVSMTPZBY2GiCr24O1uNalYXG3eKNBAOYxCiWqUpmkcn77oJ
+         QmDsidgKsWFNtDe0iS3VPBd4GWNjawEI50qkjOEGXGecLqTzn6YaQs4sjJkU59yjh+G/
+         aJhze9GyXDwgGIwCURAA0Bm+4xpnoxynRkO5I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681286126;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MjkjPiJds6NhU+s5Yx2pUX02cx7dy7w1B7Hx/2j4ki8=;
+        b=Q7n+vocX035Ei+a1bnAFPK/fzGNZ5K9/RyoKvbZdYfdCP7sFt5h51y2qQUiAa69JI2
+         pDpKk5bYgR+QWzxn0rjzhEJNi8Ic99CocJp5y8Mk35sScSmyfw6d1FK97KbaPKYVYRVr
+         CIhzOa927W+CnTYrlnYCL7rqK/DntNu5IeiJtvUNc61SrneVdsGYY0UXv53im8vLzKB6
+         Xuj2KITsMNzHfVsihRtkGlQHyNJhGrO9hYwvcvL3XtItU41y2ywyhaxLGB/r8heLm6M2
+         TvasmLQPHD4g8iXQSYXSNDI0cj/n3IBC40/2R2PX6tMZu2+uJeIe7yBzlgH6KLjrXhRf
+         95aA==
+X-Gm-Message-State: AAQBX9cl5QHY25W5sZAsICbIOzb3OR8vF7LovibHrFiSkE2IPtU+3EH2
+        XR6UxdMREHs68cKwi9RNhoxC6A==
+X-Google-Smtp-Source: AKy350YCD507ti6nJXcEWhQIA1OyqKMoRsMgrjJuXF/qJiryLyQVzwc6kBcMRP8haoB6i2piKpF90Q==
+X-Received: by 2002:adf:f107:0:b0:2c7:660:9284 with SMTP id r7-20020adff107000000b002c706609284mr1303777wro.0.1681286126393;
+        Wed, 12 Apr 2023 00:55:26 -0700 (PDT)
+Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
+        by smtp.gmail.com with ESMTPSA id b16-20020adfe310000000b002f27a6a49d0sm5371170wrj.10.2023.04.12.00.55.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 00:55:25 -0700 (PDT)
+Date:   Wed, 12 Apr 2023 09:55:23 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 1/7] drm: Add common fdinfo helper
+Message-ID: <ZDZj63TsCo/gd1pC@phenom.ffwll.local>
+Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230411225725.2032862-1-robdclark@gmail.com>
+ <20230411225725.2032862-2-robdclark@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <49479b93-b364-d882-7a77-08223a94ed36@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230411225725.2032862-2-robdclark@gmail.com>
+X-Operating-System: Linux phenom 6.1.0-7-amd64 
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-11 18:50:24, Abhinav Kumar wrote:
+On Tue, Apr 11, 2023 at 03:56:06PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
+> Handle a bit of the boiler-plate in a single case, and make it easier to
+> add some core tracked stats.
 > 
-> On 4/11/2023 6:06 PM, Dmitry Baryshkov wrote:
-> > On 12/04/2023 01:32, Abhinav Kumar wrote:
-> >> Hi Marijn
-> >>
-> >> On 4/11/2023 3:24 PM, Marijn Suijten wrote:
-> >>> Again, don't forget to include previous reviewers in cc, please :)
-> >>>
-> >>> On 2023-04-11 14:09:40, Kuogee Hsieh wrote:
-> >>>> Perform DSC range checking to make sure correct DSC is requested before
-> >>>> reserve resource for it.
-> > 
-> > nit: reserving
-> > 
-> >>>
-> >>> This isn't performing any range checking for resource reservations /
-> >>> requests: this is only validating the constants written in our catalog
-> >>> and seems rather useless.  It isn't fixing any real bug either, so the
-> >>> Fixes: tag below seems extraneous.
-> >>>
-> >>> Given prior comments from Abhinav that "the kernel should be trusted",
-> >>> we should remove this validation for all the other blocks instead.
-> >>>
-> >>
-> >> The purpose of this check is that today all our blocks in RM use the 
-> >> DSC_* enum as the size.
-> >>
-> >> struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
-> >>
-> >> If the device tree ends up with more DSC blocks than the DSC_* enum, 
-> >> how can we avoid this issue today? Not because its a bug in device 
-> >> tree but how many static number of DSCs are hard-coded in RM.
-> > 
-> > We don't have these blocks in device tree. And dpu_hw_catalog shouldn't 
-> > use indices outside of enum dpu_dsc.
-> > 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+
+Thanks a lot for kicking this off. A few polish comments below, with those
+addressed:
+
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+
+> ---
+>  drivers/gpu/drm/drm_file.c | 39 ++++++++++++++++++++++++++++++++++++++
+>  include/drm/drm_drv.h      |  7 +++++++
+>  include/drm/drm_file.h     |  4 ++++
+>  3 files changed, 50 insertions(+)
 > 
-> ah, my bad, i should have said catalog here. Okay so the expectation is 
-> that dpu_hw_catalog.c will program the indices to match the RM limits.
+> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+> index a51ff8cee049..37dfaa6be560 100644
+> --- a/drivers/gpu/drm/drm_file.c
+> +++ b/drivers/gpu/drm/drm_file.c
+> @@ -148,6 +148,7 @@ bool drm_dev_needs_global_mutex(struct drm_device *dev)
+>   */
+>  struct drm_file *drm_file_alloc(struct drm_minor *minor)
+>  {
+> +	static atomic_t ident = ATOMIC_INIT(0);
+
+Maybe make this atomic64_t just to be sure?
+
+>  	struct drm_device *dev = minor->dev;
+>  	struct drm_file *file;
+>  	int ret;
+> @@ -156,6 +157,8 @@ struct drm_file *drm_file_alloc(struct drm_minor *minor)
+>  	if (!file)
+>  		return ERR_PTR(-ENOMEM);
+>  
+> +	/* Get a unique identifier for fdinfo: */
+> +	file->client_id = atomic_inc_return(&ident) - 1;
+>  	file->pid = get_pid(task_pid(current));
+>  	file->minor = minor;
+>  
+> @@ -868,6 +871,42 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
+>  }
+>  EXPORT_SYMBOL(drm_send_event);
+>  
+> +/**
+> + * drm_fop_show_fdinfo - helper for drm file fops
+> + * @seq_file: output stream
+> + * @f: the device file instance
+> + *
+> + * Helper to implement fdinfo, for userspace to query usage stats, etc, of a
+> + * process using the GPU.
+
+Please mention drm_driver.show_fd_info here too.
+
+> + */
+> +void drm_fop_show_fdinfo(struct seq_file *m, struct file *f)
+> +{
+> +	struct drm_file *file = f->private_data;
+> +	struct drm_device *dev = file->minor->dev;
+> +	struct drm_printer p = drm_seq_file_printer(m);
+> +
+> +	/*
+> +	 * ******************************************************************
+> +	 * For text output format description please see drm-usage-stats.rst!
+> +	 * ******************************************************************
+
+Maybe move this into the kerneldoc comment above (perhaps with an
+IMPORTANT: tag or something, and make it an actual link)?
+
+Also in the drm-usage-stats.rst please put a link to this function and
+that is must be used for implementing fd_info.
+
+> +	 */
+> +
+> +	drm_printf(&p, "drm-driver:\t%s\n", dev->driver->name);
+> +	drm_printf(&p, "drm-client-id:\t%u\n", file->client_id);
+> +
+> +	if (dev_is_pci(dev->dev)) {
+> +		struct pci_dev *pdev = to_pci_dev(dev->dev);
+> +
+> +		drm_printf(&p, "drm-pdev:\t%04x:%02x:%02x.%d\n",
+> +			   pci_domain_nr(pdev->bus), pdev->bus->number,
+> +			   PCI_SLOT(pdev->devfn), PCI_FUNC(pdev->devfn));
+> +	}
+> +
+> +	if (dev->driver->show_fdinfo)
+> +		dev->driver->show_fdinfo(&p, file);
+> +}
+> +EXPORT_SYMBOL(drm_fop_show_fdinfo);
+
+Bit a bikeshed, but for consistency drop the _fop_? We don't have it for
+any of the other drm fops and git grep doesn't show a naming conflict.
+
+> +
+>  /**
+>   * mock_drm_getfile - Create a new struct file for the drm device
+>   * @minor: drm minor to wrap (e.g. #drm_device.primary)
+> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
+> index 5b86bb7603e7..a883c6d3bcdf 100644
+> --- a/include/drm/drm_drv.h
+> +++ b/include/drm/drm_drv.h
+> @@ -401,6 +401,13 @@ struct drm_driver {
+>  			       struct drm_device *dev, uint32_t handle,
+>  			       uint64_t *offset);
+>  
+> +	/**
+> +	 * @fdinfo:
+> +	 *
+> +	 * Print device specific fdinfo.  See drm-usage-stats.rst.
+
+Please make this a link. I like links in kerneldoc :-)
+
+> +	 */
+> +	void (*show_fdinfo)(struct drm_printer *p, struct drm_file *f);
+> +
+>  	/** @major: driver major number */
+>  	int major;
+>  	/** @minor: driver minor number */
+> diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
+> index 0d1f853092ab..dfa995b787e1 100644
+> --- a/include/drm/drm_file.h
+> +++ b/include/drm/drm_file.h
+> @@ -258,6 +258,9 @@ struct drm_file {
+>  	/** @pid: Process that opened this file. */
+>  	struct pid *pid;
+>  
+> +	/** @client_id: A unique id for fdinfo */
+> +	u32 client_id;
+> +
+>  	/** @magic: Authentication magic, see @authenticated. */
+>  	drm_magic_t magic;
+>  
+> @@ -437,6 +440,7 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e);
+>  void drm_send_event_timestamp_locked(struct drm_device *dev,
+>  				     struct drm_pending_event *e,
+>  				     ktime_t timestamp);
+> +void drm_fop_show_fdinfo(struct seq_file *m, struct file *f);
+>  
+>  struct file *mock_drm_getfile(struct drm_minor *minor, unsigned int flags);
+>  
+> -- 
+> 2.39.2
 > 
-> I still stand by the fact that the hardware capabilities coming from 
-> catalog should be trusted but this is just the SW index.
 
-These come from the catalog.  Here's how it looks for sdm845:
-
-	static struct dpu_dsc_cfg sdm845_dsc[] = {
-		DSC_BLK("dsc_0", DSC_0, 0x80000, 0),
-		DSC_BLK("dsc_1", DSC_1, 0x80400, 0),
-		DSC_BLK("dsc_2", DSC_2, 0x80800, 0),
-		DSC_BLK("dsc_3", DSC_3, 0x80c00, 0),
-	};
-
-The only way to trigger this newly introduced range check is by omitting
-the DSC_x constants and manually writing e.g. an out-of-range value 10
-here, or setting DSC_NONE.  This is only allowed for interfaces.
-
-As we trust the kernel, hence this config, the if introduced here (and
-already present for other blocks) has pretty much no effect.
-
-> > Marijn proposed to pass struct dpu_foo_cfg directly to 
-> > dpu_hw_foo_init(). This will allow us to drop these checks completely.
-> > 
-> 
-> Ah okay, sure, would like to see that then uniformly get rid of these 
-> checks.
-
-This suggested change won't make a difference to the range check
-introduced here.  The range-check validates that the catalog sets `id`
-to a sensible value (since we do not use array indices for this, we
-could even decide to do so via `[DSC_0] = (struct dpu_dsc_cfg){ ... }`
-if we so desire in the future).
-
-It'll only get rid of the `_xxx_offset` functions looping through the
-arrays in the catalog again, to find a catalog pointer with matching
-`id` while we aleady have exactly that pointer here via &cat->dsc[i].
-
-The only semantic difference incurred by the change is when the same
-`id` value is (erroneously) used multiple times in an array: the current
-implementation will always find and return the first block while the
-suggestion will make sure all blocks are used.
-But again, reusing an `id` is an error and shouldn't happen.
-
-> > For the time being, I think it might be better to add these checks for 
-> > DSC for the sake of uniformity.
-> > 
-> 
-> Yes, i think so too.
-
-I'd rather see a separate patch removing them then, as my suggestion
-won't affect the legality of the range check.
-
-- Marijn
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
