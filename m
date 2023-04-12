@@ -2,80 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 917986DE8A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 03:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90A7A6DE91B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 03:50:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjDLBGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 11 Apr 2023 21:06:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34974 "EHLO
+        id S229458AbjDLBum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 11 Apr 2023 21:50:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjDLBGw (ORCPT
+        with ESMTP id S229515AbjDLBul (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 11 Apr 2023 21:06:52 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EA103C0D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 18:06:51 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id r27so12720992lfe.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 11 Apr 2023 18:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681261609; x=1683853609;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N/gZ6cj/6Omli4sjrZld+bXqKW2xcaRiN8ew1uF6z4Q=;
-        b=qg/wgnV2eqb3f3qQ00x6+C/wLebXtdwYd60rDUlRcu0B87vzIOf+Xu/PPuWjxfhOl/
-         /RZKj2IE4PiUFEKdIVr4Zd19MTDnpzLVNkD7OCJ2YEZLGr3a2CCsGr4c57IEr3NXeyZn
-         3Ohj60QVPeGofBqYQTB74rITk+TTv6Kkh/DpLSpTTIEjIz6auBkcU1TcRwhnd1EpPdJz
-         0chkGhO9nWNZDcKABqTQ8qhonjZilzuAUZGjCOTxUXPJaA3A2K5rPqLhS29LOQ8S5vxM
-         Iq0keKRq5+xe+VbJXK8f3fYpMPoO/Bla/y2Waa51VfXG1TRqcyoPJzlHXfzaSZHPtTrc
-         z+ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681261609; x=1683853609;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N/gZ6cj/6Omli4sjrZld+bXqKW2xcaRiN8ew1uF6z4Q=;
-        b=5ogCQDlMUDQjJqlKKUckbTQ+TFmSm2w7RTHZQIt0dTRpESvRTLIgxiMaAh3kAbEmR5
-         /EJHYkVpGnpZq4Y4xcpiKl1L0y1RJpN7FKhfnN4Kkbgsba0ascVuXAOvhjLIPq+C01dA
-         s0A+iKyOgjLukApojfUhbUxWfBY+9shGJQbTP7lNPO2yH7RNy8/lr0eSV3Lq/I9mVldP
-         Pmh8Jx5dE8MfJZKDS0ZgcVcrbcwZ9ZVZyDHw0j76rA8JYyu1ZNbTR/36wYxmEvPte8U5
-         m9WeTV6IWDkCr4od/c0NbxcazlibvvVsZoYkT5OiB5hHUQC329CCq6SkkOid6YRXkPOJ
-         0rhQ==
-X-Gm-Message-State: AAQBX9f6khs7/E4VbgmrfUEnnG5UNGuAbxGGMyZYJCGo/gcIwy20SnOg
-        6+mPpKon+8Q/vPXhxIC5tepjUw==
-X-Google-Smtp-Source: AKy350bo4WvmONxNFFnQIrtl/U3MsUQ1AvPbCr7NIx57Gv8KxdTGkpb0fgFvDk5kBTujWXmxM1wm0Q==
-X-Received: by 2002:a19:c504:0:b0:4b5:8298:5867 with SMTP id w4-20020a19c504000000b004b582985867mr115362lfe.66.1681261609629;
-        Tue, 11 Apr 2023 18:06:49 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u11-20020ac2518b000000b004d5a6dcb94fsm2781793lfi.33.2023.04.11.18.06.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 18:06:49 -0700 (PDT)
-Message-ID: <24c5aa23-9b3c-787c-10aa-e9d5ad91512b@linaro.org>
-Date:   Wed, 12 Apr 2023 04:06:48 +0300
+        Tue, 11 Apr 2023 21:50:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6272683;
+        Tue, 11 Apr 2023 18:50:40 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33C0keBK015548;
+        Wed, 12 Apr 2023 01:50:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=a2Sk2OO/jA5sTTJNE4j6qslc9o4ud7/nASEjTzby/kg=;
+ b=k06ldBsHfCuOUN9bWtG1ybUc57+GvHL4M9Wr3IkfM9W4jDGwOA4jegh8fpqDCqqmmoO3
+ tL4dculmqyhWYCDklPxGZqXJaEn6R17zsQnnOsWtj/iYId6xXrt3DjUysRRfZmXZHD4o
+ GuDr9QQdipdhjap571oDtYXrCWyknzBrVdNbcdvYSy/wJktQG5VgspiE2fCnG7qC9OV1
+ 9ISppgEHRlAiLHmMlwsWbrvOAcQPrShCXsI6eSlujKLkdfhqGWwGy0pi9R9Sd3LLWu1t
+ jp6lhdlmE76loTu0MaAPeMuP8JmsCEU0/p4BMaUjQboPnoIdpyLbjwihZQUWhvvYIZHz rA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pw3cva1k4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Apr 2023 01:50:26 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33C1oPl9003394
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Apr 2023 01:50:25 GMT
+Received: from [10.110.115.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 11 Apr
+ 2023 18:50:24 -0700
+Message-ID: <49479b93-b364-d882-7a77-08223a94ed36@quicinc.com>
+Date:   Tue, 11 Apr 2023 18:50:24 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
 Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: add DSC range checking during
  resource reservation
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, quic_sbillaka@quicinc.com,
-        airlied@gmail.com, andersson@kernel.org, robdclark@gmail.com,
-        dri-devel@lists.freedesktop.org, dianders@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
-        sean@poorly.run, linux-kernel@vger.kernel.org
+CC:     <freedreno@lists.freedesktop.org>, <quic_sbillaka@quicinc.com>,
+        <airlied@gmail.com>, <andersson@kernel.org>, <robdclark@gmail.com>,
+        <dri-devel@lists.freedesktop.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <agross@kernel.org>, <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <swboyd@chromium.org>,
+        <sean@poorly.run>, <linux-kernel@vger.kernel.org>
 References: <1681247380-1607-1-git-send-email-quic_khsieh@quicinc.com>
  <qvgbm3wimai3jytnikbcixipvwqn2uywqpg4mn6mjh5atergfx@wa4edsrp7y22>
  <96416911-bca3-b007-b036-1c4463e83aaa@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <96416911-bca3-b007-b036-1c4463e83aaa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <24c5aa23-9b3c-787c-10aa-e9d5ad91512b@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <24c5aa23-9b3c-787c-10aa-e9d5ad91512b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yuaxNTFyxmKnrkjQkZcIqr8zdsDZ_GJP
+X-Proofpoint-ORIG-GUID: yuaxNTFyxmKnrkjQkZcIqr8zdsDZ_GJP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-11_16,2023-04-11_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 clxscore=1015 bulkscore=0
+ mlxlogscore=999 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304120014
+X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,108 +89,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2023 01:32, Abhinav Kumar wrote:
-> Hi Marijn
-> 
-> On 4/11/2023 3:24 PM, Marijn Suijten wrote:
->> Again, don't forget to include previous reviewers in cc, please :)
+
+
+On 4/11/2023 6:06 PM, Dmitry Baryshkov wrote:
+> On 12/04/2023 01:32, Abhinav Kumar wrote:
+>> Hi Marijn
 >>
->> On 2023-04-11 14:09:40, Kuogee Hsieh wrote:
->>> Perform DSC range checking to make sure correct DSC is requested before
->>> reserve resource for it.
-
-nit: reserving
-
->>
->> This isn't performing any range checking for resource reservations /
->> requests: this is only validating the constants written in our catalog
->> and seems rather useless.  It isn't fixing any real bug either, so the
->> Fixes: tag below seems extraneous.
->>
->> Given prior comments from Abhinav that "the kernel should be trusted",
->> we should remove this validation for all the other blocks instead.
->>
-> 
-> The purpose of this check is that today all our blocks in RM use the 
-> DSC_* enum as the size.
-> 
-> struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
-> 
-> If the device tree ends up with more DSC blocks than the DSC_* enum, how 
-> can we avoid this issue today? Not because its a bug in device tree but 
-> how many static number of DSCs are hard-coded in RM.
-
-We don't have these blocks in device tree. And dpu_hw_catalog shouldn't 
-use indices outside of enum dpu_dsc.
-
-Marijn proposed to pass struct dpu_foo_cfg directly to 
-dpu_hw_foo_init(). This will allow us to drop these checks completely.
-
-For the time being, I think it might be better to add these checks for 
-DSC for the sake of uniformity.
-
-> 
-> And like you said, this is not specific to DSC. Such checks are present 
-> for other blocks too.
-> 
->>> Fixes: c985d7bb64ff ("drm/msm/disp/dpu1: Add DSC support in RM")
->>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 10 +++++++++-
->>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>> On 4/11/2023 3:24 PM, Marijn Suijten wrote:
+>>> Again, don't forget to include previous reviewers in cc, please :)
 >>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> index f4dda88..95e58f1 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> @@ -1,6 +1,7 @@
->>>   // SPDX-License-Identifier: GPL-2.0-only
->>>   /*
->>>    * Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
->>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
->>> reserved.
->>>    */
->>>   #define pr_fmt(fmt)    "[drm:%s] " fmt, __func__
->>> @@ -250,6 +251,11 @@ int dpu_rm_init(struct dpu_rm *rm,
->>>           struct dpu_hw_dsc *hw;
->>>           const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
->>> +        if (dsc->id < DSC_0 || dsc->id >= DSC_MAX) {
->>> +            DPU_ERROR("skip dsc %d with invalid id\n", dsc->id);
->>> +            continue;
->>> +        }
->>> +
->>>           hw = dpu_hw_dsc_init(dsc->id, mmio, cat);
->>>           if (IS_ERR_OR_NULL(hw)) {
->>>               rc = PTR_ERR(hw);
->>> @@ -557,8 +563,10 @@ static int _dpu_rm_make_reservation(
->>>       }
->>>       ret  = _dpu_rm_reserve_dsc(rm, global_state, enc, 
->>> &reqs->topology);
->>> -    if (ret)
->>> +    if (ret) {
->>> +        DPU_ERROR("unable to find appropriate DSC\n");
->>
->> This, while a nice addition, should go in a different patch.
-
-I'd agree here, a separate patch.
-
->>
->> Thanks!
->>
->> - Marijn
->>
->>>           return ret;
->>> +    }
->>>       return ret;
->>>   }
->>> -- 
->>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->>> Forum,
->>> a Linux Foundation Collaborative Project
+>>> On 2023-04-11 14:09:40, Kuogee Hsieh wrote:
+>>>> Perform DSC range checking to make sure correct DSC is requested before
+>>>> reserve resource for it.
+> 
+> nit: reserving
+> 
 >>>
+>>> This isn't performing any range checking for resource reservations /
+>>> requests: this is only validating the constants written in our catalog
+>>> and seems rather useless.  It isn't fixing any real bug either, so the
+>>> Fixes: tag below seems extraneous.
+>>>
+>>> Given prior comments from Abhinav that "the kernel should be trusted",
+>>> we should remove this validation for all the other blocks instead.
+>>>
+>>
+>> The purpose of this check is that today all our blocks in RM use the 
+>> DSC_* enum as the size.
+>>
+>> struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
+>>
+>> If the device tree ends up with more DSC blocks than the DSC_* enum, 
+>> how can we avoid this issue today? Not because its a bug in device 
+>> tree but how many static number of DSCs are hard-coded in RM.
+> 
+> We don't have these blocks in device tree. And dpu_hw_catalog shouldn't 
+> use indices outside of enum dpu_dsc.
+> 
 
--- 
-With best wishes
-Dmitry
+ah, my bad, i should have said catalog here. Okay so the expectation is 
+that dpu_hw_catalog.c will program the indices to match the RM limits.
 
+I still stand by the fact that the hardware capabilities coming from 
+catalog should be trusted but this is just the SW index.
+
+> Marijn proposed to pass struct dpu_foo_cfg directly to 
+> dpu_hw_foo_init(). This will allow us to drop these checks completely.
+> 
+
+Ah okay, sure, would like to see that then uniformly get rid of these 
+checks.
+
+> For the time being, I think it might be better to add these checks for 
+> DSC for the sake of uniformity.
+> 
+
+Yes, i think so too.
+
+>>
+>> And like you said, this is not specific to DSC. Such checks are 
+>> present for other blocks too.
+>>
+>>>> Fixes: c985d7bb64ff ("drm/msm/disp/dpu1: Add DSC support in RM")
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 10 +++++++++-
+>>>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>> index f4dda88..95e58f1 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>>> @@ -1,6 +1,7 @@
+>>>>   // SPDX-License-Identifier: GPL-2.0-only
+>>>>   /*
+>>>>    * Copyright (c) 2016-2018, The Linux Foundation. All rights 
+>>>> reserved.
+>>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
+>>>> reserved.
+>>>>    */
+>>>>   #define pr_fmt(fmt)    "[drm:%s] " fmt, __func__
+>>>> @@ -250,6 +251,11 @@ int dpu_rm_init(struct dpu_rm *rm,
+>>>>           struct dpu_hw_dsc *hw;
+>>>>           const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
+>>>> +        if (dsc->id < DSC_0 || dsc->id >= DSC_MAX) {
+>>>> +            DPU_ERROR("skip dsc %d with invalid id\n", dsc->id);
+>>>> +            continue;
+>>>> +        }
+>>>> +
+>>>>           hw = dpu_hw_dsc_init(dsc->id, mmio, cat);
+>>>>           if (IS_ERR_OR_NULL(hw)) {
+>>>>               rc = PTR_ERR(hw);
+>>>> @@ -557,8 +563,10 @@ static int _dpu_rm_make_reservation(
+>>>>       }
+>>>>       ret  = _dpu_rm_reserve_dsc(rm, global_state, enc, 
+>>>> &reqs->topology);
+>>>> -    if (ret)
+>>>> +    if (ret) {
+>>>> +        DPU_ERROR("unable to find appropriate DSC\n");
+>>>
+>>> This, while a nice addition, should go in a different patch.
+> 
+> I'd agree here, a separate patch.
+> 
+>>>
+>>> Thanks!
+>>>
+>>> - Marijn
+>>>
+>>>>           return ret;
+>>>> +    }
+>>>>       return ret;
+>>>>   }
+>>>> -- 
+>>>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>>>> Forum,
+>>>> a Linux Foundation Collaborative Project
+>>>>
+> 
