@@ -2,86 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F0BC6DF836
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:18:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 965936DF849
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:22:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbjDLOS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 10:18:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47572 "EHLO
+        id S230211AbjDLOWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 10:22:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230081AbjDLOS4 (ORCPT
+        with ESMTP id S229848AbjDLOWY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 10:18:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB058449C;
-        Wed, 12 Apr 2023 07:18:55 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33CA9KF5016590;
-        Wed, 12 Apr 2023 14:18:44 GMT
+        Wed, 12 Apr 2023 10:22:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D18849C2;
+        Wed, 12 Apr 2023 07:22:20 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33CDCcfZ002529;
+        Wed, 12 Apr 2023 14:22:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=A3rtY/+rMuLAW7o8CwDLtu8ApOMjjqatmbeuFdqpedY=;
- b=AKYnLl7YDsF9l68dMWFqfYcVbsRkE/6XdHlCzLp61Xm3bf+/97sFZ2cj0/iZNK8Vd9Iy
- bdLELIPqnfZpZ17QkbzIMwHpjAiuYw4EwhiQ17QOFIKHDikEYLfOIGyPdtKMWujR4Qai
- 5k+HupWAcqCwVUjf/Gal/jcm0b5Oz6apFn+1d+9OghslRpgN8FWJDz6nCpPpnwomqBkG
- idx40wNf4hCq/Grul1+QZujN2R4WIml/MPyj5LyIdy+ClSB+WSzNVJ8MfpP7a9BYVFEP
- 8HW1/QrD2sgR9MLPLZFlxwavEiEbJ2NgmtT6gdTEceU17KEdNu2wfY7U4t4qdCSolbxE Uw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwchbt7m2-1
+ bh=A6rkTKdrp8pWYrTITfHeeRZBDsC4+SFAsWLmky1OPHA=;
+ b=k/zW38eNGmfyTt2lmRjcaRALhfG8zGZeKEKK090AuweShwtd8mzfNhUPhbysKX0lCZ69
+ sJJyIFR0JE0k92c8FARjeW0F8a111VxLmy0LB6g3ExbtphWtv0O/x6iUvMYN2Ra0bT1M
+ cCSAW+owArd0LLIYAlaRMTWvFZq0Sa5Mn4qG4rpt9gXNOzEQEoA1oBP/t4xphXW1OzCn
+ fK1YExp1CdVMJcZHlPn0WgA4QhozHs4APeyU3D/KtjGt90HjWuOjHy1x6Jnhugf7n+kX
+ nuJ7ZHYFckaakZLlAmiCx9aIZJRgSRJ0epe1btAwkjwp0BNJ6Qpshgf6vUiIN6YtxmZZ Vw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwqens19h-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Apr 2023 14:18:44 +0000
+        Wed, 12 Apr 2023 14:22:09 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33CEIhUH010999
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33CEM8NP011605
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Apr 2023 14:18:43 GMT
+        Wed, 12 Apr 2023 14:22:08 GMT
 Received: from [10.50.1.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 12 Apr
- 2023 07:18:38 -0700
-Message-ID: <d53b793a-5e9d-071e-8842-d8c0845e22c1@quicinc.com>
-Date:   Wed, 12 Apr 2023 19:47:49 +0530
+ 2023 07:22:04 -0700
+Message-ID: <d260f351-1cf1-aecc-e8f5-d0877ed04ab6@quicinc.com>
+Date:   Wed, 12 Apr 2023 19:52:01 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH V2 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
+Subject: Re: [PATCH V2 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
         <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
         Rajendra Nayak <quic_rjendra@quicinc.com>
 References: <cover.1680874520.git.quic_schowdhu@quicinc.com>
- <96601c1f9e433ef8fbc608d5ca09365b9c0d8132.1680874520.git.quic_schowdhu@quicinc.com>
- <e1f83f5f-c139-c1b2-5e42-00fce804e548@linaro.org>
+ <5eeeb46e9b3f61656a37cb77c2ad6a04e383c16d.1680874520.git.quic_schowdhu@quicinc.com>
+ <20230407154132.dpguz24f6rukyujq@ripper>
+ <8cf793df-b676-bbb4-0601-5647d58bb2b3@quicinc.com>
+ <7e180b96-6f47-6b25-8751-01b5186c8c71@linaro.org>
 From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <e1f83f5f-c139-c1b2-5e42-00fce804e548@linaro.org>
+In-Reply-To: <7e180b96-6f47-6b25-8751-01b5186c8c71@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KSQ3ilWMLl3KT8oZJfN20uVn6w4_lnDb
-X-Proofpoint-GUID: KSQ3ilWMLl3KT8oZJfN20uVn6w4_lnDb
+X-Proofpoint-GUID: RaIiqXVUvlEMlkFQilcFQS4ByNlfVERI
+X-Proofpoint-ORIG-GUID: RaIiqXVUvlEMlkFQilcFQS4ByNlfVERI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-12_06,2023-04-12_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 adultscore=0 phishscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2303200000 definitions=main-2304120126
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,59 +93,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4/12/2023 1:45 PM, Krzysztof Kozlowski wrote:
-> On 07/04/2023 16:04, Souradeep Chowdhury wrote:
->> All Qualcomm bootloaders log useful timestamp information related
->> to bootloader stats in the IMEM region. Add the child node within
->> IMEM for the boot stat region containing register address and
->> compatible string.
+On 4/12/2023 1:47 PM, Krzysztof Kozlowski wrote:
+> On 10/04/2023 08:48, Souradeep Chowdhury wrote:
 >>
->> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->> ---
->>   .../devicetree/bindings/sram/qcom,imem.yaml         | 21 +++++++++++++++++++++
->>   1 file changed, 21 insertions(+)
 >>
->> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->> index 665c06e..9998d65 100644
->> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->> @@ -26,6 +26,7 @@ properties:
->>             - qcom,sdm845-imem
->>             - qcom,sdx55-imem
->>             - qcom,sdx65-imem
->> +          - qcom,sm8450-imem
->>         - const: syscon
->>         - const: simple-mfd
->>   
->> @@ -48,6 +49,26 @@ patternProperties:
->>       $ref: /schemas/remoteproc/qcom,pil-info.yaml#
->>       description: Peripheral image loader relocation region
->>   
->> +  "^boot-stat@[0-9a-f]+$":
+>> On 4/7/2023 9:11 PM, Bjorn Andersson wrote:
+>>> On Fri, Apr 07, 2023 at 07:34:36PM +0530, Souradeep Chowdhury wrote:
+>>>> All of Qualcomm's proprietary Android boot-loaders capture boot time
+>>>> stats, like the time when the bootloader started execution and at what
+>>>> point the bootloader handed over control to the kernel etc. in the IMEM
+>>>> region. This information is captured in a specific format by this driver
+>>>> by mapping a structure to the IMEM memory region and then accessing the
+>>>> members of the structure to print the information. This information is
+>>>> useful in verifying if the existing boot KPIs have regressed or not.
+>>>> A sample log in SM8450(waipio) device is as follows:-
+>>>>
+>>>> KPI: Pre ABL Time = 3s
+>>>> KPI: ABL Time = 14s
+>>>
+>>> Why are these in whole seconds?
+>>
+>> This is to give a granular view of time.
+>>
+>>>
+>>>> KPI: Kernel MPM timestamp = 890206
+>>>
+>>> And why is this presented in cycles?
+>>
+>> This timestamp is used as an intermediate value for calculating one of
+>> the KPIs. Can be changed to seconds as well for consistency.
+>>
+>>>
+>>>>
+>>>> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+>>>> stage and the timestamp generated by the sleep counter is logged by
+>>>> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+>>>> starts execution which is logged here as "Pre ABL Time" and the second
+>>>> when it is about to load the kernel logged as "ABL Time". Both are
+>>>> logged in the unit of seconds.
+>>>
+>>> We have a policy to not taint the kernel log with "useless" information,
+>>> for kernel developers this seems to add no value and for end users
+>>> there's no benefit to this.
+>>>
+>>>> The current kernel timestamp is
+>>>> printed by the boot_stats driver as well.
+>>>>
+>>>
+>>> Why?
+>>
+>> Same as stated above.
 > 
-> Konrad,
-> Just like for RPM Master stats, didn't we want to call these just "stats"?
+> You did not answer. The question is "why do you think printing this
+> during boot is suitable for wide usage?". I don't find answer "give a
+> granular view of time" anyway related.
 > 
-> https://lore.kernel.org/linux-arm-msm/20230405-topic-master_stats-v2-1-51c304ecb610@linaro.org
+> Please come with rationale why such printing should be used in Linux
+> kernel at all, given that as Bjorn said - we do not print
+> debugging/profiling information.
 > 
->> +    type: object
->> +    description:
->> +      Imem region dedicated for storing timestamps related
->> +      information regarding bootstats.
-> 
-> Description is okay, but you ignored the rest.
-> 
-> This is a friendly reminder during the review process.
-> 
-> It seems my previous comments were not fully addressed. Maybe my
-> feedback got lost between the quotes, maybe you just forgot to apply it.
-> Please go back to the previous discussion and either implement all
-> requested changes or keep discussing them.
-> 
-> Thank you.
+> You should probably come with a debugfs interface for this.
 
-Ack. Will be implemented in the next version.
-> 
+Ack. The debugfs interface for this will be present in the next version.
+
 > 
 > Best regards,
 > Krzysztof
