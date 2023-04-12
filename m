@@ -2,132 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEFE56DF913
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:53:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9452F6DF92A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:57:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230011AbjDLOxg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 10:53:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50572 "EHLO
+        id S229760AbjDLO5s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 10:57:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbjDLOxU (ORCPT
+        with ESMTP id S229532AbjDLO5r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 10:53:20 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F71729D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 07:53:18 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id z26so14949992lfj.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 07:53:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681311196; x=1683903196;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QcBUTwrPn98Ub9uNAVdB99KXgqzNGzqHRdwuVwi4QY0=;
-        b=FTE84kV8JcYu5Uc3XNq6UbkUo6STYOeJDee4Oi0FFI5g2B7rq+su2i53iiAZCi/zoY
-         MA9UvPc0qtcz7w/pihTBVcZIW88OHfX89fkJyribV8Qc3k3NkO4Vizs2sQ4v8XLHnS+k
-         zpwIjJtXmBl6T4/73l56oUYq+9eNpd72crloZ9lyi/yGMFrgItAt1NSSFpTg7wk4cXgp
-         v5CMMJhj17eNhCX/UknNx2b4UrT/kfXkoaRoxKT+X4dd8YWF4QX5K27Olhc3PEM/s99M
-         pVKxRZ+H/TceYszlcwcOn9M2mzH4CdRUz9DTxD+XYCn36cnBgwMg2diHxsiWFC47+bKN
-         NGFA==
+        Wed, 12 Apr 2023 10:57:47 -0400
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADC247696;
+        Wed, 12 Apr 2023 07:57:36 -0700 (PDT)
+Received: by mail-oi1-f180.google.com with SMTP id w19so7854941oiv.13;
+        Wed, 12 Apr 2023 07:57:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681311196; x=1683903196;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QcBUTwrPn98Ub9uNAVdB99KXgqzNGzqHRdwuVwi4QY0=;
-        b=oW3IDeoeYB9Pis/b8wTP8DUzShsCxGkwMBpm1KZONXzfOo64bDTnF3GQOIilBUCs7J
-         XrBBIpXwwiIuT66inVEKTmz5IQsvyGl6nC8pjEqDWapLMRQxvTBQdyvO5Qjwlii/SO7G
-         g0yb8iRalL09KE9Z2lff0Vi+Yn2zmnYEWG1sXOWR4ZMz0ekbQ5O+xmXG+RAjEHH2qd9n
-         rih1DA4vpa4Mr2pxHDn3ashCYyMp/rwwQyYWV4kHQ6U9jSzMtcmYP108vOjuio0nhSfw
-         YaXH1G53d/dKOrPZ7ytAZOaSVcNUNwwNIWRZKvSS4yuTvbeggFcKgkkqG/7077x6sEcN
-         tf9g==
-X-Gm-Message-State: AAQBX9evZdkbp/PhsMIvPgFqBZyjikM7HeU16YGomgOQAVtW3mA0gdRJ
-        suPUXRYU/Y35DyiwDAnUCQo36w==
-X-Google-Smtp-Source: AKy350Y9FVP7ihnyoOGS8FPwJJAmnb/lbALdSo5FRLgLoL55Oom6+cjZTh74PqxMOAV+qZGCkInBNQ==
-X-Received: by 2002:ac2:51a6:0:b0:4ea:f8f0:545f with SMTP id f6-20020ac251a6000000b004eaf8f0545fmr3831047lfk.52.1681311196306;
-        Wed, 12 Apr 2023 07:53:16 -0700 (PDT)
-Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id w5-20020ac24425000000b004e95f1c9e7dsm3015367lfl.78.2023.04.12.07.53.15
+        d=1e100.net; s=20210112; t=1681311456; x=1683903456;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iMxXEh/refxEn2BVLKI2zG+gF/jaetDaYeI4Maspl7s=;
+        b=3V1ECEK4nUXZsIDs14ektY4ee1VpMmpa0cFA5BdoJnVXNsvEQA7uVA4l9UMiywkssm
+         X8+l9DFGfJ15LiZrZ1fkIO4HlD232eEzv648P1DKlmfO0fgliW7rci89O93NjsjL2Qrv
+         kH4704CUJhE3yGNM9QAG4wTfkpErnsBi5InGD9WIku4Hq1zGQK+TxVDKdBM2GK89bosJ
+         5fUJhld9Mnnaw8oULKjfbe5LSE2nuqq+VSvZxBiSVbj1wF5NRS2JT4WqdeBN9rqOfWS7
+         0H/rw6a4ZspvGOsYzC6S17NeVRT05uDRkdQmtSbwpdzhWJn+Qh9ryhCf/H/U3esQzDYT
+         qOXw==
+X-Gm-Message-State: AAQBX9ctcNnKzdWcbGOkkFURkNiPEaRXLJkjzSscXmg0GIfzraU/ALhW
+        kIMaub3aM4V11Q26wKiBMg==
+X-Google-Smtp-Source: AKy350aqIqgD6ZUzUetWYjloDIl1Z+9gM07oApCpq4K8/QG9Y/jPsecHAHyYaHOlNFpjRXG8NcayTw==
+X-Received: by 2002:a05:6808:281:b0:38b:a6be:7a57 with SMTP id z1-20020a056808028100b0038ba6be7a57mr3172426oic.28.1681311455736;
+        Wed, 12 Apr 2023 07:57:35 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id o2-20020a0568080bc200b0038413a012dasm6677495oik.4.2023.04.12.07.57.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 07:53:16 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 12 Apr 2023 16:53:07 +0200
-Subject: [PATCH 3/3] clk: qcom: dispcc-qcm2290: Fix GPLL0_OUT_DIV handling
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230412-topic-qcm_dispcc-v1-3-bf2989a75ae4@linaro.org>
-References: <20230412-topic-qcm_dispcc-v1-0-bf2989a75ae4@linaro.org>
-In-Reply-To: <20230412-topic-qcm_dispcc-v1-0-bf2989a75ae4@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 12 Apr 2023 07:57:35 -0700 (PDT)
+Received: (nullmailer pid 2357068 invoked by uid 1000);
+        Wed, 12 Apr 2023 14:57:34 -0000
+Date:   Wed, 12 Apr 2023 09:57:34 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681311191; l=1435;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=0ujSVRUiOXtdaFduY1BUwp/tKHCvG84AuQ805mYqR5c=;
- b=44aZNte1QZmDbZwJffhUosLZ1SYc+AmEHM4NinljzKhiUgke/oDbeX8sOLmZe9criHLgNua6QdwX
- 8qWTpd6eB7m8nPI7tqzUdpkW24oZmgUlAkzIOqi40/UYZQ6lt7KM
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        linux-remoteproc@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/6] dt-bindings: media: qcom,sdm845-venus-v2: Allow
+ interconnect properties
+Message-ID: <168131145406.2357008.9122812908931031702.robh@kernel.org>
+References: <20230407-topic-msm_dtb-v1-0-6efb4196f51f@linaro.org>
+ <20230407-topic-msm_dtb-v1-1-6efb4196f51f@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230407-topic-msm_dtb-v1-1-6efb4196f51f@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-GPLL0_OUT_DIV was previously shoved in under the name of its undivided
-sibling in parent_map_2. Resolve it.
 
-Fixes: cc517ea3333f ("clk: qcom: Add display clock controller driver for QCM2290")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/dispcc-qcm2290.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+On Fri, 07 Apr 2023 15:28:31 +0200, Konrad Dybcio wrote:
+> Allow the interconnect properties, which have been in use for ages.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
 
-diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-index ee62aca4e5bb..44dd5cfcc150 100644
---- a/drivers/clk/qcom/dispcc-qcm2290.c
-+++ b/drivers/clk/qcom/dispcc-qcm2290.c
-@@ -28,6 +28,7 @@ enum {
- 	P_DISP_CC_PLL0_OUT_MAIN,
- 	P_DSI0_PHY_PLL_OUT_BYTECLK,
- 	P_DSI0_PHY_PLL_OUT_DSICLK,
-+	P_GPLL0_OUT_DIV,
- 	P_GPLL0_OUT_MAIN,
- 	P_SLEEP_CLK,
- };
-@@ -84,7 +85,7 @@ static const struct clk_parent_data disp_cc_parent_data_1[] = {
- 
- static const struct parent_map disp_cc_parent_map_2[] = {
- 	{ P_BI_TCXO_AO, 0 },
--	{ P_GPLL0_OUT_MAIN, 4 },
-+	{ P_GPLL0_OUT_DIV, 4 },
- };
- 
- static const struct clk_parent_data disp_cc_parent_data_2[] = {
-@@ -153,8 +154,8 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
- 
- static const struct freq_tbl ftbl_disp_cc_mdss_ahb_clk_src[] = {
- 	F(19200000, P_BI_TCXO_AO, 1, 0, 0),
--	F(37500000, P_GPLL0_OUT_MAIN, 8, 0, 0),
--	F(75000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
-+	F(37500000, P_GPLL0_OUT_DIV, 8, 0, 0),
-+	F(75000000, P_GPLL0_OUT_DIV, 4, 0, 0),
- 	{ }
- };
- 
-
--- 
-2.40.0
+Acked-by: Rob Herring <robh@kernel.org>
 
