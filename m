@@ -2,81 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B4026E0004
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 22:41:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B55D6E0016
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 22:46:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbjDLUlU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 16:41:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53124 "EHLO
+        id S229840AbjDLUqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 16:46:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbjDLUlT (ORCPT
+        with ESMTP id S229520AbjDLUqe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 16:41:19 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B435C55A6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:41:17 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id by8so13049144ljb.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:41:17 -0700 (PDT)
+        Wed, 12 Apr 2023 16:46:34 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E645249
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:46:32 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id m4so16168655lfj.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:46:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681332076; x=1683924076;
+        d=linaro.org; s=google; t=1681332391; x=1683924391;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qlLoupxyOcbuZO1f+pTlXDNuIDRKQGPW1F/qouBF8z8=;
-        b=ewmAYjyP9GCb8dcY0pY/L7s2ETYui0zcjujMCJVK5EmP2/B20ECQ+YB/XLQ/ttRmCk
-         gfZwZb0Lht1LEx2+n3eGt3vOod8swCR0sGPHCYlQ3X3hAirjveH5ZvysrKO2XQS9n8qG
-         +VXZWLzo+3mA7ftCaVOW5w5BF51/ZZ05pAqFRpJIFuHsRL1OfYrRodpH6vHNEN/1/YNo
-         pAofdCzPJaOn4SxLopFffXMAGwQ6km9/YCz4sge9tUtHtfmyjH0FLDQ7u4m5sTA9WXWr
-         wZClh3kEbQ3iH8ODuagOK2MMjpey1sIAUGddkOT/s9HURIfxACkOG703suU2pfQZop2n
-         g2EQ==
+        bh=a6Emo09CCLf/plGwNFLqZjmgSdrNmUy8E7AyaPJFF70=;
+        b=pAQ0VwoClK2BLTfd4hXRFYopE2ziTbzRSGF0W06LrIYuVEbVs4nnW76sRnvPLtlloX
+         8Q93A9dY8IOLEugXaklEpY3Dp0EEXuk0u67mCFyvkdE1+HyU/deQ1p1btrl4KOu7fgGq
+         7ePFNcmR961dhsa8dkIUbDb0jewTFV7DKS5BX07gfV9XxTSxshbuR/7CK4RUsqwVTA0x
+         GpNrSYf+U6wDTS1pifYfdHXrnyF7H3uvk+jxyTu1LedYGFSzE+D+5L+RTHqihgG9dAlh
+         1szJyPdkFpEyBXqVvy8/aKRU0WbrMBPMgpPPdJlVA3nRnKFfOk77+x4lVpyWSB2v3nl0
+         eDlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681332076; x=1683924076;
+        d=1e100.net; s=20221208; t=1681332391; x=1683924391;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qlLoupxyOcbuZO1f+pTlXDNuIDRKQGPW1F/qouBF8z8=;
-        b=Gv+BE0mp2kfBju5U9KH6+Nhjey1fHt0igGDq3BiLEm+J+hoKX3EVlZHA7PqVKUwfSq
-         xLPiM8K75chrL7T91aKqRYavypakZ++T77tJR1PwOUvoS7XwEKNrtm57KSxCjswleYaS
-         cHQem6aMTJgVl85qrfkD2WBhf74rBdX+PJML7Yo6PkxHVAqKKadQZRthSGM8ZYhfp8ln
-         X1TDAkJd0q7khCGMC0H381BRW2yTDzXu9NQr79mTG9z6ef1CwbpW2UBaFsCalNvO4/vz
-         WdVVDXV7Za2L2GRCa25VLvhUZVSAzqHACzxyoMr0nI5WDFHuIe+I8yXpsrJI+nCfR5sm
-         VWVw==
-X-Gm-Message-State: AAQBX9e/XVHK7DnJbI2YmbLYA4BlDOv9M6txY51TzdE/ZR/FplfrQmZx
-        NQOfpGDOZt4N+GY80Ev84ZNCPQ==
-X-Google-Smtp-Source: AKy350b6lNRcBYDdrNH+7OvXajk7bbZMKS+WlFCqcfJS/3UIVNaizilzXlj35ezuCgvq8fHqTYplmw==
-X-Received: by 2002:a2e:9602:0:b0:2a6:1e50:ba42 with SMTP id v2-20020a2e9602000000b002a61e50ba42mr5612018ljh.48.1681332075959;
-        Wed, 12 Apr 2023 13:41:15 -0700 (PDT)
+        bh=a6Emo09CCLf/plGwNFLqZjmgSdrNmUy8E7AyaPJFF70=;
+        b=gPYMS1Uo5DR5vxlobwkN06A8ZBF1J9SzDJ6ZrVFnUsLwHNJGedVJaoL5De2qkjQi3Q
+         9K0IsbuU7o2rN40MeGjlFdvr0zuUlKebf/tG9I1GDxX5u0xxjkGJrkGHmxip8vRLH5i0
+         jwhPDJl/QKwk2QiemRDiwA5ISRKoqmlG87UgGMsH1efmxHTMU6TGtue5/+VuI2ONqzmz
+         S4grhMVV+ck+q+yxbheeKmVpmdmh3sFIdb7y2EBc7eFjy2M0AyNNggQ9AReAyfVd0Ux9
+         mkyycUbbyMxouix0OYsLsfSMyNKMjxP360aX2jRaX1LdhOwaBSLzanZ7CzjoDiogLjqh
+         jlSw==
+X-Gm-Message-State: AAQBX9edMpe25mSDf/CxoMRbNEBhES9G0wT5+A41u0Iurk/pT0Fdpuf2
+        F/oYEofYD33r104RnY0zUdMDXw==
+X-Google-Smtp-Source: AKy350a5RBGKlHJXw3i/gSzdU4PAsc78wrlKrPLZuM3LPt2X7QO34SvkbYChUN+VghVnBLGqOhBBHA==
+X-Received: by 2002:ac2:429a:0:b0:4eb:4552:61aa with SMTP id m26-20020ac2429a000000b004eb455261aamr40493lfh.12.1681332390865;
+        Wed, 12 Apr 2023 13:46:30 -0700 (PDT)
 Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id x28-20020a05651c105c00b0029ab1f2b196sm3417678ljm.24.2023.04.12.13.41.14
+        by smtp.gmail.com with ESMTPSA id b7-20020a056512024700b004eca8b92936sm87784lfo.61.2023.04.12.13.46.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 13:41:15 -0700 (PDT)
-Message-ID: <6aba6924-18c4-fb2d-68ce-65fae07018ab@linaro.org>
-Date:   Wed, 12 Apr 2023 22:41:13 +0200
+        Wed, 12 Apr 2023 13:46:30 -0700 (PDT)
+Message-ID: <a599d157-002f-26ef-5f31-a3fb0925dfba@linaro.org>
+Date:   Wed, 12 Apr 2023 22:46:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v5 3/4] clk: qcom: cbf-msm8996: scale CBF clock according
- to the CPUfreq
+Subject: Re: [PATCH V12 3/4] arm64: dts: qcom: Add support for ipq9574 SoC and
+ RDP433 variant
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230410200014.432418-1-dmitry.baryshkov@linaro.org>
- <20230410200014.432418-4-dmitry.baryshkov@linaro.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, geert+renesas@glider.be,
+        rafal@milecki.pl, nfraprado@collabora.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230410135948.11970-1-quic_devipriy@quicinc.com>
+ <20230410135948.11970-4-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230410200014.432418-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230410135948.11970-4-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,139 +91,191 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10.04.2023 22:00, Dmitry Baryshkov wrote:
-> Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
-> according to CPU frequencies.
+On 10.04.2023 15:59, Devi Priya wrote:
+> Add initial device tree support for Qualcomm IPQ9574 SoC and
+> Reference Design Platform(RDP) 433 which is based on IPQ9574
+> family of SoCs
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
->  drivers/clk/qcom/Kconfig        |  1 +
->  drivers/clk/qcom/clk-cbf-8996.c | 59 ++++++++++++++++++++++++++++++++-
->  2 files changed, 59 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 449bc8314d21..475f4997d79f 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -48,6 +48,7 @@ config QCOM_CLK_APCS_MSM8916
->  config QCOM_CLK_APCC_MSM8996
->  	tristate "MSM8996 CPU Clock Controller"
->  	select QCOM_KRYO_L2_ACCESSORS
-> +	select INTERCONNECT_CLK if INTERCONNECT
->  	depends on ARM64
->  	help
->  	  Support for the CPU clock controller on msm8996 devices.
-> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
-> index cfd567636f4e..1bb2cd956d68 100644
-> --- a/drivers/clk/qcom/clk-cbf-8996.c
-> +++ b/drivers/clk/qcom/clk-cbf-8996.c
-> @@ -5,11 +5,15 @@
->  #include <linux/bitfield.h>
->  #include <linux/clk.h>
->  #include <linux/clk-provider.h>
-> +#include <linux/interconnect-clk.h>
-> +#include <linux/interconnect-provider.h>
->  #include <linux/of.h>
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
->  #include <linux/regmap.h>
->  
-> +#include <dt-bindings/interconnect/qcom,msm8996-cbf.h>
-> +
->  #include "clk-alpha-pll.h"
->  #include "clk-regmap.h"
->  
-> @@ -223,6 +227,48 @@ static const struct regmap_config cbf_msm8996_regmap_config = {
->  	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
->  };
->  
-> +#ifdef CONFIG_INTERCONNECT
-> +
-> +/* Random ID that doesn't clash with main qnoc and OSM */
-> +#define CBF_MASTER_NODE 2000
-Man, this clearly should have been equal 8996 :P
 
-> +
-> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev, struct clk_hw *cbf_hw)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct clk *clk = devm_clk_hw_get_clk(dev, cbf_hw, "cbf");
-> +	const struct icc_clk_data data[] = {
-> +		{ .clk = clk, .name = "cbf", },
-> +	};
-> +	struct icc_provider *provider;
-> +
-> +	provider = icc_clk_register(dev, CBF_MASTER_NODE, ARRAY_SIZE(data), data);
-> +	if (IS_ERR(provider))
-> +		return PTR_ERR(provider);
-> +
-> +	platform_set_drvdata(pdev, provider);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
-> +{
-> +	struct icc_provider *provider = platform_get_drvdata(pdev);
-> +
-> +	icc_clk_unregister(provider);
-> +
-> +	return 0;
-> +}
-> +#else
-> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev,  struct clk_hw *cbf_hw)
-> +{
-> +	dev_warn(&pdev->dev, "interconnects support is disabled, CBF clock is fixed\n");
-s/interconnects/interconnect
+> +	soc: soc@0 {
+> +		compatible = "simple-bus";
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges = <0 0 0 0xffffffff>;
+this is equal to:
 
-or
+ranges;
 
-s/interconnects support/CONFIG_INTERCONNECT
-
-> +
-> +	return 0;
-> +}
-> +#define qcom_msm8996_cbf_icc_remove(pdev) (0)
-> +#define qcom_msm8996_cbf_icc_sync_state(dev) (0)
-> +#endif
-> +
->  static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
->  {
->  	void __iomem *base;
-> @@ -281,7 +327,16 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
->  
-> -	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &cbf_mux.clkr.hw);
-> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &cbf_mux.clkr.hw);
-> +	if (ret)
-> +		return ret;
-> +
-> +	return qcom_msm8996_cbf_icc_register(pdev, &cbf_mux.clkr.hw);
-> +}
-> +
-> +static int qcom_msm8996_cbf_remove(struct platform_device *pdev)
-> +{
-> +	return qcom_msm8996_cbf_icc_remove(pdev);
->  }
->  
->  static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
-> @@ -292,9 +347,11 @@ MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
->  
->  static struct platform_driver qcom_msm8996_cbf_driver = {
->  	.probe = qcom_msm8996_cbf_probe,
-> +	.remove = qcom_msm8996_cbf_remove,
-.remove_new?
-
-With that:
+Could you fix that up when applying, Bjorn, should there be
+no other issues?
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  	.driver = {
->  		.name = "qcom-msm8996-cbf",
->  		.of_match_table = qcom_msm8996_cbf_match_table,
-> +		.sync_state = icc_sync_state,
->  	},
->  };
->  
+
+> +
+> +		tlmm: pinctrl@1000000 {
+> +			compatible = "qcom,ipq9574-tlmm";
+> +			reg = <0x01000000 0x300000>;
+> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			gpio-ranges = <&tlmm 0 0 65>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +
+> +			uart2_pins: uart2-state {
+> +				pins = "gpio34", "gpio35";
+> +				function = "blsp2_uart";
+> +				drive-strength = <8>;
+> +				bias-disable;
+> +			};
+> +		};
+> +
+> +		gcc: clock-controller@1800000 {
+> +			compatible = "qcom,ipq9574-gcc";
+> +			reg = <0x01800000 0x80000>;
+> +			clocks = <&xo_board_clk>,
+> +				 <&sleep_clk>,
+> +				 <0>,
+> +				 <0>,
+> +				 <0>,
+> +				 <0>,
+> +				 <0>;
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
+> +
+> +		sdhc_1: mmc@7804000 {
+> +			compatible = "qcom,ipq9574-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0x07804000 0x1000>, <0x07805000 0x1000>;
+> +			reg-names = "hc", "cqhci";
+> +
+> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+> +				 <&gcc GCC_SDCC1_APPS_CLK>,
+> +				 <&xo_board_clk>;
+> +			clock-names = "iface", "core", "xo";
+> +			non-removable;
+> +			status = "disabled";
+> +		};
+> +
+> +		blsp1_uart2: serial@78b1000 {
+> +			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+> +			reg = <0x078b1000 0x200>;
+> +			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_BLSP1_UART3_APPS_CLK>,
+> +				 <&gcc GCC_BLSP1_AHB_CLK>;
+> +			clock-names = "core", "iface";
+> +			status = "disabled";
+> +		};
+> +
+> +		intc: interrupt-controller@b000000 {
+> +			compatible = "qcom,msm-qgic2";
+> +			reg = <0x0b000000 0x1000>,  /* GICD */
+> +			      <0x0b002000 0x2000>,  /* GICC */
+> +			      <0x0b001000 0x1000>,  /* GICH */
+> +			      <0x0b004000 0x2000>;  /* GICV */
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <3>;
+> +			interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+> +			ranges = <0 0x0b00c000 0x3000>;
+> +
+> +			v2m0: v2m@0 {
+> +				compatible = "arm,gic-v2m-frame";
+> +				reg = <0x00000000 0xffd>;
+> +				msi-controller;
+> +			};
+> +
+> +			v2m1: v2m@1000 {
+> +				compatible = "arm,gic-v2m-frame";
+> +				reg = <0x00001000 0xffd>;
+> +				msi-controller;
+> +			};
+> +
+> +			v2m2: v2m@2000 {
+> +				compatible = "arm,gic-v2m-frame";
+> +				reg = <0x00002000 0xffd>;
+> +				msi-controller;
+> +			};
+> +		};
+> +
+> +		timer@b120000 {
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0x0b120000 0x1000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges;
+> +
+> +			frame@b120000 {
+> +				reg = <0x0b121000 0x1000>,
+> +				      <0x0b122000 0x1000>;
+> +				frame-number = <0>;
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+> +			};
+> +
+> +			frame@b123000 {
+> +				reg = <0x0b123000 0x1000>;
+> +				frame-number = <1>;
+> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b124000 {
+> +				reg = <0x0b124000 0x1000>;
+> +				frame-number = <2>;
+> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b125000 {
+> +				reg = <0x0b125000 0x1000>;
+> +				frame-number = <3>;
+> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b126000 {
+> +				reg = <0x0b126000 0x1000>;
+> +				frame-number = <4>;
+> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b127000 {
+> +				reg = <0x0b127000 0x1000>;
+> +				frame-number = <5>;
+> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@b128000 {
+> +				reg = <0x0b128000 0x1000>;
+> +				frame-number = <6>;
+> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+> +				status = "disabled";
+> +			};
+> +		};
+> +	};
+> +
+> +	timer {
+> +		compatible = "arm,armv8-timer";
+> +		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+> +	};
+> +};
