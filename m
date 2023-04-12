@@ -2,96 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B2D16DED47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 10:11:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B41A6DED53
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 10:15:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229988AbjDLILr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 04:11:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52112 "EHLO
+        id S229817AbjDLIPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 04:15:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229963AbjDLILn (ORCPT
+        with ESMTP id S229998AbjDLIPH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 04:11:43 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4494061A9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 01:11:36 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-2f27a10f72bso165785f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 01:11:36 -0700 (PDT)
+        Wed, 12 Apr 2023 04:15:07 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6FBB122
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 01:15:05 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id q23so17235174ejz.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 01:15:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1681287095; x=1683879095;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ApQh3OO8N/EkSlcg/GoWQjRUynfLNJg2zkmAQ0bDPGw=;
-        b=gfyWMUpShdnQKWyAjpTEdc2LlGQvtN0yklmxrUAwTj29EHlkO5IhoMlUjmWqHs/QD8
-         Mb7XfysniPM4irakrgTheWv1Pk91OvVsHCAzzqQyCbxRl8G5wB9UshcnPPA6YQ4eGZmy
-         QsJIeA5rz0iifCC/VUKfFFyWjgyIK9rVjnbmk=
+        d=linaro.org; s=google; t=1681287304;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fFt2X04+gRJHM2+VI6ttu8hA+NrhkWSLmAUSA85EMys=;
+        b=Z6I6MrMH/lfo0t0Y0h6nvWLZnvjhnC6NwFLDT6uewKACghnLMh/GTj1v+inaNlz+Kl
+         wZ6na2RHpYTyWT781486puPTghs6mXJXOHSICprqmvDRjdYwykvupA3XID25f/nf6F1K
+         oUbO4bgP7K3rjUPhiLbcIDtHgLpEL9FFNzsDXZTHKUj5hE3YkoLANTGk6bH61+tEbAGR
+         x0IDS7wMevWHc/rOtJOTKoYkVrlXH+X5akkL+HXcioyVHDYsikBJSZ17zaFwMlAtWEkD
+         qLPqlTep0SpYlat+X9ZZOf/iVvD1wgfr1MUuns1XiI5imaP3LgX/Ls+Gfyw4UcVCQ1bR
+         XZlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681287095; x=1683879095;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ApQh3OO8N/EkSlcg/GoWQjRUynfLNJg2zkmAQ0bDPGw=;
-        b=IzcSRO1IXvGghB3ZoVNHscbCmZMQD5duv042yws0scSMlEcepgDSySQHgFgV5pJ4gl
-         pTDArKPLOBcSM3tfSTsDY+nJrVMxNhQFmNUNKhSZN6hqAODvyYpLbll3hmejwGq1aE6y
-         2gop5hyg9NYOPAdfEQOcR9epErGmx+FKmBno8hdKxEP9xcz1hW5Dn4CELJaJKif46fu0
-         mHNuD+PoHZuLh6JUPiVHkrnpV1UcufLD7/sJHyAUlWfHGvZ01pF4YYcJpCYsr8swsCfS
-         wHFOzNxtihclO8SeM1rGXecrxVmeXjk3EJ+j2OqjPp2C9WnyghLmAKDFvE5Mksr8iGT4
-         rL3g==
-X-Gm-Message-State: AAQBX9fL2DdVlIW5guIF3bT+H1Zmek9O/1gfR5oRorwWQr1COILlXU9l
-        k2yxK7SplcUqJYiOxGp5m+BiJg==
-X-Google-Smtp-Source: AKy350bnBOA1yKbUJKGFfK7Ajlx+yHLgcIBWXcno+RB9JgfyhFepkx/MEZdWOedrsJ7jrgeu2MHhLQ==
-X-Received: by 2002:a5d:6588:0:b0:2e4:aa61:a50 with SMTP id q8-20020a5d6588000000b002e4aa610a50mr9004356wru.1.1681287094654;
-        Wed, 12 Apr 2023 01:11:34 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id m3-20020adfdc43000000b002c5691f13eesm16556148wrj.50.2023.04.12.01.11.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 01:11:34 -0700 (PDT)
-Date:   Wed, 12 Apr 2023 10:11:32 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Christopher Healy <healych@amazon.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH v2 0/2] drm: fdinfo memory stats
-Message-ID: <ZDZntP+0wG6+QyHh@phenom.ffwll.local>
-Mail-Followup-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Christopher Healy <healych@amazon.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        freedreno@lists.freedesktop.org
-References: <20230410210608.1873968-1-robdclark@gmail.com>
- <CAF6AEGvs4XMggPMthiJ89SiaUj3k+nY95OhxLZ5cD-01XPco4Q@mail.gmail.com>
- <ZDWQfbUBhyJf1Ezx@phenom.ffwll.local>
- <CAF6AEGtYw4Dn80OtrnJESkkDXxhUdAr6Nuva+Jo3ExW8MXH++Q@mail.gmail.com>
- <CAA8EJppnEwcHM++YUYZGrNXEha=-ZVAexBdkMVsU52PTOs4VnA@mail.gmail.com>
- <CAF6AEGsE3NOe9TkEzrk5rr-D2PoKaxF5Yn3W8wWew8um6r2EXw@mail.gmail.com>
- <d93f4256-4554-e031-9730-4ca2a7de6aaf@linaro.org>
+        d=1e100.net; s=20210112; t=1681287304;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fFt2X04+gRJHM2+VI6ttu8hA+NrhkWSLmAUSA85EMys=;
+        b=hDlKrMCmK4I1YEoq6wD27r6igYN+dxtb2pdduGrDMnl/mrdcPHtMG4jmZdVljCRUGS
+         EHCM+fxBfpDI7obfaeJKzWumJFREUXCyNRLThHKH/uHJZFy7oBfcGeOF5xsscvr4CKxs
+         49rZYqGru2cPgpT/XXQXmdUihCY8hHGu8kUPOzX+Pk5bi76tXvbHK9kJHgE6jX2+DnTg
+         3WqMCXgwD0CbpXmB7blrOoziSf9z5DgRLUb0WbJCQsPmBWMc3U3dVvN5MPE0MsirZH5Y
+         Rg/gZrmnGzNKNK0CdoDfwsK2I6C1SoQ9whre1zdYibEPdlirj30qsaNdgNY5oNevm62t
+         eKFQ==
+X-Gm-Message-State: AAQBX9coqNwXpE+LCObRSK37I3Rso8K5+rZU7oRXnT/pVkwhEAFsSlaY
+        YmwZnyE7c3xftpdKqxKr7BYwlg==
+X-Google-Smtp-Source: AKy350YN+rstwkL7t/fiU5nlz3Ynak5pPMW0pVAEUiLlmM3URy4db0+sE67ofxpCGhmf8BuykmLBKA==
+X-Received: by 2002:a17:906:6494:b0:94a:653b:ba40 with SMTP id e20-20020a170906649400b0094a653bba40mr1571344ejm.15.1681287304232;
+        Wed, 12 Apr 2023 01:15:04 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:8fa0:9989:3f72:b14f? ([2a02:810d:15c0:828:8fa0:9989:3f72:b14f])
+        by smtp.gmail.com with ESMTPSA id wt13-20020a170906ee8d00b0094a8115e148sm3103930ejb.87.2023.04.12.01.15.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Apr 2023 01:15:03 -0700 (PDT)
+Message-ID: <e1f83f5f-c139-c1b2-5e42-00fce804e548@linaro.org>
+Date:   Wed, 12 Apr 2023 10:15:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d93f4256-4554-e031-9730-4ca2a7de6aaf@linaro.org>
-X-Operating-System: Linux phenom 6.1.0-7-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
+ within IMEM
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1680874520.git.quic_schowdhu@quicinc.com>
+ <96601c1f9e433ef8fbc608d5ca09365b9c0d8132.1680874520.git.quic_schowdhu@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <96601c1f9e433ef8fbc608d5ca09365b9c0d8132.1680874520.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -99,155 +84,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 01:36:52AM +0300, Dmitry Baryshkov wrote:
-> On 11/04/2023 21:28, Rob Clark wrote:
-> > On Tue, Apr 11, 2023 at 10:36 AM Dmitry Baryshkov
-> > <dmitry.baryshkov@linaro.org> wrote:
-> > > 
-> > > On Tue, 11 Apr 2023 at 20:13, Rob Clark <robdclark@gmail.com> wrote:
-> > > > 
-> > > > On Tue, Apr 11, 2023 at 9:53 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > > > 
-> > > > > On Tue, Apr 11, 2023 at 09:47:32AM -0700, Rob Clark wrote:
-> > > > > > On Mon, Apr 10, 2023 at 2:06 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > > > > > 
-> > > > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > > > > 
-> > > > > > > Similar motivation to other similar recent attempt[1].  But with an
-> > > > > > > attempt to have some shared code for this.  As well as documentation.
-> > > > > > > 
-> > > > > > > It is probably a bit UMA-centric, I guess devices with VRAM might want
-> > > > > > > some placement stats as well.  But this seems like a reasonable start.
-> > > > > > > 
-> > > > > > > Basic gputop support: https://patchwork.freedesktop.org/series/116236/
-> > > > > > > And already nvtop support: https://github.com/Syllo/nvtop/pull/204
-> > > > > > 
-> > > > > > On a related topic, I'm wondering if it would make sense to report
-> > > > > > some more global things (temp, freq, etc) via fdinfo?  Some of this,
-> > > > > > tools like nvtop could get by trawling sysfs or other driver specific
-> > > > > > ways.  But maybe it makes sense to have these sort of things reported
-> > > > > > in a standardized way (even though they aren't really per-drm_file)
-> > > > > 
-> > > > > I think that's a bit much layering violation, we'd essentially have to
-> > > > > reinvent the hwmon sysfs uapi in fdinfo. Not really a business I want to
-> > > > > be in :-)
-> > > > 
-> > > > I guess this is true for temp (where there are thermal zones with
-> > > > potentially multiple temp sensors.. but I'm still digging my way thru
-> > > > the thermal_cooling_device stuff)
-> > > 
-> > > It is slightly ugly. All thermal zones and cooling devices are virtual
-> > > devices (so, even no connection to the particular tsens device). One
-> > > can either enumerate them by checking
-> > > /sys/class/thermal/thermal_zoneN/type or enumerate them through
-> > > /sys/class/hwmon. For cooling devices again the only enumeration is
-> > > through /sys/class/thermal/cooling_deviceN/type.
-> > > 
-> > > Probably it should be possible to push cooling devices and thermal
-> > > zones under corresponding providers. However I do not know if there is
-> > > a good way to correlate cooling device (ideally a part of GPU) to the
-> > > thermal_zone (which in our case is provided by tsens / temp_alarm
-> > > rather than GPU itself).
-> > > 
-> > > > 
-> > > > But what about freq?  I think, esp for cases where some "fw thing" is
-> > > > controlling the freq we end up needing to use gpu counters to measure
-> > > > the freq.
-> > > 
-> > > For the freq it is slightly easier: /sys/class/devfreq/*, devices are
-> > > registered under proper parent (IOW, GPU). So one can read
-> > > /sys/class/devfreq/3d00000.gpu/cur_freq or
-> > > /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq.
-> > > 
-> > > However because of the components usage, there is no link from
-> > > /sys/class/drm/card0
-> > > (/sys/devices/platform/soc@0/ae00000.display-subsystem/ae01000.display-controller/drm/card0)
-> > > to /sys/devices/platform/soc@0/3d00000.gpu, the GPU unit.
-> > > 
-> > > Getting all these items together in a platform-independent way would
-> > > be definitely an important but complex topic.
-> > 
-> > But I don't believe any of the pci gpu's use devfreq ;-)
-> > 
-> > And also, you can't expect the CPU to actually know the freq when fw
-> > is the one controlling freq.  We can, currently, have a reasonable
-> > approximation from devfreq but that stops if IFPC is implemented.  And
-> > other GPUs have even less direct control.  So freq is a thing that I
-> > don't think we should try to get from "common frameworks"
+On 07/04/2023 16:04, Souradeep Chowdhury wrote:
+> All Qualcomm bootloaders log useful timestamp information related
+> to bootloader stats in the IMEM region. Add the child node within
+> IMEM for the boot stat region containing register address and
+> compatible string.
 > 
-> I think it might be useful to add another passive devfreq governor type for
-> external frequencies. This way we can use the same interface to export
-> non-CPU-controlled frequencies.
-
-Yeah this sounds like a decent idea to me too. It might also solve the fun
-of various pci devices having very non-standard freq controls in sysfs
-(looking at least at i915 here ...)
-
-I guess it would minimally be a good idea if we could document this, or
-maybe have a reference implementation in nvtop or whatever the cool thing
-is rn.
--Daniel
-
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  .../devicetree/bindings/sram/qcom,imem.yaml         | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 > 
-> > 
-> > BR,
-> > -R
-> > 
-> > > > 
-> > > > > What might be needed is better glue to go from the fd or fdinfo to the
-> > > > > right hw device and then crawl around the hwmon in sysfs automatically. I
-> > > > > would not be surprised at all if we really suck on this, probably more
-> > > > > likely on SoC than pci gpus where at least everything should be under the
-> > > > > main pci sysfs device.
-> > > > 
-> > > > yeah, I *think* userspace would have to look at /proc/device-tree to
-> > > > find the cooling device(s) associated with the gpu.. at least I don't
-> > > > see a straightforward way to figure it out just for sysfs
-> > > > 
-> > > > BR,
-> > > > -R
-> > > > 
-> > > > > -Daniel
-> > > > > 
-> > > > > > 
-> > > > > > BR,
-> > > > > > -R
-> > > > > > 
-> > > > > > 
-> > > > > > > [1] https://patchwork.freedesktop.org/series/112397/
-> > > > > > > 
-> > > > > > > Rob Clark (2):
-> > > > > > >    drm: Add fdinfo memory stats
-> > > > > > >    drm/msm: Add memory stats to fdinfo
-> > > > > > > 
-> > > > > > >   Documentation/gpu/drm-usage-stats.rst | 21 +++++++
-> > > > > > >   drivers/gpu/drm/drm_file.c            | 79 +++++++++++++++++++++++++++
-> > > > > > >   drivers/gpu/drm/msm/msm_drv.c         | 25 ++++++++-
-> > > > > > >   drivers/gpu/drm/msm/msm_gpu.c         |  2 -
-> > > > > > >   include/drm/drm_file.h                | 10 ++++
-> > > > > > >   5 files changed, 134 insertions(+), 3 deletions(-)
-> > > > > > > 
-> > > > > > > --
-> > > > > > > 2.39.2
-> > > > > > > 
-> > > > > 
-> > > > > --
-> > > > > Daniel Vetter
-> > > > > Software Engineer, Intel Corporation
-> > > > > http://blog.ffwll.ch
-> > > 
-> > > 
-> > > 
-> > > --
-> > > With best wishes
-> > > Dmitry
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> index 665c06e..9998d65 100644
+> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> @@ -26,6 +26,7 @@ properties:
+>            - qcom,sdm845-imem
+>            - qcom,sdx55-imem
+>            - qcom,sdx65-imem
+> +          - qcom,sm8450-imem
+>        - const: syscon
+>        - const: simple-mfd
+>  
+> @@ -48,6 +49,26 @@ patternProperties:
+>      $ref: /schemas/remoteproc/qcom,pil-info.yaml#
+>      description: Peripheral image loader relocation region
+>  
+> +  "^boot-stat@[0-9a-f]+$":
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Konrad,
+Just like for RPM Master stats, didn't we want to call these just "stats"?
+
+https://lore.kernel.org/linux-arm-msm/20230405-topic-master_stats-v2-1-51c304ecb610@linaro.org/
+
+> +    type: object
+> +    description:
+> +      Imem region dedicated for storing timestamps related
+> +      information regarding bootstats.
+
+Description is okay, but you ignored the rest.
+
+This is a friendly reminder during the review process.
+
+It seems my previous comments were not fully addressed. Maybe my
+feedback got lost between the quotes, maybe you just forgot to apply it.
+Please go back to the previous discussion and either implement all
+requested changes or keep discussing them.
+
+Thank you.
+
+
+Best regards,
+Krzysztof
+
