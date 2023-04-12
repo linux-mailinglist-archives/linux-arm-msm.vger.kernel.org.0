@@ -2,238 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 824476DF7B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 15:51:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F0BC6DF836
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:18:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229913AbjDLNv3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 09:51:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53976 "EHLO
+        id S230193AbjDLOS5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 10:18:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbjDLNv2 (ORCPT
+        with ESMTP id S230081AbjDLOS4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 09:51:28 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4984E6592
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 06:51:19 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f080fdb924so4562845e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 06:51:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1681307478; x=1683899478;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LQ4NiZvznI6IBHIw53zN4PYbVETcRXS/mWjDM4fzXi4=;
-        b=V6NvYG80P0AwbTYTb710JCsHBXPO8z1p+yX1qAkADij2GAGwKttISHoJ6IE2kXEWxZ
-         18u2Qx/O1+aRenmH82kbc4PzY1kzeALFyCp5v6Q3B925Tj8Nhi1+nvPSbcisaWFwqa84
-         jfxo4XldKXk0zeAJzEFwQC+jLzUQGi85QiZW8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681307478; x=1683899478;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LQ4NiZvznI6IBHIw53zN4PYbVETcRXS/mWjDM4fzXi4=;
-        b=JErO4h8+mOQ/l0cbkMdyd57g6T/uh3xy3XJ+OJUr8RHR9mPsx0lGr2aogAg95ay0kI
-         1+e/KAQ3B5NKwsYUM1345AfrDRocz1MoVIHC1iG2BhHDnzV7V6rQg5ajr9X3tm3nWzFC
-         dHV23x0oQ8PLoUvKc1oDenAYmfD/PQLCEqhTDPqzEoWWOKprjn5YNdnI+aptSJkSM6gZ
-         GfjjE/PHv9lCV++iNmwe0dP2gNxc/8BaogpBCQiavtBmYjDWyHYRfGirKZeg+GCa3688
-         XpcbxgWWRLVJ29qsvrw9HLnHzD7+08HFuiBb7wkNtsxtj48lk/c1yiRJWoARDTc0efWF
-         3aRw==
-X-Gm-Message-State: AAQBX9dubDJTMdZ4xByyeTNOfBvsQKcWI13HXfzcRTs4QFmAYwiFVvme
-        19yFqlFMigJU+5eRocyf6vnNIQ==
-X-Google-Smtp-Source: AKy350Yev9AoQttQJuI2EFo+iz78JVTq8wQnWUp147g1uDZB5AoV2Ib1Ak5O6swXsXNWA1+Evrw4WA==
-X-Received: by 2002:a05:600c:1f0e:b0:3f0:80fe:212d with SMTP id bd14-20020a05600c1f0e00b003f080fe212dmr2293208wmb.3.1681307477662;
-        Wed, 12 Apr 2023 06:51:17 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id g15-20020a05600c4ecf00b003edc4788fa0sm2627683wmq.2.2023.04.12.06.51.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 06:51:17 -0700 (PDT)
-Date:   Wed, 12 Apr 2023 15:51:15 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        intel-gfx@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 4/7] drm/i915: Switch to fdinfo helper
-Message-ID: <ZDa3U/k9orudzwL2@phenom.ffwll.local>
-Mail-Followup-To: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@gmail.com>, intel-gfx@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230411225725.2032862-1-robdclark@gmail.com>
- <20230411225725.2032862-5-robdclark@gmail.com>
- <292d10fe-3163-d282-6497-18c1d8621d72@linux.intel.com>
+        Wed, 12 Apr 2023 10:18:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB058449C;
+        Wed, 12 Apr 2023 07:18:55 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33CA9KF5016590;
+        Wed, 12 Apr 2023 14:18:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=A3rtY/+rMuLAW7o8CwDLtu8ApOMjjqatmbeuFdqpedY=;
+ b=AKYnLl7YDsF9l68dMWFqfYcVbsRkE/6XdHlCzLp61Xm3bf+/97sFZ2cj0/iZNK8Vd9Iy
+ bdLELIPqnfZpZ17QkbzIMwHpjAiuYw4EwhiQ17QOFIKHDikEYLfOIGyPdtKMWujR4Qai
+ 5k+HupWAcqCwVUjf/Gal/jcm0b5Oz6apFn+1d+9OghslRpgN8FWJDz6nCpPpnwomqBkG
+ idx40wNf4hCq/Grul1+QZujN2R4WIml/MPyj5LyIdy+ClSB+WSzNVJ8MfpP7a9BYVFEP
+ 8HW1/QrD2sgR9MLPLZFlxwavEiEbJ2NgmtT6gdTEceU17KEdNu2wfY7U4t4qdCSolbxE Uw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwchbt7m2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Apr 2023 14:18:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33CEIhUH010999
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 12 Apr 2023 14:18:43 GMT
+Received: from [10.50.1.100] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 12 Apr
+ 2023 07:18:38 -0700
+Message-ID: <d53b793a-5e9d-071e-8842-d8c0845e22c1@quicinc.com>
+Date:   Wed, 12 Apr 2023 19:47:49 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <292d10fe-3163-d282-6497-18c1d8621d72@linux.intel.com>
-X-Operating-System: Linux phenom 6.1.0-7-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
+ within IMEM
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1680874520.git.quic_schowdhu@quicinc.com>
+ <96601c1f9e433ef8fbc608d5ca09365b9c0d8132.1680874520.git.quic_schowdhu@quicinc.com>
+ <e1f83f5f-c139-c1b2-5e42-00fce804e548@linaro.org>
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <e1f83f5f-c139-c1b2-5e42-00fce804e548@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KSQ3ilWMLl3KT8oZJfN20uVn6w4_lnDb
+X-Proofpoint-GUID: KSQ3ilWMLl3KT8oZJfN20uVn6w4_lnDb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-12_06,2023-04-12_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304120126
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 01:32:43PM +0100, Tvrtko Ursulin wrote:
-> 
-> On 11/04/2023 23:56, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> > 
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/i915/i915_driver.c     |  3 ++-
-> >   drivers/gpu/drm/i915/i915_drm_client.c | 18 +++++-------------
-> >   drivers/gpu/drm/i915/i915_drm_client.h |  2 +-
-> >   3 files changed, 8 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-> > index db7a86def7e2..37eacaa3064b 100644
-> > --- a/drivers/gpu/drm/i915/i915_driver.c
-> > +++ b/drivers/gpu/drm/i915/i915_driver.c
-> > @@ -1696,7 +1696,7 @@ static const struct file_operations i915_driver_fops = {
-> >   	.compat_ioctl = i915_ioc32_compat_ioctl,
-> >   	.llseek = noop_llseek,
-> >   #ifdef CONFIG_PROC_FS
-> > -	.show_fdinfo = i915_drm_client_fdinfo,
-> > +	.show_fdinfo = drm_fop_show_fdinfo,
-> >   #endif
-> >   };
-> > @@ -1796,6 +1796,7 @@ static const struct drm_driver i915_drm_driver = {
-> >   	.open = i915_driver_open,
-> >   	.lastclose = i915_driver_lastclose,
-> >   	.postclose = i915_driver_postclose,
-> > +	.show_fdinfo = i915_drm_client_fdinfo,
-> >   	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
-> >   	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
-> > diff --git a/drivers/gpu/drm/i915/i915_drm_client.c b/drivers/gpu/drm/i915/i915_drm_client.c
-> > index b09d1d386574..4a77e5e47f79 100644
-> > --- a/drivers/gpu/drm/i915/i915_drm_client.c
-> > +++ b/drivers/gpu/drm/i915/i915_drm_client.c
-> > @@ -101,7 +101,7 @@ static u64 busy_add(struct i915_gem_context *ctx, unsigned int class)
-> >   }
-> >   static void
-> > -show_client_class(struct seq_file *m,
-> > +show_client_class(struct drm_printer *p,
-> >   		  struct i915_drm_client *client,
-> >   		  unsigned int class)
-> >   {
-> > @@ -117,22 +117,20 @@ show_client_class(struct seq_file *m,
-> >   	rcu_read_unlock();
-> >   	if (capacity)
-> > -		seq_printf(m, "drm-engine-%s:\t%llu ns\n",
-> > +		drm_printf(p, "drm-engine-%s:\t%llu ns\n",
-> >   			   uabi_class_names[class], total);
-> >   	if (capacity > 1)
-> > -		seq_printf(m, "drm-engine-capacity-%s:\t%u\n",
-> > +		drm_printf(p, "drm-engine-capacity-%s:\t%u\n",
-> >   			   uabi_class_names[class],
-> >   			   capacity);
-> >   }
-> > -void i915_drm_client_fdinfo(struct seq_file *m, struct file *f)
-> > +void i915_drm_client_fdinfo(struct drm_printer *p, struct drm_file *file)
-> >   {
-> > -	struct drm_file *file = f->private_data;
-> >   	struct drm_i915_file_private *file_priv = file->driver_priv;
-> >   	struct drm_i915_private *i915 = file_priv->dev_priv;
-> >   	struct i915_drm_client *client = file_priv->client;
-> > -	struct pci_dev *pdev = to_pci_dev(i915->drm.dev);
-> >   	unsigned int i;
-> >   	/*
-> > @@ -141,12 +139,6 @@ void i915_drm_client_fdinfo(struct seq_file *m, struct file *f)
-> >   	 * ******************************************************************
-> >   	 */
-> > -	seq_printf(m, "drm-driver:\t%s\n", i915->drm.driver->name);
-> > -	seq_printf(m, "drm-pdev:\t%04x:%02x:%02x.%d\n",
-> > -		   pci_domain_nr(pdev->bus), pdev->bus->number,
-> > -		   PCI_SLOT(pdev->devfn), PCI_FUNC(pdev->devfn));
-> > -	seq_printf(m, "drm-client-id:\t%u\n", client->id);
-> 
-> As mentioned in my reply to the cover letter, I think the i915
-> implementation is the right one. At least the semantics of it.
-> 
-> Granted it is a super set of the minimum required as documented by
-> drm-usage-stats.rst - not only 1:1 to current instances of struct file, but
-> also avoids immediate id recycling.
-> 
-> Former could perhaps be achieved with a simple pointer hash, but latter
-> helps userspace detect when a client has exited and id re-allocated to a new
-> client within a single scanning period.
-> 
-> Without this I don't think userspace can implement a fail safe method of
-> detecting which clients are new ones and so wouldn't be able to track
-> history correctly.
-> 
-> I think we should rather extend the documented contract to include the
-> cyclical property than settle for a weaker common implementation.
 
-atomic64_t never wraps, so you don't have any recycling issues?
 
-The other piece and imo much more important is that I really don't want
-the i915_drm_client design to spread, it conceptually makes no sense.
-drm_file is the uapi object, once that's gone userspace will never be able
-to look at anything, having a separate free-standing object that's
-essentially always dead is backwards.
-
-I went a bit more in-depth in a different thread on scheduler fd_info
-stats, but essentially fd_info needs to pull stats, you should never push
-stats towards the drm_file (or i915_drm_client). That avoids all the
-refcounting issues and rcu needs and everything else like that.
-
-Maybe you want to jump into that thread:
-https://lore.kernel.org/dri-devel/CAKMK7uE=m3sSTQrLCeDg0vG8viODOecUsYDK1oC++f5pQi0e8Q@mail.gmail.com/
-
-So retiring i915_drm_client infrastructure is the right direction I think.
--Daniel
-
-> Regards,
+On 4/12/2023 1:45 PM, Krzysztof Kozlowski wrote:
+> On 07/04/2023 16:04, Souradeep Chowdhury wrote:
+>> All Qualcomm bootloaders log useful timestamp information related
+>> to bootloader stats in the IMEM region. Add the child node within
+>> IMEM for the boot stat region containing register address and
+>> compatible string.
+>>
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/sram/qcom,imem.yaml         | 21 +++++++++++++++++++++
+>>   1 file changed, 21 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+>> index 665c06e..9998d65 100644
+>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+>> @@ -26,6 +26,7 @@ properties:
+>>             - qcom,sdm845-imem
+>>             - qcom,sdx55-imem
+>>             - qcom,sdx65-imem
+>> +          - qcom,sm8450-imem
+>>         - const: syscon
+>>         - const: simple-mfd
+>>   
+>> @@ -48,6 +49,26 @@ patternProperties:
+>>       $ref: /schemas/remoteproc/qcom,pil-info.yaml#
+>>       description: Peripheral image loader relocation region
+>>   
+>> +  "^boot-stat@[0-9a-f]+$":
 > 
-> Tvrtko
+> Konrad,
+> Just like for RPM Master stats, didn't we want to call these just "stats"?
 > 
-> > -
-> >   	/*
-> >   	 * Temporarily skip showing client engine information with GuC submission till
-> >   	 * fetching engine busyness is implemented in the GuC submission backend
-> > @@ -155,6 +147,6 @@ void i915_drm_client_fdinfo(struct seq_file *m, struct file *f)
-> >   		return;
-> >   	for (i = 0; i < ARRAY_SIZE(uabi_class_names); i++)
-> > -		show_client_class(m, client, i);
-> > +		show_client_class(p, client, i);
-> >   }
-> >   #endif
-> > diff --git a/drivers/gpu/drm/i915/i915_drm_client.h b/drivers/gpu/drm/i915/i915_drm_client.h
-> > index 69496af996d9..ef85fef45de5 100644
-> > --- a/drivers/gpu/drm/i915/i915_drm_client.h
-> > +++ b/drivers/gpu/drm/i915/i915_drm_client.h
-> > @@ -60,7 +60,7 @@ static inline void i915_drm_client_put(struct i915_drm_client *client)
-> >   struct i915_drm_client *i915_drm_client_add(struct i915_drm_clients *clients);
-> >   #ifdef CONFIG_PROC_FS
-> > -void i915_drm_client_fdinfo(struct seq_file *m, struct file *f);
-> > +void i915_drm_client_fdinfo(struct drm_printer *p, struct drm_file *file);
-> >   #endif
-> >   void i915_drm_clients_fini(struct i915_drm_clients *clients);
+> https://lore.kernel.org/linux-arm-msm/20230405-topic-master_stats-v2-1-51c304ecb610@linaro.org
+> 
+>> +    type: object
+>> +    description:
+>> +      Imem region dedicated for storing timestamps related
+>> +      information regarding bootstats.
+> 
+> Description is okay, but you ignored the rest.
+> 
+> This is a friendly reminder during the review process.
+> 
+> It seems my previous comments were not fully addressed. Maybe my
+> feedback got lost between the quotes, maybe you just forgot to apply it.
+> Please go back to the previous discussion and either implement all
+> requested changes or keep discussing them.
+> 
+> Thank you.
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Ack. Will be implemented in the next version.
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
