@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 026616DF90C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:53:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F4466DF914
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 16:53:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230046AbjDLOxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 10:53:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50478 "EHLO
+        id S229845AbjDLOxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 10:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229927AbjDLOxR (ORCPT
+        with ESMTP id S230011AbjDLOxT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 10:53:17 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4E763A90
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 07:53:15 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id m4so14881071lfj.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 07:53:15 -0700 (PDT)
+        Wed, 12 Apr 2023 10:53:19 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C34246A6B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 07:53:16 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id e11so15019371lfc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 07:53:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681311194; x=1683903194;
+        d=linaro.org; s=google; t=1681311195; x=1683903195;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7UAk5E190wNgEBpxEtcgbtHjnL3P3IqX8QW8cfsP/YM=;
-        b=K0ZinGz0TVWTKppVbCaFL0TrOFM6eJ9G0ii4oxQ2NwLz5SHqZCik0NxSgXadZnpMi2
-         3K3lq9EOgaWnxUdrl93GLhGVdlneb7KHQKl7l8sw9XTOZVrzSjYbZ0TkQR19H21bZn/k
-         QmzKz7Omy9dIYkl69iAMg9Urw4/5fnAcKCLn7kxdUDDHChRh6F3hRb718tzFicULZXfj
-         j4oQZ5NwJI5ROLHIyx2vZtTTC9+iKetvIvIwnN9TJz1/wdPsBWfNDhLT+uDTxxLrPswu
-         vRugK0D1ZHBUt68LKT7swEnaplNSD/KvdG0sg8mGTkO8ujdYtcZyTJ3WfJZCdAiXI7wh
-         te1w==
+        bh=hzXitOAB7i9wPsi0RU5jPhBlfKzrQ5/zxTpphCz2cOw=;
+        b=kHjLP0f69MHCgc+2DS0cqFj1Oc6/l0E/zz1wpP/iosDA5+4Fb3UjGzu0FI7Be9vZ0u
+         JW8/vnc3srHNBA1OZaFu92W53W9pDgKqk7kIE1cTzsuJoUdO/imTOsE3kMnfC+V10Scj
+         RI1c8pgxNzyfxCwDNXkdmg829MY9ZAC9GbO1tdnvknofKm4yeDePKHnWV06Ymruyz9ER
+         aUblXOsRWKGx85+e02BK4EBgAURy1B3ZiOSGQRg4MinKmcH7LWiaY6Svu+bccxFeYsc7
+         a/d/JWf9kALpdw3pauP8ISeNNwqWP/3VwpGupWMrYb63T1sTpuAmPIRhPVaBnAKk+lA6
+         opeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681311194; x=1683903194;
+        d=1e100.net; s=20221208; t=1681311195; x=1683903195;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7UAk5E190wNgEBpxEtcgbtHjnL3P3IqX8QW8cfsP/YM=;
-        b=Lzs9GVbok5DMMC9mBUJey3egMRmRmpcYtyD7TuP6EJ5dFM9fu/xlcflQ2Jqd0v6w0w
-         J0audzOQMv74jcvDjXjMIOAMQ9BGnyoJNs79yo+Vrcb2e1I1bPNZNExyZQK9o+P3bppg
-         W4HwX13hXYDOf8bAZgoIjni0fAg63HXrlxEZTNndVOLSefUfSPdAGJdNhsB7nxicSx/f
-         OjKBgUJHyf9W5Vxk/TjvYtA0FjOdhtm14JTsb+gLuBhP7/iR7rUv6vshZA3aDrH3JQWC
-         Ke8OXKgl+Z+eHZmIHxFljXk730MMWLrXhqUf5y0olp55Be35Q4olH/TSXSdIUNM66JMH
-         R8Ag==
-X-Gm-Message-State: AAQBX9eLTqVS232GmM2yfXh1f5L0k2z197veKtF0cj/bjLSxrbVAcjDO
-        QXjv7g6zKmBwMVgO1//qmGXOgA==
-X-Google-Smtp-Source: AKy350bOzesaNrpocZI7s+N4fZGw0Ob6oOvECDQ22CCsAizyz+FwTRO+qC7oqwMygtCuFugoU++9Jg==
-X-Received: by 2002:ac2:5fc8:0:b0:4e8:3d24:de6f with SMTP id q8-20020ac25fc8000000b004e83d24de6fmr4925749lfg.14.1681311194072;
-        Wed, 12 Apr 2023 07:53:14 -0700 (PDT)
+        bh=hzXitOAB7i9wPsi0RU5jPhBlfKzrQ5/zxTpphCz2cOw=;
+        b=Fd0DtUIA08mQR4+pTDE+2d4nK77bY7xoMOJZstbkt+FX9vEr8Q11PdBz972yVd9QMw
+         PEA7XonXkO6rBZTd6SM6fybFpkTrKYmKSEiApVgxaaz9RrczuRuUk2b2UxisNKCphDKU
+         rs+sKCbrvS7+YOAPZuhgLKvRhu5tuN6ZPTMjn5Kps51/rCusFT/vk+5rTJ+lHplpYCkM
+         bs/b8oz5P3xs4FXtrADk4djrp0c0RC6O9PTF8G1B/aTEi9nbdTyAtO20++uLm/vjZLc3
+         MkzAO7+BgX41dohk27oqrQwTZN8KlrZfjvvg25s7ZRmQ3mlMYJvSVXpDeMNgkWtjZEjn
+         tH7Q==
+X-Gm-Message-State: AAQBX9d5cgtEd9CYWeGhVbmiL5FKUenkPNjx6Q7Yu/zVpf84CkL3iOMr
+        ESx7THlyxDBOsAcELJWUYP54Pw==
+X-Google-Smtp-Source: AKy350bAzp0vsxDGVnboU2R0wJXBJGE/OaQ//CXpJSRoNvxsuoLNlfmlbkMm+tPLjv5hfmbAxjh2xg==
+X-Received: by 2002:ac2:5444:0:b0:4eb:274b:a69 with SMTP id d4-20020ac25444000000b004eb274b0a69mr1831189lfn.26.1681311195192;
+        Wed, 12 Apr 2023 07:53:15 -0700 (PDT)
 Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id w5-20020ac24425000000b004e95f1c9e7dsm3015367lfl.78.2023.04.12.07.53.13
+        by smtp.gmail.com with ESMTPSA id w5-20020ac24425000000b004e95f1c9e7dsm3015367lfl.78.2023.04.12.07.53.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 07:53:13 -0700 (PDT)
+        Wed, 12 Apr 2023 07:53:14 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 12 Apr 2023 16:53:05 +0200
-Subject: [PATCH 1/3] clk: qcom: dispcc-qcm2290: Fix BI_TCXO_AO handling
+Date:   Wed, 12 Apr 2023 16:53:06 +0200
+Subject: [PATCH 2/3] clk: qcom: dispcc-qcm2290: Remove inexistent DSI1PHY
+ clk
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230412-topic-qcm_dispcc-v1-1-bf2989a75ae4@linaro.org>
+Message-Id: <20230412-topic-qcm_dispcc-v1-2-bf2989a75ae4@linaro.org>
 References: <20230412-topic-qcm_dispcc-v1-0-bf2989a75ae4@linaro.org>
 In-Reply-To: <20230412-topic-qcm_dispcc-v1-0-bf2989a75ae4@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -69,62 +70,58 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681311191; l=1283;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1681311191; l=1245;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=ZPPztK/ocj1ol1xQUHYQtAl+y1B8bJFYFayKaHP8l6g=;
- b=OyLOma9Xj210KuSJleD8Uh6LGCGzZ/Fnkz5r0uMAFN6a/Jv1rf4k524QCcHwwx2PbE76RmR+5qLv
- VVa4Ax1MA7QazGJWXAfLfpI70g3Ri6Umo0x1m/0NYa7LVQaFhl2b
+ bh=5FJ0glA+UfMPhOkTxeP63CncmUlAPOn1NSBFVZ9Bnf0=;
+ b=/3Ufj2N/TAX1seIFCdp47zWL0iEhSQFuyc58fzJfbSw5uYaUX0Sp4fwvk2LHwtZ8o9SxOn6bDFJd
+ 1RB781VIDPpSL8YMBFJbrqvR0PZrTZAapCdxgYwhEH/fZdsb/Uci
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-BI_TCXO_AO was previously shoved in under the name of its non-AO
-sibling in parent_map_2. Resolve it.
+There's only one DSI PHY on this SoC. Remove the ghost entry for the
+clock produced by a secondary one.
 
 Fixes: cc517ea3333f ("clk: qcom: Add display clock controller driver for QCM2290")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/clk/qcom/dispcc-qcm2290.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/dispcc-qcm2290.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-index cbb5f1ec6a54..0f516c72e624 100644
+index 0f516c72e624..ee62aca4e5bb 100644
 --- a/drivers/clk/qcom/dispcc-qcm2290.c
 +++ b/drivers/clk/qcom/dispcc-qcm2290.c
-@@ -24,6 +24,7 @@
- 
- enum {
- 	P_BI_TCXO,
-+	P_BI_TCXO_AO,
+@@ -28,7 +28,6 @@ enum {
  	P_DISP_CC_PLL0_OUT_MAIN,
  	P_DSI0_PHY_PLL_OUT_BYTECLK,
  	P_DSI0_PHY_PLL_OUT_DSICLK,
-@@ -83,7 +84,7 @@ static const struct clk_parent_data disp_cc_parent_data_1[] = {
+-	P_DSI1_PHY_PLL_OUT_DSICLK,
+ 	P_GPLL0_OUT_MAIN,
+ 	P_SLEEP_CLK,
+ };
+@@ -108,13 +107,11 @@ static const struct clk_parent_data disp_cc_parent_data_3[] = {
+ static const struct parent_map disp_cc_parent_map_4[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
+-	{ P_DSI1_PHY_PLL_OUT_DSICLK, 2 },
  };
  
- static const struct parent_map disp_cc_parent_map_2[] = {
--	{ P_BI_TCXO, 0 },
-+	{ P_BI_TCXO_AO, 0 },
- 	{ P_GPLL0_OUT_MAIN, 4 },
+ static const struct clk_parent_data disp_cc_parent_data_4[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .fw_name = "dsi0_phy_pll_out_dsiclk" },
+-	{ .fw_name = "dsi1_phy_pll_out_dsiclk" },
  };
  
-@@ -154,7 +155,7 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
- };
- 
- static const struct freq_tbl ftbl_disp_cc_mdss_ahb_clk_src[] = {
--	F(19200000, P_BI_TCXO, 1, 0, 0),
-+	F(19200000, P_BI_TCXO_AO, 1, 0, 0),
- 	F(37500000, P_GPLL0_OUT_MAIN, 8, 0, 0),
- 	F(75000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
- 	{ }
+ static const struct parent_map disp_cc_parent_map_5[] = {
 
 -- 
 2.40.0
