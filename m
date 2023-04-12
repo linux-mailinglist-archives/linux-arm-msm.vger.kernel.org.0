@@ -2,91 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 957A16DF4B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 14:09:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11EF36DF4BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 14:11:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231514AbjDLMJn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 08:09:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50968 "EHLO
+        id S229705AbjDLMLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 08:11:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231553AbjDLMJm (ORCPT
+        with ESMTP id S229469AbjDLMLg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 08:09:42 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7821E4D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 05:09:36 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id i6so2678161lfp.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 05:09:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681301375; x=1683893375;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=u3h3Qb1KatJSKEmGkyYMOlAl0W2Gj+Vwa3k7Pw9iuQc=;
-        b=ymGqYnFVBhofOGOwR5Qn/oIyKTYickjGrpi24ONt4lLyDsJ1ZrSBxT2macuyAsAJFP
-         hNjr+Cimvgd0WnNteNTfVwBV/sRR83sEftpMy8pgGuoMmTudyQ5nNdUGfVFSS8HPF+Kk
-         NySgC8kvT3AwWBvy8aynSZVGbMOGdAQlQzZ3VCa57lZwe89J0tlx0tHHwOQ1ySO0cgQ1
-         kK2vGDlTslhj/6Q1o0+u288CzgaVXOb8EuW+ZOY684p2eudsdE3F7cvzZv7gkgwoVbZu
-         IgzAuurhT0J3PBDtE+uitYQfjSSLi07EgpNdhS5PveseGSqYNIcH78ViLW8T+QWtZL/U
-         RDIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681301375; x=1683893375;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u3h3Qb1KatJSKEmGkyYMOlAl0W2Gj+Vwa3k7Pw9iuQc=;
-        b=MuAO/J8azEYB6H4ZCHG/luxx8oHbFfzKQ149+eoY18ka7auv3JIIqMrLaCQuuNwfDp
-         37HMtJgQHrNg5+iM0iZLsoOHl0WdqQUqwfrPDue9VLVj2jlivi1KxwS0jKAFjSTsK1tu
-         do/m7f3j1YD8zpqf/9RjchjigjpzF+TM+ZscJrLEwEmcJUTy9CYAyUjZB18q1yavSOjG
-         PYJHS2avE+Vj0SeMSrSO9uC7WXCjlZ5AWVC9YErB+ghFkSO9/aFIaNpH/06vu3OXzKn+
-         3fRK/iPZyFyYrybmrKmNZNSKMxwgiDwHLkJdoSR0pox9/ok/m7e0Eo5/ZELchMkwQsNR
-         qzeg==
-X-Gm-Message-State: AAQBX9eQydRTFG3jCMJzjk//d1bk8N4IAECGCTRmY+TJLZPtyGoZDdqT
-        XWRqEsVYprYw55/l/GM4lNp3AQ==
-X-Google-Smtp-Source: AKy350YwSJR4JPJ3GVRU7sQeWv9eVe45n1srxKzeDCdDhA6t33VQwsIYqWpVyCNt21TlBJSmZ8MLEQ==
-X-Received: by 2002:ac2:4d01:0:b0:4ec:7967:9e88 with SMTP id r1-20020ac24d01000000b004ec79679e88mr639622lfi.8.1681301375158;
-        Wed, 12 Apr 2023 05:09:35 -0700 (PDT)
-Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id l6-20020ac25546000000b004dd6c325311sm2993786lfk.248.2023.04.12.05.09.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 05:09:34 -0700 (PDT)
-Message-ID: <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
-Date:   Wed, 12 Apr 2023 14:09:33 +0200
+        Wed, 12 Apr 2023 08:11:36 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DD2B4;
+        Wed, 12 Apr 2023 05:11:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681301495; x=1712837495;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ewT/IrLeXzhwmk8e73q3/ULj13sZtuYMfUJ09TlK3Rs=;
+  b=mP7D6/EWOW7Nj1eRrJ251nO0kIpSGJlAVBjYkd9cAOC3vkz/5jRWa6Mq
+   KuTL0W1P/EI2qvVt1OzdWGALYqSSDIZIIPbbkW17rVE5pgnEy7T/SzDDl
+   o8sqAENnxzlPKJ/kcLfdAEIdkKr6JsCmO3aiKk88lNq80w9LYYnKCmNIx
+   DGXvLhgGvlAzilsfSHp9XnHN0vThviQdLhjsrd19/XvxZ/BaKVMhC3nri
+   H2BNdlSw/mWO7O9ip+rwAJrv7GqnV118y/Vj9+8ElHw5i7Uyf5uTCfNtT
+   N5E1UjpAKUYKbykgKg0ylPY4th5C4Hr8+jDQdvWVPkdlvRgbxaoyWPQjy
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10677"; a="346550590"
+X-IronPort-AV: E=Sophos;i="5.98,339,1673942400"; 
+   d="scan'208";a="346550590"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2023 05:11:34 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10677"; a="688934157"
+X-IronPort-AV: E=Sophos;i="5.98,339,1673942400"; 
+   d="scan'208";a="688934157"
+Received: from amurkovx-mobl.ger.corp.intel.com (HELO [10.213.229.123]) ([10.213.229.123])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Apr 2023 05:11:28 -0700
+Message-ID: <98bb3388-d671-dcf3-0247-649a702b5e11@linux.intel.com>
+Date:   Wed, 12 Apr 2023 13:10:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 0/7] drm: fdinfo memory stats
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        "moderated list:DRM DRIVERS FOR VIVANTE GPU IP" 
+        <etnaviv@lists.freedesktop.org>, Evan Quan <evan.quan@amd.com>,
+        Guchun Chen <guchun.chen@amd.com>,
+        Hawking Zhang <Hawking.Zhang@amd.com>,
+        intel-gfx@lists.freedesktop.org,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Mario Limonciello <mario.limonciello@amd.com>,
+        =?UTF-8?Q?Michel_D=c3=a4nzer?= <mdaenzer@redhat.com>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Sean Paul <sean@poorly.run>,
+        Shashank Sharma <shashank.sharma@amd.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        YiPeng Chai <YiPeng.Chai@amd.com>
+References: <20230411225725.2032862-1-robdclark@gmail.com>
+ <bbbbbf34-2ea5-5344-30db-f976c5198d75@amd.com>
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Cc:     Rob Herring <robh@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
- <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
- <168069726278.2356075.14351594478003012447.robh@kernel.org>
- <20230405134727.GA2461305-robh@kernel.org>
- <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
- <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
- <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
- <ZDAAToSzNLVo6le8@gerhold.net>
- <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
- <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <bbbbbf34-2ea5-5344-30db-f976c5198d75@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -94,34 +91,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
-> On 12/04/2023 13:47, Konrad Dybcio wrote:
->>> For unrelated reasons I actually have some patches for this, that switch
->>> the /smd top-level node to a "remoteproc-like" node dedicated to the
->>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
->>> add additional (optional) properties like "resets" and "iommus" for the
->>> RPM, but it would allow adding arbitrary subnodes as well:
->>>
->>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
->>>
->>> I could finish those up and post them if that would help...
->> Krzysztof, what do you think?
+On 12/04/2023 10:34, Christian König wrote:
+> Am 12.04.23 um 00:56 schrieb Rob Clark:
+>> From: Rob Clark <robdclark@chromium.org>
+>>
+>> Similar motivation to other similar recent attempt[1].  But with an
+>> attempt to have some shared code for this.  As well as documentation.
+>>
+>> It is probably a bit UMA-centric, I guess devices with VRAM might want
+>> some placement stats as well.  But this seems like a reasonable start.
+>>
+>> Basic gputop support: https://patchwork.freedesktop.org/series/116236/
+>> And already nvtop support: https://github.com/Syllo/nvtop/pull/204
+>>
+>> [1] https://patchwork.freedesktop.org/series/112397/
 > 
-> I don't know what is there in MSM8916 and how it should be represented.
-Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
-which communicates over the SMD protocol (or G-LINK on >=8996).
+> I think the extra client id looks a bit superfluous since the ino of the 
+> file should already be unique and IIRC we have been already using that one.
 
-The Qualcomm firmware loads the RPM fw blob and sets it up early in
-the boot process, but msm8916-mainline folks managed to get TF-A
-going and due to it being less.. invasive.. than the Qualcomm TZ,
-RPM needs a bit more handling to be accessible.
+Do you mean file_inode(struct drm_file->filp)->i_ino ? That one would be 
+the same number for all clients which open the same device node so 
+wouldn't work.
 
-The M3 core is wired up through the CNoC bus and we communicate
-with it through the MSG RAM and the "APCS mailbox".
+I also don't think the atomic_add_return for client id works either, 
+since it can alias on overflow.
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
+In i915 I use an xarray and __xa_alloc_cyclic.
+
+Regards,
+
+Tvrtko
