@@ -2,102 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE6FE6E028E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 01:27:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A84D96E02A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 01:38:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229517AbjDLX1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 19:27:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38466 "EHLO
+        id S229492AbjDLXiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 19:38:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229508AbjDLX1b (ORCPT
+        with ESMTP id S229541AbjDLXiv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 19:27:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2253B59E1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 16:27:31 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33CMNRGH032467;
-        Wed, 12 Apr 2023 23:27:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=P4Fkaby+GYnp68YCJrDFElPHEolJ3pS9mh61d7u/CbQ=;
- b=iM5D/Ebnq7WNC+xv21vePFFsDPA3N8od02KQ3mVS+mHrIQQU3QdKDR4a/0ud5aX0wASA
- OfxntUn81Zso7xUubMv9QB9Fir6yPUYkSrdesWRmiEVW/KPdDe9URQ1vFjN1P6ISIbW5
- j/FgRf4YxwpHMwDmAm4Uxl4jyhI+NrhhCO+qziB9AVwfWZvPv23NMIkdHp2NSh/mvypq
- G0ehxG1pItJPmI2JRPZ/OAgplwLcTItE7tsUt56WwQu5eBETxKPoxskyGB5JOi0nWD0+
- xxHkhmN49+znwNOHyCJnoA3WvAjzid7lGlDykVFapFl/bvkEagi/o9bBZs/9BRVIMToy 7w== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwqn1hyv5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Apr 2023 23:27:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33CNRMkc009248
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 12 Apr 2023 23:27:22 GMT
-Received: from [10.110.73.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 12 Apr
- 2023 16:27:21 -0700
-Message-ID: <b897f29d-0ae6-1aef-0f3b-7bb653da64f4@quicinc.com>
-Date:   Wed, 12 Apr 2023 16:27:20 -0700
+        Wed, 12 Apr 2023 19:38:51 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277F63A8C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 16:38:49 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-50489936a7bso3603088a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 16:38:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1681342727;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cqi3F2DLTaK1XRD+XBhKe6ot1+wzOmTh1thtCJqRlgA=;
+        b=VV/BN1szRArbtzTWiRfhFDCLoYJM3RKfVv+GHRmlXJ9owwqzHhiDB8wMf0nrMmomLI
+         cXNiOprrIBUP5BAIMj4cfU2KJwoDAVE2BM3MvNMWBiTBF+/xE1lHtyAV4BMhBSWerrYH
+         r+he4F8RCcFcLdN0Bb9F/lVurdNIjtoKlZt5Qc7molk5iWChp5uhQvemYzAXvuFrKEgC
+         y9A5KJ1bR0JXbXDNUjtJi2jocfJTWlW4Hia0hiyHKytihdazhl9ndLNBFVRavyHowkGT
+         a8/f+eO9NkoUKrdws6mvUKkT/1rAFhYVQPPHQI2U1vdgaDmiE2tWr2tu6V3617uV7tex
+         /j9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681342727;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Cqi3F2DLTaK1XRD+XBhKe6ot1+wzOmTh1thtCJqRlgA=;
+        b=XJaUpzPiMVNyQ94xktWmSU4uboyGsk4h8sXKRuUBoxCPm6PbOJnuxilE9cRWQVWaio
+         15ePqoT4ZkSrohRKkv7zZCM55CwfT9zwLDzgC2fpr3Hxz7fCHImYn9mmvgmNEMdpL+Ku
+         qhawppUvhWGZKnSnN2lkul7Ox1E/A8NIrzY6xIdkZ0Rpf6eC9be6ueTut3x/itlewlXa
+         mUrviRek4T5YnRe2atlPfZ6bCWr3pGCkY9hD4eicoc4YVZC0pFPC0vaxfugjxkoDIj/5
+         P3rrstoxUj0Pp2Xdw3OpAgQMe2SKxyhCwkTbi/UANtshALsW2ikhPGYMLsylE0nfvkOB
+         nT+A==
+X-Gm-Message-State: AAQBX9dth6RgIefDvvDQJh9+6fBk3KSGfymRPeFJMKITv0GJS8Bk3UmI
+        XwKu5C45mJsYo/CcR/FuEefhkw4VUF+3mSrOcsilHg==
+X-Google-Smtp-Source: AKy350Ylw76zATlXqd22goKD6jZ1DfF1RaS1ReYl4pCHK9HRFt/rpX4TdFDVfYAqLNPyVH8aVC/lYmaBfyGXOk10SPU=
+X-Received: by 2002:a50:aa84:0:b0:506:4139:541f with SMTP id
+ q4-20020a50aa84000000b005064139541fmr190771edc.8.1681342727602; Wed, 12 Apr
+ 2023 16:38:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v6 1/7] drm/msm/dsi: use new helpers for DSC setup
-Content-Language: en-US
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+References: <20230326233812.28058-1-steev@kali.org> <20230326233812.28058-3-steev@kali.org>
+ <ZCVgMuSdyMQhf/Ko@hovoldconsulting.com> <CAKXuJqjJjd6SY1g3JW8w53rEVCqgDkJXQ=1iA3qXcF+C9qv1SQ@mail.gmail.com>
+ <CABBYNZKX9bixyy8GZ0VDFaeNeY0_MSVDDNvcTqiAXEx8zFXfbA@mail.gmail.com>
+In-Reply-To: <CABBYNZKX9bixyy8GZ0VDFaeNeY0_MSVDDNvcTqiAXEx8zFXfbA@mail.gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Wed, 12 Apr 2023 18:38:36 -0500
+Message-ID: <CAKXuJqiZ9iQESFpVs-b5YLEF5cuPQf7tNtBYGerUxfEp3sj19Q@mail.gmail.com>
+Subject: Re: [PATCH v8 2/4] Bluetooth: hci_qca: Add support for QTI Bluetooth
+ chip wcn6855
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     Johan Hovold <johan@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230329-rfc-msm-dsc-helper-v6-0-cb7f59f0f7fb@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v6-1-cb7f59f0f7fb@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v6-1-cb7f59f0f7fb@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: d4NAW_B6YLJHA8ysPHlmfhEO4MNfR4sl
-X-Proofpoint-ORIG-GUID: d4NAW_B6YLJHA8ysPHlmfhEO4MNfR4sl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-12_13,2023-04-12_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 suspectscore=0
- impostorscore=0 clxscore=1015 mlxlogscore=707 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304120197
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Sven Peter <sven@svenpeter.dev>, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        Mark Pearson <markpearson@lenovo.com>,
+        Tim Jiang <quic_tjiang@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Luiz,
+
+On Wed, Apr 12, 2023 at 3:00=E2=80=AFPM Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi Steev,
+>
+> On Thu, Mar 30, 2023 at 9:35=E2=80=AFAM Steev Klimaszewski <steev@kali.or=
+g> wrote:
+> >
+> > Hi Johan,
+> >
+> > On Thu, Mar 30, 2023 at 5:10=E2=80=AFAM Johan Hovold <johan@kernel.org>=
+ wrote:
+> > >
+> > > On Sun, Mar 26, 2023 at 06:38:10PM -0500, Steev Klimaszewski wrote:
+> > > > Add regulators, GPIOs and changes required to power on/off wcn6855.
+> > > > Add support for firmware download for wcn6855 which is in the
+> > > > linux-firmware repository as hpbtfw21.tlv and hpnv21.bin.
+> > > >
+> > > > Based on the assumption that this is similar to the wcn6750
+> > > >
+> > > > Tested-on: BTFW.HSP.2.1.0-00538-VER_PATCHZ-1
+> > > >
+> > > > Signed-off-by: Steev Klimaszewski <steev@kali.org>
+> > > > Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> > > > Tested-by: Bjorn Andersson <andersson@kernel.org>
+> > > > ---
+> > > > Changes since v7:
+> > > >  * None
+> > >
+> > > Only noticed now when Luiz applied the patches, but why did you drop =
+my
+> > > reviewed-by and tested-by tags from this patch when submitting v8?
+> > >
+> > > For the record:
+> > >
+> > > Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+> > > Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> > >
+> > Oops, that wasn't intentional! I only meant to drop it on the dts bits
+> > as that part I wanted to make sure I got right based on your comments,
+> > my apologies!
+> > --steev
+>
+> This one seems to be causing a new warning:
+>
+> drivers/bluetooth/hci_qca.c:18
+> 94:37: warning: unused variable 'qca_soc_data_wcn6855' [-Wunused-const-va=
+riable]
+>
+I had seen this as well and I just noticed that the others were marked
+as __maybe_unused and I forgot to.  Will send a fix up for that!
 
 
-On 4/12/2023 4:25 PM, Jessica Zhang wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Use new DRM DSC helpers to setup DSI DSC configuration. The
-> initial_scale_value needs to be adjusted according to the standard, but
-> this is a separate change.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
-
-For completeness,
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> --
+> Luiz Augusto von Dentz
+-- steev
