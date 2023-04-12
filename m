@@ -2,127 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 461B46DEC71
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 09:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7EE96DEC78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 09:22:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbjDLHUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 03:20:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47958 "EHLO
+        id S229693AbjDLHWq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 03:22:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjDLHUu (ORCPT
+        with ESMTP id S229555AbjDLHWp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 03:20:50 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0766530CA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:20:48 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id qb20so25968509ejc.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:20:47 -0700 (PDT)
+        Wed, 12 Apr 2023 03:22:45 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 217703C17
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:22:44 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id x31so6865364ljq.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681284046;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1681284162; x=1683876162;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QdkHlkygyrByQg419aDNV3ptLNHr8rYQerwRNj8xGA4=;
-        b=v0uRJwn7bc6kxMR9t3SsAK+Zoagch1miml9frz5BLuwoQYRIjv7E6gWB4YLDiKdAgz
-         uWGZRc8ACc4mm4bMZ5icLviRsegesJ0xpV8AqkQup3pQFAao1cNFbt68FKsNSXH4+fnj
-         WnlfuYWkXkwhK6fvlb4G+ux1GMysMsrsJsVQeTf3YSFhkgUCY37WyJL95WzADCQnbj+9
-         Re+DLE689ZfQs3YJV8k9X0FfmLYpqVF70lJ9RlLvw9Hk1NolJup6gfFr66bkH6jA3xZU
-         owYKWR7etQXRbko4rNa7XcBtgsSmAMRaQjY+KOaDy3qxUJ9e9ljZFzaek9sq5Z+fQJEM
-         OaPg==
+        bh=B4f9EVZqNZ+GzqjpGfS3SyfyVN9rRf+QNMY2/O3Iing=;
+        b=GUr2R7zChOecWXHR42bQqiwUEy9+wBUazZhLsV+6ZVpugAWdDUPTW9fE197eQ+wOwc
+         wupgF7//FBu64twuGaLb4WAZ/RUZ5QEQhKcPEUIbbLOMKdbAF5lLNkwAE81Ox0a9mOJn
+         PvpmgidMjgaPOS//iEmZ0gYB5s+BcP35Q7+ljxlgK/WHRaphsBkDu8kV1+P9Sf3PxsrN
+         AsxmXoEkK7p8eZYAnXSEYTG9OIgxLj2nPH9WiMmutF27QKJUj7eTBddg+4PSqltXLetR
+         d5JEQwvud2VSxYfDCGJPda/PgIpSdUz+fwXJTC+AMF1i3p4sv01obX9fALk6wr9TXBR8
+         ZwOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681284046;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1681284162; x=1683876162;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QdkHlkygyrByQg419aDNV3ptLNHr8rYQerwRNj8xGA4=;
-        b=VHClwGIyTjLK4MhECw1uyaFcKrial6SaqMPfjRxqwl35y5R/ac4HuktNW9RKlp2r7a
-         Iuc3Q3H5QSJF6Z1ULbb8rVtlOYdJovPOVYt739OQNPET1QNVKGaHCUM9hhOAp5cGDld6
-         ZOhqScVH0RDXBMINXjqW98blEv7VAuuozuOXPhivtrFc94gnfsxFdmSKhi9IrF+3BSpI
-         GeuTsieCGgI78CfwF4QmsXs52OjUIUcsa8N7pT+mGXDSPRtvl7YrWm6xKrCRCTpQq+vS
-         kFJcUqjFaPtgSDEvL8wIFe2RoipXNdRCO3LlVmOJmxu/sQagtgywmJgSjKFCleLvE2au
-         DU/g==
-X-Gm-Message-State: AAQBX9dXNogXQlyAXDsJDDZjaTeVdtLZmITfYeEmEORXsK/xWKWcvbrI
-        2j5Yc2/VKslMkLbp7UFcEfpZwA==
-X-Google-Smtp-Source: AKy350YdNCYxr5cEeE31YLwqV48xPDU/gshyAN4umZzLpG8BlrVAvwZZh+9yMvOS/rcahNhPtVgirw==
-X-Received: by 2002:a17:907:3fa6:b0:94c:2548:395 with SMTP id hr38-20020a1709073fa600b0094c25480395mr1394352ejc.52.1681284046498;
-        Wed, 12 Apr 2023 00:20:46 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:8fa0:9989:3f72:b14f? ([2a02:810d:15c0:828:8fa0:9989:3f72:b14f])
-        by smtp.gmail.com with ESMTPSA id sb2-20020a1709076d8200b0094a785e362dsm3248934ejc.141.2023.04.12.00.20.45
+        bh=B4f9EVZqNZ+GzqjpGfS3SyfyVN9rRf+QNMY2/O3Iing=;
+        b=HSTPjcqgNzcArDawyAjjWWIOC4v/IZS9HiMc8Rw8qo3ThDuLN1TM/oyIwH5RGlBmag
+         DVaVSMFjX1eUXyzcHjFsDjljeMZTQvxumHWeycIucDx4lSnT3/Dg+CayuX/atXFe07xU
+         2kCm3usoJSI6te2uMoB7WIMYHbNuEpC3pxJjclPSDWcbd6NJnRt4ZuzaqeJhXNPKgNXF
+         zGpKDv1pDtVXd4DmOhy6sVrE5PzO+F4skp8ce9V4yvP18B0v8XImgizVVB6Gdt/JKzVI
+         Io8jkYEMUQ3015iWRtGwjk5ce7VsmdOh7FzXncB151zMjCT9PyhuSD/dWiTST0kdBanW
+         /jPw==
+X-Gm-Message-State: AAQBX9f8XcOvHHapL+c2ynbGmGgRsNT8rInc1KnailHHll3w4bT1sBVj
+        lOJvvFtQHnmQI6RY5lRFpbqLdg==
+X-Google-Smtp-Source: AKy350aDJOdDoHVJhr7RPAnvHasDaKEMp6jnfyQAlf1vAVo2UXDe3Uk8tAU8GT8ynRvie7/b0Zg70Q==
+X-Received: by 2002:a2e:7c0f:0:b0:2a0:f395:cc4c with SMTP id x15-20020a2e7c0f000000b002a0f395cc4cmr3869079ljc.49.1681284162372;
+        Wed, 12 Apr 2023 00:22:42 -0700 (PDT)
+Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
+        by smtp.gmail.com with ESMTPSA id l9-20020a19c209000000b004ec84d24818sm1681915lfc.282.2023.04.12.00.22.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 00:20:46 -0700 (PDT)
-Message-ID: <a47f2066-bc7b-bc62-b936-77583135e291@linaro.org>
-Date:   Wed, 12 Apr 2023 09:20:45 +0200
+        Wed, 12 Apr 2023 00:22:42 -0700 (PDT)
+Message-ID: <6f2621bc-5442-f409-2d18-ea64dce3cc58@linaro.org>
+Date:   Wed, 12 Apr 2023 09:22:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: qcom,rpmpd: Add SA8155P
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad: correct pin
+ drive-strength
+To:     Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-References: <20230411-topic-hanaau-v2-0-fd3d70844b31@linaro.org>
- <20230411-topic-hanaau-v2-1-fd3d70844b31@linaro.org>
- <f12d50a2-a9b0-5659-4224-2b7039ba058e@linaro.org>
- <2ce26f3f-f746-ce15-c490-288628c7645c@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2ce26f3f-f746-ce15-c490-288628c7645c@linaro.org>
+        linux-kernel@vger.kernel.org
+References: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
+ <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
+ <887eb9f6-9882-37c6-4332-ddae7a354187@linaro.org>
+ <ZDZUiW+74rhhRAfS@hovoldconsulting.com>
+ <15e1d05f-b7e1-27bc-7363-aefd2d155eea@linaro.org>
+ <ZDZbif25qQh79cuG@hovoldconsulting.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZDZbif25qQh79cuG@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 20:03, Konrad Dybcio wrote:
->>>        - qcom,sdm660-rpmpd
->>> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
->>> index 1bf8e87ecd7e..867b18e041ea 100644
->>> --- a/include/dt-bindings/power/qcom-rpmpd.h
->>> +++ b/include/dt-bindings/power/qcom-rpmpd.h
->>> @@ -90,6 +90,15 @@
->>>  #define SM8150_MMCX	9
->>>  #define SM8150_MMCX_AO	10
->>>  
->>> +/* SA8155P is a special case, kept for backwards compatibility */
+
+
+On 12.04.2023 09:19, Johan Hovold wrote:
+> On Wed, Apr 12, 2023 at 09:03:31AM +0200, Krzysztof Kozlowski wrote:
+>> On 12/04/2023 08:49, Johan Hovold wrote:
+>>> On Tue, Apr 11, 2023 at 06:58:33PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 11/04/2023 16:23, Johan Hovold wrote:
+>>>>> On Fri, Apr 07, 2023 at 08:07:10PM +0200, Krzysztof Kozlowski wrote:
+>>>>>> Fix typo in drive-strength property name.
+>>>>>
+>>>>> In the future, please try to use the established commit-summary prefix.
+>>>>> In this case:
+>>>>>
+>>>>> 	arm64: dts: qcom: sc8280xp-x13s:
+>>>>
+>>>> Sure.
+>>>>
+>>>> commit ca1ce7207e53cfe69aee5002eb3795069668da53
+>>>> Author: Johan Hovold <johan+linaro@kernel.org>
+>>>> Date:   Fri Aug 5 11:23:17 2022 +0200
+>>>>
+>>>>     arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate touchpad
+>>>
+>>> Yeah, we initially used a longer prefix (including "x13s" which was
+>>> missing in the Subject of this patch), but quite soon decided on using
+>>> the shorter
+>>>
+>>> 	arm64: dts: qcom: sc8280xp-x13s:
+>>>
+>>> instead.
 >>
->> This is a new binding, thus I don't understand what is here backwards
->> compatible?
-> Check the DT structure, 8155-adp (so, de facto 8155) included
-> 8150 before, but that was not exactly the correct approach..
-> It bit us after we accidentally discovered 8155 advertises MMCX,
-> LCX and LMX PDs in cmd-db but triggers a bite on access attempts..
-> 
-> By mimicking the indices to match the ones of 8150, we only have
-> to fix up the domains that were axed from 8155 (in comparison to
-> 8150 which has the full fat setup).
-
-> 
-> Konrad
+>> Thanks. Do you know if this rule applies to other long-names? I was
+>> usually keeping full name or shortening them by cutting end, but maybe I
+>> should cut the middle?
 >>
->>> +#define SA8155P_CX	SM8150_CX
->>> +#define SA8155P_CX_AO	SM8150_CX_AO
+>> sm8250-sony-xperia-edo-pdx206
+>> sm8250-sony-xperia-edo
+>> sm8250-pdx206
+I do sm8250-pdx206 or sm8250-edo for common dtsi changes
 
-The DTS diff (the patch here) does not show it, I would need to check
-the context by opening other DTS in linux-next. Therefore it would be
-great if commit msg explained this.
+Generally anything that contains the SoC name and isn't ambiguous
+works, IMO. And the more concise, the better.
 
-BTW, using here directly numbers matching SM8150 values, would also be
-backwards compatible...
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Konrad
+> 
+> I would not call it a rule just yet, but I guess there are further cases
+> were this could have been used. Perhaps you can all decide to use it for
+> the other Qualcomm dts as well.
+> 
+> For the X13s the, 'sc8280xp-x13s' is enough to uniquely define the
+> board and it mirrors 'sc8280xp-crd' (and using a shorter prefix makes
+> the commit logs easier to read).
+> 
+> The general suggestion is still to check 'git log --oneline' for the
+> files in question and use what appears to be the (recent) common prefix.
+> 
+> Johan
