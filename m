@@ -2,121 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2606DEC5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 09:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8EEE6DEC6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 09:19:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229450AbjDLHQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 03:16:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44356 "EHLO
+        id S229899AbjDLHT6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 03:19:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbjDLHQJ (ORCPT
+        with ESMTP id S229785AbjDLHTz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 03:16:09 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015923A98
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:16:07 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id gb34so26548573ejc.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 00:16:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681283765;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oYluzBqeGlhNCgYN/vs2TBjqaPrfmZeDGPID9roW1cQ=;
-        b=fvrcfx6ep1D++SFCxg6x5vVGSwG5/VmBcg5cv1f3WhstBDhlfZAbdCY4UC3VRAkNxJ
-         CN3t5AyuRSs2dr30TFruEmrY15oGiCdBhG0Oy634+piytmCO4gZWoho20Hlbk3ZhDUyK
-         VwkoPhAVjSUrJN+ho/0KxX0Uvp35SLwTiLV44b9M560wqWxFkIXTMjYEdZjPahEmL067
-         kYkbmAnbPbVC/3R7yWmCrctcqF89n+SFFVULneVvySsJQZ+biNXatJoFapZ+ElrbmN+8
-         +XOAV0NadAa1Sy8Au8yv74/KoQBlaFGvtIwQ0lxLxdpyIblb2e2UbgoHYWwZAESEhffp
-         +ybA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681283765;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oYluzBqeGlhNCgYN/vs2TBjqaPrfmZeDGPID9roW1cQ=;
-        b=yv2il0jTkJdfsxokC5ONgtaKBkRrqycjGnZbqohnAC5MTN38Auv57HWR3xbzq3MUkb
-         jB8SIwtptam2trub46NrFwRNn7YGvO02Nun+oE6Bm9qOYkWEoiAQGmjrNSMHo8Idgwfl
-         9pxd3+VkOzBs3mi2x6WeudCTKUCV48j7E9NEL2RBqVtMWnVKpl+O7su9N4gXfVEWFYpO
-         efad1lUODxHms9/7A9TtzTKNhG5EnH+t7JR/IHMgoveoKBFBRZEe3/WjRYiVEJQ5xd/G
-         EYTZbkXHkeWY9rfgAw4noM2nVrE1MQhXE5Wh1o1T5V2gjx0Wd5Hi9/hA2WI7m6OgDAhk
-         tQeQ==
-X-Gm-Message-State: AAQBX9ewL4wWhaRjQPYUyf94LsPNVMjmEtMCbVl5t+s+B0IDQwYSf7aq
-        4ZZbfPR2Yxjie7f6oo1B93xxbQ==
-X-Google-Smtp-Source: AKy350YvNgklkhK0fZIoRDJJP7VAp46SzPBgygdA633mj6ZPtpz6ZPya476IZVB8S7WnIn6JShG1LQ==
-X-Received: by 2002:a17:906:768b:b0:94a:54ad:b36b with SMTP id o11-20020a170906768b00b0094a54adb36bmr1127452ejm.77.1681283765470;
-        Wed, 12 Apr 2023 00:16:05 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:8fa0:9989:3f72:b14f? ([2a02:810d:15c0:828:8fa0:9989:3f72:b14f])
-        by smtp.gmail.com with ESMTPSA id hs8-20020a1709073e8800b0094e1272bd12sm1630723ejc.159.2023.04.12.00.16.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 00:16:05 -0700 (PDT)
-Message-ID: <4b630254-2de0-979b-8d44-6b7d1dcd3d28@linaro.org>
-Date:   Wed, 12 Apr 2023 09:16:03 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v3 6/7] dt-bindings: iommu: arm,smmu: enable clocks for
- sa8775p Adreno SMMU
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Wed, 12 Apr 2023 03:19:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A707A5FDA;
+        Wed, 12 Apr 2023 00:19:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 453FC62EC0;
+        Wed, 12 Apr 2023 07:19:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C421C433EF;
+        Wed, 12 Apr 2023 07:19:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681283978;
+        bh=TQltmBsNQWqTpXlk7lYjhpue27q5v+hRw8tcrt0yGbM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eHRwriL8YKvV58OPayVsfvdnkqVOVxf3/v1jjfjI2g3pHjssVEMGZmUZQ9JdAKpb1
+         G4wbvvmdEA7fAh7HkmD7cy/wc6j8iP1rZCA3nDR7Ma9IqWM8alnLSMA27jU8d9rAYd
+         eayNO+hSxdkAsGabjDSvDO1LcX6NbDPBDaebcrs2RAnVr5gGutjCSrHxoIF0FTpedZ
+         rfq3HAnp2dWPQNgMSD2++Vq0U59bmT+pn5KE+wARGYeF9YURyGmxw/vAmZM1zIzu7Y
+         rOHC2NDKP/7vJIAGE9lSPRGKgYmDr8PGmOl0M5ZzYexDOQXjtVGFSqBoudLvu8s09S
+         7RX46qupNG+3Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pmUlV-0007Yv-R3; Wed, 12 Apr 2023 09:19:38 +0200
+Date:   Wed, 12 Apr 2023 09:19:37 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230411125910.401075-1-brgl@bgdev.pl>
- <20230411125910.401075-7-brgl@bgdev.pl>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230411125910.401075-7-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad: correct pin
+ drive-strength
+Message-ID: <ZDZbif25qQh79cuG@hovoldconsulting.com>
+References: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
+ <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
+ <887eb9f6-9882-37c6-4332-ddae7a354187@linaro.org>
+ <ZDZUiW+74rhhRAfS@hovoldconsulting.com>
+ <15e1d05f-b7e1-27bc-7363-aefd2d155eea@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <15e1d05f-b7e1-27bc-7363-aefd2d155eea@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 14:59, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Wed, Apr 12, 2023 at 09:03:31AM +0200, Krzysztof Kozlowski wrote:
+> On 12/04/2023 08:49, Johan Hovold wrote:
+> > On Tue, Apr 11, 2023 at 06:58:33PM +0200, Krzysztof Kozlowski wrote:
+> >> On 11/04/2023 16:23, Johan Hovold wrote:
+> >>> On Fri, Apr 07, 2023 at 08:07:10PM +0200, Krzysztof Kozlowski wrote:
+> >>>> Fix typo in drive-strength property name.
+> >>>
+> >>> In the future, please try to use the established commit-summary prefix.
+> >>> In this case:
+> >>>
+> >>> 	arm64: dts: qcom: sc8280xp-x13s:
+> >>
+> >> Sure.
+> >>
+> >> commit ca1ce7207e53cfe69aee5002eb3795069668da53
+> >> Author: Johan Hovold <johan+linaro@kernel.org>
+> >> Date:   Fri Aug 5 11:23:17 2022 +0200
+> >>
+> >>     arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate touchpad
+> > 
+> > Yeah, we initially used a longer prefix (including "x13s" which was
+> > missing in the Subject of this patch), but quite soon decided on using
+> > the shorter
+> > 
+> > 	arm64: dts: qcom: sc8280xp-x13s:
+> > 
+> > instead.
 > 
-> The GPU SMMU will require the clocks property to be set so put the
-> relevant compatible into the adreno if-then block.
+> Thanks. Do you know if this rule applies to other long-names? I was
+> usually keeping full name or shortening them by cutting end, but maybe I
+> should cut the middle?
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
+> sm8250-sony-xperia-edo-pdx206
+> sm8250-sony-xperia-edo
+> sm8250-pdx206
 
-This is a friendly reminder during the review process.
+I would not call it a rule just yet, but I guess there are further cases
+were this could have been used. Perhaps you can all decide to use it for
+the other Qualcomm dts as well.
 
-It looks like you received a tag and forgot to add it.
+For the X13s the, 'sc8280xp-x13s' is enough to uniquely define the
+board and it mirrors 'sc8280xp-crd' (and using a shorter prefix makes
+the commit logs easier to read).
 
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions. However, there's no need to repost patches *only* to add the
-tags. The upstream maintainer will do that for acks received on the
-version they apply.
+The general suggestion is still to check 'git log --oneline' for the
+files in question and use what appears to be the (recent) common prefix.
 
-https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
-
-If a tag was not added on purpose, please state why and what changed.
-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Johan
