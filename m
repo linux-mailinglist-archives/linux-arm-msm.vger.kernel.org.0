@@ -2,73 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE60F6DFA2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 17:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 782766DFAB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 18:01:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjDLPdM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 11:33:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
+        id S229900AbjDLQBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 12:01:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbjDLPdL (ORCPT
+        with ESMTP id S229659AbjDLQBv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 11:33:11 -0400
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89D0459E1;
-        Wed, 12 Apr 2023 08:33:10 -0700 (PDT)
-Received: by mail-ot1-f48.google.com with SMTP id k101-20020a9d19ee000000b006a14270bc7eso3212836otk.6;
-        Wed, 12 Apr 2023 08:33:10 -0700 (PDT)
+        Wed, 12 Apr 2023 12:01:51 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03C2440D7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 09:01:50 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id s12so2954915wrb.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 09:01:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681315308;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bFr+6SNH273Zl3F8QVF5uj+29BMN+VjrZnzuQ15L4Ks=;
+        b=uW5T098cFgLazTILvUupr66h0Wqi9mRwXj5J7u7By2C3AI6WxNq5DNB0oy/tOn3f/K
+         cxlAxICdOCdQjqpjrsF2grZQ1LKC42QwUVzNgtdt+WCt28lNIpxAILIIcrCbBkPXbL/a
+         iTszzseg6xwOivX+6ZWo+T7vnhO+ZY5H6AY5pHM7RXgj87jh3K36Vi84U/BoP+eebvsO
+         /f+k1GcTvVENXso5AnbiX2qrmHb2Abk3fZ/XRoQYRj7JiaOJjhU3lYuY3m7hfT8CqO5+
+         WXeLYBRNaZqT83RlJ9bh3Mm3XFNS8zFKYt5mqT8xEP/HYBQiNi8KadXK2O7EDPou27r+
+         v+rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681313589; x=1683905589;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EOjaCPYafQTgElcWLu+C+9q7oFGdFz1gmtpWgWQoSzo=;
-        b=M2RKc5h7zyXgTfETW5JmahmeJTk6eogkmQPU1VBcsYVmQbYdtdHo2EUX9C1nnXeUeE
-         84YBudoI8QSJypL+ZVsyelbA3t3e8EgmtXo+ugKVZN6wt6InAB/PAMuuQ29kAHEShCNz
-         j3asaWZ/5bupNZAXWgSg6TF2RGQ6QNlipgDAuWOFWByD1AR04IwaEz7xEjIHRukzy9MK
-         vtvqD5HHkARrMWMfpdYMaYt6bC33zQx74fc3GuPW09p2+EhERSYclmZxY9maNj5o/HOk
-         isbds9aaIjWFfnGyboTuBNH02Dq3dY+1t8wMwTKSo79OPEtSw54kX0LUj7iCeWI5gyj2
-         wWmA==
-X-Gm-Message-State: AAQBX9eL94LNw6VpSRI3NHIK3BXVf3X6ekOkbVEX8c8XWkVbzSlMEvg9
-        S6XqWycHcAh4YGFSg/j5YkMBJX6PVg==
-X-Google-Smtp-Source: AKy350aJpoIwH0hm0Dtc/H4sRBjBI6NWqyeiXLeGnh9wj1Cv9m157DT65w5pOWUg7WSbSXvkfU/l4Q==
-X-Received: by 2002:a05:6830:1e4d:b0:69f:65de:9914 with SMTP id e13-20020a0568301e4d00b0069f65de9914mr9393639otj.4.1681313589629;
-        Wed, 12 Apr 2023 08:33:09 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id f7-20020a9d6c07000000b006a205a8d5bdsm6668119otq.45.2023.04.12.08.33.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 08:33:09 -0700 (PDT)
-Received: (nullmailer pid 2472906 invoked by uid 1000);
-        Wed, 12 Apr 2023 15:33:08 -0000
-Date:   Wed, 12 Apr 2023 10:33:08 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Jianhua Lu <lujianhua000@gmail.com>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>,
-        freedreno@lists.freedesktop.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        phone-devel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        devicetree@vger.kernel.org,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: display/msm: dsi-controller-main: Document
- qcom,master-dsi and qcom,sync-dual-dsi
-Message-ID: <168131358792.2472835.6239404234836108897.robh@kernel.org>
-References: <20230411143149.16742-1-lujianhua000@gmail.com>
+        d=1e100.net; s=20221208; t=1681315308;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bFr+6SNH273Zl3F8QVF5uj+29BMN+VjrZnzuQ15L4Ks=;
+        b=LyyPvbinhpEiTV2cUFp/pc7s1bNr2Bg7UbFDJjoViI1D3Jzfd0sz0h5ETjU1uBIBoy
+         ZhPgaH4ptmZwrpInwJtPRIc9RXyWKG+aGrTpnUDCne2Yab8EB91CohfIBAcM6JLS+Pha
+         o/1vFIQE/7ZIOQJu4T3e+QMRv09rStO9qQrOkfA5z49ptmoybaezdoUI/NcySCVevOf9
+         NB6+QHPqpHfLKUovGI3jiLDbwhe7bpHtHf1CRGuYbTeLHpXSBmcoXFNRCipk+U4+GcIc
+         I7QvKur5cFx10QBfrIkBzBRlOwXwqRPuYdrzzo2n7/VloO/0jXTOENwXomxES9wEf99w
+         AHmA==
+X-Gm-Message-State: AAQBX9fp+OjsNjXz7uG4L2o615xyrfP1+KYYQCh4H4bBk3V5PXPsxHt6
+        d2C9a9b7E7gpeOjnd89/8UN3gJFnO2krGQifKMI=
+X-Google-Smtp-Source: AKy350bkplwSrahDJLIpNKaGEYxKRoC0h3LYaUpg0uwuXG86MFRI70iHgwQvCarlq6tRfPyZQOOEIw==
+X-Received: by 2002:adf:dc82:0:b0:2ef:3140:8701 with SMTP id r2-20020adfdc82000000b002ef31408701mr5003891wrj.10.1681315308432;
+        Wed, 12 Apr 2023 09:01:48 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:938a:b3db:7c59:795e? ([2a02:810d:15c0:828:938a:b3db:7c59:795e])
+        by smtp.gmail.com with ESMTPSA id u5-20020adff885000000b002c70851fdd8sm17515397wrp.75.2023.04.12.09.01.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Apr 2023 09:01:47 -0700 (PDT)
+Message-ID: <28488550-7d5a-232c-c9d9-9ca82acfb0f9@linaro.org>
+Date:   Wed, 12 Apr 2023 18:01:45 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230411143149.16742-1-lujianhua000@gmail.com>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [V2 1/3] spi: dt-bindings: qcom,spi-qcom-qspi: Add iommus binding
+ for qspi
+Content-Language: en-US
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        broonie@kernel.org, vkoul@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com
+References: <1681313387-8376-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1681313387-8376-2-git-send-email-quic_vnivarth@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1681313387-8376-2-git-send-email-quic_vnivarth@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,16 +82,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/04/2023 17:29, Vijaya Krishna Nivarthi wrote:
+> Add iommus binding to documentation to be in sync with below
+> change to dtsi...
+> Add stream-id of qspi to iommus
 
-On Tue, 11 Apr 2023 22:31:49 +0800, Jianhua Lu wrote:
-> This fixes warning:
->   sm8250-xiaomi-elish-csot.dtb: dsi@ae94000: Unevaluated properties are not allowed ('qcom,master-dsi', 'qcom,sync-dual-dsi' were unexpected)
-> 
-> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
-> ---
->  .../bindings/display/msm/dsi-controller-main.yaml    | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
+This commit msg needs improvements. Try to avoid referring to other
+patches in the series, unless necessary. In this case - it is not
+necessary. You should provide here rationale for the binding change.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Subject: Drop redundant part "binding for qspi"
+
+You also miss PATCH part. Use standard tools to generate patches, so
+they will fit properly to Linux patch workflow.
+
+
+Best regards,
+Krzysztof
 
