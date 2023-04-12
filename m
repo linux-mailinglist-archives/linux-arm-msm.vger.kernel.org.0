@@ -2,130 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDAD66DF40D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 13:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90D516DF422
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 13:48:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229946AbjDLLpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 07:45:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51808 "EHLO
+        id S229785AbjDLLsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 07:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230310AbjDLLps (ORCPT
+        with ESMTP id S229588AbjDLLsH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 07:45:48 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 439066EBA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 04:45:46 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id qa44so27726694ejc.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 04:45:46 -0700 (PDT)
+        Wed, 12 Apr 2023 07:48:07 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9454EDD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 04:47:56 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id t20so14284932lfd.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 04:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681299944;
+        d=linaro.org; s=google; t=1681300075; x=1683892075;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mK5o4f66OfGomkrggIIJazu8fU+1x4ruUmLe4IBoRDI=;
-        b=qJJU2xie8Tn8kBs4aO4ykWnx0ohS5FVYmu6ju8vvvgWCf6K5imcYpFZyW0N2LE1jmC
-         kP0kwKjnXLWUw3/bFBPTQjlQIVuxc1NNiotOCrLzMEveoSjRIAXhZOJ+pxgJyUfm2Iuo
-         raNYWM7MAC2MXfnlpRVaT5xMYoobHL1JYY2HCeMGYwvA+zk2v9R+heiKRkz6g7jj0Hrm
-         hNLmU4b1/kJWoPgzPyLVeltpB9g3zHk/eczdmMkm5VXEYA0p9otTzw3fYNzD+fNMUhcI
-         enTcdbKJ8CTdum3grN2hAXq6YBuqOVpTt6MNBigFVjkCFPt6MQFFSO7CVC5sUFcQMmbA
-         YXrQ==
+        bh=7PDRGxEShggzOR/Xl7EtJnVQmJ9Lo2xgV6jIShMWMhA=;
+        b=ca5oA4kEl5+/mD44LGcCDwGW3QVv1/zYr/QfZFtpDE12/3os2aUbsL5ri1hEH399HN
+         ro3mIL2K0pa26p3NsnOABz2or32+1JTSU/eBi+ahLqj08/kOVc9fZ5g68nxRsMbrwnPU
+         CT9TAl1tpBZVzpd/p5VsnDtt3GW0ox0ZGKFCPxvwWu4f8vIuHrdZx6DHxcUFcf4UMY17
+         t5b1kySo+mX2X07wjM41DBzfgMOPxkKy/FuB8MfPOdBw85s1g4Dpi20EUFDHKBsNKKiT
+         owCDjingQECnAOfpg/wGUtRIKMLjIeM0yqtXfEblW76rCtF1IqrvEPTD9Rp8KBeKCmrM
+         CLog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681299944;
+        d=1e100.net; s=20210112; t=1681300075; x=1683892075;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mK5o4f66OfGomkrggIIJazu8fU+1x4ruUmLe4IBoRDI=;
-        b=oyTuXYkkM7F6o43KhvV7rgnG5mGMJLKcRWNb07kTh9pqFehVrw33dge41sXocBjQp7
-         5ONs8zsH4xl3MsP3A6MZ7UVPvIBS4o+sc0J8Fe9a1q1gsh6whNBAWVXMV5lBcQW5KGzR
-         tcMJpYnNqJnczzSnQdtR+uckCRXON55Fk3SfQ4/P9TnsDuLqYggajamthg7gqaFC7GDc
-         bWEVeYBwUniZsNTZ4/EH1Yivsm+yNk/MgqOj68m8Ri8QkgOI4rUk2xhGZmerT6iaULfE
-         FBxC1y2q3+siGhlaK8sLGo9llqvwGcQyzNAsKx4lMweoO286jt9BA1UO4yX5qeelmucA
-         lGxg==
-X-Gm-Message-State: AAQBX9eg/NGn3rc7B+b80LiXI409pb3m1OHhbPV7WSSytvXyc0MV79WO
-        BNUtSfkMzyS/Rz+FMX+aFPOI4Q==
-X-Google-Smtp-Source: AKy350aTTC4VgxxllCbi8sJCVEIivgVbCLmsk2H7q+VgRHkvR7TZC73Rm1X1GoCi4YeJzDhj41P97g==
-X-Received: by 2002:a17:906:dc8b:b0:947:92c9:6aa4 with SMTP id cs11-20020a170906dc8b00b0094792c96aa4mr2520183ejc.4.1681299944528;
-        Wed, 12 Apr 2023 04:45:44 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:8fa0:9989:3f72:b14f? ([2a02:810d:15c0:828:8fa0:9989:3f72:b14f])
-        by smtp.gmail.com with ESMTPSA id ta22-20020a1709078c1600b0094e7bb22860sm127586ejc.50.2023.04.12.04.45.43
+        bh=7PDRGxEShggzOR/Xl7EtJnVQmJ9Lo2xgV6jIShMWMhA=;
+        b=TE6/aqhQlNe0rFlKh8xflY9WMimOMKUz/xxWJPsDdOIwJ/Hb05eEWCeDJtjDHCBNF+
+         oNOoaxB+Tx47yqsbGlUSrLLYbHkFvCidJfoi9lssjxUrKfcxoT0jSYAzFWpxOicxHhUc
+         O68M3lZfCapFAmMbXerF64GQqnXWf82KnYo2/2Buz5cIdN9AD6ocn8Y/SLCUzKxkzgAc
+         IQgXg9fkm1E45v+TNazrXd7FCI1h9K8OcZof+MriPnE8JMjrQ+a572xFR3UgE6zSn2OX
+         RGKn2aVMSM4Az3JHGQck64Nf2QFzrVDMCiwjAQ/OG9nOjaMQkXblZVSlElBdF05CvZA0
+         4dpA==
+X-Gm-Message-State: AAQBX9fO50DXNuqX3ybyY6yOEKqwtoYTvhGOP9yUp3S2z8uoNWy0wKiO
+        AJOkeG24N90y4GNBacw4WqrFrA==
+X-Google-Smtp-Source: AKy350aUZ3CGJoUofIeVVJ4YAhyMxqUiZCUMEwpEb3JCUeppyK803LMkXw+XpWVL55zLVoq/SS8BKA==
+X-Received: by 2002:a05:6512:21aa:b0:4ec:9f24:3e57 with SMTP id c10-20020a05651221aa00b004ec9f243e57mr534056lft.3.1681300075131;
+        Wed, 12 Apr 2023 04:47:55 -0700 (PDT)
+Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
+        by smtp.gmail.com with ESMTPSA id q10-20020ac2510a000000b004ec5229092dsm2907440lfb.34.2023.04.12.04.47.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 04:45:44 -0700 (PDT)
-Message-ID: <583f6149-f022-55a9-6d26-e9bc69e6dfc1@linaro.org>
-Date:   Wed, 12 Apr 2023 13:45:42 +0200
+        Wed, 12 Apr 2023 04:47:54 -0700 (PDT)
+Message-ID: <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
+Date:   Wed, 12 Apr 2023 13:47:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 01/40] dt-bindings: pinctrl: qcom,ipq5332-tlmm: simplify
- with unevaluatedProperties
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
         Shawn Guo <shawn.guo@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <me@iskren.info>,
-        Martin Botka <martin.botka@somainline.org>,
-        Danila Tikhonov <danila@jiaxyga.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230407184546.161168-1-krzysztof.kozlowski@linaro.org>
- <574d3aa5-21f4-014a-8cc7-7549df59ff3c@linaro.org>
- <20230411173550.GA3408186-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230411173550.GA3408186-robh@kernel.org>
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
+ <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+ <168069726278.2356075.14351594478003012447.robh@kernel.org>
+ <20230405134727.GA2461305-robh@kernel.org>
+ <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
+ <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
+ <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
+ <ZDAAToSzNLVo6le8@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZDAAToSzNLVo6le8@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/04/2023 19:35, Rob Herring wrote:
-> On Fri, Apr 07, 2023 at 08:54:43PM +0200, Krzysztof Kozlowski wrote:
->> On 07/04/2023 20:45, Krzysztof Kozlowski wrote:
->>> All Qualcomm SoC Top Level Mode Multiplexer pin controllers have similar
->>> capabilities regarding pin properties, thus we can just accept entire
->>> set provided by qcom,tlmm-common.yaml schema.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->>
->> Linus,
->>
->> If you prefer I can send all these to you in a pull after getting some acks.
->>
->>
->> Rob,
->>
->> Feel free to ack once for all of them.
-> 
-> There's no cover letter to ack them all (and b4 to pick up), but I guess 
-> that's your own problem in this case. For the series:
-> 
-> Acked-by: Rob Herring <robh@kernel.org>
-> 
-> IMO, this should just be 1 patch. It's 1 change for 1 platform family 
-> for 1 subsystem. There's just no point when it's all the same people 
-> that will review it and apply it.
 
-My previous patches of approximately this size were bouncing from the
-lists, so I wanted to avoid this. Also, some of the bindings actually
-have different maintainers.
 
-Best regards,
-Krzysztof
+On 7.04.2023 13:36, Stephan Gerhold wrote:
+> On Thu, Apr 06, 2023 at 09:55:40PM +0200, Konrad Dybcio wrote:
+>> [...]
+>> I don't really know what kind.. I can add something like:
+>>
+>> rpm {
+>> 	compatible = "qcom,rpm", "simple-mfd";
+>>
+>> 	mpm: interrupt-controller {
+>> 	...
+>> };
+>>
+> 
+> IMO we should indeed add something like this, because the current
+> representation of the RPM below the top level /smd node is misleading.
+> "SMD" is not a device, bus, component or anything like that. It is just
+> the communication protocol. There should not be a top-level DT node for
+> this.
+> 
+> Instead there should be a dedicated device tree node for the RPM like in
+> your example above, which will allow adding properties and subnodes to
+> it as needed.
+> 
+> For unrelated reasons I actually have some patches for this, that switch
+> the /smd top-level node to a "remoteproc-like" node dedicated to the
+> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
+> add additional (optional) properties like "resets" and "iommus" for the
+> RPM, but it would allow adding arbitrary subnodes as well:
+> 
+> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
+> 
+> I could finish those up and post them if that would help...
+Krzysztof, what do you think?
 
+On a note, the bindings check is gone with dtschema-2023.4
+
+Konrad
+> 
+> Thanks,
+> Stephan
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> index dcbc5972248b22..1c24b01bd268c8 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -310,10 +310,10 @@
+>  		};
+>  	};
+>  
+> -	smd {
+> -		compatible = "qcom,smd";
+> +	rpm: remoteproc-rpm {
+> +		compatible = "qcom,msm8916-rpm-proc", "qcom,rpm-proc";
+>  
+> -		rpm {
+> +		smd-edge {
+>  			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+>  			qcom,ipc = <&apcs 8 0>;
+>  			qcom,smd-edge = <15>;
+> 
+> 
