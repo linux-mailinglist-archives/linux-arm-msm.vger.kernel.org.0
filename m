@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 453866DFFC1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 22:26:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 216FA6DFFC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 22:27:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230146AbjDLU0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 16:26:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40984 "EHLO
+        id S229711AbjDLU11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 16:27:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbjDLU0b (ORCPT
+        with ESMTP id S229555AbjDLU1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 16:26:31 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE1B67A9B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:26:29 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id j11so795213ljq.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:26:29 -0700 (PDT)
+        Wed, 12 Apr 2023 16:27:25 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15CB530E0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:27:24 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id q26so4083186lfe.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 13:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681331188; x=1683923188;
+        d=linaro.org; s=google; t=1681331242; x=1683923242;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8H9YKn/XNUDyg0V0IfHKOXTMiAPmo1dRrKHaJchsJUE=;
-        b=fsnNaJ3fMWvfqjnUgm9M5H+0D2TmDp4cyBYvzYOssEXvtbpAqLnOFds9jKCDvlhXAj
-         yimJGk7G9oSRZW5qj5ULdaoI5lT2Vl4CbUMuM6U0MjxfixGU7Z7WzDAA71R5mhRAv+07
-         P9TwXtH7Jz42ZeNPp3ZGtS85NR8lYNle7fUFx2LSA25aLyaXFjSi2tgg9REITXjWH0FD
-         KrhFFZandn+X/4pyYr36x2Du9HaTxfg/wlR/gxdjvFzZVQ1e5kFDQ5UnpZcB9H3WZXO4
-         9mnv4i3puJnsyrGzzu3i892UX+JYhhJVNx0SbyZfKhViPxWxYUxF/NHfzSeJI5W8FqhK
-         vT5A==
+        bh=qdD6X2tsWvNw/zRsltriRHxCTaK999MB9DdSQty7sIk=;
+        b=m8RhPAagGIaAQM2rpwxDNqnkNsbDrLnvyXQuIL5Gb0pw04I6kEZMHvihT394Lk8U5E
+         EsuPjFYRZBzfJu2GBHTaKq60kv9SGJX/48XubuFNGcklk8JMDxuU6L4CLbZ3Oa8Nv4sN
+         pQ1Fa3s2dy3Le660qvhYqQ4W26Bk0Q3a0wkXYIgskj2PCtX5sYVPHzmrWfI/2ZsZmixc
+         L8jHWFdJSnpDSYN19mKrGRf3uMsAskRXaufjgIB2i7lG/RduE0Pj9u6hX5Hz0MnJzNKa
+         +BH6CxBBEl+dHGXQjF7nFIQ50DXq3Q2z8Xhz80neSLWgy4+TVnSak647ncaxX37B7CxV
+         OQ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681331188; x=1683923188;
+        d=1e100.net; s=20221208; t=1681331242; x=1683923242;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8H9YKn/XNUDyg0V0IfHKOXTMiAPmo1dRrKHaJchsJUE=;
-        b=IUIEMQiAciizGO1wWisQIDFvvidO3bayVGpFvKs+6davXAmukQW3d110/6IvnGPZCc
-         asSbLaJju/SPJW7cUHocI1LL6B+Yt1bvHx4zqEuNkQpnN+OIlQ1lDupzkBgQlT/Dxqgr
-         gtiBCBQfWwni70Lpzz+y+o8GX4Ot1UY3e7feyvbkn3i9tSXjspnzyWihgQuF4XkdWNgp
-         TUp1JtRBRh6Fu6HhAz7OXuWl3U0HPRwUgaUIfJBAFhQVjwxIFzSHx4OcyziuqDX9QdxI
-         gihatGXXSHTjrRMNMY0WENZT8wJDhUpomTvN9GHSeYwDpaViKc+cTdLBjCTj0P66qvhn
-         wbOA==
-X-Gm-Message-State: AAQBX9eaVNkc+sLnrHcoa9Ekg7V7HNXbL6t2X/1GiSSGkrfHylJUmuK7
-        pUdAYnkz+vjProz/h2FN9g+53Q==
-X-Google-Smtp-Source: AKy350aXEj5ixExfpIhCosCnRuDfPdFOXLUsw5Zw5migaoZNzQBU88qmsg7DFqP2/hBysnxxJCHFog==
-X-Received: by 2002:a05:651c:115:b0:2a7:a5a4:b878 with SMTP id a21-20020a05651c011500b002a7a5a4b878mr402560ljb.50.1681331187958;
-        Wed, 12 Apr 2023 13:26:27 -0700 (PDT)
+        bh=qdD6X2tsWvNw/zRsltriRHxCTaK999MB9DdSQty7sIk=;
+        b=X81RnR2Ovc0m1oBHVJUp6kWG8wyRDSBb1Vmwj16+gyzQrpKLBOXKqZTjWJgLYNVxYq
+         RpATu+pLusGsM1tCi6mw68231HXgRx//DSyVFPvVaxEdVxwHEdigWalZVJ+GdCQiYBbx
+         CJvaSu67ASzBRMfpCHaqAufC4zch1xDWY0ZSYMCs92PpU5TB1bJwX8uAtoefKAHfjuLT
+         y7a08/ZGw6ZLC8r+iu0FyLkcmRSiE/b6WDE2o/dRXYSi+/OAEBUzjJ9oM640pgYiN7aS
+         hDdI8a0ubgbDIECOT7jmSlHM2lHXX74LBzodlC4MNq8BaCZ60UkAGUx8Mreo3mq4iaVp
+         dRpg==
+X-Gm-Message-State: AAQBX9fw7g6OAts/pf2xQqeOBTND379ZDNuoEEBQgdo8u5A3lIQSmR0S
+        kyV+nFYM6R/GgpCCLVqWYlz+oQ==
+X-Google-Smtp-Source: AKy350YVIRTv5R7AgdTvAxHjSp0NWPnZQJUJ/JGfN/ZvzkW+8RZBZ6F4DAfnpDpJ//H7u9TvnQiIpA==
+X-Received: by 2002:ac2:55ae:0:b0:4dd:a445:e69d with SMTP id y14-20020ac255ae000000b004dda445e69dmr36307lfg.26.1681331242291;
+        Wed, 12 Apr 2023 13:27:22 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id r1-20020a2eb601000000b0029c36ebf89asm3411557ljn.112.2023.04.12.13.26.27
+        by smtp.gmail.com with ESMTPSA id c25-20020a197619000000b004eacd90e0c7sm3165151lff.81.2023.04.12.13.27.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 13:26:27 -0700 (PDT)
-Message-ID: <497d7ea1-6824-314b-7165-d72e0ce55027@linaro.org>
-Date:   Wed, 12 Apr 2023 23:26:26 +0300
+        Wed, 12 Apr 2023 13:27:21 -0700 (PDT)
+Message-ID: <0d56d963-a9dc-f6c5-60c0-421da030e1b3@linaro.org>
+Date:   Wed, 12 Apr 2023 23:27:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: sm8150: turn first USB PHY into
- USB+DP PHY
+Subject: Re: [PATCH 4/5] dt-bindings: phy: qcom,msm8996-qmp-usb3-phy: drop
+ legacy bindings
 Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
+To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -69,92 +69,185 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         Johan Hovold <johan+linaro@kernel.org>,
         devicetree@vger.kernel.org
 References: <20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
- <20230324215550.1966809-4-dmitry.baryshkov@linaro.org>
- <70957e67-e570-3800-e679-d7c291295999@linaro.org>
- <cfa6af3e-c7bc-894a-119c-5c6c5ea82ec0@linaro.org>
- <85d75550-66f4-2680-c6fe-9c575e916b40@linaro.org>
- <6a545494-832b-d1d9-ad5a-9ed0a724703b@linaro.org>
+ <20230324215550.1966809-5-dmitry.baryshkov@linaro.org>
+ <656c6ae6-41c5-9b7e-8602-02d8b3b4149e@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <6a545494-832b-d1d9-ad5a-9ed0a724703b@linaro.org>
+In-Reply-To: <656c6ae6-41c5-9b7e-8602-02d8b3b4149e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/03/2023 13:52, Konrad Dybcio wrote:
+On 27/03/2023 11:00, Neil Armstrong wrote:
+> On 24/03/2023 22:55, Dmitry Baryshkov wrote:
+>> The qcom,msm8996-qmp-usb3-phy.yaml defines bindings for several PHYs
+>> which predate USB -> USB+DP migration. Now as sm8150 has been migrated,
+>> drop the legacy bindings completely. No device trees use them anymore.
+>> Newer USB+DP bindings should use combo bindings from the beginning.
 > 
-> 
-> On 27.03.2023 12:14, Dmitry Baryshkov wrote:
->> On 27/03/2023 11:05, Neil Armstrong wrote:
->>> On 27/03/2023 09:59, Neil Armstrong wrote:
->>>> On 24/03/2023 22:55, Dmitry Baryshkov wrote:
->>>>> The first USB PHY on the sm8150 platform is really the USB+DP combo
->>>>> PHY. Add the DP part of the PHY.
->>>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>    arch/arm64/boot/dts/qcom/sm8150.dtsi | 17 +++++++++++++----
->>>>>    1 file changed, 13 insertions(+), 4 deletions(-)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
->>>>> index 9491be4a6bf0..a618218f7b68 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
->>>>> @@ -3392,20 +3392,19 @@ usb_2_hsphy: phy@88e3000 {
->>>>>            };
->>>>>            usb_1_qmpphy: phy@88e9000 {
->>>>> -            compatible = "qcom,sm8150-qmp-usb3-phy";
->>>>> +            compatible = "qcom,sm8150-qmp-usb3-dp-phy";
->>>>>                reg = <0 0x088e9000 0 0x18c>,
->>>>> -                  <0 0x088e8000 0 0x10>;
->>>>> +                  <0 0x088e8000 0 0x38>,
->>>>> +                  <0 0x088ea000 0 0x40>;
->>>>>                status = "disabled";
->>>>>                #address-cells = <2>;
->>>>>                #size-cells = <2>;
->>>>>                ranges;
->>>>> -
->>>>>                clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
->>>>>                     <&rpmhcc RPMH_CXO_CLK>,
->>>>>                     <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
->>>>>                     <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
->>>>>                clock-names = "aux", "ref_clk_src", "ref", "com_aux";
->>>>> -
->>>>>                resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
->>>>>                     <&gcc GCC_USB3_PHY_PRIM_BCR>;
->>>>>                reset-names = "phy", "common";
->>>>> @@ -3423,6 +3422,16 @@ usb_1_ssphy: phy@88e9200 {
->>>>>                    clock-names = "pipe0";
->>>>>                    clock-output-names = "usb3_phy_pipe_clk_src";
->>>>>                };
->>>>> +
->>>>> +            usb_1_dpphy: phy@88ea200 {
->>>>> +                reg = <0 0x088ea200 0 0x200>,
->>>>> +                      <0 0x088ea400 0 0x200>,
->>>>> +                      <0 0x088eaa00 0 0x200>,
->>>>> +                      <0 0x088ea600 0 0x200>,
->>>>> +                      <0 0x088ea800 0 0x200>;
->>>>> +                #clock-cells = <1>;
->>>>> +                #phy-cells = <0>;
->>>>> +            };
->>>>
->>>> Is there a reason why the new flat bindings from qcom,sc8280xp-qmp-usb43dp-phy.yaml are not used instead ?
->>>>
->>>
->>> Oh ok I see "phy: qcom-qmp-combo: convert to newer style of bindings" is the followup of this serie,
->>> please specify it because it wasn't obvious...
->>
->> I thought that a note in the cover letter was good enough, but yeah, maybe it should be more explicit. Do you think it warrants v2? I can send one.
-> IMO it's unnecessary so long as both get in.
+> Shouldn't we mark then as deprecated first ?
 
-And so nobody responded with R-B :-)
+Not sure. What would be the reason to do that? There are no users for 
+them anymore. They do not describe properties (which can be deprecated), 
+instead they describe devices which are no longer present in DT.
+
+> 
+> Neil
+> 
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 80 -------------------
+>>   1 file changed, 80 deletions(-)
+>>
+>> diff --git 
+>> a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml 
+>> b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+>> index e81a38281f8c..5684eaf170e4 100644
+>> --- 
+>> a/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+>> +++ 
+>> b/Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-usb3-phy.yaml
+>> @@ -24,26 +24,17 @@ properties:
+>>         - qcom,msm8996-qmp-usb3-phy
+>>         - qcom,msm8998-qmp-usb3-phy
+>>         - qcom,qcm2290-qmp-usb3-phy
+>> -      - qcom,sc7180-qmp-usb3-phy
+>> -      - qcom,sc8180x-qmp-usb3-phy
+>> -      - qcom,sdm845-qmp-usb3-phy
+>>         - qcom,sdm845-qmp-usb3-uni-phy
+>>         - qcom,sdx55-qmp-usb3-uni-phy
+>>         - qcom,sdx65-qmp-usb3-uni-phy
+>>         - qcom,sm6115-qmp-usb3-phy
+>> -      - qcom,sm8150-qmp-usb3-phy
+>>         - qcom,sm8150-qmp-usb3-uni-phy
+>> -      - qcom,sm8250-qmp-usb3-phy
+>>         - qcom,sm8250-qmp-usb3-uni-phy
+>> -      - qcom,sm8350-qmp-usb3-phy
+>>         - qcom,sm8350-qmp-usb3-uni-phy
+>> -      - qcom,sm8450-qmp-usb3-phy
+>>     reg:
+>> -    minItems: 1
+>>       items:
+>>         - description: serdes
+>> -      - description: DP_COM
+>>     "#address-cells":
+>>       enum: [ 1, 2 ]
+>> @@ -128,28 +119,6 @@ required:
+>>   additionalProperties: false
+>>   allOf:
+>> -  - if:
+>> -      properties:
+>> -        compatible:
+>> -          contains:
+>> -            enum:
+>> -              - qcom,sc7180-qmp-usb3-phy
+>> -    then:
+>> -      properties:
+>> -        clocks:
+>> -          maxItems: 4
+>> -        clock-names:
+>> -          items:
+>> -            - const: aux
+>> -            - const: cfg_ahb
+>> -            - const: ref
+>> -            - const: com_aux
+>> -        resets:
+>> -          maxItems: 1
+>> -        reset-names:
+>> -          items:
+>> -            - const: phy
+>> -
+>>     - if:
+>>         properties:
+>>           compatible:
+>> @@ -204,7 +173,6 @@ allOf:
+>>           compatible:
+>>             contains:
+>>               enum:
+>> -              - qcom,sm8150-qmp-usb3-phy
+>>                 - qcom,sm8150-qmp-usb3-uni-phy
+>>                 - qcom,sm8250-qmp-usb3-uni-phy
+>>                 - qcom,sm8350-qmp-usb3-uni-phy
+>> @@ -225,29 +193,6 @@ allOf:
+>>               - const: phy
+>>               - const: common
+>> -  - if:
+>> -      properties:
+>> -        compatible:
+>> -          contains:
+>> -            enum:
+>> -              - qcom,sm8250-qmp-usb3-phy
+>> -              - qcom,sm8350-qmp-usb3-phy
+>> -    then:
+>> -      properties:
+>> -        clocks:
+>> -          maxItems: 3
+>> -        clock-names:
+>> -          items:
+>> -            - const: aux
+>> -            - const: ref_clk_src
+>> -            - const: com_aux
+>> -        resets:
+>> -          maxItems: 2
+>> -        reset-names:
+>> -          items:
+>> -            - const: phy
+>> -            - const: common
+>> -
+>>     - if:
+>>         properties:
+>>           compatible:
+>> @@ -271,28 +216,6 @@ allOf:
+>>               - const: phy_phy
+>>               - const: phy
+>> -  - if:
+>> -      properties:
+>> -        compatible:
+>> -          contains:
+>> -            enum:
+>> -              - qcom,sdm845-qmp-usb3-phy
+>> -              - qcom,sm8150-qmp-usb3-phy
+>> -              - qcom,sm8350-qmp-usb3-phy
+>> -              - qcom,sm8450-qmp-usb3-phy
+>> -    then:
+>> -      patternProperties:
+>> -        "^phy@[0-9a-f]+$":
+>> -          properties:
+>> -            reg:
+>> -              items:
+>> -                - description: TX lane 1
+>> -                - description: RX lane 1
+>> -                - description: PCS
+>> -                - description: TX lane 2
+>> -                - description: RX lane 2
+>> -                - description: PCS_MISC
+>> -
+>>     - if:
+>>         properties:
+>>           compatible:
+>> @@ -319,13 +242,10 @@ allOf:
+>>                 - qcom,ipq6018-qmp-usb3-phy
+>>                 - qcom,ipq8074-qmp-usb3-phy
+>>                 - qcom,qcm2290-qmp-usb3-phy
+>> -              - qcom,sc7180-qmp-usb3-phy
+>> -              - qcom,sc8180x-qmp-usb3-phy
+>>                 - qcom,sdx55-qmp-usb3-uni-phy
+>>                 - qcom,sdx65-qmp-usb3-uni-phy
+>>                 - qcom,sm6115-qmp-usb3-phy
+>>                 - qcom,sm8150-qmp-usb3-uni-phy
+>> -              - qcom,sm8250-qmp-usb3-phy
+>>       then:
+>>         patternProperties:
+>>           "^phy@[0-9a-f]+$":
+> 
 
 -- 
 With best wishes
