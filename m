@@ -2,119 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0C286DEB9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 08:15:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F20576DEC14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 08:49:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbjDLGO7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 02:14:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37904 "EHLO
+        id S229564AbjDLGts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 02:49:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjDLGO6 (ORCPT
+        with ESMTP id S229484AbjDLGts (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 02:14:58 -0400
+        Wed, 12 Apr 2023 02:49:48 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B87B940F2;
-        Tue, 11 Apr 2023 23:14:50 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F935199;
+        Tue, 11 Apr 2023 23:49:47 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5366362E5E;
-        Wed, 12 Apr 2023 06:14:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DEBC433EF;
-        Wed, 12 Apr 2023 06:14:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1681280089;
-        bh=Nxag8wK1torwvwcelmJg4s5Xft+8uu3sHSeDBkA6DIU=;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BC52062E93;
+        Wed, 12 Apr 2023 06:49:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9BCC433D2;
+        Wed, 12 Apr 2023 06:49:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681282186;
+        bh=FI6luPqi9WmXR5nNQLmqp2fp++H9K/zl4E+074hTFQE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Z0C6JC868/IbrDNImk0zmIaQYLikuOeSr4okyyqgL6WyPuWoITU2J28J+4gTwO+SY
-         jFrJtF+QfNU/XlnmM4Nhdsz4nmpnkBZ/+pLXtdK70Z+gdKrDmYTCVTx0pkbmgg884h
-         k5jrVjHTZLUx8nxkSGxiaQnavKN3Whh5Zk7hTVZ8=
-Date:   Wed, 12 Apr 2023 08:14:47 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     John Moon <quic_johmoo@quicinc.com>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
+        b=iMKPj63ds0rG/v6oXAUq+yfZf6oHmpzNAZ4DV5NEoNaSneXwJ9V/nNKF2twXO28+a
+         Lv30UvfMTIY7bjfQ37JPx9VhKPlzr3346+Jj2OM9z19/7tVWeyLGMsMf6AL+TDRfXX
+         PZbk8nHsr1Iebo7BsDo2r0dKtnDs59HvAj4oCD932l6k2Bt+7DsdcN9Wqxzz83mu8/
+         DDK3mu/pGrjvsC5tb9wwe18uLMtUue211qQhlwd/hh14Hol04xZT9DbNYX8xGKpOly
+         RgVjdwpk3PeUf0REb39jpFYrgqoFVeWJEBLgSzRXQxv0TdfIQFLqyoCmk7l4CuYwTV
+         ao+E4OjYvhgaw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pmUIb-0003XJ-RZ; Wed, 12 Apr 2023 08:49:45 +0200
+Date:   Wed, 12 Apr 2023 08:49:45 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        kernel-team@android.com, libabigail@sourceware.org,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [PATCH v5 1/2] check-uapi: Introduce check-uapi.sh
-Message-ID: <2023041209-armed-overlaid-3d3d@gregkh>
-References: <20230407203456.27141-1-quic_johmoo@quicinc.com>
- <20230407203456.27141-2-quic_johmoo@quicinc.com>
- <CAK7LNAQQmoyUx+0Jk3c7iqY20KokrHEOPwHNb2doZOOA8RWBDA@mail.gmail.com>
- <2023041015-lunar-dandelion-1b4e@gregkh>
- <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
- <2023041136-donator-faceplate-5f91@gregkh>
- <bcdcee9b-f213-bc3c-d300-92a1e0138187@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad: correct pin
+ drive-strength
+Message-ID: <ZDZUiW+74rhhRAfS@hovoldconsulting.com>
+References: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
+ <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
+ <887eb9f6-9882-37c6-4332-ddae7a354187@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bcdcee9b-f213-bc3c-d300-92a1e0138187@quicinc.com>
+In-Reply-To: <887eb9f6-9882-37c6-4332-ddae7a354187@linaro.org>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 11:36:48AM -0700, John Moon wrote:
-> > > 
-> > > Others do not seem to be intentional:
-> > > 
-> > >   Addition/use of flex arrays:
-> > >     - include/uapi/linux/rseq.h (f7b01bb0b57f)
-> > >     - include/uapi/scsi/scsi_bsg_mpi3mr.h (c6f2e6b6eaaf)
+On Tue, Apr 11, 2023 at 06:58:33PM +0200, Krzysztof Kozlowski wrote:
+> On 11/04/2023 16:23, Johan Hovold wrote:
+> > On Fri, Apr 07, 2023 at 08:07:10PM +0200, Krzysztof Kozlowski wrote:
+> >> Fix typo in drive-strength property name.
 > > 
-> > That is not a breakage, that's a tool problem.
+> > In the future, please try to use the established commit-summary prefix.
+> > In this case:
 > > 
-> > >   Type change:
-> > >     - include/uapi/scsi/scsi_bsg_ufs.h (3f5145a615238)
-> > 
-> > Again, not a real breakage, size is still the same.
-> > 
+> > 	arm64: dts: qcom: sc8280xp-x13s:
 > 
-> Would you find the tool more useful if it simply filtered out all instances
-> where the size of the type did not change? This would filter out the
-> following which the tool currently flags:
+> Sure.
 > 
-> - enum expansions
-> - reserved field expansions
-> - expansions of a struct with a flex array at the end
-> - type changes
-> - re-ordering of existing members
-> - ...others?
+> commit ca1ce7207e53cfe69aee5002eb3795069668da53
+> Author: Johan Hovold <johan+linaro@kernel.org>
+> Date:   Fri Aug 5 11:23:17 2022 +0200
+> 
+>     arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate touchpad
 
-Obviously not, as some of those are real breakages, and some are not at
-all.
+Yeah, we initially used a longer prefix (including "x13s" which was
+missing in the Subject of this patch), but quite soon decided on using
+the shorter
 
-Please understand what is an abi breakage.  Adding new enums is not.
-Using a reserved field is not.  Reording existing members IS.
+	arm64: dts: qcom: sc8280xp-x13s:
 
-> These changes aren't _always_ safe, but if you assume the kernel developer
-> is doing something reasonable, then maybe it's okay. Maybe we could hide
-> these checks behind something like a "--pedantic" flag?
+instead.
 
-Again, no, that list above has totally different things in it, some are
-completly safe, others totally break the abi.  Do NOT lump them all
-together as that is wrong.
-
-thanks,
-
-greg k-h
+Johan
