@@ -2,115 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F9576DED55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 10:16:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5C546DED5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 12 Apr 2023 10:17:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbjDLIQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 04:16:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55708 "EHLO
+        id S229571AbjDLIRk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 04:17:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjDLIQD (ORCPT
+        with ESMTP id S229507AbjDLIRj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 04:16:03 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916CDFC;
-        Wed, 12 Apr 2023 01:16:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2C98862F53;
-        Wed, 12 Apr 2023 08:16:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145D7C433EF;
-        Wed, 12 Apr 2023 08:15:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681287360;
-        bh=cYGLuhrnmzlOrQY4GPjvQrjAZMGeHUI8Q3IUNRi/rpY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=L2vJGHEj9+I6HvrX/reWlTyE3ZjC7n016eJ0kRowVvlirkFCmMnKZuAEqvJmSOHsn
-         Cbjpzph6EbRTHLbYVh6n7pRqjNC6SVPyFJj2dr6jPW831dY41JDkYHvK5TtSdGi0aL
-         m378zOczEuQr3npwBi4jvS5prLcK1UWrPVhoaoJ8KhVqh9b/3bknngcA7Ck6YPMW37
-         sQXEqwZAhNIw6RITV6rIp+vJywCR2Sc9IyuezN1JuoojcXVZukKEOdDtH06iL3SW1U
-         418v0oYtLRmLFzAU22Z5GilXjGlnrAFlRf/ATedgbH1R+T2QsUU/rP0tl1HzJK4KFb
-         tfWIGSmQ+kHOQ==
-Date:   Wed, 12 Apr 2023 10:15:53 +0200
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, bhelgaas@google.com,
-        konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Revert "dt-bindings: PCI: qcom: Add iommu-map properties"
-Message-ID: <ZDZouY0PEL64MT6N@lpieralisi>
-References: <20230411121533.22454-1-manivannan.sadhasivam@linaro.org>
- <20230411174742.GA3428751-robh@kernel.org>
- <20230411184231.GA59982@thinkpad>
+        Wed, 12 Apr 2023 04:17:39 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6E31BF1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 01:17:37 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id j17so17071059ejs.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 01:17:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681287456;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uPgzd/VLKqLuQj5VWjkLgmOErQ669vusy63km8xjmc0=;
+        b=hw2Z5wbeJQdY3oh8mBvw2eyn8C+jprPkv41i65KsCAH2305r4v0JTumhAzGsscjfKm
+         KZqo5Ya7PJUwvRywCHys4msGSo+c8TkRp+JxHo0jWDpCpGzohQFQhLw/xi8XQekvjMCh
+         8DaEjj5Gj9tE3dw261q+KOR7hzgnOHjw109v8nlbeR9J8TJGcRqAyMg0Y6iK8Y03nJ3+
+         TJt8hWQ2f0otq5Zo7u1W1WSOfjtKkZ6YBR0otNG/E6Mjl2z6YQtNpPWcOaK1OT5TJGud
+         x9oUFht7yqMPyC0Ma163LEIDoFTlKYSox8uTQSEP/VxKkZtTlvAQU3gCbQ/tVu7/WRFb
+         R/RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681287456;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uPgzd/VLKqLuQj5VWjkLgmOErQ669vusy63km8xjmc0=;
+        b=hU8shfl3oGLXZb6ciZyhJiHwVi9ItTKj//px2gKvyxpfa0Z2/cHuA8p4Isl+EXba4D
+         t6+SS+w2m8qJV2CaYJZD+Z/aloLLHLPeT+6JYjARHIw9Of6ecDvwIf0qcIznuKhGiBQ4
+         R+8PmjQ4gZvpT+XP1CansRXkQmV9DN1ZpfFmYipx9AyXahjH8Ws2Rj8K2ih5Q+jXiPEh
+         RfDsAF0D7orAJ5cmAfFkWORHa6Ob54L9hP+JbvsxTBkkEwAH+xM7VjbE4MeikhR+oIsX
+         Xg5oV50hQWZmASJVEIxekG/eO53UOrv6O6BsIJ8Ls+n6vNbiXt4bPfzywP1sCM6bJTAl
+         z7gQ==
+X-Gm-Message-State: AAQBX9ew2dgzLMuq/3k0XjU2LiiM4tvr0J1b8b4gAc21m/C2PdbFfMVJ
+        jSWvlTd9oZpqIK4nrH6ca/rqQw==
+X-Google-Smtp-Source: AKy350YZSgTTZrYnjgc/O2bMS7r2SCOzfHbjKd+xcTOqV+vdlaN3wNoKqYNeDOIj4dSGzcsZjKa8Rw==
+X-Received: by 2002:a17:907:8d01:b0:94a:7a0f:7851 with SMTP id tc1-20020a1709078d0100b0094a7a0f7851mr9406162ejc.41.1681287456296;
+        Wed, 12 Apr 2023 01:17:36 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:8fa0:9989:3f72:b14f? ([2a02:810d:15c0:828:8fa0:9989:3f72:b14f])
+        by smtp.gmail.com with ESMTPSA id ww1-20020a170907084100b0094a44aa90ddsm4171525ejb.216.2023.04.12.01.17.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Apr 2023 01:17:35 -0700 (PDT)
+Message-ID: <7e180b96-6f47-6b25-8751-01b5186c8c71@linaro.org>
+Date:   Wed, 12 Apr 2023 10:17:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230411184231.GA59982@thinkpad>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
+Content-Language: en-US
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1680874520.git.quic_schowdhu@quicinc.com>
+ <5eeeb46e9b3f61656a37cb77c2ad6a04e383c16d.1680874520.git.quic_schowdhu@quicinc.com>
+ <20230407154132.dpguz24f6rukyujq@ripper>
+ <8cf793df-b676-bbb4-0601-5647d58bb2b3@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <8cf793df-b676-bbb4-0601-5647d58bb2b3@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 12:12:31AM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Apr 11, 2023 at 12:47:42PM -0500, Rob Herring wrote:
-> > On Tue, Apr 11, 2023 at 05:45:33PM +0530, Manivannan Sadhasivam wrote:
-> > > This reverts commit 6ebfa40b63ae65eac20834ef4f45355fc5ef6899.
-> > > 
-> > > "iommu-map" property is already documented in commit
-> > 
-> > Need the commit hash here.
-> > 
-> > > ("dt-bindings: PCI: qcom: Add SM8550 compatible") along with the "iommus"
-> > > property.
-> > 
-> > Shouldn't there be a patch removing "iommus" as discussed?
-> > 
+On 10/04/2023 08:48, Souradeep Chowdhury wrote:
 > 
-> Yeah, that was my intention after the dts patches were merged. And since the
-> dts patches are in linux-next now, I could finally send the patch.
-
-I don't understand what's the plan here. By the way, instead of merging
-this revert I just dropped the commit that this patch is reverting from
-the controller/qcom branch, please have a look to check if everything is
-what you expect it to be there.
-
-Lorenzo
-
-> - Mani
 > 
-> > > 
-> > > So let's revert the commit that just added "iommu-map" to avoid
-> > > duplication.
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 2 --
-> > >  1 file changed, 2 deletions(-)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > index 5d236bac99b6..a1318a4ecadf 100644
-> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> > > @@ -78,8 +78,6 @@ properties:
-> > >  
-> > >    dma-coherent: true
-> > >  
-> > > -  iommu-map: true
-> > > -
-> > >    interconnects:
-> > >      maxItems: 2
-> > >  
-> > > -- 
-> > > 2.25.1
-> > > 
+> On 4/7/2023 9:11 PM, Bjorn Andersson wrote:
+>> On Fri, Apr 07, 2023 at 07:34:36PM +0530, Souradeep Chowdhury wrote:
+>>> All of Qualcomm's proprietary Android boot-loaders capture boot time
+>>> stats, like the time when the bootloader started execution and at what
+>>> point the bootloader handed over control to the kernel etc. in the IMEM
+>>> region. This information is captured in a specific format by this driver
+>>> by mapping a structure to the IMEM memory region and then accessing the
+>>> members of the structure to print the information. This information is
+>>> useful in verifying if the existing boot KPIs have regressed or not.
+>>> A sample log in SM8450(waipio) device is as follows:-
+>>>
+>>> KPI: Pre ABL Time = 3s
+>>> KPI: ABL Time = 14s
+>>
+>> Why are these in whole seconds?
 > 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+> This is to give a granular view of time.
+> 
+>>
+>>> KPI: Kernel MPM timestamp = 890206
+>>
+>> And why is this presented in cycles?
+> 
+> This timestamp is used as an intermediate value for calculating one of 
+> the KPIs. Can be changed to seconds as well for consistency.
+> 
+>>
+>>>
+>>> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+>>> stage and the timestamp generated by the sleep counter is logged by
+>>> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+>>> starts execution which is logged here as "Pre ABL Time" and the second
+>>> when it is about to load the kernel logged as "ABL Time". Both are
+>>> logged in the unit of seconds.
+>>
+>> We have a policy to not taint the kernel log with "useless" information,
+>> for kernel developers this seems to add no value and for end users
+>> there's no benefit to this.
+>>
+>>> The current kernel timestamp is
+>>> printed by the boot_stats driver as well.
+>>>
+>>
+>> Why?
+> 
+> Same as stated above.
+
+You did not answer. The question is "why do you think printing this
+during boot is suitable for wide usage?". I don't find answer "give a
+granular view of time" anyway related.
+
+Please come with rationale why such printing should be used in Linux
+kernel at all, given that as Bjorn said - we do not print
+debugging/profiling information.
+
+You should probably come with a debugfs interface for this.
+
+Best regards,
+Krzysztof
+
