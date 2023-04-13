@@ -2,211 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 491E56E17E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 01:08:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 219586E181F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 01:19:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbjDMXI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 19:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42014 "EHLO
+        id S229660AbjDMXTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 19:19:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbjDMXI0 (ORCPT
+        with ESMTP id S229492AbjDMXTX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 19:08:26 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46D5B1FFE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 16:08:24 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id i26so21556544lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 16:08:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681427302; x=1684019302;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=637H74vWxZ4gX2iKNFYbz5JBcFfkn6d8GocnTsloh8Q=;
-        b=rbKxrjUIAd+X6KwrltL/MkHLE8BgLyCoCvfZZGTIemi37itMcS2npcI2b2HDXXk7Ec
-         ClfsiYCq/4DsihWiPuII+L2VA2mIwvasHklODifyBVJC60EZ5q4dkK3bvUmRKehBllZh
-         8eWmBPT4cz3MKFUfcyBi07WN4D6rWO6fFSDKeVxD7YHw1O31Fhvc6oboUwiBOv5v3I3v
-         yj50Zv8l1V96LC52wkvKR+TN2nWLAU6/lX5a06mJHBSa0Iz7O1+E2WjB9+0Ymxh4edzr
-         UoGMHCam3xcbn9gHW8NkY2U9/qGgC+NLcKzJjPFsXBvLwl8GA9ZtFUWaafO3q+pNFS7Y
-         7g9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681427302; x=1684019302;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=637H74vWxZ4gX2iKNFYbz5JBcFfkn6d8GocnTsloh8Q=;
-        b=hxRw+XHFTiHzKyhc6hNCdTfTP1Or1Cc4qcXT35Y8Jv7lvfp19RppCu50NKhb82taYd
-         hdJaIuakQeKa772SwsPHvFQks991BoViTrJDEZyLjyzguAGluq3H69tk8E1iZfdTGNsU
-         SUe8O7fHGJCbDCMpPMAst9uVr6ZR+M42LplHW0aVPSLhhJawKmimi9rP7Uni+lIdm4su
-         Qjm43n1CCx7LZ5XB3OYrPm6oETUFk09RKtJ1C6uAUEKCVfokE0ZAXucA94vHEuwmBCq6
-         XnaPbF1+uVzy5Nk62UTmxHnWybowypiysFRc1Jxk5muvaxayivbz/cYpq0jUgXNIwjBT
-         kUoQ==
-X-Gm-Message-State: AAQBX9e/oEXN+jfH/NUc+V0MRfgfMP1G39t5NY7CZy7jdFxXlffuf/iN
-        LPnJvnxJffgoJCEWSe/JjmyCX/Wz7d3hSLnnl/o=
-X-Google-Smtp-Source: AKy350YwG1c79czrZM93aUuBkouQbuFKALrb9AUFJ2Ijplaa2Nm71Bmdzzw7+aXidzhWbr/IiqLOVQ==
-X-Received: by 2002:ac2:4c92:0:b0:4e9:6097:add3 with SMTP id d18-20020ac24c92000000b004e96097add3mr1510914lfl.61.1681427302536;
-        Thu, 13 Apr 2023 16:08:22 -0700 (PDT)
-Received: from [192.168.1.101] (abyl123.neoplus.adsl.tpnet.pl. [83.9.31.123])
-        by smtp.gmail.com with ESMTPSA id r6-20020ac252a6000000b004ec6252aa37sm499499lfm.116.2023.04.13.16.08.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Apr 2023 16:08:22 -0700 (PDT)
-Message-ID: <546d7fa4-cdb9-7d1f-98e5-065a7706ee56@linaro.org>
-Date:   Fri, 14 Apr 2023 01:08:20 +0200
+        Thu, 13 Apr 2023 19:19:23 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07158449B;
+        Thu, 13 Apr 2023 16:18:57 -0700 (PDT)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 1630FD07B4;
+        Thu, 13 Apr 2023 23:18:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1681427893; bh=CRTWj+yIkiq12Ol3HBaiMX1cMs/LluSumeZfXP8P+4U=;
+        h=From:Subject:Date:To:Cc;
+        b=rdrGTDB8DvBZ2oSC07ZXnZqn+HjTQ3DwwUEZq2hsxarn2LFcC92daygpQEVw8H9mO
+         VFb06Cc6zd5pnPB92fKXwKXqUXf2UL4ubAyzzJtOwqoHXlVI8rofiv+Qw5M3hwni+V
+         9/BdLoVbrx2CCa++9Qhhn3gEZrBoVICWrOeS9QbY=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/8] Add PMI632 PMIC and RGB LED on sdm632-fairphone-fp3
+Date:   Fri, 14 Apr 2023 01:17:44 +0200
+Message-Id: <20230414-pmi632-v1-0-fe94dc414832@z3ntu.xyz>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/3] venus: add firmware version based check
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Viswanath Boma <quic_vboma@quicinc.com>
-References: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
- <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
- <6c3002ad-ff78-8818-0e68-a151d33b0fca@gmail.com>
- <0b5d967d-b6f5-ed1e-1878-160d6e645f02@linaro.org>
- <89fc0a9c-0eee-44c4-52a4-bfa0009b9cce@linaro.org>
-In-Reply-To: <89fc0a9c-0eee-44c4-52a4-bfa0009b9cce@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJiNOGQC/x3NwQqDMAyA4VeRnBetSVXYq4wdoouag7W0IAPx3
+ Vd3/OGD/4SsyTTDszoh6WHZ9lCifVQwrRIWRfuUBnLEzrce42Y9E3pRx0Sd6NBBwaNkxTFJmNa
+ b9zXXrtnEAs6RbxCTzvb9n17v6/oBWepSi3kAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-leds@vger.kernel.org, linux-iio@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1408; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=CRTWj+yIkiq12Ol3HBaiMX1cMs/LluSumeZfXP8P+4U=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkOI2bAIaCCSnfYMwzpW9XoiSE5rpK0s1oysYuy
+ NLpWHjEBhiJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZDiNmwAKCRBy2EO4nU3X
+ VofBD/9sWBHdLNm2RZU2Onpy9t9Gd6jZy7oYSBwsMTJc5u1mfsWrmQjHU/5Ny8NHPyLC6m1wv1v
+ GyAvAEd/YQlmAPOJZMdxxEIdU3g00Ti+RQEVQTEBlACBJxLYB2aBB5QSkftFz5wzc2akSaXY2bm
+ GBU7OIoW8fTyZiySOdWhSFsmTU+nt2vhrUqmX9rw57LE3DqK72WdsWkStXDbKw69UIABuF4F5t8
+ ZFe8O7vJYaEMsh3azORJivjJdMt5I34qQ+WnsKTZI0MFd5y1uGD5RY/T8Ol5q18sPHjwhvIfzKQ
+ 9IM0yvEMx64BOcIWXx2WoZFKO4E/XZnv7JtbPAZmnj24Al75ZHjQBdykB4a5hqn6LgVpyqWyvq3
+ c6YVkGeuQiEHROSnHrVvPCwmw8Ibc54jy40RNyDVKr6M+hGkXG493W+Y+4O8jAe7al81sOTuaEM
+ FnydnkQIixfqDlYQFJ1qf6KkoAhz78zGhNAJjg2Ed/ooM5qi+A1dzOli6DnYGTBKVNeenhBu7Eb
+ 3EmwwQOQNitifGincr1m7zhmlfoly2in1dwE59Sq08Ps5TskG0lWYGIjREq6PTxEM4V1yPfPpDU
+ iyBde1Y5HGTsta9lZnqGC0pKBKf+IXK6GM8tU0YEImgDUWYqNsV4rEjiFn3CKtTScwz2L+2kxia
+ tgfIB/g15aYipsg==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add support for the PMI632 PMIC in the spmi-gpio & qcom-lpg driver, add
+the dtsi for the PMIC and enable the notification LED on fairphone-fp3.
 
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (8):
+      dt-bindings: pinctrl: qcom,pmic-gpio: add PMI632
+      pinctrl: qcom: spmi-gpio: Add PMI632 support
+      dt-bindings: leds: qcom-lpg: Add compatible for PMI632 LPG block
+      leds: qcom-lpg: Add support for PMI632 LPG
+      dt-bindings: iio: adc: qcom,spmi-vadc: Allow 1/16 for pre-scaling
+      dt-bindings: mfd: qcom-spmi-pmic: Add PMI632 compatible
+      arm64: dts: qcom: Add PMI632 PMIC
+      arm64: dts: qcom: sdm632-fairphone-fp3: Add notification LED
 
-On 14.04.2023 01:01, Konrad Dybcio wrote:
-> 
-> 
-> On 11.04.2023 12:59, Konrad Dybcio wrote:
->>
->>
->> On 9.04.2023 07:18, Stanimir Varbanov wrote:
->>> Hi Dikshita,
->>>
->>> Thanks for the patch.
->>>
->>> On 7.04.23 г. 9:25 ч., Dikshita Agarwal wrote:
->>>> Add firmware version based checks to enable/disable
->>>> features for different SOCs.
->>>>
->>>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
->>>> Tested-by: Nathan Hebert <nhebert@chromium.org>
->>>> ---
->>>>   drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
->>>>   drivers/media/platform/qcom/venus/hfi_msgs.c | 11 +++++++++--
->>>>   2 files changed, 29 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->>>> index 32551c2..9d1e4b2 100644
->>>> --- a/drivers/media/platform/qcom/venus/core.h
->>>> +++ b/drivers/media/platform/qcom/venus/core.h
->>>> @@ -202,6 +202,11 @@ struct venus_core {
->>>>       unsigned int core0_usage_count;
->>>>       unsigned int core1_usage_count;
->>>>       struct dentry *root;
->>>> +    struct venus_img_version {
->>>> +        u32 major;
->>>> +        u32 minor;
->>>> +        u32 rev;
->>>> +    } venus_ver;
->>>>   };
->>>>     struct vdec_controls {
->>>> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->>>>       return NULL;
->>>>   }
->>>>   +static inline int
->>>> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->>>> +{
->>>> +    return ((core)->venus_ver.major == vmajor &&
->>>> +        (core)->venus_ver.minor == vminor &&
->>>> +        (core)->venus_ver.rev >= vrev);
->>>> +}
->>>> +
->>>> +static inline int
->>>> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->>>> +{
->>>> +    return ((core)->venus_ver.major == vmajor &&
->>>> +        (core)->venus_ver.minor == vminor &&
->>>> +        (core)->venus_ver.rev <= vrev);
->>>> +}
->>>
->>> IMO those two should return bool
->>>
->>>>   #endif
->>>> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
->>>> index df96db3..07ac0fc 100644
->>>> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
->>>> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
->>>> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->>>>   }
->>>>     static void
->>>> -sys_get_prop_image_version(struct device *dev,
->>>> +sys_get_prop_image_version(struct venus_core *core,
->>>>                  struct hfi_msg_sys_property_info_pkt *pkt)
->>>>   {
->>>> +    struct device *dev = core->dev;
->>>>       u8 *smem_tbl_ptr;
->>>>       u8 *img_ver;
->>>>       int req_bytes;
->>>> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
->>>>           return;
->>>>         img_ver = pkt->data;
->>>> +    if (IS_V4(core))
->>>> +        sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
->>>> +               &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->>>> +    else if (IS_V6(core))
->>>> +        sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
->>>> +               &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->>>>   
->>>
->>> what about if IS_V1?
->> Whooops, I missed that in my review as well...
->>
->> Looks like the 8916 and 8996 FWs fall under the VIDEO.VE case
->> as well, that's the QC_VERSION_STRING they have..
-> On top of that, my 8350 fw reports:
-> 
-> F/W version: 14:video-firmware.1.0-3fb5add1d3ac96f8f74facd537845a6ceb5a99e4
-FWIW this cryptic version also needs fdata.device_addr = 0
+ .../bindings/iio/adc/qcom,spmi-vadc.yaml           |   2 +-
+ .../devicetree/bindings/leds/leds-qcom-lpg.yaml    |   1 +
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |   1 +
+ .../bindings/pinctrl/qcom,pmic-gpio.yaml           |   2 +
+ arch/arm64/boot/dts/qcom/pmi632.dtsi               | 165 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm632-fairphone-fp3.dts  |  29 ++++
+ drivers/leds/rgb/leds-qcom-lpg.c                   |  15 ++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c           |   1 +
+ 8 files changed, 215 insertions(+), 1 deletion(-)
+---
+base-commit: c83fb1e4acf528c29b0729525cf23544f8121b3d
+change-id: 20230414-pmi632-4ae03225ae75
 
-(for reference - failling to do so will never stop the video
-stream polling)
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
 
-Konrad
-> 
-> Konrad
->>
->> Perhaps this could be an 
->>
->> if (IS_V6)
->> 	..
->> else
->> 	..
->>
->> Konrad
->>>
->>>>       dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->>>
->>> this will crash for v1.
->>>
->>>>   @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->>>>         switch (pkt->property) {
->>>>       case HFI_PROPERTY_SYS_IMAGE_VERSION:
->>>> -        sys_get_prop_image_version(dev, pkt);
->>>> +        sys_get_prop_image_version(core, pkt);
->>>>           break;
->>>>       default:
->>>>           dev_dbg(dev, VDBGL "unknown property data\n");
->>>
