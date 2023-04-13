@@ -2,75 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25D496E0E0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 15:07:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3199D6E0E31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 15:12:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbjDMNHu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 09:07:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38742 "EHLO
+        id S230260AbjDMNM1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 09:12:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbjDMNHs (ORCPT
+        with ESMTP id S230298AbjDMNM1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 09:07:48 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6570A253;
-        Thu, 13 Apr 2023 06:07:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1681391261; x=1712927261;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=M2aUEW+IML2DV0GcrvR6z18+5jlp57gNIuCt5UccOMs=;
-  b=Io6LFYx5B8KLzZicRD8Qin5xwnmBuxe5AF4rkF9sqN4Ir6Q1GcK9r68/
-   fisDnJcoeWHs/a06O+EdhduUFyLkZh3XO8e+obHo2Z+Zb2sBxl4H/amrc
-   gHK7yO7ofBJfQIF9rMeGkIHmLiwtliU8ofs6zvNvPPGMibm+N58/sdM9R
-   Yq0M0g96+sqjCTShEkAVdqSudpxjHOEVxC4bm0K5mLJ8wB8lQiJLY0y2g
-   2M3FndZHbdPIXhNbZj9aWBt8TAzG5ziI20DP6kuWURxrk87KB1qqCA0c9
-   qeA7KAheNzv7D7GjjDIhkbmMBfDWMmBckSvaRqkBU0Txnx1YAirntuo77
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10679"; a="342922394"
-X-IronPort-AV: E=Sophos;i="5.99,193,1677571200"; 
-   d="scan'208";a="342922394"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2023 06:07:41 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10679"; a="639665454"
-X-IronPort-AV: E=Sophos;i="5.99,193,1677571200"; 
-   d="scan'208";a="639665454"
-Received: from mmcgar2x-mobl1.ger.corp.intel.com (HELO [10.213.231.135]) ([10.213.231.135])
-  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2023 06:07:37 -0700
-Message-ID: <76c836a3-30a8-a46e-5a1a-0e3dc5967459@linux.intel.com>
-Date:   Thu, 13 Apr 2023 14:07:35 +0100
+        Thu, 13 Apr 2023 09:12:27 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64AD1A26E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 06:11:52 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id dm2so37406438ejc.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 06:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681391511; x=1683983511;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XCWUaiaWVnGIwMXJ072+drdEdGoVEQpMTGC5dkuhkzs=;
+        b=gOE0ushqz0Cf8TvKuw85UEHNM+zO9/7/DBFwDl4ukRzgE2P/+QWipzXCoxv5Pu0P52
+         Q63G/7jfgm/4l+6XJywI04qJPLCXIrbpRKpwGaC/6UyZOadVRT9ohA3AfZerRm2v08S+
+         ki1As17D4K8Mudlkv6SgPeq0FzDra/okKDXdhJs9wR6TifjNyY1n2yMU43ubZjmqW1l8
+         fDML3le/6xGOjHwTqDuyTTShNOUtGih4oWjEGlkNlzu/5NWS5/OJYFpFh6/rUZnxZs6D
+         bxj63uHIG4/ynQm0znyw4ulGSnUCGJVojYZbKIxDsguFZejgys6CJInNZwyfxh1/vJ31
+         hjbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681391511; x=1683983511;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XCWUaiaWVnGIwMXJ072+drdEdGoVEQpMTGC5dkuhkzs=;
+        b=R+S49UNPd8mq2n3eWGCo4MLMEMPwj4v1nG1Tpr0rvLj6eLPX3ufebcCBpMeu2sMtDt
+         XP1H9bioOGFa9SWXqyxY0mH3HRCP6MojyHDJrNpfTuZEVLmguxDahdQoczKNUzswLiZ1
+         URNlvXzzdX2S8j/nPBn38GIVI9SJpOcB2wPmfd/hayJAqOnnrq1B4e4F0D91q7s7PVqo
+         CDOUfFXCXibLr0dSBZBiCe+w5X26aXv8OWTLwPhTIjnKeALNVzD3Ot5TdR3li+CVIxsU
+         dN4aYNkPYNr5V+LmXf52LM2NJXeVvU0OJEKpkr6/J1x6BReY9EUOv79uoRIExDBTTqMs
+         1I+w==
+X-Gm-Message-State: AAQBX9dJc6IM41f14D2DH+76xywyWfjVgrGg7541C79006pon1s096k3
+        06NuDPAaGXp9IiLC7p/Au2+m/w==
+X-Google-Smtp-Source: AKy350YJ3uLaEKYbCc3ihWijhwZDDaFIcsFka/6gnLknW+fWV2K5RQUvLCR1fAH6/lNXlxY0M+dGPA==
+X-Received: by 2002:a17:907:d042:b0:94e:c40d:18f4 with SMTP id vb2-20020a170907d04200b0094ec40d18f4mr382489ejc.1.1681391510693;
+        Thu, 13 Apr 2023 06:11:50 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id s24-20020a170906961800b0094dde59ad39sm969889ejx.79.2023.04.13.06.11.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Apr 2023 06:11:49 -0700 (PDT)
+Message-ID: <541e2684-9df6-b875-df2e-a33ceee7c780@linaro.org>
+Date:   Thu, 13 Apr 2023 14:11:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v4 4/6] drm/i915: Switch to fdinfo helper
+Subject: Re: [PATCH v2 7/7] soundwire: qcom: use tabs for indentation in
+ defines
 Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        David Airlie <airlied@gmail.com>,
-        intel-gfx@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230412224311.23511-1-robdclark@gmail.com>
- <20230412224311.23511-5-robdclark@gmail.com>
-From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Organization: Intel Corporation UK Plc
-In-Reply-To: <20230412224311.23511-5-robdclark@gmail.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Rao Mandadapu <quic_srivasam@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230403132503.62090-1-krzysztof.kozlowski@linaro.org>
+ <20230403132503.62090-8-krzysztof.kozlowski@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230403132503.62090-8-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
-        NICE_REPLY_A,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,117 +89,69 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 12/04/2023 23:42, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
 
-There is more do to here to remove my client->id fully (would now be 
-dead code) so maybe easiest if you drop this patch and I do it after you 
-land this and it propagates to our branches? I'd like to avoid pain with 
-conflicts if possible..
-
-Regards,
-
-Tvrtko
-
+On 03/04/2023 14:25, Krzysztof Kozlowski wrote:
+> Use consistently only tabs to indent the value in defines.
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   drivers/gpu/drm/i915/i915_driver.c     |  3 ++-
->   drivers/gpu/drm/i915/i915_drm_client.c | 18 +++++-------------
->   drivers/gpu/drm/i915/i915_drm_client.h |  2 +-
->   3 files changed, 8 insertions(+), 15 deletions(-)
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+
+--srini
+>   drivers/soundwire/qcom.c | 34 +++++++++++++++++-----------------
+>   1 file changed, 17 insertions(+), 17 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-> index db7a86def7e2..0d91f85f8b97 100644
-> --- a/drivers/gpu/drm/i915/i915_driver.c
-> +++ b/drivers/gpu/drm/i915/i915_driver.c
-> @@ -1696,7 +1696,7 @@ static const struct file_operations i915_driver_fops = {
->   	.compat_ioctl = i915_ioc32_compat_ioctl,
->   	.llseek = noop_llseek,
->   #ifdef CONFIG_PROC_FS
-> -	.show_fdinfo = i915_drm_client_fdinfo,
-> +	.show_fdinfo = drm_show_fdinfo,
->   #endif
->   };
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index f2e1135ef113..77a5e4cbbe9b 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -58,9 +58,9 @@
+>   #define SWRM_INTERRUPT_STATUS_SPECIAL_CMD_ID_FINISHED		BIT(10)
+>   #define SWRM_INTERRUPT_STATUS_AUTO_ENUM_FAILED			BIT(11)
+>   #define SWRM_INTERRUPT_STATUS_AUTO_ENUM_TABLE_IS_FULL		BIT(12)
+> -#define SWRM_INTERRUPT_STATUS_BUS_RESET_FINISHED_V2             BIT(13)
+> -#define SWRM_INTERRUPT_STATUS_CLK_STOP_FINISHED_V2              BIT(14)
+> -#define SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP               BIT(16)
+> +#define SWRM_INTERRUPT_STATUS_BUS_RESET_FINISHED_V2		BIT(13)
+> +#define SWRM_INTERRUPT_STATUS_CLK_STOP_FINISHED_V2		BIT(14)
+> +#define SWRM_INTERRUPT_STATUS_EXT_CLK_STOP_WAKEUP		BIT(16)
+>   #define SWRM_INTERRUPT_MAX					17
+>   #define SWRM_V1_3_INTERRUPT_MASK_ADDR				0x204
+>   #define SWRM_V1_3_INTERRUPT_CLEAR				0x208
+> @@ -125,20 +125,20 @@
+>   #define SWRM_REG_VAL_PACK(data, dev, id, reg)	\
+>   			((reg) | ((id) << 16) | ((dev) << 20) | ((data) << 24))
 >   
-> @@ -1796,6 +1796,7 @@ static const struct drm_driver i915_drm_driver = {
->   	.open = i915_driver_open,
->   	.lastclose = i915_driver_lastclose,
->   	.postclose = i915_driver_postclose,
-> +	.show_fdinfo = i915_drm_client_fdinfo,
+> -#define MAX_FREQ_NUM		1
+> -#define TIMEOUT_MS		100
+> -#define QCOM_SWRM_MAX_RD_LEN	0x1
+> -#define QCOM_SDW_MAX_PORTS	14
+> -#define DEFAULT_CLK_FREQ	9600000
+> -#define SWRM_MAX_DAIS		0xF
+> -#define SWR_INVALID_PARAM 0xFF
+> -#define SWR_HSTOP_MAX_VAL 0xF
+> -#define SWR_HSTART_MIN_VAL 0x0
+> -#define SWR_BROADCAST_CMD_ID    0x0F
+> -#define SWR_MAX_CMD_ID	14
+> -#define MAX_FIFO_RD_RETRY 3
+> -#define SWR_OVERFLOW_RETRY_COUNT 30
+> -#define SWRM_LINK_STATUS_RETRY_CNT 100
+> +#define MAX_FREQ_NUM						1
+> +#define TIMEOUT_MS						100
+> +#define QCOM_SWRM_MAX_RD_LEN					0x1
+> +#define QCOM_SDW_MAX_PORTS					14
+> +#define DEFAULT_CLK_FREQ					9600000
+> +#define SWRM_MAX_DAIS						0xF
+> +#define SWR_INVALID_PARAM					0xFF
+> +#define SWR_HSTOP_MAX_VAL					0xF
+> +#define SWR_HSTART_MIN_VAL					0x0
+> +#define SWR_BROADCAST_CMD_ID					0x0F
+> +#define SWR_MAX_CMD_ID						14
+> +#define MAX_FIFO_RD_RETRY					3
+> +#define SWR_OVERFLOW_RETRY_COUNT				30
+> +#define SWRM_LINK_STATUS_RETRY_CNT				100
 >   
->   	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
->   	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
-> diff --git a/drivers/gpu/drm/i915/i915_drm_client.c b/drivers/gpu/drm/i915/i915_drm_client.c
-> index b09d1d386574..4a77e5e47f79 100644
-> --- a/drivers/gpu/drm/i915/i915_drm_client.c
-> +++ b/drivers/gpu/drm/i915/i915_drm_client.c
-> @@ -101,7 +101,7 @@ static u64 busy_add(struct i915_gem_context *ctx, unsigned int class)
->   }
->   
->   static void
-> -show_client_class(struct seq_file *m,
-> +show_client_class(struct drm_printer *p,
->   		  struct i915_drm_client *client,
->   		  unsigned int class)
->   {
-> @@ -117,22 +117,20 @@ show_client_class(struct seq_file *m,
->   	rcu_read_unlock();
->   
->   	if (capacity)
-> -		seq_printf(m, "drm-engine-%s:\t%llu ns\n",
-> +		drm_printf(p, "drm-engine-%s:\t%llu ns\n",
->   			   uabi_class_names[class], total);
->   
->   	if (capacity > 1)
-> -		seq_printf(m, "drm-engine-capacity-%s:\t%u\n",
-> +		drm_printf(p, "drm-engine-capacity-%s:\t%u\n",
->   			   uabi_class_names[class],
->   			   capacity);
->   }
->   
-> -void i915_drm_client_fdinfo(struct seq_file *m, struct file *f)
-> +void i915_drm_client_fdinfo(struct drm_printer *p, struct drm_file *file)
->   {
-> -	struct drm_file *file = f->private_data;
->   	struct drm_i915_file_private *file_priv = file->driver_priv;
->   	struct drm_i915_private *i915 = file_priv->dev_priv;
->   	struct i915_drm_client *client = file_priv->client;
-> -	struct pci_dev *pdev = to_pci_dev(i915->drm.dev);
->   	unsigned int i;
->   
->   	/*
-> @@ -141,12 +139,6 @@ void i915_drm_client_fdinfo(struct seq_file *m, struct file *f)
->   	 * ******************************************************************
->   	 */
->   
-> -	seq_printf(m, "drm-driver:\t%s\n", i915->drm.driver->name);
-> -	seq_printf(m, "drm-pdev:\t%04x:%02x:%02x.%d\n",
-> -		   pci_domain_nr(pdev->bus), pdev->bus->number,
-> -		   PCI_SLOT(pdev->devfn), PCI_FUNC(pdev->devfn));
-> -	seq_printf(m, "drm-client-id:\t%u\n", client->id);
-> -
->   	/*
->   	 * Temporarily skip showing client engine information with GuC submission till
->   	 * fetching engine busyness is implemented in the GuC submission backend
-> @@ -155,6 +147,6 @@ void i915_drm_client_fdinfo(struct seq_file *m, struct file *f)
->   		return;
->   
->   	for (i = 0; i < ARRAY_SIZE(uabi_class_names); i++)
-> -		show_client_class(m, client, i);
-> +		show_client_class(p, client, i);
->   }
->   #endif
-> diff --git a/drivers/gpu/drm/i915/i915_drm_client.h b/drivers/gpu/drm/i915/i915_drm_client.h
-> index 69496af996d9..ef85fef45de5 100644
-> --- a/drivers/gpu/drm/i915/i915_drm_client.h
-> +++ b/drivers/gpu/drm/i915/i915_drm_client.h
-> @@ -60,7 +60,7 @@ static inline void i915_drm_client_put(struct i915_drm_client *client)
->   struct i915_drm_client *i915_drm_client_add(struct i915_drm_clients *clients);
->   
->   #ifdef CONFIG_PROC_FS
-> -void i915_drm_client_fdinfo(struct seq_file *m, struct file *f);
-> +void i915_drm_client_fdinfo(struct drm_printer *p, struct drm_file *file);
->   #endif
->   
->   void i915_drm_clients_fini(struct i915_drm_clients *clients);
+>   enum {
+>   	MASTER_ID_WSA = 1,
