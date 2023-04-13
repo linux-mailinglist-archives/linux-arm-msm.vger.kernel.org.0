@@ -2,76 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 60E246E0CBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 13:35:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B5376E0DDA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 14:58:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231161AbjDMLfg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 07:35:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36414 "EHLO
+        id S229739AbjDMM6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 08:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231154AbjDMLfd (ORCPT
+        with ESMTP id S229708AbjDMM6n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 07:35:33 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325199EEE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 04:35:17 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id s2so10625022wra.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 04:35:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681385699; x=1683977699;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gBrRnJy3OveOdQzWzUMXg8AtzsE0ZcvrQQU1bmsmaXo=;
-        b=jXY00Mr8MInZu5bJOHcYeJEl9wN8hyVkFACDLKQ95WmjfD0WPHH/q685vSO9RcWG2A
-         YkSsdbKyOpluBi5fSQawUfPXqMf2zLOjDh2I8CZvatV/SeGagdaWg8n6yyZHu4g9lhXK
-         yMv0lnfoojomIneC47286HrQENocXrmMkg1VqFrTC6ehR0mwC6WXYZZ5aT8zJcEBeZPQ
-         BMG6ssU0Qqok3tfWSrTogv34va21P4V9GDQ8gfhp0r09zrheda4ul3gIuWy9gqJcoHtq
-         9Z95CRYM3X72wQPIr2oLYYn/jsFAJIGyv/yVludjvTzvx9cePovdfM5XVGU4XXNt8uww
-         1p8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681385699; x=1683977699;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gBrRnJy3OveOdQzWzUMXg8AtzsE0ZcvrQQU1bmsmaXo=;
-        b=dvXfglshQpXnANEByh++IktTrGXgi2fXuTjee/wALxccDqr2bvksVoXZX152I2HHJE
-         iLP3ixLK7a4xFZYdU4nBUK5t15V7jKiaJ2M2wt6jklvSr6UNkl9OobLcatrezJhe8Zgd
-         mgZfMbMsdGOaQhMhyJ22A1Tmh/BulCKZ4elRsUKanKh457QNLsbfFxhNt8xzv9CAHQRO
-         N7J+3W6bRKIS9JWwK8IAoL4tNCrCD0WQZzka62i6lJ8oCeosauu5PC8HngosQnfIAA75
-         MRs71oCcucmwHjOx4BtRdb6YuUMqwSaEhY/RoRJqrbfuvEsg6IYylCeCnOH2H4/9Fgr6
-         njeA==
-X-Gm-Message-State: AAQBX9dbQ3y5XFiPziftoPiQxobpFwnsAePwT6I1F7lAeuWTWEIQun3C
-        ldPhRA93n7N9MpmGCxb11DBMkA==
-X-Google-Smtp-Source: AKy350Zyqd5dEuCoe9u5RzEEEuR09j0tqJKSI69/NUwtHlAi5urEYHkgb4SrnY2TZeYYuSn6OJPdWA==
-X-Received: by 2002:a05:6000:1b8c:b0:2f4:d4a3:c252 with SMTP id r12-20020a0560001b8c00b002f4d4a3c252mr1347085wru.3.1681385699368;
-        Thu, 13 Apr 2023 04:34:59 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id e16-20020a5d4e90000000b002f2782978d8sm1108877wru.20.2023.04.13.04.34.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 04:34:58 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, andersson@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     caleb.connolly@linaro.org, bryan.odonoghue@linaro.org,
-        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: [PATCH v5 14/14] phy: qcom-qmp: Register as a typec switch for orientation detection
-Date:   Thu, 13 Apr 2023 12:34:38 +0100
-Message-Id: <20230413113438.1577658-15-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
-References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
+        Thu, 13 Apr 2023 08:58:43 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B2C249D6;
+        Thu, 13 Apr 2023 05:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681390721; x=1712926721;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=atKxIHpULToXQdQCDiM2k2VwriGvzhW5bZrh9vQzplk=;
+  b=hsRdk1NVHvIGAUHM2MB6fad89tb+gd/7R07iobBSBA2OjkMaDet/oQ09
+   kIBpOI36R0nSTAKw39ipsN/1IWAuTx7qc0RQADwz4iqQpiGHOkUrznqDM
+   3O3X9268E9jdWWkb8JhUiW79+Od/90XyC03mLsiTs7ZvnvxrcB9Sqa/E4
+   xop4NoXx7cLcNE2IekgA1Qs/95HouSKopDMn0diA2h6tzEXiwJdBfbk5n
+   bH7vDUgQT9N6y3ySVymXHXEMU06wBd1l1vQb6qs+eHeEd1qvZ/HSgy+KA
+   65J0q71b5ocdYll88zuK5/fjhyQLtzUFnb41bQKin3sQejHJMfcMVr/yI
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10679"; a="332884847"
+X-IronPort-AV: E=Sophos;i="5.99,193,1677571200"; 
+   d="scan'208";a="332884847"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2023 05:58:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10679"; a="758685116"
+X-IronPort-AV: E=Sophos;i="5.99,193,1677571200"; 
+   d="scan'208";a="758685116"
+Received: from mmcgar2x-mobl1.ger.corp.intel.com (HELO [10.213.231.135]) ([10.213.231.135])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Apr 2023 05:58:36 -0700
+Message-ID: <c82fd8fa-9f4b-f62f-83be-25853f9ecf5e@linux.intel.com>
+Date:   Thu, 13 Apr 2023 13:58:34 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 6/7] drm: Add fdinfo memory stats
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230411225725.2032862-1-robdclark@gmail.com>
+ <20230411225725.2032862-7-robdclark@gmail.com>
+ <29a8d9aa-c6ea-873f-ce0b-fb8199b13068@linux.intel.com>
+ <CAF6AEGsZsMx+Vy+4UQSx3X7w_QNvvjLqWxx=PnCLAOC9f-X2CQ@mail.gmail.com>
+ <ZDb1phnddSne79iN@phenom.ffwll.local>
+ <CAF6AEGvBeDVM12ac0j_PKSdcY83hNDhyrQs9-=h=dx_7AoMXLw@mail.gmail.com>
+ <ZDcEGoSPGr/oRLas@phenom.ffwll.local>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <ZDcEGoSPGr/oRLas@phenom.ffwll.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,199 +82,356 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-The lane select switch for USB typec orientation is within the USB QMP PHY.
-the current device.  It could be connected through an endpoint, to an
-independent device handling the typec detection, ie the QCOM SPMI typec
-driver.
+On 12/04/2023 20:18, Daniel Vetter wrote:
+> On Wed, Apr 12, 2023 at 11:42:07AM -0700, Rob Clark wrote:
+>> On Wed, Apr 12, 2023 at 11:17 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>>>
+>>> On Wed, Apr 12, 2023 at 10:59:54AM -0700, Rob Clark wrote:
+>>>> On Wed, Apr 12, 2023 at 7:42 AM Tvrtko Ursulin
+>>>> <tvrtko.ursulin@linux.intel.com> wrote:
+>>>>>
+>>>>>
+>>>>> On 11/04/2023 23:56, Rob Clark wrote:
+>>>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>>>
+>>>>>> Add support to dump GEM stats to fdinfo.
+>>>>>>
+>>>>>> v2: Fix typos, change size units to match docs, use div_u64
+>>>>>> v3: Do it in core
+>>>>>>
+>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>>>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+>>>>>> ---
+>>>>>>    Documentation/gpu/drm-usage-stats.rst | 21 ++++++++
+>>>>>>    drivers/gpu/drm/drm_file.c            | 76 +++++++++++++++++++++++++++
+>>>>>>    include/drm/drm_file.h                |  1 +
+>>>>>>    include/drm/drm_gem.h                 | 19 +++++++
+>>>>>>    4 files changed, 117 insertions(+)
+>>>>>>
+>>>>>> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentation/gpu/drm-usage-stats.rst
+>>>>>> index b46327356e80..b5e7802532ed 100644
+>>>>>> --- a/Documentation/gpu/drm-usage-stats.rst
+>>>>>> +++ b/Documentation/gpu/drm-usage-stats.rst
+>>>>>> @@ -105,6 +105,27 @@ object belong to this client, in the respective memory region.
+>>>>>>    Default unit shall be bytes with optional unit specifiers of 'KiB' or 'MiB'
+>>>>>>    indicating kibi- or mebi-bytes.
+>>>>>>
+>>>>>> +- drm-shared-memory: <uint> [KiB|MiB]
+>>>>>> +
+>>>>>> +The total size of buffers that are shared with another file (ie. have more
+>>>>>> +than a single handle).
+>>>>>> +
+>>>>>> +- drm-private-memory: <uint> [KiB|MiB]
+>>>>>> +
+>>>>>> +The total size of buffers that are not shared with another file.
+>>>>>> +
+>>>>>> +- drm-resident-memory: <uint> [KiB|MiB]
+>>>>>> +
+>>>>>> +The total size of buffers that are resident in system memory.
+>>>>>
+>>>>> I think this naming maybe does not work best with the existing
+>>>>> drm-memory-<region> keys.
+>>>>
+>>>> Actually, it was very deliberate not to conflict with the existing
+>>>> drm-memory-<region> keys ;-)
+>>>>
+>>>> I wouldn't have preferred drm-memory-{active,resident,...} but it
+>>>> could be mis-parsed by existing userspace so my hands were a bit tied.
+>>>>
+>>>>> How about introduce the concept of a memory region from the start and
+>>>>> use naming similar like we do for engines?
+>>>>>
+>>>>> drm-memory-$CATEGORY-$REGION: ...
+>>>>>
+>>>>> Then we document a bunch of categories and their semantics, for instance:
+>>>>>
+>>>>> 'size' - All reachable objects
+>>>>> 'shared' - Subset of 'size' with handle_count > 1
+>>>>> 'resident' - Objects with backing store
+>>>>> 'active' - Objects in use, subset of resident
+>>>>> 'purgeable' - Or inactive? Subset of resident.
+>>>>>
+>>>>> We keep the same semantics as with process memory accounting (if I got
+>>>>> it right) which could be desirable for a simplified mental model.
+>>>>>
+>>>>> (AMD needs to remind me of their 'drm-memory-...' keys semantics. If we
+>>>>> correctly captured this in the first round it should be equivalent to
+>>>>> 'resident' above. In any case we can document no category is equal to
+>>>>> which category, and at most one of the two must be output.)
+>>>>>
+>>>>> Region names we at most partially standardize. Like we could say
+>>>>> 'system' is to be used where backing store is system RAM and others are
+>>>>> driver defined.
+>>>>>
+>>>>> Then discrete GPUs could emit N sets of key-values, one for each memory
+>>>>> region they support.
+>>>>>
+>>>>> I think this all also works for objects which can be migrated between
+>>>>> memory regions. 'Size' accounts them against all regions while for
+>>>>> 'resident' they only appear in the region of their current placement, etc.
+>>>>
+>>>> I'm not too sure how to rectify different memory regions with this,
+>>>> since drm core doesn't really know about the driver's memory regions.
+>>>> Perhaps we can go back to this being a helper and drivers with vram
+>>>> just don't use the helper?  Or??
+>>>
+>>> I think if you flip it around to drm-$CATEGORY-memory{-$REGION}: then it
+>>> all works out reasonably consistently?
+>>
+>> That is basically what we have now.  I could append -system to each to
+>> make things easier to add vram/etc (from a uabi standpoint)..
+> 
+> What you have isn't really -system, but everything. So doesn't really make
+> sense to me to mark this -system, it's only really true for integrated (if
+> they don't have stolen or something like that).
+> 
+> Also my comment was more in reply to Tvrtko's suggestion.
 
-bod: Fixed the logic qcom_qmp_phy_typec_switch_set() to disable phy
- on disconnect if and only if we have initialized the PHY.
- Retained CC orientation logic in qcom_qmp_phy_com_init() to simplify
- patch.
+Right so my proposal was drm-memory-$CATEGORY-$REGION which I think 
+aligns with the current drm-memory-$REGION by extending, rather than 
+creating confusion with different order of key name components.
 
-bod: Ported from earlier version of driver to phy-qcom-qmp-combo.c
+AMD currently has (among others) drm-memory-vram, which we could define 
+in the spec maps to category X, if category component is not present.
 
-Co-developed-by: Wesley Cheng <wcheng@codeaurora.org>
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-Co-developed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/Kconfig              |  8 +++
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 80 +++++++++++++++++++++--
- 2 files changed, 84 insertions(+), 4 deletions(-)
+Some examples:
 
-diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-index 4850d48f31fa1..8240fffdbed4e 100644
---- a/drivers/phy/qualcomm/Kconfig
-+++ b/drivers/phy/qualcomm/Kconfig
-@@ -101,6 +101,14 @@ config PHY_QCOM_QMP_USB
- 
- endif # PHY_QCOM_QMP
- 
-+config PHY_QCOM_QMP_TYPEC
-+	def_bool PHY_QCOM_QMP=y && TYPEC=y || PHY_QCOM_QMP=m && TYPEC
-+	help
-+	  Register a type C switch from the QMP PHY driver for type C
-+	  orientation support.  This has dependencies with if the type C kernel
-+	  configuration is enabled or not.  This support will not be present if
-+	  USB type C is disabled.
-+
- config PHY_QCOM_QUSB2
- 	tristate "Qualcomm QUSB2 PHY Driver"
- 	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 6850e04c329b8..b9a30c087423d 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -19,6 +19,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/reset.h>
- #include <linux/slab.h>
-+#include <linux/usb/typec_mux.h>
- 
- #include <dt-bindings/phy/phy-qcom-qmp.h>
- 
-@@ -63,6 +64,10 @@
- /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
- #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
- 
-+/* QPHY_V3_DP_COM_TYPEC_CTRL register bits */
-+#define SW_PORTSELECT_VAL			BIT(0)
-+#define SW_PORTSELECT_MUX			BIT(1)
-+
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
- 
- struct qmp_phy_init_tbl {
-@@ -1323,6 +1328,9 @@ struct qmp_combo {
- 	struct clk_fixed_rate pipe_clk_fixed;
- 	struct clk_hw dp_link_hw;
- 	struct clk_hw dp_pixel_hw;
-+
-+	struct typec_switch_dev *sw;
-+	enum typec_orientation orientation;
- };
- 
- static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
-@@ -1955,7 +1963,8 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
- static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
- {
- 	u32 val;
--	bool reverse = false;
-+	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-+	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
- 
- 	val = DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
- 	      DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN;
-@@ -1974,10 +1983,18 @@ static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
- 	 * if (orientation == ORIENTATION_CC2)
- 	 *	writel(0x4c, qmp->dp_dp_phy + QSERDES_V3_DP_PHY_MODE);
- 	 */
-+	if (dp_opts->lanes == 4 || reverse)
-+		val |= DP_PHY_PD_CTL_LANE_0_1_PWRDN;
-+	if (dp_opts->lanes == 4 || !reverse)
-+		val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-+
- 	val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
- 	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
- 
--	writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
-+	if (reverse)
-+		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
-+	else
-+		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
- 
- 	return reverse;
- }
-@@ -2461,6 +2478,7 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
- {
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 	void __iomem *com = qmp->com;
-+	u32 val;
- 	int ret;
- 
- 	mutex_lock(&qmp->phy_mutex);
-@@ -2498,8 +2516,11 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
- 			SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
- 			SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
- 
--	/* Default type-c orientation, i.e CC1 */
--	qphy_setbits(com, QPHY_V3_DP_COM_TYPEC_CTRL, 0x02);
-+	/* Latch CC orientation based on reported state by TCPM */
-+	val = SW_PORTSELECT_MUX;
-+	if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
-+		val |= SW_PORTSELECT_VAL;
-+	qphy_setbits(com, QPHY_V3_DP_COM_TYPEC_CTRL, val);
- 
- 	qphy_setbits(com, QPHY_V3_DP_COM_PHY_MODE_CTRL, USB3_MODE | DP_MODE);
- 
-@@ -3338,6 +3359,53 @@ static struct phy *qmp_combo_phy_xlate(struct device *dev, struct of_phandle_arg
- 	return ERR_PTR(-EINVAL);
- }
- 
-+#if IS_ENABLED(CONFIG_PHY_QCOM_QMP_TYPEC)
-+static int qmp_combo_typec_switch_set(struct typec_switch_dev *sw,
-+				      enum typec_orientation orientation)
-+{
-+	struct qmp_combo *qmp = typec_switch_get_drvdata(sw);
-+	struct phy *dp_phy = qmp->dp_phy;
-+	int ret = 0;
-+
-+	dev_dbg(qmp->dev, "Toggling orientation current %d requested %d\n",
-+		qmp->orientation, orientation);
-+
-+	qmp->orientation = orientation;
-+
-+	if (orientation == TYPEC_ORIENTATION_NONE) {
-+		if (qmp->init_count)
-+			ret = qmp_combo_dp_power_off(dp_phy);
-+	} else {
-+		if (!qmp->init_count)
-+			ret = qmp_combo_dp_power_on(dp_phy);
-+	}
-+
-+	return 0;
-+}
-+
-+static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
-+{
-+	struct typec_switch_desc sw_desc;
-+	struct device *dev = qmp->dev;
-+
-+	sw_desc.drvdata = qmp;
-+	sw_desc.fwnode = dev->fwnode;
-+	sw_desc.set = qmp_combo_typec_switch_set;
-+	qmp->sw = typec_switch_register(dev, &sw_desc);
-+	if (IS_ERR(qmp->sw)) {
-+		dev_err(dev, "Error registering typec switch: %ld\n",
-+			PTR_ERR(qmp->sw));
-+	}
-+
-+	return 0;
-+}
-+#else
-+static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
-+{
-+	return 0;
-+}
-+#endif
-+
- static int qmp_combo_probe(struct platform_device *pdev)
- {
- 	struct qmp_combo *qmp;
-@@ -3428,6 +3496,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 	else
- 		phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
- 
-+	ret = qmp_combo_typec_switch_register(qmp);
-+	if (ret)
-+		goto err_node_put;
-+
- 	of_node_put(usb_np);
- 	of_node_put(dp_np);
- 
--- 
-2.39.2
+drm-memory-resident-system:
+drm-memory-size-lmem0:
+drm-memory-active-vram:
 
+Etc.. I think it creates a consistent story.
+
+Other than this, my two I think significant opens which haven't been 
+addressed yet are:
+
+1)
+
+Why do we want totals (not per region) when userspace can trivially 
+aggregate if they want. What is the use case?
+
+2)
+
+Current proposal limits the value to whole objects and fixates that by 
+having it in the common code. If/when some driver is able to support 
+sub-BO granularity they will need to opt out of the common printer at 
+which point it may be less churn to start with a helper rather than 
+mid-layer. Or maybe some drivers already support this, I don't know. 
+Given how important VM BIND is I wouldn't be surprised.
+
+Regards,
+
+Tvrtko
+
+>>> And ttm could/should perhaps provide a helper to dump the region specific
+>>> version of this. Or we lift the concept of regions out of ttm a bit
+>>> higher, that's kinda needed for cgroups eventually anyway I think.
+>>> -Daniel
+>>>
+>>>>
+>>>> BR,
+>>>> -R
+>>>>
+>>>>> Userspace can aggregate if it wishes to do so but kernel side should not.
+>>>>>
+>>>>>> +
+>>>>>> +- drm-purgeable-memory: <uint> [KiB|MiB]
+>>>>>> +
+>>>>>> +The total size of buffers that are purgeable.
+>>>>>> +
+>>>>>> +- drm-active-memory: <uint> [KiB|MiB]
+>>>>>> +
+>>>>>> +The total size of buffers that are active on one or more rings.
+>>>>>> +
+>>>>>>    - drm-cycles-<str> <uint>
+>>>>>>
+>>>>>>    Engine identifier string must be the same as the one specified in the
+>>>>>> diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+>>>>>> index 37dfaa6be560..46fdd843bb3a 100644
+>>>>>> --- a/drivers/gpu/drm/drm_file.c
+>>>>>> +++ b/drivers/gpu/drm/drm_file.c
+>>>>>> @@ -42,6 +42,7 @@
+>>>>>>    #include <drm/drm_client.h>
+>>>>>>    #include <drm/drm_drv.h>
+>>>>>>    #include <drm/drm_file.h>
+>>>>>> +#include <drm/drm_gem.h>
+>>>>>>    #include <drm/drm_print.h>
+>>>>>>
+>>>>>>    #include "drm_crtc_internal.h"
+>>>>>> @@ -871,6 +872,79 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
+>>>>>>    }
+>>>>>>    EXPORT_SYMBOL(drm_send_event);
+>>>>>>
+>>>>>> +static void print_size(struct drm_printer *p, const char *stat, size_t sz)
+>>>>>> +{
+>>>>>> +     const char *units[] = {"", " KiB", " MiB"};
+>>>>>> +     unsigned u;
+>>>>>> +
+>>>>>> +     for (u = 0; u < ARRAY_SIZE(units) - 1; u++) {
+>>>>>> +             if (sz < SZ_1K)
+>>>>>> +                     break;
+>>>>>> +             sz = div_u64(sz, SZ_1K);
+>>>>>> +     }
+>>>>>> +
+>>>>>> +     drm_printf(p, "%s:\t%zu%s\n", stat, sz, units[u]);
+>>>>>> +}
+>>>>>> +
+>>>>>> +static void print_memory_stats(struct drm_printer *p, struct drm_file *file)
+>>>>>> +{
+>>>>>> +     struct drm_gem_object *obj;
+>>>>>> +     struct {
+>>>>>> +             size_t shared;
+>>>>>> +             size_t private;
+>>>>>> +             size_t resident;
+>>>>>> +             size_t purgeable;
+>>>>>> +             size_t active;
+>>>>>> +     } size = {0};
+>>>>>> +     bool has_status = false;
+>>>>>> +     int id;
+>>>>>> +
+>>>>>> +     spin_lock(&file->table_lock);
+>>>>>> +     idr_for_each_entry (&file->object_idr, obj, id) {
+>>>>>> +             enum drm_gem_object_status s = 0;
+>>>>>> +
+>>>>>> +             if (obj->funcs && obj->funcs->status) {
+>>>>>> +                     s = obj->funcs->status(obj);
+>>>>>> +                     has_status = true;
+>>>>>> +             }
+>>>>>> +
+>>>>>> +             if (obj->handle_count > 1) {
+>>>>>> +                     size.shared += obj->size;
+>>>>>> +             } else {
+>>>>>> +                     size.private += obj->size;
+>>>>>> +             }
+>>>>>> +
+>>>>>> +             if (s & DRM_GEM_OBJECT_RESIDENT) {
+>>>>>> +                     size.resident += obj->size;
+>>>>>> +             } else {
+>>>>>> +                     /* If already purged or not yet backed by pages, don't
+>>>>>> +                      * count it as purgeable:
+>>>>>> +                      */
+>>>>>> +                     s &= ~DRM_GEM_OBJECT_PURGEABLE;
+>>>>>
+>>>>> Side question - why couldn't resident buffers be purgeable? Did you mean
+>>>>> for the if branch check to be active here? But then it wouldn't make
+>>>>> sense for a driver to report active _and_ purgeable..
+>>>>>
+>>>>>> +             }
+>>>>>> +
+>>>>>> +             if (!dma_resv_test_signaled(obj->resv, dma_resv_usage_rw(true))) {
+>>>>>> +                     size.active += obj->size;
+>>>>>> +
+>>>>>> +                     /* If still active, don't count as purgeable: */
+>>>>>> +                     s &= ~DRM_GEM_OBJECT_PURGEABLE;
+>>>>>
+>>>>> Another side question - I guess this tidies a race in reporting? If so
+>>>>> not sure it matters given the stats are all rather approximate.
+>>>>>
+>>>>>> +             }
+>>>>>> +
+>>>>>> +             if (s & DRM_GEM_OBJECT_PURGEABLE)
+>>>>>> +                     size.purgeable += obj->size;
+>>>>>> +     }
+>>>>>
+>>>>> One concern I have here is that it is all based on obj->size. That is,
+>>>>> there is no provision for drivers to implement page level granularity.
+>>>>> So correct reporting in use cases such as VM BIND in the future wouldn't
+>>>>> work unless it was a driver hook to get almost all of the info above. At
+>>>>> which point common code is just a loop. TBF I don't know if any drivers
+>>>>> do sub obj->size backing store granularity today, but I think it is
+>>>>> sometimes to be sure of before proceeding.
+>>>>>
+>>>>> Second concern is what I touched upon in the first reply block - if the
+>>>>> common code blindly loops over all objects then on discrete GPUs it
+>>>>> seems we get an 'aggregate' value here which is not what I think we
+>>>>> want. We rather want to have the ability for drivers to list stats per
+>>>>> individual memory region.
+>>>>>
+>>>>>> +     spin_unlock(&file->table_lock);
+>>>>>> +
+>>>>>> +     print_size(p, "drm-shared-memory", size.shared);
+>>>>>> +     print_size(p, "drm-private-memory", size.private);
+>>>>>> +     print_size(p, "drm-active-memory", size.active);
+>>>>>> +
+>>>>>> +     if (has_status) {
+>>>>>> +             print_size(p, "drm-resident-memory", size.resident);
+>>>>>> +             print_size(p, "drm-purgeable-memory", size.purgeable);
+>>>>>> +     }
+>>>>>> +}
+>>>>>> +
+>>>>>>    /**
+>>>>>>     * drm_fop_show_fdinfo - helper for drm file fops
+>>>>>>     * @seq_file: output stream
+>>>>>> @@ -904,6 +978,8 @@ void drm_fop_show_fdinfo(struct seq_file *m, struct file *f)
+>>>>>>
+>>>>>>        if (dev->driver->show_fdinfo)
+>>>>>>                dev->driver->show_fdinfo(&p, file);
+>>>>>> +
+>>>>>> +     print_memory_stats(&p, file);
+>>>>>>    }
+>>>>>>    EXPORT_SYMBOL(drm_fop_show_fdinfo);
+>>>>>>
+>>>>>> diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
+>>>>>> index dfa995b787e1..e5b40084538f 100644
+>>>>>> --- a/include/drm/drm_file.h
+>>>>>> +++ b/include/drm/drm_file.h
+>>>>>> @@ -41,6 +41,7 @@
+>>>>>>    struct dma_fence;
+>>>>>>    struct drm_file;
+>>>>>>    struct drm_device;
+>>>>>> +struct drm_printer;
+>>>>>>    struct device;
+>>>>>>    struct file;
+>>>>>>
+>>>>>> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+>>>>>> index 189fd618ca65..213917bb6b11 100644
+>>>>>> --- a/include/drm/drm_gem.h
+>>>>>> +++ b/include/drm/drm_gem.h
+>>>>>> @@ -42,6 +42,14 @@
+>>>>>>    struct iosys_map;
+>>>>>>    struct drm_gem_object;
+>>>>>>
+>>>>>> +/**
+>>>>>> + * enum drm_gem_object_status - bitmask of object state for fdinfo reporting
+>>>>>> + */
+>>>>>> +enum drm_gem_object_status {
+>>>>>> +     DRM_GEM_OBJECT_RESIDENT  = BIT(0),
+>>>>>> +     DRM_GEM_OBJECT_PURGEABLE = BIT(1),
+>>>>>> +};
+>>>>>> +
+>>>>>>    /**
+>>>>>>     * struct drm_gem_object_funcs - GEM object functions
+>>>>>>     */
+>>>>>> @@ -174,6 +182,17 @@ struct drm_gem_object_funcs {
+>>>>>>         */
+>>>>>>        int (*evict)(struct drm_gem_object *obj);
+>>>>>>
+>>>>>> +     /**
+>>>>>> +      * @status:
+>>>>>> +      *
+>>>>>> +      * The optional status callback can return additional object state
+>>>>>> +      * which determines which stats the object is counted against.  The
+>>>>>> +      * callback is called under table_lock.  Racing against object status
+>>>>>> +      * change is "harmless", and the callback can expect to not race
+>>>>>> +      * against object destruction.
+>>>>>> +      */
+>>>>>> +     enum drm_gem_object_status (*status)(struct drm_gem_object *obj);
+>>>>>
+>>>>> Does this needs to be in object funcs and couldn't be consolidated to
+>>>>> driver level?
+>>>>>
+>>>>> Regards,
+>>>>>
+>>>>> Tvrtko
+>>>>>
+>>>>>> +
+>>>>>>        /**
+>>>>>>         * @vm_ops:
+>>>>>>         *
+>>>
+>>> --
+>>> Daniel Vetter
+>>> Software Engineer, Intel Corporation
+>>> http://blog.ffwll.ch
+> 
