@@ -2,119 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 317196E1189
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 17:57:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA44B6E11E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 18:13:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231464AbjDMP5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 11:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40746 "EHLO
+        id S230084AbjDMQM7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 12:12:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231549AbjDMP5m (ORCPT
+        with ESMTP id S230003AbjDMQM5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 11:57:42 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC15B443;
-        Thu, 13 Apr 2023 08:57:35 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33DFtiAS023380;
-        Thu, 13 Apr 2023 15:57:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=lgGwJBcQMhBKAkSJFoI9V99IVAmxurpS1N+u/QL3rq0=;
- b=ZL7n0yBY0Oge0sb3gRwX5qqw0zD+xz4ENG2rLhi/pbeAj6pO7sFQyAUWftzL8KpJXCUk
- Ogb0x/jcUuYyM2mBbomDJGTO/ZVDF+l+5uqTUy3f30skfJ4lVfwaD94/kHpMlOpwPy30
- UBzbiJof1X9wEqxWhDnTDm/EKaIfJJs9liDXe09A+JTjYpmjrJpYqilRb6Fqo1pB7diu
- sFEIRUUYmVCFCjbswdBxdASJEsr6dyblsf/mfCST5zrxbZlfE9UZrRB6hCdo5XXmmRMm
- Uo2aGYulZ8aCj71YKuAsynslIS7tpb+lOv7Vfbhxsr1C3kcVAvJFO6JHt1c37Z8MMJHd CA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3px6cnhscp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Apr 2023 15:57:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33DFvQPF030062
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Apr 2023 15:57:26 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 13 Apr 2023 08:56:56 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
-        <airlied@gmail.com>, <agross@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_khsieh@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] drm/msm/dpu: always program dsc active bits
-Date:   Thu, 13 Apr 2023 08:56:41 -0700
-Message-ID: <1681401401-15099-1-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 13 Apr 2023 12:12:57 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48FDF9EC2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 09:12:53 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id rp27so1744383ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 09:12:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681402372; x=1683994372;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OJ8yZnKo2ciUycy3fDWr4JbLsJRyFcG2ZUFoRMEKgTA=;
+        b=vxL/Q7QEmmjX98MNNirP0+3OsrDOlCx6l7A7c2jbrF3KkT4xeoRS3RJ04WJGZx/Tv9
+         Laru0Vso6Y7wEW8RSCLihGnULIXbRsZL4iLfrJiUe/rSpn65nToRY7OzXthKbrvOcJrF
+         hRGjKKHWLRZ0dgjFXZ/0ZfSgyEvx/Wr7Umxh/pyc/Tq/UInVpGBmnqZui/iibfIHqMzx
+         L+lqdhUWsasfbDv8wJoZk3sl+Otl19jfpyb/0gbV6pgm+CB3fm+/3b9NudHDgwa0HiAa
+         eRf2IoeeUx3bKqhUzB8jQBn6YfGMysQ6ykCrlYe+6vxMsntuN8X1o3/VArdBI2s7qoHo
+         yy9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681402372; x=1683994372;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJ8yZnKo2ciUycy3fDWr4JbLsJRyFcG2ZUFoRMEKgTA=;
+        b=a5qytR0YfbQ0OyWP6vEDssb3mIDR5qq3iPA4kYqLXPX5RsM7J9vZneQlyLXC1fm8IQ
+         8ryOqf+MnmybKpZDRc6Bl33616AqykA2OARaH4QtQ85zBYCWtSTMHA2SIQHTe/8zUXEZ
+         6VRDVtY+q1E/1QJrQ/B08oJSqUyBjlWf1TZkcWjEUo+LphY51CV3H19w+SIYrtiatvyT
+         7uElkPGutBKonSMpk88kMHJ/drztaeOAJjkDpnWu1B3Erw760n0a958ut7YIWLpg+N9X
+         zl5LTKPQm/Uh2E6qmIz8yhEuwZ1GF6tIjPPim6yf3BJi+gUAUq+0obUqt0DT9R6eARs1
+         jnpw==
+X-Gm-Message-State: AAQBX9eqYLeQn+TKx+ughtGgnDXdXN2fG6TbjhfX3++XoPpshb9CF245
+        CiEFm8WgtAm0UvZ/witssS4Xmg==
+X-Google-Smtp-Source: AKy350aEyp4aOnI97LGS1Pu9EbHMptg5RVMwyBXZj7K1XJdLcNsUbvBx7m6ittsOeRa80kimevxypg==
+X-Received: by 2002:a17:906:e82:b0:94e:68a5:b7b8 with SMTP id p2-20020a1709060e8200b0094e68a5b7b8mr3172478ejf.76.1681402371804;
+        Thu, 13 Apr 2023 09:12:51 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:5032:d2d4:ece5:b035? ([2a02:810d:15c0:828:5032:d2d4:ece5:b035])
+        by smtp.gmail.com with ESMTPSA id j14-20020a17090686ce00b0094a57f50d7csm1148558ejy.200.2023.04.13.09.12.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Apr 2023 09:12:51 -0700 (PDT)
+Message-ID: <3e361a73-797f-41c7-1ead-ecafee3928e4@linaro.org>
+Date:   Thu, 13 Apr 2023 18:12:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XqA7GVMGZUGk30xcLzuG4raDxlmGBVUj
-X-Proofpoint-GUID: XqA7GVMGZUGk30xcLzuG4raDxlmGBVUj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-13_10,2023-04-13_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=894
- priorityscore=1501 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- phishscore=0 impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304130142
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sa8775p: pmic: remove the PON modes
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230413131705.3073911-1-brgl@bgdev.pl>
+ <20230413131705.3073911-2-brgl@bgdev.pl>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230413131705.3073911-2-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In current code, the DSC active bits are written only if cfg->dsc is set.
-However, for displays which are hot-pluggable, there can be a use-case
-of disconnecting a DSC supported sink and connecting a non-DSC sink.
+On 13/04/2023 15:17, Bartosz Golaszewski wrote:
+> From: Parikshit Pareek <quic_ppareek@quicinc.com>
+> 
+> Remove the power on reasons with reboot from the pmm8654au_0_pon.
+> Instead, the PoN reaons should be part of different sdam_0 mode, to
 
-For those cases we need to clear DSC active bits during tear down.
+typo: reasons
 
-Changes in V2:
-1) correct commit text as suggested
-2) correct Fixes commit id
-3) add FIXME comment
+> be interoduced.
 
-Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+introduced
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index bbdc95c..1651cd7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -541,10 +541,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 	if (cfg->merge_3d)
- 		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
- 			      BIT(cfg->merge_3d - MERGE_3D_0));
--	if (cfg->dsc) {
--		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
--		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
--	}
-+
-+	/* FIXME: fix reset_intf_cfg to handle teardown of dsc */
-+	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
-+	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
- }
- 
- static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Anyway it does not say why. Are these power reasons not correct?
+
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+
+Best regards,
+Krzysztof
 
