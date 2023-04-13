@@ -2,275 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4D2D6E0938
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 10:46:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B64B56E0950
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 10:50:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbjDMIqf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 04:46:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43938 "EHLO
+        id S229580AbjDMIuk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 04:50:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjDMIqe (ORCPT
+        with ESMTP id S229749AbjDMIuj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 04:46:34 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22EEB65BC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:46:32 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-94a342f4c8eso62624466b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:46:32 -0700 (PDT)
+        Thu, 13 Apr 2023 04:50:39 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2450F8A64
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:50:37 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5055141a8fdso777953a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1681375590; x=1683967590;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cU47L3sLeOYrkDWs84Myga16bAiwQGB6q0rl/Fg1mzk=;
-        b=ev61Sb/spDPgQ85fk+r6/L0drS29wujhVCQDZc1oIvnuDEGc8EEO3YjY6mLz3Fzv9o
-         EijAY1sQ6ptnmzi91HIZ/JPtrpRpzDuIvB7MyGIOWm6H8jTJMFPnTDT9GlaYiUwCKuzq
-         hb+oaLvnHIbJCdWDNIHUY4fdjbPvZcAKyijbU=
+        d=linaro.org; s=google; t=1681375835; x=1683967835;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L6mAVmlSqBlK97GI+OBS2IQeOpH152LcbvquHB//CeQ=;
+        b=qBQKxSkg0B1ny6AKrI2JM4J00sV4tr5wSjLIsSLHqWeQQNThrxkz1/uKK/G9InUVv3
+         Mo9x25u7mcDVhg5j0KTpldXUooJrhuQMu9fWJRuU1TabACrIJAyhQc5mVRnL7X5Uoitm
+         P9QyyIG+y7m4LQKs9IOqTgK0s32MG7zK+bjkVAkIMlsuoZysL2zZJ69/62SRFxPsLe72
+         0574RRl69Mu0UlKDgx2dWy8U4pPdqpvFPrOZMnsDNhnHhbvg+ejuzIkwlo7RD98E1Zuy
+         guBIsYHfrix5W5BmScoNRt33NO+lBOC12YQofsDel11ibeE2tf9AlvIOe1YTH7tB32Q2
+         Olow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681375590; x=1683967590;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cU47L3sLeOYrkDWs84Myga16bAiwQGB6q0rl/Fg1mzk=;
-        b=VUyjpoy5iMyHZunoi7mVk/fB8tQj2stTTdOZRVwDvHAYfwhRXheomxGREEgu1fPv1h
-         Ddv9u92fwimH8oKfKgECVoip7hsiDPrUL9U7S4RZfx7Qdy6L8H6PQJDCd15nT6RODdFy
-         N1iydUlcj1x6Q6W/1tfWmyR0R5BcqMfiqvTbFT0OxXDcm6TO8lQEw/waHPVTEVplf0OZ
-         Od7IApSuIsIdRKp6xUrWfYxiVYHZcZNYYEI1L5fbPXb+q6a0fZoClS69QM3afsyhXzx1
-         jL9eugRMJvM1V0Dj93kD53CPYiWE+FZFYN8Tx9Nz6CfH+oUd8T7xcle7J2W4qBE3Wvfi
-         XYVg==
-X-Gm-Message-State: AAQBX9eZDAkEukP1hQzxAHbeQ2NMXmXldtqt9Ued6I95N0nSOdpT24Fm
-        fcGhDdkKwvTk6/pVVpJk/STW+g==
-X-Google-Smtp-Source: AKy350ayrJkpPJdsjI/YoN1IZKT+GlbEBPHLdDhM6jlRev4fxFd1ZU3slcUdb/yNo5zYIA0tiIY7GA==
-X-Received: by 2002:a17:906:150:b0:94e:4843:5e32 with SMTP id 16-20020a170906015000b0094e48435e32mr1674681ejh.5.1681375590474;
-        Thu, 13 Apr 2023 01:46:30 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id y14-20020a1709064b0e00b0094e60ac9678sm642373eju.122.2023.04.13.01.46.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 01:46:30 -0700 (PDT)
-Date:   Thu, 13 Apr 2023 10:46:28 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4 1/6] drm: Add common fdinfo helper
-Message-ID: <ZDfBZIuiAuMhuULd@phenom.ffwll.local>
-Mail-Followup-To: Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230412224311.23511-1-robdclark@gmail.com>
- <20230412224311.23511-2-robdclark@gmail.com>
- <ce87917c-6cf1-b1e7-4782-61a7e47aa92d@amd.com>
+        d=1e100.net; s=20221208; t=1681375835; x=1683967835;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L6mAVmlSqBlK97GI+OBS2IQeOpH152LcbvquHB//CeQ=;
+        b=K7uXGwN7xqbD9jVDxEAeoAEP01PBbUmNXN0DQAG+mnP5lFWllAG/5JkjK+HHc9D1bM
+         Qh/b9vyQQY0EuiqD8VGyaKo2EZ9QnZOYHCOnFKHAtkXlNDHuX0L+/9KXAAR7Xj+sNavV
+         qtl+IVqMXsWg8VefZ+p1iXgU74i3PKRpLLrqQjuwooqPZssxKfaEEanIDbuRQeY4dSO6
+         EztxsY3inNFXIr4d05421Mbb00Fg+m/OL36mU0klTql7bFNlO8F0Zq/PaOqeywj9tgK1
+         va5YMNZ+1oyHHNXJ6YvIwSB5+raolhn7TmjruE6fbQiOE3DseQV5nKZtKF+ia1xvgnEN
+         vCLQ==
+X-Gm-Message-State: AAQBX9evDCRGCV8cijvV2U+Sp+tOHiJKZITo97LSQ3p4WTs6sZ9+Y0ET
+        So24pcgym1LmJJVuiJNTg5s2Lw==
+X-Google-Smtp-Source: AKy350ams2Rhgtj5ld9eUc37t1b+SyClKLb5d8tFO/xWnlQN/71bN5uirU2rOp0PEk4y8rjT+Aca6A==
+X-Received: by 2002:aa7:d74d:0:b0:4fb:aa0a:5b72 with SMTP id a13-20020aa7d74d000000b004fbaa0a5b72mr1546251eds.5.1681375835504;
+        Thu, 13 Apr 2023 01:50:35 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:ec6f:1b33:ab3f:bfd7? ([2a02:810d:15c0:828:ec6f:1b33:ab3f:bfd7])
+        by smtp.gmail.com with ESMTPSA id v15-20020aa7dbcf000000b00501d51c23fbsm555672edt.6.2023.04.13.01.50.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Apr 2023 01:50:34 -0700 (PDT)
+Message-ID: <6a9b1c25-2e17-a657-3a58-b2ff8d1c86d7@linaro.org>
+Date:   Thu, 13 Apr 2023 10:50:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ce87917c-6cf1-b1e7-4782-61a7e47aa92d@amd.com>
-X-Operating-System: Linux phenom 6.1.0-7-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Cc:     Rob Herring <robh@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
+ <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+ <168069726278.2356075.14351594478003012447.robh@kernel.org>
+ <20230405134727.GA2461305-robh@kernel.org>
+ <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
+ <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
+ <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
+ <ZDAAToSzNLVo6le8@gerhold.net>
+ <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
+ <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
+ <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
+ <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
+ <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 13, 2023 at 10:07:11AM +0200, Christian König wrote:
-> Am 13.04.23 um 00:42 schrieb Rob Clark:
-> > From: Rob Clark <robdclark@chromium.org>
-> > 
-> > Handle a bit of the boiler-plate in a single case, and make it easier to
-> > add some core tracked stats.
-> > 
-> > v2: Update drm-usage-stats.rst, 64b client-id, rename drm_show_fdinfo
-> > 
-> > Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   Documentation/gpu/drm-usage-stats.rst | 10 +++++++-
-> >   drivers/gpu/drm/drm_file.c            | 35 +++++++++++++++++++++++++++
-> >   include/drm/drm_drv.h                 |  7 ++++++
-> >   include/drm/drm_file.h                |  4 +++
-> >   4 files changed, 55 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentation/gpu/drm-usage-stats.rst
-> > index b46327356e80..2ab32c40e93c 100644
-> > --- a/Documentation/gpu/drm-usage-stats.rst
-> > +++ b/Documentation/gpu/drm-usage-stats.rst
-> > @@ -126,7 +126,15 @@ percentage utilization of the engine, whereas drm-engine-<str> only reflects
-> >   time active without considering what frequency the engine is operating as a
-> >   percentage of it's maximum frequency.
-> > +Implementation Details
-> > +======================
-> > +
-> > +Drivers should use drm_show_fdinfo() in their `struct file_operations`, and
-> > +implement &drm_driver.show_fdinfo if they wish to provide any stats which
-> > +are not provided by drm_show_fdinfo().  But even driver specific stats should
-> > +be documented above and where possible, aligned with other drivers.
+On 12/04/2023 19:06, Konrad Dybcio wrote:
 > 
-> I'm really wondering if it wouldn't be less mid-layering if we let the
-> drivers call the drm function to print the common values instead of the
-> other way around?
+> 
+> On 12.04.2023 18:53, Krzysztof Kozlowski wrote:
+>> On 12/04/2023 14:09, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
+>>>> On 12/04/2023 13:47, Konrad Dybcio wrote:
+>>>>>> For unrelated reasons I actually have some patches for this, that switch
+>>>>>> the /smd top-level node to a "remoteproc-like" node dedicated to the
+>>>>>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
+>>>>>> add additional (optional) properties like "resets" and "iommus" for the
+>>>>>> RPM, but it would allow adding arbitrary subnodes as well:
+>>>>>>
+>>>>>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
+>>>>>>
+>>>>>> I could finish those up and post them if that would help...
+>>>>> Krzysztof, what do you think?
+>>>>
+>>>> I don't know what is there in MSM8916 and how it should be represented.
+>>> Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
+>>> which communicates over the SMD protocol (or G-LINK on >=8996).
+>>>
+>>> The Qualcomm firmware loads the RPM fw blob and sets it up early in
+>>> the boot process, but msm8916-mainline folks managed to get TF-A
+>>> going and due to it being less.. invasive.. than the Qualcomm TZ,
+>>> RPM needs a bit more handling to be accessible.
+>>>
+>>> The M3 core is wired up through the CNoC bus and we communicate
+>>> with it through the MSG RAM and the "APCS mailbox".
+>>
+>> Thanks, that's actually good description. Yet I still do not know what
+>> is exactly the problem and the question. Linking some out of tree
+>> commits does not give me the answer, at least I cannot get that answer
+>> form the link.
+>>
+>> For example what I don't understand is: why additional resources (like
+>> resets) can be provided only in new binding, but not in the old.
+> The old binding dictates that the rpm node (which in turn
+> holds all "devices" that only interface with RPM, like RPMCC) is
+> a child of smd{}, which does not make sense logically, as SMD is
+> a protocol (e.g. we don't place devices connected over i2c under
+> /i2c{}).
 
-The idea is that we plug this into DRM_GEM_FOPS and then everyone gets it
-by default. So it's a bit a tradeoff between midlayering and having
-inconsistent uapi between drivers. And there's generic tools that parse
-this, so consistency across drivers is good.
+We do. All devices connected over I2C are under i2c node which is the
+controller. The example is different than what you have here...
 
-My gut feeling was that after a bit of experimenting with lots of
-different drivers for fdinfo stuff it's time to push for a bit more
-standardization and less fragmentation.
+>  The rpm node lacks a compatible, as it's representing
+> an "smd channel", so there's no driver so there's no way to assert
+> resets etc.
 
-We can of course later on course-correct and shuffle things around again,
-e.g. by pushing more things into the gem_bo_fops->status hook (ttm and
-other memory manager libs could implement a decent one by default), or
-moving more into the drm_driver->show_fdinfo callback again.
-
-If you look at kms we also shuffle things back&forth between core (for
-more consistency) and drivers (for more flexibility where needed).
-
-The important part here imo is that we start with some scaffolding to be
-able to do this. Like another thing that I think we want is some
-drm_fdinfo_print functions that make sure the formatting is guaranteed
-consistents and we don't trip up parsers (like some drivers use " \t" as
-separator instead of just "\t", I guess by accident).
-
-> Apart from thatquestion the patch looks good to me.
-
-Ack? Or want the above recorded in the commit message, I think it'd make
-sense to put it there.
--Daniel
+You have rpm-requests which has compatible. These are not its resources?
 
 > 
-> Christian.
-> 
-> > +
-> >   Driver specific implementations
-> > -===============================
-> > +-------------------------------
-> >   :ref:`i915-usage-stats`
-> > diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
-> > index a51ff8cee049..6d5bdd684ae2 100644
-> > --- a/drivers/gpu/drm/drm_file.c
-> > +++ b/drivers/gpu/drm/drm_file.c
-> > @@ -148,6 +148,7 @@ bool drm_dev_needs_global_mutex(struct drm_device *dev)
-> >    */
-> >   struct drm_file *drm_file_alloc(struct drm_minor *minor)
-> >   {
-> > +	static atomic64_t ident = ATOMIC_INIT(0);
-> >   	struct drm_device *dev = minor->dev;
-> >   	struct drm_file *file;
-> >   	int ret;
-> > @@ -156,6 +157,8 @@ struct drm_file *drm_file_alloc(struct drm_minor *minor)
-> >   	if (!file)
-> >   		return ERR_PTR(-ENOMEM);
-> > +	/* Get a unique identifier for fdinfo: */
-> > +	file->client_id = atomic64_inc_return(&ident);
-> >   	file->pid = get_pid(task_pid(current));
-> >   	file->minor = minor;
-> > @@ -868,6 +871,38 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e)
-> >   }
-> >   EXPORT_SYMBOL(drm_send_event);
-> > +/**
-> > + * drm_show_fdinfo - helper for drm file fops
-> > + * @seq_file: output stream
-> > + * @f: the device file instance
-> > + *
-> > + * Helper to implement fdinfo, for userspace to query usage stats, etc, of a
-> > + * process using the GPU.  See also &drm_driver.show_fdinfo.
-> > + *
-> > + * For text output format description please see Documentation/gpu/drm-usage-stats.rst
-> > + */
-> > +void drm_show_fdinfo(struct seq_file *m, struct file *f)
-> > +{
-> > +	struct drm_file *file = f->private_data;
-> > +	struct drm_device *dev = file->minor->dev;
-> > +	struct drm_printer p = drm_seq_file_printer(m);
-> > +
-> > +	drm_printf(&p, "drm-driver:\t%s\n", dev->driver->name);
-> > +	drm_printf(&p, "drm-client-id:\t%llu\n", file->client_id);
-> > +
-> > +	if (dev_is_pci(dev->dev)) {
-> > +		struct pci_dev *pdev = to_pci_dev(dev->dev);
-> > +
-> > +		drm_printf(&p, "drm-pdev:\t%04x:%02x:%02x.%d\n",
-> > +			   pci_domain_nr(pdev->bus), pdev->bus->number,
-> > +			   PCI_SLOT(pdev->devfn), PCI_FUNC(pdev->devfn));
-> > +	}
-> > +
-> > +	if (dev->driver->show_fdinfo)
-> > +		dev->driver->show_fdinfo(&p, file);
-> > +}
-> > +EXPORT_SYMBOL(drm_show_fdinfo);
-> > +
-> >   /**
-> >    * mock_drm_getfile - Create a new struct file for the drm device
-> >    * @minor: drm minor to wrap (e.g. #drm_device.primary)
-> > diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
-> > index 5b86bb7603e7..5edf2a13733b 100644
-> > --- a/include/drm/drm_drv.h
-> > +++ b/include/drm/drm_drv.h
-> > @@ -401,6 +401,13 @@ struct drm_driver {
-> >   			       struct drm_device *dev, uint32_t handle,
-> >   			       uint64_t *offset);
-> > +	/**
-> > +	 * @show_fdinfo:
-> > +	 *
-> > +	 * Print device specific fdinfo.  See Documentation/gpu/drm-usage-stats.rst.
-> > +	 */
-> > +	void (*show_fdinfo)(struct drm_printer *p, struct drm_file *f);
-> > +
-> >   	/** @major: driver major number */
-> >   	int major;
-> >   	/** @minor: driver minor number */
-> > diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
-> > index 0d1f853092ab..6de6d0e9c634 100644
-> > --- a/include/drm/drm_file.h
-> > +++ b/include/drm/drm_file.h
-> > @@ -258,6 +258,9 @@ struct drm_file {
-> >   	/** @pid: Process that opened this file. */
-> >   	struct pid *pid;
-> > +	/** @client_id: A unique id for fdinfo */
-> > +	u64 client_id;
-> > +
-> >   	/** @magic: Authentication magic, see @authenticated. */
-> >   	drm_magic_t magic;
-> > @@ -437,6 +440,7 @@ void drm_send_event(struct drm_device *dev, struct drm_pending_event *e);
-> >   void drm_send_event_timestamp_locked(struct drm_device *dev,
-> >   				     struct drm_pending_event *e,
-> >   				     ktime_t timestamp);
-> > +void drm_show_fdinfo(struct seq_file *m, struct file *f);
-> >   struct file *mock_drm_getfile(struct drm_minor *minor, unsigned int flags);
-> 
+> On newer SoCs that still implement SMD RPM (like 8996), we do
+> actually have a driver and a parent node which it binds to
+> (rpm-glink).
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+You want to add RPM resets to rpm-glink node? This also does not look right.
+
+> 
+> AFAIU:
+> In both cases, the "final" drivers (rpmcc, rpmpd..) are bound
+> after hitting a SMD/GLINK callback that tells Linux we're ready
+> to rock. That's an issue for Stephan, as these callbacks won't
+> ever happen if the RPM core is not initialized (and TF-A doesn't
+> do that).
+
+To me half or almost all of Qualcomm remote-proc-related bindings, like
+SMD, GLINK and associated processors, are difficult to read, half-baked
+and developed to match the current Linux/SW need. When the Linux drivers
+changed, new bindings were added... If you want to fix it, sure go
+ahead, but design everything to match something rational, not again to
+match one specific SW/FW implementation.
+
+Best regards,
+Krzysztof
+
