@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7D646E177B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 00:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BFBB6E17CF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 01:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230178AbjDMWcm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 18:32:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49272 "EHLO
+        id S230063AbjDMXBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 19:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjDMWcm (ORCPT
+        with ESMTP id S229958AbjDMXBQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 18:32:42 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 237DAAD25
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 15:32:15 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id kt6so2966887ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 15:32:14 -0700 (PDT)
+        Thu, 13 Apr 2023 19:01:16 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DABB10D1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 16:01:12 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id i6so9464888lfp.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 16:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681425128; x=1684017128;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1681426870; x=1684018870;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=l9L8tYYDKjHSQReGzmtMFXvGbvY7EYYVxpxKS7dXKNo=;
-        b=NUMlpInTsiaZkcsWcvkcKmtfHKuAwRbbbcmBduiX7PxlzMJoxEBi6ntfBNjafwJWoM
-         gFjLpY3wCQsp+inAdEZzlHrofabiy4tT0V+Anr/PbIjkKY+aJ4cTCvFFqCdmEK7m60Sh
-         g6rLHBXIjMBceh7AxpYizZozyK1Rp5mNB7qm+pN17SwcHNlET8i5K3ZGr+m6JAGs3oDK
-         sAqaOP6y+wtNmLzzh0OOpa+Lg7ILcHMFhqtK5NtfKRroSAFIl18IxB4XpMXpEYXw9CT3
-         FHSd0RA+21dHkMzMDkzB/aMTGUxyyZ68nsOH84EmaobTGoBlQcO6+VVtpJqyQgJP/SIF
-         T5dQ==
+        bh=SDbMy6pQwCkgyZ7gS+ySEIiMO6GFUQWvHdlS77zoO0U=;
+        b=PGVxbY+vutnOMMThgqmDGmagf5KKahGnTYQepG4Lg2ckeRBUPZdXfu9+bIQO4jqk5k
+         kU0XSWtg8v5su/HKcgCvcFfXvfw25GzmH20COWgLA1VuNIbhceD9hCoAlMHA4FDwHoAN
+         O5PJlgUOMCpsEX7EQ1y67rV2ZNw+UM+GtAZmvRsQvm2irtYAxkwt4S3dMRoAXIWkCJNG
+         bH9o1gQRZF1x98SLPSCgewOClOEIHQMOtUrfqFAJ2gKtpiPp/vvjVUQtcNszF/NamNIC
+         bWHCLhMbnJM75Y9V1ULg9HJEbIbP8rej+rtXWOdBXmigne149/DNJvg3lqgYd3T6tJNf
+         v0JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681425128; x=1684017128;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1681426870; x=1684018870;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9L8tYYDKjHSQReGzmtMFXvGbvY7EYYVxpxKS7dXKNo=;
-        b=Q3yuyeoggp1nQfubyaSMwKaNdqUi+Hn602NM72XAtHxoYWl9dkevZ8D1XCzp0t/JUP
-         yNV0QGhIC3i5tvq/cqEiVz6YO+RInlJQ9u9bBGA49Z+kQgy4h7Cb0mgzjXRa/qg56Te5
-         raIE8Y1DPLVF9ERVC5jhrWGIxbuVaeAi++T3KphJHoYMC34Z/KNqqZPu/Mg+V24Xbe/H
-         j5YIV/vG80L+SInj1x6T8semr/f8/ijM6Apu1Mr/FXFmrmFk8cGE5ZPaY/x2FMxTkzS/
-         8ACab5Wthg2Ku217J+5SIDaQ63ICWWwErUfQwS1sDE8wlT/3cVQQ7wxnXuwhzXq8Cwi3
-         UG4A==
-X-Gm-Message-State: AAQBX9d1QzMKdyoNDBRM1FIQq8MZLh0v5Eu+OQRv4VsLE+aooGuFPD9/
-        q/JbJnqVI5MyQQaTHVogsy0+Ug==
-X-Google-Smtp-Source: AKy350Yy95MU6ymMXBfdoUzvXczL7NB3u1Ku2n1nJfzBRl7LG4KzH69EMBs/RB5ypqmLO3ckzmGIOg==
-X-Received: by 2002:a17:906:6855:b0:930:6e31:3c11 with SMTP id a21-20020a170906685500b009306e313c11mr4393262ejs.70.1681425128140;
-        Thu, 13 Apr 2023 15:32:08 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id f17-20020a170906495100b009334219656dsm1567607ejt.56.2023.04.13.15.32.06
+        bh=SDbMy6pQwCkgyZ7gS+ySEIiMO6GFUQWvHdlS77zoO0U=;
+        b=lw5CQWbkh6xVkX2HnHE4T4i9uzXPxS29P4h3xiMk0v6BT5C7Vn2IIfFvPvewy9c8Qe
+         PQo61ATHSQDDV39b+bXDcF/uktrpYFAWfF7MXbekgmCpGIVbLVfv2il6EqJVenBP7vC7
+         tHC6FjrIMYj1kOGTuQAq61zz1QgWbcQfgXASv2i1leUfhXzeBTddyeDEfPDqJHZapQGY
+         wj1xykg3bFbgmbk/4O2Au6I2bINXQvZRJFoy+eEcRDEhamBqMNozewIEB4bNnBLndcnl
+         f5yYueTk4Kkk5nUqyxlVUY7kr9bhX4nqGNxmlgNz6sLfAMgkQDWxFRkFT9cxSuLzQsrK
+         JjGw==
+X-Gm-Message-State: AAQBX9fAq06mA0NHnklK5faxmYKHx1f8ZT9VatjmV166YXfLQRrNRf+z
+        9McQnI4BgRGIwxQyyAq8YOojeg==
+X-Google-Smtp-Source: AKy350bRmxl3PJ1vK1lQRdfuK4vz5JaRv95hJQtwgY3WFx7Gvu9ouzQNAbH7Z+bBvz+N7nLfrsSJ2w==
+X-Received: by 2002:a05:6512:96d:b0:4e8:49ff:8df8 with SMTP id v13-20020a056512096d00b004e849ff8df8mr1418567lft.61.1681426870138;
+        Thu, 13 Apr 2023 16:01:10 -0700 (PDT)
+Received: from [192.168.1.101] (abyl123.neoplus.adsl.tpnet.pl. [83.9.31.123])
+        by smtp.gmail.com with ESMTPSA id r8-20020ac24d08000000b004b4b600c093sm505607lfi.92.2023.04.13.16.01.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Apr 2023 15:32:07 -0700 (PDT)
-Message-ID: <e74fb30d-4268-86b1-cdf7-ad3d104c6c40@linaro.org>
-Date:   Thu, 13 Apr 2023 23:32:06 +0100
+        Thu, 13 Apr 2023 16:01:09 -0700 (PDT)
+Message-ID: <89fc0a9c-0eee-44c4-52a4-bfa0009b9cce@linaro.org>
+Date:   Fri, 14 Apr 2023 01:01:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 2/6] remoteproc: qcom: Move minidump specific data to
- qcom_minidump.h
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 1/3] venus: add firmware version based check
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
-References: <1679491817-2498-1-git-send-email-quic_mojha@quicinc.com>
- <1679491817-2498-3-git-send-email-quic_mojha@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1679491817-2498-3-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, quic_vgarodia@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Viswanath Boma <quic_vboma@quicinc.com>
+References: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
+ <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
+ <6c3002ad-ff78-8818-0e68-a151d33b0fca@gmail.com>
+ <0b5d967d-b6f5-ed1e-1878-160d6e645f02@linaro.org>
+In-Reply-To: <0b5d967d-b6f5-ed1e-1878-160d6e645f02@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
@@ -83,168 +83,120 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22/03/2023 13:30, Mukesh Ojha wrote:
-> Move minidump specific data types and macros to a separate internal
-> header(qcom_minidump.h) so that it can be shared among different
-
-minidump.h should be good as we are already in include/soc/qcom/
-
---srini
-
-> Qualcomm drivers.
+On 11.04.2023 12:59, Konrad Dybcio wrote:
 > 
-> There is no change in functional behavior after this.
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->   drivers/remoteproc/qcom_common.c | 56 +---------------------------------
->   include/soc/qcom/qcom_minidump.h | 66 ++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 67 insertions(+), 55 deletions(-)
->   create mode 100644 include/soc/qcom/qcom_minidump.h
+> On 9.04.2023 07:18, Stanimir Varbanov wrote:
+>> Hi Dikshita,
+>>
+>> Thanks for the patch.
+>>
+>> On 7.04.23 г. 9:25 ч., Dikshita Agarwal wrote:
+>>> Add firmware version based checks to enable/disable
+>>> features for different SOCs.
+>>>
+>>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
+>>> Tested-by: Nathan Hebert <nhebert@chromium.org>
+>>> ---
+>>>   drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
+>>>   drivers/media/platform/qcom/venus/hfi_msgs.c | 11 +++++++++--
+>>>   2 files changed, 29 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>>> index 32551c2..9d1e4b2 100644
+>>> --- a/drivers/media/platform/qcom/venus/core.h
+>>> +++ b/drivers/media/platform/qcom/venus/core.h
+>>> @@ -202,6 +202,11 @@ struct venus_core {
+>>>       unsigned int core0_usage_count;
+>>>       unsigned int core1_usage_count;
+>>>       struct dentry *root;
+>>> +    struct venus_img_version {
+>>> +        u32 major;
+>>> +        u32 minor;
+>>> +        u32 rev;
+>>> +    } venus_ver;
+>>>   };
+>>>     struct vdec_controls {
+>>> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
+>>>       return NULL;
+>>>   }
+>>>   +static inline int
+>>> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
+>>> +{
+>>> +    return ((core)->venus_ver.major == vmajor &&
+>>> +        (core)->venus_ver.minor == vminor &&
+>>> +        (core)->venus_ver.rev >= vrev);
+>>> +}
+>>> +
+>>> +static inline int
+>>> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
+>>> +{
+>>> +    return ((core)->venus_ver.major == vmajor &&
+>>> +        (core)->venus_ver.minor == vminor &&
+>>> +        (core)->venus_ver.rev <= vrev);
+>>> +}
+>>
+>> IMO those two should return bool
+>>
+>>>   #endif
+>>> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> index df96db3..07ac0fc 100644
+>>> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+>>> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
+>>>   }
+>>>     static void
+>>> -sys_get_prop_image_version(struct device *dev,
+>>> +sys_get_prop_image_version(struct venus_core *core,
+>>>                  struct hfi_msg_sys_property_info_pkt *pkt)
+>>>   {
+>>> +    struct device *dev = core->dev;
+>>>       u8 *smem_tbl_ptr;
+>>>       u8 *img_ver;
+>>>       int req_bytes;
+>>> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
+>>>           return;
+>>>         img_ver = pkt->data;
+>>> +    if (IS_V4(core))
+>>> +        sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
+>>> +               &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
+>>> +    else if (IS_V6(core))
+>>> +        sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
+>>> +               &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
+>>>   
+>>
+>> what about if IS_V1?
+> Whooops, I missed that in my review as well...
 > 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 805e525..88fc984 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -18,6 +18,7 @@
->   #include <linux/slab.h>
->   #include <linux/soc/qcom/mdt_loader.h>
->   #include <linux/soc/qcom/smem.h>
-> +#include <soc/qcom/qcom_minidump.h>
->   
->   #include "remoteproc_internal.h"
->   #include "qcom_common.h"
-> @@ -26,61 +27,6 @@
->   #define to_smd_subdev(d) container_of(d, struct qcom_rproc_subdev, subdev)
->   #define to_ssr_subdev(d) container_of(d, struct qcom_rproc_ssr, subdev)
->   
-> -#define MAX_NUM_OF_SS           10
-> -#define MAX_REGION_NAME_LENGTH  16
-> -#define SBL_MINIDUMP_SMEM_ID	602
-> -#define MINIDUMP_REGION_VALID		('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
-> -#define MINIDUMP_SS_ENCR_DONE		('D' << 24 | 'O' << 16 | 'N' << 8 | 'E' << 0)
-> -#define MINIDUMP_SS_ENABLED		('E' << 24 | 'N' << 16 | 'B' << 8 | 'L' << 0)
-> -
-> -/**
-> - * struct minidump_region - Minidump region
-> - * @name		: Name of the region to be dumped
-> - * @seq_num:		: Use to differentiate regions with same name.
-> - * @valid		: This entry to be dumped (if set to 1)
-> - * @address		: Physical address of region to be dumped
-> - * @size		: Size of the region
-> - */
-> -struct minidump_region {
-> -	char	name[MAX_REGION_NAME_LENGTH];
-> -	__le32	seq_num;
-> -	__le32	valid;
-> -	__le64	address;
-> -	__le64	size;
-> -};
-> -
-> -/**
-> - * struct minidump_subsystem - Subsystem's SMEM Table of content
-> - * @status : Subsystem toc init status
-> - * @enabled : if set to 1, this region would be copied during coredump
-> - * @encryption_status: Encryption status for this subsystem
-> - * @encryption_required : Decides to encrypt the subsystem regions or not
-> - * @region_count : Number of regions added in this subsystem toc
-> - * @regions_baseptr : regions base pointer of the subsystem
-> - */
-> -struct minidump_subsystem {
-> -	__le32	status;
-> -	__le32	enabled;
-> -	__le32	encryption_status;
-> -	__le32	encryption_required;
-> -	__le32	region_count;
-> -	__le64	regions_baseptr;
-> -};
-> -
-> -/**
-> - * struct minidump_global_toc - Global Table of Content
-> - * @status : Global Minidump init status
-> - * @md_revision : Minidump revision
-> - * @enabled : Minidump enable status
-> - * @subsystems : Array of subsystems toc
-> - */
-> -struct minidump_global_toc {
-> -	__le32				status;
-> -	__le32				md_revision;
-> -	__le32				enabled;
-> -	struct minidump_subsystem	subsystems[MAX_NUM_OF_SS];
-> -};
-> -
->   struct qcom_ssr_subsystem {
->   	const char *name;
->   	struct srcu_notifier_head notifier_list;
-> diff --git a/include/soc/qcom/qcom_minidump.h b/include/soc/qcom/qcom_minidump.h
-> new file mode 100644
-> index 0000000..84c8605
-> --- /dev/null
-> +++ b/include/soc/qcom/qcom_minidump.h
-> @@ -0,0 +1,66 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Qualcomm minidump shared data structures and macros
-> + *
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _QCOM_MINIDUMP_H_
-> +#define _QCOM_MINIDUMP_H_
-> +
-> +#define MAX_NUM_OF_SS           10
-> +#define MAX_REGION_NAME_LENGTH  16
-> +#define SBL_MINIDUMP_SMEM_ID	602
-> +#define MINIDUMP_REGION_VALID		('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
-> +#define MINIDUMP_SS_ENCR_DONE		('D' << 24 | 'O' << 16 | 'N' << 8 | 'E' << 0)
-> +#define MINIDUMP_SS_ENABLED		('E' << 24 | 'N' << 16 | 'B' << 8 | 'L' << 0)
-> +
-> +/**
-> + * struct minidump_region - Minidump region
-> + * @name		: Name of the region to be dumped
-> + * @seq_num:		: Use to differentiate regions with same name.
-> + * @valid		: This entry to be dumped (if set to 1)
-> + * @address		: Physical address of region to be dumped
-> + * @size		: Size of the region
-> + */
-> +struct minidump_region {
-> +	char	name[MAX_REGION_NAME_LENGTH];
-> +	__le32	seq_num;
-> +	__le32	valid;
-> +	__le64	address;
-> +	__le64	size;
-> +};
-> +
-> +/**
-> + * struct minidump_subsystem - Subsystem's SMEM Table of content
-> + * @status : Subsystem toc init status
-> + * @enabled : if set to 1, this region would be copied during coredump
-> + * @encryption_status: Encryption status for this subsystem
-> + * @encryption_required : Decides to encrypt the subsystem regions or not
-> + * @region_count : Number of regions added in this subsystem toc
-> + * @regions_baseptr : regions base pointer of the subsystem
-> + */
-> +struct minidump_subsystem {
-> +	__le32	status;
-> +	__le32	enabled;
-> +	__le32	encryption_status;
-> +	__le32	encryption_required;
-> +	__le32	region_count;
-> +	__le64	regions_baseptr;
-> +};
-> +
-> +/**
-> + * struct minidump_global_toc - Global Table of Content
-> + * @status : Global Minidump init status
-> + * @md_revision : Minidump revision
-> + * @enabled : Minidump enable status
-> + * @subsystems : Array of subsystems toc
-> + */
-> +struct minidump_global_toc {
-> +	__le32				status;
-> +	__le32				md_revision;
-> +	__le32				enabled;
-> +	struct minidump_subsystem	subsystems[MAX_NUM_OF_SS];
-> +};
-> +
-> +#endif  /* _QCOM_MINIDUMP_H_ */
+> Looks like the 8916 and 8996 FWs fall under the VIDEO.VE case
+> as well, that's the QC_VERSION_STRING they have..
+On top of that, my 8350 fw reports:
+
+F/W version: 14:video-firmware.1.0-3fb5add1d3ac96f8f74facd537845a6ceb5a99e4
+
+Konrad
+> 
+> Perhaps this could be an 
+> 
+> if (IS_V6)
+> 	..
+> else
+> 	..
+> 
+> Konrad
+>>
+>>>       dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
+>>
+>> this will crash for v1.
+>>
+>>>   @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct venus_core *core,
+>>>         switch (pkt->property) {
+>>>       case HFI_PROPERTY_SYS_IMAGE_VERSION:
+>>> -        sys_get_prop_image_version(dev, pkt);
+>>> +        sys_get_prop_image_version(core, pkt);
+>>>           break;
+>>>       default:
+>>>           dev_dbg(dev, VDBGL "unknown property data\n");
+>>
