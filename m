@@ -2,78 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 066B16E02F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 02:05:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E99556E0307
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 02:07:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbjDMAFl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 20:05:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
+        id S229720AbjDMAHW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 12 Apr 2023 20:07:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjDMAFl (ORCPT
+        with ESMTP id S229819AbjDMAHU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 20:05:41 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F611713
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 17:05:39 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id h12so11945251lfj.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 17:05:39 -0700 (PDT)
+        Wed, 12 Apr 2023 20:07:20 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD5976AE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 17:07:08 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id h12so11948925lfj.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 17:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681344338; x=1683936338;
+        d=linaro.org; s=google; t=1681344427; x=1683936427;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hqDd36Xna87Ja2uYucxlmnJMfm1J2VYsmJqSFbSPlQI=;
-        b=M2ED25aGEQVOUIoOeRvJA2/4Um84MCt5oMI1eOqRhZd8MaV4+Y1TPJNHMs8KrwEY2f
-         WOHVw7C8nwV27UhqErNVsyhXMCqgrcapez/Zf1h+f9z7IYby3I0/uvalUY9nrtojPuYO
-         LSpCxy5Ve4IAq8jtu3D/xJEpdORhA+7dHclgVsx4MthRUReDLdPHUN6GI0yXWxESO4KU
-         dg908a/VRgW5Pv8dEf2t/RRKLmoO4iu3KMWnKEE0wJAu0/aoXeC9muMdokqYdTSocjsg
-         PlcI1sEJC48Epuh/H733VE60yHmlakZIdcSszVXRgS/mtkZMK60qgbEy7Z5frThxcFSO
-         1NUQ==
+        bh=tOd7NOVIuKpcZyAlsPaoi5g+ynF8wF/mSBwzKeYJ5ps=;
+        b=bbMFCdCC5Q+woKKSC+rAMZnhE26CHyAna2FNuf/0daVeomHgUZMCcTz71jrF5gkUOE
+         VFSenACxQ9VBgf3V6mhncJfx26wo0J+QCQeKlH1a4bcU/yxK8wcD1dC868C62AQoSwin
+         V1gJVj9GbVitZPMXvs0GP5y+4Jb+fIUVcTl45+nPD/6bkMBaAmU17Ubyk/5YL2gjRI4U
+         PtkSkD4bqJwRyNeuRCGTlyGIUGy5BosKdfxc7MnczI8Xr+47myEmy17/Eebk126Mjhna
+         h1i72YSoOkzH1Un473uRlcsvGm5yDYkMpibyrWkAUZvymQGpNbdsMmEb2v8C0GNmyM2d
+         mV9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681344338; x=1683936338;
+        d=1e100.net; s=20221208; t=1681344427; x=1683936427;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hqDd36Xna87Ja2uYucxlmnJMfm1J2VYsmJqSFbSPlQI=;
-        b=Bo0kl+cw2pbXM30Sao+OuDbVNmu2JbA2FauuK8mrZc4x4AQ5AZ/roka8axbEh7Dk1l
-         dyGZ0WjpL6A0xS2dgqTyBcp6jU44+5kliW946ukRoJerJN0eWuHt1/PKzQObUmAMjBf3
-         ClnylWQLF+0Ehc5ZpNJKCCiT9CRo71/kJydSyeDWdWP+aw6WKaYoB131geZIGjdSJGNN
-         X3agGn6nb/P6gWilehmzqnkz2X2SIac18Nj+LhwQqZuu83RuB3cjwBF42D0ucf2MGdCr
-         fwPMiCKN9nrGFWBTnkyHbM69QWulofmdWs9GjNzZDR6+jUX+aZ2sDcBG0ahCD1t5uZSR
-         vHew==
-X-Gm-Message-State: AAQBX9c+E9iR+D09+D6wDy16YIS9bLXfjCBqwBFwrPnREtQMiwMIj7eR
-        H2/g2bnEfIm51t8ok9VHFtH+IKt2yjzMtVwd5sk=
-X-Google-Smtp-Source: AKy350aWaxxBspAXIGmezaj+Yjct61vVYleYqotsiazvOmF9AB3dmyba3DsfUjtzvzVvI0N9utag3Q==
-X-Received: by 2002:ac2:4461:0:b0:4ec:84ec:db0c with SMTP id y1-20020ac24461000000b004ec84ecdb0cmr183251lfl.52.1681344338198;
-        Wed, 12 Apr 2023 17:05:38 -0700 (PDT)
+        bh=tOd7NOVIuKpcZyAlsPaoi5g+ynF8wF/mSBwzKeYJ5ps=;
+        b=T6POfov1+9BYgFxxRurue4VRmeFAARrQ3U/lReRscCI6/WMvioIYG5hnIJzlwAQCuY
+         uERBq29MLZCx7hvjBxGZXQna1C3VnWj7bvAgImcHbdkZu9e9+P+zPs8D6/CTmj8oQNSZ
+         adDIkGOUFWxSn4muIP6nFphKiwzsFH4uJ4FEyt1lC7J+m0BCLPHKkX7E2s7nKl99gxo4
+         RdgTDpMTpMWO3vlAznDyQemm6xqpD9IABMIzD12Ig6FHlXfRy8GayWap3U2madAIOxMZ
+         Kyww0IayTGAKnvAEYmMmbPS69g13mI0X1QzM6FrDJo8NYxxubAUSrF1w5phwEWBdRRRT
+         b/yQ==
+X-Gm-Message-State: AAQBX9c9UJEHkl1sHJxh5cCjGlbNWMMUoHku3kJtFv/Z9Hx+Ky+gALsq
+        B13aBWnNctVrWDvNuySx74A8ZA==
+X-Google-Smtp-Source: AKy350ah9N6A7Y0npbYfR/g5D1BHtXhgKT5/gJslSWdjBm4pzyLOimPO2wm46OYGYljhsX5WI8fW4Q==
+X-Received: by 2002:a05:6512:971:b0:4d7:44c9:9f4c with SMTP id v17-20020a056512097100b004d744c99f4cmr199797lft.4.1681344427048;
+        Wed, 12 Apr 2023 17:07:07 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w7-20020ac254a7000000b004eca35798a4sm41537lfk.32.2023.04.12.17.05.37
+        by smtp.gmail.com with ESMTPSA id 16-20020ac25f10000000b004db2ca9dd33sm35088lfq.275.2023.04.12.17.07.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Apr 2023 17:05:37 -0700 (PDT)
-Message-ID: <b1b6ddc7-a793-a1b4-8dd6-8ea69b6e5573@linaro.org>
-Date:   Thu, 13 Apr 2023 03:05:37 +0300
+        Wed, 12 Apr 2023 17:07:06 -0700 (PDT)
+Message-ID: <be810874-0648-d57b-de7b-54ff7ec4576b@linaro.org>
+Date:   Thu, 13 Apr 2023 03:07:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v5 6/8] drm/msm/dsi: Add check for slice_width in
- dsi_timing_setup
+Subject: Re: [PATCH v6 2/7] drm/msm: Add MSM-specific DSC helper methods
 Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
         freedreno@lists.freedesktop.org
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-References: <20230329-rfc-msm-dsc-helper-v5-0-0108401d7886@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v5-6-0108401d7886@quicinc.com>
- <c829ff2f-f676-8c6d-2681-1b5da4f9ede7@linaro.org>
- <e72a1e24-72e1-aad4-bc8f-f23dc84780dc@quicinc.com>
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230329-rfc-msm-dsc-helper-v6-0-cb7f59f0f7fb@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v6-2-cb7f59f0f7fb@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <e72a1e24-72e1-aad4-bc8f-f23dc84780dc@quicinc.com>
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v6-2-cb7f59f0f7fb@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -84,63 +82,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2023 01:40, Abhinav Kumar wrote:
+On 13/04/2023 02:25, Jessica Zhang wrote:
+> Introduce MSM-specific DSC helper methods, as some calculations are
+> common between DP and DSC.
 > 
+> Changes in v2:
+> - Moved files up to msm/ directory
+> - Dropped get_comp_ratio() helper
+> - Used drm_int2fixp() to convert to integers to fp
+> - Style changes to improve readability
+> - Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
+> - Changed msm_dsc_get_slice_per_intf() to a static inline method
+> - Dropped last division step of msm_dsc_get_pclk_per_line() and changed
+>    method name accordingly
+> - Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
+> - Fixed some math issues caused by passing in incorrect types to
+>    drm_fixed methods in get_bytes_per_soft_slice()
 > 
-> On 4/12/2023 12:24 PM, Dmitry Baryshkov wrote:
->> On 12/04/2023 22:09, Jessica Zhang wrote:
->>> Add a check for valid dsc->slice_width value in dsi_timing_setup.
->>>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 6 ++++++
->>>   1 file changed, 6 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> index 508577c596ff..6a6218a9655f 100644
->>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> @@ -937,6 +937,12 @@ static void dsi_timing_setup(struct msm_dsi_host 
->>> *msm_host, bool is_bonded_dsi)
->>>               return;
->>>           }
->>> +        if (!dsc->slice_width || (mode->hdisplay < dsc->slice_width)) {
->>
->> This is an erroneous condition, correct. Can we move it to a better 
->> place, where we can return an error instead of ignoring it?
->>
->> I'd say that we should validate dsc->slice_width at the 
->> dsi_host_attach(). It well might be a good idea to add a helper that 
->> validates required dsc properties (e.g. version, bpp/bpc, slice_width, 
->> slice_height, slice_count).
->>
->> As for the mode->hdisplay, we have the following code in 
->> msm_dsi_host_check_dsc() (where pic_width = mode->hdisplay):
->>
->> if (pic_width % dsc->slice_width) {...}
->>
->> This way the only way how mode->hdisplay can be less than 
->> dsc->slice_width is if mode->hdisplay is 0 (which is forbidden if I 
->> remember correctly). So the second part of the check is useless.
->>
+> Changes in v3:
+> - Dropped src_bpp parameter from all methods -- src_bpp can be
+>    calculated as dsc->bits_per_component * 3
+> - Dropped intf_width parameter from get_bytes_per_soft_slice()
+> - Moved dsc->bits_per_component to numerator calculation in
+>    get_bytes_per_soft_slice()
+> - Renamed msm_dsc_get_uncompressed_pclk_per_line to
+>    *_get_uncompressed_pclk_per_intf()
+> - Removed dsc->slice_width check from
+>    msm_dsc_get_uncompressed_pclk_per_intf()
+> - Made get_bytes_per_soft_slice() a public method (this will be called
+>    later to help calculate DP pclk params)
+> - Added documentation in comments
+> - Moved extra_eol_bytes math out of msm_dsc_get_eol_byte_num() and
+>    renamed msm_dsc_get_eol_byte_num to *_get_bytes_per_intf.
 > 
-> Lets drop this from this series and come up with a better approach to 
-> validate dsc params. We will take it up once dsc over dsi and dp lands.
-
-Sure, why not.
-
+> Changes in v4:
+> - Changed msm_dsc_get_uncompressed_pclk_per_intf to
+>    msm_dsc_get_pclk_per_intf
 > 
->>> +            pr_err("DSI: invalid slice width %d (pic_width: %d)\n",
->>> +                   dsc->slice_width, mode->hdisplay);
->>> +            return;
->>> +        }
->>> +
->>>           dsc->pic_width = mode->hdisplay;
->>>           dsc->pic_height = mode->vdisplay;
->>>           DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
->>>
->>
+> Changes in v5:
+> - Added extra line at end of msm_dsc_helper.h
+> - Simplified msm_dsc_get_bytes_per_soft_slice() math
+> - Simplified and inlined msm_dsc_get_pclk_per_intf() math
+> - Removed unused headers
+> 
+> Changes in v6:
+> - Documented return value for all helper functions
+> - Fixed dependency issue caused by drm_fixed.h being included before
+>    linux/kernel.h
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/Makefile         |  1 +
+>   drivers/gpu/drm/msm/msm_dsc_helper.c | 26 ++++++++++++
+>   drivers/gpu/drm/msm/msm_dsc_helper.h | 81 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 108 insertions(+)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
