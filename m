@@ -2,361 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E7FE6E0731
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 08:44:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76ED06E083A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 09:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbjDMGoE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 02:44:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52298 "EHLO
+        id S229999AbjDMHuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 03:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbjDMGoC (ORCPT
+        with ESMTP id S230016AbjDMHun (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 02:44:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A0B31705;
-        Wed, 12 Apr 2023 23:44:01 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33D69pE2018452;
-        Thu, 13 Apr 2023 06:43:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=yRB7cciyRzcz8nkDBjPpG/bkD/w2lbThPBq1TXUWcrM=;
- b=csoeyez8IvOy+pz4dKwQDaPEh4L3aHZSD2zUK1ia7fljLqLG0jrMbh8zX0CKGsOhuQj0
- RpiBWz/wobOgBm06OmjllXmpVB24NWMbXxZXo9/tjA9+0H3CG8hPJOWEs0GNibXrM/sI
- 4h2+fE6xBb/S1MBhiZ7yAO1BtZ7sVX5vOw/wneoPKDdRWpeSVdbleLf6d2oq+y6eMHwk
- YxqWTeDDWkUTzwu4vZPLuIKtDJ3MqJF25O4pplqZetIwS3TPD08MKJtU7nrpMpdEmtzF
- PMeZEJxUqbNSIvFMtNtC10778iXYxRnE0zRckGvwgUysLAnyps98s1obgNAhwHFRzdNN wQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pxbx5r32k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Apr 2023 06:43:58 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33D6hvMp013393
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 13 Apr 2023 06:43:57 GMT
-Received: from tjiang-gv.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 12 Apr 2023 23:43:54 -0700
-From:   Tim Jiang <quic_tjiang@quicinc.com>
-To:     <marcel@holtmann.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_tjiang@quicinc.com>,
-        <quic_bgodavar@quicinc.com>, <quic_hemantg@quicinc.com>,
-        <mka@chromium.org>
-Subject: [PATCH v2] Bluetooth: btusb: Add WCN6855 devcoredump support
-Date:   Thu, 13 Apr 2023 14:43:44 +0800
-Message-ID: <20230413064344.18714-1-quic_tjiang@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Thu, 13 Apr 2023 03:50:43 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C9B093F1;
+        Thu, 13 Apr 2023 00:50:23 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6C0AF63C2D;
+        Thu, 13 Apr 2023 07:50:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C61F1C4339B;
+        Thu, 13 Apr 2023 07:50:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681372217;
+        bh=JAjWavrA+ZgB3agBM3DMPabBKzWaDvz6pU3/S9q4AvU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=d1QGG74Cl7IIFfZFPuf9qGcllPP88cjKSVjsnJ3ZgBF7Mg+uAAoqiEAosE4iI3PIo
+         aC+Q35xdLko7SpFXrkLxvS/oi1Les9TD3YlUKp+kQ/tUGpBz0JXBBvraAPTx5K28aJ
+         NQ8HBYelltV0kzDULWRHv8AVDkiC08onfAqq1szBOQOYWwMqDjKTIE0paCGYRkMr9j
+         GdIIU7lmRIQwrmntOv5VfbECcZp7KYmGvxmS786jxcn0EHyMtOZ1hcRGPJeCIxf5S6
+         09ip1xu+AnuLlWK8H+oLp39TJycTSJVCuWqyS8pJtYSe+aQD6yvaYx578unLk0Gf6Y
+         KTt7KMsOdomxA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A62A2C395C5;
+        Thu, 13 Apr 2023 07:50:17 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2anweT7IPVBhV8oPkgZPqnlv6ETvqEwr
-X-Proofpoint-GUID: 2anweT7IPVBhV8oPkgZPqnlv6ETvqEwr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-13_03,2023-04-12_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0
- spamscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304130060
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net v2] net: qrtr: Fix an uninit variable access bug in
+ qrtr_tx_resume()
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <168137221767.12270.4741360777654214045.git-patchwork-notify@kernel.org>
+Date:   Thu, 13 Apr 2023 07:50:17 +0000
+References: <20230410012352.3997823-1-william.xuanziyang@huawei.com>
+In-Reply-To: <20230410012352.3997823-1-william.xuanziyang@huawei.com>
+To:     Ziyang Xuan (William) <william.xuanziyang@huawei.com>
+Cc:     mani@kernel.org, davem@davemloft.net, edumazet@google.com,
+        kuba@kernel.org, pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-WCN6855 will report memdump via ACL data or HCI event when
-it get crashed, so we collect memdump to debug firmware.
+Hello:
 
-Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
----
- drivers/bluetooth/btusb.c | 222 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 222 insertions(+)
+This patch was applied to netdev/net.git (main)
+by Paolo Abeni <pabeni@redhat.com>:
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 2303b0a66323..f045bbb0ee09 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -733,6 +733,16 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
- 	{}
- };
- 
-+struct qca_dump_info {
-+	/* fields for dump collection */
-+	u16 id_vendor;
-+	u16 id_product;
-+	u32 fw_version;
-+	u32 controller_id;
-+	u32 ram_dump_size;
-+	u16 ram_dump_seqno;
-+};
-+
- #define BTUSB_MAX_ISOC_FRAMES	10
- 
- #define BTUSB_INTR_RUNNING	0
-@@ -752,6 +762,7 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
- #define BTUSB_WAKEUP_AUTOSUSPEND	14
- #define BTUSB_USE_ALT3_FOR_WBS	15
- #define BTUSB_ALT6_CONTINUOUS_TX	16
-+#define BTUSB_HW_SSR_ACTIVE	17
- 
- struct btusb_data {
- 	struct hci_dev       *hdev;
-@@ -814,6 +825,8 @@ struct btusb_data {
- 
- 	int oob_wake_irq;   /* irq for out-of-band wake-on-bt */
- 	unsigned cmd_timeout_cnt;
-+
-+	struct qca_dump_info qca_dump;
- };
- 
- static void btusb_reset(struct hci_dev *hdev)
-@@ -904,6 +917,11 @@ static void btusb_qca_cmd_timeout(struct hci_dev *hdev)
- 	struct btusb_data *data = hci_get_drvdata(hdev);
- 	struct gpio_desc *reset_gpio = data->reset_gpio;
- 
-+	if (test_bit(BTUSB_HW_SSR_ACTIVE, &data->flags)) {
-+		bt_dev_info(hdev, "Ramdump in progress, defer cmd_timeout");
-+		return;
-+	}
-+
- 	if (++data->cmd_timeout_cnt < 5)
- 		return;
- 
-@@ -3294,6 +3312,202 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- 	return 0;
- }
- 
-+#define QCA_MEMDUMP_ACL_HANDLE 0x2EDD
-+#define QCA_MEMDUMP_SIZE_MAX  0x100000
-+#define QCA_MEMDUMP_VSE_CLASS 0x01
-+#define QCA_MEMDUMP_MSG_TYPE 0x08
-+#define QCA_MEMDUMP_PKT_SIZE 248
-+#define QCA_LAST_SEQUENCE_NUM 0xffff
-+
-+struct qca_dump_hdr {
-+	u8 vse_class;
-+	u8 msg_type;
-+	__le16 seqno;
-+	u8 reserved;
-+	union {
-+		u8 data[0];
-+		struct {
-+			__le32 ram_dump_size;
-+			u8 data0[0];
-+		} __packed;
-+	};
-+} __packed;
-+
-+
-+static void btusb_dump_hdr_qca(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	char buf[128];
-+	struct btusb_data *btdata = hci_get_drvdata(hdev);
-+
-+	snprintf(buf, sizeof(buf), "Controller Name: 0x%x\n",
-+			btdata->qca_dump.controller_id);
-+	skb_put_data(skb, buf, strlen(buf));
-+
-+	snprintf(buf, sizeof(buf), "Firmware Version: 0x%x\n",
-+			btdata->qca_dump.fw_version);
-+	skb_put_data(skb, buf, strlen(buf));
-+
-+	snprintf(buf, sizeof(buf), "Driver: %s\nVendor: qca\n",
-+			btusb_driver.name);
-+	skb_put_data(skb, buf, strlen(buf));
-+
-+	snprintf(buf, sizeof(buf), "VID: 0x%x\nPID:0x%x\n",
-+			btdata->qca_dump.id_vendor, btdata->qca_dump.id_product);
-+	skb_put_data(skb, buf, strlen(buf));
-+
-+	snprintf(buf, sizeof(buf), "Lmp Subversion: 0x%x\n",
-+			hdev->lmp_subver);
-+	skb_put_data(skb, buf, strlen(buf));
-+}
-+
-+static void btusb_coredump_qca(struct hci_dev *hdev)
-+{
-+	static const u8 param[] = { 0x26 };
-+	struct sk_buff *skb;
-+
-+	skb = __hci_cmd_sync(hdev, 0xfc0c, 1, param, HCI_CMD_TIMEOUT);
-+	if (IS_ERR(skb))
-+		bt_dev_err(hdev, "%s: triggle crash failed (%ld)", __func__, PTR_ERR(skb));
-+	kfree_skb(skb);
-+}
-+
-+/*
-+ * ==0: not a dump pkt.
-+ * < 0: fails to handle a dump pkt
-+ * > 0: otherwise.
-+ */
-+static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	int ret = 1;
-+	u8 pkt_type;
-+	u8 *sk_ptr;
-+	unsigned int sk_len;
-+	u16 seqno;
-+	u32 dump_size;
-+
-+	struct hci_event_hdr *event_hdr;
-+	struct hci_acl_hdr *acl_hdr;
-+	struct qca_dump_hdr *dump_hdr;
-+	struct btusb_data *btdata = hci_get_drvdata(hdev);
-+	struct usb_device *udev = btdata->udev;
-+
-+	pkt_type = hci_skb_pkt_type(skb);
-+	sk_ptr = skb->data;
-+	sk_len = skb->len;
-+
-+	if (pkt_type == HCI_ACLDATA_PKT) {
-+		acl_hdr = hci_acl_hdr(skb);
-+		if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
-+			return 0;
-+		sk_ptr += HCI_ACL_HDR_SIZE;
-+		sk_len -= HCI_ACL_HDR_SIZE;
-+		event_hdr = (struct hci_event_hdr *)sk_ptr;
-+	} else {
-+		event_hdr = hci_event_hdr(skb);
-+	}
-+
-+	if ((event_hdr->evt != HCI_VENDOR_PKT)
-+		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
-+		return 0;
-+
-+	sk_ptr += HCI_EVENT_HDR_SIZE;
-+	sk_len -= HCI_EVENT_HDR_SIZE;
-+
-+	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
-+	if ((sk_len < offsetof(struct qca_dump_hdr, data))
-+		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
-+	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		return 0;
-+
-+	/*it is dump pkt now*/
-+	seqno = le16_to_cpu(dump_hdr->seqno);
-+	if (seqno == 0) {
-+		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
-+		dump_size = le32_to_cpu(dump_hdr->ram_dump_size);
-+		if (!dump_size || (dump_size > QCA_MEMDUMP_SIZE_MAX)) {
-+			ret = -EILSEQ;
-+			bt_dev_err(hdev, "Invalid memdump size(%u)",
-+				   dump_size);
-+			goto out;
-+		}
-+
-+		ret = hci_devcd_init(hdev, dump_size);
-+		if (ret < 0) {
-+			bt_dev_err(hdev, "memdump init error(%d)", ret);
-+			goto out;
-+		}
-+
-+		btdata->qca_dump.ram_dump_size = dump_size;
-+		btdata->qca_dump.ram_dump_seqno = 0;
-+		sk_ptr += offsetof(struct qca_dump_hdr, data0);
-+		sk_len -= offsetof(struct qca_dump_hdr, data0);
-+
-+		usb_disable_autosuspend(udev);
-+		bt_dev_info(hdev, "%s memdump size(%u)\n",
-+			    (pkt_type == HCI_ACLDATA_PKT) ? "ACL" : "event",
-+			    dump_size);
-+	} else {
-+		sk_ptr += offsetof(struct qca_dump_hdr, data);
-+		sk_len -= offsetof(struct qca_dump_hdr, data);
-+	}
-+
-+	if (!btdata->qca_dump.ram_dump_size) {
-+		ret = -EINVAL;
-+		bt_dev_err(hdev, "memdump is not active");
-+		goto out;
-+	}
-+
-+	if ((seqno > btdata->qca_dump.ram_dump_seqno + 1) && (seqno != QCA_LAST_SEQUENCE_NUM)) {
-+		dump_size = QCA_MEMDUMP_PKT_SIZE * (seqno - btdata->qca_dump.ram_dump_seqno - 1);
-+		hci_devcd_append_pattern(hdev, 0x0, dump_size);
-+		bt_dev_err(hdev,
-+			   "expected memdump seqno(%u) is not received(%u)\n",
-+			   btdata->qca_dump.ram_dump_seqno, seqno);
-+		btdata->qca_dump.ram_dump_seqno = seqno;
-+		kfree_skb(skb);
-+		return ret;
-+	}
-+
-+	skb_pull(skb, skb->len - sk_len);
-+	hci_devcd_append(hdev, skb);
-+	btdata->qca_dump.ram_dump_seqno++;
-+	if (seqno == QCA_LAST_SEQUENCE_NUM) {
-+		bt_dev_info(hdev,
-+				"memdump done: pkts(%u), total(%u)\n",
-+				btdata->qca_dump.ram_dump_seqno, btdata->qca_dump.ram_dump_size);
-+
-+		hci_devcd_complete(hdev);
-+		goto out;
-+	}
-+	return ret;
-+
-+out:
-+	if (btdata->qca_dump.ram_dump_size)
-+		usb_enable_autosuspend(udev);
-+	btdata->qca_dump.ram_dump_size = 0;
-+	btdata->qca_dump.ram_dump_seqno = 0;
-+	clear_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
-+
-+	if (ret < 0)
-+		kfree_skb(skb);
-+	return ret;
-+}
-+
-+static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	if (handle_dump_pkt_qca(hdev, skb))
-+		return 0;
-+	return hci_recv_frame(hdev, skb);
-+}
-+
-+static int btusb_recv_evt_qca(struct hci_dev *hdev, struct sk_buff *skb)
-+{
-+	if (handle_dump_pkt_qca(hdev, skb))
-+		return 0;
-+	return hci_recv_frame(hdev, skb);
-+}
-+
-+
- #define QCA_DFU_PACKET_LEN	4096
- 
- #define QCA_GET_TARGET_VERSION	0x09
-@@ -3628,6 +3842,9 @@ static int btusb_setup_qca(struct hci_dev *hdev)
- 	if (err < 0)
- 		return err;
- 
-+	btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
-+	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
-+
- 	if (!(status & QCA_SYSCFG_UPDATED)) {
- 		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
- 		if (err < 0)
-@@ -4117,6 +4334,11 @@ static int btusb_probe(struct usb_interface *intf,
- 	}
- 
- 	if (id->driver_info & BTUSB_QCA_WCN6855) {
-+		data->qca_dump.id_vendor = id->idVendor;
-+		data->qca_dump.id_product = id->idProduct;
-+		data->recv_event = btusb_recv_evt_qca;
-+		data->recv_acl = btusb_recv_acl_qca;
-+		hci_devcd_register(hdev, btusb_coredump_qca, btusb_dump_hdr_qca, NULL);
- 		data->setup_on_usb = btusb_setup_qca;
- 		hdev->shutdown = btusb_shutdown_qca;
- 		hdev->set_bdaddr = btusb_set_bdaddr_wcn6855;
+On Mon, 10 Apr 2023 09:23:52 +0800 you wrote:
+> Syzbot reported a bug as following:
+> 
+> =====================================================
+> BUG: KMSAN: uninit-value in qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+>  qrtr_tx_resume+0x185/0x1f0 net/qrtr/af_qrtr.c:230
+>  qrtr_endpoint_post+0xf85/0x11b0 net/qrtr/af_qrtr.c:519
+>  qrtr_tun_write_iter+0x270/0x400 net/qrtr/tun.c:108
+>  call_write_iter include/linux/fs.h:2189 [inline]
+>  aio_write+0x63a/0x950 fs/aio.c:1600
+>  io_submit_one+0x1d1c/0x3bf0 fs/aio.c:2019
+>  __do_sys_io_submit fs/aio.c:2078 [inline]
+>  __se_sys_io_submit+0x293/0x770 fs/aio.c:2048
+>  __x64_sys_io_submit+0x92/0xd0 fs/aio.c:2048
+>  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+>  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+>  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+> 
+> [...]
+
+Here is the summary with links:
+  - [net,v2] net: qrtr: Fix an uninit variable access bug in qrtr_tx_resume()
+    https://git.kernel.org/netdev/net/c/6417070918de
+
+You are awesome, thank you!
 -- 
-2.17.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
