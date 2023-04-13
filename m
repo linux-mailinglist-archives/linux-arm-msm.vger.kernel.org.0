@@ -2,91 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 956E16E05DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 06:18:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABB226E0610
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 06:40:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbjDMER6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 00:17:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43892 "EHLO
+        id S229605AbjDMEkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 00:40:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbjDMERX (ORCPT
+        with ESMTP id S229492AbjDMEka (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 00:17:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3E6172C;
-        Wed, 12 Apr 2023 21:15:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EDB5963439;
-        Thu, 13 Apr 2023 04:15:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1C6C4339B;
-        Thu, 13 Apr 2023 04:15:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681359341;
-        bh=BmvSeStlY/3OFiQagQGoFed7dwR+A0UXBFPAOqd2MKE=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=JKK8FIPWTcONpK0kcAc1QD4p15wfvOgd0AKViIdWnl58ICoojmTPqU7gR0hgmw13h
-         byVx5WhdchdVQRvg4IhdZsQ2CAzBWKWKNUVw3x8Bokl+3qDhimaUntwxOoH5XVAaf7
-         jdzd2Sw348lkVTnzNxhyhJDgG2KY5h4B9owSJZgjsttVKdsjYqJrVWx1sDQYmp0d/o
-         lhw0YzSPX7mHtRHhY5A/oTwwDqjHdKHjGUQrWnFLtWWQekNKNbq/MqHr+xTM6Snd4e
-         YMm8ovBlGHMjoy3imd7EAZ3DqiBGb8YXS0e8htDa9mfmk/nvoo5GOOVtvuWFHVdyqy
-         +lefBsX3rS9UQ==
-Message-ID: <8c774af24fa89d44924998064a996a2c.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Thu, 13 Apr 2023 00:40:30 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9763E46B9;
+        Wed, 12 Apr 2023 21:40:29 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33D4UAbt011805;
+        Thu, 13 Apr 2023 04:40:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=LgkUpL9fahPgWUMGVfvhX6dXOgHLpy5fD8oxPNuM8qU=;
+ b=mtC0G25dExze9CooR/Ss1V11w3MHf4PsukpD6RuWE7btY//k5PHw+On2eEil37TFbjZ4
+ SiWAx+wP6yrrk21P3KCGii8U7010giXQ8VuqqVrj1jpQlenlB5lR4o0J9DD6NoRlyTno
+ SyBNJ7xq335VYCpETU6juh2UN9MMn9Z4QgT+qm2u48u33WtbPiDT4FpbNns/2b/lFZqr
+ oIYHhdny+qpFtwt7DBahkx80aO99c3MJXLmuqctmbxvuAZLrxTvoUUJEOHwzI44gDXd/
+ cP8Wp7uwiXw9lfi/UC57u7lXbbNyFneINDLLwiExP2+hc7sG1AtO4xTb+aihB1Bw628m fQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pwchbupk8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Apr 2023 04:40:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33D4eA2a005449
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 13 Apr 2023 04:40:10 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 12 Apr
+ 2023 21:39:45 -0700
+Message-ID: <0569ed09-2241-d981-4e0c-209caa7483ab@quicinc.com>
+Date:   Thu, 13 Apr 2023 10:09:42 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1671601032-18397-2-git-send-email-quic_jprakash@quicinc.com>
-References: <1671601032-18397-1-git-send-email-quic_jprakash@quicinc.com> <1671601032-18397-2-git-send-email-quic_jprakash@quicinc.com>
-Subject: Re: [PATCH] spmi: Add a check for remove callback when removing a SPMI driver
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
-        Jishnu Prakash <quic_jprakash@quicinc.com>
-To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
-        devicetree@vger.kernel.org, gregkh@linuxfoundation.org,
-        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
-        quic_collinsd@quicinc.com, quic_kamalw@quicinc.com,
-        quic_subbaram@quicinc.com, robh+dt@kernel.org
-Date:   Wed, 12 Apr 2023 21:15:39 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V2 1/2] dt-bindings: watchdog: qcom-wdt: add
+ qcom,apss-wdt-ipq5332 compatible
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <wim@linux-watchdog.org>,
+        <linux@roeck-us.net>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230320104530.30411-1-quic_kathirav@quicinc.com>
+ <20230320104530.30411-2-quic_kathirav@quicinc.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230320104530.30411-2-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hUN6L7TzGJio0I40f1xoaPM1z5Io0ua8
+X-Proofpoint-GUID: hUN6L7TzGJio0I40f1xoaPM1z5Io0ua8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-13_01,2023-04-12_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304130041
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Jishnu Prakash (2022-12-20 21:37:12)
-> When removing a SPMI driver, there can be a crash due to NULL pointer
-> dereference if it does not have a remove callback defined. This is
-> one such call trace observed when removing the QCOM SPMI PMIC driver:
->=20
->  dump_backtrace.cfi_jt+0x0/0x8
->  dump_stack_lvl+0xd8/0x16c
->  panic+0x188/0x498
->  __cfi_slowpath+0x0/0x214
->  __cfi_slowpath+0x1dc/0x214
->  spmi_drv_remove+0x16c/0x1e0
->  device_release_driver_internal+0x468/0x79c
->  driver_detach+0x11c/0x1a0
->  bus_remove_driver+0xc4/0x124
->  driver_unregister+0x58/0x84
->  cleanup_module+0x1c/0xc24 [qcom_spmi_pmic]
->  __do_sys_delete_module+0x3ec/0x53c
->  __arm64_sys_delete_module+0x18/0x28
->  el0_svc_common+0xdc/0x294
->  el0_svc+0x38/0x9c
->  el0_sync_handler+0x8c/0xf0
->  el0_sync+0x1b4/0x1c0
->=20
-> If a driver has all its resources allocated through devm_() APIs and
-> does not need any other explicit cleanup, it would not require a
-> remove callback to be defined. Hence, add a check for remove callback
-> presence before calling it when removing a SPMI driver.
->=20
-> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
-> ---
 
-Applied to spmi-next
+On 3/20/2023 4:15 PM, Kathiravan T wrote:
+> Add a compatible for the IPQ5332 platform's APSS watchdog.
+
+Guenter,
+
+
+Without this patch, I see dtbs_check failure in linux-next.
+
+
+I see you reviewed the V1 of this patch, can you pick up this patch? I don't see it in https://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git/log/?h=watchdog-next
+I'm not sure if I am looking at the right tree, Please correct me if I am wrong.
+
+
+Thanks,
+Kathiravan T.
+
+
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+> Changes in V2:
+> 	- Pick up R-b tag
+>
+>   Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 6448b633c970..8060a87d29da 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -18,6 +18,7 @@ properties:
+>         - items:
+>             - enum:
+>                 - qcom,kpss-wdt-ipq4019
+> +              - qcom,apss-wdt-ipq5332
+>                 - qcom,apss-wdt-msm8994
+>                 - qcom,apss-wdt-qcs404
+>                 - qcom,apss-wdt-sa8775p
