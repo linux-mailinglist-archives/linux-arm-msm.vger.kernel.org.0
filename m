@@ -2,111 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CC806E1046
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 16:46:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4E7F6E1036
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 16:44:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229638AbjDMOp5 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 10:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40972 "EHLO
+        id S230360AbjDMOn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 10:43:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjDMOp5 (ORCPT
+        with ESMTP id S229784AbjDMOnu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 10:45:57 -0400
-X-Greylist: delayed 494 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 13 Apr 2023 07:45:32 PDT
-Received: from gnu.wildebeest.org (gnu.wildebeest.org [45.83.234.184])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5083EA5EC;
-        Thu, 13 Apr 2023 07:45:31 -0700 (PDT)
-Received: from r6.localdomain (82-217-174-174.cable.dynamic.v4.ziggo.nl [82.217.174.174])
-        (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by gnu.wildebeest.org (Postfix) with ESMTPSA id 7C8A2302BB02;
-        Thu, 13 Apr 2023 16:37:14 +0200 (CEST)
-Received: by r6.localdomain (Postfix, from userid 1000)
-        id 2A6AB34014C; Thu, 13 Apr 2023 16:37:14 +0200 (CEST)
-Message-ID: <718c102205750a00b86e8d33748e9bfb3c485ee1.camel@klomp.org>
-Subject: Re: [PATCH v5 1/2] check-uapi: Introduce check-uapi.sh
-From:   Mark Wielaard <mark@klomp.org>
-To:     John Moon <quic_johmoo@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
+        Thu, 13 Apr 2023 10:43:50 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DBFB76E;
+        Thu, 13 Apr 2023 07:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=J5w0b8Fobg2W9RujUD13uGJH7vRMN8dHc0B4sOAwikM=; b=5TjbN28trjt5HISvTlm95p0A9G
+        D9M1FUwIBttbFB3gbsuaO9mbk3vXv4+yRqyZZ19apAILewifcs3qVozNt1PG9U/NozW0WFJ5NF4Mn
+        26Hx/eLWptWB7cbOupRNhwJelVtjvJ+RY33Xa4ZQEc6x6adDxZx3Gjac/K9aKr2J/KXA=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1pmyAb-00ACJL-AV; Thu, 13 Apr 2023 16:43:29 +0200
+Date:   Thu, 13 Apr 2023 16:43:29 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Florian Fainelli <f.fainelli@gmail.com>
+Cc:     Christian Marangi <ansuelsmth@gmail.com>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        kernel-team@android.com, libabigail@sourceware.org,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Date:   Thu, 13 Apr 2023 16:37:14 +0200
-In-Reply-To: <d34a6b09-8244-49e2-2d7a-eee5fd5ca5b7@quicinc.com>
-References: <20230407203456.27141-1-quic_johmoo@quicinc.com>
-         <20230407203456.27141-2-quic_johmoo@quicinc.com>
-         <CAK7LNAQQmoyUx+0Jk3c7iqY20KokrHEOPwHNb2doZOOA8RWBDA@mail.gmail.com>
-         <2023041015-lunar-dandelion-1b4e@gregkh>
-         <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
-         <2023041136-donator-faceplate-5f91@gregkh>
-         <bcdcee9b-f213-bc3c-d300-92a1e0138187@quicinc.com>
-         <2023041209-armed-overlaid-3d3d@gregkh>
-         <d34a6b09-8244-49e2-2d7a-eee5fd5ca5b7@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        John Crispin <john@phrozen.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH v6 06/16] net: phy: phy_device: Call into the
+ PHY driver to set LED brightness
+Message-ID: <60d5bad7-e7c1-4ffe-be6c-5d92e482b1ba@lunn.ch>
+References: <20230327141031.11904-1-ansuelsmth@gmail.com>
+ <20230327141031.11904-7-ansuelsmth@gmail.com>
+ <202ae4b9-8995-474a-1282-876078e15e47@gmail.com>
+ <64380b46.7b0a0220.978a.1eb4@mx.google.com>
+ <7ea465d9-95eb-d158-632a-a2aa892fd2bf@gmail.com>
 MIME-Version: 1.0
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7ea465d9-95eb-d158-632a-a2aa892fd2bf@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+> Humm just thought of something else, is it OK for led_brightness_set and
+> led_blink_set to call into functions that might require sleeping (MDIO, I2C,
+> SPI, etc.)?
 
-On Wed, 2023-04-12 at 09:37 -0700, John Moon via Libabigail wrote:
-> On 4/11/2023 11:14 PM, Greg Kroah-Hartman wrote:
-> > > Would you find the tool more useful if it simply filtered out all instances
-> > > where the size of the type did not change? This would filter out the
-> > > following which the tool currently flags:
-> > > 
-> > > - enum expansions
-> > > - reserved field expansions
-> > > - expansions of a struct with a flex array at the end
-> > > - type changes
-> > > - re-ordering of existing members
-> > > - ...others?
-> > 
-> > Obviously not, as some of those are real breakages, and some are not at
-> > all.
-> > 
-> > Please understand what is an abi breakage.  Adding new enums is not.
-> > Using a reserved field is not.  Reording existing members IS.
-> > 
-> 
-> Yes, understood that method would miss certain classes of breakages. I 
-> was suggesting it as a way to improve the signal-to-noise ratio of the 
-> tool since we don't currently have an algorithm for determining 
-> breakages with 100% accuracy.
+Hi Florian
 
-Note that you can check the exit code of libabigail's abidiff to see
-whether something is an incompatible abi change or not, see:
-https://sourceware.org/libabigail/manual/abidiff.html#return-values
+That is fine. The LED class is similar to GPIOs. There is a can sleep
+version, and an atomic version. For phylib we are using the can sleep
+version. The LED core then hides the differences from the users.
 
-You can also of course use suppressions to instruct abidiff to avoid
-reporting changes involving certain ABI artifacts:
-https://sourceware.org/libabigail/manual/libabigail-concepts.html#suppr-spec-label
-
-Cheers,
-
-Mark
+    Andrew
