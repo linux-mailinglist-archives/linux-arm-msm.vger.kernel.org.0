@@ -2,198 +2,326 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F11F6E13FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 20:22:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F6226E1417
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 20:25:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbjDMSWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 14:22:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48096 "EHLO
+        id S229611AbjDMSZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 14:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbjDMSWU (ORCPT
+        with ESMTP id S229597AbjDMSZf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 14:22:20 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60664680;
-        Thu, 13 Apr 2023 11:22:18 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 68387640B2;
-        Thu, 13 Apr 2023 18:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191A2C433EF;
-        Thu, 13 Apr 2023 18:22:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1681410137;
-        bh=Hd8IcoblSRP4QvKpc1PPwu3BTSDjkQ2bWVKjm6hZBm8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fr5pupMj7IiONRvpaQeU1jNbceEGxtjzHL8SUM3oXDDXV+76SrmSVxyLmms1eUbop
-         9MY+KsqEbnMAiQGkZTJQhFU3rVs1feiVwoCGcThSvuV4C1k8uM/nUPRYDuBqJO2y3c
-         Th6fu034Y2iZ0MfIqoYomL2m3Ot8VSsUHSXKCQps=
-Date:   Thu, 13 Apr 2023 20:22:14 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     John Moon <quic_johmoo@quicinc.com>
-Cc:     Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Nicolas Schier <nicolas@fjasle.eu>,
-        linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Todd Kjos <tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida <gprocida@google.com>,
-        kernel-team@android.com, libabigail@sourceware.org,
-        Jordan Crouse <jorcrous@amazon.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Guru Das Srinagesh <quic_gurus@quicinc.com>
-Subject: Re: [PATCH v5 1/2] check-uapi: Introduce check-uapi.sh
-Message-ID: <2023041322-stopwatch-ungraded-a08b@gregkh>
-References: <20230407203456.27141-2-quic_johmoo@quicinc.com>
- <CAK7LNAQQmoyUx+0Jk3c7iqY20KokrHEOPwHNb2doZOOA8RWBDA@mail.gmail.com>
- <2023041015-lunar-dandelion-1b4e@gregkh>
- <ae44540f-8947-8efb-fb8d-45a84bd3fef3@quicinc.com>
- <2023041136-donator-faceplate-5f91@gregkh>
- <bcdcee9b-f213-bc3c-d300-92a1e0138187@quicinc.com>
- <2023041209-armed-overlaid-3d3d@gregkh>
- <d34a6b09-8244-49e2-2d7a-eee5fd5ca5b7@quicinc.com>
- <2023041216-antitoxic-finch-dd14@gregkh>
- <dc2f4e9d-2e7e-a4af-5513-1d25eaba40a8@quicinc.com>
+        Thu, 13 Apr 2023 14:25:35 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61E4AAF2D;
+        Thu, 13 Apr 2023 11:25:01 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id d1so475219oiw.13;
+        Thu, 13 Apr 2023 11:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681410300; x=1684002300;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IQCnllSH7dJftTfgmLw0TzuSKV0B8nJdoGs2gjaL+i4=;
+        b=N6pZLwyscFiPf1D5pZRoS9kQtl4f3jSthuAV/hFZG6acaUdKqRkNFkvrgZTfNfx18r
+         J+O0r5kreAQRSZSORRSe/stzKtT3EsIIDjlmmbl/S8771W30VZV8E6jiW1TAfJuldW6a
+         59h1TrNtv4rX+0iqkq5m4ovLHEtgkawmYFUDoVFN5jy++vLOPg8/BYthRa2r68AG9dsP
+         WPSTWvH/HHBJDR0IS/CLGuvq6oh+lZ5RA7ingTM5oHZ4/lI5M2bBHW/qhxzFxT4e8R6g
+         mjMP//s44BQBNez5b88Lq1+WyIUAZxnOuYuAJyxpeYQpalSasoSBRZEqF2T5274JwNNT
+         LoMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681410300; x=1684002300;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IQCnllSH7dJftTfgmLw0TzuSKV0B8nJdoGs2gjaL+i4=;
+        b=XgF4lfXta48STrB39x1JGi0ynZiyg0VzFtd6TtbgyW9k2hmp8pn9CkxtrXtNoOXGKk
+         16jtO443UO5GW1PhCszhFeZPHH1e/vNwGzT6asRVBjz+cy7weKrappKolsFgIgjHTa3o
+         8vz+FE8g3baL3pRAU2WvFb5sVu84lAtE9UeihAXgJx/pSKQJXLjht3vpb9eb6iIJzP21
+         QVcZzUzuNF5diKy/EumRPMM05iCTtgs9cjUOWWr9/TqwJ14NplWcBxg9rp2HOSsNgAm3
+         xe+AoxSL3ySbi7nPiuPyi6luuEScACcatFkY4ZEBSzRRjrEZdzQkh90OO90aINdHpKBf
+         xQWg==
+X-Gm-Message-State: AAQBX9ffS9u3Onw4MC95kOfqZDFcdB1p5aXgVB/aC1XMGUvgJy6+aWoG
+        +k31HmmX4bDPC1EBYgxr28ZyHh8xlHeRJ2G6PXo=
+X-Google-Smtp-Source: AKy350Z3R1cZpqQ5DUGc7rHLGwOILPl+j/ncSvFrW1UKSFd/144WTOdC049sErW5ynp2FdIklif7/8ljxSaHQE3ErZo=
+X-Received: by 2002:a05:6808:14f:b0:36e:f6f7:bb1a with SMTP id
+ h15-20020a056808014f00b0036ef6f7bb1amr862590oie.5.1681410300524; Thu, 13 Apr
+ 2023 11:25:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dc2f4e9d-2e7e-a4af-5513-1d25eaba40a8@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20230411225725.2032862-1-robdclark@gmail.com> <20230411225725.2032862-7-robdclark@gmail.com>
+ <29a8d9aa-c6ea-873f-ce0b-fb8199b13068@linux.intel.com> <CAF6AEGsZsMx+Vy+4UQSx3X7w_QNvvjLqWxx=PnCLAOC9f-X2CQ@mail.gmail.com>
+ <ZDb1phnddSne79iN@phenom.ffwll.local> <CAF6AEGvBeDVM12ac0j_PKSdcY83hNDhyrQs9-=h=dx_7AoMXLw@mail.gmail.com>
+ <ZDcEGoSPGr/oRLas@phenom.ffwll.local> <c82fd8fa-9f4b-f62f-83be-25853f9ecf5e@linux.intel.com>
+ <ZDgDQ1PqtXwu8zqA@phenom.ffwll.local> <ad8f2793-c1b3-a505-e93f-6cc52fded86d@linux.intel.com>
+In-Reply-To: <ad8f2793-c1b3-a505-e93f-6cc52fded86d@linux.intel.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 13 Apr 2023 11:24:49 -0700
+Message-ID: <CAF6AEGtTze668idO-ghyN5PHodk-f2eNc7yuhgett-LuaHLWSQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] drm: Add fdinfo memory stats
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 13, 2023 at 10:07:23AM -0700, John Moon wrote:
-> On 4/12/2023 9:43 AM, Greg Kroah-Hartman wrote:
-> > On Wed, Apr 12, 2023 at 09:37:16AM -0700, John Moon wrote:
-> > > On 4/11/2023 11:14 PM, Greg Kroah-Hartman wrote:
-> > > > > Would you find the tool more useful if it simply filtered out all instances
-> > > > > where the size of the type did not change? This would filter out the
-> > > > > following which the tool currently flags:
-> > > > > 
-> > > > > - enum expansions
-> > > > > - reserved field expansions
-> > > > > - expansions of a struct with a flex array at the end
-> > > > > - type changes
-> > > > > - re-ordering of existing members
-> > > > > - ...others?
-> > > > 
-> > > > Obviously not, as some of those are real breakages, and some are not at
-> > > > all.
-> > > > 
-> > > > Please understand what is an abi breakage.  Adding new enums is not.
-> > > > Using a reserved field is not.  Reording existing members IS.
-> > > > 
-> > > 
-> > > Yes, understood that method would miss certain classes of breakages. I was
-> > > suggesting it as a way to improve the signal-to-noise ratio of the tool
-> > > since we don't currently have an algorithm for determining breakages with
-> > > 100% accuracy.
-> > 
-> > Why not?  You know the different types of things here based on the
-> > differences between the dwarf data, and they fall into different
-> > categories, and those different categories mean different things.
-> > 
-> > If you have questions as to which type of change is allowed and which is
-> > not, just ask us, the rules are not complex, nor impossible to describe,
-> > otherwise we wouldn't have a stable api at all, right?
-> > 
-> 
-> Right, it's currently a limitation of parsing the abidiff output.
-> 
-> Even in trivial situations like an enum expansion, the tool knows that a
-> variant was added and another variant had its offset changed. There's not a
-> good way to say for sure that the variant whose offset changed is a "*_MAX"
-> variant. So if we simply ignored enum expansion, we'd miss breakages like
-> this:
-> 
-> enum foo {
-> 	FLAG_A,
-> +       FLAG_B,
-> 	FLAG_C,
-> 	FLAG_MAX
-> }
-> 
-> Maybe we can ignore an enum expansion if only the last variant's offset
-> changed, but then we'd miss cases where enums don't have a MAX variant.
-> Maybe we could limit the check to last variant's offset whose name contains
-> string "MAX", but what if someone calls it "LAST" instead? It gets fragile.
+On Thu, Apr 13, 2023 at 9:40=E2=80=AFAM Tvrtko Ursulin
+<tvrtko.ursulin@linux.intel.com> wrote:
+>
+>
+> On 13/04/2023 14:27, Daniel Vetter wrote:
+> > On Thu, Apr 13, 2023 at 01:58:34PM +0100, Tvrtko Ursulin wrote:
+> >>
+> >> On 12/04/2023 20:18, Daniel Vetter wrote:
+> >>> On Wed, Apr 12, 2023 at 11:42:07AM -0700, Rob Clark wrote:
+> >>>> On Wed, Apr 12, 2023 at 11:17=E2=80=AFAM Daniel Vetter <daniel@ffwll=
+.ch> wrote:
+> >>>>>
+> >>>>> On Wed, Apr 12, 2023 at 10:59:54AM -0700, Rob Clark wrote:
+> >>>>>> On Wed, Apr 12, 2023 at 7:42=E2=80=AFAM Tvrtko Ursulin
+> >>>>>> <tvrtko.ursulin@linux.intel.com> wrote:
+> >>>>>>>
+> >>>>>>>
+> >>>>>>> On 11/04/2023 23:56, Rob Clark wrote:
+> >>>>>>>> From: Rob Clark <robdclark@chromium.org>
+> >>>>>>>>
+> >>>>>>>> Add support to dump GEM stats to fdinfo.
+> >>>>>>>>
+> >>>>>>>> v2: Fix typos, change size units to match docs, use div_u64
+> >>>>>>>> v3: Do it in core
+> >>>>>>>>
+> >>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>>>>>>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+> >>>>>>>> ---
+> >>>>>>>>     Documentation/gpu/drm-usage-stats.rst | 21 ++++++++
+> >>>>>>>>     drivers/gpu/drm/drm_file.c            | 76 +++++++++++++++++=
+++++++++++
+> >>>>>>>>     include/drm/drm_file.h                |  1 +
+> >>>>>>>>     include/drm/drm_gem.h                 | 19 +++++++
+> >>>>>>>>     4 files changed, 117 insertions(+)
+> >>>>>>>>
+> >>>>>>>> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentati=
+on/gpu/drm-usage-stats.rst
+> >>>>>>>> index b46327356e80..b5e7802532ed 100644
+> >>>>>>>> --- a/Documentation/gpu/drm-usage-stats.rst
+> >>>>>>>> +++ b/Documentation/gpu/drm-usage-stats.rst
+> >>>>>>>> @@ -105,6 +105,27 @@ object belong to this client, in the respec=
+tive memory region.
+> >>>>>>>>     Default unit shall be bytes with optional unit specifiers of=
+ 'KiB' or 'MiB'
+> >>>>>>>>     indicating kibi- or mebi-bytes.
+> >>>>>>>>
+> >>>>>>>> +- drm-shared-memory: <uint> [KiB|MiB]
+> >>>>>>>> +
+> >>>>>>>> +The total size of buffers that are shared with another file (ie=
+. have more
+> >>>>>>>> +than a single handle).
+> >>>>>>>> +
+> >>>>>>>> +- drm-private-memory: <uint> [KiB|MiB]
+> >>>>>>>> +
+> >>>>>>>> +The total size of buffers that are not shared with another file=
+.
+> >>>>>>>> +
+> >>>>>>>> +- drm-resident-memory: <uint> [KiB|MiB]
+> >>>>>>>> +
+> >>>>>>>> +The total size of buffers that are resident in system memory.
+> >>>>>>>
+> >>>>>>> I think this naming maybe does not work best with the existing
+> >>>>>>> drm-memory-<region> keys.
+> >>>>>>
+> >>>>>> Actually, it was very deliberate not to conflict with the existing
+> >>>>>> drm-memory-<region> keys ;-)
+> >>>>>>
+> >>>>>> I wouldn't have preferred drm-memory-{active,resident,...} but it
+> >>>>>> could be mis-parsed by existing userspace so my hands were a bit t=
+ied.
+> >>>>>>
+> >>>>>>> How about introduce the concept of a memory region from the start=
+ and
+> >>>>>>> use naming similar like we do for engines?
+> >>>>>>>
+> >>>>>>> drm-memory-$CATEGORY-$REGION: ...
+> >>>>>>>
+> >>>>>>> Then we document a bunch of categories and their semantics, for i=
+nstance:
+> >>>>>>>
+> >>>>>>> 'size' - All reachable objects
+> >>>>>>> 'shared' - Subset of 'size' with handle_count > 1
+> >>>>>>> 'resident' - Objects with backing store
+> >>>>>>> 'active' - Objects in use, subset of resident
+> >>>>>>> 'purgeable' - Or inactive? Subset of resident.
+> >>>>>>>
+> >>>>>>> We keep the same semantics as with process memory accounting (if =
+I got
+> >>>>>>> it right) which could be desirable for a simplified mental model.
+> >>>>>>>
+> >>>>>>> (AMD needs to remind me of their 'drm-memory-...' keys semantics.=
+ If we
+> >>>>>>> correctly captured this in the first round it should be equivalen=
+t to
+> >>>>>>> 'resident' above. In any case we can document no category is equa=
+l to
+> >>>>>>> which category, and at most one of the two must be output.)
+> >>>>>>>
+> >>>>>>> Region names we at most partially standardize. Like we could say
+> >>>>>>> 'system' is to be used where backing store is system RAM and othe=
+rs are
+> >>>>>>> driver defined.
+> >>>>>>>
+> >>>>>>> Then discrete GPUs could emit N sets of key-values, one for each =
+memory
+> >>>>>>> region they support.
+> >>>>>>>
+> >>>>>>> I think this all also works for objects which can be migrated bet=
+ween
+> >>>>>>> memory regions. 'Size' accounts them against all regions while fo=
+r
+> >>>>>>> 'resident' they only appear in the region of their current placem=
+ent, etc.
+> >>>>>>
+> >>>>>> I'm not too sure how to rectify different memory regions with this=
+,
+> >>>>>> since drm core doesn't really know about the driver's memory regio=
+ns.
+> >>>>>> Perhaps we can go back to this being a helper and drivers with vra=
+m
+> >>>>>> just don't use the helper?  Or??
+> >>>>>
+> >>>>> I think if you flip it around to drm-$CATEGORY-memory{-$REGION}: th=
+en it
+> >>>>> all works out reasonably consistently?
+> >>>>
+> >>>> That is basically what we have now.  I could append -system to each =
+to
+> >>>> make things easier to add vram/etc (from a uabi standpoint)..
+> >>>
+> >>> What you have isn't really -system, but everything. So doesn't really=
+ make
+> >>> sense to me to mark this -system, it's only really true for integrate=
+d (if
+> >>> they don't have stolen or something like that).
+> >>>
+> >>> Also my comment was more in reply to Tvrtko's suggestion.
+> >>
+> >> Right so my proposal was drm-memory-$CATEGORY-$REGION which I think al=
+igns
+> >> with the current drm-memory-$REGION by extending, rather than creating
+> >> confusion with different order of key name components.
+> >
+> > Oh my comment was pretty much just bikeshed, in case someone creates a
+> > $REGION that other drivers use for $CATEGORY. Kinda Rob's parsing point=
+.
+> > So $CATEGORY before the -memory.
+> >
+> > Otoh I don't think that'll happen, so I guess we can go with whatever m=
+ore
+> > folks like :-) I don't really care much personally.
+>
+> Okay I missed the parsing problem.
+>
+> >> AMD currently has (among others) drm-memory-vram, which we could defin=
+e in
+> >> the spec maps to category X, if category component is not present.
+> >>
+> >> Some examples:
+> >>
+> >> drm-memory-resident-system:
+> >> drm-memory-size-lmem0:
+> >> drm-memory-active-vram:
+> >>
+> >> Etc.. I think it creates a consistent story.
+> >>
+> >> Other than this, my two I think significant opens which haven't been
+> >> addressed yet are:
+> >>
+> >> 1)
+> >>
+> >> Why do we want totals (not per region) when userspace can trivially
+> >> aggregate if they want. What is the use case?
+> >>
+> >> 2)
+> >>
+> >> Current proposal limits the value to whole objects and fixates that by
+> >> having it in the common code. If/when some driver is able to support s=
+ub-BO
+> >> granularity they will need to opt out of the common printer at which p=
+oint
+> >> it may be less churn to start with a helper rather than mid-layer. Or =
+maybe
+> >> some drivers already support this, I don't know. Given how important V=
+M BIND
+> >> is I wouldn't be surprised.
+> >
+> > I feel like for drivers using ttm we want a ttm helper which takes care=
+ of
+> > the region printing in hopefully a standard way. And that could then al=
+so
+> > take care of all kinds of of partial binding and funny rules (like mayb=
+e
+> > we want a standard vram region that addds up all the lmem regions on
+> > intel, so that all dgpu have a common vram bucket that generic tools
+> > understand?).
+>
+> First part yes, but for the second I would think we want to avoid any
+> aggregation in the kernel which can be done in userspace just as well.
+> Such total vram bucket would be pretty useless on Intel even since
+> userspace needs to be region aware to make use of all resources. It
+> could even be counter productive I think - "why am I getting out of
+> memory when half of my vram is unused!?".
+>
+> > It does mean we walk the bo list twice, but *shrug*. People have been
+> > complaining about procutils for decades, they're still horrible, I thin=
+k
+> > walking bo lists twice internally in the ttm case is going to be ok. If
+> > not, it's internals, we can change them again.
+> >
+> > Also I'd lean a lot more towards making ttm a helper and not putting th=
+at
+> > into core, exactly because it's pretty clear we'll need more flexibilit=
+y
+> > when it comes to accurate stats for multi-region drivers.
+>
+> Exactly.
 
-That's what the regexes are for, you can make them on a per-file basis,
-right?
+It could also be that the gem->status() fxn is extended to return
+_which_ pool that object is in.. but either way, we aren't painting
+ourselves into a corner
 
-> Or situations like expanding into reserved fields. How can we detect the
-> difference between this:
-> 
-> struct foo {
-> 	__u32 x;
-> 	__u32 y;
-> +       __u32 z;
-> +       __u8  padding[12];
-> -	__u8  padding[16];
-> }
-> 
-> And this:
-> 
-> struct foo {
-> 	__u32 x;
-> 	__u32 y;
-> +       __u32 z;
-> +       char  codename[4]; /* Takes "NAME" */
-> -	char  codename[8]; /* Takes "CODENAME" */
-> }
-> 
-> Maybe we grep for "pad" or "reserved", but again... fragile.
+> > But for a first "how much gpu space does this app use" across everythin=
+g I
+> > think this is a good enough starting point.
+>
+> Okay so we agree this would be better as a helper and not in the core.
+>
+> On the point are keys/semantics good enough as a starting point I am
+> still not convinced kernel should aggregate and that instead we should
+> start from day one by appending -system (or something) to Rob's proposed
+> keys.
 
-Again, regexes.
+I mean, if addition were expensive I might agree about not aggregating ;-)
 
-But if this is too fragile, then yes, it's going to be useless as those
-are obviously allowed changes and you are giving us a tool that would
-say they are forbidden.
+BR,
+-R
 
-> Another idea is to add some sort of in-line comment to give the checker a
-> hint that the field is intentionally unstable. It could be implicit for
-> "*_MAX" enum variants or "*padding" at the end of structs, but if you wanted
-> to have something like "end[]" (like in the rseq change), you could add /*
-> ABI-unstable */ next to it and the script would ignore it.
-
-The abi isn't "unstable", it's "extensible".  Those are two very
-different things.
-
-> Beyond those issues, we have non-trivial situations like when it's safe to
-> add members to a struct. We know the kernel will zero-extend mismatches
-> between kernel and userspace, but how do we know the driver properly handles
-> the case of an old userspace passing an old struct?
-
-Then flag it to make sure as the "driver" is the "kernel".
-
-> So far, we've erred on the side of flagging it if it _could_ be a break and
-> relied on the reviewer to make the final determination.
-
-But don't give us loads of "this could be broken" if it really isn't
-please.
-
-You have decades of code history to run the tool on to get these things
-worked out.  Please do so before expecting us to use it and complain
-about things it flags that are not actual breakages.
-
-In it's current form, would you use this tool if you were the maintainer
-of a subsystem?
-
-thanks,
-
-greg k-h
+> Regards,
+>
+> Tvrtko
