@@ -2,76 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C1B96E150A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 21:17:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 253DD6E154A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 21:41:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbjDMTRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 15:17:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55736 "EHLO
+        id S229733AbjDMTlR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 15:41:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229902AbjDMTRV (ORCPT
+        with ESMTP id S229622AbjDMTlQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 15:17:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E642E86A8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 12:15:58 -0700 (PDT)
+        Thu, 13 Apr 2023 15:41:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E758A47
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 12:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1681413358;
+        s=mimecast20190719; t=1681414832;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=xTgGczCO0mNwpgaEE0ax8YC4P9ZUQjVz+mrfnTw0NtY=;
-        b=HY3EpJoztDfFOaolJ940Vs7kk9o2s8euVrXVmsYu1IWQ74Ca+iNJ4d2iFAztGDE2aIY17p
-        PXQylC6ZNX8VTt+8mfH9o9FCtKC2aTi5uWzTkCaZPq5qGP5lXqteb9nKXweUl5Im59eHQ4
-        +8E1HbOtfr5UCtPmsdkwb92mV3xmQwA=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+         content-transfer-encoding:content-transfer-encoding;
+        bh=DAws+N1whAZqdp2+FmcZLsXGffvhZMy054TUXCEFTxA=;
+        b=c21UMAk5iscdghwkUGvCeUq/zkukLdfPXRkNdveNT28MbI4g3t/k18WJuZTveJMWscQcZM
+        5ph85kwSD2dwnzDqQ+o06XYbqYzv/69A0uxrfc3t0ckczQIvJnP32UuC+uIlT5WNkGWmMG
+        9AVNxC/mtSJQOF+e5t+7ZxS7Fzopy+8=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-141-yvcNUUtlNN-NhPMo__65kg-1; Thu, 13 Apr 2023 15:15:57 -0400
-X-MC-Unique: yvcNUUtlNN-NhPMo__65kg-1
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-54c17fb245dso218506197b3.21
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 12:15:55 -0700 (PDT)
+ us-mta-96-WWAup0w0M4ao5ydGEms96Q-1; Thu, 13 Apr 2023 15:40:30 -0400
+X-MC-Unique: WWAup0w0M4ao5ydGEms96Q-1
+Received: by mail-ot1-f72.google.com with SMTP id s6-20020a056830124600b006a037b882d8so3950020otp.16
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 12:40:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681413355; x=1684005355;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xTgGczCO0mNwpgaEE0ax8YC4P9ZUQjVz+mrfnTw0NtY=;
-        b=cYvaNbWdOkXFbjfsr8IYy2A4Ws4jcEFTGyNHHF4nxCuhJ85rt969g2XBTHuPmzOpYn
-         T5z6nphHbcCMgXQrRSlRIiy0tGQueUMBodgBfSQ53xYgW1Kw23SxVS4Mup/+buIKfiN8
-         iLJelN/01R/kPsx5YnK2kOJ6G0KHrSgoShHd5o5wjP1JySbGDHSSi4k/yKwZwddbdh2L
-         88+jSTf6SMiv30fSGDh0siTvzjYysYowZmjhME6Tn5chX8299Oa8rzBKFt1jCFNPffX+
-         3oRSz+apkDf1kaX75tH5sxOQmibqmYLwtxQaCgVvhGfdd7w8Akh+Ff5PEHuZFLDX0KAL
-         JAPA==
-X-Gm-Message-State: AAQBX9fbja9GvMtL8WREu99IUEZOjoaiZ3uuFwS9KNMnCI4asVHPtpLZ
-        zTNmboEevy8YIGXjwcRn4TyAvlLx/EQ+c5NF8e2LUDZuBKIPtHI+IfTnvLriKWB6BPAZ1tGsVG6
-        NaM2T3odYRt26MLbtuzJt6D05MA==
-X-Received: by 2002:a81:4810:0:b0:536:3451:b2ab with SMTP id v16-20020a814810000000b005363451b2abmr2997372ywa.51.1681413355406;
-        Thu, 13 Apr 2023 12:15:55 -0700 (PDT)
-X-Google-Smtp-Source: AKy350Z+kPXa1HPrZbBVBQ9Hvi0ho/p670nRIUBtqxHPLoBYgdWfhEUIgtsd9juVQgyaVIGCkR8Wyw==
-X-Received: by 2002:a81:4810:0:b0:536:3451:b2ab with SMTP id v16-20020a814810000000b005363451b2abmr2997349ywa.51.1681413355120;
-        Thu, 13 Apr 2023 12:15:55 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681414830; x=1684006830;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DAws+N1whAZqdp2+FmcZLsXGffvhZMy054TUXCEFTxA=;
+        b=fZwo68FTJDfsNnzgC24GlR15DHqvqi8/Iz4VNs8skCSlJyKlyCegxjNAFZYWL3vIyF
+         FkKJ6qTTi0/lIANJWONmUWL4FkGVeYrwxdlGaoYCg8Jod4hIlWTbPbBZWaDgIca9OzgS
+         RlqGz4ga6BzQAokvVL9+Eod2NJ0md8wNBkuMpE/xZoltvGJQ+Gcyylj8CeAPAdFnmbwD
+         4NWpnu1KhuIQcZYvzIKqjHNd8k+Yxb7KBESV+T/3XqRxNrZXfu7drnkBnWuMpcsXXb3q
+         y/tiFA7rWqX9NehAyUWvjfjSWbjJ2Jk6wKlndkJKUQXSlQ8eEmfT+57UJyzF1AO+DTw2
+         dLBw==
+X-Gm-Message-State: AAQBX9e2gKMMhdNu85GOzXXHpVfbBCy2wXsx9QAEkRyIWT0kmiYZ/7m3
+        Ao3Weo64rxq5LyugGQlDLXUtygGN0ZgaiKFuFTKc5hh1knB0z87I2NnTrIn7NzBLE+Dkat6821v
+        760P0GnuafHEnpGSeYAZQgw0d/g==
+X-Received: by 2002:a05:6808:49:b0:387:3324:29c6 with SMTP id v9-20020a056808004900b00387332429c6mr1720496oic.30.1681414830168;
+        Thu, 13 Apr 2023 12:40:30 -0700 (PDT)
+X-Google-Smtp-Source: AKy350bFJPcabd2xer93D43uqwTOnEY7fzuGU+iChbHVBOp+gryFxy/XPCdtzRuuHoUgy+wpwDOzRg==
+X-Received: by 2002:a05:6808:49:b0:387:3324:29c6 with SMTP id v9-20020a056808004900b00387332429c6mr1720483oic.30.1681414829849;
+        Thu, 13 Apr 2023 12:40:29 -0700 (PDT)
 Received: from halaney-x13s.redhat.com (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id t11-20020a81780b000000b00545a4ec318dsm673203ywc.13.2023.04.13.12.15.54
+        by smtp.gmail.com with ESMTPSA id x19-20020a056808145300b003898bec0e01sm966140oiv.17.2023.04.13.12.40.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 12:15:54 -0700 (PDT)
+        Thu, 13 Apr 2023 12:40:29 -0700 (PDT)
 From:   Andrew Halaney <ahalaney@redhat.com>
 To:     linux-kernel@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        richardcochran@gmail.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        netdev@vger.kernel.org, bmasney@redhat.com, echanude@redhat.com,
-        ncai@quicinc.com, jsuraj@qti.qualcomm.com, hisunil@quicinc.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH v5 3/3] arm64: dts: qcom: sa8540p-ride: Add ethernet nodes
-Date:   Thu, 13 Apr 2023 14:15:41 -0500
-Message-Id: <20230413191541.1073027-4-ahalaney@redhat.com>
+Subject: [PATCH v2 1/3] arm64: dts: qcom: sa8155p-adp: Make compatible the first property
+Date:   Thu, 13 Apr 2023 14:40:18 -0500
+Message-Id: <20230413194020.1077857-1-ahalaney@redhat.com>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230413191541.1073027-1-ahalaney@redhat.com>
-References: <20230413191541.1073027-1-ahalaney@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -85,249 +78,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable both the MACs found on the board.
+As stated at the below link in another review, compatible is always the
+first property.
 
-ethernet0 and ethernet1 both ultimately go to a series of on board
-switches which aren't managed by this processor.
+Follow suit here to avoid copying incorrectly in the future.
 
-ethernet0 is connected to a Marvell 88EA1512 phy via RGMII. That goes to
-the series of switches via SGMII on the "media" side of the phy.
-RGMII_SGMII mode is enabled via devicetree register descriptions.
-The switch on the "media" side has auto-negotiation disabled, so
-configuration from userspace similar to:
-
-        ethtool -s eth0 autoneg off speed 1000 duplex full
-
-is necessary to get traffic flowing on that interface.
-
-ethernet1 is in a mac2mac/fixed-link configuration going to the same
-series of switches directly via RGMII.
-
-Tested-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/netdev/20230331215804.783439-1-ahalaney@redhat.com/T/#ma76b4116bbb9e49ee4bcf699e40935d80965b3f3
 Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
 ---
 
-This patch is why there's a v5, I couldn't ignore the needless
-interrupts-parent Konrad pointed out in the sa8155-adp.dts over at:
-https://lore.kernel.org/linux-arm-msm/88d41729-86be-95cb-2fda-1b809f07ed6b@linaro.org/
-
-Changes since v4:
-    * Remove needless interrupt-parent (Konrad)
-    * Add Tested-by (Brian)
-
-Changes since v3:
-    * Compatible goes first in node (Krzysztof)
-
-Changes since v1 and v2:
+Changes since v1:
     * None
 
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 179 ++++++++++++++++++++++
- 1 file changed, 179 insertions(+)
+ arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 40db5aa0803c..650cd54f418e 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -28,6 +28,65 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <1>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x1>;
-+			snps,route-ptp;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x2>;
-+			snps,route-avcp;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,map-to-dma-channel = <0x3>;
-+			snps,priority = <0xc>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <1>;
-+		snps,tx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue1 {
-+			snps,dcb-algorithm;
-+		};
-+
-+		queue2 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+
-+		queue3 {
-+			snps,avb-algorithm;
-+			snps,send_slope = <0x1000>;
-+			snps,idle_slope = <0x1000>;
-+			snps,high_credit = <0x3e800>;
-+			snps,low_credit = <0xffc18000>;
-+		};
-+	};
- };
+diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+index 339fea522509..029b23198b3a 100644
+--- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
++++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
+@@ -352,19 +352,18 @@ &ethernet {
+ 	max-speed = <1000>;
  
- &apps_rsc {
-@@ -151,6 +210,66 @@ vreg_l8g: ldo8 {
- 	};
- };
- 
-+&ethernet0 {
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+
-+	max-speed = <1000>;
-+	phy-handle = <&rgmii_phy>;
-+	phy-mode = "rgmii-txid";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&ethernet0_default>;
-+
-+	status = "okay";
-+
-+	mdio {
+ 	mdio {
 +		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		/* Marvell 88EA1512 */
-+		rgmii_phy: phy@8 {
-+			reg = <0x8>;
-+
-+			interrupts-extended = <&tlmm 127 IRQ_TYPE_EDGE_FALLING>;
-+
-+			reset-gpios = <&pmm8540c_gpios 1 GPIO_ACTIVE_LOW>;
-+			reset-assert-us = <11000>;
-+			reset-deassert-us = <70000>;
-+
-+			device_type = "ethernet-phy";
-+
-+			/* Set to RGMII_SGMII mode and soft reset. Turn off auto-negotiation
-+			 * from userspace to talk to the switch on the SGMII side of things
-+			 */
-+			marvell,reg-init =
-+				/* Set MODE[2:0] to RGMII_SGMII */
-+				<0x12 0x14 0xfff8 0x4>,
-+				/* Soft reset required after changing MODE[2:0] */
-+				<0x12 0x14 0x7fff 0x8000>;
-+		};
-+	};
-+};
-+
-+&ethernet1 {
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+
-+	max-speed = <1000>;
-+	phy-mode = "rgmii-txid";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&ethernet1_default>;
-+
-+	status = "okay";
-+
-+	fixed-link {
-+		speed = <1000>;
-+		full-duplex;
-+	};
-+};
-+
- &i2c0 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c0_default>;
-@@ -316,6 +435,66 @@ &xo_board_clk {
- /* PINCTRL */
+ 		#address-cells = <0x1>;
+ 		#size-cells = <0x0>;
  
- &tlmm {
-+	ethernet0_default: ethernet0-default-state {
-+		mdc-pins {
-+			pins = "gpio175";
-+			function = "rgmii_0";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		mdio-pins {
-+			pins = "gpio176";
-+			function = "rgmii_0";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		rgmii-tx-pins {
-+			pins = "gpio183", "gpio184", "gpio185", "gpio186", "gpio187", "gpio188";
-+			function = "rgmii_0";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		rgmii-rx-pins {
-+			pins = "gpio177", "gpio178", "gpio179", "gpio180", "gpio181", "gpio182";
-+			function = "rgmii_0";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
-+	ethernet1_default: ethernet1-default-state {
-+		mdc-pins {
-+			pins = "gpio97";
-+			function = "rgmii_1";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		mdio-pins {
-+			pins = "gpio98";
-+			function = "rgmii_1";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		rgmii-tx-pins {
-+			pins = "gpio105", "gpio106", "gpio107", "gpio108", "gpio109", "gpio110";
-+			function = "rgmii_1";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		rgmii-rx-pins {
-+			pins = "gpio99", "gpio100", "gpio101", "gpio102", "gpio103", "gpio104";
-+			function = "rgmii_1";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
- 	i2c0_default: i2c0-default-state {
- 		/* To USB7002T-I/KDXVA0 USB hub (SIP1 only) */
- 		pins = "gpio135", "gpio136";
+-		compatible = "snps,dwmac-mdio";
+-
+ 		/* Micrel KSZ9031RNZ PHY */
+ 		rgmii_phy: phy@7 {
++			compatible = "ethernet-phy-ieee802.3-c22";
+ 			reg = <0x7>;
+ 
+ 			interrupt-parent = <&tlmm>;
+ 			interrupts-extended = <&tlmm 124 IRQ_TYPE_EDGE_FALLING>; /* phy intr */
+ 			device_type = "ethernet-phy";
+-			compatible = "ethernet-phy-ieee802.3-c22";
+ 		};
+ 	};
+ };
 -- 
 2.39.2
 
