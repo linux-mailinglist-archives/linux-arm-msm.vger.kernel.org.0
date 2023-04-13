@@ -2,149 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EA746E0342
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 02:37:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 956E16E05DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 06:18:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjDMAhp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 12 Apr 2023 20:37:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43158 "EHLO
+        id S230183AbjDMER6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 00:17:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbjDMAho (ORCPT
+        with ESMTP id S230137AbjDMERX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 12 Apr 2023 20:37:44 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE59F4EC5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 17:37:42 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 26so256082lfq.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 12 Apr 2023 17:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681346261; x=1683938261;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5mkrhtaW8RsYbUQ5f7IhajN13a1zUBEoHVYcCAD4lt8=;
-        b=YAUQK6Uqc8xFn1mrCRoO2XRW2ReAsqji5eNZL0FBpz14vLPT6uViBgrDcVLKB7vCK9
-         qzZlBuNR9hs3yTwEdetkHvjy+0ge7awJERq9xpbZJx9asVdjnHEmhlYQpxQLXcV1+VOk
-         7U1rzfEl+cf5VuOKQARmoeUL0W3olCbQs/Ln0iJMsOyUyj2glO2REK42MwMrk6dfheOb
-         begKYhC0/wIQVs9nVImUHblAxR8c9n4SZS3RrVC+QDtnWmdJzjOqBDn/uYOuMzw8u9EA
-         nKV8/TR26Wcslx2+BnRFy66bRrccNZxgQSCcOwb6Cqgbr/IWV2QagXei2xcOXcehByE+
-         zPCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681346261; x=1683938261;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5mkrhtaW8RsYbUQ5f7IhajN13a1zUBEoHVYcCAD4lt8=;
-        b=H324KdOjNvcE/AqANixppYfYB+8oCQf7O7U1M6Do6uwzYr7m6DJIG14Ze8R9WFw8Ca
-         SBKoviw8N3KAX5Kg8M8qsYpP+OyiBbzZdRuJKcNtcgTTJ6ClBP8Tqa3VP8dtR902HSCz
-         2uFT3Fb83B6u6XwA7xeGQStIw9DdPxHODc3Ba392RFWs1Q6fvm3k4uGO0LWunFKsSnUA
-         b+pqpNEJFjDtSt20U20YJjViSodtpTNwQwKC3tlzckgQNchMcNsyPj6AMYIhp+ypY+Ri
-         S8PYxyolq+okO+whdUH/CjrImPcLNMsp1C+uZRuKZJ5M7U7NQJWvegW6SGovCo+x+dE1
-         dLjg==
-X-Gm-Message-State: AAQBX9cNclF1p7MvOqDgeKYL8pbKJ7HF+C/vawFD6xg9KfEPwSQfOj0A
-        dVoD0/TB11qyff4YGT6eRL1uQw==
-X-Google-Smtp-Source: AKy350Y3SDVjMmc9PlqIlyeh9f7wZCt13CLFaobUPByq17P4fvjyFCNsXA94jtRMwT1S0VjCVanJ5Q==
-X-Received: by 2002:ac2:5228:0:b0:4dc:828f:ef97 with SMTP id i8-20020ac25228000000b004dc828fef97mr236444lfl.60.1681346261169;
-        Wed, 12 Apr 2023 17:37:41 -0700 (PDT)
-Received: from [192.168.1.101] (abxj23.neoplus.adsl.tpnet.pl. [83.9.3.23])
-        by smtp.gmail.com with ESMTPSA id u6-20020ac243c6000000b004e7fa99f2b5sm48280lfl.186.2023.04.12.17.37.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 17:37:40 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Thu, 13 Apr 2023 02:37:36 +0200
-Subject: [PATCH] arm64: dts: qcom: msm8996-tone: Enable LPG LEDs
-MIME-Version: 1.0
+        Thu, 13 Apr 2023 00:17:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3E6172C;
+        Wed, 12 Apr 2023 21:15:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EDB5963439;
+        Thu, 13 Apr 2023 04:15:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1C6C4339B;
+        Thu, 13 Apr 2023 04:15:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681359341;
+        bh=BmvSeStlY/3OFiQagQGoFed7dwR+A0UXBFPAOqd2MKE=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=JKK8FIPWTcONpK0kcAc1QD4p15wfvOgd0AKViIdWnl58ICoojmTPqU7gR0hgmw13h
+         byVx5WhdchdVQRvg4IhdZsQ2CAzBWKWKNUVw3x8Bokl+3qDhimaUntwxOoH5XVAaf7
+         jdzd2Sw348lkVTnzNxhyhJDgG2KY5h4B9owSJZgjsttVKdsjYqJrVWx1sDQYmp0d/o
+         lhw0YzSPX7mHtRHhY5A/oTwwDqjHdKHjGUQrWnFLtWWQekNKNbq/MqHr+xTM6Snd4e
+         YMm8ovBlGHMjoy3imd7EAZ3DqiBGb8YXS0e8htDa9mfmk/nvoo5GOOVtvuWFHVdyqy
+         +lefBsX3rS9UQ==
+Message-ID: <8c774af24fa89d44924998064a996a2c.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230413-tone_led-v1-1-bc3c73393bfa@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAM9ON2QC/x2M0QpAQBBFf0XzbGuXRfkVSWsNprahXaTk300ez
- +3c80DCSJigzR6IeFGijQVMnoFfHS+oaBKGQheltqZUx8Y4BJxUbetqtkYb31Qg+ugSqjE69qs
- c+AxBxj3iTPff7/r3/QCzjKCXbwAAAA==
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681346259; l=1516;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=MrJT4mj6R582Z5U+PgPBwlwFZ2TPZnZ9vzzkyNUYHv0=;
- b=cbCGz68G8gQkNon6eTKu+JtLpOInN4sNKXzNSIhMtiBml/aps00bbZ+x/qwArs9VUZJbaz29BwgF
- oXYQXPgUBHP+kppjID6BqfQpOfUtOGKf0q+KO5T81/wxz7DTgTft
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1671601032-18397-2-git-send-email-quic_jprakash@quicinc.com>
+References: <1671601032-18397-1-git-send-email-quic_jprakash@quicinc.com> <1671601032-18397-2-git-send-email-quic_jprakash@quicinc.com>
+Subject: Re: [PATCH] spmi: Add a check for remove callback when removing a SPMI driver
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
+        Jishnu Prakash <quic_jprakash@quicinc.com>
+To:     Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
+        devicetree@vger.kernel.org, gregkh@linuxfoundation.org,
+        linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+        quic_collinsd@quicinc.com, quic_kamalw@quicinc.com,
+        quic_subbaram@quicinc.com, robh+dt@kernel.org
+Date:   Wed, 12 Apr 2023 21:15:39 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the notification LED(s) wired up to the PMI8994(6) LPG.
+Quoting Jishnu Prakash (2022-12-20 21:37:12)
+> When removing a SPMI driver, there can be a crash due to NULL pointer
+> dereference if it does not have a remove callback defined. This is
+> one such call trace observed when removing the QCOM SPMI PMIC driver:
+>=20
+>  dump_backtrace.cfi_jt+0x0/0x8
+>  dump_stack_lvl+0xd8/0x16c
+>  panic+0x188/0x498
+>  __cfi_slowpath+0x0/0x214
+>  __cfi_slowpath+0x1dc/0x214
+>  spmi_drv_remove+0x16c/0x1e0
+>  device_release_driver_internal+0x468/0x79c
+>  driver_detach+0x11c/0x1a0
+>  bus_remove_driver+0xc4/0x124
+>  driver_unregister+0x58/0x84
+>  cleanup_module+0x1c/0xc24 [qcom_spmi_pmic]
+>  __do_sys_delete_module+0x3ec/0x53c
+>  __arm64_sys_delete_module+0x18/0x28
+>  el0_svc_common+0xdc/0x294
+>  el0_svc+0x38/0x9c
+>  el0_sync_handler+0x8c/0xf0
+>  el0_sync+0x1b4/0x1c0
+>=20
+> If a driver has all its resources allocated through devm_() APIs and
+> does not need any other explicit cleanup, it would not require a
+> remove callback to be defined. Hence, add a check for remove callback
+> presence before calling it when removing a SPMI driver.
+>=20
+> Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+> ---
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- .../boot/dts/qcom/msm8996-sony-xperia-tone.dtsi    | 29 ++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index 7f4d493a55ff..b4b770a9277d 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -11,6 +11,7 @@
- #include "pmi8996.dtsi"
- #include <dt-bindings/input/input.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
- 
-@@ -605,6 +606,34 @@ pm8994_s11: s11 {
- 	};
- };
- 
-+&pmi8994_lpg {
-+	qcom,power-source = <1>;
-+	status = "okay";
-+
-+	multi-led {
-+		color = <LED_COLOR_ID_RGB>;
-+		function = LED_FUNCTION_STATUS;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@1 {
-+			reg = <1>;
-+			color = <LED_COLOR_ID_BLUE>;
-+		};
-+
-+		led@2 {
-+			reg = <2>;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+
-+		led@3 {
-+			reg = <3>;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+	};
-+};
-+
- &pmi8994_spmi_regulators {
- 	vdd_gfx:
- 	pmi8994_s2: s2 {
-
----
-base-commit: 7d8214bba44c1aa6a75921a09a691945d26a8d43
-change-id: 20230413-tone_led-6465f4101c75
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Applied to spmi-next
