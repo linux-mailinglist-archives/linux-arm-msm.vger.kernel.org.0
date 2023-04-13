@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F91A6E0E47
+	by mail.lfdr.de (Postfix) with ESMTP id E32666E0E49
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 15:17:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbjDMNRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230096AbjDMNRW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 13 Apr 2023 09:17:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46658 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230387AbjDMNRU (ORCPT
+        with ESMTP id S230393AbjDMNRV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 09:17:20 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D71E0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 06:17:18 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id v20-20020a05600c471400b003ed8826253aso3759292wmo.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 06:17:18 -0700 (PDT)
+        Thu, 13 Apr 2023 09:17:21 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F62188
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 06:17:19 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id v10so1828790wmn.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 06:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1681391836; x=1683983836;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sor1o3lgx6pN6vl67a8PWbhrfGi3/hG81XlEFkcdfb0=;
-        b=Iqwvyv8WgfS/XE0vS+/Khekvvz+atOqobe2B05VzD6c9V4XTNqYTbaNPLU3uSae11V
-         x/vfpDhzg4pbnQmphl9Lo73JAQtNAb/rrjG7Js2FZK9kK7hHicKU3pP26s1qDEy31l2m
-         rl8UQ6wvZbhIDbrwgAA2tMLt5GVhLqA92Wh0fbBZ4s7NJFhUKI53q9uspaR5VdQx3xI9
-         7CPiD/EuATButGBOdaWftY9nx0sfXsGTuGZ756GXuSyYNNpgAVerskDcVbTXmV53Mv7W
-         F5uXlKEUbp5leKPi7slJbHbakGYxBa6cPZkcnwnwovHE0Zwy3NG+NkhOodwahqn497an
-         ZxEQ==
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1681391837; x=1683983837;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aESHnUR1O/61n5/lfPsi3I+Fy8BChJQIQxTnoiWBoZM=;
+        b=NPDKRqRhXu9gB7ad0+HipO+LO7EdyiPdFBX+cbn+ldIWVtVPPCcFpHknPNruo3Ieh8
+         8jDqsJFjadsfs1LNgvOtQGADuxSTFi75F70ITZ1dh3zd6WvL1bCQIAH88bqfvzsCG5CW
+         N/7uV3cxhXayOT7o225y4swYx/6OnLovSNig3tRePA9Bry8EVc59XaKjpeWQQgrWUWAC
+         JREEs84Lh0H8EYlccci+RqxNyDumE/veGS6XuRwDAgT7mlf55btS9Jhw+l8TnnYjK0xb
+         w2VUds0UzqLNlmWJwEmUzDLhNicsRolmmeKucRXMF+uONI/6xJwi/nf5EZWA5UdQSimO
+         1lGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681391836; x=1683983836;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Sor1o3lgx6pN6vl67a8PWbhrfGi3/hG81XlEFkcdfb0=;
-        b=KIbPUY+35Tvk5wcEqrq6a8NmOH9wA2KdgRpe+/aqvgg28R1GmlLmnsFu8f/CDLBSyj
-         BA73Dtt2upbTPnxqb1hC7w3pqyH8yoPvbxK7q0TAzvz0UF/0yrDnvIokVQx+wMJjWbjT
-         ZPPr5L91V6yeQAQtALsMSFJYuO+/x3drC0sM4fxdhvQkUiRNor2Q2C/MeB3ZP8zU8QM2
-         feTP+xp0wBCWv8WYZr/FrXrYolW1Uv8s74h+48ov44aYJf/hUO5wwZWeMrnD13Wp0EG/
-         rJwDvsjuHYw32cckatG1khe145p8KPOhPQBJp0mGM+VXS90u/Gn+wV2Gi4HD+E3sPC69
-         OR/w==
-X-Gm-Message-State: AAQBX9crDOksyNYxE2W9fVa/lQyIP9QywAxmxT1ttlEYuPWlB7VV9AYI
-        PFcj77tMeVKsE6CpWGKLNvdUKg==
-X-Google-Smtp-Source: AKy350bORanD31k3svyLmAj37J/UJ696aFUbqm7fguFemtr0h+CoOf62HMopl4I8dSifRLvkiQBx7A==
-X-Received: by 2002:a7b:c8d4:0:b0:3ef:6aa1:9284 with SMTP id f20-20020a7bc8d4000000b003ef6aa19284mr1729418wml.29.1681391836605;
-        Thu, 13 Apr 2023 06:17:16 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681391837; x=1683983837;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aESHnUR1O/61n5/lfPsi3I+Fy8BChJQIQxTnoiWBoZM=;
+        b=lfoUFp/TbvmVHkhcJKuoIHP326WDQSVle2VJtuzcDeJdPgl4Bik1KC9MhElzxXj2pE
+         D/LirctlwFp4qLWRReE4Fsmv6X8SYAuauhVCdvITg/s21b5Jfzl6YIXzzRhPr7yaocQx
+         NU81ceFuuKPfqXfomY2T6UodTQ6dkm06d4rxTwEsoZZRp+pA7rwuikzbyH+6fGy5BPuY
+         8UCdjsYZpn1JMDeGSV6fVulInJ1Zr/V0AxAPyvwDh9T/RyaVOwcdwWiXCdKRZU88eGCU
+         t/LahQQmkmBh54yNagwBAD0NyJG79as2Jqcdklkfm6mh+7UJXkEvLAaBVAK8ajKpGPwo
+         f67Q==
+X-Gm-Message-State: AAQBX9f2DWhqKnf10BI7tn4Wibx83YiIDG6cHVBYUMCthtPqFn92uj7T
+        FN+48BBZCNJtu0mL7PwaoRjVrw==
+X-Google-Smtp-Source: AKy350bvrROxb1ZoO3jmn2mMCqa7Z7IQXD6ThE4Um58m/oLTMv+a7KPxPlbwn775JAYUjIu/cBs62g==
+X-Received: by 2002:a7b:c7cd:0:b0:3ed:a82d:dffb with SMTP id z13-20020a7bc7cd000000b003eda82ddffbmr1778585wmk.40.1681391837607;
+        Thu, 13 Apr 2023 06:17:17 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:814c:fc8a:da02:39ad])
-        by smtp.gmail.com with ESMTPSA id v3-20020a1cf703000000b003f04646838esm1796400wmh.39.2023.04.13.06.17.15
+        by smtp.gmail.com with ESMTPSA id v3-20020a1cf703000000b003f04646838esm1796400wmh.39.2023.04.13.06.17.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 06:17:16 -0700 (PDT)
+        Thu, 13 Apr 2023 06:17:17 -0700 (PDT)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Sebastian Reichel <sre@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -61,11 +62,14 @@ To:     Sebastian Reichel <sre@kernel.org>,
 Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 0/4] arm64: qcom: fix the reboot reason handling on sa8775p
-Date:   Thu, 13 Apr 2023 15:17:01 +0200
-Message-Id: <20230413131705.3073911-1-brgl@bgdev.pl>
+Subject: [PATCH 1/4] arm64: dts: qcom: sa8775p: pmic: remove the PON modes
+Date:   Thu, 13 Apr 2023 15:17:02 +0200
+Message-Id: <20230413131705.3073911-2-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20230413131705.3073911-1-brgl@bgdev.pl>
+References: <20230413131705.3073911-1-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -77,29 +81,31 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Parikshit Pareek <quic_ppareek@quicinc.com>
 
-SA8775P uses nvmem to pass the reboot reason magic value to the bootloader.
-Remove the reboot modes from the PON node and introduce an SDAM node passed
-to the nvmem-reboot-mode driver. While at it: convert the bindings for
-nvmem-reboot-mode to YAML and enable it for arm64 in defconfig.
+Remove the power on reasons with reboot from the pmm8654au_0_pon.
+Instead, the PoN reaons should be part of different sdam_0 mode, to
+be interoduced.
 
-Bartosz Golaszewski (2):
-  arm64: defconfig: enable building the nvmem-reboot-mode module
-  dt-bindings: power: reset: convert nvmem-reboot-mode bindings to YAML
+Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-Parikshit Pareek (2):
-  arm64: dts: qcom: sa8775p: pmic: remove the PON modes
-  arm64: dts: qcom: sa8775p: pmic: add the sdam_0 node
-
- .../power/reset/nvmem-reboot-mode.txt         | 26 ----------
- .../power/reset/nvmem-reboot-mode.yaml        | 52 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi   | 23 +++++++-
- arch/arm64/configs/defconfig                  |  1 +
- 4 files changed, 74 insertions(+), 28 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.txt
- create mode 100644 Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+index 7602cca47bae..5abdc239d3a6 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+@@ -108,8 +108,6 @@ pmm8654au_0_pon: pon@1200 {
+ 			compatible = "qcom,pmk8350-pon";
+ 			reg = <0x1200>, <0x800>;
+ 			reg-names = "hlos", "pbs";
+-			mode-recovery = <0x1>;
+-			mode-bootloader = <0x2>;
+ 
+ 			pmm8654au_0_pon_pwrkey: pwrkey {
+ 				compatible = "qcom,pmk8350-pwrkey";
 -- 
 2.37.2
 
