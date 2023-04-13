@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B64B56E0950
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 10:50:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D77056E0960
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 13 Apr 2023 10:53:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbjDMIuk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 04:50:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46450 "EHLO
+        id S229870AbjDMIxh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 04:53:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbjDMIuj (ORCPT
+        with ESMTP id S230017AbjDMIxU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 04:50:39 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2450F8A64
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:50:37 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5055141a8fdso777953a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:50:36 -0700 (PDT)
+        Thu, 13 Apr 2023 04:53:20 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8653A93E2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:53:10 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id z9so8570589ejx.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 13 Apr 2023 01:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681375835; x=1683967835;
+        d=linaro.org; s=google; t=1681375989; x=1683967989;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=L6mAVmlSqBlK97GI+OBS2IQeOpH152LcbvquHB//CeQ=;
-        b=qBQKxSkg0B1ny6AKrI2JM4J00sV4tr5wSjLIsSLHqWeQQNThrxkz1/uKK/G9InUVv3
-         Mo9x25u7mcDVhg5j0KTpldXUooJrhuQMu9fWJRuU1TabACrIJAyhQc5mVRnL7X5Uoitm
-         P9QyyIG+y7m4LQKs9IOqTgK0s32MG7zK+bjkVAkIMlsuoZysL2zZJ69/62SRFxPsLe72
-         0574RRl69Mu0UlKDgx2dWy8U4pPdqpvFPrOZMnsDNhnHhbvg+ejuzIkwlo7RD98E1Zuy
-         guBIsYHfrix5W5BmScoNRt33NO+lBOC12YQofsDel11ibeE2tf9AlvIOe1YTH7tB32Q2
-         Olow==
+        bh=3H24zP1L7tYYlCqcIbWQTBu/s9gcRQK5v7kIq+g891I=;
+        b=KICwgJX+Xasyma77ZsxbeSnEzglwgFHu4leJC6Q3s8sWKcXe+OofACslEldiD6kYnk
+         Uk/S4fK55NeQMGpZSU5rjisgBKz2TvsOc+DHlm0wGHBMjBxBCWHI3JMx9bzFZBMKMVze
+         ZByORwbDqqjJdRf5ivFzZ4YV+4UtoNrmJEeDuevfmU454EZ1DIBU5w45RjYISe3CA9kd
+         DbWcs2scsLHKfAJ7x4503MKzzC9h50CnBFgN/y0e5MXp4arvvwcpLWnZ8f/3Elgc8rE+
+         uol62orUHmgKVajfoIyRuDToECRDEMrhWxRhhvYKeTOeElWEmjfBN500oIukkhymkzvH
+         9/1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681375835; x=1683967835;
+        d=1e100.net; s=20221208; t=1681375989; x=1683967989;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6mAVmlSqBlK97GI+OBS2IQeOpH152LcbvquHB//CeQ=;
-        b=K7uXGwN7xqbD9jVDxEAeoAEP01PBbUmNXN0DQAG+mnP5lFWllAG/5JkjK+HHc9D1bM
-         Qh/b9vyQQY0EuiqD8VGyaKo2EZ9QnZOYHCOnFKHAtkXlNDHuX0L+/9KXAAR7Xj+sNavV
-         qtl+IVqMXsWg8VefZ+p1iXgU74i3PKRpLLrqQjuwooqPZssxKfaEEanIDbuRQeY4dSO6
-         EztxsY3inNFXIr4d05421Mbb00Fg+m/OL36mU0klTql7bFNlO8F0Zq/PaOqeywj9tgK1
-         va5YMNZ+1oyHHNXJ6YvIwSB5+raolhn7TmjruE6fbQiOE3DseQV5nKZtKF+ia1xvgnEN
-         vCLQ==
-X-Gm-Message-State: AAQBX9evDCRGCV8cijvV2U+Sp+tOHiJKZITo97LSQ3p4WTs6sZ9+Y0ET
-        So24pcgym1LmJJVuiJNTg5s2Lw==
-X-Google-Smtp-Source: AKy350ams2Rhgtj5ld9eUc37t1b+SyClKLb5d8tFO/xWnlQN/71bN5uirU2rOp0PEk4y8rjT+Aca6A==
-X-Received: by 2002:aa7:d74d:0:b0:4fb:aa0a:5b72 with SMTP id a13-20020aa7d74d000000b004fbaa0a5b72mr1546251eds.5.1681375835504;
-        Thu, 13 Apr 2023 01:50:35 -0700 (PDT)
+        bh=3H24zP1L7tYYlCqcIbWQTBu/s9gcRQK5v7kIq+g891I=;
+        b=YcGnglCiw8cH39kdr3LT+7dn78V1lSEqdVM+ROgaUqXYW7ANrMRrhykDwrt8CnMcMO
+         z+Qq0VsOgWEqm9Cen0VMgGPM9ZsmrY9wZjL6rblTe+t5g6hCUZSlNGbAeeawgT1lQP0T
+         hlzflLndgCvYIJ+W4QZuFww/GgNqMFIlJI4OwSQjB72fahrwx4/nDMf0BopIy4vlLwxR
+         DaIy3zAa9u5P04YQn2b34hrvzChSoaSb1SfPmGhJ0KvZIebh8pVh19KC62wOzXLpUVao
+         Q9r9PmkU0pZQfqeFOKK5WJ9N/1qykbrtpadkg2K3BvnhtKlzfYwH5UlQnepkAmo+M5SW
+         nRDA==
+X-Gm-Message-State: AAQBX9cl2QeM5tQu/OJQFpm/kJi7+KkU01uBDTv5FqwWZAQid4C1N/S7
+        rgkQCr54w/BXUsdRJq4zt07nlA==
+X-Google-Smtp-Source: AKy350bssJsTsK6f959IfKKZln3Gn31vb5WyeZyv4Fiyd5jiVWOkRLggleMzrk2N2+UqGDJiCAHdxA==
+X-Received: by 2002:a17:907:1b1b:b0:94e:4fac:d92b with SMTP id mp27-20020a1709071b1b00b0094e4facd92bmr2018234ejc.58.1681375989020;
+        Thu, 13 Apr 2023 01:53:09 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:ec6f:1b33:ab3f:bfd7? ([2a02:810d:15c0:828:ec6f:1b33:ab3f:bfd7])
-        by smtp.gmail.com with ESMTPSA id v15-20020aa7dbcf000000b00501d51c23fbsm555672edt.6.2023.04.13.01.50.34
+        by smtp.gmail.com with ESMTPSA id gy18-20020a170906f25200b008ec4333fd65sm637573ejb.188.2023.04.13.01.53.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Apr 2023 01:50:34 -0700 (PDT)
-Message-ID: <6a9b1c25-2e17-a657-3a58-b2ff8d1c86d7@linaro.org>
-Date:   Thu, 13 Apr 2023 10:50:33 +0200
+        Thu, 13 Apr 2023 01:53:08 -0700 (PDT)
+Message-ID: <a84b11c7-c49d-6859-cdd7-16b4d37489df@linaro.org>
+Date:   Thu, 13 Apr 2023 10:53:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp-lenovo-thinkpad: correct pin
+ drive-strength
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Cc:     Rob Herring <robh@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Johan Hovold <johan@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
- <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
- <168069726278.2356075.14351594478003012447.robh@kernel.org>
- <20230405134727.GA2461305-robh@kernel.org>
- <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
- <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
- <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
- <ZDAAToSzNLVo6le8@gerhold.net>
- <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
- <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
- <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
- <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
- <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230407180710.128815-1-krzysztof.kozlowski@linaro.org>
+ <ZDVtXkCON8DFUDjh@hovoldconsulting.com>
+ <887eb9f6-9882-37c6-4332-ddae7a354187@linaro.org>
+ <ZDZUiW+74rhhRAfS@hovoldconsulting.com>
+ <15e1d05f-b7e1-27bc-7363-aefd2d155eea@linaro.org>
+ <ZDZbif25qQh79cuG@hovoldconsulting.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
+In-Reply-To: <ZDZbif25qQh79cuG@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -96,81 +86,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/04/2023 19:06, Konrad Dybcio wrote:
-> 
-> 
-> On 12.04.2023 18:53, Krzysztof Kozlowski wrote:
->> On 12/04/2023 14:09, Konrad Dybcio wrote:
->>>
->>>
->>> On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
->>>> On 12/04/2023 13:47, Konrad Dybcio wrote:
->>>>>> For unrelated reasons I actually have some patches for this, that switch
->>>>>> the /smd top-level node to a "remoteproc-like" node dedicated to the
->>>>>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
->>>>>> add additional (optional) properties like "resets" and "iommus" for the
->>>>>> RPM, but it would allow adding arbitrary subnodes as well:
->>>>>>
->>>>>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
->>>>>>
->>>>>> I could finish those up and post them if that would help...
->>>>> Krzysztof, what do you think?
+On 12/04/2023 09:19, Johan Hovold wrote:
+> On Wed, Apr 12, 2023 at 09:03:31AM +0200, Krzysztof Kozlowski wrote:
+>> On 12/04/2023 08:49, Johan Hovold wrote:
+>>> On Tue, Apr 11, 2023 at 06:58:33PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 11/04/2023 16:23, Johan Hovold wrote:
+>>>>> On Fri, Apr 07, 2023 at 08:07:10PM +0200, Krzysztof Kozlowski wrote:
+>>>>>> Fix typo in drive-strength property name.
+>>>>>
+>>>>> In the future, please try to use the established commit-summary prefix.
+>>>>> In this case:
+>>>>>
+>>>>> 	arm64: dts: qcom: sc8280xp-x13s:
 >>>>
->>>> I don't know what is there in MSM8916 and how it should be represented.
->>> Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
->>> which communicates over the SMD protocol (or G-LINK on >=8996).
+>>>> Sure.
+>>>>
+>>>> commit ca1ce7207e53cfe69aee5002eb3795069668da53
+>>>> Author: Johan Hovold <johan+linaro@kernel.org>
+>>>> Date:   Fri Aug 5 11:23:17 2022 +0200
+>>>>
+>>>>     arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13s: add alternate touchpad
 >>>
->>> The Qualcomm firmware loads the RPM fw blob and sets it up early in
->>> the boot process, but msm8916-mainline folks managed to get TF-A
->>> going and due to it being less.. invasive.. than the Qualcomm TZ,
->>> RPM needs a bit more handling to be accessible.
+>>> Yeah, we initially used a longer prefix (including "x13s" which was
+>>> missing in the Subject of this patch), but quite soon decided on using
+>>> the shorter
 >>>
->>> The M3 core is wired up through the CNoC bus and we communicate
->>> with it through the MSG RAM and the "APCS mailbox".
+>>> 	arm64: dts: qcom: sc8280xp-x13s:
+>>>
+>>> instead.
 >>
->> Thanks, that's actually good description. Yet I still do not know what
->> is exactly the problem and the question. Linking some out of tree
->> commits does not give me the answer, at least I cannot get that answer
->> form the link.
+>> Thanks. Do you know if this rule applies to other long-names? I was
+>> usually keeping full name or shortening them by cutting end, but maybe I
+>> should cut the middle?
 >>
->> For example what I don't understand is: why additional resources (like
->> resets) can be provided only in new binding, but not in the old.
-> The old binding dictates that the rpm node (which in turn
-> holds all "devices" that only interface with RPM, like RPMCC) is
-> a child of smd{}, which does not make sense logically, as SMD is
-> a protocol (e.g. we don't place devices connected over i2c under
-> /i2c{}).
-
-We do. All devices connected over I2C are under i2c node which is the
-controller. The example is different than what you have here...
-
->  The rpm node lacks a compatible, as it's representing
-> an "smd channel", so there's no driver so there's no way to assert
-> resets etc.
-
-You have rpm-requests which has compatible. These are not its resources?
-
+>> sm8250-sony-xperia-edo-pdx206
+>> sm8250-sony-xperia-edo
+>> sm8250-pdx206
 > 
-> On newer SoCs that still implement SMD RPM (like 8996), we do
-> actually have a driver and a parent node which it binds to
-> (rpm-glink).
-
-You want to add RPM resets to rpm-glink node? This also does not look right.
-
+> I would not call it a rule just yet, but I guess there are further cases
+> were this could have been used. Perhaps you can all decide to use it for
+> the other Qualcomm dts as well.
 > 
-> AFAIU:
-> In both cases, the "final" drivers (rpmcc, rpmpd..) are bound
-> after hitting a SMD/GLINK callback that tells Linux we're ready
-> to rock. That's an issue for Stephan, as these callbacks won't
-> ever happen if the RPM core is not initialized (and TF-A doesn't
-> do that).
+> For the X13s the, 'sc8280xp-x13s' is enough to uniquely define the
+> board and it mirrors 'sc8280xp-crd' (and using a shorter prefix makes
+> the commit logs easier to read).
+> 
+> The general suggestion is still to check 'git log --oneline' for the
+> files in question and use what appears to be the (recent) common prefix.
 
-To me half or almost all of Qualcomm remote-proc-related bindings, like
-SMD, GLINK and associated processors, are difficult to read, half-baked
-and developed to match the current Linux/SW need. When the Linux drivers
-changed, new bindings were added... If you want to fix it, sure go
-ahead, but design everything to match something rational, not again to
-match one specific SW/FW implementation.
+I do it for subsystems, but I am not going to do it per file. Sorry, I
+am sending way too many of them to keep also customizing them per each
+file. If you wanted x13s prefix, then you would name the file like that.
+If you named file differently, then apparently that's how you want it to
+look.
 
 Best regards,
 Krzysztof
