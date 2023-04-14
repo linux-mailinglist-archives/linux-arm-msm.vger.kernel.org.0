@@ -2,86 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF76F6E2B73
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 23:03:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C844C6E2C42
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 00:06:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230061AbjDNVDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 17:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53512 "EHLO
+        id S229984AbjDNWGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 18:06:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjDNVDl (ORCPT
+        with ESMTP id S229927AbjDNWGR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 17:03:41 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77949B;
-        Fri, 14 Apr 2023 14:03:38 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33EL01ma019798;
-        Fri, 14 Apr 2023 21:03:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AwhCx3wuq7L0uIveBgsKwkcFhjqZsrOJUc2OeOS0mos=;
- b=pUDlIIfoeCgUgIxVl1/5VAbI/upfdtew66GlRx1t7mXsQaH2GqK2N4Jv86hu3HZFCTY+
- qgKmVIgTcS5nBy03HR5lQg74eCr9GrrT6VP4ZvrmVeMXrb5XyVMnHEobQB8bI5pCuEYH
- N0gocLeUvwU8dcoa5WldImRW9LHHdosEA/oXXDBx80xMlbn5iz6ZhdM7ouT+IOdJq3Nl
- PlGpExpgzn5Nlu40mDB0Spduv9JxFAoOF2NBbbx42zeLcCIuAZEYJXGg/M75Xr3RkMX4
- f9mu0xQhgIeDsczNKhpCHfrTiNiE1eForndVlBdLEtVRM3kiVTw5FFyTCT+hq8/3DpOc yQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3py4ghsaay-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 14 Apr 2023 21:03:26 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33EL3PlL003829
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 14 Apr 2023 21:03:25 GMT
-Received: from [10.110.73.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 14 Apr
- 2023 14:03:24 -0700
-Message-ID: <eb8ea024-1152-418c-a048-f86253867c9e@quicinc.com>
-Date:   Fri, 14 Apr 2023 14:03:23 -0700
+        Fri, 14 Apr 2023 18:06:17 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4677B3ABB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 15:06:14 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54ee0b73e08so370700597b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 15:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1681509972; x=1684101972;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7Cvi2dU+iitiLIxLUaeBBm5twrfEdbhX+NPaWLDCNHs=;
+        b=ee0N5Y+/J6UVaxUYvXbsio9U5vSTPYEFwGXFBq6+w3AIZg1mfdWWC/cYMNOKhoAzIi
+         wNlOBMrb6HQ3iUZI/zdBky3wqLrZHYfE4V3b9EhiQo4cQvPConyWumFNbYKDY/dNCR6f
+         lZ09+MTowK59bMVHl93NlQchHAPfUhiDPlbAI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681509972; x=1684101972;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7Cvi2dU+iitiLIxLUaeBBm5twrfEdbhX+NPaWLDCNHs=;
+        b=WPbHeJCtvvDB4WLt/GYSpWcSr7AppLMV1SZ5DBR1dWSNRYAQcV7YqXXfc6Dw1M6Mds
+         +ClQEwfqGrDGMNX+iwzqIJupaOF5ypwZuj4ANT6T56k7IGEgC1WTjKMPkFjrknrJ5BWa
+         0ZxG+bfAPPRnKjO9KL/Y/2efUHaBwKAvlNgVLwvLBCRC4TxOKIv23QNNSs6/MZBem0hu
+         rKoCgGtz5Y7XgQBSIAijXJJzlGgSnsUof/8NDv5NgNzZ1q4ua50MbnbIh6CQmBTXvU8P
+         u1PYSnGvtZeJOTQPjnlEJbIQbHaLE2vZl5gWdaUj2YO3mE1U/V3B07ePrDcSCEI8Du0k
+         RMUg==
+X-Gm-Message-State: AAQBX9cPMf+K4JDZrHD0q72lPxOeEGbC1988miFSL92sYfiaIV8NFUV/
+        AHJbhKWoiCJYfNx0y5w9roageJI+QyG+klTIurU=
+X-Google-Smtp-Source: AKy350YSQptFnFJTJpTDk4ZQzu6phwb3tqiGK5tpVVGu3uBp+9wdLi89zPH5CJeDO6cf4gaqkPzczw==
+X-Received: by 2002:a0d:d644:0:b0:545:62d7:6fac with SMTP id y65-20020a0dd644000000b0054562d76facmr6795151ywd.10.1681509971968;
+        Fri, 14 Apr 2023 15:06:11 -0700 (PDT)
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
+        by smtp.gmail.com with ESMTPSA id c68-20020a811c47000000b00545a08184bdsm1468513ywc.77.2023.04.14.15.06.10
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Apr 2023 15:06:11 -0700 (PDT)
+Received: by mail-yb1-f175.google.com with SMTP id t16so7513478ybi.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 15:06:10 -0700 (PDT)
+X-Received: by 2002:a25:d10e:0:b0:b8f:3881:1638 with SMTP id
+ i14-20020a25d10e000000b00b8f38811638mr3954970ybg.7.1681509970219; Fri, 14 Apr
+ 2023 15:06:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] drm/msm/dpu: always program dsc active bits
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1681401401-15099-1-git-send-email-quic_khsieh@quicinc.com>
- <tgfbdk6q3uool365jqddibnbgq66clsmsm6tldxpm5toqghxpq@m2ic3oonv2s5>
- <aac210da-dec1-aab8-3f48-c33d9e7687d6@quicinc.com>
- <3oaangxh7gmie3cdd6rmujm7dd3hagsrnwiq3bascdtamvfn3a@bn6ou5hbsgxv>
- <c09725ff-771c-35d1-adc9-4bb1b7c1c334@quicinc.com>
- <CAA8EJppKXSGcOcYEc6UKz9Eh8JizSpdDNe+cdvfmFbuBJ9zPKw@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJppKXSGcOcYEc6UKz9Eh8JizSpdDNe+cdvfmFbuBJ9zPKw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ijCGfHwj2m5L48MTwn8EOaYIoNz5OoPM
-X-Proofpoint-ORIG-GUID: ijCGfHwj2m5L48MTwn8EOaYIoNz5OoPM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-14_13,2023-04-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=861 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2304140185
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+References: <1681481153-24036-1-git-send-email-quic_vnivarth@quicinc.com> <1681481153-24036-4-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1681481153-24036-4-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 14 Apr 2023 15:05:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VKY-0vX271G+EQQ5kC3gTqpPPyTGE0xHWPBncVUhZufQ@mail.gmail.com>
+Message-ID: <CAD=FV=VKY-0vX271G+EQQ5kC3gTqpPPyTGE0xHWPBncVUhZufQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] spi: spi-qcom-qspi: Add DMA mode support
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,130 +81,608 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
+
+On Fri, Apr 14, 2023 at 7:06=E2=80=AFAM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> @@ -14,7 +16,6 @@
+>  #include <linux/spi/spi.h>
+>  #include <linux/spi/spi-mem.h>
+>
+> -
+
+Drop unrelated whitespace change.
 
 
-On 4/14/2023 1:58 PM, Dmitry Baryshkov wrote:
-> On Fri, 14 Apr 2023 at 21:55, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 4/14/2023 10:28 AM, Marijn Suijten wrote:
->>> On 2023-04-14 08:41:37, Abhinav Kumar wrote:
->>>>
->>>> On 4/14/2023 12:48 AM, Marijn Suijten wrote:
->>>>> Capitalize DSC in the title, as discussed in v1.
->>>>>
->>>>> On 2023-04-13 08:56:41, Kuogee Hsieh wrote:
->>>>>> In current code, the DSC active bits are written only if cfg->dsc is set.
->>>>>> However, for displays which are hot-pluggable, there can be a use-case
->>>>>> of disconnecting a DSC supported sink and connecting a non-DSC sink.
->>>>>>
->>>>>> For those cases we need to clear DSC active bits during tear down.
->>>>>>
->>>>>> Changes in V2:
->>>>>> 1) correct commit text as suggested
->>>>>> 2) correct Fixes commit id
->>>>>> 3) add FIXME comment
->>>>>>
->>>>>> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
->>>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>>>
->>>>> By default git send-email should pick this up in the CC line...  but I
->>>>> had to download this patch from lore once again.
->>>>>
->>>>
->>>> Yes, I think what happened here is, he didnt git am the prev rev and
->>>> make changes on top of that so git send-email didnt pick up. We should
->>>> fix that process.
->>>
->>> The mail was sent so it must have gone through git send-email, unless a
->>> different mail client was used to send the .patch file.  I think you are
->>> confusing this with git am (which doesn't need to be used if editing a
->>> commit on a local branch) and subsequently git format-patch, which takes
->>> a commit from a git repository and turns it into a .patch file: neither
->>> of these "converts" r-b's (and other tags) to cc, that's happening in
->>> git send-email (see `--suppress-cc` documentation in `man
->>> git-send-email`).
->>>
->>
->> Yes, ofcourse git send-email was used to send the patch, not any other
->> mail client.
->>
->> Yes i am also aware that send-email converts rb to CC.
->>
->> But if you keep working on the local branch, then you would have to
->> manually add the r-bs. If you use am of the prev version and develop on
->> that, it will automatically add the r-bs.
-> 
-> It looks like there is some misunderstanding here. I think Marijn
-> doesn't question his R-B (which was present), but tries to point out
-> that Kuogee might want to adjust his git-send-email invocation. By
-> default (and that's a good practice, which we should follow),
-> git-send-email will CC people mentioned in such tags. Marijn didn't
-> get this email. So, it seems, for some reason this Cc: _mail_ header
-> was suppressed. Probably git-send-email invocation should be changed
-> to prevent suppression of adding mentioned people to CC lists.
-> 
+> @@ -108,6 +110,10 @@
+>  #define RD_FIFO_RESET          0x0030
+>  #define RESET_FIFO             BIT(0)
+>
+> +#define NEXT_DMA_DESC_ADDR             0x0040
+> +#define CURRENT_DMA_DESC_ADDR  0x0044
+> +#define CURRENT_MEM_ADDR               0x0048
 
-Yeah I understood that part. There were two issues here:
-
-1) My r-b got dropped and that was because am wasn't used to 
-automatically retain tags from prev version.
-
-If you dont add the r-bs either manually or by am, then folks wont be 
-part of CC either
-
-2) I synced with kuogee. his git version seems to be quite old which is 
-not adding the folks from r-b to cc. So there was nothing wrong with 
-invocation, just versioning.
+Looking at the above with a correctly configured editor (tab size=3D8)
+the numbers don't line up. The first and 3rd have one too many tabs.
 
 
->>
->>
->>> I can recommend b4: it has lots of useful features including
->>> automatically picking up reviews and processing revisions.  It even
->>> requires a changelog to be edited ;).  However, finding the right flags
->>> and trusting it'll "do as ordered" is a bit daunting at first.
->>>
->>>>>> ---
->>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 ++++----
->>>>>>     1 file changed, 4 insertions(+), 4 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>>>>> index bbdc95c..1651cd7 100644
->>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->>>>>> @@ -541,10 +541,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->>>>>>             if (cfg->merge_3d)
->>>>>>                     DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->>>>>>                                   BIT(cfg->merge_3d - MERGE_3D_0));
->>>>>> -  if (cfg->dsc) {
->>>>>> -          DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
->>>>>> -          DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
->>>>>> -  }
->>>>>> +
->>>>>> +  /* FIXME: fix reset_intf_cfg to handle teardown of dsc */
->>>>>
->>>>> There's more wrong than just moving (not "fix"ing) this bit of code into
->>>>> reset_intf_cfg.  And this will have to be re-wrapped in `if (cfg->dsc)`
->>>>> again by reverting this patch.  Perhaps that can be explained, or link
->>>>> to Abhinav's explanation to make it clear to readers what this FIXME
->>>>> actually means?  Let's wait for Abhinav and Dmitry to confirm the
->>>>> desired communication here.
->>>>>
->>>>> https://lore.kernel.org/linux-arm-msm/ec045d6b-4ffd-0f8c-4011-8db45edc6978@quicinc.com/
->>>>>
->>>>
->>>> Yes, I am fine with linking this explanation in the commit text and
->>>> mentioning that till thats fixed, we need to go with this solution. The
->>>> FIXME itself is fine, I will work on it and I remember this context well.
->>>
->>> Looks like it was removed entirely in v3, in favour of only describing
->>> it in the patch body.  The wording seems a bit off but that's fine by me
->>> if you're picking this up soon anyway.
->>>
->>> - Marijn
-> 
-> 
-> 
+> @@ -120,6 +126,27 @@ enum qspi_dir {
+>         QSPI_WRITE,
+>  };
+>
+> +struct qspi_cmd_desc {
+> +       u32 data_address;
+> +       u32 next_descriptor;
+> +       u32 direction:1;
+> +       u32 multi_io_mode:3;
+> +       u32 reserved1:4;
+> +       u32 fragment:1;
+> +       u32 reserved2:7;
+> +       u32 length:16;
+> +       /*
+> +        * This marks end of HW cmd descriptor
+> +        * Fields down below are for SW usage to
+> +        * copy data from DMA buffer to rx buffer
+> +        */
+> +       u8 *bounce_src;
+> +       u8 *bounce_dst;
+> +       u32 bounce_length;
+> +};
+> +
+> +#define QSPI_MAX_NUM_DESC 5
+
+Nothing uses QSPI_MAX_NUM_DESC. Drop it.
+
+
+> @@ -137,11 +164,36 @@ enum qspi_clocks {
+>         QSPI_NUM_CLKS
+>  };
+>
+> +enum qspi_xfer_mode {
+> +       QSPI_INVALID,
+> +       QSPI_FIFO,
+> +       QSPI_DMA
+> +};
+
+Why bother with INVALID? It's either FIFO or DMA, right?
+
+
+> +/* number of entries in sgt returned from spi framework that we can supp=
+ort */
+> +#define QSPI_MAX_SG 5
+
+Is the above a hardware limitation, or just because you are statically
+allocating arrays? Please clarify in the comment. Would it make sense
+to just dynamically allocate the arrays and remove the need for this
+limitation?
+
+
+> +/* 3 descriptors for head, aligned part and tail */
+> +#define QSPI_NUM_CMD_DESC 3
+> +
+> +/* 2 descriptors for head, tail */
+> +#define QSPI_NUM_DAT_DESC 2
+> +
+>  struct qcom_qspi {
+>         void __iomem *base;
+>         struct device *dev;
+>         struct clk_bulk_data *clks;
+>         struct qspi_xfer xfer;
+> +       struct dma_pool *dma_cmd_pool;
+> +       struct dma_pool *dma_data_pool;
+> +       dma_addr_t dma_cmd_desc[QSPI_NUM_CMD_DESC*QSPI_MAX_SG];
+> +       dma_addr_t dma_data_desc[QSPI_NUM_DAT_DESC*QSPI_MAX_SG];
+> +       void *virt_cmd_desc[QSPI_NUM_CMD_DESC*QSPI_MAX_SG];
+> +       void *virt_data_desc[QSPI_NUM_DAT_DESC*QSPI_MAX_SG];
+> +       unsigned int n_cmd_desc;
+> +       unsigned int n_data_desc;
+> +       int xfer_mode;
+
+Instead of "int", shouldn't xfer_mode be "enum qspi_xfer_mode"?
+Although below I'm proposing that xfer_mode can just be completely
+dropped from this structure.
+
+
+> @@ -151,18 +203,25 @@ struct qcom_qspi {
+>  static u32 qspi_buswidth_to_iomode(struct qcom_qspi *ctrl,
+>                                    unsigned int buswidth)
+>  {
+> +       u32 ret;
+> +
+> +       /* for DMA we don't write to PIO_XFER_CFG register, so don't shif=
+t */
+>         switch (buswidth) {
+>         case 1:
+> -               return SDR_1BIT << MULTI_IO_MODE_SHFT;
+> +               ret =3D (ctrl->xfer_mode =3D=3D QSPI_DMA ? SDR_1BIT : SDR=
+_1BIT << MULTI_IO_MODE_SHFT);
+> +               break;
+>         case 2:
+> -               return SDR_2BIT << MULTI_IO_MODE_SHFT;
+> +               ret =3D (ctrl->xfer_mode =3D=3D QSPI_DMA ? SDR_2BIT : SDR=
+_2BIT << MULTI_IO_MODE_SHFT);
+> +               break;
+>         case 4:
+> -               return SDR_4BIT << MULTI_IO_MODE_SHFT;
+> +               ret =3D (ctrl->xfer_mode =3D=3D QSPI_DMA ? SDR_4BIT : SDR=
+_4BIT << MULTI_IO_MODE_SHFT);
+> +               break;
+>         default:
+>                 dev_warn_once(ctrl->dev,
+>                                 "Unexpected bus width: %u\n", buswidth);
+> -               return SDR_1BIT << MULTI_IO_MODE_SHFT;
+> +               ret =3D (ctrl->xfer_mode =3D=3D QSPI_DMA ? SDR_1BIT : SDR=
+_1BIT << MULTI_IO_MODE_SHFT);
+>         }
+> +       return ret;
+
+Wouldn't it be easier to do the test once at the end? In other words,
+in the switch statement "ret" never contains the shift and then at the
+end:
+
+if (ctrl->xfer_mode !=3D QSPI_DMA)
+  ret <<=3D MULTI_IO_MODE_SHFT;
+return ret;
+
+...or, even better, just always return the unshifted mode and do the
+shifting unconditionally in qcom_qspi_pio_xfer_cfg(). Then you never
+need to look at xfer_mode to decide.
+
+
+> @@ -241,12 +316,16 @@ static int qcom_qspi_set_speed(struct qcom_qspi *ct=
+rl, unsigned long speed_hz)
+>                 return ret;
+>         }
+>
+> +       avg_bw_cpu =3D Bps_to_icc(speed_hz);
+>         /*
+> -        * Set BW quota for CPU as driver supports FIFO mode only.
+> -        * We don't have explicit peak requirement so keep it equal to av=
+g_bw.
+> +        * Set BW quota for CPU for FIFO to avg_bw
+> +        * as we don't have explicit peak requirement.
+> +        * TBD TBD TBD - change this as required for DMA.
+> +        * As of now same peak requirement seems to be working.
+>          */
+> -       avg_bw_cpu =3D Bps_to_icc(speed_hz);
+> -       ret =3D icc_set_bw(ctrl->icc_path_cpu_to_qspi, avg_bw_cpu, avg_bw=
+_cpu);
+> +       peak_bw_cpu =3D ctrl->xfer_mode =3D=3D QSPI_FIFO ? avg_bw_cpu : a=
+vg_bw_cpu;
+> +
+> +       ret =3D icc_set_bw(ctrl->icc_path_cpu_to_qspi, avg_bw_cpu, peak_b=
+w_cpu);
+
+The change to this function is completely a no-op, right? You check
+the mode against QSPI_FIFO but you set the "peak_bw_cpu" to the same
+thing in both modes. ...and the thing you set it to is exactly the
+same as the function set it to before your patch.
+
+...so drop all the changes you made to this function.
+
+
+> @@ -258,6 +337,190 @@ static int qcom_qspi_set_speed(struct qcom_qspi *ct=
+rl, unsigned long speed_hz)
+>         return 0;
+>  }
+>
+> +/* aligned to 32 bytes, not to cross 1KB boundary */
+> +#define QSPI_ALIGN_REQ         32
+> +#define QSPI_BOUNDARY_REQ      1024
+> +
+> +static int qcom_qspi_alloc_desc(struct qcom_qspi *ctrl, uint8_t *virt_pt=
+r,
+> +                       dma_addr_t dma_ptr, uint32_t n_bytes)
+
+Why is "n_bytes" "uint32_t" instead of just "u32"? Please just use
+"u32" consistently in this file.
+
+
+> +{
+> +       struct qspi_cmd_desc *virt_cmd_desc, *prev;
+> +       uint8_t *virt_data_desc;
+> +       dma_addr_t dma_cmd_desc, dma_data_desc;
+> +
+> +       if (virt_ptr && n_bytes >=3D QSPI_ALIGN_REQ) {
+> +               dev_err(ctrl->dev,
+> +                       "Exiting to avert memory overwrite, n_bytes-%d\n"=
+, n_bytes);
+> +               return -ENOMEM;
+> +       }
+> +
+> +       /* allocate for dma cmd descriptor */
+> +       virt_cmd_desc =3D (struct qspi_cmd_desc *)dma_pool_alloc(ctrl->dm=
+a_cmd_pool,
+> +               GFP_KERNEL, &dma_cmd_desc);
+> +       if (!virt_cmd_desc) {
+> +               dev_err(ctrl->dev,
+> +                       "Could not allocate for cmd_desc\n");
+> +               return -ENOMEM;
+> +       }
+> +       ctrl->virt_cmd_desc[ctrl->n_cmd_desc] =3D virt_cmd_desc;
+> +       ctrl->dma_cmd_desc[ctrl->n_cmd_desc] =3D dma_cmd_desc;
+> +       ctrl->n_cmd_desc++;
+> +
+> +       /* allocate for dma data descriptor if unaligned else use pre-ali=
+gned */
+> +       if (virt_ptr) {
+> +               virt_data_desc =3D (uint8_t *)dma_pool_zalloc(ctrl->dma_d=
+ata_pool,
+> +                       GFP_KERNEL, &dma_data_desc);
+> +               if (!virt_data_desc) {
+> +                       dev_err(ctrl->dev,
+> +                               "Could not allocate for data_desc\n");
+> +                       return -ENOMEM;
+> +               }
+> +               ctrl->virt_data_desc[ctrl->n_data_desc] =3D virt_data_des=
+c;
+> +               ctrl->dma_data_desc[ctrl->n_data_desc] =3D dma_data_desc;
+> +               ctrl->n_data_desc++;
+> +
+> +               /*
+> +                * for tx copy xfer data into allocated buffer
+> +                * for rx setup bounce info to copy after xfer
+> +                */
+> +               if (ctrl->xfer.dir =3D=3D QSPI_WRITE) {
+> +                       memcpy(virt_data_desc, virt_ptr, n_bytes);
+> +               } else {
+> +                       virt_cmd_desc->bounce_src =3D virt_data_desc;
+> +                       virt_cmd_desc->bounce_dst =3D virt_ptr;
+> +                       virt_cmd_desc->bounce_length =3D n_bytes;
+> +               }
+> +       } else {
+> +               dma_data_desc =3D dma_ptr;
+> +       }
+> +
+> +       /* setup cmd descriptor */
+> +       virt_cmd_desc->data_address =3D dma_data_desc;
+> +       virt_cmd_desc->next_descriptor =3D 0;
+> +       virt_cmd_desc->direction =3D ctrl->xfer.dir;
+> +       virt_cmd_desc->multi_io_mode =3D ctrl->iomode;
+> +       virt_cmd_desc->reserved1 =3D 0;
+> +       virt_cmd_desc->fragment =3D ctrl->xfer.is_last ? 0 : 1;
+> +       virt_cmd_desc->reserved2 =3D 0;
+> +       virt_cmd_desc->length =3D n_bytes;
+> +
+> +       /* update previous descriptor */
+> +       if (ctrl->n_cmd_desc >=3D 2) {
+> +               prev =3D (ctrl->virt_cmd_desc)[ctrl->n_cmd_desc - 2];
+> +               prev->next_descriptor =3D dma_cmd_desc;
+> +               prev->fragment =3D 1;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int qcom_qspi_setup_dma_desc(struct qcom_qspi *ctrl,
+> +                               struct spi_transfer *xfer)
+> +{
+> +       int ret;
+> +       struct sg_table *sgt;
+> +       unsigned int sg_total_len =3D 0;
+> +       dma_addr_t dma_ptr_sg;
+> +       unsigned int dma_len_sg;
+> +       uint32_t prolog_bytes, aligned_bytes, epilog_bytes;
+> +       dma_addr_t aligned_addr;
+> +       int i;
+> +       uint8_t *byte_ptr;
+> +
+> +       if (ctrl->n_cmd_desc || ctrl->n_data_desc) {
+> +               dev_err(ctrl->dev, "Remnant dma buffers cmd-%d, data-%d\n=
+",
+> +                       ctrl->n_cmd_desc, ctrl->n_data_desc);
+> +               return -EIO;
+> +       }
+> +
+> +       sgt =3D (ctrl->xfer.dir =3D=3D QSPI_READ) ? &xfer->rx_sg : &xfer-=
+>tx_sg;
+> +       if (!sgt->nents || sgt->nents > QSPI_MAX_SG) {
+> +               dev_err(ctrl->dev, "Cannot handle %d entries in scatter l=
+ist\n", sgt->nents);
+> +               return -EINVAL;
+> +       }
+> +
+> +       for (i =3D 0; i < sgt->nents; i++)
+> +               sg_total_len +=3D sg_dma_len(sgt->sgl + i);
+> +       if (sg_total_len !=3D xfer->len) {
+> +               dev_err(ctrl->dev, "Data lengths mismatch\n");
+> +               return -EINVAL;
+> +       }
+> +
+> +       if (ctrl->xfer.dir =3D=3D QSPI_READ)
+> +               byte_ptr =3D xfer->rx_buf;
+> +       else
+> +               byte_ptr =3D (uint8_t *)xfer->tx_buf;
+> +
+> +       for (i =3D 0; i < sgt->nents; i++) {
+> +               dma_ptr_sg =3D sg_dma_address(sgt->sgl + i);
+> +               dma_len_sg =3D sg_dma_len(sgt->sgl + i);
+> +
+> +               aligned_addr =3D PTR_ALIGN(dma_ptr_sg, QSPI_ALIGN_REQ);
+> +
+> +               prolog_bytes =3D min(dma_len_sg, (unsigned int)(aligned_a=
+ddr - dma_ptr_sg));
+> +               if (prolog_bytes) {
+> +                       ret =3D qcom_qspi_alloc_desc(ctrl, byte_ptr, 0, p=
+rolog_bytes);
+> +                       if (ret)
+> +                               goto cleanup;
+> +                       byte_ptr +=3D prolog_bytes;
+> +               }
+> +
+> +               aligned_bytes =3D PTR_ALIGN_DOWN(dma_len_sg - prolog_byte=
+s, QSPI_ALIGN_REQ);
+> +               if (aligned_bytes) {
+> +                       ret =3D qcom_qspi_alloc_desc(ctrl, 0, aligned_add=
+r, aligned_bytes);
+> +                       if (ret)
+> +                               goto cleanup;
+> +                       byte_ptr +=3D aligned_bytes;
+> +               }
+> +
+> +               epilog_bytes =3D dma_len_sg - prolog_bytes - aligned_byte=
+s;
+> +               if (epilog_bytes) {
+> +                       ret =3D qcom_qspi_alloc_desc(ctrl, byte_ptr, 0, e=
+pilog_bytes);
+> +                       if (ret)
+> +                               goto cleanup;
+> +                       byte_ptr +=3D epilog_bytes;
+
+While I won't claim to be an expert on DMA, the above smells wrong to
+me. It looks as if you're doing a whole lot of work here that doesn't
+really belong in your driver but should be in the SPI core. If I
+understand correctly, the issue is that this SPI controller needs DMA
+buffers to start aligned on a 32-byte boundary. To handle that, you're
+doing a whole lot of manual work to copy/bounce the bits that aren't
+aligned.
+
+Having alignment requirements like this doesn't seem like it should be
+that unusual, though, and that's why it feels like the logic belongs
+in the SPI core. In fact, it seems like this is _supposed_ to be
+handled in the SPI core, but it isn't? In "spi.h" I see
+"dma_alignment" that claims to be exactly what you need. As far as I
+can tell, though, the core doesn't use this? ...so I'm kinda confused.
+As far as I can tell this doesn't do anything and thus anyone setting
+it today is broken?
+
+Mark can tell me if I'm giving bad advice here, but IMO you should:
+
+1. Set your controller's "dma_alignment" property to 32.
+
+2. Add support to the core (in spi_map_buf() and spi_unmap_buf(), I
+think) to handle the bouncing.
+
+
+Other notes around this:
+
+* In your code, I see "QSPI_BOUNDARY_REQ as 1K" which confuses me. As
+far as I can tell you can do DMA that crosses 1K boundaries since (I
+think) "aligned_bytes" above can be up to 64K, right?
+
+* I haven't yet figured out why exactly you need the "epilog". Are you
+sure you really do, or could this be combined with the "aligned"
+chunk? I think the only requirement is that the start of the transfer
+is aligned, right?
+
+* If this is done in the core in spi_map_buf(), I think you only need
+a single bounce buffer that is "dma_alignment" bytes big that you can
+allocate once and store with the controller, right?
+
+
+> +               }
+> +       }
+> +       return 0;
+> +
+> +cleanup:
+> +       dev_err(ctrl->dev, "ERROR cleanup in setup_dma_desc\n");
+> +       for (i =3D 0; i < ctrl->n_data_desc; i++)
+> +               dma_pool_free(ctrl->dma_data_pool, ctrl->virt_data_desc[i=
+],
+> +                                 ctrl->dma_data_desc[i]);
+> +       ctrl->n_data_desc =3D 0;
+> +
+> +       for (i =3D 0; i < ctrl->n_cmd_desc; i++)
+> +               dma_pool_free(ctrl->dma_cmd_pool, ctrl->virt_cmd_desc[i],
+> +                                 ctrl->dma_cmd_desc[i]);
+> +       ctrl->n_cmd_desc =3D 0;
+> +       return ret;
+> +}
+> +
+> +static void qcom_qspi_dma_xfer(struct qcom_qspi *ctrl)
+> +{
+> +       /* Ack any previous interrupts that might be hanging around */
+> +       writel(DMA_CHAIN_DONE, ctrl->base + MSTR_INT_STATUS);
+
+Do we really need the above? Maybe we can drop it and (in a separate
+patch) drop the similar statement in qcom_qspi_pio_xfer()?
+
+If this is truly needed for some reason, then it seems like in both
+cases you should ack _all_ interrupts (the FIFO plus the DMA ones)
+since we might be switching back and forth between the two modes and
+thus any old interrupts that are "hanging around" could be from
+either. ...but I think you can just drop it. If there are really any
+interrupts "hanging around" we're in pretty bad shape.
+
+
+> +       /* Setup new interrupts */
+> +       writel(DMA_CHAIN_DONE, ctrl->base + MSTR_INT_EN);
+> +
+> +       /* flush all writes */
+> +       wmb();
+
+Why do you need this explicit wmb()? I'm fairly sure that this is
+handled automatically by the fact that you're using writel() and not
+writel_relaxed(). writel() documents that it is "ordered relative to
+any prior Normal memory access" and certainly it's ordered relative to
+IO writes to the same device.
+
+
+> +
+> +       /* kick off transfer */
+> +       writel((uint32_t)(uintptr_t)(ctrl->dma_cmd_desc)[0], ctrl->base +=
+ NEXT_DMA_DESC_ADDR);
+
+It feels like there's one too many casts here. Shouldn't this just be
+"(u32)(ctrl->dma_cmd_desc[0])"?
+
+
+> +}
+> +
+> +/* Switch to DMA if transfer length exceeds this */
+> +#define QSPI_MAX_BYTES_FIFO 64
+> +
+> +static bool qcom_qspi_can_dma(struct spi_controller *ctlr,
+> +                        struct spi_device *slv, struct spi_transfer *xfe=
+r)
+> +{
+> +       return xfer->len > QSPI_MAX_BYTES_FIFO ? true : false;
+
+No need for the "? true : false". Just:
+
+return xfer->len > QSPI_MAX_BYTES_FIFO;
+
+
+> @@ -290,7 +555,25 @@ static int qcom_qspi_transfer_one(struct spi_master =
+*master,
+>         ctrl->xfer.is_last =3D list_is_last(&xfer->transfer_list,
+>                                           &master->cur_msg->transfers);
+>         ctrl->xfer.rem_bytes =3D xfer->len;
+> -       qcom_qspi_pio_xfer(ctrl);
+> +
+> +       if (qcom_qspi_can_dma(master, slv, xfer)) {
+
+Maybe it would be better to check if either "xfer->rx_sg.nents" or
+"xfer->tx_sg.nents" is non-zero. That indicates that the SPI framework
+is expecting you to do DMA.
+
+
+> +               ctrl->xfer_mode =3D QSPI_DMA;
+> +               ctrl->iomode =3D qspi_buswidth_to_iomode(ctrl, ctrl->xfer=
+.buswidth);
+
+Don't store iomode in the "ctrl" structure (remove it from that
+struct). Just make it a local variable in qcom_qspi_setup_dma_desc()
+and then pass it in to the one place that needs it:
+qcom_qspi_alloc_desc()
+
+
+> +               mstr_cfg |=3D DMA_ENABLE;
+> +               writel(mstr_cfg, ctrl->base + MSTR_CONFIG);
+
+nit: I seem to remember IO writes to the controller taking a
+non-trivial amount of time. Maybe worth it to do?
+
+if (!(mstr_cfg & DMA_ENABLE)) {
+  mstr_cfg |=3D DMA_ENABLE;
+  writel(mstr_cfg, ctrl->base + MSTR_CONFIG);
+}
+
+...similar for the "else" case below.
+
+
+> @@ -328,6 +611,40 @@ static int qcom_qspi_prepare_message(struct spi_mast=
+er *master,
+>         return 0;
+>  }
+>
+> +static int qcom_qspi_alloc_dma(struct qcom_qspi *ctrl)
+> +{
+> +       /* allocate for cmd descriptors pool */
+> +       ctrl->dma_cmd_pool =3D dma_pool_create("qspi cmd desc pool",
+> +               ctrl->dev, sizeof(struct qspi_cmd_desc), 0, 0);
+
+Instead of dma_pool_create(), use dmam_pool_create(). That looks to be
+the (oddly named) devm version of the function. Then you can fully get
+rid of qcom_qspi_free_dma() and also the dma_pool_destroy() in your
+error handling below.
+
+It also seems really weird that the "data" pool has such strict
+alignment requirements and you do a whole ton of work to meet those
+requirements, but the "cmd" pool has no alignment requirements at all.
+Is this really correct?
+
+
+> +       if (!ctrl->dma_cmd_pool) {
+> +               dev_err(ctrl->dev, "Could not create dma pool for cmd_des=
+c\n");
+
+nit: no need for an error message here. You can assume that allocation
+failures will already print a warning splat and you don't need another
+one for this incredibly unlikely event.
+
+
+> @@ -426,27 +743,63 @@ static irqreturn_t qcom_qspi_irq(int irq, void *dev=
+_id)
+>         int_status =3D readl(ctrl->base + MSTR_INT_STATUS);
+>         writel(int_status, ctrl->base + MSTR_INT_STATUS);
+>
+> -       if (ctrl->xfer.dir =3D=3D QSPI_WRITE) {
+> -               if (int_status & WR_FIFO_EMPTY)
+> -                       ret =3D pio_write(ctrl);
+> -       } else {
+> -               if (int_status & RESP_FIFO_RDY)
+> -                       ret =3D pio_read(ctrl);
+> -       }
+> -
+> -       if (int_status & QSPI_ERR_IRQS) {
+> -               if (int_status & RESP_FIFO_UNDERRUN)
+> -                       dev_err(ctrl->dev, "IRQ error: FIFO underrun\n");
+> -               if (int_status & WR_FIFO_OVERRUN)
+> -                       dev_err(ctrl->dev, "IRQ error: FIFO overrun\n");
+> -               if (int_status & HRESP_FROM_NOC_ERR)
+> -                       dev_err(ctrl->dev, "IRQ error: NOC response error=
+\n");
+> -               ret =3D IRQ_HANDLED;
+> -       }
+> -
+> -       if (!ctrl->xfer.rem_bytes) {
+> -               writel(0, ctrl->base + MSTR_INT_EN);
+> -               spi_finalize_current_transfer(dev_get_drvdata(ctrl->dev))=
+;
+> +       switch (ctrl->xfer_mode) {
+> +       case QSPI_FIFO:
+
+I don't think you really need to check xfer_mode here, do you? If
+xfer_mode is FIFO then only the FIFO-related interrupts are enabled.
+If xfer_mode is DMA then only the DMA-related interrupts are enabled.
+
+In fact, I think you can fully get rid of the "xfer_mode" structure
+member completely. It's completely redundant.
+
+
+> @@ -487,6 +840,9 @@ static int qcom_qspi_probe(struct platform_device *pd=
+ev)
+>         if (ret)
+>                 return ret;
+>
+> +       /* set default mode to FIFO */
+> +       ctrl->xfer_mode =3D QSPI_FIFO;
+
+Get rid of this initialization. Above I'm suggesting getting rid of
+"xfter" mode altogether, but in any case, we should be setting this
+before each transfer so the initialization doesn't do anything useful.
+
+
+> @@ -556,10 +923,15 @@ static int qcom_qspi_probe(struct platform_device *=
+pdev)
+>  static void qcom_qspi_remove(struct platform_device *pdev)
+>  {
+>         struct spi_master *master =3D platform_get_drvdata(pdev);
+> +       struct qcom_qspi *ctrl;
+> +
+> +       ctrl =3D spi_master_get_devdata(master);
+>
+>         /* Unregister _before_ disabling pm_runtime() so we stop transfer=
+s */
+>         spi_unregister_master(master);
+>
+> +       qcom_qspi_free_dma(ctrl);
+> +
+>         pm_runtime_disable(&pdev->dev);
+
+To make this the reverse order of probe the qcom_qspi_free_dma() call
+should be _after_ the pm_runtime_disable(), although above I'm
+suggesting fully getting rid of qcom_qspi_free_dma() so maybe the
+point is moot.
