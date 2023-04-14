@@ -2,67 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24C3A6E2B50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 22:54:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51A3A6E2B53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 22:55:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbjDNUyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 16:54:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49518 "EHLO
+        id S229704AbjDNUzK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 16:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbjDNUya (ORCPT
+        with ESMTP id S229586AbjDNUzJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 16:54:30 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097F63C3B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 13:54:29 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2a76b2a36e2so419901fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 13:54:28 -0700 (PDT)
+        Fri, 14 Apr 2023 16:55:09 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB6F344AE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 13:55:06 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id t16so7356978ybi.13
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 13:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681505667; x=1684097667;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=a9cFFq/KYsVmXdRW5BoGPPdCt3V+TRMXS12ipPluoCk=;
-        b=I38UCYH84Rgc9hSzF3d2E2pCxutrAD4gaIrN8dF/9+lawahHToFCecs36OEG3hJfCm
-         wwDbAYe7A7us0KJu6Vlh9P1c+KrZqmfr0L9CPuqD6CuY2rdxVi4xthUy7qvgF7vv+JUz
-         nHJdRyfGX6DH7bDV552BBN603R7e2ZquCWFaePWN+sUnCuDnTOKqaeHx+IGg9QnDWCkr
-         UFz7ECuzpnEhLHt7S4mDBzMijvO5/qplA0snuhvjPEfRW5jdNN/7Gb0Ysxy+5ONK5sVY
-         c2WPXNBgibr7UWfyqJwLPVrtUcTWii8o5vOFfyiEADAqyKn/tsGKrd02gbKGlbrhMDXo
-         PdZQ==
+        d=linaro.org; s=google; t=1681505706; x=1684097706;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/IURpgE1xbg57WxWviHWuAPUOk7epEJxWNcaSFTD3Ms=;
+        b=EyQRrgfn7LKymKGR5myIfuzUTXTT4wjpF3TmZvfH3hfjPXc/22ZWByX562pWMDSwEP
+         VqNRI1jgGQ3XO6o8CRRq9EzejnM+ynGUP1Sun5BuDvu/hz35szzVeKok964QLmDq4v0r
+         9e85aYinmTR2nhmwJLC2TuGxbeTyGalmX2nJtgKtDxWHM0brE8wdjtZTAXC6pG5doQw5
+         gjU1SjsyZAeskQKF70YVtS+e3UGfXSwW4DA2GLk9oyv1iBEnHLYNsGdL1WXOy1guHRSV
+         3zCbdmzog+sS3UjpTkjpGA2YkDHv4pYobdr7LsN9ltvvgGEb7YbWAEBInS4UTQc+N7jt
+         HnbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681505667; x=1684097667;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1681505706; x=1684097706;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=a9cFFq/KYsVmXdRW5BoGPPdCt3V+TRMXS12ipPluoCk=;
-        b=HHydgyX/YTmtgSRZxsoeeLOiJ+ARfaqXRMQCI5pYZP3nv9tdUliKdfwFP3+F2FjvYH
-         b7PozZS86BSgHOc8uIHHTmFpPu+LEEa1rGMN8NtJLdeQBIAAHne01O5Y4eFfiOZVUOh5
-         uWpnXrQ45INvIrXlEBTPfV71yTJeE89WhzP/POQTlSgyt5NL2iumZm6Ol+qNSnaBsRTT
-         dG5abF/m+lK7MrKMl7XN3l/bk6U8pSu8IzQ1XfnwZrtCKMUkzBDF7APXB69hrlSqt2NB
-         htX9xa+cVryhhYKe4SWzos7mZQk+ytgM/nJE9sj5ITh1QF5Ubp1DiIb0r8ilXGzbl39Z
-         EExQ==
-X-Gm-Message-State: AAQBX9f+NAhf/LqNqlzHuXZC2cnSh8LoehiP0c0H50ljDQlt3HrMicoY
-        UGqYT6oBGr7PpNOTYXMSvIr3ZktayWx1ZQNc3NY=
-X-Google-Smtp-Source: AKy350aIc+knsXz3Ima8K4XlqscLTViTEtHan5itjvGxmj/JhSbh1Igh+tw0ubW9oYJa0nxQySG4ZQ==
-X-Received: by 2002:a05:6512:946:b0:4db:26b1:ec52 with SMTP id u6-20020a056512094600b004db26b1ec52mr39253lft.59.1681505667285;
-        Fri, 14 Apr 2023 13:54:27 -0700 (PDT)
-Received: from eriador.lan (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id d25-20020ac241d9000000b004ec87fb5ebcsm959734lfi.286.2023.04.14.13.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 13:54:26 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH] phy: qcom-qmp-pcie: correct sm8350 PHY tables
-Date:   Fri, 14 Apr 2023 23:54:25 +0300
-Message-Id: <20230414205425.3878902-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        bh=/IURpgE1xbg57WxWviHWuAPUOk7epEJxWNcaSFTD3Ms=;
+        b=h4fEXtQDl1LfcZ75fsmGCkElU8Kz7sjIkmTJ6l2krpEBn5zxlev/RSUrvJbP9v0miG
+         cDPQblqU3FjWaW0LpyanyOt6iZaDXZX5cNCa+h2u93LAcnfziVpfO6PJvNc3Awh6OHB5
+         6JmQGUglyVfLwxcpRbyexINjILuUz4kZvrNkZOVia7hXa5ybvlQb8K5WcIP/daIsI8jn
+         ilOvJgb2ta3BUTv8S0RJripOMKWKCcj5agHbx4q9ZiOQiAKbeEJ69mtgpUkAg/FOZwqt
+         TFm73KaJvxrchXQRjPtfAVLquxVGeDc/LsZpD6Mp3dthNwX+JhdRRkw7G7tj3K0Wxzcx
+         U4iQ==
+X-Gm-Message-State: AAQBX9dZPbadXygJQoEomKmcStQGIyl5xaSUwbk38k6SCGhC7dzCeLkQ
+        SZDr2TLXNc20EA640yYS82kD5O/klSnBDQDv2QIj7w==
+X-Google-Smtp-Source: AKy350aF41mkuwh1/kO7eZl2hcZWels8mhSTbjZere9bTExw3aS8wy2MCxPVGGZk4BY3COhO1yMbWu1m1Fg4ByKRuIQ=
+X-Received: by 2002:a25:d882:0:b0:b8f:59ed:e9d9 with SMTP id
+ p124-20020a25d882000000b00b8f59ede9d9mr3675922ybg.9.1681505706076; Fri, 14
+ Apr 2023 13:55:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org>
+ <20230413-topic-lahaina_vidcc-v2-2-f721d507e555@linaro.org>
+ <CAA8EJpoxvjWrvJENkFSimfU=CG7C3jZ=ToZep1tnJbtPzCcS9Q@mail.gmail.com> <34797b11-b654-a9a4-ac26-5287ca582a82@linaro.org>
+In-Reply-To: <34797b11-b654-a9a4-ac26-5287ca582a82@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 14 Apr 2023 23:54:54 +0300
+Message-ID: <CAA8EJppVUddvAp=3H7oGntE-5XqJkHc7=2mcgpBBnRcsHCDZQg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] clk: qcom: Introduce SM8350 VIDEOCC
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,124 +79,192 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Correct sm8350 PCIe PHY tables according to the vendor dtsi file.
-This accounts some additional differences between PHY programming on
-sm8350 and sm8450.
+On Fri, 14 Apr 2023 at 20:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 14.04.2023 18:31, Dmitry Baryshkov wrote:
+> > On Fri, 14 Apr 2023 at 14:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> Add support for the Video Clock Controller found on the SM8350 SoC.
+> >>
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+>
+> [...]
+>
+> >> +static struct clk_rcg2 video_cc_ahb_clk_src = {
+> >> +       .cmd_rcgr = 0xbd4,
+> >> +       .mnd_width = 0,
+> >> +       .hid_width = 5,
+> >> +       .parent_map = video_cc_parent_map_0,
+> >> +       .freq_tbl = ftbl_video_cc_ahb_clk_src,
+> >> +       .clkr.hw.init = &(const struct clk_init_data) {
+> >> +               .name = "video_cc_ahb_clk_src",
+> >> +               .parent_data = video_cc_parent_data_0,
+> >> +               .num_parents = ARRAY_SIZE(video_cc_parent_data_0),
+> >> +               .flags = CLK_SET_RATE_PARENT,
+> >> +               .ops = &clk_rcg2_shared_ops,
+> >> +       },
+> >> +};
+> >
+> > Do we need this clock at all? We don't have the child
+> > video_cc_ahb_clk, so potentially CCF can try disabling or modifying
+> > this clock.
+> Hm.. I see a few things:
+>
+> 1. downstream kona has it, upstream does not
+> 2. it's shared so we never actually hard-shut it off..
+> 2a. ..but it'd be good to ensure it's on when it's ready..
+> 2b. ..but we never do anyway..
+> 2c. ..but should we even? doesn't Venus govern it internally?
+>
+>
+> >
+> >> +
+> >> +static const struct freq_tbl ftbl_video_cc_mvs0_clk_src[] = {
+> >> +       F(720000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> >> +       F(1014000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> >> +       F(1098000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> >> +       F(1332000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
+> >> +       { }
+> >> +};
+> >> +
+>
+> [...]
+>
+> >> +static struct clk_branch video_cc_mvs1_clk = {
+> >> +       .halt_reg = 0xdb4,
+> >> +       .halt_check = BRANCH_HALT_VOTED,
+> >
+> > As a note, sm8250 has BRANCH_HALT here.
+> No, it does on the div2 clk, and so do we:
 
-The name for the PCS register 0x8 is not present in the vendor kernels,
-but since on other generations the register prior to POWER_STATE_CONFIG2
-is called POWER_STATE_CONFIG1, we can establish that as its name.
+Excuse me, I got confused by all the syllables. I was looking at the
+video_cc_mvs1c_clk. On sm8250 it is _VOTED, in this patch it is not. I
+can not say that either one of those is incorrect, but such a
+difference looks a bit suspicious for me. Maybe Tanya or somebody else
+can comment here.
 
-Fixes: c70052739d16 ("phy: qcom-qmp-pcie: add support for sm8350 platform")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 42 +++++++++++++++----
- .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h   |  1 +
- 2 files changed, 35 insertions(+), 8 deletions(-)
+> [...]
+>
+> >> +};
+> >> +
+> >> +static struct clk_branch video_cc_mvs1_div2_clk = {
+> >> +       .halt_reg = 0xdf4,
+> >> +       .halt_check = BRANCH_HALT_VOTED,
+> >> +       .hwcg_reg = 0xdf4,
+>
+> [...]
+>
+> >> +
+> >> +static const struct qcom_reset_map video_cc_sm8350_resets[] = {
+> >> +       [CVP_VIDEO_CC_INTERFACE_BCR] = { 0xe54 },
+> >> +       [CVP_VIDEO_CC_MVS0_BCR] = { 0xd14 },
+> >
+> > Would it be better to use common VIDEO_CC prefix here (IOW:
+> > VIDEO_CC_CVP_MVS0_BCR, VIDEO_CC_CVP_INTERFACE_BCR), etc.
+> My best guess would be that the ones prefixed with CVP_
+> are actual INTF/INSTANCEn(CORE) reset lines whereas
+> the ones containing _CLK_ reset their clock sub-branches.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 5182aeac43ee..cd3e031bf506 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1265,10 +1265,10 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen3_pcie_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE0, 0x07),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE1_MODE1, 0x4c),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE1, 0x06),
--	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0x90),
- };
- 
- static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_rc_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0x90),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_BUF_ENABLE, 0x07),
- };
- 
-@@ -1321,11 +1321,16 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen3x1_pcie_pcs_misc_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
- };
- 
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_rc_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0xf0),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x04),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_SYSCLK_BUF_ENABLE, 0x07),
-+};
-+
- static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_tx_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_TX_PI_QEC_CTRL, 0x20),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_1, 0x75),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_TX_LANE_MODE_4, 0x3f),
--	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_TX, 0x1d),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_TX_RES_CODE_LANE_OFFSET_RX, 0x0c),
- };
- 
-@@ -1334,6 +1339,25 @@ static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_rc_rx_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_MODE_00_HIGH3, 0x3f),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x07),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_PI_CONTROLS, 0xf0),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_TERM_AC_BYPASS_DC_COUPLE_OFFSET, 0x18),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_pcs_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RX_SIGDET_LVL, 0xa8),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_RATE_SLEW_CNTRL1, 0x0b),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_REFGEN_REQ_CONFIG1, 0x05),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x1_pcie_pcs_misc_tbl[] = {
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_OSC_DTCT_ACTIONS, 0x00),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_INT_AUX_CLK_CONFIG1, 0x00),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_EQ_CONFIG2, 0x0f),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_POWER_STATE_CONFIG1, 0x0f),
-+	QMP_PHY_INIT_CFG(QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
-+};
-+
-+static const struct qmp_phy_init_tbl sm8350_qmp_gen3x2_pcie_rc_serdes_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0x90),
- };
- 
- static const struct qmp_phy_init_tbl sm8350_qmp_gen3x2_pcie_rc_rx_tbl[] = {
-@@ -2325,15 +2349,15 @@ static const struct qmp_phy_cfg sm8350_qmp_gen3x1_pciephy_cfg = {
- 		.tx_num		= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_tx_tbl),
- 		.rx		= sm8450_qmp_gen3_pcie_rx_tbl,
- 		.rx_num		= ARRAY_SIZE(sm8450_qmp_gen3_pcie_rx_tbl),
--		.pcs		= sm8450_qmp_gen3_pcie_pcs_tbl,
--		.pcs_num	= ARRAY_SIZE(sm8450_qmp_gen3_pcie_pcs_tbl),
--		.pcs_misc	= sm8450_qmp_gen3x1_pcie_pcs_misc_tbl,
--		.pcs_misc_num	= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_pcs_misc_tbl),
-+		.pcs		= sm8350_qmp_gen3x1_pcie_pcs_tbl,
-+		.pcs_num	= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_pcs_tbl),
-+		.pcs_misc	= sm8350_qmp_gen3x1_pcie_pcs_misc_tbl,
-+		.pcs_misc_num	= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_pcs_misc_tbl),
- 	},
- 
- 	.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
--		.serdes		= sm8450_qmp_gen3x1_pcie_rc_serdes_tbl,
--		.serdes_num	= ARRAY_SIZE(sm8450_qmp_gen3x1_pcie_rc_serdes_tbl),
-+		.serdes		= sm8350_qmp_gen3x1_pcie_rc_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_rc_serdes_tbl),
- 		.rx		= sm8350_qmp_gen3x1_pcie_rc_rx_tbl,
- 		.rx_num		= ARRAY_SIZE(sm8350_qmp_gen3x1_pcie_rc_rx_tbl),
- 	},
-@@ -2369,6 +2393,8 @@ static const struct qmp_phy_cfg sm8350_qmp_gen3x2_pciephy_cfg = {
- 	},
- 
- 	.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
-+		.serdes		= sm8350_qmp_gen3x2_pcie_rc_serdes_tbl,
-+		.serdes_num	= ARRAY_SIZE(sm8350_qmp_gen3x2_pcie_rc_serdes_tbl),
- 		.rx		= sm8350_qmp_gen3x2_pcie_rc_rx_tbl,
- 		.rx_num		= ARRAY_SIZE(sm8350_qmp_gen3x2_pcie_rc_rx_tbl),
- 		.pcs		= sm8350_qmp_gen3x2_pcie_rc_pcs_tbl,
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h
-index a469ae2a10a1..ea466e14ca12 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h
-@@ -8,6 +8,7 @@
- #define QCOM_PHY_QMP_PCS_PCIE_V5_H_
- 
- /* Only for QMP V5 PHY - PCS_PCIE registers */
-+#define QPHY_V5_PCS_PCIE_POWER_STATE_CONFIG1		0x08
- #define QPHY_V5_PCS_PCIE_POWER_STATE_CONFIG2		0x0c
- #define QPHY_V5_PCS_PCIE_POWER_STATE_CONFIG4		0x14
- #define QPHY_V5_PCS_PCIE_ENDPOINT_REFCLK_DRIVE		0x20
+Note, again, on sm8250 all resets start with VIDEO_CC, even CVP ones.
+I think we can follow that.
+
+>
+> >
+> >> +       [VIDEO_CC_MVS0C_CLK_ARES] = { 0xc34, 2 },
+> >> +       [CVP_VIDEO_CC_MVS0C_BCR] = { 0xbf4 },
+> >> +       [CVP_VIDEO_CC_MVS1_BCR] = { 0xd94 },
+> >> +       [VIDEO_CC_MVS1C_CLK_ARES] = { 0xcd4, 2 },
+> >> +       [CVP_VIDEO_CC_MVS1C_BCR] = { 0xc94 },
+> >> +};
+>
+> [...]
+>
+> >> +       ret = pm_runtime_resume_and_get(&pdev->dev);
+> >> +       if (ret)
+> >> +               return ret;
+> >> +
+> >> +       regmap = qcom_cc_map(pdev, &video_cc_sm8350_desc);
+> >> +       if (IS_ERR(regmap)) {
+> >> +               pm_runtime_put(&pdev->dev);
+> >> +               return PTR_ERR(regmap);
+> >> +       };
+> >
+> > Extra semicolon
+> Ooeh!
+>
+> >
+> >> +
+> >> +       clk_lucid_pll_configure(&video_pll0, regmap, &video_pll0_config);
+> >> +       clk_lucid_pll_configure(&video_pll1, regmap, &video_pll1_config);
+> >> +
+> >> +       /*
+> >> +        * Keep clocks always enabled:
+> >> +        *      video_cc_ahb_clk
+> >> +        *      video_cc_xo_clk
+> >> +        */
+> >> +       regmap_update_bits(regmap, 0xe58, BIT(0), BIT(0));
+> >> +       regmap_update_bits(regmap, 0xeec, BIT(0), BIT(0));
+> >> +
+> >> +       ret = qcom_cc_really_probe(pdev, &video_cc_sm8350_desc, regmap);
+> >> +       pm_runtime_put(&pdev->dev);
+> >> +
+> >> +       return ret;
+> >> +}
+> >> +
+> >> +static const struct dev_pm_ops video_cc_sm8350_pm_ops = {
+> >> +       SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
+> >
+> > The driver doesn't use pm_clk at all. Are these PM_OPS correct?
+> I'm unsure. I see the pm state changing in debugfs when the clocks are
+> (not) consumed. But let's continue our discussion about using pm_clks
+> for AHB.
+
+Well, those are two separate questions. One is that w/o additional
+pm_clk calls this string is useless (and should be removed). Another
+on is a possible restructure of our cc drivers to use pm_clk for AHB
+clocks (which would require adding more than that).
+
+
+>
+> >
+> >> +};
+> >> +
+> >> +static const struct of_device_id video_cc_sm8350_match_table[] = {
+> >> +       { .compatible = "qcom,sm8350-videocc" },
+> >> +       { }
+> >> +};
+> >> +MODULE_DEVICE_TABLE(of, video_cc_sm8350_match_table);
+> >> +
+> >> +static struct platform_driver video_cc_sm8350_driver = {
+> >> +       .probe = video_cc_sm8350_probe,
+> >> +       .driver = {
+> >> +               .name = "sm8350-videocc",
+> >> +               .of_match_table = video_cc_sm8350_match_table,
+> >> +               .pm = &video_cc_sm8350_pm_ops,
+> >> +       },
+> >> +};
+> >> +module_platform_driver(video_cc_sm8350_driver);
+> >> +
+> >> +MODULE_DESCRIPTION("QTI SM8350 VIDEOCC Driver");
+> >> +MODULE_LICENSE("GPL");
+> >>
+> >> --
+> >> 2.40.0
+> >>
+> >
+> > Generic note: the register layout follows closely sm8250. However the
+> > existing differences probably do not warrant merging them.
+> No, I don't think merging any designs that are farther away
+> than 8150 and 8155 or 8992 and 8994 etc. is a good idea..
+>
+> I don't want to ever look at something like dispcc-sm8[123]50.c
+> again!
+
+Me too!
+
 -- 
-2.39.2
-
+With best wishes
+Dmitry
