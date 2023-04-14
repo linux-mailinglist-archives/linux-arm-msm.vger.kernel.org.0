@@ -2,64 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F5EB6E21F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 13:26:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D65AA6E21FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 13:26:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230054AbjDNL0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 07:26:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56444 "EHLO
+        id S229996AbjDNL0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 07:26:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbjDNL0P (ORCPT
+        with ESMTP id S230046AbjDNL0R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 07:26:15 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5487E83E5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 04:26:12 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 26so6215137lfq.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 04:26:12 -0700 (PDT)
+        Fri, 14 Apr 2023 07:26:17 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC81C7D94
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 04:26:13 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id a29so19297358ljq.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 04:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681471570; x=1684063570;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZXayIhb48rpICvZhgV0WpLpWTGJfP5YGp0OUVXORCrU=;
-        b=B+aAH7iwOvmQOPM5kAGyXrKGDpG3EgfK7vClDXgy1uEk2I98f/mWfScR07a1scB4fz
-         NTjQ56u04nweoPFEM89XzKAkO3xZmFOcRFY0RbCaRTh2qSFhpId5RyZ/kmqSgNwJ0nNd
-         QWp2sVBBuQYQaPb/BK3eWNhyNGrL0t86GFMYbQRQV5qFTOA9PhrRyMq9lBj7ZQAzJ7el
-         NsGzuADabwE14EL52awSsYbyvUhMPCTuzucA4MH0vY/JKVdMdciB6hXkgRbEgyXPrXYs
-         WBJrjGmnRIF4TNgqSRpo1086F9agmwjywSRuBZzdMIaDDKy1nuzBVPsQk2jve81DJhk8
-         rONw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681471570; x=1684063570;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1681471572; x=1684063572;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZXayIhb48rpICvZhgV0WpLpWTGJfP5YGp0OUVXORCrU=;
-        b=PNL3qEgEFtizLcGfRpayRTj4ah+QDXMD1KM0NvPVKuGahli6mOKbgc+nDgTamnZNWR
-         b3eTp2am0Vc2KcjDCvIccDAeCOxkcysiO9BFZ9V0zib08pXoqATFaD8bXdehob+zWUUM
-         hsmabvtG78lV1DmcVFHvK+iKujXeF4kPJgYB8BiMJ/VTqk23KwDIWc8A9Dudr07WfZS0
-         OnqUb+1YmKZXhYP3/lKwjHqMlDFLKK4u7GCGJl/OB3YdZVdG2gB2x9WxHsU+sF9xheRu
-         5brxsY4lwEOKDPowCywPKtJv0nA83kC1o2FoFB0mPlgRuDznS2yt6Ds/TlhIcQprJIS7
-         LYzg==
-X-Gm-Message-State: AAQBX9foTIgAmpdCR6LHOOJbixHluE2I8iCyhsUHgHN4pyl807lKtL/o
-        HI5HgDMPVgYJtVohLKvwUQNnHg==
-X-Google-Smtp-Source: AKy350YCD/gqeoFDnTa2Hdfa7XhbQnXeWkA78wnWZoK8ZEzi0mDfNEObzPujJARrty7gF92OloRWSQ==
-X-Received: by 2002:ac2:5a4f:0:b0:4cb:4362:381d with SMTP id r15-20020ac25a4f000000b004cb4362381dmr2491545lfn.62.1681471570603;
-        Fri, 14 Apr 2023 04:26:10 -0700 (PDT)
+        bh=hZACr2qT1r+Pq/JG1rFFm+OjlMblwToTQZN+UEc9YSE=;
+        b=YLnQYGCJFK1sjLKyNQ3cuARkxKXbepwbwtmbk6Oo/go3HDUl2YF1+mnWdBNd1NKgkT
+         LsGxhTuYvED38/uLsGvXOX4CqmaairbS10svzUdBeY5cc6C4/p53Nt5XPJLxquAkoNGI
+         nJeBcH7ndpb+f6xcQvVQjlWt6rVXxTE3JuIRvO/yWDjIDPbotvSz/ZoTHC+NTKq3H+cv
+         BhMslCfWXY2i1U+jnjj1AL71PRvODqoAKqAIvOGksN9j9GSzJGvwLIKwP1KXEqfOXBeG
+         grVfTdsAMSSe4oc5LCUxf8RABsiS7Y2Zt7/tWy+qzOnyke8tJ66U/DoAM2AL/ziBSaSJ
+         FUpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681471572; x=1684063572;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hZACr2qT1r+Pq/JG1rFFm+OjlMblwToTQZN+UEc9YSE=;
+        b=a5hayxDZo3mCA6M0Re5KHHnYdy/4scozVqHAjVuyY0xUV8zkrCk002KXWam2YaCgXH
+         J3tIcSbBnHLpXgYtj/Yqd6WKDxRLDIOUqgzGdFRqvJGbAY78n0RhL9ilm+c+9NLek32r
+         fjquNPdMGV+kVO3tOENtYovXbpcPaQ9WhJBVGXPu3gFwLR4ApEsmVRJs+p/eVhia5Mg5
+         y0LosAMPLmLlAdMvzG9voBYSMk/TLQpLwcVlhlTh1g8qSo2OXaIb9aV1yMPdTdWz4Wc3
+         ib8xA+DpLDUmMJNX/Q3Gx9zIQUPexml0neR3dp9ythi3oTzEmdcpSifcgEK4T1QCIYR3
+         FdBg==
+X-Gm-Message-State: AAQBX9eTyweg+wCrQdbaZU3QtRGOJrmEaQl44l6bWcm4KLlmI0a7gjp6
+        rQXhjdha5rTOrlplJdrTs8dINg==
+X-Google-Smtp-Source: AKy350aP/+UPWzkbCS3EJKDnIrjBwYL8ESv1As/svYi+jJohuIuHiK7x28QNSm3RUICN4+G1fmht+Q==
+X-Received: by 2002:a2e:9d84:0:b0:295:d7a8:559b with SMTP id c4-20020a2e9d84000000b00295d7a8559bmr1615180ljj.10.1681471571922;
+        Fri, 14 Apr 2023 04:26:11 -0700 (PDT)
 Received: from [192.168.1.101] (abyl123.neoplus.adsl.tpnet.pl. [83.9.31.123])
-        by smtp.gmail.com with ESMTPSA id f2-20020a19ae02000000b004ecb06acbb3sm738430lfc.281.2023.04.14.04.26.09
+        by smtp.gmail.com with ESMTPSA id f2-20020a19ae02000000b004ecb06acbb3sm738430lfc.281.2023.04.14.04.26.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 04:26:10 -0700 (PDT)
+        Fri, 14 Apr 2023 04:26:11 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v2 0/2] SM8350 VIDEOCC
-Date:   Fri, 14 Apr 2023 13:26:07 +0200
-Message-Id: <20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org>
+Date:   Fri, 14 Apr 2023 13:26:08 +0200
+Subject: [PATCH v2 1/2] dt-bindings: clock: qcom,videocc: Add SM8350
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE84OWQC/32NWwrCMBBFt1LybaR5FNEv9yFFJmnaDISkTGpQS
- vZu7AL8PPdyODvLjtBldut2Rq5gxhQbyFPHrIe4OI5TYyZ7qXotFN/SipYH8IARngUna7mxExi
- jL8OgJWumgey4IYjWNze+QmjjSm7G95F6jI095i3R5ygX8Vv/R4rgPRdKz1cjJQxG3UM7KZ0TL
- WystX4B1EoKpswAAAA=
+Message-Id: <20230413-topic-lahaina_vidcc-v2-1-f721d507e555@linaro.org>
+References: <20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org>
+In-Reply-To: <20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org>
 To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -73,11 +72,11 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681471569; l=1143;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1681471569; l=4559;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=b1Z8B5GLQvfM6ewcQNkW9peR5LT/DSelr7WkGl08+Z0=;
- b=76jbKqduayOAhCvGyK9OsQaZZi45ZFQ2hNbCxhFM+69mO3MOsGdnvnUZxZvpv9alD59wiz2tVLlt
- 24W5MmekCF9GjBtxOpDEnBAyUBiHu0SjMYtWKN4qVMeF+JaFgpX2
+ bh=yDNgI5vaFDUinUfBBr+IuGY3i/nybTj/plx2VvRXMcU=;
+ b=vV8EFqIf+B1ySfObURnPZtaBo/OlDkvqpZX27ubloRTsoJGr+N0Ng8rwMNamtZEWSJOPy4ITzFpR
+ cyJ0ULJMDKcIlEfFlIf8OO9N/VkRMeKeJOggAYg0MdLkoDOMNByE
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -90,35 +89,157 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-v1 -> v2:
-- "){" -> ") {"
-- subsys_initcall -> module_platform_driver
-- constify lucid_5lpe_vco & .hw.init
-- devm_add_action_or_reset -> devm_pm_runtime_enable
-
-v1: https://lore.kernel.org/r/20230413-topic-lahaina_vidcc-v1-0-134f9b22a5b3@linaro.org
-
-This serires brings support for SM8350 videocc and updates the
-related dt-bindings.
+SM8350, like most recent higher-end chips has a separate clock
+controller block just for the Venus IP. Document it.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Konrad Dybcio (2):
-      dt-bindings: clock: qcom,videocc: Add SM8350
-      clk: qcom: Introduce SM8350 VIDEOCC
+ .../devicetree/bindings/clock/qcom,videocc.yaml    | 29 +++++++++++++++++-
+ include/dt-bindings/clock/qcom,sm8350-videocc.h    | 35 ++++++++++++++++++++++
+ include/dt-bindings/reset/qcom,sm8350-videocc.h    | 18 +++++++++++
+ 3 files changed, 81 insertions(+), 1 deletion(-)
 
- .../devicetree/bindings/clock/qcom,videocc.yaml    |  29 +-
- drivers/clk/qcom/Kconfig                           |   9 +
- drivers/clk/qcom/Makefile                          |   1 +
- drivers/clk/qcom/videocc-sm8350.c                  | 557 +++++++++++++++++++++
- include/dt-bindings/clock/qcom,sm8350-videocc.h    |  35 ++
- include/dt-bindings/reset/qcom,sm8350-videocc.h    |  18 +
- 6 files changed, 648 insertions(+), 1 deletion(-)
----
-base-commit: e3342532ecd39bbd9c2ab5b9001cec1589bc37e9
-change-id: 20230413-topic-lahaina_vidcc-bcdabb475542
+diff --git a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+index 2b07146161b4..6d892b0f2306 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,videocc.yaml
+@@ -19,6 +19,8 @@ description: |
+     include/dt-bindings/clock/qcom,videocc-sdm845.h
+     include/dt-bindings/clock/qcom,videocc-sm8150.h
+     include/dt-bindings/clock/qcom,videocc-sm8250.h
++    include/dt-bindings/clock/qcom,videocc-sm8350.h
++    include/dt-bindings/reset/qcom,videocc-sm8350.h
+ 
+ properties:
+   compatible:
+@@ -28,6 +30,7 @@ properties:
+       - qcom,sdm845-videocc
+       - qcom,sm8150-videocc
+       - qcom,sm8250-videocc
++      - qcom,sm8350-videocc
+ 
+   clocks:
+     minItems: 1
+@@ -63,7 +66,6 @@ required:
+   - compatible
+   - reg
+   - clocks
+-  - clock-names
+   - '#clock-cells'
+   - '#reset-cells'
+   - '#power-domain-cells'
+@@ -85,6 +87,9 @@ allOf:
+           items:
+             - const: bi_tcxo
+ 
++      required:
++        - clock-names
++
+   - if:
+       properties:
+         compatible:
+@@ -101,6 +106,9 @@ allOf:
+             - const: bi_tcxo
+             - const: bi_tcxo_ao
+ 
++      required:
++        - clock-names
++
+   - if:
+       properties:
+         compatible:
+@@ -119,6 +127,25 @@ allOf:
+             - const: bi_tcxo
+             - const: bi_tcxo_ao
+ 
++      required:
++        - clock-names
++
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,sm8350-videocc
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Board XO source
++            - description: Board active XO source
++            - description: Board sleep clock
++
++      required:
++        - power-domains
++
+ additionalProperties: false
+ 
+ examples:
+diff --git a/include/dt-bindings/clock/qcom,sm8350-videocc.h b/include/dt-bindings/clock/qcom,sm8350-videocc.h
+new file mode 100644
+index 000000000000..b6945a448676
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sm8350-videocc.h
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023, Linaro Limited
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_VIDEO_CC_SM8350_H
++#define _DT_BINDINGS_CLK_QCOM_VIDEO_CC_SM8350_H
++
++/* Clocks */
++#define VIDEO_CC_AHB_CLK_SRC					0
++#define VIDEO_CC_MVS0_CLK					1
++#define VIDEO_CC_MVS0_CLK_SRC					2
++#define VIDEO_CC_MVS0_DIV_CLK_SRC				3
++#define VIDEO_CC_MVS0C_CLK					4
++#define VIDEO_CC_MVS0C_DIV2_DIV_CLK_SRC				5
++#define VIDEO_CC_MVS1_CLK					6
++#define VIDEO_CC_MVS1_CLK_SRC					7
++#define VIDEO_CC_MVS1_DIV2_CLK					8
++#define VIDEO_CC_MVS1_DIV_CLK_SRC				9
++#define VIDEO_CC_MVS1C_CLK					10
++#define VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC				11
++#define VIDEO_CC_SLEEP_CLK					12
++#define VIDEO_CC_SLEEP_CLK_SRC					13
++#define VIDEO_CC_XO_CLK_SRC					14
++#define VIDEO_PLL0						15
++#define VIDEO_PLL1						16
++
++/* GDSCs */
++#define MVS0C_GDSC						0
++#define MVS1C_GDSC						1
++#define MVS0_GDSC						2
++#define MVS1_GDSC						3
++
++#endif
+diff --git a/include/dt-bindings/reset/qcom,sm8350-videocc.h b/include/dt-bindings/reset/qcom,sm8350-videocc.h
+new file mode 100644
+index 000000000000..df7a808720ee
+--- /dev/null
++++ b/include/dt-bindings/reset/qcom,sm8350-videocc.h
+@@ -0,0 +1,18 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2023, Linaro Limited
++ */
++
++#ifndef _DT_BINDINGS_RESET_QCOM_VIDEO_CC_SM8350_H
++#define _DT_BINDINGS_RESET_QCOM_VIDEO_CC_SM8350_H
++
++#define CVP_VIDEO_CC_INTERFACE_BCR				0
++#define CVP_VIDEO_CC_MVS0_BCR					1
++#define VIDEO_CC_MVS0C_CLK_ARES					2
++#define CVP_VIDEO_CC_MVS0C_BCR					3
++#define CVP_VIDEO_CC_MVS1_BCR					4
++#define VIDEO_CC_MVS1C_CLK_ARES					5
++#define CVP_VIDEO_CC_MVS1C_BCR					6
++
++#endif
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.40.0
 
