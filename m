@@ -2,75 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 817436E1D4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 09:36:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCCAA6E1D6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 09:44:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbjDNHg0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 03:36:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58336 "EHLO
+        id S229673AbjDNHoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 03:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbjDNHgZ (ORCPT
+        with ESMTP id S229494AbjDNHoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 03:36:25 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 412BE76A7;
-        Fri, 14 Apr 2023 00:35:50 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0755420370;
-        Fri, 14 Apr 2023 09:35:01 +0200 (CEST)
-Date:   Fri, 14 Apr 2023 09:35:00 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: always program dsc active bits
-Message-ID: <mfzi535qsjtcznwdvgb7qyzk25rcsrkwozah6ji4thqsj73n3m@asybxllomisg>
-References: <1681247095-1201-1-git-send-email-quic_khsieh@quicinc.com>
- <z7wj2lcgcdxsqh7ylhec3ig6o4p6q37zqvpzoxp4bd4vid2z2n@ubsgt3ebqrwr>
- <83f9a438-52c5-83f3-1767-92d16518d8f0@quicinc.com>
- <feedv4isliterjtwyicqfarwuvzhtov3jkmvjcwqvt7itkyh7y@e2jq5t6r3lxc>
- <e78e576a-2a04-e7ca-f6c4-701d508541ad@quicinc.com>
+        Fri, 14 Apr 2023 03:44:15 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 130B64C06
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 00:44:14 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id dm2so43601916ejc.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 00:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681458252; x=1684050252;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xggPyA5Loe1PP8kK256jqhC93KUTQ15DwlgDEOkunfA=;
+        b=lfChVG0kCG4fpYP4QhuqIz/B3aGDMndQAyK5F34Aw9DcYHwWZj2sxxsAdDoUMyECtw
+         Waao+Y7Of9MwB+er1zwTwdFcMR81qJMZsNo5eJUy1aOPd7lunlBS4k1Jjxexk55HxqTh
+         cxicVe6SJ+Aui9RRgVdj1g2YOrgboXSiIJ3zQL0baMb9mCrRbXs3QIWihfEfcondhNS/
+         qdPMG4B+/0gy7av2wtoBx5ubpbcsDWGCUFKAWvcvD6DlAEDYSqM4ahmtk4j0sjeUgKnm
+         bl0NS9l8VgnoMPzgpJBQc0om3NPsuZlkIJdOEm3u90Dw77vUiTJjdlmt54iQBIVSVG7U
+         ltKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681458252; x=1684050252;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xggPyA5Loe1PP8kK256jqhC93KUTQ15DwlgDEOkunfA=;
+        b=VYRxq7eLRq0j/vP02s0krV512f81v+wlQ8f+9lx3VFd5anddSCAg5UjzVbHQxKMTf6
+         sqDXsL9dO/IH4pMn6Bi8B1aKNn/jMUZi0wsvst2cnWRdaml/+IB9XdhgACv+2CvdWd8E
+         JlwCbDUCv8X5bhyawfkRdojGLwoS9h7uy/7FmGz00cpqP64dh1rEcwwY8CINgWKyBMpr
+         EeaYzRpTGz36epLCGEkJVgosvGqkaTISMNpSGJhMD8pfmGIwrcFo7sLKAfiWEK2UXo10
+         9taYYnVeUV4Mfx9HtsozQCCgmluLXaKdgq/DO5d2FeOLpC56GDL9iiWPoDQ2xDfPjejY
+         yh/A==
+X-Gm-Message-State: AAQBX9fODdwH3XcAUliapZL4S36vVhuWVonqNSh+Mq59Jklk+s/VTVqB
+        qzC9JWgnKDqo7GKB0d4P+vSiRwD1rbcv2BQeOqA=
+X-Google-Smtp-Source: AKy350YPcZ3BLKpDrlII+wqnI5EW6oBxcl0fHOpJPCrNIqmVgoO5mmHwNDo4YKuiP7xHtB3sEAX9hQ==
+X-Received: by 2002:a17:907:7810:b0:8b1:7ae9:647 with SMTP id la16-20020a170907781000b008b17ae90647mr5407027ejc.76.1681458252561;
+        Fri, 14 Apr 2023 00:44:12 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:8a60:6b0f:105a:eefb? ([2a02:810d:15c0:828:8a60:6b0f:105a:eefb])
+        by smtp.gmail.com with ESMTPSA id gv16-20020a1709072bd000b0094a785e362dsm2118002ejc.141.2023.04.14.00.44.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Apr 2023 00:44:12 -0700 (PDT)
+Message-ID: <046eac79-b97e-9f95-8a2f-05cf00a00f81@linaro.org>
+Date:   Fri, 14 Apr 2023 09:44:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e78e576a-2a04-e7ca-f6c4-701d508541ad@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 1/5] dt-bindings: input: touchscreen: add bindings for
+ focaltech,fts5452
+Content-Language: en-US
+To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Robert Jarzmik <robert.jarzmik@free.fr>,
+        Jeff LaBundy <jeff@labundy.com>,
+        Markuss Broks <markuss.broks@gmail.com>,
+        Jean Delvare <jdelvare@suse.de>,
+        Job Noorman <job@noorman.info>,
+        Alistair Francis <alistair@alistair23.me>,
+        Chris Morgan <macromorgan@hotmail.com>,
+        Hans de Goede <hdegoede@redhat.com>
+Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230410160200.57261-1-joelselvaraj.oss@gmail.com>
+ <20230410160200.57261-2-joelselvaraj.oss@gmail.com>
+ <f9552bb6-ea73-93b4-f15d-d5d7c326c708@linaro.org>
+ <b89c39af-da87-8138-9899-fb631ebe76e1@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <b89c39af-da87-8138-9899-fb631ebe76e1@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-12 10:33:15, Abhinav Kumar wrote:
-[..]
-> > What happens if a device boots without DSC panel connected?  Will
-> > CTL_DSC_FLUSH be zero and not (unnecessarily, I assume) flush any of the
-> > DSC blocks?  Or could this flush uninitialized state to the block?
-> > 
+On 14/04/2023 02:32, Joel Selvaraj wrote:
+> Hi Krzysztof Kozlowski,
 > 
-> If we bootup without DSC panel connected, the kernel's cfg->dsc will be 
-> 0 and default register value of CTL_DSC_FLUSH will be 0 so it wont flush 
-> any DSC blocks.
+> Konrad Dybcio suggested to use interrupts-extended instead interrupts.
 
-Ack, that makes sense.  However, if I connect a DSC panel, then
-disconnect it (now the register should be non-zero, but cfg->dsc will be
-zero), and then replug a non-DSC panel multiple times, it'll get flushed
-every time because we never clear CTL_DSC_FLUSH after that?
+Sorry,
 
-> Sure, as I wrote in the other response, we can move this 
-> to reset_intf_cfg later when the other pieces are fixed. And leave a 
-> FIXME here.
+I have no idea what this email is about.
 
-Kuogee forgot to CC me on this patchs so I did not read/receive that
-side of the email thread.  Will catch up before reviewing v2.
+There is no context here, no reply, it just appeared alone in my inbox
+without any reference. Please respond inline to existing messages,
+keeping necessary context you are replying to.
 
-- Marijn
+> So in my WIP v3, I have updated it in the dts and bindings example.
+> However, I am confused if I should replace the "interrupts" with
+> "interrupts-extended" property in the schema too? I see a lot of schemas
+
+No.
+
+> specifying "interrupts", with examples using "interrupts" or
+> "interrupts-extended". At the same time, I see some specifying both
+> "interrupts" and "interrupts-extended" (like one of these two) and very
+> few others specify only "interrupts-extended" in the schema. Which is
+> the currently recommended way to do this?
+> 
+> In between, the interrupt property should be a required property as the
+> driver will not function without an interrupt. I will fix that in v3.
+> 
+> Thanks,
+> Joel Selvaraj
+
+Best regards,
+Krzysztof
+
