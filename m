@@ -2,127 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3ACDF6E2775
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 17:53:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 431D26E27F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 18:05:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbjDNPw7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 11:52:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39912 "EHLO
+        id S230339AbjDNQFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 12:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbjDNPw6 (ORCPT
+        with ESMTP id S230108AbjDNQFH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 11:52:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 107E1B74D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 08:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1681487524;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=ATzwgaslzQU3gPsTLdjNRzR08gZk0kKwHmUAOWcuyho=;
-        b=IoYZJBxK32pNT0xoodwh3nKL7crrsOfksSv913xz76pnmYpw/QXcQDaIrr/tb6mNIIv1kW
-        p0+CFqOLLqo+FdC5tiso1S+jP53QWQxqDS4/DjBdO+NsJjH0Lk9vAyW2CAFfdiuOPJsMTa
-        aYLJViNWnd4GMiXncd7pTVh9hHz5eaM=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-PFmJjy68NqmpLiAka0cUtg-1; Fri, 14 Apr 2023 11:52:03 -0400
-X-MC-Unique: PFmJjy68NqmpLiAka0cUtg-1
-Received: by mail-oi1-f199.google.com with SMTP id y129-20020acae187000000b0038c4c61e7a3so320586oig.20
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 08:52:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681487523; x=1684079523;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ATzwgaslzQU3gPsTLdjNRzR08gZk0kKwHmUAOWcuyho=;
-        b=huYuAlAy8d16ZYlBAF+IVvQ5riArSdRndNNe5hARWqV4LHrRrsyxWo3EPMtqNP8lcO
-         qJUuiEZvSVpVit2dr3PqkhbWCN4yPYWOijCCZ7zOPkcmZ2i2GX5Mdp74W5VlJJIi92Kx
-         AAHJEyfFh8CdTpca6WxpQQ8teJoleLQSI4hxOD5FoA1TGDGV4F1YlpqhVqCG4uHQtnyV
-         2qHgf6ttvDQAGCWHkzl7PQLa3xOSIR5VwytjBejB5eKAKmKNqNqvVFCwzXHxfP8H+fdD
-         E8TnSvNQmIrccjoctJsaH93F45MN0x/+BFXZCfk/82CMe/28CI8I51E/o09vbalPgCtj
-         Bl4g==
-X-Gm-Message-State: AAQBX9eVqDaWGjoMykOtIUXjeMolvsrju1Toqh3C/Pf+cmL13ORk0T56
-        7m99yWt8muk0EDr4W8qNlZbiqbsSi4ZkdfJmz6CAAGul+wTg2pQH55L0kWJVY+vO80UNEqfA4Mk
-        sX86aqQYkDrmXJsMrAJFf1hN6+w==
-X-Received: by 2002:a54:4601:0:b0:389:4f7b:949d with SMTP id p1-20020a544601000000b003894f7b949dmr2828317oip.22.1681487522999;
-        Fri, 14 Apr 2023 08:52:02 -0700 (PDT)
-X-Google-Smtp-Source: AKy350a0ymS28sAALQ4gSVn0pIU6HcawITLnwQRF/nhGAcGXRRC0HAnooY6KqMZffglNozLSmTy3tw==
-X-Received: by 2002:a54:4601:0:b0:389:4f7b:949d with SMTP id p1-20020a544601000000b003894f7b949dmr2828314oip.22.1681487522774;
-        Fri, 14 Apr 2023 08:52:02 -0700 (PDT)
-Received: from halaney-x13s (104-53-165-62.lightspeed.stlsmo.sbcglobal.net. [104.53.165.62])
-        by smtp.gmail.com with ESMTPSA id bm26-20020a0568081a9a00b0038b734b335csm1800645oib.43.2023.04.14.08.52.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 08:52:02 -0700 (PDT)
-Date:   Fri, 14 Apr 2023 10:51:59 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v6 8/8] arm64: dts: qcom: sa8540-ride: Enable first port
- of tertiary usb controller
-Message-ID: <20230414155159.zmhkeoxwhxe5czm5@halaney-x13s>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
- <20230405125759.4201-9-quic_kriskura@quicinc.com>
+        Fri, 14 Apr 2023 12:05:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 191455BB0;
+        Fri, 14 Apr 2023 09:05:03 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33EFR9vE011456;
+        Fri, 14 Apr 2023 16:04:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=zmT8OGNRNLDcRI4wX+B2UEr0mwcLGz92og4FZshltnQ=;
+ b=antOn+e0QYxY11M/qmPeE5IR7JBm1chVBS7oGTbBzEjjMiGBgw8GyYgRpnPujQeNkBPH
+ CCwgJIJyJEB+vBSVebP1dzIcCAr18Nvkg0lGNNHlVRbjC0eAnF1mdIhM12Koc56w1tfs
+ XxaniBbWTUhs+Xf4zjMVlJVYdD9Oiu2J2An7NbqSpM6GqW+2+6CJFSXXmXLnkeGIIuLn
+ E3CuDfCgKXh2XYUzXckILUyEzIU0ZikYi89UVicHw2MpPDFKYtglLpch9+F0/PoWxI3M
+ ibKNnDMuVmaCpYPYq2fDxXJoHAQc4d2AliYoWN8w4PrCu8815zS4d1J++wQZDVXFDkge LA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pxdteknet-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 16:04:59 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33EG4wGV002787
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 16:04:58 GMT
+Received: from [10.216.10.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 14 Apr
+ 2023 09:04:52 -0700
+Message-ID: <2c5bbe48-3007-a1d5-73b9-9d2132bff9d4@quicinc.com>
+Date:   Fri, 14 Apr 2023 21:34:48 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230405125759.4201-9-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH V1 1/4] dt-bindings: clock: qcom,ipq9574-gcc: Drop the
+ Bias PLL ubi clock source
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
+References: <20230414134812.16812-1-quic_devipriy@quicinc.com>
+ <20230414134812.16812-2-quic_devipriy@quicinc.com>
+ <dc48d390-9c8b-d3b7-9c5e-6cbddb0e1306@linaro.org>
+ <aca7b808-51ce-1921-2ee2-0e82cf19d960@quicinc.com>
+ <7b4fe58c-9cf8-57ab-8cbc-c5ccf0b2a46d@linaro.org>
+From:   Devi Priya <quic_devipriy@quicinc.com>
+In-Reply-To: <7b4fe58c-9cf8-57ab-8cbc-c5ccf0b2a46d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: H18vUg1Fz5dVU1W_YWN3MuQSKPZI4V0I
+X-Proofpoint-GUID: H18vUg1Fz5dVU1W_YWN3MuQSKPZI4V0I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-14_08,2023-04-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=597 clxscore=1015 spamscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 mlxscore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304140142
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 05, 2023 at 06:27:59PM +0530, Krishna Kurapati wrote:
-> Enable first port of Quad port Tertiary USB controller for SA8540 Ride.
+
+
+On 4/14/2023 8:39 PM, Krzysztof Kozlowski wrote:
+> On 14/04/2023 16:22, Devi Priya wrote:
+>>
+>>
+>> On 4/14/2023 7:47 PM, Krzysztof Kozlowski wrote:
+>>> On 14/04/2023 15:48, Devi Priya wrote:
+>>>> Remove bias_pll_ubi_nc_clk from the binding as it has been removed from
+>>>> the Device Tree. Also added Bjorn Andersson to the maintainers list.
+>>>
+>>> Was it really removed? Where?
+>>>
+>> It has been removed from the Device tree and binding in V11
+>> https://lore.kernel.org/linux-arm-msm/20230404101622.5394-1-quic_devipriy@quicinc.com/
 > 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> I still see it in current next. Are you sure you refer to something
+> already merged?
 
-This is nitpicky, but I liked some of the description in the first[0]
-version of this patch that I authored for you:
-
-    From dcb27d07f079194ebd7efe1c9bec64da78beb290 Mon Sep 17 00:00:00 2001
-    From: Andrew Halaney <ahalaney@redhat.com>
-    Date: Thu, 19 Jan 2023 14:53:38 -0600
-    Subject: [PATCH] arm64: dts: qcom: sa8540p-ride: Enable usb_2
-    Content-type: text/plain
-
-    There is now support for the multiport USB controller this uses
-    so enable it.
-
-    The board only has a single port hooked up (despite it being wired up to
-    the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
-    which by default on boot is selected to mux properly. Grab the gpio
-    controlling that and ensure it stays in the right position so USB 2.0
-    continues to be routed from the external port to the SoC.
-
-    Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-
-Specifically the bit helping explain what the mux, its default state,
-etc are things I find explain some of the hardware/patch better. Personal
-opinion of course but I'll highlight it since you dropped it out :)
-
-[0] https://lore.kernel.org/linux-arm-msm/20230119220942.ja5gbo3t3fl63gpy@halaney-x13s/
-
-Either way, thanks for taking the patch along and working on this.
+This change was made in V11 and Currently V9 is merged in linux-next.
+So, the delta changes between V9 & V12 is posted in this series.
+The device tree change where the clock is removed is added part of this 
+incremental patch series and the binding is updated to reflect the same.
+Apologies, if the confusion is because of "has been removed from device 
+tree" in the commit message.
 
 Thanks,
-Andrew
-
+Devi Priya
+> 
+> Best regards,
+> Krzysztof
+> 
