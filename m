@@ -2,93 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 775F36E202E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 12:03:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEFC26E207B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 12:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbjDNKC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 06:02:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41420 "EHLO
+        id S229753AbjDNKNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 06:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbjDNKCt (ORCPT
+        with ESMTP id S229636AbjDNKNr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 06:02:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 689467D91;
-        Fri, 14 Apr 2023 03:02:48 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33E9l4iH022901;
-        Fri, 14 Apr 2023 10:02:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Q/n+MZ4xOGHaYAcNvhWlx8MWXpSgSS7OVEh/YXvb4Vo=;
- b=EYIPsluiq0WDO+a+R84fasyYeitE3ue0aIlMnDzoxQw+nQSizBazSF+pUAX0h+z0O2qa
- jpLXk0wgoZHGdTIsQlAQFt/EgFnvbR8/aZrEWIL6jQjF+SdgFHO2zGIz0X+4jSbj6aL4
- Xx6TrTSGXi7gmw44nITmCyWODLIM0AEL7AOJ0xghPGL9+r/c6nVrB9y2naztAVKzH0VQ
- v1h/7EjCJieYQbiwEVoHEXGbunNZ2vNLJdNAzbVflV4nwP/7n6zFGpW1nd+nVTXDCrna
- LRPtPUnK89mYgbkF2ezq1379IhwiBT1hjMgpU3dFrThVjLeZwBRXr4WhittMGwSgIeem rA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3py4ghr0y7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 14 Apr 2023 10:02:13 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33EA2Cr1013401
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 14 Apr 2023 10:02:12 GMT
-Received: from [10.216.10.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 14 Apr
- 2023 03:02:02 -0700
-Message-ID: <da6051dd-1a29-a356-9d6a-a35f20b23fb9@quicinc.com>
-Date:   Fri, 14 Apr 2023 15:31:59 +0530
+        Fri, 14 Apr 2023 06:13:47 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BFA67ECD;
+        Fri, 14 Apr 2023 03:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681467188; x=1713003188;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=cjLLIMHR+d6qP/BhWUSCR4eoe5tVu5Gp1jVzvOoek7o=;
+  b=imAitqjZ70M1xLGZO4XgJsr0yUhTiU/N5f1solxz1zHBDmRRhuRXqcm2
+   b1yGct7fWGetL428vdWykExadrnD8qXIkWBdSm0smqHrKBKg4jO7snyC9
+   tDkUNNVegqtA7+KGbS5VqpsLJNkrtsQWVviFt5xbn6mPCBynrJdCFI7eI
+   0zB+2LJiL/02X93oREz/CcnT1ubB9MWsxGPZAR3pH0xKOKpl4OI4dWRWc
+   6qRR9bnZELg6WTcqAV+UyL1U5N/5+Sk8uK3wN8CpsWVKP/FGAqopadaLA
+   lW5KscKqIaNs8xAdwoXEIT7Bnd5s76HWoYXUvgm1Dt8TLiA+sCXWp96oY
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10679"; a="333202132"
+X-IronPort-AV: E=Sophos;i="5.99,195,1677571200"; 
+   d="scan'208";a="333202132"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2023 03:12:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10679"; a="667148528"
+X-IronPort-AV: E=Sophos;i="5.99,195,1677571200"; 
+   d="scan'208";a="667148528"
+Received: from sokeeffe-mobl.ger.corp.intel.com (HELO [10.213.222.60]) ([10.213.222.60])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2023 03:12:40 -0700
+Message-ID: <5278c52a-b69a-ef7b-bbf2-b65bba2bac64@linux.intel.com>
+Date:   Fri, 14 Apr 2023 11:12:38 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V12 3/4] arm64: dts: qcom: Add support for ipq9574 SoC and
- RDP433 variant
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 6/7] drm: Add fdinfo memory stats
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <linus.walleij@linaro.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <p.zabel@pengutronix.de>, <shawnguo@kernel.org>, <arnd@arndb.de>,
-        <marcel.ziswiler@toradex.com>, <dmitry.baryshkov@linaro.org>,
-        <geert+renesas@glider.be>, <rafal@milecki.pl>,
-        <nfraprado@collabora.com>, <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>
-References: <20230410135948.11970-1-quic_devipriy@quicinc.com>
- <20230410135948.11970-4-quic_devipriy@quicinc.com>
- <a599d157-002f-26ef-5f31-a3fb0925dfba@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <a599d157-002f-26ef-5f31-a3fb0925dfba@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rFPC14_6yVVzlHo2ldTvJLOibAZ3tZTz
-X-Proofpoint-ORIG-GUID: rFPC14_6yVVzlHo2ldTvJLOibAZ3tZTz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-14_04,2023-04-13_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2304140090
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230411225725.2032862-1-robdclark@gmail.com>
+ <20230411225725.2032862-7-robdclark@gmail.com>
+ <29a8d9aa-c6ea-873f-ce0b-fb8199b13068@linux.intel.com>
+ <CAF6AEGsZsMx+Vy+4UQSx3X7w_QNvvjLqWxx=PnCLAOC9f-X2CQ@mail.gmail.com>
+ <ZDb1phnddSne79iN@phenom.ffwll.local>
+ <CAF6AEGvBeDVM12ac0j_PKSdcY83hNDhyrQs9-=h=dx_7AoMXLw@mail.gmail.com>
+ <ZDcEGoSPGr/oRLas@phenom.ffwll.local>
+ <c82fd8fa-9f4b-f62f-83be-25853f9ecf5e@linux.intel.com>
+ <ZDgDQ1PqtXwu8zqA@phenom.ffwll.local>
+ <ad8f2793-c1b3-a505-e93f-6cc52fded86d@linux.intel.com>
+ <ZDhgcqiOtJi6//TS@phenom.ffwll.local>
+ <8893ad56-8807-eb69-2185-b338725f0b18@linux.intel.com>
+ <CAKMK7uE+wxFFezLjZESvO+CyZjc9suptq9V2kC=ra3oB0wtDtA@mail.gmail.com>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <CAKMK7uE+wxFFezLjZESvO+CyZjc9suptq9V2kC=ra3oB0wtDtA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,213 +90,299 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 4/13/2023 2:16 AM, Konrad Dybcio wrote:
-> 
-> 
-> On 10.04.2023 15:59, Devi Priya wrote:
->> Add initial device tree support for Qualcomm IPQ9574 SoC and
->> Reference Design Platform(RDP) 433 which is based on IPQ9574
->> family of SoCs
+On 14/04/2023 10:07, Daniel Vetter wrote:
+> On Fri, 14 Apr 2023 at 10:57, Tvrtko Ursulin
+> <tvrtko.ursulin@linux.intel.com> wrote:
+>> On 13/04/2023 21:05, Daniel Vetter wrote:
+>>> On Thu, Apr 13, 2023 at 05:40:21PM +0100, Tvrtko Ursulin wrote:
+>>>>
+>>>> On 13/04/2023 14:27, Daniel Vetter wrote:
+>>>>> On Thu, Apr 13, 2023 at 01:58:34PM +0100, Tvrtko Ursulin wrote:
+>>>>>>
+>>>>>> On 12/04/2023 20:18, Daniel Vetter wrote:
+>>>>>>> On Wed, Apr 12, 2023 at 11:42:07AM -0700, Rob Clark wrote:
+>>>>>>>> On Wed, Apr 12, 2023 at 11:17 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>>>>>>>>>
+>>>>>>>>> On Wed, Apr 12, 2023 at 10:59:54AM -0700, Rob Clark wrote:
+>>>>>>>>>> On Wed, Apr 12, 2023 at 7:42 AM Tvrtko Ursulin
+>>>>>>>>>> <tvrtko.ursulin@linux.intel.com> wrote:
+>>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>> On 11/04/2023 23:56, Rob Clark wrote:
+>>>>>>>>>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>>>>>>>>>
+>>>>>>>>>>>> Add support to dump GEM stats to fdinfo.
+>>>>>>>>>>>>
+>>>>>>>>>>>> v2: Fix typos, change size units to match docs, use div_u64
+>>>>>>>>>>>> v3: Do it in core
+>>>>>>>>>>>>
+>>>>>>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>>>>>>>>>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+>>>>>>>>>>>> ---
+>>>>>>>>>>>>       Documentation/gpu/drm-usage-stats.rst | 21 ++++++++
+>>>>>>>>>>>>       drivers/gpu/drm/drm_file.c            | 76 +++++++++++++++++++++++++++
+>>>>>>>>>>>>       include/drm/drm_file.h                |  1 +
+>>>>>>>>>>>>       include/drm/drm_gem.h                 | 19 +++++++
+>>>>>>>>>>>>       4 files changed, 117 insertions(+)
+>>>>>>>>>>>>
+>>>>>>>>>>>> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentation/gpu/drm-usage-stats.rst
+>>>>>>>>>>>> index b46327356e80..b5e7802532ed 100644
+>>>>>>>>>>>> --- a/Documentation/gpu/drm-usage-stats.rst
+>>>>>>>>>>>> +++ b/Documentation/gpu/drm-usage-stats.rst
+>>>>>>>>>>>> @@ -105,6 +105,27 @@ object belong to this client, in the respective memory region.
+>>>>>>>>>>>>       Default unit shall be bytes with optional unit specifiers of 'KiB' or 'MiB'
+>>>>>>>>>>>>       indicating kibi- or mebi-bytes.
+>>>>>>>>>>>>
+>>>>>>>>>>>> +- drm-shared-memory: <uint> [KiB|MiB]
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +The total size of buffers that are shared with another file (ie. have more
+>>>>>>>>>>>> +than a single handle).
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +- drm-private-memory: <uint> [KiB|MiB]
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +The total size of buffers that are not shared with another file.
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +- drm-resident-memory: <uint> [KiB|MiB]
+>>>>>>>>>>>> +
+>>>>>>>>>>>> +The total size of buffers that are resident in system memory.
+>>>>>>>>>>>
+>>>>>>>>>>> I think this naming maybe does not work best with the existing
+>>>>>>>>>>> drm-memory-<region> keys.
+>>>>>>>>>>
+>>>>>>>>>> Actually, it was very deliberate not to conflict with the existing
+>>>>>>>>>> drm-memory-<region> keys ;-)
+>>>>>>>>>>
+>>>>>>>>>> I wouldn't have preferred drm-memory-{active,resident,...} but it
+>>>>>>>>>> could be mis-parsed by existing userspace so my hands were a bit tied.
+>>>>>>>>>>
+>>>>>>>>>>> How about introduce the concept of a memory region from the start and
+>>>>>>>>>>> use naming similar like we do for engines?
+>>>>>>>>>>>
+>>>>>>>>>>> drm-memory-$CATEGORY-$REGION: ...
+>>>>>>>>>>>
+>>>>>>>>>>> Then we document a bunch of categories and their semantics, for instance:
+>>>>>>>>>>>
+>>>>>>>>>>> 'size' - All reachable objects
+>>>>>>>>>>> 'shared' - Subset of 'size' with handle_count > 1
+>>>>>>>>>>> 'resident' - Objects with backing store
+>>>>>>>>>>> 'active' - Objects in use, subset of resident
+>>>>>>>>>>> 'purgeable' - Or inactive? Subset of resident.
+>>>>>>>>>>>
+>>>>>>>>>>> We keep the same semantics as with process memory accounting (if I got
+>>>>>>>>>>> it right) which could be desirable for a simplified mental model.
+>>>>>>>>>>>
+>>>>>>>>>>> (AMD needs to remind me of their 'drm-memory-...' keys semantics. If we
+>>>>>>>>>>> correctly captured this in the first round it should be equivalent to
+>>>>>>>>>>> 'resident' above. In any case we can document no category is equal to
+>>>>>>>>>>> which category, and at most one of the two must be output.)
+>>>>>>>>>>>
+>>>>>>>>>>> Region names we at most partially standardize. Like we could say
+>>>>>>>>>>> 'system' is to be used where backing store is system RAM and others are
+>>>>>>>>>>> driver defined.
+>>>>>>>>>>>
+>>>>>>>>>>> Then discrete GPUs could emit N sets of key-values, one for each memory
+>>>>>>>>>>> region they support.
+>>>>>>>>>>>
+>>>>>>>>>>> I think this all also works for objects which can be migrated between
+>>>>>>>>>>> memory regions. 'Size' accounts them against all regions while for
+>>>>>>>>>>> 'resident' they only appear in the region of their current placement, etc.
+>>>>>>>>>>
+>>>>>>>>>> I'm not too sure how to rectify different memory regions with this,
+>>>>>>>>>> since drm core doesn't really know about the driver's memory regions.
+>>>>>>>>>> Perhaps we can go back to this being a helper and drivers with vram
+>>>>>>>>>> just don't use the helper?  Or??
+>>>>>>>>>
+>>>>>>>>> I think if you flip it around to drm-$CATEGORY-memory{-$REGION}: then it
+>>>>>>>>> all works out reasonably consistently?
+>>>>>>>>
+>>>>>>>> That is basically what we have now.  I could append -system to each to
+>>>>>>>> make things easier to add vram/etc (from a uabi standpoint)..
+>>>>>>>
+>>>>>>> What you have isn't really -system, but everything. So doesn't really make
+>>>>>>> sense to me to mark this -system, it's only really true for integrated (if
+>>>>>>> they don't have stolen or something like that).
+>>>>>>>
+>>>>>>> Also my comment was more in reply to Tvrtko's suggestion.
+>>>>>>
+>>>>>> Right so my proposal was drm-memory-$CATEGORY-$REGION which I think aligns
+>>>>>> with the current drm-memory-$REGION by extending, rather than creating
+>>>>>> confusion with different order of key name components.
+>>>>>
+>>>>> Oh my comment was pretty much just bikeshed, in case someone creates a
+>>>>> $REGION that other drivers use for $CATEGORY. Kinda Rob's parsing point.
+>>>>> So $CATEGORY before the -memory.
+>>>>>
+>>>>> Otoh I don't think that'll happen, so I guess we can go with whatever more
+>>>>> folks like :-) I don't really care much personally.
+>>>>
+>>>> Okay I missed the parsing problem.
+>>>>
+>>>>>> AMD currently has (among others) drm-memory-vram, which we could define in
+>>>>>> the spec maps to category X, if category component is not present.
+>>>>>>
+>>>>>> Some examples:
+>>>>>>
+>>>>>> drm-memory-resident-system:
+>>>>>> drm-memory-size-lmem0:
+>>>>>> drm-memory-active-vram:
+>>>>>>
+>>>>>> Etc.. I think it creates a consistent story.
+>>>>>>
+>>>>>> Other than this, my two I think significant opens which haven't been
+>>>>>> addressed yet are:
+>>>>>>
+>>>>>> 1)
+>>>>>>
+>>>>>> Why do we want totals (not per region) when userspace can trivially
+>>>>>> aggregate if they want. What is the use case?
+>>>>>>
+>>>>>> 2)
+>>>>>>
+>>>>>> Current proposal limits the value to whole objects and fixates that by
+>>>>>> having it in the common code. If/when some driver is able to support sub-BO
+>>>>>> granularity they will need to opt out of the common printer at which point
+>>>>>> it may be less churn to start with a helper rather than mid-layer. Or maybe
+>>>>>> some drivers already support this, I don't know. Given how important VM BIND
+>>>>>> is I wouldn't be surprised.
+>>>>>
+>>>>> I feel like for drivers using ttm we want a ttm helper which takes care of
+>>>>> the region printing in hopefully a standard way. And that could then also
+>>>>> take care of all kinds of of partial binding and funny rules (like maybe
+>>>>> we want a standard vram region that addds up all the lmem regions on
+>>>>> intel, so that all dgpu have a common vram bucket that generic tools
+>>>>> understand?).
+>>>>
+>>>> First part yes, but for the second I would think we want to avoid any
+>>>> aggregation in the kernel which can be done in userspace just as well. Such
+>>>> total vram bucket would be pretty useless on Intel even since userspace
+>>>> needs to be region aware to make use of all resources. It could even be
+>>>> counter productive I think - "why am I getting out of memory when half of my
+>>>> vram is unused!?".
+>>>
+>>> This is not for intel-aware userspace. This is for fairly generic "gputop"
+>>> style userspace, which might simply have no clue or interest in what lmemX
+>>> means, but would understand vram.
+>>>
+>>> Aggregating makes sense.
 >>
->> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
->> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
->> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
+>> Lmem vs vram is now an argument not about aggregation but about
+>> standardizing regions names.
+>>
+>> One detail also is a change in philosophy compared to engine stats where
+>> engine names are not centrally prescribed and it was expected userspace
+>> will have to handle things generically and with some vendor specific
+>> knowledge.
+>>
+>> Like in my gputop patches. It doesn't need to understand what is what,
+>> it just finds what's there and presents it to the user.
+>>
+>> Come some accel driver with local memory it wouldn't be vram any more.
+>> Or even a headless data center GPU. So I really don't think it is good
+>> to hardcode 'vram' in the spec, or midlayer, or helpers.
+>>
+>> And for aggregation.. again, userspace can do it just as well. If we do
+>> it in kernel then immediately we have multiple sets of keys to output
+>> for any driver which wants to show the region view. IMO it is just
+>> pointless work in the kernel and more code in the kernel, when userspace
+>> can do it.
+>>
+>> Proposal A (one a discrete gpu, one category only):
+>>
+>> drm-resident-memory: x KiB
+>> drm-resident-memory-system: x KiB
+>> drm-resident-memory-vram: x KiB
+>>
+>> Two loops in the kernel, more parsing in userspace.
+>>
+>> Proposal B:
+>>
+>> drm-resident-memory-system: x KiB
+>> drm-resident-memory-vram: x KiB
+>>
+>> Can be one loop, one helper, less text for userspace to parse and it can
+>> still trivially show the total if so desired.
+>>
+>> For instance a helper (or two) with a common struct containing region
+>> names and totals, where a callback into the driver tallies under each
+>> region, as the drm helper is walking objects.
 > 
->> +	soc: soc@0 {
->> +		compatible = "simple-bus";
->> +		#address-cells = <1>;
->> +		#size-cells = <1>;
->> +		ranges = <0 0 0 0xffffffff>;
-> this is equal to:
-> 
-> ranges;
+> The difference is that Rob's patches exist, and consistently roll this
+> out across all drm drivers.
+> > You're patches don't exist, and encourage further fragmentation. And
+> my take here is that "the good enough, and real" wins above "perfect,
+> but maybe in a few years and inconsitently across drivers".
 
-Konrad, on updating (ranges = <0 0 0 0xffffffff>; --> ranges;)
-we see the below warnings:
-arch/arm64/boot/dts/qcom/ipq9574.dtsi:103.3-10: Warning (ranges_format):
-/soc@0:ranges: empty "ranges" property but its #address-cells (1)
-differs from / (2)
-arch/arm64/boot/dts/qcom/ipq9574.dtsi:103.3-10: Warning (ranges_format): 
-/soc@0:ranges: empty "ranges" property but its #size-cells (1) differs
-from / (2)
+There is fragmentation in this series already since two categories 
+depend on drivers implementing them. Resident is even IMO one of the 
+more interesting ones.
 
-Looks like, empty ranges property isn't supported if the parent and
-child address spaces are non-identical.
-Would you suggest to retain the ranges as such?
-(ranges = <0 0 0 0xffffffff>;)
+> No one is stopping you from writing a ton of patches to get towards
+> the perfect state, and we still want to get there. But I don't see the
+> point in rejecting the good enough for now for that.
 
-Thanks,
-Devi Priya
+I argued a few times already on what I see as problems and discussed 
+pros and cons, but I can write patches too.
+
+Regards,
+
+Tvrtko
+
+> It's kinda the same idea with scheduler stats, but the other way
+> round: Sure it'd have been great if we could have this consistently
+> across all drivers, but right now the scheduler situation just isn't
+> there to support that. I'm pushing a bit, but it's definitely years
+> away. So the pragmatic option there was to just roll things out
+> driver-by-driver, to get things going. It's not perfect at all, and it
+> would have been easy to nuke that entire fdinfo effort on those
+> grounds.
 > 
-> Could you fix that up when applying, Bjorn, should there be
-> no other issues?
+> If you want maybe a todo.rst entry to cover this discussion and make
+> sure we do record the rough consensus of where we eventually want to
+> end up at?
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>> It does mean we walk the bo list twice, but *shrug*. People have been
+>>>>> complaining about procutils for decades, they're still horrible, I think
+>>>>> walking bo lists twice internally in the ttm case is going to be ok. If
+>>>>> not, it's internals, we can change them again.
+>>>>>
+>>>>> Also I'd lean a lot more towards making ttm a helper and not putting that
+>>>>> into core, exactly because it's pretty clear we'll need more flexibility
+>>>>> when it comes to accurate stats for multi-region drivers.
+>>>>
+>>>> Exactly.
+>>>>
+>>>>> But for a first "how much gpu space does this app use" across everything I
+>>>>> think this is a good enough starting point.
+>>>>
+>>>> Okay so we agree this would be better as a helper and not in the core.
+>>>
+>>> Nope, if you mean with this = Rob's patch. I was talking about a
+>>> hypothetical region-aware extension for ttm-using drivers.
+>>>
+>>>> On the point are keys/semantics good enough as a starting point I am still
+>>>> not convinced kernel should aggregate and that instead we should start from
+>>>> day one by appending -system (or something) to Rob's proposed keys.
+>>>
+>>> It should imo. Inflicting driver knowledge on generic userspace makes not
+>>> much sense, we should start with the more generally useful stuff imo.
+>>> That's why there's the drm fdinfo spec and all that so it's not a
+>>> free-for-all.
+>>>
+>>> Also Rob's stuff is _not_ system. Check on a i915 dgpu if you want :-)
+>>
+>> I am well aware it adds up everything, that is beside the point.
+>>
+>> Drm-usage-stats.rst text needs to be more precise across all keys at least:
+>>
+>> +- drm-resident-memory: <uint> [KiB|MiB]
+>> +
+>> +The total size of buffers that are resident in system memory.
+>>
+>> But as said, I don't see the point in providing aggregated values.
 > 
-Thank you!
-> Konrad
+> The choice isn't between aggregated values and split values.
 > 
->> +
->> +		tlmm: pinctrl@1000000 {
->> +			compatible = "qcom,ipq9574-tlmm";
->> +			reg = <0x01000000 0x300000>;
->> +			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
->> +			gpio-controller;
->> +			#gpio-cells = <2>;
->> +			gpio-ranges = <&tlmm 0 0 65>;
->> +			interrupt-controller;
->> +			#interrupt-cells = <2>;
->> +
->> +			uart2_pins: uart2-state {
->> +				pins = "gpio34", "gpio35";
->> +				function = "blsp2_uart";
->> +				drive-strength = <8>;
->> +				bias-disable;
->> +			};
->> +		};
->> +
->> +		gcc: clock-controller@1800000 {
->> +			compatible = "qcom,ipq9574-gcc";
->> +			reg = <0x01800000 0x80000>;
->> +			clocks = <&xo_board_clk>,
->> +				 <&sleep_clk>,
->> +				 <0>,
->> +				 <0>,
->> +				 <0>,
->> +				 <0>,
->> +				 <0>;
->> +			#clock-cells = <1>;
->> +			#reset-cells = <1>;
->> +			#power-domain-cells = <1>;
->> +		};
->> +
->> +		sdhc_1: mmc@7804000 {
->> +			compatible = "qcom,ipq9574-sdhci", "qcom,sdhci-msm-v5";
->> +			reg = <0x07804000 0x1000>, <0x07805000 0x1000>;
->> +			reg-names = "hc", "cqhci";
->> +
->> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "hc_irq", "pwr_irq";
->> +
->> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
->> +				 <&gcc GCC_SDCC1_APPS_CLK>,
->> +				 <&xo_board_clk>;
->> +			clock-names = "iface", "core", "xo";
->> +			non-removable;
->> +			status = "disabled";
->> +		};
->> +
->> +		blsp1_uart2: serial@78b1000 {
->> +			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
->> +			reg = <0x078b1000 0x200>;
->> +			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
->> +			clocks = <&gcc GCC_BLSP1_UART3_APPS_CLK>,
->> +				 <&gcc GCC_BLSP1_AHB_CLK>;
->> +			clock-names = "core", "iface";
->> +			status = "disabled";
->> +		};
->> +
->> +		intc: interrupt-controller@b000000 {
->> +			compatible = "qcom,msm-qgic2";
->> +			reg = <0x0b000000 0x1000>,  /* GICD */
->> +			      <0x0b002000 0x2000>,  /* GICC */
->> +			      <0x0b001000 0x1000>,  /* GICH */
->> +			      <0x0b004000 0x2000>;  /* GICV */
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +			interrupt-controller;
->> +			#interrupt-cells = <3>;
->> +			interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
->> +			ranges = <0 0x0b00c000 0x3000>;
->> +
->> +			v2m0: v2m@0 {
->> +				compatible = "arm,gic-v2m-frame";
->> +				reg = <0x00000000 0xffd>;
->> +				msi-controller;
->> +			};
->> +
->> +			v2m1: v2m@1000 {
->> +				compatible = "arm,gic-v2m-frame";
->> +				reg = <0x00001000 0xffd>;
->> +				msi-controller;
->> +			};
->> +
->> +			v2m2: v2m@2000 {
->> +				compatible = "arm,gic-v2m-frame";
->> +				reg = <0x00002000 0xffd>;
->> +				msi-controller;
->> +			};
->> +		};
->> +
->> +		timer@b120000 {
->> +			compatible = "arm,armv7-timer-mem";
->> +			reg = <0x0b120000 0x1000>;
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +			ranges;
->> +
->> +			frame@b120000 {
->> +				reg = <0x0b121000 0x1000>,
->> +				      <0x0b122000 0x1000>;
->> +				frame-number = <0>;
->> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
->> +					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
->> +			};
->> +
->> +			frame@b123000 {
->> +				reg = <0x0b123000 0x1000>;
->> +				frame-number = <1>;
->> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
->> +				status = "disabled";
->> +			};
->> +
->> +			frame@b124000 {
->> +				reg = <0x0b124000 0x1000>;
->> +				frame-number = <2>;
->> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
->> +				status = "disabled";
->> +			};
->> +
->> +			frame@b125000 {
->> +				reg = <0x0b125000 0x1000>;
->> +				frame-number = <3>;
->> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
->> +				status = "disabled";
->> +			};
->> +
->> +			frame@b126000 {
->> +				reg = <0x0b126000 0x1000>;
->> +				frame-number = <4>;
->> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
->> +				status = "disabled";
->> +			};
->> +
->> +			frame@b127000 {
->> +				reg = <0x0b127000 0x1000>;
->> +				frame-number = <5>;
->> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
->> +				status = "disabled";
->> +			};
->> +
->> +			frame@b128000 {
->> +				reg = <0x0b128000 0x1000>;
->> +				frame-number = <6>;
->> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
->> +				status = "disabled";
->> +			};
->> +		};
->> +	};
->> +
->> +	timer {
->> +		compatible = "arm,armv8-timer";
->> +		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
->> +			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
->> +			     <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
->> +			     <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
->> +	};
->> +};
+> The choice is between no values (for most drivers) and split values on
+> some drivers, vs aggregated values for everyone (and still split
+> values for some).
+> -Daniel
