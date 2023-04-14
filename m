@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AE9E6E2543
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 16:07:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 617F96E253C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 16:07:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230387AbjDNOHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 10:07:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57864 "EHLO
+        id S230309AbjDNOHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 10:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230358AbjDNOHK (ORCPT
+        with ESMTP id S230356AbjDNOHK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 14 Apr 2023 10:07:10 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 401A0B46C
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C81B440
         for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 07:06:44 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id u12so5819102lfu.5
+Received: by mail-lf1-x12f.google.com with SMTP id e11so23477017lfc.10
         for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 07:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681481185; x=1684073185;
+        d=linaro.org; s=google; t=1681481186; x=1684073186;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=piZtR9c1XXRUhN80nr5uI5PYaUW6B0TX8Yk94OoYNYM=;
-        b=L0hMZaKd8aAn3gP0arCyVc3RvZA3y2s9OpyXKpUgLA6BbsiNQ43gXoMT6ccrGNzYvt
-         gS31vXMWqQra92iOxWdau4KgHn3JsuGoLXDzONZw+aJUJ9WLULDE9/NbyxRtyGkxGl0+
-         pDjJCDPfsPTgtov87i84MWWaQtTRQ2ZweNzWlxs4rPoYF4lpqjyzHwwZSw73lBuBlea0
-         1rRD5s5wOHNxLPA5YqNTBtIA3rq569dfYfAMY6oQOOpXx69E9lM1zQt2UCQUvvvZy+IY
-         ateBY2nUCkgzlCaVT0lcivFrRvOPTBxeLa1xiBy0WGGrtEXFyURHGLVu/Q/bp1E5YChR
-         YzBw==
+        bh=4BHCI/166BKjZ+FXcUih3BMF+v7LRQkg3jx37UcTFdA=;
+        b=Rtev4/ouMtv+3Ed1LMSldMuZi7Jobjganjd2eiBngYCBR11LBhPlNuqD0oYCykYj8z
+         hgK2yiOi9reFESjiXBFAuocR3eC5qVgfkbX9rIqfTmBiZPYeqB3c40dLsPTERtiWObjt
+         r4lJCABTXAOdw5aQOaTx+o4jhXklmEuRxWv4urJxtFwjWNLf0v/u56mNqt2a7yR/O3dt
+         8gtCdcEYkB2wsn6TtmRVIQLTZEr07XPZ89MH3XjwAPYqLEoOqQ64Q7rqOgNWCk++rrMC
+         BCifHz4Kazh47gRnljH7yeWv1uAY7NsZI+hlf5gRfbLNHV1x/j7BrE+2jQuE3cs3ZTKV
+         bmng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681481185; x=1684073185;
+        d=1e100.net; s=20221208; t=1681481186; x=1684073186;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=piZtR9c1XXRUhN80nr5uI5PYaUW6B0TX8Yk94OoYNYM=;
-        b=dTNLRlKv3aMe7slGsrhkzoF6P2qlFn6rMfUmcLBG8ufViGSpbEqRSs64IJe8xWqgvP
-         gQiW5cZAclm0n/xk3yY7O+fUhlkhlOuWBiCi58BpIiCMw9t5jclxt6V52FnWOxw0U/LU
-         fyzTUEZxehKRLAn3ouakM43TQui4Ks9Qaar0IEIhbSPhP2DX1vxPCn3508e0nxgI3cxx
-         naJA6SmG1Pwk5rdaIK4oQcb1P8bINUjf7Hq9cyG2xkR9qlI5qSKGnS7K3LQAOrwIurLU
-         LZnoEt6ZatHXU3/3g8mKk0od4NnytP2q9mBRTVt42JNoQkvzouEU7F5BeiUJwxln93pr
-         JYvA==
-X-Gm-Message-State: AAQBX9eeKiMSiD5ddg0XPFrQqoqT5oFQZ+jh+h1+wJWmXHXd3pQuMy5O
-        HCEC4r2ZFNPU4CiRcCM8N0gpBg==
-X-Google-Smtp-Source: AKy350aW2kYqU5rDczMtKrNTsBvQThixg5YPYjr6NGvHe7Ksi053ZZLv1eU36D2PlJ7d55hE7KR07w==
-X-Received: by 2002:ac2:4428:0:b0:4ec:8615:304e with SMTP id w8-20020ac24428000000b004ec8615304emr2172956lfl.32.1681481185139;
-        Fri, 14 Apr 2023 07:06:25 -0700 (PDT)
+        bh=4BHCI/166BKjZ+FXcUih3BMF+v7LRQkg3jx37UcTFdA=;
+        b=HliiD9CwP9e7EyxGO/OT8IlHXr6TLDSi65HNeRAgX5FcJtPlgcwmj3o172S/Fr/aDG
+         mlHJ4UbEAZog/81EzJY6oUa31TIS/OxW+R4l6pkc/6GZ53AbUFrVztvp7v93juHB0qMi
+         yuYu9l4YyiMWl+S4l+nCg/dlRnSyqP4FzLBc7yGXkCFmv9Rov+/uwdLjbLHLuF58grZh
+         RoE5ZC75r5JX5AazyoV20ER6G3R7v01N3Q7C6o0RPjWOYFVXMjcG3H8TS9rsPkFDGSnh
+         6MEzZP1gbjG/YXv8XDtSRUk7b6LCpaYRxsx60tp9ikPWQcxLwmy4wzXD+5onC3cPB1nZ
+         eXGQ==
+X-Gm-Message-State: AAQBX9ckG+6C6bSOiYztf37iMpJ0yfvbPG648gqgxqp3lDQUbykPholG
+        13Siq9AOFJm1OGR6q4nn7zHi8Q==
+X-Google-Smtp-Source: AKy350YriwNgCGDtf5oV+RFjWvDkEL94w5t6irwr93Q8pCEGa96woZ1cRxPOwIE/JcEBXleGpR4rxQ==
+X-Received: by 2002:ac2:5159:0:b0:4dd:a61c:8f71 with SMTP id q25-20020ac25159000000b004dda61c8f71mr1960530lfd.41.1681481186017;
+        Fri, 14 Apr 2023 07:06:26 -0700 (PDT)
 Received: from [127.0.1.1] ([85.235.12.238])
-        by smtp.gmail.com with ESMTPSA id b10-20020ac25e8a000000b004d856fe5121sm808794lfq.194.2023.04.14.07.06.24
+        by smtp.gmail.com with ESMTPSA id b10-20020ac25e8a000000b004d856fe5121sm808794lfq.194.2023.04.14.07.06.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 07:06:24 -0700 (PDT)
+        Fri, 14 Apr 2023 07:06:25 -0700 (PDT)
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 14 Apr 2023 16:06:19 +0200
-Subject: [PATCH 3/6] pinctrl: plgpio: Convert to immutable irq_chip
+Date:   Fri, 14 Apr 2023 16:06:20 +0200
+Subject: [PATCH 4/6] pinctrl: qcom spmi-mpp: Convert to immutable irq_chip
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230414-immutable-irqchips-2-v1-3-6b59a5186b00@linaro.org>
+Message-Id: <20230414-immutable-irqchips-2-v1-4-6b59a5186b00@linaro.org>
 References: <20230414-immutable-irqchips-2-v1-0-6b59a5186b00@linaro.org>
 In-Reply-To: <20230414-immutable-irqchips-2-v1-0-6b59a5186b00@linaro.org>
 To:     Marc Zyngier <maz@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
@@ -84,53 +84,73 @@ intuition.
 
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 ---
- drivers/pinctrl/spear/pinctrl-plgpio.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-spmi-mpp.c | 38 ++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/pinctrl/spear/pinctrl-plgpio.c b/drivers/pinctrl/spear/pinctrl-plgpio.c
-index ada401ef4342..722681e0b89b 100644
---- a/drivers/pinctrl/spear/pinctrl-plgpio.c
-+++ b/drivers/pinctrl/spear/pinctrl-plgpio.c
-@@ -301,6 +301,7 @@ static void plgpio_irq_disable(struct irq_data *d)
- 	spin_lock_irqsave(&plgpio->lock, flags);
- 	plgpio_reg_set(plgpio->regmap, offset, plgpio->regs.ie);
- 	spin_unlock_irqrestore(&plgpio->lock, flags);
-+	gpiochip_disable_irq(gc, irqd_to_hwirq(d));
- }
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
+index 644fb4a0e72a..fe0393829c20 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
+@@ -143,7 +143,6 @@ struct pmic_mpp_state {
+ 	struct regmap	*map;
+ 	struct pinctrl_dev *ctrl;
+ 	struct gpio_chip chip;
+-	struct irq_chip irq;
+ };
  
- static void plgpio_irq_enable(struct irq_data *d)
-@@ -317,6 +318,7 @@ static void plgpio_irq_enable(struct irq_data *d)
- 			return;
- 	}
- 
-+	gpiochip_enable_irq(gc, irqd_to_hwirq(d));
- 	spin_lock_irqsave(&plgpio->lock, flags);
- 	plgpio_reg_reset(plgpio->regmap, offset, plgpio->regs.ie);
- 	spin_unlock_irqrestore(&plgpio->lock, flags);
-@@ -356,11 +358,13 @@ static int plgpio_irq_set_type(struct irq_data *d, unsigned trigger)
+ static const struct pinconf_generic_params pmic_mpp_bindings[] = {
+@@ -823,6 +822,33 @@ static int pmic_mpp_child_to_parent_hwirq(struct gpio_chip *chip,
  	return 0;
  }
  
--static struct irq_chip plgpio_irqchip = {
-+static const struct irq_chip plgpio_irqchip = {
- 	.name		= "PLGPIO",
- 	.irq_enable	= plgpio_irq_enable,
- 	.irq_disable	= plgpio_irq_disable,
- 	.irq_set_type	= plgpio_irq_set_type,
-+	.flags		= IRQCHIP_IMMUTABLE,
++static void pmic_mpp_irq_mask(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++
++	irq_chip_mask_parent(d);
++	gpiochip_disable_irq(gc, irqd_to_hwirq(d));
++}
++
++static void pmic_mpp_irq_unmask(struct irq_data *d)
++{
++	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
++
++	gpiochip_enable_irq(gc, irqd_to_hwirq(d));
++	irq_chip_unmask_parent(d);
++}
++
++static const struct irq_chip pmic_mpp_irq_chip = {
++	.name = "spmi-mpp",
++	.irq_ack = irq_chip_ack_parent,
++	.irq_mask = pmic_mpp_irq_mask,
++	.irq_unmask = pmic_mpp_irq_unmask,
++	.irq_set_type = irq_chip_set_type_parent,
++	.irq_set_wake = irq_chip_set_wake_parent,
++	.flags = IRQCHIP_MASK_ON_SUSPEND | IRQCHIP_IMMUTABLE,
 +	GPIOCHIP_IRQ_RESOURCE_HELPERS,
- };
++};
++
+ static int pmic_mpp_probe(struct platform_device *pdev)
+ {
+ 	struct irq_domain *parent_domain;
+@@ -915,16 +941,8 @@ static int pmic_mpp_probe(struct platform_device *pdev)
+ 	if (!parent_domain)
+ 		return -ENXIO;
  
- static void plgpio_irq_handler(struct irq_desc *desc)
-@@ -595,7 +599,7 @@ static int plgpio_probe(struct platform_device *pdev)
- 		struct gpio_irq_chip *girq;
- 
- 		girq = &plgpio->chip.irq;
--		girq->chip = &plgpio_irqchip;
-+		gpio_irq_chip_set_chip(girq, &plgpio_irqchip);
- 		girq->parent_handler = plgpio_irq_handler;
- 		girq->num_parents = 1;
- 		girq->parents = devm_kcalloc(&pdev->dev, 1,
+-	state->irq.name = "spmi-mpp",
+-	state->irq.irq_ack = irq_chip_ack_parent,
+-	state->irq.irq_mask = irq_chip_mask_parent,
+-	state->irq.irq_unmask = irq_chip_unmask_parent,
+-	state->irq.irq_set_type = irq_chip_set_type_parent,
+-	state->irq.irq_set_wake = irq_chip_set_wake_parent,
+-	state->irq.flags = IRQCHIP_MASK_ON_SUSPEND,
+-
+ 	girq = &state->chip.irq;
+-	girq->chip = &state->irq;
++	gpio_irq_chip_set_chip(girq, &pmic_mpp_irq_chip);
+ 	girq->default_type = IRQ_TYPE_NONE;
+ 	girq->handler = handle_level_irq;
+ 	girq->fwnode = dev_fwnode(state->dev);
 
 -- 
 2.34.1
