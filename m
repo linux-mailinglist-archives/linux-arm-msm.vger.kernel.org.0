@@ -2,81 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1336C6E26AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 17:18:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F5746E272B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 17:41:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231251AbjDNPSE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 11:18:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38436 "EHLO
+        id S229497AbjDNPly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 11:41:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230516AbjDNPSB (ORCPT
+        with ESMTP id S229494AbjDNPlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 11:18:01 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D5F1A5CD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 08:17:51 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id si1so16250546ejb.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 08:17:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681485469; x=1684077469;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9drcNPSM0KBR/CLrBwPG24/hlufSHekIX2GuAa0mc7s=;
-        b=DpYdX+CHD+F/+NFh7Oh0tAd/G7RToDYcGkhwE0Qp9T+/OXvLJkiThET18+0f2JhQR/
-         ytNVi+NL44SPs4QSFY3PVpySwPE8J67VT6ToVQyvHjhsbqre9DKC1GI64VmbIKZINwuQ
-         TBrs8yC9yasnwi7+34VIkrpYmsalcISpUyMIMxWPxhHm9W2fCutH/uqUiiwSFAM/Epgs
-         Z1vis+O0CuGzfD3ka/4FKW33Y7U1MqWS1c2LEqQ9ARD7gQ4stOYs+jI7cehgK/wmEphg
-         wt2mU3/FpPLYcZUff4OIPg4J8gaRgJ/VlB5oiirY18bTdXQllJmRfVm9GrR47BMFGojl
-         Czqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681485469; x=1684077469;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9drcNPSM0KBR/CLrBwPG24/hlufSHekIX2GuAa0mc7s=;
-        b=E8n9Au1zc8D3ZmdS3d/EjRbGdJp1kBiezXMx+0HtxR103r80cvYRMUco+Uj2noWojc
-         BQXJEuB68jmnYAcFc9/pwSdV+F92FpcgjzHXHCIor0jQFgpdimDqDo/3M0AH8XPhqslT
-         n5hQi4aCnBqvUJhAoloPwefr/WG4QNMazHoIZMrAKduFwbNLSv8o1Jz0vidcmPeIO+OD
-         T7Cs92r/xGB+35Yu7PlZe41qVTTmGdXXhL2duKvBGGjBosbmsAU9eEts3NQCs9pb2kfI
-         U00ujaqkbK2m7WZffDN08NMzTXsQ41rt2du4TJaTexawQ/teY7HdGACaFbe7Tb7mZ97C
-         BEZg==
-X-Gm-Message-State: AAQBX9dfjBLF4X79MOxiblLdvP9nPvbft8qNCRyYoaUtzHjMCh+DhTDs
-        ri7oQn2gg7JO6XrgNOQ8xniyyg==
-X-Google-Smtp-Source: AKy350Y1ovRQx1f10GgZ8oEgerwPzy42tM/K38eDatHEyM6Q0mtLluw+V3szHNhRcNBxfX4Yn4ti6g==
-X-Received: by 2002:a17:907:72d4:b0:94a:7da2:d339 with SMTP id du20-20020a17090772d400b0094a7da2d339mr7465159ejc.26.1681485469533;
-        Fri, 14 Apr 2023 08:17:49 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:39b7:81a0:bd41:17b1? ([2a02:810d:15c0:828:39b7:81a0:bd41:17b1])
-        by smtp.gmail.com with ESMTPSA id p25-20020a17090635d900b0094e75d3ba1bsm2575677ejb.131.2023.04.14.08.17.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 08:17:49 -0700 (PDT)
-Message-ID: <20faef75-9182-6e67-8ac5-c8234318ab64@linaro.org>
-Date:   Fri, 14 Apr 2023 17:17:48 +0200
+        Fri, 14 Apr 2023 11:41:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98902900C;
+        Fri, 14 Apr 2023 08:41:52 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33EFffeY006347;
+        Fri, 14 Apr 2023 15:41:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NK/P0Cz1MxmLV1BoZL/v3IENNRORMkZFXgt0sEvVQyI=;
+ b=F3pL9Ovv8k0AqFx4bpYsFYuwNHy5C+J+T4PRGq/a/pEnU4gCxbDSvL20LtGMd44zLdbg
+ j43V2GgxMR6pwgJgxBR8EtQ78O7syYaKMoD3lrOXwlIVG4jaFTfIHtlZuyZZXgNfuUDy
+ 5PYl4TaG1hpD4ypwRDWKeNOzydhT1fffNis4r0Lpm9Fl4g9wFogGYXPYZBSlGDuDc1+v
+ Bi7D6d65lzX+YFuZKREgEtHmndhrcRvsjPc6uYwh04OsCkjedZzBo7wF2vBaF1KmC/GE
+ L31JVvVz3ADRyIpamRB20HyviUMSGNvdOAqYbyjlkJXPcaWO0FGV47tzi8kTqxdn70BD lQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3py20e11ru-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 15:41:40 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33EFfdsZ006120
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 15:41:39 GMT
+Received: from [10.110.73.215] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 14 Apr
+ 2023 08:41:38 -0700
+Message-ID: <aac210da-dec1-aab8-3f48-c33d9e7687d6@quicinc.com>
+Date:   Fri, 14 Apr 2023 08:41:37 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 1/2] dt-bindings: clock: qcom,videocc: Add SM8350
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2] drm/msm/dpu: always program dsc active bits
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org>
- <20230413-topic-lahaina_vidcc-v2-1-f721d507e555@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230413-topic-lahaina_vidcc-v2-1-f721d507e555@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     <robdclark@gmail.com>, <sean@poorly.run>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <vkoul@kernel.org>, <daniel@ffwll.ch>,
+        <airlied@gmail.com>, <agross@kernel.org>,
+        <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
+        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1681401401-15099-1-git-send-email-quic_khsieh@quicinc.com>
+ <tgfbdk6q3uool365jqddibnbgq66clsmsm6tldxpm5toqghxpq@m2ic3oonv2s5>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <tgfbdk6q3uool365jqddibnbgq66clsmsm6tldxpm5toqghxpq@m2ic3oonv2s5>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xnbsfrOMy6PlHWXsXlNi3qaZM2ZHUpO0
+X-Proofpoint-ORIG-GUID: xnbsfrOMy6PlHWXsXlNi3qaZM2ZHUpO0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-14_08,2023-04-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ phishscore=0 adultscore=0 impostorscore=0 spamscore=0 mlxlogscore=663
+ priorityscore=1501 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304140138
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,16 +86,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2023 13:26, Konrad Dybcio wrote:
-> SM8350, like most recent higher-end chips has a separate clock
-> controller block just for the Venus IP. Document it.
+
+
+On 4/14/2023 12:48 AM, Marijn Suijten wrote:
+> Capitalize DSC in the title, as discussed in v1.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../devicetree/bindings/clock/qcom,videocc.yaml    | 29 +++++++++++++
+> On 2023-04-13 08:56:41, Kuogee Hsieh wrote:
+>> In current code, the DSC active bits are written only if cfg->dsc is set.
+>> However, for displays which are hot-pluggable, there can be a use-case
+>> of disconnecting a DSC supported sink and connecting a non-DSC sink.
+>>
+>> For those cases we need to clear DSC active bits during tear down.
+>>
+>> Changes in V2:
+>> 1) correct commit text as suggested
+>> 2) correct Fixes commit id
+>> 3) add FIXME comment
+>>
+>> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> By default git send-email should pick this up in the CC line...  but I
+> had to download this patch from lore once again.
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yes, I think what happened here is, he didnt git am the prev rev and 
+make changes on top of that so git send-email didnt pick up. We should 
+fix that process.
 
-Best regards,
-Krzysztof
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 ++++----
+>>   1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> index bbdc95c..1651cd7 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> @@ -541,10 +541,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>>   	if (cfg->merge_3d)
+>>   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+>>   			      BIT(cfg->merge_3d - MERGE_3D_0));
+>> -	if (cfg->dsc) {
+>> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+>> -		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+>> -	}
+>> +
+>> +	/* FIXME: fix reset_intf_cfg to handle teardown of dsc */
+> 
+> There's more wrong than just moving (not "fix"ing) this bit of code into
+> reset_intf_cfg.  And this will have to be re-wrapped in `if (cfg->dsc)`
+> again by reverting this patch.  Perhaps that can be explained, or link
+> to Abhinav's explanation to make it clear to readers what this FIXME
+> actually means?  Let's wait for Abhinav and Dmitry to confirm the
+> desired communication here.
+> 
+> https://lore.kernel.org/linux-arm-msm/ec045d6b-4ffd-0f8c-4011-8db45edc6978@quicinc.com/
+> 
 
+Yes, I am fine with linking this explanation in the commit text and 
+mentioning that till thats fixed, we need to go with this solution. The 
+FIXME itself is fine, I will work on it and I remember this context well.
+
+> - Marijn
+> 
+>> +	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+>> +	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+>>   }
+>>   
+>>   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
