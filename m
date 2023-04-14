@@ -2,75 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 271766E2134
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 12:45:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C57EF6E215B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 12:57:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbjDNKo6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 06:44:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51258 "EHLO
+        id S229822AbjDNK5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 06:57:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjDNKo5 (ORCPT
+        with ESMTP id S229732AbjDNK5U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 06:44:57 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D053584
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 03:44:55 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50508810c8bso1678516a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 03:44:55 -0700 (PDT)
+        Fri, 14 Apr 2023 06:57:20 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C48FD4C2D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 03:57:17 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id o1so22880270lfc.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 03:57:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681469094; x=1684061094;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1681469836; x=1684061836;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=99/2Xzq1k3jGcxmT1pTlyb+0p5jdof1SmGadkZ956E8=;
-        b=gjpb92BJlyi8AdRk2tXb6yIbRjNjmhPIjGoUt2NuU0q+EpYqyo3wONGmRD1PvavfsD
-         3EMTmNpcRpfwkCowxOmjE+xlw7lf9vxOMlVAldE5s1EDeZcUPR4udR2V5FXv/lVgTU/a
-         OIKwB7dOGs+wSZw6Cv/dE8mXplb70MkLuDyhswOglpMEgRd9GkBuewhN+8oaW9urSnNk
-         rKYjQlFyRam2rXBVRQZ6Hu1fxxH9VWK5AxxvWPXVeGNQ6evxRnM3DaWxY1slE9kzT2ir
-         iyKN3Ql0FWU47U5IFa9tz4j3s9ROVKl37k+PnvumIYZONanbc84xGAnXCMu7sZw2fMv3
-         kpWg==
+        bh=Hx+ApbyVhyoF5Fk1VzYu+PCx1Wrur1xu+HZmmrLoA5w=;
+        b=gTP9touwaAw8C5Xu8gxRaZ4SqzQ7pf8icA0pzVld3459wVZGI9TuqNP3kKUMlA1WxS
+         JIcdFiZ9CODjxEr5e3gT54f4VcgltMiNRPMywE++Za60bfJOuj+MdO2yclXTbpGUZmia
+         5iid/p1LDeIg0dDihFLR/394qSnyc3qmBnt5CiprKub+yxkdf6w0T2Mxt/GKdQgsz5vg
+         XrqoleOanMVqsqKlBwM6sRiU6MFwJAZ2nWLH3C2RE18Il3QhiuPh57E+ostRlXA4rvcC
+         dqymlaugmHk8oD+EpOIProX98DIA9tDJ0A6qJL1I474BsPiO5U0QMq8OJLsSjALx7z4E
+         jPeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681469094; x=1684061094;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1681469836; x=1684061836;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=99/2Xzq1k3jGcxmT1pTlyb+0p5jdof1SmGadkZ956E8=;
-        b=ZmnfRMofVPGxe4W+w6u0cETCsyZPJMaL9eZPR1XnVPAyXxfnJAHO4KQ/uEZYl3FqFf
-         OyIKIWfYZ2A56vbIw8Bu7odj92x8JPI0U6ERbQBFF3khpuntDWzuOyz9QKbOPz8EZtPP
-         OyIKPhyHMXTVAcw5hrMx9JZJKSzEhhG9UTe245IerwsplG6cpoKIFlR29h/DIHyjwyX4
-         gkakrXIIrdt6tpt+WYRSPR1zRkLDbPUuJTeNVJURy6CGVNaMjaIWEr6axY/OWKDJPdce
-         WexOWE+sgF0Hv7Rt5d7Rzt1YDRC7ljQwvCLOV7c6uHqJhnwxqBszG41VOnuVoEwaNr2E
-         FOkg==
-X-Gm-Message-State: AAQBX9ccWVuU7nAHG2JBE3gZgbTshFgNp+0KQA1L3+4kYtfu5wqCs/Lc
-        hIbZE8s+YHE4aGh/BQ0wC8foXQ==
-X-Google-Smtp-Source: AKy350YAZ4ObREDPTqX+3sDjKddkzxLRFtcc0tjO/9BvuuaM+s0ApmwT+Uw7xC7rJqvbc3fYPtVPzQ==
-X-Received: by 2002:aa7:c04f:0:b0:504:aae4:a034 with SMTP id k15-20020aa7c04f000000b00504aae4a034mr5907943edo.31.1681469094005;
-        Fri, 14 Apr 2023 03:44:54 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id o24-20020aa7c7d8000000b005067d089aafsm1003061eds.11.2023.04.14.03.44.52
+        bh=Hx+ApbyVhyoF5Fk1VzYu+PCx1Wrur1xu+HZmmrLoA5w=;
+        b=DITWZpS4Fv2dFYdTqOjHV7Z289YOFBgyt7sbz4/i7/IN4AZPQg7CotrERQq3Q0xBaT
+         HNF8Zsy4fGGcIfOu7ueUOSIrWmhbIPlPMK3AJ236wS6BPL7ROILC4OVfjOlkKJQF9103
+         Exn99L92uYW6gCZY/c7zdfibb30CuxH7TEBe6Ip32VhZN72MjIpbsIInz92Wv3CK/fak
+         RlLFvxRjEEXSZK/cVxlwbe5HyFHFFoZtHMaxS5s4177XF+yYR0mgCCYbUl69+VgKjCuu
+         UjcUOZXQdfQX27xKnM/SZkilyi4W85CiBazYZSl8EDoyoTvZuMaRYP5HGRfmx3OYUTaN
+         jhIw==
+X-Gm-Message-State: AAQBX9cJcZN5NPOJJ/gBvTWHofPyhNOnAn3aB/V5qK+WM63k6FUzn7Ll
+        tz3+oXnAjtBTY+CoMeSfcIE/yQ==
+X-Google-Smtp-Source: AKy350bjSKHb4pppNHvFNeiuVLmFpt8+I5Om0SfQTuacXFquY1hLIWfh0fzndxo0O+kASuHRwRJRrw==
+X-Received: by 2002:a05:6512:6d4:b0:4eb:4157:5704 with SMTP id u20-20020a05651206d400b004eb41575704mr2670218lff.29.1681469835957;
+        Fri, 14 Apr 2023 03:57:15 -0700 (PDT)
+Received: from [192.168.1.101] (abyl123.neoplus.adsl.tpnet.pl. [83.9.31.123])
+        by smtp.gmail.com with ESMTPSA id x28-20020ac25ddc000000b004d863fa8681sm749227lfq.173.2023.04.14.03.57.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 03:44:53 -0700 (PDT)
-Message-ID: <6c01d2fc-3155-0dcd-f473-9cbd75dd69ec@linaro.org>
-Date:   Fri, 14 Apr 2023 11:44:51 +0100
+        Fri, 14 Apr 2023 03:57:15 -0700 (PDT)
+Message-ID: <411c8a57-9c9e-c799-91c4-5338f9d15799@linaro.org>
+Date:   Fri, 14 Apr 2023 12:57:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v2 6/6] remoterproc: qcom: refactor to leverage exported
- minidump symbol
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V12 3/4] arm64: dts: qcom: Add support for ipq9574 SoC and
+ RDP433 variant
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, linus.walleij@linaro.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
+        shawnguo@kernel.org, arnd@arndb.de, marcel.ziswiler@toradex.com,
+        dmitry.baryshkov@linaro.org, geert+renesas@glider.be,
+        rafal@milecki.pl, nfraprado@collabora.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com
+References: <20230410135948.11970-1-quic_devipriy@quicinc.com>
+ <20230410135948.11970-4-quic_devipriy@quicinc.com>
+ <a599d157-002f-26ef-5f31-a3fb0925dfba@linaro.org>
+ <da6051dd-1a29-a356-9d6a-a35f20b23fb9@quicinc.com>
 Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
-References: <1679491817-2498-1-git-send-email-quic_mojha@quicinc.com>
- <1679491817-2498-7-git-send-email-quic_mojha@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1679491817-2498-7-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <da6051dd-1a29-a356-9d6a-a35f20b23fb9@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -83,68 +93,218 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22/03/2023 13:30, Mukesh Ojha wrote:
-> qcom_minidump driver provides qcom_minidump_subsystem_desc()
-> exported API which other driver can use it query subsystem
-> descriptor. Refactor qcom_minidump() to use this symbol.
+On 14.04.2023 12:01, Devi Priya wrote:
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->   drivers/remoteproc/qcom_common.c | 13 ++-----------
->   1 file changed, 2 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 88fc984..240e9f7 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -94,19 +94,10 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
->   {
->   	int ret;
->   	struct minidump_subsystem *subsystem;
-> -	struct minidump_global_toc *toc;
->   
-> -	/* Get Global minidump ToC*/
-> -	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
-> -
-> -	/* check if global table pointer exists and init is set */
-> -	if (IS_ERR(toc) || !toc->status) {
-> -		dev_err(&rproc->dev, "Minidump TOC not found in SMEM\n");
-> +	subsystem = qcom_minidump_subsystem_desc(minidump_id);
-> +	if (IS_ERR(subsystem))
->   		return;
+> On 4/13/2023 2:16 AM, Konrad Dybcio wrote:
+>>
+>>
+>> On 10.04.2023 15:59, Devi Priya wrote:
+>>> Add initial device tree support for Qualcomm IPQ9574 SoC and
+>>> Reference Design Platform(RDP) 433 which is based on IPQ9574
+>>> family of SoCs
+>>>
+>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>>> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>>> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>>> ---
+>>
+>>> +    soc: soc@0 {
+>>> +        compatible = "simple-bus";
+>>> +        #address-cells = <1>;
+>>> +        #size-cells = <1>;
+>>> +        ranges = <0 0 0 0xffffffff>;
+>> this is equal to:
+>>
+>> ranges;
+> 
+> Konrad, on updating (ranges = <0 0 0 0xffffffff>; --> ranges;)
+> we see the below warnings:
+> arch/arm64/boot/dts/qcom/ipq9574.dtsi:103.3-10: Warning (ranges_format):
+> /soc@0:ranges: empty "ranges" property but its #address-cells (1)
+> differs from / (2)
+> arch/arm64/boot/dts/qcom/ipq9574.dtsi:103.3-10: Warning (ranges_format): /soc@0:ranges: empty "ranges" property but its #size-cells (1) differs
+> from / (2)
+> 
+> Looks like, empty ranges property isn't supported if the parent and
+> child address spaces are non-identical.
+> Would you suggest to retain the ranges as such?
+> (ranges = <0 0 0 0xffffffff>;)
+> 
+> Thanks,
+> Devi Priya
+Oh right, you have address/size cells = 2 at the top level.
+Forget about this change.
 
-Sorry If I am missing something but I got lost looking at the below code 
-snippet in drivers/remoteproc/qcom_common.c
-
-
--------------------->cut<-----------------------------
-	subsystem = qcom_minidump_subsystem_desc(minidump_id);
-	if (IS_ERR(subsystem))
-		return;
-
-	/**
-	 * Collect minidump if SS ToC is valid and segment table
-	 * is initialized in memory and encryption status is set.
-	 */
-	if (subsystem->regions_baseptr == 0 ||
-	    le32_to_cpu(subsystem->status) != 1 ||
-	    le32_to_cpu(subsystem->enabled) != MINIDUMP_SS_ENABLED ||
-	    le32_to_cpu(subsystem->encryption_status) != MINIDUMP_SS_ENCR_DONE) {
-		dev_err(&rproc->dev, "Minidump not ready, skipping\n");
-		return;
-	}
--------------------->cut<-----------------------------
-
-where does "subsystem->regions_baseptr" for this ADSP minidump 
-descriptor get set?
-
-
---srini
-
-> -	}
-> -
-> -	/* Get subsystem table of contents using the minidump id */
-> -	subsystem = &toc->subsystems[minidump_id];
->   
->   	/**
->   	 * Collect minidump if SS ToC is valid and segment table
+Konrad
+>>
+>> Could you fix that up when applying, Bjorn, should there be
+>> no other issues?
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+> Thank you!
+>> Konrad
+>>
+>>> +
+>>> +        tlmm: pinctrl@1000000 {
+>>> +            compatible = "qcom,ipq9574-tlmm";
+>>> +            reg = <0x01000000 0x300000>;
+>>> +            interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+>>> +            gpio-controller;
+>>> +            #gpio-cells = <2>;
+>>> +            gpio-ranges = <&tlmm 0 0 65>;
+>>> +            interrupt-controller;
+>>> +            #interrupt-cells = <2>;
+>>> +
+>>> +            uart2_pins: uart2-state {
+>>> +                pins = "gpio34", "gpio35";
+>>> +                function = "blsp2_uart";
+>>> +                drive-strength = <8>;
+>>> +                bias-disable;
+>>> +            };
+>>> +        };
+>>> +
+>>> +        gcc: clock-controller@1800000 {
+>>> +            compatible = "qcom,ipq9574-gcc";
+>>> +            reg = <0x01800000 0x80000>;
+>>> +            clocks = <&xo_board_clk>,
+>>> +                 <&sleep_clk>,
+>>> +                 <0>,
+>>> +                 <0>,
+>>> +                 <0>,
+>>> +                 <0>,
+>>> +                 <0>;
+>>> +            #clock-cells = <1>;
+>>> +            #reset-cells = <1>;
+>>> +            #power-domain-cells = <1>;
+>>> +        };
+>>> +
+>>> +        sdhc_1: mmc@7804000 {
+>>> +            compatible = "qcom,ipq9574-sdhci", "qcom,sdhci-msm-v5";
+>>> +            reg = <0x07804000 0x1000>, <0x07805000 0x1000>;
+>>> +            reg-names = "hc", "cqhci";
+>>> +
+>>> +            interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+>>> +            interrupt-names = "hc_irq", "pwr_irq";
+>>> +
+>>> +            clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+>>> +                 <&gcc GCC_SDCC1_APPS_CLK>,
+>>> +                 <&xo_board_clk>;
+>>> +            clock-names = "iface", "core", "xo";
+>>> +            non-removable;
+>>> +            status = "disabled";
+>>> +        };
+>>> +
+>>> +        blsp1_uart2: serial@78b1000 {
+>>> +            compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+>>> +            reg = <0x078b1000 0x200>;
+>>> +            interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
+>>> +            clocks = <&gcc GCC_BLSP1_UART3_APPS_CLK>,
+>>> +                 <&gcc GCC_BLSP1_AHB_CLK>;
+>>> +            clock-names = "core", "iface";
+>>> +            status = "disabled";
+>>> +        };
+>>> +
+>>> +        intc: interrupt-controller@b000000 {
+>>> +            compatible = "qcom,msm-qgic2";
+>>> +            reg = <0x0b000000 0x1000>,  /* GICD */
+>>> +                  <0x0b002000 0x2000>,  /* GICC */
+>>> +                  <0x0b001000 0x1000>,  /* GICH */
+>>> +                  <0x0b004000 0x2000>;  /* GICV */
+>>> +            #address-cells = <1>;
+>>> +            #size-cells = <1>;
+>>> +            interrupt-controller;
+>>> +            #interrupt-cells = <3>;
+>>> +            interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+>>> +            ranges = <0 0x0b00c000 0x3000>;
+>>> +
+>>> +            v2m0: v2m@0 {
+>>> +                compatible = "arm,gic-v2m-frame";
+>>> +                reg = <0x00000000 0xffd>;
+>>> +                msi-controller;
+>>> +            };
+>>> +
+>>> +            v2m1: v2m@1000 {
+>>> +                compatible = "arm,gic-v2m-frame";
+>>> +                reg = <0x00001000 0xffd>;
+>>> +                msi-controller;
+>>> +            };
+>>> +
+>>> +            v2m2: v2m@2000 {
+>>> +                compatible = "arm,gic-v2m-frame";
+>>> +                reg = <0x00002000 0xffd>;
+>>> +                msi-controller;
+>>> +            };
+>>> +        };
+>>> +
+>>> +        timer@b120000 {
+>>> +            compatible = "arm,armv7-timer-mem";
+>>> +            reg = <0x0b120000 0x1000>;
+>>> +            #address-cells = <1>;
+>>> +            #size-cells = <1>;
+>>> +            ranges;
+>>> +
+>>> +            frame@b120000 {
+>>> +                reg = <0x0b121000 0x1000>,
+>>> +                      <0x0b122000 0x1000>;
+>>> +                frame-number = <0>;
+>>> +                interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+>>> +                         <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+>>> +            };
+>>> +
+>>> +            frame@b123000 {
+>>> +                reg = <0x0b123000 0x1000>;
+>>> +                frame-number = <1>;
+>>> +                interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                status = "disabled";
+>>> +            };
+>>> +
+>>> +            frame@b124000 {
+>>> +                reg = <0x0b124000 0x1000>;
+>>> +                frame-number = <2>;
+>>> +                interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                status = "disabled";
+>>> +            };
+>>> +
+>>> +            frame@b125000 {
+>>> +                reg = <0x0b125000 0x1000>;
+>>> +                frame-number = <3>;
+>>> +                interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                status = "disabled";
+>>> +            };
+>>> +
+>>> +            frame@b126000 {
+>>> +                reg = <0x0b126000 0x1000>;
+>>> +                frame-number = <4>;
+>>> +                interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                status = "disabled";
+>>> +            };
+>>> +
+>>> +            frame@b127000 {
+>>> +                reg = <0x0b127000 0x1000>;
+>>> +                frame-number = <5>;
+>>> +                interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                status = "disabled";
+>>> +            };
+>>> +
+>>> +            frame@b128000 {
+>>> +                reg = <0x0b128000 0x1000>;
+>>> +                frame-number = <6>;
+>>> +                interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+>>> +                status = "disabled";
+>>> +            };
+>>> +        };
+>>> +    };
+>>> +
+>>> +    timer {
+>>> +        compatible = "arm,armv8-timer";
+>>> +        interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>>> +                 <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>>> +                 <GIC_PPI 4 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+>>> +                 <GIC_PPI 1 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+>>> +    };
+>>> +};
