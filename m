@@ -2,111 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D41506E24E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 15:57:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3E046E24F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 16:00:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbjDNN5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 09:57:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47906 "EHLO
+        id S229997AbjDNOAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 10:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbjDNN5z (ORCPT
+        with ESMTP id S230034AbjDNOAK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 09:57:55 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5188DE56
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 06:57:54 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id m4so23300938lfj.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 06:57:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681480672; x=1684072672;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mXvnZiBUYIq053kMTXG6IiE5H5AHN38vkwVpGrxQfAM=;
-        b=FvxzrKFv6qu6gY8IkmUHTLBKvwF2rccNgKQ52wFuyK+and5ZOaYZ/z+7oEc+6g+kba
-         EGeQXR/H/gRG2Z9jiwdIaJs5+5oIDAHZMovZENKlE4qF2de4lDil03ixMVVdG4CNbhkB
-         IVO8D3jCKDH0Nb1bGcXO0hY5ntWDOc4dlbreaI0IDnu7EPdBssCQpy/uQvDFLY+FLAsi
-         /TrnBq2jnQd9VLBaVY8U/Q3uGGjuxT6N36e4mtenNLeU5WCGZMnONTlFowW3e3sbwXc/
-         j/KKpsqJfmSR0Uyj+VDB+br8ae3DguLzeZeSUt/HZmuLUSvAV45O1cq6yCPp1cw70dVl
-         s/sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681480672; x=1684072672;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mXvnZiBUYIq053kMTXG6IiE5H5AHN38vkwVpGrxQfAM=;
-        b=FTvGdcYnqa1v/bMx+d39hUXgEvEdtHV04N8kw2GYnKFwHtRSOGzdxstMvuaymR5RwR
-         t1MTQE2InIn8ifubDb/pWnVj6cNF/IOhvzLpa0MeoZ/rU7pY2mYRG1zg9bfSNHVawlDA
-         2PfqfiCAJG2m80F5qUofFPrcBRtHQqvowcQGADFgUh0gyKGk1fLAvcdCQIYpS3KYZjKx
-         73gHUTgvFwa5JZ0c+gUxwVCUP11iYcpHa9mKQUXYH1YhBPQDkY9tY/6zBBUz+4oP4ppd
-         IwcuXIToOqy6WB5BO6yZjmIZc2OB6vjFs4XpFxuswq1t1kExEEppg+1ecUwMRnuYPf9H
-         0C9w==
-X-Gm-Message-State: AAQBX9dgigD2VWH5T6g193fCVLpFXIgOiWH6TmFdP+aFovSj4163A+2+
-        /tjHkR8Xng52NxDWyqsEMjcZIZLcYGFu7IwjDGA=
-X-Google-Smtp-Source: AKy350Y8w02zr0TOBQcRwvabEdWzYKknhuOt7AYhTw22LkM3il3oYtICOWzkj4zlx9357TC0SMPSgQ==
-X-Received: by 2002:ac2:5937:0:b0:4e8:61d2:72ee with SMTP id v23-20020ac25937000000b004e861d272eemr2693701lfi.5.1681480672256;
-        Fri, 14 Apr 2023 06:57:52 -0700 (PDT)
-Received: from Linus-Dell.lan ([85.235.12.238])
-        by smtp.gmail.com with ESMTPSA id b7-20020ac247e7000000b004cc5f44747dsm808161lfp.220.2023.04.14.06.57.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 06:57:51 -0700 (PDT)
-From:   Linus Walleij <linus.walleij@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Fri, 14 Apr 2023 10:00:10 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90860AF35;
+        Fri, 14 Apr 2023 07:00:05 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33EBncAD009442;
+        Fri, 14 Apr 2023 13:59:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=Tooml1hhLwti7ZYgYj0Dz0aeb5Hl0ADPmtkWfv01SEM=;
+ b=OgWYCfxO+qrcF6YEoyqoLRPiJw2tC8FhZQzGWbkHAnvAeEay0APqGZyFGoV1GKSFMTgH
+ hDTrfhfaQcZmHuw3+ZWZU5X7DsyW+0zVEQf7fXxgPwcptN1DvT0NFy2wAW7AVOc9nigA
+ 0diBeLkRjhs12rVhnaVs7+YtQQlpYWCpW8c70feCsOFwProENoS+Ts1iqL9DJNmaN3sC
+ Jbsyu32f9qIy6MxrUuJwlNpBfspr3197Mvivcx080Q7u/vO5s1oguROrNJUCIGLrTfT8
+ wRjXA1GELBciuqqkoZpMXe0PQpAxw1N+vGbx/M9yxGiOobraP1OkEmWqnLu6//TqMH2A Yw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pxe66k7cw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 13:59:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33EDxnCe017102
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 13:59:49 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 14 Apr 2023 06:59:44 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Herman van Hazendonk <me@herrie.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        stable@vger.kernel.org
-Subject: [PATCH] ARM: dts: qcom-apq8060: Fix regulator node names
-Date:   Fri, 14 Apr 2023 15:57:47 +0200
-Message-Id: <20230414135747.34994-1-linus.walleij@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V1 0/3] Add Data Capture and Compare(DCC) driver to new location
+Date:   Fri, 14 Apr 2023 19:29:10 +0530
+Message-ID: <cover.1681480351.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fi3kkEBL1f0Ym8N3tGJiXn5uQn6AH8tC
+X-Proofpoint-ORIG-GUID: fi3kkEBL1f0Ym8N3tGJiXn5uQn6AH8tC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-14_07,2023-04-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=625 phishscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 adultscore=0 clxscore=1011
+ mlxscore=0 suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304140126
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-commit 04715461abf7 altered the node names in a DTSI file
-used by qcom-apq8060-dragonboard.dts breaking the board.
-Align the node names in the DTS file and the board boots
-again.
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
-Cc: stable@vger.kernel.org
-Fixes: 04715461abf7 ("ARM: dts: qcom-msm8660: align RPM regulators node name with bindings")
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
----
- arch/arm/boot/dts/qcom-apq8060-dragonboard.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This patch series is a continuation of the previous series
 
-diff --git a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-index 8e4b61e4d4b1..e8fe321f3d89 100644
---- a/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8060-dragonboard.dts
-@@ -451,7 +451,7 @@ &rpm {
- 	 * PM8901 supplies "preliminary regulators" whatever
- 	 * that means
- 	 */
--	pm8901-regulators {
-+	regulators-0 {
- 		vdd_l0-supply = <&pm8901_s4>;
- 		vdd_l1-supply = <&vph>;
- 		vdd_l2-supply = <&vph>;
-@@ -537,7 +537,7 @@ lvs0 {
- 
- 	};
- 
--	pm8058-regulators {
-+	regulators-1 {
- 		vdd_l0_l1_lvs-supply = <&pm8058_s3>;
- 		vdd_l2_l11_l12-supply = <&vph>;
- 		vdd_l3_l4_l5-supply = <&vph>;
--- 
-2.34.1
+https://lore.kernel.org/linux-arm-kernel/20221228172825.r32vpphbdulaldvv@builder.lan/T/
+
+The dcc driver is moved to a new location drivers/misc along with the binding
+as per discussions.
+
+Souradeep Chowdhury (3):
+  dt-bindings: misc: qcom,dcc: Add the dtschema
+  drivers: misc: dcc: Add driver support for Data Capture and Compare
+    unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+
+ .../devicetree/bindings/misc/qcom,dcc.yaml         |   44 +
+ MAINTAINERS                                        |    8 +
+ drivers/misc/Kconfig                               |    8 +
+ drivers/misc/Makefile                              |    1 +
+ drivers/misc/dcc.c                                 | 1305 ++++++++++++++++++++
+ 5 files changed, 1366 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+ create mode 100644 drivers/misc/dcc.c
+
+--
+2.7.4
 
