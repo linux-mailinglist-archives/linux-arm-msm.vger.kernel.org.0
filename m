@@ -2,107 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E47C6E1D78
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 09:49:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 121DA6E1D8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 09:55:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbjDNHsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 03:48:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38372 "EHLO
+        id S229689AbjDNHzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 03:55:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbjDNHsP (ORCPT
+        with ESMTP id S229528AbjDNHzM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 03:48:15 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [5.144.164.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F00510E2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 00:48:14 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 995B5204A2;
-        Fri, 14 Apr 2023 09:48:12 +0200 (CEST)
-Date:   Fri, 14 Apr 2023 09:48:11 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
-        airlied@gmail.com, agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm/dpu: always program dsc active bits
-Message-ID: <tgfbdk6q3uool365jqddibnbgq66clsmsm6tldxpm5toqghxpq@m2ic3oonv2s5>
-References: <1681401401-15099-1-git-send-email-quic_khsieh@quicinc.com>
+        Fri, 14 Apr 2023 03:55:12 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B885FDE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 00:55:11 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id rp27so6538901ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 00:55:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681458909; x=1684050909;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MX6fVdL7wxeWaRqB1f72ozHdllS9D+KpLFRVzWoVQBQ=;
+        b=h0CFJl9uAw67dUL4yY7QzwF1QY7ic002r/rOSBbtCwD9oG0uHugRCs48n9B82cNfQk
+         ghyjnqRl5p2mnDrJFZsZaS8h7f8sOpJWlzQYcEN2c6Cm/ss+Ik2/XoEh2YfrJfVYfjfM
+         aP/dLv66OBX/5A8564+WLPTjuQsjrBcRAdJHCINnAvSh+VY6VBOBwu5hWXJnKCx/vwIa
+         w9qeKrxo6tZfs7Z3AF2ZfplPaclSbRuhCQrFfUoiQDSiMBcY99jALLMxweT1T2B343nK
+         GVcDz3wEu6aLKoAWK0fI/0j1MKH7RXSpXzp6vw5wRe+Y7MiMj4ThdQgTBfvN5Ct/tzls
+         dhFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681458909; x=1684050909;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MX6fVdL7wxeWaRqB1f72ozHdllS9D+KpLFRVzWoVQBQ=;
+        b=h6NevwwUVr9OV2ih7SzNqWabMMe55Ecws/8VSsWqkX0Q/cKQAkPw4/HfxugthPTzjY
+         cyTpJ10kTdCimBWslLFnJ9x2pw86Y7dUqFnm30jUh8bLDZkFfQoiZstYWrs7I3GC8LTt
+         TYqc332ket9M0Gb8uZT9cyIwWr09X4p2NeqXgGUUeSQYh9gNQprRQYogsM0t0+iLflDW
+         rn1rn8Ltf2xRZJpioKp7yhcEFVvb2xs4KTxGkbf6/twl/VI+xbcJxrz5LFpb7Tf+tRyL
+         30F5FJbcE6LsRvCakPsyeD5PT8PQsWphH9GWEZrzLRl4eVnvo93KcKFTB4dugZVfPbg8
+         BbpQ==
+X-Gm-Message-State: AAQBX9dWOCOe9BCm2MWu6HoCKpJCwpPZzB7+KpRkYtqCygwP0VmlwKJG
+        qI/u/V2HLlAkPUFkiM2n/KC8jg==
+X-Google-Smtp-Source: AKy350bxn545iqVRLBUHXEmEW5pwE+NR2So3C/xmKqr6ULNBknC8Ntejoz/1D66bV9Yjj5epi33Ulw==
+X-Received: by 2002:a17:907:1c1d:b0:94e:f862:e0ac with SMTP id nc29-20020a1709071c1d00b0094ef862e0acmr89568ejc.17.1681458909499;
+        Fri, 14 Apr 2023 00:55:09 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:8a60:6b0f:105a:eefb? ([2a02:810d:15c0:828:8a60:6b0f:105a:eefb])
+        by smtp.gmail.com with ESMTPSA id h23-20020aa7c957000000b005066ca60b2csm1790424edt.63.2023.04.14.00.55.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Apr 2023 00:55:09 -0700 (PDT)
+Message-ID: <517a0967-4632-27b3-a161-e96ea83d3d78@linaro.org>
+Date:   Fri, 14 Apr 2023 09:55:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1681401401-15099-1-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 1/8] dt-bindings: pinctrl: qcom,pmic-gpio: add PMI632
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-leds@vger.kernel.org, linux-iio@vger.kernel.org
+References: <20230414-pmi632-v1-0-fe94dc414832@z3ntu.xyz>
+ <20230414-pmi632-v1-1-fe94dc414832@z3ntu.xyz>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230414-pmi632-v1-1-fe94dc414832@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Capitalize DSC in the title, as discussed in v1.
-
-On 2023-04-13 08:56:41, Kuogee Hsieh wrote:
-> In current code, the DSC active bits are written only if cfg->dsc is set.
-> However, for displays which are hot-pluggable, there can be a use-case
-> of disconnecting a DSC supported sink and connecting a non-DSC sink.
+On 14/04/2023 01:17, Luca Weiss wrote:
+> Document the 8 GPIOs found on PMI632.
 > 
-> For those cases we need to clear DSC active bits during tear down.
-> 
-> Changes in V2:
-> 1) correct commit text as suggested
-> 2) correct Fixes commit id
-> 3) add FIXME comment
-> 
-> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-By default git send-email should pick this up in the CC line...  but I
-had to download this patch from lore once again.
-
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index bbdc95c..1651cd7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -541,10 +541,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->  	if (cfg->merge_3d)
->  		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->  			      BIT(cfg->merge_3d - MERGE_3D_0));
-> -	if (cfg->dsc) {
-> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
-> -		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
-> -	}
-> +
-> +	/* FIXME: fix reset_intf_cfg to handle teardown of dsc */
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> index 1096655961f7..2179444b7a83 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> @@ -52,6 +52,7 @@ properties:
+>            - qcom,pm8994-gpio
+>            - qcom,pm8998-gpio
+>            - qcom,pma8084-gpio
+> +          - qcom,pmi632-gpio
 
-There's more wrong than just moving (not "fix"ing) this bit of code into
-reset_intf_cfg.  And this will have to be re-wrapped in `if (cfg->dsc)`
-again by reverting this patch.  Perhaps that can be explained, or link
-to Abhinav's explanation to make it clear to readers what this FIXME
-actually means?  Let's wait for Abhinav and Dmitry to confirm the
-desired communication here.
+You missed update to other places.
 
-https://lore.kernel.org/linux-arm-msm/ec045d6b-4ffd-0f8c-4011-8db45edc6978@quicinc.com/
+Best regards,
+Krzysztof
 
-- Marijn
-
-> +	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
-> +	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
->  }
->  
->  static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
