@@ -2,122 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 441D06E2900
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 19:11:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 265436E2954
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 19:28:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230306AbjDNRLT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 13:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37456 "EHLO
+        id S230092AbjDNR2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 13:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230294AbjDNRLS (ORCPT
+        with ESMTP id S229997AbjDNR2M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 13:11:18 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83B561BD3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 10:11:16 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-504ecfdf6b6so2887638a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 10:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681492275; x=1684084275;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WWFKzv+6OmPpo0mp+ZpJhFgaz9KaqvwS0otuVBFZkt4=;
-        b=zD/gD0jBGi43o9/Ge5kQCvMRScKUzFjkx5DaAbv/qtx0EJwZcJv2CoslRQDqd02H+y
-         md1jyufYPCllkhwCyDmoo0CVeh58e28zdDxN3wSnCy4MWOoyIhraFoYPXDTqREkpyI7N
-         m/Ha9wvdSPGfS4O24o9Xt0FXKp4Pa4k81XftT642qAajltTUdZRatCK5garx8jXT3WfM
-         1yS2jLg5m8kgM3QRF5uydUGagY5uIvqyob9d+bk1Ynq5DdSWZ3B8e7Y3SRMWysP+C6Ek
-         WdhGn+Umaoye7LWFQdNtIniRqS3MKgp8m/bJOIcI7J6L4+H4Lhp5B6bhonQfdbRP/5tQ
-         8M4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681492275; x=1684084275;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WWFKzv+6OmPpo0mp+ZpJhFgaz9KaqvwS0otuVBFZkt4=;
-        b=AEfxSlDEurNqcdoZR4bTXwyEhAwgnfF+tab/V+eHqonpEWD1N4QBg5Qx4AUNEncq6N
-         Elb8aO/J5ZPdWOLJ4I9Xu+DCKElibJwByzZfLhcbvJUhP5cUYEXZ4Naj+K7iCE6+gumT
-         U1NJ/qvV2kOd+A+5kC5pwNDBcX1jV/0VxpJEGzZWpyECQ0R4PSo2Kgb3QyrWiAByytoz
-         f4LPiV8DA8AE0V1Ehe4y6mf4ipWzrsyIDtWVXJjVI1AJD8Xtech5AZdF9VntfRUihTpf
-         n4MsHGyEd7GHGaovKNavHxeL/xoOToWMseBWARZF7myujJdFEAE3W7+QgLyOYqJIGCo3
-         rC7g==
-X-Gm-Message-State: AAQBX9e+eNM2bNCbtrTjv4F/WnlvznyzYggjWZxuxZDTqS7pGx4EVBFh
-        2hDEMaxvoTQ3MS7QaFq0Bl6JYA==
-X-Google-Smtp-Source: AKy350ZM7koFyxIDpucMqufOPkm2B6d69BgIu8wCBP3JNPLMuVz9Btf/itc+rnQmz5h3CQEwKNXoLA==
-X-Received: by 2002:aa7:c394:0:b0:501:c3de:dc5c with SMTP id k20-20020aa7c394000000b00501c3dedc5cmr6166290edq.18.1681492275024;
-        Fri, 14 Apr 2023 10:11:15 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:39b7:81a0:bd41:17b1? ([2a02:810d:15c0:828:39b7:81a0:bd41:17b1])
-        by smtp.gmail.com with ESMTPSA id v15-20020aa7dbcf000000b00501d51c23fbsm2344642edt.6.2023.04.14.10.11.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 10:11:14 -0700 (PDT)
-Message-ID: <76237034-7871-c77f-1e32-c0a585d8df86@linaro.org>
-Date:   Fri, 14 Apr 2023 19:11:13 +0200
+        Fri, 14 Apr 2023 13:28:12 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC47B3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 14 Apr 2023 10:28:09 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 74EF23FA00;
+        Fri, 14 Apr 2023 19:28:06 +0200 (CEST)
+Date:   Fri, 14 Apr 2023 19:28:04 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dpu: always program dsc active bits
+Message-ID: <3oaangxh7gmie3cdd6rmujm7dd3hagsrnwiq3bascdtamvfn3a@bn6ou5hbsgxv>
+References: <1681401401-15099-1-git-send-email-quic_khsieh@quicinc.com>
+ <tgfbdk6q3uool365jqddibnbgq66clsmsm6tldxpm5toqghxpq@m2ic3oonv2s5>
+ <aac210da-dec1-aab8-3f48-c33d9e7687d6@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH V1 1/4] dt-bindings: clock: qcom,ipq9574-gcc: Drop the
- Bias PLL ubi clock source
-Content-Language: en-US
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_poovendh@quicinc.com
-References: <20230414134812.16812-1-quic_devipriy@quicinc.com>
- <20230414134812.16812-2-quic_devipriy@quicinc.com>
- <dc48d390-9c8b-d3b7-9c5e-6cbddb0e1306@linaro.org>
- <aca7b808-51ce-1921-2ee2-0e82cf19d960@quicinc.com>
- <7b4fe58c-9cf8-57ab-8cbc-c5ccf0b2a46d@linaro.org>
- <2c5bbe48-3007-a1d5-73b9-9d2132bff9d4@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2c5bbe48-3007-a1d5-73b9-9d2132bff9d4@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aac210da-dec1-aab8-3f48-c33d9e7687d6@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2023 18:04, Devi Priya wrote:
+On 2023-04-14 08:41:37, Abhinav Kumar wrote:
 > 
+> On 4/14/2023 12:48 AM, Marijn Suijten wrote:
+> > Capitalize DSC in the title, as discussed in v1.
+> > 
+> > On 2023-04-13 08:56:41, Kuogee Hsieh wrote:
+> >> In current code, the DSC active bits are written only if cfg->dsc is set.
+> >> However, for displays which are hot-pluggable, there can be a use-case
+> >> of disconnecting a DSC supported sink and connecting a non-DSC sink.
+> >>
+> >> For those cases we need to clear DSC active bits during tear down.
+> >>
+> >> Changes in V2:
+> >> 1) correct commit text as suggested
+> >> 2) correct Fixes commit id
+> >> 3) add FIXME comment
+> >>
+> >> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
+> >> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> >> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > 
+> > By default git send-email should pick this up in the CC line...  but I
+> > had to download this patch from lore once again.
+> > 
 > 
-> On 4/14/2023 8:39 PM, Krzysztof Kozlowski wrote:
->> On 14/04/2023 16:22, Devi Priya wrote:
->>>
->>>
->>> On 4/14/2023 7:47 PM, Krzysztof Kozlowski wrote:
->>>> On 14/04/2023 15:48, Devi Priya wrote:
->>>>> Remove bias_pll_ubi_nc_clk from the binding as it has been removed from
->>>>> the Device Tree. Also added Bjorn Andersson to the maintainers list.
->>>>
->>>> Was it really removed? Where?
->>>>
->>> It has been removed from the Device tree and binding in V11
->>> https://lore.kernel.org/linux-arm-msm/20230404101622.5394-1-quic_devipriy@quicinc.com/
->>
->> I still see it in current next. Are you sure you refer to something
->> already merged?
+> Yes, I think what happened here is, he didnt git am the prev rev and 
+> make changes on top of that so git send-email didnt pick up. We should 
+> fix that process.
+
+The mail was sent so it must have gone through git send-email, unless a
+different mail client was used to send the .patch file.  I think you are
+confusing this with git am (which doesn't need to be used if editing a
+commit on a local branch) and subsequently git format-patch, which takes
+a commit from a git repository and turns it into a .patch file: neither
+of these "converts" r-b's (and other tags) to cc, that's happening in
+git send-email (see `--suppress-cc` documentation in `man
+git-send-email`).
+
+I can recommend b4: it has lots of useful features including
+automatically picking up reviews and processing revisions.  It even
+requires a changelog to be edited ;).  However, finding the right flags
+and trusting it'll "do as ordered" is a bit daunting at first.
+
+> >> ---
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 8 ++++----
+> >>   1 file changed, 4 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> >> index bbdc95c..1651cd7 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> >> @@ -541,10 +541,10 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+> >>   	if (cfg->merge_3d)
+> >>   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+> >>   			      BIT(cfg->merge_3d - MERGE_3D_0));
+> >> -	if (cfg->dsc) {
+> >> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+> >> -		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+> >> -	}
+> >> +
+> >> +	/* FIXME: fix reset_intf_cfg to handle teardown of dsc */
+> > 
+> > There's more wrong than just moving (not "fix"ing) this bit of code into
+> > reset_intf_cfg.  And this will have to be re-wrapped in `if (cfg->dsc)`
+> > again by reverting this patch.  Perhaps that can be explained, or link
+> > to Abhinav's explanation to make it clear to readers what this FIXME
+> > actually means?  Let's wait for Abhinav and Dmitry to confirm the
+> > desired communication here.
+> > 
+> > https://lore.kernel.org/linux-arm-msm/ec045d6b-4ffd-0f8c-4011-8db45edc6978@quicinc.com/
+> > 
 > 
-> This change was made in V11 and Currently V9 is merged in linux-next.
-> So, the delta changes between V9 & V12 is posted in this series.
-> The device tree change where the clock is removed is added part of this 
-> incremental patch series and the binding is updated to reflect the same.
-> Apologies, if the confusion is because of "has been removed from device 
-> tree" in the commit message.
+> Yes, I am fine with linking this explanation in the commit text and 
+> mentioning that till thats fixed, we need to go with this solution. The 
+> FIXME itself is fine, I will work on it and I remember this context well.
 
-Your commit indicated that removal from DTS happened. If it did not
-happen, you need to come with proper reason (and fix the tense not to
-confuse).
+Looks like it was removed entirely in v3, in favour of only describing
+it in the patch body.  The wording seems a bit off but that's fine by me
+if you're picking this up soon anyway.
 
-Best regards,
-Krzysztof
-
+- Marijn
