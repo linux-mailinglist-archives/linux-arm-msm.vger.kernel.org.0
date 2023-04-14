@@ -2,56 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CE8C6E1AB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 05:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B8096E1AB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 05:23:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbjDNDVM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 23:21:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42378 "EHLO
+        id S229708AbjDNDXv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 13 Apr 2023 23:23:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjDNDVL (ORCPT
+        with ESMTP id S229457AbjDNDXu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 23:21:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656522D40;
-        Thu, 13 Apr 2023 20:21:10 -0700 (PDT)
+        Thu, 13 Apr 2023 23:23:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DD7B2D78;
+        Thu, 13 Apr 2023 20:23:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD4D664337;
-        Fri, 14 Apr 2023 03:21:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A3EC433D2;
-        Fri, 14 Apr 2023 03:21:08 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D6C8E6142A;
+        Fri, 14 Apr 2023 03:23:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1086AC433D2;
+        Fri, 14 Apr 2023 03:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681442469;
-        bh=Djr/EyzdyP74eCkHVTABOcQP+MzKJ4RKp9Nj+Tms4SE=;
+        s=k20201202; t=1681442628;
+        bh=dWGS/YaPHR/fQv4dBr6p4FNjaecwHauI4HlGGWcgXT4=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rEu9cQWik9DprlY3c368E3poUdVwDmzOJCu1Anf6o+tSvz771TpnfPZly7u38pYXK
-         dS6cvRKiYXnT4DaYb/Wb+0jr4v1nZRp2+S+oyE9Xzl8BrMMyaXhVlIsfN5Yb2TWDC1
-         0ngc+aI7GwXzJrUCKpunKngH+GC0f3wstX8UiaS0sR45hBnG0YnCSb/UkMoCXZ2Nb5
-         MRemtwXKdFq9PQM2mT72jf+ew3CamESuuGjz/dZs7I8nZXd/JGxuCaSoeONTXXm+6W
-         9BQTgLFto9gIvQlQBWncG+X2jS6/m7F4DmPa4GSknIRZE51j3tXqicFw/UJw+/+ZGc
-         x7GaX4KY40dfg==
-Date:   Thu, 13 Apr 2023 20:24:47 -0700
+        b=MfRNr1aTuyIX7APY63DHiwdotjsX7QOVFjacYy6BXKxKiam+MSquLnJaAXuelFx19
+         JZT5jCN52ex/gUS6+HA13IgHi7WxrRCdmQkVddt+r6qotXikbQF77b60zcJUUOb/m2
+         /ZK7Qod/CW0N8oiSmmxyBtJSzzx2JM1Fkp6WNSe82zF9fzqal2QD8Woe7azzAvrz4D
+         7rZKvYrQiQjYHDIzrCB+aK0PsViv4YbEYU3Tm2sUcrO+uTL9myACCv4o+3/ZAwvBsb
+         PXHkMBjggWxdKGm27n+o0I4yCMWJnWw1uf011L2DwPMQ8A7yMIUhYaHLb7fbLDc02g
+         OQJS4ona4XwHQ==
+Date:   Thu, 13 Apr 2023 20:27:26 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] clk: qcom: dispcc-qcm2290: Fix GPLL0_OUT_DIV handling
-Message-ID: <20230414032447.gwcn2akewuunvydf@ripper>
-References: <20230412-topic-qcm_dispcc-v1-0-bf2989a75ae4@linaro.org>
- <20230412-topic-qcm_dispcc-v1-3-bf2989a75ae4@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] clk: qcom: Introduce SM8350 VIDEOCC
+Message-ID: <20230414032726.ppssnbensuzcrjrm@ripper>
+References: <20230413-topic-lahaina_vidcc-v1-0-134f9b22a5b3@linaro.org>
+ <20230413-topic-lahaina_vidcc-v1-2-134f9b22a5b3@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230412-topic-qcm_dispcc-v1-3-bf2989a75ae4@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20230413-topic-lahaina_vidcc-v1-2-134f9b22a5b3@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,56 +62,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 04:53:07PM +0200, Konrad Dybcio wrote:
-> GPLL0_OUT_DIV was previously shoved in under the name of its undivided
-> sibling in parent_map_2. Resolve it.
-> 
+On Thu, Apr 13, 2023 at 08:44:59PM +0200, Konrad Dybcio wrote:
+> diff --git a/drivers/clk/qcom/videocc-sm8350.c b/drivers/clk/qcom/videocc-sm8350.c
+[..]
+> +static struct clk_alpha_pll video_pll0 = {
+> +	.offset = 0x42c,
+> +	.vco_table = lucid_5lpe_vco,
+> +	.num_vco = ARRAY_SIZE(lucid_5lpe_vco),
+> +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID],
+> +	.clkr = {
+> +		.hw.init = &(struct clk_init_data){
 
-I'm afraid I don't understand what you're saying here, can you please
-rework it?
+I know it's tiny, but please add a <space> between ) and { of these.
+
+> +			.name = "video_pll0",
+> +			.parent_data = &(const struct clk_parent_data){
+> +				.index = DT_BI_TCXO,
+> +			},
+> +			.num_parents = 1,
+> +			.ops = &clk_alpha_pll_lucid_5lpe_ops,
+> +		},
+> +	},
+> +};
+[..]
+> +
+> +static int __init video_cc_sm8350_init(void)
+> +{
+> +	return platform_driver_register(&video_cc_sm8350_driver);
+> +}
+> +subsys_initcall(video_cc_sm8350_init);
+
+You don't need this at subsys_initcall(), please use
+module_platform_driver().
 
 Thanks,
 Bjorn
-
-> Fixes: cc517ea3333f ("clk: qcom: Add display clock controller driver for QCM2290")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/clk/qcom/dispcc-qcm2290.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-> index ee62aca4e5bb..44dd5cfcc150 100644
-> --- a/drivers/clk/qcom/dispcc-qcm2290.c
-> +++ b/drivers/clk/qcom/dispcc-qcm2290.c
-> @@ -28,6 +28,7 @@ enum {
->  	P_DISP_CC_PLL0_OUT_MAIN,
->  	P_DSI0_PHY_PLL_OUT_BYTECLK,
->  	P_DSI0_PHY_PLL_OUT_DSICLK,
-> +	P_GPLL0_OUT_DIV,
->  	P_GPLL0_OUT_MAIN,
->  	P_SLEEP_CLK,
->  };
-> @@ -84,7 +85,7 @@ static const struct clk_parent_data disp_cc_parent_data_1[] = {
->  
->  static const struct parent_map disp_cc_parent_map_2[] = {
->  	{ P_BI_TCXO_AO, 0 },
-> -	{ P_GPLL0_OUT_MAIN, 4 },
-> +	{ P_GPLL0_OUT_DIV, 4 },
->  };
->  
->  static const struct clk_parent_data disp_cc_parent_data_2[] = {
-> @@ -153,8 +154,8 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
->  
->  static const struct freq_tbl ftbl_disp_cc_mdss_ahb_clk_src[] = {
->  	F(19200000, P_BI_TCXO_AO, 1, 0, 0),
-> -	F(37500000, P_GPLL0_OUT_MAIN, 8, 0, 0),
-> -	F(75000000, P_GPLL0_OUT_MAIN, 4, 0, 0),
-> +	F(37500000, P_GPLL0_OUT_DIV, 8, 0, 0),
-> +	F(75000000, P_GPLL0_OUT_DIV, 4, 0, 0),
->  	{ }
->  };
->  
-> 
-> -- 
-> 2.40.0
-> 
