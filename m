@@ -2,56 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E72786E1AD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 05:34:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B912B6E1B27
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 14 Apr 2023 06:41:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229753AbjDNDdi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 13 Apr 2023 23:33:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46450 "EHLO
+        id S229601AbjDNEli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 14 Apr 2023 00:41:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbjDNDdf (ORCPT
+        with ESMTP id S229479AbjDNElh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 13 Apr 2023 23:33:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31504ED8;
-        Thu, 13 Apr 2023 20:33:32 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 73344643A8;
-        Fri, 14 Apr 2023 03:33:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9449BC433D2;
-        Fri, 14 Apr 2023 03:33:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681443211;
-        bh=zQ1T5RTb+RrMY2JnDGYIFwYF15LUKVpBvczjEj5kFYg=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=MUhPXB/w7hkEalJgISFC9D1IcD/w818lEiYisFqIesDygBD5AsJ+OmHyQMvWGVynb
-         LqdGHaLEEvBiX7jwbH8N5Lx9lehI72Czr6SW4pm7T/J4vCq6r9oHVnPsGbwSzYr6cM
-         36Dga9p+tArC+01KxM+gd0gJ6dwEqbGuocyz2hbWtgijMtaE8uYstpZDi76le4+Mwz
-         ecnxbTIeXkNTzch7NAjPQ3pH2MkDWPtWtHmJOrr0AamYF3C1yEcPX+IUFKi2y5x1ly
-         KrMM5gxtuN7kQ8jijpvu4gMWEUPitNnNv+GMKcOW1muuu9FL4q3+Ye/+3koqy4O+yt
-         0pObnh8bHOsPg==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     swboyd@chromium.org, konrad.dybcio@somainline.org,
-        quic_plai@quicinc.com, quic_rohkumar@quicinc.com,
-        linux-arm-msm@vger.kernel.org, broonie@kernel.org,
-        quic_visr@quicinc.com, agross@kernel.org, sboyd@kernel.org,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-        krzysztof.kozlowski+dt@linaro.org, linux-clk@vger.kernel.org,
-        robh+dt@kernel.org, mturquette@baylibre.com,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v11 0/3] Add resets for ADSP based audio clock controller driver
-Date:   Thu, 13 Apr 2023 20:37:06 -0700
-Message-Id: <168144342195.2459486.11052723951925664521.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230407092255.119690-1-quic_mohs@quicinc.com>
-References: <20230407092255.119690-1-quic_mohs@quicinc.com>
+        Fri, 14 Apr 2023 00:41:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5904B4683;
+        Thu, 13 Apr 2023 21:41:36 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33E32Qsk025843;
+        Fri, 14 Apr 2023 04:41:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hJRpPmNCPtJVBcrq0CaP8SRzwZ3nh+MkoQO9ClK7m2w=;
+ b=TZ8CNwYTYVquAWr+pDhAWJnwBilNFXHe+JDLUYctmzwvhDvWhpm4eU4UXxc68MPHkNbS
+ 3Mz3q5ifBOM5zo07z15B9R6rNE/tG4IJnyYppP4klN1j5P+E7IhniGL1ntZnXjsTl6eY
+ EgKFAmIsEVjDWkBXf+dchkDqUrRD6iijIMJ/N6n1n+zdom/srQHoYHSTfJ4SwRzZoPsU
+ Zyr/ExPRDecQ2jpnu2Hz87gwXhQnNiRPBN/t7plZogSJKY9DVFrGycQyyomrzvP9X4ky
+ xFPPe8lUv2FAH0xzPiIA1Jqz+Ef4zUXYCaqzOtlh0lKgQUZRLk99aqpM45LHnDZzpw3i AA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3px6cnk1c7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 04:41:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33E4fGbV008380
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 14 Apr 2023 04:41:16 GMT
+Received: from [10.216.8.24] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 13 Apr
+ 2023 21:41:10 -0700
+Message-ID: <f55fb40e-50d7-c4f2-efee-8de24a6a31f2@quicinc.com>
+Date:   Fri, 14 Apr 2023 10:11:06 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v6 0/8] Add multiport support for DWC3 controllers
+To:     Adrien Thierry <athierry@redhat.com>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+ <ZDhP823LUMCDuD9q@fedora>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZDhP823LUMCDuD9q@fedora>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: uQYKuBL01LX8LffcCvm-kYUC8gttuV27
+X-Proofpoint-GUID: uQYKuBL01LX8LffcCvm-kYUC8gttuV27
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-14_01,2023-04-13_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304140041
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,58 +91,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 7 Apr 2023 14:52:52 +0530, Mohammad Rafi Shaik wrote:
-> Add resets and remove qdsp6ss clock controller for audioreach based platforms.
+
+
+On 4/14/2023 12:24 AM, Adrien Thierry wrote:
+> Hi,
 > 
-> Changes since v10:
->     -- drop #define macro for max_register.
->     -- Add max_register value for top_cc register.
-> Changes since v9:
->     -- Drop "clk: qcom: lpassaudiocc-sc7280: Modify qcom_cc_probe" patch.
->     -- Update Fixes tag in Add the required gdsc's in lpass_cc_sc7280_desc patch.
->     -- Add the max_register value in Skip qdsp6ss clock registration patch.
-> Changes since v8:
->     -- Add the required gdsc's in lpass_cc_sc7280_desc structure.
->     -- Modify qcom_cc_probe to qcom_cc_probe_by_index.
->     -- Update the commit message for v8,4/5 patch, which is not required for new logic.
->     -- Drop "Add binding headers for lpasscc" patch.
->     -- Drop "Skip lpass_aon_cc_pll config" patch.
-> Changes since v7:
->     -- Modiy AHB clock probing method in "Merge lpasscc into lpass_aon patch".
->     -- Fix Typo errors in "Merge lpasscc into lpass_aon patch".
->     -- Update commit message in "Merge lpasscc into lpass_aon patch"
-> Changes since v6:
->     -- Update commit message in "Merge lpasscc into lpass_aon patch" patch.
->     -- Drop "Skip lpasscorecc registration" patch.
->     -- Add comment in the code in "Skip lpass_aon_cc_pll config" patch.
-> Changes since v5:
->     -- Fix compilation issue.
-> Changes since v4:
->     -- Update Fixes tag in Merge lpasscc into lpass_aon patch.
->     -- Revert removal of clk_regmap structure in Merge lpasscc into lpass_aon patch.
-> Changes since v3:
->     -- Remove duplicate clock resets patch.
->     -- Add binding headers for q6 clocks.
->     -- Create new patch for merging lpasscc q6 clocks into lpass_aon.
->     -- Create new patches for handling conflicts of ADSP and bypass solution.
-> Changes since v2:
->     -- Revert removing qdsp6ss clock control.
->     -- Add Conditional check for qdsp6ss clock registration.
-> Changes since v1:
->     -- Update commit message.
->     -- Remove qdsp6ss clock control.
+>> Krishna Kurapati (8):
+>>    dt-bindings: usb: Add bindings for multiport properties on DWC3
+>>      controller
+>>    usb: dwc3: core: Access XHCI address space temporarily to read port
+>>      info
+>>    usb: dwc3: core: Skip setting event buffers for host only controllers
+>>    usb: dwc3: core: Refactor PHY logic to support Multiport Controller
+>>    usb: dwc3: qcom: Add multiport controller support for qcom wrapper
+>>    arm64: dts: qcom: sc8280xp: Add multiport controller node for SC8280
+>>    arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
+>>      ports
+>>    arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb
+>>      controller
+>>
+>>   .../devicetree/bindings/usb/snps,dwc3.yaml    |  13 +-
+>>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts	 |  47 +++
+>>   arch/arm64/boot/dts/qcom/sa8540p-ride.dts     |  22 ++
+>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  58 +++
+>>   drivers/usb/dwc3/core.c                       | 373 ++++++++++++++----
+>>   drivers/usb/dwc3/core.h                       |  71 +++-
+>>   drivers/usb/dwc3/drd.c                        |  13 +-
+>>   drivers/usb/dwc3/dwc3-qcom.c                  |  28 +-
+>>   8 files changed, 523 insertions(+), 102 deletions(-)
 > 
-> [...]
+> I tested this series on the sa8540p-ride, with a USB Ethernet adapter
+> plugged into the board. The device shows up as expected:
+> 
+> # lsusb -tv
+> /:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=xhci-hcd/2p, 10000M
+>      ID 1d6b:0003 Linux Foundation 3.0 root hub
+>      |__ Port 1: Dev 2, If 0, Class=Vendor Specific Class, Driver=r8152, 5000M
+>          ID 0bda:8153 Realtek Semiconductor Corp. RTL8153 Gigabit Ethernet Adapter
+> /:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=xhci-hcd/4p, 480M
+>      ID 1d6b:0002 Linux Foundation 2.0 root hub
+> 
+> Tested-by: Adrien Thierry <athierry@redhat.com> # sa8540p-ride
+> 
 
-Applied, thanks!
+Hi Adrien,
 
-[1/3] dt-bindings: clock: qcom,sc7280-lpasscc: Add qcom,adsp-pil-mode property
-      commit: 5c3a7dcce10028c5839864ed475ae7930b03c1e8
-[2/3] clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
-      commit: 4fc1c2d9a2b7a394f3b873aae5e03bffd8b5cd31
-[3/3] clk: qcom: lpassaudiocc-sc7280: Add required gdsc power domain clks in lpass_cc_sc7280_desc
-      commit: aad09fc7c4a522892eb64a79627b17a3869936cb
+  Thanks for testing out the patches.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+Regards,
+Krishna,
