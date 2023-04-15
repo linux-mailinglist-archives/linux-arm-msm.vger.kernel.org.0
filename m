@@ -2,89 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82BC86E2E70
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 04:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 109A86E2F2E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 07:39:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbjDOCDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 14 Apr 2023 22:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43754 "EHLO
+        id S229801AbjDOFja (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Apr 2023 01:39:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230107AbjDOCCn (ORCPT
+        with ESMTP id S229462AbjDOFja (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 14 Apr 2023 22:02:43 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 210DC83D3;
-        Fri, 14 Apr 2023 19:02:42 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54f8b687a06so1581127b3.0;
-        Fri, 14 Apr 2023 19:02:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681524161; x=1684116161;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QfFLYwoRbIcS+5n1zFSGq1E+iP2KHQOy5/Vbet45Gu4=;
-        b=g/VYV2yqnH2eA0lEeYtVv85WVktmO9HxBMfNW7J4AQ16iR7EJE4Hi3vJTo7C/x7zMo
-         usfA55rBiBVMwtJcRm8avc1L+Q6WT9Nc8Oe8AJN9zOmfH0hiIA8U+cCdS3ku4gHvVTTo
-         WfpXhMQxgWrUwWEFVGhpEcirALG7LCfwniOKRzVc1TYlQOBPsoWaZnb66b1ZwvHSM5c6
-         MtvkqICCDlYW4EXUSPZ58vwbUHP0O5kKYIX7GzAVdNG4hHxZRxss/9c3csUFgc/EshwH
-         D5BljrSYJBTCk7SqDUyV1rzZ8THD+PVsn6SIDciGuKHwcYmQgnXjJuToVof8PUaEwD+z
-         0kIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681524161; x=1684116161;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QfFLYwoRbIcS+5n1zFSGq1E+iP2KHQOy5/Vbet45Gu4=;
-        b=beuyYd9Jifd8LXgEAUqMTJDChNHnVBXcr820W3SvstwgtjU0jTDdPfOqYQwHlTct1M
-         kurnswYEvE/9HORrsVNxIhV8zAZhGSVttutsjdd6Rm/VfNnhwWm/UwV3gySGf19mlAQt
-         fTldk853qSEvO0ltK6WuHKzkdNT8D71QU3JxgZTt9gc2TmQ+tLWvcO2dL63Pcd5us9DK
-         z55lgvGBluoM25VmaYmmgO4oE81FNTHcm/1J1n0/8EZhg17lN8IDUlgak/DpcmAFaXK+
-         8LqCQHSJE+Nl+pmOCZAgRym5JaDOhvMNmD4i+L7EAOhhzD8EpGZjAV0LW7b2MbrLFjjX
-         6KmQ==
-X-Gm-Message-State: AAQBX9e8CjOubDBj6bR/4hP02sMqBT3i3qEXdIGE4KchNdr+u/nsCTwf
-        IHQ0F1xSePRK67yTxoDio/A=
-X-Google-Smtp-Source: AKy350Z34NCtOeyDltAA+YqPY7xdtbn3jTq23ob5FORw1LL+hPAy4r721FNIfl2gkhYLEAIW28ad6Q==
-X-Received: by 2002:a81:1252:0:b0:54f:dc9b:c994 with SMTP id 79-20020a811252000000b0054fdc9bc994mr3789942yws.1.1681524161272;
-        Fri, 14 Apr 2023 19:02:41 -0700 (PDT)
-Received: from JOEL-DESKTOP.. ([2604:2d80:4d87:cd00:9f51:32d7:1177:67d])
-        by smtp.gmail.com with ESMTPSA id 68-20020a810a47000000b00545a081847fsm1593607ywk.15.2023.04.14.19.02.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 19:02:41 -0700 (PDT)
-From:   Joel Selvaraj <joelselvaraj.oss@gmail.com>
-To:     Caleb Connolly <caleb@connolly.tech>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
+        Sat, 15 Apr 2023 01:39:30 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B0F55B4;
+        Fri, 14 Apr 2023 22:39:29 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AD85461DA2;
+        Sat, 15 Apr 2023 05:39:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC8BC433D2;
+        Sat, 15 Apr 2023 05:39:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1681537168;
+        bh=sgqkra4Gl7AEFkkAJD6KZbCVVWw5Ls3bOzVoxaPUYvs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jmk1QDXOKGjBY0T2+F1Q0RNrD2CkZhgopDBDxA+5qOo6Tkeg6L7xcJMjZBPE0Fg5Q
+         PecKJFwxwhVKxdk0DkkXG0Nj19rX7tI0Nu4hV7lQfT7z2dg+wASQpAuS4LW69Oqe1E
+         ku5O4zQlD2JFGgMvATYQRbgLf0T7KA0octmvdJ2c=
+Date:   Sat, 15 Apr 2023 07:39:24 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Henrik Rydberg <rydberg@bitmath.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
         Arnd Bergmann <arnd@arndb.de>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Jeff LaBundy <jeff@labundy.com>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        Jean Delvare <jdelvare@suse.de>,
-        Max Krummenacher <max.krummenacher@toradex.com>,
-        Chris Morgan <macromorgan@hotmail.com>,
-        Job Noorman <job@noorman.info>,
-        Alistair Francis <alistair@alistair23.me>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Maxime Ripard <mripard@kernel.org>
-Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Joel Selvaraj <joelselvaraj.oss@gmail.com>
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sdm845-shift-axolotl: update focaltech touchscreen properties
-Date:   Fri, 14 Apr 2023 21:02:22 -0500
-Message-Id: <20230415020222.216232-6-joelselvaraj.oss@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230415020222.216232-1-joelselvaraj.oss@gmail.com>
-References: <20230415020222.216232-1-joelselvaraj.oss@gmail.com>
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data
+ Capture and Compare unit(DCC)
+Message-ID: <ZDo4jIIV7cfPD2qW@kroah.com>
+References: <cover.1681480351.git.quic_schowdhu@quicinc.com>
+ <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,52 +61,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The touchscreen nodes were added before the driver patches were merged.
-Update the focaltech touchscreen properties to match with the upstreamed
-focaltech driver. Also, the touchscreen used is in axolotl is fts5452
-and not fts8719.
+On Fri, Apr 14, 2023 at 07:29:12PM +0530, Souradeep Chowdhury wrote:
+> The DCC is a DMA Engine designed to capture and store data
+> during system crash or software triggers. The DCC operates
+> based on user inputs via the debugfs interface. The user gives
+> addresses as inputs and these addresses are stored in the
+> dcc sram. In case of a system crash or a manual software
+> trigger by the user through the debugfs interface,
+> the dcc captures and stores the values at these addresses.
+> This patch contains the driver which has all the methods
+> pertaining to the debugfs interface, auxiliary functions to
+> support all the four fundamental operations of dcc namely
+> read, write, read/modify/write and loop. The probe method
+> here instantiates all the resources necessary for dcc to
+> operate mainly the dedicated dcc sram where it stores the
+> values. The DCC driver can be used for debugging purposes
+> without going for a reboot since it can perform software
+> triggers as well based on user inputs.
 
-Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
----
- .../boot/dts/qcom/sdm845-shift-axolotl.dts     | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+You have 72 columns, why not use them all please?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index b54e304abf71..70286e53e000 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -474,23 +474,21 @@ &i2c5 {
- 	status = "okay";
- 
- 	touchscreen@38 {
--		compatible = "focaltech,fts8719";
-+		compatible = "focaltech,fts5452";
- 		reg = <0x38>;
--		wakeup-source;
--		interrupt-parent = <&tlmm>;
--		interrupts = <125 0x2>;
--		vdd-supply = <&vreg_l28a_3p0>;
--		vcc-i2c-supply = <&vreg_l14a_1p88>;
- 
--		pinctrl-names = "default", "suspend";
-+		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-+
-+		avdd-supply = <&vreg_l28a_3p0>;
-+		vddio-supply = <&vreg_l14a_1p88>;
-+
- 		pinctrl-0 = <&ts_int_active &ts_reset_active>;
- 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
-+		pinctrl-names = "default", "suspend";
- 
--		reset-gpio = <&tlmm 99 GPIO_ACTIVE_HIGH>;
--		irq-gpio = <&tlmm 125 GPIO_TRANSITORY>;
- 		touchscreen-size-x = <1080>;
- 		touchscreen-size-y = <2160>;
--		focaltech,max-touch-number = <5>;
- 	};
- };
- 
--- 
-2.40.0
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
 
+It is now 2023 :)
+
+
+
+
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/bitops.h>
+> +#include <linux/debugfs.h>
+> +#include <linux/delay.h>
+> +#include <linux/fs.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/miscdevice.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +#include <linux/uaccess.h>
+> +
+> +#define STATUS_READY_TIMEOUT		5000  /* microseconds */
+> +
+> +#define DCC_SRAM_NODE "dcc_sram"
+
+You only use this once, why is a #define needed?
+
+> +static void dcc_create_debug_dir(struct dcc_drvdata *drvdata)
+> +{
+> +	int i;
+> +	char list_num[10];
+> +	struct dentry *list;
+> +	struct device *dev = drvdata->dev;
+> +
+> +	drvdata->dbg_dir = debugfs_create_dir(dev_name(dev), NULL);
+
+You are creating a directory at the root of debugfs with just your
+device name?  While that will work, that feels very odd.  Please use a
+subdirectory.
+
+> +	if (IS_ERR(drvdata->dbg_dir)) {
+> +		pr_err("can't create debugfs dir\n");
+
+There is no need to ever check the return value of a debugfs call.
+
+Nor do you really ever even need to save off the dentry here, just look
+it up when you need to remove it.
+
+> +		return;
+> +	}
+> +
+> +	for (i = 0; i <= drvdata->nr_link_list; i++) {
+> +		sprintf(list_num, "%d", i);
+> +		list = debugfs_create_dir(list_num, drvdata->dbg_dir);
+> +		debugfs_create_file("enable", 0600, list, drvdata, &enable_fops);
+> +		debugfs_create_file("config", 0600, list, drvdata, &config_fops);
+> +	}
+> +
+> +	debugfs_create_file("trigger", 0200, drvdata->dbg_dir, drvdata, &trigger_fops);
+> +	debugfs_create_file("ready", 0400, drvdata->dbg_dir, drvdata, &ready_fops);
+> +	debugfs_create_file("config_reset", 0200, drvdata->dbg_dir,
+> +			    drvdata, &config_reset_fops);
+
+This really looks like you are using debugfs to control the device, not
+just for debugging information.  How are you going to be able to use the
+device in a system that has debugfs disabled?
+
+thanks,
+
+greg k-h
