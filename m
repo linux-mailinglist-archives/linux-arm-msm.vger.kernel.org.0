@@ -2,158 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 109A86E2F2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 07:39:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D332B6E2FCF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 10:53:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbjDOFja (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Apr 2023 01:39:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55492 "EHLO
+        id S229752AbjDOIxc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Apr 2023 04:53:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbjDOFja (ORCPT
+        with ESMTP id S229541AbjDOIxc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Apr 2023 01:39:30 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B0F55B4;
-        Fri, 14 Apr 2023 22:39:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AD85461DA2;
-        Sat, 15 Apr 2023 05:39:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC8BC433D2;
-        Sat, 15 Apr 2023 05:39:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1681537168;
-        bh=sgqkra4Gl7AEFkkAJD6KZbCVVWw5Ls3bOzVoxaPUYvs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jmk1QDXOKGjBY0T2+F1Q0RNrD2CkZhgopDBDxA+5qOo6Tkeg6L7xcJMjZBPE0Fg5Q
-         PecKJFwxwhVKxdk0DkkXG0Nj19rX7tI0Nu4hV7lQfT7z2dg+wASQpAuS4LW69Oqe1E
-         ku5O4zQlD2JFGgMvATYQRbgLf0T7KA0octmvdJ2c=
-Date:   Sat, 15 Apr 2023 07:39:24 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data
- Capture and Compare unit(DCC)
-Message-ID: <ZDo4jIIV7cfPD2qW@kroah.com>
-References: <cover.1681480351.git.quic_schowdhu@quicinc.com>
- <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
+        Sat, 15 Apr 2023 04:53:32 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8121340E9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 01:53:30 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id gc14so6371111ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 01:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681548809; x=1684140809;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fOyFQ2wFGtSd8qaPjXT+9Ch8QWN9JK4V7LI6iLKCdxk=;
+        b=KkL4AGpMgpNBq83/uaElao2EPAjn0pkvMThOd8qWzeji4frQNXEIOAzf2Udim43+eZ
+         YBNVcGInTyrCgxWf7mmxEdfUTOPqTXDxBfHRjKQ005wWWC3bqaEK6heJYR67Ftuw0GDw
+         TQitN2A9iA/cGk8jdJ4yAYeREuQk0HN7QMFytVtAcCAOFe3by/QyW6n7oomKTF97laqq
+         yvx2LEza1inDiaSbdIRyeULiC715JlZK3XkIcQz7NR4a2+2GDqmw64LDy/i00rM1mQFr
+         UzuNBC+3pS3iD9dtR1YiJ7FvSIWk3GkkVIwapICUtvm0K8k2V3LSctQKv/ExTEgyInMh
+         Sz9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681548809; x=1684140809;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fOyFQ2wFGtSd8qaPjXT+9Ch8QWN9JK4V7LI6iLKCdxk=;
+        b=fGGxqH13Hi5rz/KqHRifDjZesb9Z0UFwO9wvNRb8xV5NxZ7HW7TRehSgkMK+ArWQsC
+         wwaX+qbp9YOo/xwBzIORaTxKg7UazcXXtzmGplQc07hG+3Bgxj5ADL60UK0idOaqcfiB
+         xrVNgFQF47dmYmyIQlAqYg6j+gstcEhcP8zua+k9EO7Ssqg1iYLV75xQ03S+mvGnxFJE
+         QC2oWp8mGILOhelL5fyNyJJ+14Lrx2prWsi2vW/OGHdqLdWJOX7FjqQ6DL9tic7KZBpN
+         2Yw8sn+vS1vxZPn39ga7BLfERpn0jnnDlJTgEEks0+GO3jXIK3AYLrVV9KYtfOy59Cnz
+         lAUg==
+X-Gm-Message-State: AAQBX9eSCBRqsvde5Oh0SAfEjWT2HkmP8KNm89v/NhD+FZDVmGBotUgi
+        X6My6JBrwNiJ+Q8BVu7N8fk55Q==
+X-Google-Smtp-Source: AKy350ZVKdn9XyFdxnaJQ81W2jGronzMUZ8Zykc6G0YKNLnZ8O0zBY9XHC+PhWEvrcKlpNB6yYKxiA==
+X-Received: by 2002:a17:906:6a94:b0:94c:a08c:3be2 with SMTP id p20-20020a1709066a9400b0094ca08c3be2mr1364721ejr.63.1681548808988;
+        Sat, 15 Apr 2023 01:53:28 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:a3bf:4ed:6c53:2a36? ([2a02:810d:15c0:828:a3bf:4ed:6c53:2a36])
+        by smtp.gmail.com with ESMTPSA id hu14-20020a170907a08e00b0094f2d38896esm193732ejc.65.2023.04.15.01.53.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Apr 2023 01:53:28 -0700 (PDT)
+Message-ID: <cf45c33c-0604-0a37-3546-68ccc518c6de@linaro.org>
+Date:   Sat, 15 Apr 2023 10:53:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 1/3] spi: dt-bindings: qcom,spi-qcom-qspi: Add iommus
+Content-Language: en-US
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com
+References: <1681481153-24036-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1681481153-24036-2-git-send-email-quic_vnivarth@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1681481153-24036-2-git-send-email-quic_vnivarth@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 14, 2023 at 07:29:12PM +0530, Souradeep Chowdhury wrote:
-> The DCC is a DMA Engine designed to capture and store data
-> during system crash or software triggers. The DCC operates
-> based on user inputs via the debugfs interface. The user gives
-> addresses as inputs and these addresses are stored in the
-> dcc sram. In case of a system crash or a manual software
-> trigger by the user through the debugfs interface,
-> the dcc captures and stores the values at these addresses.
-> This patch contains the driver which has all the methods
-> pertaining to the debugfs interface, auxiliary functions to
-> support all the four fundamental operations of dcc namely
-> read, write, read/modify/write and loop. The probe method
-> here instantiates all the resources necessary for dcc to
-> operate mainly the dedicated dcc sram where it stores the
-> values. The DCC driver can be used for debugging purposes
-> without going for a reboot since it can perform software
-> triggers as well based on user inputs.
+On 14/04/2023 16:05, Vijaya Krishna Nivarthi wrote:
+> Add iommus binding for DMA mode support
+> 
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
 
-You have 72 columns, why not use them all please?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
+Best regards,
+Krzysztof
 
-It is now 2023 :)
-
-
-
-
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/bitops.h>
-> +#include <linux/debugfs.h>
-> +#include <linux/delay.h>
-> +#include <linux/fs.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/miscdevice.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/slab.h>
-> +#include <linux/uaccess.h>
-> +
-> +#define STATUS_READY_TIMEOUT		5000  /* microseconds */
-> +
-> +#define DCC_SRAM_NODE "dcc_sram"
-
-You only use this once, why is a #define needed?
-
-> +static void dcc_create_debug_dir(struct dcc_drvdata *drvdata)
-> +{
-> +	int i;
-> +	char list_num[10];
-> +	struct dentry *list;
-> +	struct device *dev = drvdata->dev;
-> +
-> +	drvdata->dbg_dir = debugfs_create_dir(dev_name(dev), NULL);
-
-You are creating a directory at the root of debugfs with just your
-device name?  While that will work, that feels very odd.  Please use a
-subdirectory.
-
-> +	if (IS_ERR(drvdata->dbg_dir)) {
-> +		pr_err("can't create debugfs dir\n");
-
-There is no need to ever check the return value of a debugfs call.
-
-Nor do you really ever even need to save off the dentry here, just look
-it up when you need to remove it.
-
-> +		return;
-> +	}
-> +
-> +	for (i = 0; i <= drvdata->nr_link_list; i++) {
-> +		sprintf(list_num, "%d", i);
-> +		list = debugfs_create_dir(list_num, drvdata->dbg_dir);
-> +		debugfs_create_file("enable", 0600, list, drvdata, &enable_fops);
-> +		debugfs_create_file("config", 0600, list, drvdata, &config_fops);
-> +	}
-> +
-> +	debugfs_create_file("trigger", 0200, drvdata->dbg_dir, drvdata, &trigger_fops);
-> +	debugfs_create_file("ready", 0400, drvdata->dbg_dir, drvdata, &ready_fops);
-> +	debugfs_create_file("config_reset", 0200, drvdata->dbg_dir,
-> +			    drvdata, &config_reset_fops);
-
-This really looks like you are using debugfs to control the device, not
-just for debugging information.  How are you going to be able to use the
-device in a system that has debugfs disabled?
-
-thanks,
-
-greg k-h
