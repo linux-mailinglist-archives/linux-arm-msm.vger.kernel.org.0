@@ -2,94 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D332B6E2FCF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 10:53:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F3B26E3037
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 11:58:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbjDOIxc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Apr 2023 04:53:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60144 "EHLO
+        id S229904AbjDOJ6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Apr 2023 05:58:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbjDOIxc (ORCPT
+        with ESMTP id S229491AbjDOJ6Q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Apr 2023 04:53:32 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8121340E9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 01:53:30 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id gc14so6371111ejc.5
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 01:53:30 -0700 (PDT)
+        Sat, 15 Apr 2023 05:58:16 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 459583C33
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 02:58:14 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id jg21so51350016ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 02:58:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681548809; x=1684140809;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fOyFQ2wFGtSd8qaPjXT+9Ch8QWN9JK4V7LI6iLKCdxk=;
-        b=KkL4AGpMgpNBq83/uaElao2EPAjn0pkvMThOd8qWzeji4frQNXEIOAzf2Udim43+eZ
-         YBNVcGInTyrCgxWf7mmxEdfUTOPqTXDxBfHRjKQ005wWWC3bqaEK6heJYR67Ftuw0GDw
-         TQitN2A9iA/cGk8jdJ4yAYeREuQk0HN7QMFytVtAcCAOFe3by/QyW6n7oomKTF97laqq
-         yvx2LEza1inDiaSbdIRyeULiC715JlZK3XkIcQz7NR4a2+2GDqmw64LDy/i00rM1mQFr
-         UzuNBC+3pS3iD9dtR1YiJ7FvSIWk3GkkVIwapICUtvm0K8k2V3LSctQKv/ExTEgyInMh
-         Sz9w==
+        d=linaro.org; s=google; t=1681552693; x=1684144693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qBW7voqUuCZ1/G9Ruo0KBFBVOsPyocZSL7gk/zrdikA=;
+        b=vV0UVC8YX5hmGr0O97HyyHm2Xo8rJmT7MUThJiturG/vbsOZEQRCW+4Z0YLug1TOuA
+         9Fl8JfgAPV0dxpjL6yz1awbckIWcCiv4Hd8gj0dA972smjEZDmZv4JjOqq7iZVpBW1sY
+         mF5wUG94gjCJkPbW3xKn1lVAPzwYVtZa1qeOWVyYbG8fUaE7YKWfd8oS2zh10JImfbRT
+         O8lCVvmjaHsSea0ZY/SQAum9EPpDkCtdmnt2u3aFbMLw2G9sg2x+R/EdSXH/RcSPmxwH
+         Iu3rdR7zRs4CK/5xpJtAtfDsmNTydHU8iff+2leZXDusAHTEaDLK7m0Ywax1Mb5TkID/
+         qMrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681548809; x=1684140809;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fOyFQ2wFGtSd8qaPjXT+9Ch8QWN9JK4V7LI6iLKCdxk=;
-        b=fGGxqH13Hi5rz/KqHRifDjZesb9Z0UFwO9wvNRb8xV5NxZ7HW7TRehSgkMK+ArWQsC
-         wwaX+qbp9YOo/xwBzIORaTxKg7UazcXXtzmGplQc07hG+3Bgxj5ADL60UK0idOaqcfiB
-         xrVNgFQF47dmYmyIQlAqYg6j+gstcEhcP8zua+k9EO7Ssqg1iYLV75xQ03S+mvGnxFJE
-         QC2oWp8mGILOhelL5fyNyJJ+14Lrx2prWsi2vW/OGHdqLdWJOX7FjqQ6DL9tic7KZBpN
-         2Yw8sn+vS1vxZPn39ga7BLfERpn0jnnDlJTgEEks0+GO3jXIK3AYLrVV9KYtfOy59Cnz
-         lAUg==
-X-Gm-Message-State: AAQBX9eSCBRqsvde5Oh0SAfEjWT2HkmP8KNm89v/NhD+FZDVmGBotUgi
-        X6My6JBrwNiJ+Q8BVu7N8fk55Q==
-X-Google-Smtp-Source: AKy350ZVKdn9XyFdxnaJQ81W2jGronzMUZ8Zykc6G0YKNLnZ8O0zBY9XHC+PhWEvrcKlpNB6yYKxiA==
-X-Received: by 2002:a17:906:6a94:b0:94c:a08c:3be2 with SMTP id p20-20020a1709066a9400b0094ca08c3be2mr1364721ejr.63.1681548808988;
-        Sat, 15 Apr 2023 01:53:28 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:a3bf:4ed:6c53:2a36? ([2a02:810d:15c0:828:a3bf:4ed:6c53:2a36])
-        by smtp.gmail.com with ESMTPSA id hu14-20020a170907a08e00b0094f2d38896esm193732ejc.65.2023.04.15.01.53.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 15 Apr 2023 01:53:28 -0700 (PDT)
-Message-ID: <cf45c33c-0604-0a37-3546-68ccc518c6de@linaro.org>
-Date:   Sat, 15 Apr 2023 10:53:27 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 1/3] spi: dt-bindings: qcom,spi-qcom-qspi: Add iommus
-Content-Language: en-US
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com
-References: <1681481153-24036-1-git-send-email-quic_vnivarth@quicinc.com>
- <1681481153-24036-2-git-send-email-quic_vnivarth@quicinc.com>
+        d=1e100.net; s=20221208; t=1681552693; x=1684144693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qBW7voqUuCZ1/G9Ruo0KBFBVOsPyocZSL7gk/zrdikA=;
+        b=hdp7SlVzeSo4v5OG7rYVPe0HyfJZ1V0EMGI4kK8PTsVIYOXeMiUUhxrJfZFrFMAUer
+         V3NNBm+dj23sw2DK7Nk/78zhnHmGOzizuaYB2iOnruQTq51qJCTJSLIDJkiTE2ZdnnRF
+         NFM1EDWtnvQfuBYul6ELhNJv3pSjklt+skb4rMRpcyh4ScrlVTKGEvGiM2yd9Jr8zn9m
+         HtClLzHhRJihfvwTm6i2ejwLuKu6wowMYSBxbzFDaA+itrf/8E3oKACwL8FC82zfeje1
+         TdsFxc9AsRIV6PL7fASH5c3hZQge7H4ohIyW9L1yO6s+WM+59lFkFPM/QTnfNeSYO06i
+         POEQ==
+X-Gm-Message-State: AAQBX9eKc+OhKjsL1mrs+O9S3gA0iQ4U0tyYDA/XkY8A8cpA2yWmmhAy
+        LzX7GqXQdZeWRGXTT8mRS1foyQ==
+X-Google-Smtp-Source: AKy350ZYKRSYuyMEh5n5Qwf2//t0LPyGrPZqab6XuiqTfYLkjAF0dCA9it0pvgVfMz92eYuf6M/tYA==
+X-Received: by 2002:a17:907:1245:b0:94e:6294:9d23 with SMTP id wc5-20020a170907124500b0094e62949d23mr1342399ejb.26.1681552692687;
+        Sat, 15 Apr 2023 02:58:12 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:a3bf:4ed:6c53:2a36])
+        by smtp.gmail.com with ESMTPSA id gn23-20020a1709070d1700b009373f1b5c4esm3594248ejc.161.2023.04.15.02.58.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Apr 2023 02:58:12 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1681481153-24036-2-git-send-email-quic_vnivarth@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+To:     Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Julius Werner <jwerner@chromium.org>,
+        Evan Benn <evanbenn@chromium.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Sander Vanheule <sander@svanheule.net>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Fu Wei <fu.wei@linaro.org>, Viresh Kumar <vireshk@kernel.org>,
+        Eugen Hristev <eugen.hristev@collabora.com>,
+        Justin Chen <justinpopo6@gmail.com>,
+        =?UTF-8?q?=82ecki?= <rafal@milecki.pl>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Corentin Labbe <clabbe@baylibre.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Jamie Iles <jamie@jamieiles.com>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Christophe Roullier <christophe.roullier@foss.st.com>,
+        Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
+        Srinivas Neeli <srinivas.neeli@xilinx.com>,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-renesas-soc@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/6] dt-bindings: watchdog: drop duplicated GPIO watchdog bindings
+Date:   Sat, 15 Apr 2023 11:51:07 +0200
+Message-Id: <20230415095112.51257-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2023 16:05, Vijaya Krishna Nivarthi wrote:
-> Add iommus binding for DMA mode support
-> 
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
+Two conversions to DT schema of GPIO watchdog binding happened and came
+through different trees.  Merge them into one:
+1. Combine maintainers,
+2. Use more descriptive property descriptions and constraints from
+   gpio-wdt.yaml,
+3. Switch to unevaluatedProperties:false, to allow generic watchdog
+   properties.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/watchdog/gpio-wdt.yaml           | 55 -------------------
+ .../bindings/watchdog/linux,wdt-gpio.yaml     | 17 +++++-
+ 2 files changed, 15 insertions(+), 57 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/watchdog/gpio-wdt.yaml
 
-Best regards,
-Krzysztof
+diff --git a/Documentation/devicetree/bindings/watchdog/gpio-wdt.yaml b/Documentation/devicetree/bindings/watchdog/gpio-wdt.yaml
+deleted file mode 100644
+index 155dc7965e9b..000000000000
+--- a/Documentation/devicetree/bindings/watchdog/gpio-wdt.yaml
++++ /dev/null
+@@ -1,55 +0,0 @@
+-# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+-%YAML 1.2
+----
+-$id: http://devicetree.org/schemas/watchdog/gpio-wdt.yaml#
+-$schema: http://devicetree.org/meta-schemas/core.yaml#
+-
+-title: GPIO controlled watchdog
+-
+-maintainers:
+-  - Robert Marko <robert.marko@sartura.hr>
+-
+-properties:
+-  compatible:
+-    const: linux,wdt-gpio
+-
+-  gpios:
+-    maxItems: 1
+-    description: GPIO connected to the WDT reset pin
+-
+-  hw_algo:
+-    $ref: /schemas/types.yaml#/definitions/string
+-    description: Algorithm used by the driver
+-    oneOf:
+-      - description:
+-          Either a high-to-low or a low-to-high transition clears the WDT counter.
+-          The watchdog timer is disabled when GPIO is left floating or connected
+-          to a three-state buffer.
+-        const: toggle
+-      - description:
+-          Low or high level starts counting WDT timeout, the opposite level
+-          disables the WDT.
+-          Active level is determined by the GPIO flags.
+-        const: level
+-
+-  hw_margin_ms:
+-    $ref: /schemas/types.yaml#/definitions/uint32
+-    description: Maximum time to reset watchdog circuit (in milliseconds)
+-    minimum: 2
+-    maximum: 65535
+-
+-  always-running:
+-    type: boolean
+-    description:
+-      If the watchdog timer cannot be disabled, add this flag to have the driver
+-      keep toggling the signal without a client.
+-      It will only cease to toggle the signal when the device is open and the
+-      timeout elapsed.
+-
+-required:
+-  - compatible
+-  - gpios
+-  - hw_algo
+-  - hw_margin_ms
+-
+-unevaluatedProperties: false
+diff --git a/Documentation/devicetree/bindings/watchdog/linux,wdt-gpio.yaml b/Documentation/devicetree/bindings/watchdog/linux,wdt-gpio.yaml
+index 50af79af6416..499f1b7e03f9 100644
+--- a/Documentation/devicetree/bindings/watchdog/linux,wdt-gpio.yaml
++++ b/Documentation/devicetree/bindings/watchdog/linux,wdt-gpio.yaml
+@@ -8,6 +8,7 @@ title: GPIO-controlled Watchdog
+ 
+ maintainers:
+   - Guenter Roeck <linux@roeck-us.net>
++  - Robert Marko <robert.marko@sartura.hr>
+ 
+ properties:
+   compatible:
+@@ -19,11 +20,23 @@ properties:
+ 
+   hw_algo:
+     description: The algorithm used by the driver.
+-    enum: [ level, toggle ]
++    oneOf:
++      - description:
++          Either a high-to-low or a low-to-high transition clears the WDT counter.
++          The watchdog timer is disabled when GPIO is left floating or connected
++          to a three-state buffer.
++        const: toggle
++      - description:
++          Low or high level starts counting WDT timeout, the opposite level
++          disables the WDT.
++          Active level is determined by the GPIO flags.
++        const: level
+ 
+   hw_margin_ms:
+     description: Maximum time to reset watchdog circuit (milliseconds).
+     $ref: /schemas/types.yaml#/definitions/uint32
++    minimum: 2
++    maximum: 65535
+ 
+   always-running:
+     type: boolean
+@@ -42,7 +55,7 @@ required:
+ allOf:
+   - $ref: watchdog.yaml#
+ 
+-additionalProperties: false
++unevaluatedProperties: false
+ 
+ examples:
+   - |
+-- 
+2.34.1
 
