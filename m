@@ -2,138 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05F626E3340
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 21:10:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3946E3380
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 22:19:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbjDOTKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Apr 2023 15:10:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39532 "EHLO
+        id S229720AbjDOUTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Apr 2023 16:19:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjDOTKI (ORCPT
+        with ESMTP id S229795AbjDOUTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Apr 2023 15:10:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF403C0B;
-        Sat, 15 Apr 2023 12:10:07 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33FJ5bY5028214;
-        Sat, 15 Apr 2023 19:09:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=N3vL3RGfvK8GznC4j9MO7miYb9Yae3BnD+igqgQ/+S4=;
- b=aDw9JemMK0uvEMesppGvqOLQA7CQbSuDmvb3Ie7x5KqAtZVx7qxUhznH8n/ctG3o+VT4
- xfrD+ktL30M+qUexQPM12bqCKIUk4n3pH6QxJuF9HGwDXBuSWypx8N3i/Rxw3QxAnD+L
- xHeg+yAEDBzy7ps8OMC8LCRBYoCSMmWCt5TXoqT+FwUFnLzDRNZKu7ellaibM2Jdl34T
- qIixDRf9fmmJ2wFr8vDZ9/4QxTNY64esgtU/f+pxUO2/FNXe2j0mF9eYBrDYnw7MH3jA
- Vg6KHOgIwszESwxXY6PN2hk/ko3Q1bho938lwC2AyuN2m2FDpxCu9QpcO7xA41NXM+B/ 9Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pymmg0un6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 15 Apr 2023 19:09:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33FJ9drp002810
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 15 Apr 2023 19:09:39 GMT
-Received: from [10.216.37.89] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 15 Apr
- 2023 12:09:32 -0700
-Message-ID: <f979b4c2-c0e8-6b43-796b-10c21ae4df75@quicinc.com>
-Date:   Sun, 16 Apr 2023 00:39:29 +0530
+        Sat, 15 Apr 2023 16:19:11 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D3226BE
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 13:19:10 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pnmML-000643-8M; Sat, 15 Apr 2023 22:18:57 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pnmMJ-00BUuI-UE; Sat, 15 Apr 2023 22:18:55 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pnmMI-00DUZG-Ue; Sat, 15 Apr 2023 22:18:54 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, kernel@pengutronix.de
+Subject: [PATCH] soc: qcom: ramp_controller: Improve error message for failure in .remove()
+Date:   Sat, 15 Apr 2023 22:18:48 +0200
+Message-Id: <20230415201848.3779001-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v6 8/8] arm64: dts: qcom: sa8540-ride: Enable first port
- of tertiary usb controller
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
-        <quic_harshq@quicinc.com>, <quic_shazhuss@quicinc.com>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
- <20230405125759.4201-9-quic_kriskura@quicinc.com>
- <20230414155159.zmhkeoxwhxe5czm5@halaney-x13s>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20230414155159.zmhkeoxwhxe5czm5@halaney-x13s>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: V8M1DKbwj9CQN79F062NW3Eb_Eceuf0E
-X-Proofpoint-GUID: V8M1DKbwj9CQN79F062NW3Eb_Eceuf0E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-15_10,2023-04-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 mlxlogscore=605 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 spamscore=0
- adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304150177
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1917; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=XGqVcoHIQx9s0/ZmljGKaTyrZdyEfKfneW24jL+k0es=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkOwanQbqkKC45PMwoJIH6m2L+VfLGAGodKokF+ 5rUbaRS7feJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZDsGpwAKCRCPgPtYfRL+ TtIGB/9+1kJdyDCmbS5+9yNR1+wRygkeQnx25UHmExiizF1Ziuk2w1As7/cGlRykiu95wgPGrN2 dbPhtzn6vEZ6gxqsFi2y9rnoM1V0KsgrrXYoFTrw/5xtgMoydVEBSGDeUVRliqsstkEh+5b2ITa oScJ/rOFluNlLbgxsbd+Mt8Ru1bk/yLlOn+tnvQIpfFtRKMyy1FhBU+hX+GJ0u0c2Rls4l+eqZV Z8kfMAnxMnjDpwogJZc6CgOWjI0rUcOI6+mQoK+r682v1SFfpwUU2Rw3E0kGBkJkksJ+626Ds2s jUCZuLFgq7P5nwFWxHWcSvmKAvsKnobEo3gedn7OCA28ePMF
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+When a platform_driver's .remove() callback returns an error, the driver
+core emits
 
+	remove callback returned a non-zero value. This will be ignored.
 
-On 4/14/2023 9:21 PM, Andrew Halaney wrote:
-> On Wed, Apr 05, 2023 at 06:27:59PM +0530, Krishna Kurapati wrote:
->> Enable first port of Quad port Tertiary USB controller for SA8540 Ride.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> 
-> This is nitpicky, but I liked some of the description in the first[0]
-> version of this patch that I authored for you:
-> 
->      From dcb27d07f079194ebd7efe1c9bec64da78beb290 Mon Sep 17 00:00:00 2001
->      From: Andrew Halaney <ahalaney@redhat.com>
->      Date: Thu, 19 Jan 2023 14:53:38 -0600
->      Subject: [PATCH] arm64: dts: qcom: sa8540p-ride: Enable usb_2
->      Content-type: text/plain
-> 
->      There is now support for the multiport USB controller this uses
->      so enable it.
-> 
->      The board only has a single port hooked up (despite it being wired up to
->      the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
->      which by default on boot is selected to mux properly. Grab the gpio
->      controlling that and ensure it stays in the right position so USB 2.0
->      continues to be routed from the external port to the SoC.
-> 
->      Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
-> 
-> Specifically the bit helping explain what the mux, its default state,
-> etc are things I find explain some of the hardware/patch better. Personal
-> opinion of course but I'll highlight it since you dropped it out :)
-> 
-> [0] https://lore.kernel.org/linux-arm-msm/20230119220942.ja5gbo3t3fl63gpy@halaney-x13s/
-> 
-> Either way, thanks for taking the patch along and working on this.
-> 
-> Thanks,
-> Andrew
-> 
+. Replace this by a more specific error message. Then convert to
+.remove_new() which is equivalent to returning zero unconditionally in
+.remove(). See commit 5c5a7680e67b ("platform: Provide a remove callback
+that returns no value") for its rationale.
 
-Hi Andrew, Sorry for that. Will make sure to update the commit text with 
-this info in the next version.
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+---
+ drivers/soc/qcom/ramp_controller.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-Regards,
-Krishna,
+diff --git a/drivers/soc/qcom/ramp_controller.c b/drivers/soc/qcom/ramp_controller.c
+index dc74d2a19de2..1ff13661bcce 100644
+--- a/drivers/soc/qcom/ramp_controller.c
++++ b/drivers/soc/qcom/ramp_controller.c
+@@ -308,12 +308,15 @@ static int qcom_ramp_controller_probe(struct platform_device *pdev)
+ 	return qcom_ramp_controller_start(qrc);
+ }
+ 
+-static int qcom_ramp_controller_remove(struct platform_device *pdev)
++static void qcom_ramp_controller_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_ramp_controller *qrc = platform_get_drvdata(pdev);
++	int ret;
+ 
+-	return rc_write_cfg(qrc, qrc->desc->cfg_ramp_dis,
+-			    RC_DCVS_CFG_SID, qrc->desc->num_ramp_dis);
++	ret = rc_write_cfg(qrc, qrc->desc->cfg_ramp_dis,
++			   RC_DCVS_CFG_SID, qrc->desc->num_ramp_dis);
++	if (ret)
++		dev_err(&pdev->dev, "Failed to send disable sequence\n");
+ }
+ 
+ static const struct of_device_id qcom_ramp_controller_match_table[] = {
+@@ -329,7 +332,7 @@ static struct platform_driver qcom_ramp_controller_driver = {
+ 		.suppress_bind_attrs = true,
+ 	},
+ 	.probe  = qcom_ramp_controller_probe,
+-	.remove = qcom_ramp_controller_remove,
++	.remove_new = qcom_ramp_controller_remove,
+ };
+ 
+ static int __init qcom_ramp_controller_init(void)
+
+base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+-- 
+2.39.2
+
