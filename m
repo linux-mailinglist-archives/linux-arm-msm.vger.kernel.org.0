@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B34CF6E3048
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 11:58:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05C886E3050
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 15 Apr 2023 11:58:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbjDOJ61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 15 Apr 2023 05:58:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52322 "EHLO
+        id S229911AbjDOJ6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 15 Apr 2023 05:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230097AbjDOJ6W (ORCPT
+        with ESMTP id S230011AbjDOJ60 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 15 Apr 2023 05:58:22 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DE026A72
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 02:58:21 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id fy21so8732906ejb.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 02:58:21 -0700 (PDT)
+        Sat, 15 Apr 2023 05:58:26 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBEBE93D1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 02:58:23 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id rp27so14678680ejb.12
+        for <linux-arm-msm@vger.kernel.org>; Sat, 15 Apr 2023 02:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681552701; x=1684144701;
+        d=linaro.org; s=google; t=1681552703; x=1684144703;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X++FhK1t/fMQBncyu3FeTc1IPRncKd5sGne3lbXD1HA=;
-        b=ElHS0DixfV4Wx0/NRCOiZ3tsYfPcSyO/g1j7g/FJw5/YfXipUfJBvmFPzXl13E2Tvf
-         SlSdK+EcP2/VLC4TtP1izTSZh2TYXhQwqrEHTP4zmLknPDHuF6W0Ez3oOwri2AO4Ln8J
-         DKM/IsZIxge+Q36axXN56jyjNpGR6y1DekpVmrGRzkbCcPf8lzZTffR5fyyV3yf3kqgU
-         XY3Jr5gNhHwtScMoax+woXvPJV+LbcS1d3mQ8aHbvrtS9cqK7eNuaskGH+C3p4x28hPk
-         gE0r2qXpKKwQao2swDA6m552WDpf1EkvhZhgjtn7/+5P2CZIcSXmPfyymhrvI2osVwKR
-         mSyg==
+        bh=mICjLWmF/LNoSL6NvsOb+8lhWw0UJh5jOmm9qwOxptg=;
+        b=F+IR/off6Tme4IZyE6DN1+wfs9kbpla6jlIL3VVwih9UcpOCWzUJ71w7RdKLDqiLoQ
+         2kGpTLz3bjJtdYCshc4S/lDbmWsST2QG/9tjtRhQGt/Om7N3ANXxHCn+JpA6njFeqswV
+         ZoJjNJktUl6tcrtSFp/+9Cp1jM0AJW73F/y9ecu8nljzuHhEqC5t/MRjOCXv8ISYWK0B
+         THmdrRsv8fLjkOn+vhU+597RuD21pqBJUgn9aXHwOIavjJdzf6TD+iDJJN2DmtQsEm4u
+         3f2eRGld4bEiRAsq4kqLoMy1WMV1vpixqzacgCMOsrAJCL0QOGMRibGUQQAqrXhA5Ydf
+         YFgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681552701; x=1684144701;
+        d=1e100.net; s=20221208; t=1681552703; x=1684144703;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X++FhK1t/fMQBncyu3FeTc1IPRncKd5sGne3lbXD1HA=;
-        b=Y4+7zzmaLTr8CZVGTQGrozzl9ymtKa4e+VVoH02zC/p/JR66V3HKX8+e6uYODPiuCE
-         VgSdQRoVLr5B20n9Ro+ruy2oORwCeOYS0+pTlHFyaN7cNyqmeED2ydr7Xryzvoeg7wzN
-         UsTHKDNWtYPUpegGEhRSXwJ//OhX44KRhDvrcHPJUikkU1wxtfbHyIgPbn04vFvIDTYv
-         fPIzGzTAAfM3UsD0HxveJ/yCfvkxLG2s9qOvorhHNvzulO/0PBB77oHhv4VpyegrKwmv
-         +d9jZ7aNtazejsO7Yn2Y8gO2uXybcIBAKoSWI3c8yp2hAuqrWPGHbSmSmDfyE0c54s7l
-         WFUA==
-X-Gm-Message-State: AAQBX9fZpin+jzmKDqWooAckSgGSXu78LeOyqpElLpNfW53z9Z82uP/j
-        lp6F4kdKOsu80Y4+mszGmT2t2Q==
-X-Google-Smtp-Source: AKy350Yav0SQe0tEvR6ZtIMRzAj9K6H8406yqb7Hzclv9sLARZM1w9Vr1g/iMuC5RnPGGtv3bjO69Q==
-X-Received: by 2002:a17:906:149b:b0:948:b9ea:3302 with SMTP id x27-20020a170906149b00b00948b9ea3302mr1901974ejc.1.1681552700850;
-        Sat, 15 Apr 2023 02:58:20 -0700 (PDT)
+        bh=mICjLWmF/LNoSL6NvsOb+8lhWw0UJh5jOmm9qwOxptg=;
+        b=Fa8pbLSwsyxERwqbAnBXnJ5S/X8PW0Ca+Scma09GtlDR/ZldObDM4EfEV/fWhx88NR
+         G5ya5vXtMccER8xjypOdcN3p2L3YYJZD58V4R34xp2y5jDUh5l7fkYlw3Labvmt4dIvc
+         wq5u9j6JPReUqGbHLh9NYx0npN0FK5M/hamTMZrfJ8uwLPYRn1R1emeDM2TK+VEE9Bx0
+         BY5N11nkj7kJKlLkyRLzBO7G0BjfULDxX5ci9QoBByrf/kWnhVi44U8yv/iGCOfZBOEy
+         WAiEWZZe5BM79F6maqAiU0E2f+yV340eokJP5qYyz0pACil5ct/KvfLBko/FmL+iCPjl
+         dgug==
+X-Gm-Message-State: AAQBX9cKYuyf8G00w1tEmvRcZyX7mWnBY9c5TTLkF4DObrZUiqgJ0OWu
+        AovG294xCdGdX2kCsgHeTes40Q==
+X-Google-Smtp-Source: AKy350Yl7r7VuDqDzLWQRNAgcjR0HSlTkvOCXUrie3RgrYqoOlXErvIpYyC3N6eYoIbrvn50xJkc1Q==
+X-Received: by 2002:a17:906:824e:b0:94f:31da:8c38 with SMTP id f14-20020a170906824e00b0094f31da8c38mr195996ejx.24.1681552703329;
+        Sat, 15 Apr 2023 02:58:23 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:a3bf:4ed:6c53:2a36])
-        by smtp.gmail.com with ESMTPSA id gn23-20020a1709070d1700b009373f1b5c4esm3594248ejc.161.2023.04.15.02.58.18
+        by smtp.gmail.com with ESMTPSA id gn23-20020a1709070d1700b009373f1b5c4esm3594248ejc.161.2023.04.15.02.58.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Apr 2023 02:58:20 -0700 (PDT)
+        Sat, 15 Apr 2023 02:58:22 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Wim Van Sebroeck <wim@linux-watchdog.org>,
         Guenter Roeck <linux@roeck-us.net>,
@@ -107,9 +107,9 @@ To:     Wim Van Sebroeck <wim@linux-watchdog.org>,
         linux-stm32@st-md-mailman.stormreply.com,
         linux-renesas-soc@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 4/6] dt-bindings: watchdog: fsl-imx7ulp-wdt: simplify with unevaluatedProperties
-Date:   Sat, 15 Apr 2023 11:51:10 +0200
-Message-Id: <20230415095112.51257-4-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 5/6] dt-bindings: watchdog: toshiba,visconti-wdt: simplify with unevaluatedProperties
+Date:   Sat, 15 Apr 2023 11:51:11 +0200
+Message-Id: <20230415095112.51257-5-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230415095112.51257-1-krzysztof.kozlowski@linaro.org>
 References: <20230415095112.51257-1-krzysztof.kozlowski@linaro.org>
@@ -117,8 +117,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -129,14 +129,14 @@ Allow generic watchdog properties by using unevaluatedProperties: false.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../devicetree/bindings/watchdog/fsl-imx7ulp-wdt.yaml         | 4 +---
+ .../devicetree/bindings/watchdog/toshiba,visconti-wdt.yaml    | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/watchdog/fsl-imx7ulp-wdt.yaml b/Documentation/devicetree/bindings/watchdog/fsl-imx7ulp-wdt.yaml
-index d3790f1a96a2..4b7ed1355701 100644
---- a/Documentation/devicetree/bindings/watchdog/fsl-imx7ulp-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/fsl-imx7ulp-wdt.yaml
-@@ -30,15 +30,13 @@ properties:
+diff --git a/Documentation/devicetree/bindings/watchdog/toshiba,visconti-wdt.yaml b/Documentation/devicetree/bindings/watchdog/toshiba,visconti-wdt.yaml
+index eba083822d1f..51d03d5b08ad 100644
+--- a/Documentation/devicetree/bindings/watchdog/toshiba,visconti-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/toshiba,visconti-wdt.yaml
+@@ -24,14 +24,12 @@ properties:
    clocks:
      maxItems: 1
  
@@ -144,7 +144,6 @@ index d3790f1a96a2..4b7ed1355701 100644
 -
  required:
    - compatible
-   - interrupts
    - reg
    - clocks
  
