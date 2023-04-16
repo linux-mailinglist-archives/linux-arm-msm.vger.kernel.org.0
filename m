@@ -2,75 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD24D6E3AB6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 19:39:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5995D6E3AC4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 19:43:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229976AbjDPRjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 13:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51380 "EHLO
+        id S229677AbjDPRnb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 13:43:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229948AbjDPRjv (ORCPT
+        with ESMTP id S229598AbjDPRna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 13:39:51 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F1298
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 10:39:50 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id j5so1651458wms.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 10:39:49 -0700 (PDT)
+        Sun, 16 Apr 2023 13:43:30 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65AD1BEE
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 10:43:28 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id ud9so58239888ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 10:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681666788; x=1684258788;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vj/vqJ5bGXyvz254ZvxSYqoDaKPY0yBJ/BPaiX+7f40=;
-        b=GbZ9qiyBQiC3ZZsAZwmZuMooMXC98jAjM1w5wB0VdPvf4Av6DHWd74zf4tSA1A10Us
-         47dMt74Xi0tWrq0wZOBcoOyTGktzKBUzP/Nw38f2QTbY3fL22uqTDCkuE7yLtp/mEWpK
-         M2+xB0M77byJB40/68yhEdIK/+OlSWyNof2HGBhKlvj5OsUlnd066BJwIfNr2tVMNBgG
-         ilNt18gjeWShGrj/nW9QjYOSCy79DIVKXZfqRsTDbC6FFV1Nq89WYLO1S7d1ks9YhRHV
-         pIYWWEkCEXCv60Hl25tTsvZjyDiZvfGV5GEoIIdzPpvP8vbTEI/7NIn0rSluk8erIJ2+
-         As8g==
+        d=linaro.org; s=google; t=1681667007; x=1684259007;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cY4dL+cUq0/Tvegynn94s2stFQV130nkYRZfRYAeYPY=;
+        b=e69Zb9dzK6GpsAvCcC2Z5CYx+RcD97Cak0AWRUq7GsRJzAEXddYwxGbbz3h1kxnww9
+         aGYLKxag9ltd+TUyOticn3vT2nit79G36PAq0l6jtyhJ+xiJD0ffvCHKVVb09T68oPdQ
+         cEtK4Hi8sjkuMWA3rTgBIWWm+6zKi1mgjDkqwkyIWmg/l47naySDAAd8xzGj+dEWwku+
+         gyoX3pQpfpYuXw8fSv51Sc7eMqTjQuZm5bralnQrKGt/adHvtVsFUi+smRlQ/R4jvcTm
+         sdM9Tzp85rpRf68JS+s1D2vyycjSx6iT6eDjZvWCKvOyZefXqJOouMIfvPkVIY5Ohir8
+         R5HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681666788; x=1684258788;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vj/vqJ5bGXyvz254ZvxSYqoDaKPY0yBJ/BPaiX+7f40=;
-        b=WU/tkys9O8J5Yllmzm3ct+UGQq69qGg/miPWWs0lId9f5if3QYqeNilAk/RNTuCAVj
-         1l5f9NgfgWKyH6rDhsm2LeZ59I4fS+NWYkGeQz6wx/VXZxHx9vnfcqeJqh1ZjLvBGDIM
-         m2OGktCLaJY2W2BkJPhPBit4CyfWFDo5GJ7bvVaMvFqJ6igArSHDdiGgVpTt2jBbQEGH
-         1MRPhANensUzCOwsPEdTr3vp8EQzIUGcTzlSDyCNFb8qwQ/yYESKzIfpE/OZ9i95Gc1Y
-         0Tlo/ShbehqwQNGege9g1MwDoxSpews+VWoZttFQlxgqwucVuQgk5X8bzKpUfE3saAJP
-         ajfA==
-X-Gm-Message-State: AAQBX9cTMrK45WTlN1R0ba2nrr9Lih+tpnWABcSfvN0MGxT0Ao6PpmuN
-        J0GqBjpL5ZbAHgEiOjy18ZI=
-X-Google-Smtp-Source: AKy350Y3fPwLrncRZ6gFnnV7HPqMl22uXBtXMCQlzgWmqs+WZ7y/f+Rn5c6rFTgk3saJv+pVdBlMbg==
-X-Received: by 2002:a05:600c:348e:b0:3ee:93d2:c915 with SMTP id a14-20020a05600c348e00b003ee93d2c915mr8408694wmq.6.1681666788361;
-        Sun, 16 Apr 2023 10:39:48 -0700 (PDT)
-Received: from speedcore (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id v9-20020a5d6b09000000b002d97529b3bbsm8486767wrw.96.2023.04.16.10.39.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Apr 2023 10:39:47 -0700 (PDT)
-Date:   Sun, 16 Apr 2023 19:39:46 +0200
-From:   Arnaud Vrac <rawoul@gmail.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-Subject: Re: [Freedreno] [PATCH 2/2] drm/msm/dpu: add HDMI output support
-Message-ID: <ZDwy4n12G8unCgM0@speedcore>
-References: <20230415171926.85774-1-dmitry.baryshkov@linaro.org>
- <20230415171926.85774-3-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1681667007; x=1684259007;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cY4dL+cUq0/Tvegynn94s2stFQV130nkYRZfRYAeYPY=;
+        b=gwOUNeTsU+TaakNGab1JHjXW2/F+SynPr1j1ZGZiZ1EXjABf0YauIN4ueEFyfvpb54
+         npxmLDyh3nxBhLGT5jNuwlqeq1pyhpEeQvnl4IVCZfFgLGioqyvqud9IBsfNmcnlI2dm
+         DelNUv3tQObpxjXdcyaQiyg/8GuxM2BzFMvB9NNm71pLLD8qdJvfX9h1FgmpdMiGENY7
+         yoqd5YW7Ho2n9vtN6k8WNsf7Ven1vjVFnHId66k8KCRK7RiwJhgOVCuq2KvCPpcspz69
+         WPhEzSkTuVpu9HCItzMSFwIcW8B17fYItWe3juaoSNvpKdWIxtvgy5wCNgp1m0qftMvO
+         VKUw==
+X-Gm-Message-State: AAQBX9cpETFMfnwCZYXKV7LqtlWEshRyc52HaIVWWIozqg3Ynqn8UuVg
+        TN9/DW/g3OoJ/6tyPGUg0bzRxg==
+X-Google-Smtp-Source: AKy350ZL5PiH2QbcAiLhGfdhIUMICPHfqdbl637zRIH01dTa2MyVwiVljA41xXNm5xi08mIVXzK3iQ==
+X-Received: by 2002:a17:906:828f:b0:94a:4739:bed9 with SMTP id h15-20020a170906828f00b0094a4739bed9mr4669293ejx.13.1681667007162;
+        Sun, 16 Apr 2023 10:43:27 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:f9e3:1d38:66a7:ae92? ([2a02:810d:15c0:828:f9e3:1d38:66a7:ae92])
+        by smtp.gmail.com with ESMTPSA id m2-20020a1709062ac200b008f89953b761sm5375920eje.3.2023.04.16.10.43.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Apr 2023 10:43:26 -0700 (PDT)
+Message-ID: <684c14e6-0a6c-92c8-e408-c52689a58d68@linaro.org>
+Date:   Sun, 16 Apr 2023 19:43:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20230415171926.85774-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v5 01/14] dt-bindings: regulator: qcom,usb-vbus-regulator:
+ Mark reg as required
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
+        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
+References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
+ <20230413113438.1577658-2-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230413113438.1577658-2-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,92 +81,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Apr 15 20:19, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+On 13/04/2023 13:34, Bryan O'Donoghue wrote:
+> The regulator code needs to know the location of the register to write to
+> to switch on/off. Right now we have a driver that does this, a yaml that
+> partially describes it and no dts that uses it.
+> 
+> Switching on the VBUS for sm8250 shows that we haven't documented reg as a
+> required property, do so now.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml   | 1 +
+>  1 file changed, 1 insertion(+)
 
->MSM8998 and the older Qualcomm platforms support HDMI outputs. Now as
->DPU encoder is ready, add support for using INTF_HDMI.
->
->Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->---
-> drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 45 +++++++++++++++++++++++++
-> 1 file changed, 45 insertions(+)
->
->diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->index e85e3721d2c7..65cce59163a4 100644
->--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->@@ -617,6 +617,45 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
-> 	return 0;
-> }
->
->+static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
->+				    struct msm_drm_private *priv,
->+				    struct dpu_kms *dpu_kms)
->+{
->+	struct drm_encoder *encoder = NULL;
->+	struct msm_display_info info;
->+	int rc;
->+	int i;
->+
->+	if (!priv->hdmi)
->+		return 0;
->+
->+	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS);
->+	if (IS_ERR(encoder)) {
->+		DPU_ERROR("encoder init failed for HDMI display\n");
->+		return PTR_ERR(encoder);
->+	}
->+
->+	memset(&info, 0, sizeof(info));
 
-Move this where fields are initialized ?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
->+	rc = msm_hdmi_modeset_init(priv->hdmi, dev, encoder);
->+	if (rc) {
->+		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
->+		drm_encoder_cleanup(encoder);
->+		return rc;
->+	}
->+
->+	info.num_of_h_tiles = 1;
->+	info.h_tile_instance[0] = i;
+Best regards,
+Krzysztof
 
-i is uninitialized here, the line can be removed.
-
-With the above changes:
-
-Reviewed-by: Arnaud Vrac <rawoul@gmail.com>
-Tested-by: Arnaud Vrac <rawoul@gmail.com> # on msm8998
-
--Arnaud
-
->+	info.intf_type = INTF_HDMI;
->+	rc = dpu_encoder_setup(dev, encoder, &info);
->+	if (rc) {
->+		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
->+			  encoder->base.id, rc);
->+		return rc;
->+	}
->+
->+	return 0;
->+}
->+
-> static int _dpu_kms_initialize_writeback(struct drm_device *dev,
-> 		struct msm_drm_private *priv, struct dpu_kms *dpu_kms,
-> 		const u32 *wb_formats, int n_formats)
->@@ -683,6 +722,12 @@ static int _dpu_kms_setup_displays(struct drm_device *dev,
-> 		return rc;
-> 	}
->
->+	rc = _dpu_kms_initialize_hdmi(dev, priv, dpu_kms);
->+	if (rc) {
->+		DPU_ERROR("initialize HDMI failed, rc = %d\n", rc);
->+		return rc;
->+	}
->+
-> 	/* Since WB isn't a driver check the catalog before initializing */
-> 	if (dpu_kms->catalog->wb_count) {
-> 		for (i = 0; i < dpu_kms->catalog->wb_count; i++) {
->-- 
->2.30.2
->
