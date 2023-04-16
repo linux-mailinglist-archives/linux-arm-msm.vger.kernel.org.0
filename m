@@ -2,75 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25AFF6E3928
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 16:21:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EB766E3996
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 17:04:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230385AbjDPOVG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 10:21:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40558 "EHLO
+        id S229920AbjDPPEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 11:04:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230095AbjDPOVE (ORCPT
+        with ESMTP id S229878AbjDPPEw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 10:21:04 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695F326AE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 07:21:02 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id k36-20020a17090a4ca700b0024770df9897so2149572pjh.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 07:21:02 -0700 (PDT)
+        Sun, 16 Apr 2023 11:04:52 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D5A1A5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:04:50 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id xd13so23884745ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681654862; x=1684246862;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SXO7rlFhBShZ/ZQnEUK9JdwypninSK4l6l9LhoVLfzU=;
-        b=Cx67P2ULWTbipJr2C+cTLc5DhQJrBwd7KUfMDzWiB1x4elWxTsblbi8AJMxxibcIsg
-         W8FVukWsn2mGsirj6ddn2ZP+ggzCqwOQycXJ+JsQEZwnnGE9LOlo/iroRANP/7hw77j8
-         ADRiakkLS7Sc/2GVGdiDuCSqtc9BDFjJ4/6pl/BsrrNOMJ3I9xlp1ZQOgjBz2tcyrRCJ
-         dhNUnFyBJp+UzNPhtCLuAzCRa/xAdx0xF6oqzkc+OENeh5iyogUZ/Wh6nKszurmiXzCR
-         xq05jwTo4ARFGSkEC8twEvsaKwCQI26Acrs4N2d9TU5jmBXysZDLbM7M3KpcHuzbS/1v
-         vRoQ==
+        d=linaro.org; s=google; t=1681657489; x=1684249489;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W7knCr9Rw+t/6alapTgwg/iEzfEkJZjn1612eROrLe0=;
+        b=XaR//UYbfZ9tT/9t67VsysxxBdnm84ST9QijxZCd8TEMnylMyj9VhQcx71ux05BA7X
+         gvF55lWW47c0Bw/mwLgQzQD8fVM2+Uz7LYnQ9giWTZJ+fD1QPAas00GxJGeT5f5x82bY
+         /ozxls8s/s2xn/tZ0lmEn2Abr28OKO+3cBhmPntSX4koURbI4C53Gd4Wd/b/s2n1icDL
+         wBgDEteu6u8HjX9KYayX8Beyo7FtMdY+LlLOyOBHRHn0xIkgKxHq5QBqnm7m5ePcq8s2
+         jlBO4tKK4AL1u3BdACgHyA0YLBD1lGjbNiLufR33TGn7ve4qzKpfRHNqkVJC35YsOquF
+         5u5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681654862; x=1684246862;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1681657489; x=1684249489;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXO7rlFhBShZ/ZQnEUK9JdwypninSK4l6l9LhoVLfzU=;
-        b=MjwtCrLylKJh8EoG67y6ZvXv7AKZVOd+dqGewbgQTG3KceEdujDNnXOcTo236RZru7
-         qA5QlwL1lrAmvHwrqVLoVrrhKhk75lbJp7+B1cXMl2q9nibACBPy5XWXpRbVMcuF5ioi
-         XDg03AnM8iJ+EYakwC/QEJJu72FEkUvWjVTYJhJsaMzzMcvtrcZqcL20p4TAQNiDhe7r
-         5UxY/+pcPbeXJTU+3f0YJIxUJ1My98gjBZNLFFrS5805t9U3v1Gt6Wa7AE3BfOC/73zm
-         E+nUwVFHIfiGhx+Im/xze/u4NgqV5UbcVfIo6WJGhhGnpkwMONEOQmDsrQN11ujqWjDe
-         M5MQ==
-X-Gm-Message-State: AAQBX9cVVmvcY51jxKQPLFKXgRNvdcqLPUcl1Y/Bq1r/2sL5zye6q3PR
-        ygxL9VcHV8u/zNnHrC5noANY
-X-Google-Smtp-Source: AKy350YBR0PJ2nnMsUy1giv8SpCxczTuTFkoRUgnd58ijEEEoPfHogR8UI0e91mq/xCRDIqIIEMZcw==
-X-Received: by 2002:a17:90a:4e85:b0:247:4186:69ba with SMTP id o5-20020a17090a4e8500b00247418669bamr8064961pjh.31.1681654861716;
-        Sun, 16 Apr 2023 07:21:01 -0700 (PDT)
-Received: from thinkpad ([220.158.158.124])
-        by smtp.gmail.com with ESMTPSA id 20-20020a630f54000000b004fc1d91e695sm5398335pgp.79.2023.04.16.07.20.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Apr 2023 07:21:01 -0700 (PDT)
-Date:   Sun, 16 Apr 2023 19:50:55 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] soc: qcom: Introduce RPM master stats driver
-Message-ID: <20230416142055.GA2798@thinkpad>
-References: <20230405-topic-master_stats-v3-0-2cb2ba4f2092@linaro.org>
- <20230405-topic-master_stats-v3-2-2cb2ba4f2092@linaro.org>
+        bh=W7knCr9Rw+t/6alapTgwg/iEzfEkJZjn1612eROrLe0=;
+        b=EugR1nkRVUBAAJ9kcjrjSnkOF89oJRnvHUqSfTkNXmOk3wp9AaXFZBdMOdAa5bYr0N
+         3KAK4QIiPnGyGBwbhvLR93M7BvUaElKxNFTEzz1KsbOc7Atx7G4v3EjUTu/4NQmx32fr
+         qRsbeGQK2ItRPLgPeNgZI93BD23qTdG9a/GsbcEcOjU2eNS753KEm5vjcO6E5RIZUeO6
+         cfIimeLQ+c4ygtVaAWNbqmBOC+J6pXGSrtlUzSsjQx6txk5iEC3dqSM99wB6MpDVBXK6
+         iEqXqUWE8PWOrDy6SiN3laO0aVWYHqr1WYjluP+O4bDSiMjKQKJKsQCsnUJW/0NRhT8R
+         IXig==
+X-Gm-Message-State: AAQBX9d89TXrT3U4TiWKprp2HF26kwVc4nIKSHl5TEkxEqEZexDrKm3b
+        DoK7g6ZMSfBcWolSoa7TWmI3bg==
+X-Google-Smtp-Source: AKy350ZmvaPyK/34orGOz6gZvivnaCzSPH+AWBjfFvkNmokL7H4Sbk94KYMRpcm+UnV25l3Pqe1/jA==
+X-Received: by 2002:a17:906:ad87:b0:94a:4b7a:9886 with SMTP id la7-20020a170906ad8700b0094a4b7a9886mr4729072ejb.12.1681657488988;
+        Sun, 16 Apr 2023 08:04:48 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:ba4d:301c:484d:5c9? ([2a02:810d:15c0:828:ba4d:301c:484d:5c9])
+        by smtp.gmail.com with ESMTPSA id tk9-20020a170907c28900b0094f5179540fsm955274ejc.83.2023.04.16.08.04.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 16 Apr 2023 08:04:48 -0700 (PDT)
+Message-ID: <3877cb9e-9647-0acf-f705-d34fe2c731ff@linaro.org>
+Date:   Sun, 16 Apr 2023 17:04:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 03/18] dt-bindings: interrupt-controller: qcom-pdc: add
+ compatible for sa8775p
+Content-Language: en-US
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+References: <20230327125316.210812-1-brgl@bgdev.pl>
+ <20230327125316.210812-4-brgl@bgdev.pl>
+ <CAMRc=Mfe6gCM=Mz6Can6xsSsrjX-9T_aR2Yev+b57koky_az-A@mail.gmail.com>
+ <CAMRc=Mfw+4Co8JPz51_E+DSawijO8EB6rMmFXEmM0e5F3Fg_8A@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAMRc=Mfw+4Co8JPz51_E+DSawijO8EB6rMmFXEmM0e5F3Fg_8A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230405-topic-master_stats-v3-2-2cb2ba4f2092@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,261 +87,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 14, 2023 at 01:37:18PM +0200, Konrad Dybcio wrote:
-> Introduce a driver to query and expose detailed, per-subsystem (as opposed
-> to the existing qcom_stats driver which exposes SoC-wide data) about low
-> power mode states of a given RPM master. That includes the APSS (ARM),
-> MPSS (modem) and other remote cores, depending on the platform
-> configuration.
-> 
-> This is a vastly cleaned up and restructured version of a similar
-> driver found in msm-5.4.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/soc/qcom/Kconfig            |  11 +++
->  drivers/soc/qcom/Makefile           |   1 +
->  drivers/soc/qcom/rpm_master_stats.c | 160 ++++++++++++++++++++++++++++++++++++
->  3 files changed, 172 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index a491718f8064..e597799e8121 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -135,6 +135,17 @@ config QCOM_RMTFS_MEM
->  
->  	  Say y here if you intend to boot the modem remoteproc.
->  
-> +config QCOM_RPM_MASTER_STATS
-> +	tristate "Qualcomm RPM Master stats"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	help
-> +	  The RPM Master sleep stats driver provides detailed per-subsystem
-> +	  sleep/wake data, read from the RPM message RAM. It can be used to
-> +	  assess whether all the low-power modes available are entered as
-> +	  expected or to check which part of the SoC prevents it from sleeping.
-> +
-> +	  Say y here if you intend to debug or monitor platform sleep.
-> +
->  config QCOM_RPMH
->  	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
->  	depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index 0f43a88b4894..7349371fdea1 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -14,6 +14,7 @@ obj-$(CONFIG_QCOM_QMI_HELPERS)	+= qmi_helpers.o
->  qmi_helpers-y	+= qmi_encdec.o qmi_interface.o
->  obj-$(CONFIG_QCOM_RAMP_CTRL)	+= ramp_controller.o
->  obj-$(CONFIG_QCOM_RMTFS_MEM)	+= rmtfs_mem.o
-> +obj-$(CONFIG_QCOM_RPM_MASTER_STATS)	+= rpm_master_stats.o
->  obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
->  qcom_rpmh-y			+= rpmh-rsc.o
->  qcom_rpmh-y			+= rpmh.o
-> diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
-> new file mode 100644
-> index 000000000000..73080c92bf89
-> --- /dev/null
-> +++ b/drivers/soc/qcom/rpm_master_stats.c
-> @@ -0,0 +1,160 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023, Linaro Limited
-> + *
-> + * This driver supports what is known as "Master Stats v2", which seems to be
-> + * the only version which has ever shipped, all the way from 2013 to 2023.
+On 14/04/2023 11:33, Bartosz Golaszewski wrote:
+> On Thu, Apr 6, 2023 at 4:10 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>
+>> On Mon, Mar 27, 2023 at 2:53 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>
+>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>
+>>> Add a compatible for the Power Domain Controller on SA8775p platforms.
+>>> Increase the number of PDC pin mappings.
+>>>
+>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>> Cc: Thomas Gleixner <tglx@linutronix.de>
+>>> Cc: Marc Zyngier <maz@kernel.org>
+>>> ---
+>>>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml     | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>> index 94791e261c42..641ff32e4a6c 100644
+>>> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>> @@ -26,6 +26,7 @@ properties:
+>>>    compatible:
+>>>      items:
+>>>        - enum:
+>>> +          - qcom,sa8775p-pdc
+>>>            - qcom,sc7180-pdc
+>>>            - qcom,sc7280-pdc
+>>>            - qcom,sc8280xp-pdc
+>>> @@ -53,7 +54,7 @@ properties:
+>>>    qcom,pdc-ranges:
+>>>      $ref: /schemas/types.yaml#/definitions/uint32-matrix
+>>>      minItems: 1
+>>> -    maxItems: 32 # no hard limit
+>>> +    maxItems: 38 # no hard limit
 
-It'd better to mention "Qualcomm downstream" in the somewhere above comment to
-make it clear for users.
+I don't think the limit is correct. I still see warnings with this
+patch. We already have 57 elements, so limit should be I guess 128 or
+something.
 
-> + */
-> +
-> +#include <linux/debugfs.h>
-> +#include <linux/io.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_address.h>
-> +#include <linux/platform_device.h>
-> +
-> +struct master_stats_data {
-> +	void __iomem *base;
-> +	const char *label;
-> +};
-> +
-> +struct rpm_master_stats {
-> +	uint32_t active_cores;
-> +	uint32_t num_shutdowns;
-> +	uint64_t shutdown_req;
-> +	uint64_t wakeup_idx;
-> +	uint64_t bringup_req;
-> +	uint64_t bringup_ack;
-> +	uint32_t wakeup_reason; /* 0 = "rude wakeup", 1 = scheduled wakeup */
-> +	uint32_t last_sleep_trans_dur;
-> +	uint32_t last_wake_trans_dur;
-> +
-> +	/* Per-subsystem (*not necessarily* SoC-wide) XO shutdown stats */
-> +	uint32_t xo_count;
-> +	uint64_t xo_last_enter;
-> +	uint64_t last_exit;
-> +	uint64_t xo_total_dur;
+Best regards,
+Krzysztof
 
-Why can't you use u64, u32?
-
-Also, sort these members as below:
-
-u64
-u32
-
-> +};
-> +
-> +static int master_stats_show(struct seq_file *s, void *unused)
-> +{
-> +	struct master_stats_data *d = s->private;
-> +	struct rpm_master_stats stat;
-> +
-> +	memcpy_fromio(&stat, d->base, sizeof(stat));
-> +
-> +	seq_printf(s, "%s:\n", d->label);
-> +
-> +	seq_printf(s, "\tLast shutdown @ %llu\n", stat.shutdown_req);
-> +	seq_printf(s, "\tLast bringup req @ %llu\n", stat.bringup_req);
-> +	seq_printf(s, "\tLast bringup ack @ %llu\n", stat.bringup_ack);
-> +	seq_printf(s, "\tLast wakeup idx: %llu\n", stat.wakeup_idx);
-> +	seq_printf(s, "\tLast XO shutdown enter @ %llu\n", stat.xo_last_enter);
-> +	seq_printf(s, "\tLast XO shutdown exit @ %llu\n", stat.last_exit);
-> +	seq_printf(s, "\tXO total duration: %llu\n", stat.xo_total_dur);
-> +	seq_printf(s, "\tLast sleep transition duration: %u\n", stat.last_sleep_trans_dur);
-> +	seq_printf(s, "\tLast wake transition duration: %u\n", stat.last_wake_trans_dur);
-> +	seq_printf(s, "\tXO shutdown count: %u\n", stat.xo_count);
-> +	seq_printf(s, "\tWakeup reason: 0x%x\n", stat.wakeup_reason);
-> +	seq_printf(s, "\tShutdown count: %u\n", stat.num_shutdowns);
-> +	seq_printf(s, "\tActive cores bitmask: 0x%x\n", stat.active_cores);
-> +
-> +	return 0;
-> +}
-> +DEFINE_SHOW_ATTRIBUTE(master_stats);
-> +
-> +static int master_stats_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct device_node *msgram_np;
-> +	struct master_stats_data *d;
-
-"d" is not a good choice for a local variable (might be OK above but definitely
-not here)
-
-> +	struct dentry *dent, *root;
-> +	struct resource res;
-> +	int count, i, ret;
-> +
-> +	count = of_property_count_strings(dev->of_node, "qcom,master-names");
-> +	if (count < 0)
-> +		return count;
-> +
-> +	d = devm_kzalloc(dev, count * sizeof(*d), GFP_KERNEL);
-> +	if (!d)
-> +		return -ENOMEM;
-> +
-> +	root = debugfs_create_dir("rpm_master_stats", NULL);
-
-It's better to use "qcom_rpm_master_stats".
-
-> +	platform_set_drvdata(pdev, root);
-> +
-> +	for (i = 0; i < count; i++) {
-> +		msgram_np = of_parse_phandle(dev->of_node, "qcom,rpm-msg-ram", i);
-> +		if (!msgram_np) {
-> +			debugfs_remove_recursive(root);
-> +			return dev_err_probe(dev, -EINVAL,
-
--ENODEV
-
-> +					     "Couldn't parse MSG RAM phandle idx %d", i);
-> +		}
-> +
-> +		/*
-> +		 * Purposefully skip devm_platform helpers as we're using a
-> +		 * shared resource.
-> +		 */
-> +		ret = of_address_to_resource(msgram_np, 0, &res);
-
-Missing of_node_put() here due to of_parse_phandle().
-
-> +		if (ret < 0) {
-> +			debugfs_remove_recursive(root);
-> +			return ret;
-> +		}
-> +
-> +		d[i].base = devm_ioremap(dev, res.start, resource_size(&res));
-> +		if (IS_ERR(d[i].base)) {
-> +			debugfs_remove_recursive(root);
-> +			return dev_err_probe(dev, -EINVAL,
-> +					     "Could not map the MSG RAM slice idx %d!\n", i);
-> +		}
-> +
-> +		ret = of_property_read_string_index(dev->of_node, "qcom,master-names", i,
-> +						    &d[i].label);
-> +		if (ret < 0) {
-> +			debugfs_remove_recursive(root);
-> +			return dev_err_probe(dev, ret,
-> +					     "Could not read name idx %d!\n", i);
-> +		}
-> +
-> +		/*
-> +		 * Generally it's not advised to fail on debugfs errors, but this
-> +		 * driver's only job is exposing data therein.
-> +		 */
-> +		dent = debugfs_create_file(d[i].label, 0444, root,
-> +					   &d[i], &master_stats_fops);
-> +		if (!dent) {
-
-Don't check for NULL, instead use IS_ERR() if you really care about error
-checking here.
-
-> +			debugfs_remove_recursive(root);
-> +			return -EINVAL;
-> +		}
-> +	}
-> +
-> +	device_set_pm_not_required(dev);
-> +
-> +	return 0;
-> +}
-> +
-> +static void master_stats_remove(struct platform_device *pdev)
-> +{
-> +	struct dentry *root = platform_get_drvdata(pdev);
-> +
-> +	debugfs_remove_recursive(root);
-> +}
-> +
-> +static const struct of_device_id rpm_master_table[] = {
-> +	{ .compatible = "qcom,rpm-master-stats" },
-> +	{ },
-> +};
-> +
-> +static struct platform_driver master_stats_driver = {
-> +	.probe = master_stats_probe,
-> +	.remove_new = master_stats_remove,
-> +	.driver = {
-> +		.name = "rpm_master_stats",
-> +		.of_match_table = rpm_master_table,
-> +	},
-> +};
-> +module_platform_driver(master_stats_driver);
-> +
-> +MODULE_DESCRIPTION("RPM Master Statistics driver");
-
-Qualcomm RPM Master Statistics driver
-
-- Mani
-
-> +MODULE_LICENSE("GPL");
-> 
-> -- 
-> 2.40.0
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
