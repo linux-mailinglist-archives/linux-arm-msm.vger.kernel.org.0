@@ -2,89 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DDAB6E361E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 10:42:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5315D6E364A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 10:52:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230063AbjDPImn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 04:42:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54462 "EHLO
+        id S230397AbjDPIwE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 04:52:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230142AbjDPImm (ORCPT
+        with ESMTP id S230271AbjDPIwD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 04:42:42 -0400
+        Sun, 16 Apr 2023 04:52:03 -0400
 Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3E75CC
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 01:42:38 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id kt6so18352916ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 01:42:38 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF52F121
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 01:52:01 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id ud9so56354741ejc.7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 01:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681634557; x=1684226557;
+        d=linaro.org; s=google; t=1681635120; x=1684227120;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hqq+eYxLKmqhmd5LaiASaZTg9uvXAN3PWoh+nYWuMCg=;
-        b=zMwiXZdP/jKXpT6gKopu1anaiiVIxNM48UHNK3IMwrXVTmW2eHNeLY/mWgBO3hmb9/
-         4BcLE0MzbhexGA42zE+RgXFUNg34SlJ9W+lb2R3mchYaZmyWJuYysZoiA51OyqKXTvvq
-         aCDEajkatGrLk6ZhzSDPKCUulC2zPQME/QwMjjeKQvzciorbcXMqtmk/4ygGA+GZSDlS
-         3emf9MwtJPK7Q/SUHUjHBz1MxJuCAeTY/T2GVZ219g3CdGzJI7oB3ANtLw8FGRa3gxeB
-         fe7EZmxMMQeFPoZLZR52U/rAf/VXYyGIjJiSZlTulcU86rTdne3i7LYT20XkLh61XQFH
-         FIQA==
+        bh=xz32sDKpQee3zlr0zbbcU6t7W7vxz6tKNYrQgxPMKhM=;
+        b=iByFr0zHFbbmpDcuRT4PT75udL0WsPCSqRaVHq4COTZiUZWBbd9DS6L1BeEDu7TGMe
+         numPO2jCgvITYIRIp0T7U4cz68Rlqwtprp8LZM3g+gg44ye6QTAx44AZox8WMTcXzQTl
+         /T7Wpk3Zi5IM1HGA+j9pfe8I4Vf7CzOMtkHc+cFltux3qesSZuIHafGZbTX8WwoQ81RT
+         hBJweTn+UqJShEsFPq2m/7GPDF5KW9E336x20WdGrRqG7vty5yem+Ykg5J8X9argTnhI
+         WXHdUoPI8HTmFLdKISV6h4fwk6WUAGpioWMImU1hrMZ5BhkC3FnuLZLZxK4VWbpgf6h4
+         SdnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681634557; x=1684226557;
+        d=1e100.net; s=20221208; t=1681635120; x=1684227120;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hqq+eYxLKmqhmd5LaiASaZTg9uvXAN3PWoh+nYWuMCg=;
-        b=i5byBHkbnpGrhNw0IPQvPjgsrS4gkix1kBt48JsLhfZKnIH0TQ1Qxq3nNqnIZmKKp2
-         WGKl4Jr0YKzlOaZwab+43zVm43UYBA4YADkOlftDsr4dYMP/pZpxCL8hRo1LpPk4awGi
-         Y5ZGKfJNz82j7mPORyTf9UX6DSf+KghXCmJw/4WyfjX2jOgQZuLk5ZCc1odsHkr69WN2
-         wf2qmWXlIjN9Pm6uehTMBd+HoAvp1hWGo+Si0r+oLjWqiVqvvoYemyE3cCA4UDn7Ezis
-         zJhBosCiUV5CHFed9y7m7xFiXberlobSS+JJamJ418knzSw3ty2bEBkdW9wh58W1ytwY
-         0jqQ==
-X-Gm-Message-State: AAQBX9ctfds7CqmMxG8M9uKGQnV0PMIbJmchBaoz+LXtGPs3HlaEufBc
-        zoWAAlh//gra7mHCI/mywV5R9g==
-X-Google-Smtp-Source: AKy350YmwV0JiTy6NU+GKSTqxxFOs6/3hOvoxtfaH7q6nvSq2pks1/HUnrJLWXt9TN+yzpgJLuQAzQ==
-X-Received: by 2002:a17:906:ad8a:b0:94e:6f2d:d1c9 with SMTP id la10-20020a170906ad8a00b0094e6f2dd1c9mr4154864ejb.68.1681634557504;
-        Sun, 16 Apr 2023 01:42:37 -0700 (PDT)
+        bh=xz32sDKpQee3zlr0zbbcU6t7W7vxz6tKNYrQgxPMKhM=;
+        b=gJ3FoygDBV0mT0786CHZvQUD5/RCAzYhdhp2A47YZZTajTneDOVmr+7cp5l7S2qWYL
+         f2BqfNLDucNBGIfTEcz5XX/jZJbC+QysfPPnBFXULg8hvzoe2uUgui9X8z6KJLCgFxKe
+         CFZXJFdH+PMsIuHeNdu3kGQ7obO4JrNOs7rq/X/qmMpw2N8vpTaiRk5B5nrfW3JkbjgF
+         K5wI4s94e8iqFVly32AbJKdGZ+mU3cFYOrZssvGdfXFGSoFYF/8BpWkw7Q8b5eWJLT8x
+         z5QLsQsibkr2Vlec11eNADG+QU7ubas3oF0HTp7uveJpjkGzxX+BpK0WchbjvmYN0mRH
+         qVyw==
+X-Gm-Message-State: AAQBX9fi568+BAynCT2kLzeQv6b92hH/JaXOP4EKIhqK2YuM7WlxmGoW
+        YhEU/iyZXuUfJo/QNe0rZKw00gEIoCaS9DzSdO4=
+X-Google-Smtp-Source: AKy350ZgAT7FtBUWuvq/C/6PhXhW6abzvf7raeIGB2P72QHa4KKmckqO/uvo4v2wOGWhDawntqppKQ==
+X-Received: by 2002:a17:907:954f:b0:94e:11ce:4fcc with SMTP id ex15-20020a170907954f00b0094e11ce4fccmr3232718ejc.37.1681635120160;
+        Sun, 16 Apr 2023 01:52:00 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:29dd:ded4:3ccc:83db? ([2a02:810d:15c0:828:29dd:ded4:3ccc:83db])
-        by smtp.gmail.com with ESMTPSA id w3-20020a170906b18300b0094b5ce9d43dsm4792678ejy.85.2023.04.16.01.42.36
+        by smtp.gmail.com with ESMTPSA id m24-20020a1709060d9800b0094eeab34ad5sm3038472eji.124.2023.04.16.01.51.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Apr 2023 01:42:37 -0700 (PDT)
-Message-ID: <9ffb88fa-6cda-2740-77c6-d4985ebaace7@linaro.org>
-Date:   Sun, 16 Apr 2023 10:42:35 +0200
+        Sun, 16 Apr 2023 01:51:59 -0700 (PDT)
+Message-ID: <d175db74-6208-02e5-6427-52377e33fa9e@linaro.org>
+Date:   Sun, 16 Apr 2023 10:51:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v3 1/5] dt-bindings: input: touchscreen: add
- focaltech,fts5452 touchscreen
+Subject: Re: [PATCH v3 1/2] dt-bindings: soc: qcom: Add RPM Master stats
 Content-Language: en-US
-To:     Joel Selvaraj <joelselvaraj.oss@gmail.com>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Robert Jarzmik <robert.jarzmik@free.fr>,
-        Jeff LaBundy <jeff@labundy.com>,
-        Markuss Broks <markuss.broks@gmail.com>,
-        Jean Delvare <jdelvare@suse.de>,
-        Max Krummenacher <max.krummenacher@toradex.com>,
-        Chris Morgan <macromorgan@hotmail.com>,
-        Job Noorman <job@noorman.info>,
-        Alistair Francis <alistair@alistair23.me>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Maxime Ripard <mripard@kernel.org>
-Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20230415020222.216232-1-joelselvaraj.oss@gmail.com>
- <20230415020222.216232-2-joelselvaraj.oss@gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230405-topic-master_stats-v3-0-2cb2ba4f2092@linaro.org>
+ <20230405-topic-master_stats-v3-1-2cb2ba4f2092@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230415020222.216232-2-joelselvaraj.oss@gmail.com>
+In-Reply-To: <20230405-topic-master_stats-v3-1-2cb2ba4f2092@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -97,16 +81,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/04/2023 04:02, Joel Selvaraj wrote:
-> Document the Focaltech FTS touchscreen driver.
+On 14/04/2023 13:37, Konrad Dybcio wrote:
+> The RPM MSG RAM contains per-RPM-master (e.g. APPS, ADSP etc.) sleep
+> statistics. They let one assess which core is actively preventing the
+> system from entering a true low-power mode.
 > 
-> Signed-off-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  .../input/touchscreen/focaltech,fts5452.yaml  | 71 +++++++++++++++++++
+>  .../bindings/soc/qcom/qcom,rpm-master-stats.yaml   | 53 ++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,rpm-master-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,rpm-master-stats.yaml
+> new file mode 100644
+> index 000000000000..d7e58cbd3344
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,rpm-master-stats.yaml
+> @@ -0,0 +1,53 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/qcom,rpm-master-stats.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. (QTI) RPM Master Stats
+> +
+> +maintainers:
+> +  - Konrad Dybcio <konrad.dybcio@linaro.org>
+> +
+> +description:
+> +  Per-RPM-Master (e.g. APSS, ADSP, etc.) sleep statistics.
 
+Explain what is RPM-Master and what do you mean by "sleep".
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,rpm-master-stats
+> +
+> +  qcom,rpm-msg-ram:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: Phandle to an RPM MSG RAM slice containing the master stats
+> +    minItems: 1
+> +    maxItems: 5
+> +
+> +  qcom,master-names:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
+> +    description: RPM Master name
+
+There is a relation between this and qcom,rpm-msg-ram which you do not
+describe. It's not just RPM master name...
 
 Best regards,
 Krzysztof
