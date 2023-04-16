@@ -2,83 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EB766E3996
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 17:04:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AC246E399F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 17:12:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229920AbjDPPEx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 11:04:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59332 "EHLO
+        id S229946AbjDPPMj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 11:12:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbjDPPEw (ORCPT
+        with ESMTP id S229446AbjDPPMi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 11:04:52 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D5A1A5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:04:50 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id xd13so23884745ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:04:50 -0700 (PDT)
+        Sun, 16 Apr 2023 11:12:38 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8827FB4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:12:37 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id vc20so2896750ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:12:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681657489; x=1684249489;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W7knCr9Rw+t/6alapTgwg/iEzfEkJZjn1612eROrLe0=;
-        b=XaR//UYbfZ9tT/9t67VsysxxBdnm84ST9QijxZCd8TEMnylMyj9VhQcx71ux05BA7X
-         gvF55lWW47c0Bw/mwLgQzQD8fVM2+Uz7LYnQ9giWTZJ+fD1QPAas00GxJGeT5f5x82bY
-         /ozxls8s/s2xn/tZ0lmEn2Abr28OKO+3cBhmPntSX4koURbI4C53Gd4Wd/b/s2n1icDL
-         wBgDEteu6u8HjX9KYayX8Beyo7FtMdY+LlLOyOBHRHn0xIkgKxHq5QBqnm7m5ePcq8s2
-         jlBO4tKK4AL1u3BdACgHyA0YLBD1lGjbNiLufR33TGn7ve4qzKpfRHNqkVJC35YsOquF
-         5u5A==
+        d=linaro.org; s=google; t=1681657956; x=1684249956;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xlWlvCWzrovrnqFvYZa6sVT2dx6B7igBCNASIvtKe9k=;
+        b=ofuNa16m1w1KPW5fhX8kOZV6iA3lUxhQjy4U44tnXZ0qMuT+JO+fsjXJwxiyc0niJf
+         /QUO4b8lsrltY7rwihIhq5ewsI/26fOmG5uCtnB8az4Jt9Anw9vyqUdzCaMw5uh3KgOv
+         VAOkGVTZRKq1VXDhzOU5bjND7F57mPLNWUw1mibGlMTsE3LTgROWQlYxM1aJo4QSIU4/
+         79A3yLVaOBsBiGzRZuteNFkIcdbGfU+rbwNFZwtQwIXCPFVGdHFbiXqovZmOfKiGS1Kd
+         zdA+b9ejFY1YfrI2VZZZpbCQX00CAzB3nK3FyHcvP4+vIu8eepwVva3QRBQz6DDNzbvB
+         F4kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681657489; x=1684249489;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W7knCr9Rw+t/6alapTgwg/iEzfEkJZjn1612eROrLe0=;
-        b=EugR1nkRVUBAAJ9kcjrjSnkOF89oJRnvHUqSfTkNXmOk3wp9AaXFZBdMOdAa5bYr0N
-         3KAK4QIiPnGyGBwbhvLR93M7BvUaElKxNFTEzz1KsbOc7Atx7G4v3EjUTu/4NQmx32fr
-         qRsbeGQK2ItRPLgPeNgZI93BD23qTdG9a/GsbcEcOjU2eNS753KEm5vjcO6E5RIZUeO6
-         cfIimeLQ+c4ygtVaAWNbqmBOC+J6pXGSrtlUzSsjQx6txk5iEC3dqSM99wB6MpDVBXK6
-         iEqXqUWE8PWOrDy6SiN3laO0aVWYHqr1WYjluP+O4bDSiMjKQKJKsQCsnUJW/0NRhT8R
-         IXig==
-X-Gm-Message-State: AAQBX9d89TXrT3U4TiWKprp2HF26kwVc4nIKSHl5TEkxEqEZexDrKm3b
-        DoK7g6ZMSfBcWolSoa7TWmI3bg==
-X-Google-Smtp-Source: AKy350ZmvaPyK/34orGOz6gZvivnaCzSPH+AWBjfFvkNmokL7H4Sbk94KYMRpcm+UnV25l3Pqe1/jA==
-X-Received: by 2002:a17:906:ad87:b0:94a:4b7a:9886 with SMTP id la7-20020a170906ad8700b0094a4b7a9886mr4729072ejb.12.1681657488988;
-        Sun, 16 Apr 2023 08:04:48 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ba4d:301c:484d:5c9? ([2a02:810d:15c0:828:ba4d:301c:484d:5c9])
-        by smtp.gmail.com with ESMTPSA id tk9-20020a170907c28900b0094f5179540fsm955274ejc.83.2023.04.16.08.04.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Apr 2023 08:04:48 -0700 (PDT)
-Message-ID: <3877cb9e-9647-0acf-f705-d34fe2c731ff@linaro.org>
-Date:   Sun, 16 Apr 2023 17:04:47 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 03/18] dt-bindings: interrupt-controller: qcom-pdc: add
- compatible for sa8775p
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1681657956; x=1684249956;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xlWlvCWzrovrnqFvYZa6sVT2dx6B7igBCNASIvtKe9k=;
+        b=TAC7kGs2TKnLGELW17vz/2IRZbwP1a6bMVKNMIoc+IW+X/REdZZw8o0jpLvuRXKutt
+         QUmvFolkphnr5+viu5qBFkyjVUzNIqh8T344dF8KJCBBwFUZvY1pMJWxft4/Vbv7VEZk
+         zS6zlTrGFj5cNhFRWKQehRXuHPkQ3OayjTeslW6bL6eiSKPNjddF7Fbs4r6sg35FfwZL
+         IRYPGByuQ0JL7CAwBmoZ8mQ5mh7fHntz+3JoJUXzDifFVkVZ1upi7wJ3/7YxyAGddk2e
+         Jg9rWcQDTqXZG6fVrngxjftKDXfrSEYbH4k3PEavogz5JNZU3G22MAtWKmXiLcIH5mUF
+         ucog==
+X-Gm-Message-State: AAQBX9drB6b1ah9Ok/h4fQ5Q1gD2votKa60tGLTkSpj5KPhC/VEhRDKk
+        Gjomq3gmpqtj4XU7aA/+j3RElw==
+X-Google-Smtp-Source: AKy350ZI6BgnI3mupLhl88+iHzgLlBV1xT4C3FRFxxGbWQfUvHA+oyjPfjPjRJIwh1KODZ7vbnE2QA==
+X-Received: by 2002:a17:906:6992:b0:930:6c71:64eb with SMTP id i18-20020a170906699200b009306c7164ebmr4772616ejr.29.1681657955997;
+        Sun, 16 Apr 2023 08:12:35 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:ba4d:301c:484d:5c9])
+        by smtp.gmail.com with ESMTPSA id s13-20020a1709060c0d00b0094e729d333fsm5169635ejf.222.2023.04.16.08.12.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Apr 2023 08:12:35 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-References: <20230327125316.210812-1-brgl@bgdev.pl>
- <20230327125316.210812-4-brgl@bgdev.pl>
- <CAMRc=Mfe6gCM=Mz6Can6xsSsrjX-9T_aR2Yev+b57koky_az-A@mail.gmail.com>
- <CAMRc=Mfw+4Co8JPz51_E+DSawijO8EB6rMmFXEmM0e5F3Fg_8A@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAMRc=Mfw+4Co8JPz51_E+DSawijO8EB6rMmFXEmM0e5F3Fg_8A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] dt-bindings: phy: qcom,edp-phy: allow power-domains
+Date:   Sun, 16 Apr 2023 17:12:33 +0200
+Message-Id: <20230416151233.346336-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,46 +76,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2023 11:33, Bartosz Golaszewski wrote:
-> On Thu, Apr 6, 2023 at 4:10 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->>
->> On Mon, Mar 27, 2023 at 2:53 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->>>
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> Add a compatible for the Power Domain Controller on SA8775p platforms.
->>> Increase the number of PDC pin mappings.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> Cc: Thomas Gleixner <tglx@linutronix.de>
->>> Cc: Marc Zyngier <maz@kernel.org>
->>> ---
->>>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml     | 3 ++-
->>>  1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
->>> index 94791e261c42..641ff32e4a6c 100644
->>> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
->>> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
->>> @@ -26,6 +26,7 @@ properties:
->>>    compatible:
->>>      items:
->>>        - enum:
->>> +          - qcom,sa8775p-pdc
->>>            - qcom,sc7180-pdc
->>>            - qcom,sc7280-pdc
->>>            - qcom,sc8280xp-pdc
->>> @@ -53,7 +54,7 @@ properties:
->>>    qcom,pdc-ranges:
->>>      $ref: /schemas/types.yaml#/definitions/uint32-matrix
->>>      minItems: 1
->>> -    maxItems: 32 # no hard limit
->>> +    maxItems: 38 # no hard limit
+At least on SC8280XP the eDP PHY is part of power domain:
 
-I don't think the limit is correct. I still see warnings with this
-patch. We already have 57 elements, so limit should be I guess 128 or
-something.
+  sc8280xp-crd.dtb: phy@220c2a00: 'power-domains' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Best regards,
-Krzysztof
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+index c4f8e6ffa5c3..6566353f1a02 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+@@ -43,6 +43,9 @@ properties:
+   "#phy-cells":
+     const: 0
+ 
++  power-domains:
++    maxItems: 1
++
+   vdda-phy-supply: true
+   vdda-pll-supply: true
+ 
+-- 
+2.34.1
 
