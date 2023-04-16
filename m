@@ -2,114 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3D206E3684
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 11:16:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EDAE6E36BF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 11:45:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230337AbjDPJQH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 05:16:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41334 "EHLO
+        id S230221AbjDPJpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 05:45:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbjDPJQF (ORCPT
+        with ESMTP id S229970AbjDPJpw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 05:16:05 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB1551FFF
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:16:03 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-94e6caa223cso250867466b.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:16:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681636562; x=1684228562;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IQXACcFQhYMTTapf4fYrBnZy/KtxmeAb2/9BYxrU0Bg=;
-        b=zNVG1f9czlGFT2SrHPjlDHaK/IzZU5sRnN6vfXw910do/0PVh3Q63Xz4Tu0c4YGdCJ
-         xsb25VuOJ0vbBbKzz9pRkJihJBP0lHOXMOfxMo5I5RR+FCqSza26PAd/GEQolLGI3Pq3
-         soeylxBcHmUU3jBz97j4mlyv/KOg6CuzWCdRt/nvE8SD+5CIzkpBKkCIEvDlxB3GOwg9
-         kVFY0cZeF53ZSvuuXGvNkD3lTxC5opgjEckn5pjmj5Hatr3Msvj1agnlnpI3ZDFBSJ/o
-         gzEyR56X7nXkIaD/tp1V/0xbFO7icJt+nGd8kqH9P1jqlnKAuaWeear9z+EcEaF32MhV
-         9BJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681636562; x=1684228562;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IQXACcFQhYMTTapf4fYrBnZy/KtxmeAb2/9BYxrU0Bg=;
-        b=MNZQlh7FWTzuxWGTNQxnFTB+t+o0ELjpJpvw3g9UgUnh0bKeTqAON2OlExPTziltiZ
-         27Gpk0uhEV0EPJ3KWmJzMw3/T6oXtPRc/8wgdemjhNha322/0ARilCdiFkx7SetHGL5d
-         zl7jLgdQb+IQTQLZyAqWj0t1yqTv06X7uEBKsMsz4ZZF8tvwyEQnuiwJ68HLkZrxXQ+N
-         nQWDcZXzjWg4NUgnKB3apV5vM4Jn3AReYvjcaGmAPfRKWET4WJs8xEL7iMP3trM5dJRv
-         927Mgdi54UDQPHTApVpqRnesUUvtMVj3LUuyQyQHsPlA/5bjlZdQIo09wz854YZfXfd3
-         hAAg==
-X-Gm-Message-State: AAQBX9ezOHSTwqL+cPfHjb94uwUKD55kl0bWv8bPp9ehznaT4TmHAgou
-        zjWscABjeqUCfa3pVAisEpi20Q==
-X-Google-Smtp-Source: AKy350b8zNnrbYNWqzu2ymag2e1aIn96EHCycoVEwyxSuWpG9Q+Xeq/H1EjdtDt+sJ6qVBeCc9rslw==
-X-Received: by 2002:a05:6402:10d2:b0:4fd:20e5:4142 with SMTP id p18-20020a05640210d200b004fd20e54142mr10405208edu.21.1681636562398;
-        Sun, 16 Apr 2023 02:16:02 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:29dd:ded4:3ccc:83db? ([2a02:810d:15c0:828:29dd:ded4:3ccc:83db])
-        by smtp.gmail.com with ESMTPSA id ay18-20020a056402203200b0050504648fc4sm4319723edb.80.2023.04.16.02.16.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Apr 2023 02:16:02 -0700 (PDT)
-Message-ID: <2df035b4-edf6-b5c3-55a4-17fca6ea7f85@linaro.org>
-Date:   Sun, 16 Apr 2023 11:15:59 +0200
+        Sun, 16 Apr 2023 05:45:52 -0400
+Received: from smtp.smtpout.orange.fr (smtp-29.smtpout.orange.fr [80.12.242.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C3B92710
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:45:50 -0700 (PDT)
+Received: from pop-os.home ([86.243.2.178])
+        by smtp.orange.fr with ESMTPA
+        id nyx8pERD6B8bjnyx8pG0XW; Sun, 16 Apr 2023 11:45:48 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=orange.fr;
+        s=t20230301; t=1681638348;
+        bh=dXigaYMwb+m2xTiuf4ebRXnogGfAxTaA5Lp2S1H6688=;
+        h=From:To:Cc:Subject:Date;
+        b=Zmmc/sbB94VZ+7wayt/SSi8OckpymgDv2PTvp3KxkKDJjTkBYiYE9Be5z0V3LwaSF
+         Q0V2u3ThYQBWM2VG2SfZMp4O6MzooqbHyLTB/i1upDYalEeeUU0u2IOx6RuNkuQ6bB
+         n1zBQJp5H9gdlYR8GtbdYo3rGGWe2Qcs0rEFPmODGwFldLhc8g20uIGo8KOAhFwEJg
+         IC+qBILIY3OLbkDBdo/+Exk5zZOWS88VaUjy8Au9pqUvxakcqugC2doQoQSv5STOhH
+         KpvuJCHevmsXSLnTXKsC1vCxdoFSqYYbx7hQ9nIzQgnZDsCP1UZG7g7ZAGgHv+hLdr
+         2jMMOi66asH0w==
+X-ME-Helo: pop-os.home
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Sun, 16 Apr 2023 11:45:48 +0200
+X-ME-IP: 86.243.2.178
+From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev
+Subject: [PATCH] iommu/msm: Use the devm_clk_get_prepared() helper function
+Date:   Sun, 16 Apr 2023 11:45:45 +0200
+Message-Id: <14a5928a91fc8addf7f87a76428188ddc4271727.1681638224.git.christophe.jaillet@wanadoo.fr>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V3 8/9] arm64: dts: Add ipq5018 SoC and rdp432-c2 board
- support
-Content-Language: en-US
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-References: <1681468167-11689-1-git-send-email-quic_srichara@quicinc.com>
- <1681468167-11689-9-git-send-email-quic_srichara@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1681468167-11689-9-git-send-email-quic_srichara@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 14/04/2023 12:29, Sricharan Ramabadhran wrote:
-> Add initial device tree support for the Qualcomm IPQ5018 SoC and
-> rdp432-c2 board.
-> 
-> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [v3] Fixed all review comments and DTS schema warnings
-> 
->  arch/arm64/boot/dts/qcom/Makefile              |   1 +
+Use the devm_clk_get_prepared() helper function instead of hand-writing it.
+It saves some lines of code.
 
-You have some failures to fix. Difficult to say how much because your
-patchset breaks other bindings, so validation aborted. For sure your
-cache misses properties:
+It also makes the error handling path of the probe and the remove function
+useless.
 
-ipq5018-rdp432-c2.dtb: l2-cache: 'cache-unified' is a required property
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+---
+This patch has been cross-compiled only.
+---
+ drivers/iommu/msm_iommu.c | 62 ++++++++++-----------------------------
+ 1 file changed, 15 insertions(+), 47 deletions(-)
 
-Be sure that your DTS is clean and comes with no new warnings. If you
-need help with them, get in touch. If your DTS is correct, but errors
-come from other schema, try my pending branch:
-https://github.com/krzk/linux/commits/pending/dt-bindings-qcom-new-and-fixes-for-warnings-linux-next
-
-Best regards,
-Krzysztof
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 79d89bad5132..5a9bbbd185cf 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -712,48 +712,30 @@ static int msm_iommu_probe(struct platform_device *pdev)
+ 	iommu->dev = &pdev->dev;
+ 	INIT_LIST_HEAD(&iommu->ctx_list);
+ 
+-	iommu->pclk = devm_clk_get(iommu->dev, "smmu_pclk");
++	iommu->pclk = devm_clk_get_prepared(iommu->dev, "smmu_pclk");
+ 	if (IS_ERR(iommu->pclk))
+ 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->pclk),
+ 				     "could not get smmu_pclk\n");
+ 
+-	ret = clk_prepare(iommu->pclk);
+-	if (ret)
+-		return dev_err_probe(iommu->dev, ret,
+-				     "could not prepare smmu_pclk\n");
+-
+-	iommu->clk = devm_clk_get(iommu->dev, "iommu_clk");
+-	if (IS_ERR(iommu->clk)) {
+-		clk_unprepare(iommu->pclk);
++	iommu->clk = devm_clk_get_prepared(iommu->dev, "iommu_clk");
++	if (IS_ERR(iommu->clk))
+ 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->clk),
+ 				     "could not get iommu_clk\n");
+-	}
+-
+-	ret = clk_prepare(iommu->clk);
+-	if (ret) {
+-		clk_unprepare(iommu->pclk);
+-		return dev_err_probe(iommu->dev, ret, "could not prepare iommu_clk\n");
+-	}
+ 
+ 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	iommu->base = devm_ioremap_resource(iommu->dev, r);
+-	if (IS_ERR(iommu->base)) {
+-		ret = dev_err_probe(iommu->dev, PTR_ERR(iommu->base), "could not get iommu base\n");
+-		goto fail;
+-	}
++	if (IS_ERR(iommu->base))
++		return dev_err_probe(iommu->dev, PTR_ERR(iommu->base),
++				     "could not get iommu base\n");
+ 	ioaddr = r->start;
+ 
+ 	iommu->irq = platform_get_irq(pdev, 0);
+-	if (iommu->irq < 0) {
+-		ret = -ENODEV;
+-		goto fail;
+-	}
++	if (iommu->irq < 0)
++		return -ENODEV;
+ 
+ 	ret = of_property_read_u32(iommu->dev->of_node, "qcom,ncb", &val);
+-	if (ret) {
+-		dev_err(iommu->dev, "could not get ncb\n");
+-		goto fail;
+-	}
++	if (ret)
++		return dev_err_probe(iommu->dev, ret, "could not get ncb\n");
+ 	iommu->ncb = val;
+ 
+ 	msm_iommu_reset(iommu->base, iommu->ncb);
+@@ -767,8 +749,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
+ 
+ 	if (!par) {
+ 		pr_err("Invalid PAR value detected\n");
+-		ret = -ENODEV;
+-		goto fail;
++		return -ENODEV;
+ 	}
+ 
+ 	ret = devm_request_threaded_irq(iommu->dev, iommu->irq, NULL,
+@@ -778,7 +759,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
+ 					iommu);
+ 	if (ret) {
+ 		pr_err("Request IRQ %d failed with ret=%d\n", iommu->irq, ret);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	list_add(&iommu->dev_node, &qcom_iommu_devices);
+@@ -787,23 +768,19 @@ static int msm_iommu_probe(struct platform_device *pdev)
+ 				     "msm-smmu.%pa", &ioaddr);
+ 	if (ret) {
+ 		pr_err("Could not add msm-smmu at %pa to sysfs\n", &ioaddr);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	ret = iommu_device_register(&iommu->iommu, &msm_iommu_ops, &pdev->dev);
+ 	if (ret) {
+ 		pr_err("Could not register msm-smmu at %pa\n", &ioaddr);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
+ 		iommu->base, iommu->irq, iommu->ncb);
+ 
+-	return ret;
+-fail:
+-	clk_unprepare(iommu->clk);
+-	clk_unprepare(iommu->pclk);
+-	return ret;
++	return 0;
+ }
+ 
+ static const struct of_device_id msm_iommu_dt_match[] = {
+@@ -811,20 +788,11 @@ static const struct of_device_id msm_iommu_dt_match[] = {
+ 	{}
+ };
+ 
+-static void msm_iommu_remove(struct platform_device *pdev)
+-{
+-	struct msm_iommu_dev *iommu = platform_get_drvdata(pdev);
+-
+-	clk_unprepare(iommu->clk);
+-	clk_unprepare(iommu->pclk);
+-}
+-
+ static struct platform_driver msm_iommu_driver = {
+ 	.driver = {
+ 		.name	= "msm_iommu",
+ 		.of_match_table = msm_iommu_dt_match,
+ 	},
+ 	.probe		= msm_iommu_probe,
+-	.remove_new	= msm_iommu_remove,
+ };
+ builtin_platform_driver(msm_iommu_driver);
+-- 
+2.34.1
 
