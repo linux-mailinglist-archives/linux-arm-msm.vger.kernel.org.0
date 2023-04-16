@@ -2,158 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 989916E39C1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 17:20:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3459F6E39E1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 17:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230198AbjDPPUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 11:20:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37882 "EHLO
+        id S230332AbjDPPoA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 11:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbjDPPUK (ORCPT
+        with ESMTP id S229446AbjDPPn7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 11:20:10 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6D01BE7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:20:08 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id sz19so789788ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 08:20:07 -0700 (PDT)
+        Sun, 16 Apr 2023 11:43:59 -0400
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D6C26AE;
+        Sun, 16 Apr 2023 08:43:58 -0700 (PDT)
+Received: by mail-io1-xd30.google.com with SMTP id ca18e2360f4ac-7606d6bb669so36459839f.2;
+        Sun, 16 Apr 2023 08:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681658406; x=1684250406;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rbAN5WU56B4VEiB1VFsqC9Gu1Swjc+C/BnQGH/MXxU8=;
-        b=vFZZkIacIl8160Edsrq6FQgdswWD0NbURlNL8AaHAfXEcNIcP6KSIWDgMY4FSOloem
-         XT/l6aZi+ZuEmbaliOaA/5H0K+gifvsizmgsSc0BW60VXrVuvNCvf6ojgqPq7NJx9muA
-         Dsr9+aIDlAqdhe9X7ca1vD4gfVi2qIFSR4x1HreKcoyuZETpLrczwLOD1DpP/ecie4mS
-         7strxWiKY+PzJbXnsZ+xGK3pckrJZNbSvKSyG+R6U+cQhM8WOdBDLK418/n0Adr90jIq
-         Q7rxJGhyHH1R+uwWq60OzhS4BYwlgEkWDPNTdZ4AL/sGQUYIu3N0caiv3B3Ft1FSkoCa
-         DBZw==
+        d=gmail.com; s=20221208; t=1681659837; x=1684251837;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gFn5R4xXzuvnwOnRhG3Vhya1AEqvHvNArnfqEJR1x7Y=;
+        b=RPGCj6RbG27UEGViRruRGBWBJLUbnTs9IMB0y05AunSX2LTybgsQFFG+xkwbS6Uf+9
+         tMwt9rLA57orOj98V4Z2YHnypLsGYm7F0LpPz06Im1/V39oobjpUeQFhdk6jykwzC75N
+         twNZoJkLaL/fijF19RgUnyuwNvkxBV5i1yJNoY96ffRI38W3Zv9L9LGbnONuFnf6V81C
+         jdOSfzwUw6RZzS65ITgbD7rgGdliHkywvTptYiTvQBIUwopCaE70xcbdge3qZqCnne5T
+         PWWV8JRO7zFQ021HhqFv1h0Ezb/IAcPpzggZdObO+dwoBcLVjfBzljddM0RzrFFpnt68
+         g2qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681658406; x=1684250406;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rbAN5WU56B4VEiB1VFsqC9Gu1Swjc+C/BnQGH/MXxU8=;
-        b=k9oqJcsGFuuQ7CMzYbqUNApoM6HdngKsRdvWr/C/Nx8A7i0rbeoI1NRrTauLHaq3ol
-         Csot/yvI4f2he2ndySjI/ISnbmaSYuuuEXzE+zRcsp+cLCCNYJZmUIcolAsxpfamNpM1
-         OtfLA1Vbg7YSRt4Z13haR0Ej0PEjuFS463nXuEs0VazEl9NPL1f0rMHfxDTW4C9l/kBK
-         EA+4P/xRvBVrWJ1ATJ//ngH7ZUS5NO2ZmBSXAkn8jbv1yuvgWQ/VD5nZvAwamRdfk1jh
-         m7ofQe7QwMEAN0LOAnt4TcgimhnEOHN78ku+E99nd3NxkSujN/3axWHrYo7Ml02qXNhF
-         8p1Q==
-X-Gm-Message-State: AAQBX9e7XrgpBgk2rNSxS6udj5UCwK+TE+QLiUkUxYuFUxYLIqfHuHf4
-        EBNaoaQx4piKWAUzVPU3WRf3RA==
-X-Google-Smtp-Source: AKy350ajHtRg1Jzq0HB8HI0deyaXSVS4/EcdAvXZXdc0qq6IDelZKY32JGmq5Y7NUAuRGGimi3ZFBQ==
-X-Received: by 2002:a17:906:bc42:b0:94f:5e17:e80d with SMTP id s2-20020a170906bc4200b0094f5e17e80dmr1786236ejv.45.1681658406502;
-        Sun, 16 Apr 2023 08:20:06 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:ba4d:301c:484d:5c9? ([2a02:810d:15c0:828:ba4d:301c:484d:5c9])
-        by smtp.gmail.com with ESMTPSA id d9-20020a17090648c900b0094f4f2db7e0sm1049358ejt.143.2023.04.16.08.20.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Apr 2023 08:20:06 -0700 (PDT)
-Message-ID: <df5377a3-4bdb-0f74-b536-528b9d225580@linaro.org>
-Date:   Sun, 16 Apr 2023 17:20:05 +0200
+        d=1e100.net; s=20221208; t=1681659837; x=1684251837;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gFn5R4xXzuvnwOnRhG3Vhya1AEqvHvNArnfqEJR1x7Y=;
+        b=A7yihYPt+NICN7Plo5XGk2zsb2ihwj5KwmoNEqBaY/ixDp1KgQkaX1FVfTLJtRvOHi
+         m0nLE0QuJj+dxmcEVg2g8PZoFTh4hgCbp8OS56orqOjDneajrec4XiMtUSiISLWlA3gb
+         yBwSpwTkIjT2Kx2wPfTYvA4TmRWHMyZnJlUxCdDIcF0byJDesfSIsALcYWuqBtYCJLE0
+         t1gJVM1ROFISCcwKHqJSPNxmU9VkwO9QV2ancLyb26GiycEfOxXy+pfF7vto75Q2rRLn
+         Qt2sJI56hSo2vmpf61KRLw3N8ZoLmRjl7PBvSRD9UA55U8rbVbY6UhCKegiRkBZrkfla
+         7Jlg==
+X-Gm-Message-State: AAQBX9e1FZC5q4CHQgrh+HMAlAHuogzPO4KLGTwWsea8t1D46k0DRSbh
+        g/JAsHLAw/j5xuR84mq239OI0zJK4nk=
+X-Google-Smtp-Source: AKy350ZpMx84dPLE9eO18JJEM0NfPihoCSRCw4RFiUudqaj5E6BLXeL3qZ3w/Bo5NH376PtQUCR63g==
+X-Received: by 2002:a92:cecf:0:b0:328:3002:9732 with SMTP id z15-20020a92cecf000000b0032830029732mr8005995ilq.16.1681659837673;
+        Sun, 16 Apr 2023 08:43:57 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id y42-20020a02952d000000b0040f9f562bfesm670449jah.123.2023.04.16.08.43.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Apr 2023 08:43:57 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date:   Sun, 16 Apr 2023 08:43:55 -0700
+From:   Guenter Roeck <linux@roeck-us.net>
+To:     Kathiravan T <quic_kathirav@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        wim@linux-watchdog.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2 1/2] dt-bindings: watchdog: qcom-wdt: add
+ qcom,apss-wdt-ipq5332 compatible
+Message-ID: <e1b88c17-2335-43da-b5e2-f9e150a87b0a@roeck-us.net>
+References: <20230320104530.30411-1-quic_kathirav@quicinc.com>
+ <20230320104530.30411-2-quic_kathirav@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/4] dt-bindings: power: reset: convert nvmem-reboot-mode
- bindings to YAML
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230413131705.3073911-1-brgl@bgdev.pl>
- <20230413131705.3073911-4-brgl@bgdev.pl>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230413131705.3073911-4-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230320104530.30411-2-quic_kathirav@quicinc.com>
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2023 15:17, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Mon, Mar 20, 2023 at 04:15:29PM +0530, Kathiravan T wrote:
+> Add a compatible for the IPQ5332 platform's APSS watchdog.
 > 
-> Convert the DT binding document for nvmem-reboot-mode from .txt to YAML.
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
 
-Thank you for your patch. There is something to discuss/improve.
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-> diff --git a/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> new file mode 100644
-> index 000000000000..64a7d224c7dd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/power/reset/nvmem-reboot-mode.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/power/reset/nvmem-reboot-mode.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Generic NVMEM reboot mode driver
-
-Drop "driver".
-> +
-> +maintainers:
-> +  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> +
-> +description: |
-
-Do not need '|' unless you need to preserve formatting.
-
-> +  This driver gets the reboot mode magic value from the reboot-mode driver
-> +  and stores it in the NVMEM cell named "reboot-mode". The bootloader can
-> +  then read it and take different action according to the value.
-> +
-> +properties:
-> +  compatible:
-> +    const: nvmem-reboot-mode
-> +
-> +  nvmem-cells:
-> +    description: |
-
-Do not need '|' unless you need to preserve formatting.
-
-> +      A phandle pointing to the nvmem-cells node where the vendor-specific
-> +      magic value representing the reboot mode is stored.
-> +    maxItems: 1
-> +
-> +  nvmem-cell-names:
-> +    items:
-> +      - const: reboot-mode
-> +
-> +patternProperties:
-> +  "^mode-.+":
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: Vendor-specific mode value written to the mode register
-> +
-> +additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - nvmem-cells
-> +  - nvmem-cell-names
-
-put required: before additionalProperties
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+> ---
+> Changes in V2:
+> 	- Pick up R-b tag
+> 
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> index 6448b633c970..8060a87d29da 100644
+> --- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> +++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
+> @@ -18,6 +18,7 @@ properties:
+>        - items:
+>            - enum:
+>                - qcom,kpss-wdt-ipq4019
+> +              - qcom,apss-wdt-ipq5332
+>                - qcom,apss-wdt-msm8994
+>                - qcom,apss-wdt-qcs404
+>                - qcom,apss-wdt-sa8775p
