@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22FED6E366D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 11:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D0376E366F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 11:06:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230367AbjDPJGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 05:06:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37296 "EHLO
+        id S229472AbjDPJGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 05:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230319AbjDPJF7 (ORCPT
+        with ESMTP id S229849AbjDPJGx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 05:05:59 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC981706
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:05:57 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id kt6so18420506ejb.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:05:57 -0700 (PDT)
+        Sun, 16 Apr 2023 05:06:53 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B768D1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:06:51 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id xi5so56589218ejb.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:06:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681635955; x=1684227955;
+        d=linaro.org; s=google; t=1681636010; x=1684228010;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KlGz8JKELgg3r8mMiki5eECoDbZv+x5gc1ofLrVcTyg=;
-        b=cOgPSIoFkdBBtroB7HJ8Jy5YxHfHM+s7oz+bS15lmhrLaQv7kDAJryXB+eWSTdFnCq
-         KJe5Y6hXhpZ9g6Dmrc5P+qOCFrE3Bx2c47+KA38UAZlSmq8M1c2+K2vWV0J5K3jw5Ww5
-         QXtZ8Zg17Q/p9uGZ6jnuUdssnXYE2+oc2fCeJkvEHO3OFfMrCVVPTpYLM0LaJhdKIJhp
-         UGbCaMEczEp71Q2lHkkvurXNkkHULzbwbdlRU7/NoUch2q7Os4vfOjUYwWiNam+RzGwu
-         cW0thOZCWngq/3yRUpDCwkZF6udLdqTeHGz0jy29p034FLxvU+NZwoJS8SrMKNQiHLKo
-         HNxA==
+        bh=MySIw9waWW4Xk/aovZcd2fC1291iB4ogfzRvJl3ikps=;
+        b=oPD6z41rIRPiPN9vujgQErfu+O7lVBNDXDkn0rbx39zbPgvqKoU+3+77OfnPZnM0jK
+         +WBeLLwnlW2fDcIAPfJ131a3K89NQpaCium3NI5Z69+k7ZnS41TmhqZRqrYdkz7GfELN
+         amvkQpBNoM51MjeQAmwBNMjmJ8H4eTzeGualZKl/TPKjMq0TsOKmWbhojakuC2M5ewqR
+         siFTO9atvMBtg9NDhZJKqhmemXP2vPejkkW/HDy/yTnzuRMjcMxPuVVmKvBmMKY9lDxY
+         j/e5QUeWb72kTEcAxQe5XdzAcERvaIrQ/uffmnRekX457Vfkp77hOf/IxsgagfLt3bpI
+         lnjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681635955; x=1684227955;
+        d=1e100.net; s=20221208; t=1681636010; x=1684228010;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KlGz8JKELgg3r8mMiki5eECoDbZv+x5gc1ofLrVcTyg=;
-        b=KVaK290BxIo9La8FFj1XkA6Elyp43kdj2225XKE1RXHyYw0wXyP8DSHZddmHFWW61w
-         OkqqRVxZdJmwM/BqSovAT704IjVrjftQCDCRjcpFw9Q1/Yv2CyV0++aep92jdx8fVRcV
-         nsTuihzRskao09nzjZHW/9aByG4srADuIT9dc1f+sum7jCxqFQDnZHi1qtMJpTCRNFd6
-         6ec+AkB7xA9UW8Jvt8zQbJxTvWSlMMo/DPc2YbHhPPtDvesaZbyrgc4tX7nv7d7Z++6K
-         hc86HkQufeRGH/hRTGaj+n0tH88oU44rt/OwPvWRDAIWXRoc6TvZN8oJQbKIL+Uk6CFm
-         Sx9Q==
-X-Gm-Message-State: AAQBX9eUPHX3BCXO3RgoQTWIIjTt3ActkK2neTdgWpKIyEjZg+sDlSlI
-        fPGMLlzc1jDZcEovqYH2Ne0gpg==
-X-Google-Smtp-Source: AKy350YtxFNxax7Pbq26Km+VElE38/PHPK+bNeopmDM55nPrGadnmeGvHZepVxj8+9iGRvAW89qqwQ==
-X-Received: by 2002:a17:906:1014:b0:948:eed:b4e0 with SMTP id 20-20020a170906101400b009480eedb4e0mr4192321ejm.61.1681635955504;
-        Sun, 16 Apr 2023 02:05:55 -0700 (PDT)
+        bh=MySIw9waWW4Xk/aovZcd2fC1291iB4ogfzRvJl3ikps=;
+        b=eOgxnLNLApDFtG91a32/9kewSOZuEX+/fhN42yCTMP1LrMn29ldZnC6YrAOtCuObbY
+         CdYvYIzcefcZtGnP0er4WPezPoeSdp2G6Vs5+SDOzrEjTa8GGb8M0WY6u8qvOwE88DQr
+         Ix/aqNbIuBnQby4LXov8HBWyLrZfAzdUxbn0vWFOTDL2riQq5O0vlihLPiZQIny5+CJe
+         JPEV56Gng3bAAwNLyORkd4ZnDRrWlLEMyJ1Ks4DfgRo8PqZHGmM4VZXvoq+dssf3uK58
+         MCZB4VCPVOLTi3azsd3GQhZxumid7wpaulYkb/uGSt1l6Lg1jwpa+TeqdeDlTL4/oZ1o
+         u+Xw==
+X-Gm-Message-State: AAQBX9fOA5nAHT7bx9TlmW8zTR3/QiN7BC3iHkzb4Ne6qShXUB8RDKUJ
+        fGN0K2zGpSZtniq6LcxhqcXssg==
+X-Google-Smtp-Source: AKy350ZzWsYy0GX5jmLzK+27nTxe75g9meKiLlz60+VnfHusZw/nv0Wk/QH+DWdFrAqqKXPLKLUiPA==
+X-Received: by 2002:a17:906:ae56:b0:932:1af9:7386 with SMTP id lf22-20020a170906ae5600b009321af97386mr4158267ejb.27.1681636010015;
+        Sun, 16 Apr 2023 02:06:50 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:29dd:ded4:3ccc:83db? ([2a02:810d:15c0:828:29dd:ded4:3ccc:83db])
-        by smtp.gmail.com with ESMTPSA id n20-20020a1709065db400b0094a90d3e385sm4807165ejv.30.2023.04.16.02.05.54
+        by smtp.gmail.com with ESMTPSA id wt10-20020a170906ee8a00b0094f225c0cd3sm1739874ejb.86.2023.04.16.02.06.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Apr 2023 02:05:55 -0700 (PDT)
-Message-ID: <4b3ce97d-a134-290d-e762-46d6a91caee1@linaro.org>
-Date:   Sun, 16 Apr 2023 11:05:53 +0200
+        Sun, 16 Apr 2023 02:06:49 -0700 (PDT)
+Message-ID: <608ad622-4ffd-8264-4a95-2cedc429e469@linaro.org>
+Date:   Sun, 16 Apr 2023 11:06:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH V3 5/9] dt-bindings: qcom: Add ipq5018 bindings
+Subject: Re: [PATCH V3 6/9] dt-bindings: firmware: document IPQ5018 SCM
 Content-Language: en-US
 To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -67,9 +67,9 @@ To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
         linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <1681468167-11689-1-git-send-email-quic_srichara@quicinc.com>
- <1681468167-11689-6-git-send-email-quic_srichara@quicinc.com>
+ <1681468167-11689-7-git-send-email-quic_srichara@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1681468167-11689-6-git-send-email-quic_srichara@quicinc.com>
+In-Reply-To: <1681468167-11689-7-git-send-email-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,39 +83,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 14/04/2023 12:29, Sricharan Ramabadhran wrote:
-> Document the new ipq5018 SOC/board device tree bindings.
-> 
 > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > ---
->  [v3] Fixed board name
+>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
->  Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 785b969..350f9f6 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -30,6 +30,7 @@ description: |
->          apq8084
->          apq8096
->          ipq4018
-> +        ipq5018
->          ipq5332
->          ipq6018
->          ipq8074
-> @@ -95,6 +96,7 @@ description: |
->          hk10-c2
->          idp
->          liquid
-> +        rdp432-c1
+> diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> index 367d04a..ea5987d 100644
+> --- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> +++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+> @@ -28,6 +28,7 @@ properties:
+>            - qcom,scm-ipq6018
+>            - qcom,scm-ipq806x
+>            - qcom,scm-ipq8074
+> +          - qcom,scm-ipq5018
 
 Keep proper order, not random.
-
->          mtp
->          qrd
->          ride
-
 
 Best regards,
 Krzysztof
