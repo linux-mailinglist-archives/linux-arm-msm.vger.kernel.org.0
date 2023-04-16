@@ -2,54 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EDAE6E36BF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 11:45:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE6C76E36FC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 16 Apr 2023 12:11:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230221AbjDPJpx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 16 Apr 2023 05:45:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49178 "EHLO
+        id S229803AbjDPKLm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 16 Apr 2023 06:11:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbjDPJpw (ORCPT
+        with ESMTP id S229579AbjDPKLk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 16 Apr 2023 05:45:52 -0400
-Received: from smtp.smtpout.orange.fr (smtp-29.smtpout.orange.fr [80.12.242.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C3B92710
-        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 02:45:50 -0700 (PDT)
-Received: from pop-os.home ([86.243.2.178])
-        by smtp.orange.fr with ESMTPA
-        id nyx8pERD6B8bjnyx8pG0XW; Sun, 16 Apr 2023 11:45:48 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=orange.fr;
-        s=t20230301; t=1681638348;
-        bh=dXigaYMwb+m2xTiuf4ebRXnogGfAxTaA5Lp2S1H6688=;
-        h=From:To:Cc:Subject:Date;
-        b=Zmmc/sbB94VZ+7wayt/SSi8OckpymgDv2PTvp3KxkKDJjTkBYiYE9Be5z0V3LwaSF
-         Q0V2u3ThYQBWM2VG2SfZMp4O6MzooqbHyLTB/i1upDYalEeeUU0u2IOx6RuNkuQ6bB
-         n1zBQJp5H9gdlYR8GtbdYo3rGGWe2Qcs0rEFPmODGwFldLhc8g20uIGo8KOAhFwEJg
-         IC+qBILIY3OLbkDBdo/+Exk5zZOWS88VaUjy8Au9pqUvxakcqugC2doQoQSv5STOhH
-         KpvuJCHevmsXSLnTXKsC1vCxdoFSqYYbx7hQ9nIzQgnZDsCP1UZG7g7ZAGgHv+hLdr
-         2jMMOi66asH0w==
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 16 Apr 2023 11:45:48 +0200
-X-ME-IP: 86.243.2.178
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+        Sun, 16 Apr 2023 06:11:40 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C16E1E1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 03:11:38 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id xd13so22866985ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 03:11:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681639897; x=1684231897;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PXlcOAS1nGAgLABpy2LEgEsdYkAtut7JjkmPtZqL66Y=;
+        b=gUrKjH9f3EH1rFG9SnwbgYtz1ayqJbLzYy6Iq2Qr0xKKkOL+kfc4SrzIV6VFrC09Di
+         IcZpArhnisLC3yOBvk71oykwEMGxuZK/6oSOg/Wpe67gplBYsVIYwqD6AzWrur6aTV6l
+         j87/wPaANj7xLlxA4SdqhO+z4znSRyKJKRwucauz9vRZOwzLJmcTFur0s8kXSnEtW2ds
+         0GhNMmd3hICk4hzL7BPKUSCOur+/1lIKr5IMo0UTHAoxtipQC4Qd2Bv6/UO2zxD/mLGo
+         ORLUuT8lyWiovHtZBpoaZ6kOjxYF4yeApNmSi7Yb7//cV0z6PpDQLHuXhr/+Zjvm01ao
+         H3tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681639897; x=1684231897;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PXlcOAS1nGAgLABpy2LEgEsdYkAtut7JjkmPtZqL66Y=;
+        b=kLhvmmxogx3hTLo0I/3IdXCWz5yESg5bdgkrNsFtv2wC0i+xjsHCKSSPzb0MYxMdw/
+         ULpv7UeeCqxgsV2sVK9qHPQ1WvZ0fzyRZ+uODQ7mYhTV2hLz1mlkIJaSR77hGM4JXb76
+         S2m7Sc4ZVZ7wf3QvGiyau22F0Zb4Jxnmqoum7tAirGWculJaj37DkR38OGcCCJRZCGlW
+         MmZVGiwDmpFQzXp/lq65kuV0zFpxITu5uDB8E87vdMmojXBgIYH/pMIaUOYYsnHVwsZr
+         3FgjMiXCx8Ib3HwTTeCP5/WyI2ueg9ucAx85CXaMp/WTbtCG53CMLjz+kMgZqSY37h/8
+         DWyQ==
+X-Gm-Message-State: AAQBX9f6ibV4b2yivZi/UXxMxwzuUGnc8FNj9/GIFUXJ7Q/wMd9RQBIX
+        s9xc65vNIF23cv6OYfDd/jGqzQ==
+X-Google-Smtp-Source: AKy350aLTADs/BLgrJxsRRyl/Pgg+19M0SwiGPfPFQqN4Tu9AAAJrLSGQkFkxNVsZhlY4Sj2rlvtQw==
+X-Received: by 2002:a17:906:5255:b0:94a:5a9e:9da0 with SMTP id y21-20020a170906525500b0094a5a9e9da0mr3666069ejm.77.1681639897229;
+        Sun, 16 Apr 2023 03:11:37 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:29dd:ded4:3ccc:83db])
+        by smtp.gmail.com with ESMTPSA id wg9-20020a17090705c900b0094ea48e9052sm4742755ejb.32.2023.04.16.03.11.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Apr 2023 03:11:36 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev
-Subject: [PATCH] iommu/msm: Use the devm_clk_get_prepared() helper function
-Date:   Sun, 16 Apr 2023 11:45:45 +0200
-Message-Id: <14a5928a91fc8addf7f87a76428188ddc4271727.1681638224.git.christophe.jaillet@wanadoo.fr>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/4] arm64: dts: qcom: fix indentation
+Date:   Sun, 16 Apr 2023 12:11:31 +0200
+Message-Id: <20230416101134.95686-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,149 +74,425 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the devm_clk_get_prepared() helper function instead of hand-writing it.
-It saves some lines of code.
+Correct indentation to use only tabs.
 
-It also makes the error handling path of the probe and the remove function
-useless.
-
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-This patch has been cross-compiled only.
----
- drivers/iommu/msm_iommu.c | 62 ++++++++++-----------------------------
- 1 file changed, 15 insertions(+), 47 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi  |  8 ++--
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi |  4 +-
+ arch/arm64/boot/dts/qcom/sdm670.dtsi   |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi   |  4 +-
+ arch/arm64/boot/dts/qcom/sm6375.dtsi   | 34 ++++++++---------
+ arch/arm64/boot/dts/qcom/sm8150.dtsi   |  4 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi   | 52 +++++++++++++-------------
+ arch/arm64/boot/dts/qcom/sm8450.dtsi   | 52 +++++++++++++-------------
+ 8 files changed, 80 insertions(+), 80 deletions(-)
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 79d89bad5132..5a9bbbd185cf 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -712,48 +712,30 @@ static int msm_iommu_probe(struct platform_device *pdev)
- 	iommu->dev = &pdev->dev;
- 	INIT_LIST_HEAD(&iommu->ctx_list);
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 2b35cb3f5292..2c5780008c84 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -53,8 +53,8 @@ CPU0: cpu@0 {
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_0>;
+ 			L2_0: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
++				compatible = "cache";
++				cache-level = <2>;
+ 			};
+ 		};
  
--	iommu->pclk = devm_clk_get(iommu->dev, "smmu_pclk");
-+	iommu->pclk = devm_clk_get_prepared(iommu->dev, "smmu_pclk");
- 	if (IS_ERR(iommu->pclk))
- 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->pclk),
- 				     "could not get smmu_pclk\n");
+@@ -83,8 +83,8 @@ CPU2: cpu@100 {
+ 			#cooling-cells = <2>;
+ 			next-level-cache = <&L2_1>;
+ 			L2_1: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
++				compatible = "cache";
++				cache-level = <2>;
+ 			};
+ 		};
  
--	ret = clk_prepare(iommu->pclk);
--	if (ret)
--		return dev_err_probe(iommu->dev, ret,
--				     "could not prepare smmu_pclk\n");
--
--	iommu->clk = devm_clk_get(iommu->dev, "iommu_clk");
--	if (IS_ERR(iommu->clk)) {
--		clk_unprepare(iommu->pclk);
-+	iommu->clk = devm_clk_get_prepared(iommu->dev, "iommu_clk");
-+	if (IS_ERR(iommu->clk))
- 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->clk),
- 				     "could not get iommu_clk\n");
--	}
--
--	ret = clk_prepare(iommu->clk);
--	if (ret) {
--		clk_unprepare(iommu->pclk);
--		return dev_err_probe(iommu->dev, ret, "could not prepare iommu_clk\n");
--	}
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index ef9bd6ab577d..8fb766f9e8e0 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -60,8 +60,8 @@ L2_0: l2-cache {
+ 				cache-level = <2>;
+ 				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
+-				      cache-level = <3>;
++					compatible = "cache";
++					cache-level = <3>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index c5f839dd1c6e..49c07cb76b20 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -42,7 +42,7 @@ L2_0: l2-cache {
+ 				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
++					compatible = "cache";
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 90424442bb4a..ae0510e687b4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -110,8 +110,8 @@ L2_0: l2-cache {
+ 				cache-level = <2>;
+ 				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
+-				      cache-level = <3>;
++					compatible = "cache";
++					cache-level = <3>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index ae9b6bc446cb..4e8b99e7cf66 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -48,10 +48,10 @@ CPU0: cpu@0 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_0: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
++					compatible = "cache";
+ 				};
+ 			};
+ 		};
+@@ -68,8 +68,8 @@ CPU1: cpu@100 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_100: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	iommu->base = devm_ioremap_resource(iommu->dev, r);
--	if (IS_ERR(iommu->base)) {
--		ret = dev_err_probe(iommu->dev, PTR_ERR(iommu->base), "could not get iommu base\n");
--		goto fail;
--	}
-+	if (IS_ERR(iommu->base))
-+		return dev_err_probe(iommu->dev, PTR_ERR(iommu->base),
-+				     "could not get iommu base\n");
- 	ioaddr = r->start;
+@@ -85,8 +85,8 @@ CPU2: cpu@200 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_200: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	iommu->irq = platform_get_irq(pdev, 0);
--	if (iommu->irq < 0) {
--		ret = -ENODEV;
--		goto fail;
--	}
-+	if (iommu->irq < 0)
-+		return -ENODEV;
+@@ -102,8 +102,8 @@ CPU3: cpu@300 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_300: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	ret = of_property_read_u32(iommu->dev->of_node, "qcom,ncb", &val);
--	if (ret) {
--		dev_err(iommu->dev, "could not get ncb\n");
--		goto fail;
--	}
-+	if (ret)
-+		return dev_err_probe(iommu->dev, ret, "could not get ncb\n");
- 	iommu->ncb = val;
+@@ -119,8 +119,8 @@ CPU4: cpu@400 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_400: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	msm_iommu_reset(iommu->base, iommu->ncb);
-@@ -767,8 +749,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
+@@ -136,8 +136,8 @@ CPU5: cpu@500 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_500: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	if (!par) {
- 		pr_err("Invalid PAR value detected\n");
--		ret = -ENODEV;
--		goto fail;
-+		return -ENODEV;
- 	}
+@@ -153,8 +153,8 @@ CPU6: cpu@600 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_600: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	ret = devm_request_threaded_irq(iommu->dev, iommu->irq, NULL,
-@@ -778,7 +759,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
- 					iommu);
- 	if (ret) {
- 		pr_err("Request IRQ %d failed with ret=%d\n", iommu->irq, ret);
--		goto fail;
-+		return ret;
- 	}
+@@ -170,8 +170,8 @@ CPU7: cpu@700 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_700: l2-cache {
+-			      compatible = "cache";
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	list_add(&iommu->dev_node, &qcom_iommu_devices);
-@@ -787,23 +768,19 @@ static int msm_iommu_probe(struct platform_device *pdev)
- 				     "msm-smmu.%pa", &ioaddr);
- 	if (ret) {
- 		pr_err("Could not add msm-smmu at %pa to sysfs\n", &ioaddr);
--		goto fail;
-+		return ret;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 2273fa571988..1a229caad8aa 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -65,8 +65,8 @@ L2_0: l2-cache {
+ 				cache-level = <2>;
+ 				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
+-				      cache-level = <3>;
++					compatible = "cache";
++					cache-level = <3>;
+ 				};
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index ebcb481571c2..ebe59bd7bcc7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -58,12 +58,12 @@ CPU0: cpu@0 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_0: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
+-				      cache-level = <3>;
++					compatible = "cache";
++					cache-level = <3>;
+ 				};
+ 			};
+ 		};
+@@ -80,9 +80,9 @@ CPU1: cpu@100 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_100: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	ret = iommu_device_register(&iommu->iommu, &msm_iommu_ops, &pdev->dev);
- 	if (ret) {
- 		pr_err("Could not register msm-smmu at %pa\n", &ioaddr);
--		goto fail;
-+		return ret;
- 	}
+@@ -98,9 +98,9 @@ CPU2: cpu@200 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_200: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- 	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
- 		iommu->base, iommu->irq, iommu->ncb);
+@@ -116,9 +116,9 @@ CPU3: cpu@300 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_300: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
--	return ret;
--fail:
--	clk_unprepare(iommu->clk);
--	clk_unprepare(iommu->pclk);
--	return ret;
-+	return 0;
- }
+@@ -134,9 +134,9 @@ CPU4: cpu@400 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_400: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
- static const struct of_device_id msm_iommu_dt_match[] = {
-@@ -811,20 +788,11 @@ static const struct of_device_id msm_iommu_dt_match[] = {
- 	{}
- };
+@@ -152,9 +152,9 @@ CPU5: cpu@500 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_500: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
  
--static void msm_iommu_remove(struct platform_device *pdev)
--{
--	struct msm_iommu_dev *iommu = platform_get_drvdata(pdev);
--
--	clk_unprepare(iommu->clk);
--	clk_unprepare(iommu->pclk);
--}
--
- static struct platform_driver msm_iommu_driver = {
- 	.driver = {
- 		.name	= "msm_iommu",
- 		.of_match_table = msm_iommu_dt_match,
- 	},
- 	.probe		= msm_iommu_probe,
--	.remove_new	= msm_iommu_remove,
- };
- builtin_platform_driver(msm_iommu_driver);
+@@ -170,9 +170,9 @@ CPU6: cpu@600 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_600: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -188,9 +188,9 @@ CPU7: cpu@700 {
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+ 			L2_700: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 595533aeafc4..b15b585f3548 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -57,12 +57,12 @@ CPU0: cpu@0 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			L2_0: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 				L3_0: l3-cache {
+-				      compatible = "cache";
+-				      cache-level = <3>;
++					compatible = "cache";
++					cache-level = <3>;
+ 				};
+ 			};
+ 		};
+@@ -79,9 +79,9 @@ CPU1: cpu@100 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			L2_100: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -97,9 +97,9 @@ CPU2: cpu@200 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			L2_200: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -115,9 +115,9 @@ CPU3: cpu@300 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 0>;
+ 			L2_300: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -133,9 +133,9 @@ CPU4: cpu@400 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			L2_400: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -151,9 +151,9 @@ CPU5: cpu@500 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			L2_500: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -169,9 +169,9 @@ CPU6: cpu@600 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 1>;
+ 			L2_600: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
+@@ -187,9 +187,9 @@ CPU7: cpu@700 {
+ 			#cooling-cells = <2>;
+ 			clocks = <&cpufreq_hw 2>;
+ 			L2_700: l2-cache {
+-			      compatible = "cache";
+-			      cache-level = <2>;
+-			      next-level-cache = <&L3_0>;
++				compatible = "cache";
++				cache-level = <2>;
++				next-level-cache = <&L3_0>;
+ 			};
+ 		};
+ 
 -- 
 2.34.1
 
