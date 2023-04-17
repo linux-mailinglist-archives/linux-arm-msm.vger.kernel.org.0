@@ -2,70 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1ED56E516B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 22:12:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C7F6E5175
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 22:12:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbjDQUMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 16:12:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41920 "EHLO
+        id S230254AbjDQUMc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 16:12:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjDQUMU (ORCPT
+        with ESMTP id S230093AbjDQUM0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 16:12:20 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 635EC46AC;
-        Mon, 17 Apr 2023 13:12:19 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id q2so32018798pll.7;
-        Mon, 17 Apr 2023 13:12:19 -0700 (PDT)
+        Mon, 17 Apr 2023 16:12:26 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31DD14C3B;
+        Mon, 17 Apr 2023 13:12:24 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id hg14-20020a17090b300e00b002471efa7a8fso14182168pjb.0;
+        Mon, 17 Apr 2023 13:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681762339; x=1684354339;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=c9ZcH/UsIU/GcQvCDP1QRyb831wl6lpWFQtu8V+MLrA=;
-        b=JLFDGszkk3bWSS4oOn0Z5jXx5pu5tQyCXMtYa7M5wXTMF4vf86At8265QTzScrAoj8
-         +O8gZyxn1daqdjD1dpgIeMzX2XDqD94nLo6iKJN2Knuglbukt5stAF1HMUg79eAdk9qr
-         t1tg3XFRM5FxUHB2R2vbZn+EM1piSSFQWJ3WjLHiDvX4klcR8VdUFmbCHiaO2C8vYQgc
-         jEylp4v/NvZjQCtmeY58poEjl7g2SUbTBjDZSVPmMP7uFif42uNOY8MDBXaqjaWwT2w0
-         uqbKqOH2TXothSMwU5CD0xtVKHrATYvPRWZAP8+in3UhMba9lNuTXbq74R34YlfHbvHL
-         27BA==
+        d=gmail.com; s=20221208; t=1681762343; x=1684354343;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tG6YslYBKkuazr2dWr4ftni9ZweXIehBqMaA0S88C5g=;
+        b=ranf+f0tP4Pb5Lh3n2WP/yUu2QmlnNs1+iNecDfUR5KzPGDF2bZRgZqk1mWXpHnHt5
+         LvjFfEz45tozCyPEEtQjKkO8d/GjRWICY4Hv4JwW6qTQHxWO9CZfLaHGX8p2r4CW9gPn
+         jMzksiwIj2fJfm/8vwU20S8sWgres5UTA5RA7TWq47jF1gyXHpo9quj4zTNbN3BzCa/u
+         opUoVSqp96ZbME/+aQRIHHBrCgoRQ4uAp9Giig/8md+Q4eWVzwdTzUdpfQWjKL0hFWnn
+         Vc3VUfTXzlPtTiL1SdnAxgrtE/Cl2UhuPJaDPjJVqT9V/wnujeoXWsWJHFu7pNrDbT3C
+         VwNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681762339; x=1684354339;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c9ZcH/UsIU/GcQvCDP1QRyb831wl6lpWFQtu8V+MLrA=;
-        b=FJ/cKom59BuSlAm2POQvzno9fieKd2z/7DvI+snGoCApR5Yk9xUW3+73ihVnGlu3J9
-         vaCnTL99HmmVxyJi8kYIzajoF+no+0xD7i2k356Ql4sIvtZBwL3tXBt7v1lJOXyFlzQY
-         3R1OjnrN3pSUcNFzewsW/QkTlPiMbAgqh4Pnr6hVWk1L3Bxwvu8kTGIH3zKLPzgC4L2G
-         NIGzpQhGvikVVttoTY6GCoh88+06qP7JbTTRNTMgdD1Dd5tqKWyJvXRFLMK/UCMsxwId
-         evL/LGy/QRp5KWXk9T+z7PqaJU48aJDVCdYTamTO1G34MP8Qh8qcjBE1pwIGfPUNFqaC
-         kWDQ==
-X-Gm-Message-State: AAQBX9ewgbJ+MuT3zPVcejGrxPjhxP4LdRyjJlB25aG6NWxic5BWUEM2
-        7GcNoSVCg4+kCat0l3g9vw4=
-X-Google-Smtp-Source: AKy350YD7UMGXIJ56E5NzWJ0ernvcLLeIW8Ry6wjCWgcRxvgxJ0fIYk2uFG9KJbQD74pEtwQSbpohQ==
-X-Received: by 2002:a17:902:854b:b0:1a2:9dd8:d646 with SMTP id d11-20020a170902854b00b001a29dd8d646mr75485plo.54.1681762338766;
-        Mon, 17 Apr 2023 13:12:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681762343; x=1684354343;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tG6YslYBKkuazr2dWr4ftni9ZweXIehBqMaA0S88C5g=;
+        b=Z+yJmrZ3ohZiOcr0CS+qokah6ZIqqtoEKieTVdm0C9mwZGRqgFVp2pt3YE3NKyf8+A
+         aWfbh5fAfeUlHaUfe4kgVNjvB1RhLn1o8mvOhfWbE1TxjqMxlLDuk0JIlCJnuHM1AXzE
+         re2o/IZxCmByxWlFJWOisuuKDF3vi96wvl+B/+l9wZ/dDrrbE+/Dn161xNUFPrb/y/cG
+         wIAGi6xFIVnjLycJszRWCPNmksv/6SGV0JV8ja9YiOi88+AMu1JjCa7WEuSxCYSD/6Go
+         ZbuzzbJvrCrse8VsKqy2c4KBh0Gl9Qh0DGo5/pE0w6asc422EMZ+LpZjvuGGOq1eS2VQ
+         zoHA==
+X-Gm-Message-State: AAQBX9c3RCuUUsSZbA43h4nPFN8PewjoZHdXE/ZGwf5uIihVKUGWbMFR
+        oss4zACsgjkAhbP7acZ9+UM=
+X-Google-Smtp-Source: AKy350Z897P0ebUOEGMZ5BJSTsfQqtu+SrNiRCFFaWIYGgI+O1qDjfMdnTtEGHt9vqVAg5JBSzDliQ==
+X-Received: by 2002:a17:902:82c5:b0:1a1:b11d:6af5 with SMTP id u5-20020a17090282c500b001a1b11d6af5mr76812plz.52.1681762343629;
+        Mon, 17 Apr 2023 13:12:23 -0700 (PDT)
 Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id 13-20020a170902c14d00b001a69dfd918dsm6166625plj.187.2023.04.17.13.12.18
+        by smtp.gmail.com with ESMTPSA id u19-20020a170902a61300b001a20b31a23fsm8094636plq.293.2023.04.17.13.12.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 13:12:18 -0700 (PDT)
+        Mon, 17 Apr 2023 13:12:23 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
         Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Akhil P Oommen <quic_akhilpo@quicinc.com>,
         Chia-I Wu <olvaffe@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
-        linux-kernel@vger.kernel.org (open list),
-        Sean Paul <sean@poorly.run>
-Subject: [RFC 0/3] drm: Add comm/cmdline fdinfo fields
-Date:   Mon, 17 Apr 2023 13:12:09 -0700
-Message-Id: <20230417201215.448099-1-robdclark@gmail.com>
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list)
+Subject: [RFC 2/3] drm/msm: Rework get_comm_cmdline() helper
+Date:   Mon, 17 Apr 2023 13:12:11 -0700
+Message-Id: <20230417201215.448099-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230417201215.448099-1-robdclark@gmail.com>
+References: <20230417201215.448099-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,26 +85,141 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-When many of the things using the GPU are processes in a VM guest, the
-actual client process is just a proxy.  The msm driver has a way to let
-the proxy tell the kernel the actual VM client process's executable name
-and command-line, which has until now been used simply for GPU crash
-devcore dumps.  Lets also expose this via fdinfo so that tools can
-expose who the actual user of the GPU is.
+Make it work in terms of ctx so that it can be re-used for fdinfo.
 
-Rob Clark (3):
-  drm/doc: Relax fdinfo string constraints
-  drm/msm: Rework get_comm_cmdline() helper
-  drm/msm: Add comm/cmdline fields
-
- Documentation/gpu/drm-usage-stats.rst   | 37 +++++++++++++++----------
- drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 +--
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++--
  drivers/gpu/drm/msm/msm_drv.c           |  2 ++
- drivers/gpu/drm/msm/msm_gpu.c           | 27 +++++++++++++-----
- drivers/gpu/drm/msm/msm_gpu.h           | 12 ++++++--
+ drivers/gpu/drm/msm/msm_gpu.c           | 13 ++++++-------
+ drivers/gpu/drm/msm/msm_gpu.h           | 12 ++++++++++--
  drivers/gpu/drm/msm/msm_submitqueue.c   |  1 +
- 6 files changed, 58 insertions(+), 25 deletions(-)
+ 5 files changed, 21 insertions(+), 11 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index bb38e728864d..43c4e1fea83f 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -412,7 +412,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		/* Ensure string is null terminated: */
+ 		str[len] = '\0';
+ 
+-		mutex_lock(&gpu->lock);
++		mutex_lock(&ctx->lock);
+ 
+ 		if (param == MSM_PARAM_COMM) {
+ 			paramp = &ctx->comm;
+@@ -423,7 +423,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		kfree(*paramp);
+ 		*paramp = str;
+ 
+-		mutex_unlock(&gpu->lock);
++		mutex_unlock(&ctx->lock);
+ 
+ 		return 0;
+ 	}
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 3d73b98d6a9c..ca0e89e46e13 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -581,6 +581,8 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
+ 	rwlock_init(&ctx->queuelock);
+ 
+ 	kref_init(&ctx->ref);
++	ctx->pid = get_pid(task_pid(current));
++	mutex_init(&ctx->lock);
+ 	msm_submitqueue_init(dev, ctx);
+ 
+ 	ctx->aspace = msm_gpu_create_private_address_space(priv->gpu, current);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index c403912d13ab..f0f4f845c32d 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -327,18 +327,17 @@ find_submit(struct msm_ringbuffer *ring, uint32_t fence)
+ 
+ static void retire_submits(struct msm_gpu *gpu);
+ 
+-static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
++static void get_comm_cmdline(struct msm_file_private *ctx, char **comm, char **cmd)
+ {
+-	struct msm_file_private *ctx = submit->queue->ctx;
+ 	struct task_struct *task;
+ 
+-	WARN_ON(!mutex_is_locked(&submit->gpu->lock));
+-
+ 	/* Note that kstrdup will return NULL if argument is NULL: */
++	mutex_lock(&ctx->lock);
+ 	*comm = kstrdup(ctx->comm, GFP_KERNEL);
+ 	*cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
++	mutex_unlock(&ctx->lock);
+ 
+-	task = get_pid_task(submit->pid, PIDTYPE_PID);
++	task = get_pid_task(ctx->pid, PIDTYPE_PID);
+ 	if (!task)
+ 		return;
+ 
+@@ -372,7 +371,7 @@ static void recover_worker(struct kthread_work *work)
+ 		if (submit->aspace)
+ 			submit->aspace->faults++;
+ 
+-		get_comm_cmdline(submit, &comm, &cmd);
++		get_comm_cmdline(submit->queue->ctx, &comm, &cmd);
+ 
+ 		if (comm && cmd) {
+ 			DRM_DEV_ERROR(dev->dev, "%s: offending task: %s (%s)\n",
+@@ -460,7 +459,7 @@ static void fault_worker(struct kthread_work *work)
+ 		goto resume_smmu;
+ 
+ 	if (submit) {
+-		get_comm_cmdline(submit, &comm, &cmd);
++		get_comm_cmdline(submit->queue->ctx, &comm, &cmd);
+ 
+ 		/*
+ 		 * When we get GPU iova faults, we can get 1000s of them,
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 7a4fa1b8655b..b2023a42116b 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -377,17 +377,25 @@ struct msm_file_private {
+ 	 */
+ 	int sysprof;
+ 
++	/** @pid: Process that opened this file. */
++	struct pid *pid;
++
++	/**
++	 * lock: Protects comm and cmdline
++	 */
++	struct mutex lock;
++
+ 	/**
+ 	 * comm: Overridden task comm, see MSM_PARAM_COMM
+ 	 *
+-	 * Accessed under msm_gpu::lock
++	 * Accessed under msm_file_private::lock
+ 	 */
+ 	char *comm;
+ 
+ 	/**
+ 	 * cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE
+ 	 *
+-	 * Accessed under msm_gpu::lock
++	 * Accessed under msm_file_private::lock
+ 	 */
+ 	char *cmdline;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
+index 0e803125a325..0444ba04fa06 100644
+--- a/drivers/gpu/drm/msm/msm_submitqueue.c
++++ b/drivers/gpu/drm/msm/msm_submitqueue.c
+@@ -61,6 +61,7 @@ void __msm_file_private_destroy(struct kref *kref)
+ 	}
+ 
+ 	msm_gem_address_space_put(ctx->aspace);
++	put_pid(ctx->pid);
+ 	kfree(ctx->comm);
+ 	kfree(ctx->cmdline);
+ 	kfree(ctx);
 -- 
 2.39.2
 
