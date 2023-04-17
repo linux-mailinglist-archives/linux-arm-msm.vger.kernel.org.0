@@ -2,220 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4D026E412F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 09:37:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40F566E4136
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 09:37:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbjDQHhL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 03:37:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51654 "EHLO
+        id S231150AbjDQHhV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 03:37:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230218AbjDQHgm (ORCPT
+        with ESMTP id S229915AbjDQHhH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 03:36:42 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDAF449CC;
-        Mon, 17 Apr 2023 00:35:20 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (133-32-181-51.west.xps.vectant.ne.jp [133.32.181.51])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 10E72DE6;
-        Mon, 17 Apr 2023 09:35:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1681716911;
-        bh=+nNnkWr6Y0n06KrbbCtAOSHIusgnvBhnkukVuDNhkEc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NbcvuQnyQJAGVrRDp382kWJkH39Ilus9pmqcciT6N67Pdpgd9FeFZlZZ9XsqwFkHA
-         Hzp4QDnGHlkDQGFg8p4k3P9nhygT8DNN9tzAcFlOgEHnSZXwgRJBNMHh4MaQ2gyksv
-         vBVHMMH+GTSQftGIrThbwBm2FcmUTup6+MKy2H7I=
-Date:   Mon, 17 Apr 2023 10:35:27 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Heiko Stuebner <heiko@sntech.de>,
-        Eddie James <eajames@linux.ibm.com>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, Robert Foss <rfoss@kernel.org>,
-        Dafna Hirschfeld <dafna@fastmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Michal Simek <michal.simek@xilinx.com>,
-        Antti Palosaari <crope@iki.fi>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        linux-sunxi@lists.linux.dev, ye xingchen <ye.xingchen@zte.com.cn>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>,
-        Eugen Hristev <eugen.hristev@collabora.com>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Hyun Kwon <hyun.kwon@xilinx.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Michael Tretter <m.tretter@pengutronix.de>,
-        Moudy Ho <moudy.ho@mediatek.com>, kernel@pengutronix.de,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Ming Qian <ming.qian@nxp.com>,
-        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Sylwester Nawrocki <s.nawrocki@samsung.com>,
-        linux-aspeed@lists.ozlabs.org,
-        Yunfei Dong <yunfei.dong@mediatek.com>,
-        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        chrome-platform@lists.linux.dev,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-rockchip@lists.infradead.org,
-        Fabien Dessenne <fabien.dessenne@foss.st.com>,
-        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
-        Colin Ian King <colin.i.king@gmail.com>,
-        linux-media@vger.kernel.org, Jacopo Mondi <jacopo@jmondi.org>,
-        Rory Liu <hellojacky0226@hotmail.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org, Sean Wang <sean.wang@mediatek.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Zhou Peng <eagle.zhou@nxp.com>,
-        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-        Dan Carpenter <error27@gmail.com>, Sean Young <sean@mess.org>,
-        Xavier Roumegue <xavier.roumegue@oss.nxp.com>,
-        Ettore Chimenti <ek5.chimenti@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        linux-tegra@vger.kernel.org,
-        Eduardo Valentin <edubezval@gmail.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Kieran Bingham <kieran.bingham@ideasonboard.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jacob Chen <jacob-chen@iotwrt.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Yang Yingliang <yangyingliang@huawei.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Bin Liu <bin.liu@mediatek.com>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Benson Leung <bleung@chromium.org>,
-        "Daniel W. S. Almeida" <dwlsalmeida@gmail.com>,
-        Qiheng Lin <linqiheng@huawei.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-        Yang Li <yang.lee@linux.alibaba.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Ricardo Ribalda <ribalda@chromium.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
-        Daniel Almeida <daniel.almeida@collabora.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mirela Rabulea <mirela.rabulea@nxp.com>,
-        Ajye Huang <ajye_huang@compal.corp-partner.google.com>,
-        Scott Chao <scott_chao@wistron.corp-partner.google.com>,
-        linux-renesas-soc@vger.kernel.org,
-        Hugues Fruchet <hugues.fruchet@foss.st.com>,
-        openbmc@lists.ozlabs.org, Andy Gross <agross@kernel.org>,
-        Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Benoit Parrot <bparrot@ti.com>,
-        Rui Miguel Silva <rmfrfs@gmail.com>,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        Yong Deng <yong.deng@magewell.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Tiffany Lin <tiffany.lin@mediatek.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Houlong Wei <houlong.wei@mediatek.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>
-Subject: Re: [PATCH 000/117] media: Convert to platform remove callback
- returning void
-Message-ID: <20230417073527.GE28551@pendragon.ideasonboard.com>
-References: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
- <20230417060203.le3izz56wt73si6k@pengutronix.de>
- <20230417061928.GD28551@pendragon.ideasonboard.com>
- <20230417073049.2b5b35hpjrjcrlge@pengutronix.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230417073049.2b5b35hpjrjcrlge@pengutronix.de>
+        Mon, 17 Apr 2023 03:37:07 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05D64C1A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:35:54 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id q23so52156033ejz.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:35:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1681716953; x=1684308953;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5XFC/9mvzx/O4+6lgw0WJn0uaQEYjzkPhtZfQPhydig=;
+        b=HUNbhNW99JActqnQxEFBW8XSlaWGg0MbaAp51GqNl/iqZW/orFbEQDWGJd7LnYcD2G
+         enTyvjpxSqOlLy+rHMoYWBYvMAyfQX7p0p3U2O2YlCrXy6u7plHWmfQMqziDmMLpOM7H
+         PhewcKOa9xsP5vLUXqrKWw1hiVSVQSSG6f4okIbN7Frmr+drvDGi4L45g+XTK/wS46Zr
+         k4z1P9XZhwDM8jNRuriP6wqOXNdPVCiKrysYQQ3vvZRCak+E7z5BkJmAwlIfNY+H9Dds
+         h6gS7t735ef1m5k9e47nDQWr/8PjxutS/LcGnBVYGrdXYQiRuYw0OI8Z3zKwuCNx6fq8
+         HwAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681716953; x=1684308953;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5XFC/9mvzx/O4+6lgw0WJn0uaQEYjzkPhtZfQPhydig=;
+        b=eJUohhdnyYxxxz0vz7MfkrSMS0l6tdxoDVaqXwH1B6i3dd+XcCFaKTnBNSdFY2O6S9
+         06KB0ZvalDLH2ucs3vrTsSOPtCeQaiYt3jlU2CZUn9tlZtERSy7pYYbujYmsxkrH4twr
+         0FnrHbl2JYlKJxbsZfQ63mY/L7sAVQU0QhaxCJ5zmG3riAYGjhqEufGK+Whk/CmJh3VN
+         ezJqsRrpLQjbdMZHUhoEILOAJYqLuMtEkG8E4BtHHheVhTHIoK340q9ed97wGw6d8MOW
+         HzbxETQpQQ+lHh8ufjOj57G6eMDAh0AkLUw0GXzE1m6lOM2GtLYCgps+DjpAR+Ab+Fi8
+         pbjw==
+X-Gm-Message-State: AAQBX9fgXWiiPGFgQLSYUgIOD+vZpaqNOk6X4lRi+0NMgA9oEPKx2eVP
+        X2EVEw6YH+Seb3hYgvj1uOAxSIfYuYUs2ptNKfuD0k2M
+X-Google-Smtp-Source: AKy350aiszsdDZQNPNMwuj0S2OGQCXnyOKHKInK77illrwKv5Zv4EoM9X2+pYLi40BANUGtxEvocIQ==
+X-Received: by 2002:a17:906:70d1:b0:94e:e859:8721 with SMTP id g17-20020a17090670d100b0094ee8598721mr7788806ejk.22.1681716953131;
+        Mon, 17 Apr 2023 00:35:53 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id be5-20020a1709070a4500b0094f282fc29asm2973857ejc.207.2023.04.17.00.35.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Apr 2023 00:35:52 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 17 Apr 2023 09:35:52 +0200
+Message-Id: <CRYUWMIJDSB2.BJWEPJEA3Y1D@otso>
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        <linux@roeck-us.net>, <heikki.krogerus@linux.intel.com>,
+        <gregkh@linuxfoundation.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+Cc:     <caleb.connolly@linaro.org>, <konrad.dybcio@linaro.org>,
+        <subbaram@quicinc.com>, <jackp@quicinc.com>,
+        <robertom@qti.qualcomm.com>
+Subject: Re: [PATCH v5 00/14] Add Qualcomm PMIC TPCM support
+X-Mailer: aerc 0.14.0
+References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
+ <CRVOZOPMKBX4.2T7FOCWF0RKBJ@otso>
+ <10551f5e-4516-c0cc-0b04-73aa38f80a2c@linaro.org>
+ <CRWA2OP2T6KT.RCWAVWF5Q2T2@otso>
+ <ccc9fa4c-ca52-d8f3-a8b3-45031bea673f@linaro.org>
+In-Reply-To: <ccc9fa4c-ca52-d8f3-a8b3-45031bea673f@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 17, 2023 at 09:30:49AM +0200, Uwe Kleine-König wrote:
-> Hello Laurent,
-> 
-> On Mon, Apr 17, 2023 at 09:19:28AM +0300, Laurent Pinchart wrote:
-> > On Mon, Apr 17, 2023 at 08:02:03AM +0200, Uwe Kleine-König wrote:
-> > > On Sun, Mar 26, 2023 at 04:30:25PM +0200, Uwe Kleine-König wrote:
-> > > > Hello,
-> > > > 
-> > > > this series adapts the platform drivers below drivers/pci to use the
-> > > 
-> > > copy&paste failure here: s/pci/media/ of course.
-> > > 
-> > > > .remove_new() callback. Compared to the traditional .remove() callback
-> > > > .remove_new() returns no value. This is a good thing because the driver core
-> > > > doesn't (and cannot) cope for errors during remove. The only effect of a
-> > > > non-zero return value in .remove() is that the driver core emits a warning. The
-> > > > device is removed anyhow and an early return from .remove() usually yields a
-> > > > resource leak.
-> > > > 
-> > > > By changing the remove callback to return void driver authors cannot
-> > > > reasonably assume any more that there is some kind of cleanup later.
-> > > > 
-> > > > Only three drivers needed some preparation first to make sure they
-> > > > return 0 unconditionally in their remove callback. Then all drivers
-> > > > could be trivially converted without side effects to .remove_new().
-> > > > 
-> > > > The changes to the individual drivers are all orthogonal. If I need to
-> > > > resend some patches because of some review feedback, I'd like to only
-> > > > send the patches that actually needed changes, so please pick up the
-> > > > remaining patches that don't need changing to reduce the amount of mail.
-> > > 
-> > > I didn't hear anything back about application of this series. Is there a
-> > > blocker somewhere?
-> > 
-> > I think the series got applied to the master branch of
-> > git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git.
-> > It should thus appear in v6.4.
-> 
-> I guess that linux-stable.git is a copy&paste failure (and it's not
-> there). I don't see the series in the master branch of
-> git://linuxtv.org/media_tree.git either.
+On Mon Apr 17, 2023 at 2:30 AM CEST, Bryan O'Donoghue wrote:
+> On 14/04/2023 07:51, Luca Weiss wrote:
+> > I see "reverse" and "normal" depending on the direction the USB stick i=
+s
+> > plugged in. When unplugged but also when plugged into my PC it stays at
+> > "unknown".
+>
+> Right so, this is down to bad behavior on the PHY patch, which is=20
+> resolved for me on sm8250 with the below.
+>
+> Basically when you unplug a device you would transition back to=20
+> "TYPEC_ORIENTATION_NONE" but that would turn off the PHY, which is obs=20
+> not very useful if you want to subsequently be a gadget.
+>
+> Anyway thanks for testing this - I'd missed the=20
+> host->device->host->device ping-pong breakage.
 
-Oops sorry. It was a copy & paste mistake indeed, I meant
+Hm, unfortunately no improvement with this on my side.. No USB
+connection pops up on the host, or USB messages regarding the USB stick
+on the device.
 
-git://linuxtv.org/media_stage.git
+Do you have an idea in which part of the code to start debugging this?
+Since orientation detection is working is it maybe in the phy code and
+not in the tcpm driver? Or does that also touch crucial stuff for USB
+apart from telling phy which direction to use?
 
-> .. a bit later ...
-> 
-> ah, it's in git://linuxtv.org/mchehab/media-next.git
-> 
-> I guess I was just to quick and probably the series will be included in
-> today's next.
+Regards
+Luca
 
--- 
-Regards,
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c=20
+> b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index b9a30c087423d..edb788a71edeb 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -3372,12 +3372,13 @@ static int qmp_combo_typec_switch_set(struct=20
+> typec_switch_dev *sw,
+>
+>          qmp->orientation =3D orientation;
+>
+> -       if (orientation =3D=3D TYPEC_ORIENTATION_NONE) {
+> -               if (qmp->init_count)
+> -                       ret =3D qmp_combo_dp_power_off(dp_phy);
+> -       } else {
+> -               if (!qmp->init_count)
+> -                       ret =3D qmp_combo_dp_power_on(dp_phy);
+> +       if (orientation !=3D TYPEC_ORIENTATION_NONE) {
+> +               ret =3D qmp_combo_dp_power_off(dp_phy);
+> +               if (ret)
+> +                       return ret;
+> +               ret =3D qmp_combo_dp_power_on(dp_phy);
+> +               if (ret)
+> +                       return ret;
+>          }
+>
+> ---
+> bod
 
-Laurent Pinchart
