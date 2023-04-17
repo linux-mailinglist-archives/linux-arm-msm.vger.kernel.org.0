@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 343246E40FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 09:30:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B48106E4109
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 09:31:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbjDQHa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 03:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43140 "EHLO
+        id S230458AbjDQHb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 03:31:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231165AbjDQHab (ORCPT
+        with ESMTP id S230347AbjDQHau (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 03:30:31 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B0A949DD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:30:13 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2a8b766322bso11234681fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:30:13 -0700 (PDT)
+        Mon, 17 Apr 2023 03:30:50 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8A224EC2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:30:25 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4ec8149907aso1187461e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:30:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681716611; x=1684308611;
+        d=linaro.org; s=google; t=1681716624; x=1684308624;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hJGSEGyAxLVNBMh89b1AYon9jCfD8byXBW9p5ZuA3DE=;
-        b=lvKIcQJ3fDq45vKThmcwBygiJg/Wg8v6mb+fbuMs/rFtAr6JNedhMYHISA1Ge9Dggq
-         2WtcWH5HjxD/fV8Lht3LYBSGiQzIBlYJafSvT+ditI9i9vHKhQ2YBDGY/mHBpaBgd8N2
-         DXWC/mS+h7l12mdaJcPMitP99CtSKydznWyid5Hx/txFBi+2oqp7w5zWwMb8DTkX6KD0
-         fKMTtLhcQyu9mew77tyPbgEnFqNxCXKD5xvoEwyJvgl1ao21xPHQr2CQItfjsekoDUGb
-         /8vR8KV1pamc7/3ZbCTVIlTscv8DFnc5hITWSl8OLhvpLk+yTFu4QGrd2eg2RdIqUlCz
-         kyGQ==
+        bh=/w3KNIf6Lo6ERSRg71uJEB0w+Ck4o2XMQvRHvyp6BrA=;
+        b=WBS+W96hChuHW4d4MC5bEu+d18ewZBvBnzN7b1qs1+mctkxcuBNa0/gOaLuUiyOSgY
+         jQ772P5Idu0hn+Ohxp4VAnMQ2hwSK+/toLxR5wXmkTOv75sQ0scnah7Moa8wNyKZXnkW
+         WmFP4nOz7Qe/umjGKxro90GZO4xq+4UR3sFLPHZ0rU1AhuQqFQw08yFrfVeK7CeSlXMd
+         lHzKcZe9un9uc7QaR7fHfZANEfL87KJt+j7VbaR0hsevZzFaI87cn8k2KKB6WUhdoLZs
+         Ka/9lxgfolVYAtqMSBSoq/YQLYvbkNwLm2atlurZ9y8XxcV3fFGGc3Hw7GR1b+/MEZcu
+         UR8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681716611; x=1684308611;
+        d=1e100.net; s=20221208; t=1681716624; x=1684308624;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hJGSEGyAxLVNBMh89b1AYon9jCfD8byXBW9p5ZuA3DE=;
-        b=CBt+4lBBO9Hpq+5ct+Wzn/Ie7WWkU2ytf1i4fZNpRX8+6vXkahKdQbmgFtI4QGz7p/
-         w5BA8zC6A37J1i2pjGL8CbbuL+cN2HP7MPO4oEPyWHQTeprudKhNcWB/UjpjNwus1s8C
-         45ed6hgav+8W1PleO47L85ruDOAIOf2zUdTMm9WQUAzv9PCk+2LUQvCsb4avyGWqAXuF
-         w6NJ2ZyGAXJiaujoesKlB17Wim1RW8nJW+YjUJad0AuZKDs+E4t7kEq2sMkNUQoFS6Iy
-         U4nPps1ovJyPe1jgJ3ivF8+aknrIlbXNkPFjBpOJGb6YVh6oqQ6sdf0RjRhJaU4HqK2G
-         lPXQ==
-X-Gm-Message-State: AAQBX9cKB0JvcUl/wvfoq6tprbGaEiE3ZkTGCHN3t1fGFOMOgU08jvlr
-        EMujIKK1is49f/jWfnl06njBNaPw5UjWr6Bet10=
-X-Google-Smtp-Source: AKy350Yw3WN/7EnvWfYyzc9vMy/bpGmN20O1vEyall5Woa6tofcjfeqA7RzKUpuoW/wr0p6Pd34VHw==
-X-Received: by 2002:ac2:4d06:0:b0:4ec:a9c1:27de with SMTP id r6-20020ac24d06000000b004eca9c127demr1716220lfi.18.1681716611566;
-        Mon, 17 Apr 2023 00:30:11 -0700 (PDT)
+        bh=/w3KNIf6Lo6ERSRg71uJEB0w+Ck4o2XMQvRHvyp6BrA=;
+        b=KWmp7BmFs/RsGpu7+jC0qgrNZAzu2Y7ct2pf7W8IQ+DviTMJdVF5+9LTTCJvH7UQqn
+         aRtgK9MomUEWfyNWexFVvkQVy0NILnVDAq13SKCDXct+lpBtl5bQ7RRMoitU5Hm0aqSy
+         eCW8hZKGwvJI8j7tID326aCMGWN1G7a2hPh0/RrwgwSsqMGxVYw/SjBKgO2ErZgpEipR
+         3l2/2vnKL39qav2Ffq9NOJBU67zuVBAfP5FXQYA70FWtybkUQc+NXR6ylxRWF7I88gXq
+         9E22nFRbtrtsXg/YO98GIcb5PiP3IWtlXbd89/C/k4WHgTFS2Vc8Vbvfsn+fYPxxg9/Y
+         LaNg==
+X-Gm-Message-State: AAQBX9eO/8kPXBn5PFncmjGYojm2SiiyumS85Of26s38O6HjK8kasmyu
+        /s1Yg4uizBLkbERr5RZOhX1lG2NPSwTU+wrTejo=
+X-Google-Smtp-Source: AKy350Z6xTd5N42EcWS5IPO0ZqpEtUct7pZCuVOphlZv0eZZfwcizIfdRAZOXioBpzEhrMI2jOS1kw==
+X-Received: by 2002:ac2:560e:0:b0:4cc:5e3a:dd82 with SMTP id v14-20020ac2560e000000b004cc5e3add82mr1524305lfd.58.1681716624181;
+        Mon, 17 Apr 2023 00:30:24 -0700 (PDT)
 Received: from [192.168.1.101] (abyk99.neoplus.adsl.tpnet.pl. [83.9.30.99])
-        by smtp.gmail.com with ESMTPSA id v12-20020ac2560c000000b004ddaea30ba6sm1944499lfd.235.2023.04.17.00.30.10
+        by smtp.gmail.com with ESMTPSA id m3-20020ac24243000000b004db3e7dfb8csm1962931lfl.189.2023.04.17.00.30.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 00:30:11 -0700 (PDT)
-Message-ID: <9b26cfd1-977c-e7cd-2e9c-31b865bb1303@linaro.org>
-Date:   Mon, 17 Apr 2023 09:30:10 +0200
+        Mon, 17 Apr 2023 00:30:23 -0700 (PDT)
+Message-ID: <f2ecffe7-9a43-4a77-7721-14c59f2931e6@linaro.org>
+Date:   Mon, 17 Apr 2023 09:30:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: qdu1000: add missing qcom,smmu-500
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: sm8250: add missing qcom,smmu-500
  fallback
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -66,14 +66,14 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230416123730.300863-1-krzysztof.kozlowski@linaro.org>
- <20230416123730.300863-3-krzysztof.kozlowski@linaro.org>
+ <20230416123730.300863-4-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230416123730.300863-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230416123730.300863-4-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,27 +88,28 @@ On 16.04.2023 14:37, Krzysztof Kozlowski wrote:
 > qcom,smmu-500 bindings") the SMMU is supposed to use qcom,smmu-500
 > compatible fallback:
 > 
->   ['qcom,qdu1000-smmu-500', 'arm,mmu-500'] is too short
->   ['qcom,qdu1000-smmu-500', 'arm,mmu-500'] is too long
+>   ['qcom,sm8250-smmu-500', 'qcom,adreno-smmu', 'qcom,smmu-500', 'arm,mmu-500'] is too long
+>   'qcom,sm8250-smmu-500' is not one of ['qcom,msm8996-smmu-v2', 'qcom,msm8998-smmu-v2', 'qcom,sdm630-smmu-v2']
+>   'qcom,sm8250-smmu-500' is not one of ['qcom,msm8996-smmu-v2', 'qcom,sc7180-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sdm845-smmu-v2'
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 2 +-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> index fb553f0bb17a..ddc3239478ae 100644
-> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> @@ -1113,7 +1113,7 @@ qup_spi15_cs: qup-spi15-cs-state {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index 7bea916900e2..778fbec9a554 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -5254,7 +5254,7 @@ wake-pins {
 >  		};
 >  
 >  		apps_smmu: iommu@15000000 {
-> -			compatible = "qcom,qdu1000-smmu-500", "arm,mmu-500";
-> +			compatible = "qcom,qdu1000-smmu-500", "qcom,smmu-500", "arm,mmu-500";
->  			reg = <0x0 0x15000000 0x0 0x100000>;
+> -			compatible = "qcom,sm8250-smmu-500", "arm,mmu-500";
+> +			compatible = "qcom,sm8250-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+>  			reg = <0 0x15000000 0 0x100000>;
 >  			#iommu-cells = <2>;
 >  			#global-interrupts = <2>;
