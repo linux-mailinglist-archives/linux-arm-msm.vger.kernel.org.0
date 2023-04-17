@@ -2,119 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B046D6E4284
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 10:23:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B91A6E42AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 10:35:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231175AbjDQIXr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 04:23:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40932 "EHLO
+        id S230484AbjDQIfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 04:35:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230375AbjDQIXm (ORCPT
+        with ESMTP id S230461AbjDQIfW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 04:23:42 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5797A55A7;
-        Mon, 17 Apr 2023 01:23:09 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33H41abM021159;
-        Mon, 17 Apr 2023 08:23:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=MmOOZa0wwQbtadZSrZGHPeffz7xcdPREluDFNCb9zi0=;
- b=Se5TCw1cn859lBYtx7gnNSR5Zd3a3s6Okqx/uAF2MNV/tZEQ8BIAP0iHrx+SvYfpnXm7
- IsuTJNgLxQtlFcayApZwIGIq/pDegVQK8FRV/4Eo/tvKN/GlkTHY5jwPbFMEUw3Lu7Xk
- qFN3wAtaQ7tgftplVeAXUlOe1y/aV7aJgb10i/bvH/Xgui64NTr5Lt0XsO8yK9kUK239
- dv1ltrO+IbjDxJRZTuDvSgT2IXlucF07kB6BW4iNeEfc1QHIJh77h37rLv4lG7SGcpn1
- 8+bsWgOnagy+Qbcd5SYFSg/qaia7iLX2Bwndg8nFrC6w0AURjvOKGJUwAhx9EfDkELlT 2w== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pymqmtx97-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 08:23:06 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33H8N5Wr024522
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 08:23:05 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 17 Apr 2023 01:23:01 -0700
-From:   Taniya Das <quic_tdas@quicinc.com>
-To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
-CC:     <dmitry.baryshkov@linaro.org>, <quic_skakitap@quicinc.com>,
-        <quic_jkona@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
-Subject: [PATCH V2 3/3] arm64: dts: qcom: sm8450: Add video clock controller
-Date:   Mon, 17 Apr 2023 13:51:27 +0530
-Message-ID: <20230417082127.11681-4-quic_tdas@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230417082127.11681-1-quic_tdas@quicinc.com>
-References: <20230417082127.11681-1-quic_tdas@quicinc.com>
+        Mon, 17 Apr 2023 04:35:22 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274804ECA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 01:35:18 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id u3so10014455ejj.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 01:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681720516; x=1684312516;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jOi5tK+OGPHQm6htXDR5U68ZReexAHOUaRN7I2oGD8k=;
+        b=E0Kx67cEiCPHehDco2mDIZiGpabs3Max5Ma2CbbdHaWB96ceYQ1K/8mgvvo/7kcHAo
+         SSsrNC5jnbLrZmpLWHwkNAfhTvLXXvzpxNeq96arEQdhR+eD60oiCFLJwSdXn/2IWgeC
+         dBWUt4VvJykpacVnAGF2I/XVGDdMRYiSiVEN8esTohYaDuZsDoFQWFVGvmiClr9EW0hR
+         UAloZtt0Zo011j9XU+db0bGxji3glFLyK/sn3shpOHMP4GkqvmntN92zixnqxgTxiHtm
+         WZvzp3oo+blot76VZLHKcVGGRz9XTkLKIYK74jWioPtqPrua4y1+ZP6ep+NwiUj3hLh9
+         Hp8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681720516; x=1684312516;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jOi5tK+OGPHQm6htXDR5U68ZReexAHOUaRN7I2oGD8k=;
+        b=glih94D2oqgXemChj6UkrwlaTrzN8eI1EeVpbmvqs4XAefc2vYrd5t3rgbUbz8cB/W
+         4j0t5mmou0mz1Ddbe+/MDpb6dlpmFBxi/vMund0aRwbxvmI+yIWA6Q7Bnf9syGQKr8kx
+         D5TeVab+ASHBDdHFeW69PsQ98AtSVvzYv0f0P80x7RzK6Bi+VYfV/GvZlOB8oLpNWrjl
+         MUc0uErTlJwF4pKgcc4mkMHc9FDfCTe9e6mLuKX5PXJSLZCdcPBoEHQuootMt9PZEOOu
+         MyNdJ4ztkMGNynngnymToAQovRuBDfo34aZtFCDeQkigGXDcsKKItAaRxvJDwtrdOZd0
+         eQiQ==
+X-Gm-Message-State: AAQBX9dhaWpL6ipgy+YkEhpVAriUP+lLyZVQXn2aI/QozYi4P57FszHN
+        5hudG5JyI9E5fuWPxZPSR2y+qg==
+X-Google-Smtp-Source: AKy350YoaaDUDxlz8DqeHMiEL4jmIMDW5roQccOUuiMRDsiw6Rk8TxI/S7fcJSHDG0KUlsI2rAIyJw==
+X-Received: by 2002:a17:906:8604:b0:94e:f176:43cc with SMTP id o4-20020a170906860400b0094ef17643ccmr6987784ejx.39.1681720516598;
+        Mon, 17 Apr 2023 01:35:16 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:b0ac:4d3b:966c:b33d? ([2a02:810d:15c0:828:b0ac:4d3b:966c:b33d])
+        by smtp.gmail.com with ESMTPSA id y15-20020a170906524f00b0094e1026bc66sm6393487ejm.140.2023.04.17.01.35.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Apr 2023 01:35:16 -0700 (PDT)
+Message-ID: <1632bd15-c9b6-4bb8-13b2-d0c4b068315c@linaro.org>
+Date:   Mon, 17 Apr 2023 10:35:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EusM-uAA01ZUD0GxnyKM5v2RCpRIf9-l
-X-Proofpoint-ORIG-GUID: EusM-uAA01ZUD0GxnyKM5v2RCpRIf9-l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-17_04,2023-04-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 phishscore=0 spamscore=0 bulkscore=0
- mlxlogscore=860 adultscore=1 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2304170074
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 03/18] dt-bindings: interrupt-controller: qcom-pdc: add
+ compatible for sa8775p
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+References: <20230327125316.210812-1-brgl@bgdev.pl>
+ <20230327125316.210812-4-brgl@bgdev.pl>
+ <CAMRc=Mfe6gCM=Mz6Can6xsSsrjX-9T_aR2Yev+b57koky_az-A@mail.gmail.com>
+ <CAMRc=Mfw+4Co8JPz51_E+DSawijO8EB6rMmFXEmM0e5F3Fg_8A@mail.gmail.com>
+ <3877cb9e-9647-0acf-f705-d34fe2c731ff@linaro.org>
+ <CAMRc=MeT4VLiLu5DJSXHqDdZv2gEoC-B7aPvoXVpc3SokQcrFg@mail.gmail.com>
+ <b46028dc-b539-384c-78aa-2f5e6f6516f2@linaro.org>
+In-Reply-To: <b46028dc-b539-384c-78aa-2f5e6f6516f2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for video clock controller on Qualcomm SM8450 platform.
+On 17/04/2023 09:55, Krzysztof Kozlowski wrote:
+> On 17/04/2023 09:27, Bartosz Golaszewski wrote:
+>> On Sun, Apr 16, 2023 at 5:04 PM Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>> On 14/04/2023 11:33, Bartosz Golaszewski wrote:
+>>>> On Thu, Apr 6, 2023 at 4:10 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>>>
+>>>>> On Mon, Mar 27, 2023 at 2:53 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>>>>
+>>>>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>>>>
+>>>>>> Add a compatible for the Power Domain Controller on SA8775p platforms.
+>>>>>> Increase the number of PDC pin mappings.
+>>>>>>
+>>>>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>>>> Cc: Thomas Gleixner <tglx@linutronix.de>
+>>>>>> Cc: Marc Zyngier <maz@kernel.org>
+>>>>>> ---
+>>>>>>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml     | 3 ++-
+>>>>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>>>>> index 94791e261c42..641ff32e4a6c 100644
+>>>>>> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>>>>> @@ -26,6 +26,7 @@ properties:
+>>>>>>    compatible:
+>>>>>>      items:
+>>>>>>        - enum:
+>>>>>> +          - qcom,sa8775p-pdc
+>>>>>>            - qcom,sc7180-pdc
+>>>>>>            - qcom,sc7280-pdc
+>>>>>>            - qcom,sc8280xp-pdc
+>>>>>> @@ -53,7 +54,7 @@ properties:
+>>>>>>    qcom,pdc-ranges:
+>>>>>>      $ref: /schemas/types.yaml#/definitions/uint32-matrix
+>>>>>>      minItems: 1
+>>>>>> -    maxItems: 32 # no hard limit
+>>>>>> +    maxItems: 38 # no hard limit
+>>>
+>>> I don't think the limit is correct. I still see warnings with this
+>>> patch. We already have 57 elements, so limit should be I guess 128 or
+>>> something.
+>>>
+>>
+>> You mean for other platforms? This limit applies to sa8775p as the
+> 
+> I see errors on sa8775p.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
-Changes since V1:
- - No changes.
+OK, so as you pointed out it's about other platform - sa8540p-ride.
+Anyway you update now this line to bump the limit, so bump it to
+something high instead of changing it in two patches.
 
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 31877f18dce2..863a39000630 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -760,6 +760,19 @@ gcc: clock-controller@100000 {
- 				      "usb3_phy_wrapper_gcc_usb30_pipe_clk";
- 		};
- 
-+		videocc: clock-controller@aaf0000 {
-+			compatible = "qcom,sm8450-videocc";
-+			reg = <0 0x0aaf0000 0 0x10000>;
-+			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "bi_tcxo", "iface";
-+			power-domains = <&rpmhpd SM8450_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		gpi_dma2: dma-controller@800000 {
- 			compatible = "qcom,sm8450-gpi-dma", "qcom,sm6350-gpi-dma";
- 			#dma-cells = <3>;
--- 
-2.25.1
+Best regards,
+Krzysztof
 
