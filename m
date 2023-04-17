@@ -2,194 +2,449 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ACB36E4D4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 17:31:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DFF76E4D76
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 17:42:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231364AbjDQPbr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 11:31:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57282 "EHLO
+        id S231330AbjDQPmR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 11:42:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231196AbjDQPbl (ORCPT
+        with ESMTP id S231314AbjDQPmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 11:31:41 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB741C150
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 08:31:07 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2a8baeac4d1so12278301fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 08:31:07 -0700 (PDT)
+        Mon, 17 Apr 2023 11:42:13 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE0AE270F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 08:42:10 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-2fbb99cb2b4so205920f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 08:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681745431; x=1684337431;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lcxH0mNsQVfDuHuH7DyMK38UqQVq7f3xMxzQMn5dBWA=;
-        b=gnQ5ymplkK5b7sYMnqpxw4yJ9NphJIng4sG9Cn67lskFdtnpqzs70ltj+eEg+tkttO
-         Sq/k3dDx/KHaH3Uz2+J/sthqAkS3CxzKqcj+t2dXHMlHP6pR5rCR7gxLoZMTKQcwXOAw
-         mL/RZ5L7XRCO4GyUsypitOsPT0UYzjrR0Z9IPqteiW5+hUNC3Hx8Vr5vXdMYeWmkfVzX
-         pHUYcGKlnYITZayEa4ro9WzgobH2AHarbLJdVx8/Qiqu7m8Y5NeykBIgJqmSZQ3W+gM5
-         bj6YrNrWyIoPZtrykHBbRDTWAGFe7VedGNbSjV83OlV+XRq9VIQdG+Ojk+xdOyn9XgXG
-         gQwQ==
+        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681746129; x=1684338129;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/hzlswnMiGoXB1p+F9TnJvkyooz/IBar1fNaepAPNYs=;
+        b=T3CK4OwOnNC+elT8N6i0jZ1zicSIeXQvFj0vk/wahuHBvgkcPiOW7MvpX871+/YUMq
+         2+Tas9IVNc4Ekrk3XQIPRCYtOG5tAzuowjE9teAZ7mLOKAFTGWqn/a6tPCbuM4Sawx21
+         1C5+wMDF4XcTXywGeSVz4HA5TfRVCg9fPQ40Av9NOQKJdGZoGURk/udT+T7XXyjR8HKu
+         Ib4A/1QsVqIHGb+Law58vh3g+atqpSu2c4om4mz5BZlveeM6Q0rf/NBvbOHd64t+HJcA
+         aUnRURsVbTD7EiLXCbneAd8fULlLLxzQfwVsiIEX1l7SlVIAVn1OorKEFTnULu4p77fe
+         znvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681745431; x=1684337431;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lcxH0mNsQVfDuHuH7DyMK38UqQVq7f3xMxzQMn5dBWA=;
-        b=LilgRfG0ULg4D/38mJBztjalNQp+X/5Tj/s0DASMbrJfCYFIF2L6f9i2OPx/CPec/o
-         Fe46kfqJn99d47i1EaVX5usuzlcA3uivOR7bTjxgSff7Wl/Fnop5lUG16bec/HwrCbJn
-         dJopssRy4GcCkRsbNlNcGKvV9saIXquwXWjDbu5L4fXhOo8vOFP0zQ/hmFZWeh6a9JYq
-         wN0fCSk1zEetxAKjnup8FTJpnFhoVAU5kXHXsAdQcPq5yrJg1tjR8aS7X0hNQtCw+57d
-         NJdmwjGRISjEpdeX8N8K9jz0rto22zIS+lt9IYeeoe5i7RdYFhUKe0PdFe21wc3b5oxF
-         wHRw==
-X-Gm-Message-State: AAQBX9clyN3ZDvmAcjEt39B2ZuGVy59wTj+uRhIbsvzcqoKvqPVnlMuI
-        Dp7DdNrIP/GkBHMhcAN4HUDcng==
-X-Google-Smtp-Source: AKy350YAQdB34K4Wt5YmouiLx0ktgowQsOMlPWso9pM6x6NdIXxq7ADxK2Zm3lKzIlmKf7RxMs66wA==
-X-Received: by 2002:a19:f806:0:b0:4e9:c627:195d with SMTP id a6-20020a19f806000000b004e9c627195dmr1879931lff.57.1681745430903;
-        Mon, 17 Apr 2023 08:30:30 -0700 (PDT)
-Received: from [192.168.1.101] (abyk99.neoplus.adsl.tpnet.pl. [83.9.30.99])
-        by smtp.gmail.com with ESMTPSA id b16-20020ac25e90000000b004ec8a3d4200sm2053439lfq.293.2023.04.17.08.30.29
+        d=1e100.net; s=20221208; t=1681746129; x=1684338129;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/hzlswnMiGoXB1p+F9TnJvkyooz/IBar1fNaepAPNYs=;
+        b=WnFM31WbBAW4SxiWi1LMJaoKJywEGL/OIdz2rrhk0O6W/Le8r3Cp7tJwchOs5yPiGm
+         D8wOQLWu/RCgewtEyXxvopCLLg3Mw2XvYxyL3IP3ZSiHJe8EFTIEudt+JkESyiitw4Fm
+         RUw/D18gcHKFzoneH9CWs19J5DpNrPiVKoVLcd3iZyqs6GPg8iWIx3yOK2X2jX5W4gsf
+         cG/bDMjNkQ3DoXpsVa4rzvHQ4ppz8PottTQ4IS0LIX22WY/7vHoJneMRLOWyZw4vkCjk
+         SCRssoTzj7cV7z90rordiIRbmsNK8hllQip/hl4K0Z33wfG32jSzFS6iwVfMpkciyuGQ
+         RyFA==
+X-Gm-Message-State: AAQBX9cDx3EdjxiL2LPaHRQFfiImfPWwNQiJcHeg+G47elzxzFBhYm6t
+        L9TvsJq9rRK2h9HMj6ZRQHxq
+X-Google-Smtp-Source: AKy350ZsR/2TLPkpZkVYV14GGSd9u7PKle7GzyPwzThrprfO8AdQJO8TKQbg81n6gO8IXbwIG+7TaQ==
+X-Received: by 2002:a5d:6410:0:b0:2f2:17fc:e15b with SMTP id z16-20020a5d6410000000b002f217fce15bmr5852579wru.6.1681746129285;
+        Mon, 17 Apr 2023 08:42:09 -0700 (PDT)
+Received: from [127.0.1.1] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id h12-20020a5d4fcc000000b002f22c44e974sm10742937wrw.102.2023.04.17.08.42.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 08:30:30 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 17 Apr 2023 17:30:19 +0200
-Subject: [PATCH 5/5] drm/msm/dpu1: Handle the reg bus ICC path
+        Mon, 17 Apr 2023 08:42:09 -0700 (PDT)
+From:   Arnaud Vrac <avrac@freebox.fr>
+Date:   Mon, 17 Apr 2023 17:41:18 +0200
+Subject: [PATCH] arm64: dts: qcom: msm8998: add blsp spi nodes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230417-topic-dpu_regbus-v1-5-06fbdc1643c0@linaro.org>
-References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
-In-Reply-To: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Message-Id: <20230417-msm8998-spi-v1-1-6ea13d8a5384@freebox.fr>
+X-B4-Tracking: v=1; b=H4sIAJ1oPWQC/x2NQQqDMBAAvyJ77kI0YmK/UjzEZFsXNJUsiiD+3
+ cXjDAxzglBhEnhXJxTaWfifFepXBXEK+UfISRka01jT1g4XWXzfe5SV0XXJeduZaH0CLcYghGM
+ JOU7a5G2eVa6Fvnw8i89wXTdOWCnwcgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Arnaud Vrac <avrac@freebox.fr>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681745422; l=3473;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=yaaDRHHygxKzQdks1Y/6TtLq+nFnkHcN9/nfzu3GSEU=;
- b=VTNZxxN5Kh+K53Ykp22wmxgC0rpDu78abg1GvWpdZHX0debI+H9cd8gXbR/JRvN94fKwoWyLNipa
- 5fEg7jJlAWe/w//ky+w/HA/5ewSdnYYRe+EWAGN92gxgmZdBrX72
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9969; i=avrac@freebox.fr;
+ h=from:subject:message-id; bh=CgPjylovqcl5OJuFgtl1xjV8EqwfG/LPMd0muZhCxgc=;
+ b=owEBbQKS/ZANAwAIAXED/9m7NDSrAcsmYgBkPWjLngR/x0QIKwwLVlP91twpyAd0oI77juPCJ
+ YffOu92onWJAjMEAAEIAB0WIQSUwb/ndwkXHdZ/QQZxA//ZuzQ0qwUCZD1oywAKCRBxA//ZuzQ0
+ q+9vD/93Wj4n7t47etlIb56iDWAFcK/RxxG94FPKNjibkvPDyDhcIpxgnygmCZ/FJbuNwNLl+U5
+ w6Vu1JEQUu95MaZUsxAPvRtwXJGXiG0jqAwsefNw1DWpsD+PxvorBdPhA8TnPBQM9A4dEzgPZwN
+ 28/m/v8yRiu3jDK5EFe+EbT1ymQRaUaWvIF/1atFNrDcLIKB53Nj49rgp7PA/BqKnDDyAmgfSQ5
+ 1I+7yIMVrtsCPo7RZHYgfb7eHd8bejufjOzrmic7+FHJ/C1VkTUaE39s9a6Ip7MFJLBiybAqBzE
+ NDRKgQk2ji72mmFrbihgl2DRIkEvWiM7ll3gd2YLk0RdykzAEKfPz0xxNNt7Nz7zjBbyhLOHKKu
+ EbtwgYmUAQGcxqwHZnpnJ5hXI3erBNpjDM27Nat2Tj3q6dHy56DkN6u2YoGUneKZl3DLbnPxKgq
+ CroyO8iznFpXzqgGyocad73Cu+pqcmtNmUKxWDlSgqDUiJspC8x/cgN5yKhMKUjxzbgGAPggfCw
+ Lt6Yfymgg+dyGw6m+MpxrrDl87o9yi+EkH+sY2/KnZ/OpiNHJtS7dqxxKyaEgUp/1+ztzGM0Z6t
+ ZKgX3udgLDBE8tGVygcX1Ezeo67ILOmUyMNjH9biWlDu2tGvRqlbiTkzhsVxLgaiAJ8Zhu28naM
+ G6wUxVftK41VoHw==
+X-Developer-Key: i=avrac@freebox.fr; a=openpgp;
+ fpr=6225092072BB58E3CEEC091E75392A176D952DB4
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
-another path that needs to be handled to ensure MDSS functions properly,
-namely the "reg bus", a.k.a the CPU-MDSS interconnect.
-
-Gating that path may have a variety of effects.. from none to otherwise
-inexplicable DSI timeouts..
-
-On the DPU side, we need to keep the bus alive. The vendor driver
-kickstarts it to max (300Mbps) throughput on first commit, but in
-exchange for some battery life in rare DPU-enabled-panel-disabled
-usecases, we can request it at DPU init and gate it at suspend.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 22 ++++++++++++++++++++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 309 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 309 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index dd6c1c40ab9e..d1f77faebbc0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -384,15 +384,17 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
- 	return 0;
- }
- 
--static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
-+static int dpu_kms_parse_icc_paths(struct dpu_kms *dpu_kms)
- {
- 	struct icc_path *path0;
- 	struct icc_path *path1;
-+	struct icc_path *reg_bus_path;
- 	struct drm_device *dev = dpu_kms->dev;
- 	struct device *dpu_dev = dev->dev;
- 
- 	path0 = msm_icc_get(dpu_dev, "mdp0-mem");
- 	path1 = msm_icc_get(dpu_dev, "mdp1-mem");
-+	reg_bus_path = msm_icc_get(dpu_dev, "cpu-cfg");
- 
- 	if (IS_ERR_OR_NULL(path0))
- 		return PTR_ERR_OR_ZERO(path0);
-@@ -404,6 +406,10 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
- 		dpu_kms->mdp_path[1] = path1;
- 		dpu_kms->num_mdp_paths++;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index b150437a83558..41c8bb44d1fb1 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -1228,6 +1228,57 @@ blsp1_i2c6_sleep: blsp1-i2c6-sleep-state {
+ 				drive-strength = <2>;
+ 				bias-pull-up;
+ 			};
 +
-+	if (!IS_ERR_OR_NULL(reg_bus_path))
-+		dpu_kms->reg_bus_path = reg_bus_path;
++			blsp1_spi_b_default: blsp1-spi_b-default {
++				pins = "gpio23", "gpio28";
++				function = "blsp1_spi_b";
++				drive-strength = <6>;
++				bias-disable;
++			};
 +
- 	return 0;
- }
- 
-@@ -1039,7 +1045,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
- 		DPU_DEBUG("REG_DMA is not defined");
- 	}
- 
--	dpu_kms_parse_data_bus_icc_path(dpu_kms);
-+	dpu_kms_parse_icc_paths(dpu_kms);
- 
- 	rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
- 	if (rc < 0)
-@@ -1241,6 +1247,9 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- 	for (i = 0; i < dpu_kms->num_mdp_paths; i++)
- 		icc_set_bw(dpu_kms->mdp_path[i], 0, 0);
- 
-+	if (dpu_kms->reg_bus_path)
-+		icc_set_bw(dpu_kms->reg_bus_path, 0, 0);
++			blsp1_spi1_default: blsp1-spi1-default {
++				pins = "gpio0", "gpio1", "gpio2", "gpio3";
++				function = "blsp_spi1";
++				drive-strength = <6>;
++				bias-disable;
++			};
 +
- 	return 0;
- }
- 
-@@ -1261,6 +1270,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
- 		return rc;
- 	}
- 
-+	/*
-+	 * The vendor driver supports setting 76.8 / 150 / 300 Mbps on this
-+	 * path, but it seems to go for the highest level when display output
-+	 * is enabled and zero otherwise. For simplicity, we can assume that
-+	 * DPU being enabled and running implies that.
-+	 */
-+	if (dpu_kms->reg_bus_path)
-+		icc_set_bw(dpu_kms->reg_bus_path, 0, MBps_to_icc(300));
++			blsp1_spi2_default: blsp1-spi2-default {
++				pins = "gpio31", "gpio34", "gpio32", "gpio33";
++				function = "blsp_spi2";
++				drive-strength = <6>;
++				bias-disable;
++			};
 +
- 	dpu_vbif_init_memtypes(dpu_kms);
++			blsp1_spi3_default: blsp1-spi3-default {
++				pins = "gpio45", "gpio46", "gpio47", "gpio48";
++				function = "blsp_spi2";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp1_spi4_default: blsp1-spi4-default {
++				pins = "gpio8", "gpio9", "gpio10", "gpio11";
++				function = "blsp_spi4";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp1_spi5_default: blsp1-spi5-default {
++				pins = "gpio85", "gpio86", "gpio87", "gpio88";
++				function = "blsp_spi5";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp1_spi6_default: blsp1-spi6-default {
++				pins = "gpio41", "gpio42", "gpio43", "gpio44";
++				function = "blsp_spi6";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++
+ 			/* 6 interfaces per QUP, BLSP2 indexes are numbered (n)+6 */
+ 			blsp2_i2c1_default: blsp2-i2c1-default-state {
+ 				pins = "gpio55", "gpio56";
+@@ -1312,6 +1363,48 @@ blsp2_i2c6_sleep: blsp2-i2c6-sleep-state {
+ 				drive-strength = <2>;
+ 				bias-pull-up;
+ 			};
++
++			blsp2_spi1_default: blsp2-spi1-default {
++				pins = "gpio53", "gpio54", "gpio55", "gpio56";
++				function = "blsp_spi7";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp2_spi2_default: blsp2-spi2-default {
++				pins = "gpio4", "gpio5", "gpio6", "gpio7";
++				function = "blsp_spi8";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp2_spi3_default: blsp2-spi3-default {
++				pins = "gpio49", "gpio50", "gpio51", "gpio52";
++				function = "blsp_spi9";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp2_spi4_default: blsp2-spi4-default {
++				pins = "gpio65", "gpio66", "gpio67", "gpio68";
++				function = "blsp_spi10";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp2_spi5_default: blsp2-spi5-default {
++				pins = "gpio58", "gpio59", "gpio60", "gpio61";
++				function = "blsp_spi11";
++				drive-strength = <6>;
++				bias-disable;
++			};
++
++			blsp2_spi6_default: blsp2-spi6-default {
++				pins = "gpio81", "gpio82", "gpio83", "gpio84";
++				function = "blsp_spi12";
++				drive-strength = <6>;
++				bias-disable;
++			};
+ 		};
  
- 	drm_for_each_encoder(encoder, ddev)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index d5d9bec90705..c332381d58c4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -111,6 +111,7 @@ struct dpu_kms {
- 	atomic_t bandwidth_ref;
- 	struct icc_path *mdp_path[2];
- 	u32 num_mdp_paths;
-+	struct icc_path *reg_bus_path;
- };
+ 		remoteproc_mss: remoteproc@4080000 {
+@@ -2249,6 +2342,114 @@ blsp1_i2c6: i2c@c17a000 {
+ 			#size-cells = <0>;
+ 		};
  
- struct vsync_info {
++		blsp1_spi1: spi@c175000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c175000 0x600>;
++			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp1_dma 6>, <&blsp1_dma 7>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_spi1_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp1_spi2: spi@c176000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c176000 0x600>;
++			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP1_QUP2_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_spi2_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp1_spi3: spi@c177000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c177000 0x600>;
++			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP1_QUP3_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_spi3_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp1_spi4: spi@c178000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c178000 0x600>;
++			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP1_QUP4_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp1_dma 12>, <&blsp1_dma 13>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_spi4_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp1_spi5: spi@c179000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c179000 0x600>;
++			interrupts = <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP1_QUP5_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp1_dma 14>, <&blsp1_dma 15>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_spi5_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp1_spi6: spi@c17a000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c17a000 0x600>;
++			interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP1_QUP6_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp1_dma 16>, <&blsp1_dma 17>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp1_spi6_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
+ 		blsp2_dma: dma-controller@c184000 {
+ 			compatible = "qcom,bam-v1.7.0";
+ 			reg = <0x0c184000 0x25000>;
+@@ -2392,6 +2593,114 @@ blsp2_i2c6: i2c@c1ba000 {
+ 			#size-cells = <0>;
+ 		};
+ 
++		blsp2_spi1: spi@c1b5000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1b5000 0x600>;
++			interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP1_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_spi1_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp2_spi2: spi@c1b6000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1b6000 0x600>;
++			interrupts = <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP2_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_spi2_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp2_spi3: spi@c1b7000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1b7000 0x600>;
++			interrupts = <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP3_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp2_dma 10>, <&blsp2_dma 11>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_spi3_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp2_spi4: spi@c1b8000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1b8000 0x600>;
++			interrupts = <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP4_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp2_dma 12>, <&blsp2_dma 13>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_spi4_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp2_spi5: spi@c1b9000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1b9000 0x600>;
++			interrupts = <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP5_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp2_dma 14>, <&blsp2_dma 15>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_spi5_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
++		blsp2_spi6: spi@c1ba000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x0c1ba000 0x600>;
++			interrupts = <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_BLSP2_QUP6_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp2_dma 16>, <&blsp2_dma 17>;
++			dma-names = "tx", "rx";
++			pinctrl-names = "default";
++			pinctrl-0 = <&blsp2_spi6_default>;
++
++			status = "disabled";
++			#address-cells = <1>;
++			#size-cells = <0>;
++		};
++
+ 		mmcc: clock-controller@c8c0000 {
+ 			compatible = "qcom,mmcc-msm8998";
+ 			#clock-cells = <1>;
 
+---
+base-commit: e3342532ecd39bbd9c2ab5b9001cec1589bc37e9
+change-id: 20230417-msm8998-spi-76d78360c38d
+
+Best regards,
 -- 
-2.40.0
+Arnaud Vrac <avrac@freebox.fr>
 
