@@ -2,98 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 794AB6E474A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 14:13:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B98CF6E492A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 15:03:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbjDQMNK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 08:13:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59962 "EHLO
+        id S231335AbjDQND0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 09:03:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229824AbjDQMNK (ORCPT
+        with ESMTP id S231294AbjDQNDM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 08:13:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9669023;
-        Mon, 17 Apr 2023 05:12:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 74EFB62328;
-        Mon, 17 Apr 2023 12:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5E2C433EF;
-        Mon, 17 Apr 2023 12:12:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681733553;
-        bh=eNV1zUDagB32PHHEZMYchgD0JkU4lTO2tcK5xBVvozg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=kXEY4kbPp7jM8iD80BIvQUEzp1K3o9bxJ/sjeCCR8O+WbTZHKyKfDx7YrsmJBqCL/
-         e9IcxsnDn/2RCF7NLY+/W0EsgtEcxitc3hbiIn6fWwsz4NlYDdspsPfj+fqF/tXupX
-         YCGt7FN5YecLdvEtSTg8YB1K/CnWcaSzE1ZKCWcb0sNMry3W4axgh8WIT97vC2xk6c
-         m0nH3pjwCvRHR/61jXMnEPmjUm5Z+h6ja/oYIrWsbw12SWRLL5VnoncQDl5Mz8Cb68
-         fAjciGRQ1RkY2qWaGXCNINiOKPVt2XOvl07iR0GDjeffA34iskLTsAzMusK2tkW6zX
-         Tce9NkxxNN5vA==
-Date:   Mon, 17 Apr 2023 13:12:25 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
-        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v3 3/3] spi: spi-qcom-qspi: Add DMA mode support
-Message-ID: <30a752c9-3ea0-43d3-959a-da2e8b526cb4@sirena.org.uk>
-References: <1681481153-24036-1-git-send-email-quic_vnivarth@quicinc.com>
- <1681481153-24036-4-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=VKY-0vX271G+EQQ5kC3gTqpPPyTGE0xHWPBncVUhZufQ@mail.gmail.com>
+        Mon, 17 Apr 2023 09:03:12 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B4CD1026B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 06:00:00 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id v3so703812wml.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 06:00:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1681736328; x=1684328328;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=B+MVzf8r/4s+B98TOSVIFBCcQmTeOnxbCDg8qGd1O2g=;
+        b=Qw3+fO+DNms8K56wL8s70n889hD+X3HzOhfr2FkVez8KSDwMuAvbZJ6/az6knoCYRO
+         WC5/jl0Xicoz9hT7MfXD8h1NXyK2JBbH1gLx6iV0deFFfX0Q2VIvb0mXk2TNHm9Ju3QI
+         HsEXwJAtir4qM7DcSsj7iT8Qjyl6VEh35HzCFVrFVOliKWLo2J5aC/FbNG4zhSXFJvVo
+         ghWHmHUd1yAbxuYE175hZWDu90XL2C0F/pqXB4Z7Iyo1Xs9FBoqpXt3S1Bun677QLY4h
+         RvL6o3kArQ9La2z5BDnKffqx6A6u3gxQXnPqavA34WnVlWAQWTseLP7iuJv6S7yjM1iG
+         ixvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681736328; x=1684328328;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B+MVzf8r/4s+B98TOSVIFBCcQmTeOnxbCDg8qGd1O2g=;
+        b=H/6qdKC0jSsyvYatWtWeiJW76lUrpa8nbislPeNvDLknihlE/fjvafMCgvJ0iKJq+K
+         cZDdj/0ueBf19q3d8xy/a8nPpE4fuMkgXlDX1M29SbtwqTx8+Qt9XRiFdmD0gME6BWrH
+         p12T4tA0AvMj3shts+QruRzdb4PplERBVte5XCqQ5H5x3w/+BXhwnR0Z+VPNvgg/7vT4
+         PrDrdAW4M/XDxn97ab8XGMLMK52Hsj0RULtDhLIF2uuEbUCmr3RHcngOwfqzeImT7KLd
+         iEv61bq/R0i9+ldeEZ9xHuysAk8ru5xE43WSp7KrviCWpGV9lIbNF5yU7JeAU3hp4OG8
+         FfCA==
+X-Gm-Message-State: AAQBX9c/Hw+iJmOOBo33xAYetTZ+zjeq4LqJZyRCnM9fvBBpv9CUmTh5
+        B6HpvQF1Cs6z2Is9SCYyt2d8MA==
+X-Google-Smtp-Source: AKy350Z2eV6AqL+dVKQQg8ekRMO3sImYABpWFD57wB0IsJLBBkAMxrq4zgrfOPdZN4P4MyAL/pMLaw==
+X-Received: by 2002:a1c:7304:0:b0:3f1:6f4a:a3ad with SMTP id d4-20020a1c7304000000b003f16f4aa3admr4528202wmb.2.1681736328321;
+        Mon, 17 Apr 2023 05:58:48 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:374a:ffae:fd26:4893])
+        by smtp.gmail.com with ESMTPSA id v21-20020a05600c471500b003ef5bb63f13sm15557546wmo.10.2023.04.17.05.58.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Apr 2023 05:58:47 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v4 0/5] arm64: dts: qcom: sa8775p: add more IOMMUs
+Date:   Mon, 17 Apr 2023 14:58:39 +0200
+Message-Id: <20230417125844.400782-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="QerR8LcbkWiaBCb1"
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=VKY-0vX271G+EQQ5kC3gTqpPPyTGE0xHWPBncVUhZufQ@mail.gmail.com>
-X-Cookie: Two heads are more numerous than one.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
---QerR8LcbkWiaBCb1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Add the GPU and PCIe IOMMUs for sa8775p platforms as well as the required
+GPU clock controller driver.
 
-On Fri, Apr 14, 2023 at 03:05:58PM -0700, Doug Anderson wrote:
+NOTE: I didn't pick up Krzysztof's tag for patch 4/5 as the patch changed
+significantly.
 
-> Having alignment requirements like this doesn't seem like it should be
-> that unusual, though, and that's why it feels like the logic belongs
-> in the SPI core. In fact, it seems like this is _supposed_ to be
-> handled in the SPI core, but it isn't? In "spi.h" I see
-> "dma_alignment" that claims to be exactly what you need. As far as I
-> can tell, though, the core doesn't use this? ...so I'm kinda confused.
-> As far as I can tell this doesn't do anything and thus anyone setting
-> it today is broken?
+v3 -> v4:
+- fix the adreno smmu compatibles
+- drop patches that are already in next
 
-SPI consumers should only be providing dmaable buffers.
+v2 -> v3:
+- select QCOM_GDSC in Kconfig for the GPUCC module
+- the GPU SMMU is actually an adreno SMMU so describe it as such and
+  fix the DT
+- fix the mapped memory size for the PCIe SMMU
 
---QerR8LcbkWiaBCb1
-Content-Type: application/pgp-signature; name="signature.asc"
+v1 -> v2:
+- remove unused include in the GPUCC driver
+- remove unused clock from the GPUCC driver and make it compatible
+  with the generic QCom GPUCC bindings
+- put the new defconfig option in the right place (as per savedefconfig)
+  and make the GPUCC driver a module rather than built-in
+- describe the smmu clocks for sa8775p in dt-bindings
 
------BEGIN PGP SIGNATURE-----
+Bartosz Golaszewski (5):
+  arm64: defconfig: enable the SA8775P GPUCC driver
+  arm64: dts: qcom: sa8775p: add the pcie smmu node
+  arm64: dts: qcom: sa8775p: add the GPU clock controller node
+  dt-bindings: iommu: arm,smmu: enable clocks for sa8775p Adreno SMMU
+  arm64: dts: qcom: sa8775p: add the GPU IOMMU node
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQ9N6gACgkQJNaLcl1U
-h9A0RAf/Q/Bi/4JeWGxUTZ0r2ETK1oo6ycZJpBYut1iRufKN7g8gHo0D+I7u4ShX
-PbOSybrq4CnyaGqfmtBnuBBBS/4VX9Ryu8mj5XTkLKyUbamhzjUZj48SauEkufN8
-bUkhQ5VZtCrIOd+aWVUIBX5L+VyAmjXddaHINuWUHXIYy5w5/Z/23ES7iUqsjUe+
-LIDO3zSxDkssalpPAsbCjcoYDBs+oRmIUUNvbwS5FlaTsl3yIq9r75YXHd/lUHXf
-EuW/RGag45g7zSGN02g15P0wvajWATasTYWuEnWxNMV76YOiRbmtZ8vedV1bsGPP
-O4J9kUULTNCnTdo6M5NRqqWfIXdCvQ==
-=/PHR
------END PGP SIGNATURE-----
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |   6 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 125 ++++++++++++++++++
+ arch/arm64/configs/defconfig                  |   1 +
+ 3 files changed, 130 insertions(+), 2 deletions(-)
 
---QerR8LcbkWiaBCb1--
+-- 
+2.37.2
+
