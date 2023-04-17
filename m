@@ -2,71 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFC556E4FB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 19:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7B8D6E4FBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 19:56:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231185AbjDQRyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 13:54:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48180 "EHLO
+        id S230369AbjDQR4D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 13:56:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229579AbjDQRyV (ORCPT
+        with ESMTP id S230182AbjDQR4C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 13:54:21 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FEF8AD0B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:54:18 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id a10so10708481ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:54:18 -0700 (PDT)
+        Mon, 17 Apr 2023 13:56:02 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674C86A6E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:56:00 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec8399e963so1580371e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681754056; x=1684346056;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1681754158; x=1684346158;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=F4+8olREfasjZv5QZc5V/pBOVr5naRMQNwCkcS8I+dA=;
-        b=xWU5V7sLim6ioC/6Y+oJGgycGYAycQ5y8UhuBIc4sh3cg9EMDk8QRYHlF/jnbdPdsd
-         32bDTpiDjIw0Egbeqk4eXTxNtEv3FtPbSHAkLGmSLadSJ2Elm0V1OOdfXXiGvQZIws5k
-         KLSdVDp1B8h/UzI/xc+fQmAQvn0u3P4jRkJ9g0EP9cyK2JDwz7iHt9LNC845kDcVAv0r
-         6xzLFeLqCNUoK8xhkDp+KCXFvvvuWnBiJ8097BQmVKCH8lDShMJRy+Ir0A4IzlafTh2d
-         YrLSdE1XCyXcGIcGF5OZwh7kbYjlI7O9JYii9SIU3q8HAnKS7UiyecSVVTdalT4aX2sn
-         k50w==
+        bh=BKDmMoGXfJU4fYQc4SgnFhXeKOqYUlPRJlTeeGghjx8=;
+        b=e71iFc9OvZScNGlXJc4d2BWw8WUA4B4a/x6KjylMvisNQRju5rfTmHoGAERKFeFwZn
+         b4b0AbtBHn2fF+dHWmUNI1BZTCo5/CmZ66WbPGiXQtxT73ZIVfY5t5YekrFLga2kz/Sx
+         Lch22J7ZYA8bXnLl0pd3/aYY7YbPUVk7U4xLG+54MITzuTcTKozirc0bHF+/t2IQVC9j
+         RK86hfbSOLwowXUWoY3kne/x2Q8caGQC8G7bz5mYIVdjlPY4k8OTvZSmCH7YICPy34Nj
+         raofRJ/fDGk6ovfpJyr4qj0CJmI3pGyapnUZ13Ngc5mF2vTe67ThfiR3cFk6PCSfIq3Z
+         Crtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681754056; x=1684346056;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1681754158; x=1684346158;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F4+8olREfasjZv5QZc5V/pBOVr5naRMQNwCkcS8I+dA=;
-        b=TX1w/j4LHUAoAP96FgKyhSkY+7xDP2oDdGD/BMja+8NALRMWZ/Hwlz9glKANSDzuvb
-         y+M5Rt9jOM7JSpCFmw90oDjQ+K41cNijrbjv7Py9tZC2adlDHc+//cTbneT82TCXCimc
-         pymlA4gFME8HXkWEuab7WnlTRlL9LuM2d2e5h+XMP8m7DAWxQWxX7vGW75qC7IwM/38Y
-         4F7FMqlbdolNuW1Z7IaR1o3sRWZOBuEPdudssN7wSQeewP1IRz79UIVOqzbwf/bYllvN
-         zQQelt8NW1hvBaFC0bLJ5IKFXftfwc4bNhQ5o288Nh8oMK7g9U2sEqfCuLiXJ0SyK+Di
-         JQHw==
-X-Gm-Message-State: AAQBX9f5u6h4QyReYzONKkmIxQ5EUjlKhu1t1XmIoDT475o5DoBkELIl
-        b3Go5LOeeLWrfUYxAntZi794+Q==
-X-Google-Smtp-Source: AKy350ZdGGOn1B6q+n7vcHcpU61x1OwUpebtzROn9z+Ltft2doHXj3wDzpWVq4DXIjV60SfmaBUrRg==
-X-Received: by 2002:a2e:7c06:0:b0:2a7:a5f7:e9bc with SMTP id x6-20020a2e7c06000000b002a7a5f7e9bcmr3887227ljc.15.1681754056399;
-        Mon, 17 Apr 2023 10:54:16 -0700 (PDT)
+        bh=BKDmMoGXfJU4fYQc4SgnFhXeKOqYUlPRJlTeeGghjx8=;
+        b=M77CvOQ/SryI+U7mjKa3HaAKm8hhWjAvCMyma+1F+ougf4czXBRj3rQbd3r+IbIFEQ
+         vyH67Q6AQXLZf/zvVlxMZ7wUSBSit1pPcPSTZD28uLP/h5uZ/KfXWoPLCbFbXMMtZiuM
+         SzWShuhhH1zKL7r0aSpT24pLLL0eA4z50aBAtUhbxz9gZ/sglOdWH2NtoFy0uJiAuJg9
+         JBY1Tt0SyVU+ARZptPeN28J1d0GKm800iN2z9cy+W7ktXYxVWjAAFMrUNgcY62HLxXrC
+         cXPl3OMx3Y/AOR2u6aJEqZ82FsIlXWK+TVuaQgoKgj77DGyKjzcqTMR1kzFbdTwSWCAV
+         VZag==
+X-Gm-Message-State: AAQBX9euMYb85AUKULEWB76/XQdlZPUHhRIwjYMBGIqmSupZAvZpk1KD
+        x2eBls72Tj7wH5C1n5IV6XbDlQ==
+X-Google-Smtp-Source: AKy350ZOy7SA3V/n3VNMo4APMIyDC2YUvIH1K4sUn3ZXx3m0oJ7cyPxlvpT9oHIMKvhOqVnn/3edoQ==
+X-Received: by 2002:ac2:4105:0:b0:4e8:3f35:6844 with SMTP id b5-20020ac24105000000b004e83f356844mr1847583lfi.19.1681754158663;
+        Mon, 17 Apr 2023 10:55:58 -0700 (PDT)
 Received: from [192.168.1.101] (abyk99.neoplus.adsl.tpnet.pl. [83.9.30.99])
-        by smtp.gmail.com with ESMTPSA id w19-20020a2e9bd3000000b002a8d915f30asm8799ljj.77.2023.04.17.10.54.15
+        by smtp.gmail.com with ESMTPSA id u21-20020ac25195000000b004cb45148027sm2111190lfi.203.2023.04.17.10.55.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 10:54:16 -0700 (PDT)
-Message-ID: <8b73a320-8c52-16bb-12c5-85e78dd48c04@linaro.org>
-Date:   Mon, 17 Apr 2023 19:54:14 +0200
+        Mon, 17 Apr 2023 10:55:58 -0700 (PDT)
+Message-ID: <e7d15873-a6b7-9a64-f164-7df64585dcfb@linaro.org>
+Date:   Mon, 17 Apr 2023 19:55:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sdm660: drop redundant F define
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8775p: pmic: add the sdam_0
+ node
 Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>,
+To:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230417174408.23722-1-ansuelsmth@gmail.com>
- <20230417174408.23722-2-ansuelsmth@gmail.com>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230417145536.414490-1-brgl@bgdev.pl>
+ <20230417145536.414490-4-brgl@bgdev.pl>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230417174408.23722-2-ansuelsmth@gmail.com>
+In-Reply-To: <20230417145536.414490-4-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,28 +89,58 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 17.04.2023 19:44, Christian Marangi wrote:
-> The same exact F frequency table entry is defined in clk-rcg.h
-> Drop the redundant define to cleanup code.
+On 17.04.2023 16:55, Bartosz Golaszewski wrote:
+> From: Parikshit Pareek <quic_ppareek@quicinc.com>
 > 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Introduce sdam_0 node, which is to be used via nvmem for power on
+> reasons during reboot. Add supported PoN reaons supported via sdam_0
+> node.
+> 
+> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/clk/qcom/gcc-sdm660.c | 2 --
->  1 file changed, 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/gcc-sdm660.c b/drivers/clk/qcom/gcc-sdm660.c
-> index db918c92a522..6afce8e42ede 100644
-> --- a/drivers/clk/qcom/gcc-sdm660.c
-> +++ b/drivers/clk/qcom/gcc-sdm660.c
-> @@ -25,8 +25,6 @@
->  #include "reset.h"
->  #include "gdsc.h"
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> index 5abdc239d3a6..3c3b6287cd27 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> @@ -88,6 +88,14 @@ trip1 {
+>  			};
+>  		};
+>  	};
+> +
+> +	reboot-mode {
+> +		compatible = "nvmem-reboot-mode";
+> +		nvmem-cells = <&reboot_reason>;
+> +		nvmem-cell-names = "reboot-mode";
+> +		mode-recovery = <0x01>;
+> +		mode-bootloader = <0x02>;
+> +	};
+>  };
 >  
-> -#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
-> -
->  enum {
->  	P_XO,
->  	P_SLEEP_CLK,
+>  &spmi_bus {
+> @@ -133,6 +141,19 @@ pmm8654au_0_gpios: gpio@8800 {
+>  			interrupt-controller;
+>  			#interrupt-cells = <2>;
+>  		};
+> +
+> +		pmm8654au_0_sdam_0: nvram@7100 {
+> +			compatible = "qcom,spmi-sdam";
+> +			reg = <0x7100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +			ranges = <0 0x7100 0x100>;
+> +
+> +			reboot_reason: reboot-reason@48 {
+> +				reg = <0x48 0x1>;
+> +				bits = <1 7>;
+> +			};
+> +		};
+>  	};
+>  
+>  	pmm8654au_1: pmic@2 {
