@@ -2,285 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 76FCF6E4266
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 10:20:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C23F6E4274
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 10:22:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230309AbjDQIUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 04:20:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36938 "EHLO
+        id S230253AbjDQIWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 04:22:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230456AbjDQIUQ (ORCPT
+        with ESMTP id S229940AbjDQIW0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 04:20:16 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A8F05597
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 01:20:13 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id k36-20020a17090a4ca700b0024770df9897so3944178pjh.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 01:20:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681719612; x=1684311612;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pmxox5y/MB/Uvs8BBlEeHXMdLMrq80W/RWiuw2ntXAc=;
-        b=opFDqkGZEvH9Zb+mYqjhp9sM9x3bTTa4+PLU5svTELy54dzY/ogvaC22G5mQR3SuO8
-         /UDMrj4D4ryWW0SHMhbXuWYhky9N7yN9fP6/uIXielL5BO2fyu1+yDij3ZsJSUdtCOwi
-         6oH9mjNx5x+BOClakS9lOhRsaciOdWAJnOWr3bz3Yzv6r9eDJTt46e3qKiOUkns5p9qX
-         WQuxLVwaN+3QJpMt9fbhvtrMpCntdBvuoSSpzNMbh50J497hljrWpLU1JOz+IWLs5T5p
-         x9xKim7YKWmK8xhu87/LVAN5YHIFg2kHR4Mkb0fay+eMkuhPxciC6H3bm1H8VxjHBulp
-         yPfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681719612; x=1684311612;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pmxox5y/MB/Uvs8BBlEeHXMdLMrq80W/RWiuw2ntXAc=;
-        b=RXnVvCQvkkbTKiCenD0pui81QSzMs3+C+tjfJGTcLm4GVhAmHhKpR4wLew+Qn1YzBa
-         UT1QQz4IrENzQNXXeYjUGngFkdWRqZwQ1MkdZSSRCyLCXx5H//i9/QqEOl+fyp+vb+zI
-         vbyR3sAfX++a+DgBU26OELiYfwPAUcWST42l1tpAxeXRjX+KMbSdr5Q9yttOyVA0qwZr
-         GUa89BLci9THd1Bg799iZwvS5HXoBzT0K+cAG8+cEP9Q3TWofUH0NPazLvT9rAZALgfe
-         C3RlgB/oSGJX16f6WU9oMuPXsn1DYYjQ0Z+/JQE2Te3l+GgfVcbbLa1sOpM9zxq4qjPp
-         bJKg==
-X-Gm-Message-State: AAQBX9c2P7oI20aaOEq+4tBlJE/ZzyiAbP9B8zIHgbADcNeD+8IV+dAK
-        vYQlGMQWNvPqH87dV2Ycs/8O
-X-Google-Smtp-Source: AKy350Y0EWwLGuRnTz267xrrCfS6nTR2qCqiuL7psBmhfv06Th2Hyu2SfnvFbvsnjACotURF4Meg0Q==
-X-Received: by 2002:a17:902:cf02:b0:1a6:b23c:3bf2 with SMTP id i2-20020a170902cf0200b001a6b23c3bf2mr7660797plg.10.1681719612455;
-        Mon, 17 Apr 2023 01:20:12 -0700 (PDT)
-Received: from thinkpad ([27.111.75.72])
-        by smtp.gmail.com with ESMTPSA id d24-20020a17090ac25800b00246cc751c6bsm8231855pjx.46.2023.04.17.01.20.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 01:20:12 -0700 (PDT)
-Date:   Mon, 17 Apr 2023 13:50:03 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] soc: qcom: Introduce RPM master stats driver
-Message-ID: <20230417082003.GA2874@thinkpad>
-References: <20230405-topic-master_stats-v3-0-2cb2ba4f2092@linaro.org>
- <20230405-topic-master_stats-v3-2-2cb2ba4f2092@linaro.org>
- <20230416142055.GA2798@thinkpad>
- <ab6d9730-2eae-44c7-a809-b29174acdefc@linaro.org>
+        Mon, 17 Apr 2023 04:22:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B1626B2;
+        Mon, 17 Apr 2023 01:22:25 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33H8E0pc025933;
+        Mon, 17 Apr 2023 08:22:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=2z3lDab7wSaYmLD4EKf2LqwTGMMqhl1sykbi65azdkQ=;
+ b=iCN7pP+KlVp/nx90F+nsRgJT+8//G1uScza1/s/G72CstVXFCP69oESeb8TFf7A05+87
+ oAWJD0rHdiQJH5LpcI3FR846jCi2fviX3lPlpa36Qq6N3JoMx/MyaAcOF6oEraELCbhe
+ QMy0UWOza0COC+Zbv8L2ktYg33PfSEXEFFPEiqAkJl6npHaqqZuZ+OLsqPYz5EYH2DGl
+ GDpRcYjNEp9sYFQjJGETdZLsZQboz9Sk7caCJDBe5/SBx9zWavS05T/0aTTG7DrZMNW0
+ RUS+B/JdV/Ev0Yw7ldVwiERh02c29AQiUepMpgpYA/3BgdAdq87lOT5CC2cVN5v/IPQc 9Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pyn3tjv9d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Apr 2023 08:22:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33H8MM8x024127
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 17 Apr 2023 08:22:22 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 17 Apr 2023 01:22:17 -0700
+From:   Taniya Das <quic_tdas@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+CC:     <dmitry.baryshkov@linaro.org>, <quic_skakitap@quicinc.com>,
+        <quic_jkona@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH V2 0/3] Add video clock controller driver for SM8450
+Date:   Mon, 17 Apr 2023 13:51:24 +0530
+Message-ID: <20230417082127.11681-1-quic_tdas@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ab6d9730-2eae-44c7-a809-b29174acdefc@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6MWsRA9rXtZjoQ9vYpT-5BE9HDwKxH7d
+X-Proofpoint-ORIG-GUID: 6MWsRA9rXtZjoQ9vYpT-5BE9HDwKxH7d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-17_04,2023-04-14_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 mlxlogscore=620 adultscore=0
+ phishscore=0 priorityscore=1501 spamscore=0 suspectscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304170074
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 17, 2023 at 09:14:39AM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 16.04.2023 16:20, Manivannan Sadhasivam wrote:
-> > On Fri, Apr 14, 2023 at 01:37:18PM +0200, Konrad Dybcio wrote:
-> >> Introduce a driver to query and expose detailed, per-subsystem (as opposed
-> >> to the existing qcom_stats driver which exposes SoC-wide data) about low
-> >> power mode states of a given RPM master. That includes the APSS (ARM),
-> >> MPSS (modem) and other remote cores, depending on the platform
-> >> configuration.
-> >>
-> >> This is a vastly cleaned up and restructured version of a similar
-> >> driver found in msm-5.4.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >> ---
-> >>  drivers/soc/qcom/Kconfig            |  11 +++
-> >>  drivers/soc/qcom/Makefile           |   1 +
-> >>  drivers/soc/qcom/rpm_master_stats.c | 160 ++++++++++++++++++++++++++++++++++++
-> >>  3 files changed, 172 insertions(+)
-> >>
-> >> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> >> index a491718f8064..e597799e8121 100644
-> >> --- a/drivers/soc/qcom/Kconfig
-> >> +++ b/drivers/soc/qcom/Kconfig
-> >> @@ -135,6 +135,17 @@ config QCOM_RMTFS_MEM
-> >>  
-> >>  	  Say y here if you intend to boot the modem remoteproc.
-> >>  
-> >> +config QCOM_RPM_MASTER_STATS
-> >> +	tristate "Qualcomm RPM Master stats"
-> >> +	depends on ARCH_QCOM || COMPILE_TEST
-> >> +	help
-> >> +	  The RPM Master sleep stats driver provides detailed per-subsystem
-> >> +	  sleep/wake data, read from the RPM message RAM. It can be used to
-> >> +	  assess whether all the low-power modes available are entered as
-> >> +	  expected or to check which part of the SoC prevents it from sleeping.
-> >> +
-> >> +	  Say y here if you intend to debug or monitor platform sleep.
-> >> +
-> >>  config QCOM_RPMH
-> >>  	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
-> >>  	depends on ARCH_QCOM || COMPILE_TEST
-> >> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> >> index 0f43a88b4894..7349371fdea1 100644
-> >> --- a/drivers/soc/qcom/Makefile
-> >> +++ b/drivers/soc/qcom/Makefile
-> >> @@ -14,6 +14,7 @@ obj-$(CONFIG_QCOM_QMI_HELPERS)	+= qmi_helpers.o
-> >>  qmi_helpers-y	+= qmi_encdec.o qmi_interface.o
-> >>  obj-$(CONFIG_QCOM_RAMP_CTRL)	+= ramp_controller.o
-> >>  obj-$(CONFIG_QCOM_RMTFS_MEM)	+= rmtfs_mem.o
-> >> +obj-$(CONFIG_QCOM_RPM_MASTER_STATS)	+= rpm_master_stats.o
-> >>  obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
-> >>  qcom_rpmh-y			+= rpmh-rsc.o
-> >>  qcom_rpmh-y			+= rpmh.o
-> >> diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
-> >> new file mode 100644
-> >> index 000000000000..73080c92bf89
-> >> --- /dev/null
-> >> +++ b/drivers/soc/qcom/rpm_master_stats.c
-> >> @@ -0,0 +1,160 @@
-> >> +// SPDX-License-Identifier: GPL-2.0-only
-> >> +/*
-> >> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
-> >> + * Copyright (c) 2023, Linaro Limited
-> >> + *
-> >> + * This driver supports what is known as "Master Stats v2", which seems to be
-> >> + * the only version which has ever shipped, all the way from 2013 to 2023.
-> > 
-> > It'd better to mention "Qualcomm downstream" in the somewhere above comment to
-> > make it clear for users.
-> Ack
-> 
-> > 
-> >> + */
-> >> +
-> >> +#include <linux/debugfs.h>
-> >> +#include <linux/io.h>
-> >> +#include <linux/module.h>
-> >> +#include <linux/of.h>
-> >> +#include <linux/of_address.h>
-> >> +#include <linux/platform_device.h>
-> >> +
-> >> +struct master_stats_data {
-> >> +	void __iomem *base;
-> >> +	const char *label;
-> >> +};
-> >> +
-> >> +struct rpm_master_stats {
-> >> +	uint32_t active_cores;
-> >> +	uint32_t num_shutdowns;
-> >> +	uint64_t shutdown_req;
-> >> +	uint64_t wakeup_idx;
-> >> +	uint64_t bringup_req;
-> >> +	uint64_t bringup_ack;
-> >> +	uint32_t wakeup_reason; /* 0 = "rude wakeup", 1 = scheduled wakeup */
-> >> +	uint32_t last_sleep_trans_dur;
-> >> +	uint32_t last_wake_trans_dur;
-> >> +
-> >> +	/* Per-subsystem (*not necessarily* SoC-wide) XO shutdown stats */
-> >> +	uint32_t xo_count;
-> >> +	uint64_t xo_last_enter;
-> >> +	uint64_t last_exit;
-> >> +	uint64_t xo_total_dur;
-> > 
-> > Why can't you use u64, u32?
-> Brain derp!
-> 
-> > 
-> > Also, sort these members as below:
-> > 
-> > u64
-> > u32
-> No, it's the way this data is structured in the
-> memory and we copy it as a whole.
-> 
+Add bindings, driver and DT node for video clock controller on SM8450.
 
-Ok, in that case you'd need __packed.
+Taniya Das (3):
+  dt-bindings: clock: qcom: Add SM8450 video clock controller
+  clk: qcom: videocc-sm8450: Add video clock controller driver for
+    SM8450
+  arm64: dts: qcom: sm8450: Add video clock controller
 
-> > 
-> >> +};
-> >> +
+ .../bindings/clock/qcom,sm8450-videocc.yaml   |  84 ++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  13 +
+ drivers/clk/qcom/Kconfig                      |   9 +
+ drivers/clk/qcom/Makefile                     |   1 +
+ drivers/clk/qcom/videocc-sm8450.c             | 459 ++++++++++++++++++
+ .../dt-bindings/clock/qcom,videocc-sm8450.h   |  38 ++
+ 6 files changed, 604 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+ create mode 100644 drivers/clk/qcom/videocc-sm8450.c
+ create mode 100644 include/dt-bindings/clock/qcom,videocc-sm8450.h
 
-[...]
+--
+2.25.1
 
-> >> +		/*
-> >> +		 * Generally it's not advised to fail on debugfs errors, but this
-> >> +		 * driver's only job is exposing data therein.
-> >> +		 */
-> >> +		dent = debugfs_create_file(d[i].label, 0444, root,
-> >> +					   &d[i], &master_stats_fops);
-> >> +		if (!dent) {
-> > 
-> > Don't check for NULL, instead use IS_ERR() if you really care about error
-> > checking here.
-> "This function will return a pointer to a dentry if
-> it succeeds. This pointer must be passed to the
-> debugfs_remove function when the file is to be removed
-> (no automatic cleanup happens if your module is unloaded,
-> you are responsible here.) If an error occurs, NULL will
-> be returned."
-
-This seems to be the old comment. Take a look at the updated one in mainline:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/debugfs/inode.c#n468
-
-Greg changed the semantics of the debugfs APIs a while back but the kernel doc
-was updated recently:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/fs/debugfs/inode.c?id=d3002468cb5d5da11e22145c9af32facd5c34352
-
-- Mani
-
-> 
-> > 
-> >> +			debugfs_remove_recursive(root);
-> >> +			return -EINVAL;
-> >> +		}
-> >> +	}
-> >> +
-> >> +	device_set_pm_not_required(dev);
-> >> +
-> >> +	return 0;
-> >> +}
-> >> +
-> >> +static void master_stats_remove(struct platform_device *pdev)
-> >> +{
-> >> +	struct dentry *root = platform_get_drvdata(pdev);
-> >> +
-> >> +	debugfs_remove_recursive(root);
-> >> +}
-> >> +
-> >> +static const struct of_device_id rpm_master_table[] = {
-> >> +	{ .compatible = "qcom,rpm-master-stats" },
-> >> +	{ },
-> >> +};
-> >> +
-> >> +static struct platform_driver master_stats_driver = {
-> >> +	.probe = master_stats_probe,
-> >> +	.remove_new = master_stats_remove,
-> >> +	.driver = {
-> >> +		.name = "rpm_master_stats",
-> >> +		.of_match_table = rpm_master_table,
-> >> +	},
-> >> +};
-> >> +module_platform_driver(master_stats_driver);
-> >> +
-> >> +MODULE_DESCRIPTION("RPM Master Statistics driver");
-> > 
-> > Qualcomm RPM Master Statistics driver
-> Ack
-> 
-> Konrad
-> > 
-> > - Mani
-> > 
-> >> +MODULE_LICENSE("GPL");
-> >>
-> >> -- 
-> >> 2.40.0
-> >>
-> > 
-
--- 
-மணிவண்ணன் சதாசிவம்
