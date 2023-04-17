@@ -2,451 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E587F6E4E0E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 18:12:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F4896E4E63
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 18:39:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbjDQQMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 12:12:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37284 "EHLO
+        id S229789AbjDQQjM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 12:39:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjDQQMY (ORCPT
+        with ESMTP id S229515AbjDQQjK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 12:12:24 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE9496A4C;
-        Mon, 17 Apr 2023 09:12:21 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-1879edfeff5so13843132fac.4;
-        Mon, 17 Apr 2023 09:12:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681747941; x=1684339941;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GkKzT4bcROLCVBcYs3gEDIIt3nTkNakJkIt9AKA6thI=;
-        b=qoWHst+GVkbsiL4LxfR5gp8+QK8y6l6MajZNvRQzll5PuKbOPmrTY7tCYzvps7RDne
-         RzIV/9XnkOrZom4p+3AEFdHHvDWxE8p+WIzEc9WCxfG+28uocqnd6hJofw1K1x9GH3ZR
-         2Bhy9+jYbEv74izaAQxp1aFmt4fRhAhdQ181rfo5PizCMWB/6RSiavJDW2rX+b8A6z8E
-         tg5GZEsbYbF1+8cfZIrzYYbQm+Z2WbNtf06fLtiipNfmM1zEgnBNgiPS+sBmPC5u8x2I
-         zglt375sxX4TT/WqwSSylBatcTS7H2S9XxQoUb3XGouIev0Ohb2b7yJKihxT3LsN+IxV
-         2KXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681747941; x=1684339941;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GkKzT4bcROLCVBcYs3gEDIIt3nTkNakJkIt9AKA6thI=;
-        b=H/jfWoooJfYm8p1BsN/vOjsh2RRiizB77dS3hVKEHlh3jrct9yTk4YgprnCyPernl7
-         S9pg8XAS1fgTeR8SluTMbo34O0cViAswDSaLgeXbBOBaSvkPBGRhjmBKduqWH2b/2b0h
-         Ed2NAzEJibcfmznPrFfmuHc3CN3JIqMULPvxDNfAuQuLGHvwjKnAMJiVjqjQirxrfBBO
-         mUMBbWcApU8caKwkFFOMBtqhg2hos4ynCdg2uh+3oReQem84lT3IqthEF3diYa9xAN+g
-         YoykDcolM81j9ySA26YTAKal4VLhOLnHYJ9U5EVLAo+aWOGqsvPShW78S9C5kgrpwQlq
-         W0nw==
-X-Gm-Message-State: AAQBX9fJn2N+Qhr/iBjhWuyJWVIHcyDpZIBS6DVGqCUdK2Ol+8TnR8V0
-        V5O/sTvAEa5pIrElem2aCmdHFHK8i+vfcWU9/uw=
-X-Google-Smtp-Source: AKy350bVtDDWuth3q4M/sYslNDh+ieoZyn4kP+qoK4ZpYcH0aycYXKkcDFFhoIm8hmolMMfm4oZbHMf6MEOIPVnlciA=
-X-Received: by 2002:a05:6870:e99b:b0:186:d9e3:e279 with SMTP id
- r27-20020a056870e99b00b00186d9e3e279mr5834293oao.5.1681747940954; Mon, 17 Apr
- 2023 09:12:20 -0700 (PDT)
+        Mon, 17 Apr 2023 12:39:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563C56E8E;
+        Mon, 17 Apr 2023 09:39:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E3B1261182;
+        Mon, 17 Apr 2023 16:39:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF05C433EF;
+        Mon, 17 Apr 2023 16:39:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681749548;
+        bh=JCqP49Xpz85bHJtVkhJeBIQ8R7VedWXznxPSZaz5a90=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=gSIGsY6qXIZBY2NmJowvUhPOroGWnVYrnpjj4HZdKj0Loy/wX1y/xPyPuwYFUvvn+
+         co7RimQUmLGRtnUpjGKsE5ICf4LznyfxJdKLNrJhKG9zduhhxqq8la7D/XX438acy/
+         vayM/0atTfF7YHY/j1icwAFcAIrXbORhu/5XOrdnoKT6HXkg9shZkPnSZ0A9VuYHUw
+         7xwk6ljyzDwt62NfX80+9EJZNRSnRyazJ3g8BauDFFtcO339AIHkNCgYgkfimoFrKo
+         ABvdpia6wEBBeoawryExFPwqHBhlqku09RoYg8jBmycH2TzqjUolgLQfVyl6YZlu5N
+         AGVCKbHVg077g==
+Date:   Mon, 17 Apr 2023 17:39:01 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     Doug Anderson <dianders@chromium.org>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v3 3/3] spi: spi-qcom-qspi: Add DMA mode support
+Message-ID: <85225dd4-7ecd-4ce9-8447-184f749022fe@sirena.org.uk>
+References: <1681481153-24036-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1681481153-24036-4-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=VKY-0vX271G+EQQ5kC3gTqpPPyTGE0xHWPBncVUhZufQ@mail.gmail.com>
+ <30a752c9-3ea0-43d3-959a-da2e8b526cb4@sirena.org.uk>
+ <CAD=FV=VCbcUnf42tK-HV8j=71BXXytxku_0rGjKyhyR3WG4SUw@mail.gmail.com>
+ <46249e7e-ac2c-00d3-b3b0-7b15848e7b7c@quicinc.com>
 MIME-Version: 1.0
-References: <CAF6AEGsZsMx+Vy+4UQSx3X7w_QNvvjLqWxx=PnCLAOC9f-X2CQ@mail.gmail.com>
- <ZDb1phnddSne79iN@phenom.ffwll.local> <CAF6AEGvBeDVM12ac0j_PKSdcY83hNDhyrQs9-=h=dx_7AoMXLw@mail.gmail.com>
- <ZDcEGoSPGr/oRLas@phenom.ffwll.local> <c82fd8fa-9f4b-f62f-83be-25853f9ecf5e@linux.intel.com>
- <ZDgDQ1PqtXwu8zqA@phenom.ffwll.local> <ad8f2793-c1b3-a505-e93f-6cc52fded86d@linux.intel.com>
- <ZDhgcqiOtJi6//TS@phenom.ffwll.local> <8893ad56-8807-eb69-2185-b338725f0b18@linux.intel.com>
- <CAF6AEGtaiKMWsGxTSUHM7_s_Wqiw3=ta+g=arUxknJ0dxbYvFQ@mail.gmail.com>
- <ZDuoWC7TlvNa1OOm@phenom.ffwll.local> <09c8d794-bb64-f7ba-f854-f14ac30600a6@linux.intel.com>
- <CAF6AEGsvCBoS+uKyBESk_ZHm-H_nyMbVi0K4ND1Cfbw97QcYfQ@mail.gmail.com> <d9ceeb30-2275-0fe9-cdd7-ae3d7e696c8e@linux.intel.com>
-In-Reply-To: <d9ceeb30-2275-0fe9-cdd7-ae3d7e696c8e@linux.intel.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 17 Apr 2023 09:12:09 -0700
-Message-ID: <CAF6AEGud_JHfHG5npNU=60wcUrbhxVZkdw0V_6MMfk1mgznE-g@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] drm: Add fdinfo memory stats
-To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        linux-arm-msm@vger.kernel.org,
-        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Christopher Healy <healych@amazon.com>,
-        dri-devel@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="8OVq0bfjkI9I0UjH"
+Content-Disposition: inline
+In-Reply-To: <46249e7e-ac2c-00d3-b3b0-7b15848e7b7c@quicinc.com>
+X-Cookie: Two heads are more numerous than one.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 17, 2023 at 7:20=E2=80=AFAM Tvrtko Ursulin
-<tvrtko.ursulin@linux.intel.com> wrote:
->
->
-> On 17/04/2023 14:42, Rob Clark wrote:
-> > On Mon, Apr 17, 2023 at 4:10=E2=80=AFAM Tvrtko Ursulin
-> > <tvrtko.ursulin@linux.intel.com> wrote:
-> >>
-> >>
-> >> On 16/04/2023 08:48, Daniel Vetter wrote:
-> >>> On Fri, Apr 14, 2023 at 06:40:27AM -0700, Rob Clark wrote:
-> >>>> On Fri, Apr 14, 2023 at 1:57=E2=80=AFAM Tvrtko Ursulin
-> >>>> <tvrtko.ursulin@linux.intel.com> wrote:
-> >>>>>
-> >>>>>
-> >>>>> On 13/04/2023 21:05, Daniel Vetter wrote:
-> >>>>>> On Thu, Apr 13, 2023 at 05:40:21PM +0100, Tvrtko Ursulin wrote:
-> >>>>>>>
-> >>>>>>> On 13/04/2023 14:27, Daniel Vetter wrote:
-> >>>>>>>> On Thu, Apr 13, 2023 at 01:58:34PM +0100, Tvrtko Ursulin wrote:
-> >>>>>>>>>
-> >>>>>>>>> On 12/04/2023 20:18, Daniel Vetter wrote:
-> >>>>>>>>>> On Wed, Apr 12, 2023 at 11:42:07AM -0700, Rob Clark wrote:
-> >>>>>>>>>>> On Wed, Apr 12, 2023 at 11:17=E2=80=AFAM Daniel Vetter <danie=
-l@ffwll.ch> wrote:
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> On Wed, Apr 12, 2023 at 10:59:54AM -0700, Rob Clark wrote:
-> >>>>>>>>>>>>> On Wed, Apr 12, 2023 at 7:42=E2=80=AFAM Tvrtko Ursulin
-> >>>>>>>>>>>>> <tvrtko.ursulin@linux.intel.com> wrote:
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> On 11/04/2023 23:56, Rob Clark wrote:
-> >>>>>>>>>>>>>>> From: Rob Clark <robdclark@chromium.org>
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Add support to dump GEM stats to fdinfo.
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> v2: Fix typos, change size units to match docs, use div_u=
-64
-> >>>>>>>>>>>>>>> v3: Do it in core
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >>>>>>>>>>>>>>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
-> >>>>>>>>>>>>>>> ---
-> >>>>>>>>>>>>>>>        Documentation/gpu/drm-usage-stats.rst | 21 +++++++=
-+
-> >>>>>>>>>>>>>>>        drivers/gpu/drm/drm_file.c            | 76 +++++++=
-++++++++++++++++++++
-> >>>>>>>>>>>>>>>        include/drm/drm_file.h                |  1 +
-> >>>>>>>>>>>>>>>        include/drm/drm_gem.h                 | 19 +++++++
-> >>>>>>>>>>>>>>>        4 files changed, 117 insertions(+)
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Docu=
-mentation/gpu/drm-usage-stats.rst
-> >>>>>>>>>>>>>>> index b46327356e80..b5e7802532ed 100644
-> >>>>>>>>>>>>>>> --- a/Documentation/gpu/drm-usage-stats.rst
-> >>>>>>>>>>>>>>> +++ b/Documentation/gpu/drm-usage-stats.rst
-> >>>>>>>>>>>>>>> @@ -105,6 +105,27 @@ object belong to this client, in the=
- respective memory region.
-> >>>>>>>>>>>>>>>        Default unit shall be bytes with optional unit spe=
-cifiers of 'KiB' or 'MiB'
-> >>>>>>>>>>>>>>>        indicating kibi- or mebi-bytes.
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> +- drm-shared-memory: <uint> [KiB|MiB]
-> >>>>>>>>>>>>>>> +
-> >>>>>>>>>>>>>>> +The total size of buffers that are shared with another f=
-ile (ie. have more
-> >>>>>>>>>>>>>>> +than a single handle).
-> >>>>>>>>>>>>>>> +
-> >>>>>>>>>>>>>>> +- drm-private-memory: <uint> [KiB|MiB]
-> >>>>>>>>>>>>>>> +
-> >>>>>>>>>>>>>>> +The total size of buffers that are not shared with anoth=
-er file.
-> >>>>>>>>>>>>>>> +
-> >>>>>>>>>>>>>>> +- drm-resident-memory: <uint> [KiB|MiB]
-> >>>>>>>>>>>>>>> +
-> >>>>>>>>>>>>>>> +The total size of buffers that are resident in system me=
-mory.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> I think this naming maybe does not work best with the exis=
-ting
-> >>>>>>>>>>>>>> drm-memory-<region> keys.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> Actually, it was very deliberate not to conflict with the e=
-xisting
-> >>>>>>>>>>>>> drm-memory-<region> keys ;-)
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> I wouldn't have preferred drm-memory-{active,resident,...} =
-but it
-> >>>>>>>>>>>>> could be mis-parsed by existing userspace so my hands were =
-a bit tied.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>>> How about introduce the concept of a memory region from th=
-e start and
-> >>>>>>>>>>>>>> use naming similar like we do for engines?
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> drm-memory-$CATEGORY-$REGION: ...
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Then we document a bunch of categories and their semantics=
-, for instance:
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> 'size' - All reachable objects
-> >>>>>>>>>>>>>> 'shared' - Subset of 'size' with handle_count > 1
-> >>>>>>>>>>>>>> 'resident' - Objects with backing store
-> >>>>>>>>>>>>>> 'active' - Objects in use, subset of resident
-> >>>>>>>>>>>>>> 'purgeable' - Or inactive? Subset of resident.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> We keep the same semantics as with process memory accounti=
-ng (if I got
-> >>>>>>>>>>>>>> it right) which could be desirable for a simplified mental=
- model.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> (AMD needs to remind me of their 'drm-memory-...' keys sem=
-antics. If we
-> >>>>>>>>>>>>>> correctly captured this in the first round it should be eq=
-uivalent to
-> >>>>>>>>>>>>>> 'resident' above. In any case we can document no category =
-is equal to
-> >>>>>>>>>>>>>> which category, and at most one of the two must be output.=
-)
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Region names we at most partially standardize. Like we cou=
-ld say
-> >>>>>>>>>>>>>> 'system' is to be used where backing store is system RAM a=
-nd others are
-> >>>>>>>>>>>>>> driver defined.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Then discrete GPUs could emit N sets of key-values, one fo=
-r each memory
-> >>>>>>>>>>>>>> region they support.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> I think this all also works for objects which can be migra=
-ted between
-> >>>>>>>>>>>>>> memory regions. 'Size' accounts them against all regions w=
-hile for
-> >>>>>>>>>>>>>> 'resident' they only appear in the region of their current=
- placement, etc.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> I'm not too sure how to rectify different memory regions wi=
-th this,
-> >>>>>>>>>>>>> since drm core doesn't really know about the driver's memor=
-y regions.
-> >>>>>>>>>>>>> Perhaps we can go back to this being a helper and drivers w=
-ith vram
-> >>>>>>>>>>>>> just don't use the helper?  Or??
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> I think if you flip it around to drm-$CATEGORY-memory{-$REGI=
-ON}: then it
-> >>>>>>>>>>>> all works out reasonably consistently?
-> >>>>>>>>>>>
-> >>>>>>>>>>> That is basically what we have now.  I could append -system t=
-o each to
-> >>>>>>>>>>> make things easier to add vram/etc (from a uabi standpoint)..
-> >>>>>>>>>>
-> >>>>>>>>>> What you have isn't really -system, but everything. So doesn't=
- really make
-> >>>>>>>>>> sense to me to mark this -system, it's only really true for in=
-tegrated (if
-> >>>>>>>>>> they don't have stolen or something like that).
-> >>>>>>>>>>
-> >>>>>>>>>> Also my comment was more in reply to Tvrtko's suggestion.
-> >>>>>>>>>
-> >>>>>>>>> Right so my proposal was drm-memory-$CATEGORY-$REGION which I t=
-hink aligns
-> >>>>>>>>> with the current drm-memory-$REGION by extending, rather than c=
-reating
-> >>>>>>>>> confusion with different order of key name components.
-> >>>>>>>>
-> >>>>>>>> Oh my comment was pretty much just bikeshed, in case someone cre=
-ates a
-> >>>>>>>> $REGION that other drivers use for $CATEGORY. Kinda Rob's parsin=
-g point.
-> >>>>>>>> So $CATEGORY before the -memory.
-> >>>>>>>>
-> >>>>>>>> Otoh I don't think that'll happen, so I guess we can go with wha=
-tever more
-> >>>>>>>> folks like :-) I don't really care much personally.
-> >>>>>>>
-> >>>>>>> Okay I missed the parsing problem.
-> >>>>>>>
-> >>>>>>>>> AMD currently has (among others) drm-memory-vram, which we coul=
-d define in
-> >>>>>>>>> the spec maps to category X, if category component is not prese=
-nt.
-> >>>>>>>>>
-> >>>>>>>>> Some examples:
-> >>>>>>>>>
-> >>>>>>>>> drm-memory-resident-system:
-> >>>>>>>>> drm-memory-size-lmem0:
-> >>>>>>>>> drm-memory-active-vram:
-> >>>>>>>>>
-> >>>>>>>>> Etc.. I think it creates a consistent story.
-> >>>>>>>>>
-> >>>>>>>>> Other than this, my two I think significant opens which haven't=
- been
-> >>>>>>>>> addressed yet are:
-> >>>>>>>>>
-> >>>>>>>>> 1)
-> >>>>>>>>>
-> >>>>>>>>> Why do we want totals (not per region) when userspace can trivi=
-ally
-> >>>>>>>>> aggregate if they want. What is the use case?
-> >>>>>>>>>
-> >>>>>>>>> 2)
-> >>>>>>>>>
-> >>>>>>>>> Current proposal limits the value to whole objects and fixates =
-that by
-> >>>>>>>>> having it in the common code. If/when some driver is able to su=
-pport sub-BO
-> >>>>>>>>> granularity they will need to opt out of the common printer at =
-which point
-> >>>>>>>>> it may be less churn to start with a helper rather than mid-lay=
-er. Or maybe
-> >>>>>>>>> some drivers already support this, I don't know. Given how impo=
-rtant VM BIND
-> >>>>>>>>> is I wouldn't be surprised.
-> >>>>>>>>
-> >>>>>>>> I feel like for drivers using ttm we want a ttm helper which tak=
-es care of
-> >>>>>>>> the region printing in hopefully a standard way. And that could =
-then also
-> >>>>>>>> take care of all kinds of of partial binding and funny rules (li=
-ke maybe
-> >>>>>>>> we want a standard vram region that addds up all the lmem region=
-s on
-> >>>>>>>> intel, so that all dgpu have a common vram bucket that generic t=
-ools
-> >>>>>>>> understand?).
-> >>>>>>>
-> >>>>>>> First part yes, but for the second I would think we want to avoid=
- any
-> >>>>>>> aggregation in the kernel which can be done in userspace just as =
-well. Such
-> >>>>>>> total vram bucket would be pretty useless on Intel even since use=
-rspace
-> >>>>>>> needs to be region aware to make use of all resources. It could e=
-ven be
-> >>>>>>> counter productive I think - "why am I getting out of memory when=
- half of my
-> >>>>>>> vram is unused!?".
-> >>>>>>
-> >>>>>> This is not for intel-aware userspace. This is for fairly generic =
-"gputop"
-> >>>>>> style userspace, which might simply have no clue or interest in wh=
-at lmemX
-> >>>>>> means, but would understand vram.
-> >>>>>>
-> >>>>>> Aggregating makes sense.
-> >>>>>
-> >>>>> Lmem vs vram is now an argument not about aggregation but about
-> >>>>> standardizing regions names.
-> >>>>>
-> >>>>> One detail also is a change in philosophy compared to engine stats =
-where
-> >>>>> engine names are not centrally prescribed and it was expected users=
-pace
-> >>>>> will have to handle things generically and with some vendor specifi=
-c
-> >>>>> knowledge.
-> >>>>>
-> >>>>> Like in my gputop patches. It doesn't need to understand what is wh=
-at,
-> >>>>> it just finds what's there and presents it to the user.
-> >>>>>
-> >>>>> Come some accel driver with local memory it wouldn't be vram any mo=
-re.
-> >>>>> Or even a headless data center GPU. So I really don't think it is g=
-ood
-> >>>>> to hardcode 'vram' in the spec, or midlayer, or helpers.
-> >>>>>
-> >>>>> And for aggregation.. again, userspace can do it just as well. If w=
-e do
-> >>>>> it in kernel then immediately we have multiple sets of keys to outp=
-ut
-> >>>>> for any driver which wants to show the region view. IMO it is just
-> >>>>> pointless work in the kernel and more code in the kernel, when user=
-space
-> >>>>> can do it.
-> >>>>>
-> >>>>> Proposal A (one a discrete gpu, one category only):
-> >>>>>
-> >>>>> drm-resident-memory: x KiB
-> >>>>> drm-resident-memory-system: x KiB
-> >>>>> drm-resident-memory-vram: x KiB
-> >>>>>
-> >>>>> Two loops in the kernel, more parsing in userspace.
-> >>>>
-> >>>> why would it be more than one loop, ie.
-> >>>>
-> >>>>       mem.resident +=3D size;
-> >>>>       mem.category[cat].resident +=3D size;
-> >>>>
-> >>>> At the end of the day, there is limited real-estate to show a millio=
-n
-> >>>> different columns of information.  Even the gputop patches I posted
-> >>>> don't show everything of what is currently there.  And nvtop only
-> >>>> shows toplevel resident stat.  So I think the "everything" stat is
-> >>>> going to be what most tools use.
-> >>>
-> >>> Yeah with enough finesse the double-loop isn't needed, it's just the
-> >>> simplest possible approach.
-> >>>
-> >>> Also this is fdinfo, I _really_ want perf data showing that it's a
-> >>> real-world problem when we conjecture about algorithmic complexity.
-> >>> procutils have been algorithmically garbage since decades after all :=
--)
-> >>
-> >> Just run it. :)
-> >>
-> >> Algorithmic complexity is quite obvious and not a conjecture - to find
-> >> DRM clients you have to walk _all_ pids and _all_ fds under them. So
-> >> amount of work can scale very quickly and even _not_ with the number o=
-f
-> >> DRM clients.
-> >>
-> >> It's not too bad on my desktop setup but it is significantly more CPU
-> >> intensive than top(1).
-> >>
-> >> It would be possible to optimise the current code some more by not
-> >> parsing full fdinfo (may become more important as number of keys grow)=
-,
-> >> but that's only relevant when number of drm fds is large. It doesn't
-> >> solve the basic pids * open fds search for which we'd need a way to wa=
-lk
-> >> the list of pids with drm fds directly.
-> >
-> > All of which has (almost[1]) nothing to do with one loop or two
->
-> Correct, this was just a side discussion where I understood Daniel is
-> asking about the wider performance story. Perhaps I misunderstood.
->
-> > (ignoring for a moment that I already pointed out a single loop is all
-> > that is needed).  If CPU overhead is a problem, we could perhaps come
-> > up some sysfs which has one file per drm_file and side-step crawling
-> > of all of the proc * fd.  I'll play around with it some but I'm pretty
-> > sure you are trying to optimize the wrong thing.
->
-> Yes, that's what I meant too in "a way to walk the list of pids with drm
-> fds directly".
 
-Just to follow up, I did a quick hack to loop and print the mem
-stats.. 5x loops I couldn't really measure any increase in gputop CPU
-utilization.  At 50x loops I could measure a small increase.  Without
-additional looping to artificially increase the cost, nothing drm
-related shows up in a perf-record of gputop.
+--8OVq0bfjkI9I0UjH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-What could be an easy optimization, if it can be accessed, is to parse
-/sys/kernel/debug/dri/<n>/clients to get the list of pid's of
-processes with the drm device open.  This would cut down quite a bit
-the # of pid's to examine.
+On Mon, Apr 17, 2023 at 09:27:16PM +0530, Vijaya Krishna Nivarthi wrote:
 
-BR,
--R
+> However, Like Doug pointed, dma_alignment is not being used by core.
 
-> Regards,
->
-> Tvrtko
->
-> >
-> > BR,
-> > -R
-> >
-> > [1] generally a single process using drm has multiple fd's pointing at
-> > the same drm_file.. which makes the current approach of having to read
-> > fdinfo to find the client-id sub-optimal.  But still the total # of
-> > proc * fd is much larger
+The core will use kmalloc() for any new buffers it allocates, this is
+guaranteed to satisfy DMA constraints.
+
+> Is it up to the SPI consumers to read this and ensure they are providing
+> dmaable buffers of required alignment?
+
+If they're doing anything fun for allocation.  Or they can just use
+kmalloc() themselves.
+
+> The dma_addresses coming from core are aligned for larger sized buffers but
+> for small ones like 1 and 3 bytes they are not aligned.
+
+In theory even buffers that small should be DMA safe, in practice that
+rarely matters since it's vanishingly rare that it's sensible to DMA
+such tiny buffers rather than PIOing them so drivers will tend to never
+actually try to do so and I'd expect bugs.  It is likely worth checking
+that DMA makes sense for this hardware.
+
+> I have not checked the spi-nor driver, but is it the consumer driver's job
+> to ensure required alignment in all cases?
+
+Yes.
+
+--8OVq0bfjkI9I0UjH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmQ9diQACgkQJNaLcl1U
+h9AnLwf/SFrq8jwQOq601LZUGWq/RZOBA8bDTO1wfWl54flsCjecwLtsvd9kSxAu
+RnvPBbH8WYfqFWPPqrNhFXCLnLQUAopOnN2jv1l4qU+JXtAaWh64c/6tzoDFIlH6
+zrYIjh7HhLcxd72py5K9AXJwYFI+VtKCq08obGiUICl9PwZbOxJZnehf7wFnJhKM
+J93W7fU9FohfKY35qWab854R+xgi5b53NJN5GkuvG+t43QOV1ERFYT26GyHdjKtI
+UEiqahdm+2iw6i0xxqIeurkjasM63IXU+K/F4Te+rGPda7wwXQpzTUt3muhnXx2f
+5Ls7OU3Ht8KLYxk8ckc6BUuI5f8fBg==
+=m+st
+-----END PGP SIGNATURE-----
+
+--8OVq0bfjkI9I0UjH--
