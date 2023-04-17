@@ -2,93 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 510F56E4181
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 09:42:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DEC16E41A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 09:55:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbjDQHms (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 03:42:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60082 "EHLO
+        id S230499AbjDQHzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 03:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230135AbjDQHmZ (ORCPT
+        with ESMTP id S230426AbjDQHzK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 03:42:25 -0400
+        Mon, 17 Apr 2023 03:55:10 -0400
 Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B0E846AF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:42:04 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id xi5so61665478ejb.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:42:04 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0923AB6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:55:06 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id sz19so4668052ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 00:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681717323; x=1684309323;
+        d=linaro.org; s=google; t=1681718105; x=1684310105;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZBiaQbvW+f05yQSrBNW13pqQ6G/hNkW2GoKFWQO/n/g=;
-        b=BWVFVStz2TZHg3ZxnAeX58llS391Y5YW45v1H/Wj/za7UAMQ/U2EIg9xUXno1N2532
-         yfeq2VllMs15/bAoNVsv1S/PHVYTwcrJYV+UH+1aYoeB+U/xLPs05Sw1XMEeFervVJXA
-         iRPfEyPlI7rwiIa55iWwT01FY6LgCIWAwLosspyK0Th1wtIAA7bF0Axdi0DJbiMlfHAO
-         jneq/k5nscQ+6V93Ylp/AMIndHitlfemaTUQATEpP1AipjzLYbTPY7TJyv56O9KJcQ3a
-         CvXLsyD9coNZ1MQMger/50SwAOqZJFY4IQenSBhjDdgQwSpadymR9TFSq6j/cEUFGdhZ
-         IlqA==
+        bh=04X9YyS+WRM9ueLmwKNRcEhK8aDEU6JqEoi8mu6JJQg=;
+        b=f7bIgFtbo3iG9YB1+2z34kflvvNdStH3Uoi9DdZ0wi2w17qQ++kRvLpHhqTLCWvQZp
+         +lFl70n+xuxmFbNFepSyM79s2+oP3pqShyI/Uf5xmel3Um0NXDVEGE1R/ZndMcexW/vo
+         n7IsuvG5zeRGPpXN53gTG4aeEgtrZ9L918lca5Akqx1BokuzHMA/kwxPl1jVw/WMTYy/
+         8lURqrqNVwbmT10S49PR8q+Opy0F8SJcBokglHu+lOyWQMvlT6j4eerebQY7KPzM12W4
+         ic4tIN0IqpUekLtbvZqGUh0C8zN2m0Is7YzCdmO3zauc/ckVt2i0LvFx8h6KHRgeuNBD
+         pBag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681717323; x=1684309323;
+        d=1e100.net; s=20221208; t=1681718105; x=1684310105;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZBiaQbvW+f05yQSrBNW13pqQ6G/hNkW2GoKFWQO/n/g=;
-        b=dQld6ER+rv+XpXFRfUblWcNA2K2ZicEA7KKdZpJ99SMyHi9xqlPv2ncdU/nRMrGZYu
-         J1kbaF1q74OvuSUCwGm6RmtPs4oG4dO9OmjLKax2YNq8xoR6+25p6140g5Yh50sejfqW
-         t8FIMQIKYNICt1I4q485rPjUnI6RJfYLdmr6hr/TwKzXl4dsoinzw3tMeCOCElS8FmFf
-         wdWO+0hlfcCVciB0eKV5ERM5JA8qExsKw8hSto377MhAkmqEhoVmFqdCCKSCH8rjrvqp
-         xh4VhW0SdbyJJUx/B9VVEjDmwvgBE4DlgDXC1Mie5bbT9C2aJpa4N3YNI+I3mMNiskmd
-         ii4w==
-X-Gm-Message-State: AAQBX9dcKTh4ZIh8lZYcHAkb1qUQV3YyhUXhGxHq9sYnBZ+/SQWK34oG
-        gQQMC6QXTm3PoUqQrA/vMlyByw==
-X-Google-Smtp-Source: AKy350ZmsfvJTFbRNzbkxIlUN6HAa/DkrjY5d4PnMB+7i9O3ynFoVvsgVAHuco6uK74EiX+VYZRYSg==
-X-Received: by 2002:a17:906:fc04:b0:94a:96c4:2361 with SMTP id ov4-20020a170906fc0400b0094a96c42361mr7411772ejb.73.1681717322537;
-        Mon, 17 Apr 2023 00:42:02 -0700 (PDT)
-Received: from [192.168.2.1] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.googlemail.com with ESMTPSA id hw10-20020a170907a0ca00b0094ebc041e20sm5548397ejc.46.2023.04.17.00.41.59
+        bh=04X9YyS+WRM9ueLmwKNRcEhK8aDEU6JqEoi8mu6JJQg=;
+        b=Q2Mq7rvZixKF7j+tfE1IVSguFVDcwTksL/2rr1ZSroubiWJjj/05986RWQi4QEzEK+
+         4CqyV8nNTqd77fV6DHATeZjek7vhz2JagVGPs1U2o66Pq229f4kIyP3eYS99DmC6cb+b
+         sYvTOxj1oKcsmN+B3N2QfG7MV16rmDHe95ojuHZ7l3jXzjE5BEtZinRw2q2vv60H8kNm
+         9iqFfgxhhcK7+B+QEOCJ3pu5DjAsdeusTDPG5Fi/zwCs2D7klAzjTc7KNbttT26gkWSB
+         AFzp9JRIQxvNS3sTcsPUUrkBvbE5Vs1RmYnUAGtB9wbeUfaj2JJW4vTqOnSOLrJwJHeS
+         I0vw==
+X-Gm-Message-State: AAQBX9e3Rkbfy06dpdeg7m4w6CM7RvhSnhyiBS+Mcza/iO/zkNMPYtMx
+        cuvk2fG9h93mVD0aNnO/EA5SBQ==
+X-Google-Smtp-Source: AKy350ap2ETRFcAZiOVu5L5wZXGxbHGbZstaUB32EeY+kKy5jiLzynUjnJpGw4e3u80X65R+Cbf8Dw==
+X-Received: by 2002:a17:906:c455:b0:94f:17b7:5db3 with SMTP id ck21-20020a170906c45500b0094f17b75db3mr5709683ejb.20.1681718105164;
+        Mon, 17 Apr 2023 00:55:05 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:b0ac:4d3b:966c:b33d? ([2a02:810d:15c0:828:b0ac:4d3b:966c:b33d])
+        by smtp.gmail.com with ESMTPSA id r10-20020a17090638ca00b0094a44867e0asm6236255ejd.52.2023.04.17.00.55.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 00:42:02 -0700 (PDT)
-Message-ID: <faa533bc-e34c-a2f3-2d46-ed900e8d6be2@linaro.org>
-Date:   Mon, 17 Apr 2023 09:41:59 +0200
+        Mon, 17 Apr 2023 00:55:04 -0700 (PDT)
+Message-ID: <b46028dc-b539-384c-78aa-2f5e6f6516f2@linaro.org>
+Date:   Mon, 17 Apr 2023 09:55:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v4 3/5] dt-bindings: thermal: Use generic ADC node name in
- examples
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 03/18] dt-bindings: interrupt-controller: qcom-pdc: add
+ compatible for sa8775p
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-pm@vger.kernel.org
-References: <20230410202917.247666-1-marijn.suijten@somainline.org>
- <20230410202917.247666-4-marijn.suijten@somainline.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230410202917.247666-4-marijn.suijten@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>
+References: <20230327125316.210812-1-brgl@bgdev.pl>
+ <20230327125316.210812-4-brgl@bgdev.pl>
+ <CAMRc=Mfe6gCM=Mz6Can6xsSsrjX-9T_aR2Yev+b57koky_az-A@mail.gmail.com>
+ <CAMRc=Mfw+4Co8JPz51_E+DSawijO8EB6rMmFXEmM0e5F3Fg_8A@mail.gmail.com>
+ <3877cb9e-9647-0acf-f705-d34fe2c731ff@linaro.org>
+ <CAMRc=MeT4VLiLu5DJSXHqDdZv2gEoC-B7aPvoXVpc3SokQcrFg@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAMRc=MeT4VLiLu5DJSXHqDdZv2gEoC-B7aPvoXVpc3SokQcrFg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,22 +89,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/04/2023 22:29, Marijn Suijten wrote:
-> Update the examples to reflect a future requirement for the generic
-> `channel` node name on ADC channel nodes, while conveying the board name
-> of the channel in a label instead.
+On 17/04/2023 09:27, Bartosz Golaszewski wrote:
+> On Sun, Apr 16, 2023 at 5:04 PM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 14/04/2023 11:33, Bartosz Golaszewski wrote:
+>>> On Thu, Apr 6, 2023 at 4:10 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>>
+>>>> On Mon, Mar 27, 2023 at 2:53 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>>>>
+>>>>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>>>
+>>>>> Add a compatible for the Power Domain Controller on SA8775p platforms.
+>>>>> Increase the number of PDC pin mappings.
+>>>>>
+>>>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>>> Cc: Thomas Gleixner <tglx@linutronix.de>
+>>>>> Cc: Marc Zyngier <maz@kernel.org>
+>>>>> ---
+>>>>>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml     | 3 ++-
+>>>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>>>> index 94791e261c42..641ff32e4a6c 100644
+>>>>> --- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+>>>>> @@ -26,6 +26,7 @@ properties:
+>>>>>    compatible:
+>>>>>      items:
+>>>>>        - enum:
+>>>>> +          - qcom,sa8775p-pdc
+>>>>>            - qcom,sc7180-pdc
+>>>>>            - qcom,sc7280-pdc
+>>>>>            - qcom,sc8280xp-pdc
+>>>>> @@ -53,7 +54,7 @@ properties:
+>>>>>    qcom,pdc-ranges:
+>>>>>      $ref: /schemas/types.yaml#/definitions/uint32-matrix
+>>>>>      minItems: 1
+>>>>> -    maxItems: 32 # no hard limit
+>>>>> +    maxItems: 38 # no hard limit
+>>
+>> I don't think the limit is correct. I still see warnings with this
+>> patch. We already have 57 elements, so limit should be I guess 128 or
+>> something.
+>>
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
+> You mean for other platforms? This limit applies to sa8775p as the
 
+I see errors on sa8775p.
 
-Applied, thanks
+> goal of the patch is to add its own PDC compatible. If other platforms
+> have more interrupts then we need to fix it first with a separate
+> commit IMO. I'll send out two patches for that.
 
-
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+Best regards,
+Krzysztof
 
