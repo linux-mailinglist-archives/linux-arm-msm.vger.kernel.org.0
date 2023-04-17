@@ -2,382 +2,331 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7716E45FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 13:04:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47B8E6E4618
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 13:12:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbjDQLEI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 07:04:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59618 "EHLO
+        id S231186AbjDQLMv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 07:12:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230391AbjDQLD4 (ORCPT
+        with ESMTP id S230378AbjDQLMu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 07:03:56 -0400
+        Mon, 17 Apr 2023 07:12:50 -0400
 Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E0DD8;
-        Mon, 17 Apr 2023 04:02:58 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A8E4135;
+        Mon, 17 Apr 2023 04:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1681729378; x=1713265378;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=nskN3+3aY62Sps5EKjkYwMD5AXkHIjQ/ugdoImiwsxs=;
-  b=HXNno1Z3PvAb2BNs4DJ+ozk/s6pfzIsZaXP1MrNkvlaZ09zQr8vIpeGU
-   2o1J2mfYJbLUKuSs1IP5W0csaW5CT+0hNbZRx8TSAsmaf/VAzjgQxlaLz
-   jiKfJMqfCeoBSr4l1GUcCH//fDfF/lVJpfkEp+QFa6maGknZsATQDoFAl
-   1D71EmYd7AGM1pEXP98+oNhe90+ZU/lJEG1MayT5GoIYWnwvZStG0TrZX
-   lowtAwNSz+rPWxliVLb/xssXPP0Ij9DYvRB0XBG0U/c3ocn1eMEOhrl6e
-   0pyYwhL0p+9bNUD+E321X4AQlVuKCs4YKm/VY8TM3WiYY9SlE4LM6FKNf
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10682"; a="333657531"
-X-IronPort-AV: E=Sophos;i="5.99,203,1677571200"; 
-   d="scan'208";a="333657531"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2023 04:02:46 -0700
+  t=1681729909; x=1713265909;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=iRmXXXS91Y7uC4yhoOdURFhhO7AKPLHUqfPEQ2lSuxA=;
+  b=SJ3+9SoKU9JvUCm1K4+CZFDSqPAmD6gzCH+uyhp3DGhIE0AU3pfLGK2e
+   wtnH7g6OkNy3U+AvkORFdSw8XDuNyPl0CHTSXADjuAWorydz7HU83+Jsr
+   85BX1WjnLCmWAUaQHJnt+e+aeKeC5H0ajRdGkBcDJQv7XRRNi8TDJ3l45
+   S+IImAMIgJOCJ36WZK4nhEjCfGXGygMHGXlLeBhDjfNmEAKkKjek1tZfE
+   v2N6VbVGKHTj8WsNHh42mMwZhdp5wRfOme4dHZphv+xos1CtiJobsI7M3
+   HdCf0XIoKop1YThmqgQCqnnQARMEbjkRotTDxBDEygWF8IpuY6tCvE1xs
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10682"; a="333658990"
+X-IronPort-AV: E=Sophos;i="5.99,204,1677571200"; 
+   d="scan'208";a="333658990"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2023 04:10:14 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10682"; a="693208944"
-X-IronPort-AV: E=Sophos;i="5.99,203,1677571200"; 
-   d="scan'208";a="693208944"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 17 Apr 2023 04:02:42 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1poMd7-000cIt-35;
-        Mon, 17 Apr 2023 11:02:41 +0000
-Date:   Mon, 17 Apr 2023 19:02:29 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Shuai Jiang <d202180596@hust.edu.cn>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        hust-os-kernel-patches@googlegroups.com,
-        Shuai Jiang <d202180596@hust.edu.cn>
-Subject: Re: [PATCH] Subject: drivers:i2c:busses:i2c-qup.c: Add missing
- unwind goto in qup_i2c_probe()
-Message-ID: <202304171850.t2PGRDnv-lkp@intel.com>
-References: <20230416164146.7750-1-d202180596@hust.edu.cn>
+X-IronPort-AV: E=McAfee;i="6600,9927,10682"; a="864965154"
+X-IronPort-AV: E=Sophos;i="5.99,204,1677571200"; 
+   d="scan'208";a="864965154"
+Received: from gtohallo-mobl.ger.corp.intel.com (HELO [10.213.232.210]) ([10.213.232.210])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2023 04:10:11 -0700
+Message-ID: <09c8d794-bb64-f7ba-f854-f14ac30600a6@linux.intel.com>
+Date:   Mon, 17 Apr 2023 12:10:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230416164146.7750-1-d202180596@hust.edu.cn>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 6/7] drm: Add fdinfo memory stats
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        linux-arm-msm@vger.kernel.org,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Christopher Healy <healych@amazon.com>,
+        dri-devel@lists.freedesktop.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        freedreno@lists.freedesktop.org
+References: <CAF6AEGsZsMx+Vy+4UQSx3X7w_QNvvjLqWxx=PnCLAOC9f-X2CQ@mail.gmail.com>
+ <ZDb1phnddSne79iN@phenom.ffwll.local>
+ <CAF6AEGvBeDVM12ac0j_PKSdcY83hNDhyrQs9-=h=dx_7AoMXLw@mail.gmail.com>
+ <ZDcEGoSPGr/oRLas@phenom.ffwll.local>
+ <c82fd8fa-9f4b-f62f-83be-25853f9ecf5e@linux.intel.com>
+ <ZDgDQ1PqtXwu8zqA@phenom.ffwll.local>
+ <ad8f2793-c1b3-a505-e93f-6cc52fded86d@linux.intel.com>
+ <ZDhgcqiOtJi6//TS@phenom.ffwll.local>
+ <8893ad56-8807-eb69-2185-b338725f0b18@linux.intel.com>
+ <CAF6AEGtaiKMWsGxTSUHM7_s_Wqiw3=ta+g=arUxknJ0dxbYvFQ@mail.gmail.com>
+ <ZDuoWC7TlvNa1OOm@phenom.ffwll.local>
+From:   Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Organization: Intel Corporation UK Plc
+In-Reply-To: <ZDuoWC7TlvNa1OOm@phenom.ffwll.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        NICE_REPLY_A,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shuai,
 
-kernel test robot noticed the following build errors:
+On 16/04/2023 08:48, Daniel Vetter wrote:
+> On Fri, Apr 14, 2023 at 06:40:27AM -0700, Rob Clark wrote:
+>> On Fri, Apr 14, 2023 at 1:57 AM Tvrtko Ursulin
+>> <tvrtko.ursulin@linux.intel.com> wrote:
+>>>
+>>>
+>>> On 13/04/2023 21:05, Daniel Vetter wrote:
+>>>> On Thu, Apr 13, 2023 at 05:40:21PM +0100, Tvrtko Ursulin wrote:
+>>>>>
+>>>>> On 13/04/2023 14:27, Daniel Vetter wrote:
+>>>>>> On Thu, Apr 13, 2023 at 01:58:34PM +0100, Tvrtko Ursulin wrote:
+>>>>>>>
+>>>>>>> On 12/04/2023 20:18, Daniel Vetter wrote:
+>>>>>>>> On Wed, Apr 12, 2023 at 11:42:07AM -0700, Rob Clark wrote:
+>>>>>>>>> On Wed, Apr 12, 2023 at 11:17 AM Daniel Vetter <daniel@ffwll.ch> wrote:
+>>>>>>>>>>
+>>>>>>>>>> On Wed, Apr 12, 2023 at 10:59:54AM -0700, Rob Clark wrote:
+>>>>>>>>>>> On Wed, Apr 12, 2023 at 7:42 AM Tvrtko Ursulin
+>>>>>>>>>>> <tvrtko.ursulin@linux.intel.com> wrote:
+>>>>>>>>>>>>
+>>>>>>>>>>>>
+>>>>>>>>>>>> On 11/04/2023 23:56, Rob Clark wrote:
+>>>>>>>>>>>>> From: Rob Clark <robdclark@chromium.org>
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Add support to dump GEM stats to fdinfo.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> v2: Fix typos, change size units to match docs, use div_u64
+>>>>>>>>>>>>> v3: Do it in core
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>>>>>>>>>>>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+>>>>>>>>>>>>> ---
+>>>>>>>>>>>>>       Documentation/gpu/drm-usage-stats.rst | 21 ++++++++
+>>>>>>>>>>>>>       drivers/gpu/drm/drm_file.c            | 76 +++++++++++++++++++++++++++
+>>>>>>>>>>>>>       include/drm/drm_file.h                |  1 +
+>>>>>>>>>>>>>       include/drm/drm_gem.h                 | 19 +++++++
+>>>>>>>>>>>>>       4 files changed, 117 insertions(+)
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Documentation/gpu/drm-usage-stats.rst
+>>>>>>>>>>>>> index b46327356e80..b5e7802532ed 100644
+>>>>>>>>>>>>> --- a/Documentation/gpu/drm-usage-stats.rst
+>>>>>>>>>>>>> +++ b/Documentation/gpu/drm-usage-stats.rst
+>>>>>>>>>>>>> @@ -105,6 +105,27 @@ object belong to this client, in the respective memory region.
+>>>>>>>>>>>>>       Default unit shall be bytes with optional unit specifiers of 'KiB' or 'MiB'
+>>>>>>>>>>>>>       indicating kibi- or mebi-bytes.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> +- drm-shared-memory: <uint> [KiB|MiB]
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>> +The total size of buffers that are shared with another file (ie. have more
+>>>>>>>>>>>>> +than a single handle).
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>> +- drm-private-memory: <uint> [KiB|MiB]
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>> +The total size of buffers that are not shared with another file.
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>> +- drm-resident-memory: <uint> [KiB|MiB]
+>>>>>>>>>>>>> +
+>>>>>>>>>>>>> +The total size of buffers that are resident in system memory.
+>>>>>>>>>>>>
+>>>>>>>>>>>> I think this naming maybe does not work best with the existing
+>>>>>>>>>>>> drm-memory-<region> keys.
+>>>>>>>>>>>
+>>>>>>>>>>> Actually, it was very deliberate not to conflict with the existing
+>>>>>>>>>>> drm-memory-<region> keys ;-)
+>>>>>>>>>>>
+>>>>>>>>>>> I wouldn't have preferred drm-memory-{active,resident,...} but it
+>>>>>>>>>>> could be mis-parsed by existing userspace so my hands were a bit tied.
+>>>>>>>>>>>
+>>>>>>>>>>>> How about introduce the concept of a memory region from the start and
+>>>>>>>>>>>> use naming similar like we do for engines?
+>>>>>>>>>>>>
+>>>>>>>>>>>> drm-memory-$CATEGORY-$REGION: ...
+>>>>>>>>>>>>
+>>>>>>>>>>>> Then we document a bunch of categories and their semantics, for instance:
+>>>>>>>>>>>>
+>>>>>>>>>>>> 'size' - All reachable objects
+>>>>>>>>>>>> 'shared' - Subset of 'size' with handle_count > 1
+>>>>>>>>>>>> 'resident' - Objects with backing store
+>>>>>>>>>>>> 'active' - Objects in use, subset of resident
+>>>>>>>>>>>> 'purgeable' - Or inactive? Subset of resident.
+>>>>>>>>>>>>
+>>>>>>>>>>>> We keep the same semantics as with process memory accounting (if I got
+>>>>>>>>>>>> it right) which could be desirable for a simplified mental model.
+>>>>>>>>>>>>
+>>>>>>>>>>>> (AMD needs to remind me of their 'drm-memory-...' keys semantics. If we
+>>>>>>>>>>>> correctly captured this in the first round it should be equivalent to
+>>>>>>>>>>>> 'resident' above. In any case we can document no category is equal to
+>>>>>>>>>>>> which category, and at most one of the two must be output.)
+>>>>>>>>>>>>
+>>>>>>>>>>>> Region names we at most partially standardize. Like we could say
+>>>>>>>>>>>> 'system' is to be used where backing store is system RAM and others are
+>>>>>>>>>>>> driver defined.
+>>>>>>>>>>>>
+>>>>>>>>>>>> Then discrete GPUs could emit N sets of key-values, one for each memory
+>>>>>>>>>>>> region they support.
+>>>>>>>>>>>>
+>>>>>>>>>>>> I think this all also works for objects which can be migrated between
+>>>>>>>>>>>> memory regions. 'Size' accounts them against all regions while for
+>>>>>>>>>>>> 'resident' they only appear in the region of their current placement, etc.
+>>>>>>>>>>>
+>>>>>>>>>>> I'm not too sure how to rectify different memory regions with this,
+>>>>>>>>>>> since drm core doesn't really know about the driver's memory regions.
+>>>>>>>>>>> Perhaps we can go back to this being a helper and drivers with vram
+>>>>>>>>>>> just don't use the helper?  Or??
+>>>>>>>>>>
+>>>>>>>>>> I think if you flip it around to drm-$CATEGORY-memory{-$REGION}: then it
+>>>>>>>>>> all works out reasonably consistently?
+>>>>>>>>>
+>>>>>>>>> That is basically what we have now.  I could append -system to each to
+>>>>>>>>> make things easier to add vram/etc (from a uabi standpoint)..
+>>>>>>>>
+>>>>>>>> What you have isn't really -system, but everything. So doesn't really make
+>>>>>>>> sense to me to mark this -system, it's only really true for integrated (if
+>>>>>>>> they don't have stolen or something like that).
+>>>>>>>>
+>>>>>>>> Also my comment was more in reply to Tvrtko's suggestion.
+>>>>>>>
+>>>>>>> Right so my proposal was drm-memory-$CATEGORY-$REGION which I think aligns
+>>>>>>> with the current drm-memory-$REGION by extending, rather than creating
+>>>>>>> confusion with different order of key name components.
+>>>>>>
+>>>>>> Oh my comment was pretty much just bikeshed, in case someone creates a
+>>>>>> $REGION that other drivers use for $CATEGORY. Kinda Rob's parsing point.
+>>>>>> So $CATEGORY before the -memory.
+>>>>>>
+>>>>>> Otoh I don't think that'll happen, so I guess we can go with whatever more
+>>>>>> folks like :-) I don't really care much personally.
+>>>>>
+>>>>> Okay I missed the parsing problem.
+>>>>>
+>>>>>>> AMD currently has (among others) drm-memory-vram, which we could define in
+>>>>>>> the spec maps to category X, if category component is not present.
+>>>>>>>
+>>>>>>> Some examples:
+>>>>>>>
+>>>>>>> drm-memory-resident-system:
+>>>>>>> drm-memory-size-lmem0:
+>>>>>>> drm-memory-active-vram:
+>>>>>>>
+>>>>>>> Etc.. I think it creates a consistent story.
+>>>>>>>
+>>>>>>> Other than this, my two I think significant opens which haven't been
+>>>>>>> addressed yet are:
+>>>>>>>
+>>>>>>> 1)
+>>>>>>>
+>>>>>>> Why do we want totals (not per region) when userspace can trivially
+>>>>>>> aggregate if they want. What is the use case?
+>>>>>>>
+>>>>>>> 2)
+>>>>>>>
+>>>>>>> Current proposal limits the value to whole objects and fixates that by
+>>>>>>> having it in the common code. If/when some driver is able to support sub-BO
+>>>>>>> granularity they will need to opt out of the common printer at which point
+>>>>>>> it may be less churn to start with a helper rather than mid-layer. Or maybe
+>>>>>>> some drivers already support this, I don't know. Given how important VM BIND
+>>>>>>> is I wouldn't be surprised.
+>>>>>>
+>>>>>> I feel like for drivers using ttm we want a ttm helper which takes care of
+>>>>>> the region printing in hopefully a standard way. And that could then also
+>>>>>> take care of all kinds of of partial binding and funny rules (like maybe
+>>>>>> we want a standard vram region that addds up all the lmem regions on
+>>>>>> intel, so that all dgpu have a common vram bucket that generic tools
+>>>>>> understand?).
+>>>>>
+>>>>> First part yes, but for the second I would think we want to avoid any
+>>>>> aggregation in the kernel which can be done in userspace just as well. Such
+>>>>> total vram bucket would be pretty useless on Intel even since userspace
+>>>>> needs to be region aware to make use of all resources. It could even be
+>>>>> counter productive I think - "why am I getting out of memory when half of my
+>>>>> vram is unused!?".
+>>>>
+>>>> This is not for intel-aware userspace. This is for fairly generic "gputop"
+>>>> style userspace, which might simply have no clue or interest in what lmemX
+>>>> means, but would understand vram.
+>>>>
+>>>> Aggregating makes sense.
+>>>
+>>> Lmem vs vram is now an argument not about aggregation but about
+>>> standardizing regions names.
+>>>
+>>> One detail also is a change in philosophy compared to engine stats where
+>>> engine names are not centrally prescribed and it was expected userspace
+>>> will have to handle things generically and with some vendor specific
+>>> knowledge.
+>>>
+>>> Like in my gputop patches. It doesn't need to understand what is what,
+>>> it just finds what's there and presents it to the user.
+>>>
+>>> Come some accel driver with local memory it wouldn't be vram any more.
+>>> Or even a headless data center GPU. So I really don't think it is good
+>>> to hardcode 'vram' in the spec, or midlayer, or helpers.
+>>>
+>>> And for aggregation.. again, userspace can do it just as well. If we do
+>>> it in kernel then immediately we have multiple sets of keys to output
+>>> for any driver which wants to show the region view. IMO it is just
+>>> pointless work in the kernel and more code in the kernel, when userspace
+>>> can do it.
+>>>
+>>> Proposal A (one a discrete gpu, one category only):
+>>>
+>>> drm-resident-memory: x KiB
+>>> drm-resident-memory-system: x KiB
+>>> drm-resident-memory-vram: x KiB
+>>>
+>>> Two loops in the kernel, more parsing in userspace.
+>>
+>> why would it be more than one loop, ie.
+>>
+>>      mem.resident += size;
+>>      mem.category[cat].resident += size;
+>>
+>> At the end of the day, there is limited real-estate to show a million
+>> different columns of information.  Even the gputop patches I posted
+>> don't show everything of what is currently there.  And nvtop only
+>> shows toplevel resident stat.  So I think the "everything" stat is
+>> going to be what most tools use.
+> 
+> Yeah with enough finesse the double-loop isn't needed, it's just the
+> simplest possible approach.
+> 
+> Also this is fdinfo, I _really_ want perf data showing that it's a
+> real-world problem when we conjecture about algorithmic complexity.
+> procutils have been algorithmically garbage since decades after all :-)
 
-[auto build test ERROR on wsa/i2c/for-next]
-[also build test ERROR on linus/master v6.3-rc7]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Just run it. :)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Shuai-Jiang/Subject-drivers-i2c-busses-i2c-qup-c-Add-missing-unwind-goto-in-qup_i2c_probe/20230417-004243
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git i2c/for-next
-patch link:    https://lore.kernel.org/r/20230416164146.7750-1-d202180596%40hust.edu.cn
-patch subject: [PATCH] Subject: drivers:i2c:busses:i2c-qup.c: Add missing unwind goto in qup_i2c_probe()
-config: powerpc-randconfig-r032-20230416 (https://download.01.org/0day-ci/archive/20230417/202304171850.t2PGRDnv-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 9638da200e00bd069e6dd63604e14cbafede9324)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install powerpc cross compiling tool for clang build
-        # apt-get install binutils-powerpc-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/2f61e419c04ee41517d9543a5c6a97e3e392cd5e
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Shuai-Jiang/Subject-drivers-i2c-busses-i2c-qup-c-Add-missing-unwind-goto-in-qup_i2c_probe/20230417-004243
-        git checkout 2f61e419c04ee41517d9543a5c6a97e3e392cd5e
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=powerpc olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=powerpc SHELL=/bin/bash drivers/i2c/busses/
+Algorithmic complexity is quite obvious and not a conjecture - to find 
+DRM clients you have to walk _all_ pids and _all_ fds under them. So 
+amount of work can scale very quickly and even _not_ with the number of 
+DRM clients.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202304171850.t2PGRDnv-lkp@intel.com/
+It's not too bad on my desktop setup but it is significantly more CPU 
+intensive than top(1).
 
-All errors (new ones prefixed by >>):
+It would be possible to optimise the current code some more by not 
+parsing full fdinfo (may become more important as number of keys grow), 
+but that's only relevant when number of drm fds is large. It doesn't 
+solve the basic pids * open fds search for which we'd need a way to walk 
+the list of pids with drm fds directly.
 
->> drivers/i2c/busses/i2c-qup.c:1768:17: error: incompatible integer to pointer conversion passing 'int' to parameter of type 'const void *' [-Wint-conversion]
-                   ret = PTR_ERR(qup->irq);
-                                 ^~~~~~~~
-   include/linux/err.h:29:61: note: passing argument to parameter 'ptr' here
-   static inline long __must_check PTR_ERR(__force const void *ptr)
-                                                               ^
-   1 error generated.
+Regards,
 
-
-vim +1768 drivers/i2c/busses/i2c-qup.c
-
-  1656	
-  1657	static int qup_i2c_probe(struct platform_device *pdev)
-  1658	{
-  1659		static const int blk_sizes[] = {4, 16, 32};
-  1660		struct qup_i2c_dev *qup;
-  1661		unsigned long one_bit_t;
-  1662		u32 io_mode, hw_ver, size;
-  1663		int ret, fs_div, hs_div;
-  1664		u32 src_clk_freq = DEFAULT_SRC_CLK;
-  1665		u32 clk_freq = DEFAULT_CLK_FREQ;
-  1666		int blocks;
-  1667		bool is_qup_v1;
-  1668	
-  1669		qup = devm_kzalloc(&pdev->dev, sizeof(*qup), GFP_KERNEL);
-  1670		if (!qup)
-  1671			return -ENOMEM;
-  1672	
-  1673		qup->dev = &pdev->dev;
-  1674		init_completion(&qup->xfer);
-  1675		platform_set_drvdata(pdev, qup);
-  1676	
-  1677		if (scl_freq) {
-  1678			dev_notice(qup->dev, "Using override frequency of %u\n", scl_freq);
-  1679			clk_freq = scl_freq;
-  1680		} else {
-  1681			ret = device_property_read_u32(qup->dev, "clock-frequency", &clk_freq);
-  1682			if (ret) {
-  1683				dev_notice(qup->dev, "using default clock-frequency %d",
-  1684					DEFAULT_CLK_FREQ);
-  1685			}
-  1686		}
-  1687	
-  1688		if (of_device_is_compatible(pdev->dev.of_node, "qcom,i2c-qup-v1.1.1")) {
-  1689			qup->adap.algo = &qup_i2c_algo;
-  1690			qup->adap.quirks = &qup_i2c_quirks;
-  1691			is_qup_v1 = true;
-  1692		} else {
-  1693			qup->adap.algo = &qup_i2c_algo_v2;
-  1694			qup->adap.quirks = &qup_i2c_quirks_v2;
-  1695			is_qup_v1 = false;
-  1696			if (acpi_match_device(qup_i2c_acpi_match, qup->dev))
-  1697				goto nodma;
-  1698			else
-  1699				ret = qup_i2c_req_dma(qup);
-  1700	
-  1701			if (ret == -EPROBE_DEFER)
-  1702				goto fail_dma;
-  1703			else if (ret != 0)
-  1704				goto nodma;
-  1705	
-  1706			qup->max_xfer_sg_len = (MX_BLOCKS << 1);
-  1707			blocks = (MX_DMA_BLOCKS << 1) + 1;
-  1708			qup->btx.sg = devm_kcalloc(&pdev->dev,
-  1709						   blocks, sizeof(*qup->btx.sg),
-  1710						   GFP_KERNEL);
-  1711			if (!qup->btx.sg) {
-  1712				ret = -ENOMEM;
-  1713				goto fail_dma;
-  1714			}
-  1715			sg_init_table(qup->btx.sg, blocks);
-  1716	
-  1717			qup->brx.sg = devm_kcalloc(&pdev->dev,
-  1718						   blocks, sizeof(*qup->brx.sg),
-  1719						   GFP_KERNEL);
-  1720			if (!qup->brx.sg) {
-  1721				ret = -ENOMEM;
-  1722				goto fail_dma;
-  1723			}
-  1724			sg_init_table(qup->brx.sg, blocks);
-  1725	
-  1726			/* 2 tag bytes for each block + 5 for start, stop tags */
-  1727			size = blocks * 2 + 5;
-  1728	
-  1729			qup->start_tag.start = devm_kzalloc(&pdev->dev,
-  1730							    size, GFP_KERNEL);
-  1731			if (!qup->start_tag.start) {
-  1732				ret = -ENOMEM;
-  1733				goto fail_dma;
-  1734			}
-  1735	
-  1736			qup->brx.tag.start = devm_kzalloc(&pdev->dev, 2, GFP_KERNEL);
-  1737			if (!qup->brx.tag.start) {
-  1738				ret = -ENOMEM;
-  1739				goto fail_dma;
-  1740			}
-  1741	
-  1742			qup->btx.tag.start = devm_kzalloc(&pdev->dev, 2, GFP_KERNEL);
-  1743			if (!qup->btx.tag.start) {
-  1744				ret = -ENOMEM;
-  1745				goto fail_dma;
-  1746			}
-  1747			qup->is_dma = true;
-  1748		}
-  1749	
-  1750	nodma:
-  1751		/* We support frequencies up to FAST Mode Plus (1MHz) */
-  1752		if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
-  1753			dev_err(qup->dev, "clock frequency not supported %d\n",
-  1754				clk_freq);
-  1755			ret = -EINVAL;
-  1756			goto fail_dma;
-  1757		}
-  1758	
-  1759		qup->base = devm_platform_ioremap_resource(pdev, 0);
-  1760		if (IS_ERR(qup->base))
-  1761			dev_err(qup->dev, "Could not get qup_i2c_dev base ptr\n");
-  1762			ret = PTR_ERR(qup->base);
-  1763			goto fail_dma;
-  1764	
-  1765		qup->irq = platform_get_irq(pdev, 0);
-  1766		if (qup->irq < 0)
-  1767			dev_err(qup->dev, "qup_i2c_dev irq ptr less than zero\n");
-> 1768			ret = PTR_ERR(qup->irq);
-  1769			goto fail_dma;
-  1770	
-  1771		if (has_acpi_companion(qup->dev)) {
-  1772			ret = device_property_read_u32(qup->dev,
-  1773					"src-clock-hz", &src_clk_freq);
-  1774			if (ret) {
-  1775				dev_notice(qup->dev, "using default src-clock-hz %d",
-  1776					DEFAULT_SRC_CLK);
-  1777			}
-  1778			ACPI_COMPANION_SET(&qup->adap.dev, ACPI_COMPANION(qup->dev));
-  1779		} else {
-  1780			qup->clk = devm_clk_get(qup->dev, "core");
-  1781			if (IS_ERR(qup->clk)) {
-  1782				dev_err(qup->dev, "Could not get core clock\n");
-  1783				ret = PTR_ERR(qup->clk);
-  1784				goto fail_dma;
-  1785			}
-  1786	
-  1787			qup->pclk = devm_clk_get(qup->dev, "iface");
-  1788			if (IS_ERR(qup->pclk)) {
-  1789				dev_err(qup->dev, "Could not get iface clock\n");
-  1790				ret = PTR_ERR(qup->pclk);
-  1791				goto fail_dma;
-  1792			}
-  1793			qup_i2c_enable_clocks(qup);
-  1794			src_clk_freq = clk_get_rate(qup->clk);
-  1795		}
-  1796	
-  1797		/*
-  1798		 * Bootloaders might leave a pending interrupt on certain QUP's,
-  1799		 * so we reset the core before registering for interrupts.
-  1800		 */
-  1801		writel(1, qup->base + QUP_SW_RESET);
-  1802		ret = qup_i2c_poll_state_valid(qup);
-  1803		if (ret)
-  1804			goto fail;
-  1805	
-  1806		ret = devm_request_irq(qup->dev, qup->irq, qup_i2c_interrupt,
-  1807				       IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
-  1808				       "i2c_qup", qup);
-  1809		if (ret) {
-  1810			dev_err(qup->dev, "Request %d IRQ failed\n", qup->irq);
-  1811			goto fail;
-  1812		}
-  1813	
-  1814		hw_ver = readl(qup->base + QUP_HW_VERSION);
-  1815		dev_dbg(qup->dev, "Revision %x\n", hw_ver);
-  1816	
-  1817		io_mode = readl(qup->base + QUP_IO_MODE);
-  1818	
-  1819		/*
-  1820		 * The block/fifo size w.r.t. 'actual data' is 1/2 due to 'tag'
-  1821		 * associated with each byte written/received
-  1822		 */
-  1823		size = QUP_OUTPUT_BLOCK_SIZE(io_mode);
-  1824		if (size >= ARRAY_SIZE(blk_sizes)) {
-  1825			ret = -EIO;
-  1826			goto fail;
-  1827		}
-  1828		qup->out_blk_sz = blk_sizes[size];
-  1829	
-  1830		size = QUP_INPUT_BLOCK_SIZE(io_mode);
-  1831		if (size >= ARRAY_SIZE(blk_sizes)) {
-  1832			ret = -EIO;
-  1833			goto fail;
-  1834		}
-  1835		qup->in_blk_sz = blk_sizes[size];
-  1836	
-  1837		if (is_qup_v1) {
-  1838			/*
-  1839			 * in QUP v1, QUP_CONFIG uses N as 15 i.e 16 bits constitutes a
-  1840			 * single transfer but the block size is in bytes so divide the
-  1841			 * in_blk_sz and out_blk_sz by 2
-  1842			 */
-  1843			qup->in_blk_sz /= 2;
-  1844			qup->out_blk_sz /= 2;
-  1845			qup->write_tx_fifo = qup_i2c_write_tx_fifo_v1;
-  1846			qup->read_rx_fifo = qup_i2c_read_rx_fifo_v1;
-  1847			qup->write_rx_tags = qup_i2c_write_rx_tags_v1;
-  1848		} else {
-  1849			qup->write_tx_fifo = qup_i2c_write_tx_fifo_v2;
-  1850			qup->read_rx_fifo = qup_i2c_read_rx_fifo_v2;
-  1851			qup->write_rx_tags = qup_i2c_write_rx_tags_v2;
-  1852		}
-  1853	
-  1854		size = QUP_OUTPUT_FIFO_SIZE(io_mode);
-  1855		qup->out_fifo_sz = qup->out_blk_sz * (2 << size);
-  1856	
-  1857		size = QUP_INPUT_FIFO_SIZE(io_mode);
-  1858		qup->in_fifo_sz = qup->in_blk_sz * (2 << size);
-  1859	
-  1860		hs_div = 3;
-  1861		if (clk_freq <= I2C_MAX_STANDARD_MODE_FREQ) {
-  1862			fs_div = ((src_clk_freq / clk_freq) / 2) - 3;
-  1863			qup->clk_ctl = (hs_div << 8) | (fs_div & 0xff);
-  1864		} else {
-  1865			/* 33%/66% duty cycle */
-  1866			fs_div = ((src_clk_freq / clk_freq) - 6) * 2 / 3;
-  1867			qup->clk_ctl = ((fs_div / 2) << 16) | (hs_div << 8) | (fs_div & 0xff);
-  1868		}
-  1869	
-  1870		/*
-  1871		 * Time it takes for a byte to be clocked out on the bus.
-  1872		 * Each byte takes 9 clock cycles (8 bits + 1 ack).
-  1873		 */
-  1874		one_bit_t = (USEC_PER_SEC / clk_freq) + 1;
-  1875		qup->one_byte_t = one_bit_t * 9;
-  1876		qup->xfer_timeout = TOUT_MIN * HZ +
-  1877			usecs_to_jiffies(MX_DMA_TX_RX_LEN * qup->one_byte_t);
-  1878	
-  1879		dev_dbg(qup->dev, "IN:block:%d, fifo:%d, OUT:block:%d, fifo:%d\n",
-  1880			qup->in_blk_sz, qup->in_fifo_sz,
-  1881			qup->out_blk_sz, qup->out_fifo_sz);
-  1882	
-  1883		i2c_set_adapdata(&qup->adap, qup);
-  1884		qup->adap.dev.parent = qup->dev;
-  1885		qup->adap.dev.of_node = pdev->dev.of_node;
-  1886		qup->is_last = true;
-  1887	
-  1888		strscpy(qup->adap.name, "QUP I2C adapter", sizeof(qup->adap.name));
-  1889	
-  1890		pm_runtime_set_autosuspend_delay(qup->dev, MSEC_PER_SEC);
-  1891		pm_runtime_use_autosuspend(qup->dev);
-  1892		pm_runtime_set_active(qup->dev);
-  1893		pm_runtime_enable(qup->dev);
-  1894	
-  1895		ret = i2c_add_adapter(&qup->adap);
-  1896		if (ret)
-  1897			goto fail_runtime;
-  1898	
-  1899		return 0;
-  1900	
-  1901	fail_runtime:
-  1902		pm_runtime_disable(qup->dev);
-  1903		pm_runtime_set_suspended(qup->dev);
-  1904	fail:
-  1905		qup_i2c_disable_clocks(qup);
-  1906	fail_dma:
-  1907		if (qup->btx.dma)
-  1908			dma_release_channel(qup->btx.dma);
-  1909		if (qup->brx.dma)
-  1910			dma_release_channel(qup->brx.dma);
-  1911		return ret;
-  1912	}
-  1913	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Tvrtko
