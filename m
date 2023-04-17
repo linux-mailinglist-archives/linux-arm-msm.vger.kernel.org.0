@@ -2,93 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C76506E44E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 12:15:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9C316E44F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 12:16:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230179AbjDQKPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 06:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49508 "EHLO
+        id S230414AbjDQKQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 06:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbjDQKPI (ORCPT
+        with ESMTP id S231154AbjDQKQG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 06:15:08 -0400
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECCAC59C8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 03:14:21 -0700 (PDT)
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-2f4214b430aso850199f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 03:14:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681726290; x=1684318290;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jCbAlk8AyvGATX4Pv1I/lzFLhKIIm/CJ4Jwv7PMT+EA=;
-        b=sLKRvmhuvzeT7T4ho9X5Zvib982a7njRfWLXJNZD8C7FxiP5CLoIAec7t1Co1Byiix
-         pSxb9UVo0Bb4f7FjQ+jvDuPtYNisLhH83S3bMuXULB+fuvdrb0Rx0GuKBTBCWvbAPFGU
-         wWjr77P41A7Oal/nZn/Ha4TwaTRMytdyfdM/s3qTGeFeFVKtmYl87WWC2ulbt4+hrvv6
-         UUevkDG/twBR0Bm6coFg0LDyjLX0OxihNf8PwHfmmiqZm79mdp6042p1Uynw/q4CN1t9
-         yMfdPSCMNdebynKXh4QW5QkHqSbkn9px3UBIXka7ZffDO5x49fhNffqnojhAPyYBcpUm
-         8wgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681726290; x=1684318290;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jCbAlk8AyvGATX4Pv1I/lzFLhKIIm/CJ4Jwv7PMT+EA=;
-        b=YUb188w/8cfOk3yd3uzdD8uOiyM/BlQUWSKpQmtn/q2WcW5/kmLf47cGTROICVhLu1
-         UOy1ELKFsLz/+29dMw9wCZ5eLR8lYgQEB7cGlJ5ZtLJQQLk2TS2GzPeXBwxI9hdCzD5h
-         OHEMJkQcIwW+cmv6+WC+hIDtZS5vowFJEs8WmsRqKuHeXba5uizvtNufG9b9MKX/W5XQ
-         l9sLT2eBgQXa33zphBYlNbJf5ieagjKvKsWr4DYitZmPjmrmGXr0Gd/J2BLNUu+2xbbp
-         QcRsCha59NWfK9O3MeU3hjPtbE56+xJ2jgtf1ut+aOrE2fQdcsVkeI6q4HLlPXRJB8Za
-         u0Kg==
-X-Gm-Message-State: AAQBX9dlmab1ihG78TUoO6TyddAfRxO4DJGAXr/mZWbsua52GKHiz7oJ
-        A65gwlnf8fukEjnCJrkfYqdrhw==
-X-Google-Smtp-Source: AKy350Y60T3aPU1xswnKZ/DTjAOEEljioiBWIw1pk6n7X7XLI4Bu8U9YPx9NyX2sFE7TsFVh2HPhWg==
-X-Received: by 2002:a5d:5049:0:b0:2f0:23bf:da7d with SMTP id h9-20020a5d5049000000b002f023bfda7dmr4482088wrt.29.1681726289884;
-        Mon, 17 Apr 2023 03:11:29 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t5-20020adfeb85000000b002e71156b0fcsm10128276wrn.6.2023.04.17.03.11.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 03:11:29 -0700 (PDT)
-Message-ID: <4c5d32d9-211b-b1ff-4d7d-7e951285efce@linaro.org>
-Date:   Mon, 17 Apr 2023 11:11:28 +0100
+        Mon, 17 Apr 2023 06:16:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03C7140EC;
+        Mon, 17 Apr 2023 03:15:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0DFB862196;
+        Mon, 17 Apr 2023 10:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC68C433D2;
+        Mon, 17 Apr 2023 10:12:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681726366;
+        bh=GRAa2RVEdoP6sWFZTaUzor42MJUN7cAoBncwKS2n97w=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=tUaLe0MUroPoDEhW71YLn96ifF/ylQ2u0qpI06Wi+jenuZJ1Yu39UVc/9jX0B3pk/
+         bWnIC3Tlu3aRcrLzxjRcxVB0CXYgPUHh1c3tKwfPBHFXirI5lH7E5PVL6bLQs0uP6d
+         bTMvxjN/ikO0GS6PP59POWkGeyEkja8rmfTnG46HIk6Ri3JNAOevyl/59C9RfgeQGg
+         FR3zJ1e5M89rXAoD3wf5Y3tsdTNRI6mW/d+aSvpvvJHTfw6j+hmbOQD8ibVJ9kfOKC
+         OskbZ+jaXv5z5J8qurxK/M9V480VClSYqj3x9ODtaKYCHrnEtRX35sElQa4Zr0qjk1
+         iao4t/5D/nOkg==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4] dt-bindings: net: Convert ATH10K to YAML
+References: <20230406-topic-ath10k_bindings-v4-1-9f67a6bb0d56@linaro.org>
+Date:   Mon, 17 Apr 2023 13:12:39 +0300
+In-Reply-To: <20230406-topic-ath10k_bindings-v4-1-9f67a6bb0d56@linaro.org>
+        (Konrad Dybcio's message of "Tue, 11 Apr 2023 20:19:22 +0200")
+Message-ID: <87pm82x1ew.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 00/14] Add Qualcomm PMIC TPCM support
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Luca Weiss <luca.weiss@fairphone.com>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
- <CRVOZOPMKBX4.2T7FOCWF0RKBJ@otso>
- <10551f5e-4516-c0cc-0b04-73aa38f80a2c@linaro.org>
- <CRWA2OP2T6KT.RCWAVWF5Q2T2@otso>
- <ccc9fa4c-ca52-d8f3-a8b3-45031bea673f@linaro.org>
- <CRYUWMIJDSB2.BJWEPJEA3Y1D@otso>
- <75d00efb-ff3c-b1f8-a141-3fa78a39557a@linaro.org>
-In-Reply-To: <75d00efb-ff3c-b1f8-a141-3fa78a39557a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/04/2023 11:04, Bryan O'Donoghue wrote:
->    Unmount USB key
-> 
->    cat /sys/class/usb_role/a600000.usb-role-switch/role
->    host
+Konrad Dybcio <konrad.dybcio@linaro.org> writes:
 
-Sorry obviously confirm the data role before detaching the accessory :)
+> Convert the ATH10K bindings to YAML.
+>
+> Dropped properties that are absent at the current state of mainline:
+> - qcom,msi_addr
+> - qcom,msi_base
+
+Very good, thanks. Clearly I had missed that those were unused during
+the review.
+
+> qcom,coexist-support and qcom,coexist-gpio-pin do very little and should
+> be reconsidered on the driver side, especially the latter one.
+
+I'm curious, what do you mean very little? We set ath10k firmware
+parameters based on these coex properties. How would you propose to
+handle these?
+
+> Somewhat based on the ath11k bindings.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+[...]
+
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml
+> @@ -0,0 +1,358 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/wireless/qcom,ath10k.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies ATH10K wireless devices
+
+[...]
+
+> +  wifi-firmware:
+> +    type: object
+> +    additionalProperties: false
+> +    description: |
+> +      The ATH10K Wi-Fi node can contain one optional firmware subnode.
+> +      Firmware subnode is needed when the platform does not have Trustzone.
+
+Is there a reason why you write ath10k in upper case? There are two case
+of that in the yaml file. We usually write it in lower case, can I
+change to that?
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
