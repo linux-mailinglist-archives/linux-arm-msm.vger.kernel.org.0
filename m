@@ -2,189 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD49D6E54BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 00:42:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C99276E54D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 00:55:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbjDQWmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 18:42:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34704 "EHLO
+        id S230002AbjDQWzQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 18:55:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjDQWmV (ORCPT
+        with ESMTP id S229995AbjDQWzM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 18:42:21 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0296846A0;
-        Mon, 17 Apr 2023 15:42:19 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33HMfcHK026562;
-        Mon, 17 Apr 2023 22:42:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ThdI2vVhVvUS1hsMYpkEhFDrFYSRDvOSV+xF6HW6x2s=;
- b=GqijgJafos026x3Hrrw5c92brwF7kWGFLX5YfQ8V6nOtk0KXUItJcG0fTFPUl9adNVAu
- CDswiV4isgLCElhDBUAP5y8n4SZ3/bQ2odE0Ggx6pnQiJMHe+B7HxXzcPyWsjspbaP2y
- HIWrUnyqK+1/rKOL56kqrGb/Ig1ZOs//Kqf0613yxnk32X1Ymm70lzKDWNaF1YVyuHSu
- NW/mO9x0s6GeEYz75U5r1Vm85oQKQik+mavyX6NVFdzAO3COSYfNdgEKhCdDk8ZO/T1J
- vNQ8HHg3taE47MbGMBNTBgLbf/56iJ9GTPz2KPrvzesEqYJoaKxjDe5DyC+QAwIQAYaO ng== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q171gh8fs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 22:42:00 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33HMfxaq027141
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 22:41:59 GMT
-Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 17 Apr
- 2023 15:41:58 -0700
-Message-ID: <274ad221-f397-b634-5742-fe6c9cb18843@quicinc.com>
-Date:   Mon, 17 Apr 2023 15:41:58 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v11 22/26] virt: gunyah: Add proxy-scheduled vCPUs
-To:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Mon, 17 Apr 2023 18:55:12 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C598B5B80;
+        Mon, 17 Apr 2023 15:55:10 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id s6-20020a17090a698600b00247a7794e78so3900672pjj.0;
+        Mon, 17 Apr 2023 15:55:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681772110; x=1684364110;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IkA9wnRbo5w7C60BTKvxyOVQM93T/mRdGRMWtweWrTo=;
+        b=q/yzCx2K043mqFDqjj0WM/4OzkUAmFNdBT/a8SMmW2A/EmwUaXNzAZpnxdK4WOh5YN
+         q2vgsr31qOUI/+EC6tEFp1kHH0HjPsva2nFnwfca6Jx6BLm6tNntfzP08ZNTXcDHl4AK
+         IdaaDjH38wRuntwP4pVFY848alLct1vQbaAlAa9Upy4ZU0edg6bdP7L0uqm5Gfpjzm3u
+         SGhxG4AfVtcCOD9ugLSWzODdm/FZ5xea6/DYp6ePBI7nquEtBKnA6+CQ9mGxCxfgKfj3
+         e5M9n/+lW7i+GyQHAjbPg4YbH2Sq8qmYOl4neVesYeO8hJLSRt6nLnRFb/286Hgj+Ja4
+         Oh6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681772110; x=1684364110;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IkA9wnRbo5w7C60BTKvxyOVQM93T/mRdGRMWtweWrTo=;
+        b=HIlXyn8tTGJevAEvPldxdyc1xjThWkF8FlkY5ohFiSUIIpUNooJFZTNEbC5Gv+KUdg
+         2blcm1FntEdaUYo0EfDs34vlqPjtHpqY2Ef1rKgFRGedJ2Qwfvaepj1nBQqdv7hHuGZI
+         MKwxsQkfsrIjsCSHFirV8bbCRcac9rX5z6Dq5T0MvSUo3p9Sqd366RPwg3NUh6D9VXx2
+         mqHrS5DlIbSOyiouMyZcwRxI7vhxsZ/1wQW5/ikxxh/u9lXv1q0R8BvonWRJ6ecpUU5Y
+         tlPfAYajzNUIxdMgGmMQ3b53nk+HK/GjTtGBJ9VaFoAkOANwXmgWtkg8mWd64xW9f3ZY
+         P41Q==
+X-Gm-Message-State: AAQBX9ev1pEwL62+F1FT3RHcb4inPFy7GSJX23drczFEk5BwRDeg+V9c
+        5Tjgg6SXT6pCfKVJqGZaOa99Nhoa9dQ=
+X-Google-Smtp-Source: AKy350bsqttjkFoxN4aClYncUVFHdeiJpJuM4f30fWPgWn6e7CVbVFHW+2DBpXifcM0pL+jPjbUWSw==
+X-Received: by 2002:a05:6a20:8419:b0:d8:bed9:33cf with SMTP id c25-20020a056a20841900b000d8bed933cfmr19558887pzd.17.1681772110125;
+        Mon, 17 Apr 2023 15:55:10 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id 132-20020a63058a000000b0051ba16c35cfsm3117276pgf.29.2023.04.17.15.55.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Apr 2023 15:55:09 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230304010632.2127470-1-quic_eberman@quicinc.com>
- <20230304010632.2127470-23-quic_eberman@quicinc.com>
- <98ad146d-492d-aa0c-4f6a-ba37e6bf74eb@linaro.org>
-Content-Language: en-US
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <98ad146d-492d-aa0c-4f6a-ba37e6bf74eb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Fix vmap madv warning
+Date:   Mon, 17 Apr 2023 15:55:04 -0700
+Message-Id: <20230417225504.494934-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VJu4-N-iNPmDz-8lNhuzwsk2eCSSOK6-
-X-Proofpoint-ORIG-GUID: VJu4-N-iNPmDz-8lNhuzwsk2eCSSOK6-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-17_14,2023-04-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- mlxlogscore=999 suspectscore=0 impostorscore=0 bulkscore=0 spamscore=0
- clxscore=1015 phishscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304170200
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+Commit d6ae7d1cd58e ("drm/msm/gem: Simplify vmap vs LRU tracking")
+introduced a splat in the pin_pages_locked() path for buffers that
+had been MADV_DONTNEED.
 
-On 3/31/2023 7:27 AM, Alex Elder wrote:
-> On 3/3/23 7:06 PM, Elliot Berman wrote:
+   ------------[ cut here ]------------
+   msm_obj->madv != 0
+   WARNING: CPU: 1 PID: 144 at drivers/gpu/drm/msm/msm_gem.c:230 msm_gem_pin_pages_locked+0x9c/0xd4
+   Modules linked in: lzo_rle cros_ec_lid_angle cros_ec_sensors cros_ec_sensors_core venus_dec venus_enc videobuf2_dma_contig cdc_ether usbnet mii uvcvideo videobuf2_vmalloc hci_uart btqca qcom_spmi_adc5 uvc qcom_spmi_temp_alarm qcom_vadc_common cros_ec_sensorhub videobuf2_memops cros_ec_typec sx9324 sx_common typec joydev bluetooth industrialio_triggered_buffer ecdh_generic kfifo_buf ecc venus_core qcom_stats v4l2_mem2mem videobuf2_v4l2 videobuf2_common ath11k_ahb ath11k mac80211 cfg80211 fuse zram zsmalloc
+   CPU: 1 PID: 144 Comm: ring0 Tainted: G        W          6.3.0-rc2-debug+ #622
+   Hardware name: Google Villager (rev1+) with LTE (DT)
+   pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+   pc : msm_gem_pin_pages_locked+0x9c/0xd4
+   lr : msm_gem_pin_pages_locked+0x9c/0xd4
+   sp : ffffffc009ffbab0
+   x29: ffffffc009ffbab0 x28: ffffffee8da75008 x27: ffffff80a10274d0
+   x26: ffffff8087fe3bf8 x25: ffffff8087fe3c08 x24: 0000000000000001
+   x23: ffffff80891d5800 x22: ffffff809d0de480 x21: ffffff8081e5a080
+   x20: 0000000000000002 x19: ffffff80a3564c00 x18: 0000000000000000
+   x17: 0000000000000000 x16: 0000000000000000 x15: 00000000000a9620
+   x14: 0000000000000000 x13: 2d2d2d2d2d2d2d2d x12: 2d2d2d2d5d206572
+   x11: 656820747563205b x10: 2d2d2d2d2d2d2d2d x9 : ffffffee8c705dfc
+   x8 : ffffffee8da75000 x7 : ffffffee8d34e6d0 x6 : 0000000000000000
+   x5 : 00000000000affa8 x4 : 000000000000000d x3 : ffffffee8da75008
+   x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffffff8088048040
+   Call trace:
+    msm_gem_pin_pages_locked+0x9c/0xd4
+    get_vaddr+0xb0/0x150
+    msm_gem_get_vaddr_active+0x1c/0x28
+    snapshot_buf+0x90/0x10c
+    msm_rd_dump_submit+0x30c/0x380
+    msm_gpu_submit+0x88/0x174
+    msm_job_run+0x68/0x118
+    drm_sched_main+0x2b8/0x3a0
+    kthread+0xf0/0x100
+    ret_from_fork+0x10/0x20
+   irq event stamp: 3358
+   hardirqs last  enabled at (3357): [<ffffffee8c7051f4>] __up_console_sem+0x7c/0x80
+   hardirqs last disabled at (3358): [<ffffffee8d3480b0>] el1_dbg+0x24/0x80
+   softirqs last  enabled at (3330): [<ffffffee8c610420>] __do_softirq+0x21c/0x4bc
+   softirqs last disabled at (3325): [<ffffffee8c616708>] ____do_softirq+0x18/0x24
+   ---[ end trace 0000000000000000 ]---
 
-[snip]
+But, as with msm_gem_get_vaddr_active(), this is a special case
+because we know that the buffer won't be purged evicted until it's
+fence is signaled.  We just forgot to propagate the logic get_vaddr()
+to pin_pages_locked().
 
->> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
->> index caeb3b3a3e9a..e52265fa5715 100644
->> --- a/include/uapi/linux/gunyah.h
->> +++ b/include/uapi/linux/gunyah.h
->> @@ -62,8 +62,32 @@ struct gh_vm_dtb_config {
->>   #define GH_VM_START        _IO(GH_IOCTL_TYPE, 0x3)
->> +/**
->> + * GH_FN_VCPU - create a vCPU instance to control a vCPU
->> + *
->> + * gh_fn_desc is filled with &struct gh_fn_vcpu_arg
->> + *
->> + * The vcpu type will register with the VM Manager to expect to control
->> + * vCPU number `vcpu_id`. It returns a file descriptor allowing 
->> interaction with
->> + * the vCPU. See the Gunyah vCPU API description sections for 
->> interacting with
->> + * the Gunyah vCPU file descriptors.
->> + *
->> + * Return: file descriptor to manipulate the vcpu. See GH_VCPU_* ioctls
->> + */
->> +#define GH_FN_VCPU         1
-> 
-> I think you should define GH_VN_VCPU, GN_FN_IRQFD, and GN_FN_IOEVENTFD
-> in an enumerated type.  Each has a type associated with it, and you can
-> add the explanation for the function in the kernel-doc comments above
-> thosse type definitions.
-> 
+Fixes: d6ae7d1cd58e ("drm/msm/gem: Simplify vmap vs LRU tracking")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gem.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-I'd like to enumify the GH_FN_* macros, but one challenge I'm facing is 
-that it breaks the module alias implementation in patch 19.
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index c32264234ea1..20cfd86d2b32 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -219,7 +219,8 @@ static void put_pages(struct drm_gem_object *obj)
+ 	}
+ }
+ 
+-static struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj)
++static struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj,
++					      unsigned madv)
+ {
+ 	struct msm_drm_private *priv = obj->dev->dev_private;
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+@@ -227,7 +228,9 @@ static struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj)
+ 
+ 	msm_gem_assert_locked(obj);
+ 
+-	if (GEM_WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED)) {
++	if (GEM_WARN_ON(msm_obj->madv > madv)) {
++		DRM_DEV_ERROR(obj->dev->dev, "Invalid madv state: %u vs %u\n",
++			msm_obj->madv, madv);
+ 		return ERR_PTR(-EBUSY);
+ 	}
+ 
+@@ -248,7 +251,7 @@ struct page **msm_gem_pin_pages(struct drm_gem_object *obj)
+ 	struct page **p;
+ 
+ 	msm_gem_lock(obj);
+-	p = msm_gem_pin_pages_locked(obj);
++	p = msm_gem_pin_pages_locked(obj, MSM_MADV_WILLNEED);
+ 	msm_gem_unlock(obj);
+ 
+ 	return p;
+@@ -473,10 +476,7 @@ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct msm_gem_vma *vma)
+ 
+ 	msm_gem_assert_locked(obj);
+ 
+-	if (GEM_WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED))
+-		return -EBUSY;
+-
+-	pages = msm_gem_pin_pages_locked(obj);
++	pages = msm_gem_pin_pages_locked(obj, MSM_MADV_WILLNEED);
+ 	if (IS_ERR(pages))
+ 		return PTR_ERR(pages);
+ 
+@@ -699,13 +699,7 @@ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+ 	if (obj->import_attach)
+ 		return ERR_PTR(-ENODEV);
+ 
+-	if (GEM_WARN_ON(msm_obj->madv > madv)) {
+-		DRM_DEV_ERROR(obj->dev->dev, "Invalid madv state: %u vs %u\n",
+-			msm_obj->madv, madv);
+-		return ERR_PTR(-EBUSY);
+-	}
+-
+-	pages = msm_gem_pin_pages_locked(obj);
++	pages = msm_gem_pin_pages_locked(obj, madv);
+ 	if (IS_ERR(pages))
+ 		return ERR_CAST(pages);
+ 
+-- 
+2.39.2
 
-MODULE_ALIAS("ghfunc:"__stringify(_type))
-
-When the GH_FN_* are regular preprocessor macros backed by an integer, 
-the preprocessor will make the module alias ghfunc:0 (or ghfunc:1, etc). 
-This works well because I can do
-
-request_module("ghfunc:%d", type);
-
-If the function hasn't been registered and then gunyah_vcpu.ko gets 
-loaded automatically.
-
-With enum, compiler knows the value of GH_FN_VCPU and preprocessor will 
-make the module alias like ghfunc:GH_FN_VCPU.
-
-[snip]
-
->> +
->> +/*
->> + * Gunyah presently sends max 4 bytes of exit_reason.
->> + * If that changes, this macro can be safely increased without breaking
->> + * userspace so long as struct gh_vcpu_run < PAGE_SIZE.
-> 
-> Is PAGE_SIZE allowed to be anything other than 4096 bytes?  Do you
-> expect this driver to work properly if the page size were configured
-> to be 16384 bytes?  In other words, is this a Gunyah constant, or
-> is it *really* the page size configured for Linux?
-> 
-
-Our implementations are only doing 4096 bytes. I expect the driver to 
-work properly when using 16k pages. This really is a Linux page. It's a 
-reflection of the alloc_page in gh_vcpu_bind().
-
-The exit reason is copied from hypervisor into field accessible by 
-userspace directly. Gunyah makes the exit reason size dynamic -- there's 
-no architectural limitation preventing the exit reason from being a 
-string or some lengthy data.
-
-As I was writing this response, I realized that I should be able to make 
-this a zero-length array and ensure that reason[] doesn't overflow 
-PAGE_SIZE...
-
-The comment was trying to explain that Linux itself imposes a limitation 
-on the maximum exit reason size. If we need to support longer exit 
-reason, we're OK to do so long as the total size doesn't overrun 
-PAGE_SIZE. There aren't any plans to need longer exit reasons than the 8 
-bytes mentioned today.
-
-Thanks,
-Elliot
