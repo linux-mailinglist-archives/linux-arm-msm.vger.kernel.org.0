@@ -2,62 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51ED46E4206
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 10:05:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1D036E4224
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 10:08:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230349AbjDQIFL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 04:05:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50558 "EHLO
+        id S229940AbjDQIId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 04:08:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231277AbjDQIFH (ORCPT
+        with ESMTP id S230458AbjDQIIc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 04:05:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E20F1BF;
-        Mon, 17 Apr 2023 01:05:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1EFBA61FD4;
-        Mon, 17 Apr 2023 08:05:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6F3C4339B;
-        Mon, 17 Apr 2023 08:05:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681718704;
-        bh=0Y/mnS2pjaYk07j+LJSA/55y9ntA2FADo9/M3Dr4xgk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DGKJDv/BLy56BiFvmzmoetNbBUmKx1OS5vjufwpa9DMDa4mpBFiD918rvHExFqe9f
-         YsTYesSOFT7FcZyJvTAJjSCRAtAFNpoX/uS6xAF3TxMBqeB7QPV7uAbmI0B0qMB7Yn
-         kATDatbmgWXBYL3FWMniD9DEHM/iztPJ4+H9e4pSqLzimIeAP6znCuSo8LggP5GfRZ
-         M0bNu7BjUDOxcEQmUQUttIaWAC36jaDyOwaKa+KYPlrauqv/uKzIK69VTXgd1RPXy9
-         mZGu2O8Y+qd8VOMWyw+ziPsCOVg2C4bT42JBJQ/xl0FDFDpV9LUUHS+izm0F1VV3K7
-         xax7EE8okIlgg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1poJrL-0003gR-Mp; Mon, 17 Apr 2023 10:05:11 +0200
-Date:   Mon, 17 Apr 2023 10:05:11 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v8 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
- PHY
-Message-ID: <ZDz9t9TkBqZ1fcfn@hovoldconsulting.com>
-References: <cover.1680693149.git.quic_varada@quicinc.com>
- <1efa9a64499767d939efadd0aef897ac4a6e54eb.1680693149.git.quic_varada@quicinc.com>
- <0a66e291-a86d-1ff9-e674-839b8cc8f1da@linaro.org>
+        Mon, 17 Apr 2023 04:08:32 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8588746B3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 01:08:30 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id fw30so9041022ejc.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 01:08:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681718909; x=1684310909;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rQJ7WRIROJNRsBKAyL6TG+aWODJFqJnhKcD+H/twEi8=;
+        b=bSJcdRynVCuoM2KupKqejM2B0WGsVcO+G+R1IZPtHYiKv5q+Tg/90CGkMQZLSk71Eb
+         zRhUVdPVREPE/cxpLa7L44K7M6yPqvRvcN1Wk4EyCTg4kRm+2BnTRfho5Ia3Cz8VMMQT
+         MfO/lzrxMdFETdzqdsQHYhOJ7cXBhWe+86UWcjpRyXYaibcrK3ke/TppDXQO6Z6qiy4q
+         zaiPcj2MvF86Y/79ieKtWu65cTdeDZ6ifJswxoNGM0RtuFxkUDrLxACRgAjAfYWWtg7R
+         ozQZwWI5lSzBD2qcv2wYTHhzsVRX7N0DVR7+ugJg0d8CTXV28Xx/Y+ijMKnVP/xjNOuT
+         46YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681718909; x=1684310909;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rQJ7WRIROJNRsBKAyL6TG+aWODJFqJnhKcD+H/twEi8=;
+        b=SiCJxuTHOkTcu7idH+SSDXxbukOX5VYsqV92bEV34yGawaTEZ/aNUkNBMHims9rKuB
+         BsshP8l2xGLRae8MK26m1LlKozK8n57UAn960wbmUkLsRtUF1s12sgED9nQS3O4CFOYD
+         bnli1Er71iIE29FpDfG2n+nHBr2qkICZ9l/W7exD/LO8JYG7FMVG+o93+KXgkyAwsmeJ
+         uBjONqXbushcNK9+4kc4R2Vf3mpDsrEdCwdoUBsLtUUm3KtCVI469kQ3BL1YlUGABHAo
+         3/WUeI3Cuxe6lRwYdgaCojL+FkwDFUdwVO64hQp9o7ZWaVdQoablNEdL8rD0KFrTBWUA
+         Z96A==
+X-Gm-Message-State: AAQBX9e/9FhtbABERepN9ACs1xcNB8DVBWAV/Q3pBeldxTsVWXlyOjtu
+        MJjgZDuHy7qjH9ZXCM46ld2utw==
+X-Google-Smtp-Source: AKy350aAVVKQWnFf41usawThl6KubR7Da4LuMEHW3fDT7WFbzF6LSQRy3LfjSzPLj0Zj0ouY8cDqpA==
+X-Received: by 2002:a17:906:abd2:b0:930:f953:962c with SMTP id kq18-20020a170906abd200b00930f953962cmr6268495ejb.1.1681718909007;
+        Mon, 17 Apr 2023 01:08:29 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:b0ac:4d3b:966c:b33d])
+        by smtp.gmail.com with ESMTPSA id v25-20020a170906381900b0094f3f222d34sm2338984ejc.56.2023.04.17.01.08.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Apr 2023 01:08:28 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v2 1/4] arm64: dts: qcom: sm8150: drop incorrect serial properties
+Date:   Mon, 17 Apr 2023 10:08:15 +0200
+Message-Id: <20230417080818.28398-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0a66e291-a86d-1ff9-e674-839b8cc8f1da@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,47 +74,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 06, 2023 at 09:41:49AM +0200, Krzysztof Kozlowski wrote:
-> On 05/04/2023 13:41, Varadarajan Narayanan wrote:
-> > Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
-> > 
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  Changes in v8:
-> > 	- Update clock names for ipq9574
-> > 
-> >  Changes in v6:
-> > 	- Made power-domains optional
-> > 
-> > Note: In the earlier patch sets, had used the (legacy)
-> > specification available in qcom,msm8996-qmp-usb3-phy.yaml. Moved
-> > to newer specification in qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> > ---
-> >  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 43 +++++++++++++++++++---
-> >  1 file changed, 37 insertions(+), 6 deletions(-)
+Drop incorrect and unused serial properties - address/size-cells and
+reg-names:
 
-> > +        clock-names:
-> > +          items:
-> > +            - const: aux
-> > +            - const: ref
-> > +            - const: com_aux
-> 
-> Can anyone explain me why do we name these (here and other Qualcomm
-> bindings) based on clock name, not input? Just because different clock
-> is fed to the block, does not necessarily mean the input should be named
-> differently.
+  sa8155p-adp.dtb: geniqup@ac0000: serial@a84000: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'reg-names' were unexpected)
 
-I guess part of the answer is that this has just been copied from the
-vendor dts and (almost) no one but Qualcomm has access to the
-documentation. What would the input names be here?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Also note that there are SoCs that enable both 'cfg_ahb' and 'com_aux'
-(e.g. sc7180).
+---
 
-> > +            - const: pipe
-> > +
-> >  examples:
-> >    - |
-> >      #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+Changes since v1:
+1. Add Rb tag.
+---
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Johan
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 27dcda0d4288..3846f5e0f656 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1362,14 +1362,11 @@ spi9: spi@a84000 {
+ 			uart9: serial@a84000 {
+ 				compatible = "qcom,geni-uart";
+ 				reg = <0x0 0x00a84000 0x0 0x4000>;
+-				reg-names = "se";
+ 				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
+ 				clock-names = "se";
+ 				pinctrl-0 = <&qup_uart9_default>;
+ 				pinctrl-names = "default";
+ 				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 				status = "disabled";
+ 			};
+ 
+-- 
+2.34.1
+
