@@ -2,145 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7B8D6E4FBA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 19:56:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A1C36E4FC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 20:03:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230369AbjDQR4D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 13:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49644 "EHLO
+        id S230332AbjDQSDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 14:03:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbjDQR4C (ORCPT
+        with ESMTP id S230182AbjDQSDH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 13:56:02 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674C86A6E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:56:00 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec8399e963so1580371e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681754158; x=1684346158;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BKDmMoGXfJU4fYQc4SgnFhXeKOqYUlPRJlTeeGghjx8=;
-        b=e71iFc9OvZScNGlXJc4d2BWw8WUA4B4a/x6KjylMvisNQRju5rfTmHoGAERKFeFwZn
-         b4b0AbtBHn2fF+dHWmUNI1BZTCo5/CmZ66WbPGiXQtxT73ZIVfY5t5YekrFLga2kz/Sx
-         Lch22J7ZYA8bXnLl0pd3/aYY7YbPUVk7U4xLG+54MITzuTcTKozirc0bHF+/t2IQVC9j
-         RK86hfbSOLwowXUWoY3kne/x2Q8caGQC8G7bz5mYIVdjlPY4k8OTvZSmCH7YICPy34Nj
-         raofRJ/fDGk6ovfpJyr4qj0CJmI3pGyapnUZ13Ngc5mF2vTe67ThfiR3cFk6PCSfIq3Z
-         Crtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681754158; x=1684346158;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BKDmMoGXfJU4fYQc4SgnFhXeKOqYUlPRJlTeeGghjx8=;
-        b=M77CvOQ/SryI+U7mjKa3HaAKm8hhWjAvCMyma+1F+ougf4czXBRj3rQbd3r+IbIFEQ
-         vyH67Q6AQXLZf/zvVlxMZ7wUSBSit1pPcPSTZD28uLP/h5uZ/KfXWoPLCbFbXMMtZiuM
-         SzWShuhhH1zKL7r0aSpT24pLLL0eA4z50aBAtUhbxz9gZ/sglOdWH2NtoFy0uJiAuJg9
-         JBY1Tt0SyVU+ARZptPeN28J1d0GKm800iN2z9cy+W7ktXYxVWjAAFMrUNgcY62HLxXrC
-         cXPl3OMx3Y/AOR2u6aJEqZ82FsIlXWK+TVuaQgoKgj77DGyKjzcqTMR1kzFbdTwSWCAV
-         VZag==
-X-Gm-Message-State: AAQBX9euMYb85AUKULEWB76/XQdlZPUHhRIwjYMBGIqmSupZAvZpk1KD
-        x2eBls72Tj7wH5C1n5IV6XbDlQ==
-X-Google-Smtp-Source: AKy350ZOy7SA3V/n3VNMo4APMIyDC2YUvIH1K4sUn3ZXx3m0oJ7cyPxlvpT9oHIMKvhOqVnn/3edoQ==
-X-Received: by 2002:ac2:4105:0:b0:4e8:3f35:6844 with SMTP id b5-20020ac24105000000b004e83f356844mr1847583lfi.19.1681754158663;
-        Mon, 17 Apr 2023 10:55:58 -0700 (PDT)
-Received: from [192.168.1.101] (abyk99.neoplus.adsl.tpnet.pl. [83.9.30.99])
-        by smtp.gmail.com with ESMTPSA id u21-20020ac25195000000b004cb45148027sm2111190lfi.203.2023.04.17.10.55.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 10:55:58 -0700 (PDT)
-Message-ID: <e7d15873-a6b7-9a64-f164-7df64585dcfb@linaro.org>
-Date:   Mon, 17 Apr 2023 19:55:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sa8775p: pmic: add the sdam_0
- node
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mon, 17 Apr 2023 14:03:07 -0400
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B632D61;
+        Mon, 17 Apr 2023 11:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681754586; x=1713290586;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NiywolP3IeUIa8VfpIaUT5vTVN52GkeINXKV5c29gCM=;
+  b=YPMZLyJwFIeYu0so3eVup4eky2T7JZLGMDIvh2HP+2nnH0wS7DiLL/fr
+   HU3qO9VHh2MsVFSMujHUetokPlHWSkGaXRap2wDy4JLMmpMtYt9pCXoiZ
+   zSq+Be9eMBTAwGJMLwYyxzD3bGYNWjCl0kRzWWtgh5qasS/phupyfl7no
+   PYoaVlRBCvYIn1m6S4HiDnqwE1ZOqwtXtRK1RgOxgY+4epRopuKP6pmyU
+   vGOIRVrKv8dms6TDQ3f32quofI5+xYhzBunc0UHELY7Cm4eu7/U+sa8QH
+   lbCHxNI369ADn1OmgVN/mimApX7htnQQ3Ls09Ap9QVCZtmuy2oc+dtVoN
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10683"; a="372844402"
+X-IronPort-AV: E=Sophos;i="5.99,204,1677571200"; 
+   d="scan'208";a="372844402"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2023 11:03:05 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10683"; a="865078950"
+X-IronPort-AV: E=Sophos;i="5.99,204,1677571200"; 
+   d="scan'208";a="865078950"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 17 Apr 2023 11:03:01 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1poTBs-000ccB-2O;
+        Mon, 17 Apr 2023 18:03:00 +0000
+Date:   Tue, 18 Apr 2023 02:02:35 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Parikshit Pareek <quic_ppareek@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230417145536.414490-1-brgl@bgdev.pl>
- <20230417145536.414490-4-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230417145536.414490-4-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: Re: [PATCH V4 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
+Message-ID: <202304180101.Wxf2Jbjq-lkp@intel.com>
+References: <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Souradeep,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on krzk-dt/for-next linus/master v6.3-rc7]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Souradeep-Chowdhury/dt-bindings-sram-qcom-imem-Add-Boot-Stat-region-within-IMEM/20230417-231510
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu%40quicinc.com
+patch subject: [PATCH V4 2/3] soc: qcom: boot_stat: Add Driver Support for Boot Stats
+config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20230418/202304180101.Wxf2Jbjq-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/4c8808184261e004f0b258e469415e4eea9c5ad9
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Souradeep-Chowdhury/dt-bindings-sram-qcom-imem-Add-Boot-Stat-region-within-IMEM/20230417-231510
+        git checkout 4c8808184261e004f0b258e469415e4eea9c5ad9
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sh olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sh SHELL=/bin/bash drivers/soc/qcom/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202304180101.Wxf2Jbjq-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/soc/qcom/boot_stats.c:76:6: warning: no previous prototype for 'boot_stats_remove' [-Wmissing-prototypes]
+      76 | void boot_stats_remove(struct platform_device *pdev)
+         |      ^~~~~~~~~~~~~~~~~
 
 
-On 17.04.2023 16:55, Bartosz Golaszewski wrote:
-> From: Parikshit Pareek <quic_ppareek@quicinc.com>
-> 
-> Introduce sdam_0 node, which is to be used via nvmem for power on
-> reasons during reboot. Add supported PoN reaons supported via sdam_0
-> node.
-> 
-> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+vim +/boot_stats_remove +76 drivers/soc/qcom/boot_stats.c
 
-Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> index 5abdc239d3a6..3c3b6287cd27 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> @@ -88,6 +88,14 @@ trip1 {
->  			};
->  		};
->  	};
-> +
-> +	reboot-mode {
-> +		compatible = "nvmem-reboot-mode";
-> +		nvmem-cells = <&reboot_reason>;
-> +		nvmem-cell-names = "reboot-mode";
-> +		mode-recovery = <0x01>;
-> +		mode-bootloader = <0x02>;
-> +	};
->  };
->  
->  &spmi_bus {
-> @@ -133,6 +141,19 @@ pmm8654au_0_gpios: gpio@8800 {
->  			interrupt-controller;
->  			#interrupt-cells = <2>;
->  		};
-> +
-> +		pmm8654au_0_sdam_0: nvram@7100 {
-> +			compatible = "qcom,spmi-sdam";
-> +			reg = <0x7100>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +			ranges = <0 0x7100 0x100>;
-> +
-> +			reboot_reason: reboot-reason@48 {
-> +				reg = <0x48 0x1>;
-> +				bits = <1 7>;
-> +			};
-> +		};
->  	};
->  
->  	pmm8654au_1: pmic@2 {
+    75	
+  > 76	void boot_stats_remove(struct platform_device *pdev)
+    77	{
+    78		struct bs_data *drvdata = platform_get_drvdata(pdev);
+    79	
+    80		debugfs_remove_recursive(drvdata->dbg_dir);
+    81		iounmap(drvdata->b_stats);
+    82	}
+    83	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
