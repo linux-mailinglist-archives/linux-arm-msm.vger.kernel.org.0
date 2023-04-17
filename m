@@ -2,292 +2,408 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E3F56E4A1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 15:40:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9CD16E4A2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 15:43:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229896AbjDQNkL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 09:40:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38606 "EHLO
+        id S229602AbjDQNnG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 09:43:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230121AbjDQNkK (ORCPT
+        with ESMTP id S230047AbjDQNnF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 09:40:10 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 057571717
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 06:40:08 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4ec8133c59eso1373983e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 06:40:07 -0700 (PDT)
+        Mon, 17 Apr 2023 09:43:05 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114B36EB7;
+        Mon, 17 Apr 2023 06:43:01 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id x22so5150402oiv.10;
+        Mon, 17 Apr 2023 06:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681738806; x=1684330806;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OfX3jjRBAyejaneTA/BukJVT9hltWcZ6BOSo0XWuuHM=;
-        b=dNipT0zxpVH9LwkSmnABRW+aAyMOBTh2UM7lpkx/alNQB8ME8CfWujTxsFD5lxGpMS
-         XdphnWFzTRIKRSO2Yphyq++emqJc6dmUtPXFUaHBaQT7WFtyws3LUKhHboG1Hg7WQdsH
-         L6oRnQtRUCu5S4P82N6ARSSEh43aZwN8snAF8TMLGa83o5sbTV1v0NLFO3Rw9gf8+v9Q
-         ZUmk+mNH3hj8sSdBKhI53SpFVBnkoY9Xy6kJ3V3EpR7E5gzLtJMQJuaZkDbbdXlpxlhD
-         c9dVDXJD/M2dLWGlBkvLh5wTYcAbp0qymcox+O3lMbXF7/jBimC8juDowkJlAK1VsLpc
-         un/Q==
+        d=gmail.com; s=20221208; t=1681738980; x=1684330980;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n1AboqRVWhxplnRX9xmGZ+3x7052CTP+9TiYfyhoHXg=;
+        b=ohPPr+vPNReALlZf3AM1ln/5JqsYayv5WB/dJHTDy7h8gZOm2JiiHhkHExsuy0K/vb
+         QxcTvrYjHVQLdh2MTccx5TflioxpArtJZq6eH7/ntDby2mtDq3bAfi238Z2t6ZfYyU4z
+         FSa52wbkSms2TfgZ76cHxXCTk1FlCJz6VFqvlE5BdEMY4rB2cRO/kVKn8Jf1ZRDJmjmp
+         ORF949qIofG9JH/5nMpP5yt3qEuSU6SOnochhwmvcyIlfq2/rvD82bKywSe+wGjBmr3U
+         CNlFpX32BQ0AypmST7uzdIbp356z1fbUKLssI6bMhpFWxPpdSy5xIJHvvNgiP5vJEb7K
+         Zl+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681738806; x=1684330806;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OfX3jjRBAyejaneTA/BukJVT9hltWcZ6BOSo0XWuuHM=;
-        b=I1lrE/2HzErFRo72M1NdF6kkcGbk2gsUme9VkoNu/Ld7yeSBM2pjql/n5uGh7rs4hF
-         H5Mgd6T8FQabhREh6pi1l7bmwV4rRsfR4/p9KUButsZm+gMDa4PdMixCV3u44ob5QHOe
-         n9rOMXtzkGOUrCgX7ePz8YAZPSKFddYlqzLpRgnbYUgtucjSDl8qIosrdGls5VQW0iAv
-         nx6rymKz5+GUfNzjIzQFf3GWWSrNgn+wPJmdWt9YCsl7YfSpX/bJTiJPgwOaaoQXWWUX
-         LOUyEDlaXD3gK9Jm66dK9MHWMS5c2QmxEJlbc8EkvfVHGP9KGbjPVhvDoafSVdpp3dq+
-         uBKw==
-X-Gm-Message-State: AAQBX9fnVJ4P/CYh0X9UWc9XGB09m6LYEe6P1ptveM2U7jYeKph81Lc2
-        GDRdhl8h0i9NuOXPNRChCyTOXg==
-X-Google-Smtp-Source: AKy350asxBHx6SjgbH1XtrKGinYIJdyc3SlVGJPj7DhRHC8UfFIrz28WHGfnjB9MElGEfLJN7kY3BA==
-X-Received: by 2002:ac2:4c2f:0:b0:4ec:b1bf:a55b with SMTP id u15-20020ac24c2f000000b004ecb1bfa55bmr1644966lfq.24.1681738806214;
-        Mon, 17 Apr 2023 06:40:06 -0700 (PDT)
-Received: from [192.168.1.101] (abyk99.neoplus.adsl.tpnet.pl. [83.9.30.99])
-        by smtp.gmail.com with ESMTPSA id u6-20020ac243c6000000b004e7fa99f2b5sm2062181lfl.186.2023.04.17.06.40.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 06:40:05 -0700 (PDT)
-Message-ID: <aefda5ed-fee3-8919-2b96-a5bda7c77d06@linaro.org>
-Date:   Mon, 17 Apr 2023 15:40:03 +0200
+        d=1e100.net; s=20221208; t=1681738980; x=1684330980;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n1AboqRVWhxplnRX9xmGZ+3x7052CTP+9TiYfyhoHXg=;
+        b=H3QB30leNJLzK1c1lH1qb0eBRO+VBLBcFL9WuXsSYyAHYvbDD+soPpvBJ2GLGn870G
+         p52B7uvdKpmiw5u4ypiA+ylCkR+GIe4ueT+j8cBbeCSpukKmY54HYD4MMWRO8+3JyF85
+         8PaMv/oeMoSTvAcZ5qJEyHaob/c14Q5EBeHPdHb5VXH/4STvpeSuqHUQYs11IJ5p760p
+         mwTAsxeQSwpDZSqruPHYhkUKGD9NTbg6PI14jxxGfOf7oy7K82rKzsUjZuob+3lkErHr
+         hgU4pzxw/++BQyplBnXlYzaWkdnf5yLIKlc6LIMWcyDyayVxPBzv1a0L2bYCNlaIPu2u
+         r/Jw==
+X-Gm-Message-State: AAQBX9evyApw7iULh9L8L5hGOoMIf9SYdeJ/AcyET+MvAH/a1iOJrBdT
+        UWPaQ/W2INt1bf0tgf8nRSGAvuPjIaksfNCiHGY=
+X-Google-Smtp-Source: AKy350b7dkndI2KxsBcOxqmecazSD1tapB/+6WpxXKRQdaHEuyziGzteX4PkhjMQ/BH8T7AjZ9jIVDvrBkKIzR0O9jk=
+X-Received: by 2002:aca:de87:0:b0:38e:30:121b with SMTP id v129-20020acade87000000b0038e0030121bmr1054181oig.5.1681738979969;
+ Mon, 17 Apr 2023 06:42:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v3 2/2] soc: qcom: Introduce RPM master stats driver
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230405-topic-master_stats-v3-0-2cb2ba4f2092@linaro.org>
- <20230405-topic-master_stats-v3-2-2cb2ba4f2092@linaro.org>
- <20230416142055.GA2798@thinkpad>
- <ab6d9730-2eae-44c7-a809-b29174acdefc@linaro.org>
- <20230417082003.GA2874@thinkpad>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230417082003.GA2874@thinkpad>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <CAF6AEGsZsMx+Vy+4UQSx3X7w_QNvvjLqWxx=PnCLAOC9f-X2CQ@mail.gmail.com>
+ <ZDb1phnddSne79iN@phenom.ffwll.local> <CAF6AEGvBeDVM12ac0j_PKSdcY83hNDhyrQs9-=h=dx_7AoMXLw@mail.gmail.com>
+ <ZDcEGoSPGr/oRLas@phenom.ffwll.local> <c82fd8fa-9f4b-f62f-83be-25853f9ecf5e@linux.intel.com>
+ <ZDgDQ1PqtXwu8zqA@phenom.ffwll.local> <ad8f2793-c1b3-a505-e93f-6cc52fded86d@linux.intel.com>
+ <ZDhgcqiOtJi6//TS@phenom.ffwll.local> <8893ad56-8807-eb69-2185-b338725f0b18@linux.intel.com>
+ <CAF6AEGtaiKMWsGxTSUHM7_s_Wqiw3=ta+g=arUxknJ0dxbYvFQ@mail.gmail.com>
+ <ZDuoWC7TlvNa1OOm@phenom.ffwll.local> <09c8d794-bb64-f7ba-f854-f14ac30600a6@linux.intel.com>
+In-Reply-To: <09c8d794-bb64-f7ba-f854-f14ac30600a6@linux.intel.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 17 Apr 2023 06:42:48 -0700
+Message-ID: <CAF6AEGsvCBoS+uKyBESk_ZHm-H_nyMbVi0K4ND1Cfbw97QcYfQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] drm: Add fdinfo memory stats
+To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        linux-arm-msm@vger.kernel.org,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Christopher Healy <healych@amazon.com>,
+        dri-devel@lists.freedesktop.org,
+        open list <linux-kernel@vger.kernel.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Apr 17, 2023 at 4:10=E2=80=AFAM Tvrtko Ursulin
+<tvrtko.ursulin@linux.intel.com> wrote:
+>
+>
+> On 16/04/2023 08:48, Daniel Vetter wrote:
+> > On Fri, Apr 14, 2023 at 06:40:27AM -0700, Rob Clark wrote:
+> >> On Fri, Apr 14, 2023 at 1:57=E2=80=AFAM Tvrtko Ursulin
+> >> <tvrtko.ursulin@linux.intel.com> wrote:
+> >>>
+> >>>
+> >>> On 13/04/2023 21:05, Daniel Vetter wrote:
+> >>>> On Thu, Apr 13, 2023 at 05:40:21PM +0100, Tvrtko Ursulin wrote:
+> >>>>>
+> >>>>> On 13/04/2023 14:27, Daniel Vetter wrote:
+> >>>>>> On Thu, Apr 13, 2023 at 01:58:34PM +0100, Tvrtko Ursulin wrote:
+> >>>>>>>
+> >>>>>>> On 12/04/2023 20:18, Daniel Vetter wrote:
+> >>>>>>>> On Wed, Apr 12, 2023 at 11:42:07AM -0700, Rob Clark wrote:
+> >>>>>>>>> On Wed, Apr 12, 2023 at 11:17=E2=80=AFAM Daniel Vetter <daniel@=
+ffwll.ch> wrote:
+> >>>>>>>>>>
+> >>>>>>>>>> On Wed, Apr 12, 2023 at 10:59:54AM -0700, Rob Clark wrote:
+> >>>>>>>>>>> On Wed, Apr 12, 2023 at 7:42=E2=80=AFAM Tvrtko Ursulin
+> >>>>>>>>>>> <tvrtko.ursulin@linux.intel.com> wrote:
+> >>>>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> On 11/04/2023 23:56, Rob Clark wrote:
+> >>>>>>>>>>>>> From: Rob Clark <robdclark@chromium.org>
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> Add support to dump GEM stats to fdinfo.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> v2: Fix typos, change size units to match docs, use div_u64
+> >>>>>>>>>>>>> v3: Do it in core
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> >>>>>>>>>>>>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+> >>>>>>>>>>>>> ---
+> >>>>>>>>>>>>>       Documentation/gpu/drm-usage-stats.rst | 21 ++++++++
+> >>>>>>>>>>>>>       drivers/gpu/drm/drm_file.c            | 76 ++++++++++=
++++++++++++++++++
+> >>>>>>>>>>>>>       include/drm/drm_file.h                |  1 +
+> >>>>>>>>>>>>>       include/drm/drm_gem.h                 | 19 +++++++
+> >>>>>>>>>>>>>       4 files changed, 117 insertions(+)
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> diff --git a/Documentation/gpu/drm-usage-stats.rst b/Docume=
+ntation/gpu/drm-usage-stats.rst
+> >>>>>>>>>>>>> index b46327356e80..b5e7802532ed 100644
+> >>>>>>>>>>>>> --- a/Documentation/gpu/drm-usage-stats.rst
+> >>>>>>>>>>>>> +++ b/Documentation/gpu/drm-usage-stats.rst
+> >>>>>>>>>>>>> @@ -105,6 +105,27 @@ object belong to this client, in the r=
+espective memory region.
+> >>>>>>>>>>>>>       Default unit shall be bytes with optional unit specif=
+iers of 'KiB' or 'MiB'
+> >>>>>>>>>>>>>       indicating kibi- or mebi-bytes.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> +- drm-shared-memory: <uint> [KiB|MiB]
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +The total size of buffers that are shared with another fil=
+e (ie. have more
+> >>>>>>>>>>>>> +than a single handle).
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +- drm-private-memory: <uint> [KiB|MiB]
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +The total size of buffers that are not shared with another=
+ file.
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +- drm-resident-memory: <uint> [KiB|MiB]
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +The total size of buffers that are resident in system memo=
+ry.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> I think this naming maybe does not work best with the existi=
+ng
+> >>>>>>>>>>>> drm-memory-<region> keys.
+> >>>>>>>>>>>
+> >>>>>>>>>>> Actually, it was very deliberate not to conflict with the exi=
+sting
+> >>>>>>>>>>> drm-memory-<region> keys ;-)
+> >>>>>>>>>>>
+> >>>>>>>>>>> I wouldn't have preferred drm-memory-{active,resident,...} bu=
+t it
+> >>>>>>>>>>> could be mis-parsed by existing userspace so my hands were a =
+bit tied.
+> >>>>>>>>>>>
+> >>>>>>>>>>>> How about introduce the concept of a memory region from the =
+start and
+> >>>>>>>>>>>> use naming similar like we do for engines?
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> drm-memory-$CATEGORY-$REGION: ...
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Then we document a bunch of categories and their semantics, =
+for instance:
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> 'size' - All reachable objects
+> >>>>>>>>>>>> 'shared' - Subset of 'size' with handle_count > 1
+> >>>>>>>>>>>> 'resident' - Objects with backing store
+> >>>>>>>>>>>> 'active' - Objects in use, subset of resident
+> >>>>>>>>>>>> 'purgeable' - Or inactive? Subset of resident.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> We keep the same semantics as with process memory accounting=
+ (if I got
+> >>>>>>>>>>>> it right) which could be desirable for a simplified mental m=
+odel.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> (AMD needs to remind me of their 'drm-memory-...' keys seman=
+tics. If we
+> >>>>>>>>>>>> correctly captured this in the first round it should be equi=
+valent to
+> >>>>>>>>>>>> 'resident' above. In any case we can document no category is=
+ equal to
+> >>>>>>>>>>>> which category, and at most one of the two must be output.)
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Region names we at most partially standardize. Like we could=
+ say
+> >>>>>>>>>>>> 'system' is to be used where backing store is system RAM and=
+ others are
+> >>>>>>>>>>>> driver defined.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Then discrete GPUs could emit N sets of key-values, one for =
+each memory
+> >>>>>>>>>>>> region they support.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> I think this all also works for objects which can be migrate=
+d between
+> >>>>>>>>>>>> memory regions. 'Size' accounts them against all regions whi=
+le for
+> >>>>>>>>>>>> 'resident' they only appear in the region of their current p=
+lacement, etc.
+> >>>>>>>>>>>
+> >>>>>>>>>>> I'm not too sure how to rectify different memory regions with=
+ this,
+> >>>>>>>>>>> since drm core doesn't really know about the driver's memory =
+regions.
+> >>>>>>>>>>> Perhaps we can go back to this being a helper and drivers wit=
+h vram
+> >>>>>>>>>>> just don't use the helper?  Or??
+> >>>>>>>>>>
+> >>>>>>>>>> I think if you flip it around to drm-$CATEGORY-memory{-$REGION=
+}: then it
+> >>>>>>>>>> all works out reasonably consistently?
+> >>>>>>>>>
+> >>>>>>>>> That is basically what we have now.  I could append -system to =
+each to
+> >>>>>>>>> make things easier to add vram/etc (from a uabi standpoint)..
+> >>>>>>>>
+> >>>>>>>> What you have isn't really -system, but everything. So doesn't r=
+eally make
+> >>>>>>>> sense to me to mark this -system, it's only really true for inte=
+grated (if
+> >>>>>>>> they don't have stolen or something like that).
+> >>>>>>>>
+> >>>>>>>> Also my comment was more in reply to Tvrtko's suggestion.
+> >>>>>>>
+> >>>>>>> Right so my proposal was drm-memory-$CATEGORY-$REGION which I thi=
+nk aligns
+> >>>>>>> with the current drm-memory-$REGION by extending, rather than cre=
+ating
+> >>>>>>> confusion with different order of key name components.
+> >>>>>>
+> >>>>>> Oh my comment was pretty much just bikeshed, in case someone creat=
+es a
+> >>>>>> $REGION that other drivers use for $CATEGORY. Kinda Rob's parsing =
+point.
+> >>>>>> So $CATEGORY before the -memory.
+> >>>>>>
+> >>>>>> Otoh I don't think that'll happen, so I guess we can go with whate=
+ver more
+> >>>>>> folks like :-) I don't really care much personally.
+> >>>>>
+> >>>>> Okay I missed the parsing problem.
+> >>>>>
+> >>>>>>> AMD currently has (among others) drm-memory-vram, which we could =
+define in
+> >>>>>>> the spec maps to category X, if category component is not present=
+.
+> >>>>>>>
+> >>>>>>> Some examples:
+> >>>>>>>
+> >>>>>>> drm-memory-resident-system:
+> >>>>>>> drm-memory-size-lmem0:
+> >>>>>>> drm-memory-active-vram:
+> >>>>>>>
+> >>>>>>> Etc.. I think it creates a consistent story.
+> >>>>>>>
+> >>>>>>> Other than this, my two I think significant opens which haven't b=
+een
+> >>>>>>> addressed yet are:
+> >>>>>>>
+> >>>>>>> 1)
+> >>>>>>>
+> >>>>>>> Why do we want totals (not per region) when userspace can trivial=
+ly
+> >>>>>>> aggregate if they want. What is the use case?
+> >>>>>>>
+> >>>>>>> 2)
+> >>>>>>>
+> >>>>>>> Current proposal limits the value to whole objects and fixates th=
+at by
+> >>>>>>> having it in the common code. If/when some driver is able to supp=
+ort sub-BO
+> >>>>>>> granularity they will need to opt out of the common printer at wh=
+ich point
+> >>>>>>> it may be less churn to start with a helper rather than mid-layer=
+. Or maybe
+> >>>>>>> some drivers already support this, I don't know. Given how import=
+ant VM BIND
+> >>>>>>> is I wouldn't be surprised.
+> >>>>>>
+> >>>>>> I feel like for drivers using ttm we want a ttm helper which takes=
+ care of
+> >>>>>> the region printing in hopefully a standard way. And that could th=
+en also
+> >>>>>> take care of all kinds of of partial binding and funny rules (like=
+ maybe
+> >>>>>> we want a standard vram region that addds up all the lmem regions =
+on
+> >>>>>> intel, so that all dgpu have a common vram bucket that generic too=
+ls
+> >>>>>> understand?).
+> >>>>>
+> >>>>> First part yes, but for the second I would think we want to avoid a=
+ny
+> >>>>> aggregation in the kernel which can be done in userspace just as we=
+ll. Such
+> >>>>> total vram bucket would be pretty useless on Intel even since users=
+pace
+> >>>>> needs to be region aware to make use of all resources. It could eve=
+n be
+> >>>>> counter productive I think - "why am I getting out of memory when h=
+alf of my
+> >>>>> vram is unused!?".
+> >>>>
+> >>>> This is not for intel-aware userspace. This is for fairly generic "g=
+putop"
+> >>>> style userspace, which might simply have no clue or interest in what=
+ lmemX
+> >>>> means, but would understand vram.
+> >>>>
+> >>>> Aggregating makes sense.
+> >>>
+> >>> Lmem vs vram is now an argument not about aggregation but about
+> >>> standardizing regions names.
+> >>>
+> >>> One detail also is a change in philosophy compared to engine stats wh=
+ere
+> >>> engine names are not centrally prescribed and it was expected userspa=
+ce
+> >>> will have to handle things generically and with some vendor specific
+> >>> knowledge.
+> >>>
+> >>> Like in my gputop patches. It doesn't need to understand what is what=
+,
+> >>> it just finds what's there and presents it to the user.
+> >>>
+> >>> Come some accel driver with local memory it wouldn't be vram any more=
+.
+> >>> Or even a headless data center GPU. So I really don't think it is goo=
+d
+> >>> to hardcode 'vram' in the spec, or midlayer, or helpers.
+> >>>
+> >>> And for aggregation.. again, userspace can do it just as well. If we =
+do
+> >>> it in kernel then immediately we have multiple sets of keys to output
+> >>> for any driver which wants to show the region view. IMO it is just
+> >>> pointless work in the kernel and more code in the kernel, when usersp=
+ace
+> >>> can do it.
+> >>>
+> >>> Proposal A (one a discrete gpu, one category only):
+> >>>
+> >>> drm-resident-memory: x KiB
+> >>> drm-resident-memory-system: x KiB
+> >>> drm-resident-memory-vram: x KiB
+> >>>
+> >>> Two loops in the kernel, more parsing in userspace.
+> >>
+> >> why would it be more than one loop, ie.
+> >>
+> >>      mem.resident +=3D size;
+> >>      mem.category[cat].resident +=3D size;
+> >>
+> >> At the end of the day, there is limited real-estate to show a million
+> >> different columns of information.  Even the gputop patches I posted
+> >> don't show everything of what is currently there.  And nvtop only
+> >> shows toplevel resident stat.  So I think the "everything" stat is
+> >> going to be what most tools use.
+> >
+> > Yeah with enough finesse the double-loop isn't needed, it's just the
+> > simplest possible approach.
+> >
+> > Also this is fdinfo, I _really_ want perf data showing that it's a
+> > real-world problem when we conjecture about algorithmic complexity.
+> > procutils have been algorithmically garbage since decades after all :-)
+>
+> Just run it. :)
+>
+> Algorithmic complexity is quite obvious and not a conjecture - to find
+> DRM clients you have to walk _all_ pids and _all_ fds under them. So
+> amount of work can scale very quickly and even _not_ with the number of
+> DRM clients.
+>
+> It's not too bad on my desktop setup but it is significantly more CPU
+> intensive than top(1).
+>
+> It would be possible to optimise the current code some more by not
+> parsing full fdinfo (may become more important as number of keys grow),
+> but that's only relevant when number of drm fds is large. It doesn't
+> solve the basic pids * open fds search for which we'd need a way to walk
+> the list of pids with drm fds directly.
 
+All of which has (almost[1]) nothing to do with one loop or two
+(ignoring for a moment that I already pointed out a single loop is all
+that is needed).  If CPU overhead is a problem, we could perhaps come
+up some sysfs which has one file per drm_file and side-step crawling
+of all of the proc * fd.  I'll play around with it some but I'm pretty
+sure you are trying to optimize the wrong thing.
 
-On 17.04.2023 10:20, Manivannan Sadhasivam wrote:
-> On Mon, Apr 17, 2023 at 09:14:39AM +0200, Konrad Dybcio wrote:
->>
->>
->> On 16.04.2023 16:20, Manivannan Sadhasivam wrote:
->>> On Fri, Apr 14, 2023 at 01:37:18PM +0200, Konrad Dybcio wrote:
->>>> Introduce a driver to query and expose detailed, per-subsystem (as opposed
->>>> to the existing qcom_stats driver which exposes SoC-wide data) about low
->>>> power mode states of a given RPM master. That includes the APSS (ARM),
->>>> MPSS (modem) and other remote cores, depending on the platform
->>>> configuration.
->>>>
->>>> This is a vastly cleaned up and restructured version of a similar
->>>> driver found in msm-5.4.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>>  drivers/soc/qcom/Kconfig            |  11 +++
->>>>  drivers/soc/qcom/Makefile           |   1 +
->>>>  drivers/soc/qcom/rpm_master_stats.c | 160 ++++++++++++++++++++++++++++++++++++
->>>>  3 files changed, 172 insertions(+)
->>>>
->>>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->>>> index a491718f8064..e597799e8121 100644
->>>> --- a/drivers/soc/qcom/Kconfig
->>>> +++ b/drivers/soc/qcom/Kconfig
->>>> @@ -135,6 +135,17 @@ config QCOM_RMTFS_MEM
->>>>  
->>>>  	  Say y here if you intend to boot the modem remoteproc.
->>>>  
->>>> +config QCOM_RPM_MASTER_STATS
->>>> +	tristate "Qualcomm RPM Master stats"
->>>> +	depends on ARCH_QCOM || COMPILE_TEST
->>>> +	help
->>>> +	  The RPM Master sleep stats driver provides detailed per-subsystem
->>>> +	  sleep/wake data, read from the RPM message RAM. It can be used to
->>>> +	  assess whether all the low-power modes available are entered as
->>>> +	  expected or to check which part of the SoC prevents it from sleeping.
->>>> +
->>>> +	  Say y here if you intend to debug or monitor platform sleep.
->>>> +
->>>>  config QCOM_RPMH
->>>>  	tristate "Qualcomm RPM-Hardened (RPMH) Communication"
->>>>  	depends on ARCH_QCOM || COMPILE_TEST
->>>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->>>> index 0f43a88b4894..7349371fdea1 100644
->>>> --- a/drivers/soc/qcom/Makefile
->>>> +++ b/drivers/soc/qcom/Makefile
->>>> @@ -14,6 +14,7 @@ obj-$(CONFIG_QCOM_QMI_HELPERS)	+= qmi_helpers.o
->>>>  qmi_helpers-y	+= qmi_encdec.o qmi_interface.o
->>>>  obj-$(CONFIG_QCOM_RAMP_CTRL)	+= ramp_controller.o
->>>>  obj-$(CONFIG_QCOM_RMTFS_MEM)	+= rmtfs_mem.o
->>>> +obj-$(CONFIG_QCOM_RPM_MASTER_STATS)	+= rpm_master_stats.o
->>>>  obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
->>>>  qcom_rpmh-y			+= rpmh-rsc.o
->>>>  qcom_rpmh-y			+= rpmh.o
->>>> diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
->>>> new file mode 100644
->>>> index 000000000000..73080c92bf89
->>>> --- /dev/null
->>>> +++ b/drivers/soc/qcom/rpm_master_stats.c
->>>> @@ -0,0 +1,160 @@
->>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>> +/*
->>>> + * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
->>>> + * Copyright (c) 2023, Linaro Limited
->>>> + *
->>>> + * This driver supports what is known as "Master Stats v2", which seems to be
->>>> + * the only version which has ever shipped, all the way from 2013 to 2023.
->>>
->>> It'd better to mention "Qualcomm downstream" in the somewhere above comment to
->>> make it clear for users.
->> Ack
->>
->>>
->>>> + */
->>>> +
->>>> +#include <linux/debugfs.h>
->>>> +#include <linux/io.h>
->>>> +#include <linux/module.h>
->>>> +#include <linux/of.h>
->>>> +#include <linux/of_address.h>
->>>> +#include <linux/platform_device.h>
->>>> +
->>>> +struct master_stats_data {
->>>> +	void __iomem *base;
->>>> +	const char *label;
->>>> +};
->>>> +
->>>> +struct rpm_master_stats {
->>>> +	uint32_t active_cores;
->>>> +	uint32_t num_shutdowns;
->>>> +	uint64_t shutdown_req;
->>>> +	uint64_t wakeup_idx;
->>>> +	uint64_t bringup_req;
->>>> +	uint64_t bringup_ack;
->>>> +	uint32_t wakeup_reason; /* 0 = "rude wakeup", 1 = scheduled wakeup */
->>>> +	uint32_t last_sleep_trans_dur;
->>>> +	uint32_t last_wake_trans_dur;
->>>> +
->>>> +	/* Per-subsystem (*not necessarily* SoC-wide) XO shutdown stats */
->>>> +	uint32_t xo_count;
->>>> +	uint64_t xo_last_enter;
->>>> +	uint64_t last_exit;
->>>> +	uint64_t xo_total_dur;
->>>
->>> Why can't you use u64, u32?
->> Brain derp!
->>
->>>
->>> Also, sort these members as below:
->>>
->>> u64
->>> u32
->> No, it's the way this data is structured in the
->> memory and we copy it as a whole.
->>
-> 
-> Ok, in that case you'd need __packed.
-> 
->>>
->>>> +};
->>>> +
-> 
-> [...]
-> 
->>>> +		/*
->>>> +		 * Generally it's not advised to fail on debugfs errors, but this
->>>> +		 * driver's only job is exposing data therein.
->>>> +		 */
->>>> +		dent = debugfs_create_file(d[i].label, 0444, root,
->>>> +					   &d[i], &master_stats_fops);
->>>> +		if (!dent) {
->>>
->>> Don't check for NULL, instead use IS_ERR() if you really care about error
->>> checking here.
->> "This function will return a pointer to a dentry if
->> it succeeds. This pointer must be passed to the
->> debugfs_remove function when the file is to be removed
->> (no automatic cleanup happens if your module is unloaded,
->> you are responsible here.) If an error occurs, NULL will
->> be returned."
-> 
-> This seems to be the old comment. Take a look at the updated one in mainline:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/fs/debugfs/inode.c#n468
-> 
-> Greg changed the semantics of the debugfs APIs a while back but the kernel doc
-> was updated recently:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/fs/debugfs/inode.c?id=d3002468cb5d5da11e22145c9af32facd5c34352
-Okay, ack to both. I'll fix all that and resend!
+BR,
+-R
 
-Konrad
-> 
-> - Mani
-> 
->>
->>>
->>>> +			debugfs_remove_recursive(root);
->>>> +			return -EINVAL;
->>>> +		}
->>>> +	}
->>>> +
->>>> +	device_set_pm_not_required(dev);
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static void master_stats_remove(struct platform_device *pdev)
->>>> +{
->>>> +	struct dentry *root = platform_get_drvdata(pdev);
->>>> +
->>>> +	debugfs_remove_recursive(root);
->>>> +}
->>>> +
->>>> +static const struct of_device_id rpm_master_table[] = {
->>>> +	{ .compatible = "qcom,rpm-master-stats" },
->>>> +	{ },
->>>> +};
->>>> +
->>>> +static struct platform_driver master_stats_driver = {
->>>> +	.probe = master_stats_probe,
->>>> +	.remove_new = master_stats_remove,
->>>> +	.driver = {
->>>> +		.name = "rpm_master_stats",
->>>> +		.of_match_table = rpm_master_table,
->>>> +	},
->>>> +};
->>>> +module_platform_driver(master_stats_driver);
->>>> +
->>>> +MODULE_DESCRIPTION("RPM Master Statistics driver");
->>>
->>> Qualcomm RPM Master Statistics driver
->> Ack
->>
->> Konrad
->>>
->>> - Mani
->>>
->>>> +MODULE_LICENSE("GPL");
->>>>
->>>> -- 
->>>> 2.40.0
->>>>
->>>
-> 
+[1] generally a single process using drm has multiple fd's pointing at
+the same drm_file.. which makes the current approach of having to read
+fdinfo to find the client-id sub-optimal.  But still the total # of
+proc * fd is much larger
