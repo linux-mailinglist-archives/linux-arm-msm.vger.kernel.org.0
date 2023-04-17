@@ -2,101 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D8F76E4F80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 19:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85F726E4FB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 19:54:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229669AbjDQRok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 13:44:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39610 "EHLO
+        id S231183AbjDQRyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 13:54:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjDQRok (ORCPT
+        with ESMTP id S231181AbjDQRyJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 13:44:40 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD936B47B;
-        Mon, 17 Apr 2023 10:44:27 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f0a0c4e1ebso17646445e9.3;
-        Mon, 17 Apr 2023 10:44:27 -0700 (PDT)
+        Mon, 17 Apr 2023 13:54:09 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFED9B44D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:53:57 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2a8bbea12d7so13117811fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 10:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681753466; x=1684345466;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2wl07vQ1AO+kNIizqaeliSseA8G5rkqNQsDitaTpZIc=;
-        b=EEPaJN4zXOu38z1Cjv04aHBn/69AnpIvlOb/yelRxwWeryHfC6PWx3JXAqEADozrB9
-         K44VBCPrdgpKlRm+gX8PBY5A89GXbc7VHcsyidPHE7NxGLDBTb74Ww+k/VsU8A/3xrxI
-         Az8Yv/aQVfCWGByh6LWhTWeqmzWqZXOHNgU/eWFaJ3b4vraVMkmDIQmf+6PjkvM0mCdU
-         Ce/407+2oE4KsCEUWG7xf1ep3U+i4hzRpNkvr3oInXFtvrGh+ocdzni0WtxIUu9hxhxc
-         RMeaxxcCoqlRQrPjYv1r4vCsmDYwJVMjcrKW2tXHqOZzAPM5ksv3Kp3ekj/sfYGRWWs2
-         dVpA==
+        d=linaro.org; s=google; t=1681754036; x=1684346036;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GgoyYDnW3bIE1+yljhW7/iBAMT7lsN3TyOEFvRbUH10=;
+        b=EJhrnqAo5r1bSmWzs7C07USLvkz5hS1EbVKEnKfoPs3eGs3QCR/xm+xC45Cbf7BlXA
+         oOGy2Ov4MvSlzg40qKckOxufkPEdiqJ5CLAK+Xuqp2u27F6k+rhUEv8/G/oL806P9nC0
+         wtRZge/oe+vtD2Hr7mSZ0XAaMqEiuIjk2jAwRM0tVeqpHMQa6e+kWancUuVAfuiKI84G
+         8zSJNPQCLoEPiMeC/bbhx4no98Yap6+ue/hKXEEcqw0xrooTR1YVi3BkdwO/wzLR+UkU
+         GUd1npSMgjtg0amkn4Pg9Nwgw7mXazyhkh7DV3u076j+2pmQnJpz06fRy1NtAi++yPlD
+         2khQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681753466; x=1684345466;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2wl07vQ1AO+kNIizqaeliSseA8G5rkqNQsDitaTpZIc=;
-        b=KaU/RJYwkB4YMEEmNv/9h9N90LiExgKtLFLCBiJmy0v149NFQECRItOWBA5mKnGzRg
-         QbtVyipKb4YhwXx9Zawh8PG7RmlR3tP87NvV8HGe/dqxM86+E07eFXpbwza8Asml9Ssj
-         aEtXKfSa2MlI4mpbbZQ7Gc5PVIVIPuJk8ppnEby34ccAgVUfZCJo9TbqQNlhvUN68Iy/
-         YFNQW1vMFVmJCQHVumMyB1zdXzIgzjGDxdPTHNCE3cMc8bJtlhXqQWZg8eplLyuW5p5o
-         9HV9ekg1zoIbj3yl06XUvJn2Tx6PBDOpviYhgG0TKKS0CVg6ZZ0tU2g97uDD5sD4r1kq
-         wICw==
-X-Gm-Message-State: AAQBX9eKqjCbqjE84bN4gx7j0O9SbbhwicAPpNkEFlO18KFdxRovPm1o
-        KtqkIjrAbENnBFJzPaMov/s=
-X-Google-Smtp-Source: AKy350axYaI3RgrUewJe+zqYDBluieZHARACOP6EU768NYQ7be2hn1b8turA8sReyvN3WU2DIgIW/A==
-X-Received: by 2002:adf:f1ce:0:b0:2f5:a412:dabe with SMTP id z14-20020adff1ce000000b002f5a412dabemr6818264wro.3.1681753466280;
-        Mon, 17 Apr 2023 10:44:26 -0700 (PDT)
-Received: from localhost.localdomain (host-87-7-13-196.retail.telecomitalia.it. [87.7.13.196])
-        by smtp.googlemail.com with ESMTPSA id f24-20020a7bcd18000000b003f09a9151c1sm12516155wmj.30.2023.04.17.10.44.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Apr 2023 10:44:25 -0700 (PDT)
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1681754036; x=1684346036;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GgoyYDnW3bIE1+yljhW7/iBAMT7lsN3TyOEFvRbUH10=;
+        b=cAAOrzFz35kyXE9t3X47Hrl4Q0jGqNNn588IHml3eaxcBDIVvWkKWVMxyQKKraZwF8
+         7lJ/vX/qV56EkfTvc9MpxaGdob4KwoIQmzv+3ddAtUe5EbWrMlphPmeW15PZEbc9lct5
+         Fj2PPsrdlgwLe19OSwMWZ0S2sl8VvkXVVdVxaVYtVWtzkSLH0f8nXbA8z2b/AL3D1hQ9
+         QqxRudURBdsudQ0YXoMbbcxsjByG6UWzIeDV1k6XfUhtf1xd7xMYSYFbAOHFUqDZewQu
+         PqPbKw+jy2JkBBIwZiFgPz/esphPh7Hlk4THdVjn/ww73M1KA8113pCPmqjff3JzeWZy
+         3m6Q==
+X-Gm-Message-State: AAQBX9dcvDffhESE4f0hhy3ge/w0Nib6ueMs7KXTuP1N5TIVKFFKAmP5
+        MdRZT+F1kcotM/60iSctSqLdrA==
+X-Google-Smtp-Source: AKy350amMPvVgPAUL6SocxjvTtoFWiqo+FzjMRcTObRsUMzfYWHUYIqXjvSnMBPwgoa4p0rcfGfMbQ==
+X-Received: by 2002:a19:7507:0:b0:4ec:85f6:5bf3 with SMTP id y7-20020a197507000000b004ec85f65bf3mr1962145lfe.21.1681754035984;
+        Mon, 17 Apr 2023 10:53:55 -0700 (PDT)
+Received: from [192.168.1.101] (abyk99.neoplus.adsl.tpnet.pl. [83.9.30.99])
+        by smtp.gmail.com with ESMTPSA id 7-20020ac25687000000b004edc2a023ffsm688536lfr.36.2023.04.17.10.53.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 17 Apr 2023 10:53:55 -0700 (PDT)
+Message-ID: <42ed2929-93db-6270-a994-b43eb59c3869@linaro.org>
+Date:   Mon, 17 Apr 2023 19:53:54 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 1/2] clk: qcom: gcc-ipq6018: drop redundant F define
+Content-Language: en-US
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH 2/2] clk: qcom: gcc-sdm660: drop redundant F define
-Date:   Mon, 17 Apr 2023 19:44:08 +0200
-Message-Id: <20230417174408.23722-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230417174408.23722-1-ansuelsmth@gmail.com>
 References: <20230417174408.23722-1-ansuelsmth@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230417174408.23722-1-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The same exact F frequency table entry is defined in clk-rcg.h
-Drop the redundant define to cleanup code.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/clk/qcom/gcc-sdm660.c | 2 --
- 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sdm660.c b/drivers/clk/qcom/gcc-sdm660.c
-index db918c92a522..6afce8e42ede 100644
---- a/drivers/clk/qcom/gcc-sdm660.c
-+++ b/drivers/clk/qcom/gcc-sdm660.c
-@@ -25,8 +25,6 @@
- #include "reset.h"
- #include "gdsc.h"
- 
--#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
--
- enum {
- 	P_XO,
- 	P_SLEEP_CLK,
--- 
-2.39.2
+On 17.04.2023 19:44, Christian Marangi wrote:
+> The same exact F frequency table entry is defined in clk-rcg.h
+> Drop the redundant define to cleanup code.
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+>  drivers/clk/qcom/gcc-ipq6018.c | 2 --
+>  1 file changed, 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/gcc-ipq6018.c b/drivers/clk/qcom/gcc-ipq6018.c
+> index 3f9c2f61a5d9..350ead66914c 100644
+> --- a/drivers/clk/qcom/gcc-ipq6018.c
+> +++ b/drivers/clk/qcom/gcc-ipq6018.c
+> @@ -26,8 +26,6 @@
+>  #include "clk-regmap-mux.h"
+>  #include "reset.h"
+>  
+> -#define F(f, s, h, m, n) { (f), (s), (2 * (h) - 1), (m), (n) }
+> -
+>  enum {
+>  	P_XO,
+>  	P_BIAS_PLL,
