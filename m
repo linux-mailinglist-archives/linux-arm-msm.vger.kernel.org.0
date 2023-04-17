@@ -2,79 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1AB46E4AEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 16:08:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 158E46E4B32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 16:17:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231158AbjDQOIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 10:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33484 "EHLO
+        id S231165AbjDQOQ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 10:16:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231152AbjDQOIj (ORCPT
+        with ESMTP id S230419AbjDQOQy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 10:08:39 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34321A7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 07:07:45 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-504eb1155d3so20321947a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 07:07:45 -0700 (PDT)
+        Mon, 17 Apr 2023 10:16:54 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B25F55A9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 07:16:32 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-94a35b0d130so587739366b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 07:16:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1681740461; x=1684332461;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=moL+4Bl3gFWXEYHuDwZ5rfkHMK20tDKYmlXyWn8rpAc=;
-        b=DHkV6cbgYjGHmPy8kYvBirFJJbv/e21aF7Mmd4mvsdYiG+qGONpZnx2M6TWlToNGni
-         AhAoliZVBjRJ7m/5gUPa3Y4Omml05X/jxLwBfjAX8amVSPMDATemwjywZJueMDJiwtlg
-         zr8oEUyn3/0vv1tHRU2TsNyrwfkd8vncJdJT0=
+        d=linaro.org; s=google; t=1681740990; x=1684332990;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yVQRzgONTjXgcIxkUzSecJIpFbUF/z8zPatZhBjABrY=;
+        b=JR2AESFF0BC+QkXNEMd1fyoFzNxcA7STjpz5F0nsNpOnZo5UEei7/goAt80LRQfUYY
+         1g4Hf4HFnC1gAKhYF5InoeQuYnsmsq7RSGaVS/7NaMAgGQLTSB/ROSSrbqGahMtVIgtL
+         sOyapjl4n9Ob0mB1pL91p2BcKrUXfod4S5kC5MrnNEhr3W1j+vvr6xat0h60lRHxA3O7
+         qiMKeFzqIl6f6B499g/4MK3g+sHkzMRybDdVgOsTnoSQZDtfDhOB2PVrqTmXC5nkNEf2
+         m36JoYyw7xsdwNyYqiaUayZp839SUz3Vj7vWpBkBRvjHP6xlEbYWacpfWVeW5YXbSxI2
+         0n1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681740461; x=1684332461;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=moL+4Bl3gFWXEYHuDwZ5rfkHMK20tDKYmlXyWn8rpAc=;
-        b=e4fLgUo+xICRc4QwMJmNXQrt5MA6rkjLIey+dMxK8cvnZhzLEDMWyc6DcKGXIovyDY
-         XHEsuna1TW+iy8vorFanxJS2xJkfqvEi2EO1CPf2dmA+6Z+/cS3T/kgU0a17Mw4lJB0Y
-         lE7a7OwRS0XUmj/OcBtpxpSN+LxRdUNGt96djWTPLAVKTUrgaXQ5ItNLhB0n50o2ldTz
-         d76Hr/fcH9pfujPUW4KBbJPz2elAR6NCA65adOb/BVo3z5hdyORvZf5DGcpzEGygqq1y
-         74yffHkDYEgr94xXCVoMeuEMgF/dYfYHJCUpwfpNMu0n/f4kGiPXwHLahphIrYJNlb0v
-         DLQw==
-X-Gm-Message-State: AAQBX9cC2R3D8H+39g68FnEkxNzikBKSZhKVntnQQVQHeW7H86GQhwwu
-        2G9xiL93DhAGGLLRhM+pw36Z9sZTujJcTPDoVe5LpA==
-X-Google-Smtp-Source: AKy350ZKTGvNUXdyxGNFFC0HuK4WQRgH/2Edj/FFJyzHtqHAdAcCCr9RhEHjnp35PXPpGrbYxrcKbg==
-X-Received: by 2002:aa7:c90e:0:b0:4fa:785d:121 with SMTP id b14-20020aa7c90e000000b004fa785d0121mr13430198edt.16.1681740461561;
-        Mon, 17 Apr 2023 07:07:41 -0700 (PDT)
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com. [209.85.128.53])
-        by smtp.gmail.com with ESMTPSA id ca15-20020aa7cd6f000000b0050477decdfasm5835166edb.3.2023.04.17.07.07.41
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1681740990; x=1684332990;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yVQRzgONTjXgcIxkUzSecJIpFbUF/z8zPatZhBjABrY=;
+        b=I/nskndC8M8FLnkAz6cmvZkKBiLrAzDX+wgbZJpDPr7g5U8DSvbx/3F5cKCzuJxaZf
+         p6hqzQJriSodMTtCQGgoBWUCVrDhl8PlhvetasxeKvYsgzvDxQxSF27rNJae+/hl75BA
+         Hre37ziBIRZ/ybtqQJsaFgYKAnPpk3tBd6972x+L0Cu7PmaL/GrvW5NCECHRG7mQ+NLP
+         yqE+ygWmzzNeG15k3sQ4TCNhYkxSDrlVrF8RWxHhWs9cY+r7X/ji9PIY6Tn+LIU6ad16
+         JlUWjALSFexh+g0feOc71WXrFv/PmdP3k2pS5NzMBuJ+KBU1fwVGvrfSCHlqQ7sT1sFG
+         +eEQ==
+X-Gm-Message-State: AAQBX9cNZ+Vh3fppTwzV4/4B3siklArOw8sTpUn/SZW1CFhiCAIXNP05
+        okIEIs6kN7orJjN2L8Z1PR/LeQ==
+X-Google-Smtp-Source: AKy350aZvD7dqPSR14EhguXP0BaRVtu68WfxF+4FDPU3OJWaId59qnrxRKHVkTGD2yDgSTgenaausA==
+X-Received: by 2002:a50:ef10:0:b0:506:b88a:cab4 with SMTP id m16-20020a50ef10000000b00506b88acab4mr209225eds.3.1681740990555;
+        Mon, 17 Apr 2023 07:16:30 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:96aa:60eb:e021:6511? ([2a02:810d:15c0:828:96aa:60eb:e021:6511])
+        by smtp.gmail.com with ESMTPSA id b6-20020aa7c906000000b0050687dbb5dasm4025762edt.31.2023.04.17.07.16.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 07:07:41 -0700 (PDT)
-Received: by mail-wm1-f53.google.com with SMTP id he13so18855933wmb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 07:07:41 -0700 (PDT)
-X-Received: by 2002:a7b:c40f:0:b0:3f1:6757:6239 with SMTP id
- k15-20020a7bc40f000000b003f167576239mr1471017wmi.6.1681740460987; Mon, 17 Apr
- 2023 07:07:40 -0700 (PDT)
+        Mon, 17 Apr 2023 07:16:30 -0700 (PDT)
+Message-ID: <dccd1951-9fbe-272b-541d-72446ea892e6@linaro.org>
+Date:   Mon, 17 Apr 2023 16:16:28 +0200
 MIME-Version: 1.0
-References: <1681481153-24036-1-git-send-email-quic_vnivarth@quicinc.com>
- <1681481153-24036-4-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=VKY-0vX271G+EQQ5kC3gTqpPPyTGE0xHWPBncVUhZufQ@mail.gmail.com> <30a752c9-3ea0-43d3-959a-da2e8b526cb4@sirena.org.uk>
-In-Reply-To: <30a752c9-3ea0-43d3-959a-da2e8b526cb4@sirena.org.uk>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 17 Apr 2023 07:07:28 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VCbcUnf42tK-HV8j=71BXXytxku_0rGjKyhyR3WG4SUw@mail.gmail.com>
-Message-ID: <CAD=FV=VCbcUnf42tK-HV8j=71BXXytxku_0rGjKyhyR3WG4SUw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] spi: spi-qcom-qspi: Add DMA mode support
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
-        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v2 6/7] soundwire: qcom: add support for v2.0.0 controller
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Rao Mandadapu <quic_srivasam@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230403132503.62090-1-krzysztof.kozlowski@linaro.org>
+ <20230403132503.62090-7-krzysztof.kozlowski@linaro.org>
+ <f2f1871c-38f1-52b0-d90d-d1f263048606@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <f2f1871c-38f1-52b0-d90d-d1f263048606@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,33 +88,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 13/04/2023 13:27, Srinivas Kandagatla wrote:
+RM_INTERRUPT_STATUS_RMSK);
+>>   
+>>   	/* Configure No pings */
+>>   	ctrl->reg_read(ctrl, SWRM_MCP_CFG_ADDR, &val);
+>>   	u32p_replace_bits(&val, SWRM_DEF_CMD_NO_PINGS, SWRM_MCP_CFG_MAX_NUM_OF_CMD_NO_PINGS_BMSK);
+>>   	ctrl->reg_write(ctrl, SWRM_MCP_CFG_ADDR, val);
+>>   
+>> -	if (ctrl->version >= SWRM_VERSION_1_7_0) {
+>> +	if (ctrl->version == SWRM_VERSION_1_7_0) {
+>>   		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
+>>   		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
+>>   				SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
+>> +	} else if (ctrl->version >= SWRM_VERSION_2_0_0) {
+> 
+> we can move this to a proper switch case rather than if else's
 
-On Mon, Apr 17, 2023 at 5:12=E2=80=AFAM Mark Brown <broonie@kernel.org> wro=
-te:
->
-> On Fri, Apr 14, 2023 at 03:05:58PM -0700, Doug Anderson wrote:
->
-> > Having alignment requirements like this doesn't seem like it should be
-> > that unusual, though, and that's why it feels like the logic belongs
-> > in the SPI core. In fact, it seems like this is _supposed_ to be
-> > handled in the SPI core, but it isn't? In "spi.h" I see
-> > "dma_alignment" that claims to be exactly what you need. As far as I
-> > can tell, though, the core doesn't use this? ...so I'm kinda confused.
-> > As far as I can tell this doesn't do anything and thus anyone setting
-> > it today is broken?
->
-> SPI consumers should only be providing dmaable buffers.
+OK
 
-Ah, I think I see.
+Best regards,
+Krzysztof
 
-1. In "struct spi_transfer" the @tx_buf and @rx_buf are documented to
-have "dma-safe memory".
-
-2. On ARM64 anyway, I see "ARCH_DMA_MINALIGN" is 128.
-
-So there is no reason to do any special rules to force alignment to
-32-bytes because that's already guaranteed. Presumably that means you
-can drop a whole pile of code and things will still work fine.
-
--Doug
