@@ -2,111 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3458C6E3E9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 06:50:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F13F6E3EE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 07:34:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbjDQEuz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 00:50:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43734 "EHLO
+        id S229741AbjDQFeb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 01:34:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjDQEuy (ORCPT
+        with ESMTP id S229652AbjDQFe3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 00:50:54 -0400
+        Mon, 17 Apr 2023 01:34:29 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A166930CF;
-        Sun, 16 Apr 2023 21:50:52 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB5A8212F;
+        Sun, 16 Apr 2023 22:34:23 -0700 (PDT)
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33H4mVql012485;
-        Mon, 17 Apr 2023 04:50:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4RmQFL5U0JeOtmh5MfyrMmpzlM43CpOrwVrcnDdeCF4=;
- b=KDKy42Se3jWOQwbvqcnxU9k1EYDvpqB8yt1M2QktLNYyqTHYhvW2LB1vIuGipFWghhD1
- W0qCdZeG4aGTIBlgweXjCuVG88fElDFV5cxI0yuLRycAqHAF55gGtlM5TT1ZRiFVgOQF
- iWjDPdkD6xhhcRvmkueqsKA+JB8KH6Yc3ulJO8FO02lk0yqWxhtpaojMawIX3eUa+coT
- 2EZR3gQwA2Gzx7MzMTJNR7DLYPP+klvY7gSFZqSY6OEAp0D1S2bzYPhmIeLHstuDoaz2
- oS+sPKf7Hhkj4liJDyAY4LTbXeIuhK0sY5ZEUyVRmJLAObBVTDwidWGDuLNmzsqd8F53 mQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pymnf2k9p-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33H47Fk6010753;
+        Mon, 17 Apr 2023 05:34:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=0cwRhtA6ZuctV5zzxJgO5tpv4VIFRXFeL+rOLiyTj1s=;
+ b=Sct7ZHC0XNDvPqdf3aWRMBx707acSOCAjZzJWhhWt8GkQHZ/nv96hmZPgEZAEe6Bhfjy
+ khbn2OObwz0+Djr0WQMwWjUuMx7eaN1487vu9p2Wr+p0kwFyHwYqoClc/uFqtBVxF99T
+ Tu4UdY+nKCJc9cesCqghRkca+1Vm5wffaOkT4qMX2a1FD9sHps6ItjzfNntLgNuOkG8t
+ Lnk+GIk/IClclu+4L4zAtVulpp9RgEMzEZFvO7pIjXfhwxjVoJHZvv+Ik0eaggqzWrou
+ N/95NvF/jX7OBbFaBOW70l7Ghugqsr6AtwJzNV4FABHr0QKLGHQ3tzNzFJaCh9kuXIAu Kg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pymnf2n6e-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 04:50:32 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33H4oVXL025564
+        Mon, 17 Apr 2023 05:34:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33H5YJOl028373
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 04:50:31 GMT
-Received: from [10.216.30.175] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sun, 16 Apr
- 2023 21:50:25 -0700
-Message-ID: <abbc41e4-08dc-04e9-4c05-0bd1994405b7@quicinc.com>
-Date:   Mon, 17 Apr 2023 10:20:21 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V3 0/9] Add minimal boot support for IPQ5018
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
+        Mon, 17 Apr 2023 05:34:19 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Sun, 16 Apr 2023 22:34:13 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
         <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <1681468167-11689-1-git-send-email-quic_srichara@quicinc.com>
- <de891705-bce9-7610-340d-b4bc284dfaca@linaro.org>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <de891705-bce9-7610-340d-b4bc284dfaca@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+        <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
+Subject: [PATCH V2 0/4] Incremental patches on minimal boot support
+Date:   Mon, 17 Apr 2023 11:03:51 +0530
+Message-ID: <20230417053355.25691-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _KTBngNGr2rSc1lkvP1_pYnpPJbD8qlN
-X-Proofpoint-ORIG-GUID: _KTBngNGr2rSc1lkvP1_pYnpPJbD8qlN
+X-Proofpoint-GUID: v3r8vzuiB8QTuTrIwVLgnBs11-7X10KY
+X-Proofpoint-ORIG-GUID: v3r8vzuiB8QTuTrIwVLgnBs11-7X10KY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-17_02,2023-04-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=758 adultscore=0
- mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1011 impostorscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ mlxscore=0 malwarescore=0 bulkscore=0 clxscore=1015 impostorscore=0
  priorityscore=1501 spamscore=0 lowpriorityscore=0 phishscore=0
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304170043
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+ engine=8.12.0-2303200000 definitions=main-2304170050
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krysztof,
+Patchset V9 of the series: Add minimal boot support for IPQ9574 has been
+merged and is available in linux-next/master.
+V12 being the latest revision posted in the series, the delta between
+revisions V9 and V12 is posted as a separate series as suggested by 
+Bjorn to avoid possible confusions.
 
-On 4/16/2023 2:37 PM, Krzysztof Kozlowski wrote:
-> On 14/04/2023 12:29, Sricharan Ramabadhran wrote:
->> The IPQ5018 is Qualcomm's 802.11ax SoC for Routers,
->> Gateways and Access Points.
->>
->> This series adds minimal board boot support for ipq5018-mp03.1-c2 board.
->>
->> [v3]
->> 	Fixed all comments for clocks, schema fixes
->>          Picked up Reviewed-by from Bjorn for pinctrl driver
-> 
-> Didn't you just ignore all the tags you got? I was already acking and
-> reviewing a lot of these...
-> 
+This series adds the delta changes between revisions V9 and V12.
 
-   While i got review comments for V2, only one tag from
-   Bjorn (reviewed-by) for the pinctrl driver. That one i picked.
+V9 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230316072940.29137-1-quic_devipriy@quicinc.com/
 
-Regards,
-  Sricharan
+V12 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230410135948.11970-1-quic_devipriy@quicinc.com/
+
+Changes in V2:
+	- Updated the subject & commit message of [PATCH V2 1/4]
+	- No changes were made to any other patches
+
+Changes in V1:
+	- The Delta between V9 & V12 is added to the change log of
+	  the respective patches for quick reference
+
+Devi Priya (4):
+  dt-bindings: clock: qcom,ipq9574-gcc: Drop bias_pll_ubi_nc_clk input
+  clk: qcom: gcc-ipq9574: Drop bias_pll_ubi_nc_clk & add const to
+    clk_init_data
+  arm64: dts: qcom: ipq9574: Drop bias_pll_ubi_nc_clk & update intc node
+  arm64: dts: qcom: ipq9574: rename al02-c7 dts to rdp433
+
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |   3 +-
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +-
+ ...ipq9574-al02-c7.dts => ipq9574-rdp433.dts} |   2 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  13 +-
+ drivers/clk/qcom/gcc-ipq9574.c                | 475 +++++++++---------
+ 5 files changed, 232 insertions(+), 263 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{ipq9574-al02-c7.dts => ipq9574-rdp433.dts} (97%)
+
+-- 
+2.17.1
+
