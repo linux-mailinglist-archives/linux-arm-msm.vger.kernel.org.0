@@ -2,87 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6257C6E3F4C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 08:02:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C16F96E3F49
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 08:02:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbjDQGC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 02:02:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43628 "EHLO
+        id S229634AbjDQGCl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 02:02:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229803AbjDQGCz (ORCPT
+        with ESMTP id S229711AbjDQGCk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 02:02:55 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B31199A;
-        Sun, 16 Apr 2023 23:02:54 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33H5SEdj016417;
-        Mon, 17 Apr 2023 06:02:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ER/VGvhxOt5fB55wpaULqF78kGWbn7ZbsSYhZI63y/M=;
- b=AXBWvEHgRNtnmUROjhZVJmk8YM46UswcI1+Ll9Qv6zcUW1LQyuMEPyL0UDdCr4VnIq21
- 1I35gYJaQrWj7ueKzZRJzILejvI1TgxyrfZvRQZBPgAVGiKJ+RpLJdfDY/EDXO+0M0tx
- j/0+coheQiUvV3+HAJJwgZ6Pi/h8gSAnfOKLkqWSWYQ8gFflW8JtPaija5onVOG62x3R
- 0roytjrk3aKtIcmtk5mkf0K99WNFm2B+Ov/HJVsHLDh1yEvGVZnTLA4DvHUyVpD0Hsvm
- 0XPn+WAFy3ghHAzIHQm7ov/pC/jfpcTG7DGnoHYJ7rC+EAdW9EiOBGxTqFF3clnv81+f RQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3pymqmtnts-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 06:02:34 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33H62Xmm031349
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 17 Apr 2023 06:02:33 GMT
-Received: from [10.50.21.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sun, 16 Apr
- 2023 23:02:29 -0700
-Message-ID: <f3196d7a-50f0-9bfb-71a6-47ddb9686039@quicinc.com>
-Date:   Mon, 17 Apr 2023 11:31:46 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data
- Capture and Compare unit(DCC)
-Content-Language: en-US
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Mon, 17 Apr 2023 02:02:40 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F2C22D53
+        for <linux-arm-msm@vger.kernel.org>; Sun, 16 Apr 2023 23:02:39 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1poHwH-0002G1-KI; Mon, 17 Apr 2023 08:02:09 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1poHwE-00Bnsb-Cs; Mon, 17 Apr 2023 08:02:06 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1poHwD-00Dolu-4U; Mon, 17 Apr 2023 08:02:05 +0200
+Date:   Mon, 17 Apr 2023 08:02:03 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     linux-aspeed@lists.ozlabs.org,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Benson Leung <bleung@chromium.org>,
+        Ajye Huang <ajye_huang@compal.corp-partner.google.com>,
+        Rory Liu <hellojacky0226@hotmail.com>,
+        Scott Chao <scott_chao@wistron.corp-partner.google.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Ettore Chimenti <ek5.chimenti@gmail.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Sean Young <sean@mess.org>,
+        Sakari Ailus <sakari.ailus@linux.intel.com>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Yang Yingliang <yangyingliang@huawei.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Antti Palosaari <crope@iki.fi>,
+        Michael Tretter <m.tretter@pengutronix.de>,
+        Ming Qian <ming.qian@nxp.com>, Zhou Peng <eagle.zhou@nxp.com>,
+        Eddie James <eajames@linux.ibm.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Eugen Hristev <eugen.hristev@collabora.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Bin Liu <bin.liu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Minghsiu Tsai <minghsiu.tsai@mediatek.com>,
+        Houlong Wei <houlong.wei@mediatek.com>,
+        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+        Moudy Ho <moudy.ho@mediatek.com>,
+        Qiheng Lin <linqiheng@huawei.com>,
+        Tiffany Lin <tiffany.lin@mediatek.com>,
+        Yunfei Dong <yunfei.dong@mediatek.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Xavier Roumegue <xavier.roumegue@oss.nxp.com>,
+        Mirela Rabulea <mirela.rabulea@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Rui Miguel Silva <rmfrfs@gmail.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        "Rajendra Nayak" <quic_rjendra@quicinc.com>
-References: <cover.1681480351.git.quic_schowdhu@quicinc.com>
- <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
- <ZDo4jIIV7cfPD2qW@kroah.com>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <ZDo4jIIV7cfPD2qW@kroah.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WOzbn8kzpO79l361rkH6LXfQmvmGK0gR
-X-Proofpoint-ORIG-GUID: WOzbn8kzpO79l361rkH6LXfQmvmGK0gR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-17_02,2023-04-14_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 phishscore=0 spamscore=0 bulkscore=0
- mlxlogscore=906 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2304170055
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+        Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
+        Jacopo Mondi <jacopo@jmondi.org>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Yang Li <yang.lee@linux.alibaba.com>,
+        Dan Carpenter <error27@gmail.com>,
+        Jacob Chen <jacob-chen@iotwrt.com>,
+        Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Dafna Hirschfeld <dafna@fastmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Colin Ian King <colin.i.king@gmail.com>,
+        Sylwester Nawrocki <s.nawrocki@samsung.com>,
+        Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>,
+        Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+        Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Fabien Dessenne <fabien.dessenne@foss.st.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Hugues Fruchet <hugues.fruchet@foss.st.com>,
+        Jean-Christophe Trotin <jean-christophe.trotin@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Yong Deng <yong.deng@magewell.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+        "Lad, Prabhakar" <prabhakar.csengg@gmail.com>,
+        Benoit Parrot <bparrot@ti.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        Sean Wang <sean.wang@mediatek.com>,
+        "Daniel W. S. Almeida" <dwlsalmeida@gmail.com>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Daniel Almeida <daniel.almeida@collabora.com>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Guenter Roeck <groeck@chromium.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        openbmc@lists.ozlabs.org,
+        Kieran Bingham <kieran.bingham@ideasonboard.com>,
+        linux-rockchip@lists.infradead.org,
+        NXP Linux Team <linux-imx@nxp.com>,
+        linux-sunxi@lists.linux.dev, linux-media@vger.kernel.org,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        linux-renesas-soc@vger.kernel.org, kernel@pengutronix.de
+Subject: Re: [PATCH 000/117] media: Convert to platform remove callback
+ returning void
+Message-ID: <20230417060203.le3izz56wt73si6k@pengutronix.de>
+References: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ogmoi7vlr4vxdkq5"
+Content-Disposition: inline
+In-Reply-To: <20230326143224.572654-1-u.kleine-koenig@pengutronix.de>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,136 +167,71 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--ogmoi7vlr4vxdkq5
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 4/15/2023 11:09 AM, Greg Kroah-Hartman wrote:
-> On Fri, Apr 14, 2023 at 07:29:12PM +0530, Souradeep Chowdhury wrote:
->> The DCC is a DMA Engine designed to capture and store data
->> during system crash or software triggers. The DCC operates
->> based on user inputs via the debugfs interface. The user gives
->> addresses as inputs and these addresses are stored in the
->> dcc sram. In case of a system crash or a manual software
->> trigger by the user through the debugfs interface,
->> the dcc captures and stores the values at these addresses.
->> This patch contains the driver which has all the methods
->> pertaining to the debugfs interface, auxiliary functions to
->> support all the four fundamental operations of dcc namely
->> read, write, read/modify/write and loop. The probe method
->> here instantiates all the resources necessary for dcc to
->> operate mainly the dedicated dcc sram where it stores the
->> values. The DCC driver can be used for debugging purposes
->> without going for a reboot since it can perform software
->> triggers as well based on user inputs.
-> 
-> You have 72 columns, why not use them all please?
-> 
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-> 
-> It is now 2023 :)
+Hello Mauro
 
-Ack
+On Sun, Mar 26, 2023 at 04:30:25PM +0200, Uwe Kleine-K=F6nig wrote:
+> Hello,
+>=20
+> this series adapts the platform drivers below drivers/pci to use the
 
-> 
-> 
-> 
-> 
->> + */
->> +
->> +#include <linux/bitfield.h>
->> +#include <linux/bitops.h>
->> +#include <linux/debugfs.h>
->> +#include <linux/delay.h>
->> +#include <linux/fs.h>
->> +#include <linux/io.h>
->> +#include <linux/iopoll.h>
->> +#include <linux/miscdevice.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/of_device.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/slab.h>
->> +#include <linux/uaccess.h>
->> +
->> +#define STATUS_READY_TIMEOUT		5000  /* microseconds */
->> +
->> +#define DCC_SRAM_NODE "dcc_sram"
-> 
-> You only use this once, why is a #define needed?
+copy&paste failure here: s/pci/media/ of course.
 
-This is as per the comment on version 1 of the patch series on DCC
+> .remove_new() callback. Compared to the traditional .remove() callback
+> .remove_new() returns no value. This is a good thing because the driver c=
+ore
+> doesn't (and cannot) cope for errors during remove. The only effect of a
+> non-zero return value in .remove() is that the driver core emits a warnin=
+g. The
+> device is removed anyhow and an early return from .remove() usually yield=
+s a
+> resource leak.
+>=20
+> By changing the remove callback to return void driver authors cannot
+> reasonably assume any more that there is some kind of cleanup later.
+>=20
+> Only three drivers needed some preparation first to make sure they
+> return 0 unconditionally in their remove callback. Then all drivers
+> could be trivially converted without side effects to .remove_new().
+>=20
+> The changes to the individual drivers are all orthogonal. If I need to
+> resend some patches because of some review feedback, I'd like to only
+> send the patches that actually needed changes, so please pick up the
+> remaining patches that don't need changing to reduce the amount of mail.
 
-https://lore.kernel.org/linux-arm-kernel/YElUCaBUOx7hEuIh@builder.lan/
+I didn't hear anything back about application of this series. Is there a
+blocker somewhere?
 
-"kzalloc + strlcpy can be replaced by kstrdup(), but that said...all 
-this does seems to be to copy a const string to the heap and lugging it
-around. Use a define instead."
+Apart from the three preparatory patches that are a precondition to the
+conversion of the respective drivers, the patches are all pairwise
+orthogonal. So from my POV the best would be to apply all patches that
+still apply (which might be all), I will care for the fallout later
+then.
 
+Best regards
+Uwe
 
-> 
->> +static void dcc_create_debug_dir(struct dcc_drvdata *drvdata)
->> +{
->> +	int i;
->> +	char list_num[10];
->> +	struct dentry *list;
->> +	struct device *dev = drvdata->dev;
->> +
->> +	drvdata->dbg_dir = debugfs_create_dir(dev_name(dev), NULL);
-> 
-> You are creating a directory at the root of debugfs with just your
-> device name?  While that will work, that feels very odd.  Please use a
-> subdirectory.
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
-This is as per the comment on v17 of the patch series on DCC
+--ogmoi7vlr4vxdkq5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-https://lore.kernel.org/linux-arm-kernel/6693993c-bd81-c974-a903-52a62bfec606@ieee.org/
+-----BEGIN PGP SIGNATURE-----
 
-"You never remove this dcc_dbg directory.  Why not?
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmQ84NoACgkQj4D7WH0S
+/k65OwgAkM/14eqkcxTg0/453d2uwhPt/jiDru0C14NvpnN4AFU0sa+yzp1GfYRO
+WfxjudHvw/OXq+eolRu8PrqJIpLHvQhOyjblYLXPqTB8RvdJSXI2Q1ZJjozYjCNJ
+WeBerHqAXGOnxd+2kbfCs2VZWYgmJpj1VCXeRYekMB7Kv1tmfXNXetaHIH7Rypw1
++Si1nhZN4Sk68bdXU+RaQc6UP5/E0VohPVWnSB1tsTQVL4sogBkjfDl4tueHEZxj
+959kirh12hfcFcqtz1mQ1u7V1dIc136PR+Kg/2b+GNaFbe/Zdsno5HbnbQl+NwL/
+GWFmd+GksqXkwA3k1tkqVdOFEPO4cQ==
+=K38Q
+-----END PGP SIGNATURE-----
 
-And since you don't, dcc_dbg could just be a local
-variable here rather than being a global.  But it
-seems to me this is the root directory you want to
-remove when you're done."
-
-
-> 
->> +	if (IS_ERR(drvdata->dbg_dir)) {
->> +		pr_err("can't create debugfs dir\n");
-> 
-> There is no need to ever check the return value of a debugfs call.
-> 
-> Nor do you really ever even need to save off the dentry here, just look
-> it up when you need to remove it.
-
-Ack
-
-> 
->> +		return;
->> +	}
->> +
->> +	for (i = 0; i <= drvdata->nr_link_list; i++) {
->> +		sprintf(list_num, "%d", i);
->> +		list = debugfs_create_dir(list_num, drvdata->dbg_dir);
->> +		debugfs_create_file("enable", 0600, list, drvdata, &enable_fops);
->> +		debugfs_create_file("config", 0600, list, drvdata, &config_fops);
->> +	}
->> +
->> +	debugfs_create_file("trigger", 0200, drvdata->dbg_dir, drvdata, &trigger_fops);
->> +	debugfs_create_file("ready", 0400, drvdata->dbg_dir, drvdata, &ready_fops);
->> +	debugfs_create_file("config_reset", 0200, drvdata->dbg_dir,
->> +			    drvdata, &config_reset_fops);
-> 
-> This really looks like you are using debugfs to control the device, not
-> just for debugging information.  How are you going to be able to use the
-> device in a system that has debugfs disabled?
-
-As per upstream discussions it was decided that debugfs will be a 
-suitable interface for DCC. More on this in the following link:-
-
-https://lore.kernel.org/linux-arm-kernel/20221228172825.r32vpphbdulaldvv@builder.lan/
-
-> 
-> thanks,
-> 
-> greg k-h
+--ogmoi7vlr4vxdkq5--
