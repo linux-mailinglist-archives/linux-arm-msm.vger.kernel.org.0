@@ -2,304 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39D896E5057
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 20:41:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD1356E508E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 17 Apr 2023 21:05:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbjDQSlf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 17 Apr 2023 14:41:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48484 "EHLO
+        id S230128AbjDQTFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 17 Apr 2023 15:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbjDQSle (ORCPT
+        with ESMTP id S230002AbjDQTFn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 17 Apr 2023 14:41:34 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB05846B4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 11:41:31 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54fe3cd445aso122540817b3.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 11:41:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681756891; x=1684348891;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zh2NygFtkr3VUedMSETAcg+PkAMPbYO4qgRvEzIpFdA=;
-        b=GGkR4g/uPZVqgebfVFZrVET/qxYmJ9p02R7SCDBUn2CObHnoLTJmwYYk6SYFZdRz9q
-         xDN9bgfRttmR2K4LyLZcNcAGZ42DqgO5vye8FBXvwTE+gStEO/k3od+sgMQfpB3zvjbs
-         6RSSQ6mj/IxXr9H2rDYIQpogoEbLYppiQWgngTNRa92HGLhMO07FW7r0lJdXpMmOCXum
-         nZhDot+xgEjqhA+uK+zeKrt/f+pRG6ZqNtNRD9AeNwV645wF29Rqb1rWXi6ek3YTzHaE
-         vKUO81VLqrb0I86Jr4EmHD3pne1XUyESmOSJhLlmWDJ8U67kdGl7oovlXzlwqg86Nefm
-         74hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681756891; x=1684348891;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zh2NygFtkr3VUedMSETAcg+PkAMPbYO4qgRvEzIpFdA=;
-        b=WKIaJeHPOAeZ231OkmjGlrBQVMmhNpQB9fTaiI0VpO8iKc4BJo6KNu4JFjhw1V9wdr
-         9Y4VyT69L5yBNNSPT0bvFQUF4QFUm3F0XXpQzRtjDG0nT9JI3Czw2qozTPyY0TAXCjcx
-         jQScFsfpnF3mi0BLV/DBil1catPQB/Q0Y6P9BQI4klKw6ufwOPXO1OotQrfKPXZ7oLkk
-         5NtXR1xEMdcKqEzmQ4jp/0nMQPTlifBGOzzEQypmdpBiY3lGSN7HpHv2kiov0xyWKxs5
-         6OsDwpUm+YpJNvwOgzacJYy4c5ScHuUMCFr6MkhpuzsVEqzEaHMrZFlNNZB8zU0yYPKW
-         ae5Q==
-X-Gm-Message-State: AAQBX9fsqBPZsZp1Rvrn7zRyDBKQ7lfAuc4RC7JlpbQmuJlhmi9vRwAu
-        mOeo6prg3NIp2ZD60QKLOzb/CAP0IT5iWA0ujHpMOw==
-X-Google-Smtp-Source: AKy350Z6FWj4zKvPDAxvAHo/deDE8tFqv0ceNT9dCNYRALo/7GspKAKMsq1sb5MY9YeaPfrjuaaJaItelRDkE6wuACA=
-X-Received: by 2002:a81:af62:0:b0:54c:bdc:ef18 with SMTP id
- x34-20020a81af62000000b0054c0bdcef18mr9977412ywj.5.1681756891046; Mon, 17 Apr
- 2023 11:41:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org>
- <20230413-topic-lahaina_vidcc-v2-2-f721d507e555@linaro.org>
- <CAA8EJpoxvjWrvJENkFSimfU=CG7C3jZ=ToZep1tnJbtPzCcS9Q@mail.gmail.com>
- <34797b11-b654-a9a4-ac26-5287ca582a82@linaro.org> <CAA8EJppVUddvAp=3H7oGntE-5XqJkHc7=2mcgpBBnRcsHCDZQg@mail.gmail.com>
- <5cf16897-0670-78b9-a1c0-2f6ecb086987@linaro.org>
-In-Reply-To: <5cf16897-0670-78b9-a1c0-2f6ecb086987@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 17 Apr 2023 21:41:19 +0300
-Message-ID: <CAA8EJppW+QRq=uKQwCToMg8PmHmEgAz=bYg-_sD2UpfH_Li2RA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] clk: qcom: Introduce SM8350 VIDEOCC
+        Mon, 17 Apr 2023 15:05:43 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFF755BC;
+        Mon, 17 Apr 2023 12:05:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1681758314; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=INqIBw4Ne4PgLy5vmY0LJBcYVa0jPhdpwP0ZTp9SvMxTNVsY/5fzEw4Skd5x0C/1lM
+    avWfzxvnZt+uRnH45Cu4Ovs3SoNTTuoAlpFhLhchgsMpT6JS2/2XYDPHpnQhey7Obvt/
+    VZ4RfzxGZA6mWk99KLwFndVy+VrPm3dFDIIc/6uhhLx039+zBheT93/znAjr8r5HhJVD
+    Mm2v+WKgsXbfwy8Fo02bI1Q//XVeoA/Cc+B0V9EXkHBOKeDTVQcuT666uryILzn3LM1w
+    UXs5Q7dTdcg7t9TkmUUB+p5XG5ZdSQgTCVeuC9foygDJ7FueeWTKeHRAofnIceU3YQ1t
+    8iUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1681758314;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zMu8aCbltdkyaF8tMU4hcbAdwR6OQSkVDX5++sopalU=;
+    b=Z7THDmGdOJQi/D7qEGmW6cpwYVxZqgCIJK1hVZ9v02urqRsWJ5hatiZ9WjyP9awBjq
+    kKCgIiVsgKmV0UxqIenaBoAWuqiWBf0xeCHCb3H1XWUzZYY7VnGsztgMgedGlkkvYnT2
+    e6kHB9d/Qm6h8jq3kgZtyqbShoc6SE1wV6/x53BcEH+fuFvBMOLw+x65CiddyzKoToNB
+    QYZX/yvMbhTvnGSkAuEFrr2Ef7UqH7hwXgjzzM5qwlKsZDQWwcOmPQXbqzcs8dx+5Ovf
+    Zjq60svGQ9wa5BJxF498XiGPh7mrcEqRHWpnr0GFbbxJUxsiA0YvKixNr/o9KXDLml4e
+    3rnw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1681758314;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zMu8aCbltdkyaF8tMU4hcbAdwR6OQSkVDX5++sopalU=;
+    b=tj9FF4MBFTjzEVOyc693G+9bSO3gFpH7oVu3u4z60niTHeJB8ND2Bc7uWZOsUOFAnP
+    b/hPAXWDxFgIVDROTq77rmn5T42vAgbNozYfSx2zm+Vk7DdCk5ib/Co5Kv/HGiPe4QFv
+    phpbyOp1dl0YZcT6VKPzbgHp7DeLYEJ5RnIyYBl7asrhwTRVEVDPALOrnHcjOcOzLRUj
+    J4L13kuhYcN/4+deaiDpt99qL7MGRKuWwht/pygsiYykFirzPvg5S1yTcMWLhHxrzI3b
+    EhmvyS+F7EdkuXqXg3HrxtYKK7DLukKbQi/p9JOEhkIPgF8LX75ReM3qx1dSCNTuqgy8
+    +e/g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1681758314;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zMu8aCbltdkyaF8tMU4hcbAdwR6OQSkVDX5++sopalU=;
+    b=Rb+/EdXy6QJAJY1dx4i43fy15Q4UmnxHB5WJh1ND7b6jw4thZLbpKP7mpJXXVNJUEa
+    Qo36RKaAvge/AJtMfdAQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8peN1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az3HJ5EeE4
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 17 Apr 2023 21:05:14 +0200 (CEST)
+Date:   Mon, 17 Apr 2023 21:05:06 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Taniya Das <quic_tdas@quicinc.com>,
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way
+ to enable unused clock cleanup
+Message-ID: <ZD2YYrOdQMD3pi7u@gerhold.net>
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 17 Apr 2023 at 21:10, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
->
->
-> On 14.04.2023 22:54, Dmitry Baryshkov wrote:
-> > On Fri, 14 Apr 2023 at 20:48, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 14.04.2023 18:31, Dmitry Baryshkov wrote:
-> >>> On Fri, 14 Apr 2023 at 14:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>
-> >>>> Add support for the Video Clock Controller found on the SM8350 SoC.
-> >>>>
-> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>>> ---
-> >>
-> >> [...]
-> >>
-> >>>> +static struct clk_rcg2 video_cc_ahb_clk_src = {
-> >>>> +       .cmd_rcgr = 0xbd4,
-> >>>> +       .mnd_width = 0,
-> >>>> +       .hid_width = 5,
-> >>>> +       .parent_map = video_cc_parent_map_0,
-> >>>> +       .freq_tbl = ftbl_video_cc_ahb_clk_src,
-> >>>> +       .clkr.hw.init = &(const struct clk_init_data) {
-> >>>> +               .name = "video_cc_ahb_clk_src",
-> >>>> +               .parent_data = video_cc_parent_data_0,
-> >>>> +               .num_parents = ARRAY_SIZE(video_cc_parent_data_0),
-> >>>> +               .flags = CLK_SET_RATE_PARENT,
-> >>>> +               .ops = &clk_rcg2_shared_ops,
-> >>>> +       },
-> >>>> +};
-> >>>
-> >>> Do we need this clock at all? We don't have the child
-> >>> video_cc_ahb_clk, so potentially CCF can try disabling or modifying
-> >>> this clock.
-> >> Hm.. I see a few things:
-> >>
-> >> 1. downstream kona has it, upstream does not
-> >> 2. it's shared so we never actually hard-shut it off..
-> >> 2a. ..but it'd be good to ensure it's on when it's ready..
-> >> 2b. ..but we never do anyway..
-> >> 2c. ..but should we even? doesn't Venus govern it internally?
-> >>
-> >>
-> >>>
-> >>>> +
-> >>>> +static const struct freq_tbl ftbl_video_cc_mvs0_clk_src[] = {
-> >>>> +       F(720000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-> >>>> +       F(1014000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-> >>>> +       F(1098000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-> >>>> +       F(1332000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-> >>>> +       { }
-> >>>> +};
-> >>>> +
-> >>
-> >> [...]
-> >>
-> >>>> +static struct clk_branch video_cc_mvs1_clk = {
-> >>>> +       .halt_reg = 0xdb4,
-> >>>> +       .halt_check = BRANCH_HALT_VOTED,
-> >>>
-> >>> As a note, sm8250 has BRANCH_HALT here.
-> >> No, it does on the div2 clk, and so do we:
-> >
-> > Excuse me, I got confused by all the syllables. I was looking at the
-> > video_cc_mvs1c_clk. On sm8250 it is _VOTED, in this patch it is not. I
-> > can not say that either one of those is incorrect, but such a
-> > difference looks a bit suspicious for me. Maybe Tanya or somebody else
-> > can comment here.
-> I'd say this could be a design decision, with div2 clocks being
-> treated differently, but it's how downstream does it on shipping
-> devices and while generally it's not a great thing to say, it seems
-> to be the "right enough" thing..
+On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
+> Disabling RPMCC clocks can be a bit touchy. If we can't guarantee all
+> (or at least most) of the oneline peripherals ask the interconnect
+> framework to keep their buses online and guarantee enough bandwidth,
+> we're relying on bootloader defaults to keep the said buses alive through
+> RPM requests and rate setting on RPM clocks.
+> 
+> Without that in place, the RPM clocks are never enabled in the CCF, which
+> qualifies them to be cleaned up, since - as far as Linux is concerned -
+> nobody's using them and they're just wasting power. Doing so will end
+> tragically, as within miliseconds we'll get *some* access attempt on an
+> unlocked bus which will cause a platform crash.
+> 
+> On the other hand, if we want to save power and put well-supported
+> platforms to sleep, we should be shutting off at least some of these
+> clocks (this time with a clear distinction of which ones are *actually*
+> not in use, coming from the interconnect driver).
+> 
+> To differentiate between these two cases while not breaking older DTs,
+> introduce an opt-in property to correctly mark RPM clocks as enabled
+> after handoff (the initial max freq vote) and hence qualify them for the
+> common unused clock cleanup.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> index 2a95bf8664f9..386153f61971 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> @@ -58,6 +58,12 @@ properties:
+>      minItems: 1
+>      maxItems: 2
+>  
+> +  qcom,clk-disable-unused:
+> +    type: boolean
+> +    description:
+> +      Indicates whether unused RPM clocks can be shut down with the common
+> +      unused clock cleanup. Requires a functional interconnect driver.
+> +
 
-Ack. Fair enough.
+I'm surprised that Stephen Boyd did not bring up his usual "rant" here
+of moving the interconnect clock voting out of rpmcc into the
+interconnect drivers (see [1], [2]). :-)
 
->
-> >
-> >> [...]
-> >>
-> >>>> +};
-> >>>> +
-> >>>> +static struct clk_branch video_cc_mvs1_div2_clk = {
-> >>>> +       .halt_reg = 0xdf4,
-> >>>> +       .halt_check = BRANCH_HALT_VOTED,
-> >>>> +       .hwcg_reg = 0xdf4,
-> >>
-> >> [...]
-> >>
-> >>>> +
-> >>>> +static const struct qcom_reset_map video_cc_sm8350_resets[] = {
-> >>>> +       [CVP_VIDEO_CC_INTERFACE_BCR] = { 0xe54 },
-> >>>> +       [CVP_VIDEO_CC_MVS0_BCR] = { 0xd14 },
-> >>>
-> >>> Would it be better to use common VIDEO_CC prefix here (IOW:
-> >>> VIDEO_CC_CVP_MVS0_BCR, VIDEO_CC_CVP_INTERFACE_BCR), etc.
-> >> My best guess would be that the ones prefixed with CVP_
-> >> are actual INTF/INSTANCEn(CORE) reset lines whereas
-> >> the ones containing _CLK_ reset their clock sub-branches.
-> >
-> > Note, again, on sm8250 all resets start with VIDEO_CC, even CVP ones.
-> > I think we can follow that.
-> Or get rid of that, as it's always called with a phandle to videocc..
->
-> Thoughts?
+I was a bit "cautious" about it back then but at this point I think it
+kind of makes sense. Make sure to read Stephen's detailed explanation in
+https://lore.kernel.org/linux-arm-msm/159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com/
 
-I'd say, switch to VIDEO_CC prefix, please. We can not drop the
-prefix, as we risc getting conflicts otherwise.
+We keep looking for workarounds to prevent the CCF from "messing" with
+interconnect-related clocks. But the CCF cannot mess with "clocks" it
+does not manage. The RPM interconnect drivers already talk directly to
+the RPM in drivers/interconnect/qcom/smd-rpm.c. I think it should be
+quite easy to move the QCOM_SMD_RPM_BUS_CLK relates defines over there
+and just bypass the CCF entirely.
 
->
-> >
-> >>
-> >>>
-> >>>> +       [VIDEO_CC_MVS0C_CLK_ARES] = { 0xc34, 2 },
-> >>>> +       [CVP_VIDEO_CC_MVS0C_BCR] = { 0xbf4 },
-> >>>> +       [CVP_VIDEO_CC_MVS1_BCR] = { 0xd94 },
-> >>>> +       [VIDEO_CC_MVS1C_CLK_ARES] = { 0xcd4, 2 },
-> >>>> +       [CVP_VIDEO_CC_MVS1C_BCR] = { 0xc94 },
-> >>>> +};
-> >>
-> >> [...]
-> >>
-> >>>> +       ret = pm_runtime_resume_and_get(&pdev->dev);
-> >>>> +       if (ret)
-> >>>> +               return ret;
-> >>>> +
-> >>>> +       regmap = qcom_cc_map(pdev, &video_cc_sm8350_desc);
-> >>>> +       if (IS_ERR(regmap)) {
-> >>>> +               pm_runtime_put(&pdev->dev);
-> >>>> +               return PTR_ERR(regmap);
-> >>>> +       };
-> >>>
-> >>> Extra semicolon
-> >> Ooeh!
-> >>
-> >>>
-> >>>> +
-> >>>> +       clk_lucid_pll_configure(&video_pll0, regmap, &video_pll0_config);
-> >>>> +       clk_lucid_pll_configure(&video_pll1, regmap, &video_pll1_config);
-> >>>> +
-> >>>> +       /*
-> >>>> +        * Keep clocks always enabled:
-> >>>> +        *      video_cc_ahb_clk
-> >>>> +        *      video_cc_xo_clk
-> >>>> +        */
-> >>>> +       regmap_update_bits(regmap, 0xe58, BIT(0), BIT(0));
-> >>>> +       regmap_update_bits(regmap, 0xeec, BIT(0), BIT(0));
-> >>>> +
-> >>>> +       ret = qcom_cc_really_probe(pdev, &video_cc_sm8350_desc, regmap);
-> >>>> +       pm_runtime_put(&pdev->dev);
-> >>>> +
-> >>>> +       return ret;
-> >>>> +}
-> >>>> +
-> >>>> +static const struct dev_pm_ops video_cc_sm8350_pm_ops = {
-> >>>> +       SET_RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
-> >>>
-> >>> The driver doesn't use pm_clk at all. Are these PM_OPS correct?
-> >> I'm unsure. I see the pm state changing in debugfs when the clocks are
-> >> (not) consumed. But let's continue our discussion about using pm_clks
-> >> for AHB.
-> >
-> > Well, those are two separate questions. One is that w/o additional
-> > pm_clk calls this string is useless (and should be removed). Another
-> > on is a possible restructure of our cc drivers to use pm_clk for AHB
-> > clocks (which would require adding more than that).
-> Right, I had an impression that you needed any sort of pm ops at
-> all to be registered with pm_genpd correctly, but that seems not to
-> be the case.. With that commented out, I still see "suspended" / "active"
-> and not "unsupported"..
+For backwards compatibility (for platforms without interconnect drivers)
+one could either assume that the bootloader bandwidth votes will be
+sufficient and just leave those clocks completely alone. Or the
+"icc_smd_rpm" platform device could initially make max votes similar to
+the rpmcc device. By coincidence the "icc_smd_rpm" platform device is
+always created, no matter how the device tree looks or if the platform
+actually has an interconnect driver.
 
-Let's just drop them for now.
+Stephan
 
-
->
-> Konrad
-> >
-> >
-> >>
-> >>>
-> >>>> +};
-> >>>> +
-> >>>> +static const struct of_device_id video_cc_sm8350_match_table[] = {
-> >>>> +       { .compatible = "qcom,sm8350-videocc" },
-> >>>> +       { }
-> >>>> +};
-> >>>> +MODULE_DEVICE_TABLE(of, video_cc_sm8350_match_table);
-> >>>> +
-> >>>> +static struct platform_driver video_cc_sm8350_driver = {
-> >>>> +       .probe = video_cc_sm8350_probe,
-> >>>> +       .driver = {
-> >>>> +               .name = "sm8350-videocc",
-> >>>> +               .of_match_table = video_cc_sm8350_match_table,
-> >>>> +               .pm = &video_cc_sm8350_pm_ops,
-> >>>> +       },
-> >>>> +};
-> >>>> +module_platform_driver(video_cc_sm8350_driver);
-> >>>> +
-> >>>> +MODULE_DESCRIPTION("QTI SM8350 VIDEOCC Driver");
-> >>>> +MODULE_LICENSE("GPL");
-> >>>>
-> >>>> --
-> >>>> 2.40.0
-> >>>>
-> >>>
-> >>> Generic note: the register layout follows closely sm8250. However the
-> >>> existing differences probably do not warrant merging them.
-> >> No, I don't think merging any designs that are farther away
-> >> than 8150 and 8155 or 8992 and 8994 etc. is a good idea..
-> >>
-> >> I don't want to ever look at something like dispcc-sm8[123]50.c
-> >> again!
-> >
-> > Me too!
-> >
-
-
-
--- 
-With best wishes
-Dmitry
+[1]: https://lore.kernel.org/linux-arm-msm/159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com/
+[2]: https://lore.kernel.org/linux-arm-msm/20211209091005.D3344C004DD@smtp.kernel.org/
