@@ -2,113 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 372CB6E599C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 08:46:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 222116E5A04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 09:05:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbjDRGqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 02:46:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41308 "EHLO
+        id S229721AbjDRHE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 03:04:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230482AbjDRGqs (ORCPT
+        with ESMTP id S230252AbjDRHE5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 02:46:48 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192F140D5;
-        Mon, 17 Apr 2023 23:46:47 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33I6KBM9011080;
-        Tue, 18 Apr 2023 06:46:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=wLg6bFDRbhWlSEd0FB3HC3klJjPMFejYMgCtToFRl/c=;
- b=NtrBee8gG3wa5KJCSmGXwSzOqYGGj9WpeQcqliMtmyfcaICgtAJKrO6p05uiyQfsvVQm
- 1woVIa2pNKsdlJM7C9eBsPpcS0GI9R1nEGxIXIA592zfEgpTRRZKNkU6l00CA7pmZb2Q
- qO02UayaDJrwKU22JQ9v3lj3rkSA94831YPVlZnsR5wZb6cghdfhvC4bnfF58HU18n5T
- 9Qf4IiVvD5If/2EUZvNtgCCrLwiRBjxzyKz6cxLIu3A9LbMOtVTva6YbSqwwg+LjPA6A
- QhItswwE8PPfrqQQVBrHylMljRSjYo1u0hbA8vRbiPBBC+jV7zLCXtME0T8p/5ydJmy0 jg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1a6c9bb2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 06:46:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33I6keHh014048
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 06:46:40 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 17 Apr 2023 23:46:36 -0700
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V5 3/3] MAINTAINERS: Add the entry for boot_stats driver support
-Date:   Tue, 18 Apr 2023 12:16:05 +0530
-Message-ID: <cc4c8d5281208c8ae15988b2062324ab2cb58b29.1681799201.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1681799201.git.quic_schowdhu@quicinc.com>
-References: <cover.1681799201.git.quic_schowdhu@quicinc.com>
+        Tue, 18 Apr 2023 03:04:57 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10AE51705
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 00:04:56 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id vc20so15632267ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 00:04:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681801494; x=1684393494;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2WhHYJYuhXskgCt8P+rWi6MuOTcoPNUz8qBRPdqCUvo=;
+        b=kfEJdGpu4mcY9/ND1iACqI3ApTNBoJQgxiYe4R8Bt0ggC5waO4AOTmqsksRsiIl69z
+         WkOmFKzjWW+M6QEnLPLY5GPtfwclJVQQEGpwIicK0i29UWm3KUF8w7dYqnaBehQSWfBO
+         rcczfJ7SUQ7LxoiNsWQ+4X0LwnztqHRN9JuQeZsEpk7IeEYDfwWgouW7GLL9+MEV0kZj
+         VE122snZI2xMLFfHPNZcSVOoh3qlJ4+JN7QziFK6eWCw+SU/7yUnWDni7yyv+6XnxwMk
+         tltoMjBhRmOndobU5tChMPE7XsKLnjR+odVvpt1vuR9GQ1rSX/b6vL2TXFiPSe0omv5q
+         NsOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681801494; x=1684393494;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2WhHYJYuhXskgCt8P+rWi6MuOTcoPNUz8qBRPdqCUvo=;
+        b=K5aaSWQXmV1B5ikw7C8wJFqQo2jwdN0QeXcc39civC3mep7XJrCfoEJG08inRUNJG8
+         bpmyGmI0pZqx8DcawI1jL8hHRDU6+9W6zdbPopvu1TibdiM+nXMEpP572qeBrWVAo8cg
+         zrZf0fdNZ/dCDTpY1JRlRSuJhPsFDP8rSa8swDya4KyMswySzLNWl9Q1i5WOqJd+GZEk
+         FR8WJsvznMgrl6Caro8iTzdD+2GzaGjKW+wie/xgKEq8+LvT7hU4fSHuWZZS0TtZz5S7
+         URSP+MhhJNaRm24nIR61DtHkof+pNGNmq9sIdRAa7DHEhPMfMUs/PEvlvIkHeqzNy4ff
+         qkag==
+X-Gm-Message-State: AAQBX9fxvSBOyCoM1PvpWTJiT8slAiOvleESkQoF0XnQST6uSMQzKGBE
+        y0k+MRP8YsH/c20ZMJ4MlDbg9A==
+X-Google-Smtp-Source: AKy350bvvxWv0MaXOCX/mRjN7rgY+3X62SrGNyVxmEt7DdeR0qfPOUZz9zMNRmA6wBR9oNJjW7Xbtg==
+X-Received: by 2002:a17:907:1701:b0:933:3a22:8513 with SMTP id le1-20020a170907170100b009333a228513mr11209930ejc.53.1681801494526;
+        Tue, 18 Apr 2023 00:04:54 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:a276:7d35:5226:1c77? ([2a02:810d:15c0:828:a276:7d35:5226:1c77])
+        by smtp.gmail.com with ESMTPSA id gb32-20020a170907962000b0094f34fe27c6sm4122421ejc.170.2023.04.18.00.04.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Apr 2023 00:04:54 -0700 (PDT)
+Message-ID: <6d24511a-69dd-e99c-09d2-53cc3e80bd5e@linaro.org>
+Date:   Tue, 18 Apr 2023 09:04:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Kvan52lRip5rxQa5D7MBGVvYXrJDPUPl
-X-Proofpoint-GUID: Kvan52lRip5rxQa5D7MBGVvYXrJDPUPl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-18_03,2023-04-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxscore=0 malwarescore=0 phishscore=0 priorityscore=1501 mlxlogscore=906
- bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304180062
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sa8775p: pmic: remove the PON modes
+Content-Language: en-US
+To:     Shazad Hussain <quic_shazhuss@quicinc.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230413131705.3073911-1-brgl@bgdev.pl>
+ <20230413131705.3073911-2-brgl@bgdev.pl>
+ <3e361a73-797f-41c7-1ead-ecafee3928e4@linaro.org>
+ <792e1f22-c3eb-80c7-0600-b478b3764f7c@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <792e1f22-c3eb-80c7-0600-b478b3764f7c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the entries for all the files added as a part of driver support for
-boot stats.
+On 18/04/2023 06:39, Shazad Hussain wrote:
+> 
+> 
+> On 4/13/2023 9:42 PM, Krzysztof Kozlowski wrote:
+>> On 13/04/2023 15:17, Bartosz Golaszewski wrote:
+>>> From: Parikshit Pareek <quic_ppareek@quicinc.com>
+>>>
+>>> Remove the power on reasons with reboot from the pmm8654au_0_pon.
+>>> Instead, the PoN reaons should be part of different sdam_0 mode, to
+>>
+>> typo: reasons
+>>
+>>> be interoduced.
+>>
+>> introduced
+>>
+>> Anyway it does not say why. Are these power reasons not correct?
+>>
+> 
+> Hi Krzysztof,
+> Since sm8350 the PMIC PON peripheral was split into PON_HLOS and PON_PBS
+> to avoid security concerns with HLOS APPS being able to trigger a PMIC
+> WARM_RESET unilaterally. When the split occurred, the spare registers
+> ended up in PON_PBS, not PON_HLOS. Thus at that time, we moved to using
+> an SDAM register for Linux “reboot reason” configuration. And bootloader
+> also SDAM register to get these reboot region data to get into
+> bootloader/edl, so to have this working we need to use SDAM.
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+The explanation of their correctness should be in commit msg.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0e64787..20b96e9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17055,6 +17055,13 @@ L:	netdev@vger.kernel.org
- S:	Supported
- F:	drivers/net/ipa/
- 
-+QCOM BOOT_STATS DRIVER
-+M:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/ABI/testing/debugfs-driver-bootstat
-+F:	drivers/soc/qcom/boot_stats.c
-+
- QEMU MACHINE EMULATOR AND VIRTUALIZER SUPPORT
- M:	Gabriel Somlo <somlo@cmu.edu>
- M:	"Michael S. Tsirkin" <mst@redhat.com>
--- 
-2.7.4
+Best regards,
+Krzysztof
 
