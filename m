@@ -2,81 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05A666E5B03
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 09:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 233856E5BC2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 10:13:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbjDRHy5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 03:54:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35606 "EHLO
+        id S231146AbjDRINJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 04:13:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231293AbjDRHyl (ORCPT
+        with ESMTP id S230327AbjDRINI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 03:54:41 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCE6421B
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 00:54:35 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7B19A2008D;
-        Tue, 18 Apr 2023 09:54:32 +0200 (CEST)
-Date:   Tue, 18 Apr 2023 09:54:30 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] drm/msm/dpu: Drop unused members from HW structs
-Message-ID: <tqftgyqd72u5cze7phfkntl7t3zyarvf5ekeoh4zwcn33vimdl@qe3tntyvjyzf>
-References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
- <20230418-dpu-drop-useless-for-lookup-v1-1-b9897ceb6f3e@somainline.org>
- <bb229562-b0af-88f4-1207-ac23a6076dff@quicinc.com>
+        Tue, 18 Apr 2023 04:13:08 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4E4420F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 01:13:06 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-54fbee98814so199141057b3.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 01:13:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681805586; x=1684397586;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VCiNu1mOtB7laUM4bFCLww5HGe90bX5kQCMaz63PSvg=;
+        b=uzbsajfvzhMME2BbITiqUYlU5JmDHTOBbzrynZ8UB9jovx8iStQe0oFs0+sb9CD2c5
+         en04wTDEnp4Y08px8o3TnO70QysiactEsoaFebfFydHRVttStiEddPcuD4M+XLePSnP7
+         CE0xk7DAdExtDFo8Gua+G6R3JNWJJWlWKB6tuDr/fevhCWCAqnYfCf1GqjULT5qgNBIf
+         2GEyDh82sTVHgIpAlfG40ZTNV17svod4n1r6BUr48pX31McQPN+TnuKZ1HN2pqUGkFt0
+         oEInSPUsRd2bzzr2WkPA5JxtMZ4TbZibZzFfdi4tVrd6yrbcfQy8gb9RnV4/1vR1PKgx
+         RyyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681805586; x=1684397586;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VCiNu1mOtB7laUM4bFCLww5HGe90bX5kQCMaz63PSvg=;
+        b=KSCrIEZOdX+rCwNo+XaPtj7LsDYoqNMbMUDVtLozeqrSMKDhGtxAPRg4tsW3t6OlA4
+         /W79RHxRnmVJcDYh+c6wtdPhGPrzWMZ8ov1X1enw4tiALeAfHMFsRbB/TI7SFAoWEvBU
+         PUqWWX6qbbaGKXQ6jsUri/axDqG39MTteSvN0zWhd78ZWjy1Pzg+RNXNXfcOJShUjg9L
+         okGDH4YLhg+TwuA9XCqFnQyQ3PpDXD0ccqxsw8BA9zkiBT41RCdb59/GUVYaHrIMwckE
+         eYyOrYureamZ5OTnG9WzkeEXAwvbKEs35Wj5qi2PUn6LaR5C2GvXYe0sxIAVfxRJ0yox
+         n+hQ==
+X-Gm-Message-State: AAQBX9ddqwkGYAtN2hv/NIOIhALRZkJ/mybrb8lvkSHmaNqp4gLuCCf2
+        NpS5SJwGARqXGqOM5Go8toTJriLh1rTtmHscTS5e9619HBc9E+CLiYtKhA==
+X-Google-Smtp-Source: AKy350ZywKW3umEFRPuEXLr49A90pYI8xBxXLbq4XkCJ4luVxZdyxE426uVcMC2dvbm4Il8k1fcAWgge3csmlCitul8=
+X-Received: by 2002:a81:6ac3:0:b0:54f:bb34:1a0 with SMTP id
+ f186-20020a816ac3000000b0054fbb3401a0mr17171311ywc.33.1681805586119; Tue, 18
+ Apr 2023 01:13:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bb229562-b0af-88f4-1207-ac23a6076dff@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20230414055502.23920-1-quic_mkshah@quicinc.com> <20230414055502.23920-3-quic_mkshah@quicinc.com>
+In-Reply-To: <20230414055502.23920-3-quic_mkshah@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 18 Apr 2023 10:12:30 +0200
+Message-ID: <CAPDyKFo5UhOca-DvOKOZWcBrcK8ONdSO8-M=8fE6kkwkPuoCww@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] cpuidle: psci: Move enabling OSI mode after power
+ domains creation
+To:     Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     andersson@kernel.org, dianders@chromium.org, swboyd@chromium.org,
+        wingers@google.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        sudeep.holla@arm.com, jwerner@chromium.org, quic_lsrao@quicinc.com,
+        quic_rjendra@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-17 18:54:18, Abhinav Kumar wrote:
-> 
-> On 4/17/2023 4:14 PM, Marijn Suijten wrote:
-> > Some of these members were initialized while never read, while others
-> > were not even assigned any value at all.  Drop them to save some space,
-> > and above all confusion when looking at these members.
-> > 
-> > Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> > Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks")
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> 
-> It seems like WB UBWC formats are not supported today. Because otherwise 
-> ctx->mdp would be used for writeback. I guess we can add a ubwc member 
-> similar to hw_sspp, when we do add the support for this. Hence this is,
+On Fri, 14 Apr 2023 at 07:55, Maulik Shah <quic_mkshah@quicinc.com> wrote:
+>
+> A switch from OSI to PC mode is only possible if all CPUs other than the
+> calling one are OFF, either through a call to CPU_OFF or not yet booted.
+>
+> Currently OSI mode is enabled before power domains are created. In cases
+> where CPUidle states are not using hierarchical CPU topology the bail out
+> path tries to switch back to PC mode which gets denied by firmware since
+> other CPUs are online at this point and creates inconsistent state as
+> firmware is in OSI mode and Linux in PC mode.
+>
+> This change moves enabling OSI mode after power domains are created,
+> this would makes sure that hierarchical CPU topology is used before
+> switching firmware to OSI mode.
+>
+> Fixes: 70c179b49870 ("cpuidle: psci: Allow PM domain to be initialized even if no OSI mode")
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> ---
+>  drivers/cpuidle/cpuidle-psci-domain.c | 37 +++++++++------------------
+>  1 file changed, 12 insertions(+), 25 deletions(-)
+>
+> diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
+> index c2d6d9c3c930..c3993df24eef 100644
+> --- a/drivers/cpuidle/cpuidle-psci-domain.c
+> +++ b/drivers/cpuidle/cpuidle-psci-domain.c
+> @@ -120,20 +120,6 @@ static void psci_pd_remove(void)
+>         }
+>  }
+>
+> -static bool psci_pd_try_set_osi_mode(void)
+> -{
+> -       int ret;
+> -
+> -       if (!psci_has_osi_support())
+> -               return false;
+> -
+> -       ret = psci_set_osi_mode(true);
+> -       if (ret)
+> -               return false;
+> -
+> -       return true;
+> -}
+> -
+>  static void psci_cpuidle_domain_sync_state(struct device *dev)
+>  {
+>         /*
+> @@ -152,15 +138,12 @@ static int psci_cpuidle_domain_probe(struct platform_device *pdev)
+>  {
+>         struct device_node *np = pdev->dev.of_node;
+>         struct device_node *node;
+> -       bool use_osi;
+> +       bool use_osi = psci_has_osi_support();
+>         int ret = 0, pd_count = 0;
+>
+>         if (!np)
+>                 return -ENODEV;
+>
+> -       /* If OSI mode is supported, let's try to enable it. */
+> -       use_osi = psci_pd_try_set_osi_mode();
+> -
+>         /*
+>          * Parse child nodes for the "#power-domain-cells" property and
+>          * initialize a genpd/genpd-of-provider pair when it's found.
+> @@ -178,25 +161,29 @@ static int psci_cpuidle_domain_probe(struct platform_device *pdev)
+>
+>         /* Bail out if not using the hierarchical CPU topology. */
+>         if (!pd_count)
+> -               goto no_pd;
+> +               goto remove_pd;
 
-That seems preferable to me.  SSPP does the same in patch 3/3, and I
-have been thinking to replace the dpu_mdss_cfg *catalog parameter in
-dpu_hw_sspp_init with just the ubwc cfg pointer.  Likewise
-dpu_hw_ctl_init also takes the full dpu_mdss_cfg only to take out the
-mixers.
+We should return 0 here instead, right?
 
-- Marijn
+>
+>         /* Link genpd masters/subdomains to model the CPU topology. */
+>         ret = dt_idle_pd_init_topology(np);
+>         if (ret)
+> -               goto remove_pd;
+> +               goto remove_pd_topology;
 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+This looks wrong to me. Shouldn't we continue to goto the "remove_pd"
+label for this error path?
+
+> +
+> +       /* let's try to enable OSI. */
+> +       ret = psci_set_osi_mode(use_osi);
+> +       if (ret)
+> +               goto remove_pd_topology;
+>
+>         pr_info("Initialized CPU PM domain topology using %s mode\n",
+>                 use_osi ? "OSI" : "PC");
+>         return 0;
+>
+> -put_node:
+> -       of_node_put(node);
+> +remove_pd_topology:
+> +       dt_idle_pd_remove_topology(np);
+>  remove_pd:
+>         psci_pd_remove();
+> +put_node:
+> +       of_node_put(node);
+
+This of_node_put() should only be called if we break the
+"for_each_child_of_node" loop above because of an error, I think.
+Perhaps it's cleaner to just move this within the loop?
+
+>         pr_err("failed to create CPU PM domains ret=%d\n", ret);
+> -no_pd:
+> -       if (use_osi)
+> -               psci_set_osi_mode(false);
+>         return ret;
+>  }
+>
+
+Kind regards
+Uffe
