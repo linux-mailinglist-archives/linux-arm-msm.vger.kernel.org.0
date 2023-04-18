@@ -2,96 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 159D36E693C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 18:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED3096E6948
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 18:21:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231875AbjDRQUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 12:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32938 "EHLO
+        id S232370AbjDRQVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 12:21:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbjDRQUE (ORCPT
+        with ESMTP id S231305AbjDRQVp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 12:20:04 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DADAC158
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 09:19:48 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id c9so35805049ejz.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 09:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681834787; x=1684426787;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iZB3of5nwzmdnHO4GEgYjYDmRaGa0m+b36yS3CIvEJQ=;
-        b=QpMngbEiGVZF0XZTmI6+TLl5AjJ8gUT9SUW4BuazUb6FBKKxEZEn6imFv9pxIQWRti
-         imv9R4dOmONMg1eay7z6kg+vJT8OE4KNYgqF/ClzkG20YuDnPoufxqM8Wx7yBd8T+8T/
-         D7GLBwd7ueqfvfokaaPV8WT/+REVECvNVCR1waX7eeeQxMytofeoA1Hms6M1MQikNw+K
-         Dlnrxe8kYNN8hSEjX7Cq36u09qoFJZ8uqctRHzgnr5ZZSVqD7sWS5iBAfW4tGpdnEMeJ
-         LZ9cgJKtd3jizs3OZf8J8HmYk++8jB2cxQfBQE8dnkpe5imBA1O6u3gCnOGfRGX/Wa8W
-         SycQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681834787; x=1684426787;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iZB3of5nwzmdnHO4GEgYjYDmRaGa0m+b36yS3CIvEJQ=;
-        b=R3j4QPL5YtNgLbhBAyJ2ySBt/I2Gbp/4iZ9y9+JfJxsMzpHfCwaV0xSRcz3fFBZbkg
-         uXhnN33spVkUVGEFTTlbP9Odxk6RfN+yG61TcAFhqnn2Wc0yp+RzkCZ5Hfk413Z4XQC9
-         CrlwUVKrhRt+RwxnLcwQU5HMM4fkB+Loxxcoa1LDaJm0iIXsa3DFi1gOS/3s2JxMNcqw
-         54lLoBMzxc4r4gGsT/fzBK4NrManQARIvOISiC1DgGARUpSXFTh3qeacA0mEwXqBrpTh
-         sjMmrFVrJHH96XSQReqWnKvvKOKSLeztDe3rn8seB6fHiWS79VocgaAP/IYhTgDaj50O
-         NLkg==
-X-Gm-Message-State: AAQBX9cK/Ng4FECIdPf24pxUIX6pJwvoUdlDRU0fkkPab70yYIMdVSGY
-        grDe/pkGbszeQJjcuU4qG2guaA==
-X-Google-Smtp-Source: AKy350aiZFhGitVDEerbV9PnSTaboFy4MuHQj/BaI+bPDBGfN+fxdgSfFOtqdnMeV1evU8B1s7GsGA==
-X-Received: by 2002:a17:906:3844:b0:94e:e0b7:96d6 with SMTP id w4-20020a170906384400b0094ee0b796d6mr11862141ejc.14.1681834786931;
-        Tue, 18 Apr 2023 09:19:46 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:a276:7d35:5226:1c77? ([2a02:810d:15c0:828:a276:7d35:5226:1c77])
-        by smtp.gmail.com with ESMTPSA id e5-20020a17090681c500b0094f7092c231sm3392246ejx.6.2023.04.18.09.19.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 09:19:46 -0700 (PDT)
-Message-ID: <992e4e50-f074-6f2b-22f9-fc39e76c8eb1@linaro.org>
-Date:   Tue, 18 Apr 2023 18:19:45 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 1/2] dt-bindings: soc: qcom: Add RPM Master stats
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 18 Apr 2023 12:21:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD06B773;
+        Tue, 18 Apr 2023 09:21:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 16BB46366C;
+        Tue, 18 Apr 2023 16:21:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299E4C433EF;
+        Tue, 18 Apr 2023 16:21:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681834896;
+        bh=0yAsboJRhuuNcS/z/N+pA0vFKY7x/4YDMsb7MJU+SG0=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=Y0WbHURiNPne3Tmv/6+qjvK+kRFeR5BkLjL38B7xiVdEUtG6fwvVafx6CNPLDPS06
+         t7pePersbWXzMF+lgS61O0K7eLvJncdCYa3pfjUquffFQ5+MgX+2MeWWSeqMC4iKOo
+         hE12LvmMLpMvMt7zOTpOOHpE5XMPGnFO2h/8+k9O+OZu5v5RxyogDaPsFjTWZQkWWd
+         X/Kyv0T9oJ9ZizmfM5V64htLaNkp8GSRdUNZoQDOppwpn1ovFIcmaucbZXheyF+gAk
+         FdZ1lSm1Zbi61vudeBmKQbWlFGFQMPbCBhCvc+XvxGj5STp87EtBkb+0ECUqaSOyFj
+         1pQoB/WQVNB9Q==
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>
-References: <20230405-topic-master_stats-v4-0-4217362fcc79@linaro.org>
- <20230405-topic-master_stats-v4-1-4217362fcc79@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230405-topic-master_stats-v4-1-4217362fcc79@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>, Rob Herring <robh@kernel.org>
+In-Reply-To: <20230418071734.5706-1-krzysztof.kozlowski@linaro.org>
+References: <20230418071734.5706-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: (subset) [RESEND PATCH 1/2] regulator: dt-bindings: qcom,rpmh:
+ Correct PM8550 family supplies
+Message-Id: <168183489386.88061.8852651683552439984.b4-ty@kernel.org>
+Date:   Tue, 18 Apr 2023 17:21:33 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Mailer: b4 0.13-dev-00303
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/04/2023 19:37, Konrad Dybcio wrote:
-> The RPM MSG RAM contains per-RPM-master (e.g. APPS, ADSP etc.) sleep
-> statistics. They let one assess which core is actively preventing the
-> system from entering a true low-power mode.
+On Tue, 18 Apr 2023 09:17:33 +0200, Krzysztof Kozlowski wrote:
+> PM8550 is different than PM8550VE/VS, because the latter has much
+> smaller amount of supplies (l1-3 and s1-6) and regulators.  The PM8550
+> has on the other hand one pin for vdd-l1-l4-l10 supplies.  Correct the
+> if:then: clause with their supplies.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied to
 
-Best regards,
-Krzysztof
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+
+Thanks!
+
+[2/2] regulator: dt-bindings: qcom,rpmh: Combine PM6150L and PM8150L if-then
+      commit: ed479907ff79007548c3bd1aed387f8cf0a62065
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
