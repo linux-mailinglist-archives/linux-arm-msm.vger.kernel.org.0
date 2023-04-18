@@ -2,117 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07B216E6E70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 23:39:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAFF46E6E87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 23:45:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232801AbjDRVjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 17:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56530 "EHLO
+        id S232957AbjDRVp6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 17:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233095AbjDRVjx (ORCPT
+        with ESMTP id S232642AbjDRVp4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 17:39:53 -0400
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C047BBB5;
-        Tue, 18 Apr 2023 14:39:37 -0700 (PDT)
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-38c6bbbeeb3so456173b6e.1;
-        Tue, 18 Apr 2023 14:39:37 -0700 (PDT)
+        Tue, 18 Apr 2023 17:45:56 -0400
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5850125B0;
+        Tue, 18 Apr 2023 14:45:43 -0700 (PDT)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-187edc01fa3so459737fac.3;
+        Tue, 18 Apr 2023 14:45:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681853976; x=1684445976;
+        d=1e100.net; s=20221208; t=1681854342; x=1684446342;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9FTQgI3HTIujYCvmdGvbn1iYHKKTz5bkM55o7VU7wfs=;
-        b=CNMQe6I34mx9dAFwKVO7dYtezQBYC4huJucPEzQI94ghKB0d5HVtLam+cyyj1Aysyp
-         NGPVgN810QZ/zoX7iAlIvCC7p97LWM2nZDCUncIX8hXSDTiOBqEnm7wN9VynkMk60QaE
-         Cc0K4FXXqCqQpOpuXF58c5Ov3Sx0GofevSsnWOPZAnUP8clm/Vq7+y5Ehr8erCrnyzc7
-         jowc6n66hbLm4W83d1KiQmk3A2nK27YXL5Y3PxKsHq51tXLwrMgld8UFFfxgdAuVPEUn
-         PZSuvZHnYZ8DLl/d4QL8tqK9c9JPjbGgyuewCdGV68S9kQQE3pAKncctaITENb3R0PAB
-         IElw==
-X-Gm-Message-State: AAQBX9eXSFPFhTqxD9gJ97ApUD/2ak8K3323OfQKkNfWE2WUwZWV2gO7
-        GL4sTzSbG569law3fAUCqA==
-X-Google-Smtp-Source: AKy350ad1gFJziMA7uFDXKgRYHOImiDLZc2+2kux8SA8FrsvhCP7QU7dcKoZR+twA7gAQFYNGfgJUA==
-X-Received: by 2002:aca:644:0:b0:378:2df5:49f5 with SMTP id 65-20020aca0644000000b003782df549f5mr1944858oig.2.1681853974837;
-        Tue, 18 Apr 2023 14:39:34 -0700 (PDT)
+        bh=AWMFayVItsnaFUG5yboqy4Ud2ym9osk5KpeZQhBq5jE=;
+        b=Y98hfFe4RNZiHYfsWGLm6cTb6WUYJHAdxsp9XVQwXBMW7wAJoOX5NuCeeml4mUFd20
+         5OM5eZYAycRIzrqibY5iQe1p5ALwL1/IQW1VFFTA7Bk0isCWV/phs47bt2LdGjFEW2oR
+         wJXmpBdkHJZQURajvwkt40ZgBbtisZZ3qUDpyRXYXk6hTM4ZI1J+DTATT7biXMcOjMfK
+         qOZf29mpXVd9U8EIhSsLRNlusUxvzZUUeuCQ4ZMwpDLolaRMDLdFsVHeU4L97NU28CAP
+         F4pUO/DT6WfXM4y14jMTvUsj6eGsK1DjfsjQaM2xQtJF+7YwPMJ/AoTAZJcVphbDfuYb
+         uLFg==
+X-Gm-Message-State: AAQBX9esvFc+xWiNm0xNLi4MC9xrMg3s/b5uksK7B64+gVOW99sOAmvd
+        GAiXzdPGSueyjWXxS+KY/w==
+X-Google-Smtp-Source: AKy350ZhzwHcWQ0KxgXJQWGnnGXYjahCsSPIlF4jl1CwlV//e0aK5I48m1C2NxxVLOBFzV7IG1kdMw==
+X-Received: by 2002:a05:6870:b620:b0:187:92fb:6eb5 with SMTP id cm32-20020a056870b62000b0018792fb6eb5mr2475530oab.5.1681854342640;
+        Tue, 18 Apr 2023 14:45:42 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id n3-20020aca2403000000b0038bffe1332dsm3950756oic.57.2023.04.18.14.39.30
+        by smtp.gmail.com with ESMTPSA id w14-20020a056830060e00b006a5de6aae9bsm769525oti.3.2023.04.18.14.45.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 14:39:31 -0700 (PDT)
-Received: (nullmailer pid 2376874 invoked by uid 1000);
-        Tue, 18 Apr 2023 21:39:29 -0000
-Date:   Tue, 18 Apr 2023 16:39:29 -0500
+        Tue, 18 Apr 2023 14:45:42 -0700 (PDT)
+Received: (nullmailer pid 2384137 invoked by uid 1000);
+        Tue, 18 Apr 2023 21:45:41 -0000
+Date:   Tue, 18 Apr 2023 16:45:41 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, linux-watchdog@vger.kernel.org,
-        Fu Wei <fu.wei@linaro.org>, Jamie Iles <jamie@jamieiles.com>,
-        linux-renesas-soc@vger.kernel.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Shawn Guo <shawnguo@kernel.org>,
-        linux-amlogic@lists.infradead.org,
-        =?UTF-8?B?77+9ZWNraQ==?= <rafal@milecki.pl>,
-        Julius Werner <jwerner@chromium.org>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Eugen Hristev <eugen.hristev@collabora.com>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Christophe Roullier <christophe.roullier@foss.st.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Viresh Kumar <vireshk@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Justin Chen <justinpopo6@gmail.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        linux-kernel@vger.kernel.org,
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        linux-mediatek@lists.infradead.org,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Evan Benn <evanbenn@chromium.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Srinivas Neeli <srinivas.neeli@xilinx.com>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Yannick Fertre <yannick.fertre@foss.st.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        Corentin Labbe <clabbe@baylibre.com>,
-        Sander Vanheule <sander@svanheule.net>
-Subject: Re: [PATCH 6/6] dt-bindings: watchdog: realtek,otto-wdt: simplify
- requiring interrupt-names
-Message-ID: <168185396909.2376821.8732982905359058158.robh@kernel.org>
-References: <20230415095112.51257-1-krzysztof.kozlowski@linaro.org>
- <20230415095112.51257-6-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Marc Zyngier <maz@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH] dt-bindings: interrupt-controller: qcom,pdc: document
+ qcom,qdu1000-pdc
+Message-ID: <168185433626.2384009.17855656492541393973.robh@kernel.org>
+References: <20230416102831.105136-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230415095112.51257-6-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230416102831.105136-1-krzysztof.kozlowski@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -120,16 +71,14 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Sat, 15 Apr 2023 11:51:12 +0200, Krzysztof Kozlowski wrote:
-> Required properties should be listed in "required:" block.  Since
-> interrupts are already there, the dependency of interrupt-names on the
-> interrupts can be simplified.
+On Sun, 16 Apr 2023 12:28:31 +0200, Krzysztof Kozlowski wrote:
+> Add QDU1000 PDC, already used in upstreamed DTS.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../devicetree/bindings/watchdog/realtek,otto-wdt.yaml        | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Applied, thanks!
 
