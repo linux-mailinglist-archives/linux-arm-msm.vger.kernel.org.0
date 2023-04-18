@@ -2,80 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BABB16E6DDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 23:07:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FC416E6E0F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 23:23:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232884AbjDRVHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 17:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60306 "EHLO
+        id S232632AbjDRVXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 17:23:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232842AbjDRVHr (ORCPT
+        with ESMTP id S231373AbjDRVXW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 17:07:47 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14BCA253;
-        Tue, 18 Apr 2023 14:07:40 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33IKuoov001291;
-        Tue, 18 Apr 2023 21:07:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2XAxNl4hzVW/qth3lmjEC9szXVLjhO+e60yVfkNNEfw=;
- b=DX5c4YQOXvTke4GSbXaZK47NiYxw1oew0B//qKtS0h8dBDEe9iH7CptofRN9yR2X6zaK
- paFfuuPn1QMUrLh6tiXFNxzOXbK5UjU85iIXC3Vz4W0hOuPdLcWGa9x4IYyrukruIDt3
- gfZAw1hfvIh49qd2McdtOYOmLnbnZpjKQCJe2bOhxTq1dmgRcTrpZrh1dV/DRp+cSLTd
- bIxheBAldmoTjiVy5g6lfR8LEnELRc2erJRt5fVWvKvCmHXWf+83kXOmLfXHUJ0/26fA
- NVdpm01q83Z6brAI7BBWnGvXnNFkVBpGxCp/ETxAEc0/VGo0yIpF5PC4UkhHDG+WfnYw mg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1v2ah9va-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 21:07:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33IL7V9v012444
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 21:07:31 GMT
-Received: from [192.168.142.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 18 Apr
- 2023 14:07:30 -0700
-Subject: Re: [PATCH v2 2/2] rpmsg: glink: Consolidate TX_DATA and TX_DATA_CONT
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Tue, 18 Apr 2023 17:23:22 -0400
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A3F975D;
+        Tue, 18 Apr 2023 14:23:13 -0700 (PDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-18777914805so6246609fac.1;
+        Tue, 18 Apr 2023 14:23:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681852993; x=1684444993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RKdLQJ2WfynsAnQi4i43G4jU69vCcdQQMLvbvIaqAHQ=;
+        b=Bc8CAtMCCN0AZEbfK6a92mOCH8/sWYSBNUEDMEJcUNpVW6zreSXfuiZqFn70c/CPcl
+         Itp3vCYUlNvv18yesmOtmOZ3U+bz43E/MW2xzPSzeDTbpZBawup0zGNn39Xklnb3ixGh
+         HTuISBi9f6JYe7zY7oVHuC6J2a8z0F4Xyi6ftIJsa+yDzpl3XoJratlCsFl4CdyKwEtN
+         jV0WWWY7gaDKIerXJ321cV12/A/JVjnNqBx1q2CX980TR79P1NrTZL4Qzl/aiklszcyZ
+         loTm0ng5cuLRvtSjlcGxi6AA+2WCatqmAuYHe97degxfYf6W9/361UNw33zze2RhvcAJ
+         8iuA==
+X-Gm-Message-State: AAQBX9eV3cxz5U/VM4XFnypHTLv7maJ0UrGG+VoI0aGTrudvvXNYQwxV
+        eDmKiqL+nyXkfQeECIbg1Q==
+X-Google-Smtp-Source: AKy350bdmvWWvs8e3IniLnnX6QWq/ARMeVjy2OYmobsGssJEfW0Lm1T3KwueQwpXlw4Lj4ZiKOdsBA==
+X-Received: by 2002:aca:c256:0:b0:38e:3d5a:abb5 with SMTP id s83-20020acac256000000b0038e3d5aabb5mr114233oif.9.1681852991281;
+        Tue, 18 Apr 2023 14:23:11 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id e190-20020a4a55c7000000b0054542d3219asm3883392oob.11.2023.04.18.14.23.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Apr 2023 14:23:10 -0700 (PDT)
+Received: (nullmailer pid 2358722 invoked by uid 1000);
+        Tue, 18 Apr 2023 21:23:08 -0000
+Date:   Tue, 18 Apr 2023 16:23:08 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     =?UTF-8?B?77+9ZWNraQ==?= <rafal@milecki.pl>,
+        linux-arm-kernel@lists.infradead.org,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Eugen Hristev <eugen.hristev@collabora.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Fabio Estevam <festevam@gmail.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-renesas-soc@vger.kernel.org,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        Christophe Roullier <christophe.roullier@foss.st.com>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230418163018.785524-1-quic_bjorande@quicinc.com>
- <20230418163018.785524-3-quic_bjorande@quicinc.com>
-From:   Chris Lew <quic_clew@quicinc.com>
-Message-ID: <7ab6ad8b-2403-abba-08b5-028ecc18f12c@quicinc.com>
-Date:   Tue, 18 Apr 2023 14:07:29 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Florian Fainelli <f.fainelli@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Julius Werner <jwerner@chromium.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Corentin Labbe <clabbe@baylibre.com>,
+        Jamie Iles <jamie@jamieiles.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Evan Benn <evanbenn@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        linux-amlogic@lists.infradead.org,
+        Sander Vanheule <sander@svanheule.net>,
+        Justin Chen <justinpopo6@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Viresh Kumar <vireshk@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+        Srinivas Neeli <srinivas.neeli@xilinx.com>,
+        Shawn Guo <shawnguo@kernel.org>, Fu Wei <fu.wei@linaro.org>,
+        linux-watchdog@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 1/6] dt-bindings: watchdog: drop duplicated GPIO watchdog
+ bindings
+Message-ID: <168185298846.2358657.13423905325582795303.robh@kernel.org>
+References: <20230415095112.51257-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20230418163018.785524-3-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nKQhWyWGqcBeUO8-DpRlcBb2vazc1o1z
-X-Proofpoint-ORIG-GUID: nKQhWyWGqcBeUO8-DpRlcBb2vazc1o1z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-18_15,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- clxscore=1011 impostorscore=0 mlxscore=0 adultscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304180175
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230415095112.51257-1-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,97 +120,22 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 4/18/2023 9:30 AM, Bjorn Andersson wrote:
-> Rather than duplicating most of the code for constructing the initial
-> TX_DATA and subsequent TX_DATA_CONT packets, roll them into a single
-> loop.
+On Sat, 15 Apr 2023 11:51:07 +0200, Krzysztof Kozlowski wrote:
+> Two conversions to DT schema of GPIO watchdog binding happened and came
+> through different trees.  Merge them into one:
+> 1. Combine maintainers,
+> 2. Use more descriptive property descriptions and constraints from
+>    gpio-wdt.yaml,
+> 3. Switch to unevaluatedProperties:false, to allow generic watchdog
+>    properties.
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
+>  .../bindings/watchdog/gpio-wdt.yaml           | 55 -------------------
+>  .../bindings/watchdog/linux,wdt-gpio.yaml     | 17 +++++-
+>  2 files changed, 15 insertions(+), 57 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/watchdog/gpio-wdt.yaml
 > 
-> Changes since v1:
-> - Reduced unnecessary complexity in the chunking condition
->
 
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
 
->   drivers/rpmsg/qcom_glink_native.c | 46 +++++++++----------------------
->   1 file changed, 13 insertions(+), 33 deletions(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 62634d020d13..7e6fad4e02f8 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -1309,7 +1309,7 @@ static int __qcom_glink_send(struct glink_channel *channel,
->   	int ret;
->   	unsigned long flags;
->   	int chunk_size = len;
-> -	int left_size = 0;
-> +	size_t offset = 0;
->   
->   	if (!glink->intentless) {
->   		while (!intent) {
-> @@ -1343,49 +1343,29 @@ static int __qcom_glink_send(struct glink_channel *channel,
->   		iid = intent->id;
->   	}
->   
-> -	if (wait && chunk_size > SZ_8K) {
-> -		chunk_size = SZ_8K;
-> -		left_size = len - chunk_size;
-> -	}
-> -	req.msg.cmd = cpu_to_le16(GLINK_CMD_TX_DATA);
-> -	req.msg.param1 = cpu_to_le16(channel->lcid);
-> -	req.msg.param2 = cpu_to_le32(iid);
-> -	req.chunk_size = cpu_to_le32(chunk_size);
-> -	req.left_size = cpu_to_le32(left_size);
-> -
-> -	ret = qcom_glink_tx(glink, &req, sizeof(req), data, chunk_size, wait);
-> -
-> -	/* Mark intent available if we failed */
-> -	if (ret) {
-> -		if (intent)
-> -			intent->in_use = false;
-> -		return ret;
-> -	}
-> -
-> -	while (left_size > 0) {
-> -		data = (void *)((char *)data + chunk_size);
-> -		chunk_size = left_size;
-> -		if (chunk_size > SZ_8K)
-> +	while (offset < len) {
-> +		chunk_size = len - offset;
-> +		if (chunk_size > SZ_8K && wait)
->   			chunk_size = SZ_8K;
-> -		left_size -= chunk_size;
->   
-> -		req.msg.cmd = cpu_to_le16(GLINK_CMD_TX_DATA_CONT);
-> +		req.msg.cmd = cpu_to_le16(offset == 0 ? GLINK_CMD_TX_DATA : GLINK_CMD_TX_DATA_CONT);
->   		req.msg.param1 = cpu_to_le16(channel->lcid);
->   		req.msg.param2 = cpu_to_le32(iid);
->   		req.chunk_size = cpu_to_le32(chunk_size);
-> -		req.left_size = cpu_to_le32(left_size);
-> +		req.left_size = cpu_to_le32(len - offset - chunk_size);
->   
-> -		ret = qcom_glink_tx(glink, &req, sizeof(req), data,
-> -				    chunk_size, wait);
-> -
-> -		/* Mark intent available if we failed */
-> +		ret = qcom_glink_tx(glink, &req, sizeof(req), data + offset, chunk_size, wait);
->   		if (ret) {
-> +			/* Mark intent available if we failed */
->   			if (intent)
->   				intent->in_use = false;
-> -			break;
-> +			return ret;
->   		}
-> +
-> +		offset += chunk_size;
->   	}
-> -	return ret;
-> +
-> +	return 0;
->   }
->   
->   static int qcom_glink_send(struct rpmsg_endpoint *ept, void *data, int len)
-> 
