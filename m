@@ -2,86 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE4316E5E3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 12:08:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E33E6E5E4F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 12:11:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230459AbjDRKI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 06:08:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36680 "EHLO
+        id S230123AbjDRKLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 06:11:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjDRKIy (ORCPT
+        with ESMTP id S230027AbjDRKLE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 06:08:54 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4776B35B8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:08:51 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id u3so19737236ejj.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:08:51 -0700 (PDT)
+        Tue, 18 Apr 2023 06:11:04 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D4076EB1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:10:23 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id l15so5094571ljq.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681812530; x=1684404530;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1681812622; x=1684404622;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CHTRuDZizZmh3JLZCo5lprJ34wrb3qJisxHDlzonFVQ=;
-        b=IL9QQcBRXReGXfHqy0crh2FxCNKO1auiDipds27slpKbXHVXazCM6KG8qIo1FvRcxt
-         iq9WJU9MycEAR+w87PKddU8wGGtQ3anbOKLaRUO5Uj77vcpjST+eNxWyoFKtpxwBNTn6
-         G1ntWN0oiQjJnSREdUT7A/iCLtwacqzVXVbFzhVHDjS7r7M0vZ0dtMTHSwxhEnK3OSdy
-         7or+H0TxJbxiZ+08cu+obndPVE/glYUYnb9oZlhzjyRdVmsQZjqtLd1O9T0MhpfJCHs0
-         Z5Bc3nY0iDEq6teRKfyraaYCkBi7VT8B8GOAShTPUpUSi7ajgy1E1yX5wuVT5Fx3nj9F
-         wNog==
+        bh=UXA7IdH6OnmIg4dHeihhBVhSOUFUULrLJzUMC4zJSkE=;
+        b=S1EqyM2bhUI/MpHfz9cdN+dN5X18qxer6sd7/Yay6PaBl0qjv70HRKYD7KYwR7etYF
+         1vIRBJ4mHwI31SPHf8vj6eEbCGw7G2Ri0UyYMzyvo8MSYhMYOMDtFo7fNGHrK4FbXYr3
+         n5tz+/6TD//u2/POqi6787YQ34NlydfvPNBcTLO48HTQlRWTV38LVlFc31rVaukcX5TX
+         n3ITAvgfSWkE6bwRFAUA3q8ZxhE090CZkq9Jeq/B6flvHbpz57fwCKY4hlzQmGcjQotS
+         ox4l5MeFHiKdBny6AaH7u/jeO0ogy3gelR8TPVrWWRBrFprIOHhR8FAzMh9FpMNjmvDR
+         4NAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681812530; x=1684404530;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1681812622; x=1684404622;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CHTRuDZizZmh3JLZCo5lprJ34wrb3qJisxHDlzonFVQ=;
-        b=DcUSKOsLCh6z7LEHlESJ7swKCMifDyzwtbK+Mv6EsHdhDAQQV3aex+zcftkX6qBRic
-         kbkyV9rBObASQg6Vxc0aOjLrbGfUwJtBD6yoNtK1aJbdtwA7qcCYSuimHXvvM49iwVB6
-         zhk1DqLB+/OZd0o8k5h34+6P8hp0y+wSzCS0sm8lCXMGSF4AGN0XHLaEzPSkQex1mKTJ
-         f5DuCe8wFpjSu+SPecdZM2Y/No7vSd4K+8Ohx13mQb4zN/fPFvEiezxCa2FEUKyI8Hlk
-         X8EpcdatpzNl5RASoEU0xnysy7FaBJYE+2Habg3ayF5jLYq1fSwPTtGQygevvESSpUT2
-         po3w==
-X-Gm-Message-State: AAQBX9evGDbeO9mllSJ88mW8va9WAUu7INWdk708YlqHV3oaPk0tSE3p
-        Tq6YPXm9of+bklc6+O+f0GG25jjTJAbjeLbaLDA=
-X-Google-Smtp-Source: AKy350Y6QKNYyStk/yeNY7V9U+pJgUn1EghZMLBG2sV9zSfpYxNv6bvXFckJUhC1XhExS9B0xAO02g==
-X-Received: by 2002:a17:906:82c5:b0:94a:8e19:6aba with SMTP id a5-20020a17090682c500b0094a8e196abamr10589810ejy.21.1681812529724;
-        Tue, 18 Apr 2023 03:08:49 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id kt2-20020a170906aac200b0094f6458157csm3300672ejb.223.2023.04.18.03.08.48
+        bh=UXA7IdH6OnmIg4dHeihhBVhSOUFUULrLJzUMC4zJSkE=;
+        b=kFozRavKW3JcftmNgdlq4trCAhyENG9Ta/OrLkbTISklzutvVtsNgrniCR+mhBhqkD
+         kJB0i/LN9aBCSWxpIfCd0q0BgOSjmhmivwEBA8EKsNhS/JVG3f8Z6MVvnfHN4P02FtY/
+         j1NQY+OcMIQ8oC/w3CGOcpR+UDmdCfskzn7BERyTK7aOs1gAHFgTME6VOXwLl1/3fi1E
+         4o+SwzqADCon5QqwumjC+p4DaizdjxNVC/OB2qUc5GqitlcTgi44UZ06INKdRW7l0EXa
+         RCXePhYUAtoveu1PlR9kha9fViGAgPgEErapGG7V++uPnMF+o5WVkbivOWYTFC1ZDzMT
+         jSng==
+X-Gm-Message-State: AAQBX9f5vT0sN/QkcRZH5jEkupKbzvo6KA4+v7Lp9jbdRH0qkQPSIdte
+        MUCqZqcJ/1j8lGjWS5y+OkL66A==
+X-Google-Smtp-Source: AKy350b+EZLC54YBdhnK8Qcxhhtkwyp2iBSktRYLNRnit+ipp8TAThYMwu8PI5N+Sp20tV4Ys/lePA==
+X-Received: by 2002:a2e:9117:0:b0:2a6:15c7:1926 with SMTP id m23-20020a2e9117000000b002a615c71926mr665207ljg.3.1681812621746;
+        Tue, 18 Apr 2023 03:10:21 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id c22-20020a197616000000b004eb3b84d2a1sm2312523lff.114.2023.04.18.03.10.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 03:08:49 -0700 (PDT)
-Message-ID: <4a250d8f-5771-4933-be99-5721c163fe8a@linaro.org>
-Date:   Tue, 18 Apr 2023 11:08:47 +0100
+        Tue, 18 Apr 2023 03:10:21 -0700 (PDT)
+Message-ID: <e6eeb6ca-fdac-a2a0-bf7e-54cd8f13cc9e@linaro.org>
+Date:   Tue, 18 Apr 2023 12:10:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 2/7] dt-bindings: soundwire: qcom: add 16-bit sample
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550: use uint16 for Soundwire
  interval
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20230418095447.577001-1-krzysztof.kozlowski@linaro.org>
- <20230418095447.577001-3-krzysztof.kozlowski@linaro.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230418095447.577001-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-kernel@vger.kernel.org
+References: <20230418095734.669858-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230418095734.669858-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,76 +82,55 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18/04/2023 10:54, Krzysztof Kozlowski wrote:
-> The port sample interval was always 16-bit, split into low and high
-> bytes.  This split was unnecessary, although harmless for older devices
-> because all of them used only lower byte (so values < 0xff).  With
-> support for Soundwire controller on Qualcomm SM8550 and its devices,
-> both bytes will be used, thus add a new 'qcom,ports-sinterval' property
-> to allow 16-bit sample intervals.
+On 18.04.2023 11:57, Krzysztof Kozlowski wrote:
+> The Soundwire bindings changed during review, after the SM8550 DTS
+> Soundwire nodes were merged.  Switch to uint16 for Soundwire
+> qcom,ports-sinterval property, to match with current bindings.
 > 
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> Fixes: 61b006389bb7 ("arm64: dts: qcom: sm8550: add Soundwire controllers")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
 > ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
+Konrad
 > 
-> Changes since v2:
-> 1. Use uint16 for qcom,ports-sinterval.
->     DTS will be fixed in separate patchset.
-> 2. Add tags.
+> Fix for v6.4-rc1.
+> 
+> Bindings v3 (with uint16):
+> https://lore.kernel.org/linux-arm-msm/20230418095447.577001-1-krzysztof.kozlowski@linaro.org/T/#md34302ec02eebdbe3e4defef79a40b32a7e621b8
 > ---
->   .../bindings/soundwire/qcom,soundwire.yaml    | 20 +++++++++++++++++--
->   1 file changed, 18 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-> index 98c7fc7e1189..fb44b89a754e 100644
-> --- a/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-> +++ b/Documentation/devicetree/bindings/soundwire/qcom,soundwire.yaml
-> @@ -86,7 +86,7 @@ properties:
->     qcom,ports-sinterval-low:
->       $ref: /schemas/types.yaml#/definitions/uint8-array
->       description:
-> -      Sample interval low of each data port.
-> +      Sample interval (only lowest byte) of each data port.
->         Out ports followed by In ports. Used for Sample Interval calculation.
->         Value of 0xff indicates that this option is not implemented
->         or applicable for the respective data port.
-> @@ -94,6 +94,17 @@ properties:
->       minItems: 3
->       maxItems: 16
->   
-> +  qcom,ports-sinterval:
-> +    $ref: /schemas/types.yaml#/definitions/uint16-array
-> +    description:
-> +      Sample interval of each data port.
-> +      Out ports followed by In ports. Used for Sample Interval calculation.
-> +      Value of 0xffff indicates that this option is not implemented
-> +      or applicable for the respective data port.
-> +      More info in MIPI Alliance SoundWire 1.0 Specifications.
-> +    minItems: 3
-> +    maxItems: 16
-> +
->     qcom,ports-offset1:
->       $ref: /schemas/types.yaml#/definitions/uint8-array
->       description:
-> @@ -220,10 +231,15 @@ required:
->     - '#size-cells'
->     - qcom,dout-ports
->     - qcom,din-ports
-> -  - qcom,ports-sinterval-low
->     - qcom,ports-offset1
->     - qcom,ports-offset2
->   
-> +oneOf:
-> +  - required:
-> +      - qcom,ports-sinterval-low
-> +  - required:
-> +      - qcom,ports-sinterval
-> +
->   additionalProperties: false
->   
->   examples:
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 6e9bad8f6f33..80a01ff3ee30 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -2022,7 +2022,7 @@ swr3: soundwire-controller@6ab0000 {
+>  			qcom,din-ports = <4>;
+>  			qcom,dout-ports = <9>;
+>  
+> -			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
+> +			qcom,ports-sinterval =		/bits/ 16 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
+>  			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
+>  			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>  			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
+> @@ -2068,7 +2068,7 @@ swr1: soundwire-controller@6ad0000 {
+>  			qcom,din-ports = <0>;
+>  			qcom,dout-ports = <10>;
+>  
+> -			qcom,ports-sinterval =		<0x03 0x3f 0x1f 0x07 0x00 0x18f 0xff 0xff 0xff 0xff>;
+> +			qcom,ports-sinterval =		/bits/ 16 <0x03 0x3f 0x1f 0x07 0x00 0x18f 0xff 0xff 0xff 0xff>;
+>  			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x00 0x00 0xff 0xff 0xff 0xff>;
+>  			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00 0x00 0xff 0xff 0xff 0xff>;
+>  			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff>;
+> @@ -2133,7 +2133,7 @@ swr0: soundwire-controller@6b10000 {
+>  			qcom,din-ports = <4>;
+>  			qcom,dout-ports = <9>;
+>  
+> -			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
+> +			qcom,ports-sinterval =		/bits/ 16 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
+>  			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
+>  			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
+>  			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
