@@ -2,148 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3D6B6E67EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 17:20:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCF066E67F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 17:23:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230389AbjDRPU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 11:20:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39006 "EHLO
+        id S231539AbjDRPXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 11:23:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjDRPU0 (ORCPT
+        with ESMTP id S230070AbjDRPXh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 11:20:26 -0400
+        Tue, 18 Apr 2023 11:23:37 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0166B83C3;
-        Tue, 18 Apr 2023 08:20:22 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33IAYOFv021374;
-        Tue, 18 Apr 2023 15:19:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/HohYFfTG1GLIaax09t4Ld6q7yqW2itdIzPMwPQ9NhQ=;
- b=b+Re9FgVp60KfU03U2T/p+/krDkUitTeEbyF9UFtJdf1M4WT0XookgKO0y1o0V6B4k+r
- m+It09ONtDYwaqo7XCoV1s4bnU3cptlJ07fK/pSNXBP5quoyBxZjhs01asqtTPRPl5n5
- WauGsvFRB0m9gOuSF9NDrmWKaaVl77IWB9Q2WPspsG78UWtU5Kq8UJEbq7x0h3M2rmqZ
- WThPAte5ufx0P9VOseThE2WHRTeIzhqvanSSkaeNZ2S0R3aGNdTZSIJm1P5kub6hHOiN
- GPrVuU6q0KpzMP7HxU3vnrrCGJdALOVsv9C25tWJtSNTPDt+1Nvr2mYEHiOBt06FK/B9 gA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1bvktamf-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B3CE12C8C;
+        Tue, 18 Apr 2023 08:23:27 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33IAYOGc005302;
+        Tue, 18 Apr 2023 15:23:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=/fFvPvWewR1GVh5hVO4hPrFoOL8bObIJCmqYQi9jYlU=;
+ b=h0SiLPxa1RiOBLn6kuZ3r0RPZSCpHfZzQYuD9x5PTmANEgRrk8sL2ODaxEsTiWNHK0ht
+ kWMq8DgngDezcFF2UToJCxSOGED32uD11Nh/D8e1t7E1AriHg8ViYZSsIsgzUKEqQ1rA
+ cJtWEhIRi/7AXwtFU1ob/orC0PAyY87wZxoD11T+k9denk/ifPXu/Nyn3gd7h7I8YeGN
+ v/JlQzVPdAqNIaDyRBDFaon5pb6KBCKpbqQwUByacN+TuW/nZcwvkdJvQjy8t5JLeazr
+ emrDzUJuiigTd9x1MGks6chnp64FYyLeE60W9S/QiIy2tbiyu8csWGxAURVKqx1GoHL/ Og== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q17yhu37a-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 15:19:59 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33IFJwLn027373
+        Tue, 18 Apr 2023 15:23:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33IFNB2v027839
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 15:19:58 GMT
-Received: from [10.216.30.222] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 18 Apr
- 2023 08:19:52 -0700
-Message-ID: <55d3dc01-8909-db69-fbac-60e7636febdc@quicinc.com>
-Date:   Tue, 18 Apr 2023 20:49:48 +0530
+        Tue, 18 Apr 2023 15:23:11 GMT
+Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 18 Apr 2023 08:23:06 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V22 0/3] misc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Tue, 18 Apr 2023 20:52:34 +0530
+Message-ID: <cover.1681829664.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 3/6] docs: qcom: Add qualcomm minidump guide
-Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <corbet@lwn.net>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <catalin.marinas@arm.com>, <will@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-doc@vger.kernel.org>, Brian Masney <bmasney@redhat.com>
-References: <1679491817-2498-1-git-send-email-quic_mojha@quicinc.com>
- <1679491817-2498-4-git-send-email-quic_mojha@quicinc.com>
- <24ec8534-60a4-b308-0831-9ab6b983d902@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <24ec8534-60a4-b308-0831-9ab6b983d902@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sBHGT8gEIQSbCfnAzUf88VmV45l7x24b
-X-Proofpoint-ORIG-GUID: sBHGT8gEIQSbCfnAzUf88VmV45l7x24b
+X-Proofpoint-ORIG-GUID: v6c3ZseiAY6P9t2JkKlHXTOofo3HJR-a
+X-Proofpoint-GUID: v6c3ZseiAY6P9t2JkKlHXTOofo3HJR-a
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-18_11,2023-04-18_01,2023-02-09_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 mlxlogscore=620 impostorscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ spamscore=0 impostorscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ clxscore=1015 malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2303200000 definitions=main-2304180131
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+@Brian
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
-On 4/14/2023 4:01 AM, Srinivas Kandagatla wrote:
-> 
-> 
-> On 22/03/2023 13:30, Mukesh Ojha wrote:
->> +Dump collection
->> +---------------
->> +
->> +The solution supports extracting the minidump produced either over 
->> USB or
->> +stored to an attached storage device.
->> +
->> +By default, dumps are downloaded via USB to the attached x86_64 machine
->> +running PCAT (Qualcomm tool) software. Upon download, we will see
-> 
-> Are these both PCAT and dexter tools public?
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
 
-I think, PCAT comes as part of Qcom Package Kit.
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
 
-Last time, I checked with @Brian, he was saying the they use PCAT 
-software tool running on x86_64 machine attached to QCOM device to
-get the dump(via USB) out of the device.
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
 
-Dexter.exe seems private tool, that only requires if we use storage
-(via ufs/emmc) to save minidump on the target device itself and later 
-use adb to pull out the rawdump partition dump and pass it through
-dexter to convert it to same binary blobs which we got directly through
-PCAT.
+i)TimeStamp Related Issue
 
-I don't at least have any way to avoid dexter tool at the moment.
-However, i will think if we can develop any script which does the
-same.
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
 
--- Mukesh
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
 
-> 
-> --srini
->> +a set of binary blobs starts with name md_* in PCAT configured directory
->> +in x86_64 machine, so for above example from the client it will be
->> +md_REGION_A.BIN. This binary blob depends on region content to determine
->> +whether it needs external parser support to get the content of the 
->> region,
->> +so for simple plain ASCII text we don't need any parsing and the content
->> +can be seen just opening the binary file.
->> +
->> +To collect the dump to attached storage type, one need to write 
->> appropriate
->> +value to IMEM register, in that case dumps are collected in rawdump
->> +partition on the target device itself.
->> +
->> +One need to read the entire rawdump partition and pull out content to
->> +save it onto the attached x86_64 machine over USB. Later, this rawdump
->> +can be pass it to another tool dexter.exe(Qualcomm tool) which converts
->> +this into the similar binary blobs which we have got it when download 
->> type
->> +was set to USB i.e a set of registered region as blobs and their name
->> +starts with md_*.
->> -- 2.7.4
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
+
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
+
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/dcc/../3/config
+..... and so on for other timestamp related clk registers
+
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
+
+echo R 0x10C004 4 > /sys/kernel/debug/dcc/../3/config_read
+
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+        <timestamp>03/14/21</timestamp>
+            <generator>Linux DCC Parser</generator>
+                <chip name="None" version="None">
+                <register address="0x0010c004" value="0x80000000" />
+                <register address="0x0010c008" value="0x00000008" />
+                <register address="0x0010c00c" value="0x80004220" />
+                <register address="0x0010c010" value="0x80000000" />
+            </chip>
+    <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
+
+Changes in v22
+
+* DCC driver is added to the new location as per discussions
+
+* Implemented the comments on the previous version of this patch
+
+Souradeep Chowdhury (3):
+  dt-bindings: misc: qcom,dcc: Add the dtschema
+  misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+
+ .../devicetree/bindings/misc/qcom,dcc.yaml         |   44 +
+ MAINTAINERS                                        |    8 +
+ drivers/misc/Kconfig                               |    8 +
+ drivers/misc/Makefile                              |    1 +
+ drivers/misc/dcc.c                                 | 1300 ++++++++++++++++++++
+ 5 files changed, 1361 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+ create mode 100644 drivers/misc/dcc.c
+
+--
+2.7.4
+
