@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30DCD6E6100
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 14:18:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3B926E6103
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 14:18:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbjDRMR7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 08:17:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55474 "EHLO
+        id S230468AbjDRMSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 08:18:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230468AbjDRMR6 (ORCPT
+        with ESMTP id S230064AbjDRMSf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 08:17:58 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3936C1FC2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 05:17:55 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2a8afef50f2so20048731fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 05:17:55 -0700 (PDT)
+        Tue, 18 Apr 2023 08:18:35 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BB18E44
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 05:18:33 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id k15so12124773ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 05:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681820273; x=1684412273;
+        d=linaro.org; s=google; t=1681820312; x=1684412312;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pm8kfo3XeSVwAetxgwT0FTokY6mXbT03bQ/HeaTO5sg=;
-        b=BWqcSSa5M/DWIFNbg4ZO7UwMLj5VWEnGqqVHDgNleYwqCR1muKHmvjPz+dsv3fnn2p
-         HgM7l3NZx/91bqWIEawAklbJXL2QVGOnYXVVVFVhqXENv1C0TdDuYJSAolh5BBlEZ0Z0
-         /GMQTPZBJeD/7MkmZ333jRL+8Pci+PndkxJOw+SeDkZ7a3z6e9r4PbJgkF3D8BeYXLSw
-         Jpl3cULrPqEgROuaQAndgzk7bPtuUEGIBViUYdwlLIEI8+z+IAfMETKw4lLh6wvUgswp
-         D/QF24yUGT/4W28VMJMsOWCdfyShdXqgFMJ976ajfy0d2E7i7f3bASBD5qAKQ9yuNskX
-         +v5A==
+        bh=s5cxVw9YSikx002hly9GEAsV567PP+kQP1sM6EfB2Co=;
+        b=Tp2K1BX9OOUuGPhWUAu5PjFgtrEl6eOyccDkPCEAvfIa/2kgX8zh1hZWroSUnek4qO
+         UjR2/u4yCP1MiWVBiG8kD9X0pyVfWIiW4b8XSEpQarcFTvRKZmeCD2dRcFE4HGE05c+p
+         5mTyzCZD/XlsEfyN35kFfT09IeqVU7/oWojfy6Ol75sJAGLfuoBrjbjtn1/mM40nUiXD
+         15mzuraHRGr0pMlBy5S5ni056qyM+8KZCMRXVKZfGHYukAuScJI4fR1iJNIhBY8CEcrM
+         wA7B4SJRjaE8ZvXKmgM3qEbnQtZ6AOvnKNMC7kJVLyQRU3adS7Jj/qP36pwowxGGMN3h
+         /VfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681820273; x=1684412273;
+        d=1e100.net; s=20221208; t=1681820312; x=1684412312;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pm8kfo3XeSVwAetxgwT0FTokY6mXbT03bQ/HeaTO5sg=;
-        b=Q3dGF4BcpALq4pYop4pOdygUOl4jk9QlcTV57DFnXUWnRgCHF7boaktEBSqNyq7oO7
-         2JVzEYT9Be/bctxTENPZ8ovpIBiOoQisbtEFpUekZfBaDPdWHAw/LO9f5Gi42ydnDQao
-         NS/0rUT9gu02lYeXnOTAeNtuLk9hC7ydh/3OPqn6/Aarg71ZAZ60behskhNmgYTyc4Kd
-         DSxBCskMrgghKICsgWBpCsxZu2s4tBiYCWsyS3AcU6hgrhavHl1XmY2bQd55n+vGAYCJ
-         xsB3d7syCRBzlM6188NfZ4zOG6RsXgZoeAa4zDb54cDj3j5NBnh+O9Y1SRKsscaoscyP
-         2NVQ==
-X-Gm-Message-State: AAQBX9eE6ftjVsCmGcZAFiVhx7iSI871+lDLps1+G+KNPlcMiYWpIbFd
-        kKMxpE3qwJTYd3CoV0XlqoyTBg==
-X-Google-Smtp-Source: AKy350Zpv11CFVrXOJiJ6pDXhJb1NwLe8eKm9EyvXhDLS9nC5cGtz9y89V2oYVJtwOv8s5AcCLi44Q==
-X-Received: by 2002:ac2:4a89:0:b0:4ed:c089:6e5a with SMTP id l9-20020ac24a89000000b004edc0896e5amr2759303lfp.23.1681820273493;
-        Tue, 18 Apr 2023 05:17:53 -0700 (PDT)
+        bh=s5cxVw9YSikx002hly9GEAsV567PP+kQP1sM6EfB2Co=;
+        b=LCjA10zq7AqY2CNh2Akp1tSAWb/44IuLLa2oQspZDxscpfjmJG8OvFYWEL6k0i84P/
+         VhzVGhcDoONHi5M4o4Gu3HC4IvLsJ3zadEfHATxcpO6sBgRVkYSEaiUZ821ZDEHJzeJI
+         LAD3Cp/R7+90qumuGYk1Sdi08OdPdmyh2MWRlFfFo10mCnsVkVnp4aBtogMcFUmdrBnv
+         GzBcm6TVWU5aKIYPUZCG6nAktXvsOJfV9PYSRkiBg3H/0c52/29LRopsakUpq1cXWdm4
+         EG8bn3ETcUYeOHOqspF2diBLpZEVM+zPa3GuwLmoU1WFlzBVu8efkvFXGFJFUYD6xBiZ
+         avEw==
+X-Gm-Message-State: AAQBX9f4ZFV9C/ko5bQ58tBQEtFDwY7CJwCPMj8GpCbSgybSewVs3yZJ
+        DcEIgnc6AcQ+lwqD/a5AkbtNiQ==
+X-Google-Smtp-Source: AKy350av1XJ3jXQfSMjdRIlffK92NsVOt67SJ0ygIdBrTmoPvuEK8mAfNV5QJh2WF6ITbgmeWh0s2g==
+X-Received: by 2002:a2e:8799:0:b0:2a7:9690:ca01 with SMTP id n25-20020a2e8799000000b002a79690ca01mr667734lji.18.1681820311894;
+        Tue, 18 Apr 2023 05:18:31 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id m2-20020a195202000000b004edd4566114sm109236lfb.24.2023.04.18.05.17.51
+        by smtp.gmail.com with ESMTPSA id z21-20020a2e8e95000000b002a634bfa224sm2557662ljk.40.2023.04.18.05.18.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 05:17:53 -0700 (PDT)
-Message-ID: <8c102e7c-3ec7-5ffb-9d99-cfdc183acf19@linaro.org>
-Date:   Tue, 18 Apr 2023 14:17:51 +0200
+        Tue, 18 Apr 2023 05:18:31 -0700 (PDT)
+Message-ID: <38478a18-d60f-924f-f8cd-3ba44d0f1c65@linaro.org>
+Date:   Tue, 18 Apr 2023 14:18:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v2 05/17] drm/msm/dpu: Remove duplicate register defines
- from INTF
+Subject: Re: [PATCH v2 06/17] drm/msm/dpu: Remove extraneous register define
+ indentation
 Content-Language: en-US
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -84,15 +84,15 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Archit Taneja <architt@codeaurora.org>,
         Sravanthi Kollukuduru <skolluku@codeaurora.org>
 References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-5-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-6-ef76c877eb97@somainline.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230411-dpu-intf-te-v2-5-ef76c877eb97@somainline.org>
+In-Reply-To: <20230411-dpu-intf-te-v2-6-ef76c877eb97@somainline.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -102,33 +102,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 17.04.2023 22:21, Marijn Suijten wrote:
-> The INTF_FRAME_LINE_COUNT_EN, INTF_FRAME_COUNT and INTF_LINE_COUNT
-> registers are already defined higher up, in the right place when sorted
-> numerically.
+> A bunch of registers are indented with two extra spaces, looking as if
+> these are values corresponding to the previous register which is not the
+> case, rather these are simply also register offsets and should only have
+> a single space separating them and the #define keyword.
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 5 -----
->  1 file changed, 5 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 41 +++++++++++++++--------------
+>  1 file changed, 21 insertions(+), 20 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 84ee2efa9c66..b9dddf576c02 100644
+> index b9dddf576c02..1d22d7dc99b8 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -56,11 +56,6 @@
->  #define   INTF_TPG_RGB_MAPPING          0x11C
->  #define   INTF_PROG_FETCH_START         0x170
->  #define   INTF_PROG_ROT_START           0x174
-> -
-> -#define   INTF_FRAME_LINE_COUNT_EN      0x0A8
-> -#define   INTF_FRAME_COUNT              0x0AC
+> @@ -38,26 +38,27 @@
+>  #define INTF_ACTIVE_DATA_HCTL           0x068
+>  #define INTF_FRAME_LINE_COUNT_EN        0x0A8
+>  #define INTF_FRAME_COUNT                0x0AC
 > -#define   INTF_LINE_COUNT               0x0B0
 > -
->  #define   INTF_MUX                      0x25C
->  #define   INTF_STATUS                   0x26C
+> -#define   INTF_DEFLICKER_CONFIG         0x0F0
+> -#define   INTF_DEFLICKER_STRNG_COEFF    0x0F4
+> -#define   INTF_DEFLICKER_WEAK_COEFF     0x0F8
+> -
+> -#define   INTF_DSI_CMD_MODE_TRIGGER_EN  0x084
+> -#define   INTF_PANEL_FORMAT             0x090
+> -#define   INTF_TPG_ENABLE               0x100
+> -#define   INTF_TPG_MAIN_CONTROL         0x104
+> -#define   INTF_TPG_VIDEO_CONFIG         0x108
+> -#define   INTF_TPG_COMPONENT_LIMITS     0x10C
+> -#define   INTF_TPG_RECTANGLE            0x110
+> -#define   INTF_TPG_INITIAL_VALUE        0x114
+> -#define   INTF_TPG_BLK_WHITE_PATTERN_FRAMES   0x118
+> -#define   INTF_TPG_RGB_MAPPING          0x11C
+> -#define   INTF_PROG_FETCH_START         0x170
+> -#define   INTF_PROG_ROT_START           0x174
+> -#define   INTF_MUX                      0x25C
+> -#define   INTF_STATUS                   0x26C
+> +#define INTF_LINE_COUNT                 0x0B0
+> +
+> +#define INTF_DEFLICKER_CONFIG           0x0F0
+> +#define INTF_DEFLICKER_STRNG_COEFF      0x0F4
+> +#define INTF_DEFLICKER_WEAK_COEFF       0x0F8
+> +
+> +#define INTF_DSI_CMD_MODE_TRIGGER_EN    0x084
+> +#define INTF_PANEL_FORMAT               0x090
+> +#define INTF_TPG_ENABLE                 0x100
+> +#define INTF_TPG_MAIN_CONTROL           0x104
+> +#define INTF_TPG_VIDEO_CONFIG           0x108
+> +#define INTF_TPG_COMPONENT_LIMITS       0x10C
+> +#define INTF_TPG_RECTANGLE              0x110
+> +#define INTF_TPG_INITIAL_VALUE          0x114
+> +#define INTF_TPG_BLK_WHITE_PATTERN_FRAMES 0x118
+> +#define INTF_TPG_RGB_MAPPING            0x11C
+> +#define INTF_PROG_FETCH_START           0x170
+> +#define INTF_PROG_ROT_START             0x174
+> +
+> +#define INTF_MUX                        0x25C
+> +#define INTF_STATUS                     0x26C
 >  
+>  #define INTF_CFG_ACTIVE_H_EN	BIT(29)
+>  #define INTF_CFG_ACTIVE_V_EN	BIT(30)
 > 
