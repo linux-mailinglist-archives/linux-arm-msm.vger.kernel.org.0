@@ -2,72 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E33E6E5E4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 12:11:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 435806E5ED8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 12:34:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230123AbjDRKLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 06:11:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38932 "EHLO
+        id S229535AbjDRKeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 06:34:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbjDRKLE (ORCPT
+        with ESMTP id S229652AbjDRKeA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 06:11:04 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D4076EB1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:10:23 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id l15so5094571ljq.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:10:23 -0700 (PDT)
+        Tue, 18 Apr 2023 06:34:00 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED5A210A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:33:57 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id k15so11795606ljq.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 03:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681812622; x=1684404622;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1681814036; x=1684406036;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UXA7IdH6OnmIg4dHeihhBVhSOUFUULrLJzUMC4zJSkE=;
-        b=S1EqyM2bhUI/MpHfz9cdN+dN5X18qxer6sd7/Yay6PaBl0qjv70HRKYD7KYwR7etYF
-         1vIRBJ4mHwI31SPHf8vj6eEbCGw7G2Ri0UyYMzyvo8MSYhMYOMDtFo7fNGHrK4FbXYr3
-         n5tz+/6TD//u2/POqi6787YQ34NlydfvPNBcTLO48HTQlRWTV38LVlFc31rVaukcX5TX
-         n3ITAvgfSWkE6bwRFAUA3q8ZxhE090CZkq9Jeq/B6flvHbpz57fwCKY4hlzQmGcjQotS
-         ox4l5MeFHiKdBny6AaH7u/jeO0ogy3gelR8TPVrWWRBrFprIOHhR8FAzMh9FpMNjmvDR
-         4NAA==
+        bh=Q5/bfT+RXd6RtVeOwPRrzIiafIg3lFmOa6O9Z8BiwAE=;
+        b=kZmeDGSdMwfgVWKsFDqktR9W3cUkkDYFckVBi0lAMmZEJ5RyWsBLc3MsRcKVeo1L3A
+         vNX4zLHHNA1UKtlg3oMjYLD5VfL6glEnfgtTaRF16L0K0UU+rjmA75fsgS3u7fIg3zAz
+         HiuvGOeQiAanGEEPIfarIwhONrTqKWXTfDBoH4jDIqewCGExGcf6im6v5cvGIlDDi+If
+         5SFlhzGwEER236gbjOhXWgC/I7SBs5jSACeppKy0puJW2J/oETd3DB6B6sC75hsr+6th
+         owmI+E4YhUens4vvBxgDYabue4KqGxiQNFkKVn4BmpvVkH7o3r/Z6c/K/YpBudAPX6FO
+         Dd6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681812622; x=1684404622;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1681814036; x=1684406036;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UXA7IdH6OnmIg4dHeihhBVhSOUFUULrLJzUMC4zJSkE=;
-        b=kFozRavKW3JcftmNgdlq4trCAhyENG9Ta/OrLkbTISklzutvVtsNgrniCR+mhBhqkD
-         kJB0i/LN9aBCSWxpIfCd0q0BgOSjmhmivwEBA8EKsNhS/JVG3f8Z6MVvnfHN4P02FtY/
-         j1NQY+OcMIQ8oC/w3CGOcpR+UDmdCfskzn7BERyTK7aOs1gAHFgTME6VOXwLl1/3fi1E
-         4o+SwzqADCon5QqwumjC+p4DaizdjxNVC/OB2qUc5GqitlcTgi44UZ06INKdRW7l0EXa
-         RCXePhYUAtoveu1PlR9kha9fViGAgPgEErapGG7V++uPnMF+o5WVkbivOWYTFC1ZDzMT
-         jSng==
-X-Gm-Message-State: AAQBX9f5vT0sN/QkcRZH5jEkupKbzvo6KA4+v7Lp9jbdRH0qkQPSIdte
-        MUCqZqcJ/1j8lGjWS5y+OkL66A==
-X-Google-Smtp-Source: AKy350b+EZLC54YBdhnK8Qcxhhtkwyp2iBSktRYLNRnit+ipp8TAThYMwu8PI5N+Sp20tV4Ys/lePA==
-X-Received: by 2002:a2e:9117:0:b0:2a6:15c7:1926 with SMTP id m23-20020a2e9117000000b002a615c71926mr665207ljg.3.1681812621746;
-        Tue, 18 Apr 2023 03:10:21 -0700 (PDT)
+        bh=Q5/bfT+RXd6RtVeOwPRrzIiafIg3lFmOa6O9Z8BiwAE=;
+        b=UX8/OsX1VYev11tPRWsA74a1ZuyO0DM7lbJUcYwb5eINPINa/mX4dSFctHuOT2LX6k
+         G6WXrQEHy3I5FVHQ6JJGU/n2ihUz9gLtb3Bm9Z0NeD+7WzeX1IUJnLu2xstJ5tOMEh0O
+         xXvRJA5XNHpI6dgK9pXAXwwXmPYsEsv9OgYiRGAKS50n0PmeKgXnTulKShX3WBll3Qz3
+         vyYn0XXVILUxQqk8brlW3vwYyAWEa3n8rzHm7KycXor7m9tvmiWJoiZwnAdTWohgLHSw
+         WcMVTmE9rI02AhDWx9FtaPbbr7ptmY7564eqWU6oXMJn+zYxSaJe5yoOxWcSLDNDRonU
+         Woyg==
+X-Gm-Message-State: AAQBX9dT1pyxc/JZZ63Zd6RQF5PdOF7tuRL6jwtfJPDFwgpsSFSvKZ8z
+        Zz1Zih5mT8YQ7Izd2O8PMeBxdA==
+X-Google-Smtp-Source: AKy350ZbCcfL3I9jAM9i+Z+zM7VRlJEaAWOsr0O4MjW6or/G+gRTHtsmX4gjbR5Ap03BW7pNhjWi4g==
+X-Received: by 2002:a2e:9810:0:b0:2a8:b188:139a with SMTP id a16-20020a2e9810000000b002a8b188139amr533757ljj.45.1681814036167;
+        Tue, 18 Apr 2023 03:33:56 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id c22-20020a197616000000b004eb3b84d2a1sm2312523lff.114.2023.04.18.03.10.20
+        by smtp.gmail.com with ESMTPSA id e15-20020a2e984f000000b002a8afccf545sm1885029ljj.127.2023.04.18.03.33.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 03:10:21 -0700 (PDT)
-Message-ID: <e6eeb6ca-fdac-a2a0-bf7e-54cd8f13cc9e@linaro.org>
-Date:   Tue, 18 Apr 2023 12:10:20 +0200
+        Tue, 18 Apr 2023 03:33:55 -0700 (PDT)
+Message-ID: <3873483f-7f7d-a146-cca9-b50f054289d4@linaro.org>
+Date:   Tue, 18 Apr 2023 12:33:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: use uint16 for Soundwire
- interval
+Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way to
+ enable unused clock cleanup
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230418095734.669858-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
+ <ZD2YYrOdQMD3pi7u@gerhold.net>
+ <d63d4896afe8a1a901470f88862ce608.sboyd@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230418095734.669858-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d63d4896afe8a1a901470f88862ce608.sboyd@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,55 +89,95 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.04.2023 11:57, Krzysztof Kozlowski wrote:
-> The Soundwire bindings changed during review, after the SM8550 DTS
-> Soundwire nodes were merged.  Switch to uint16 for Soundwire
-> qcom,ports-sinterval property, to match with current bindings.
+On 18.04.2023 02:19, Stephen Boyd wrote:
+> Quoting Stephan Gerhold (2023-04-17 12:05:06)
+>> On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
+>>> Disabling RPMCC clocks can be a bit touchy. If we can't guarantee all
+>>> (or at least most) of the oneline peripherals ask the interconnect
+>>> framework to keep their buses online and guarantee enough bandwidth,
+>>> we're relying on bootloader defaults to keep the said buses alive through
+>>> RPM requests and rate setting on RPM clocks.
+>>>
+>>> Without that in place, the RPM clocks are never enabled in the CCF, which
+>>> qualifies them to be cleaned up, since - as far as Linux is concerned -
+>>> nobody's using them and they're just wasting power. Doing so will end
+>>> tragically, as within miliseconds we'll get *some* access attempt on an
+>>> unlocked bus which will cause a platform crash.
+>>>
+>>> On the other hand, if we want to save power and put well-supported
+>>> platforms to sleep, we should be shutting off at least some of these
+>>> clocks (this time with a clear distinction of which ones are *actually*
+>>> not in use, coming from the interconnect driver).
+>>>
+>>> To differentiate between these two cases while not breaking older DTs,
+>>> introduce an opt-in property to correctly mark RPM clocks as enabled
+>>> after handoff (the initial max freq vote) and hence qualify them for the
+>>> common unused clock cleanup.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
+>>>  Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml | 6 ++++++
+>>>  1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+>>> index 2a95bf8664f9..386153f61971 100644
+>>> --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+>>> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+>>> @@ -58,6 +58,12 @@ properties:
+>>>      minItems: 1
+>>>      maxItems: 2
+>>>  
+>>> +  qcom,clk-disable-unused:
+>>> +    type: boolean
+>>> +    description:
+>>> +      Indicates whether unused RPM clocks can be shut down with the common
+>>> +      unused clock cleanup. Requires a functional interconnect driver.
+>>> +
+>>
+>> I'm surprised that Stephen Boyd did not bring up his usual "rant" here
+>> of moving the interconnect clock voting out of rpmcc into the
+>> interconnect drivers (see [1], [2]). :-)
 > 
-> Fixes: 61b006389bb7 ("arm64: dts: qcom: sm8550: add Soundwire controllers")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> :) I was hoping to get a fix for disabling unused clks during late init
+> at the same time. Shucks!
 > 
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> I was a bit "cautious" about it back then but at this point I think it
+>> kind of makes sense. Make sure to read Stephen's detailed explanation in
+>> https://lore.kernel.org/linux-arm-msm/159796605593.334488.8355244657387381953@swboyd.mtv.corp.google.com/
+>>
+>> We keep looking for workarounds to prevent the CCF from "messing" with
+>> interconnect-related clocks. But the CCF cannot mess with "clocks" it
+>> does not manage. The RPM interconnect drivers already talk directly to
+>> the RPM in drivers/interconnect/qcom/smd-rpm.c. I think it should be
+>> quite easy to move the QCOM_SMD_RPM_BUS_CLK relates defines over there
+>> and just bypass the CCF entirely.
+> 
+> Please do it!
+Okay, that's a plan..
+
+> 
+>>
+>> For backwards compatibility (for platforms without interconnect drivers)
+>> one could either assume that the bootloader bandwidth votes will be
+>> sufficient and just leave those clocks completely alone. Or the
+>> "icc_smd_rpm" platform device could initially make max votes similar to
+>> the rpmcc device. By coincidence the "icc_smd_rpm" platform device is
+>> always created, no matter how the device tree looks or if the platform
+>> actually has an interconnect driver.
+>>
+> 
+> Yeah that's a good plan. Suspend will be broken or burn a lot of power,
+(that's what happens as of today, so sgtm!)
+
+> but presumably the new DTB will be used fairly quickly. Or you can
+> implement something like clkdev for interconnects that lets you hack up
+> an association between interconnects and consumers for existing DTs and
+> then drop those lookups months later.
+Uh.. let's not.. Let's just contain it in the interconnect driver.
+
+The buses will be at bearable frequencies coming from the bootloader
+(as RPM, storage etc. are enabled) and boosting them at icc_rpm_smd
+probe sounds sane.
 
 Konrad
-> 
-> Fix for v6.4-rc1.
-> 
-> Bindings v3 (with uint16):
-> https://lore.kernel.org/linux-arm-msm/20230418095447.577001-1-krzysztof.kozlowski@linaro.org/T/#md34302ec02eebdbe3e4defef79a40b32a7e621b8
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 6e9bad8f6f33..80a01ff3ee30 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2022,7 +2022,7 @@ swr3: soundwire-controller@6ab0000 {
->  			qcom,din-ports = <4>;
->  			qcom,dout-ports = <9>;
->  
-> -			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
-> +			qcom,ports-sinterval =		/bits/ 16 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
->  			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
->  			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->  			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
-> @@ -2068,7 +2068,7 @@ swr1: soundwire-controller@6ad0000 {
->  			qcom,din-ports = <0>;
->  			qcom,dout-ports = <10>;
->  
-> -			qcom,ports-sinterval =		<0x03 0x3f 0x1f 0x07 0x00 0x18f 0xff 0xff 0xff 0xff>;
-> +			qcom,ports-sinterval =		/bits/ 16 <0x03 0x3f 0x1f 0x07 0x00 0x18f 0xff 0xff 0xff 0xff>;
->  			qcom,ports-offset1 =		/bits/ 8 <0x00 0x00 0x0b 0x01 0x00 0x00 0xff 0xff 0xff 0xff>;
->  			qcom,ports-offset2 =		/bits/ 8 <0x00 0x00 0x0b 0x00 0x00 0x00 0xff 0xff 0xff 0xff>;
->  			qcom,ports-hstart =		/bits/ 8 <0xff 0x03 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff>;
-> @@ -2133,7 +2133,7 @@ swr0: soundwire-controller@6b10000 {
->  			qcom,din-ports = <4>;
->  			qcom,dout-ports = <9>;
->  
-> -			qcom,ports-sinterval =		<0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
-> +			qcom,ports-sinterval =		/bits/ 16 <0x07 0x1f 0x3f 0x07 0x1f 0x3f 0x18f 0xff 0xff 0x0f 0x0f 0xff 0x31f>;
->  			qcom,ports-offset1 =		/bits/ 8 <0x01 0x03 0x05 0x02 0x04 0x15 0x00 0xff 0xff 0x06 0x0d 0xff 0x00>;
->  			qcom,ports-offset2 =		/bits/ 8 <0xff 0x07 0x1f 0xff 0x07 0x1f 0xff 0xff 0xff 0xff 0xff 0xff 0xff>;
->  			qcom,ports-hstart =		/bits/ 8 <0xff 0xff 0xff 0xff 0xff 0xff 0x08 0xff 0xff 0xff 0xff 0xff 0x0f>;
