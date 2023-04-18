@@ -2,109 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 773796E68F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 18:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 524986E68E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 18:06:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232295AbjDRQHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 12:07:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50196 "EHLO
+        id S230389AbjDRQGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 12:06:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232290AbjDRQHM (ORCPT
+        with ESMTP id S231547AbjDRQGS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 12:07:12 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6746813F89;
-        Tue, 18 Apr 2023 09:06:49 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33IFU0pd006152;
-        Tue, 18 Apr 2023 16:06:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=anWyvRSLQ2R8CpDI4TbnpyM9aRqD9vXygDkn+RJxXzQ=;
- b=SUF0Ky5/vJbFKiSBYsE2Y+2bw8BpPZh1H36h4WZsVM6UWolEeBtwIMktf/PiTGDW1DXa
- k9TIeOy7BIcUoIexvPBe1nPTaz93Q/9vrNttflzwJ7ANNdrbXivn24wwlqacpQwv/fes
- AxxylHYtBaYjJQnkQLrsEsh2VgB7hKwHAYNH8ea0XYMIJ3LuUwtH0YibfbXeIkG+kjl4
- ogLXNr8ctBEGBhtw/CA66Ropf+e7Gbb1C8VQSScl+xwA6v9NikBXcKsT9Sxnem6fMcxc
- Zj7rJNhdRQUESaSNqFuGKt+5CJ6JpPOgFcm0RH01QccAVyDCzbCfg4coqUXMsUVdK2In jA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1v190em2-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 16:06:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33IG6bN4010158
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 16:06:37 GMT
-Received: from [10.110.98.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 18 Apr
- 2023 09:06:35 -0700
-Message-ID: <60bb4a4a-f414-e926-df53-d6d1a01fc221@quicinc.com>
-Date:   Tue, 18 Apr 2023 09:06:34 -0700
+        Tue, 18 Apr 2023 12:06:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 951F9A5F3;
+        Tue, 18 Apr 2023 09:06:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1F7BA6363C;
+        Tue, 18 Apr 2023 16:06:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4E0C433D2;
+        Tue, 18 Apr 2023 16:06:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681833975;
+        bh=tOJ1So/lkQYZ1dXqAXduZ3FghSn5PqnZguZxMb/fFAg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=Rknt2bVajEwu9llHT+cdMysW+QEmBKLwIwvLnxS+mau45SKr+pooGTmFA+as5oe3G
+         bPBUO8gFeDOzT0v489+Aiw05CaTzgT+oUmio21YT01yxHBDtmww+i+R5/8P+FZUp78
+         uAVXkxUBUcLukyoFvDhDsfLaiPEyYk7sMnVdo7hu9/ycf4lUe1TNG8I5wi+G3IEXlR
+         xb8+b4sxORGryIsovm4J4yjxcniHvzebdrKT8BSHyK32yF9VSwDO8VCdmbRK7Rz7JZ
+         tBo7gnTyLgraXQ/hnmfFmUtqyWZUWtlpMMVhibwptdOgyHdyvjAhKw7zw7rQVYR1/h
+         xROnYUUmWeSqQ==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Chris Lew <quic_clew@quicinc.com>
+Cc:     linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/2] rpmsg: glink: Wait for intent after intent request
+Date:   Tue, 18 Apr 2023 09:09:46 -0700
+Message-Id: <168183418160.1484313.14958797737671661515.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230327144617.3134175-1-quic_bjorande@quicinc.com>
+References: <20230327144617.3134175-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 2/3] drm/msm/dpu: Assign missing writeback log_mask
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
- <20230418-dpu-drop-useless-for-lookup-v1-2-b9897ceb6f3e@somainline.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230418-dpu-drop-useless-for-lookup-v1-2-b9897ceb6f3e@somainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Y4QKOVO5AxmNisp-ZDaWfYTJM9oyJoNM
-X-Proofpoint-GUID: Y4QKOVO5AxmNisp-ZDaWfYTJM9oyJoNM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-18_11,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxscore=0 spamscore=0 clxscore=1015
- mlxlogscore=853 bulkscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304180136
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/17/2023 4:14 PM, Marijn Suijten wrote:
-> The WB debug log mask ended up never being assigned, leading to writes
-> to this block to never be logged even if the mask is enabled in
-> dpu_hw_util_log_mask via sysfs.
-
-This should be debugfs not sysfs.
-
+On Mon, 27 Mar 2023 07:46:15 -0700, Bjorn Andersson wrote:
+> When written it was assumed that upon requesting an intent, the intent
+> would arrive followed by an intent request acknowledgement. But this is
+> not always the case, in which case the current implementation would
+> request yet another intent and when that is acknowledged find the first
+> received intent - if the remote didn't run out of memory and failed the
+> second request...
 > 
-> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
+> [...]
 
-With that fixed,
+Applied, thanks!
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+[1/2] rpmsg: glink: Transition intent request signaling to wait queue
+      commit: c09c7a59bfdd9a5d02a75ab640ed73ad56b3d1bc
+[2/2] rpmsg: glink: Wait for intent, not just request ack
+      commit: 62efe3ed777c180a924a8576ca0b5a1a55eba9ae
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
