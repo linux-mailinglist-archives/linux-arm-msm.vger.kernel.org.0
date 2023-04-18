@@ -2,117 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 725426E67FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 17:23:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 512276E680B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 17:26:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231635AbjDRPXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 11:23:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41406 "EHLO
+        id S230377AbjDRP0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 11:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231753AbjDRPXt (ORCPT
+        with ESMTP id S231314AbjDRP0p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 11:23:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCBF61385E;
-        Tue, 18 Apr 2023 08:23:40 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33IAUitN023350;
-        Tue, 18 Apr 2023 15:23:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=QJUzhc+RA8TH9PdxIysA6RyvA/OZ16PTk6JeUDHL7/M=;
- b=V7YNIOh4rfEb3DzhuzrgIHwAq2OaABgjvybA9Dp+U4OyVxnOwOQ3X/2OJe1DdBDTJmF8
- KleEg8YoYyvHi2ylSxphTWcj/5LiXhgvYI6DySm13VRWITN/A3jUnOF1rjoHpt3PMejL
- CMsSK4xy5A5St/KssxQRXGO7Nuxz5Aqfcv6JsTNQPm2K1ZIHzTDI30PP1L4JeI2ghwRO
- k9AUZMB6LLTcdIF9f9EEQ4eqOnLqoZ0e3cSg1pD1EsWF42p0UsYNx3CuLuTqfw/AeUE/
- DyN/sW5add1mIrx4clpzIv0GMclJyzSX3KluerByIVFpKU0TNAqWVdUW7B7qE/UM25bF fw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q19kg2nb8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 15:23:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33IFNRlc014626
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 15:23:27 GMT
-Received: from blr-ubuntu-525.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 18 Apr 2023 08:23:22 -0700
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V22 3/3] MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver support
-Date:   Tue, 18 Apr 2023 20:52:37 +0530
-Message-ID: <a9a4f7a6ba11fa14674c60b16ed85ae010e2be56.1681829664.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1681829664.git.quic_schowdhu@quicinc.com>
-References: <cover.1681829664.git.quic_schowdhu@quicinc.com>
+        Tue, 18 Apr 2023 11:26:45 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B37412C92
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 08:26:23 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id dm2so74318057ejc.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 08:26:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681831582; x=1684423582;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s9M4Cy3RAneTyQNPZZI73IssUJ+/tbZ24lCmil8/wy0=;
+        b=htQXPSbwfbKehEj5O/7VedrIOI3id8b1ElfrdoQSSii8SiWKOLqlzSn6hWxhFIS8dg
+         4oqduLcxCDchk60CK9IA7cQrPgG2/ON/bOhTOkF72rA/FpQq8gkL8nH0c5u/XUvbfwoG
+         Lx1nWaGc9ruXXr9Vks/3SYMXKpEIjNpC3N1/neydjeKlWS/OAOJEvpg/P2djaizMOdDb
+         c7zkFjq7XmHLex1XKayPQHWTKnuyxqHZ420lhoLFaygx5xwDvU5uPIx192J6wf2NyNUs
+         B5Zz/GRuXQcipbrTJf+oyjWtJdDMJsnO7bzm87XX/sdMFXYNn2xkljaBlbJTSAAG9UuB
+         VvDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681831582; x=1684423582;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s9M4Cy3RAneTyQNPZZI73IssUJ+/tbZ24lCmil8/wy0=;
+        b=e8FYGy+H35GOHwfPPPvX+jIIumn/EbEP9bIfIA9c8GUtLNrfX3AvM+pn9Tu2xcuPi5
+         UdrIj3BzC7tf9LRGzS+/o5L9/00/Go9tOL9zNl541AsDnR6rmqMTMCr6wU0NHOIgXJul
+         WuR4YC5xOlbzOjq8yH1C+mTi9KOhNV/cMrdpIouM+r99+UCD1oXPUsEKIFYe+r+FvQsZ
+         ibnps1FJHliXYPEyxserHBheqAis/4lMMJvo6YSw1ZEsE1g7KbSDlHXnRD3xzyvjyl/Q
+         W5O4M0k8qXb+G1uvhMhaWOtTc/ZmJZZPlfoOrXXddeWQ948pD0lA1FF6GtGACZpB49oA
+         /BtQ==
+X-Gm-Message-State: AAQBX9eeY03fzirrloesdpInX2JeRJh7eys1qYtccG55WeN4rBCfdFp5
+        g3vRibRQJ2tg7Mtf6bY5ENpXjQ==
+X-Google-Smtp-Source: AKy350Y55KT8s6wtLY+JUO1aCm8Wql7NeBtVJbi/L7pgsU7v6MZvKexJNZSfPBUyTFJDx+wtKF8qXQ==
+X-Received: by 2002:a17:907:918c:b0:94d:f66c:3cdc with SMTP id bp12-20020a170907918c00b0094df66c3cdcmr9596474ejb.51.1681831582049;
+        Tue, 18 Apr 2023 08:26:22 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id gv35-20020a1709072be300b0094f07545d43sm5646849ejc.188.2023.04.18.08.26.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Apr 2023 08:26:21 -0700 (PDT)
+Message-ID: <bd7ad4a2-3cd0-9d6e-00b8-5592c67d7205@linaro.org>
+Date:   Tue, 18 Apr 2023 16:26:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: G6glkm0dJs6DIEBopSPHcfpeVS5WZgYt
-X-Proofpoint-ORIG-GUID: G6glkm0dJs6DIEBopSPHcfpeVS5WZgYt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-18_11,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=879
- suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 mlxscore=0 adultscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304180131
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 3/6] docs: qcom: Add qualcomm minidump guide
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org,
+        Brian Masney <bmasney@redhat.com>
+References: <1679491817-2498-1-git-send-email-quic_mojha@quicinc.com>
+ <1679491817-2498-4-git-send-email-quic_mojha@quicinc.com>
+ <24ec8534-60a4-b308-0831-9ab6b983d902@linaro.org>
+ <55d3dc01-8909-db69-fbac-60e7636febdc@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <55d3dc01-8909-db69-fbac-60e7636febdc@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the entries for all the files added as a part of driver support for
-DCC(Data Capture and Compare).
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b4e9c5b..6b8a5c8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -5705,6 +5705,14 @@ W:	http://lists.twibble.org/mailman/listinfo/dc395x/
- F:	Documentation/scsi/dc395x.rst
- F:	drivers/scsi/dc395x.*
- 
-+DCC QTI DRIVER
-+M:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/ABI/testing/debugfs-driver-dcc
-+F:	Documentation/devicetree/bindings/misc/qcom,dcc.yaml
-+F:	drivers/misc/dcc.c
-+
- DCCP PROTOCOL
- L:	dccp@vger.kernel.org
- S:	Orphan
--- 
-2.7.4
+On 18/04/2023 16:19, Mukesh Ojha wrote:
+> +@Brian
+> 
+> On 4/14/2023 4:01 AM, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 22/03/2023 13:30, Mukesh Ojha wrote:
+>>> +Dump collection
+>>> +---------------
+>>> +
+>>> +The solution supports extracting the minidump produced either over 
+>>> USB or
+>>> +stored to an attached storage device.
+>>> +
+>>> +By default, dumps are downloaded via USB to the attached x86_64 machine
+>>> +running PCAT (Qualcomm tool) software. Upon download, we will see
+>>
+>> Are these both PCAT and dexter tools public?
+> 
+> I think, PCAT comes as part of Qcom Package Kit.
 
+yes, this is part of Qualcomm Package Manager.
+
+> 
+> Last time, I checked with @Brian, he was saying the they use PCAT 
+> software tool running on x86_64 machine attached to QCOM device to
+> get the dump(via USB) out of the device.
+> 
+> Dexter.exe seems private tool, that only requires if we use storage
+> (via ufs/emmc) to save minidump on the target device itself and later 
+> use adb to pull out the rawdump partition dump and pass it through
+> dexter to convert it to same binary blobs which we got directly through
+> PCAT.
+> 
+> I don't at least have any way to avoid dexter tool at the moment.
+> However, i will think if we can develop any script which does the
+> same.
+That would be nice!
+
+--srini
+> 
+> -- Mukesh
+> 
+>>
+>> --srini
+>>> +a set of binary blobs starts with name md_* in PCAT configured 
+>>> directory
+>>> +in x86_64 machine, so for above example from the client it will be
+>>> +md_REGION_A.BIN. This binary blob depends on region content to 
+>>> determine
+>>> +whether it needs external parser support to get the content of the 
+>>> region,
+>>> +so for simple plain ASCII text we don't need any parsing and the 
+>>> content
+>>> +can be seen just opening the binary file.
+>>> +
+>>> +To collect the dump to attached storage type, one need to write 
+>>> appropriate
+>>> +value to IMEM register, in that case dumps are collected in rawdump
+>>> +partition on the target device itself.
+>>> +
+>>> +One need to read the entire rawdump partition and pull out content to
+>>> +save it onto the attached x86_64 machine over USB. Later, this rawdump
+>>> +can be pass it to another tool dexter.exe(Qualcomm tool) which converts
+>>> +this into the similar binary blobs which we have got it when 
+>>> download type
+>>> +was set to USB i.e a set of registered region as blobs and their name
+>>> +starts with md_*.
+>>> -- 2.7.4
