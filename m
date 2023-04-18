@@ -2,131 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E88B6E5820
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 06:39:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AD8F6E5876
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 07:19:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230000AbjDREjm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 00:39:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42502 "EHLO
+        id S229885AbjDRFT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 01:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbjDREjk (ORCPT
+        with ESMTP id S229719AbjDRFT2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 00:39:40 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75C431BDC;
-        Mon, 17 Apr 2023 21:39:39 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33I1Qn8m013458;
-        Tue, 18 Apr 2023 04:39:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3XTWqtZ3w9Eey9pd4PsRb/Fejz/hw3NeUUOaQHLLLss=;
- b=glq8roC9jkCIWGP91biXuYIWmm1AErqmOW1al3+O4uLUbwfguEIEPcJoDJ/pT7nDjZx+
- XPBev/YHr6JNAmm1WMZiUS10NNJ8YSXPlyipv4WBACbjHY0qd63noq6tF72Rq7ys3DiN
- EfkYMwPgLBhKcnMsSHofxwesdueD6KljH0KKwYdE3H6ntTaeRhqKuYJa/HfsaZrmhGkP
- Kpg4mdYKSwsmfGf2ei8cQCOV2lR9rGnAJlgVm2eynR8vA13SluYxUwIi7zQB3Gpy5TGC
- 8gMH8ZEmjufwcuW51R67zxvYElMeXlW19mcOq8lucyZPKw0wrVCRE1xNqCS2QEhC3QBr rA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1h0cgbbx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 04:39:16 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33I4dFBv004298
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 04:39:15 GMT
-Received: from [10.217.217.202] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 17 Apr
- 2023 21:39:08 -0700
-Message-ID: <792e1f22-c3eb-80c7-0600-b478b3764f7c@quicinc.com>
-Date:   Tue, 18 Apr 2023 10:09:01 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: sa8775p: pmic: remove the PON modes
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Tue, 18 Apr 2023 01:19:28 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2F1835BE;
+        Mon, 17 Apr 2023 22:19:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681795166; x=1713331166;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ApemhVgsU+TFdPtwqGDQRyH9z/W8/lC9uWid1us00p8=;
+  b=jm6W5vWtURdp2gOlWJQBRL340792QWIMJYTuoD5HkQyscjpgcmhPOw9u
+   +2VZ7kLGAA6xH6NylNEMyG09MgzgV6r63JlStLmpV9V1PivjXcJRx2cgz
+   NSAWD40b/QgZE4QSuZ4s/ZVDUYgnVkMk+Ey1WZrv3GyU8zXEcj3F5H/3D
+   7yxGsoQYGKdfww9iegSxtieIleAOMwca4AnWK1UncKND8VnzXXDuxQPVV
+   /6UeIT5ZpKZ4wwocX9p2E7wwH8bHCnl25X4yZVm4yLpmoP3WIL1B/gj/Z
+   9Tfl0XUwDE5DoTe7Z204E6lngPzR4uHWbA61rY0e7mP/73QNB0tuZj5Kp
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10683"; a="325417315"
+X-IronPort-AV: E=Sophos;i="5.99,206,1677571200"; 
+   d="scan'208";a="325417315"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2023 22:19:26 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10683"; a="815071972"
+X-IronPort-AV: E=Sophos;i="5.99,206,1677571200"; 
+   d="scan'208";a="815071972"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 17 Apr 2023 22:19:22 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1podkP-000d1P-1u;
+        Tue, 18 Apr 2023 05:19:21 +0000
+Date:   Tue, 18 Apr 2023 13:18:22 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-CC:     <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Parikshit Pareek <quic_ppareek@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230413131705.3073911-1-brgl@bgdev.pl>
- <20230413131705.3073911-2-brgl@bgdev.pl>
- <3e361a73-797f-41c7-1ead-ecafee3928e4@linaro.org>
-Content-Language: en-US
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <3e361a73-797f-41c7-1ead-ecafee3928e4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4fG5p8sFF0XmZEJRWb4HKzAGsKAglQ2H
-X-Proofpoint-GUID: 4fG5p8sFF0XmZEJRWb4HKzAGsKAglQ2H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-17_14,2023-04-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
- lowpriorityscore=0 bulkscore=0 phishscore=0 mlxlogscore=949 malwarescore=0
- clxscore=1011 suspectscore=0 impostorscore=0 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304180041
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: Re: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data
+ Capture and Compare unit(DCC)
+Message-ID: <202304181327.0grVYsHS-lkp@intel.com>
+References: <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Souradeep,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on char-misc/char-misc-testing]
+[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.3-rc7 next-20230417]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Souradeep-Chowdhury/dt-bindings-misc-qcom-dcc-Add-the-dtschema/20230414-220304
+patch link:    https://lore.kernel.org/r/b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu%40quicinc.com
+patch subject: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20230418/202304181327.0grVYsHS-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 9638da200e00bd069e6dd63604e14cbafede9324)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/f3f73f6008e1ebca6fba848e260b1f938d91be95
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Souradeep-Chowdhury/dt-bindings-misc-qcom-dcc-Add-the-dtschema/20230414-220304
+        git checkout f3f73f6008e1ebca6fba848e260b1f938d91be95
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/misc/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202304181327.0grVYsHS-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/misc/dcc.c:217:14: warning: variable 'ret' is used uninitialized whenever 'for' loop exits because its condition is false [-Wsometimes-uninitialized]
+           for (i = 0; i < drvdata->nr_link_list; i++) {
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/misc/dcc.c:238:9: note: uninitialized use occurs here
+           return ret;
+                  ^~~
+   drivers/misc/dcc.c:217:14: note: remove the condition if it is always true
+           for (i = 0; i < drvdata->nr_link_list; i++) {
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/misc/dcc.c:190:9: note: initialize the variable 'ret' to silence this warning
+           int ret;
+                  ^
+                   = 0
+   1 warning generated.
 
 
-On 4/13/2023 9:42 PM, Krzysztof Kozlowski wrote:
-> On 13/04/2023 15:17, Bartosz Golaszewski wrote:
->> From: Parikshit Pareek <quic_ppareek@quicinc.com>
->>
->> Remove the power on reasons with reboot from the pmm8654au_0_pon.
->> Instead, the PoN reaons should be part of different sdam_0 mode, to
-> 
-> typo: reasons
-> 
->> be interoduced.
-> 
-> introduced
-> 
-> Anyway it does not say why. Are these power reasons not correct?
-> 
+vim +217 drivers/misc/dcc.c
 
-Hi Krzysztof,
-Since sm8350 the PMIC PON peripheral was split into PON_HLOS and PON_PBS
-to avoid security concerns with HLOS APPS being able to trigger a PMIC
-WARM_RESET unilaterally. When the split occurred, the spare registers
-ended up in PON_PBS, not PON_HLOS. Thus at that time, we moved to using
-an SDAM register for Linux “reboot reason” configuration. And bootloader
-also SDAM register to get these reboot region data to get into
-bootloader/edl, so to have this working we need to use SDAM.
+   186	
+   187	static int dcc_sw_trigger(struct dcc_drvdata *drvdata)
+   188	{
+   189		void __iomem *addr;
+   190		int ret;
+   191		int i;
+   192		u32 status;
+   193		u32 ll_cfg;
+   194		u32 tmp_ll_cfg;
+   195		u32 val;
+   196	
+   197		mutex_lock(&drvdata->mutex);
+   198	
+   199		for (i = 0; i < drvdata->nr_link_list; i++) {
+   200			if (!test_bit(i, drvdata->enable_bitmap))
+   201				continue;
+   202			ll_cfg = dcc_list_readl(drvdata, i, DCC_LL_CFG);
+   203			tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
+   204			dcc_list_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
+   205			dcc_list_writel(drvdata, 1, i, DCC_LL_SW_TRIGGER);
+   206			dcc_list_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
+   207		}
+   208	
+   209		addr = drvdata->base + DCC_STATUS(drvdata->mem_map_ver);
+   210		if (readl_poll_timeout(addr, val, !FIELD_GET(DCC_STATUS_MASK, val),
+   211				       1, STATUS_READY_TIMEOUT)) {
+   212			dev_err(drvdata->dev, "DCC is busy after receiving sw trigger\n");
+   213			ret = -EBUSY;
+   214			goto out_unlock;
+   215		}
+   216	
+ > 217		for (i = 0; i < drvdata->nr_link_list; i++) {
+   218			if (!test_bit(i, drvdata->enable_bitmap))
+   219				continue;
+   220	
+   221			status = dcc_list_readl(drvdata, i, DCC_LL_BUS_ACCESS_STATUS);
+   222			if (!status)
+   223				continue;
+   224	
+   225			dev_err(drvdata->dev, "Read access error for list %d err: 0x%x\n",
+   226				i, status);
+   227			ll_cfg = dcc_list_readl(drvdata, i, DCC_LL_CFG);
+   228			tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
+   229			dcc_list_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
+   230			dcc_list_writel(drvdata, DCC_STATUS_MASK, i, DCC_LL_BUS_ACCESS_STATUS);
+   231			dcc_list_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
+   232			ret = -ENODATA;
+   233			break;
+   234		}
+   235	
+   236	out_unlock:
+   237		mutex_unlock(&drvdata->mutex);
+   238		return ret;
+   239	}
+   240	
 
->>
->> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->> ---
-> 
-> Best regards,
-> Krzysztof
-> 
-
--Shazad
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
