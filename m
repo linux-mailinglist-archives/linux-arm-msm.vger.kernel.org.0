@@ -2,278 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 280FA6E65A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 15:16:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD3996E65DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 15:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232276AbjDRNQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 09:16:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41440 "EHLO
+        id S230492AbjDRN3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 09:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230489AbjDRNQa (ORCPT
+        with ESMTP id S231393AbjDRN3U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 09:16:30 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1540614476
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 06:16:29 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4edc63c82d1so1245210e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 06:16:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681823787; x=1684415787;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sgggcNwZXxbZHeP3Mj+Q6o2cKdV7dl9LMQfDCRj8a40=;
-        b=VuLA4kwBkWJxCPoWIk3ZYahaoHb/XNVxbHtSUHsxlrCzRPcjeLV+ZUFn0oWz9vocdm
-         KgXzzc3g5g/z12gD2TCLJ+uCMB6+smxnNk89Tz0GvhqagcYDdT5Jo2EGf1fEozhlW5ws
-         5aJelw7B0itzLO9cu2jl7iTMgsfCbgAP6wCn3jiX7+mViPZYQwQ8wL+b+VxANJCf6h9G
-         KNDj+zWNX46x4Ze9GF5L5AlitGkMmlOmxQ3KbLp2EHZOB8XfV68/xvV/OM5t3NHHF4nG
-         ayHjfX1Vwny36jTU9QX/VsotGr7ZJmW8Tk9iYT/FUNeIxOLsqDTktHvv9N1PRQFINdOZ
-         wpkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681823787; x=1684415787;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sgggcNwZXxbZHeP3Mj+Q6o2cKdV7dl9LMQfDCRj8a40=;
-        b=denHUV2b9u7ckWI7LrtZvCSA16fkpXqE+I+2lm00mi5k8sTFHhTfymrtZnLyMZI8Mu
-         NpSDTCCzoVphpNKAPCWp0HxL3zR27OpU8PegbXVyoj9jNhXc2LiBLaEMo+66hOVmKz0d
-         fM7hZXCsmXxeJCCXrIVkrTYNo2uEoBwuJNWMrW5IsLYAVNVJb+gvpzUe145xobiKhKi1
-         YjyX4i7VXa8z9E8bMu7p/wbu1p1ztZLWyenhYRR6INM2daP4KHjBZbiusLY9u+fjArPh
-         V8MHIJw+GeWafxGY1v86q11IMRC/Rzv+DnefhWSQV3kXqf0E4Gs8dgMuLqtIEJV6bxDZ
-         aAJw==
-X-Gm-Message-State: AAQBX9daZZ0XBpXMuuXsBu7iceo3ZC1NV6puw3+H7d6Ez3ZV9qLyz+2p
-        4dm+1bN2zIL57bpQrM11ncAhKg==
-X-Google-Smtp-Source: AKy350YjQozNSVtD7xe9gVWsEYAU8euckO/IZUoPxURb5KB+0cjRoKY3fF5uX/VO2rbFgZSy4kBAjA==
-X-Received: by 2002:a19:520a:0:b0:4eb:4523:d2e6 with SMTP id m10-20020a19520a000000b004eb4523d2e6mr2915448lfb.24.1681823787229;
-        Tue, 18 Apr 2023 06:16:27 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id b1-20020a056512024100b004edc9e9eec5sm373340lfo.138.2023.04.18.06.16.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 06:16:26 -0700 (PDT)
-Message-ID: <f0ceef33-47be-6c4c-175b-7202791f0890@linaro.org>
-Date:   Tue, 18 Apr 2023 15:16:24 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 17/17] drm/msm/dpu: Remove intr_rdptr from DPU >= 5.0.0
- pingpong config
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
+        Tue, 18 Apr 2023 09:29:20 -0400
+Received: from hust.edu.cn (unknown [202.114.0.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABF81444C;
+        Tue, 18 Apr 2023 06:29:15 -0700 (PDT)
+Received: from localhost.localdomain ([172.16.0.254])
+        (user=d202180596@hust.edu.cn mech=LOGIN bits=0)
+        by mx1.hust.edu.cn  with ESMTP id 33IDQtWh013039-33IDQtWi013039
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Tue, 18 Apr 2023 21:26:55 +0800
+From:   Shuai Jiang <d202180596@hust.edu.cn>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Archit Taneja <architt@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>
-References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-17-ef76c877eb97@somainline.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230411-dpu-intf-te-v2-17-ef76c877eb97@somainline.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Ivan T. Ivanov" <iivanov@mm-sol.com>,
+        Wolfram Sang <wsa@kernel.org>,
+        Austin Christ <austinwc@codeaurora.org>,
+        Naveen Kaje <nkaje@codeaurora.org>,
+        Sricharan R <sricharan@codeaurora.org>
+Cc:     hust-os-kernel-patches@googlegroups.com,
+        Shuai Jiang <d202180596@hust.edu.cn>,
+        Andy Gross <agross@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+Date:   Tue, 18 Apr 2023 21:26:42 +0800
+Message-Id: <20230418132642.16668-1-d202180596@hust.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-FEAS-AUTH-USER: d202180596@hust.edu.cn
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Smatch Warns:
+	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
+	warn: missing unwind goto?
 
+The goto label "fail_runtime" and "fail" will disable qup->pclk, 
+but here qup->pclk failed to obtain, in order to be consistent, 
+change the direct return to goto label "fail_dma".
 
-On 17.04.2023 22:21, Marijn Suijten wrote:
-> Now that newer DPU platforms use a readpointer-done interrupt on the
-> INTF block, stop providing the unused interrupt on the PINGPONG block.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: 10c5a8425968 ("i2c: qup: New bus driver for the Qualcomm QUP I2C controller")
+Fixes: 515da746983b ("i2c: qup: add ACPI support")
+Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+---
+The issue is found by static analysis and remains untested.
+---
+ drivers/i2c/busses/i2c-qup.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-Konrad
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  |  8 ++++----
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h |  8 ++++----
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h  |  8 ++++----
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h  |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  |  8 ++++----
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h  | 10 +++++-----
->  7 files changed, 23 insertions(+), 23 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> index e8d25a45d6b3..a6dbc4c8acb8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-> @@ -130,16 +130,16 @@ static const struct dpu_dspp_cfg sm8150_dspp[] = {
->  static const struct dpu_pingpong_cfg sm8150_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_TE2_MASK, MERGE_3D_0, sdm845_pp_sblk_te,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +			-1),
->  	PP_BLK("pingpong_1", PINGPONG_1, 0x70800, PINGPONG_SM8150_TE2_MASK, MERGE_3D_0, sdm845_pp_sblk_te,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> +			-1),
->  	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> +			-1),
->  	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> +			-1),
->  	PP_BLK("pingpong_4", PINGPONG_4, 0x72000, PINGPONG_SM8150_MASK, MERGE_3D_2, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
->  			-1),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index 62857288ad91..14d5ead8d40c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -118,16 +118,16 @@ static const struct dpu_lm_cfg sc8180x_lm[] = {
->  static const struct dpu_pingpong_cfg sc8180x_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_TE2_MASK, MERGE_3D_0, sdm845_pp_sblk_te,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +			-1),
->  	PP_BLK("pingpong_1", PINGPONG_1, 0x70800, PINGPONG_SM8150_TE2_MASK, MERGE_3D_0, sdm845_pp_sblk_te,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> +			-1),
->  	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> +			-1),
->  	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> +			-1),
->  	PP_BLK("pingpong_4", PINGPONG_4, 0x72000, PINGPONG_SM8150_MASK, MERGE_3D_2, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
->  			-1),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> index f77329ab397d..f98ca0f1e4a9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-> @@ -131,16 +131,16 @@ static const struct dpu_dspp_cfg sm8250_dspp[] = {
->  static const struct dpu_pingpong_cfg sm8250_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_TE2_MASK, MERGE_3D_0, sdm845_pp_sblk_te,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +			-1),
->  	PP_BLK("pingpong_1", PINGPONG_1, 0x70800, PINGPONG_SM8150_TE2_MASK, MERGE_3D_0, sdm845_pp_sblk_te,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> +			-1),
->  	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> +			-1),
->  	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> +			-1),
->  	PP_BLK("pingpong_4", PINGPONG_4, 0x72000, PINGPONG_SM8150_MASK, MERGE_3D_2, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
->  			-1),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> index 5509ceb5d55b..ba9de008519b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
-> @@ -62,7 +62,7 @@ static const struct dpu_dspp_cfg sm6115_dspp[] = {
->  static const struct dpu_pingpong_cfg sm6115_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
->  		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +		-1),
->  };
->  
->  static const struct dpu_intf_cfg sm6115_intf[] = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> index 22b8a173d214..92ac348eea6b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
-> @@ -59,7 +59,7 @@ static const struct dpu_dspp_cfg qcm2290_dspp[] = {
->  static const struct dpu_pingpong_cfg qcm2290_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
->  		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +		-1),
->  };
->  
->  static const struct dpu_intf_cfg qcm2290_intf[] = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index 220ba7bdeb20..7cec702c2429 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -129,16 +129,16 @@ static const struct dpu_dspp_cfg sm8350_dspp[] = {
->  static const struct dpu_pingpong_cfg sm8350_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, PINGPONG_SM8150_MASK, MERGE_3D_0, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +			-1),
->  	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, PINGPONG_SM8150_MASK, MERGE_3D_0, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> +			-1),
->  	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> +			-1),
->  	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> +			-1),
->  	PP_BLK("pingpong_4", PINGPONG_4, 0x6d000, PINGPONG_SM8150_MASK, MERGE_3D_2, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
->  			-1),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 5d8f381e1708..5f2ab9bcd04d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -126,20 +126,20 @@ static const struct dpu_dspp_cfg sm8450_dspp[] = {
->  	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
->  		 &sm8150_dspp_sblk),
->  };
-> -/* FIXME: interrupts */
-> +
->  static const struct dpu_pingpong_cfg sm8450_pp[] = {
->  	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, PINGPONG_SM8150_MASK, MERGE_3D_0, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> +			-1),
->  	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, PINGPONG_SM8150_MASK, MERGE_3D_0, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> +			-1),
->  	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> +			-1),
->  	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, PINGPONG_SM8150_MASK, MERGE_3D_1, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
-> +			-1),
->  	PP_BLK("pingpong_4", PINGPONG_4, 0x6d000, PINGPONG_SM8150_MASK, MERGE_3D_2, sdm845_pp_sblk,
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
->  			-1),
-> 
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index 2e153f2f71b6..78682388e02e 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1752,16 +1752,21 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
+ 		dev_err(qup->dev, "clock frequency not supported %d\n",
+ 			clk_freq);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto fail_dma;
+ 	}
+ 
+ 	qup->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(qup->base))
+-		return PTR_ERR(qup->base);
++	if (IS_ERR(qup->base)) {
++		ret = PTR_ERR(qup->base);
++		goto fail_dma;
++	}
+ 
+ 	qup->irq = platform_get_irq(pdev, 0);
+-	if (qup->irq < 0)
+-		return qup->irq;
++	if (qup->irq < 0) {
++		ret = qup->irq;
++		goto fail_dma;
++	}
+ 
+ 	if (has_acpi_companion(qup->dev)) {
+ 		ret = device_property_read_u32(qup->dev,
+@@ -1775,13 +1780,15 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 		qup->clk = devm_clk_get(qup->dev, "core");
+ 		if (IS_ERR(qup->clk)) {
+ 			dev_err(qup->dev, "Could not get core clock\n");
+-			return PTR_ERR(qup->clk);
++			ret = PTR_ERR(qup->clk);
++			goto fail_dma;
+ 		}
+ 
+ 		qup->pclk = devm_clk_get(qup->dev, "iface");
+ 		if (IS_ERR(qup->pclk)) {
+ 			dev_err(qup->dev, "Could not get iface clock\n");
+-			return PTR_ERR(qup->pclk);
++			ret = PTR_ERR(qup->pclk);
++			goto fail_dma;
+ 		}
+ 		qup_i2c_enable_clocks(qup);
+ 		src_clk_freq = clk_get_rate(qup->clk);
+-- 
+2.25.1
+
