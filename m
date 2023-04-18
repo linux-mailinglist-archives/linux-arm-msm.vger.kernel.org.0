@@ -2,104 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3B466E65E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 15:30:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 477376E6673
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 15:58:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbjDRNao (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 09:30:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
+        id S230504AbjDRN6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 09:58:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231177AbjDRNan (ORCPT
+        with ESMTP id S229756AbjDRN6S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 09:30:43 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB9E14450
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 06:30:42 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id sz19so16148277ejc.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 06:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681824641; x=1684416641;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rffFnl7mfjezGYLAktfVaaITh/gwflzEth7uD6ZC/cM=;
-        b=I5eEix0qVq0SZl6LePburT2lrcPY9omUYZ8PmE++6NBF67yQ0ze2mpF6wb4Cmgw/pD
-         xWQ3ro43dl+zw8hza5uydu/o8vSq++PgPVK98u3A0Wnl5bqZmGyd310bZwWkP0l2sMw5
-         z6Yy1SBbFdx7bDyMWYsKVEcaqhj7vQmOjGkGgaANM1pku79ENItxKjp7376/TOeeCGdF
-         pjZ85FFvXds7Wx7buAgos6OwLt6OqkOaNvxGaxOlSTWzKPGJ9IlrJeLI5KhaeGhuvLv/
-         RpTP/paZReyjbfUlSPraITZm06nQ6fAs77PjQ/DVe1oP8hWzpW+5hmyncPufTmVZFH0Z
-         h6hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681824641; x=1684416641;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rffFnl7mfjezGYLAktfVaaITh/gwflzEth7uD6ZC/cM=;
-        b=NNgUbHUxpc3lRrzZGgpMCh2QroDiCgK8M1opAiwV70rP1Lb78vZfTTpeU2TXdkjLcb
-         v9n8oAXvgbm7E2Z3hJvg83Hgzidnf5IT/DkLWSVK40bierXMPmUIEvgvDFATdGktRpJx
-         yi49U6gHBks5tAUV0XzCOmLFigDD0G+ir2Der3Bx4owSP0XP3Zy9W3JNzyERoxaTObph
-         ndtGP2zjWIMqZOcqDHIjBcgcIACXnnpu6EUNVTAv6j62fBK5lGmHEtsWDW+KdxfG2EaX
-         JU5CLBymf1w5pd4YH25vjH7qDNoLZ8Ia4zqVdzvAgIAyoFGopd7MatYgfwgfqsVVMWwY
-         yfFg==
-X-Gm-Message-State: AAQBX9cDMOi7+EX0R/7omd57Y1OcgGesCyTL8ex1mDRpRrTXfDRnVJeS
-        g1QSakvDCUzuACjqoI5aBGDVXg==
-X-Google-Smtp-Source: AKy350ZW4dBad0JSllW5uCiWq3kVnCQW9P3yk9AHbLDu7uN4k47WQuQO54FdCJYumwP+hDNYtSM5ew==
-X-Received: by 2002:a17:906:b802:b0:94e:61d3:d13b with SMTP id dv2-20020a170906b80200b0094e61d3d13bmr10632661ejb.75.1681824640821;
-        Tue, 18 Apr 2023 06:30:40 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:a276:7d35:5226:1c77? ([2a02:810d:15c0:828:a276:7d35:5226:1c77])
-        by smtp.gmail.com with ESMTPSA id kt2-20020a170906aac200b0094f6458157csm3523268ejb.223.2023.04.18.06.30.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Apr 2023 06:30:40 -0700 (PDT)
-Message-ID: <b781b14a-0bc0-3e3a-e803-a54f24cd58d3@linaro.org>
-Date:   Tue, 18 Apr 2023 15:30:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v2 1/5] dt-bindings: display/msm: Add reg bus interconnect
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Tue, 18 Apr 2023 09:58:18 -0400
+Received: from hust.edu.cn (unknown [202.114.0.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC13FC64E;
+        Tue, 18 Apr 2023 06:58:17 -0700 (PDT)
+Received: from localhost.localdomain ([172.16.0.254])
+        (user=d202180596@hust.edu.cn mech=LOGIN bits=0)
+        by mx1.hust.edu.cn  with ESMTP id 33IDuFgt012244-33IDuFgu012244
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Tue, 18 Apr 2023 21:56:15 +0800
+From:   Shuai Jiang <d202180596@hust.edu.cn>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        "Ivan T. Ivanov" <iivanov@mm-sol.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Naveen Kaje <nkaje@codeaurora.org>,
+        Austin Christ <austinwc@codeaurora.org>
+Cc:     hust-os-kernel-patches@googlegroups.com,
+        Shuai Jiang <d202180596@hust.edu.cn>,
+        Andy Gross <agross@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230417-topic-dpu_regbus-v2-0-91a66d04898e@linaro.org>
- <20230417-topic-dpu_regbus-v2-1-91a66d04898e@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230417-topic-dpu_regbus-v2-1-91a66d04898e@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Subject: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+Date:   Tue, 18 Apr 2023 21:56:12 +0800
+Message-Id: <20230418135612.598-1-d202180596@hust.edu.cn>
+X-Mailer: git-send-email 2.17.1
+X-FEAS-AUTH-USER: d202180596@hust.edu.cn
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/04/2023 14:10, Konrad Dybcio wrote:
-> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
-> another path that needs to be handled to ensure MDSS functions properly,
-> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
-> 
-> Gating that path may have a variety of effects.. from none to otherwise
-> inexplicable DSI timeouts..
-> 
-> Describe it in bindings to allow for use in device trees.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Smatch Warns:
+	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
+	warn: missing unwind goto?
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The goto label "fail_runtime" and "fail" will disable qup->pclk, 
+but here qup->pclk failed to obtain, in order to be consistent, 
+change the direct return to goto label "fail_dma".
 
-Best regards,
-Krzysztof
+Fixes: 10c5a8425968 ("i2c: qup: New bus driver for the Qualcomm QUP I2C controller")
+Fixes: 515da746983b ("i2c: qup: add ACPI support")
+Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+---
+The issue is found by static analysis and remains untested.
+---
+ drivers/i2c/busses/i2c-qup.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index 2e153f2f71b6..78682388e02e 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1752,16 +1752,21 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
+ 		dev_err(qup->dev, "clock frequency not supported %d\n",
+ 			clk_freq);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto fail_dma;
+ 	}
+ 
+ 	qup->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(qup->base))
+-		return PTR_ERR(qup->base);
++	if (IS_ERR(qup->base)) {
++		ret = PTR_ERR(qup->base);
++		goto fail_dma;
++	}
+ 
+ 	qup->irq = platform_get_irq(pdev, 0);
+-	if (qup->irq < 0)
+-		return qup->irq;
++	if (qup->irq < 0) {
++		ret = qup->irq;
++		goto fail_dma;
++	}
+ 
+ 	if (has_acpi_companion(qup->dev)) {
+ 		ret = device_property_read_u32(qup->dev,
+@@ -1775,13 +1780,15 @@ static int qup_i2c_probe(struct platform_device *pdev)
+ 		qup->clk = devm_clk_get(qup->dev, "core");
+ 		if (IS_ERR(qup->clk)) {
+ 			dev_err(qup->dev, "Could not get core clock\n");
+-			return PTR_ERR(qup->clk);
++			ret = PTR_ERR(qup->clk);
++			goto fail_dma;
+ 		}
+ 
+ 		qup->pclk = devm_clk_get(qup->dev, "iface");
+ 		if (IS_ERR(qup->pclk)) {
+ 			dev_err(qup->dev, "Could not get iface clock\n");
+-			return PTR_ERR(qup->pclk);
++			ret = PTR_ERR(qup->pclk);
++			goto fail_dma;
+ 		}
+ 		qup_i2c_enable_clocks(qup);
+ 		src_clk_freq = clk_get_rate(qup->clk);
+-- 
+2.25.1
 
