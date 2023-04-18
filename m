@@ -2,77 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA30F6E608F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 14:02:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 344556E60CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 14:12:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231664AbjDRMCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 08:02:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
+        id S229688AbjDRMMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 08:12:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231387AbjDRL7u (ORCPT
+        with ESMTP id S231623AbjDRMLe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 07:59:50 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF66B471
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 04:57:02 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id k15so12049377ljq.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 04:57:02 -0700 (PDT)
+        Tue, 18 Apr 2023 08:11:34 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25E55258
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 05:10:59 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4ecb137af7eso2077325e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 05:10:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681819021; x=1684411021;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mjhT7c5vpFQRJS8nwL3Z88wTyDAD+eZRtyY5BOWpF+w=;
-        b=zE8rNev5UcDJboxw+q774X9yDzzU1rT3+U0tnvcPA7hjqzUVSHdPAxHW+C1wK7HdSJ
-         F6rtP+MYJQQHG2vydiX6toLHpkg4WJTV526V6HQWOhcEOqwS8Y5v1U8faPPrjJhaiII1
-         Qxgr/gp55oA8LhlzVnh6ULHbD+/VzWWuU8w8mr2InLw7Nq/7VPOV0z46MV9Aja+TzCJZ
-         9YUtB3R00ECK6g78OsjZ/MqcSUYZK986JmNYHUKHaDtaS3yqNVseEEcLcaKEtUmAHrk/
-         dtdemxHeLzOB6AgvosavSlu9kP/hQnLFj/oGDA+MU+/BN4JEqzOT1cgUqpIS2WZbHF8t
-         9B4w==
+        d=linaro.org; s=google; t=1681819858; x=1684411858;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0FtC68OU05WVvDMbJdinmshqebJEKgAhn9ch5Qe5aNc=;
+        b=oN7I222L001U6oDBsNQ2Z5r5KMJbnqkErXI/QjKJVbO1yn6F2htBlGooLVIismVzr4
+         76hsQ7fTvy4NDCgh0MHFz/ICYDD5yItQVx81xQSvk1CWKeetqH8y/SkstCtfzOk/0Ws2
+         Sce66q4FtaDOnTjf/JjfBGU0bmAVSrgFbOI2RpXjNFkcxbSZ39sGEsYbepqaqf2YzA/4
+         qtnOE7Xuh6bXp3/Xn0GS1Ala/5ncj0F57JpNd/YfN/yQE2Mxw2A0J5FkZqE+dVyEFRnU
+         G1HSUStT84NrTD/wJQIoFegZuFrzmIB9VapwNIumIDpMUlWIGpMJ0S3UmgdVLQBAJMsb
+         xPSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681819021; x=1684411021;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1681819858; x=1684411858;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mjhT7c5vpFQRJS8nwL3Z88wTyDAD+eZRtyY5BOWpF+w=;
-        b=Rm+dovuyNN2jhYjmFPv23Uh9v2A5vuuran58DkMvlVIQ+fqYob40UbGUwB4/pEuFYw
-         /E9GcTYCtnRm027+0iX+4ERJJa+TeMnt5i0rEV5Q26fE4mv5Wq5vscL5kPOkcXnzkJJj
-         C7Gf0AhmwCK0VWmJnc4mOlBVyLjyAkIDg2FeDmzByo3Jw9b85bgK/4aDEsUmK5wBqcEM
-         sgprH++6vGcOFo1CAT6mp5OpgjsfF0SycbH02VLST0HyFd3IN1gewPN5XzA2b2A3zRSC
-         wEIMvU/xrZZQW18Xk/wA5KahhBfQY1OYGinzIbynkqpQsARfUDPv9D1lPLxId+p6sVyl
-         H/kg==
-X-Gm-Message-State: AAQBX9c1q9lBxnnxLt5HdqKiAno+rnwDyOKSC0g3HparF9qdyeBNxQFK
-        xP7lyrEJizoNVyVxAoX3deL8cg==
-X-Google-Smtp-Source: AKy350YWAf8ZWRkhimz4yUkdQ1xEmjTrsRRXXfQoNJVQJkLdcR+DmAPJZnHF+XYSTYDStU9r6OJtig==
-X-Received: by 2002:a2e:998b:0:b0:2a8:ace6:bf80 with SMTP id w11-20020a2e998b000000b002a8ace6bf80mr725460lji.8.1681819020917;
-        Tue, 18 Apr 2023 04:57:00 -0700 (PDT)
+        bh=0FtC68OU05WVvDMbJdinmshqebJEKgAhn9ch5Qe5aNc=;
+        b=DFHiawgmbLPcH/hWsCr0f0Kz7Fwxmrycg7Q9lq7LZepKg8bWx/wgs+1HnQdpzz0aCU
+         EWI58vSHJRJWre+zJlbGIikgA5oouaJclh63nOIH8Ekp840qG36mDLIqwZ8Hgvc34lUF
+         i0h2qTwh017Uzb9MJpmRdkIkNVjVsKjHpjOR60rzIfGcMj3CLnAbM2lafmASHBZOX44w
+         7VDY4dTGLU0UgHJE/5yLxQ9rUrO32srSEPX4PE/PJq3/f7kaUAHpgy7T1BF/UXOZZH5m
+         rWAzSA9igvZRXF/6YKyfM3Q0FLNqG55hfS0oRK99Vpibi7sW5pSrHVE2jJw39Ex0ZatP
+         vb8w==
+X-Gm-Message-State: AAQBX9fKlz7NUlMZzfS761v+tYdZf2cCJGp8nQZvm1ai+em9tCxLiRlD
+        3V6y8ZQEorVJwTyyBz6fQUPMkQ==
+X-Google-Smtp-Source: AKy350b1R8Gw9qWShitOCt9kHDGW8yxwVJp7S7FeWgH2XL+i6oh7hdrksmu3Eu1fsIACNW9o0RcwZg==
+X-Received: by 2002:a05:6512:946:b0:4cc:7282:702b with SMTP id u6-20020a056512094600b004cc7282702bmr2915977lft.2.1681819858155;
+        Tue, 18 Apr 2023 05:10:58 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id 2-20020a2eb282000000b00298a8527806sm2550121ljx.93.2023.04.18.04.56.59
+        by smtp.gmail.com with ESMTPSA id q17-20020a19a411000000b004d86808fd33sm2365895lfc.15.2023.04.18.05.10.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 04:57:00 -0700 (PDT)
+        Tue, 18 Apr 2023 05:10:57 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 18 Apr 2023 13:56:56 +0200
-Subject: [PATCH] arm64: dts: qcom: sm6115: Set up CPU cooling maps
+Subject: [PATCH v2 0/5] MDSS reg bus interconnect
+Date:   Tue, 18 Apr 2023 14:10:55 +0200
+Message-Id: <20230417-topic-dpu_regbus-v2-0-91a66d04898e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230418-topic-cool_bengal-v1-1-c5d53814dc74@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIeFPmQC/x2N7QqDMAwAX0XyewGt7vNVZEibpRooqbTbEMR3X
- 9jPOzhuh8pFuMKj2aHwV6pkNehODdDidWaUlzG41vXt0N3wnVchpJzTFFhnn9DFc+zjcHWXO4F
- 1wVfGULzSYqV+UjK5Fo6y/Ufj8zh+EDZ0o3gAAAA=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+X-B4-Tracking: v=1; b=H4sIAM+IPmQC/32NQQqDMBAAvyJ7bkoSrWJP/UeRksRVFyQJG5UW8
+ e9NfUCPMzDMDgmZMMG92IFxo0TBZ9CXAtxk/IiC+sygpS5lpRqxhEhO9HF9MY52TcJY11amaWR
+ 705AzaxIKy8a7KYd+necsI+NA7/Pz7DJPlJbAn3O7qZ/9c9iUkELWg+2dqqvSycdM3nC4Bh6hO
+ 47jC+z6B/rGAAAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1681819019; l=8208;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1681819856; l=1588;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=mw3YwshvzeBPE3qS+R34Cnn7pe3SKVF9EwUI0dpQdR4=;
- b=Gus7uJvwBLIkNjA59xMMfkZ/SLrqjhK7dV5Zhx8X6uTBzRvIN0rycgFhNT2dH9yUhgbdlY+fmy9/
- etJ8mFk+B2JZq3fF1bl53opkOOS5+y4HPUFHTKd4qgvruiQ4OWil
+ bh=9T+oPpgA4/nGeRlxxYT3UQzjlTmn8RNRP+pFgS35nLA=;
+ b=XjbFOQMabHazQLE042ggp/Qsi6Htq0N/t8+YpKAeT+K76r5ZaYtdmBUHabs5aYEel2Pn+xJfsea8
+ xG5lbEfjCv97dAhRoRjnauhXPCsCcfnkcYAN63wmEQL6lNH9N9D7
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,275 +91,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Set up CPU cooling maps to ensure the thermal framework is aware of
-the connection between the CPUs and the TSENS sensors.
+v1 -> v2:
+- Fix "Mbps" -> "MBps" [5/5]
+- Add an interconnects: entry in dt-bindings (and not only -names..) [1/5]
 
-All of the maps refer to all 4 CPUs within a given cluster at a time,
-as that's what can be considered the smallest DVFS target unit - they
-all share the same voltage line and clock source.
+v1: https://lore.kernel.org/r/20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org
+
+Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
+another path that needs to be handled to ensure MDSS functions properly,
+namely the "reg bus", a.k.a the CPU-MDSS interconnect.
+
+Gating that path may have a variety of effects.. from none to otherwise
+inexplicable DSI timeouts..
+
+This series tries to address the lack of that.
+
+Example path:
+
+interconnects = <&bimc MASTER_AMPSS_M0 0 &config_noc SLAVE_DISPLAY_CFG 0>;
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 137 +++++++++++++++++++++++++++++++++++
- 1 file changed, 137 insertions(+)
+Konrad Dybcio (5):
+      dt-bindings: display/msm: Add reg bus interconnect
+      drm/msm/dpu1: Rename path references to mdp_path
+      drm/msm/mdss: Rename path references to mdp_path
+      drm/msm/mdss: Handle the reg bus ICC path
+      drm/msm/dpu1: Handle the reg bus ICC path
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 631ca327e064..36ff913c1a60 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -12,6 +12,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/thermal/thermal.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -47,6 +48,8 @@ CPU0: cpu@0 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			#cooling-cells = <2>;
-+
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -63,6 +66,7 @@ CPU1: cpu@1 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -75,6 +79,7 @@ CPU2: cpu@2 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -87,6 +92,7 @@ CPU3: cpu@3 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU4: cpu@100 {
-@@ -99,6 +105,8 @@ CPU4: cpu@100 {
- 			dynamic-power-coefficient = <282>;
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			#cooling-cells = <2>;
-+
- 			L2_1: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -115,6 +123,7 @@ CPU5: cpu@101 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU6: cpu@102 {
-@@ -127,6 +136,7 @@ CPU6: cpu@102 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		CPU7: cpu@103 {
-@@ -139,6 +149,7 @@ CPU7: cpu@103 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_1>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-+			#cooling-cells = <2>;
- 		};
- 
- 		cpu-map {
-@@ -2471,6 +2482,24 @@ cpu4-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 6>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu4_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu4_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu4_alert0: trip-point0 {
- 					temperature = <90000>;
-@@ -2497,6 +2526,24 @@ cpu5-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 7>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu5_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu5_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu5_alert0: trip-point0 {
- 					temperature = <90000>;
-@@ -2523,6 +2570,24 @@ cpu6-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 8>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu6_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu6_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu6_alert0: trip-point0 {
- 					temperature = <90000>;
-@@ -2549,6 +2614,24 @@ cpu7-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 9>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu7_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu7_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu7_alert0: trip-point0 {
- 					temperature = <90000>;
-@@ -2575,6 +2658,24 @@ cpu45-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 10>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu45_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu45_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu45_alert0: trip-point0 {
- 					temperature = <90000>;
-@@ -2601,6 +2702,24 @@ cpu67-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 11>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu67_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu67_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu67_alert0: trip-point0 {
- 					temperature = <90000>;
-@@ -2627,6 +2746,24 @@ cpu0123-thermal {
- 			polling-delay = <0>;
- 			thermal-sensors = <&tsens0 12>;
- 
-+			cooling-maps {
-+				map0 {
-+					trip = <&cpu0123_alert0>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&cpu0123_alert1>;
-+					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+
- 			trips {
- 				cpu0123_alert0: trip-point0 {
- 					temperature = <90000>;
-
+ .../bindings/display/msm/mdss-common.yaml          |  2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      | 10 +++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 34 ++++++++++++++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  5 ++--
+ drivers/gpu/drm/msm/msm_mdss.c                     | 35 ++++++++++++++--------
+ 5 files changed, 58 insertions(+), 28 deletions(-)
 ---
 base-commit: 4aa1da8d99724f6c0b762b58a71cee7c5e2e109b
-change-id: 20230418-topic-cool_bengal-2f5f3f47269c
+change-id: 20230417-topic-dpu_regbus-abc94a770952
 
 Best regards,
 -- 
