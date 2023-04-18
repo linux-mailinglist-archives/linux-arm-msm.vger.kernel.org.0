@@ -2,190 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD8F6E5876
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 07:19:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 464F96E58D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 07:59:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229885AbjDRFT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 01:19:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55818 "EHLO
+        id S230286AbjDRF7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 01:59:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbjDRFT2 (ORCPT
+        with ESMTP id S229517AbjDRF7O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 01:19:28 -0400
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2F1835BE;
-        Mon, 17 Apr 2023 22:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1681795166; x=1713331166;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ApemhVgsU+TFdPtwqGDQRyH9z/W8/lC9uWid1us00p8=;
-  b=jm6W5vWtURdp2gOlWJQBRL340792QWIMJYTuoD5HkQyscjpgcmhPOw9u
-   +2VZ7kLGAA6xH6NylNEMyG09MgzgV6r63JlStLmpV9V1PivjXcJRx2cgz
-   NSAWD40b/QgZE4QSuZ4s/ZVDUYgnVkMk+Ey1WZrv3GyU8zXEcj3F5H/3D
-   7yxGsoQYGKdfww9iegSxtieIleAOMwca4AnWK1UncKND8VnzXXDuxQPVV
-   /6UeIT5ZpKZ4wwocX9p2E7wwH8bHCnl25X4yZVm4yLpmoP3WIL1B/gj/Z
-   9Tfl0XUwDE5DoTe7Z204E6lngPzR4uHWbA61rY0e7mP/73QNB0tuZj5Kp
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10683"; a="325417315"
-X-IronPort-AV: E=Sophos;i="5.99,206,1677571200"; 
-   d="scan'208";a="325417315"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Apr 2023 22:19:26 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10683"; a="815071972"
-X-IronPort-AV: E=Sophos;i="5.99,206,1677571200"; 
-   d="scan'208";a="815071972"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 17 Apr 2023 22:19:22 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1podkP-000d1P-1u;
-        Tue, 18 Apr 2023 05:19:21 +0000
-Date:   Tue, 18 Apr 2023 13:18:22 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: Re: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data
- Capture and Compare unit(DCC)
-Message-ID: <202304181327.0grVYsHS-lkp@intel.com>
-References: <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
+        Tue, 18 Apr 2023 01:59:14 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B23D59DF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 22:59:12 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ec88c67b2eso1872678e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 17 Apr 2023 22:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681797551; x=1684389551;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dQlu0Oc2Q0nPMBCNq5iTPUZpwrRZlsMdPt2zjra8+VI=;
+        b=B/lJxYxd9QgPHdTz8Y94+SQwigHwPQz1MSY0HBGE49jeKpZvQ5ridodaJ1/hg5dYTg
+         xfm1UctNbPOooHeryL4EpFSpzLbpfIM/1AP6IiE/eAQ2XC+jiAPE4sjVq/0OLp+s5H64
+         OPszLw7mQaJ1PqKU00ScUiZOb3Ks0WeXpBGa5YCNLjOyLXsRt33eVOV3J7/7jSzM1Fi3
+         /RpCf1VKsRTVD/tqHSDxBWAwYQ/D3zBjMwphUFrVmu8iFcvUlk1YDipJso9tURLsGQAs
+         Kxkqmj8wx1BzA1Zw3ty0py3y/B5zl4OJTEDWjPXGFVRp+Onsg5ZfmKZ52/USaH6DILFS
+         M1fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681797551; x=1684389551;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dQlu0Oc2Q0nPMBCNq5iTPUZpwrRZlsMdPt2zjra8+VI=;
+        b=fcl9AEfLnNAmdHfr9nW5/O9odFxfZQDQ2W+zecjPA5yn334m1UhQk93oWKAR8uSuat
+         iO1GTKJwNJLC7YNJgWrE4SdEEyumpatWsAsrl9hRIVFOZuI0E/3iWehqhumdSuMFlnC2
+         SaJ5FkSi3iiFbtBVvDYQnj5JPK0JIpVGnI2uGUtiHPFFOaYnHVaAT2Y78kKwzY4yi4td
+         +8MvIpxrSaAd5ve6tSO8c49xQ6NDxWAitpxHMeBY4o7NSjg0AZ809l1to+tRSYIftXli
+         mOYQfTP/+jYFNOmIjc+X0rKcRJSUOF9Q4uYqEhq3uHn68zOJxd8Jew+iJw07MT60Vbs6
+         C5ww==
+X-Gm-Message-State: AAQBX9fugicJDE6fnQAEtStWfmonPRPhyIcA0+64hh/Lle24l26CU99G
+        jgfeNGjm8XBErFLAwRa5aAVLSNv+aQHsB9OcfxE=
+X-Google-Smtp-Source: AKy350YRsUSKQ0+i58Lzun7WtY7IrRwSkm+DWIi2JdfS71rVYYWUT2OQ/a/Q5PRWIBazn3AQLm2dWBYGVxBajLvvRoE=
+X-Received: by 2002:a05:6512:96b:b0:4e8:4b7a:6b73 with SMTP id
+ v11-20020a056512096b00b004e84b7a6b73mr2935594lft.4.1681797550844; Mon, 17 Apr
+ 2023 22:59:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:ab2:2681:0:b0:1b6:840f:9075 with HTTP; Mon, 17 Apr 2023
+ 22:59:10 -0700 (PDT)
+Reply-To: mariamkouame.info@myself.com
+From:   Mariam Kouame <mariamkouame1992@gmail.com>
+Date:   Mon, 17 Apr 2023 22:59:10 -0700
+Message-ID: <CADUz=agNY633M0qMXMnAP3Ms7-3rKuWtAZGCOQZKeYpCdBxT_w@mail.gmail.com>
+Subject: from mariam kouame
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Souradeep,
+Dear,
 
-kernel test robot noticed the following build warnings:
+Please grant me permission to share a very crucial discussion with
+you. I am looking forward to hearing from you at your earliest
+convenience.
 
-[auto build test WARNING on char-misc/char-misc-testing]
-[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.3-rc7 next-20230417]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Souradeep-Chowdhury/dt-bindings-misc-qcom-dcc-Add-the-dtschema/20230414-220304
-patch link:    https://lore.kernel.org/r/b1a9cbbcfefe133cc9047a71a2acdaa74239df29.1681480351.git.quic_schowdhu%40quicinc.com
-patch subject: [PATCH V1 2/3] drivers: misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
-config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20230418/202304181327.0grVYsHS-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 9638da200e00bd069e6dd63604e14cbafede9324)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm64 cross compiling tool for clang build
-        # apt-get install binutils-aarch64-linux-gnu
-        # https://github.com/intel-lab-lkp/linux/commit/f3f73f6008e1ebca6fba848e260b1f938d91be95
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Souradeep-Chowdhury/dt-bindings-misc-qcom-dcc-Add-the-dtschema/20230414-220304
-        git checkout f3f73f6008e1ebca6fba848e260b1f938d91be95
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash drivers/misc/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202304181327.0grVYsHS-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/misc/dcc.c:217:14: warning: variable 'ret' is used uninitialized whenever 'for' loop exits because its condition is false [-Wsometimes-uninitialized]
-           for (i = 0; i < drvdata->nr_link_list; i++) {
-                       ^~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/misc/dcc.c:238:9: note: uninitialized use occurs here
-           return ret;
-                  ^~~
-   drivers/misc/dcc.c:217:14: note: remove the condition if it is always true
-           for (i = 0; i < drvdata->nr_link_list; i++) {
-                       ^~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/misc/dcc.c:190:9: note: initialize the variable 'ret' to silence this warning
-           int ret;
-                  ^
-                   = 0
-   1 warning generated.
-
-
-vim +217 drivers/misc/dcc.c
-
-   186	
-   187	static int dcc_sw_trigger(struct dcc_drvdata *drvdata)
-   188	{
-   189		void __iomem *addr;
-   190		int ret;
-   191		int i;
-   192		u32 status;
-   193		u32 ll_cfg;
-   194		u32 tmp_ll_cfg;
-   195		u32 val;
-   196	
-   197		mutex_lock(&drvdata->mutex);
-   198	
-   199		for (i = 0; i < drvdata->nr_link_list; i++) {
-   200			if (!test_bit(i, drvdata->enable_bitmap))
-   201				continue;
-   202			ll_cfg = dcc_list_readl(drvdata, i, DCC_LL_CFG);
-   203			tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
-   204			dcc_list_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
-   205			dcc_list_writel(drvdata, 1, i, DCC_LL_SW_TRIGGER);
-   206			dcc_list_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
-   207		}
-   208	
-   209		addr = drvdata->base + DCC_STATUS(drvdata->mem_map_ver);
-   210		if (readl_poll_timeout(addr, val, !FIELD_GET(DCC_STATUS_MASK, val),
-   211				       1, STATUS_READY_TIMEOUT)) {
-   212			dev_err(drvdata->dev, "DCC is busy after receiving sw trigger\n");
-   213			ret = -EBUSY;
-   214			goto out_unlock;
-   215		}
-   216	
- > 217		for (i = 0; i < drvdata->nr_link_list; i++) {
-   218			if (!test_bit(i, drvdata->enable_bitmap))
-   219				continue;
-   220	
-   221			status = dcc_list_readl(drvdata, i, DCC_LL_BUS_ACCESS_STATUS);
-   222			if (!status)
-   223				continue;
-   224	
-   225			dev_err(drvdata->dev, "Read access error for list %d err: 0x%x\n",
-   226				i, status);
-   227			ll_cfg = dcc_list_readl(drvdata, i, DCC_LL_CFG);
-   228			tmp_ll_cfg = ll_cfg & ~DCC_TRIGGER_MASK;
-   229			dcc_list_writel(drvdata, tmp_ll_cfg, i, DCC_LL_CFG);
-   230			dcc_list_writel(drvdata, DCC_STATUS_MASK, i, DCC_LL_BUS_ACCESS_STATUS);
-   231			dcc_list_writel(drvdata, ll_cfg, i, DCC_LL_CFG);
-   232			ret = -ENODATA;
-   233			break;
-   234		}
-   235	
-   236	out_unlock:
-   237		mutex_unlock(&drvdata->mutex);
-   238		return ret;
-   239	}
-   240	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Mrs. Mariam Kouame
