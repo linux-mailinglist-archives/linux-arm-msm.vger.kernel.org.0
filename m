@@ -2,274 +2,383 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 372A46E64FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 14:54:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9FF16E6535
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 15:02:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232294AbjDRMyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 08:54:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
+        id S232041AbjDRNB7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 09:01:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232292AbjDRMxy (ORCPT
+        with ESMTP id S231156AbjDRNB6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 08:53:54 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C31AD46B9;
-        Tue, 18 Apr 2023 05:53:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A216663470;
-        Tue, 18 Apr 2023 12:53:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC379C433EF;
-        Tue, 18 Apr 2023 12:53:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681822431;
-        bh=/SVereuW3kHicirGXU8Z6L+PlZ5/mBjZBq1MOGuhCgg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jWl2qDeSceJIXYoAXnOJLH/arUfw90Oi6biHvcdIa8HhDd8W9z2Axh/McJMUal67j
-         /qr+G4WIJDSMX6YmyQ3mTHObFluzOe2yF+Lof4go4deAA3dXzIGHYnD3mdpWo/zU6z
-         myHrnYlZhKRdOCNiN+RsiHLCTrg6BR/C+Fjv4VMmp7MDpH3JgAlubzEfd5i556vR48
-         xSuh8kv7LBxtJZWyLkLcTgdNSXeSUCznFwN0yaLiWVB+nH9PG9U1exvoGVSLZjxag3
-         o9l69mosRS27m0kZ+t1ogeM0N2mJUJ5xK6B2mqr3hq8cyTTZbQVKB+TcTE0e+rUs4a
-         u4AzbYZOgBhuQ==
-Date:   Tue, 18 Apr 2023 05:57:23 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Wesley Cheng <wcheng@codeaurora.org>
-Subject: Re: [PATCH v5 14/14] phy: qcom-qmp: Register as a typec switch for
- orientation detection
-Message-ID: <20230418125723.r7fkxgrs2ncxbb7j@ripper>
-References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
- <20230413113438.1577658-15-bryan.odonoghue@linaro.org>
+        Tue, 18 Apr 2023 09:01:58 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D2316DCE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 06:01:51 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2a8aea0c7dcso18866071fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 06:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681822910; x=1684414910;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d6YEmcuAerby7c0K4iVTEgn+ogX7Io1YG4cdbzDgjzo=;
+        b=meFzbGkQNz+I6DWvPn43dT00bCFSQfO9QNLn/3EE5MvWCVhfpzKkWhYuoJlfBKNHM3
+         w4oy2ghW6V3wJmL5NmYYRAiXy3DTgsOmbZOuLS1giEqAzgZN3IrOysriysQ9kCvk8Ul4
+         uzknr6M3kStyypqv+tcPhEnbiH+RDrldAsWy5s6CQziKxRVGw2X8EIraopPL7P05XLVO
+         MY9uwqa5iH/TLTLXr3FvrSqJ/intfxCtMoCnCGWWYtimquCv5JymTUJq3nG3s4sHJGLD
+         H0qXz0blFStPrT2/atQ/RJJwE4b85pXOWHORW6g1pgfF6gWp+TxFO1N10ioApa7PM4B2
+         WzVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681822910; x=1684414910;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d6YEmcuAerby7c0K4iVTEgn+ogX7Io1YG4cdbzDgjzo=;
+        b=lIGg1vvFyEPq/XHXoiQfs9jvWcsUw5aeKKfdBU7421rVc2U/wE6M7jXpWFbyOGX90h
+         /qCAgi/HswWk87HEeZuIyAr5+Jnv2PMeaXc+twbuJBBRbWZ7oZH2AYdRy2Xyn58uXRip
+         aBSs7qpwpufMkutUIT95OyGOzygILTCU+7QBuM7doX97rlnt5g7CVCr4ZWQ41yYYvVA7
+         fy30O56u2waH0KPDhW3wuAhMJySygbObiU1bX3SvLHufgiuFQCw34OAHfSQKM+NVyX0i
+         gY5gpOMNKAIjn5f06rGnmxS+n9e94gzWBRPpVdYRHFgWKroW/eaTpglNK68Sty10oync
+         jnDw==
+X-Gm-Message-State: AAQBX9cqx+7DZIj2tzQFdJJvQp17L3g6UygipqVwPW6RSDLCu+wFYn9w
+        2PVyPUs5oZl6eFAVsxleEGJYFl7IVVTCLf/io+U=
+X-Google-Smtp-Source: AKy350ZcAJamEpRa7XQusi3NN0l1oRnR5o4ScmhYDAfiTffiIBI+LzXujMXS6hL8CzUVcScc8xvr9Q==
+X-Received: by 2002:ac2:414a:0:b0:4ed:b8be:8116 with SMTP id c10-20020ac2414a000000b004edb8be8116mr2201310lfi.20.1681822909457;
+        Tue, 18 Apr 2023 06:01:49 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id z18-20020ac25df2000000b004e83edd8ce8sm2367433lfq.196.2023.04.18.06.01.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Apr 2023 06:01:49 -0700 (PDT)
+Message-ID: <139ea923-968b-cee2-15e0-3fb8112e15d9@linaro.org>
+Date:   Tue, 18 Apr 2023 15:01:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230413113438.1577658-15-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] arm64: dts: qcom: sm6115: Set up CPU cooling maps
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230418-topic-cool_bengal-v1-1-c5d53814dc74@linaro.org>
+ <20230418130223.wvsu3bsm62i2gtpp@ripper>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230418130223.wvsu3bsm62i2gtpp@ripper>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 13, 2023 at 12:34:38PM +0100, Bryan O'Donoghue wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+
+On 18.04.2023 15:02, Bjorn Andersson wrote:
+> On Tue, Apr 18, 2023 at 01:56:56PM +0200, Konrad Dybcio wrote:
+>> Set up CPU cooling maps to ensure the thermal framework is aware of
+>> the connection between the CPUs and the TSENS sensors.
+>>
+>> All of the maps refer to all 4 CPUs within a given cluster at a time,
+>> as that's what can be considered the smallest DVFS target unit - they
+>> all share the same voltage line and clock source.
+>>
 > 
-> The lane select switch for USB typec orientation is within the USB QMP PHY.
-> the current device.  It could be connected through an endpoint, to an
-> independent device handling the typec detection, ie the QCOM SPMI typec
-> driver.
+> Generally software based CPU cooling is considered too slow to cope with
+> CPU core temperature changes, and the limits hardware working together
+> with OSM/EPSS will do a better job maintaining appropriate core
+> temperature levels.
 > 
-> bod: Fixed the logic qcom_qmp_phy_typec_switch_set() to disable phy
->  on disconnect if and only if we have initialized the PHY.
->  Retained CC orientation logic in qcom_qmp_phy_com_init() to simplify
->  patch.
+> Is there a reason why this can't be used/relied upon on this platform?
+I haven't set up LMH yet and the default limits, at least with my dubious
+meta build, seem to let the board go to 75degC with just 4 cores working..
+
+Not sure if there's a voltage droop when I let it go full throttle or
+something, but pushing it to the limit definitely causes the board to be
+(even) less stable..
+
 > 
-> bod: Ported from earlier version of driver to phy-qcom-qmp-combo.c
 > 
-> Co-developed-by: Wesley Cheng <wcheng@codeaurora.org>
-> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-> Co-developed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> PS. Amending this mechanism with software based cooling to keep the
+> system at a reasonable/lower temperature is a good idea.
+We don't like burned chips around here!
 
-Your s-o-b should be last here...
-
-> ---
->  drivers/phy/qualcomm/Kconfig              |  8 +++
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 80 +++++++++++++++++++++--
->  2 files changed, 84 insertions(+), 4 deletions(-)
+Konrad
 > 
-> diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-> index 4850d48f31fa1..8240fffdbed4e 100644
-> --- a/drivers/phy/qualcomm/Kconfig
-> +++ b/drivers/phy/qualcomm/Kconfig
-> @@ -101,6 +101,14 @@ config PHY_QCOM_QMP_USB
->  
->  endif # PHY_QCOM_QMP
->  
-> +config PHY_QCOM_QMP_TYPEC
-> +	def_bool PHY_QCOM_QMP=y && TYPEC=y || PHY_QCOM_QMP=m && TYPEC
-> +	help
-> +	  Register a type C switch from the QMP PHY driver for type C
-> +	  orientation support.  This has dependencies with if the type C kernel
-> +	  configuration is enabled or not.  This support will not be present if
-> +	  USB type C is disabled.
-> +
->  config PHY_QCOM_QUSB2
->  	tristate "Qualcomm QUSB2 PHY Driver"
->  	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 6850e04c329b8..b9a30c087423d 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -19,6 +19,7 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/reset.h>
->  #include <linux/slab.h>
-> +#include <linux/usb/typec_mux.h>
->  
->  #include <dt-bindings/phy/phy-qcom-qmp.h>
->  
-> @@ -63,6 +64,10 @@
->  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
->  #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
->  
-> +/* QPHY_V3_DP_COM_TYPEC_CTRL register bits */
-> +#define SW_PORTSELECT_VAL			BIT(0)
-> +#define SW_PORTSELECT_MUX			BIT(1)
-> +
->  #define PHY_INIT_COMPLETE_TIMEOUT		10000
->  
->  struct qmp_phy_init_tbl {
-> @@ -1323,6 +1328,9 @@ struct qmp_combo {
->  	struct clk_fixed_rate pipe_clk_fixed;
->  	struct clk_hw dp_link_hw;
->  	struct clk_hw dp_pixel_hw;
-> +
-> +	struct typec_switch_dev *sw;
-> +	enum typec_orientation orientation;
->  };
->  
->  static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
-> @@ -1955,7 +1963,8 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
->  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
->  {
->  	u32 val;
-> -	bool reverse = false;
-> +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-> +	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
->  
->  	val = DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
->  	      DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN;
-> @@ -1974,10 +1983,18 @@ static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
->  	 * if (orientation == ORIENTATION_CC2)
->  	 *	writel(0x4c, qmp->dp_dp_phy + QSERDES_V3_DP_PHY_MODE);
->  	 */
-> +	if (dp_opts->lanes == 4 || reverse)
-> +		val |= DP_PHY_PD_CTL_LANE_0_1_PWRDN;
-> +	if (dp_opts->lanes == 4 || !reverse)
-> +		val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-> +
->  	val |= DP_PHY_PD_CTL_LANE_2_3_PWRDN;
-
-When "reverse" this implies 4 lanes, I think it's an accidental left
-over from introducing the conditionals.
-
->  	writel(val, qmp->dp_dp_phy + QSERDES_DP_PHY_PD_CTL);
->  
-> -	writel(0x5c, qmp->dp_dp_phy + QSERDES_DP_PHY_MODE);
-> +	if (reverse)
-> +		writel(0x4c, qmp->pcs + QSERDES_DP_PHY_MODE);
-> +	else
-> +		writel(0x5c, qmp->pcs + QSERDES_DP_PHY_MODE);
->  
->  	return reverse;
->  }
-> @@ -2461,6 +2478,7 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
->  {
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  	void __iomem *com = qmp->com;
-> +	u32 val;
->  	int ret;
->  
->  	mutex_lock(&qmp->phy_mutex);
-> @@ -2498,8 +2516,11 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
->  			SW_DPPHY_RESET_MUX | SW_DPPHY_RESET |
->  			SW_USB3PHY_RESET_MUX | SW_USB3PHY_RESET);
->  
-> -	/* Default type-c orientation, i.e CC1 */
-> -	qphy_setbits(com, QPHY_V3_DP_COM_TYPEC_CTRL, 0x02);
-> +	/* Latch CC orientation based on reported state by TCPM */
-> +	val = SW_PORTSELECT_MUX;
-> +	if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
-> +		val |= SW_PORTSELECT_VAL;
-> +	qphy_setbits(com, QPHY_V3_DP_COM_TYPEC_CTRL, val);
->  
->  	qphy_setbits(com, QPHY_V3_DP_COM_PHY_MODE_CTRL, USB3_MODE | DP_MODE);
->  
-> @@ -3338,6 +3359,53 @@ static struct phy *qmp_combo_phy_xlate(struct device *dev, struct of_phandle_arg
->  	return ERR_PTR(-EINVAL);
->  }
->  
-> +#if IS_ENABLED(CONFIG_PHY_QCOM_QMP_TYPEC)
-> +static int qmp_combo_typec_switch_set(struct typec_switch_dev *sw,
-> +				      enum typec_orientation orientation)
-> +{
-> +	struct qmp_combo *qmp = typec_switch_get_drvdata(sw);
-> +	struct phy *dp_phy = qmp->dp_phy;
-> +	int ret = 0;
-> +
-> +	dev_dbg(qmp->dev, "Toggling orientation current %d requested %d\n",
-> +		qmp->orientation, orientation);
-> +
-> +	qmp->orientation = orientation;
-> +
-> +	if (orientation == TYPEC_ORIENTATION_NONE) {
-> +		if (qmp->init_count)
-> +			ret = qmp_combo_dp_power_off(dp_phy);
-> +	} else {
-> +		if (!qmp->init_count)
-> +			ret = qmp_combo_dp_power_on(dp_phy);
-> +	}
-
-This sequence is crashing my laptop, need some more time to debug the
-actual cause.
-
-Regards,
-Bjorn
-
-> +
-> +	return 0;
-> +}
-> +
-> +static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
-> +{
-> +	struct typec_switch_desc sw_desc;
-> +	struct device *dev = qmp->dev;
-> +
-> +	sw_desc.drvdata = qmp;
-> +	sw_desc.fwnode = dev->fwnode;
-> +	sw_desc.set = qmp_combo_typec_switch_set;
-> +	qmp->sw = typec_switch_register(dev, &sw_desc);
-> +	if (IS_ERR(qmp->sw)) {
-> +		dev_err(dev, "Error registering typec switch: %ld\n",
-> +			PTR_ERR(qmp->sw));
-> +	}
-> +
-> +	return 0;
-> +}
-> +#else
-> +static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
-> +{
-> +	return 0;
-> +}
-> +#endif
-> +
->  static int qmp_combo_probe(struct platform_device *pdev)
->  {
->  	struct qmp_combo *qmp;
-> @@ -3428,6 +3496,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
->  	else
->  		phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
->  
-> +	ret = qmp_combo_typec_switch_register(qmp);
-> +	if (ret)
-> +		goto err_node_put;
-> +
->  	of_node_put(usb_np);
->  	of_node_put(dp_np);
->  
-> -- 
-> 2.39.2
+> Regards,
+> Bjorn
 > 
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 137 +++++++++++++++++++++++++++++++++++
+>>  1 file changed, 137 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> index 631ca327e064..36ff913c1a60 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+>> @@ -12,6 +12,7 @@
+>>  #include <dt-bindings/gpio/gpio.h>
+>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>  #include <dt-bindings/power/qcom-rpmpd.h>
+>> +#include <dt-bindings/thermal/thermal.h>
+>>  
+>>  / {
+>>  	interrupt-parent = <&intc>;
+>> @@ -47,6 +48,8 @@ CPU0: cpu@0 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_0>;
+>>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>> +			#cooling-cells = <2>;
+>> +
+>>  			L2_0: l2-cache {
+>>  				compatible = "cache";
+>>  				cache-level = <2>;
+>> @@ -63,6 +66,7 @@ CPU1: cpu@1 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_0>;
+>>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>> +			#cooling-cells = <2>;
+>>  		};
+>>  
+>>  		CPU2: cpu@2 {
+>> @@ -75,6 +79,7 @@ CPU2: cpu@2 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_0>;
+>>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>> +			#cooling-cells = <2>;
+>>  		};
+>>  
+>>  		CPU3: cpu@3 {
+>> @@ -87,6 +92,7 @@ CPU3: cpu@3 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_0>;
+>>  			qcom,freq-domain = <&cpufreq_hw 0>;
+>> +			#cooling-cells = <2>;
+>>  		};
+>>  
+>>  		CPU4: cpu@100 {
+>> @@ -99,6 +105,8 @@ CPU4: cpu@100 {
+>>  			dynamic-power-coefficient = <282>;
+>>  			next-level-cache = <&L2_1>;
+>>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>> +			#cooling-cells = <2>;
+>> +
+>>  			L2_1: l2-cache {
+>>  				compatible = "cache";
+>>  				cache-level = <2>;
+>> @@ -115,6 +123,7 @@ CPU5: cpu@101 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_1>;
+>>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>> +			#cooling-cells = <2>;
+>>  		};
+>>  
+>>  		CPU6: cpu@102 {
+>> @@ -127,6 +136,7 @@ CPU6: cpu@102 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_1>;
+>>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>> +			#cooling-cells = <2>;
+>>  		};
+>>  
+>>  		CPU7: cpu@103 {
+>> @@ -139,6 +149,7 @@ CPU7: cpu@103 {
+>>  			enable-method = "psci";
+>>  			next-level-cache = <&L2_1>;
+>>  			qcom,freq-domain = <&cpufreq_hw 1>;
+>> +			#cooling-cells = <2>;
+>>  		};
+>>  
+>>  		cpu-map {
+>> @@ -2471,6 +2482,24 @@ cpu4-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 6>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu4_alert0>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu4_alert1>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu4_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>> @@ -2497,6 +2526,24 @@ cpu5-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 7>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu5_alert0>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu5_alert1>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu5_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>> @@ -2523,6 +2570,24 @@ cpu6-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 8>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu6_alert0>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu6_alert1>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu6_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>> @@ -2549,6 +2614,24 @@ cpu7-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 9>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu7_alert0>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu7_alert1>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu7_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>> @@ -2575,6 +2658,24 @@ cpu45-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 10>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu45_alert0>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu45_alert1>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu45_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>> @@ -2601,6 +2702,24 @@ cpu67-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 11>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu67_alert0>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu67_alert1>;
+>> +					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu67_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>> @@ -2627,6 +2746,24 @@ cpu0123-thermal {
+>>  			polling-delay = <0>;
+>>  			thermal-sensors = <&tsens0 12>;
+>>  
+>> +			cooling-maps {
+>> +				map0 {
+>> +					trip = <&cpu0123_alert0>;
+>> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +
+>> +				map1 {
+>> +					trip = <&cpu0123_alert1>;
+>> +					cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
+>> +							 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+>> +				};
+>> +			};
+>> +
+>>  			trips {
+>>  				cpu0123_alert0: trip-point0 {
+>>  					temperature = <90000>;
+>>
+>> ---
+>> base-commit: 4aa1da8d99724f6c0b762b58a71cee7c5e2e109b
+>> change-id: 20230418-topic-cool_bengal-2f5f3f47269c
+>>
+>> Best regards,
+>> -- 
+>> Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
