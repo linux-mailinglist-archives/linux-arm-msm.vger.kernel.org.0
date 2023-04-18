@@ -2,244 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DB596E5C22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 10:35:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 580256E5C7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 10:49:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbjDRIfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 04:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
+        id S230123AbjDRItp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 04:49:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbjDRIe6 (ORCPT
+        with ESMTP id S230471AbjDRItm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 04:34:58 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D196E5276
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 01:34:55 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f17b5552e9so195835e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 01:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1681806894; x=1684398894;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fK3y0BUQpGH7irvo8NU0fynJnPut9qQ7xlfoCq4CYng=;
-        b=gu1Jw5Z+VkRdweBK6KngJhdDB6l0cbDx53nX/TFfWMHLBAxDzS4iiwlhVoYR2WfLG8
-         BO8ZxxDSiYGuOUbSxOY9eBe0m1WZw7Ady93EXQop79Ezst8xg2i36ulaVH6lVGELc/A6
-         tbWqGXG4mPfSxgfd/BXLIBwym6jER/1MprzWc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681806894; x=1684398894;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fK3y0BUQpGH7irvo8NU0fynJnPut9qQ7xlfoCq4CYng=;
-        b=ZF8fgPvrAuiGkI7cDCMINNnzGt7sFrKpAnOIteurFNaVIdj8JIYgOtYt2Cz6bUb98r
-         Ku96Y1SrT1vjE0Tkn+Fsk0gevYDr8kfk2bA0TF8a8iImwZsR0NWeESM0pp3neUrK7V2U
-         UOauOe76WIEBjgv7hoMV81GWqXnzVkHd57JDsOhnqugKTflMyGFyH4B//O7xUoSlVklV
-         sKSqVNMFsJHUG3+f9ppDqWo1W6wNarU75KPZ1cL3PYet9rqb1eG4DKbL52cSgljWOPNg
-         IcGaV5DbMCyry2qSueW40nzshPv+3J++rwRT2bD/BGPUqEBFzexVvWjDCxIQ50ExdDoJ
-         93kQ==
-X-Gm-Message-State: AAQBX9dkkXSQATjI/MtGB1fiJmFSvaXxgFmkz3rxSyu+EyyOwmS9obCM
-        XsOHVajb4FLMOR7WaWYyuAJ8gw==
-X-Google-Smtp-Source: AKy350Zb/Pmk6fjTuOI1X1TU5gGYDQL8J50cM0uidBzPbaCHSu3IUJ7zuzjH7UgjDGJDOY0mLfD57w==
-X-Received: by 2002:a05:600c:6025:b0:3f1:75a5:a369 with SMTP id az37-20020a05600c602500b003f175a5a369mr3356980wmb.3.1681806894329;
-        Tue, 18 Apr 2023 01:34:54 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id s16-20020a05600c319000b003f17122587bsm7222453wmp.36.2023.04.18.01.34.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 01:34:53 -0700 (PDT)
-Date:   Tue, 18 Apr 2023 10:34:52 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [RFC 2/3] drm/msm: Rework get_comm_cmdline() helper
-Message-ID: <ZD5WLMRNibbRkGQO@phenom.ffwll.local>
-Mail-Followup-To: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Chia-I Wu <olvaffe@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230417201215.448099-1-robdclark@gmail.com>
- <20230417201215.448099-3-robdclark@gmail.com>
- <58977051-197b-f1f0-c795-9037e70d7a91@linux.intel.com>
+        Tue, 18 Apr 2023 04:49:42 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD763AA2;
+        Tue, 18 Apr 2023 01:49:40 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33I6sgwD006693;
+        Tue, 18 Apr 2023 08:48:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=qPjpUi0gtLcofF5+7vTUolasQy9T7XSoQJza/z9PaeY=;
+ b=Y8r7co89UT/N9jEHYyKDMmX4K8zqgQ7gz/U5lXMkmzjNAZr1I8CK65G5sfPc+4hE/jJ7
+ V7uF3C/HUZ8uYL7EqoYSMa7zN3GhI088jyL0Y0VvE/eN/Is9G+4x07Ql7r/PNDA1NT+i
+ dLV0KGnuTA9h7wr1i97NRJifuotbaX28WM3b9VY49LFevJXLHtFPhzH1Zp3Y5LLsVtHY
+ 0Q2hY+3cJN3WEs7IcG9a65Uq9C/WCYdNwxs+g/0lUpMXSQL47zWWrxan7rHVuu+gC6Ae
+ Mw1g3DQyie1TkIduEqJ4L5SEuQPSfYrq8pLKhj2tvNVGzoz6fXBI7W9DA7a6/8WKlu08 0Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1nf8gb3g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Apr 2023 08:48:57 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33I8muGH004455
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 18 Apr 2023 08:48:56 GMT
+Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 18 Apr 2023 01:48:53 -0700
+From:   Sarannya S <quic_sarannya@quicinc.com>
+To:     <quic_bjorande@quicinc.com>, <arnaud.pouliquen@foss.st.com>,
+        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
+        <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Sarannya S <quic_sarannya@quicinc.com>
+Subject: [PATCH V5 0/3] rpmsg signaling/flowcontrol patches 
+Date:   Tue, 18 Apr 2023 14:18:38 +0530
+Message-ID: <1681807721-32343-1-git-send-email-quic_sarannya@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <58977051-197b-f1f0-c795-9037e70d7a91@linux.intel.com>
-X-Operating-System: Linux phenom 6.1.0-7-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uw6pqbxNvTFLt9Fv4tx-xREpQGH8A3qm
+X-Proofpoint-ORIG-GUID: uw6pqbxNvTFLt9Fv4tx-xREpQGH8A3qm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-18_04,2023-04-17_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=719 adultscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304180075
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 09:27:49AM +0100, Tvrtko Ursulin wrote:
-> 
-> On 17/04/2023 21:12, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> > 
-> > Make it work in terms of ctx so that it can be re-used for fdinfo.
-> > 
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++--
-> >   drivers/gpu/drm/msm/msm_drv.c           |  2 ++
-> >   drivers/gpu/drm/msm/msm_gpu.c           | 13 ++++++-------
-> >   drivers/gpu/drm/msm/msm_gpu.h           | 12 ++++++++++--
-> >   drivers/gpu/drm/msm/msm_submitqueue.c   |  1 +
-> >   5 files changed, 21 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index bb38e728864d..43c4e1fea83f 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -412,7 +412,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
-> >   		/* Ensure string is null terminated: */
-> >   		str[len] = '\0';
-> > -		mutex_lock(&gpu->lock);
-> > +		mutex_lock(&ctx->lock);
-> >   		if (param == MSM_PARAM_COMM) {
-> >   			paramp = &ctx->comm;
-> > @@ -423,7 +423,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
-> >   		kfree(*paramp);
-> >   		*paramp = str;
-> > -		mutex_unlock(&gpu->lock);
-> > +		mutex_unlock(&ctx->lock);
-> >   		return 0;
-> >   	}
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 3d73b98d6a9c..ca0e89e46e13 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -581,6 +581,8 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
-> >   	rwlock_init(&ctx->queuelock);
-> >   	kref_init(&ctx->ref);
-> > +	ctx->pid = get_pid(task_pid(current));
-> 
-> Would it simplify things for msm if DRM core had an up to date file->pid as
-> proposed in
-> https://patchwork.freedesktop.org/patch/526752/?series=109902&rev=4 ? It
-> gets updated if ioctl issuer is different than fd opener and this being
-> context_init here reminded me of it. Maybe you wouldn't have to track the
-> pid in msm?
+Added new IOCTLS- RPMSG_GET_SIGNAL_IOCTL and RPMSG_SET_SIGNAL_IOCTL
+to get/set the rpmsg char device's flow control signal.
+Update the cmd name 'RPM_CMD_SIGNALS' to 'GLINK_CMD_SIGNALS'.
+Addressed review comments to change variable names/descriptions. 
 
-Can we go one step further and let the drm fdinfo stuff print these new
-additions? Consistency across drivers and all that.
+Chris Lew (2):
+  rpmsg: glink: Add support to handle signals command
+  rpmsg: char: Add RPMSG GET/SET SIGNAL IOCTL support
 
-Also for a generic trigger I think any driver ioctl is good enough (we
-only really need to avoid the auth dance when you're not on a render
-node).
--Daniel
+Deepak Kumar Singh (1):
+  rpmsg: core: Add signal API support
 
-> 
-> Regards,
-> 
-> Tvrtko
-> 
-> > +	mutex_init(&ctx->lock);
-> >   	msm_submitqueue_init(dev, ctx);
-> >   	ctx->aspace = msm_gpu_create_private_address_space(priv->gpu, current);
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> > index c403912d13ab..f0f4f845c32d 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > @@ -327,18 +327,17 @@ find_submit(struct msm_ringbuffer *ring, uint32_t fence)
-> >   static void retire_submits(struct msm_gpu *gpu);
-> > -static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **cmd)
-> > +static void get_comm_cmdline(struct msm_file_private *ctx, char **comm, char **cmd)
-> >   {
-> > -	struct msm_file_private *ctx = submit->queue->ctx;
-> >   	struct task_struct *task;
-> > -	WARN_ON(!mutex_is_locked(&submit->gpu->lock));
-> > -
-> >   	/* Note that kstrdup will return NULL if argument is NULL: */
-> > +	mutex_lock(&ctx->lock);
-> >   	*comm = kstrdup(ctx->comm, GFP_KERNEL);
-> >   	*cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
-> > +	mutex_unlock(&ctx->lock);
-> > -	task = get_pid_task(submit->pid, PIDTYPE_PID);
-> > +	task = get_pid_task(ctx->pid, PIDTYPE_PID);
-> >   	if (!task)
-> >   		return;
-> > @@ -372,7 +371,7 @@ static void recover_worker(struct kthread_work *work)
-> >   		if (submit->aspace)
-> >   			submit->aspace->faults++;
-> > -		get_comm_cmdline(submit, &comm, &cmd);
-> > +		get_comm_cmdline(submit->queue->ctx, &comm, &cmd);
-> >   		if (comm && cmd) {
-> >   			DRM_DEV_ERROR(dev->dev, "%s: offending task: %s (%s)\n",
-> > @@ -460,7 +459,7 @@ static void fault_worker(struct kthread_work *work)
-> >   		goto resume_smmu;
-> >   	if (submit) {
-> > -		get_comm_cmdline(submit, &comm, &cmd);
-> > +		get_comm_cmdline(submit->queue->ctx, &comm, &cmd);
-> >   		/*
-> >   		 * When we get GPU iova faults, we can get 1000s of them,
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> > index 7a4fa1b8655b..b2023a42116b 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.h
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> > @@ -377,17 +377,25 @@ struct msm_file_private {
-> >   	 */
-> >   	int sysprof;
-> > +	/** @pid: Process that opened this file. */
-> > +	struct pid *pid;
-> > +
-> > +	/**
-> > +	 * lock: Protects comm and cmdline
-> > +	 */
-> > +	struct mutex lock;
-> > +
-> >   	/**
-> >   	 * comm: Overridden task comm, see MSM_PARAM_COMM
-> >   	 *
-> > -	 * Accessed under msm_gpu::lock
-> > +	 * Accessed under msm_file_private::lock
-> >   	 */
-> >   	char *comm;
-> >   	/**
-> >   	 * cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE
-> >   	 *
-> > -	 * Accessed under msm_gpu::lock
-> > +	 * Accessed under msm_file_private::lock
-> >   	 */
-> >   	char *cmdline;
-> > diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-> > index 0e803125a325..0444ba04fa06 100644
-> > --- a/drivers/gpu/drm/msm/msm_submitqueue.c
-> > +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-> > @@ -61,6 +61,7 @@ void __msm_file_private_destroy(struct kref *kref)
-> >   	}
-> >   	msm_gem_address_space_put(ctx->aspace);
-> > +	put_pid(ctx->pid);
-> >   	kfree(ctx->comm);
-> >   	kfree(ctx->cmdline);
-> >   	kfree(ctx);
+ drivers/rpmsg/qcom_glink_native.c | 63 +++++++++++++++++++++++++++++++++++++++
+ drivers/rpmsg/rpmsg_char.c        | 58 ++++++++++++++++++++++++++++++-----
+ drivers/rpmsg/rpmsg_core.c        | 20 +++++++++++++
+ drivers/rpmsg/rpmsg_internal.h    |  2 ++
+ include/linux/rpmsg.h             | 15 ++++++++++
+ include/uapi/linux/rpmsg.h        | 12 +++++++-
+ 6 files changed, 162 insertions(+), 8 deletions(-)
 
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
