@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 599416E6BC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 20:11:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48D836E6BCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 20:11:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232607AbjDRSLc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 14:11:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45506 "EHLO
+        id S232471AbjDRSLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 14:11:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232573AbjDRSLa (ORCPT
+        with ESMTP id S232579AbjDRSLa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 18 Apr 2023 14:11:30 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 312B01259D
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 646E39EF5
         for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 11:11:20 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-2fe3fb8e2f7so269949f8f.0
+Received: by mail-wm1-x333.google.com with SMTP id o29-20020a05600c511d00b003f1739de43cso292844wms.4
         for <linux-arm-msm@vger.kernel.org>; Tue, 18 Apr 2023 11:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681841478; x=1684433478;
+        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681841479; x=1684433479;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HWgjCk8Y5OqaGe2854pshW/+RKD+sr2jN2Xg3ngYTlU=;
-        b=yOZHP2I/mS+lFMDLCQczZZXxAbDnspVnWlHsfl3etb3QG5ANp4LKBkd4JTK6lqMTsx
-         MxJR3YSGDZP3hwFFOYUuNxcV/bsdUViEKNH2smVsc7QtMJgSTIxsqcFaZDlBF1L+76is
-         dNt+lKAbi1SRiNPk/D3IUNMRCEHFiv/0M86wmaop8moGlXTycE8oOA/+NmbakwQ3c2Q6
-         +lk5SpS/MCtKefePvEfz47mdktk0lHPO3iZDNRX8kmEBs9HXusDrXZm0rXK0vZxYNDaW
-         DHqGQY/1zGbR27p46IyKT+WRJP1IM9QnGeaflvmC4WalLIlylTOnQdPoea3ZLPIAvTGY
-         JEkQ==
+        bh=GNLIbIkfDv+9349rG8wTY2HZ2mEpz3z6lx+72T5OpbY=;
+        b=SUTeE+ozxQY5RhTCnjTwf3vRx8fch7xurY/TcHvAu3mvNTADJdpe04DhRsrbBXQUqe
+         IW5NMdyiwDKQg6xbyZnXi2/jI6AfE450oll3yfEuSqowh3vgLAu8N2rbIrh8ETBv71Lr
+         ZX1wXDk1J2+JxCKeDZayNPH7+ROzgquwXBi7tCBwk8CdnXs06GeZaj01b/PN1+nzXREH
+         XMoE4qd9GbrjLG2Pkw7zE4V6W4/TUEcG/ThdniegBfyPwhqd/WyWs2NyhMr4kY1tvdTq
+         /UUcAo9G65h+3NKUBY/VpgUiEsPNph5iPaivWo9/Kx6O5XgA2Oq94hCaOd/fW+eSVX4l
+         Muzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681841478; x=1684433478;
+        d=1e100.net; s=20221208; t=1681841479; x=1684433479;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HWgjCk8Y5OqaGe2854pshW/+RKD+sr2jN2Xg3ngYTlU=;
-        b=e6EAgwCOYJf1udvVdDFgSftDaJgCfBlLDB1RcsL7rWnAFYiaJc8NrYeHsPQnhOrDuE
-         wLR8UPcTZFM1axMKQSZi0zWCs1p6sYp1NvU1O0UrG9AwSSu6CQZOZA1Gq9enZcP4vfLn
-         WUQrT/VlcHLID7wJBLMIa5rRMJiqhtNv46wiXZXWr+x0sQgVJa0Wa1TYCVNBoCaH8D9b
-         R0UrBwyXoLurKFPRuWZKV3ycYqS1bNM5kff0Nu6Qeviy9Tk4FS3e7XJo27A0vM9SDH5S
-         2rxMLntFrFU4MkQGbC6Mziawl4qbPYVuLA94oziW+VQVXoMSEXquPbvJglq64kT8xayR
-         Xu/A==
-X-Gm-Message-State: AAQBX9exPEPsI7b9X3E8+vjXgf3n9wKnmeduzzCwtUbNaMbNe32+9OiQ
-        DtRc39CM4szp0gB1tI6LI0G6
-X-Google-Smtp-Source: AKy350YmOcATgDshwW4I3Oio+Q2jGgQ1DWDUTEWU/4AbCu5wFYbOM1dZlkwuEXRePapgQy0lKWCsPA==
-X-Received: by 2002:adf:eb0b:0:b0:2f5:5d74:4f9f with SMTP id s11-20020adfeb0b000000b002f55d744f9fmr2503261wrn.11.1681841478364;
+        bh=GNLIbIkfDv+9349rG8wTY2HZ2mEpz3z6lx+72T5OpbY=;
+        b=K2ephjmrYX9m7pW7jLT8EiJjMRX7OAZOYYvMjLSOzuGrYMWoxliq6saEJM1P73bbBf
+         lI9M+TgKfjuwva+KJg3iiP3tzOu+ikTi4BrGaif8N8OO5uiuHDcJT/d4kHJez0+YBuxQ
+         wjf4aYbAjcdafNR0aKI5hj/EKAMP3kSNz5vL2pgtt2W7ePGsHGtTqu5JxC9Q/xzEzdTR
+         CxfveX14UBNlwnNdzrSG5DjzmCvlQYXT0LkR/RFkAbk34gJ2QVvyMfJoG3CpVielqRe/
+         C7xCYD+z32nQy5AAW0fbIHwdcWVwpNrWhY0heuV5n60Ce6y5rbDmxhdg8zsV4xZr9H/b
+         durA==
+X-Gm-Message-State: AAQBX9fJkgHRRnMEKhIjJBXO3eRO2xLmLLfM4gkBFZOkCASoEmkng3NI
+        iILkvPM6pNezMqCjPK3ngSD2
+X-Google-Smtp-Source: AKy350Y5K0w4P5Hu/xmAlBYeiNvJQgzuQzVozBZ6pzBvgykN4f1OfOXSepZHQfDqZzGBeqIzYvE8iQ==
+X-Received: by 2002:a05:600c:378b:b0:3f1:7aff:e14a with SMTP id o11-20020a05600c378b00b003f17affe14amr1848693wmr.39.1681841478783;
         Tue, 18 Apr 2023 11:11:18 -0700 (PDT)
 Received: from [127.0.1.1] (freebox.vlq16.iliad.fr. [213.36.7.13])
         by smtp.gmail.com with ESMTPSA id r17-20020a5d4e51000000b002f01e181c4asm13727898wrt.5.2023.04.18.11.11.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 18 Apr 2023 11:11:18 -0700 (PDT)
 From:   Arnaud Vrac <avrac@freebox.fr>
-Date:   Tue, 18 Apr 2023 20:10:45 +0200
-Subject: [PATCH 3/4] drm/msm: expose edid to hdmi cec adapter
+Date:   Tue, 18 Apr 2023 20:10:46 +0200
+Subject: [PATCH 4/4] arm64: dts: qcom: msm8998: add hdmi cec pinctrl nodes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230418-msm8998-hdmi-cec-v1-3-176479fb2fce@freebox.fr>
+Message-Id: <20230418-msm8998-hdmi-cec-v1-4-176479fb2fce@freebox.fr>
 References: <20230418-msm8998-hdmi-cec-v1-0-176479fb2fce@freebox.fr>
 In-Reply-To: <20230418-msm8998-hdmi-cec-v1-0-176479fb2fce@freebox.fr>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -73,20 +73,20 @@ Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, Arnaud Vrac <avrac@freebox.fr>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2444; i=avrac@freebox.fr;
- h=from:subject:message-id; bh=yMD8mdwL4UzuJ4urozm6hkE+ei92Sv5WQC0tT/4Y284=;
- b=owEBbQKS/ZANAwAIAXED/9m7NDSrAcsmYgBkPt1Au6G3IkSntJhVUGBaSFWYzjeSj1NkCTBEJ
- 2uswfMwbxeJAjMEAAEIAB0WIQSUwb/ndwkXHdZ/QQZxA//ZuzQ0qwUCZD7dQAAKCRBxA//ZuzQ0
- q/Z5D/oD2ynykDobHdfCHo4jJyvHCyzcEClszedW90E66HWQkHzocu8iInucyPKIJBw7jwUVhu/
- 5QEH1stGvm4psJzhRZygTYp97ZWaowMkkFU8cQ2E36mNkHkd4UnYgzd7Zu/Fb64tk9IkY0DalVa
- FeKCUacXpHz8jfU5VUB6gV+XgzwIO0aCvoFhuDqbNuNbedlPBUPne1lU5rDGxQexvcrc7YV8vUg
- vOVy0F81ppX3Na5k/bZvjz30L2QV4dWmLryMcKi5PbmbhWme611xnledh7sA6TVc4VZNGjM9A0M
- tGrf6azq2/otDOPSD7zXSPcbPcTf2lXdIhGyI+m9g/zAsNEFkCwSGsbUyBN8b/b90tCipeEaiXD
- ZBZk3oooZvtcOVlDEzequ2KxNBWSPhV+czQR4C7ijyveRip2uneKEUgcSLfwrIRO6ikTA0lp1+L
- sTjOrepDFAGt4dlju9+ej+U/aWuFpuhFxK15g6utEIW2E9SPChSRN+NjEVpjpZe0Q/1leOUK8EK
- QNpdvPpH0WEohlEqexojwNpRXzzZqBiTo9btswZygERbRAYL2q39XWq153dce1yMPxd9lfK2wkz
- hCGPnxV2izV69PTzbAiRAcJGQuMBphx5uROUM7YpUGXkQsT1jxouQLe9aIaQ8vY+kaWZR9xSiy2
- XXqaMH2SFM4z3EQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=951; i=avrac@freebox.fr;
+ h=from:subject:message-id; bh=fhrPgtytI/VRf0IiIxFCjsL95vuhTLfx4rQMFZjeLTM=;
+ b=owEBbQKS/ZANAwAIAXED/9m7NDSrAcsmYgBkPt1CWxkNDZ9xyVgrYUSeHM9gk5iCCYafwuF5k
+ Ek74p4mhkuJAjMEAAEIAB0WIQSUwb/ndwkXHdZ/QQZxA//ZuzQ0qwUCZD7dQgAKCRBxA//ZuzQ0
+ qxTREACDQikHrhslKZwbsvjGDHuH/n8bR1jRpYMGyyM42c2rXK72uLu+mE2oinXZKGo4ge4GyFs
+ Vs10d4qYZ+ai2tO0sPWS3VqfH+aV3EUa/45uSnINhdHDCix1v55ns/ct7OIrhqze65zXnFWjBn4
+ rIpTwZZD8ptnfu3PD75W/4ednMa5qv4Cq5A+6iTWTDb4SoXJozQhASgIg6s8rw01fkBNnn8Tj3J
+ ZTxhXe425Um/gVIvv9kIY22q+WbFunBHcVCgaNn2KxKENqjrr85J+lTHp1/Q7f5GxEE9zAQdmlR
+ OO8OQoaWgPrTFdbm0Nif9zIBKJSwhcqUWEkYnwqGQozK+XTvpBH1lAOzw0jmP0yoq2/O1gtPQGK
+ 8O3MgBGaAjW5WmijllyFMueqo/jxNdQY6CKTwECS0qAt5mhQR+DJHeUNjxQnP/Zco32SE1l+iV9
+ gFP2eJe54nL1JTRpGIFwaQtggunIoXcQ6gHIq7+J+G8wDLYQWXgDPEHFrWLRKhgxRJAKYmjefZj
+ +zA8frDDKGIihpD46oo0E2Rl5E/CXKB0c8RBPup1sCCjUYsbzucmyn80FAX+c+O5L1QRAKkeM4P
+ /6hS1LEt3R4s5hLh04mmfmoNM9eoA+6hSHyyotiVLyOlGnbSji/sVGQiAx80aQvNaMaNqS1Sh3h
+ QBWinVFanysKJWw==
 X-Developer-Key: i=avrac@freebox.fr; a=openpgp;
  fpr=6225092072BB58E3CEEC091E75392A176D952DB4
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,82 +98,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When edid has been read after hpd, pass it to the cec adapter so that it
-can extract the physical address of the device on the cec bus.
-Invalidate the physical address when hpd is low.
+HDMI is not enabled yet on msm8998 so the pinctrl nodes are not
+used.
 
 Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c |  2 ++
- drivers/gpu/drm/msm/hdmi/hdmi_hpd.c    | 17 +++++++++++++----
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 9b1391d27ed39..efc3bd4908e83 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -7,6 +7,7 @@
- #include <linux/delay.h>
- #include <drm/drm_bridge_connector.h>
- #include <drm/drm_edid.h>
-+#include <media/cec.h>
- 
- #include "msm_kms.h"
- #include "hdmi.h"
-@@ -256,6 +257,7 @@ static struct edid *msm_hdmi_bridge_get_edid(struct drm_bridge *bridge,
- 	hdmi_write(hdmi, REG_HDMI_CTRL, hdmi_ctrl | HDMI_CTRL_ENABLE);
- 
- 	edid = drm_get_edid(connector, hdmi->i2c);
-+	cec_s_phys_addr_from_edid(hdmi->cec_adap, edid);
- 
- 	hdmi_write(hdmi, REG_HDMI_CTRL, hdmi_ctrl);
- 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-index bfa827b479897..cb3eb2625ff63 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_hpd.c
-@@ -7,6 +7,7 @@
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
- #include <linux/pinctrl/consumer.h>
-+#include <media/cec.h>
- 
- #include "msm_kms.h"
- #include "hdmi.h"
-@@ -230,15 +231,17 @@ enum drm_connector_status msm_hdmi_bridge_detect(
- {
- 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
- 	struct hdmi *hdmi = hdmi_bridge->hdmi;
--	enum drm_connector_status stat_gpio, stat_reg;
-+	enum drm_connector_status status, stat_gpio, stat_reg;
- 	int retry = 20;
- 
- 	/*
- 	 * some platforms may not have hpd gpio. Rely only on the status
- 	 * provided by REG_HDMI_HPD_INT_STATUS in this case.
- 	 */
--	if (!hdmi->hpd_gpiod)
--		return detect_reg(hdmi);
-+	if (!hdmi->hpd_gpiod) {
-+		status = detect_reg(hdmi);
-+		goto out;
-+	}
- 
- 	do {
- 		stat_gpio = detect_gpio(hdmi);
-@@ -259,5 +262,11 @@ enum drm_connector_status msm_hdmi_bridge_detect(
- 		DBG("hpd gpio tells us: %d", stat_gpio);
- 	}
- 
--	return stat_gpio;
-+	status = stat_gpio;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index b150437a83558..fb4aa376ef117 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -1312,6 +1312,20 @@ blsp2_i2c6_sleep: blsp2-i2c6-sleep-state {
+ 				drive-strength = <2>;
+ 				bias-pull-up;
+ 			};
 +
-+out:
-+	if (!status)
-+		cec_phys_addr_invalidate(hdmi->cec_adap);
++			hdmi_cec_default: hdmi-cec-default-state {
++				pins = "gpio31";
++				function = "hdmi_cec";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
 +
-+	return status;
- }
++			hdmi_cec_sleep: hdmi-cec-sleep-state {
++				pins = "gpio31";
++				function = "hdmi_cec";
++				drive-strength = <2>;
++				bias-pull-up;
++			};
+ 		};
+ 
+ 		remoteproc_mss: remoteproc@4080000 {
 
 -- 
 2.40.0
