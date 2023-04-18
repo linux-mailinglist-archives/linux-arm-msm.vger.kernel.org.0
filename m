@@ -2,82 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 311FD6E5DE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 11:51:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B46E6E5E08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 18 Apr 2023 11:55:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbjDRJvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 05:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50728 "EHLO
+        id S231436AbjDRJzn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 05:55:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjDRJvi (ORCPT
+        with ESMTP id S231172AbjDRJzi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 05:51:38 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A67B410D9;
-        Tue, 18 Apr 2023 02:51:36 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33I6sxDW018556;
-        Tue, 18 Apr 2023 09:51:32 GMT
+        Tue, 18 Apr 2023 05:55:38 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B0B940C7;
+        Tue, 18 Apr 2023 02:55:06 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33I8lAFv028173;
+        Tue, 18 Apr 2023 09:54:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=L+eUqA5NJKcBPR51rFZc25ELZ4D8X+qapQd2LFr1bfo=;
- b=jP/O4t2kAJtNZKcLHT/LGCgxFXEaedvZTJXdE2DXq6HpBCIQtmI6URsnDvexBz6AwyP3
- bk6yR+AbMVavTDEIMiCXMaTMASIyv6sMPgppuKC0YWjuIcX/0fxOdYpwfSir34DMo7Bw
- JhfGKDj/1qqMfpk+rfqLCnEytoYKUze/RTrGtNepByq8TU8sC/j6SuBY/Kj5XjboQ/8O
- TGUb69UNBO0fx7q7KpUsS9ojN49RyTjw+TxwVOth6qQB8h3neO/lzEuY9zXTk3VJLDXt
- G3FVVNYswAyAav8nwsaBX3k6ue0Wn0SD5tGxloxU9G5Cg2hiE5tpIBTu9fCzGR690B6F MA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1nr5gek0-1
+ bh=9MNYTWJnVX4ToZwrdikCP8x2UjqgSoVQz3bfG1l0798=;
+ b=DvJWHfuo/X0ipclGHa1Mno5fXpqniawailplmc/tb1t3/+D9WXcuG/r+dc6PDd+AngRq
+ PbCPTsSrJZgrxjt4u0oH0sOneCQPLWLSX59IhptKYfEblZEBBeo8aB28JZcQvpSn6wsZ
+ XtuBEH3MbeHsxLyc6i1ZB9IAJACue5RsXIiHuTXNCAfxMvpiOSpG/upT+6Ow/9WKuqod
+ ozt/OhEv8Nyau5p3ywJnkHdJ36YH+UTRnaPHiH7HO9wJ5v8iwU3hgOwQ5gDxrZQ3vzzv
+ PIC05EkGRelzNazWRG42LS4euaMBb4oq3VmvZZ/3nHB4yVoNJQMPdhLOWiIJMgDTQ3kI pw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q1nk4gfnd-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 09:51:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33I9pV1g023589
+        Tue, 18 Apr 2023 09:54:52 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33I9sps0027999
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 18 Apr 2023 09:51:31 GMT
-Received: from [10.50.61.1] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Tue, 18 Apr 2023 09:54:51 GMT
+Received: from [10.218.19.109] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 18 Apr
- 2023 02:51:27 -0700
-Message-ID: <bc382695-b619-2c45-8751-2120f8d548ba@quicinc.com>
-Date:   Tue, 18 Apr 2023 15:21:24 +0530
+ 2023 02:54:44 -0700
+Message-ID: <12f13183-c381-25f7-459e-62e0c2b19498@quicinc.com>
+Date:   Tue, 18 Apr 2023 15:24:40 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 1/3] venus: add firmware version based check
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sa8775p: pmic: remove the PON modes
 Content-Language: en-US
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        <linux-media@vger.kernel.org>, <quic_vgarodia@quicinc.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Viswanath Boma" <quic_vboma@quicinc.com>
-References: <1680848758-3947-1-git-send-email-quic_dikshita@quicinc.com>
- <1680848758-3947-2-git-send-email-quic_dikshita@quicinc.com>
- <6c3002ad-ff78-8818-0e68-a151d33b0fca@gmail.com>
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <6c3002ad-ff78-8818-0e68-a151d33b0fca@gmail.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+CC:     <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20230413131705.3073911-1-brgl@bgdev.pl>
+ <20230413131705.3073911-2-brgl@bgdev.pl>
+ <3e361a73-797f-41c7-1ead-ecafee3928e4@linaro.org>
+ <792e1f22-c3eb-80c7-0600-b478b3764f7c@quicinc.com>
+ <a17c21b7-9c0a-2458-735c-ac3b16ed337f@linaro.org>
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <a17c21b7-9c0a-2458-735c-ac3b16ed337f@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6wxK0hvHMwC-Dh118I8FNbDrsqnhg7xh
-X-Proofpoint-ORIG-GUID: 6wxK0hvHMwC-Dh118I8FNbDrsqnhg7xh
+X-Proofpoint-ORIG-GUID: OUOSSZ3POk8lnWGVILgZtZ22ahS1OCSE
+X-Proofpoint-GUID: OUOSSZ3POk8lnWGVILgZtZ22ahS1OCSE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-18_06,2023-04-17_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 spamscore=0 suspectscore=0 impostorscore=0 phishscore=0
- mlxlogscore=950 clxscore=1015 priorityscore=1501 mlxscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2303200000 definitions=main-2304180085
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,116 +96,54 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 4/9/2023 10:48 AM, Stanimir Varbanov wrote:
-> Hi Dikshita,
->
-> Thanks for the patch.
->
-> On 7.04.23 г. 9:25 ч., Dikshita Agarwal wrote:
->> Add firmware version based checks to enable/disable
->> features for different SOCs.
+
+On 4/18/2023 3:13 PM, Konrad Dybcio wrote:
+> 
+> 
+> On 18.04.2023 06:39, Shazad Hussain wrote:
 >>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
->> Tested-by: Nathan Hebert <nhebert@chromium.org>
->> ---
->>   drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
->>   drivers/media/platform/qcom/venus/hfi_msgs.c | 11 +++++++++--
->>   2 files changed, 29 insertions(+), 2 deletions(-)
 >>
->> diff --git a/drivers/media/platform/qcom/venus/core.h 
->> b/drivers/media/platform/qcom/venus/core.h
->> index 32551c2..9d1e4b2 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -202,6 +202,11 @@ struct venus_core {
->>       unsigned int core0_usage_count;
->>       unsigned int core1_usage_count;
->>       struct dentry *root;
->> +    struct venus_img_version {
->> +        u32 major;
->> +        u32 minor;
->> +        u32 rev;
->> +    } venus_ver;
->>   };
->>     struct vdec_controls {
->> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 
->> codec, u32 domain)
->>       return NULL;
->>   }
->>   +static inline int
->> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, 
->> u32 vrev)
->> +{
->> +    return ((core)->venus_ver.major == vmajor &&
->> +        (core)->venus_ver.minor == vminor &&
->> +        (core)->venus_ver.rev >= vrev);
->> +}
->> +
->> +static inline int
->> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, 
->> u32 vrev)
->> +{
->> +    return ((core)->venus_ver.major == vmajor &&
->> +        (core)->venus_ver.minor == vminor &&
->> +        (core)->venus_ver.rev <= vrev);
->> +}
->
-> IMO those two should return bool
-sure, will update.
->
->>   #endif
->> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c 
->> b/drivers/media/platform/qcom/venus/hfi_msgs.c
->> index df96db3..07ac0fc 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
->> @@ -248,9 +248,10 @@ static void hfi_sys_init_done(struct venus_core 
->> *core, struct venus_inst *inst,
->>   }
->>     static void
->> -sys_get_prop_image_version(struct device *dev,
->> +sys_get_prop_image_version(struct venus_core *core,
->>                  struct hfi_msg_sys_property_info_pkt *pkt)
->>   {
->> +    struct device *dev = core->dev;
->>       u8 *smem_tbl_ptr;
->>       u8 *img_ver;
->>       int req_bytes;
->> @@ -263,6 +264,12 @@ sys_get_prop_image_version(struct device *dev,
->>           return;
->>         img_ver = pkt->data;
->> +    if (IS_V4(core))
->> +        sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u-PROD",
->> +               &core->venus_ver.major, &core->venus_ver.minor, 
->> &core->venus_ver.rev);
->> +    else if (IS_V6(core))
->> +        sscanf(img_ver, "14:VIDEO.VPU.%u.%u-%u-PROD",
->> +               &core->venus_ver.major, &core->venus_ver.minor, 
->> &core->venus_ver.rev);
->
-> what about if IS_V1?
+>> On 4/13/2023 9:42 PM, Krzysztof Kozlowski wrote:
+>>> On 13/04/2023 15:17, Bartosz Golaszewski wrote:
+>>>> From: Parikshit Pareek <quic_ppareek@quicinc.com>
+>>>>
+>>>> Remove the power on reasons with reboot from the pmm8654au_0_pon.
+>>>> Instead, the PoN reaons should be part of different sdam_0 mode, to
+>>>
+>>> typo: reasons
+>>>
+>>>> be interoduced.
+>>>
+>>> introduced
+>>>
+>>> Anyway it does not say why. Are these power reasons not correct?
+>>>
+>>
+>> Hi Krzysztof,
+>> Since sm8350 the PMIC PON peripheral was split into PON_HLOS and PON_PBS
+>> to avoid security concerns with HLOS APPS being able to trigger a PMIC
+>> WARM_RESET unilaterally. When the split occurred, the spare registers
+>> ended up in PON_PBS, not PON_HLOS. Thus at that time, we moved to using
+>> an SDAM register for Linux “reboot reason” configuration. And bootloader
+>> also SDAM register to get these reboot region data to get into
+>> bootloader/edl, so to have this working we need to use SDAM.
+>>
+> Does that imply all PMICs following the PMK8350 scheme (separate HLOS and
+> PBS) should direct reboot mode writes to SDAM?
+> 
+> Konrad
 
-the conditional code above is added only for v6 and v4.
+Yes, that's what the expectation is with bootloader using SDAM as well.
 
-The behavior for v1 remain same as before.
+>>>>
+>>>> Signed-off-by: Parikshit Pareek <quic_ppareek@quicinc.com>
+>>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>>> ---
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>> -Shazad
 
-img_ver = pkt->data
-
->
->>       dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->
-> this will crash for v1.
-I didn't get why would it crash, could you pls explain?
->
->>   @@ -286,7 +293,7 @@ static void hfi_sys_property_info(struct 
->> venus_core *core,
->>         switch (pkt->property) {
->>       case HFI_PROPERTY_SYS_IMAGE_VERSION:
->> -        sys_get_prop_image_version(dev, pkt);
->> +        sys_get_prop_image_version(core, pkt);
->>           break;
->>       default:
->>           dev_dbg(dev, VDBGL "unknown property data\n");
->
+-Shazad
