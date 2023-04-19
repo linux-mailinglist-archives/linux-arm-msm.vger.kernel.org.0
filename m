@@ -2,123 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B3836E7931
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 14:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFA4E6E7961
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 14:09:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232974AbjDSMA6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 08:00:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53212 "EHLO
+        id S229448AbjDSMJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 08:09:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232428AbjDSMAz (ORCPT
+        with ESMTP id S233156AbjDSMJ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 08:00:55 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9EBF9EE7;
-        Wed, 19 Apr 2023 05:00:26 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id CD40163E38;
-        Wed, 19 Apr 2023 12:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 26F76C4339B;
-        Wed, 19 Apr 2023 12:00:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681905624;
-        bh=kL7MXaHfZUb5tJRqat4CTB+HjhFYT3TLVG/TA9D/yOU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=DyKJ7lZEgtxMcBtN3hFQTRgImJ0r78sfGAFkj0/1IpnBOGNsodsEKSA9n0/0u0zCO
-         SgdGBFEnVUCVGNcpn/Ixzg07lTnEoadfHZM4weInv6uDSQC+j0CJ1RugD/nQc8zwmw
-         E8PTmOC86u/lnpdLrK75GluGpZ9SrXGcd+dYzkcgt+yXotoUcyFs3p4hDqNpU5buzO
-         qFucbkE1pCfekMm8Bs7nIlumeB8LyAjG71S9QQu5COc77iM+C+pK2Z+fnfnT+SnZi/
-         MR0UaF2bXx6TEF5b74pA63/E6RUiJ9UPY/tCxKwchlVvt9AIQhuMjJgYRSAJ+b/fuz
-         RRji8WNy9Cycw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 00DF7E3309C;
-        Wed, 19 Apr 2023 12:00:23 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 19 Apr 2023 08:09:26 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED2DE6C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 05:09:20 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f178da219bso14448945e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 05:09:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1681906158; x=1684498158;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ICV+ifexo83o57cRcwBX/lZ8ijdYT70+Vp9Lz3f2oAg=;
+        b=ykMoH/onbS1531mCkS58WF+fhQb/0kz8ZY36KbB/9u0gHHuOZQOTNOcmePMMX3kdcC
+         JrZg2yRBqAm6Bueq4rgEySjGr1NJE75dSQkn3jO1q5NFFu/3XDpN3QkIh3ZYNH1amdEa
+         MglUuRz0NUd0vIE+JsxOWG4uSvWjcud65TMNLqrFHKUXZjbyxCt4tz0tl+SPCZecRDUt
+         hvTGl+Qi8eb98CLLxeZCktJ9fd5qtP3LglWCDJs1KD/yRmust4LchvLPkPzJHp6U88yQ
+         z24WJ5AiLKoRN+bHeQ6sisSV5ZVab8ED083r2ZGweEnFvBh6gromIbqRLY5tpYZ5ZD4l
+         Vcjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681906158; x=1684498158;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ICV+ifexo83o57cRcwBX/lZ8ijdYT70+Vp9Lz3f2oAg=;
+        b=UBi7hOE0ilQUymXHT8VUnBQIO6Pl0+YshoXAKBJ7289o5qh6XYAtmpwm+FabtyDguV
+         trn6W1J4PLpbMjOzmkj9vDhZ67p5NWb0RH8hj2KE9MySS3u1kIdjsMezSjklopM9wq96
+         a7dwluvfHIg/fvoUMaNJUeter2RiOw/M5kpmrTZz01HMWa9U8qsk/0SYd1j/ZN8raKUE
+         evS1QnF4uLt/zasoXwKXJWn1sjKh57COE8YspuKwEudo3y2bmndyTm+Mz1MSuNZi2OZr
+         dWRXmUIPm66iP4Igq8EQCaPGK9K6z0DTFsblUYMf46jF1PMuOjeKVABWfO/ltN8qRunb
+         f61g==
+X-Gm-Message-State: AAQBX9dD/BPHB/XyPSaSJyZ+vaA3mveTCoqTwcNyKstqndI1uYAZGNf8
+        PdYN0wXq41IL2VDudmZsMc0kLw==
+X-Google-Smtp-Source: AKy350aKXVkWQBioUWRD45UWirKdXtYI4Q7nfX+i1Dn7PTo4kmQYfduYh6Pb3t2kw30YkIia5o26xw==
+X-Received: by 2002:adf:e688:0:b0:2fb:f93f:b96 with SMTP id r8-20020adfe688000000b002fbf93f0b96mr4416492wrm.31.1681906158527;
+        Wed, 19 Apr 2023 05:09:18 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:e836:64e1:77c8:1d5b])
+        by smtp.gmail.com with ESMTPSA id v11-20020a5d678b000000b002fa834e1c69sm7634899wru.52.2023.04.19.05.09.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Apr 2023 05:09:17 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v2] dt-bindings: phy: qmp-ufs: tweak clock and clock-names for sa8775p
+Date:   Wed, 19 Apr 2023 14:09:14 +0200
+Message-Id: <20230419120914.173715-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [net-next PATCH v7 00/16] net: Add basic LED support for switch/phy
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <168190562399.2268.16556585281655823731.git-patchwork-notify@kernel.org>
-Date:   Wed, 19 Apr 2023 12:00:23 +0000
-References: <20230417151738.19426-1-ansuelsmth@gmail.com>
-In-Reply-To: <20230417151738.19426-1-ansuelsmth@gmail.com>
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     andrew@lunn.ch, f.fainelli@gmail.com, olteanv@gmail.com,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, hkallweit1@gmail.com,
-        linux@armlinux.org.uk, corbet@lwn.net, gregory.clement@bootlin.com,
-        sebastian.hesselbarth@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, pavel@ucw.cz,
-        lee@kernel.org, john@phrozen.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-This series was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
+maxItems is already globally set to 3. To make the binding easier to read
+and remove redundancy, set minItems to 3 for sa8775p as this platform
+requires exactly three clocks.
 
-On Mon, 17 Apr 2023 17:17:22 +0200 you wrote:
-> This is a continue of [1]. It was decided to take a more gradual
-> approach to implement LEDs support for switch and phy starting with
-> basic support and then implementing the hw control part when we have all
-> the prereq done.
-> 
-> This series implements only the brightness_set() and blink_set() ops.
-> An example of switch implementation is done with qca8k.
-> 
-> [...]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+v1 -> v2:
+- rephrased the commit message as this is not a fix but rather
+  a readability improvement
 
-Here is the summary with links:
-  - [net-next,v7,01/16] net: dsa: qca8k: move qca8k_port_to_phy() to header
-    https://git.kernel.org/netdev/net-next/c/3e8b4d6277fd
-  - [net-next,v7,02/16] net: dsa: qca8k: add LEDs basic support
-    https://git.kernel.org/netdev/net-next/c/1e264f9d2918
-  - [net-next,v7,03/16] net: dsa: qca8k: add LEDs blink_set() support
-    https://git.kernel.org/netdev/net-next/c/91acadcc6e59
-  - [net-next,v7,04/16] leds: Provide stubs for when CLASS_LED & NEW_LEDS are disabled
-    https://git.kernel.org/netdev/net-next/c/e5029edd5393
-  - [net-next,v7,05/16] net: phy: Add a binding for PHY LEDs
-    https://git.kernel.org/netdev/net-next/c/01e5b728e9e4
-  - [net-next,v7,06/16] net: phy: phy_device: Call into the PHY driver to set LED brightness
-    https://git.kernel.org/netdev/net-next/c/684818189b04
-  - [net-next,v7,07/16] net: phy: marvell: Add software control of the LEDs
-    https://git.kernel.org/netdev/net-next/c/2d3960e58ef7
-  - [net-next,v7,08/16] net: phy: phy_device: Call into the PHY driver to set LED blinking
-    https://git.kernel.org/netdev/net-next/c/4e901018432e
-  - [net-next,v7,09/16] net: phy: marvell: Implement led_blink_set()
-    https://git.kernel.org/netdev/net-next/c/ea9e86485dec
-  - [net-next,v7,10/16] dt-bindings: net: ethernet-controller: Document support for LEDs node
-    https://git.kernel.org/netdev/net-next/c/57b6c752c5c0
-  - [net-next,v7,11/16] dt-bindings: net: dsa: qca8k: add LEDs definition example
-    https://git.kernel.org/netdev/net-next/c/ed617bc022f4
-  - [net-next,v7,12/16] ARM: dts: qcom: ipq8064-rb3011: Drop unevaluated properties in switch nodes
-    https://git.kernel.org/netdev/net-next/c/939595c79d12
-  - [net-next,v7,13/16] ARM: dts: qcom: ipq8064-rb3011: Add Switch LED for each port
-    https://git.kernel.org/netdev/net-next/c/09930f1fb875
-  - [net-next,v7,14/16] dt-bindings: net: phy: Document support for LEDs node
-    https://git.kernel.org/netdev/net-next/c/18a24b694a2b
-  - [net-next,v7,15/16] arm: mvebu: dt: Add PHY LED support for 370-rd WAN port
-    https://git.kernel.org/netdev/net-next/c/380a8fe1b2f4
-  - [net-next,v7,16/16] Documentation: LEDs: Describe good names for network LEDs
-    https://git.kernel.org/netdev/net-next/c/c693ea2fd6e3
+ .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-You are awesome, thank you!
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+index 94c0fab065a8..a1897a7606df 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
+@@ -78,9 +78,9 @@ allOf:
+     then:
+       properties:
+         clocks:
+-          maxItems: 3
++          minItems: 3
+         clock-names:
+-          maxItems: 3
++          minItems: 3
+     else:
+       properties:
+         clocks:
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.37.2
 
