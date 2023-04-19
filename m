@@ -2,204 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A9A16E813A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 20:27:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC9C6E81AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 21:07:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229507AbjDSS11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 14:27:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44496 "EHLO
+        id S231224AbjDSTHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 15:07:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjDSS10 (ORCPT
+        with ESMTP id S229441AbjDSTHH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 14:27:26 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE832D70;
-        Wed, 19 Apr 2023 11:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1681928844; x=1713464844;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hMwknj2fnthEuseGk77ISBlfTv6f5/iv+yEnHLXoIAw=;
-  b=enySk25qFvEgyqJuaqDTOT4XNft8bVq+RrUoLT/U7i+TNAn4V0BKnIT0
-   pbIp6cNfelMQUCYRwB2fB7fStfuAXKu1KtsUIW9UwSwTDhsBDdDuemOez
-   pAJPt8OnBb1D6KeYvJyBIf6i190rjdZ8X0ci/r26lD6ur8IoUqdDqpaJZ
-   S9W1GNnmAmgBlHTFcKlu98MzaBiKN5JaTlcwFEhNyrreVYzOd/uDfHvBq
-   OA00H2CWNqFd4ytUkctpOPy+AwILBldaafIb98l/3Orc/BTPSXn3zPZe1
-   IszqjTv/Sf6sJK89uyi5QTtZD48MDrAAkbHSvRzsHCbkVUJ5Beq2Zx1Ca
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="410757548"
-X-IronPort-AV: E=Sophos;i="5.99,210,1677571200"; 
-   d="scan'208";a="410757548"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2023 11:26:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="937765285"
-X-IronPort-AV: E=Sophos;i="5.99,208,1677571200"; 
-   d="scan'208";a="937765285"
-Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 19 Apr 2023 11:26:00 -0700
-Received: from kbuild by b613635ddfff with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1ppCVD-000f5y-2o;
-        Wed, 19 Apr 2023 18:25:59 +0000
-Date:   Thu, 20 Apr 2023 02:25:19 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Mao Jinlong <quic_jinlmao@quicinc.com>,
-        linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-Subject: Re: [PATCH v2] stm: class: Add MIPI OST protocol support
-Message-ID: <202304200216.kvZgZcao-lkp@intel.com>
-References: <20230419141328.37472-1-quic_jinlmao@quicinc.com>
+        Wed, 19 Apr 2023 15:07:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4130565B6;
+        Wed, 19 Apr 2023 12:07:02 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33JGiLbp030220;
+        Wed, 19 Apr 2023 19:06:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=G/y8ctTcURCYoZmiuLkLbWXgnfrdu76wyZiUSLHo2Ho=;
+ b=cDK4YRXujHSOFTJOMGYS7EvoADjvXAdnrheVTaxZqdhZKTsqPjIQc2SNKFcGXNUIIcho
+ CssuFkbh4TQoOf3dT6yGxG48d404avLzqkTsp4mmGoT9HqaMWhx56MJ4Q+qBGLlsJerT
+ qMHayZ1QY+N1nr4XKCDoPOXk0a/cnPdW9o6vV7ho/qpIsaQelG01iXpZoy9DXu0er/eO
+ SXe3Feyu5XqEQYKN6MnWbDWe3WOu+SqqhDadykXJnV6JTLZyBHuQp/cfVbg6DfBRVX8i
+ CODSMbJPY0+vlBYUMnwmPMVjmX+mrINQMDjJ8+OFHWxJGdE5tt0/mFBp5Wd/YslTUKN1 hA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q26wy29j5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 19:06:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33JJ6pG8019846
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 19:06:51 GMT
+Received: from [10.134.71.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
+ 2023 12:06:50 -0700
+Message-ID: <11c72462-b256-d0db-a666-9615da4420f6@quicinc.com>
+Date:   Wed, 19 Apr 2023 12:06:50 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230419141328.37472-1-quic_jinlmao@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/dpu1: Handle the reg bus ICC path
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
+ <20230417-topic-dpu_regbus-v1-5-06fbdc1643c0@linaro.org>
+From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
+In-Reply-To: <20230417-topic-dpu_regbus-v1-5-06fbdc1643c0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: uZuyWiNw6UBDUJjAuj75d_TvKXv1_VVz
+X-Proofpoint-ORIG-GUID: uZuyWiNw6UBDUJjAuj75d_TvKXv1_VVz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-19_13,2023-04-18_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 clxscore=1011 mlxscore=0 malwarescore=0 spamscore=0
+ mlxlogscore=999 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304190167
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mao,
-
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on atorgue-stm32/stm32-next]
-[also build test ERROR on linus/master v6.3-rc7 next-20230418]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/stm-class-Add-MIPI-OST-protocol-support/20230419-221653
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/atorgue/stm32.git stm32-next
-patch link:    https://lore.kernel.org/r/20230419141328.37472-1-quic_jinlmao%40quicinc.com
-patch subject: [PATCH v2] stm: class: Add MIPI OST protocol support
-config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20230420/202304200216.kvZgZcao-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/54db7d137859caf5a14de2b166d80913b0c80218
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Mao-Jinlong/stm-class-Add-MIPI-OST-protocol-support/20230419-221653
-        git checkout 54db7d137859caf5a14de2b166d80913b0c80218
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sparc SHELL=/bin/bash drivers/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202304200216.kvZgZcao-lkp@intel.com/
-
-All error/warnings (new ones prefixed by >>):
-
-   drivers/hwtracing/stm/p_ost.c: In function 'ost_write':
->> drivers/hwtracing/stm/p_ost.c:174:46: error: implicit declaration of function 'get_current'; did you mean 'get_cred'? [-Werror=implicit-function-declaration]
-     174 |         *(u64 *)(trc_hdr + 8) = task_tgid_nr(get_current());
-         |                                              ^~~~~~~~~~~
-         |                                              get_cred
->> drivers/hwtracing/stm/p_ost.c:174:46: warning: passing argument 1 of 'task_tgid_nr' makes pointer from integer without a cast [-Wint-conversion]
-     174 |         *(u64 *)(trc_hdr + 8) = task_tgid_nr(get_current());
-         |                                              ^~~~~~~~~~~~~
-         |                                              |
-         |                                              int
-   In file included from include/linux/sched/mm.h:7,
-                    from include/linux/xarray.h:19,
-                    from include/linux/radix-tree.h:21,
-                    from include/linux/idr.h:15,
-                    from include/linux/kernfs.h:12,
-                    from include/linux/sysfs.h:16,
-                    from include/linux/kobject.h:20,
-                    from include/linux/module.h:21,
-                    from drivers/hwtracing/stm/p_ost.c:9:
-   include/linux/sched.h:1582:54: note: expected 'struct task_struct *' but argument is of type 'int'
-    1582 | static inline pid_t task_tgid_nr(struct task_struct *tsk)
-         |                                  ~~~~~~~~~~~~~~~~~~~~^~~
-   cc1: some warnings being treated as errors
 
 
-vim +174 drivers/hwtracing/stm/p_ost.c
-
-   131	
-   132	static ssize_t notrace ost_write(struct stm_data *data,
-   133			struct stm_output *output, unsigned int chan,
-   134			const char *buf, size_t count)
-   135	{
-   136		unsigned int c = output->channel + chan;
-   137		unsigned int m = output->master;
-   138		const unsigned char nil = 0;
-   139		u32 header = DATA_HEADER;
-   140		u8 trc_hdr[16];
-   141		ssize_t sz;
-   142	
-   143		struct ost_output *op = output->pdrv_private;
-   144	
-   145		/*
-   146		 * Identify the source by entity type.
-   147		 * If entity type is not set, return error value.
-   148		 */
-   149		if (op->node.entity_type == OST_ENTITY_TYPE_FTRACE) {
-   150			header |= OST_ENTITY_FTRACE;
-   151		} else if (op->node.entity_type == OST_ENTITY_TYPE_CONSOLE) {
-   152			header |= OST_ENTITY_CONSOLE;
-   153		} else {
-   154			pr_debug("p_ost: Entity must be set for trace data.");
-   155			return -EINVAL;
-   156		}
-   157	
-   158		/*
-   159		 * STP framing rules for OST frames:
-   160		 *   * the first packet of the OST frame is marked;
-   161		 *   * the last packet is a FLAG with timestamped tag.
-   162		 */
-   163		/* Message layout: HEADER / DATA / TAIL */
-   164		/* HEADER */
-   165		sz = data->packet(data, m, c, STP_PACKET_DATA, STP_PACKET_MARKED,
-   166				  4, (u8 *)&header);
-   167		if (sz <= 0)
-   168			return sz;
-   169	
-   170		/* DATA */
-   171		*(u16 *)(trc_hdr) = STM_MAKE_VERSION(0, 4);
-   172		*(u16 *)(trc_hdr + 2) = STM_HEADER_MAGIC;
-   173		*(u32 *)(trc_hdr + 4) = raw_smp_processor_id();
- > 174		*(u64 *)(trc_hdr + 8) = task_tgid_nr(get_current());
-   175		sz = stm_data_write(data, m, c, false, trc_hdr, sizeof(trc_hdr));
-   176		if (sz <= 0)
-   177			return sz;
-   178	
-   179		sz = stm_data_write(data, m, c, false, buf, count);
-   180	
-   181		/* TAIL */
-   182		if (sz > 0)
-   183			data->packet(data, m, c, STP_PACKET_FLAG,
-   184				STP_PACKET_TIMESTAMPED, 0, &nil);
-   185	
-   186		return sz;
-   187	}
-   188	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+On 4/17/2023 8:30 AM, Konrad Dybcio wrote:
+> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
+> another path that needs to be handled to ensure MDSS functions properly,
+> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
+> 
+> Gating that path may have a variety of effects.. from none to otherwise
+> inexplicable DSI timeouts..
+> 
+> On the DPU side, we need to keep the bus alive. The vendor driver
+> kickstarts it to max (300Mbps) throughput on first commit, but in
+> exchange for some battery life in rare DPU-enabled-panel-disabled
+> usecases, we can request it at DPU init and gate it at suspend.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 22 ++++++++++++++++++++--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
+>   2 files changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index dd6c1c40ab9e..d1f77faebbc0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -384,15 +384,17 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+>   	return 0;
+>   }
+>   
+> -static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+> +static int dpu_kms_parse_icc_paths(struct dpu_kms *dpu_kms)
+>   {
+>   	struct icc_path *path0;
+>   	struct icc_path *path1;
+> +	struct icc_path *reg_bus_path;
+>   	struct drm_device *dev = dpu_kms->dev;
+>   	struct device *dpu_dev = dev->dev;
+>   
+>   	path0 = msm_icc_get(dpu_dev, "mdp0-mem");
+>   	path1 = msm_icc_get(dpu_dev, "mdp1-mem");
+> +	reg_bus_path = msm_icc_get(dpu_dev, "cpu-cfg");
+>   
+>   	if (IS_ERR_OR_NULL(path0))
+>   		return PTR_ERR_OR_ZERO(path0);
+> @@ -404,6 +406,10 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+>   		dpu_kms->mdp_path[1] = path1;
+>   		dpu_kms->num_mdp_paths++;
+>   	}
+> +
+> +	if (!IS_ERR_OR_NULL(reg_bus_path))
+> +		dpu_kms->reg_bus_path = reg_bus_path;
+> +
+>   	return 0;
+>   }
+>   
+> @@ -1039,7 +1045,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>   		DPU_DEBUG("REG_DMA is not defined");
+>   	}
+>   
+> -	dpu_kms_parse_data_bus_icc_path(dpu_kms);
+> +	dpu_kms_parse_icc_paths(dpu_kms);
+>   
+>   	rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
+>   	if (rc < 0)
+> @@ -1241,6 +1247,9 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+>   	for (i = 0; i < dpu_kms->num_mdp_paths; i++)
+>   		icc_set_bw(dpu_kms->mdp_path[i], 0, 0);
+>   
+> +	if (dpu_kms->reg_bus_path)
+> +		icc_set_bw(dpu_kms->reg_bus_path, 0, 0);
+> +
+>   	return 0;
+>   }
+>   
+> @@ -1261,6 +1270,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+>   		return rc;
+>   	}
+>   
+> +	/*
+> +	 * The vendor driver supports setting 76.8 / 150 / 300 Mbps on this
+How do you arrive at these distint BW values? Are they provided by the 
+ICC fwk for the given path?
+> +	 * path, but it seems to go for the highest level when display output
+> +	 * is enabled and zero otherwise. For simplicity, we can assume that
+> +	 * DPU being enabled and running implies that.
+> +	 */
+> +	if (dpu_kms->reg_bus_path)
+> +		icc_set_bw(dpu_kms->reg_bus_path, 0, MBps_to_icc(300));
+> +
+>   	dpu_vbif_init_memtypes(dpu_kms);
+>   
+>   	drm_for_each_encoder(encoder, ddev)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index d5d9bec90705..c332381d58c4 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -111,6 +111,7 @@ struct dpu_kms {
+>   	atomic_t bandwidth_ref;
+>   	struct icc_path *mdp_path[2];
+>   	u32 num_mdp_paths;
+> +	struct icc_path *reg_bus_path;
+>   };
+>   
+>   struct vsync_info {
+> 
