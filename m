@@ -2,222 +2,533 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB5266E735D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 08:35:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4CE56E7396
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 09:01:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231862AbjDSGfi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 02:35:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51198 "EHLO
+        id S231226AbjDSHBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 03:01:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229688AbjDSGfh (ORCPT
+        with ESMTP id S229850AbjDSHBW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 02:35:37 -0400
+        Wed, 19 Apr 2023 03:01:22 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99FB23C06;
-        Tue, 18 Apr 2023 23:35:35 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33J6LwLf007299;
-        Wed, 19 Apr 2023 06:35:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=qcppdkim1;
- bh=nrBdfuPGQJp61wAb31cwi/9JQjOlMD4cuQSGVZhF6EA=;
- b=hHVbUNsgO/lAEQiMnvpW76VWVZ1SJYr9Kfgl6obFnubpCgSRXHCkIxTrmTrtzSf7FGDL
- S79hlChmDyr6/PE35UCU6aYPoxZQyw9EeVTzouiN86fl1D8aWFSZuCFYrb5RGfXF9B0V
- 6KN1JSJOxXgCNd/7NNQiZC1U5haFXrxSIiZ12LlBZeS9TAkxUKMLdbsWpwyBWqxp99ls
- C9z5jGBqatSqkOMkiZlycrhxP6fpX6ayK1vnjBTVpAxwpdsxj4Kfg4ciH5gnDxwE9ARj
- OyHXCJiAg5GASpwFmwmXyWfD0OhJD6VOo3LP5m4932aSyyA7MONooP/2wIGTKYEJ+kMx Dw== 
-Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2174.outbound.protection.outlook.com [104.47.59.174])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q26wy0epd-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 623F9191;
+        Wed, 19 Apr 2023 00:01:20 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33J6JpDk007974;
+        Wed, 19 Apr 2023 07:00:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KyzlXhyFGaaeR55GRtCttFAUB+UfMwYPL77LV2G/rC4=;
+ b=BXBSDQL3sXuAIdfAX7iaCZB24dODZzWCjX43QKhcOLR3DPlZY8x4qTYG5FHAtkDyd7wv
+ 0tEi+sUkNDcJpsEZGh0X9gE2dxdovap7NL0JDlDtCViz5kptBPDEh4QFQKan0ymowWFk
+ jha3mfhpVgdPekJkJKI7PuzojBah5rIQHnYSiTTUP1cUXabuYU61/IaiMLWp2pQiQdIN
+ 5TUl3Q6gLKLGTo/UScfxejMysN5Mpd0zYcJqcHZR7MySP04W+kMODdk+fhwKHyjE8SQn
+ XMCLspJR1BpX751HIb0IleEGj+DFQ8k6nEdQWHNBaUoK87ETw2fn+sn3PDxMyuSbtgmD Og== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q25kwrm5f-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 06:35:32 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VcpyDDzxYvwGaJN27lhc0gVe1weNBW0i+dPBbYjfsO3+3k1qEjMofPReJOWjpBxQzAMsWVZvtXqkAuPea8S/02hojG49uCPx23iRznpTxuDpmaJM9BYwb1SJSdryelWtVjUngufg9j2mME3KkJzOSyq38UU+3IH1aPyg0q4h/FzKIDSXxIBCczA7fZ/Xl/XfBeb2pTZOGqRstSqBGRSbg4+I3KEnd1gw+u+/wVFlZQ1jmazqqOk1HbWFuS7EbyHxfUbl0f5vUKnKAZsOwSMaZ1MH+NOvBpsDMydXpd//ckTiB2QCcy15H7ESbY3J1QYKCN3Yp0oOpf70UnFjInro9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nrBdfuPGQJp61wAb31cwi/9JQjOlMD4cuQSGVZhF6EA=;
- b=B728O1Cwk6bhQKdpkEDzqxkMwRJDdiF7F0xAUPsmgU5y9njM8TTJ3DWC20MvgxWCU0SROKib5PV0plS9SeKXkCLOvOUgQ3hx9/FIG217EGFg7sSJDZz+dA86CprmLriZBlwIGxD7wFSEYQLXasbaijNNZ24B1lFk3fXuKY4HAaM4TojjNl4u8otrBwlmuVHLTKWnKxh+np5Deub8Q7lkrWZl1HFqaFt0tvE4JSQ9y39HlPfRmUFSQiNIXALEcxuLOMi7AglBAX+dddreZ1Tn6mawnCRQR6SiSspSXsm5I+sgUCPVJWSzZJfbJtT8RjIkF0T38VzdEFZgm5kYaiq/YQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
- dkim=pass header.d=quicinc.com; arc=none
-Received: from PH0PR02MB7542.namprd02.prod.outlook.com (2603:10b6:510:51::5)
- by PH0PR02MB8518.namprd02.prod.outlook.com (2603:10b6:510:10b::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6298.45; Wed, 19 Apr
- 2023 06:35:27 +0000
-Received: from PH0PR02MB7542.namprd02.prod.outlook.com
- ([fe80::d3f2:f4c:2782:1de]) by PH0PR02MB7542.namprd02.prod.outlook.com
- ([fe80::d3f2:f4c:2782:1de%6]) with mapi id 15.20.6319.020; Wed, 19 Apr 2023
- 06:35:27 +0000
-From:   "Sampath Nimmala (Temp) (QUIC)" <quic_sampnimm@quicinc.com>
-To:     Josh Boyer <jwboyer@kernel.org>,
-        "Sampath Nimmala (Temp) (QUIC)" <quic_sampnimm@quicinc.com>
-CC:     "linux-firmware@kernel.org" <linux-firmware@kernel.org>,
-        "linux-bluethooth@vger.kernel.org" <linux-bluethooth@vger.kernel.org>,
-        "mka@chromium.org" <mka@chromium.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>,
-        "Sai Teja Aluvala (Temp) (QUIC)" <quic_saluvala@quicinc.com>,
-        "Atul Dhudase (QUIC)" <quic_adhudase@quicinc.com>
-Subject: RE: QCA: Update firmware files for BT chip WCN6750
-Thread-Topic: QCA: Update firmware files for BT chip WCN6750
-Thread-Index: AdlrhqwquThZG/j1RNyFxNupIEGPrQGZj9AAACb089A=
-Date:   Wed, 19 Apr 2023 06:35:27 +0000
-Message-ID: <PH0PR02MB75421FE9F55AAEC9C5D9AF3EFA629@PH0PR02MB7542.namprd02.prod.outlook.com>
-References: <PH0PR02MB75428BF5CB96C4533A0ECD79FA959@PH0PR02MB7542.namprd02.prod.outlook.com>
- <CA+5PVA7mh3mFp28oxVxJa=DbKehhgX0Sxxtz8YBWSsU_7iWkiQ@mail.gmail.com>
-In-Reply-To: <CA+5PVA7mh3mFp28oxVxJa=DbKehhgX0Sxxtz8YBWSsU_7iWkiQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR02MB7542:EE_|PH0PR02MB8518:EE_
-x-ms-office365-filtering-correlation-id: 31e0cbd6-84ad-4609-f822-08db40a04371
-x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: vZY6j8NaUVwYN4OAJnsy9iFgK74kI1TI7zC0BeIawZXHYI3sgBTxwMzcDSbt4h+AdeOBgApl0axX42MeC0mPgqil748UFbdr5XOIlYBHpyAEddm62O0D3n9/f8JYgiLghk0qSeyxgNH+6U6Ki8Oc9ld98hk0qPdft1szeH5R9vAvMdj77sARpEW2cdnPtFR8Zxe4FMHoeJixm3ydUixOBx1dAx8JKX+1w6xS3jugkOtVS+fgsQkCwekvuTuBic71UJj3vJYHtrXrIFpJc1/Z4SvKsSKxaRBwSjLLTZfity6xRGKcWINqsJIYic33YrwShie+TRHWAqh2ro5jeZkNDrqfUcl2mh3CYdYklqq29/xx/deXEM84FPCpupkKjWoTUT9GwxcRRA9C1gc65C1sefWdoLpqa81M6YNuBwNC9fIappvAkwDcFTH2+hbSDqSqYO3h9qnHRmnMhBX6jeukFgIkBIe7aQkVPglEuKKovdFjJdLCrQL3DTmWhgoBvDG3iNPo//jq+puErPmYHRY+73dfKrrSLE/+o/VlUtvSPnpuItt96C0aUt5/tC3jHmSozSOKiu9f6nX5i4wQ6pU+BQ/dn2JKkOgucm59CrO0ro4=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR02MB7542.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(39860400002)(346002)(376002)(136003)(366004)(451199021)(15650500001)(38070700005)(52536014)(2906002)(8936002)(5660300002)(8676002)(41300700001)(122000001)(55016003)(86362001)(33656002)(38100700002)(66574015)(478600001)(110136005)(316002)(53546011)(26005)(107886003)(6506007)(9686003)(54906003)(186003)(71200400001)(966005)(7696005)(4326008)(66446008)(64756008)(66476007)(66556008)(66946007)(83380400001)(76116006);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dDk3OEp5aWd1MTY4VzNQcjVEaDdQdkpScHluYVM3QVhHUFJOdHZoc1E0WG1q?=
- =?utf-8?B?NEN6dnN5TWpLOFQyZVhBcG1RbStUNWJRZVdEcXdrOThqa2l5RXlxMDVVTXZm?=
- =?utf-8?B?NzlCZGxlbXZBME1oNWZ6WEhkNUR2UlpUMlVCZ1A5dHk4Y213UEpFRHFTMHNx?=
- =?utf-8?B?anhHVDB1emRWR0VodHVWNzRUeDRmb3U4dkJOZ1JQWkZjT1dWSGQrWWJoMnEr?=
- =?utf-8?B?WUFsd1UyUCtHWUZaSUJjWnN3SjVjRnZNVTZjZVZZTDhTS05zVUJPdzFqWGh1?=
- =?utf-8?B?NnNPWi9TNlZjYmw2NzhZMGN3Y2drRGRHYzN0OFVVaHZITGE2NEVwUzAva3FW?=
- =?utf-8?B?VUlZOHFpZWYzSWVRM3g1LzVLUDgrZVNua2RqSXpuejJoV051VzZpYU1xRmlY?=
- =?utf-8?B?VGxkd3lrL0p4M2hEV0pRcVpCVDFRQUdIY1RwT1ljeXR1dmM5d0kxQlpBUDRX?=
- =?utf-8?B?Y0JWTHdPNkJZOTRWWFM5ek9sWHdwVWVJS05ocHRTZUVQcTU0c2lkcW9ORDFr?=
- =?utf-8?B?M1BkK0NTK1RWUEtuZ1YvWU5LYy9ycHFiSzYrQlJ6VSsyaEJ1dHE3bzlQRVNp?=
- =?utf-8?B?WUQ3M1FPMDQ5Q0trYkFZY3ZPZUgzNEpXem9paHNVSEE1VTVwOVhhUU1OYm5u?=
- =?utf-8?B?SXlRN3VTWSswZ0FUM2V6MjJlT1dXdDRuQnlueXJaRGJQd0RQMlZrREhla1Zs?=
- =?utf-8?B?Rmh6cUlqei84WjhUUmFvZEVqbG5yMTJTanVpTmh1M2dJbmtBbjAyU0ZEbkl3?=
- =?utf-8?B?S0lKUEhsV2RMUG1GaXlxNmVIYlVoQmY3ZFI5SWNVdFUramV3K1drRXB2ZTRZ?=
- =?utf-8?B?K1g3M0RRRG00Mk1XSkhVNURwZmdpZnR3Y2hXeDAvdGxuMExScnFjNldyN21G?=
- =?utf-8?B?b0lPWEh3NTA1UGFONCtYZ0drMWdKamxkdVZMKzNvLy9oU2lxcnNtOUM4aWpX?=
- =?utf-8?B?Q3oySWNLV2RLNjdLbHFiNGJ5SXJzTytYREduM1k4aC9veFF1YVpIMHhFenlM?=
- =?utf-8?B?emYvRGo4WDlvRThZajkxR0J3MThzRU9FQkdIZFlHWlJoVm1Fb2l6K1k3Vlda?=
- =?utf-8?B?Z0t6RjhucDJJREZMTjEvZ3lLZG04WkRmejRacGRieTdicVl5ellsQTFzSDRh?=
- =?utf-8?B?UmJZS2h3QWYyd016Y3g1VTdsdVF5eGtUa1lwV2hQNHp4MjdYc3NVT2tLa0JG?=
- =?utf-8?B?S0NzSjFEMjRMWTQ5UjJVN0padFhvNUVzZUR5Y3FTdy90YWtFTitZeElvWWh5?=
- =?utf-8?B?aHNiWC8wQ3hwS1M3azlVTU4rM1VGQ2NjNlQ2eW55a3k0VVI0dkNqOE5nc0dM?=
- =?utf-8?B?RCtjL0M2WkpSdEp3S2ZQUm1YWHRpNnRTK3ZKSTVYNXNhSVVhb0NzYTZ4eXlo?=
- =?utf-8?B?MFJwT3M1bXFjMWtHNkNUMGpVWWd0TERxamV5Mld6T0V2UGdOcnBORDdSdVZF?=
- =?utf-8?B?NFNhT2RTQ3diV2tyb1pnczZBSWRXREpqVDZKK21sTXk1bFpWb2ZRRG9jR05p?=
- =?utf-8?B?U3R1NXhTeHAwMmdleHhyRTNIamZuR3l1dDFickxab1JEYTNqQ2NENDFSbGFX?=
- =?utf-8?B?dzBRTEZRMTkzbkxEcXdSRHBRSFpua3VmTnFjNUJhK0NrVXEvdnJ5KzVsbDdZ?=
- =?utf-8?B?SThVV0xDeFdxZWhjbitXcG9PN2N4MlQycllGaTAyNFFYT3VMZ011UHR1M2dW?=
- =?utf-8?B?Q1h5V1g0WFlhK0FOUkJVbDFoaDFjSnYxQ1krSDNyRmMxT0d3UktnSXU0cEZC?=
- =?utf-8?B?OUN3QW9jV3RsU1RQYkNsa2h2WHlBKzBHcTl6OGZkUFhRRnpsbzFNdDRlZnNB?=
- =?utf-8?B?eENWVktxNGdUTmZtam9nMlk1ejlzcFQwbEV1VVpDZnBQQnRSaXh5bUVoSHhL?=
- =?utf-8?B?VDBrVVFqcE1hdXRDUEkzdDd3K3duSHJ0T2p3cjdCSWhrMjBrVEJXeU9EU2VJ?=
- =?utf-8?B?TEdieXZIcWlMVVlEMGVUYlZYb1NuY25UQWhWT1dleFlzMFM4Z1FBR3lzNmFx?=
- =?utf-8?B?WEI0SkdJK3N0T2svM3dDMEE4dW5ETmk3RFc2aEJReVVLQ2xUalFsTStiWFA1?=
- =?utf-8?B?d25UMExmdUJENWp2bHVkbWZiNlFRSVVTekpvUWMySm1ZRE1vTDA5Kzc1L09E?=
- =?utf-8?Q?kBe/Y+m235O/9W4MIZM8rgf+h?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        Wed, 19 Apr 2023 07:00:51 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33J70okY018058
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 07:00:50 GMT
+Received: from [10.50.49.141] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
+ 2023 00:00:45 -0700
+Message-ID: <f1456dd7-5dcf-d91a-459c-65efca4a3444@quicinc.com>
+Date:   Wed, 19 Apr 2023 12:30:19 +0530
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: BQMr+GXDacmZcoUF1GrAjdXp5/MFk5Ax98/ruoMbo9YqKLCSvn5t9uyCqqTAZJXGZEef4vRuckhN0DAn8uiHvQu6K+juerMMAxZBL6rLNhC5bhkIjM0Aw6ePnQ8X8qxtMWAwjm6x426uya27xBvM+Wvbj4I9P0pFdxR/sMBRCkFYlAhK7LeAClrLvaEX9TdfuVpTcMswyqsK/CRzmsXnZwjNZG8x42E7PQ4VVYpaMmxXPPAGiAIWJ7tjhBYVwHvNYV4l6lzK85gkPkeqdEXpGrrweJekGOXKE6NOJD48EQy+iKK2d/zKi+6vpOLDm4fTArss5Ar/3lZHQplLPJq/ZlomKGhbmJnA/HZpiEjT2rB9/vAngReH7adgUVj3O81F3s9aDB8QlEwJTwtz+ImJ/MeNVFs/pZMbDTidajFxG3HR2UmUUbVnnVWTJEtNth0AC2APiZBsmbYR47zdaTbZB3/ipxr6nsSQQLDXzzVUe2f/vnnqzIT9KgeAo2AgxYYUDsJjwor2NM1CCtdItVVh1XAVJAvMiO/cFka4EYaE6IRiqI4Y3HSGQYvEnJnT9RoDSRdUKsDf48BhGbOa5thdQI3cNLoh/bMWNbBfrWVEKogqA0ZFoIXUwH20vkGxz334E24ZodAZMcOcK7cga1PMISkp9v8I7Qt6Wc5kv4QNq3BHcmq17P7cCWPuhwZ1SR0WRCSqEkYfCkg+UbtOAm+ZYOtClsGi8Ue+MoCgMRq1Zjk0Gqo692llOT4QzN93BTQ53rMt6Edc+GHCp1TRwLbYAMbuT9hK31IGdtWzvChqsoTRrti08a7gFMB1q6snOlWy0tb6PwfyRlInZ5VX5O1P1A==
-X-OriginatorOrg: quicinc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7542.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 31e0cbd6-84ad-4609-f822-08db40a04371
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Apr 2023 06:35:27.3149
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: m40KhNo87Sv9D20aoPa2uWshj6Ms0k89W9xOFZgk8X3IS74wxWhv+dMlUMrfRDID/FEfz3LHysKepPyR5rEq6GEGMChjsDZfLVYEkbs5RU4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB8518
-X-Proofpoint-GUID: CdJQ9fQEvYvSe9z0lwT3nMkLg9wrNWtn
-X-Proofpoint-ORIG-GUID: CdJQ9fQEvYvSe9z0lwT3nMkLg9wrNWtn
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V22 2/3] misc: dcc: Add driver support for Data Capture
+ and Compare unit(DCC)
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>
+References: <cover.1681829664.git.quic_schowdhu@quicinc.com>
+ <e4f41fa61d9dd66f68bbd7650c6fbf96810c3569.1681829664.git.quic_schowdhu@quicinc.com>
+ <2023041833-alienate-trash-f4da@gregkh>
+Content-Language: en-US
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <2023041833-alienate-trash-f4da@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2M9xIiiVGE63EV5UL28bIqVaC937xsDY
+X-Proofpoint-GUID: 2M9xIiiVGE63EV5UL28bIqVaC937xsDY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-19_02,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 clxscore=1015 mlxscore=0 malwarescore=0 spamscore=0
- mlxlogscore=923 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304190060
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=999 mlxscore=0 spamscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304190064
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QWRkZWQgY2hhbmdlcyB0byBXSEVOQ0UsIHBsZWFzZSBmaW5kIGJlbG93IHNjcmVlbnNob3QgZm9y
-IHB1bGwgcmVxdWVzdC4NCg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhlIGZvbGxvd2luZyBjaGFu
-Z2VzIHNpbmNlIGNvbW1pdCA4NDUxYzJiMWQ1MjlkYzFhNDkzMjhhYzkyMzVkM2NmNWJiOGE4ZmNi
-Og0KDQogIG10NzZ4eDogTW92ZSB0aGUgb2xkIE1lZGlhdGVrIFdpRmkgZmlybXdhcmUgdG8gbWVk
-aWF0ZWsgKDIwMjMtMDQtMTggMDg6MTQ6MDggLTA0MDApDQoNCmFyZSBhdmFpbGFibGUgaW4gdGhl
-IEdpdCByZXBvc2l0b3J5IGF0Og0KDQogIGdpdEBnaXRodWIuY29tOnNhbXBhdGhuaW1tbWFsYS9i
-dF9maXJtd2FyZS5naXQgbWFpbg0KDQpmb3IgeW91IHRvIGZldGNoIGNoYW5nZXMgdXAgdG8gNjFi
-ZTcxYThkMWJmMDVkMGRmOGUwNzcyNDQ5NDY1ZTQzMGRlZWI1ZjoNCg0KICBxY2E6IFVwZGF0ZSBm
-aXJtd2FyZSBmaWxlcyBmb3IgQlQgY2hpcCBXQ042NzUwICgyMDIzLTA0LTE5IDExOjU5OjQ5ICsw
-NTMwKQ0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0Kc2FtcG5pbW0gKDEpOg0KICAgICAgcWNhOiBVcGRhdGUgZmlybXdhcmUg
-ZmlsZXMgZm9yIEJUIGNoaXAgV0NONjc1MA0KDQogcWNhL21zYnRmdzExLm1ibiB8IEJpbiAxNjY4
-MzYgLT4gMTY3NTUyIGJ5dGVzDQogcWNhL21zYnRmdzExLnRsdiB8IEJpbiAxNTQ2MjQgLT4gMTU1
-MzQwIGJ5dGVzDQogcWNhL21zbnYxMS5iMDkgICB8IEJpbiAwIC0+IDU4NDcgYnl0ZXMNCiBxY2Ev
-bXNudjExLmIwYSAgIHwgQmluIDAgLT4gNTg0NyBieXRlcw0KIHFjYS9tc252MTEuYmluICAgfCBC
-aW4gNTg0NyAtPiA1ODQ3IGJ5dGVzDQogNSBmaWxlcyBjaGFuZ2VkLCAwIGluc2VydGlvbnMoKyks
-IDAgZGVsZXRpb25zKC0pDQogY3JlYXRlIG1vZGUgMTAwNzU1IHFjYS9tc252MTEuYjA5DQogY3Jl
-YXRlIG1vZGUgMTAwNzU1IHFjYS9tc252MTEuYjBhDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpUaGFua3MsDQpT
-YW1wYXRoDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKb3NoIEJveWVyIDxq
-d2JveWVyQGtlcm5lbC5vcmc+IA0KU2VudDogVHVlc2RheSwgQXByaWwgMTgsIDIwMjMgNToyNyBQ
-TQ0KVG86IFNhbXBhdGggTmltbWFsYSAoVGVtcCkgKFFVSUMpIDxxdWljX3NhbXBuaW1tQHF1aWNp
-bmMuY29tPg0KQ2M6IGxpbnV4LWZpcm13YXJlQGtlcm5lbC5vcmc7IGxpbnV4LWJsdWV0aG9vdGhA
-dmdlci5rZXJuZWwub3JnOyBta2FAY2hyb21pdW0ub3JnOyBsaW51eC1rZXJuZWxAdmdlci5rZXJu
-ZWwub3JnOyBsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZzsgQmFsYWtyaXNobmEgR29kYXZh
-cnRoaSAoUVVJQykgPHF1aWNfYmdvZGF2YXJAcXVpY2luYy5jb20+OyBTYWkgVGVqYSBBbHV2YWxh
-IChUZW1wKSAoUVVJQykgPHF1aWNfc2FsdXZhbGFAcXVpY2luYy5jb20+OyBBdHVsIERodWRhc2Ug
-KFFVSUMpIDxxdWljX2FkaHVkYXNlQHF1aWNpbmMuY29tPg0KU3ViamVjdDogUmU6IFFDQTogVXBk
-YXRlIGZpcm13YXJlIGZpbGVzIGZvciBCVCBjaGlwIFdDTjY3NTANCg0KV0FSTklORzogVGhpcyBl
-bWFpbCBvcmlnaW5hdGVkIGZyb20gb3V0c2lkZSBvZiBRdWFsY29tbS4gUGxlYXNlIGJlIHdhcnkg
-b2YgYW55IGxpbmtzIG9yIGF0dGFjaG1lbnRzLCBhbmQgZG8gbm90IGVuYWJsZSBtYWNyb3MuDQoN
-Ck9uIE1vbiwgQXByIDEwLCAyMDIzIGF0IDQ6MzHigK9BTSBTYW1wYXRoIE5pbW1hbGEgKFRlbXAp
-IChRVUlDKSA8cXVpY19zYW1wbmltbUBxdWljaW5jLmNvbT4gd3JvdGU6DQo+DQo+IEhpIFRlYW0s
-DQo+DQo+IFBsZWFzZSBpbmNsdWRlIGZpcm13YXJlIGJpbnMgZm9yIFdDTjY3NTAuDQo+DQo+IE1h
-am9yIGNvbnRyaWJ1dGlvbnMgOiBCdWcgRml4ZXMuDQo+DQo+IFNuYXBzaG90IG9mIHB1bGwgcmVx
-dWVzdCBpcyBhcyBiZWxvdywgbGV0IG1lIGtub3cgaWYgYW55dGhpbmcgaXMgbWlzc2luZy4NCj4g
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLQ0KPiAtLS0tLS0tLS0tLSBUaGUgZm9sbG93aW5nIGNoYW5nZXMgc2luY2Ug
-Y29tbWl0IA0KPiA4NmRhMmFjOWI0ZTU3ZTlhODhmOGJmY2I1YTE2M2E0MDZmNWMwMGUxOg0KPg0K
-PiAgIE1lcmdlIGh0dHBzOi8vZ2l0aHViLmNvbS9wa3NoaWgvbGludXgtZmlybXdhcmUgKDIwMjMt
-MDQtMDYgMDc6MzA6MzEgDQo+IC0wNDAwKQ0KPg0KPiBhcmUgYXZhaWxhYmxlIGluIHRoZSBHaXQg
-cmVwb3NpdG9yeSBhdDoNCj4NCj4gICBnaXRAZ2l0aHViLmNvbTpzYW1wYXRobmltbW1hbGEvQmx1
-ZXRvb3RoX0ZXLmdpdCBtYWluDQo+DQo+IGZvciB5b3UgdG8gZmV0Y2ggY2hhbmdlcyB1cCB0byAx
-NjdhYjg4NTNiYzE1ZjhlYzU4ZTZiNzZmOThlZTUwMDc3NzBkOTA3Og0KPg0KPiAgIHFjYTogVXBk
-YXRlIGZpcm13YXJlIGZpbGVzIGZvciBCVCBjaGlwIFdDTjY3NTAgKDIwMjMtMDQtMTAgMTM6NTU6
-MzggDQo+ICswNTMwKQ0KPg0KPiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+IHNhbXBuaW1tICgxKToNCj4gICAgICAgcWNh
-OiBVcGRhdGUgZmlybXdhcmUgZmlsZXMgZm9yIEJUIGNoaXAgV0NONjc1MA0KPg0KPiBxY2EvbXNi
-dGZ3MTEubWJuIHwgQmluIDE2NjgzNiAtPiAxNjc1NTIgYnl0ZXMgcWNhL21zYnRmdzExLnRsdiB8
-IEJpbiANCj4gMTU0NjI0IC0+IDE1NTM0MCBieXRlcw0KPiBxY2EvbXNudjExLmIwOSAgIHwgQmlu
-IDAgLT4gNTg0NyBieXRlcw0KPiBxY2EvbXNudjExLmIwYSAgIHwgQmluIDAgLT4gNTg0NyBieXRl
-cw0KDQpUaGVzZSBmaWxlIGFkZGl0aW9ucyBuZWVkIHRvIGJlIGFkZGVkIHRvIFdIRU5DRSBvciBj
-aGVja193aGVuY2UucHkgZmFpbHM6DQoNCltqd2JveWVyQHZhZGVyIGxpbnV4LWZpcm13YXJlXSQg
-Li9jaGVja193aGVuY2UucHkNCkU6IHFjYS9tc252MTEuYjA5IG5vdCBsaXN0ZWQgaW4gV0hFTkNF
-DQpFOiBxY2EvbXNudjExLmIwYSBub3QgbGlzdGVkIGluIFdIRU5DRQ0KW2p3Ym95ZXJAdmFkZXIg
-bGludXgtZmlybXdhcmVdJA0KDQpDYW4geW91IGFkanVzdCBwbGVhc2U/DQoNCmpvc2gNCg0KPiBx
-Y2EvbXNudjExLmJpbiAgIHwgQmluIDU4NDcgLT4gNTg0NyBieXRlcw0KPiA1IGZpbGVzIGNoYW5n
-ZWQsIDAgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkgbW9kZSBjaGFuZ2UgMTAwNjQ0ID0+
-IA0KPiAxMDA3NTUgcWNhL21zYnRmdzExLm1ibiBtb2RlIGNoYW5nZSAxMDA2NDQgPT4gMTAwNzU1
-IHFjYS9tc2J0ZncxMS50bHYgDQo+IGNyZWF0ZSBtb2RlIDEwMDc1NSBxY2EvbXNudjExLmIwOSBj
-cmVhdGUgbW9kZSAxMDA3NTUgcWNhL21zbnYxMS5iMGEgDQo+IG1vZGUgY2hhbmdlIDEwMDY0NCA9
-PiAxMDA3NTUgcWNhL21zbnYxMS5iaW4NCj4NCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAtLS0tLS0tLS0t
-LQ0KPg0KPg0KPg0KPiBUaGFua3MsDQo+DQo+IFNhbXBhdGgNCj4NCj4NCg==
+
+
+On 4/18/2023 9:15 PM, Greg Kroah-Hartman wrote:
+> On Tue, Apr 18, 2023 at 08:52:36PM +0530, Souradeep Chowdhury wrote:
+>> The DCC is a DMA Engine designed to capture and store data during system
+>> crash or software triggers. The DCC operates based on user inputs via
+>> the debugfs interface. The user gives addresses as inputs and these
+>> addresses are stored in the dcc sram. In case of a system crash or a
+>> manual software trigger by the user through the debugfs interface, the
+>> dcc captures and stores the values at these addresses. This patch
+>> contains the driver which has all the methods pertaining to the debugfs
+>> interface, auxiliary functions to support all the four fundamental
+>> operations of dcc namely read, write, read/modify/write and loop. The
+>> probe method here instantiates all the resources necessary for dcc to
+>> operate mainly the dedicated dcc sram where it stores the values. The
+>> DCC driver can be used for debugging purposes without going for a reboot
+>> since it can perform software triggers as well based on user inputs.
+>>
+>> Also add the documentation for debugfs entries which explains the
+>> functionalities of each debugfs file that has been created for dcc.
+> 
+> I see no documentation entries in this commit :(
+
+My apologies, this patch was given from qcom-next tree which already has 
+the documentation merged. Will include it from the next versions.
+
+> 
+>> The following is the justification of using debugfs interface over the
+>> other alternatives like sysfs/ioctls
+>>
+>> i) As can be seen from the debugfs attribute descriptions, some of the
+>> debugfs attribute files here contains multiple arguments which needs to
+>> be accepted from the user. This goes against the design style of sysfs.
+>>
+>> ii) The user input patterns have been made simple and convenient in this
+>> case with the use of debugfs interface as user doesn't need to shuffle
+>> between different files to execute one instruction as was the case on
+>> using other alternatives.
+> 
+> Why do you have debugfs and also a misc device?  How are they related?
+> Why both?  Why not just one?  What userspace tools are going to use
+> either of these interfaces and where are they published to show how this
+> all was tested?
+
+DCC has two fundamental steps of usage:-
+
+1.Configuring the register addresses on the dcc_sram which is done by 
+user through the debugfs interface. For example:-
+
+echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+
+Here we are configuring the register addresses for list 3, the 'R'
+indicates a read operation, so this register value will be read
+in case of a software trigger or kernel panic/watchdog bite and
+dumped into the dcc_sram.
+
+2.The dcc_sram content is exposed to the user in the form of a misc 
+device. The user can parse the content of this dcc_sram to get the
+register values. There is an opensource parser available for dcc at
+the following location:-
+
+https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
+
+> 
+>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>> Reviewed-by: Alex Elder <elder@linaro.org>
+>> ---
+>>   drivers/misc/Kconfig  |    8 +
+>>   drivers/misc/Makefile |    1 +
+>>   drivers/misc/dcc.c    | 1300 +++++++++++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 1309 insertions(+)
+>>   create mode 100644 drivers/misc/dcc.c
+>>
+>> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+>> index 433aa41..e2bc652 100644
+>> --- a/drivers/misc/Kconfig
+>> +++ b/drivers/misc/Kconfig
+>> @@ -276,6 +276,14 @@ config QCOM_COINCELL
+>>   	  to maintain PMIC register and RTC state in the absence of
+>>   	  external power.
+>>   
+>> +config QCOM_DCC
+>> +	tristate "Qualcomm Technologies, Inc. Data Capture and Compare(DCC) engine driver"
+>> +	depends on ARCH_QCOM || COMPILE_TEST
+>> +	help
+>> +	  This option enables driver for Data Capture and Compare engine. DCC
+>> +	  driver provides interface to configure DCC block and read back
+>> +	  captured data from DCC's internal SRAM.
+> 
+> 
+> What is the module name?
+
+It's qcom-dcc, will update the name here.
+
+> 
+>> +
+>>   config QCOM_FASTRPC
+>>   	tristate "Qualcomm FastRPC"
+>>   	depends on ARCH_QCOM || COMPILE_TEST
+>> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+>> index 56de439..6fa8efa 100644
+>> --- a/drivers/misc/Makefile
+>> +++ b/drivers/misc/Makefile
+>> @@ -16,6 +16,7 @@ obj-$(CONFIG_TIFM_CORE)       	+= tifm_core.o
+>>   obj-$(CONFIG_TIFM_7XX1)       	+= tifm_7xx1.o
+>>   obj-$(CONFIG_PHANTOM)		+= phantom.o
+>>   obj-$(CONFIG_QCOM_COINCELL)	+= qcom-coincell.o
+>> +obj-$(CONFIG_QCOM_DCC)		+= dcc.o
+> 
+> Why such a generic name?  Shouldn't it be qcom-dcc?
+
+Ack
+
+> 
+> 
+> 
+>>   obj-$(CONFIG_QCOM_FASTRPC)	+= fastrpc.o
+>>   obj-$(CONFIG_SENSORS_BH1770)	+= bh1770glc.o
+>>   obj-$(CONFIG_SENSORS_APDS990X)	+= apds990x.o
+>> diff --git a/drivers/misc/dcc.c b/drivers/misc/dcc.c
+>> new file mode 100644
+>> index 0000000..7231ed9
+>> --- /dev/null
+>> +++ b/drivers/misc/dcc.c
+>> @@ -0,0 +1,1300 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> 
+> No work happened on this code in 2022?  All 22 of these entries were
+> only in 2021 and 2023?
+
+Ack
+
+> 
+>> + */
+>> +
+>> +#include <linux/bitfield.h>
+>> +#include <linux/bitops.h>
+>> +#include <linux/debugfs.h>
+>> +#include <linux/delay.h>
+>> +#include <linux/fs.h>
+>> +#include <linux/io.h>
+>> +#include <linux/iopoll.h>
+>> +#include <linux/miscdevice.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/slab.h>
+>> +#include <linux/uaccess.h>
+>> +
+>> +#define STATUS_READY_TIMEOUT		5000  /* microseconds */
+>> +
+>> +/* DCC registers */
+>> +#define DCC_HW_INFO			0x04
+>> +#define DCC_LL_NUM_INFO			0x10
+>> +#define DCC_STATUS(vers)		((vers) == 1 ? 0x0c : 0x1c)
+> 
+> Why isn't this just an inline function?
+
+Ack. Will make this inline
+
+> 
+>> +#define DCC_LL_LOCK			0x00
+>> +#define DCC_LL_CFG			0x04
+>> +#define DCC_LL_BASE			0x08
+>> +#define DCC_FD_BASE			0x0c
+>> +#define DCC_LL_TIMEOUT			0x10
+>> +#define DCC_LL_INT_ENABLE		0x18
+>> +#define DCC_LL_INT_STATUS		0x1c
+>> +#define DCC_LL_SW_TRIGGER		0x2c
+>> +#define DCC_LL_BUS_ACCESS_STATUS	0x30
+>> +
+>> +/* Default value used if a bit 6 in the HW_INFO register is set. */
+>> +#define DCC_FIX_LOOP_OFFSET		16
+>> +
+>> +/* Mask to find version info from HW_Info register */
+>> +#define DCC_VER_INFO_MASK		BIT(9)
+>> +
+>> +#define MAX_DCC_OFFSET			GENMASK(9, 2)
+>> +#define MAX_DCC_LEN			GENMASK(6, 0)
+>> +#define MAX_LOOP_CNT			GENMASK(7, 0)
+>> +#define MAX_LOOP_ADDR			10
+>> +
+>> +#define DCC_ADDR_DESCRIPTOR		0x00
+>> +#define DCC_ADDR_LIMIT			27
+>> +#define DCC_WORD_SIZE			sizeof(u32)
+>> +#define DCC_ADDR_RANGE_MASK		GENMASK(31, 4)
+>> +#define DCC_LOOP_DESCRIPTOR		BIT(30)
+>> +#define DCC_RD_MOD_WR_DESCRIPTOR	BIT(31)
+>> +#define DCC_LINK_DESCRIPTOR		GENMASK(31, 30)
+>> +#define DCC_STATUS_MASK			GENMASK(1, 0)
+>> +#define DCC_LOCK_MASK			BIT(0)
+>> +#define DCC_LOOP_OFFSET_MASK		BIT(6)
+>> +#define DCC_TRIGGER_MASK		BIT(9)
+>> +
+>> +#define DCC_WRITE_MASK			BIT(15)
+>> +#define DCC_WRITE_OFF_MASK		GENMASK(7, 0)
+>> +#define DCC_WRITE_LEN_MASK		GENMASK(14, 8)
+>> +
+>> +#define DCC_READ_IND			0x00
+>> +#define DCC_WRITE_IND			(BIT(28))
+>> +
+>> +#define DCC_AHB_IND			0x00
+>> +#define DCC_APB_IND			BIT(29)
+>> +
+>> +#define DCC_MAX_LINK_LIST		8
+>> +
+>> +#define DCC_VER_MASK2			GENMASK(5, 0)
+>> +
+>> +#define DCC_SRAM_WORD_LENGTH		4
+>> +
+>> +#define DCC_RD_MOD_WR_ADDR              0xC105E
+>> +
+>> +enum dcc_descriptor_type {
+>> +	DCC_READ_TYPE,
+>> +	DCC_LOOP_TYPE,
+>> +	DCC_READ_WRITE_TYPE,
+>> +	DCC_WRITE_TYPE
+>> +};
+>> +
+>> +struct dcc_config_entry {
+>> +	u32				base;
+>> +	u32				offset;
+>> +	u32				len;
+>> +	u32				loop_cnt;
+>> +	u32				write_val;
+>> +	u32				mask;
+>> +	bool				apb_bus;
+>> +	enum dcc_descriptor_type	desc_type;
+>> +	struct list_head		list;
+>> +};
+> 
+> No documentation for this structure?
+
+Ack. Will add documentation to this structure as well.
+
+> 
+>> +
+>> +/**
+>> + * struct dcc_drvdata - configuration information related to a dcc device
+>> + * @base:		Base Address of the dcc device
+>> + * @dev:		The device attached to the driver data
+>> + * @mutex:		Lock to protect access and manipulation of dcc_drvdata
+>> + * @ram_base:		Base address for the SRAM dedicated for the dcc device
+>> + * @ram_size:		Total size of the SRAM dedicated for the dcc device
+>> + * @ram_offset:		Offset to the SRAM dedicated for dcc device
+>> + * @mem_map_ver:	Memory map version of DCC hardware
+>> + * @ram_cfg:		Used for address limit calculation for dcc
+>> + * @ram_start:		Starting address of DCC SRAM
+>> + * @sram_dev:		Miscellaneous device equivalent of dcc SRAM
+>> + * @cfg_head:		Points to the head of the linked list of addresses
+>> + * @dbg_dir:		The dcc debugfs directory under which all the debugfs files are placed
+>> + * @nr_link_list:	Total number of linkedlists supported by the DCC configuration
+>> + * @loop_shift:		Loop offset bits range for the addresses
+>> + * @enable_bitmap:	Bitmap to capture the enabled status of each linked list of addresses
+>> + */
+>> +struct dcc_drvdata {
+>> +	void __iomem		*base;
+>> +	void __iomem            *ram_base;
+>> +	struct device		*dev;
+> 
+> Why do you need this back-pointer here?
+
+This is getting used at multiple places to log
+dev_err and also for resource allocation using
+devm_kzalloc.
+
+> 
+>> +	struct mutex		mutex;
+>> +	size_t			ram_size;
+>> +	size_t			ram_offset;
+>> +	int			mem_map_ver;
+>> +	unsigned int		ram_cfg;
+>> +	unsigned int		ram_start;
+>> +	struct miscdevice	sram_dev;
+> 
+> Wait, this is the struct device, right?  Or not?
+
+miscdevice here represents the dcc_sram, an io-memory
+dedicated to dcc for configuring/storing register values.
+Whereas struct device represents the dcc_device which can
+be used to write control signals on the bus to handle dcc
+hardware operation sequence(like config_reset,sw_trigger etc.)
+
+> 
+>> +	struct list_head	*cfg_head;
+>> +	struct dentry		*dbg_dir;
+> 
+> Why is this needed and not just looked up when necessary?
+
+This needs to be passed while creating sub-directories and also
+while removing. Rather than looking up everytime,saving and
+re-using this in here.
+
+> 
+>> +	size_t			nr_link_list;
+>> +	u8			loop_shift;
+>> +	unsigned long		*enable_bitmap;
+> 
+> So this is a list of bitmaps?  Why "unsigned long"?  Why not u64?
+
+Ack
+
+> 
+>> +};
+>> +
+>> +struct dcc_cfg_attr {
+>> +	u32	addr;
+>> +	u32	prev_addr;
+>> +	u32	prev_off;
+>> +	u32	link;
+>> +	u32	sram_offset;
+>> +};
+>> +
+>> +struct dcc_cfg_loop_attr {
+>> +	u32	loop_cnt;
+>> +	u32	loop_len;
+>> +	u32	loop_off;
+>> +	bool    loop_start;
+>> +};
+>> +
+>> +static inline u32 dcc_list_offset(int version)
+>> +{
+>> +	return version == 1 ? 0x1c : version == 2 ? 0x2c : 0x34;
+>> +}
+> 
+> Ah, you do have an inline function for the above mentioned macro.
+> Please drop the macro.
+> 
+> And write this inline function out to be readable, single-level ?:
+> comments are impossible to read, let alone double-level ones.
+> 
+> Write code for people first, compilers second.  You gain nothing by
+> making this terse except to confuse people.
+
+Ack. This inline function is different from the previous macro.
+
+Will keep both as inline functions.
+
+> 
+>> +
+>> +static inline void dcc_list_writel(struct dcc_drvdata *drvdata,
+>> +				   u32 ll, u32 val, u32 off)
+>> +{
+>> +	u32 offset = dcc_list_offset(drvdata->mem_map_ver) + off;
+>> +
+>> +	writel(val, drvdata->base + ll * 0x80 + offset);
+> 
+> What is this magic 0x80 for?
+
+This is the list offset needed for address calculation as per the 
+dcc-hardware specification. Will declare a macro for this.
+
+> 
+>> +}
+>> +
+>> +static inline u32 dcc_list_readl(struct dcc_drvdata *drvdata, u32 ll, u32 off)
+>> +{
+>> +	u32 offset = dcc_list_offset(drvdata->mem_map_ver) + off;
+>> +
+>> +	return readl(drvdata->base + ll * 0x80 + offset);
+> 
+> Again, where did 0x80 come from?
+
+Same as above.
+
+> 
+>> +}
+>> +
+>> +static void dcc_sram_write_auto(struct dcc_drvdata *drvdata,
+>> +				u32 val, u32 *off)
+>> +{
+>> +	/* If the overflow condition is met increment the offset
+>> +	 * and return to indicate that overflow has occurred
+>> +	 */
+>> +	if (unlikely(*off > drvdata->ram_size - 4)) {
+>> +		*off += 4;
+>> +		return;
+> 
+> You didn't indicate anything here, all you did was succeed at the call,
+> the caller has no way of ever knowing this failed.
+> 
+> Why not return an error?
+
+As per previous discussions it was decided to perform the write 
+speculatively. So that while writing to the dcc_sram if we exceed
+the memory size, dcc will skip the write and keep incrementing
+the offset. In the method "dcc_emit_config" we have the check to
+finally detect if we have exceeded the sram offset
+
+if (cfg.sram_offset + total_len > drvdata->ram_size) {
+	cfg.sram_offset += total_len;
+	goto overstep;
+}
+
+> 
+>> +	}
+>> +
+>> +	writel(val, drvdata->ram_base + *off);
+>> +
+>> +	*off += 4;
+> 
+> See, same modification as your "error" above.
+> 
+> How was this tested?
+
+This increment is needed to update the offset for the next memory
+position in dcc_sram.
+
+> 
+>> +static int dcc_emit_config(struct dcc_drvdata *drvdata, unsigned int curr_list)
+>> +{
+>> +	int ret;
+>> +	u32 total_len, pos;
+>> +	struct dcc_config_entry *entry;
+>> +	struct dcc_cfg_attr cfg;
+>> +	struct dcc_cfg_loop_attr cfg_loop;
+>> +
+>> +	memset(&cfg, 0, sizeof(cfg));
+>> +	memset(&cfg_loop, 0, sizeof(cfg_loop));
+> 
+> Why are these large structures on the stack?
+
+cfg_loop is needed for offset calculation in case of dcc loop 
+instructions based on the way it needs to be configured in dcc_sram
+for dcc hardware to interpret it. entry, cfg is a generic structure used
+across all dcc instructions. All these structures are needed for the
+memory checks after we are done with configuring all the dcc instructions.
+
+> 
+> And if on the stack, why not have the compiler initialize them to 0 for
+> you automatically?
+
+Ack
+
+> 
+> I stopped reviewing here...
+> 
+> greg k-h
