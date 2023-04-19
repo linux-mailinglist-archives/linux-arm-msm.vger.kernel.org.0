@@ -2,87 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4CE56E7396
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 09:01:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 899EB6E73E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 09:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231226AbjDSHBX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 03:01:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34728 "EHLO
+        id S231251AbjDSHWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 03:22:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbjDSHBW (ORCPT
+        with ESMTP id S231238AbjDSHWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 03:01:22 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 623F9191;
-        Wed, 19 Apr 2023 00:01:20 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33J6JpDk007974;
-        Wed, 19 Apr 2023 07:00:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KyzlXhyFGaaeR55GRtCttFAUB+UfMwYPL77LV2G/rC4=;
- b=BXBSDQL3sXuAIdfAX7iaCZB24dODZzWCjX43QKhcOLR3DPlZY8x4qTYG5FHAtkDyd7wv
- 0tEi+sUkNDcJpsEZGh0X9gE2dxdovap7NL0JDlDtCViz5kptBPDEh4QFQKan0ymowWFk
- jha3mfhpVgdPekJkJKI7PuzojBah5rIQHnYSiTTUP1cUXabuYU61/IaiMLWp2pQiQdIN
- 5TUl3Q6gLKLGTo/UScfxejMysN5Mpd0zYcJqcHZR7MySP04W+kMODdk+fhwKHyjE8SQn
- XMCLspJR1BpX751HIb0IleEGj+DFQ8k6nEdQWHNBaUoK87ETw2fn+sn3PDxMyuSbtgmD Og== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q25kwrm5f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 07:00:51 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33J70okY018058
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 07:00:50 GMT
-Received: from [10.50.49.141] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
- 2023 00:00:45 -0700
-Message-ID: <f1456dd7-5dcf-d91a-459c-65efca4a3444@quicinc.com>
-Date:   Wed, 19 Apr 2023 12:30:19 +0530
+        Wed, 19 Apr 2023 03:22:41 -0400
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D58740F0;
+        Wed, 19 Apr 2023 00:22:38 -0700 (PDT)
+Received: from [192.168.0.2] (ip5f5ae81a.dynamic.kabel-deutschland.de [95.90.232.26])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmenzel)
+        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 1A23461E4052B;
+        Wed, 19 Apr 2023 09:22:37 +0200 (CEST)
+Message-ID: <a26a1b41-dd6b-4b01-696e-79e195787958@molgen.mpg.de>
+Date:   Wed, 19 Apr 2023 09:22:36 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH V22 2/3] misc: dcc: Add driver support for Data Capture
- and Compare unit(DCC)
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        "Rajendra Nayak" <quic_rjendra@quicinc.com>
-References: <cover.1681829664.git.quic_schowdhu@quicinc.com>
- <e4f41fa61d9dd66f68bbd7650c6fbf96810c3569.1681829664.git.quic_schowdhu@quicinc.com>
- <2023041833-alienate-trash-f4da@gregkh>
+Subject: Re: [PATCH v3] Bluetooth: btusb: Add WCN6855 devcoredump support
 Content-Language: en-US
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <2023041833-alienate-trash-f4da@gregkh>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2M9xIiiVGE63EV5UL28bIqVaC937xsDY
-X-Proofpoint-GUID: 2M9xIiiVGE63EV5UL28bIqVaC937xsDY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-19_02,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- malwarescore=0 impostorscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=999 mlxscore=0 spamscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304190064
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, quic_hemantg@quicinc.com,
+        mka@chromium.org
+References: <20230419033805.27356-1-quic_tjiang@quicinc.com>
+From:   Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20230419033805.27356-1-quic_tjiang@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,445 +48,335 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dear Tim,
 
 
-On 4/18/2023 9:15 PM, Greg Kroah-Hartman wrote:
-> On Tue, Apr 18, 2023 at 08:52:36PM +0530, Souradeep Chowdhury wrote:
->> The DCC is a DMA Engine designed to capture and store data during system
->> crash or software triggers. The DCC operates based on user inputs via
->> the debugfs interface. The user gives addresses as inputs and these
->> addresses are stored in the dcc sram. In case of a system crash or a
->> manual software trigger by the user through the debugfs interface, the
->> dcc captures and stores the values at these addresses. This patch
->> contains the driver which has all the methods pertaining to the debugfs
->> interface, auxiliary functions to support all the four fundamental
->> operations of dcc namely read, write, read/modify/write and loop. The
->> probe method here instantiates all the resources necessary for dcc to
->> operate mainly the dedicated dcc sram where it stores the values. The
->> DCC driver can be used for debugging purposes without going for a reboot
->> since it can perform software triggers as well based on user inputs.
->>
->> Also add the documentation for debugfs entries which explains the
->> functionalities of each debugfs file that has been created for dcc.
+Than you for the patch.
+
+Am 19.04.23 um 05:38 schrieb Tim Jiang:
+> WCN6855 will report memdump via ACL data or HCI event when
+> it get crashed, so we collect memdump to debug firmware.
+
+s/when it get crashed/when it crashes/
+
+Please give an example, how to collect the memdump, and maybe even how 
+to force a crash.
+
+Please amend the commit message to document the specification/datasheet 
+name and revision.
+
+Is WCN6855 the only device supporting this, or could other devices be 
+easily added?
+
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+> ---
+>   drivers/bluetooth/btusb.c | 222 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 222 insertions(+)
 > 
-> I see no documentation entries in this commit :(
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 2303b0a66323..f045bbb0ee09 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -733,6 +733,16 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
+>   	{}
+>   };
+>   
+> +struct qca_dump_info {
+> +	/* fields for dump collection */
+> +	u16 id_vendor;
+> +	u16 id_product;
+> +	u32 fw_version;
+> +	u32 controller_id;
+> +	u32 ram_dump_size;
 
-My apologies, this patch was given from qcom-next tree which already has 
-the documentation merged. Will include it from the next versions.
+I’d add the unit to the variable name.
 
-> 
->> The following is the justification of using debugfs interface over the
->> other alternatives like sysfs/ioctls
->>
->> i) As can be seen from the debugfs attribute descriptions, some of the
->> debugfs attribute files here contains multiple arguments which needs to
->> be accepted from the user. This goes against the design style of sysfs.
->>
->> ii) The user input patterns have been made simple and convenient in this
->> case with the use of debugfs interface as user doesn't need to shuffle
->> between different files to execute one instruction as was the case on
->> using other alternatives.
-> 
-> Why do you have debugfs and also a misc device?  How are they related?
-> Why both?  Why not just one?  What userspace tools are going to use
-> either of these interfaces and where are they published to show how this
-> all was tested?
+> +	u16 ram_dump_seqno;
+> +};
+> +
+>   #define BTUSB_MAX_ISOC_FRAMES	10
+>   
+>   #define BTUSB_INTR_RUNNING	0
+> @@ -752,6 +762,7 @@ static const struct dmi_system_id btusb_needs_reset_resume_table[] = {
+>   #define BTUSB_WAKEUP_AUTOSUSPEND	14
+>   #define BTUSB_USE_ALT3_FOR_WBS	15
+>   #define BTUSB_ALT6_CONTINUOUS_TX	16
+> +#define BTUSB_HW_SSR_ACTIVE	17
+>   
+>   struct btusb_data {
+>   	struct hci_dev       *hdev;
+> @@ -814,6 +825,8 @@ struct btusb_data {
+>   
+>   	int oob_wake_irq;   /* irq for out-of-band wake-on-bt */
+>   	unsigned cmd_timeout_cnt;
+> +
+> +	struct qca_dump_info qca_dump;
+>   };
+>   
+>   static void btusb_reset(struct hci_dev *hdev)
+> @@ -904,6 +917,11 @@ static void btusb_qca_cmd_timeout(struct hci_dev *hdev)
+>   	struct btusb_data *data = hci_get_drvdata(hdev);
+>   	struct gpio_desc *reset_gpio = data->reset_gpio;
+>   
+> +	if (test_bit(BTUSB_HW_SSR_ACTIVE, &data->flags)) {
+> +		bt_dev_info(hdev, "Ramdump in progress, defer cmd_timeout");
+> +		return;
+> +	}
+> +
+>   	if (++data->cmd_timeout_cnt < 5)
+>   		return;
+>   
+> @@ -3294,6 +3312,202 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+>   	return 0;
+>   }
+>   
+> +#define QCA_MEMDUMP_ACL_HANDLE 0x2EDD
+> +#define QCA_MEMDUMP_SIZE_MAX  0x100000
+> +#define QCA_MEMDUMP_VSE_CLASS 0x01
+> +#define QCA_MEMDUMP_MSG_TYPE 0x08
+> +#define QCA_MEMDUMP_PKT_SIZE 248
+> +#define QCA_LAST_SEQUENCE_NUM 0xffff
+> +
+> +struct qca_dump_hdr {
+> +	u8 vse_class;
+> +	u8 msg_type;
+> +	__le16 seqno;
+> +	u8 reserved;
+> +	union {
+> +		u8 data[0];
+> +		struct {
+> +			__le32 ram_dump_size;
+> +			u8 data0[0];
+> +		} __packed;
+> +	};
+> +} __packed;
+> +
+> +
+> +static void btusb_dump_hdr_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	char buf[128];
+> +	struct btusb_data *btdata = hci_get_drvdata(hdev);
+> +
+> +	snprintf(buf, sizeof(buf), "Controller Name: 0x%x\n",
+> +			btdata->qca_dump.controller_id);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "Firmware Version: 0x%x\n",
+> +			btdata->qca_dump.fw_version);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "Driver: %s\nVendor: qca\n",
+> +			btusb_driver.name);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "VID: 0x%x\nPID:0x%x\n",
+> +			btdata->qca_dump.id_vendor, btdata->qca_dump.id_product);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +
+> +	snprintf(buf, sizeof(buf), "Lmp Subversion: 0x%x\n",
+> +			hdev->lmp_subver);
+> +	skb_put_data(skb, buf, strlen(buf));
+> +}
+> +
+> +static void btusb_coredump_qca(struct hci_dev *hdev)
+> +{
+> +	static const u8 param[] = { 0x26 };
+> +	struct sk_buff *skb;
+> +
+> +	skb = __hci_cmd_sync(hdev, 0xfc0c, 1, param, HCI_CMD_TIMEOUT);
+> +	if (IS_ERR(skb))
+> +		bt_dev_err(hdev, "%s: triggle crash failed (%ld)", __func__, PTR_ERR(skb));
 
-DCC has two fundamental steps of usage:-
+What does “triggle” mean?
 
-1.Configuring the register addresses on the dcc_sram which is done by 
-user through the debugfs interface. For example:-
+> +	kfree_skb(skb);
+> +}
+> +
+> +/*
+> + * ==0: not a dump pkt.
+> + * < 0: fails to handle a dump pkt
+> + * > 0: otherwise.
+> + */
+> +static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	int ret = 1;
+> +	u8 pkt_type;
+> +	u8 *sk_ptr;
+> +	unsigned int sk_len;
+> +	u16 seqno;
+> +	u32 dump_size;
+> +
+> +	struct hci_event_hdr *event_hdr;
+> +	struct hci_acl_hdr *acl_hdr;
+> +	struct qca_dump_hdr *dump_hdr;
+> +	struct btusb_data *btdata = hci_get_drvdata(hdev);
+> +	struct usb_device *udev = btdata->udev;
+> +
+> +	pkt_type = hci_skb_pkt_type(skb);
+> +	sk_ptr = skb->data;
+> +	sk_len = skb->len;
+> +
+> +	if (pkt_type == HCI_ACLDATA_PKT) {
+> +		acl_hdr = hci_acl_hdr(skb);
+> +		if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
+> +			return 0;
+> +		sk_ptr += HCI_ACL_HDR_SIZE;
+> +		sk_len -= HCI_ACL_HDR_SIZE;
+> +		event_hdr = (struct hci_event_hdr *)sk_ptr;
+> +	} else {
+> +		event_hdr = hci_event_hdr(skb);
+> +	}
+> +
+> +	if ((event_hdr->evt != HCI_VENDOR_PKT)
+> +		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
+> +		return 0;
 
-echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
+Indentation/alignment of the second and third line (it’s the same) looks 
+confusing, as it’s not clear, what is the body.
 
-Here we are configuring the register addresses for list 3, the 'R'
-indicates a read operation, so this register value will be read
-in case of a software trigger or kernel panic/watchdog bite and
-dumped into the dcc_sram.
+> +
+> +	sk_ptr += HCI_EVENT_HDR_SIZE;
+> +	sk_len -= HCI_EVENT_HDR_SIZE;
+> +
+> +	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
+> +	if ((sk_len < offsetof(struct qca_dump_hdr, data))
+> +		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
+> +	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
 
-2.The dcc_sram content is exposed to the user in the form of a misc 
-device. The user can parse the content of this dcc_sram to get the
-register values. There is an opensource parser available for dcc at
-the following location:-
+The coding style is off.
 
-https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
+> +		return 0;
+> +
+> +	/*it is dump pkt now*/
 
-> 
->> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->> Reviewed-by: Alex Elder <elder@linaro.org>
->> ---
->>   drivers/misc/Kconfig  |    8 +
->>   drivers/misc/Makefile |    1 +
->>   drivers/misc/dcc.c    | 1300 +++++++++++++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 1309 insertions(+)
->>   create mode 100644 drivers/misc/dcc.c
->>
->> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
->> index 433aa41..e2bc652 100644
->> --- a/drivers/misc/Kconfig
->> +++ b/drivers/misc/Kconfig
->> @@ -276,6 +276,14 @@ config QCOM_COINCELL
->>   	  to maintain PMIC register and RTC state in the absence of
->>   	  external power.
->>   
->> +config QCOM_DCC
->> +	tristate "Qualcomm Technologies, Inc. Data Capture and Compare(DCC) engine driver"
->> +	depends on ARCH_QCOM || COMPILE_TEST
->> +	help
->> +	  This option enables driver for Data Capture and Compare engine. DCC
->> +	  driver provides interface to configure DCC block and read back
->> +	  captured data from DCC's internal SRAM.
-> 
-> 
-> What is the module name?
+Please add spaces, and elaborate. I do not understant the comment.
 
-It's qcom-dcc, will update the name here.
+> +	seqno = le16_to_cpu(dump_hdr->seqno);
+> +	if (seqno == 0) {
+> +		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
+> +		dump_size = le32_to_cpu(dump_hdr->ram_dump_size);
+> +		if (!dump_size || (dump_size > QCA_MEMDUMP_SIZE_MAX)) {
+> +			ret = -EILSEQ;
+> +			bt_dev_err(hdev, "Invalid memdump size(%u)",
+> +				   dump_size);
+> +			goto out;
+> +		}
+> +
+> +		ret = hci_devcd_init(hdev, dump_size);
+> +		if (ret < 0) {
+> +			bt_dev_err(hdev, "memdump init error(%d)", ret);
 
-> 
->> +
->>   config QCOM_FASTRPC
->>   	tristate "Qualcomm FastRPC"
->>   	depends on ARCH_QCOM || COMPILE_TEST
->> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
->> index 56de439..6fa8efa 100644
->> --- a/drivers/misc/Makefile
->> +++ b/drivers/misc/Makefile
->> @@ -16,6 +16,7 @@ obj-$(CONFIG_TIFM_CORE)       	+= tifm_core.o
->>   obj-$(CONFIG_TIFM_7XX1)       	+= tifm_7xx1.o
->>   obj-$(CONFIG_PHANTOM)		+= phantom.o
->>   obj-$(CONFIG_QCOM_COINCELL)	+= qcom-coincell.o
->> +obj-$(CONFIG_QCOM_DCC)		+= dcc.o
-> 
-> Why such a generic name?  Shouldn't it be qcom-dcc?
+I’d add spaces before the (.
 
-Ack
+> +			goto out;
+> +		}
+> +
+> +		btdata->qca_dump.ram_dump_size = dump_size;
+> +		btdata->qca_dump.ram_dump_seqno = 0;
+> +		sk_ptr += offsetof(struct qca_dump_hdr, data0);
+> +		sk_len -= offsetof(struct qca_dump_hdr, data0);
+> +
+> +		usb_disable_autosuspend(udev);
+> +		bt_dev_info(hdev, "%s memdump size(%u)\n",
+> +			    (pkt_type == HCI_ACLDATA_PKT) ? "ACL" : "event",
+> +			    dump_size);
+> +	} else {
+> +		sk_ptr += offsetof(struct qca_dump_hdr, data);
+> +		sk_len -= offsetof(struct qca_dump_hdr, data);
+> +	}
+> +
+> +	if (!btdata->qca_dump.ram_dump_size) {
+> +		ret = -EINVAL;
+> +		bt_dev_err(hdev, "memdump is not active");
 
-> 
-> 
-> 
->>   obj-$(CONFIG_QCOM_FASTRPC)	+= fastrpc.o
->>   obj-$(CONFIG_SENSORS_BH1770)	+= bh1770glc.o
->>   obj-$(CONFIG_SENSORS_APDS990X)	+= apds990x.o
->> diff --git a/drivers/misc/dcc.c b/drivers/misc/dcc.c
->> new file mode 100644
->> index 0000000..7231ed9
->> --- /dev/null
->> +++ b/drivers/misc/dcc.c
->> @@ -0,0 +1,1300 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> 
-> No work happened on this code in 2022?  All 22 of these entries were
-> only in 2021 and 2023?
+What is the heuristics behind that? Setting `ram_dump_size` to zero 
+disables the feature? Where is this documented?
 
-Ack
+> +		goto out;
+> +	}
+> +
+> +	if ((seqno > btdata->qca_dump.ram_dump_seqno + 1) && (seqno != QCA_LAST_SEQUENCE_NUM)) {
+> +		dump_size = QCA_MEMDUMP_PKT_SIZE * (seqno - btdata->qca_dump.ram_dump_seqno - 1);
+> +		hci_devcd_append_pattern(hdev, 0x0, dump_size);
+> +		bt_dev_err(hdev,
+> +			   "expected memdump seqno(%u) is not received(%u)\n",
 
-> 
->> + */
->> +
->> +#include <linux/bitfield.h>
->> +#include <linux/bitops.h>
->> +#include <linux/debugfs.h>
->> +#include <linux/delay.h>
->> +#include <linux/fs.h>
->> +#include <linux/io.h>
->> +#include <linux/iopoll.h>
->> +#include <linux/miscdevice.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/of_device.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/slab.h>
->> +#include <linux/uaccess.h>
->> +
->> +#define STATUS_READY_TIMEOUT		5000  /* microseconds */
->> +
->> +/* DCC registers */
->> +#define DCC_HW_INFO			0x04
->> +#define DCC_LL_NUM_INFO			0x10
->> +#define DCC_STATUS(vers)		((vers) == 1 ? 0x0c : 0x1c)
-> 
-> Why isn't this just an inline function?
+I’d add spaces before the ( – also in other places.
 
-Ack. Will make this inline
 
-> 
->> +#define DCC_LL_LOCK			0x00
->> +#define DCC_LL_CFG			0x04
->> +#define DCC_LL_BASE			0x08
->> +#define DCC_FD_BASE			0x0c
->> +#define DCC_LL_TIMEOUT			0x10
->> +#define DCC_LL_INT_ENABLE		0x18
->> +#define DCC_LL_INT_STATUS		0x1c
->> +#define DCC_LL_SW_TRIGGER		0x2c
->> +#define DCC_LL_BUS_ACCESS_STATUS	0x30
->> +
->> +/* Default value used if a bit 6 in the HW_INFO register is set. */
->> +#define DCC_FIX_LOOP_OFFSET		16
->> +
->> +/* Mask to find version info from HW_Info register */
->> +#define DCC_VER_INFO_MASK		BIT(9)
->> +
->> +#define MAX_DCC_OFFSET			GENMASK(9, 2)
->> +#define MAX_DCC_LEN			GENMASK(6, 0)
->> +#define MAX_LOOP_CNT			GENMASK(7, 0)
->> +#define MAX_LOOP_ADDR			10
->> +
->> +#define DCC_ADDR_DESCRIPTOR		0x00
->> +#define DCC_ADDR_LIMIT			27
->> +#define DCC_WORD_SIZE			sizeof(u32)
->> +#define DCC_ADDR_RANGE_MASK		GENMASK(31, 4)
->> +#define DCC_LOOP_DESCRIPTOR		BIT(30)
->> +#define DCC_RD_MOD_WR_DESCRIPTOR	BIT(31)
->> +#define DCC_LINK_DESCRIPTOR		GENMASK(31, 30)
->> +#define DCC_STATUS_MASK			GENMASK(1, 0)
->> +#define DCC_LOCK_MASK			BIT(0)
->> +#define DCC_LOOP_OFFSET_MASK		BIT(6)
->> +#define DCC_TRIGGER_MASK		BIT(9)
->> +
->> +#define DCC_WRITE_MASK			BIT(15)
->> +#define DCC_WRITE_OFF_MASK		GENMASK(7, 0)
->> +#define DCC_WRITE_LEN_MASK		GENMASK(14, 8)
->> +
->> +#define DCC_READ_IND			0x00
->> +#define DCC_WRITE_IND			(BIT(28))
->> +
->> +#define DCC_AHB_IND			0x00
->> +#define DCC_APB_IND			BIT(29)
->> +
->> +#define DCC_MAX_LINK_LIST		8
->> +
->> +#define DCC_VER_MASK2			GENMASK(5, 0)
->> +
->> +#define DCC_SRAM_WORD_LENGTH		4
->> +
->> +#define DCC_RD_MOD_WR_ADDR              0xC105E
->> +
->> +enum dcc_descriptor_type {
->> +	DCC_READ_TYPE,
->> +	DCC_LOOP_TYPE,
->> +	DCC_READ_WRITE_TYPE,
->> +	DCC_WRITE_TYPE
->> +};
->> +
->> +struct dcc_config_entry {
->> +	u32				base;
->> +	u32				offset;
->> +	u32				len;
->> +	u32				loop_cnt;
->> +	u32				write_val;
->> +	u32				mask;
->> +	bool				apb_bus;
->> +	enum dcc_descriptor_type	desc_type;
->> +	struct list_head		list;
->> +};
-> 
-> No documentation for this structure?
+Kind regards,
 
-Ack. Will add documentation to this structure as well.
+Paul
 
-> 
->> +
->> +/**
->> + * struct dcc_drvdata - configuration information related to a dcc device
->> + * @base:		Base Address of the dcc device
->> + * @dev:		The device attached to the driver data
->> + * @mutex:		Lock to protect access and manipulation of dcc_drvdata
->> + * @ram_base:		Base address for the SRAM dedicated for the dcc device
->> + * @ram_size:		Total size of the SRAM dedicated for the dcc device
->> + * @ram_offset:		Offset to the SRAM dedicated for dcc device
->> + * @mem_map_ver:	Memory map version of DCC hardware
->> + * @ram_cfg:		Used for address limit calculation for dcc
->> + * @ram_start:		Starting address of DCC SRAM
->> + * @sram_dev:		Miscellaneous device equivalent of dcc SRAM
->> + * @cfg_head:		Points to the head of the linked list of addresses
->> + * @dbg_dir:		The dcc debugfs directory under which all the debugfs files are placed
->> + * @nr_link_list:	Total number of linkedlists supported by the DCC configuration
->> + * @loop_shift:		Loop offset bits range for the addresses
->> + * @enable_bitmap:	Bitmap to capture the enabled status of each linked list of addresses
->> + */
->> +struct dcc_drvdata {
->> +	void __iomem		*base;
->> +	void __iomem            *ram_base;
->> +	struct device		*dev;
-> 
-> Why do you need this back-pointer here?
 
-This is getting used at multiple places to log
-dev_err and also for resource allocation using
-devm_kzalloc.
-
-> 
->> +	struct mutex		mutex;
->> +	size_t			ram_size;
->> +	size_t			ram_offset;
->> +	int			mem_map_ver;
->> +	unsigned int		ram_cfg;
->> +	unsigned int		ram_start;
->> +	struct miscdevice	sram_dev;
-> 
-> Wait, this is the struct device, right?  Or not?
-
-miscdevice here represents the dcc_sram, an io-memory
-dedicated to dcc for configuring/storing register values.
-Whereas struct device represents the dcc_device which can
-be used to write control signals on the bus to handle dcc
-hardware operation sequence(like config_reset,sw_trigger etc.)
-
-> 
->> +	struct list_head	*cfg_head;
->> +	struct dentry		*dbg_dir;
-> 
-> Why is this needed and not just looked up when necessary?
-
-This needs to be passed while creating sub-directories and also
-while removing. Rather than looking up everytime,saving and
-re-using this in here.
-
-> 
->> +	size_t			nr_link_list;
->> +	u8			loop_shift;
->> +	unsigned long		*enable_bitmap;
-> 
-> So this is a list of bitmaps?  Why "unsigned long"?  Why not u64?
-
-Ack
-
-> 
->> +};
->> +
->> +struct dcc_cfg_attr {
->> +	u32	addr;
->> +	u32	prev_addr;
->> +	u32	prev_off;
->> +	u32	link;
->> +	u32	sram_offset;
->> +};
->> +
->> +struct dcc_cfg_loop_attr {
->> +	u32	loop_cnt;
->> +	u32	loop_len;
->> +	u32	loop_off;
->> +	bool    loop_start;
->> +};
->> +
->> +static inline u32 dcc_list_offset(int version)
->> +{
->> +	return version == 1 ? 0x1c : version == 2 ? 0x2c : 0x34;
->> +}
-> 
-> Ah, you do have an inline function for the above mentioned macro.
-> Please drop the macro.
-> 
-> And write this inline function out to be readable, single-level ?:
-> comments are impossible to read, let alone double-level ones.
-> 
-> Write code for people first, compilers second.  You gain nothing by
-> making this terse except to confuse people.
-
-Ack. This inline function is different from the previous macro.
-
-Will keep both as inline functions.
-
-> 
->> +
->> +static inline void dcc_list_writel(struct dcc_drvdata *drvdata,
->> +				   u32 ll, u32 val, u32 off)
->> +{
->> +	u32 offset = dcc_list_offset(drvdata->mem_map_ver) + off;
->> +
->> +	writel(val, drvdata->base + ll * 0x80 + offset);
-> 
-> What is this magic 0x80 for?
-
-This is the list offset needed for address calculation as per the 
-dcc-hardware specification. Will declare a macro for this.
-
-> 
->> +}
->> +
->> +static inline u32 dcc_list_readl(struct dcc_drvdata *drvdata, u32 ll, u32 off)
->> +{
->> +	u32 offset = dcc_list_offset(drvdata->mem_map_ver) + off;
->> +
->> +	return readl(drvdata->base + ll * 0x80 + offset);
-> 
-> Again, where did 0x80 come from?
-
-Same as above.
-
-> 
->> +}
->> +
->> +static void dcc_sram_write_auto(struct dcc_drvdata *drvdata,
->> +				u32 val, u32 *off)
->> +{
->> +	/* If the overflow condition is met increment the offset
->> +	 * and return to indicate that overflow has occurred
->> +	 */
->> +	if (unlikely(*off > drvdata->ram_size - 4)) {
->> +		*off += 4;
->> +		return;
-> 
-> You didn't indicate anything here, all you did was succeed at the call,
-> the caller has no way of ever knowing this failed.
-> 
-> Why not return an error?
-
-As per previous discussions it was decided to perform the write 
-speculatively. So that while writing to the dcc_sram if we exceed
-the memory size, dcc will skip the write and keep incrementing
-the offset. In the method "dcc_emit_config" we have the check to
-finally detect if we have exceeded the sram offset
-
-if (cfg.sram_offset + total_len > drvdata->ram_size) {
-	cfg.sram_offset += total_len;
-	goto overstep;
-}
-
-> 
->> +	}
->> +
->> +	writel(val, drvdata->ram_base + *off);
->> +
->> +	*off += 4;
-> 
-> See, same modification as your "error" above.
-> 
-> How was this tested?
-
-This increment is needed to update the offset for the next memory
-position in dcc_sram.
-
-> 
->> +static int dcc_emit_config(struct dcc_drvdata *drvdata, unsigned int curr_list)
->> +{
->> +	int ret;
->> +	u32 total_len, pos;
->> +	struct dcc_config_entry *entry;
->> +	struct dcc_cfg_attr cfg;
->> +	struct dcc_cfg_loop_attr cfg_loop;
->> +
->> +	memset(&cfg, 0, sizeof(cfg));
->> +	memset(&cfg_loop, 0, sizeof(cfg_loop));
-> 
-> Why are these large structures on the stack?
-
-cfg_loop is needed for offset calculation in case of dcc loop 
-instructions based on the way it needs to be configured in dcc_sram
-for dcc hardware to interpret it. entry, cfg is a generic structure used
-across all dcc instructions. All these structures are needed for the
-memory checks after we are done with configuring all the dcc instructions.
-
-> 
-> And if on the stack, why not have the compiler initialize them to 0 for
-> you automatically?
-
-Ack
-
-> 
-> I stopped reviewing here...
-> 
-> greg k-h
+> +			   btdata->qca_dump.ram_dump_seqno, seqno);
+> +		btdata->qca_dump.ram_dump_seqno = seqno;
+> +		kfree_skb(skb);
+> +		return ret;
+> +	}
+> +
+> +	skb_pull(skb, skb->len - sk_len);
+> +	hci_devcd_append(hdev, skb);
+> +	btdata->qca_dump.ram_dump_seqno++;
+> +	if (seqno == QCA_LAST_SEQUENCE_NUM) {
+> +		bt_dev_info(hdev,
+> +				"memdump done: pkts(%u), total(%u)\n",
+> +				btdata->qca_dump.ram_dump_seqno, btdata->qca_dump.ram_dump_size);
+> +
+> +		hci_devcd_complete(hdev);
+> +		goto out;
+> +	}
+> +	return ret;
+> +
+> +out:
+> +	if (btdata->qca_dump.ram_dump_size)
+> +		usb_enable_autosuspend(udev);
+> +	btdata->qca_dump.ram_dump_size = 0;
+> +	btdata->qca_dump.ram_dump_seqno = 0;
+> +	clear_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
+> +
+> +	if (ret < 0)
+> +		kfree_skb(skb);
+> +	return ret;
+> +}
+> +
+> +static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	if (handle_dump_pkt_qca(hdev, skb))
+> +		return 0;
+> +	return hci_recv_frame(hdev, skb);
+> +}
+> +
+> +static int btusb_recv_evt_qca(struct hci_dev *hdev, struct sk_buff *skb)
+> +{
+> +	if (handle_dump_pkt_qca(hdev, skb))
+> +		return 0;
+> +	return hci_recv_frame(hdev, skb);
+> +}
+> +
+> +
+>   #define QCA_DFU_PACKET_LEN	4096
+>   
+>   #define QCA_GET_TARGET_VERSION	0x09
+> @@ -3628,6 +3842,9 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+>   	if (err < 0)
+>   		return err;
+>   
+> +	btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
+> +	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
+> +
+>   	if (!(status & QCA_SYSCFG_UPDATED)) {
+>   		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+>   		if (err < 0)
+> @@ -4117,6 +4334,11 @@ static int btusb_probe(struct usb_interface *intf,
+>   	}
+>   
+>   	if (id->driver_info & BTUSB_QCA_WCN6855) {
+> +		data->qca_dump.id_vendor = id->idVendor;
+> +		data->qca_dump.id_product = id->idProduct;
+> +		data->recv_event = btusb_recv_evt_qca;
+> +		data->recv_acl = btusb_recv_acl_qca;
+> +		hci_devcd_register(hdev, btusb_coredump_qca, btusb_dump_hdr_qca, NULL);
+>   		data->setup_on_usb = btusb_setup_qca;
+>   		hdev->shutdown = btusb_shutdown_qca;
+>   		hdev->set_bdaddr = btusb_set_bdaddr_wcn6855;
