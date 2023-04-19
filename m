@@ -2,138 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29F396E7CEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 16:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C684A6E7D18
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 16:42:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231667AbjDSOie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 10:38:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38912 "EHLO
+        id S232898AbjDSOmB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 10:42:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233085AbjDSOid (ORCPT
+        with ESMTP id S232632AbjDSOmB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 10:38:33 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8137C3C17;
-        Wed, 19 Apr 2023 07:38:31 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id he11-20020a05600c540b00b003ef6d684102so1568822wmb.3;
-        Wed, 19 Apr 2023 07:38:31 -0700 (PDT)
+        Wed, 19 Apr 2023 10:42:01 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D2324228
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 07:41:58 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id eo4-20020a05600c82c400b003f05a99a841so1554104wmb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 07:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681915110; x=1684507110;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pRLB4jafvDSF5N3zbFXDTvNqa3CWokYQT7DnSmldu+s=;
-        b=B6s2epmCAFJBrmAoB93mRJYd/ff0qly363oyJkb5paDWH4zH4tdPVJFuITaSc1N72l
-         U4HOTyjY88hj/udELRS4uSsrNpX5Vpe17ZUdi4PI3fI7mxs93bxsNH/lHXhAtxTrYF3X
-         i9RchJQa5d4MWGxMb7ZxqdEbEsXlWy5QyUpsoiS9jq/wk84HwkYHCeDhdlaDpOvN+Htu
-         Oxt4nxTx6igTQpl1D/YjYYQFslkA/GlMXAAK6XWyLulRa2HfeYEP30j0TSAF5jggaNRw
-         6jP7dxN14tx+r8E/mw9Lp7VGwEfMhTVokzsg46F+eIHoMyLbe57euwMka7/nx7vlLAPc
-         jXDw==
+        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681915316; x=1684507316;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bbQkv8jwrzDkswGUNpm+pnkw/ViVbiTH2eyiHhJb3M4=;
+        b=xpqwOKviV3x6su4F66G0lA+GLbxZZnI5CB6LrMkiVKlNfY184LccJ0g/wVEqGcKIsx
+         RGVql6UqqH8puGBagZvlGoVC0DD1VpP35GIbxxfraL8jGnb0qHtaBSk7K93EpB4+PCtv
+         nMoG71hok4guw52ZAJReJ4xRGrXk2mCRc904XOLgw63OUNHFide9KukVfKkngesDhGwb
+         uXTSnIn1HfFEWPLCGxia1zJr+Crn9oewGMzuzbGIRM55foxtX/A7zXve63LtGtmmCGGh
+         aoLEfRBTqy46CdBc57ZGzBXagrMFsIWzyX+2FHVWzsr47erJlsI9mR5R7gOKDnqFd4BE
+         ITfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681915110; x=1684507110;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pRLB4jafvDSF5N3zbFXDTvNqa3CWokYQT7DnSmldu+s=;
-        b=T8aSBHJlNG46OLRHSqbty/MNf1skaCeraAf5Gj1QKZ1ejAn711d925OQOGQNvaotd4
-         rjZWk2P3l4MwODynOxEwNvLS3nzzhqHkzY49W7p2D8+TnUJmZKQYyhvfTEO56csGOpcR
-         zOfjdFA3fHBovzzbjD+9JmZPniH3U5eucbJUCDvomI3AudahbXzzkVbMMrU+La5Qxf80
-         Rvwcy8SWmEou1UhbmkonlSzTtiXJXkfXmvyt9VVlxt+6l18Rjmi+3ui2+OyLtMx45oLq
-         vPy8KFOxUXXYO2FcTTEp9R6HakeZ6Z9Nt8jlk8NxOocP/Vu7R98H6O/FnX96q9fiZRy3
-         DP6A==
-X-Gm-Message-State: AAQBX9c74N46jhIt65zZs2arG+tYdbr/WgTfRKP8BjCK6qg0JkOPBO3J
-        Ly1/3oknkxNEy93hHssl6Jo=
-X-Google-Smtp-Source: AKy350aAVpJgiBuQowINe7K2XwUMEspk5c7HruQFKHK8h6zPcSaAvxR/p4r/S6XEU+mKmXvjSgNJ6w==
-X-Received: by 2002:a1c:4c02:0:b0:3f1:78a7:6bd2 with SMTP id z2-20020a1c4c02000000b003f178a76bd2mr5488015wmf.27.1681915109688;
-        Wed, 19 Apr 2023 07:38:29 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-93-173.ip49.fastwebnet.it. [93.34.93.173])
-        by smtp.gmail.com with ESMTPSA id m14-20020a056000008e00b002c71b4d476asm15911066wrx.106.2023.04.19.07.38.27
+        d=1e100.net; s=20221208; t=1681915316; x=1684507316;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bbQkv8jwrzDkswGUNpm+pnkw/ViVbiTH2eyiHhJb3M4=;
+        b=kAl8Ji0OEg1QhtRNJ9MukMNd27un4f7l4qOEztCPbIPtuv4KDeq4wywu9N4fauaOqo
+         62XQ7DPjVzzorV0VMoycfwHUsR038Ey0/U7w05G9jsHSyvCS5Gtsj/MbXft4o9wAyiB8
+         OTd8+r7lLgB/25XTG+S3+nfUk4y8hmmzAsEm3mo3Ztag7ceoJctFMMJLVJALFSQYBS5n
+         wk6I1FnU0lpwANiyDsZ0PiX8kIwRPizIS3FinSkR8zcUzYzDPX7WKR+EfShHUNWYYeTi
+         +XhBHTXrC3P4IYZ061WObCodTADaLad8l/eKWbQleqHQeLWvfhyd98bf5ID0hZ6gm7+q
+         ZEPQ==
+X-Gm-Message-State: AAQBX9e60oH7O/7Et9GmHmg02POlFoBP3QMNpWaiSZvpd0kcjBW0o7lQ
+        WsC1QfaHFYnQQoUGa9olkbov
+X-Google-Smtp-Source: AKy350b2tHD6YYOyF6EJNHwhdDG0rJNjjB5sIpYsfjHVll/9aH5noTb+iMAlmgjsu/owIXVuGlVOuA==
+X-Received: by 2002:a1c:740b:0:b0:3ed:276d:81a4 with SMTP id p11-20020a1c740b000000b003ed276d81a4mr17303138wmc.32.1681915316615;
+        Wed, 19 Apr 2023 07:41:56 -0700 (PDT)
+Received: from [127.0.1.1] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id m22-20020a7bcb96000000b003f17131952fsm2388519wmi.29.2023.04.19.07.41.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Apr 2023 07:38:28 -0700 (PDT)
-Message-ID: <643ffce4.050a0220.73dcc.1bec@mx.google.com>
-X-Google-Original-Message-ID: <ZD/84vlr8Pe7ntT2@Ansuel-xps.>
-Date:   Wed, 19 Apr 2023 16:38:26 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Heiner Kallweit <hkallweit1@gmail.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Gregory Clement <gregory.clement@bootlin.com>,
-        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        Jonathan McDowell <noodles@earth.li>
-Subject: Re: [net-next PATCH v7 13/16] ARM: dts: qcom: ipq8064-rb3011: Add
- Switch LED for each port
-References: <20230417151738.19426-1-ansuelsmth@gmail.com>
- <20230417151738.19426-14-ansuelsmth@gmail.com>
- <289b7604-d32d-49d9-8f06-87147d6fd473@linaro.org>
+        Wed, 19 Apr 2023 07:41:56 -0700 (PDT)
+From:   Arnaud Vrac <avrac@freebox.fr>
+Subject: [PATCH 00/11] drm/msm/dpu: tweaks for better hardware resources
+ allocation
+Date:   Wed, 19 Apr 2023 16:41:07 +0200
+Message-Id: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <289b7604-d32d-49d9-8f06-87147d6fd473@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIT9P2QC/y3Nyw6CMBCF4Vchs3aSXqhSX8W4KHSUiaGSDgoJ4
+ d0pxuWfnC9nBaHMJHCtVsj0ZeF3KqFPFXR9SE9CjqXBKGNVrT3G8YPTTOEl6OqLs8qdjY4eCmi
+ DELY5pK4/SKJlwr+zOMjQeN8cuzHTg5ff6e2+bTtH7Jp4hAAAAA==
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Arnaud Vrac <avrac@freebox.fr>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2284; i=avrac@freebox.fr;
+ h=from:subject:message-id; bh=NLA8aCokPucqX6VgfqosaRbjjOEPuDhGV/zebS121ow=;
+ b=owEBbQKS/ZANAwAIAXED/9m7NDSrAcsmYgBkP/2Sx+NGYnUY5kQUzXMuJpNkUO1J4MQIjtMlw
+ LyJMlg0K7mJAjMEAAEIAB0WIQSUwb/ndwkXHdZ/QQZxA//ZuzQ0qwUCZD/9kgAKCRBxA//ZuzQ0
+ q5HoD/9i3Ejx1LlCyQTcY4w5DlwreWOk6HnY4l/N3UMPC0w7x+mPamsZ/cVo9/uUtTy0c0GonyD
+ j3iDZj6dvoTbozDGIZlfflLEORYJ7U7Rl8p7ILtlby7FDUc/tOzPTNj+umHN07JxMOvqtjpqSOE
+ Eq1tdJ3x1pmrtE+PZhkNRZ3hA0RxDQIuya67zwFuo6ufl9cyB6S1rGKXbcIPuXpBAL62OkI0naF
+ 6+tHvguoYSez/ttIBx+nUtvQ0Lc0MxoPrAN7V4jLUmCtuX9OpkenNjGyzHt21PcE4zS8MUr0wdR
+ C7Cq46GHDJ55bRgmeHCYAPCmZpoq+8AQjtHF7M+jbaipQCOfFihatTvjNmpb72FZ0Av2/WWrIUV
+ vdSQsQXvjDyZm4rVjZ8HTOSHpRM7VV/54RrHvRHQ8LeIgZCpJ2Um2iWgR3Gt3prM95TE81NMbgS
+ Eg2TeA6FJbL/qRnOxub6KXJt2TwsGel6hWTQibC1TTFx9ca36nhkRerIoDbUJ+n0giEcO/+wwN5
+ HhT4nusm77Hz5vjB88rtS2ujUrqgBJjDQpy5Z2PZZ6wrvK3OvXxqB9liCswFiJxKt4RjcgV6ZEf
+ XNMKq1uNSs3sMOo9S/1rKKD4rzvg1r0d0iASkk96naqx/FDa1htSCytlYpjaMmRH6YDQpFZ+jmV
+ iMAK+6b2HNR3l5w==
+X-Developer-Key: i=avrac@freebox.fr; a=openpgp;
+ fpr=6225092072BB58E3CEEC091E75392A176D952DB4
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Apr 19, 2023 at 02:53:45PM +0200, Krzysztof Kozlowski wrote:
-> On 17/04/2023 17:17, Christian Marangi wrote:
-> > Add Switch LED for each port for MikroTik RB3011UiAS-RM.
-> > 
-> > MikroTik RB3011UiAS-RM is a 10 port device with 2 qca8337 switch chips
-> > connected.
-> > 
-> > It was discovered that in the hardware design all 3 Switch LED trace of
-> > the related port is connected to the same LED. This was discovered by
-> > setting to 'always on' the related led in the switch regs and noticing
-> > that all 3 LED for the specific port (for example for port 1) cause the
-> > connected LED for port 1 to turn on. As an extra test we tried enabling
-> > 2 different LED for the port resulting in the LED turned off only if
-> > every led in the reg was off.
-> > 
-> > Aside from this funny and strange hardware implementation, the device
-> > itself have one green LED for each port, resulting in 10 green LED one
-> > for each of the 10 supported port.
-> > 
-> > Cc: Jonathan McDowell <noodles@earth.li>
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >  arch/arm/boot/dts/qcom-ipq8064-rb3011.dts | 120 ++++++++++++++++++++++
-> 
-> Please do not send the DTS patches to the net-next, but to the Qualcomm
-> SoC maintainers. The DTS must not be mixed with driver code.
-> 
+This series include misc fixes related to hardware resource allocations
+in the msm dpu driver, some specifically for msm8998 (including hw
+catalog fixes and cursor sspp support for cursor planes, instead of
+using Smart DMA pipes).
 
-Hi,
+This series has been tested on msm8998 with additional patches to enable
+hdmi support.
 
-sorry for the mess, it was asked to give an user of the LED feature for
-qca8k so I was a bit confused on where to include it and at the end I
-decided to put it in this series.
+The following modetest example command works now; 8 planes can be
+displayed simultaneously on msm8998 in 1080p, including a cursor plane,
+using a single LM:
 
-What was the correct way? 2 different series and reference the DT one in
-the net-next? (or not targetting net-next at all?)
+modetest -Mmsm -a \
+    -s 32:1920x1080-60 \
+    -P 33@87:1920x1080+0+0@XR24 \
+    -P 39@87:200x200+100+600@AR24 \
+    -P 45@87:200x200+200+500@AR24 \
+    -P 51@87:200x200+300+400@AR24 \
+    -P 57@87:200x200+400+300@AR24 \
+    -P 63@87:200x200+500+200@AR24 \
+    -P 69@87:200x200+600+100@AR24 \
+    -P 81@87:200x200+700+000@AR24
 
+Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+---
+Arnaud Vrac (11):
+      drm/msm/dpu: tweak msm8998 hw catalog values
+      drm/msm/dpu: use the actual lm maximum width instead of a hardcoded value
+      drm/msm/dpu: use hsync/vsync polarity set by the encoder
+      drm/msm/dpu: allow using lm mixer base stage
+      drm/msm/dpu: allow using all lm mixer stages
+      drm/msm/dpu: support cursor sspp hw blocks
+      drm/msm/dpu: add sspp cursor blocks to msm8998 hw catalog
+      drm/msm/dpu: fix cursor block register bit offset in msm8998 hw catalog
+      drm/msm/dpu: set max cursor width to 512x512
+      drm/msm/dpu: tweak lm pairings in msm8998 hw catalog
+      drm/msm/dpu: do not use mixer that supports dspp when not required
 
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    | 28 +++++++------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 10 ++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 49 +++++++++++++++++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 16 ++-----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 22 +++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          | 32 +++++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |  2 +-
+ 7 files changed, 107 insertions(+), 52 deletions(-)
+---
+base-commit: e3342532ecd39bbd9c2ab5b9001cec1589bc37e9
+change-id: 20230419-dpu-tweaks-5475305621d9
 
+Best regards,
 -- 
-	Ansuel
+Arnaud Vrac <avrac@freebox.fr>
+
