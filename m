@@ -2,191 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF9AE6E7F05
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 18:00:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AFAC6E7F21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 18:06:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232772AbjDSQAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 12:00:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50070 "EHLO
+        id S231580AbjDSQGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 12:06:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232297AbjDSQAi (ORCPT
+        with ESMTP id S231737AbjDSQGH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 12:00:38 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F45B11A;
-        Wed, 19 Apr 2023 09:00:37 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id B6E72CCC24;
-        Wed, 19 Apr 2023 16:00:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1681920035; bh=Kvp+y1PlgCtZ/H7c3YDNPiFv1aZtJPEuqKzBkTmEB2E=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=Btyge/ZRpJOT+0+JVsBPYpXC8khmH2HpUfJI+qgJYFweAnWSPf5yzl7TdoKfcK5FT
-         WHNl7VnV8diSwjBGwmX58RN1RsgxsBs6y4qpZ+XiCBMH6TqRCpiG4y0k5K1/OXyNWF
-         dWjEWr9+GDBuDLeE9LEx349hO0RrkahdzXSq0zQk=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974: correct qfprom node reg
-Date:   Wed, 19 Apr 2023 18:00:35 +0200
-Message-ID: <5664419.DvuYhMxLoT@z3ntu.xyz>
-In-Reply-To: <2401830.jE0xQCEvom@z3ntu.xyz>
-References: <20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz>
- <568ebb75-5cb2-af97-bfae-c1e1e6174a45@linaro.org>
- <2401830.jE0xQCEvom@z3ntu.xyz>
+        Wed, 19 Apr 2023 12:06:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B9A10C7;
+        Wed, 19 Apr 2023 09:06:01 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33JC4EY0006968;
+        Wed, 19 Apr 2023 16:05:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ghih59l77BimLZsOkkfjGfE/JW6vIG6Nn+R0fM4hb/I=;
+ b=pXpNZK+rBbFnwS3mg7PHqEuKLfRwb99N7pQVsS4h6qHqua9USlmoFFht0tE+gnhCuMOu
+ 4A3u8uIonYyqcBWEoIN3I1/yucQGZkHkBztO+CtTv/m+wUZj3lL+A4sCXhLh9wmmUpie
+ vCGQCCrLW2UqAmdqN7Ra0ny1vG1erfIonVvjPeZRJt4u+9ff4Lf7cyifwjcO56xjxneY
+ 6zYuaKx6R+cHdrD7s5NcbiK+EtHclYDeI6U/hZV66ChcdQ8Yn/Ev6s0uw3gTWJx41+ka
+ fOGkbwDYvcR1AgjGPYmE0oWXZwEkLt9PMxm4qG8L9BYLvLjRyiZXh68DDp/5e3qQ1Svi Fg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q25kwsyh7-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 16:05:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33JG5nKX027637
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 16:05:49 GMT
+Received: from [10.110.74.190] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
+ 2023 09:05:48 -0700
+Message-ID: <0eff5993-7826-25c7-cdde-8291b947eed4@quicinc.com>
+Date:   Wed, 19 Apr 2023 09:05:47 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 2/3] drm/msm/dpu: Assign missing writeback log_mask
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
+ <20230418-dpu-drop-useless-for-lookup-v1-2-b9897ceb6f3e@somainline.org>
+ <60bb4a4a-f414-e926-df53-d6d1a01fc221@quicinc.com>
+ <p5b6zwgbrxbhs7hgo4sh2btwmbjgoyxp5mxdutt4fkh2hjv7dz@6dq5ug5l2ohu>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <p5b6zwgbrxbhs7hgo4sh2btwmbjgoyxp5mxdutt4fkh2hjv7dz@6dq5ug5l2ohu>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wurd_67FZrzjGh6floZpR6sXoy13DDxx
+X-Proofpoint-GUID: wurd_67FZrzjGh6floZpR6sXoy13DDxx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-19_10,2023-04-18_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=992 mlxscore=0 spamscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304190145
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
-
-On Montag, 30. J=E4nner 2023 21:37:29 CEST Luca Weiss wrote:
-> On Montag, 30. J=E4nner 2023 19:42:51 CET Konrad Dybcio wrote:
-> > On 30.01.2023 19:36, Luca Weiss wrote:
-> > > On Montag, 30. J=E4nner 2023 19:30:04 CET Konrad Dybcio wrote:
-> > >> On 30.01.2023 19:20, luca@z3ntu.xyz wrote:
-> > >>> From: Craig Tatlor <ctatlor97@gmail.com>
-> > >>>=20
-> > >>> The qfprom actually starts at 0xfc4b8000 instead of 0xfc4bc000 as
-> > >>> defined previously. Adjust the tsens offsets accordingly.
-> > >>>=20
-> > >>> [luca@z3ntu.xyz: extract to standalone patch]
-> > >>>=20
-> > >>> Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens a=
-nd
-> > >>> qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
-> > >>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > >>> ---
-> > >>=20
-> > >> Isn't this a raw vs ecc-corrected values problem?
-> > >=20
-> > > Not quite sure what you mean.
-> >=20
-> > The QFPROM is split into two parts: one where raw values
-> > are stored, and the other one where ECC-corrected copies
-> > of them reside. Usually it's at offset of 0x4000. We should
-> > generally be using the ECC-corrected ones, because.. well..
-> > they are ECC-corrected.. You may want to check if the
-> > fuse you're adding reads the same value at +0x4000.
->=20
-> Yeah that actually seems to work...
->=20
-> But downstream's using this +0x4000 only for tsens it seems
->=20
->    <0xfc4bc000 0x1000> as "tsens_eeprom_physical"
->=20
-> qcom,clock-krait-8974 is using this:
->=20
->     <0xfc4b80b0 0x08> as "efuse"
->=20
-> Also seems HDMI driver is using a mix for HDCP stuff
->=20
->   drivers/video/msm/mdss/mdss_hdmi_util.h:
->=20
->     /* QFPROM Registers for HDMI/HDCP */
->     #define QFPROM_RAW_FEAT_CONFIG_ROW0_LSB  (0x000000F8)
->     #define QFPROM_RAW_FEAT_CONFIG_ROW0_MSB  (0x000000FC)
->     #define HDCP_KSV_LSB                     (0x000060D8)
->     #define HDCP_KSV_MSB                     (0x000060DC)
->=20
-> Any clue why Qualcomm used it this way in downstream? I'd rather not devi=
-ate
-> too much if not for a good reason...
-
-Any comments on the above?
-
-Regards
-Luca
-
->=20
-> Regards
-> Luca
->=20
-> > Konrad
-> >=20
-> > > The original intention behind this patch is to allow to use the pvs f=
-use
-> > > at
-> > > (now) 0xb0 which was inaccessible with the former definition.
-> > >=20
-> > >     pvs: pvs@b0 {
-> > >    =20
-> > >         reg =3D <0xb0 0x8>;
-> > >    =20
-> > >     };
-> > >=20
-> > > Regards
-> > > Luca
-> > >=20
-> > >> Konrad
-> > >>=20
-> > >>>  arch/arm/boot/dts/qcom-msm8974.dtsi | 12 ++++++------
-> > >>>  1 file changed, 6 insertions(+), 6 deletions(-)
-> > >>>=20
-> > >>> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > >>> b/arch/arm/boot/dts/qcom-msm8974.dtsi index 8d216a3c0851..922d235c6=
-065
-> > >>> 100644
-> > >>> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > >>> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> > >>> @@ -1132,16 +1132,16 @@ restart@fc4ab000 {
-> > >>>=20
-> > >>>  			reg =3D <0xfc4ab000 0x4>;
-> > >>>  	=09
-> > >>>  		};
-> > >>>=20
-> > >>> -		qfprom: qfprom@fc4bc000 {
-> > >>> +		qfprom: qfprom@fc4b8000 {
-> > >>>=20
-> > >>>  			compatible =3D "qcom,msm8974-qfprom",
-> > >=20
-> > > "qcom,qfprom";
-> > >=20
-> > >>> -			reg =3D <0xfc4bc000 0x1000>;
-> > >>> +			reg =3D <0xfc4b8000 0x7000>;
-> > >>>=20
-> > >>>  			#address-cells =3D <1>;
-> > >>>  			#size-cells =3D <1>;
-> > >>>=20
-> > >>> -			tsens_calib: calib@d0 {
-> > >>> -				reg =3D <0xd0 0x18>;
-> > >>> +			tsens_calib: calib@40d0 {
-> > >>> +				reg =3D <0x40d0 0x18>;
-> > >>>=20
-> > >>>  			};
-> > >>>=20
-> > >>> -			tsens_backup: backup@440 {
-> > >>> -				reg =3D <0x440 0x10>;
-> > >>> +			tsens_backup: backup@4440 {
-> > >>> +				reg =3D <0x4440 0x10>;
-> > >>>=20
-> > >>>  			};
-> > >>>  	=09
-> > >>>  		};
-> > >>>=20
-> > >>> ---
-> > >>> base-commit: 6d796c50f84ca79f1722bb131799e5a5710c4700
-> > >>> change-id: 20230130-msm8974-qfprom-619c0e8f26eb
-> > >>>=20
-> > >>> Best regards,
 
 
+On 4/19/2023 2:28 AM, Marijn Suijten wrote:
+> On 2023-04-18 09:06:34, Abhinav Kumar wrote:
+>>
+>> On 4/17/2023 4:14 PM, Marijn Suijten wrote:
+>>> The WB debug log mask ended up never being assigned, leading to writes
+>>> to this block to never be logged even if the mask is enabled in
+>>> dpu_hw_util_log_mask via sysfs.
+>>
+>> This should be debugfs not sysfs.
+> 
+> Good catch!  I've queued this up for v2 if it comes to it, otherwise it
+> can perhaps be fixed up while applying for msm-fixes?
+> 
 
+Yes, I can fix it up while applying to -fixes.
 
+>>> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks")
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>> ---
+>>
+>> With that fixed,
+>>
+>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Thanks!
+> 
+> - Marijn
