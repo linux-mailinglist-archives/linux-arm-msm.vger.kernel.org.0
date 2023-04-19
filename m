@@ -2,60 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE2166E846E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 00:15:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FB026E84EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 00:28:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbjDSWPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 18:15:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40378 "EHLO
+        id S233751AbjDSW2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 18:28:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjDSWPI (ORCPT
+        with ESMTP id S233762AbjDSW2X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 18:15:08 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1E940D7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 15:15:06 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id l15so617343ljq.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 15:15:06 -0700 (PDT)
+        Wed, 19 Apr 2023 18:28:23 -0400
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1D73118C2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 15:26:43 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id h2so588109ljh.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 15:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681942505; x=1684534505;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1681943034; x=1684535034;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ytCeCLRrAM5jc6M/DBn6k6KhfCt7gZVNX4R7z0khTGc=;
-        b=OnRB/l3vwD/hi/TsQlTfTlBEMz9NLvwqfNSo1CP2j66Bj8pW7wLDYKHzoOQBGs55qN
-         s9j/cT59DrxIjL9I5wsOYYPGSC1u3zmTVaq2KUnjo/lbADYVAd+g802TYcZo1j5IaBMP
-         yS3SxHVHSDLWF6MjQmNWcXX58EOsLjareyulU/wybmMlz3/sTfv5PMnEDruajOfKowCK
-         el6MMeWgUgUETby0ukQA6Awhae2Ouba6KcHUwVWpbOHAx1o1Dw+KA9HUVIYVPc5fp15c
-         V1g+nSYgTufzn7oIdm5zDI09zsn+6SI/OdYR4Gw/7LkOnSoWzh/1BnRQFZBD4NhrhTHb
-         p2nw==
+        bh=VCawUKvbpyJ/O3QCtYIFnEkGoYOHSsivpE+P/NmOeR0=;
+        b=gBReHy/14DcmnMDI8++fMkHG+PPvn+g+AG1T9PQl171wpJIcWDtJZ8Yl/HYjgS2+Uq
+         cnaNemaH9HMifkQEUNnoLLOmFqmwqfortgIUKhhRlx6doFaKz3mO7bPg/OD62Vjl+jfQ
+         XTCqZUzy2zPnSD3txii2j0agx2w/sNad0F6pGDD5hQ54SyJgcVEdgsWduJRbGyobPRRK
+         +wDmiTbu/TjuDahlWG+gKoA5YlKwsVg21tJhvuAEdYbx9a+wr8QemRSls9YpFVrZHSX/
+         nm7wctkTx62O6FRWnznAyRuxVMWBGTGyvRw3x99dEPVfiT9lwO1c/kf/8TQtwWcRfbTW
+         aY5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681942505; x=1684534505;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1681943034; x=1684535034;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ytCeCLRrAM5jc6M/DBn6k6KhfCt7gZVNX4R7z0khTGc=;
-        b=HHZqZxhfg8ZH/c+R+rRegM+Nlj1fsGPkLvg0wd5RZYXXgoMSmyMrxxxKAsvaI8gqea
-         JkrCewEHkBUwkoJpQ8v/8h2kaJvIHEZrT/zKMPLWLMlN/wgox+8Y+xNsSoQMy7Ww5xZ4
-         bAlbgejN3gTgVayLh4efN4B+jVJv7kcJLjKeqrjNEKQeqYa+ruKaPy0BlkDoeLP3A5eF
-         4rb7m5A83AlXK2ygXFBzoaaTI9N43fIKdYQc4TgEOCYJR3YUkTHaeQJ00VQkpgRALPIs
-         YC9470iO9Xz5YRRQquYzw6ctLmyEp4ypnJP1KZvBlTBoYc2q2mU3R7sWPmdWQ1Kgpk0+
-         rPQQ==
-X-Gm-Message-State: AAQBX9eWcHLC2hq9tG3lEXOO/mxxMsvwjQcfbCPj90Xm5O1+Eue4zxmA
-        cxaB3ZAk98a+PKhHEg6rkOjpTA==
-X-Google-Smtp-Source: AKy350ZFutfn0RXVZ/ykfD/OVNTS1p2iLO9nhoF8y7NgvPMPbsszamU9msWN/8x7CYFEeoCAj2bInQ==
-X-Received: by 2002:a2e:954b:0:b0:2a8:d242:4df with SMTP id t11-20020a2e954b000000b002a8d24204dfmr2518118ljh.35.1681942504921;
-        Wed, 19 Apr 2023 15:15:04 -0700 (PDT)
+        bh=VCawUKvbpyJ/O3QCtYIFnEkGoYOHSsivpE+P/NmOeR0=;
+        b=EIH7OfENDO84QyWuloaRgVEUEkDr/RtDAI5WTh3P0ssOBhZiJMprki5EYW036EG5Ud
+         +Wr8YcCb1EL1Uloa7WNT6NyD1I/Pljgf5p3LXSf1UAoI27Tsl6C/LR9Hqv8+xgscXqPT
+         qcfi7OnpVPQsgQtOfk20L7cC9oxXLPegAQztWcLA1s9XSPa1SkTTTN3fYtw4/RU0GGT+
+         Qs6cjVgnozDhaX4RNmXSuh2HJcyY5CCLPUIET2CU4SolP9pn149pRKZNmCEsGcV401Nq
+         Tx6Mc36wo47k6uVixKSaV55sFYXSBbTUiBcyrNwSUxgt9PNc9w0SWzN8OrKA5vuK1gAR
+         9DWg==
+X-Gm-Message-State: AAQBX9fAt8NTG8+IK2bzas6B+GdRJxtVFPGz2I9MPTBZQBXvmCrs5rHN
+        l68JhJ93q0GrgxdCAbCCY6igJQ==
+X-Google-Smtp-Source: AKy350bMNNErl7bByeTgmpgjdePtabkJ+a2Vh6JpDEnLxmjvPvyv7daUPysh6Z+4C1DKcf7pk3Ip0A==
+X-Received: by 2002:a2e:b0fc:0:b0:2a7:763e:f158 with SMTP id h28-20020a2eb0fc000000b002a7763ef158mr2213119ljl.19.1681943034546;
+        Wed, 19 Apr 2023 15:23:54 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id u16-20020a2e91d0000000b002934fe524d2sm3067789ljg.83.2023.04.19.15.15.03
+        by smtp.gmail.com with ESMTPSA id e26-20020a2e985a000000b00294692d8645sm3068589ljj.17.2023.04.19.15.23.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 15:15:04 -0700 (PDT)
-Message-ID: <71fe636f-ba8b-643c-9b5f-02f712bc0674@linaro.org>
-Date:   Thu, 20 Apr 2023 01:15:03 +0300
+        Wed, 19 Apr 2023 15:23:53 -0700 (PDT)
+Message-ID: <6e807c05-a990-5692-3f84-2e4153c8c278@linaro.org>
+Date:   Thu, 20 Apr 2023 01:23:52 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 01/11] drm/msm/dpu: tweak msm8998 hw catalog values
+Subject: Re: [PATCH 02/11] drm/msm/dpu: use the actual lm maximum width
+ instead of a hardcoded value
+Content-Language: en-GB
 To:     Arnaud Vrac <avrac@freebox.fr>, Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
@@ -63,16 +65,15 @@ To:     Arnaud Vrac <avrac@freebox.fr>, Rob Clark <robdclark@gmail.com>,
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
- <20230419-dpu-tweaks-v1-1-d1bac46db075@freebox.fr>
-Content-Language: en-GB
+ <20230419-dpu-tweaks-v1-2-d1bac46db075@freebox.fr>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230419-dpu-tweaks-v1-1-d1bac46db075@freebox.fr>
+In-Reply-To: <20230419-dpu-tweaks-v1-2-d1bac46db075@freebox.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,81 +81,53 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 19/04/2023 17:41, Arnaud Vrac wrote:
-> Match the values found in the downstream msm-4.4 kernel sde driver.
+> This avoids using two LMs instead of one when the display width is lower
+> than the maximum supported value. For example on MSM8996/MSM8998, the
+> actual maxwidth is 2560, so we would use two LMs for 1280x720 or
+> 1920x1080 resolutions, while one is enough.
 > 
 > Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
 
-Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
+While this looks correct (and following what we have in 4.4), later 
+vendor kernels specify the topology explicitly. Probably we should check 
+this with the hw guys, because it might be the following case: even 
+though a single LM can supply the mode, it will spend more power 
+compared to two LMs.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h |  8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 15 +++++----------
->   2 files changed, 9 insertions(+), 14 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> index 2b3ae84057dfe..b07e8a9941f79 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> @@ -134,10 +134,10 @@ static const struct dpu_dspp_cfg msm8998_dspp[] = {
->   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 1dc5dbe585723..dd2914726c4f6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -53,8 +53,6 @@
 >   
->   static const struct dpu_intf_cfg msm8998_intf[] = {
-> -	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 25, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> -	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x280, INTF_DSI, 0, 25, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> -	INTF_BLK("intf_2", INTF_2, 0x6b000, 0x280, INTF_DSI, 1, 25, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
-> -	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_HDMI, 0, 25, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
-> +	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x280, INTF_DP, 0, 21, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> +	INTF_BLK("intf_1", INTF_1, 0x6a800, 0x280, INTF_DSI, 0, 21, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> +	INTF_BLK("intf_2", INTF_2, 0x6b000, 0x280, INTF_DSI, 1, 21, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
-> +	INTF_BLK("intf_3", INTF_3, 0x6b800, 0x280, INTF_HDMI, 0, 21, INTF_SDM845_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
->   };
+>   #define IDLE_SHORT_TIMEOUT	1
 >   
->   static const struct dpu_perf_cfg msm8998_perf_data = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 03f162af1a50b..8d5d782a43398 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -587,12 +587,12 @@ static const u32 sdm845_nrt_pri_lvl[] = {3, 3, 3, 3, 3, 3, 3, 3};
+> -#define MAX_HDISPLAY_SPLIT 1080
+> -
+>   /* timeout in frames waiting for frame done */
+>   #define DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES 5
 >   
->   static const struct dpu_vbif_dynamic_ot_cfg msm8998_ot_rdwr_cfg[] = {
->   	{
-> -		.pps = 1088 * 1920 * 30,
-> +		.pps = 1920 * 1080 * 30,
->   		.ot_limit = 2,
->   	},
->   	{
-> -		.pps = 1088 * 1920 * 60,
-> -		.ot_limit = 6,
-> +		.pps = 1920 * 1080 * 60,
-> +		.ot_limit = 4,
->   	},
->   	{
->   		.pps = 3840 * 2160 * 30,
-> @@ -705,10 +705,7 @@ static const struct dpu_qos_lut_entry msm8998_qos_linear[] = {
->   	{.fl = 10, .lut = 0x1555b},
->   	{.fl = 11, .lut = 0x5555b},
->   	{.fl = 12, .lut = 0x15555b},
-> -	{.fl = 13, .lut = 0x55555b},
-> -	{.fl = 14, .lut = 0},
-> -	{.fl = 1,  .lut = 0x1b},
-> -	{.fl = 0,  .lut = 0}
-> +	{.fl = 0,  .lut = 0x55555b}
->   };
+> @@ -568,10 +566,12 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>   	 */
+>   	if (intf_count == 2)
+>   		topology.num_lm = 2;
+> -	else if (!dpu_kms->catalog->caps->has_3d_merge)
+> -		topology.num_lm = 1;
+> +	else if (dpu_kms->catalog->caps->has_3d_merge &&
+> +		 dpu_kms->catalog->mixer_count > 0 &&
+> +		 mode->hdisplay > dpu_kms->catalog->mixer[0].sblk->maxwidth)
+> +		topology.num_lm = 2;
+>   	else
+> -		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+> +		topology.num_lm = 1;
 >   
->   static const struct dpu_qos_lut_entry sdm845_qos_linear[] = {
-> @@ -730,9 +727,7 @@ static const struct dpu_qos_lut_entry msm8998_qos_macrotile[] = {
->   	{.fl = 10, .lut = 0x1aaff},
->   	{.fl = 11, .lut = 0x5aaff},
->   	{.fl = 12, .lut = 0x15aaff},
-> -	{.fl = 13, .lut = 0x55aaff},
-> -	{.fl = 1,  .lut = 0x1aaff},
-> -	{.fl = 0,  .lut = 0},
-> +	{.fl = 0,  .lut = 0x55aaff},
->   };
->   
->   static const struct dpu_qos_lut_entry sc7180_qos_linear[] = {
+>   	if (crtc_state->ctm)
+>   		topology.num_dspp = topology.num_lm;
 > 
 
 -- 
