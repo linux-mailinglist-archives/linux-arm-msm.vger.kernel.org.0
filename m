@@ -2,161 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF1256E7F37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 18:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A6016E7F41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 18:12:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231319AbjDSQKe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 12:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57790 "EHLO
+        id S232649AbjDSQM0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 12:12:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230522AbjDSQKd (ORCPT
+        with ESMTP id S233194AbjDSQMX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 12:10:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6516830C8;
-        Wed, 19 Apr 2023 09:10:32 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33JBYQrC003309;
-        Wed, 19 Apr 2023 16:10:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wuzDXi9j5/XpPRxnVUBnfv+vg36UO1WNO+V8YgK4Ffw=;
- b=AShZvGE+D5gvZLzl+wkEAdlzgh9AsCon0PKMxyqNWqx563rySm3skwHrZWG6PIq8/+zZ
- 4f2zu/52lAunpiEzuo/cStpjLw8Onhhmg1ZIGwE3rrUrx/4Euw6B58LFKaFPQzsQxeQa
- 1M7yWkXkhR8IHQhVlaly3AEXd5AXp+JZmbEXLxRc969YiiCgZNV8cgwFfP0H6dHDdUIh
- rGxxyu2If2hdc+XTcnaXc3i/UGjTuFQWqa8wC7Bt+p3V0FKML6UTlE6FbQQ36VFV0B6m
- muOtg4Y0L17C1EpvD4bizZ6AH3xhUHTDE3lHpUKWTR5pLsniCq5/QQlzJiPfBfUQRPgp aQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2dy7s0kq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 16:10:16 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33JGAGqF010079
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 16:10:16 GMT
-Received: from [10.110.10.142] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
- 2023 09:10:15 -0700
-Message-ID: <2024b144-42cf-1044-258c-2dc6c6af0d88@quicinc.com>
-Date:   Wed, 19 Apr 2023 09:10:14 -0700
+        Wed, 19 Apr 2023 12:12:23 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9153E977A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 09:12:08 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id c3so11569001ljf.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 09:12:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681920727; x=1684512727;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aVgwraJWt3EyktAkt1C2LoJC0avBDiNujtBEgja7u2E=;
+        b=qt2GMvO0NpsFA0UuXiSxHZrGuavUrfBYK4d9A/Rmgq4f9T1W0Ued8smZHOtXtia6yA
+         9DLbCZQH9iRlrmt4sbUIZSY1lrpFj10vS/xT76iMgVBrkQrBQ+mTgZ5wpD95/L3BNLxc
+         3RaZZGfhm+kV5ZtzpuucKTLQKq+ajHPGvzqvpu8711+IY65E4ImvcBw9KXk81f8kfNtp
+         PbVmZwZSfbdLQ76vVayJF8DwFX2NQHWnrxMcv1vyjJsmnGnnBatj0TanIkOagDtQdf74
+         fjoXvDe2fLc4mflinyB+cPVFknaz7tkcPM/7adVZqg/lbBhxKUztAO6S5H5EGkIGn/Wh
+         1tbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681920727; x=1684512727;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aVgwraJWt3EyktAkt1C2LoJC0avBDiNujtBEgja7u2E=;
+        b=hqWT2lfGCAzkm4P1Iev2xqPszJ3ncmhUM/IoKCTgx2cswFHmE+JhVyU6Z0tihV6kXy
+         CDdtRYPr6e7C891135gXBlOwPv64OmiR4NfN070uD1w6EghSU1p7+7Si+XZhCWUQiSqi
+         pLhzwbdG8WpHCv8OU0lPAPZya7Wy2dSN2ApptTYHI+w/RE1HCFLB6mmzQ7JYCA0/DDPi
+         GveT0cN0JnRZ3WG6d0wGgsI8vze7qWynjYp5OV5s5qYXFBdiP3hfcEgUH0fvSgHL3jy8
+         uGoobhrd0ZifqKiFBPJ1q93uZmjq5dDadC1CiWp3cYqsgymfriZADsjEIqdHXlighU16
+         qskA==
+X-Gm-Message-State: AAQBX9eX5A0MdaQarf0alIBI4Kp2+TbHil1cYKRXSaPG0Q7o3z9OhuZr
+        QimoNRsnDWI0KmSVY91smR8XdA==
+X-Google-Smtp-Source: AKy350bfZaIQsy/AVLooAEBYssL+3BU8q2EDUDmK13Nfb5ORewH0+4KL+wa/jRN3REqQuFmy9zKNwA==
+X-Received: by 2002:a2e:3602:0:b0:2a7:970b:b046 with SMTP id d2-20020a2e3602000000b002a7970bb046mr1931761lja.46.1681920726761;
+        Wed, 19 Apr 2023 09:12:06 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id m24-20020a2e8718000000b002a8c8fa34bfsm1136966lji.50.2023.04.19.09.12.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Apr 2023 09:12:06 -0700 (PDT)
+Message-ID: <383f6aa0-6150-22b5-425a-f9cf13bdbc50@linaro.org>
+Date:   Wed, 19 Apr 2023 18:12:04 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH V22 2/3] misc: dcc: Add driver support for Data Capture
- and Compare unit(DCC)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] ARM: dts: qcom: msm8974: correct qfprom node reg
 Content-Language: en-US
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1681829664.git.quic_schowdhu@quicinc.com>
- <e4f41fa61d9dd66f68bbd7650c6fbf96810c3569.1681829664.git.quic_schowdhu@quicinc.com>
- <2023041833-alienate-trash-f4da@gregkh>
- <f1456dd7-5dcf-d91a-459c-65efca4a3444@quicinc.com>
- <50844899-b047-42fd-807a-db7136e5e590@app.fastmail.com>
- <44834c75-4db7-ec8a-9367-c6b83fa96b22@quicinc.com>
- <9808142e-d6e6-71bc-f362-09b878cb3b87@quicinc.com>
-In-Reply-To: <9808142e-d6e6-71bc-f362-09b878cb3b87@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Eduardo Valentin <edubezval@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
+References: <20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz>
+ <568ebb75-5cb2-af97-bfae-c1e1e6174a45@linaro.org>
+ <2401830.jE0xQCEvom@z3ntu.xyz> <5664419.DvuYhMxLoT@z3ntu.xyz>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <5664419.DvuYhMxLoT@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VzfAnNgQ0py2MI8DknfAhCb4Q9vOAJo5
-X-Proofpoint-GUID: VzfAnNgQ0py2MI8DknfAhCb4Q9vOAJo5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-19_10,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- lowpriorityscore=0 malwarescore=0 adultscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304190145
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 4/19/2023 9:08 AM, Trilok Soni wrote:
-> On 4/19/2023 3:20 AM, Souradeep Chowdhury wrote:
->>
->>
->> On 4/19/2023 1:00 PM, Arnd Bergmann wrote:
->>> On Wed, Apr 19, 2023, at 09:00, Souradeep Chowdhury wrote:
->>>> On 4/18/2023 9:15 PM, Greg Kroah-Hartman wrote:
->>>>>
->>>>>> The following is the justification of using debugfs interface over 
->>>>>> the
->>>>>> other alternatives like sysfs/ioctls
->>>>>>
->>>>>> i) As can be seen from the debugfs attribute descriptions, some of 
->>>>>> the
->>>>>> debugfs attribute files here contains multiple arguments which 
->>>>>> needs to
->>>>>> be accepted from the user. This goes against the design style of 
->>>>>> sysfs.
->>>>>>
->>>>>> ii) The user input patterns have been made simple and convenient 
->>>>>> in this
->>>>>> case with the use of debugfs interface as user doesn't need to 
->>>>>> shuffle
->>>>>> between different files to execute one instruction as was the case on
->>>>>> using other alternatives.
->>>>>
->>>>> Why do you have debugfs and also a misc device?  How are they related?
->>>>> Why both?  Why not just one?  What userspace tools are going to use
->>>>> either of these interfaces and where are they published to show how 
->>>>> this
->>>>> all was tested?
->>>>
->>>> DCC has two fundamental steps of usage:-
->>>>
->>>> 1.Configuring the register addresses on the dcc_sram which is done by
->>>> user through the debugfs interface. For example:-
->>>>
->>>> echo R 0x10c004 > /sys/kernel/debug/dcc/../3/config
->>>>
->>>> Here we are configuring the register addresses for list 3, the 'R'
->>>> indicates a read operation, so this register value will be read
->>>> in case of a software trigger or kernel panic/watchdog bite and
->>>> dumped into the dcc_sram.
->>>
->>> Can you describe why the register location needs to be
->>> runtime configurable? I would have expected this type of setting
->>> to be part of the devicetree, which already describes other
->>> parts that interact with sram devices.
->>
->> Register addresses are made runtime configurable to give the user the
->> option of going for a software trigger. So the user can debug issues
->> during run-time as well. These register locations are arbitrary
->> and is configured by the user for debugging purposes and is not 
->> related to the DCC hardware itself.
+
+
+On 19.04.2023 18:00, Luca Weiss wrote:
+> Hi Konrad,
 > 
-> Please note that we don't want to recompile the devicetree for new 
-> settings since these registers can be set by team of engineers who are 
-> debugging system level issues with various IPs across the SOCs. You 
-> don't want to recompile the images while reproducing the system hangs/IP 
-> watchdogs etc;
+> On Montag, 30. Jänner 2023 21:37:29 CEST Luca Weiss wrote:
+>> On Montag, 30. Jänner 2023 19:42:51 CET Konrad Dybcio wrote:
+>>> On 30.01.2023 19:36, Luca Weiss wrote:
+>>>> On Montag, 30. Jänner 2023 19:30:04 CET Konrad Dybcio wrote:
+>>>>> On 30.01.2023 19:20, luca@z3ntu.xyz wrote:
+>>>>>> From: Craig Tatlor <ctatlor97@gmail.com>
+>>>>>>
+>>>>>> The qfprom actually starts at 0xfc4b8000 instead of 0xfc4bc000 as
+>>>>>> defined previously. Adjust the tsens offsets accordingly.
+>>>>>>
+>>>>>> [luca@z3ntu.xyz: extract to standalone patch]
+>>>>>>
+>>>>>> Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
+>>>>>> qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
+>>>>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>>>>>> ---
+>>>>>
+>>>>> Isn't this a raw vs ecc-corrected values problem?
+>>>>
+>>>> Not quite sure what you mean.
+>>>
+>>> The QFPROM is split into two parts: one where raw values
+>>> are stored, and the other one where ECC-corrected copies
+>>> of them reside. Usually it's at offset of 0x4000. We should
+>>> generally be using the ECC-corrected ones, because.. well..
+>>> they are ECC-corrected.. You may want to check if the
+>>> fuse you're adding reads the same value at +0x4000.
+>>
+>> Yeah that actually seems to work...
+>>
+>> But downstream's using this +0x4000 only for tsens it seems
+>>
+>>    <0xfc4bc000 0x1000> as "tsens_eeprom_physical"
+>>
+>> qcom,clock-krait-8974 is using this:
+>>
+>>     <0xfc4b80b0 0x08> as "efuse"
+>>
+>> Also seems HDMI driver is using a mix for HDCP stuff
+>>
+>>   drivers/video/msm/mdss/mdss_hdmi_util.h:
+>>
+>>     /* QFPROM Registers for HDMI/HDCP */
+>>     #define QFPROM_RAW_FEAT_CONFIG_ROW0_LSB  (0x000000F8)
+>>     #define QFPROM_RAW_FEAT_CONFIG_ROW0_MSB  (0x000000FC)
+>>     #define HDCP_KSV_LSB                     (0x000060D8)
+>>     #define HDCP_KSV_MSB                     (0x000060DC)
+>>
+>> Any clue why Qualcomm used it this way in downstream? I'd rather not deviate
+>> too much if not for a good reason...
+> 
+> Any comments on the above?
+This thread got burried to deep in the mailbox!
 
-...and also these registers list is not fixed, it will vary based on the 
-problem you are seeing and debugging on the SOC across the IPs.
+I see two reasons why they could be using the uncorrected region:
+- their generators are messed up in general
 
----Trilok Soni
+- they may have had an early chip revision once where there were
+  problems with this and their generators were messed up to
+  accommodate for it and everybody forgot to fix that
+
+No other good explanations as far as I'm aware!
+
+Konrad
+
+> 
+> Regards
+> Luca
+> 
+>>
+>> Regards
+>> Luca
+>>
+>>> Konrad
+>>>
+>>>> The original intention behind this patch is to allow to use the pvs fuse
+>>>> at
+>>>> (now) 0xb0 which was inaccessible with the former definition.
+>>>>
+>>>>     pvs: pvs@b0 {
+>>>>     
+>>>>         reg = <0xb0 0x8>;
+>>>>     
+>>>>     };
+>>>>
+>>>> Regards
+>>>> Luca
+>>>>
+>>>>> Konrad
+>>>>>
+>>>>>>  arch/arm/boot/dts/qcom-msm8974.dtsi | 12 ++++++------
+>>>>>>  1 file changed, 6 insertions(+), 6 deletions(-)
+>>>>>>
+>>>>>> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi
+>>>>>> b/arch/arm/boot/dts/qcom-msm8974.dtsi index 8d216a3c0851..922d235c6065
+>>>>>> 100644
+>>>>>> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+>>>>>> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+>>>>>> @@ -1132,16 +1132,16 @@ restart@fc4ab000 {
+>>>>>>
+>>>>>>  			reg = <0xfc4ab000 0x4>;
+>>>>>>  		
+>>>>>>  		};
+>>>>>>
+>>>>>> -		qfprom: qfprom@fc4bc000 {
+>>>>>> +		qfprom: qfprom@fc4b8000 {
+>>>>>>
+>>>>>>  			compatible = "qcom,msm8974-qfprom",
+>>>>
+>>>> "qcom,qfprom";
+>>>>
+>>>>>> -			reg = <0xfc4bc000 0x1000>;
+>>>>>> +			reg = <0xfc4b8000 0x7000>;
+>>>>>>
+>>>>>>  			#address-cells = <1>;
+>>>>>>  			#size-cells = <1>;
+>>>>>>
+>>>>>> -			tsens_calib: calib@d0 {
+>>>>>> -				reg = <0xd0 0x18>;
+>>>>>> +			tsens_calib: calib@40d0 {
+>>>>>> +				reg = <0x40d0 0x18>;
+>>>>>>
+>>>>>>  			};
+>>>>>>
+>>>>>> -			tsens_backup: backup@440 {
+>>>>>> -				reg = <0x440 0x10>;
+>>>>>> +			tsens_backup: backup@4440 {
+>>>>>> +				reg = <0x4440 0x10>;
+>>>>>>
+>>>>>>  			};
+>>>>>>  		
+>>>>>>  		};
+>>>>>>
+>>>>>> ---
+>>>>>> base-commit: 6d796c50f84ca79f1722bb131799e5a5710c4700
+>>>>>> change-id: 20230130-msm8974-qfprom-619c0e8f26eb
+>>>>>>
+>>>>>> Best regards,
+> 
+> 
+> 
+> 
