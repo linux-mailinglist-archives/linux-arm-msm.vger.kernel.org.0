@@ -2,84 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EA346E6F07
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 00:02:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 347916E70E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 03:57:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233058AbjDRWCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 18 Apr 2023 18:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45156 "EHLO
+        id S230390AbjDSB5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 18 Apr 2023 21:57:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231872AbjDRWCw (ORCPT
+        with ESMTP id S229978AbjDSB5i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 18 Apr 2023 18:02:52 -0400
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F30BC189;
-        Tue, 18 Apr 2023 15:02:51 -0700 (PDT)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-1878f1ebf46so603023fac.1;
-        Tue, 18 Apr 2023 15:02:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681855371; x=1684447371;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QI7D87InjhbBs5EZ8THYXnMAUWuofN84rJTqz1HIfe0=;
-        b=bo//+H4YNLIQCSS4iySrltBSQU0nchBKUaE2gANgavPsBqQEr24Vt4Ml/35igNu9s3
-         4yBhcmg8ANj2DAsKs/U1m0UfZxnI+BfcFYd0K6bzFo6xhzGJ0GoNzTRWCfT1ng2OY5Ai
-         q6+ZNih2PntH3j3rudGospW17dGUvSQDSPHxlknZ5G62KIIdrwEpF80ZRqciWJNkxOw0
-         1kLhKOSNlENMniOAHIH6tLYXzEwI/NXMcrOcou+4z3uTJXVMYlmTu6nV2iDhByfktJ0E
-         3+ctTHtc0dWWAhEfQ4wk+iPUGAql6EIRACR9mtLwSgwaLuYce+XMidqc/2KHNxoSVw3A
-         7mtQ==
-X-Gm-Message-State: AAQBX9cIp6m9LAM9ASkavio7mo/UUJPUTe24HqprSQVRG4yAtl06dQ1o
-        0lH4yZdFIkSHACoHhIT+CQ==
-X-Google-Smtp-Source: AKy350adrkwoDBM/BxR6mRY2zD33IZaIewcPncoeCx+VQU/atsuFvdm7h8sMt7+MTUZiPvNZONir+g==
-X-Received: by 2002:a05:6870:8928:b0:177:a4d0:e389 with SMTP id i40-20020a056870892800b00177a4d0e389mr2034044oao.28.1681855371247;
-        Tue, 18 Apr 2023 15:02:51 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id u5-20020a056870b0c500b00172ac40356csm6011756oag.50.2023.04.18.15.02.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Apr 2023 15:02:50 -0700 (PDT)
-Received: (nullmailer pid 2408753 invoked by uid 1000);
-        Tue, 18 Apr 2023 22:02:49 -0000
-Date:   Tue, 18 Apr 2023 17:02:49 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-phy@lists.infradead.org,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: Re: [PATCH] dt-bindings: phy: qcom,edp-phy: allow power-domains
-Message-ID: <168185536811.2408674.3978903723829554887.robh@kernel.org>
-References: <20230416151233.346336-1-krzysztof.kozlowski@linaro.org>
+        Tue, 18 Apr 2023 21:57:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46DA1705;
+        Tue, 18 Apr 2023 18:57:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6FFC763372;
+        Wed, 19 Apr 2023 01:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F2BC433EF;
+        Wed, 19 Apr 2023 01:57:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681869456;
+        bh=FCT2s+tjoEAO4WaqpR4CNs/KcNexv8a/2U0HgeW4Av4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=MIQLXO++vNxhItgu5js5jf2BJUZDv+lIH13pRMWbxXfNuRkL4zbzyS54Q33E8xi1n
+         ATReCtbh4oISPduzTeGPM2E9NpykkYDyZvQ9oewFQZQotoFcRU1RuSOQQlEoSSKIuv
+         hLYjCWpEifWOCTVtERw/b5ssXEbusmoOukr5CQJr/LeuFnlVhwZp2hVKC9bEJ6Iwd8
+         Mjb4y6WO3tzmJrJ6+oq8BsSJRvtl7a7Gn16ttCb5qqFSkVzOJ5SrdsiclJU0UTieDt
+         DUi9WgU+a7d1FOFuoxy8Vzga5F4DC9iCrZeSAIanl9YTKbp/wKwFKbWstVJtElTJIu
+         1R6SRSm1oavpg==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Chris Lew <quic_clew@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] rpmsg: glink: Fix + cleanup in __qcom_glink_send()
+Date:   Tue, 18 Apr 2023 19:01:08 -0700
+Message-Id: <168186966272.1517024.17052926442905008994.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230418163018.785524-1-quic_bjorande@quicinc.com>
+References: <20230418163018.785524-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230416151233.346336-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Sun, 16 Apr 2023 17:12:33 +0200, Krzysztof Kozlowski wrote:
-> At least on SC8280XP the eDP PHY is part of power domain:
+On Tue, 18 Apr 2023 09:30:16 -0700, Bjorn Andersson wrote:
+> Found these two things to fix/cleanup while poking around in the glink
+> code.
 > 
->   sc8280xp-crd.dtb: phy@220c2a00: 'power-domains' does not match any of the regexes: 'pinctrl-[0-9]+'
+> Bjorn Andersson (2):
+>   rpmsg: glink: Propagate TX failures in intentless mode as well
+>   rpmsg: glink: Consolidate TX_DATA and TX_DATA_CONT
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml | 3 +++
->  1 file changed, 3 insertions(+)
-> 
+> [...]
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Applied, thanks!
 
+[1/2] rpmsg: glink: Propagate TX failures in intentless mode as well
+      commit: f187a431c494348d8afdb77900fc879be73bdbf3
+[2/2] rpmsg: glink: Consolidate TX_DATA and TX_DATA_CONT
+      commit: cc888eb072b6a48642e429a030b065d4da1d594b
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
