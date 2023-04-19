@@ -2,167 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C96B26E7F76
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 18:20:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C19C6E8008
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 19:04:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230507AbjDSQUj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 12:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35530 "EHLO
+        id S233283AbjDSREG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 13:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233197AbjDSQUh (ORCPT
+        with ESMTP id S233437AbjDSREE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 12:20:37 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9476F2D69
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 09:20:35 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4ec8ce03818so3021432e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 09:20:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681921234; x=1684513234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ajS5AwxNAy2StLCvTIgtNL2E/BG5ps9eI73QSwxiK0o=;
-        b=WgCraIJeytpaVNDyRFYnEcSSd0AK31/l2q4zlRFQPqpG/SfRk6BHFpgSX8NfNdhahQ
-         GHJXZoVyf932ZGFKkVGxqpRbmxNgEfQpB5f/9JTEfB96StJgPapjvSrJI51fOUR3+l9c
-         FEb6Uzt44RB+SLfbTk6dhjnP7Gyl5khb1G+1Qs5rV0K84vq/aUFEjw6+UNNOrCOiB4k+
-         b6qxmoqZP0RfaoM0nWzzdsScx25XX60puYEaANlHfrkp6GlM2/jPEi3W55WdtvfSuVCo
-         6IdOvjlzIUGdrWWKzCFCsKZJd90mlEGSYVvIcjWW0jGiMfM5Q3eVjoK4pyU9jb5M6YSC
-         dsSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681921234; x=1684513234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ajS5AwxNAy2StLCvTIgtNL2E/BG5ps9eI73QSwxiK0o=;
-        b=C6kU1buXaBIrn9eU2Y4UkcVHP3MWkYEpPLlFUcu6yeI+JIafOGynv6qB+G35nULb75
-         NqiM2GiaPZyc8C0OTAq2/+SkzjsHGUaCKZdtHOSE4eddLAVxphVTLNKzRWacirQPMReH
-         B/F3RarjXBYZojWjRMpxZXAbDh9YuGXkvYRsh4oWRXA0EL8L1CERiUFPt9K80niQmNVr
-         CNO4HkyL0Tqy/WttT7xWQjYlbXyIJajy/4hyWPJvdcj9oKETYKYouJH05qJT/k/qCdkH
-         QIZI0jnlbctOlnCVf7HunohjErlgdfwu4QDhsgOJE7PVPZOtxAzoC7Crsg20JORo1jBw
-         EWpw==
-X-Gm-Message-State: AAQBX9e397ARLU+lqZnHgczSraMl9cf1voysa0Hcka7SxskrqXSQq3sp
-        TapEdLZQ1f2+BSVyMIL3QJKBpg==
-X-Google-Smtp-Source: AKy350bqi18ppcGPBlkMku8yd3Jx5EyZwDkYGPgR2kbJpG00DnGcpfdYtIrhfwi4ng3KClUhyYSqnw==
-X-Received: by 2002:ac2:4942:0:b0:4ec:9df9:f11a with SMTP id o2-20020ac24942000000b004ec9df9f11amr3992000lfi.9.1681921233811;
-        Wed, 19 Apr 2023 09:20:33 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id f19-20020ac251b3000000b004db4936c866sm2718538lfk.38.2023.04.19.09.20.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 09:20:33 -0700 (PDT)
-Message-ID: <6862340f-64fa-c0cb-8d20-f8f4d14038e9@linaro.org>
-Date:   Wed, 19 Apr 2023 18:20:32 +0200
+        Wed, 19 Apr 2023 13:04:04 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9697EF6;
+        Wed, 19 Apr 2023 10:04:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681923842; x=1713459842;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=YWEFkjk4Tn32C8B9bIF5tMsJFwcjS2BBCkRcNPRL1DQ=;
+  b=Yz2T8buo5MzkVoHNGVFWq5aJXUDeimuw72EhY38eDy7iIgpGJRhabyGW
+   5q2reARDYKTqOXv20FYSbwszv8ckH6Ryv+D7e3j1Zlzjdb79ZXh2K+4CY
+   ULE3PtNKh5EdD2HDbxbapxcajh48Nh2OvUH7bNkmB6jPcEaqo3BMryD44
+   UDWvkYM3DRbD6hAh7cVJR/g5yrZxCKXOnVL1n6GRi4/NuvA0Iep+YFJpJ
+   /mD5lkAUE5PCPqSUWN1eeFlDd3N2EIP/nQ07/9NhoZ/QUi+QSuWBYIJA5
+   80WP9NLMkDSxiTgUCCP03mHwkKXFsjKEYJXTDx/NcUa/5/aLhOq2hnJF7
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="325117127"
+X-IronPort-AV: E=Sophos;i="5.99,208,1677571200"; 
+   d="scan'208";a="325117127"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2023 10:04:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="756171542"
+X-IronPort-AV: E=Sophos;i="5.99,208,1677571200"; 
+   d="scan'208";a="756171542"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 19 Apr 2023 10:03:57 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1ppBDp-000f2M-0Q;
+        Wed, 19 Apr 2023 17:03:57 +0000
+Date:   Thu, 20 Apr 2023 01:03:28 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
+        arnaud.pouliquen@foss.st.com, swboyd@chromium.org,
+        quic_clew@quicinc.com, mathieu.poirier@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Sarannya S <quic_sarannya@quicinc.com>,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH V6 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL
+ support
+Message-ID: <202304200018.ik0k7dKN-lkp@intel.com>
+References: <1681912409-25248-4-git-send-email-quic_sarannya@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974: correct qfprom node reg
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Eduardo Valentin <edubezval@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Craig Tatlor <ctatlor97@gmail.com>
-References: <20230130-msm8974-qfprom-v1-1-975aa0e5e083@z3ntu.xyz>
- <5664419.DvuYhMxLoT@z3ntu.xyz>
- <383f6aa0-6150-22b5-425a-f9cf13bdbc50@linaro.org>
- <4820647.31r3eYUQgx@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <4820647.31r3eYUQgx@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1681912409-25248-4-git-send-email-quic_sarannya@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Sarannya,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on v6.3-rc7]
+[also build test ERROR on linus/master next-20230418]
+[cannot apply to remoteproc/rpmsg-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Sarannya-S/rpmsg-core-Add-signal-API-support/20230419-220040
+patch link:    https://lore.kernel.org/r/1681912409-25248-4-git-send-email-quic_sarannya%40quicinc.com
+patch subject: [PATCH V6 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL support
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20230420/202304200018.ik0k7dKN-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/4f765ede8c129f07c522ef4a7c6aee27cb466be6
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Sarannya-S/rpmsg-core-Add-signal-API-support/20230419-220040
+        git checkout 4f765ede8c129f07c522ef4a7c6aee27cb466be6
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=m68k SHELL=/bin/bash drivers/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202304200018.ik0k7dKN-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+   drivers/rpmsg/rpmsg_char.c: In function 'rpmsg_eptdev_ioctl':
+>> drivers/rpmsg/rpmsg_char.c:334:23: error: too few arguments to function 'rpmsg_set_flow_control'
+     334 |                 ret = rpmsg_set_flow_control(eptdev->ept, set);
+         |                       ^~~~~~~~~~~~~~~~~~~~~~
+   In file included from drivers/rpmsg/rpmsg_char.c:23:
+   include/linux/rpmsg.h:200:5: note: declared here
+     200 | int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst);
+         |     ^~~~~~~~~~~~~~~~~~~~~~
+>> drivers/rpmsg/rpmsg_char.c:321:13: warning: variable 'val' set but not used [-Wunused-but-set-variable]
+     321 |         u32 val;
+         |             ^~~
 
 
-On 19.04.2023 18:18, Luca Weiss wrote:
-> On Mittwoch, 19. April 2023 18:12:04 CEST Konrad Dybcio wrote:
->> On 19.04.2023 18:00, Luca Weiss wrote:
->>> Hi Konrad,
->>>
->>> On Montag, 30. Jänner 2023 21:37:29 CEST Luca Weiss wrote:
->>>> On Montag, 30. Jänner 2023 19:42:51 CET Konrad Dybcio wrote:
->>>>> On 30.01.2023 19:36, Luca Weiss wrote:
->>>>>> On Montag, 30. Jänner 2023 19:30:04 CET Konrad Dybcio wrote:
->>>>>>> On 30.01.2023 19:20, luca@z3ntu.xyz wrote:
->>>>>>>> From: Craig Tatlor <ctatlor97@gmail.com>
->>>>>>>>
->>>>>>>> The qfprom actually starts at 0xfc4b8000 instead of 0xfc4bc000 as
->>>>>>>> defined previously. Adjust the tsens offsets accordingly.
->>>>>>>>
->>>>>>>> [luca@z3ntu.xyz: extract to standalone patch]
->>>>>>>>
->>>>>>>> Fixes: c59ffb519357 ("arm: dts: msm8974: Add thermal zones, tsens and
->>>>>>>> qfprom nodes") Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
->>>>>>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
->>>>>>>> ---
->>>>>>>
->>>>>>> Isn't this a raw vs ecc-corrected values problem?
->>>>>>
->>>>>> Not quite sure what you mean.
->>>>>
->>>>> The QFPROM is split into two parts: one where raw values
->>>>> are stored, and the other one where ECC-corrected copies
->>>>> of them reside. Usually it's at offset of 0x4000. We should
->>>>> generally be using the ECC-corrected ones, because.. well..
->>>>> they are ECC-corrected.. You may want to check if the
->>>>> fuse you're adding reads the same value at +0x4000.
->>>>
->>>> Yeah that actually seems to work...
->>>>
->>>> But downstream's using this +0x4000 only for tsens it seems
->>>>
->>>>    <0xfc4bc000 0x1000> as "tsens_eeprom_physical"
->>>>
->>>> qcom,clock-krait-8974 is using this:
->>>>     <0xfc4b80b0 0x08> as "efuse"
->>>>
->>>> Also seems HDMI driver is using a mix for HDCP stuff
->>>>
->>>>   drivers/video/msm/mdss/mdss_hdmi_util.h:
->>>>     /* QFPROM Registers for HDMI/HDCP */
->>>>     #define QFPROM_RAW_FEAT_CONFIG_ROW0_LSB  (0x000000F8)
->>>>     #define QFPROM_RAW_FEAT_CONFIG_ROW0_MSB  (0x000000FC)
->>>>     #define HDCP_KSV_LSB                     (0x000060D8)
->>>>     #define HDCP_KSV_MSB                     (0x000060DC)
->>>>
->>>> Any clue why Qualcomm used it this way in downstream? I'd rather not
->>>> deviate too much if not for a good reason...
->>>
->>> Any comments on the above?
->>
->> This thread got burried to deep in the mailbox!
->>
->> I see two reasons why they could be using the uncorrected region:
->> - their generators are messed up in general
->>
->> - they may have had an early chip revision once where there were
->>   problems with this and their generators were messed up to
->>   accommodate for it and everybody forgot to fix that
->>
->> No other good explanations as far as I'm aware!
-> 
-> So, resolution is to use the offsets as declared in downstream, so take this 
-> patch to have the full range available?
-No, the correct resolution to "fix QFPROM reg" would be to
-increase the size to 0x7000-0x4000 = 0x3000, as we should be
-using the ECC-corrected entries.
+vim +/rpmsg_set_flow_control +334 drivers/rpmsg/rpmsg_char.c
 
-Konrad
-> 
-> Regards
-> Luca
-> 
-> 
-> 
+   314	
+   315	static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
+   316				       unsigned long arg)
+   317	{
+   318		struct rpmsg_eptdev *eptdev = fp->private_data;
+   319	
+   320		bool set;
+ > 321		u32 val;
+   322		int ret;
+   323	
+   324		switch (cmd) {
+   325		case RPMSG_GET_OUTGOING_FLOWCONTROL:
+   326			eptdev->remote_flow_updated = false;
+   327			ret = put_user(eptdev->remote_flow, (int __user *)arg);
+   328			break;
+   329		case RPMSG_SET_INCOMING_FLOWCONTROL:
+   330			ret = get_user(val, (int __user *)arg);
+   331			if (ret)
+   332				break;
+   333			set = !!arg;
+ > 334			ret = rpmsg_set_flow_control(eptdev->ept, set);
+   335			break;
+   336		case RPMSG_DESTROY_EPT_IOCTL:
+   337			/* Don't allow to destroy a default endpoint. */
+   338			if (eptdev->default_ept) {
+   339				ret = -EINVAL;
+   340				break;
+   341			}
+   342			ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
+   343			break;
+   344		default:
+   345			ret = -EINVAL;
+   346		}
+   347	
+   348		return ret;
+   349	}
+   350	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
