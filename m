@@ -2,81 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA07F6E821A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 21:49:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF21B6E8229
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 21:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbjDSTs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 15:48:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52692 "EHLO
+        id S230407AbjDST4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 15:56:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbjDSTs7 (ORCPT
+        with ESMTP id S229521AbjDST4U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 15:48:59 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 355E74492
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 12:48:57 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2a7b02615f1so526161fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 12:48:57 -0700 (PDT)
+        Wed, 19 Apr 2023 15:56:20 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7371FFD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 12:56:19 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id c9so1288113ejz.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 12:56:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681933735; x=1684525735;
+        d=linaro.org; s=google; t=1681934177; x=1684526177;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZTyNKupNsXf2g+91PrPeU2a11PGoDFN20zA7SNUiqa0=;
-        b=MMVV0oI5iZoLMSWrFHuxhrPHwJWEwWo9NDFSTsUMvnDuxZ+ftMo4+2t6pSqxU/9zmJ
-         mJUFGHmFF2pV4n4Id8zA4IIb3ilQOlhiHMhX4mMxPIQyKQaeGNNvWKtP4PurPzpIhTkn
-         oGTsuccZQM1EF0j7uvUbWVrUbGLhXq+13He/orOkcSzXMNoCNX4xK1SIjK2NMhusK+Na
-         JuMFlyaJAEtG1hhtBW4em31/vbbQoD8sJTaRcZd9vMMXPU90sQBJ0HmV2B5gsod0c75t
-         O9WgpZXhUexEQm42tyn8FN+8KiCi6gKXsDTSA+f7JNwh6Cks81lze41j4B8dxyWx5E1/
-         J5qQ==
+        bh=QK0RzTuumCQC1t5HnO9BC42T80LLGoNo/wFWeG++m3M=;
+        b=ebupDPWi6a9ZIyC9OYScjcl9eatEyGRZmZp7E4aMGiqDLtmMmpbrrFhuODPR1S5mnb
+         pDalxeHmsroNgY70X6di0JfdJpn9Hg22M/6rcqi8K4k8CF8mRM8KrtsK+r4CETIx8Znq
+         J3cm1AZGHsR3VWRa0ASbHjoxxGc62mt9ZkHwGJLJa4WrISCXEgFKXBjZu7l40v4Ae5d8
+         oLzslRBMW8EJ2U1hCnWpXFerRC2+SQYaBvZulj1A0JXxW+bEXwptjSJD6+RQSVTTHQUX
+         qciNNcagu2Lp+PuPH5JxsPSfKsDnaKlECsVvDCrePC8lYKqhI4L+GF8fhHJ2MOfsM/hv
+         I4VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681933735; x=1684525735;
+        d=1e100.net; s=20221208; t=1681934177; x=1684526177;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZTyNKupNsXf2g+91PrPeU2a11PGoDFN20zA7SNUiqa0=;
-        b=IwVXY25nsZYC4SwPsvLzVHC0XeAfd5zCQkioXzaZLge+7mIU/cdvMO2X/o/G5TkUGK
-         R4U0pcOKpWFsZ3sFa5Gkd4NCQoeRsAer6rC2cXbja/MOwNa/Yt4xDo6gG4FXj199QGD/
-         KNMN8j1XAzt2Fbu2hGuw876RloUH1qOjqqGN3fhsNboy4c86qvyCwx8Tq9DRdHJkDswW
-         oTZ3yTf+fMoayAa5pyl1OP42LRVn5Frc560KUJPevVoFlIEhCSdcbMVba9ldecLMGqt7
-         2UsD6oV7Y/kvP/jGxYqHhW8iZG3Ky8VRM44j4ebC3+wqbJaPsADaJ537ZQA8bNtBhRag
-         D9ng==
-X-Gm-Message-State: AAQBX9f2ArhXFNCOluL1ItwqMYfAEh2fXAQ386N3px2S//O4clTLdOhI
-        5paVzjotwP68NnwfB3tyBrSLFg==
-X-Google-Smtp-Source: AKy350YKG23tnDYXxO75yYLkS8XJe3vIMC1X4eB1eASmgz1L1is/D1f87aLJjfvgYP27+NZxb0G9wg==
-X-Received: by 2002:a19:740a:0:b0:4ec:92e4:e0c3 with SMTP id v10-20020a19740a000000b004ec92e4e0c3mr4073568lfe.62.1681933735325;
-        Wed, 19 Apr 2023 12:48:55 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id 7-20020ac25687000000b004edc2a023ffsm1351395lfr.36.2023.04.19.12.48.53
+        bh=QK0RzTuumCQC1t5HnO9BC42T80LLGoNo/wFWeG++m3M=;
+        b=bVP74MG81p8iwCQ3AfhSjPzUo5/7jbG10emndRVDjyxlhbDHttbYwMjiIvz4warsaM
+         gdZQ15+3iK4+KyEdDFAwRjEMlCYieuJtvGcy+2NQzv2nTBtBChRTld1g5xAK7FTWZHM7
+         aM35nbJncZzao7gbJYUlOwZx0sfl6JwQ/xNvxsIHD/iL8xjHb177/zTCldiNlirLOzzB
+         CcrwnJxFr4MW6w/7ZB8KaG4ORe2n8nMDkIActMIKD+G2qfvrsRaE9c1Bainj/2JtQzJF
+         nzqRtIlK0glkcczvEmR4JK9LWeTpTnomUHVoqWCoBu40QFW+nq+qAC64B/I/r802U0AK
+         MChQ==
+X-Gm-Message-State: AAQBX9eUh/OqIEqbtUqIMkG9KBtQ+D2pVnGWSHC9lfsJ/gsPW9yH8MQk
+        G7r3+Y1VjkjeylFpNdPRErUS2Q==
+X-Google-Smtp-Source: AKy350bBRSdGMvjLXchuqeVbKmqng0UuuSmcvkfm/sGsi74okcHvgQ89ZbjMozDgThpDZ9T9YadAPQ==
+X-Received: by 2002:a17:906:af63:b0:94e:6b12:caab with SMTP id os3-20020a170906af6300b0094e6b12caabmr18903719ejb.51.1681934177665;
+        Wed, 19 Apr 2023 12:56:17 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:976c:1d6c:6ed0:8935? ([2a02:810d:15c0:828:976c:1d6c:6ed0:8935])
+        by smtp.gmail.com with ESMTPSA id tg10-20020a1709078dca00b0094ef2003581sm7797154ejc.153.2023.04.19.12.56.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 12:48:54 -0700 (PDT)
-Message-ID: <e15ec005-ef52-c14c-bdeb-faaca207d39b@linaro.org>
-Date:   Wed, 19 Apr 2023 21:48:52 +0200
+        Wed, 19 Apr 2023 12:56:17 -0700 (PDT)
+Message-ID: <9543f619-88fa-8e54-6e9a-4334750e51b4@linaro.org>
+Date:   Wed, 19 Apr 2023 21:56:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/dpu1: Handle the reg bus ICC path
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: Fix schema for
+ "qcom,paired"
 Content-Language: en-US
-To:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        freedreno@lists.freedesktop.org
-References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
- <20230417-topic-dpu_regbus-v1-5-06fbdc1643c0@linaro.org>
- <11c72462-b256-d0db-a666-9615da4420f6@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <11c72462-b256-d0db-a666-9615da4420f6@quicinc.com>
+To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230418150606.1528107-1-robh@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230418150606.1528107-1-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -87,102 +80,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 19.04.2023 21:06, Jeykumar Sankaran wrote:
+On 18/04/2023 17:06, Rob Herring wrote:
+> The "qcom,paired" schema is all wrong. First, it's a list rather than an
+> object(dictionary). Second, it is missing a required type. The meta-schema
+> normally catches this, but schemas under "$defs" was not getting checked.
+> A fix for that is pending.
 > 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
-> On 4/17/2023 8:30 AM, Konrad Dybcio wrote:
->> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
->> another path that needs to be handled to ensure MDSS functions properly,
->> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
->>
->> Gating that path may have a variety of effects.. from none to otherwise
->> inexplicable DSI timeouts..
->>
->> On the DPU side, we need to keep the bus alive. The vendor driver
->> kickstarts it to max (300Mbps) throughput on first commit, but in
->> exchange for some battery life in rare DPU-enabled-panel-disabled
->> usecases, we can request it at DPU init and gate it at suspend.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 22 ++++++++++++++++++++--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
->>   2 files changed, 21 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index dd6c1c40ab9e..d1f77faebbc0 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -384,15 +384,17 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
->>       return 0;
->>   }
->>   -static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
->> +static int dpu_kms_parse_icc_paths(struct dpu_kms *dpu_kms)
->>   {
->>       struct icc_path *path0;
->>       struct icc_path *path1;
->> +    struct icc_path *reg_bus_path;
->>       struct drm_device *dev = dpu_kms->dev;
->>       struct device *dpu_dev = dev->dev;
->>         path0 = msm_icc_get(dpu_dev, "mdp0-mem");
->>       path1 = msm_icc_get(dpu_dev, "mdp1-mem");
->> +    reg_bus_path = msm_icc_get(dpu_dev, "cpu-cfg");
->>         if (IS_ERR_OR_NULL(path0))
->>           return PTR_ERR_OR_ZERO(path0);
->> @@ -404,6 +406,10 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
->>           dpu_kms->mdp_path[1] = path1;
->>           dpu_kms->num_mdp_paths++;
->>       }
->> +
->> +    if (!IS_ERR_OR_NULL(reg_bus_path))
->> +        dpu_kms->reg_bus_path = reg_bus_path;
->> +
->>       return 0;
->>   }
->>   @@ -1039,7 +1045,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->>           DPU_DEBUG("REG_DMA is not defined");
->>       }
->>   -    dpu_kms_parse_data_bus_icc_path(dpu_kms);
->> +    dpu_kms_parse_icc_paths(dpu_kms);
->>         rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
->>       if (rc < 0)
->> @@ -1241,6 +1247,9 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
->>       for (i = 0; i < dpu_kms->num_mdp_paths; i++)
->>           icc_set_bw(dpu_kms->mdp_path[i], 0, 0);
->>   +    if (dpu_kms->reg_bus_path)
->> +        icc_set_bw(dpu_kms->reg_bus_path, 0, 0);
->> +
->>       return 0;
->>   }
->>   @@ -1261,6 +1270,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
->>           return rc;
->>       }
->>   +    /*
->> +     * The vendor driver supports setting 76.8 / 150 / 300 Mbps on this
-> How do you arrive at these distint BW values? Are they provided by the ICC fwk for the given path?
-They're hardcoded in the SDE driver.
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> index 9412b9362328..4c3e9ff82105 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> @@ -144,8 +144,9 @@ $defs:
+>          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+>  
+>        qcom,paired:
+> -        - description:
+> -            Indicates that the pin should be operating in paired mode.
+> +        type: boolean
+> +        description:
+> +          Indicates that the pin should be operating in paired mode.
 
-Konrad
->> +     * path, but it seems to go for the highest level when display output
->> +     * is enabled and zero otherwise. For simplicity, we can assume that
->> +     * DPU being enabled and running implies that.
->> +     */
->> +    if (dpu_kms->reg_bus_path)
->> +        icc_set_bw(dpu_kms->reg_bus_path, 0, MBps_to_icc(300));
->> +
->>       dpu_vbif_init_memtypes(dpu_kms);
->>         drm_for_each_encoder(encoder, ddev)
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> index d5d9bec90705..c332381d58c4 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> @@ -111,6 +111,7 @@ struct dpu_kms {
->>       atomic_t bandwidth_ref;
->>       struct icc_path *mdp_path[2];
->>       u32 num_mdp_paths;
->> +    struct icc_path *reg_bus_path;
->>   };
->>     struct vsync_info {
->>
+Current Linux implementation uses it as a generic pinconf param
+pinconf_generic_params which is parsed by:
+
+pinconf_generic_parse_dt_config() -> parse_dt_cfg() ->
+of_property_read_u32()
+
+
+The pinctrl-spmi-mpp.c driver, using this schema, treat it as a bool,
+but I still wonder how the code will parse bool with
+of_property_read_u32(). Maybe it should be uint32 with value of 0 and 1?
+
+Best regards,
+Krzysztof
+
