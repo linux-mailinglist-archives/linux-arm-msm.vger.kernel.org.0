@@ -2,88 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4D786E826B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 22:11:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDAD96E82C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 22:34:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230407AbjDSUL5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 16:11:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35562 "EHLO
+        id S229883AbjDSUeG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 16:34:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbjDSUL4 (ORCPT
+        with ESMTP id S229812AbjDSUeF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 16:11:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D8F4C33;
-        Wed, 19 Apr 2023 13:11:54 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33JIxtmO018870;
-        Wed, 19 Apr 2023 20:11:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=4lRYuddyzyOZ7T7y8ZQegTBdQ60Z0hvBn21Sa+GzYxQ=;
- b=HvRchAgw02Ch8X+g29yHnN9vf5u/PuEGXhDu3jNbwFNO1KnGHGWzqFDlFNrQzsLQ5fGg
- QJ6noOXZa1j0gQxbICLW9KK8XTyMfJ0K7pYuXdTABeJ+wRj3ZzKxVTvmMoRda0wQ0U5f
- t4Em5ru1v5xW8DVsEnuPMpzltCDUnj5WjB6zlhgCqCC1PQTY4njXrc80FsRmNvAkB18Z
- YI4AHEWD+Rl7IzANQzuveqt2Pm7DSzYY7MtJ7sIYOL84ykMKMhiNZjEHOvOqwyVde2nK
- MRsYQ/xNFnjJX2RQoDrfajVUwH8Kn6mz8bxDpxAI5IQ6PlZ8HN54yh12G3VwCMCQPWgH Jg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2nn807cf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 20:11:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33JKBjHY024484
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 20:11:46 GMT
-Received: from [10.134.71.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
- 2023 13:11:44 -0700
-Message-ID: <77bb1b3c-09cb-310a-be34-166e573a13a7@quicinc.com>
-Date:   Wed, 19 Apr 2023 13:11:43 -0700
+        Wed, 19 Apr 2023 16:34:05 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772A2C6;
+        Wed, 19 Apr 2023 13:34:03 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 06CF463841;
+        Wed, 19 Apr 2023 20:34:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CCCC433EF;
+        Wed, 19 Apr 2023 20:34:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681936442;
+        bh=ix0y76lYGKzaW7u59USygYREAB96p5dnukcmGiYHcuQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=EBTc7KE50r3e8zjLCjcSwnI441VXVJJ6EsqpdR5chXeHP50xob+PNFPW4lvgYig1X
+         kMP/2nQM9a2LNLe717Jdf5oGkuRCQSMv5wwA6Kaee9q+PZ2FZCyEAeuvGZW2tlNXnZ
+         Mi67sy1T0ZYC8DO4PHP9UYfayMtC5szg4q8kvzzM0GR3/qsOh4GS0vDY1GJuMwu5ff
+         4S8UrC2cqZAW0ssWs9tBntm3g2Zb/khns6y80/ye23xS6Qmawuyh/Dhd2Dah58Nt0+
+         uWsqjbpaZkeGTqIMPvyu+UbunSEJRNYQPylP7CZfJ9LZBjUpCHXRRDGsrSWwvFh+jP
+         MvEdvdb7V2jjg==
+Date:   Wed, 19 Apr 2023 13:37:32 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Cc:     Sarannya S <quic_sarannya@quicinc.com>, quic_bjorande@quicinc.com,
+        swboyd@chromium.org, quic_clew@quicinc.com,
+        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <quic_deesin@quicinc.com>
+Subject: Re: [PATCH V5 1/3] rpmsg: core: Add signal API support
+Message-ID: <20230419203732.nbu6jmbtzlstrzwd@ripper>
+References: <1681807721-32343-1-git-send-email-quic_sarannya@quicinc.com>
+ <1681807721-32343-2-git-send-email-quic_sarannya@quicinc.com>
+ <0543735a-5f0c-bdf4-2a89-e94841bd4a68@foss.st.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/dpu1: Handle the reg bus ICC path
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
- <20230417-topic-dpu_regbus-v1-5-06fbdc1643c0@linaro.org>
- <11c72462-b256-d0db-a666-9615da4420f6@quicinc.com>
- <e15ec005-ef52-c14c-bdeb-faaca207d39b@linaro.org>
-From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-In-Reply-To: <e15ec005-ef52-c14c-bdeb-faaca207d39b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QGMhDy7ReST1ODUAfKQWCbU9L5K7e2AZ
-X-Proofpoint-GUID: QGMhDy7ReST1ODUAfKQWCbU9L5K7e2AZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-19_14,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- spamscore=0 impostorscore=0 clxscore=1015 phishscore=0 mlxlogscore=999
- bulkscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304190174
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0543735a-5f0c-bdf4-2a89-e94841bd4a68@foss.st.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,111 +59,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/19/2023 12:48 PM, Konrad Dybcio wrote:
+On Wed, Apr 19, 2023 at 11:53:49AM +0200, Arnaud POULIQUEN wrote:
+> Hi,
 > 
 > 
-> On 19.04.2023 21:06, Jeykumar Sankaran wrote:
->>
->>
->> On 4/17/2023 8:30 AM, Konrad Dybcio wrote:
->>> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
->>> another path that needs to be handled to ensure MDSS functions properly,
->>> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
->>>
->>> Gating that path may have a variety of effects.. from none to otherwise
->>> inexplicable DSI timeouts..
->>>
->>> On the DPU side, we need to keep the bus alive. The vendor driver
->>> kickstarts it to max (300Mbps) throughput on first commit, but in
->>> exchange for some battery life in rare DPU-enabled-panel-disabled
->>> usecases, we can request it at DPU init and gate it at suspend.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 22 ++++++++++++++++++++--
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
->>>    2 files changed, 21 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>> index dd6c1c40ab9e..d1f77faebbc0 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->>> @@ -384,15 +384,17 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
->>>        return 0;
->>>    }
->>>    -static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
->>> +static int dpu_kms_parse_icc_paths(struct dpu_kms *dpu_kms)
->>>    {
->>>        struct icc_path *path0;
->>>        struct icc_path *path1;
->>> +    struct icc_path *reg_bus_path;
->>>        struct drm_device *dev = dpu_kms->dev;
->>>        struct device *dpu_dev = dev->dev;
->>>          path0 = msm_icc_get(dpu_dev, "mdp0-mem");
->>>        path1 = msm_icc_get(dpu_dev, "mdp1-mem");
->>> +    reg_bus_path = msm_icc_get(dpu_dev, "cpu-cfg");
->>>          if (IS_ERR_OR_NULL(path0))
->>>            return PTR_ERR_OR_ZERO(path0);
->>> @@ -404,6 +406,10 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
->>>            dpu_kms->mdp_path[1] = path1;
->>>            dpu_kms->num_mdp_paths++;
->>>        }
->>> +
->>> +    if (!IS_ERR_OR_NULL(reg_bus_path))
->>> +        dpu_kms->reg_bus_path = reg_bus_path;
->>> +
->>>        return 0;
->>>    }
->>>    @@ -1039,7 +1045,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->>>            DPU_DEBUG("REG_DMA is not defined");
->>>        }
->>>    -    dpu_kms_parse_data_bus_icc_path(dpu_kms);
->>> +    dpu_kms_parse_icc_paths(dpu_kms);
->>>          rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
->>>        if (rc < 0)
->>> @@ -1241,6 +1247,9 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
->>>        for (i = 0; i < dpu_kms->num_mdp_paths; i++)
->>>            icc_set_bw(dpu_kms->mdp_path[i], 0, 0);
->>>    +    if (dpu_kms->reg_bus_path)
->>> +        icc_set_bw(dpu_kms->reg_bus_path, 0, 0);
->>> +
->>>        return 0;
->>>    }
->>>    @@ -1261,6 +1270,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
->>>            return rc;
->>>        }
->>>    +    /*
->>> +     * The vendor driver supports setting 76.8 / 150 / 300 Mbps on this
->> How do you arrive at these distint BW values? Are they provided by the ICC fwk for the given path?
-> They're hardcoded in the SDE driver.
+> On 4/18/23 10:48, Sarannya S wrote:
+> > From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> > 
+> > Some transports like Glink support the state notifications between
+> > clients using flow control signals similar to serial protocol signals.
+> > Local glink client drivers can send and receive flow control status
+> > to glink clients running on remote processors.
+> > 
+> > Add APIs to support sending and receiving of flow control status by
+> > rpmsg clients.
+> > 
+> > Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> > Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
+> > ---
+> >  drivers/rpmsg/rpmsg_core.c     | 20 ++++++++++++++++++++
+> >  drivers/rpmsg/rpmsg_internal.h |  2 ++
+> >  2 files changed, 22 insertions(+)
+> > 
+> > diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
+> > index a2207c0..86b4912 100644
+> > --- a/drivers/rpmsg/rpmsg_core.c
+> > +++ b/drivers/rpmsg/rpmsg_core.c
+> > @@ -331,6 +331,24 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
+> >  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
+> >  
+> >  /**
+> > + * rpmsg_set_flow_control() - sets/clears serial flow control signals
+> > + * @ept:	the rpmsg endpoint
+> > + * @enable:	pause/resume incoming data flow
+> > + *
+> > + * Return: 0 on success and an appropriate error value on failure.
+> > + */
+> > +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
 > 
-> Konrad
-These bandwidths are derived from the scaling frequencies of all the 
-buses participating in the icc-path. So they cannot be constants. 
-Ideally they should be read from the hw catalog data of the respective 
-platform.
+> 
+> Regression since V4[1]
+> 
+> In V4 version the function was:
+> 
+> int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
+> 
+> Following comments on V3 [2]
+> 
+> Without dst parameter it is not compatible with the rpmsg_virtio backend
+> 
 
-Jeykumar S.
->>> +     * path, but it seems to go for the highest level when display output
->>> +     * is enabled and zero otherwise. For simplicity, we can assume that
->>> +     * DPU being enabled and running implies that.
->>> +     */
->>> +    if (dpu_kms->reg_bus_path)
->>> +        icc_set_bw(dpu_kms->reg_bus_path, 0, MBps_to_icc(300));
->>> +
->>>        dpu_vbif_init_memtypes(dpu_kms);
->>>          drm_for_each_encoder(encoder, ddev)
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> index d5d9bec90705..c332381d58c4 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> @@ -111,6 +111,7 @@ struct dpu_kms {
->>>        atomic_t bandwidth_ref;
->>>        struct icc_path *mdp_path[2];
->>>        u32 num_mdp_paths;
->>> +    struct icc_path *reg_bus_path;
->>>    };
->>>      struct vsync_info {
->>>
+You're right, and I missed that this was gone again. Thanks for pointing
+it out. I've backed this series out of rpmsg-next again.
+
+v6 seems to carry the correct argument again...
+
+Regards,
+Bjorn
+
+> 
+> [1]https://lkml.org/lkml/2022/12/7/506
+> [2]https://www.spinics.net/lists/kernel/msg4573082.html
+> 
+> Regards
+> Arnaud
+> 
+> > +{
+> > +	if (WARN_ON(!ept))
+> > +		return -EINVAL;
+> > +	if (!ept->ops->set_flow_control)
+> > +		return -ENXIO;
+> > +
+> > +	return ept->ops->set_flow_control(ept, enable);
+> > +}
+> > +EXPORT_SYMBOL(rpmsg_set_flow_control);
+> > +
+> > +/**
+> >   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
+> >   * @ept: the rpmsg endpoint
+> >   *
+> > @@ -539,6 +557,8 @@ static int rpmsg_dev_probe(struct device *dev)
+> >  
+> >  		rpdev->ept = ept;
+> >  		rpdev->src = ept->addr;
+> > +
+> > +		ept->flow_cb = rpdrv->flowcontrol;
+> >  	}
+> >  
+> >  	err = rpdrv->probe(rpdev);
+> > diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
+> > index 39b646d..4fea45a 100644
+> > --- a/drivers/rpmsg/rpmsg_internal.h
+> > +++ b/drivers/rpmsg/rpmsg_internal.h
+> > @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
+> >   * @trysendto:		see @rpmsg_trysendto(), optional
+> >   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
+> >   * @poll:		see @rpmsg_poll(), optional
+> > + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
+> >   * @get_mtu:		see @rpmsg_get_mtu(), optional
+> >   *
+> >   * Indirection table for the operations that a rpmsg backend should implement.
+> > @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
+> >  			     void *data, int len);
+> >  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
+> >  			     poll_table *wait);
+> > +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable);
+> >  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
+> >  };
+> >  
