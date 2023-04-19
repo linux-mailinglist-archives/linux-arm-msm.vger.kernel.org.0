@@ -2,119 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E756E8370
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 23:20:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0D086E83B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 23:26:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232282AbjDSVUF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 17:20:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
+        id S229767AbjDSV03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 17:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232456AbjDSVTr (ORCPT
+        with ESMTP id S229983AbjDSV02 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 17:19:47 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C2DE83F2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:19:24 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id vc20so1584898ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:19:24 -0700 (PDT)
+        Wed, 19 Apr 2023 17:26:28 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40998E60
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:26:25 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id c3so499804ljf.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681939164; x=1684531164;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KW3N7y2mH7tdXeuZ/kIZmdwbObDrn11+y8J9xSdzllM=;
-        b=ac0VZV/XkkYkhhdeDLb7ecUkdh0YqRJZyMrv+a48jj2dtC61L4tA1RAfe+Z4YRFv33
-         lgmKHKnGQSzwjByOIMY7RCftgyIwJJ6ExchsIJxRFGkDDmDLgQi6RPOtVFaK/es3cZVV
-         fjN4sJ1JFFaA5gomq0s45vgLQLXy3EVB5rsa676mDSC8AFKYEzjtJj+rJpGgfJGDP7IX
-         +B21E/0xHqzm8FZPURoVmB4mrRY7BuBEDpsZlg+8rBjpTjK+ilhEeeI66IFyXJLvvLvf
-         G5/o4LOfCZVRU0FCAvUkGz04mVuGE1+d0OJxtc2MrFto27zmp76HMgFfXeIGFNyF6uK0
-         q6fQ==
+        d=linaro.org; s=google; t=1681939583; x=1684531583;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=G7rLjVelMroUaEiqjl++LDyQDXZLBXJneIETgFg7kfY=;
+        b=R2BeKr1L0hhm6DJSQeidUDfHuDd5+ZJoq4TOgU37eePK+pqACeRlO8XV1NmGmXEqdN
+         zMsZtcwFZUEg+uobXe/kysNSlykxrbJZyMM0WrJHwbtgL1tmOOMQa13N+Gqweuj05N24
+         xNwLwdcA5gVdLmJirjg6ioH2/lydImJPAfbwjeLIHkQxUZACh8upfgo/E+Kh+djV+/2B
+         eMsRAvrBal4w0uX5ENi8No9VWGlPIhWqlNSXaP5WOk0NNB69FhcHp8SMxINZnDn6GEp3
+         QCpg0faV1EmNpQzipY/eLVnd9qHHzZAqIEXUrPPEGpO6muEiStWC/YCpu0HHz9FlhvSJ
+         nYgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681939164; x=1684531164;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KW3N7y2mH7tdXeuZ/kIZmdwbObDrn11+y8J9xSdzllM=;
-        b=RrYCxBUP/NxO5Y4qx/UW2Hdc1fwLFGxvfbti2hhg4enNQxgS2KFP6QJ8kicKxXdqvg
-         z5qUQeyoRpNJZwFk8rQ6YEohdePLFLaDaABD1SUGOwIpg+omNA/lkWRi8lVCBFKkkqAq
-         ALUzftiklzv8rTh4qqmBRmfKol945Pvjpl6Lv0T8cN4pk/bMCvqZIjw39D52o3oPpqQc
-         A52kok9JXzttrGZCwiZcwSqH5AZl5qL0RQ8gVUB2kONAVDHGay2HQuMAyb+KMnj0hMcD
-         l5Le/Umw2fImwHR3QzifulWawv1c2Rf2RG1jklCop1+7Zhdqs5XHRmV0B2J94KdhIWUV
-         XFaA==
-X-Gm-Message-State: AAQBX9c/D6mUlELUjkFZbWMhpgnRKwZUb4dXEAW91euvHFMim4+s3pXi
-        BDIOqynJhfrnPAUhTiSoS58obA==
-X-Google-Smtp-Source: AKy350ZyesocccCe9v+hN3fGURoHdWt4yO3+2sNTeNfvV7YJNULRBXevGRscrRPzKdqF2kuz81oXeA==
-X-Received: by 2002:a17:907:3e02:b0:94f:35ea:d773 with SMTP id hp2-20020a1709073e0200b0094f35ead773mr18298595ejc.75.1681939164055;
-        Wed, 19 Apr 2023 14:19:24 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:976c:1d6c:6ed0:8935])
-        by smtp.gmail.com with ESMTPSA id qc27-20020a170906d8bb00b0094f364b36acsm6208476ejb.165.2023.04.19.14.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Apr 2023 14:19:23 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        d=1e100.net; s=20221208; t=1681939583; x=1684531583;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G7rLjVelMroUaEiqjl++LDyQDXZLBXJneIETgFg7kfY=;
+        b=P7SJP996ug13IQKWVXBaczO5OQYrGodwokq2I/9ZCurhWGccPvSZHFv44nwhIzluAt
+         xaKEhIEvwXhKOdSyplec+OG+76lujkRE1rtkXUp8Exc15N36qVwUvCcv8wlEbG1VaWUj
+         m3zM1p8xo35n4396GQhImNWEr2v6JpF3UtrXNJmqVIKUr8NEXi7tr7RLdVwwpBDj9tVG
+         q6qVRj4ziBcyTDoooMx1yyQl8beuNzH6yWgGYFqDKIalPlMA/4Gn8bXjmayilV/t2qQT
+         67VZI1vx097JvEIXYfbBk0TfNNiU0KOjsi3QCPTmuH683cmUJn7vkxA7MfCN8u03ps1c
+         XqmA==
+X-Gm-Message-State: AAQBX9fcEIJLKqJJcYOJQvjfgh5mEeNpPJjffS6ZYRG6tqhtVv59PqEg
+        Ihj4zGqIbu+nLoErpiSdK5qpkg==
+X-Google-Smtp-Source: AKy350YwRKyqyht0LHMNwHAknUo5O+PCkps4HQwk0FE03ebRAxhB/2wTs/O6g9F9gTWK2osX8ClJTQ==
+X-Received: by 2002:a2e:9e56:0:b0:299:ac68:4806 with SMTP id g22-20020a2e9e56000000b00299ac684806mr2195156ljk.9.1681939583467;
+        Wed, 19 Apr 2023 14:26:23 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id 2-20020a2eb282000000b002a76b9e4058sm3049975ljx.43.2023.04.19.14.26.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Apr 2023 14:26:23 -0700 (PDT)
+Message-ID: <bb8e3633-3fe5-b4d2-08e1-0789a68620a8@linaro.org>
+Date:   Wed, 19 Apr 2023 23:26:21 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [Freedreno] [PATCH 5/5] drm/msm/dpu1: Handle the reg bus ICC path
+Content-Language: en-US
+To:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFT RFC PATCH] arm64: dts: qcom: sdm630-nile: correct duplicated reserved memory node
-Date:   Wed, 19 Apr 2023 23:19:21 +0200
-Message-Id: <20230419211921.79871-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        freedreno@lists.freedesktop.org
+References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
+ <20230417-topic-dpu_regbus-v1-5-06fbdc1643c0@linaro.org>
+ <11c72462-b256-d0db-a666-9615da4420f6@quicinc.com>
+ <e15ec005-ef52-c14c-bdeb-faaca207d39b@linaro.org>
+ <77bb1b3c-09cb-310a-be34-166e573a13a7@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <77bb1b3c-09cb-310a-be34-166e573a13a7@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SoC DTSI already comes with 85800000 reserved memory node, so assume the
-author wanted to update its length.  This fixes dtbs W=1 warning:
 
-  Warning (unique_unit_address_if_enabled): /reserved-memory/qhee-code@85800000: duplicate unit-address (also used in node /reserved-memory/reserved@85800000)
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+On 19.04.2023 22:11, Jeykumar Sankaran wrote:
+> 
+> 
+> On 4/19/2023 12:48 PM, Konrad Dybcio wrote:
+>>
+>>
+>> On 19.04.2023 21:06, Jeykumar Sankaran wrote:
+>>>
+>>>
+>>> On 4/17/2023 8:30 AM, Konrad Dybcio wrote:
+>>>> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
+>>>> another path that needs to be handled to ensure MDSS functions properly,
+>>>> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
+>>>>
+>>>> Gating that path may have a variety of effects.. from none to otherwise
+>>>> inexplicable DSI timeouts..
+>>>>
+>>>> On the DPU side, we need to keep the bus alive. The vendor driver
+>>>> kickstarts it to max (300Mbps) throughput on first commit, but in
+>>>> exchange for some battery life in rare DPU-enabled-panel-disabled
+>>>> usecases, we can request it at DPU init and gate it at suspend.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 22 ++++++++++++++++++++--
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
+>>>>    2 files changed, 21 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> index dd6c1c40ab9e..d1f77faebbc0 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>>>> @@ -384,15 +384,17 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+>>>>        return 0;
+>>>>    }
+>>>>    -static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+>>>> +static int dpu_kms_parse_icc_paths(struct dpu_kms *dpu_kms)
+>>>>    {
+>>>>        struct icc_path *path0;
+>>>>        struct icc_path *path1;
+>>>> +    struct icc_path *reg_bus_path;
+>>>>        struct drm_device *dev = dpu_kms->dev;
+>>>>        struct device *dpu_dev = dev->dev;
+>>>>          path0 = msm_icc_get(dpu_dev, "mdp0-mem");
+>>>>        path1 = msm_icc_get(dpu_dev, "mdp1-mem");
+>>>> +    reg_bus_path = msm_icc_get(dpu_dev, "cpu-cfg");
+>>>>          if (IS_ERR_OR_NULL(path0))
+>>>>            return PTR_ERR_OR_ZERO(path0);
+>>>> @@ -404,6 +406,10 @@ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+>>>>            dpu_kms->mdp_path[1] = path1;
+>>>>            dpu_kms->num_mdp_paths++;
+>>>>        }
+>>>> +
+>>>> +    if (!IS_ERR_OR_NULL(reg_bus_path))
+>>>> +        dpu_kms->reg_bus_path = reg_bus_path;
+>>>> +
+>>>>        return 0;
+>>>>    }
+>>>>    @@ -1039,7 +1045,7 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>>>>            DPU_DEBUG("REG_DMA is not defined");
+>>>>        }
+>>>>    -    dpu_kms_parse_data_bus_icc_path(dpu_kms);
+>>>> +    dpu_kms_parse_icc_paths(dpu_kms);
+>>>>          rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
+>>>>        if (rc < 0)
+>>>> @@ -1241,6 +1247,9 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
+>>>>        for (i = 0; i < dpu_kms->num_mdp_paths; i++)
+>>>>            icc_set_bw(dpu_kms->mdp_path[i], 0, 0);
+>>>>    +    if (dpu_kms->reg_bus_path)
+>>>> +        icc_set_bw(dpu_kms->reg_bus_path, 0, 0);
+>>>> +
+>>>>        return 0;
+>>>>    }
+>>>>    @@ -1261,6 +1270,15 @@ static int __maybe_unused dpu_runtime_resume(struct device *dev)
+>>>>            return rc;
+>>>>        }
+>>>>    +    /*
+>>>> +     * The vendor driver supports setting 76.8 / 150 / 300 Mbps on this
+>>> How do you arrive at these distint BW values? Are they provided by the ICC fwk for the given path?
+>> They're hardcoded in the SDE driver.
+>>
+>> Konrad
+> These bandwidths are derived from the scaling frequencies of all the buses participating in the icc-path. So they cannot be constants. Ideally they should be read from the hw catalog data of the respective platform.
+msm-5.4 : rotator/sde_rotator_base.c
 
----
+static const struct sde_rot_bus_data sde_rot_reg_bus_table[] = {
+        {0, 0},
+        {0, 76800},
+        {0, 150000},
+        {0, 300000},
+};
 
-What was the original code intention?
----
- arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+One of the two voters begs to disagree, but I do indeed see that some
+SoCs (lahaina, yupik, shima..) cast votes for 74/148/265 MBps instead
+of 77/150/300 from the MDSS device (with rotator being considered
+separate), or so say their DTs, thanks for pointing that out.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-index 2ca713a3902a..3033723fc6ff 100644
---- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
-@@ -138,11 +138,6 @@ debug@ffb00000 {
- 			no-map;
- 		};
- 
--		reserved@85800000 {
--			reg = <0x00 0x85800000 0x00 0x3700000>;
--			no-map;
--		};
--
- 		cont_splash_mem: splash@9d400000 {
- 			reg = <0 0x9d400000 0 (1920 * 1080 * 4)>;
- 			no-map;
-@@ -256,6 +251,10 @@ &pon_resin {
- 	linux,code = <KEY_VOLUMEUP>;
- };
- 
-+&qhee_code {
-+	reg = <0x00 0x85800000 0x00 0x3700000>;
-+};
-+
- &qusb2phy0 {
- 	status = "okay";
- 
--- 
-2.34.1
+Nonetheless, this code would taste good with bolognese sauce..
 
+Konrad
+
+> 
+> Jeykumar S.
+>>>> +     * path, but it seems to go for the highest level when display output
+>>>> +     * is enabled and zero otherwise. For simplicity, we can assume that
+>>>> +     * DPU being enabled and running implies that.
+>>>> +     */
+>>>> +    if (dpu_kms->reg_bus_path)
+>>>> +        icc_set_bw(dpu_kms->reg_bus_path, 0, MBps_to_icc(300));
+>>>> +
+>>>>        dpu_vbif_init_memtypes(dpu_kms);
+>>>>          drm_for_each_encoder(encoder, ddev)
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>>>> index d5d9bec90705..c332381d58c4 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>>>> @@ -111,6 +111,7 @@ struct dpu_kms {
+>>>>        atomic_t bandwidth_ref;
+>>>>        struct icc_path *mdp_path[2];
+>>>>        u32 num_mdp_paths;
+>>>> +    struct icc_path *reg_bus_path;
+>>>>    };
+>>>>      struct vsync_info {
+>>>>
