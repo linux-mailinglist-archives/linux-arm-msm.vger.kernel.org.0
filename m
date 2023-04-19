@@ -2,120 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF21B6E8229
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 21:56:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 302926E8254
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 22:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230407AbjDST4V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 15:56:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55318 "EHLO
+        id S229514AbjDSUFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 16:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbjDST4U (ORCPT
+        with ESMTP id S230404AbjDSUFn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 15:56:20 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7371FFD
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 12:56:19 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id c9so1288113ejz.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 12:56:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681934177; x=1684526177;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QK0RzTuumCQC1t5HnO9BC42T80LLGoNo/wFWeG++m3M=;
-        b=ebupDPWi6a9ZIyC9OYScjcl9eatEyGRZmZp7E4aMGiqDLtmMmpbrrFhuODPR1S5mnb
-         pDalxeHmsroNgY70X6di0JfdJpn9Hg22M/6rcqi8K4k8CF8mRM8KrtsK+r4CETIx8Znq
-         J3cm1AZGHsR3VWRa0ASbHjoxxGc62mt9ZkHwGJLJa4WrISCXEgFKXBjZu7l40v4Ae5d8
-         oLzslRBMW8EJ2U1hCnWpXFerRC2+SQYaBvZulj1A0JXxW+bEXwptjSJD6+RQSVTTHQUX
-         qciNNcagu2Lp+PuPH5JxsPSfKsDnaKlECsVvDCrePC8lYKqhI4L+GF8fhHJ2MOfsM/hv
-         I4VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681934177; x=1684526177;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QK0RzTuumCQC1t5HnO9BC42T80LLGoNo/wFWeG++m3M=;
-        b=bVP74MG81p8iwCQ3AfhSjPzUo5/7jbG10emndRVDjyxlhbDHttbYwMjiIvz4warsaM
-         gdZQ15+3iK4+KyEdDFAwRjEMlCYieuJtvGcy+2NQzv2nTBtBChRTld1g5xAK7FTWZHM7
-         aM35nbJncZzao7gbJYUlOwZx0sfl6JwQ/xNvxsIHD/iL8xjHb177/zTCldiNlirLOzzB
-         CcrwnJxFr4MW6w/7ZB8KaG4ORe2n8nMDkIActMIKD+G2qfvrsRaE9c1Bainj/2JtQzJF
-         nzqRtIlK0glkcczvEmR4JK9LWeTpTnomUHVoqWCoBu40QFW+nq+qAC64B/I/r802U0AK
-         MChQ==
-X-Gm-Message-State: AAQBX9eUh/OqIEqbtUqIMkG9KBtQ+D2pVnGWSHC9lfsJ/gsPW9yH8MQk
-        G7r3+Y1VjkjeylFpNdPRErUS2Q==
-X-Google-Smtp-Source: AKy350bBRSdGMvjLXchuqeVbKmqng0UuuSmcvkfm/sGsi74okcHvgQ89ZbjMozDgThpDZ9T9YadAPQ==
-X-Received: by 2002:a17:906:af63:b0:94e:6b12:caab with SMTP id os3-20020a170906af6300b0094e6b12caabmr18903719ejb.51.1681934177665;
-        Wed, 19 Apr 2023 12:56:17 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:976c:1d6c:6ed0:8935? ([2a02:810d:15c0:828:976c:1d6c:6ed0:8935])
-        by smtp.gmail.com with ESMTPSA id tg10-20020a1709078dca00b0094ef2003581sm7797154ejc.153.2023.04.19.12.56.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 12:56:17 -0700 (PDT)
-Message-ID: <9543f619-88fa-8e54-6e9a-4334750e51b4@linaro.org>
-Date:   Wed, 19 Apr 2023 21:56:16 +0200
+        Wed, 19 Apr 2023 16:05:43 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D307D49D9;
+        Wed, 19 Apr 2023 13:05:38 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33JJvi6e029838;
+        Wed, 19 Apr 2023 20:05:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+RpcB5qKe9o7XxXSkazpxXba+GyKdraybL0xw2kxvgA=;
+ b=PS3olbQ6fvHjCwz3pBdWaemiJDOzYyQgXYPY38osiIdwXfSAv0Sa6uAkWw9sNguAS+77
+ 1M/nD9k4/KzAu5/vb9bnZQBbkaQA8WIjYYtiGlTPiFKgvP9N1UkRE65G0UmVyEcubFAL
+ 9N3BHzq5wVl13TkAw6/BqrV+tRR9iIK2sjG5ZfKvToAQbuHPX22oLgCJqL7xlGGeFdgf
+ WMgGuK3YGmd9MAydCcapgLQdJ3+vlprmBMKtoJcQjOMlzxkKRzvON+f2/eEGaWgtyo7H
+ VtjZzmsVr8wgRLV3k1U4BWeK+iaSzOGxesjFsO0V2h2voYSt496GAj5IxbfapwW0dQ+Y MQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2hd9h082-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 20:05:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33JK5Ssu019006
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 19 Apr 2023 20:05:28 GMT
+Received: from [10.134.71.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 19 Apr
+ 2023 13:05:27 -0700
+Message-ID: <c20433cb-02e4-bd82-99ab-bd25a49771d4@quicinc.com>
+Date:   Wed, 19 Apr 2023 13:05:26 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: Fix schema for
- "qcom,paired"
+Subject: Re: [Freedreno] [PATCH 1/5] dt-bindings: display/msm: Add reg bus
+ interconnect
 Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230418150606.1528107-1-robh@kernel.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230418150606.1528107-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
+ <20230417-topic-dpu_regbus-v1-1-06fbdc1643c0@linaro.org>
+From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
+In-Reply-To: <20230417-topic-dpu_regbus-v1-1-06fbdc1643c0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: k5dWlDyfAgv4xkDSZ19w7GWAsVtuHHjd
+X-Proofpoint-ORIG-GUID: k5dWlDyfAgv4xkDSZ19w7GWAsVtuHHjd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-19_13,2023-04-18_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 adultscore=0 spamscore=0 clxscore=1015
+ mlxscore=0 mlxlogscore=999 phishscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304190174
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/04/2023 17:06, Rob Herring wrote:
-> The "qcom,paired" schema is all wrong. First, it's a list rather than an
-> object(dictionary). Second, it is missing a required type. The meta-schema
-> normally catches this, but schemas under "$defs" was not getting checked.
-> A fix for that is pending.
+Resending the question as the previous one was sent only to the 
+freedreno list. Apologies for spamming!
+
+On 4/17/2023 8:30 AM, Konrad Dybcio wrote:
+> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
+> another path that needs to be handled to ensure MDSS functions properly,
+> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
 > 
-> Signed-off-by: Rob Herring <robh@kernel.org>
+> Gating that path may have a variety of effects.. from none to otherwise
+> inexplicable DSI timeouts..
+> 
+> Describe it in bindings to allow for use in device trees.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>   Documentation/devicetree/bindings/display/msm/mdss-common.yaml | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
-> index 9412b9362328..4c3e9ff82105 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
-> @@ -144,8 +144,9 @@ $defs:
->          enum: [0, 1, 2, 3, 4, 5, 6, 7]
->  
->        qcom,paired:
-> -        - description:
-> -            Indicates that the pin should be operating in paired mode.
-> +        type: boolean
-> +        description:
-> +          Indicates that the pin should be operating in paired mode.
-
-Current Linux implementation uses it as a generic pinconf param
-pinconf_generic_params which is parsed by:
-
-pinconf_generic_parse_dt_config() -> parse_dt_cfg() ->
-of_property_read_u32()
-
-
-The pinctrl-spmi-mpp.c driver, using this schema, treat it as a bool,
-but I still wonder how the code will parse bool with
-of_property_read_u32(). Maybe it should be uint32 with value of 0 and 1?
-
-Best regards,
-Krzysztof
-
+> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> index ccd7d6417523..9eb5b6d3e0b9 100644
+> --- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
+> @@ -72,6 +72,7 @@ properties:
+>       items:
+>         - const: mdp0-mem
+>         - const: mdp1-mem
+> +      - const: cpu-cfg
+>   
+If posted already, please point to the DTSI patch for this ICC path.
+>     resets:
+>       items:
+> 
