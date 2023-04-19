@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1C926E8360
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 23:19:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCA796E8362
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 23:19:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231880AbjDSVT1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 17:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40694 "EHLO
+        id S231910AbjDSVTd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 17:19:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231846AbjDSVTQ (ORCPT
+        with ESMTP id S231901AbjDSVTR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 17:19:16 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F4197298
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:19:12 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id dm2so1619896ejc.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:19:12 -0700 (PDT)
+        Wed, 19 Apr 2023 17:19:17 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BF736A6E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:19:15 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id vc20so1583961ejc.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 14:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681939152; x=1684531152;
+        d=linaro.org; s=google; t=1681939153; x=1684531153;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PNBcAEWabbMN2jaL20kWYpjszsvaOHQs80xc0K/bb6M=;
-        b=njwghyR6i+9SWlWAYB6LBy1+93P16evssOEp7uLF/oS3A4252SyCZtvWKBONdJfOLP
-         QHiihjypEjqEvOdSuJGEebGJZLdbb5BMbC5WjhkUM0AApW9PcRMMJvv7v1CofVD5WQj4
-         VMW+XV0xOrH55TYrlhjZT0MjXhYGxtBl64Zm/vwh9bV7l7nP/beTwqFx56mT6evEQ8GR
-         FOxvPj8ZoyXJgmC1Lc9XDiFMT68PVRMbJEn77M+3W8kyjyk5LoL0d+yZvU05eAazbnPY
-         yvQXr+vsk+kVUiJunXtiAsXEOT1/ShTzYlNfGlkdMm1siABUOawj7AxfCedrTP/K41I5
-         Aijg==
+        bh=9QPvfE3NjcwvEgxYvM974qTypUj2hewodk0hJUiEGis=;
+        b=o2xxMKhWf7lWXAKvLMPYpYa9jd9z+qLzCkDp7GvQdEWIHj+9MDcxa12pwWIm1eBrs2
+         Ne3sj9YVMhgu+MrEsGz02xFn+5F1aJk687yJwcuayI4c+oTuxVeuqHrIkDpwqU93MOSK
+         ZVeGnC5e/yqN1SetdB+6fRb4Jii51ykVtTETvdm6bF2UddM+MwkojQv61uvhk32AIGjW
+         O08GsgtqHHQA60UTKF5V6M+PmXnvwrfjLUYgqONwfNKbnDjr7cOsyOqhsp/79t2yQIu/
+         iPB68hF/bEEfM8jwebIc3PRffVZ99xmo0822Gx5zvpuyMNltT5X/JDvB+m1xjV2LxLpH
+         xgyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681939152; x=1684531152;
+        d=1e100.net; s=20221208; t=1681939153; x=1684531153;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PNBcAEWabbMN2jaL20kWYpjszsvaOHQs80xc0K/bb6M=;
-        b=dN3Mh7vFajthF/wcQ43ieAKCRoLBriSHEOBLjfm6zi8NkFWpuP3kG6EaUt1ir8kkAF
-         eknPX9T4IujWLDM3Xd/arGxIFJlurOhIh7N7pzoKEGuYWNxNmNObBwV/bS8S02HFE6OA
-         j+YeL1Zo1F4WMqAg0HBW7yWlu337ywUR3cG5VPwEJx6TKm0TMX8KwswUwk1+ffNqipEe
-         AA1ovt+gSF07Egv1H5mmTb5GPsfnaXZiSpMBn53KuxTaHF2AXIkF5kjxMsuie3JOJBS7
-         PWc+PkBDFhIK/ExeSBpPfSyheWB9sxP0wYKLZWKTt92jJGKac3WZM2S7Ebg0fPW408E6
-         0R3Q==
-X-Gm-Message-State: AAQBX9dDAdNbStn586wn33shRYf9rcyFgQuUFLUtitVgZbQPhTxXohXl
-        HwH1eJ7/gVMCIxxFzRA2SY99hg==
-X-Google-Smtp-Source: AKy350bdM4DlhkiJHOdSMtMex9q+M52Pq7KZzxJFU5AmxlFnun35UJNB5GClV4cWwfbOdwFHuo+q9A==
-X-Received: by 2002:a17:906:590:b0:953:37d7:23c3 with SMTP id 16-20020a170906059000b0095337d723c3mr3684119ejn.32.1681939151990;
-        Wed, 19 Apr 2023 14:19:11 -0700 (PDT)
+        bh=9QPvfE3NjcwvEgxYvM974qTypUj2hewodk0hJUiEGis=;
+        b=TWdMDIU8d289JCsK8JFOacKFSfEHkUfAa0owCu7weKyIhVex+C7CGv0geD4q9zdhyG
+         MDXzEqJr6gON1lBs9IjCSpVZC1uGIGr1WpInVrr5hBOoNAu6ELFxJ4C4TlU7ZB7OVaMH
+         2STHzFNmSnh5qnwSEp8wvnJ0RYSB1Oy+zyC3Z496kEIM13Mib1pm3eidPaNxDpGGjjQo
+         92bIwxxYNf8THG2tpGsXgDZ5rfMNHFcI28B38gNwbWEnQb/74bgGLf5ZtrTNFWeenC0P
+         G2uyZL+4rYUv9jXO2PZPTpAi6PHs3ZAyrE7xvSEgNsgtk4YxY5l0s2AoX4XcX0Q+7fT+
+         yFBA==
+X-Gm-Message-State: AAQBX9dlcAhfb1uMkvNjFqkJrS7U1oyjWxffwPf9QnfyxpD9K5vguIO8
+        tsZF8bhpnanQW25aP4JMJ8P3FA==
+X-Google-Smtp-Source: AKy350b6pQG2ZfnAcvVvCyj5MtEONQUY+beQxcRcapPPUIKC9wEkO9dClvWpBalXDQCHuvNkvhNndQ==
+X-Received: by 2002:a17:906:dac8:b0:94f:968e:4c00 with SMTP id xi8-20020a170906dac800b0094f968e4c00mr10645057ejb.31.1681939153551;
+        Wed, 19 Apr 2023 14:19:13 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:976c:1d6c:6ed0:8935])
-        by smtp.gmail.com with ESMTPSA id a12-20020a17090682cc00b0094f109a5b3asm7092739ejy.135.2023.04.19.14.19.10
+        by smtp.gmail.com with ESMTPSA id a12-20020a17090682cc00b0094f109a5b3asm7092739ejy.135.2023.04.19.14.19.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Apr 2023 14:19:11 -0700 (PDT)
+        Wed, 19 Apr 2023 14:19:13 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -77,9 +77,9 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 08/18] arm64: dts: qcom: msm8994: correct SPMI unit address
-Date:   Wed, 19 Apr 2023 23:18:46 +0200
-Message-Id: <20230419211856.79332-8-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 09/18] arm64: dts: qcom: msm8996: correct camss unit address
+Date:   Wed, 19 Apr 2023 23:18:47 +0200
+Message-Id: <20230419211856.79332-9-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230419211856.79332-1-krzysztof.kozlowski@linaro.org>
 References: <20230419211856.79332-1-krzysztof.kozlowski@linaro.org>
@@ -97,27 +97,27 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Match unit-address to reg entry to fix dtbs W=1 warnings:
 
-  Warning (simple_bus_reg): /soc/spmi@fc4c0000: simple-bus unit address format error, expected "fc4cf000"
+  Warning (simple_bus_reg): /soc/camss@a00000: simple-bus unit address format error, expected "a34000"
 
-Fixes: b0ad598f8ec0 ("arm64: dts: qcom: msm8994: Add SPMI PMIC arbiter device")
+Fixes: e0531312e78f ("arm64: dts: qcom: msm8996: Add CAMSS support")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index bdc3f2ba1755..c5cf01c7f72e 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -747,7 +747,7 @@ restart@fc4ab000 {
- 			reg = <0xfc4ab000 0x4>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 30257c07e127..25fe2b8552fc 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -2069,7 +2069,7 @@ ufsphy_lane: phy@627400 {
+ 			};
  		};
  
--		spmi_bus: spmi@fc4c0000 {
-+		spmi_bus: spmi@fc4cf000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0xfc4cf000 0x1000>,
- 			      <0xfc4cb000 0x1000>,
+-		camss: camss@a00000 {
++		camss: camss@a34000 {
+ 			compatible = "qcom,msm8996-camss";
+ 			reg = <0x00a34000 0x1000>,
+ 			      <0x00a00030 0x4>,
 -- 
 2.34.1
 
