@@ -2,233 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D9876E7B5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 15:56:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEA8B6E7B71
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 19 Apr 2023 16:00:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231651AbjDSN4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 09:56:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58662 "EHLO
+        id S230507AbjDSOAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 10:00:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233565AbjDSNyy (ORCPT
+        with ESMTP id S229978AbjDSOAp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 09:54:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A58AFB8;
-        Wed, 19 Apr 2023 06:54:32 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33JBwkH7003159;
-        Wed, 19 Apr 2023 13:54:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=B8cLtxv9PU2HnbgUOJm2opofnozZCP40aKIFgYCMcrU=;
- b=Z4ICEhHsu/DJxDqcc264djSrzLo6NrwGzIrB9zlIBtVDzlJtcZ9XtRyihwdbjh82/Enk
- YqAKmIuWvhbFTfprVjpI+/nHOaIg8QhiYhBeU65mhQaGGZCn7rx5xuqFWumySg0vUHaw
- h/Hev+pcpql2/Lg1fS7AjaQtY0mEmy1Gz9pHpa7PwMitiMzZNDZ++dnz3r7KarTXynOn
- xwifN4eUDhAtoEs4jsYTRIpZW/8aPKDhTwhIbUjFnY7S6v2AAGu2vClM+uO/utWRavqL
- dlG/kh7qFqPVFHoMTb5EmYAiX1ZsrFiv4QuHJT8zLJCNBeseBdpWELEiNrKs4fQVD4y1 9w== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2dy7rkus-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 13:54:24 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33JDsB9k008924
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 19 Apr 2023 13:54:11 GMT
-Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 19 Apr 2023 06:54:07 -0700
-From:   Sarannya S <quic_sarannya@quicinc.com>
-To:     <quic_bjorande@quicinc.com>, <arnaud.pouliquen@foss.st.com>,
-        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Sarannya S <quic_sarannya@quicinc.com>,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH V6 3/3] rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL support
-Date:   Wed, 19 Apr 2023 19:23:28 +0530
-Message-ID: <1681912409-25248-4-git-send-email-quic_sarannya@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1681912409-25248-1-git-send-email-quic_sarannya@quicinc.com>
-References: <1681912409-25248-1-git-send-email-quic_sarannya@quicinc.com>
+        Wed, 19 Apr 2023 10:00:45 -0400
+X-Greylist: delayed 154347 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 19 Apr 2023 07:00:43 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57A3F83;
+        Wed, 19 Apr 2023 07:00:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1681912840; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=pvBk3KjtOqhsVP0fpd8sLK3TZ1iPPEOEMap3voQ1pMPZtV9W8bNXxRx2GNdcl4+TLI
+    JS5lpze7kXo5dfPZkUjgI3MDZdanV3cSyIi0FfBu3tZTtmF2MzTO5pS7qOCl9ykEvw2Y
+    vhNkZZuclPm+iIzBYGFMa0tE4pfAu8icBlL3XiyM62xUCtutuyqyEJmdGp7dgsNfp9Hx
+    3ejg2IqJ1ar/1/dGjvVRRpMsAUWfJghhkpwC4oo0zr5H/0Pg/Ryz3qcbdB+q6rhhMB5O
+    CwUdz9HPUi4zUnHcdaeEKL2C554ozIBPQ7gZw+Fc5q1QxUpH4TRIavB8lQDBGbDhsi6C
+    eyxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1681912840;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=khgLveWxOtEKwyxE2H65XlSSu/fm5Gz0M5cVj1ZTRVQ=;
+    b=j0jO8HFRZgQH8Pqmiqk3dcwZmfdwcBT7smkvNJL2IphNrx2qzyF67lNqlPA4GJWBfY
+    X7OqFtHu6698SdycUnVDBt3rCghQXmNWxt6xQH/c2ooTytuwIC/Egt+taERiDWCtBhkc
+    BD/TcMkN4EjTDr3zeBFi2Fqv3yoeIMEWI1d1jzk90SLnGNonpjwGb1ORU/wV6NpLMevg
+    A7GyqTGIvoudmgESPNI9xAVurZIbJpwp6mdEfjQYzuXsw5YWxdgrXYoRNrcCgNBemH1n
+    SHcu+8v0Q3My3FJ6+gSNiV5rB3wzhGzjupQU1bBvuErZ6VTt3rJhhLAONd479a6inNs0
+    1V1g==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1681912840;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=khgLveWxOtEKwyxE2H65XlSSu/fm5Gz0M5cVj1ZTRVQ=;
+    b=eWzHib70vHw+5Bol3kA1vcx3kxZxzTyRGMiJ4zMq5YkjJAl3SKphIGJY15TgkOxJdl
+    Pbc4OPFC9gTSmTkI1HphhyRWpL8D8zfOriRmnWtXk+7C8OP3b1Vjnd3X50G3UoBCnOt6
+    nmhRugRT4Vw/60zhcl4rna+RL3XeRcr30/3QzCVfnErPTzwu8xjSdQrXuWbCIuUAGKhp
+    FoT4qFtlA8sgz0dKK/E2mIzrs/K3jsqA/Owm7FJmp2T60wqCYwJKO8fh3W5tRYj7vCbS
+    tE4QAM4cKSgeNQkORn+KvrejqBBOz71jtNM8JoXwA+QumOHOT7mhU0spJlBc4KdeeLcF
+    TOTg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1681912840;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=khgLveWxOtEKwyxE2H65XlSSu/fm5Gz0M5cVj1ZTRVQ=;
+    b=K+LMlUTc2w6j06vhnHh7av6fPcrcYXmZdGiN9nKrW8XxKUT5izZYEYK5wq9H+NbJgA
+    NljCDk0AYBjY0BOnidBA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8p+F1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az3JE0el5p
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 19 Apr 2023 16:00:40 +0200 (CEST)
+Date:   Wed, 19 Apr 2023 16:00:34 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way
+ to enable unused clock cleanup
+Message-ID: <ZD_0AmYU-N5vzv8f@gerhold.net>
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
+ <ZD2YYrOdQMD3pi7u@gerhold.net>
+ <d63d4896afe8a1a901470f88862ce608.sboyd@kernel.org>
+ <3873483f-7f7d-a146-cca9-b50f054289d4@linaro.org>
+ <6407af2a-18c6-9baf-cc9b-dcf7001812b7@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XXPs98SuyPLWjRGz_ldUBMRGkRAeCD8I
-X-Proofpoint-GUID: XXPs98SuyPLWjRGz_ldUBMRGkRAeCD8I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-19_09,2023-04-18_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- lowpriorityscore=0 malwarescore=0 adultscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304190125
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6407af2a-18c6-9baf-cc9b-dcf7001812b7@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
-IOCTL support for rpmsg char device nodes to get/set the low level
-transport signals.
+On Wed, Apr 19, 2023 at 01:31:01PM +0200, Konrad Dybcio wrote:
+> What should we do about the non-bus RPM clocks though? I don't fancy
+> IPA_CLK running 24/7.. And Stephan Gerhold was able to achieve VDD_MIN
+> on msm8909 with these clocks shut down (albeit with a very basic dt setup)!
+> 
+> Taking into account the old interconnect-enabled DTs, some of the
+> clocks would need to be on so that the QoS writes can succeed
+> (e.g. the MAS_IPA endpoint needs IPA_CLK), it gets complicated again..
+> 
 
-Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
----
- drivers/rpmsg/rpmsg_char.c | 53 ++++++++++++++++++++++++++++++++++++++++------
- include/uapi/linux/rpmsg.h | 11 +++++++++-
- 2 files changed, 57 insertions(+), 7 deletions(-)
+I guess MSM8996 is the only platform affected by this? sdm630.dtsi seems
+to list the clock already in the a2noc and all others don't seem to have
+an interconnect driver yet.
 
-diff --git a/drivers/rpmsg/rpmsg_char.c b/drivers/rpmsg/rpmsg_char.c
-index a271fce..97f80f4 100644
---- a/drivers/rpmsg/rpmsg_char.c
-+++ b/drivers/rpmsg/rpmsg_char.c
-@@ -23,6 +23,7 @@
- #include <linux/rpmsg.h>
- #include <linux/skbuff.h>
- #include <linux/slab.h>
-+#include <linux/termios.h>
- #include <linux/uaccess.h>
- #include <uapi/linux/rpmsg.h>
- 
-@@ -68,6 +69,8 @@ struct rpmsg_eptdev {
- 	struct sk_buff_head queue;
- 	wait_queue_head_t readq;
- 
-+	bool remote_flow;
-+	bool remote_flow_updated;
- };
- 
- int rpmsg_chrdev_eptdev_destroy(struct device *dev, void *data)
-@@ -116,6 +119,18 @@ static int rpmsg_ept_cb(struct rpmsg_device *rpdev, void *buf, int len,
- 	return 0;
- }
- 
-+static int rpmsg_ept_flow_cb(struct rpmsg_device *rpdev, void *priv, bool enable)
-+{
-+	struct rpmsg_eptdev *eptdev = priv;
-+
-+	eptdev->remote_flow = enable;
-+	eptdev->remote_flow_updated = true;
-+
-+	wake_up_interruptible(&eptdev->readq);
-+
-+	return 0;
-+}
-+
- static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- {
- 	struct rpmsg_eptdev *eptdev = cdev_to_eptdev(inode->i_cdev);
-@@ -152,6 +167,7 @@ static int rpmsg_eptdev_open(struct inode *inode, struct file *filp)
- 		return -EINVAL;
- 	}
- 
-+	ept->flow_cb = rpmsg_ept_flow_cb;
- 	eptdev->ept = ept;
- 	filp->private_data = eptdev;
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -172,6 +188,7 @@ static int rpmsg_eptdev_release(struct inode *inode, struct file *filp)
- 		eptdev->ept = NULL;
- 	}
- 	mutex_unlock(&eptdev->ept_lock);
-+	eptdev->remote_flow_updated = false;
- 
- 	/* Discard all SKBs */
- 	skb_queue_purge(&eptdev->queue);
-@@ -285,6 +302,9 @@ static __poll_t rpmsg_eptdev_poll(struct file *filp, poll_table *wait)
- 	if (!skb_queue_empty(&eptdev->queue))
- 		mask |= EPOLLIN | EPOLLRDNORM;
- 
-+	if (eptdev->remote_flow_updated)
-+		mask |= EPOLLPRI;
-+
- 	mutex_lock(&eptdev->ept_lock);
- 	mask |= rpmsg_poll(eptdev->ept, filp, wait);
- 	mutex_unlock(&eptdev->ept_lock);
-@@ -297,14 +317,35 @@ static long rpmsg_eptdev_ioctl(struct file *fp, unsigned int cmd,
- {
- 	struct rpmsg_eptdev *eptdev = fp->private_data;
- 
--	if (cmd != RPMSG_DESTROY_EPT_IOCTL)
--		return -EINVAL;
-+	bool set;
-+	u32 val;
-+	int ret;
- 
--	/* Don't allow to destroy a default endpoint. */
--	if (eptdev->default_ept)
--		return -EINVAL;
-+	switch (cmd) {
-+	case RPMSG_GET_OUTGOING_FLOWCONTROL:
-+		eptdev->remote_flow_updated = false;
-+		ret = put_user(eptdev->remote_flow, (int __user *)arg);
-+		break;
-+	case RPMSG_SET_INCOMING_FLOWCONTROL:
-+		ret = get_user(val, (int __user *)arg);
-+		if (ret)
-+			break;
-+		set = !!arg;
-+		ret = rpmsg_set_flow_control(eptdev->ept, set);
-+		break;
-+	case RPMSG_DESTROY_EPT_IOCTL:
-+		/* Don't allow to destroy a default endpoint. */
-+		if (eptdev->default_ept) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+		ret = rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+		break;
-+	default:
-+		ret = -EINVAL;
-+	}
- 
--	return rpmsg_chrdev_eptdev_destroy(&eptdev->dev, NULL);
-+	return ret;
- }
- 
- static const struct file_operations rpmsg_eptdev_fops = {
-diff --git a/include/uapi/linux/rpmsg.h b/include/uapi/linux/rpmsg.h
-index 1637e68..c955e27 100644
---- a/include/uapi/linux/rpmsg.h
-+++ b/include/uapi/linux/rpmsg.h
-@@ -10,7 +10,6 @@
- #include <linux/types.h>
- 
- #define RPMSG_ADDR_ANY		0xFFFFFFFF
--
- /**
-  * struct rpmsg_endpoint_info - endpoint info representation
-  * @name: name of service
-@@ -43,4 +42,14 @@ struct rpmsg_endpoint_info {
-  */
- #define RPMSG_RELEASE_DEV_IOCTL	_IOW(0xb5, 0x4, struct rpmsg_endpoint_info)
- 
-+/**
-+ * Set the flow control for the remote rpmsg char device.
-+ */
-+#define RPMSG_GET_OUTGOING_FLOWCONTROL _IOW(0xb5, 0x5, struct rpmsg_endpoint_info)
-+
-+/**
-+ * Set the flow control for the local rpmsg char device.
-+ */
-+#define RPMSG_SET_INCOMING_FLOWCONTROL _IOW(0xb5, 0x6, struct rpmsg_endpoint_info)
-+
- #endif
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+This will be subjective and someone will surely disagree but...
 
+IMO forcing all RPM clocks on during boot and keeping them enabled is
+not part of the DT ABI. If you don't describe the hardware correctly and
+are missing necessary clocks in the description (like the IPA_CLK on the
+interconnect node) then your DT is wrong and should be fixed.
+
+I would see this a bit like typical optimizing C compilers nowadays. If
+you write correct code it can optimize, e.g. drop unnecessary function
+calls. But if you write incorrect code with undefined behavior it's not
+the fault of the compiler if you run into trouble. The code must be
+fixed.
+
+The DT bindings don't specify that unused resources (clocks, ...) stay
+"magically" active. They specify that that the resources you reference
+are available. As such, I would say the OS is free to optimize here and
+turn off unused resources.
+
+The more important point IMO is not breaking all platforms without
+interconnect drivers. This goes beyond just adding a missing clock to
+the DT, you need to write the driver first. But having the max vote in
+icc_smd_rpm (somehow) should hopefully take care of that.
+
+> I suppose something like this would work-ish:
+> 
+> 0. remove clock handles as they're now contained within icc and
+>    use them as a "legacy marker"
+> 1. add:
+> 	if (qp->bus_clocks)
+> 		// skip qos writes
+
+Maybe you can just check if all necessary clocks for QOS are there or
+not? I don't think it's a problem to skip it on broken DTs. I think it
+would be even fine to refuse loading the interconnect driver completely
+and just have the standard max vote (as long as that results in a
+booting system).
+
+> 
+> This will:
+> - let us add is_enabled so that all RPM clocks bar XO_A will be cleaned up
+> - save massively on code complexity
+> 
+
++1
+
+> at the cost of retroactively removing features (QoS settings) for people
+> with old DTs and new kernels (don't tell Torvalds!)
+> 
+
+I doubt anyone will notice :p
+
+> This DTB ABI stuff really gets in the way sometimes :/ We're only now
+> fixing up U-Boot to be able to use upstream Linux DTs and other than
+> that I think only OpenBSD uses it with 8280.. Wish we could get rid of
+> all old junk once and then establish immutability but oh well..
+
+Nice, thanks a lot for working on addressing the Qualcomm DT mess in
+U-Boot. I've been meaning to work this myself for a long time but never
+found the time to start... :')
+
+Thanks,
+Stephan
