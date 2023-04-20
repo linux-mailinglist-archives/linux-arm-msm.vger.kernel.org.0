@@ -2,144 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 163E96E8B54
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D9ABF6E8B5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:26:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234058AbjDTHYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 03:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37992 "EHLO
+        id S229705AbjDTH0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 03:26:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234048AbjDTHYv (ORCPT
+        with ESMTP id S233735AbjDTH0i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 03:24:51 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D56540E5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:24:48 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5050497df77so554662a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:24:48 -0700 (PDT)
+        Thu, 20 Apr 2023 03:26:38 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E360103
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:26:37 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id xd13so4266992ejb.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681975487; x=1684567487;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F+HBRAHzS6T192KwkoETQ0kcTreq2pNJKfWHpy0M0Yc=;
-        b=hypN3jYredFna/9ZAALLNqsd8I+k3K7lO4IB86cGE26YXY4qfWG4v4P97Kx/qf5LlN
-         F3mn+qB0PSV3AnffuNTxwuzzhB9SqDEg683ouBIZkOK19kvD13PJLF8k0MB1EWxIs+G+
-         ttQVE1xotsw792RuVap0OB3ov4hZ2YLZZgZWybChGgMi7P/mbwBGeNs8EonRQpZ90U2t
-         Xmxw14aCULA4pmHvjCYDjuYG4xdI5WbVzmJwC5PjmfrA2GAEGUmDSPzkLlYv1gL2/l04
-         MhVuU+s72YX860/J2Yrxvdz3Fpia8bMyKJnIaD9mwGSHLC6i1X42QavVEzP24F4FZHpD
-         WBLg==
+        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681975596; x=1684567596;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LaCVvuCh0ifaod/8Osz9wRqo6LYk9iFhMUaDZ5ywzU4=;
+        b=HSxwHGoFkt1pfTNx3P/aMn78Qft/H5J/iUpd5Dtt67Q3lLbJ2cqELZ280B8RVP9ZI6
+         3YEMJHi59bhftwaSq+SH/3AXJhaP72uPkdWkxKcscMJxNwhsArxyCQV7s5V83hTyicNF
+         nfjlFpvVTHCEdsqLwdIe8aEJFzXtSrtI/GvaNr8cKS6z9VHGyaaq4Dns5byfIuQr3B/g
+         QY46hQIq0uY417faOyPO4xbA9sv6kwLDQzVR6AVEpIOMOkDjU2X38NFzBnTFtIBRCzsn
+         J8DeyanOx0w8Wa8rRbKW0DbN7Z7jtmPwVRGE8siIG3mhgk7dzNOISL3OOSA5cpmjtj3d
+         ZFMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681975487; x=1684567487;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F+HBRAHzS6T192KwkoETQ0kcTreq2pNJKfWHpy0M0Yc=;
-        b=ETb418ZEcQGQ5i9gLg9IBZdwSSYo/R6ULT4rzwoYmq/XVe9TtLLy5IFZBxaIPgda1H
-         i8PuV7x2H5iHrAOxQ/Nu/SdGKcjFJCXQkox0rS2l/ajYDfOQtspE9WPX/0udx74KT2XX
-         JMGY0hObz+eaXUs6iSk67KRBe9MNrvpUap3bGFI158UDjSmE8ol6MKXRhvgUv5np3SMX
-         RWh2jehDSXfKki7WcuZ1XcH30p6Uy6QzQUOT+rdx449ftknrcrI+7uUrOTF+Ew4bZVkt
-         rG+MdedMcxmK/ow8MJbvxYKS1V/UzhcE6z+dJ7r33ZsziZNhWoyGOt9q2xlVv00zXVvA
-         En3g==
-X-Gm-Message-State: AAQBX9cL02DilPQTJk6uh49ErgOYXZz4B/zGPLsXPX23ROuDk/H3ZDKQ
-        hF+H+5bRWNQrsE688VP72+NE/A==
-X-Google-Smtp-Source: AKy350Z3/CKA8tzUMD8zqorNQIbxbz5pKe/C5s6Vs2QjO0Ivkg6sN0rPTj2LRxGksAk3irqoZOB1cw==
-X-Received: by 2002:aa7:d88c:0:b0:504:a248:3741 with SMTP id u12-20020aa7d88c000000b00504a2483741mr851286edq.14.1681975486947;
-        Thu, 20 Apr 2023 00:24:46 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
-        by smtp.gmail.com with ESMTPSA id w20-20020aa7cb54000000b004fa19f5ba99sm435935edt.79.2023.04.20.00.24.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 00:24:46 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Del Regno <angelogioacchino.delregno@somainline.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] media: dt-bindings: qcom: camss: correct unit address
-Date:   Thu, 20 Apr 2023 09:24:42 +0200
-Message-Id: <20230420072442.36308-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20221208; t=1681975596; x=1684567596;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LaCVvuCh0ifaod/8Osz9wRqo6LYk9iFhMUaDZ5ywzU4=;
+        b=V6cqLTpq7TJgakOGuCvgvVWoscJz/8h8AtEqKa5fIMRGIokgqhqw4WwqXxlqDJizL9
+         HsKYQhlC3Jx9OZIh7b6kwyANvkXz5VSFzlhwrvowHyPYfkjTcarHRkQhJVWYo5pecc1E
+         dCpywOIcgqG4y2uk9mV+oDUwRNiFYBKnQ1LXDOqc7/xMkQKs8x9Ulj9VkRLzNxhB9c+O
+         9JBE1wApsKjAROpXu0akU2kFoHAyNzechp1YFWPAtQYigjyznCk8NvH6ck9VXghvHlZG
+         hgjdWgc9Dpy+EhuJYay+G3RHKtbjOqFXUaZg4un4gXCSFjKm1F6VkXZFTWl3pe0cgs76
+         WrQQ==
+X-Gm-Message-State: AAQBX9drd5va+Ny2b2wRkvy3VTp47h0d0CWvg3klAMw1o74i0wBUbRnV
+        MSzrYzjxuYBklALyYXkJwnKZLWNv5zSP4ia94wQP
+X-Google-Smtp-Source: AKy350b+6jWk+FNIWk6cavQH152CzIc90gdPX+pCwubbVAUdMA3XRND8Zrw5SaaDEkP1wAvzR+tWGB6OxqTQhZLcC8g=
+X-Received: by 2002:a17:906:4b17:b0:94a:4c68:c1aa with SMTP id
+ y23-20020a1709064b1700b0094a4c68c1aamr241124eju.7.1681975595637; Thu, 20 Apr
+ 2023 00:26:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
+ <20230419-dpu-tweaks-v1-4-d1bac46db075@freebox.fr> <74c59560-8a79-150f-0c1e-13f22eb35cb2@linaro.org>
+In-Reply-To: <74c59560-8a79-150f-0c1e-13f22eb35cb2@linaro.org>
+From:   Arnaud Vrac <avrac@freebox.fr>
+Date:   Thu, 20 Apr 2023 09:26:24 +0200
+Message-ID: <CAG9NU6_Ua_XLa+c=_93fs5chzQTyPf11W4F87UYbny1k-feoJw@mail.gmail.com>
+Subject: Re: [PATCH 04/11] drm/msm/dpu: allow using lm mixer base stage
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Match unit-address to first reg entry.
+Le jeu. 20 avr. 2023 =C3=A0 00:43, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> a =C3=A9crit :
+>
+> On 19/04/2023 17:41, Arnaud Vrac wrote:
+> > The dpu backend already handles applying alpha to the base stage, so we
+> > can use it to render the bottom plane in all cases. This allows mixing
+> > one additional plane with the hardware mixer.
+> >
+> > Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+>
+> This might require additional changes. First, for the STAGE_BASE pipe
+> in the source split mode (iow using two LMs) should programmed with
+> respect to the right LM's x offset (rather than usual left top-left LM).
+> See  mdss_mdp_pipe_position_update().
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml | 2 +-
- Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml | 2 +-
- Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml  | 2 +-
- Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml  | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Ok, I did test with 2 LMs and it seems to be working, I'll investigate.
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-index 12ec3e1ea869..abd444e12d05 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
-@@ -155,7 +155,7 @@ examples:
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
-     #include <dt-bindings/clock/qcom,gcc-msm8916.h>
- 
--    camss: camss@1b00000 {
-+    camss: camss@1b0ac00 {
-       compatible = "qcom,msm8916-camss";
- 
-       clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-index 6aeb3d6d02d5..db2604802d51 100644
---- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-@@ -221,7 +221,7 @@ examples:
-     #include <dt-bindings/clock/qcom,gcc-msm8996.h>
-     #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- 
--    camss: camss@a00000 {
-+    camss: camss@a34000 {
-       compatible = "qcom,msm8996-camss";
- 
-       clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-index b28c8e17f158..2f23baf32b61 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
-@@ -227,7 +227,7 @@ examples:
-     #include <dt-bindings/clock/qcom,gcc-sdm660.h>
-     #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
- 
--    camss: camss@ca00000 {
-+    camss: camss@ca00020 {
-       compatible = "qcom,sdm660-camss";
- 
-       clocks = <&mmcc CAMSS_AHB_CLK>,
-diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-index f9a003882f84..8f5c9aff37fb 100644
---- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
-@@ -219,7 +219,7 @@ examples:
-       #address-cells = <2>;
-       #size-cells = <2>;
- 
--      camss: camss@a00000 {
-+      camss: camss@acb3000 {
-         compatible = "qcom,sdm845-camss";
- 
-         clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
--- 
-2.34.1
+>
+> Also this might need some interaction with CTL_MIXER_BORDER_OUT being
+> set or not. If I remember correctly, if there bottom plane is not
+> fullscreen or if there are no planes at all, we should set
+> CTL_MIXER_BORDER_OUT (which takes STAGE_BASE) and start assigning them
+> from STAGE0. If not, we can use STAGE_BASE.
 
+I also tested with both fullscreen and non-fullscreen primary plane,
+and no plane. I'll check this.
+
+>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
+m/msm/disp/dpu1/dpu_plane.c
+> > index 14b5cfe306113..148921ed62f85 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -881,7 +881,7 @@ static int dpu_plane_atomic_check(struct drm_plane =
+*plane,
+> >       r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
+> >       r_pipe->sspp =3D NULL;
+> >
+> > -     pstate->stage =3D DPU_STAGE_0 + pstate->base.normalized_zpos;
+> > +     pstate->stage =3D DPU_STAGE_BASE + pstate->base.normalized_zpos;
+> >       if (pstate->stage >=3D pdpu->catalog->caps->max_mixer_blendstages=
+) {
+> >               DPU_ERROR("> %d plane stages assigned\n",
+> >                         pdpu->catalog->caps->max_mixer_blendstages - DP=
+U_STAGE_0);
+> >
+>
+> --
+> With best wishes
+> Dmitry
+>
