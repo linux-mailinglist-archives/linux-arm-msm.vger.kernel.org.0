@@ -2,95 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 317AA6E8ED6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:04:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97AE06E8EE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:05:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233978AbjDTKEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:04:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46324 "EHLO
+        id S233922AbjDTKFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234125AbjDTKEh (ORCPT
+        with ESMTP id S234433AbjDTKFc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:04:37 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A7D426AC;
-        Thu, 20 Apr 2023 03:04:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1681985070; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=UDim+PQA33tmbIO6x+xSrtpKHpsfwjxjEAELUsUhwNxS/T8XFZ6eO87JWRcMBECsU5
-    vCnf++wWTk9Gw28q7akFVYyKgU5M3qAOI68Q2XoWoKp4U1eyg2Y0soC8jgR1D4x+MnTV
-    C6J73l7VukQ2zi6h/DHQE3ZSGM2KHs8E9WY4CkkbVGHyazICt6TueM0ovjTWu+gx/pzD
-    ClgWYKbyxPnWdEzPf4pE1xSadVsKccJUj91JUHbeovHAyAVsh9I+I5Qp5RjBGUtBr/3w
-    /vWC/qPkt9uoHjU+3JidhaaHjAOObu7UcMKUlu8E2DTpghyfQLt4U79MeoZkcZA0irE/
-    vnUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1681985070;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=wDrVxTv70izMK25X6UuVTZzq526NLO2TgXSsl+hFSSM=;
-    b=Gxh+MnBNTyua7OV3fzNAyLwO0m3FSUK5tF68bSRwxWk7oKyQeDxd8Po2O0ySGvES34
-    ml0Fz3NDNhNO3j7XL5v8puEq00/9iQZgC4qSwGINQgMv6WQIlOYXI8brDXE1QH+IT5s5
-    xQ8uB5t+FeO8iAs6KuJ+CAtnHFf7OQfvrk9tQIuSaFn1MF10fpm3/v5g7PCDBYi53MQc
-    LrlWbwZJ4Ppc+R/t1uUa2InpkQff/Tm0EtKpfFGYisGMkq7KND0SrXhx+C3uyLDOp7a8
-    IJnB8AHTKkZ2yuBnjPcc2n3Scp6BoX6a8QRfo/WOvUqWGKc7OZmQOGxEQ9hmFR8Eb5Lj
-    wqYQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1681985070;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=wDrVxTv70izMK25X6UuVTZzq526NLO2TgXSsl+hFSSM=;
-    b=YSDzDfrr7wmCqJJee377/LUhYMc7adtH/ISYMHknGT9N64u/kCB4G2CVa9q/Fwzkq8
-    6hNgutF5ZS7M64G55XVIw6SP8oL/d3YM6UM1jwsLf/lFhfMO80XgIKaFrnQ4zID15ib8
-    a0E0ZKUp5mqgOkcOVvsJeO0FAkAK0d48m2umjkZ9iWRYLaZNLiE1Y05fH4vXjgS5E/ks
-    74NmK18JX47WkI19v1dFbPvXseDWM/TdReJfwLA/GHnj5o04EeXuecZbjSoKemA9884s
-    pgOUIJQBDLmn4yR5pKIiaQWccdsI+mLjijQAZuXFi59ppcY/RDsv8/xjaN75isTa2zus
-    H6nQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1681985070;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=wDrVxTv70izMK25X6UuVTZzq526NLO2TgXSsl+hFSSM=;
-    b=hd/YWgN17SBUy8Gk9S7Z0ak84x+6vM+rF3xu4/Op9RNUZjI7FMJ2bwkXoEejtAkoVu
-    6yaOUcG6HqCGmriSnHBg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z2F1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az3KA4To4v
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 20 Apr 2023 12:04:29 +0200 (CEST)
-Date:   Thu, 20 Apr 2023 12:04:23 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Thu, 20 Apr 2023 06:05:32 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B42A3A8E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:05:13 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4edb93139ddso435970e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:05:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681985112; x=1684577112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4RJXgo9mbZocth7W+W/DHGi5VI0a91D1/aaXffY9umQ=;
+        b=lqclOq7xlrh4i4oA0IR5rQP1xWRPVMmSK35utJZQag/nwUvQGNv6FiEPXi+2jROtAt
+         7lPtJwxfypHnbq18+ge0VMtkmmMjBfOJ710f6BF2zNhq9xMB5kZc04aShJyf/ZU92qgF
+         bWaxly6/XjxNzqmxDrlb1vcFfBZZKLblurYJ2BglxXkP20VGGOVs9vcZ+SzfJOUSuDUr
+         maRUNdq2FBC5lJxWzZyRNPBlNUa/qaK6vsnz7QG4TGTD2b+y58v8n0ZDILRjbVc/Ms0r
+         /8p5nNrcEeSaXQya0jGVsIyfdizF1Sto3MEohQp5IgPON2PIypCcUNryED+QDBpZZB6F
+         7v+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681985112; x=1684577112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4RJXgo9mbZocth7W+W/DHGi5VI0a91D1/aaXffY9umQ=;
+        b=UvTO+0Q7aGUBUVTnh9Ifnidb2Ije58EwLyTyAf0uTu2dIEDoevji7Dk4PmYQEcjq3F
+         +AdDmE8+G0bFFG+zszhR/Lq7B0mmmZ4xdQHlm3vJFIPx72LN2SaVatL8k3qliu8LyNj2
+         P4RfGM8Na8d1fjcbkwwjNNcRRshuxxvdRH2T2JzykPgBpLYStkhFqls2LaDL1vypwWe0
+         x35rylnwODh/lf0+uzdzliYK+WqVMen5qHRQNnmkMizU/C0hO6anNsQehQdrnT2R+nOu
+         DyrToR6CTA632FzI/bZ3C2nZwz9ITVv3zynuRm5YIol9F6wTRYNegQpjMfzJc0WO/aGB
+         d1fA==
+X-Gm-Message-State: AAQBX9eJNu6JZXRgqhux6aBya9gIP//Ei1ANgPdoZkkOjzuEtjDhS0KK
+        gqka7D6fl+cOQMObb5aFMwCe/g==
+X-Google-Smtp-Source: AKy350a39HBh7R9jgbfr/UIn1pZgwf56M1oanLrDl7HkbyiiLwbA6+p08jkzA66//nGGXiIVdLaZhg==
+X-Received: by 2002:a19:c508:0:b0:4db:4530:2b2d with SMTP id w8-20020a19c508000000b004db45302b2dmr273139lfe.49.1681985112150;
+        Thu, 20 Apr 2023 03:05:12 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id r24-20020a2e9958000000b002a7af83ca1csm182840ljj.21.2023.04.20.03.05.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 03:05:11 -0700 (PDT)
+Message-ID: <aa547a69-e1d8-1349-bd8c-9265275bb7f1@linaro.org>
+Date:   Thu, 20 Apr 2023 13:05:11 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 3/4] clk: qcom: rpmh: Add RPMH clocks support for SDX75
+Content-Language: en-GB
+To:     Taniya Das <quic_tdas@quicinc.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     quic_skakitap@quicinc.com, Imran Shaik <quic_imrashai@quicinc.com>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
-Message-ID: <ZEEOJ7VhccqCNTbj@gerhold.net>
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
- <ZEDwLB3RwT6mHIu4@gerhold.net>
- <6175f709-8c88-6ec3-4c31-cac9f2440b52@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6175f709-8c88-6ec3-4c31-cac9f2440b52@linaro.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_rohiagar@quicinc.com, netdev@vger.kernel.org
+References: <20230419133013.2563-1-quic_tdas@quicinc.com>
+ <20230419133013.2563-4-quic_tdas@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230419133013.2563-4-quic_tdas@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,26 +85,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 20, 2023 at 11:36:24AM +0200, Konrad Dybcio wrote:
-> On 20.04.2023 09:56, Stephan Gerhold wrote:
-> > On Thu, Apr 20, 2023 at 03:50:16AM +0200, Konrad Dybcio wrote:
-> >> On 8.03.2023 22:35, Konrad Dybcio wrote:
-> >>> Keepalive clocks for other platforms were gathered by digging in old
-> >>> downstream kernels, please give them a test.
-> >> I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
-> >> some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
-> >> are NOT governed by interconnect.. So before we can disable clocks,
-> >> both will need to be implemented.. ugh... I was hoping we could avoid
-> >> having it in rpmcc..
-> > Can you give an example? Which clocks are affected on which SoC?
-> msm8998/sdm660 and PNoC
+On 19/04/2023 16:30, Taniya Das wrote:
+> From: Imran Shaik <quic_imrashai@quicinc.com>
+> 
+> Add support for RPMH clocks for SDX75 platform.
+> 
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>   drivers/clk/qcom/clk-rpmh.c | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
 
-I don't see a PNoC for 8998/660, do you mean the "cnoc_periph_clk"
-downstream? Like the other NoCs it seems to be a RPM_BUS_CLK_TYPE, which
-means it does fit best into interconnect in my opinion. From a quick
-grep I don't see any usage of it in msm-4.4 downstream other than the
-active-only keepalive vote. So maybe you could just send that vote once
-in icc_rpm_smd and then ignore that clock (don't expose it at all)?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks,
-Stephan
+-- 
+With best wishes
+Dmitry
+
