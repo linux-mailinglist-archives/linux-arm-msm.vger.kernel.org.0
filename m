@@ -2,146 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F7F06E9371
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 13:55:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE0BB6E9385
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 13:58:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231864AbjDTLzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 07:55:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52834 "EHLO
+        id S233992AbjDTL6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 07:58:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjDTLzm (ORCPT
+        with ESMTP id S231936AbjDTL6R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 07:55:42 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F4E125;
-        Thu, 20 Apr 2023 04:55:40 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33KApa5i012564;
-        Thu, 20 Apr 2023 11:55:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=OpqjDS71NuvgVPcPQLeQrnkxWH3dmPrKI46AvafwSK0=;
- b=aKtqgIijTEpFO/3ArVHZG74+d+B/sIookBOI4jMYjsygwwZYBJ7Lx8Z0FYYw9SsHlEpt
- oZno6ZOq3x5rB3U2c0Mjlxo03OAvigTDcVUO4OXK345kQTVFJpPj6q+NHi7vl/GEMf8I
- zCulE3ijnDpvHSDDurjt+Cp9A/n5e1oDN1ZZrYtkwJrfZdbxVChhE02sdtYpZQmHgOy2
- ByC+89V3OM8VOMm7E5JbpUHVeDKMcv8ipJ2YYrNE9mmfCRtTwJ7b44JMSRLAPq1EFX+2
- ttrd4nauYDyCfB896te6Xog4mM5o5iH+yLpUCNBYHDL++ZdvsMYPVHwMsa9AKAE7rm8S Tg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2p4v9wdu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Apr 2023 11:55:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33KBtZYD017399
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Apr 2023 11:55:35 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 20 Apr 2023 04:55:32 -0700
-From:   Taniya Das <quic_tdas@quicinc.com>
-To:     Stephen Boyd <sboyd@kernel.org>,
+        Thu, 20 Apr 2023 07:58:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F109649EB;
+        Thu, 20 Apr 2023 04:58:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8D907648B4;
+        Thu, 20 Apr 2023 11:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF67C433EF;
+        Thu, 20 Apr 2023 11:58:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681991895;
+        bh=8QMlE5Zx8DCMIClYMX9SMYQfx5Q3HK4Ce3RNNDoqSKM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=uusm797cmi4abghVByv4IJFJJr2wT6e9ov88XGGFZ16V3lQaePswCkfdBGoerBi54
+         SfhQ8A9xeSYLDzbTcpjN0d01pnJxAPWWLP6FbHUzihAaHsijc5NbnXkuaNrScqpgNn
+         6zRwGT3xy1jglp8I7yuSy9lpihbE/xSh0O8BoHLf6Nz0MkrHLdTQmbwcgngMr5XJ3r
+         54lW4dRiqrtHU6KDpdTAfC8JJN2aSQwi4v7yS2E0oa3SLbiJggxBcX/8HioP+0k1rG
+         YtWmxoPCOcX1ehOHP4ikMPLDQJXWSWqo6M16PadCHZow7i4lo5NaM57xVI+p3GHRzQ
+         PS+P3I4oMJnvg==
+Date:   Thu, 20 Apr 2023 12:58:08 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_skakitap@quicinc.com>,
-        <quic_cponnapa@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>
-Subject: [PATCH] clk: qcom: camcc-sc7180: Add parent dependency to all camera GDSCs
-Date:   Thu, 20 Apr 2023 17:25:20 +0530
-Message-ID: <20230420115520.16472-1-quic_tdas@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Patrick Lai <quic_plai@quicinc.com>
+Subject: Re: [PATCH 1/6] ASoC: wcd938x: switch to using gpiod API
+Message-ID: <6b355201-a957-4fca-a513-d5fa0742fb40@sirena.org.uk>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-2-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eYoN-tAZHMFiDmuzlDfaydVaQ2Tsq7hl
-X-Proofpoint-ORIG-GUID: eYoN-tAZHMFiDmuzlDfaydVaQ2Tsq7hl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-20_07,2023-04-20_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- bulkscore=0 impostorscore=0 phishscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 spamscore=0 mlxlogscore=666 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304200096
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="vqfNoi3NLhep8mlT"
+Content-Disposition: inline
+In-Reply-To: <20230420101617.142225-2-krzysztof.kozlowski@linaro.org>
+X-Cookie: Above all else -- sky.
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mark titan_top_gdsc as parent to all other camera GDSCs.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
- drivers/clk/qcom/camcc-sc7180.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+--vqfNoi3NLhep8mlT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-index e2b4804695f3..8a4ba7a19ed1 100644
---- a/drivers/clk/qcom/camcc-sc7180.c
-+++ b/drivers/clk/qcom/camcc-sc7180.c
-@@ -1480,12 +1480,21 @@ static struct clk_branch cam_cc_sys_tmr_clk = {
- 	},
- };
+On Thu, Apr 20, 2023 at 12:16:12PM +0200, Krzysztof Kozlowski wrote:
 
-+static struct gdsc titan_top_gdsc = {
-+	.gdscr = 0xb134,
-+	.pd = {
-+		.name = "titan_top_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+};
-+
- static struct gdsc bps_gdsc = {
- 	.gdscr = 0x6004,
- 	.pd = {
- 		.name = "bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- 	.flags = HW_CTRL,
- };
+> -	gpio_direction_output(wcd938x->reset_gpio, 0);
+> -	/* 20us sleep required after pulling the reset gpio to LOW */
+> +	gpiod_set_value_cansleep(wcd938x->reset_gpio, 1);
+> +	/* 20us sleep required after asserting the reset gpio */
 
-@@ -1495,6 +1504,7 @@ static struct gdsc ife_0_gdsc = {
- 		.name = "ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
+This is inverting the sense of the GPIO in the API from active low to
+active high which will mean we're introducing a new reliance on having
+the signal described as active low in DT.  That's an ABI concern.
 
- static struct gdsc ife_1_gdsc = {
-@@ -1503,6 +1513,7 @@ static struct gdsc ife_1_gdsc = {
- 		.name = "ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
+I remain deeply unconvinced that remapping active low outputs like this
+in the GPIO API is helping.
 
- static struct gdsc ipe_0_gdsc = {
-@@ -1512,15 +1523,9 @@ static struct gdsc ipe_0_gdsc = {
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
- 	.flags = HW_CTRL,
-+	.parent = &titan_top_gdsc.pd,
- };
+--vqfNoi3NLhep8mlT
+Content-Type: application/pgp-signature; name="signature.asc"
 
--static struct gdsc titan_top_gdsc = {
--	.gdscr = 0xb134,
--	.pd = {
--		.name = "titan_top_gdsc",
--	},
--	.pwrsts = PWRSTS_OFF_ON,
--};
+-----BEGIN PGP SIGNATURE-----
 
- static struct clk_hw *cam_cc_sc7180_hws[] = {
- 	[CAM_CC_PLL2_OUT_EARLY] = &cam_cc_pll2_out_early.hw,
---
-2.17.1
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmRBKM8ACgkQJNaLcl1U
+h9CEewf/XEC8aLgWsBDB68psO5wv1ThhV486/JVRhSBnT8ZjXhUzNDx256WlTY2F
+SBX+O79Y3aZNZF+SB8XXyVaR816sBKuOd5+XedRI3hrjr2cagr1xnVc3d4JW1X55
++hEVZgyzuqgeq+69p8z9mUxuf3loD9migmJ2m/1IqST8ZjVszErvkCxFeSgewWCz
+2WedShr3yGyFmmkqT6BDyjFkPwfKfGbBzpT6yZy9L+C0pt7+rG5VNOSs/J8DWkPq
+9S+NBJ0lsY7nlWIEOFS8FtkO2iRxNzVZOzoHDdge4IILLRS9r+9aX2xRmMpHqh2p
+uG6xvVDD7fZaOvgTy6XpO3HQfHdy8A==
+=ERq/
+-----END PGP SIGNATURE-----
 
+--vqfNoi3NLhep8mlT--
