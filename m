@@ -2,144 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C49A86E9B11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:47:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA1026E9B1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:51:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231414AbjDTRrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 13:47:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47984 "EHLO
+        id S231602AbjDTRvd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 13:51:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231128AbjDTRrm (ORCPT
+        with ESMTP id S230235AbjDTRvc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:47:42 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FE5171D;
-        Thu, 20 Apr 2023 10:47:41 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33KHPhYA026906;
-        Thu, 20 Apr 2023 17:47:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=piDta8ozlQhR0tbwvrizGAOrMkZ4zCOT5GG5tQ4IryM=;
- b=RG8lxROtvWoKGcOy6wldR45CLf3DQ6sNtih8ALGCJNV19NJlhaBP13VKpLNypldhXI/D
- 75h1VmE42LJmF34CSnhTLSrMQaewtgtBLbaiL+gW0L/mH6AH3f6x7Hni9tFvFJv6CGcy
- dLW9m4U1hCDWgXZDumYH8iHoDCkt/bmH6IMlszme5bVDrPr/1IsTstvFWS2E1BtL9551
- e2o61P8p47MRseC1+EGNugz7tNM5Mb5rZsSys5x8oJQxqcUWZx5BnJhWI6m4kOB05s0Q
- tel/snsMvmu3M77/IP/IV+Jcyu5vTGpUNOlvo2r4/i533OfS6NCMlJ2PeOvtqZ7Vn5TY Tw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2p7atsdw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Apr 2023 17:47:36 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33KHlZSw030194
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 20 Apr 2023 17:47:35 GMT
-Received: from [10.71.111.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 20 Apr
- 2023 10:47:34 -0700
-Message-ID: <905b4150-6e15-4172-10cf-19aa0ebf817c@quicinc.com>
-Date:   Thu, 20 Apr 2023 10:47:34 -0700
+        Thu, 20 Apr 2023 13:51:32 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D99EF26BF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:51:30 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id fy21so8145968ejb.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:51:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682013089; x=1684605089;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RsvcKdpTTSQt3CBjI9jdoU//lRtwKP24jIO2BHiLPgg=;
+        b=JKBU1FqU+5DnsS9Xyo9UClySwykWt0bSYLl+ZdusaY6eLCtFI7YK/vpxIZAWFZ7qZU
+         UESpMayo5PdTbkwYIaP3n51WvCTUO4cErDJ4jy8e1G5FBGCydk5rQU0rLWgCMrVTs0DB
+         dd0MexdGfzE80IQ/ctc6gfueZx4+0/WycIjBgRY8+x74+hB0/8QGrF7/7uDEqugPOAmZ
+         CQQYdRwfEsL9qXDrkdOeRWEsp4bLyKaOLipm98vESEnKBnrQ5JfVJipiUDLEhfkVQiyj
+         Hka8y504A89sbn+Kbi8rz09meJ+PEbp0OHiwiouXXMlEOyeoE1YLDaT0ocuHj43oUsLa
+         MYBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682013089; x=1684605089;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RsvcKdpTTSQt3CBjI9jdoU//lRtwKP24jIO2BHiLPgg=;
+        b=DolHGyDEGUfvKuVJppdD9fEdRZaUYQZpz+YjUCSoQ/dcmXEnu/kdsfKALQ4oeTdtcs
+         3worE07kavlsdHgCGajWJRoQ8McDxPZ2NFiz/0bjitd/mD//lXLJBeSun38pf6oVRQX+
+         7UkLKig/6gbI3YyhIXQQLlDLRM2EqRlzrWXxVg0GGP2SjUdLjNYJrpFWKsuwvDOoQZH+
+         Djyy6wVxTX7lK7fUE5pemjYP8e0Qx4B2sAVJJFMFmu/0PvOtYI3RI/+HvcJQOHr1O8W0
+         N59XVWmZgMO0kFz1X9h17jwLxwaJ8jrsw7nv3fG7BaIY7wlgFAWI9plll7l+4CUzTDMr
+         oOpg==
+X-Gm-Message-State: AAQBX9fwftoOptXz3KwBLenXK5nkr7WqfsmwefZay15avvscr+aApsAv
+        jKkdnEUWt8RBVJmEO8vKpRegHw==
+X-Google-Smtp-Source: AKy350bNdPXwDoc/0mMYA84/aQ76NYrnBevJSqgEx481vVvN7fe5BzSTRNvzQDtmsl/Q4NmeqIGVKg==
+X-Received: by 2002:a17:906:d79a:b0:8e1:12b6:a8fc with SMTP id pj26-20020a170906d79a00b008e112b6a8fcmr2379364ejb.4.1682013089158;
+        Thu, 20 Apr 2023 10:51:29 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:bcb8:77e6:8f45:4771? ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
+        by smtp.gmail.com with ESMTPSA id lc21-20020a170906dff500b0094ef10eceb3sm945513ejc.185.2023.04.20.10.51.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 10:51:28 -0700 (PDT)
+Message-ID: <94bbd608-a90b-605d-a61c-6d6769b60445@linaro.org>
+Date:   Thu, 20 Apr 2023 19:51:27 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [Freedreno] [PATCH 02/11] drm/msm/dpu: use the actual lm maximum
- width instead of a hardcoded value
+Subject: Re: [PATCH 1/6] ASoC: wcd938x: switch to using gpiod API
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnaud Vrac <avrac@freebox.fr>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
-References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
- <20230419-dpu-tweaks-v1-2-d1bac46db075@freebox.fr>
- <6e807c05-a990-5692-3f84-2e4153c8c278@linaro.org>
-From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-In-Reply-To: <6e807c05-a990-5692-3f84-2e4153c8c278@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: d5jpEChOYoNeyqH1Qdl_jE4iPKnTc2Ua
-X-Proofpoint-ORIG-GUID: d5jpEChOYoNeyqH1Qdl_jE4iPKnTc2Ua
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-20_13,2023-04-20_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
- lowpriorityscore=0 spamscore=0 bulkscore=0 malwarescore=0 adultscore=0
- phishscore=0 mlxscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=901
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2304200148
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Patrick Lai <quic_plai@quicinc.com>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-2-krzysztof.kozlowski@linaro.org>
+ <6b355201-a957-4fca-a513-d5fa0742fb40@sirena.org.uk>
+ <fe6202ee-2552-8b5c-c2d5-f2f7042b901d@linaro.org>
+ <d746ee5f-283d-44ce-b72c-18c8955d38b1@sirena.org.uk>
+ <3eb0cbb4-f6d9-db8a-031e-92627e70f41e@linaro.org>
+ <9942c3a9-51d1-4161-8871-f6ec696cb4db@sirena.org.uk>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <9942c3a9-51d1-4161-8871-f6ec696cb4db@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 20/04/2023 18:28, Mark Brown wrote:
+> On Thu, Apr 20, 2023 at 04:16:59PM +0200, Krzysztof Kozlowski wrote:
+>> On 20/04/2023 15:00, Mark Brown wrote:
+> 
+>>> That's just upstream, what about any downstream users?
+> 
+>> Life of downstream. We all know the drill: merge your DTS or suffer. The
+> 
+> No, the DT is supposed to be an ABI.  
 
+No, the DT bindings are the ABI. We are supposed not to break
+user-space, but out-of-tree users of drivers are not ABI by itself.
+Bindings are. If out-of-tree users make mistakes in their DTS and do not
+want to upstream it, it's their choice but it does not come for free.
 
-On 4/19/2023 3:23 PM, Dmitry Baryshkov wrote:
-> On 19/04/2023 17:41, Arnaud Vrac wrote:
->> This avoids using two LMs instead of one when the display width is lower
->> than the maximum supported value. For example on MSM8996/MSM8998, the
->> actual maxwidth is 2560, so we would use two LMs for 1280x720 or
->> 1920x1080 resolutions, while one is enough.
->>
->> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
-> 
-> While this looks correct (and following what we have in 4.4), later 
-> vendor kernels specify the topology explicitly. Probably we should check 
-> this with the hw guys, because it might be the following case: even 
-> though a single LM can supply the mode, it will spend more power 
-> compared to two LMs.
-> 
-> 
-Yes. 2 LM split will allow the HW to run in lower mdp core clock. Can 
-you maintain the split_threshold in the hw catalog until per mode 
-topology is available?
+> The point in having a domain
+> specific language with a compiler is to allow device trees to be
+> distributed independently of the kernel.
 
-Jeykumar S
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 +++++-----
->>   1 file changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index 1dc5dbe585723..dd2914726c4f6 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -53,8 +53,6 @@
->>   #define IDLE_SHORT_TIMEOUT    1
->> -#define MAX_HDISPLAY_SPLIT 1080
->> -
->>   /* timeout in frames waiting for frame done */
->>   #define DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES 5
->> @@ -568,10 +566,12 @@ static struct msm_display_topology 
->> dpu_encoder_get_topology(
->>        */
->>       if (intf_count == 2)
->>           topology.num_lm = 2;
->> -    else if (!dpu_kms->catalog->caps->has_3d_merge)
->> -        topology.num_lm = 1;
->> +    else if (dpu_kms->catalog->caps->has_3d_merge &&
->> +         dpu_kms->catalog->mixer_count > 0 &&
->> +         mode->hdisplay > dpu_kms->catalog->mixer[0].sblk->maxwidth)
->> +        topology.num_lm = 2;
->>       else
->> -        topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
->> +        topology.num_lm = 1;
->>       if (crtc_state->ctm)
->>           topology.num_dspp = topology.num_lm;
->>
+When it is written incorrectly - wrong flag used for GPIO - there is no
+requirement to support it.
+
+>> I could rework this patch to provide backwards compatible solution like
+>> I did for WSA:
+>> https://lore.kernel.org/all/20230102114152.297305-4-krzysztof.kozlowski@linaro.org/
 > 
+> There we go...
+> 
+>>> We could handle inversions through an explicit property if that were
+>>> needed, that would be a less problematic transition and clearer in the
+>>> consumer code.
+> 
+>> I am not sure if it is worth. The DTS is supposed to describe hardware,
+>> so even if reset pin flag was not effective, it is a mistake to describe
+>> it as ACTIVE_HIGH. Do we care about keeping broken code happy? If yes,
+>> then property is the way to go. If partially, then I can add
+>> backwards-compatible approach like I mentioned above.
+> 
+> It's not just this individual transition, it's the whole thing with
+> encoding the polarity of the signal at all - it's a layer of abstraction
+> that feels like it introduces at least as many problems as it solves,
+> and requiring configuration on every single system integration doesn't
+> feel like the right choice in general.
+
+Choosing appropriate flag for GPIO in DTS is not difficult. It was
+skipped because we rarely cared in the drivers, but it should have been
+chosen correctly. The same about interrupt flags. We had many DTS for
+many times marking all possible interrupts as IRQ_TYPE_NONE. Did it
+matter for many drivers and setups? No, was perfectly "fine". Is it
+correct from DTS point of view. Also no.
+
+Best regards,
+Krzysztof
+
