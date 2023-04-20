@@ -2,65 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B04DD6E9A82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:20:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 877F26E9A8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229523AbjDTRUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 13:20:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54614 "EHLO
+        id S229507AbjDTRUs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 13:20:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229898AbjDTRUA (ORCPT
+        with ESMTP id S229657AbjDTRUq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:20:00 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B8F2449A;
-        Thu, 20 Apr 2023 10:19:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B374264A89;
-        Thu, 20 Apr 2023 17:19:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E8FC433D2;
-        Thu, 20 Apr 2023 17:19:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1682011159;
-        bh=OWzPbivqRUEkhrItNBGzj3uBQBlq9cqwvTC3adE53q0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SQkPpxk0F41RWEvt9mZlhml/5Ue2gMvM3/0Y+EGA9DRDe3CHJA6Q3ZmfLz58rRkIr
-         gG2bFuwUZyJKO/HZhWbKYX4rASVX1W01ccvAva2p1Cc+jTgA4XHn0WpdgSFi4HL8kg
-         +k4E1/XIkd85hm3iCThlryDuaE2QGxRNpnvh25uNusC5NhamQrl5nR+a4BnN3BRl/E
-         czd7vpZLtLzhQ8V4MSKCwf9jRpnbUFedXZwJ6wiQ0eFkgoQkrJePOtTYXSjWe6tVzJ
-         teQIcXV9cbGXlieQm0MiU5eiwO2D7xXptKXHSZoUriqXnV/XXq5Oz78JgtOXgi0aqp
-         vPrh3brRNy3OQ==
-Date:   Thu, 20 Apr 2023 18:19:10 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Patrick Lai <quic_plai@quicinc.com>
-Subject: Re: [PATCH 3/6] ASoC: codecs: wcd938x: Check for enumeration before
- using TX device
-Message-ID: <3147a427-f6db-45cd-967b-dba1b9ff8bd5@sirena.org.uk>
-References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
- <20230420101617.142225-4-krzysztof.kozlowski@linaro.org>
- <dfe88b94-215b-a86f-60b4-25d2f9ea0e5f@linux.intel.com>
+        Thu, 20 Apr 2023 13:20:46 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE8A358C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:20:31 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-555bc7f6746so51479367b3.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:20:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1682011230; x=1684603230;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=npIvl3QgC8NcszelNQAZW8/zRVotzvOXnUNhHUMiAZ8=;
+        b=KQs7NudBQyLCUQlIcIgPgvcU3Am9iQJaOwcrnEiNEhZlF/H2QtEilO+0ua/CC9zRwX
+         a8jax2783UCBH8RpGjvzZjpDA4PNxRvMkUAWIe9ZxagI1SoF0dkU/ZTb/5PXWUaEk0/T
+         zxmIK0pj8qoUrrqHLOLch4JKf2PjxHELYHegE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682011230; x=1684603230;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=npIvl3QgC8NcszelNQAZW8/zRVotzvOXnUNhHUMiAZ8=;
+        b=fZbCenKDEzwM1w/lcYf9yOzJ+bVJoorMmreJRV77TuLRWpHS30Sl7kzI4X3LMeSg/Y
+         iUVUDddXU5zroQOoUZE5yMKYItqDsatc/Zjq4NAqPqDg/ygMLnABssG+HKcVQQ04wHvd
+         0RvIMcRGLr4v+31k+UtqLFMZ6Bfhj0Lna9heMBX7/I3ja0NsDnd7fDGFkMxuIKPuphYK
+         NOefi8LkXucpjZmVSR9GzqeRT+Yt353Sz8WtSFSWas3fOQPz5Lka1k1AgDmGLAEwTByS
+         jnXr2+SS1t4TUmUtp42nTbGK+HxiMSdL4UHKYdVmpbGPk5Sef5psbsdmIbwVg5pToC50
+         u51w==
+X-Gm-Message-State: AAQBX9cj1PHnMNd9/BjagBgjpidK/jhxMZO/X6cnm24Em9SBV4Dh30dH
+        lRI8jX7FGQIp1y/PzL3jPcVHfGq8OoEfhflQ+WY=
+X-Google-Smtp-Source: AKy350ZeMrtj96lN8emPvnniSaZS6R6N2QC4HhoeoAbADncLLE2Rz9JDbpnyFkCHr5K2DpICclsBxw==
+X-Received: by 2002:a0d:df50:0:b0:54f:a5ed:1978 with SMTP id i77-20020a0ddf50000000b0054fa5ed1978mr1374748ywe.38.1682011230559;
+        Thu, 20 Apr 2023 10:20:30 -0700 (PDT)
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
+        by smtp.gmail.com with ESMTPSA id a10-20020a81660a000000b0054f8ec34bf8sm446789ywc.49.2023.04.20.10.20.28
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 10:20:28 -0700 (PDT)
+Received: by mail-yb1-f174.google.com with SMTP id t16so2653203ybi.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:20:28 -0700 (PDT)
+X-Received: by 2002:a25:cacc:0:b0:b98:6352:be17 with SMTP id
+ a195-20020a25cacc000000b00b986352be17mr882764ybg.0.1682011227804; Thu, 20 Apr
+ 2023 10:20:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="UlUxRv2aKVH/fZyf"
-Content-Disposition: inline
-In-Reply-To: <dfe88b94-215b-a86f-60b4-25d2f9ea0e5f@linux.intel.com>
-X-Cookie: Above all else -- sky.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+References: <1681996394-13099-1-git-send-email-quic_vnivarth@quicinc.com> <1681996394-13099-3-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1681996394-13099-3-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 20 Apr 2023 10:20:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WyVRxRc7WuW1vhFXWDG81cAu7g5WiC9sggGoEuQOA4Cw@mail.gmail.com>
+Message-ID: <CAD=FV=WyVRxRc7WuW1vhFXWDG81cAu7g5WiC9sggGoEuQOA4Cw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/5] arm64: dts: qcom: sc7180: Add stream-id of qspi to iommus
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,40 +81,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---UlUxRv2aKVH/fZyf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Thu, Apr 20, 2023 at 6:13=E2=80=AFAM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
+>
+> As part of DMA mode support to qspi driver.
+>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
 
-On Thu, Apr 20, 2023 at 09:18:15AM -0500, Pierre-Louis Bossart wrote:
-> On 4/20/23 05:16, Krzysztof Kozlowski wrote:
-
-> > +	/*
-> > +	 * Before any TX slave regmap usage, be sure the TX slave is actually
-> > +	 * enumerated.
-> > +	 */
-
-> the alternative is to move regmap to be cache-only in the probe and
-> remove the cache-only property when the device is enumerated.
-
-Right, it's generally a better approach unless you need the hardware to
-actually do something immediately - if you're just setting up what's
-needed whenver things actually get started then using cache only mode is
-much less complicated.
-
---UlUxRv2aKVH/fZyf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmRBdA0ACgkQJNaLcl1U
-h9DeLwf+PvFmR3k+omskMKofJfXaRqx9gNhO1EIxPyysnIvGc8wp1CjH0rSUBHDa
-/AurDZBZQ2WDs5jx9E0QumJHVU+EG+Jr8n2hVCCdEv/QkRSEPV5A2ozhxHG7JhBy
-+WqEZ1CdQE7b8L0PiKqEcsJrRoWSnA6UN15mWBpxlztInIDkmqSKTd6u6JyylH75
-wcLspRhFTeT4HA4aQC6adaQNa4OgI5x7uDFL9eHVSrqUnug4KPRI2aGkafizjdtd
-F2bMA+NTrX9oVu4FhDWyMTUzGtRPJA1A4SKUqVFe5oIY5f5UXaBdLeBq2ew7ToQT
-tmufOOhU+U1jpP1CoA5QDQMaTRkjnw==
-=o6u7
------END PGP SIGNATURE-----
-
---UlUxRv2aKVH/fZyf--
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
