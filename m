@@ -2,30 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BDE86E9E1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 23:51:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A7A06E9E31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 23:55:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbjDTVvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 17:51:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58990 "EHLO
+        id S231464AbjDTVza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 17:55:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231636AbjDTVvl (ORCPT
+        with ESMTP id S231287AbjDTVz3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 17:51:41 -0400
+        Thu, 20 Apr 2023 17:55:29 -0400
 Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F90426B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 14:51:39 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37A891FC7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 14:55:07 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B91F320548;
-        Thu, 20 Apr 2023 23:51:36 +0200 (CEST)
-Date:   Thu, 20 Apr 2023 23:51:35 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D3CCC2049B;
+        Thu, 20 Apr 2023 23:55:04 +0200 (CEST)
+Date:   Thu, 20 Apr 2023 23:55:03 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -41,6 +40,7 @@ Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
@@ -48,21 +48,18 @@ Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
         Archit Taneja <architt@codeaurora.org>,
         Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Subject: Re: [PATCH v2 11/17] drm/msm/dpu: Disable MDP vsync source selection
- on DPU 5.0.0 and above
-Message-ID: <fxph57xh3waxv7fpjnmgai4krpgrdxf3bmp2b3vbpgqbmkcy6u@ib3ds6idhgwz>
+Subject: Re: [PATCH v2 14/17] drm/msm/dpu: Document and enable TEAR
+ interrupts on DSI interfaces
+Message-ID: <sbb4cbejalo5dpq3zceizmiwwfcnqvnfijok636exkwuiampja@qzjljebk6pyy>
 References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-11-ef76c877eb97@somainline.org>
- <20fab838-e05b-163d-aa72-bd8235df9f2c@linaro.org>
- <38030486-f08a-33e6-f8d1-3f4de379a75b@linaro.org>
- <3d1b08f0-adf9-8815-46f7-c31b54a7140c@linaro.org>
+ <20230411-dpu-intf-te-v2-14-ef76c877eb97@somainline.org>
+ <e16ef4f6-bf58-0c85-75ed-f8384c7fd7ef@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3d1b08f0-adf9-8815-46f7-c31b54a7140c@linaro.org>
+In-Reply-To: <e16ef4f6-bf58-0c85-75ed-f8384c7fd7ef@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,32 +67,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-20 04:03:31, Dmitry Baryshkov wrote:
-[..]
-> >>>    -static void dpu_hw_setup_vsync_source(struct dpu_hw_mdp *mdp,
-> >>> +static void dpu_hw_setup_vsync_source_v1(struct dpu_hw_mdp *mdp,
-> >>>            struct dpu_vsync_source_cfg *cfg)
-> >>
-> >> In my opinion _v1 is not really descriptive here. Could you please rename it to dpu_hw_setup_vsync_source_no_vsync_sel() ?
-> > v1 refers to the CTL rev 100 a.k.a 1.0.0 a.k.a 1, but that's not
-> > yet very well formulated upstream.. if we even need it..
+On 2023-04-20 04:11:29, Dmitry Baryshkov wrote:
+> On 17/04/2023 23:21, Marijn Suijten wrote:
+> > All SoCs since DPU 5.0.0 have the tear interrupt registers moved out of
+> > the PINGPONG block and into the INTF block.  Wire up these interrupts
+> > and IRQ masks on all supported hardware.
+> > 
+> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > ---
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 12 ++++++----
+> >   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 12 ++++++----
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 12 ++++++----
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  8 ++++---
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  8 ++++---
+> >   .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  8 ++++---
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 12 ++++++----
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  6 +++--
+> >   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 12 ++++++----
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 12 ++++++----
+> >   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 12 ++++++----
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 15 ++++++++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  6 +++--
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 27 ++++++++++++++++++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |  4 ++++
+> >   15 files changed, 125 insertions(+), 41 deletions(-)
+> 
+> If there is v3 for some reason, please split this into two patches: 
+> core/interrups and SoC catalog changes.
 
-I think v1 just refers to "the first next variant of this function",
-similar to how for example Microsoft COM APIs start without a suffix,
-then get 1, 2, 3 etc appended as new variants "of the same" trickle in.
-
-> Yeah, but this mdp_top, not the ctl. And for CTL I'd probably rename _v1 
-> to _active to follow actual feature name.
-
-Correct, I just got lazily inspired by downstream here.  There it
-switches on SDE_MDP_VSYNC_SEL which is based on DPU >= 5.0.0 as
-explained in the patch.
-
-> >> Or maybe rename dpu_hw_setup_vsync_source() to dpu_hw_setup_vsync_source_vsync_sel() and drop _v1 from this function.
-
-Maybe add _and_ in there?
-
-> >>
-> >> Up to you.
+I think you want a v3 for the vsync_sel _active_ rename in dpu_hw_top,
+all other patches are r-b'd if I scanned through it all correctly.  I
+can definitely accommodate to that.
 
 - Marijn
