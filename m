@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 827DB6E9F49
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:49:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DE126E9F51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:50:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232936AbjDTWtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 18:49:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33958 "EHLO
+        id S233014AbjDTWuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 18:50:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232960AbjDTWtK (ORCPT
+        with ESMTP id S232392AbjDTWuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 18:49:10 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74193C06
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:49:05 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4edcdfa8638so970076e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:49:05 -0700 (PDT)
+        Thu, 20 Apr 2023 18:50:24 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF638358B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:50:22 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4edcdfa8638so971204e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682030944; x=1684622944;
+        d=linaro.org; s=google; t=1682031021; x=1684623021;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=fdP8MC3XaEqA32rWPdIckKxRCI4GJxh3IXEDH13XKh4=;
-        b=Uo5s2ZVJ8f0YtJNR2V/QAw9DClxjdNn9cqFYEbfOZQUbcrDWvI3kZIG/ZvuvSdVhU7
-         pfh5B5a9RphGrqWEwNIRlbMY45cfKU38pWY1e0FY61FUJh0Jb1svYJ9R0LJakfx9tu3m
-         nbekIr7F6ZW68EnD6s+zO6qcATzgxFBHn6w9fyAO0JcooAsehyLQcDBDOcntPm0NyGoN
-         Oifnhlo7c89uxuHM+wDtJ0RnSGZNiKDCUdarMsAhcx8sziEmaqPjUGiTtCmM0BS8tN6v
-         sj4Ln9lcUStQlwf/nzgnSZ0qMbfnh5CtcwwFPN++psWNdyfLRUKvJWy/6+3gbGTZVDBk
-         ty5Q==
+        bh=68FCGKUyFaiFbG/iXo9yWgITnRfiZGq9Rg8NWDS09CU=;
+        b=Hm9MQY+d3zWJ8HGp6gmLD/00DgcjBJwatAr7+3XYRS59EtbFDERsBX8/Ks3EPh6BG3
+         fQgoE2PFsLatuu5MA9UVvUlYPHKCcdjQ8E6SrVHzXj4Qs1mMw1EkHdacE/NdiUh8tfL5
+         LAKAHQABx64AXh8gWtXf1KIQFq1tsUa9uQY9PFxebAD67U7c5bHoSUbUc/Bn1jQDbS9n
+         Qf/iewahUJEDdjqzt+IFOixdGJwc2vN7gAfzL1LA7fLqCYA95/RQaLb5JvrgzBC1AH9K
+         OO0+VY1ADaQmiqr7YH+tv2T84hDNPMSaCgIKwTazyvmrQlot1YlBbzgv+pnfUckh3UJS
+         h3Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682030944; x=1684622944;
+        d=1e100.net; s=20221208; t=1682031021; x=1684623021;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fdP8MC3XaEqA32rWPdIckKxRCI4GJxh3IXEDH13XKh4=;
-        b=WLHyD/UvRRtOiIlhd5Hawxgsa6ehO/CpBiE5M57olVGLNjYlNUNHVEi4bzjoNa7uxG
-         breM8b1Iy/+W+zV5MIHMDzgBXUfHVW0H/IrdP7uTUjnfp4t8VtbLlVlpF4vvpY+RViCc
-         MBN6C/Ww5pjAiYGVF8OSrZQPaQ0JWMhdilPIsDwjOMl+uu/RJhvcYwS5uuJZAfWrYBQr
-         XncJe5y1WHM+UCgVvg0P0YhIYxaG2GxOJjac2w7nPEmdw9dxAeMaj4fLk+6Swv+vcNlU
-         8C6AlehzV1ri0iJa/3Oe+5Gdj+5nmHZBk5vSyIEfPquNz40hyEPrZA8HxOZ5YBrIewUZ
-         3s4Q==
-X-Gm-Message-State: AAQBX9ciZNKI4Wl1Gb2QGhTDoz+ClaydhCKz3i+Vf9elsH5tudh2r+2m
-        +4MDg+9GGeq5U4hE2nL2G+l7EA==
-X-Google-Smtp-Source: AKy350ZInjPaVxyUTYhwDYw+L3xY8vOz8c952eS4vzPQ6cipzNOj58Pw/XifVqqdE8XeIyyL0HzukA==
-X-Received: by 2002:ac2:4905:0:b0:4ed:c9b0:6a42 with SMTP id n5-20020ac24905000000b004edc9b06a42mr780084lfi.12.1682030944156;
-        Thu, 20 Apr 2023 15:49:04 -0700 (PDT)
+        bh=68FCGKUyFaiFbG/iXo9yWgITnRfiZGq9Rg8NWDS09CU=;
+        b=FV8YpCkeOvBVbyj9OFGHfV2qvclTz4KG5eq/YO10Fu1yo0Ts1KQ3xg3O7GaquWjbmE
+         xLs+bm00/c0wwWojNXtNkiG/4tCkHEe5WUXbRgWTjbJfVJm/tmFo1dtPPt+D5me6I2mb
+         nTNCMDktgEr+rr2oVjaD9RYjVjDtFUGbT11zcxpbyyL3lC6VPFvDBOu+ovixXlPUJ7YB
+         JXFUK56PdHus8SLCAU1t+s5FKrcvjg0+sUSSEIr7NAWEsnHHeVMxmiZqtsPDYPVtLeJZ
+         qWuFGEudw/0ZZFqACQ3+8iLgUAkGW1yKh/Yu6NA6yvY2128gNVllhysB4uETN3K1szYN
+         is9g==
+X-Gm-Message-State: AAQBX9d5SKdL0rZjg7TK80zKO7KHibVTNfEISJAqTdsmq4Rx7Zbsq30e
+        v+9I4KozMofN7tcG1q+2Mxh/nQ==
+X-Google-Smtp-Source: AKy350a7P9jnq3r/leHVLSe7itJb11Vk9eHPCVoGdSGTSX6RhfhyYLjGpLCW3dojQzCUqmMeF0OUDQ==
+X-Received: by 2002:ac2:5a4a:0:b0:4d7:ccef:6b52 with SMTP id r10-20020ac25a4a000000b004d7ccef6b52mr817486lfn.39.1682031021097;
+        Thu, 20 Apr 2023 15:50:21 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id x13-20020ac2488d000000b004ef11b30a17sm94609lfc.91.2023.04.20.15.49.03
+        by smtp.gmail.com with ESMTPSA id o14-20020a2e730e000000b002a8d41c8ebdsm404990ljc.122.2023.04.20.15.50.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 15:49:03 -0700 (PDT)
-Message-ID: <d2b6ebad-dd38-0bb3-7c98-27cda45c7ed9@linaro.org>
-Date:   Fri, 21 Apr 2023 01:49:03 +0300
+        Thu, 20 Apr 2023 15:50:20 -0700 (PDT)
+Message-ID: <26832d5c-f55c-1dd0-947a-0278bcbf08de@linaro.org>
+Date:   Fri, 21 Apr 2023 01:50:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
@@ -96,8 +96,39 @@ On 21/04/2023 01:31, Konrad Dybcio wrote:
 > ---
 >   drivers/gpu/drm/msm/msm_mdss.c | 10 ++++++++++
 >   1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> index 4e3a5f0c303c..f2470ce699f7 100644
+> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> @@ -546,6 +546,15 @@ static const struct msm_mdss_data sm6350_data = {
+>   	.highest_bank_bit = 1,
+>   };
+>   
+> +static const struct msm_mdss_data sm6375_data = {
+> +	.ubwc_version = UBWC_2_0,
+> +	.ubwc_dec_version = UBWC_2_0,
+> +	.ubwc_swizzle = 6,
+> +	.ubwc_static = 0x1e,
+> +	/* Possibly 0 for LPDDR3 */
+> +	.highest_bank_bit = 1,
+> +};
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Nit: we can use sm6350 data here, can't we?
+
+> +
+>   static const struct msm_mdss_data sm8150_data = {
+>   	.ubwc_version = UBWC_3_0,
+>   	.ubwc_dec_version = UBWC_3_0,
+> @@ -580,6 +589,7 @@ static const struct of_device_id mdss_dt_match[] = {
+>   	{ .compatible = "qcom,sc8280xp-mdss", .data = &sc8280xp_data },
+>   	{ .compatible = "qcom,sm6115-mdss", .data = &sm6115_data },
+>   	{ .compatible = "qcom,sm6350-mdss", .data = &sm6350_data },
+> +	{ .compatible = "qcom,sm6375-mdss", .data = &sm6375_data },
+>   	{ .compatible = "qcom,sm8150-mdss", .data = &sm8150_data },
+>   	{ .compatible = "qcom,sm8250-mdss", .data = &sm8250_data },
+>   	{ .compatible = "qcom,sm8350-mdss", .data = &sm8250_data },
+> 
 
 -- 
 With best wishes
