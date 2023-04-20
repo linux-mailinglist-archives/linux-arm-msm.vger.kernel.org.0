@@ -2,126 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57A446E8E64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 11:43:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42E486E8EA8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 11:54:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233735AbjDTJnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 05:43:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
+        id S234281AbjDTJyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 05:54:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232154AbjDTJmo (ORCPT
+        with ESMTP id S234231AbjDTJyH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 05:42:44 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD7524C01;
-        Thu, 20 Apr 2023 02:40:47 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id k15so2105724ljq.4;
-        Thu, 20 Apr 2023 02:40:47 -0700 (PDT)
+        Thu, 20 Apr 2023 05:54:07 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B06E26BD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 02:54:02 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso447020e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 02:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681983645; x=1684575645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MXezQIL8nQT7EHNZDg5A3zwX32Ez5Xt7dCXaMMgSYRE=;
-        b=gS0rvfbFTHrddVjRYYkBoQBAkbBKiIIfAmjXA4hDLm9cXNQydDv8xPgKzQo/+DmUbU
-         oD1tZQOtRIWCnc+gQ2Cq+6kJj9Du0D1TR3ZiQZZ30NM3ONRqJ2dWO0EhCl26r6v9vOlf
-         uT4CK8+IbhFRfzC4312mdPAtqiJnnSeEpFTVSX66bLXHQnZAQciXyXlfZ1DkcLIMIh8N
-         6Zig+xCX6r6qlJ2WeG0vnHtoV8sJyvZZmH6HBcWeKY9dXxNBK40I9KnjCffHX35gNWa4
-         NZhT9Sb3XDmnFjYrdQ95ZUXrsmNJexNQuiNql4jxqOh4bULx2kBy2J1Lt6uExf5LQDTn
-         J1Gg==
+        d=linaro.org; s=google; t=1681984440; x=1684576440;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mGGvYz0vqZ33n+fo0Tr5AwZsVe0Xqlv0TtcIG/mEdRM=;
+        b=FOLFkVdZ0v44OL6a8anDA51YEWjj1ueQkF6fXUjxy9/2GrffrqyIQV4jqMAU1uWkRr
+         IWmpPCKlgCSgBGZMOJk6lL+d19uqtXDYozyUl9ylDc0qsVqkyUc8vgPHwgBhis+sblZr
+         6CYCqqz9RHKsO8DpEvpLTEilZK5we08WkBhros9yXgygNmPXxqYgjjCmolN1dxR7GvcJ
+         Lh8WHR6ozwt7UrrvN5dPMdMc+JRM7zwSWRJkrbmE1ZQT2D+UvPnfylsDYrlF/kJMe7Da
+         AYtlBZ9czPCkn8xBazSzW6BKVro0eq8UvzoZOy5DTGeA2gHGeTsVxt9tua8feP17iUUP
+         TBLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681983645; x=1684575645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MXezQIL8nQT7EHNZDg5A3zwX32Ez5Xt7dCXaMMgSYRE=;
-        b=eq52xzJ0UZo2finzLWbJCX0QZ8MvhCtsRYGpe3TMxaIP1G8zqplAYFTfO6MHw2Aw+Q
-         7ewa6/RDSYLk13tl/cfEnpUTwdtrZZ4F4N0uBnB7240iiw+nlk2HF2gkFYRNqQTVwxge
-         R6jOE5BZjlXmjPqQASjY36zqsOWSkeT+gmZUmAxky+d0P2blC/SNsMfyC6BecWWrK30h
-         6E6wJTFh7S7EuM1N/nYflww/MxNpgKFUlCs+OyBZhdNd5JwfwaalQqpp+mBpHaMt/CJy
-         XuUQDqAG5NYCPcoZEyoIW31Gebnhv7qvdjBJAzi5NknAS1heT+aYJBrNkU/1VVtbgB2F
-         /mJA==
-X-Gm-Message-State: AAQBX9f7DEAtW55zoT8KOfw98Vpbsvv24PxLKh78OdfzT6Qe2cCe/fIJ
-        sAUQsgqKNS4jCC6Ce+o0JWhbiRuwpmK0tQRqNIw=
-X-Google-Smtp-Source: AKy350Y3JU2L27iVYwrYrXipxJ1TJZFDuoI/VJwjHdGAyJUSB58qs8J62vQpxs+N4iZAkbdBoW8mRtHUbMFIKKOb1xM=
-X-Received: by 2002:a2e:a0d3:0:b0:2a9:eec1:71f5 with SMTP id
- f19-20020a2ea0d3000000b002a9eec171f5mr181058ljm.4.1681983644357; Thu, 20 Apr
- 2023 02:40:44 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681984440; x=1684576440;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mGGvYz0vqZ33n+fo0Tr5AwZsVe0Xqlv0TtcIG/mEdRM=;
+        b=Vulo6jXnNdbcmo8sWFrzwBuvTBwTeH97BzIM7+kMP5FhByTTimgL4BHrhzDDZX+16m
+         gQQsLp/ifwbLV5Qw7BcdVRnKsghhaIyjDgUqEjEaihTHh/l9mrFYrRvT1IP7FSx6NJg5
+         htWGJSOXx27mKZ7ZcKBDqIkOGM+sgGpTTcdWF2QjdhOu/yvh++JwyJi5j8q810H9G/3g
+         8H3O2V111zHSo0+uq7/ENlqEM3Fvs1zYwX4VTXXY8ZrZ/tzWwwFbGC8DVGwJ2cuaTlD3
+         7rvCgZ22b2WMz2Mi71WYbZ9CsdxZNSnxnmMKWV9nr6b56Gg5C4BjGNzk64TaRC5cmM8s
+         LByQ==
+X-Gm-Message-State: AAQBX9cUfA/XKpmDxry1xpx1IV1TRKT7qcZaKwkxH7F5D+tnR9O5mB6X
+        hl75T+icow0aOUeDFfztGoAnhg==
+X-Google-Smtp-Source: AKy350Y7UIxnxGPQnkZd6F1ty5wN9QW7ABmp+6yZagCX0dwlMCfwws+fXNS7jbCUDatA5h7CGh55LA==
+X-Received: by 2002:ac2:4a8c:0:b0:4ee:e0c7:435f with SMTP id l12-20020ac24a8c000000b004eee0c7435fmr116894lfp.61.1681984440112;
+        Thu, 20 Apr 2023 02:54:00 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id v28-20020ac2559c000000b004edc608d86bsm162230lfg.104.2023.04.20.02.53.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 02:53:59 -0700 (PDT)
+Message-ID: <bcbda796-908a-43d5-0744-c03656fda47b@linaro.org>
+Date:   Thu, 20 Apr 2023 12:53:58 +0300
 MIME-Version: 1.0
-References: <20230419211856.79332-1-krzysztof.kozlowski@linaro.org> <20230419211856.79332-18-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230419211856.79332-18-krzysztof.kozlowski@linaro.org>
-From:   Molly Sophia <mollysophia379@gmail.com>
-Date:   Thu, 20 Apr 2023 17:40:33 +0800
-Message-ID: <CAK0UmJBMUSWSjO8d44aL+uaRfwKZ25VvNMZOH_BKUT35g5weUg@mail.gmail.com>
-Subject: Re: [PATCH 18/18] arm64: dts: qcom: sdm845-polaris: add missing
- touchscreen child node reg
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 04/11] drm/msm/dpu: allow using lm mixer base stage
+Content-Language: en-GB
+To:     Arnaud Vrac <avrac@freebox.fr>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
+ <20230419-dpu-tweaks-v1-4-d1bac46db075@freebox.fr>
+ <74c59560-8a79-150f-0c1e-13f22eb35cb2@linaro.org>
+ <CAG9NU6_Ua_XLa+c=_93fs5chzQTyPf11W4F87UYbny1k-feoJw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAG9NU6_Ua_XLa+c=_93fs5chzQTyPf11W4F87UYbny1k-feoJw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 20, 2023 at 5:19=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> Add missing reg property to touchscreen child node to fix dtbs W=3D1 warn=
-ings:
->
->   Warning (unit_address_vs_reg): /soc@0/geniqup@ac0000/i2c@a98000/touchsc=
-reen@20/rmi4-f12@12: node has a unit name, but no reg or ranges property
->
-> Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/ar=
-m64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> index 8ae0ffccaab2..576f0421824f 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-> @@ -483,6 +483,7 @@ rmi4-f01@1 {
->                 };
->
->                 rmi4-f12@12 {
-> +                       reg =3D <0x12>;
->                         syna,rezero-wait-ms =3D <0xc8>;
->                         syna,clip-x-high =3D <0x438>;
->                         syna,clip-y-high =3D <0x870>;
-> --
-> 2.34.1
->
+On 20/04/2023 10:26, Arnaud Vrac wrote:
+> Le jeu. 20 avr. 2023 à 00:43, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> a écrit :
+>>
+>> On 19/04/2023 17:41, Arnaud Vrac wrote:
+>>> The dpu backend already handles applying alpha to the base stage, so we
+>>> can use it to render the bottom plane in all cases. This allows mixing
+>>> one additional plane with the hardware mixer.
+>>>
+>>> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+>>
+>> This might require additional changes. First, for the STAGE_BASE pipe
+>> in the source split mode (iow using two LMs) should programmed with
+>> respect to the right LM's x offset (rather than usual left top-left LM).
+>> See  mdss_mdp_pipe_position_update().
+> 
+> Ok, I did test with 2 LMs and it seems to be working, I'll investigate.
 
-Reviewed-by: Molly Sophia <mollysophia379@gmail.com>
+The only reference I have here is the fbdev driver, see [1]. The newer 
+SDE driver doesn't handle STAGE_BASE vs STAGE0 (and DPU inherited that 
+design). Maybe this got fixed in hw at some point.
+
+[1] 
+https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LE.UM.4.4.1.r2-17500-QRB5165.0/drivers/video/fbdev/msm/mdss_mdp_pipe.c#L1789
+
+I think, it only concerns the src_split + multirect cases, where the 
+rectangle base point is on the right LM.
+
+> 
+>>
+>> Also this might need some interaction with CTL_MIXER_BORDER_OUT being
+>> set or not. If I remember correctly, if there bottom plane is not
+>> fullscreen or if there are no planes at all, we should set
+>> CTL_MIXER_BORDER_OUT (which takes STAGE_BASE) and start assigning them
+>> from STAGE0. If not, we can use STAGE_BASE.
+> 
+> I also tested with both fullscreen and non-fullscreen primary plane,
+> and no plane. I'll check this.
+
+Yes, the DPU driver always enables the MIXER_BORDER_OUT.
+
+> 
+>>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index 14b5cfe306113..148921ed62f85 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -881,7 +881,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>        r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>>        r_pipe->sspp = NULL;
+>>>
+>>> -     pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+>>> +     pstate->stage = DPU_STAGE_BASE + pstate->base.normalized_zpos;
+>>>        if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+>>>                DPU_ERROR("> %d plane stages assigned\n",
+>>>                          pdpu->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
+>>>
+>>
+>> --
+>> With best wishes
+>> Dmitry
+>>
+
+-- 
+With best wishes
+Dmitry
+
