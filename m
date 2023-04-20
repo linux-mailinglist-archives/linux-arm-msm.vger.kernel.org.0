@@ -2,29 +2,30 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32F6B6E9E14
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 23:47:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BDE86E9E1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 23:51:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232704AbjDTVrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 17:47:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57908 "EHLO
+        id S232050AbjDTVvl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 17:51:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232287AbjDTVrG (ORCPT
+        with ESMTP id S231636AbjDTVvl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 17:47:06 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD04D26B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 14:47:05 -0700 (PDT)
+        Thu, 20 Apr 2023 17:51:41 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F90426B3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 14:51:39 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 39341205A5;
-        Thu, 20 Apr 2023 23:47:03 +0200 (CEST)
-Date:   Thu, 20 Apr 2023 23:47:02 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B91F320548;
+        Thu, 20 Apr 2023 23:51:36 +0200 (CEST)
+Date:   Thu, 20 Apr 2023 23:51:35 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -40,7 +41,6 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Martin Botka <martin.botka@somainline.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
@@ -48,15 +48,19 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
         Archit Taneja <architt@codeaurora.org>,
         Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Subject: Re: [PATCH v2 07/17] drm/msm/dpu: Sort INTF registers numerically
-Message-ID: <3njpny4lxaexyrcpcpbvbiampqdcgc3nbrmvwxmfmin2esweat@oysuxu6b4iks>
+Subject: Re: [PATCH v2 11/17] drm/msm/dpu: Disable MDP vsync source selection
+ on DPU 5.0.0 and above
+Message-ID: <fxph57xh3waxv7fpjnmgai4krpgrdxf3bmp2b3vbpgqbmkcy6u@ib3ds6idhgwz>
 References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-7-ef76c877eb97@somainline.org>
- <f9e8a86f-3c69-4fda-01b9-2d4cd261bee8@linaro.org>
+ <20230411-dpu-intf-te-v2-11-ef76c877eb97@somainline.org>
+ <20fab838-e05b-163d-aa72-bd8235df9f2c@linaro.org>
+ <38030486-f08a-33e6-f8d1-3f4de379a75b@linaro.org>
+ <3d1b08f0-adf9-8815-46f7-c31b54a7140c@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <f9e8a86f-3c69-4fda-01b9-2d4cd261bee8@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3d1b08f0-adf9-8815-46f7-c31b54a7140c@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
@@ -66,36 +70,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-20 03:47:57, Dmitry Baryshkov wrote:
-> On 17/04/2023 23:21, Marijn Suijten wrote:
-> > A bunch of registers were appended at the end in e.g. 91143873a05d
-> > ("drm/msm/dpu: Add MISR register support for interface") rather than
-> > being inserted in a place that maintains numerical sorting.  Restore
-> > that.
-> 
-> Assuming that = "sort order":
+On 2023-04-20 04:03:31, Dmitry Baryshkov wrote:
+[..]
+> >>>    -static void dpu_hw_setup_vsync_source(struct dpu_hw_mdp *mdp,
+> >>> +static void dpu_hw_setup_vsync_source_v1(struct dpu_hw_mdp *mdp,
+> >>>            struct dpu_vsync_source_cfg *cfg)
+> >>
+> >> In my opinion _v1 is not really descriptive here. Could you please rename it to dpu_hw_setup_vsync_source_no_vsync_sel() ?
+> > v1 refers to the CTL rev 100 a.k.a 1.0.0 a.k.a 1, but that's not
+> > yet very well formulated upstream.. if we even need it..
 
-This is what I mean(t) to say, but not what I meant to write.  See the
-previous sentence: "restore that" refers to "numerical sorting" (not
-just "sort order") right before.
+I think v1 just refers to "the first next variant of this function",
+similar to how for example Microsoft COM APIs start without a suffix,
+then get 1, 2, 3 etc appended as new variants "of the same" trickle in.
 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> If I don't forget, I'll fix it when applying.
+> Yeah, but this mdp_top, not the ctl. And for CTL I'd probably rename _v1 
+> to _active to follow actual feature name.
 
-If you feel the above explanation is inadequate, feel free to replace
-the sentence with "Restore said numerical sorting".
+Correct, I just got lazily inspired by downstream here.  There it
+switches on SDE_MDP_VSYNC_SEL which is based on DPU >= 5.0.0 as
+explained in the patch.
+
+> >> Or maybe rename dpu_hw_setup_vsync_source() to dpu_hw_setup_vsync_source_vsync_sel() and drop _v1 from this function.
+
+Maybe add _and_ in there?
+
+> >>
+> >> Up to you.
 
 - Marijn
-
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 12 +++++++-----
-> >   1 file changed, 7 insertions(+), 5 deletions(-)
-> 
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
