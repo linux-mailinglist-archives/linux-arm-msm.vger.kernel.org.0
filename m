@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B7FE6E90B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:46:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E75956E90BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:46:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234904AbjDTKqI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:46:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56780 "EHLO
+        id S234926AbjDTKqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234121AbjDTKpl (ORCPT
+        with ESMTP id S233960AbjDTKpo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:45:41 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4F6B65B5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:44:55 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id h2so2185672ljh.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:44:55 -0700 (PDT)
+        Thu, 20 Apr 2023 06:45:44 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39FE4559D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:45:03 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ec8399e963so456061e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681987492; x=1684579492;
+        d=linaro.org; s=google; t=1681987501; x=1684579501;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=keeALs6lvkX/Tz23QD0lH6BGnlIDkKXtcHe2ftguPZM=;
-        b=kj2bAIhCXScUbq3VgiEqEUtg7Vo+zS02TE365Izvn3Mq52Qhv1pSIu+DE8G+PaOLPH
-         dJdj84cjL44OJQmBRZvGQNXz0tkW25dYhWdWG2LPYSNeK8TorwNrrB2VeXOhY/v51bJ/
-         M4Tg2LKjiz4kZE0j6lM73KSYjBBDTRPiLcp/DlrMP0kYRHZ0RMH9S5U6loQWweFd8UNM
-         JYl0pd7V2tNJB0km9IDZWhbI007InCqUm7jxrHYz9pMLgbu1N6NKewvESUicHY3r51F6
-         1cTU+6f399pR8Z3ajtgqMpJSVXiMTVBEQHM58j7pF4VcpMI8duXBnvhqCUNkhyVYTbEg
-         Njag==
+        bh=kY8UIzE5eO4MFqBVBrnPVYrl3XX3IycUCxRpOqgSExA=;
+        b=GvmHbUMKn2xG/27HTvNaP3xt321ryp0n5aMIRX6kx2YDk4qFgfAFjj3rSmn3swnJZt
+         yVQxT9Fi6OIifOh5dHVLoowlG/nNfQj81CL+bpJj3rxDNGNHDoJYdguCtnxTM17Oe9Bw
+         SWqQngbzYhUBiyvdYrilO9zCXu5LacO+1EXSyQhYm49BBgSM69/+tdyysz4u0vRMxFLL
+         Gpzd4qJ9rT7szUHUZwWsEpdccNTOkn37lhecUFOnBajgDps6xVziRJ+9sDzVq8Xq1I2H
+         sLghiF2T+aTSN7Cv5r8IBEA4KiB8C7nFaEKv8XHcwRW5razPex+mqrbFfEIMFN0T2wtJ
+         556w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681987492; x=1684579492;
+        d=1e100.net; s=20221208; t=1681987501; x=1684579501;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=keeALs6lvkX/Tz23QD0lH6BGnlIDkKXtcHe2ftguPZM=;
-        b=eQwCw1KsdpYybDwTsnmTMMjXwb679GR8G623JhJhDzxqIMeZYj1XdQ56y/V2P2d/gg
-         j8CysKmj3SGsVv8PHMoGAh79yY5bqDUU9KdkSvgFvTGPPp7SqzP8EpwwyV6wZ6RBzR2f
-         tPweEMtEmdR48r4zXjoMhSNUmC97BeuirYV1FEQEzTW6N4GajDbTlttss6URLGnviBbc
-         9X7xHBAxvrd4wcO0y6VvmeYBffXQ41b62FpD2AChUjL7lZ1eJ59v6i4DBf+sC0raH+hA
-         yanqmRTad0exN2+x/z1V8ldWVV/3xZxITtIvXyXzNrT1q32mcZsOkiOlZ74oaM46TGZm
-         7WYg==
-X-Gm-Message-State: AAQBX9c5T3IKmH+AGCecoB+oRDVQrrxbMbZKkdeC1R8+X44YMv0XO01/
-        MqbgCaFd/sO74cdCuZyrDYimGA==
-X-Google-Smtp-Source: AKy350bB66FYtrRoTZ6HTF1AHEnqG1YiQoIVYd0vScHXBaw5nx96EXLIrvMrT1cHm6219aLzyrma6w==
-X-Received: by 2002:a2e:a179:0:b0:2a7:6dd3:cce7 with SMTP id u25-20020a2ea179000000b002a76dd3cce7mr349029ljl.37.1681987492441;
-        Thu, 20 Apr 2023 03:44:52 -0700 (PDT)
+        bh=kY8UIzE5eO4MFqBVBrnPVYrl3XX3IycUCxRpOqgSExA=;
+        b=bCcdTsH/+Wkb6YmIkg4p9Be+qb7DnZoU1BQVQv+YV+J1A/d8yg986tCdBIZffvwD2V
+         oOxC1TMoySsrPtf6esbh6566HIXJCd8xWSL+egjrQjKbyzn6BhSWheyZeJjoS7NWBQYI
+         Ntof2rlrnlD8euqF7KtEwt77PdcowSqFNsxRPiIUKYcHmFM1Si4ATegPqxl9JkT/PYYm
+         y6njr3qT8XkpywIrlelk8pnQfuCGJktPNo9O9Pe5NTYPhnIqlXVYUo7RT51AKS71YnjP
+         u4sDkyMQGIt+ZYu12a+NUPORGk3y2zt1Nm9RV5lbpjiM/mzlwU2t0CbT4tfmddatZWjq
+         VctA==
+X-Gm-Message-State: AAQBX9dXeBrYNQHVHhFbYtAsebwTjnPzlkB77Pet4vqoETcxmRSghdBB
+        MjlWNm80N0T4uw6RLNiNpYr+ZA==
+X-Google-Smtp-Source: AKy350Z/plryjoBMhS7GTpBOJXZ2Oq1kUX0fqAivS+zzzfjN2jyVDEGZtV1n3J6BWhQy2VfW+q4zAg==
+X-Received: by 2002:ac2:5286:0:b0:4ec:a19c:32b0 with SMTP id q6-20020ac25286000000b004eca19c32b0mr312072lfm.5.1681987501073;
+        Thu, 20 Apr 2023 03:45:01 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id y13-20020ac255ad000000b004e84896253asm172653lfg.251.2023.04.20.03.44.51
+        by smtp.gmail.com with ESMTPSA id e14-20020ac2546e000000b004eaeb0a984csm177166lfn.88.2023.04.20.03.44.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 03:44:52 -0700 (PDT)
-Message-ID: <d1ffc9a9-63b7-905d-547a-a38982ceaa80@linaro.org>
-Date:   Thu, 20 Apr 2023 12:44:50 +0200
+        Thu, 20 Apr 2023 03:45:00 -0700 (PDT)
+Message-ID: <8d1dc149-8126-744c-09f0-aae10a49b757@linaro.org>
+Date:   Thu, 20 Apr 2023 12:44:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 5/7] arm64: dts: qcom: msm8998: add unit address to soc
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sdm630: add unit address to soc
  node
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -66,9 +66,9 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230420063610.11068-1-krzysztof.kozlowski@linaro.org>
- <20230420063610.11068-5-krzysztof.kozlowski@linaro.org>
+ <20230420063610.11068-6-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230420063610.11068-5-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230420063610.11068-6-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -93,19 +93,19 @@ On 20.04.2023 08:36, Krzysztof Kozlowski wrote:
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index b150437a8355..803a1f1f2597 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -800,7 +800,7 @@ timer {
->  			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index b31424544b19..a7d475f23bea 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -548,7 +548,7 @@ modem_smp2p_in: slave-kernel {
+>  		};
 >  	};
 >  
-> -	soc: soc {
-> +	soc: soc@0 {
+> -	soc {
+> +	soc@0 {
 >  		#address-cells = <1>;
 >  		#size-cells = <1>;
 >  		ranges = <0 0 0 0xffffffff>;
