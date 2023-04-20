@@ -2,68 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78DD16E9006
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:22:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7CFF6E9064
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:37:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234637AbjDTKWa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:22:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35384 "EHLO
+        id S234610AbjDTKhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234644AbjDTKVq (ORCPT
+        with ESMTP id S231978AbjDTKgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:21:46 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B959C1FF2;
-        Thu, 20 Apr 2023 03:21:14 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 54E526170E;
-        Thu, 20 Apr 2023 10:21:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10731C4339C;
-        Thu, 20 Apr 2023 10:21:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1681986073;
-        bh=Oke/vxaYCsaXG/i/ejtj16MkigByqTQMltM4m9SpS3U=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Myszrib75Rcrq6eBvq0D4zzaVZOUsiMTOqnI67K8Vgz9GRMTsVLTU0hdgzzOSUSDK
-         p0pyBJlD8t4WZXg8kC6O6JRUDeF6Gh+IEB3gQmz7kCmJmXemIwp1KmwTLycUkgMV1W
-         HsavNSoVSh7pZ+mZFYxUK62lSEd6H3XQs6Ds4FxmIBIRXF0z0iK9IX26smE8xTWqrB
-         dbcj3nBDFPIyXF5a+UoOvPmdAM6J93MYvaX9rNAepN595ZJbM5jAQQFVeB9GCU9ZHq
-         8zf5s0U2ySpiKVc+EiV8rlCTcTy6rkID7MnIPBBJfdj8+KdGJ9gZjYnMKf+ljF0wDm
-         f75A4wGaytUng==
-Date:   Thu, 20 Apr 2023 11:21:06 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
+        Thu, 20 Apr 2023 06:36:12 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8DF7A88
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:33:44 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso467961e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681986823; x=1684578823;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Km7fYpP6TW/v//SsQT00GnyneejX9uUDDOVhZE5n5xI=;
+        b=omq6USS+6wPohpA8a0n0uXqurlRJCRBlTGmxbfed9VYsZHD6xxp8Z7lnZYfHm7JF1I
+         Ugpb+KXIro1kjq1OfPs/dZ6amfgct3ZJMGypRTpYuXvYKpOIUql260eVCSIMUrd5WgjY
+         +GpYIVfVvePMUmhYkvkT1o0AGpbnHfyTNjN1ZFAiNSBto9kJZJW3xqHauaSmXBWxOxlo
+         rINiyoQlHMS/gGmDujvisgk8WaJgXNBaKbfyRczEyQWAOV7mmXi7kLfxPt5NCz2a8A6d
+         zoE+048Nw6BlGD5ThUmW0JyZND4vPI5ZFOpBhYp+4uCOfMUTcCFM6P7YFbN2ZP+Y9nF3
+         thDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681986823; x=1684578823;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Km7fYpP6TW/v//SsQT00GnyneejX9uUDDOVhZE5n5xI=;
+        b=dQ+c00Mo7OcYd+BSI+bupCR7kaUsTS3raIFuhsW+8K2gJ+AmTO8LztrnLPDZp0OAny
+         W+PPFjgi7KVwkmR5wgV5phe1+K0zd1+u+1ecc3fpgxW3VAAHTyWYqogB53gqo4+ujsSA
+         1TVL1PF46P2qA4Y8zqb2VpTu+MIYemkrdD3/ge16Zvh9RySE4tNdG7yvpgKk/XfY2Syn
+         LeeHQjddlgSbQNwESVs2izVdb/gT+MXFdu9bB1T5FRTwhYlF5NsKTKfH5I7F48ubdHh8
+         7c85ZBy/2HfA+jeraDAIKsn8dr/VxiyF5QGbcAAJNdCD7hfb+bZfOgVUVrrRqev60ixc
+         VRtg==
+X-Gm-Message-State: AAQBX9e7uGqDigcXHMsdg68p8Lu7MkgtC94H2nqK3+qFv+Nf7hl8JVyc
+        PmkTmW3WynOrbqY89nlDEmEQJA==
+X-Google-Smtp-Source: AKy350bbg9I6ZBPxb4VonvL9ujTQrhDttBE9Pxlis6/qvpG/a5zlxV4mrfqhjY4IdvKCqIzishwMyQ==
+X-Received: by 2002:ac2:5444:0:b0:4eb:2529:cbb2 with SMTP id d4-20020ac25444000000b004eb2529cbb2mr445613lfn.49.1681986822894;
+        Thu, 20 Apr 2023 03:33:42 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id n1-20020a2e8781000000b002a7e9e4e9dcsm190172lji.114.2023.04.20.03.33.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 03:33:42 -0700 (PDT)
+Message-ID: <2c4d7635-4b59-fcbd-133e-984205379e11@linaro.org>
+Date:   Thu, 20 Apr 2023 13:33:41 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 2/2] clk: qcom: Introduce SM8350 VIDEOCC
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>
-Subject: Re: [PATCH v4 4/5] dt-bindings: mfd: qcom,spmi-pmic: Use generic ADC
- node name in examples
-Message-ID: <20230420102106.GG9904@google.com>
-References: <20230410202917.247666-1-marijn.suijten@somainline.org>
- <20230410202917.247666-5-marijn.suijten@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230410202917.247666-5-marijn.suijten@somainline.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230413-topic-lahaina_vidcc-v3-0-0e404765f945@linaro.org>
+ <20230413-topic-lahaina_vidcc-v3-2-0e404765f945@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230413-topic-lahaina_vidcc-v3-2-0e404765f945@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,18 +85,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 10 Apr 2023, Marijn Suijten wrote:
-
-> Update the examples to reflect a future requirement for the generic
-> `channel` node name on ADC channel nodes, while conveying the board name
-> of the channel in a label instead.
+On 19/04/2023 15:53, Konrad Dybcio wrote:
+> Add support for the Video Clock Controller found on the SM8350 SoC.
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>   drivers/clk/qcom/Kconfig          |   9 +
+>   drivers/clk/qcom/Makefile         |   1 +
+>   drivers/clk/qcom/videocc-sm8350.c | 552 ++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 562 insertions(+)
 
-Applied, thanks
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-Lee Jones [李琼斯]
+With best wishes
+Dmitry
+
