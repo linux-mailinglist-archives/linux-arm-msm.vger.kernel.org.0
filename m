@@ -2,85 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A7DF6E9001
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:22:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78DD16E9006
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:22:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234052AbjDTKWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:22:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35338 "EHLO
+        id S234637AbjDTKWa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:22:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234188AbjDTKVg (ORCPT
+        with ESMTP id S234644AbjDTKVq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:21:36 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD6A64C10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:20:43 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id l15so2167896ljq.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681986042; x=1684578042;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K4p+Jwfh4f6O4EpesT7nZbdGy3tVSOOPuyRDN6YS6gs=;
-        b=EAwDI9yyVDLLbl6cAmcIwJbwcp8ZpDiZ7blcuGT4r1FqsctbdaZ4XrGUljVnifY3Zn
-         Gndd3JpvtkoUpNJkkB37SgCfPDPh3+TTL6sH3TGYYmTp99MHNg1Q5KxI+eItbzsIWlRv
-         UDveXKcjkTTPp4ZqP0Hx+0XrHpoNUfoJDi/J2NinFWQ1GW19KdEjHhm80L9X4DW/rc1j
-         eFWJVxxL9lI1ylb4JevgcquIYmeSA+0qUBd/wWCniICejXyZTJVK4RLwiUlHvueh+dUa
-         W/ST1rGntxJ+10N1r1mCsoT4xsmxNi34U/nXKOmhH6O6HRePbYTO9OLzUdPrQjc+Oq84
-         5BCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681986042; x=1684578042;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K4p+Jwfh4f6O4EpesT7nZbdGy3tVSOOPuyRDN6YS6gs=;
-        b=fpeuLfC9+Tox386/4+BjL4/SEsO04FcriFWacNplfT9fD7+FcVCO/xWBjRssZweAyv
-         A32UzSY7vggHZUp1hMhkcDD5I2NWzhUK6/KMBs30eSmOQvfPrfqpV1ljhzGFsSi0OdQ+
-         QaPHgB/kz7pGmu6ynkm4571SuN5g3GiIpKp/y7MgQ1L4g0wbcAG5Dq2Hg0Idj+9HGVOk
-         SwzsigGfgkWRhMdy1H4TvsLamvTUpDS4mkYThPliimSAdGuUHU+ccA2n0WXxUAMLAW/u
-         tmZ25Jg+2in+D46enMY2I3C8TWfvXuBQhB/cQcXb36QD+HVweC82bOWe+aZYrSFQ5Gd8
-         DWgQ==
-X-Gm-Message-State: AAQBX9e7LZ2oQAe3NCfm9tmxPUyc187LJe5JQzLpEpTj4qVHIzzfhuaz
-        hRBOacWVcqrdr6pXd9Js/Lw8Gw==
-X-Google-Smtp-Source: AKy350YWnFordrnmpiF7wIFWOYpQ/eTVAH3HUoCFwHRfS6GXxx1v6PZoYzAu8N/3JQL6nqKGub3QJA==
-X-Received: by 2002:a2e:9895:0:b0:2a8:bc05:1d7a with SMTP id b21-20020a2e9895000000b002a8bc051d7amr258934ljj.30.1681986042057;
-        Thu, 20 Apr 2023 03:20:42 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id n3-20020a2e8783000000b002a8e4678da4sm186778lji.139.2023.04.20.03.20.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 03:20:41 -0700 (PDT)
-Message-ID: <b9b6e799-c8a2-7d8c-4d87-56d899048454@linaro.org>
-Date:   Thu, 20 Apr 2023 12:20:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Thu, 20 Apr 2023 06:21:46 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B959C1FF2;
+        Thu, 20 Apr 2023 03:21:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 54E526170E;
+        Thu, 20 Apr 2023 10:21:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10731C4339C;
+        Thu, 20 Apr 2023 10:21:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681986073;
+        bh=Oke/vxaYCsaXG/i/ejtj16MkigByqTQMltM4m9SpS3U=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Myszrib75Rcrq6eBvq0D4zzaVZOUsiMTOqnI67K8Vgz9GRMTsVLTU0hdgzzOSUSDK
+         p0pyBJlD8t4WZXg8kC6O6JRUDeF6Gh+IEB3gQmz7kCmJmXemIwp1KmwTLycUkgMV1W
+         HsavNSoVSh7pZ+mZFYxUK62lSEd6H3XQs6Ds4FxmIBIRXF0z0iK9IX26smE8xTWqrB
+         dbcj3nBDFPIyXF5a+UoOvPmdAM6J93MYvaX9rNAepN595ZJbM5jAQQFVeB9GCU9ZHq
+         8zf5s0U2ySpiKVc+EiV8rlCTcTy6rkID7MnIPBBJfdj8+KdGJ9gZjYnMKf+ljF0wDm
+         f75A4wGaytUng==
+Date:   Thu, 20 Apr 2023 11:21:06 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
- <ZEDwLB3RwT6mHIu4@gerhold.net>
- <6175f709-8c88-6ec3-4c31-cac9f2440b52@linaro.org>
- <ZEEOJ7VhccqCNTbj@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZEEOJ7VhccqCNTbj@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v4 4/5] dt-bindings: mfd: qcom,spmi-pmic: Use generic ADC
+ node name in examples
+Message-ID: <20230420102106.GG9904@google.com>
+References: <20230410202917.247666-1-marijn.suijten@somainline.org>
+ <20230410202917.247666-5-marijn.suijten@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230410202917.247666-5-marijn.suijten@somainline.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,40 +71,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 10 Apr 2023, Marijn Suijten wrote:
 
-
-On 20.04.2023 12:04, Stephan Gerhold wrote:
-> On Thu, Apr 20, 2023 at 11:36:24AM +0200, Konrad Dybcio wrote:
->> On 20.04.2023 09:56, Stephan Gerhold wrote:
->>> On Thu, Apr 20, 2023 at 03:50:16AM +0200, Konrad Dybcio wrote:
->>>> On 8.03.2023 22:35, Konrad Dybcio wrote:
->>>>> Keepalive clocks for other platforms were gathered by digging in old
->>>>> downstream kernels, please give them a test.
->>>> I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
->>>> some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
->>>> are NOT governed by interconnect.. So before we can disable clocks,
->>>> both will need to be implemented.. ugh... I was hoping we could avoid
->>>> having it in rpmcc..
->>> Can you give an example? Which clocks are affected on which SoC?
->> msm8998/sdm660 and PNoC
+> Update the examples to reflect a future requirement for the generic
+> `channel` node name on ADC channel nodes, while conveying the board name
+> of the channel in a label instead.
 > 
-> I don't see a PNoC for 8998/660, do you mean the "cnoc_periph_clk"
-It's the same, but Qualcomm kept changing the name every kernel
-release, so that's why we have 50 defines for the same thing
-upstream :(
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
+Applied, thanks
 
-> downstream? Like the other NoCs it seems to be a RPM_BUS_CLK_TYPE, which
-> means it does fit best into interconnect in my opinion. From a quick
-> grep I don't see any usage of it in msm-4.4 downstream other than the
-> active-only keepalive vote. So maybe you could just send that vote once
-> in icc_rpm_smd and then ignore that clock (don't expose it at all)?
-Hm, perhaps that does sound like a good idea! As far as I understand,
-it's governed internally.. Older SoCs had a separate PNoC fabric
-exposed.
-
-Konrad
-
-> 
-> Thanks,
-> Stephan
+-- 
+Lee Jones [李琼斯]
