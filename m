@@ -2,108 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC98D6E8E46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 11:37:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57A446E8E64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 11:43:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234013AbjDTJhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 05:37:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51474 "EHLO
+        id S233735AbjDTJnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 05:43:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234303AbjDTJgq (ORCPT
+        with ESMTP id S232154AbjDTJmo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 05:36:46 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC315263
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 02:36:27 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2a7ac8a2c8bso3730081fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 02:36:27 -0700 (PDT)
+        Thu, 20 Apr 2023 05:42:44 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD7524C01;
+        Thu, 20 Apr 2023 02:40:47 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id k15so2105724ljq.4;
+        Thu, 20 Apr 2023 02:40:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681983386; x=1684575386;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hfsZM67OXbAlzVD+uHneuvtJvIsoB/dlohyx55svOjw=;
-        b=mMrxmnCh6cK34iMsXHT6we3TE3HE2XWlq8fH3NKmU0GnJbuuDmkuKeN18CGlJCP2+G
-         GkWDOm6egtzIZD4q1hutug9vMuk9ScjgB/G6l5Idnsk3aAAhgYEh3KEs8avXsCB1WwPm
-         1Dy0IYNMwOZMlEDqWU2+Byj7r6VeeVqC/O9afOWGvSDQdHQfnRSIg3WkpYIDgHX4B40e
-         qsyr/l/Zur5+MXYi7ubHKJq4hQ+gh/IoBjMf+qVXzvqJkYkp3lFXGdmXcI8vz165n3di
-         +dZ/jID2kuWv15n82fKrgHWEEuD2yr23jpgpOyq+6V7CuG/5EK6Wp+TvyS9wCxGhITQr
-         Xx7Q==
+        d=gmail.com; s=20221208; t=1681983645; x=1684575645;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MXezQIL8nQT7EHNZDg5A3zwX32Ez5Xt7dCXaMMgSYRE=;
+        b=gS0rvfbFTHrddVjRYYkBoQBAkbBKiIIfAmjXA4hDLm9cXNQydDv8xPgKzQo/+DmUbU
+         oD1tZQOtRIWCnc+gQ2Cq+6kJj9Du0D1TR3ZiQZZ30NM3ONRqJ2dWO0EhCl26r6v9vOlf
+         uT4CK8+IbhFRfzC4312mdPAtqiJnnSeEpFTVSX66bLXHQnZAQciXyXlfZ1DkcLIMIh8N
+         6Zig+xCX6r6qlJ2WeG0vnHtoV8sJyvZZmH6HBcWeKY9dXxNBK40I9KnjCffHX35gNWa4
+         NZhT9Sb3XDmnFjYrdQ95ZUXrsmNJexNQuiNql4jxqOh4bULx2kBy2J1Lt6uExf5LQDTn
+         J1Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681983386; x=1684575386;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hfsZM67OXbAlzVD+uHneuvtJvIsoB/dlohyx55svOjw=;
-        b=c3n4X8ZNJH2WurPrnf4NpnP7rXUdSffymv1ttr2YCxGp79iSYXdp2GXWCNyjASErcH
-         UipjGQIUUYjyEfB1sRfMVm4Ex5rdZdWoijd4/Qdy75uCizn0CGn2evPpQ64D6WB2Rlui
-         lBR4y3W9DV7aYqc5WkEgXl4fSdXi/6yYS6GL+Kjh+J/ZqbitfUmbKgnokt2P/126jKMx
-         /d/N0d2Qy6Zgk84VaEbXoYyDx0AX74Rp5jK+AsAysaMALReNU4zwR5nwIno2OGFWqlGd
-         hPB5NPJrlylwMbC/DHfB4kn/rfVDPRlDv++pdABJ+VRqe2dtvivLf2Idg57EaXVQLuYR
-         Jm0Q==
-X-Gm-Message-State: AAQBX9faeAKmw9PFBUAbSNqB6leR6WFVTUimN8/N3vh2CozEpt6z+kRA
-        vGmiseC5eEFyyWR2JOpQjnfdXQ==
-X-Google-Smtp-Source: AKy350ai9s+joKTQe7jfoz4hBNP9alfMfO6WPChONY+2B39f63l8Q02pLjKEKfzsAR5R+3/qer65/w==
-X-Received: by 2002:a05:6512:481:b0:4ed:c8ba:df9e with SMTP id v1-20020a056512048100b004edc8badf9emr305180lfq.63.1681983386212;
-        Thu, 20 Apr 2023 02:36:26 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id i20-20020ac25234000000b004eb07f5cde6sm155791lfl.297.2023.04.20.02.36.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 02:36:25 -0700 (PDT)
-Message-ID: <6175f709-8c88-6ec3-4c31-cac9f2440b52@linaro.org>
-Date:   Thu, 20 Apr 2023 11:36:24 +0200
+        d=1e100.net; s=20221208; t=1681983645; x=1684575645;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MXezQIL8nQT7EHNZDg5A3zwX32Ez5Xt7dCXaMMgSYRE=;
+        b=eq52xzJ0UZo2finzLWbJCX0QZ8MvhCtsRYGpe3TMxaIP1G8zqplAYFTfO6MHw2Aw+Q
+         7ewa6/RDSYLk13tl/cfEnpUTwdtrZZ4F4N0uBnB7240iiw+nlk2HF2gkFYRNqQTVwxge
+         R6jOE5BZjlXmjPqQASjY36zqsOWSkeT+gmZUmAxky+d0P2blC/SNsMfyC6BecWWrK30h
+         6E6wJTFh7S7EuM1N/nYflww/MxNpgKFUlCs+OyBZhdNd5JwfwaalQqpp+mBpHaMt/CJy
+         XuUQDqAG5NYCPcoZEyoIW31Gebnhv7qvdjBJAzi5NknAS1heT+aYJBrNkU/1VVtbgB2F
+         /mJA==
+X-Gm-Message-State: AAQBX9f7DEAtW55zoT8KOfw98Vpbsvv24PxLKh78OdfzT6Qe2cCe/fIJ
+        sAUQsgqKNS4jCC6Ce+o0JWhbiRuwpmK0tQRqNIw=
+X-Google-Smtp-Source: AKy350Y3JU2L27iVYwrYrXipxJ1TJZFDuoI/VJwjHdGAyJUSB58qs8J62vQpxs+N4iZAkbdBoW8mRtHUbMFIKKOb1xM=
+X-Received: by 2002:a2e:a0d3:0:b0:2a9:eec1:71f5 with SMTP id
+ f19-20020a2ea0d3000000b002a9eec171f5mr181058ljm.4.1681983644357; Thu, 20 Apr
+ 2023 02:40:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
-To:     Stephan Gerhold <stephan@gerhold.net>
+References: <20230419211856.79332-1-krzysztof.kozlowski@linaro.org> <20230419211856.79332-18-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230419211856.79332-18-krzysztof.kozlowski@linaro.org>
+From:   Molly Sophia <mollysophia379@gmail.com>
+Date:   Thu, 20 Apr 2023 17:40:33 +0800
+Message-ID: <CAK0UmJBMUSWSjO8d44aL+uaRfwKZ25VvNMZOH_BKUT35g5weUg@mail.gmail.com>
+Subject: Re: [PATCH 18/18] arm64: dts: qcom: sdm845-polaris: add missing
+ touchscreen child node reg
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
- <ZEDwLB3RwT6mHIu4@gerhold.net>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZEDwLB3RwT6mHIu4@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        "Ivan T. Ivanov" <ivan.ivanov@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Andrey Konovalov <andrey.konovalov@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Apr 20, 2023 at 5:19=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Add missing reg property to touchscreen child node to fix dtbs W=3D1 warn=
+ings:
+>
+>   Warning (unit_address_vs_reg): /soc@0/geniqup@ac0000/i2c@a98000/touchsc=
+reen@20/rmi4-f12@12: node has a unit name, but no reg or ranges property
+>
+> Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/ar=
+m64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+> index 8ae0ffccaab2..576f0421824f 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+> @@ -483,6 +483,7 @@ rmi4-f01@1 {
+>                 };
+>
+>                 rmi4-f12@12 {
+> +                       reg =3D <0x12>;
+>                         syna,rezero-wait-ms =3D <0xc8>;
+>                         syna,clip-x-high =3D <0x438>;
+>                         syna,clip-y-high =3D <0x870>;
+> --
+> 2.34.1
+>
 
-
-On 20.04.2023 09:56, Stephan Gerhold wrote:
-> On Thu, Apr 20, 2023 at 03:50:16AM +0200, Konrad Dybcio wrote:
->> On 8.03.2023 22:35, Konrad Dybcio wrote:
->>> Keepalive clocks for other platforms were gathered by digging in old
->>> downstream kernels, please give them a test.
->> I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
->> some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
->> are NOT governed by interconnect.. So before we can disable clocks,
->> both will need to be implemented.. ugh... I was hoping we could avoid
->> having it in rpmcc..
->>
-> 
-> Can you give an example? Which clocks are affected on which SoC?
-msm8998/sdm660 and PNoC
-
-Konrad
-> 
-> Thanks,
-> Stephan
+Reviewed-by: Molly Sophia <mollysophia379@gmail.com>
