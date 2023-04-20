@@ -2,89 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCECC6E9EAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:20:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 168916E9EB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:23:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232630AbjDTWU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 18:20:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45682 "EHLO
+        id S231610AbjDTWXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 18:23:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbjDTWU2 (ORCPT
+        with ESMTP id S233034AbjDTWXr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 18:20:28 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B252689
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:20:27 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec8148f73eso913369e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682029225; x=1684621225;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0QW2zFEjgoUsaSsxeB6v7NVOeo+doEcmv6Xwkw75TFw=;
-        b=qX9nkfpbyJjng6ZSha7rHGcg4LudKd3zSrQNn0RR5uF1qMb/HDTzv5Ygyp7yz5JUby
-         x+O1vf9GjBtAXRMaFcMQJsseHfBHftKtS2GGSlKHy6bJ+s58OX012Te2Hj3Ie0m+VjI3
-         TjrB7NMPSfeFaDXX1tzrCf/EDlBBycUodM8JCXTkDRvL2kzdvZz+83MKUXhIgwHnHURB
-         FXHSEHoku5wDTH4+Ij2eO44jPWiA6hQpXJHCdbgp+gJ+crH+oZJQKm6s5DvSstYRE/cC
-         RVSv1Ga5xyYN0ZIror7eizBU1aaHZbRhjipk/BAOsRSFaW2x00OrZo5jEGbDL4z2tqMK
-         gMoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682029225; x=1684621225;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0QW2zFEjgoUsaSsxeB6v7NVOeo+doEcmv6Xwkw75TFw=;
-        b=AYpuzKvQKpIcxDRk3mFvpa9062N5d47FcWbJ+WsQqfKJanOuNW2FW/6w+IsaxUf+TJ
-         agBG1JDTS5ZAEdvmjY77EGoW5jiXE2Dha4A7Lx/bV8ZDdBngBFxA3jjVaHhC4oz1TrRp
-         JHK4hOM/kYBn7TZKI4WE8tmo4jou/gXUfOAv3zbBOn8mR4t3jOaxOdUPP1RnOxmO92PQ
-         bFf25e8h0+v8vPPePFe5Dnr2ilp/AIeP+iniUHhQGQ02uCVhZPPxXWKf/koUka2mBZ/v
-         tBf6Aagx7GDwWW7Vkpne2QDaBxMayZAjeSvPtGLObA91gNDuNaZpaj2T2XqDVwooBfPK
-         xoIA==
-X-Gm-Message-State: AAQBX9d4bTaK0QIWIiDmcSNrIKlL15OsfASqoER+WFILqMKC+FNLa3Iu
-        ayWgv7+HB1EgWiLolJ8NDUzOEA==
-X-Google-Smtp-Source: AKy350bMn6KVhj21+we3mlghC+POksK+s8xQxvWGGN3UFAziRJEF3Lev22U9KKRMAJ1zT38co8wU8Q==
-X-Received: by 2002:ac2:4891:0:b0:4ec:8d97:9479 with SMTP id x17-20020ac24891000000b004ec8d979479mr777600lfc.20.1682029225592;
-        Thu, 20 Apr 2023 15:20:25 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id n5-20020ac242c5000000b004ec88753502sm347146lfl.111.2023.04.20.15.20.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 15:20:25 -0700 (PDT)
-Message-ID: <61bdd089-89b7-749b-95bd-c7e61c396e29@linaro.org>
-Date:   Fri, 21 Apr 2023 01:20:24 +0300
+        Thu, 20 Apr 2023 18:23:47 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E377130FB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:23:41 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7F46B64C4D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 22:23:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20D6C433A0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 22:23:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1682029420;
+        bh=TK78CSVwe2MVKl/Akspq+ZTZzHADfto5V/d7VPTH/qQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=P7lTXaA2BCb4gT3s/9AOGpOYXpvQe0w275Ge3A2uZ5QnmgfpLAoQmJ8L7DZAuJ2Ux
+         KyIofP1+sRAueqK5VRacBXqZFOMWto+QmDC3NfVf95jZrUGfbTr6omP1j3MenDnQ2B
+         wI/RsAcIqWKvnGSLc5qKDaBktidbgDtCfkGN4pZtR+ikpFhiNQkC42HQaYlUyMQfpM
+         xWq1dffis2dfel4bTxe9UC5chQi4W4BqJJNBDX4QWIGQ0WAMWy+s4oLpS8iABqwEhG
+         1BA6ukTjel/O7+tL/AH0KBDlKql5oXqOKY/MQke8PTbQQ1+JWkad65YyK0brPDoOPL
+         BiDYYbMe6V26g==
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-506b8c6bbdbso1394807a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:23:40 -0700 (PDT)
+X-Gm-Message-State: AAQBX9fa1KQRse2BNG0gut8p9QW/y0MoKyC7D6J6cjKzZx+bSFZpnipb
+        AWfc+R83TL27HhK3pd9uMbMpdBQWvPB+BncXdUIfRA==
+X-Google-Smtp-Source: AKy350YRvc1c5/x9Ju6w2w31NCvB0mLlC9kkPyAzm+txB1+HHBy7WJqF48Tkb4o2CdB63r+Jw/WxLenE4GJSH2atRUA=
+X-Received: by 2002:a17:906:a18c:b0:928:796d:71e8 with SMTP id
+ s12-20020a170906a18c00b00928796d71e8mr438986ejy.3.1682029419018; Thu, 20 Apr
+ 2023 15:23:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [Freedreno] [PATCH 1/3] drm/msm/dpu: Drop unused members from HW
- structs
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
+References: <20230420072429.36255-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230420072429.36255-1-krzysztof.kozlowski@linaro.org>
+From:   Amit Kucheria <amitk@kernel.org>
+Date:   Fri, 21 Apr 2023 03:53:28 +0530
+X-Gmail-Original-Message-ID: <CAHLCerPBnvp_XD-ZR79nZBzdbBEiYZFuLfUpAQtuopgZ8GC=ZQ@mail.gmail.com>
+Message-ID: <CAHLCerPBnvp_XD-ZR79nZBzdbBEiYZFuLfUpAQtuopgZ8GC=ZQ@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: correct unit address
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        freedreno@lists.freedesktop.org
-References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
- <20230418-dpu-drop-useless-for-lookup-v1-1-b9897ceb6f3e@somainline.org>
- <7ad86cd9-4b30-e7f1-780f-2c1c7093087e@linaro.org>
- <cd308be9-5420-6d75-da23-e844107ec275@quicinc.com>
- <2ujeakobg7oulzarvzjktx5elo4ckpjq5pbknr3jx3h43snmry@yd4j64s7tqy5>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <2ujeakobg7oulzarvzjktx5elo4ckpjq5pbknr3jx3h43snmry@yd4j64s7tqy5>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,43 +72,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 00:39, Marijn Suijten wrote:
-> On 2023-04-20 08:46:46, Abhinav Kumar wrote:
->>
->>
->> On 4/20/2023 7:33 AM, Dmitry Baryshkov wrote:
->>> On 18/04/2023 02:14, Marijn Suijten wrote:
->>>> Some of these members were initialized while never read, while others
->>>> were not even assigned any value at all.  Drop them to save some space,
->>>> and above all confusion when looking at these members.
->>>>
->>>> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
->>>> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for
->>>> writeback blocks")
->>>
->>> The fixes headers are slightly questionable, as unused fields are not a
->>> bug. Nevertheless:
->>>
->>
->> Yes, I would also not treat this as a "fix" but just cleanup.
-> 
-> Ack to both.  This seems like a fine line to me as the fields are not
-> contributing to anything except confusion.  Specifically hw_mdp which is
-> never initialized and may accidentally be used without realizing that
-> it'll stay NULL, but that is again up to the developer using the field
-> at that point.
-> 
-> Feel free to drop them while applying, or should I reword the message to
-> at least still link these commits to mention the origin of the unused
-> fields?
+On Thu, Apr 20, 2023 at 12:54=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Match unit-address to first reg entry.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I'm fine with having the Fixes removed. If you can send the v2 reordered 
-& with tags removed, that would be the best.
+Acked-by: Amit Kucheria <amitk@kernel.org>
 
-> 
-> - Marijn
-
--- 
-With best wishes
-Dmitry
-
+> ---
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/=
+Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index b6452ed78802..d9aa54c11663 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -328,7 +328,7 @@ examples:
+>    - |
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+>      // Example 1 (new calbiration data: for pre v1 IP):
+> -    thermal-sensor@900000 {
+> +    thermal-sensor@4a9000 {
+>          compatible =3D "qcom,msm8916-tsens", "qcom,tsens-v0_1";
+>          reg =3D <0x4a9000 0x1000>, /* TM */
+>                <0x4a8000 0x1000>; /* SROT */
+> @@ -358,7 +358,7 @@ examples:
+>    - |
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+>      // Example 1 (legacy: for pre v1 IP):
+> -    tsens1: thermal-sensor@900000 {
+> +    tsens1: thermal-sensor@4a9000 {
+>             compatible =3D "qcom,msm8916-tsens", "qcom,tsens-v0_1";
+>             reg =3D <0x4a9000 0x1000>, /* TM */
+>                   <0x4a8000 0x1000>; /* SROT */
+> --
+> 2.34.1
+>
