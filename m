@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67C4F6E967F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:00:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5A986E968F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:03:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231802AbjDTOA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 10:00:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58932 "EHLO
+        id S231825AbjDTODt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 10:03:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231800AbjDTOAv (ORCPT
+        with ESMTP id S230025AbjDTODt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 10:00:51 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F005E72B7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:00:46 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4eed6ddcae1so2733148e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:00:46 -0700 (PDT)
+        Thu, 20 Apr 2023 10:03:49 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AAAA1FC9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:03:36 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id q21so3001182ljp.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:03:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681999245; x=1684591245;
+        d=linaro.org; s=google; t=1681999414; x=1684591414;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y1aD8yQeVZIHs8X5n3y1xoP0pKOQ0cX0sJ2U9iOb/YY=;
-        b=mweWLE8mGevQKG3eonSrFfNjPVMtr9CqnUhAh3XDI/JMVjCtoCCXMR0EXQuc2d6yC0
-         6b/FNEZLChWS9F4pMA2tY1u2/Vei9NkXmmiwEI8xIx9WRrCe3X8WcSYEbl16jnL9KnH3
-         Edvsm/34C8W4HnXF5DSI6YVwUEdK+td/cXEahE3wMIuXGWKpOpLe7A04Fcn1QTfL3+R4
-         La66Q8ngkyADp03bu9pZxT0hT1eqIEjCXjZhDXh+712cURb5XNh+cjRm8kuXHu1IQLZX
-         KJsnic0kQla/JoIq7r+ur5ySBo+p1GSW6TmPX8cK/WJ+QBIi8u3M5NUY2CohHTd5Kr/I
-         YZJQ==
+        bh=NVkfX9ez3svxYnnM8rJPmrSpJjSKXj7Id4d2FlN3kdo=;
+        b=KqeZisWyrlpuDhOBtUm7MpDZRVm7fv6Ei87iod2bozueBqbASVy7qkz9awjAAVSP5G
+         YDnnpUgTd7mwlkUWt7aH1UYTPsy4Hk8bptdN7qqtXz6sN3sMqtqR15StRbdvsf3ixTaV
+         UNqN/1J3WmYyn+lJaeiZ0nOOWHRh5RGrGYeWFVOfI1N3FdHEKDIw9aqK0IWbwlkKi6bp
+         NMhO2QeiJZZhKRZ6AKbth5AIz/xO1JoKcWWV019YJcp2fd0K+lSkvREX95yT15aACGRu
+         snhW/lsMW4uu65AaijRCk8SCWAtcefRydH8VPjx78sD9fwFVNGpfgaKmmFjlmpSmcSTI
+         l+VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681999245; x=1684591245;
+        d=1e100.net; s=20221208; t=1681999414; x=1684591414;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y1aD8yQeVZIHs8X5n3y1xoP0pKOQ0cX0sJ2U9iOb/YY=;
-        b=JBKYaZ09b4Jde4hs2n8WcmdQjX386a2LuPTS6RIVUPbiSBhlv2lEUkrLAHO52XemrT
-         MrAqN5AhhG5f4RhqaA0wg6rSvMeYWZyCAYMPuZ/gVc0o2PlPMaCe8T545voRGnDsotAL
-         W/XityMc6bd6BS96eEgIcMlrA4UJ37LsIcYXfPPe8VY4IQCU8zSXN6vw8YdHbMfb7kVi
-         x/UxyCpluRc18DVJkw/MsobiCrSN8DEMM1n+FRiLmrg8/uFuoQ1heq+RvwBpMAaEhK6F
-         tO/X179O+wLzXzoYJaJmmyqadsq03s8jqiSWhQBIEaZnjyXHB9GdWa4wawfuE/TSOef1
-         vOLQ==
-X-Gm-Message-State: AAQBX9ckqHoitwE7gjwhkr1yGbkWkB8j7NmZTb8Obff8fBjj5TPt9cch
-        5PQknXecK/6GpTeWeUZqHUBIJw==
-X-Google-Smtp-Source: AKy350ZPmF4ZLO4m/OWGZMLwwoUErjLDsugYjBHHz9Q3fIzRhrn+TYbRCmTKwCu0qVUzhwRAo9J4dw==
-X-Received: by 2002:a05:6512:38c6:b0:4ed:d5ce:7dea with SMTP id p6-20020a05651238c600b004edd5ce7deamr526856lft.27.1681999245245;
-        Thu, 20 Apr 2023 07:00:45 -0700 (PDT)
+        bh=NVkfX9ez3svxYnnM8rJPmrSpJjSKXj7Id4d2FlN3kdo=;
+        b=MQAUFjQFk0B4UsKbfE5QfEGk6vT4tob+t9rYLaWm3R+QCrexYv53ozBpAT/ir1b+QJ
+         zrZhQ1PaWfLLkIxuzQTGfxrpLRj/1nrbNu1M8b9kTZTiSeX72nmsAp1OD1pGMEgwlT93
+         dHumB6gazFAnBAV7YI0XFn/3KhFvQK4wjWqpGEPhuhawPf9z+YeRJPkkJ9OxOSbqyDjD
+         UuY/Us3lJyeJp2R2Lv1xigHqfAaiEiNPcYAzGM4Zu/1K0ISNSeZsVmrlp42dAPgNOpnd
+         hS3NPEyxlpWVPojOgUWzKJIw9L9nnD5WU0AJCb4NQrtInGWCuUdqrk4PBhPECrFvzEZD
+         E5gQ==
+X-Gm-Message-State: AAQBX9dq/DAam+tSbS7t/OBXXp77zVqlyjMDf2PRAmSCXURMWyieoaEx
+        3SbebdfXTHUyh5QCAx9+b7+6Ug==
+X-Google-Smtp-Source: AKy350aSqD3HOes9oTjJ/n7YRoirlTchXOp15cOD09I43xK+WajJIRohATh87yc9DNwJ8QMiWGguPA==
+X-Received: by 2002:a05:651c:1504:b0:2a8:bb0a:2214 with SMTP id e4-20020a05651c150400b002a8bb0a2214mr2441992ljf.12.1681999414124;
+        Thu, 20 Apr 2023 07:03:34 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w8-20020ac24428000000b004db44babad7sm224318lfl.260.2023.04.20.07.00.44
+        by smtp.gmail.com with ESMTPSA id n21-20020a2e86d5000000b002a77792f2c5sm244736ljj.62.2023.04.20.07.03.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 07:00:44 -0700 (PDT)
-Message-ID: <551496a1-caf6-cebf-65b3-64b41a31e28d@linaro.org>
-Date:   Thu, 20 Apr 2023 17:00:44 +0300
+        Thu, 20 Apr 2023 07:03:33 -0700 (PDT)
+Message-ID: <c2c0567a-8205-510d-bc0d-35b28dd64f70@linaro.org>
+Date:   Thu, 20 Apr 2023 17:03:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v4 2/6] drm/msm: Switch to fdinfo helper
+Subject: Re: [PATCH v3] drm/msm/dpu: always program DSC active bits
 Content-Language: en-GB
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Christopher Healy <healych@amazon.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20230412224311.23511-1-robdclark@gmail.com>
- <20230412224311.23511-3-robdclark@gmail.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
+        airlied@gmail.com, agross@kernel.org, andersson@kernel.org,
+        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1681490777-15351-1-git-send-email-quic_khsieh@quicinc.com>
+ <zs762prrzv2geulwa7ztlolmxgldiyynk22m5ak4ejbyzbctrp@jprtanslko7c>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230412224311.23511-3-robdclark@gmail.com>
+In-Reply-To: <zs762prrzv2geulwa7ztlolmxgldiyynk22m5ak4ejbyzbctrp@jprtanslko7c>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,16 +81,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/04/2023 01:42, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 15/04/2023 02:02, Marijn Suijten wrote:
+> On 2023-04-14 09:46:17, Kuogee Hsieh wrote:
+>> In current code, the dsc active bits are set only if the cfg->dsc is set.
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/msm_drv.c | 11 +++++------
->   drivers/gpu/drm/msm/msm_gpu.c |  2 --
->   2 files changed, 5 insertions(+), 8 deletions(-)
+> This is the old sentence from v1 again, did you accidentally send the
+> wrong patch as the improvements from v2 are missing?
+> 
+>> However, for displays which are hot-pluggable, there can be a use-case
+>> of disconnecting a DSC supported sink and connecting a non-DSC sink.
+>>
+>> For those cases we need to clear DSC active bits during teardown.
+> 
+> At least teardown is one word again, v2 had "tear down" which is wrong.
+> 
+>> As discuss at [1], clear DSC active bit will handled at reset_intf_cfg()
+> 
+> discussed* as pointed out by Dmitry, and make it clear that this is
+> about clearing CTL_DSC_ACTIVE (and CTL_DSC_FLUSH?) specifically.  Once
+> that is moved to reset_intf_cfg(), this patch should be reverted as
+> there is no need to write the registers once again when cfg->dsc equals
+> 0.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Kuogee, can we please get a proper v4? With all the relevant changes 
+from v2, with the changelog, etc.
+
+Otherwise the present Reviewed-by tags are just incorrect.
+
+> 
+> - Marijn
+> 
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
+>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>
+>> [1] https://lore.kernel.org/linux-arm-msm/ec045d6b-4ffd-0f8c-4011-8db45edc6978@quicinc.com/
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 7 +++----
+>>   1 file changed, 3 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> index bbdc95c..88e4efe 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>> @@ -541,10 +541,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>>   	if (cfg->merge_3d)
+>>   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+>>   			      BIT(cfg->merge_3d - MERGE_3D_0));
+>> -	if (cfg->dsc) {
+>> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+>> -		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+>> -	}
+>> +
+>> +	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+>> +	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+>>   }
+>>   
+>>   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+>> -- 
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+>> a Linux Foundation Collaborative Project
+>>
 
 -- 
 With best wishes
