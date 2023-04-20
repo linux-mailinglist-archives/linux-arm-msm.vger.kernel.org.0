@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E60AE6E9735
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:34:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35C926E9746
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229811AbjDTOeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 10:34:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57116 "EHLO
+        id S231465AbjDTOgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 10:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbjDTOeL (ORCPT
+        with ESMTP id S232023AbjDTOgU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 10:34:11 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C0B6593
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:33:56 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2a8ba5f1d6bso5441611fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:33:56 -0700 (PDT)
+        Thu, 20 Apr 2023 10:36:20 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 263F959CA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:36:06 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id c3so3030008ljf.7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682001235; x=1684593235;
+        d=linaro.org; s=google; t=1682001364; x=1684593364;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ofr40ek0G9BZfkBPDY70rNqEWnYDL1CgRLdFieoxIVY=;
-        b=HYlmKc71wctRPq+LnqBHZDTdPLQxNak+gf4Z3CQg+nrr7Enfl+wK3NGELZIRMEADQm
-         RawxDawGU8X+/+fQWqFG7cLDeWsNGxWAKLCUwZRPe5xGhy8bGAgJ7Hwzu1EF0Nrf/ci2
-         B8QCh9uvlnvV8/neIeQT553iVGTFWGdfb+DO5RCKrLU+G4xNpaypDYHv4fKMzboen+LA
-         0VIue93TzAVMS4oi/D9sIpLB23bPLEEKpyrf9E8Etz2am/z74+9nrxq3YEhQBhAmJ3ia
-         /TixsC2+Lp0UutrMjZ1bc1HAJRwHrnL8f2pNF3VLF625ud+qnCzSZPOtL5t498Y2Nu7Y
-         YXkg==
+        bh=5uui2Wi7NVfJCrcXtN5eYVm4TxQJPj927NoxVs4YDVk=;
+        b=hMdZ+zSJBPntpLYLF2I79CXNISVnLhftjCGt4NXbSX30nQuYbBrFy77L1DJI+tD20e
+         QZ9nXE+o75BHUpwYyP/ZPZCRLSgeTkvFIRlXHqCr9HfKl/4ruuOQvck1fOBPMoyyNcEw
+         zrBAzCLLj8Rkq1kVoVB+FxSqsEJI9LFUI/G61vXxU/2c7MdW3Q6Z03GidoFddxDAMoye
+         I9JHU2qZyC0tLExd/bTM1vOWTHq8aKP9ogrv1AzU1sRYuhyEGQbnSX91qPtH1mW24YrP
+         HIAfnaIN6RlZxKxiot3qQTZvLx5m7QBom2jnXQFP1nDlpcUTU7kMNSDnhYOMoIiPT4pO
+         fKFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682001235; x=1684593235;
+        d=1e100.net; s=20221208; t=1682001364; x=1684593364;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ofr40ek0G9BZfkBPDY70rNqEWnYDL1CgRLdFieoxIVY=;
-        b=XKG3DPRbHZCTE+WfTLiSDVtggaqB1AmehoPOzY58Z/sFlN20Xq2Rtoch7xVVRzefot
-         JkaP9MFnTsRSuC39YZMvN3fKur9x/TsGjk2a33I/ZKguH6U5OMo8+7uGSwNdB34+HfUr
-         Yw8BkjBUZP1lhpUBBTjDbi3ktC+auDHbgiyCi8eG5KE317HsOTCxz1GOHP6461jAYrfj
-         Kj5pN3Hk4z+/bqA+y8+JCo3BaVWTq+CWsJYd52NTX9uGKO7P/0WwXdUx22ZkFXnmBiL3
-         BNrKuJAbOOte6EApaM/fuxneL2uMRfC/4A532qi9KyICZ9Qp/jw2YOy9E0Mz+Ifwp5De
-         RXgQ==
-X-Gm-Message-State: AAQBX9dcFNgCafjeAFVoeR1GCbgv3Dowy2IUpcVrmY5vsGhOYr5skGxT
-        buIMRemBBD/1cQO6z4x2MawhaIj854XSnc+762M=
-X-Google-Smtp-Source: AKy350a1RnFHhnCb4nDHDUFDZEK3G1dY2NlIYfiSjSWKmf67vTEDnztfUAcirZhbgAH7loNvBK2aGw==
-X-Received: by 2002:a19:ae0a:0:b0:4d7:44c9:9f4b with SMTP id f10-20020a19ae0a000000b004d744c99f4bmr451467lfc.1.1682001235170;
-        Thu, 20 Apr 2023 07:33:55 -0700 (PDT)
+        bh=5uui2Wi7NVfJCrcXtN5eYVm4TxQJPj927NoxVs4YDVk=;
+        b=Sa3a4N8d0q2WJhE9z4y+8mbwXKwzg9cDoY4DPRLBmA6KiVgl2Quz/yVovv174+QNlL
+         8nsY17ltHgHyLV12L6qoWHiFsdUk/QyzazFeYEa/chE24do7l+deX6DzFEsMS99uqKfx
+         yZcxJV7PRRT4AAXn5tx5WByJOZFHsXY17eFmFAhAOcJbZ9xOWWGoJJVvzMoVE8AlzIT7
+         QEa9vagtk+79bfHmnxrsgbHfJkkMzRUBD9606YKnNox98akMP9b+hBMVmOia9nIpIaZl
+         /J/xwuQmnKUYHu9nwevmte4tKy9XuKA3lna67gmPSQvVNCsJUmpt5VcyzSR1HwUSMwoz
+         dvlA==
+X-Gm-Message-State: AAQBX9dlLGCR/x3Ud/dl1udG/hrfwtySnYrm05d+Mbs/LKd9MEDkJH7o
+        qs7lBVKoJXwj5g14qGL6QYB9KQ==
+X-Google-Smtp-Source: AKy350bxjSiFVGri7JIuuUNGtje+lkCFgGUXQ49IfKwgtbovTDHVj8OSw7gv0rVld2E0FeTECEYI7A==
+X-Received: by 2002:a2e:9003:0:b0:2a6:de0:98e9 with SMTP id h3-20020a2e9003000000b002a60de098e9mr484011ljg.22.1682001364392;
+        Thu, 20 Apr 2023 07:36:04 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v3-20020a197403000000b004dda87ecae3sm233446lfe.246.2023.04.20.07.33.54
+        by smtp.gmail.com with ESMTPSA id a21-20020a2e8315000000b002a7899eaf9csm255146ljh.63.2023.04.20.07.36.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 07:33:54 -0700 (PDT)
-Message-ID: <7ad86cd9-4b30-e7f1-780f-2c1c7093087e@linaro.org>
-Date:   Thu, 20 Apr 2023 17:33:54 +0300
+        Thu, 20 Apr 2023 07:36:03 -0700 (PDT)
+Message-ID: <78a96f0e-738c-54b6-185c-7be4b5206463@linaro.org>
+Date:   Thu, 20 Apr 2023 17:36:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 1/3] drm/msm/dpu: Drop unused members from HW structs
+Subject: Re: [PATCH 3/3] drm/msm/dpu: Pass catalog pointers directly from RM
+ instead of IDs
 Content-Language: en-GB
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -72,9 +73,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
- <20230418-dpu-drop-useless-for-lookup-v1-1-b9897ceb6f3e@somainline.org>
+ <20230418-dpu-drop-useless-for-lookup-v1-3-b9897ceb6f3e@somainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230418-dpu-drop-useless-for-lookup-v1-1-b9897ceb6f3e@somainline.org>
+In-Reply-To: <20230418-dpu-drop-useless-for-lookup-v1-3-b9897ceb6f3e@somainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,126 +89,44 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 18/04/2023 02:14, Marijn Suijten wrote:
-> Some of these members were initialized while never read, while others
-> were not even assigned any value at all.  Drop them to save some space,
-> and above all confusion when looking at these members.
+> The Resource Manager already iterates over all available blocks from the
+> catalog, only to pass their ID to a dpu_hw_xxx_init() function which
+> uses an _xxx_offset() helper to search for and find the exact same
+> catalog pointer again to initialize the block with, fallible error
+> handling and all.
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks")
-
-The fixes headers are slightly questionable, as unused fields are not a 
-bug. Nevertheless:
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Instead, pass const pointers to the catalog entries directly to these
+> _init functions and drop the for loops entirely, saving on both
+> readability complexity and unnecessary cycles at boot.
+> 
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c   | 1 -
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h   | 5 -----
->   6 files changed, 11 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 84ee2efa9c66..a9c90249a6ac 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -374,7 +374,6 @@ struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
->   	 */
->   	c->idx = idx;
->   	c->cap = cfg;
-> -	c->mdss = m;
->   	_setup_intf_ops(&c->ops, c->cap->features);
->   
->   	return c;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 643dd10bc030..e07b2e33af3e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -90,7 +90,6 @@ struct dpu_hw_intf {
->   	/* intf */
->   	enum dpu_intf idx;
->   	const struct dpu_intf_cfg *cap;
-> -	const struct dpu_mdss_cfg *mdss;
->   
->   	/* ops */
->   	struct dpu_hw_intf_ops ops;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index cf70a9bd1034..bb3ddec5c7d7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -812,7 +812,6 @@ struct dpu_hw_sspp *dpu_hw_sspp_init(enum dpu_sspp idx,
->   	}
->   
->   	/* Assign ops */
-> -	hw_pipe->catalog = catalog;
->   	hw_pipe->ubwc = catalog->ubwc;
->   	hw_pipe->idx = idx;
->   	hw_pipe->cap = cfg;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index 74b98b6b3bc3..5004a02fd61e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -341,7 +341,6 @@ struct dpu_hw_sspp_ops {
->    * struct dpu_hw_sspp - pipe description
->    * @base: hardware block base structure
->    * @hw: block hardware details
-> - * @catalog: back pointer to catalog
->    * @ubwc: ubwc configuration data
->    * @idx: pipe index
->    * @cap: pointer to layer_cfg
-> @@ -350,7 +349,6 @@ struct dpu_hw_sspp_ops {
->   struct dpu_hw_sspp {
->   	struct dpu_hw_blk base;
->   	struct dpu_hw_blk_reg_map hw;
-> -	const struct dpu_mdss_cfg *catalog;
->   	const struct dpu_ubwc_cfg *ubwc;
->   
->   	/* Pipe */
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> index 2d28afdf860e..db5e6040017f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-> @@ -262,7 +262,6 @@ struct dpu_hw_wb *dpu_hw_wb_init(enum dpu_wb idx,
->   	}
->   
->   	/* Assign ops */
-> -	c->mdp = &m->mdp[0];
->   	c->idx = idx;
->   	c->caps = cfg;
->   	_setup_wb_ops(&c->ops, c->caps->features);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-> index 3ff5a48541e2..b91923f879f1 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-> @@ -76,15 +76,12 @@ struct dpu_hw_wb_ops {
->   /**
->    * struct dpu_hw_wb : WB driver object
->    * @hw: block hardware details
-> - * @mdp: pointer to associated mdp portion of the catalog
->    * @idx: hardware index number within type
->    * @wb_hw_caps: hardware capabilities
->    * @ops: function pointers
-> - * @hw_mdp: MDP top level hardware block
->    */
->   struct dpu_hw_wb {
->   	struct dpu_hw_blk_reg_map hw;
-> -	const struct dpu_mdp_cfg *mdp;
->   
->   	/* wb path */
->   	int idx;
-> @@ -92,8 +89,6 @@ struct dpu_hw_wb {
->   
->   	/* ops */
->   	struct dpu_hw_wb_ops ops;
-> -
-> -	struct dpu_hw_mdp *hw_mdp;
->   };
->   
->   /**
-> 
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 30 +++--------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h        | 10 +++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 32 +++---------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h        | 11 +++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 38 ++++-----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h       | 12 +++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 40 ++++++-----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h       | 12 +++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 38 ++++-----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h         | 10 +++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 33 +++----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 14 ++++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 33 +++----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 33 +++----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h       |  8 ++---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 33 +++----------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h       | 11 +++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 33 ++++---------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h         | 11 +++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 17 +++++-----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c            | 18 +++++-----
+>   23 files changed, 127 insertions(+), 366 deletions(-)
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
