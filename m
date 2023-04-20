@@ -2,73 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 375EE6E9A60
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:13:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4A736E972E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:33:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbjDTRN5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 13:13:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49778 "EHLO
+        id S230483AbjDTOdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 10:33:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjDTRN5 (ORCPT
+        with ESMTP id S231624AbjDTOdV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:13:57 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A982D5A;
-        Thu, 20 Apr 2023 10:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1682010835; x=1713546835;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=CpNS7XI9BQe8K3LeHWubyKhCrbeBsS/W8whIme5h4yY=;
-  b=Bw6+GkNTlQqVtxJ4CuBBoMbCAxJILWyblSFtHoyPiy1S54Y6UWEBUD2R
-   qoV3jEO5mPR2ONQ6HCiGkw5Nu1khxEJZTKeb+IOWaVbFCpIFMTHvux+S9
-   gWc9QpXl2zpWKqXjlpEgUsTr/D32FhrYAoobJIwLY0FHtf+5o2qPnFeMs
-   QCy+djvvV6GwsK8asNW/AGVXuf1Wn3S3MjWJhcNRQyu1qo/rNrF1qeCY2
-   aQ6j1qQVe/wQQdSC/XNIoHiFsy3+bmEdug46l6m11eq5YcwvAV2+WW9fj
-   0ifXZ+W8nlzwqAjQeH5MWD7HkPATT4GR87RWsSgbIzVqtKolasB5aysYk
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10686"; a="348574399"
-X-IronPort-AV: E=Sophos;i="5.99,213,1677571200"; 
-   d="scan'208";a="348574399"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2023 09:42:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10686"; a="1021622651"
-X-IronPort-AV: E=Sophos;i="5.99,213,1677571200"; 
-   d="scan'208";a="1021622651"
-Received: from mprabhug-mobl.amr.corp.intel.com (HELO [10.209.102.50]) ([10.209.102.50])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2023 09:42:46 -0700
-Message-ID: <dfe88b94-215b-a86f-60b4-25d2f9ea0e5f@linux.intel.com>
-Date:   Thu, 20 Apr 2023 09:18:15 -0500
+        Thu, 20 Apr 2023 10:33:21 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 740934EC8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:33:02 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec94eb6dcaso603275e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:33:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682001180; x=1684593180;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qxUBEBnff0FS5uWK1Xy6+WkZa1SWO0jyLNTiw6td0Tg=;
+        b=c0fBL6gljKJg2U5xC8i5InaVYMXL+9/qFKvMeTL5sEdZlJ+5MsUMgQorTocD+ZZr7R
+         nXPuc3kzONj+oEoOIARLORifiuZQIHlfg+jm+egwcilfOZAZDkVrRwOcEHSh9dpiTLYa
+         hA+d9ho40Od86hBr23gyMCf++z/uwKSJM+2B2x061aV0DXHaTMsjSgmtf6lwNNwDlFDF
+         OYpgiw+zoO8G3qVyXWHPzuC8b8mJgyiJade0OMfH2o9pc6A9CZ0RYPW6inK8vxZHMPBb
+         BZxBhQsrIZt/1gCAGHYoYTiFXmrhwxhRGB3uJ7HWCHoBjOvh6WLTFOk8ZtSL3fYtkQGi
+         pZ8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682001180; x=1684593180;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qxUBEBnff0FS5uWK1Xy6+WkZa1SWO0jyLNTiw6td0Tg=;
+        b=jFi/ekJBGYEXR45pnv9fmI+h6NjdQAb0mz0pjMQ02EPb6wohBsCqXDiEqXwJyULZh6
+         akp39uCluUqWPVAzpJJZrQGZV3A+Wn7+axQ2MCT8sAzaEed8Evayi6cVFLHgxK31azkj
+         Ojwyw5NQSBayVR6XZEt1yXNos04J9dnF3kv/Bm3vZvc3qVdgaWhVdUi5Oi4hHmernXB1
+         8h/JQ2HgjJ00InjXet7e8UWG8mNw41ZKmevl1ghN8vmioFfbGS5lHyq+aRlWzgaDMa8t
+         coAjrYiN6CW+RJCI8ciD3exC08NVC2r8IiQ89iHbeAtzcGK6VVNj9WLRlYCpmgpOJbGE
+         o/Dw==
+X-Gm-Message-State: AAQBX9dzmAH0lMsL6831CuZ1tUov43EyQ2l1sAZ2pvmdAgnLoB0FvjPZ
+        5NYWyuzbZPP+9qM1gCFZfsSSYw==
+X-Google-Smtp-Source: AKy350bT9WLnfTYOgyXhMG2gNFX0pcaVYe702TIX25PW1dp9FSB/gs13aejCsz1XO5Ug3vfDx6VnwA==
+X-Received: by 2002:ac2:4a8d:0:b0:4ee:d562:5752 with SMTP id l13-20020ac24a8d000000b004eed5625752mr521375lfp.27.1682001180631;
+        Thu, 20 Apr 2023 07:33:00 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id h12-20020ac25d6c000000b004db3900da02sm234026lft.73.2023.04.20.07.32.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 07:33:00 -0700 (PDT)
+Message-ID: <2aad9be0-bda3-7992-de1c-69d90dc1ecc6@linaro.org>
+Date:   Thu, 20 Apr 2023 17:32:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.10.0
-Subject: Re: [PATCH 3/6] ASoC: codecs: wcd938x: Check for enumeration before
- using TX device
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 2/3] drm/msm/dpu: Assign missing writeback log_mask
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Patrick Lai <quic_plai@quicinc.com>
-References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
- <20230420101617.142225-4-krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20230420101617.142225-4-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
+ <20230418-dpu-drop-useless-for-lookup-v1-2-b9897ceb6f3e@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230418-dpu-drop-useless-for-lookup-v1-2-b9897ceb6f3e@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,87 +87,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/20/23 05:16, Krzysztof Kozlowski wrote:
-> Qualcomm WCD938x Soundwire codecs come as two Soundwire devices - TX
-> and RX - on two Soundwire buses.  In DTS they are represented as three
-> device nodes: Soundwire TX, Soundwire RX and the platform codec node
-> (binding to this driver).
+On 18/04/2023 02:14, Marijn Suijten wrote:
+> The WB debug log mask ended up never being assigned, leading to writes
+> to this block to never be logged even if the mask is enabled in
+> dpu_hw_util_log_mask via sysfs.
 > 
-> Probing (and Soundwire enumeration) of all devices can happen in any
-> order, but only the Soundwire TX WCD938x device is used for accessing
-> actual WCD938x registers.  It is possible that component bind() in the
-> platform driver will be called too early, before the Soundwire TX device
-> is fully enumerated.  This might work or might not, but we cannot handle
-> it correctly from the codec driver.  It's job for Soundwire master to
-> bring up devices in correct order.
-
-That last sentence isn't aligned with the way enumeration works in
-general for SoundWire.
-
-The Manager starts the clock, usually after a bus reset, and waits for
-Peripherals to signal their presence with Device0 Attached.
-
-If multiple Peripherals are attached as Device0, the enumeration will
-resolve conflicts at the hardware level, and the Manager *cannot*
-control the order of enumeration; the order is defined by the values in
-the devID registers, whichever Peripheral has the highest value in the
-DevID registers wins the enumeration, and others have to back-off and be
-enumerated later.
-
-Probing and enumeration are also different concepts. The SoundWire
-design allows for drivers to be probed even in the absence of any active
-hardware. This was added on purpose so that the driver could e.g.
-program a GPIO or talk to a power-management chip to allow SoundWire
-devices to start interacting with the bus.
-
-see also suggestion below...
-
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
+> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for writeback blocks")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
-> 
-> Cc: Patrick Lai <quic_plai@quicinc.com>
-> ---
->  sound/soc/codecs/wcd938x.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-> index 212667a7249c..e8e07e120fa1 100644
-> --- a/sound/soc/codecs/wcd938x.c
-> +++ b/sound/soc/codecs/wcd938x.c
-> @@ -77,6 +77,8 @@
->  #define WCD938X_MBHC_MOISTURE_RREF      R_24_KOHM
->  #define WCD_MBHC_HS_V_MAX           1600
->  
-> +#define WCD938X_ENUM_TIMEOUT_MS		500
-> +
->  #define WCD938X_EAR_PA_GAIN_TLV(xname, reg, shift, max, invert, tlv_array) \
->  {	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, \
->  	.access = SNDRV_CTL_ELEM_ACCESS_TLV_READ |\
-> @@ -4425,6 +4427,15 @@ static int wcd938x_bind(struct device *dev)
->  	wcd938x->sdw_priv[AIF1_PB]->slave_irq = wcd938x->virq;
->  	wcd938x->sdw_priv[AIF1_CAP]->slave_irq = wcd938x->virq;
->  
-> +	/*
-> +	 * Before any TX slave regmap usage, be sure the TX slave is actually
-> +	 * enumerated.
-> +	 */
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-...
+With the mentioned commit message changes:
 
-the alternative is to move regmap to be cache-only in the probe and
-remove the cache-only property when the device is enumerated.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-That's a trick that's used for all resume cases in codecs in Intel
-platforms, and we need to extend it for the startup cases as well.
+-- 
+With best wishes
+Dmitry
 
-> +	ret = wait_for_completion_timeout(&wcd938x->tx_sdw_dev->enumeration_complete,
-> +					  msecs_to_jiffies(WCD938X_ENUM_TIMEOUT_MS));
-> +	if (!ret)
-> +		dev_warn(dev, "Enumeration timeout in bind, possible failures in accessing registers\n");
-> +
->  	ret = wcd938x_set_micbias_data(wcd938x);
->  	if (ret < 0) {
->  		dev_err(dev, "%s: bad micbias pdata\n", __func__);
