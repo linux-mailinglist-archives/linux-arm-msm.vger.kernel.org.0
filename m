@@ -2,78 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 846726E9ABF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:28:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A6CF6E9AB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:27:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231521AbjDTR2l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 13:28:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34512 "EHLO
+        id S229448AbjDTR1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 13:27:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231561AbjDTR2e (ORCPT
+        with ESMTP id S231441AbjDTR1v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:28:34 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5C44EC4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:28:30 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-63b5c4c76aaso1020472b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:28:30 -0700 (PDT)
+        Thu, 20 Apr 2023 13:27:51 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D526D49DB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:27:47 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-507bdc5ca2aso1163686a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1682011709; x=1684603709;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=78/qGEvYe/lkrFdeVXssBK2xk+jn/Iin4nBiAlABPII=;
-        b=PrEEBV5gmKmv1clBMDpycLZW+3KoJWpb8zeNcb3noJYcQ1GiSviSfcHbJoKihHa3uO
-         P06X9ABRX8R2bhDzYL32qtHaKsDSgjpaxzt9IScY3UT9uKOiF1MvmBW6w6OwVXJB5Ywj
-         OgwMx48+yBI5d8TUXjzoYGclFKhvmCu3h07gY=
+        d=linaro.org; s=google; t=1682011666; x=1684603666;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qs3hS1zEcbd6LvW4gA839iJscm7oDwTflWd6VJTMIkA=;
+        b=LQ92EKM0FhI2a7WhS8KC2S2HlkKIfkw4TWDVyq4861pzjOA3488Sb2Jm9+FJFTSDfd
+         vO4WIDkoHElxe4j9hWc4dgkfd0wocJjCUoH8KLEZdL64v+BAxCo6SQZURV4Xx1STy7Wz
+         VkOYdPU54A0vrdCRPzGP6/ZVCVc4VV4O2dRhOxe46kd3JLC8Io5w1UcqgRUhOpA9JHJD
+         tYDLXvpnCCtEuJK/kz935CIr6N+r90q2bO0DG1oDrHYhffo53xdtbHHAp4f/tXgZlFnn
+         QxqA3UFM1nVZf2abwDMejQ/G0xeSA95ZRG6N9NpcvziK/H9r9EJzR9MUZylimVb5X5SV
+         C9Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682011709; x=1684603709;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=78/qGEvYe/lkrFdeVXssBK2xk+jn/Iin4nBiAlABPII=;
-        b=FDWNlovctQ2TPqmS5P1K2HCQ+NBmR7sKMy1HrfPogIp0Zj8K9j37pvHMcjE9er+663
-         7C+hWiszrEZbrJwrX124vhbFMVPkRj53Gtana7ZgwVnpvt8bt0nPerY94o61EYsr51qo
-         EfFum1+T9vg1rsvawI0Vnc0ymlm+6h94/RF/VanH+lMQvLuSeJ4xm8NvNWd9P4Yj33sj
-         BuYanGXaJx1HS4353HGOEYXwxuijX2Xqb5q/LmbtfPqZU+TEjxBd9c3bzgClElDjJoKP
-         uj0b7cl7a7FU9mQXxR4/E8UCHOxj7MOmP3kQRwfS0BLOmTR1mr2hvBhtIe6YLWk3HJxp
-         2BHw==
-X-Gm-Message-State: AAQBX9e4w8Z/JCyz69/vhSvcIz876FuCaK05Nf8FvuKJZj6MUHMIqQyz
-        qW+m6ghIMV2aw4JmacoWrR/Ahft/NM1svVFSeNY=
-X-Google-Smtp-Source: AKy350aKIxyb6mIAHZMIm/e+llr4grhMBVPWlwVSayJxErFGG9AqpMxAzj1cgxg6EMGAK3PZFgnosg==
-X-Received: by 2002:a05:6a20:440f:b0:de:13c4:5529 with SMTP id ce15-20020a056a20440f00b000de13c45529mr3291842pzb.62.1682011709338;
-        Thu, 20 Apr 2023 10:28:29 -0700 (PDT)
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com. [209.85.210.169])
-        by smtp.gmail.com with ESMTPSA id y1-20020a056a001c8100b005a8173829d5sm1505007pfw.66.2023.04.20.10.28.28
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20221208; t=1682011666; x=1684603666;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qs3hS1zEcbd6LvW4gA839iJscm7oDwTflWd6VJTMIkA=;
+        b=LW21qFZ+Fg5vXlku+ygZsrTO1PZAwY+SCOiu6Le+l18NvtyvaLVwUVIq1QQPrtY0ws
+         Vv8Ai37ANqOOmwI/C2v/n4DQGDeVYZaoIFiia12tp5G+OnjoMkogKRk8Ak1DNrWVstEr
+         kJvvElkD78WWaDo8fyZju1mvShSgAVvyEtkH93ymmxtxm1dReK12BV+2vulZRZdg1vNI
+         OV1bpvkKm+gV362RnKwdPqMnqUwImC4v9D+wwbRJ2MjF97Ew6h6XQM0YbpadpUah+37p
+         d+/Wmqtr79W1t7QXLvlVZBEqgCrD/jX1LSMQPf8Qhv7x0P0frO0givGCMls5DmFxbs9l
+         pgPw==
+X-Gm-Message-State: AAQBX9cujrpmxpqc2c2kLb8TdmqqNIwOV1/lqHmGAT11+ZZeHuiH4Uf2
+        X3WJrBxvEIc6vZ9W4tdL/G5tqw==
+X-Google-Smtp-Source: AKy350YOpwmLNpt73flS8U2L5sl5fGklkf6iG6tZDTuKotTJFGawChDefw8Dm8dZ67D8xoCc5A+Ozw==
+X-Received: by 2002:a50:fa89:0:b0:4fa:b302:84d4 with SMTP id w9-20020a50fa89000000b004fab30284d4mr2418861edr.13.1682011666275;
+        Thu, 20 Apr 2023 10:27:46 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:bcb8:77e6:8f45:4771? ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
+        by smtp.gmail.com with ESMTPSA id y10-20020aa7d50a000000b00506a5606343sm963515edq.14.2023.04.20.10.27.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 10:28:28 -0700 (PDT)
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-63b620188aeso1661325b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:28:28 -0700 (PDT)
-X-Received: by 2002:a25:d895:0:b0:b98:6352:be20 with SMTP id
- p143-20020a25d895000000b00b986352be20mr684421ybg.0.1682011268498; Thu, 20 Apr
- 2023 10:21:08 -0700 (PDT)
+        Thu, 20 Apr 2023 10:27:45 -0700 (PDT)
+Message-ID: <beaec77b-9a61-6afd-59fa-fa726cae7a54@linaro.org>
+Date:   Thu, 20 Apr 2023 19:27:44 +0200
 MIME-Version: 1.0
-References: <1681996394-13099-1-git-send-email-quic_vnivarth@quicinc.com> <1681996394-13099-5-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1681996394-13099-5-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 20 Apr 2023 10:20:56 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=ULfbQh7JgGTNh67JjQCwcBZD3nZqWGw7-fP1W2WX0pfg@mail.gmail.com>
-Message-ID: <CAD=FV=ULfbQh7JgGTNh67JjQCwcBZD3nZqWGw7-fP1W2WX0pfg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/5] arm64: dts: qcom: sdm845: Add stream-id of qspi to iommus
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
-        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 5/6] soudnwire: master: protect concurrecnt check for
+ bus->md
+Content-Language: en-US
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-6-krzysztof.kozlowski@linaro.org>
+ <7ee41bcb-8656-49ec-40b6-15072c080d08@linux.intel.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <7ee41bcb-8656-49ec-40b6-15072c080d08@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,16 +88,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 20/04/2023 18:42, Pierre-Louis Bossart wrote:
+> typos in commit title...
+> 
+> On 4/20/23 05:16, Krzysztof Kozlowski wrote:
+>> The Soundwire master controllers might want to check for bus->md
+> 
+> Apologies for being pedantic but 'manager' and 'controller' are
+> different concepts in SoundWire, see DisCo spec.
+> It's not a 1:1 mapping, a controller can rely on M managers
 
-On Thu, Apr 20, 2023 at 6:13=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> As part of DMA mode support to qspi driver.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+I wrote master, not manager. For the Qualcomm case one controller is one
+master, but in general I try to avoid the master/slave terminology.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> 
+>> initialization to avoid race between early interrupt and finish of
+>> sdw_bus_master_add()/sdw_master_device_add().  Such early interrupt can
+>> happen if Soundwire devices are not powered off during their probe.
+>>
+>> Add a store release barrier, so the Soundwire controllers can safely
+>> check it in concurrent (e.g. in interrupt) way.
+> 
+> Can you elaborate on the race condition? I am not following what breaks,
+> and what entity generates the 'early interrupt'.
+
+The condition is explained in next patch. If you think it's better, I
+can squash it with next.
+
+If the condition is still not clear, drop a note in next patch, so I
+will elaborate there.
+
+> 
+> I am specifically concerned about adding this in common code without any
+> matching smp_load_acquire() - which is only added in the following patch
+> for the Qualcomm manager only, but not added for Intel/AMD managers. Is
+> this not a problem?
+
+Shouldn't be. The barrier just won't be effective for these drivers, but
+that should not be a problem, because I also did not add to these
+checking bus->md in a concurrent path.
+
+Basically the barrier here is necessary because I want to check bus->md
+in Qualcomm master interrupt handler.
+
+Best regards,
+Krzysztof
+
