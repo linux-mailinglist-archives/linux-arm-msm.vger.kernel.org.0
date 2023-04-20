@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 895646E8FDE
+	by mail.lfdr.de (Postfix) with ESMTP id DEA916E8FDF
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:18:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234519AbjDTKSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:18:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59102 "EHLO
+        id S234751AbjDTKSG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234391AbjDTKRl (ORCPT
+        with ESMTP id S234450AbjDTKRm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:17:41 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DAF535BF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:16:27 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-5050497df77so667981a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:16:27 -0700 (PDT)
+        Thu, 20 Apr 2023 06:17:42 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5813959C7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:16:28 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-94a35b0ec77so60869266b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681985785; x=1684577785;
+        d=linaro.org; s=google; t=1681985787; x=1684577787;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lJ7NFOY+m136Tpa7a3Lvd2KVX0E55mkuZub+f9mfMPg=;
-        b=AmBkVOglK6tDRnpf5e1CjE9fZ783z5mKL+8fZ2ZovSKfIEaRbZG2hMsl/KZYx0GutP
-         I4eilLey7aFQzEn7ekVDO8KmseLtE5PTAZDRLwn2BMgyGrZC7FEDBt/Dp4xCbjrM4nMX
-         PExtibBF1phO8lOFATg7A1Vtim0z+UT6NDLufqy2uoALruXfdu+d+TPVALxWzqlWUzA6
-         T+GyHuG0AT4R7Gz3SSQotOWrU+a4WRBC/uMDUwxK18phb9KmLz2WNzbTxwMlB5A5NfNH
-         Ets4NSbdZxAlxiComw5hFcoxnnqZUExblUbtNFza39VeKttRMXgdMGu3NppRYjhA4g+x
-         /fyA==
+        bh=Lh0gzMHKjXIEM7BMaBHJPBXLjPSxY0yCOjmfp2sB3bs=;
+        b=ZY7V2Fz3NbWwq9aEj2mVn5PnKntw3UCQb4JlfiHhYV0ddMHpN+M8YLIYbeYsE+Ffsj
+         HAguHowzIfVychuICmyTnPXqrCiMPohkRBiwJ5gFErVFL2Xe0YgYfZ2mlihhIgNvguNc
+         WJSMsNFB4dEITw8ED4WVadG5Cg82WotrYQZV/esEjZnrq6uR8DvqTnNdmacy7mSZlxCQ
+         dRkhmaqjCEYdd+QWFyqkEGUu1o9bCaNIUC0WDAMjx/nnqTAN2Q4k+sRXaFL1FpwbKdMl
+         TEgTNFQY/B73e3xmmRB2a+UxETkMTtLGmrlFCrgs70IhUoPQd7MKs9vDEzegWoAtzQjv
+         ynxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681985785; x=1684577785;
+        d=1e100.net; s=20221208; t=1681985787; x=1684577787;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lJ7NFOY+m136Tpa7a3Lvd2KVX0E55mkuZub+f9mfMPg=;
-        b=FfCHq3YmwSkNU4OwoZaPnpY4JlaLHxCjpdros9h5KYuG+8NJLGiH6QdZMxY4jYd6qD
-         dyjrTMTkW6mpkly8aChZ36aNZ6hm8D8WsNW3eF+Cam9gewDMSPSdbOpmWBjXOdmhKQv2
-         2j+CB09ZahIFQYRpZTp6oNY+a58/VPZNvmWaCol1fiqtxunrLw7WtmfTz9IJzmIUDlvC
-         LKX1P9MJQrhmyPENTo/xmx0MDa+AWGP4CfgKuvIV5YYtPK2r0xO5mdJY9ga//n6XuOME
-         egBW5qtL2G7v7WFEyFO0lE6VYxw3zICcoiB6CHlxDqJ6iPsV2i7nusww25FTS2Ad8ofI
-         sY5w==
-X-Gm-Message-State: AAQBX9eQHeWRR6MGkqZv7dIHuaTnRrRDi15xHsDb8e6PXlWgG/hzCtUA
-        SRDZu/wVRiUgV8tY9Pb1RtXLWA==
-X-Google-Smtp-Source: AKy350a9gCInOAQuMSUpXUGkll+ReqZrf7KjiUJPh73j3eJ9QX2mTKFQOiDbJcquHEnVTHtJWjfuwQ==
-X-Received: by 2002:a05:6402:1616:b0:504:9c59:7b8f with SMTP id f22-20020a056402161600b005049c597b8fmr1251270edv.36.1681985785537;
-        Thu, 20 Apr 2023 03:16:25 -0700 (PDT)
+        bh=Lh0gzMHKjXIEM7BMaBHJPBXLjPSxY0yCOjmfp2sB3bs=;
+        b=Y/XkfSSw+3XpdZdclOawk7FdYDZDnqz0lX4l+WNl1JUvsJiP9iAT8QPFGoDzlbs6eN
+         PVLoDGK/+lys71s06HBxV0Wx5D7uaVjoLrBHuricNKF/gegmucotSxAOAhczh+ImZ35W
+         Ngt9obza9MfrR2l3ZIPqEELQ7h6yWFLLOv6Syg19AqADoeowmKt3WA30ls9nT5QMQYQq
+         98ZJSV8PQIeUanE1L9Xt90JeX0Tsd6Xy9znnBrEWhMIWJdAhXwJtYy5NRxFZYYpfHMu4
+         Run9NsmzBiE3m6q4tFijtZYW/WrQZ/iNvhcmzs4Ci6q2bHchG0EQ3T3Uw+7jBRBbPhfG
+         vQyA==
+X-Gm-Message-State: AAQBX9dABvl+7VNLFqv6zrhDw+b8hv9eTszHVW7kd/0elfGJTtVdTqIR
+        yxTRpOTSTJwxP2EPNn0Kn9QTOg==
+X-Google-Smtp-Source: AKy350arZDGHMInHp8GuNY+Ano5ThS/SGyaLKa8v0e+z5Ka6cwm3FR2IPMhl6ymmgxoP66sw2zHKgg==
+X-Received: by 2002:aa7:d547:0:b0:506:98e8:7e58 with SMTP id u7-20020aa7d547000000b0050698e87e58mr999102edr.34.1681985786794;
+        Thu, 20 Apr 2023 03:16:26 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
-        by smtp.gmail.com with ESMTPSA id l22-20020aa7c3d6000000b00506be898998sm588954edr.29.2023.04.20.03.16.24
+        by smtp.gmail.com with ESMTPSA id l22-20020aa7c3d6000000b00506be898998sm588954edr.29.2023.04.20.03.16.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 03:16:25 -0700 (PDT)
+        Thu, 20 Apr 2023 03:16:26 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>,
         Bard Liao <yung-chuan.liao@linux.intel.com>,
@@ -65,9 +65,9 @@ To:     Vinod Koul <vkoul@kernel.org>,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Patrick Lai <quic_plai@quicinc.com>
-Subject: [PATCH 2/6] ASoC: codecs: wcd938x: Keep device in reset till bind
-Date:   Thu, 20 Apr 2023 12:16:13 +0200
-Message-Id: <20230420101617.142225-3-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 3/6] ASoC: codecs: wcd938x: Check for enumeration before using TX device
+Date:   Thu, 20 Apr 2023 12:16:14 +0200
+Message-Id: <20230420101617.142225-4-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
 References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
@@ -83,57 +83,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Soundwire master expects that bus devices will be kept in reset
-state and brought out of it in their Soundwire probe() or bind().
-Keeping it in reset state avoids early new Soundwire device interrupts
-in the master.  Fix this in WCD938x platform driver by moving the reset
-toggle code from platform probe() to component bind().
+Qualcomm WCD938x Soundwire codecs come as two Soundwire devices - TX
+and RX - on two Soundwire buses.  In DTS they are represented as three
+device nodes: Soundwire TX, Soundwire RX and the platform codec node
+(binding to this driver).
+
+Probing (and Soundwire enumeration) of all devices can happen in any
+order, but only the Soundwire TX WCD938x device is used for accessing
+actual WCD938x registers.  It is possible that component bind() in the
+platform driver will be called too early, before the Soundwire TX device
+is fully enumerated.  This might work or might not, but we cannot handle
+it correctly from the codec driver.  It's job for Soundwire master to
+bring up devices in correct order.  At least add some simple warning, so
+such condition will not be undetected.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 ---
 
-I wasn't sure whether this deserves a Fixes tag. It looks like a fix,
-but OTOH, I don't think Soundwire master expectation is documented
-anywhere.
-
 Cc: Patrick Lai <quic_plai@quicinc.com>
 ---
- sound/soc/codecs/wcd938x.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wcd938x.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
-index 33fd8fdde9fd..212667a7249c 100644
+index 212667a7249c..e8e07e120fa1 100644
 --- a/sound/soc/codecs/wcd938x.c
 +++ b/sound/soc/codecs/wcd938x.c
-@@ -4236,7 +4236,8 @@ static int wcd938x_populate_dt_data(struct wcd938x_priv *wcd938x, struct device
- 	struct wcd_mbhc_config *cfg = &wcd938x->mbhc_cfg;
- 	int ret;
+@@ -77,6 +77,8 @@
+ #define WCD938X_MBHC_MOISTURE_RREF      R_24_KOHM
+ #define WCD_MBHC_HS_V_MAX           1600
  
--	wcd938x->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_ASIS);
-+	/* Keep device in reset status till wcd938x_bind() */
-+	wcd938x->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	ret = PTR_ERR_OR_ZERO(wcd938x->reset_gpio);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to get reset gpio\n");
-@@ -4407,6 +4408,8 @@ static int wcd938x_bind(struct device *dev)
- 		return -EINVAL;
- 	}
- 
-+	wcd938x_reset(wcd938x);
++#define WCD938X_ENUM_TIMEOUT_MS		500
 +
- 	wcd938x->regmap = devm_regmap_init_sdw(wcd938x->tx_sdw_dev, &wcd938x_regmap_config);
- 	if (IS_ERR(wcd938x->regmap)) {
- 		dev_err(dev, "%s: tx csr regmap not found\n", __func__);
-@@ -4508,8 +4511,6 @@ static int wcd938x_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+ #define WCD938X_EAR_PA_GAIN_TLV(xname, reg, shift, max, invert, tlv_array) \
+ {	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, \
+ 	.access = SNDRV_CTL_ELEM_ACCESS_TLV_READ |\
+@@ -4425,6 +4427,15 @@ static int wcd938x_bind(struct device *dev)
+ 	wcd938x->sdw_priv[AIF1_PB]->slave_irq = wcd938x->virq;
+ 	wcd938x->sdw_priv[AIF1_CAP]->slave_irq = wcd938x->virq;
  
--	wcd938x_reset(wcd938x);
--
- 	ret = component_master_add_with_match(dev, &wcd938x_comp_ops, match);
- 	if (ret)
- 		return ret;
++	/*
++	 * Before any TX slave regmap usage, be sure the TX slave is actually
++	 * enumerated.
++	 */
++	ret = wait_for_completion_timeout(&wcd938x->tx_sdw_dev->enumeration_complete,
++					  msecs_to_jiffies(WCD938X_ENUM_TIMEOUT_MS));
++	if (!ret)
++		dev_warn(dev, "Enumeration timeout in bind, possible failures in accessing registers\n");
++
+ 	ret = wcd938x_set_micbias_data(wcd938x);
+ 	if (ret < 0) {
+ 		dev_err(dev, "%s: bad micbias pdata\n", __func__);
 -- 
 2.34.1
 
