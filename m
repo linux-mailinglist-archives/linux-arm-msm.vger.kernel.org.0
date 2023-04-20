@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F2DB56E8AEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:09:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D5D36E8AF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:10:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231797AbjDTHI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 03:08:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
+        id S233983AbjDTHKo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 03:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233929AbjDTHIz (ORCPT
+        with ESMTP id S233986AbjDTHKk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 03:08:55 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85153AF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:08:54 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id dm2so4087038ejc.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681974533; x=1684566533;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bvojUsR5pwErXxzLqJHjlEXoz6gI0576CmK0oCJxdpc=;
-        b=EAo2Ow3XS1RZ8Q6tdvY+KMv4wd4ak0f8BPocMInIOOFHNFIvuNFzOPCuf90+iwfEgQ
-         ZHspYHA6cUYNt5Wgy8/DALjenpgaoNsZVVnOeFM4wbnG+KcFyqLnPb4Rhq/O0yweYnl7
-         CYMo+WGq2i8VlcfntymZq6LjZZfDAUQbqMNQcVueagYpplsjB/G9itlTHLHsRArA2mzy
-         Y7cpIE39ZVutrHQ/bwm3Ya6cScf537u6tSqFC7ssXf6QLH2GRKojshXPUAMFzyF2fG8H
-         FwVgOBTnypFAHXr2yXHmpJz+FOoQQeqpZWXF6PzlTiIoWGkYu8toSbCAON6nc2xY+5xS
-         5uog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681974533; x=1684566533;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bvojUsR5pwErXxzLqJHjlEXoz6gI0576CmK0oCJxdpc=;
-        b=QCJT5u1IWPOj4S0S220SDO15Tjz38IUcStn0vG6XyJgVgfOVmW2pnLCPmy/R09vUBK
-         LHuXKmoCxBhBYN62HqaN+VlHkbr9khmsWF4RfRe77jYUv3O7chFBnyqg/OvCDBEJI00q
-         h5qDcl7iQJH13hKbL5y5nluVa1RxJv5UC057Qm2IYCT4Z5h9RECnN15j1Cs8XQedKlNa
-         JUVp1DwgpgpVxaRpdg531CuEeFqC3WL3EaeCFM21nDy06OMdcp2wRusZs2OUDYpDHiXa
-         4euH4LmEeBTuG3bU+AwMd84vP87V1dCUGYuIq3EZ4TDZ/tXHHzMvpdwQfHUsYgYPyFv/
-         yCoA==
-X-Gm-Message-State: AAQBX9d2cuxFOcz1VuieAABnPWNibI4zOXHfO5Kopbult2UOieaVbKvN
-        QJLMWjuMK/OGAJLJkkSHaHUEBwjHRQoeT2YrJ4SX
-X-Google-Smtp-Source: AKy350YkIRiL6/g0txyPQcEysULNj8gjrNyWWXcoEDSMWOaKX/YTC+6vqefm8B56QsKbeEQmmG9BwMkojEpTRumRSyg=
-X-Received: by 2002:a17:907:980a:b0:94f:c1f:6d09 with SMTP id
- ji10-20020a170907980a00b0094f0c1f6d09mr214789ejc.7.1681974533034; Thu, 20 Apr
- 2023 00:08:53 -0700 (PDT)
+        Thu, 20 Apr 2023 03:10:40 -0400
+Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECA0E26B3;
+        Thu, 20 Apr 2023 00:10:36 -0700 (PDT)
+Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
+        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33K2rtba028337;
+        Thu, 20 Apr 2023 09:10:31 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=selector1;
+ bh=53KGJ1211Er3xybNs3kQiclgKJZtxeoNmmsAg952A9k=;
+ b=ZEa03B/Y4eDcCU8+qI7ELgbfcDKfELizrn2fOkk/mpE/+qElmn7MH0FBJtwd/WxUmt0Q
+ oKkARdjp9fUebJVl4UY1Xy+5H3lD+v9unsp00b2DHhWLXcKUhcJGYIXPxQr11P3k7Jv3
+ aC988Emvo/hSGrTG1aNFAc4i6NiRnYCYm5PyDvdW2jWObQvQgOjG4W9gOPjX/qbUP0HV
+ uwN4cGYF25C6UwywUzKawifQOtPK/t7IIUU4p3Qw9O2GpXybGAUtkXE1cALJsNeeCwK9
+ aHSc+W45qGLN54LKRtbGxUOcG+NHMyoLAVsfg6oiIq4oBoXv718q38UopJdaTEE8G9rR Iw== 
+Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
+        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3q2dyeeu8j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Apr 2023 09:10:31 +0200
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 6EEAF10002A;
+        Thu, 20 Apr 2023 09:10:27 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node2.st.com [10.75.129.70])
+        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 6692821160D;
+        Thu, 20 Apr 2023 09:10:27 +0200 (CEST)
+Received: from [10.201.21.178] (10.201.21.178) by SHFDAG1NODE2.st.com
+ (10.75.129.70) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Thu, 20 Apr
+ 2023 09:10:24 +0200
+Message-ID: <e6ef7616-d64d-9ad7-753a-6a7ab2e0b817@foss.st.com>
+Date:   Thu, 20 Apr 2023 09:10:24 +0200
 MIME-Version: 1.0
-References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
- <20230419-dpu-tweaks-v1-11-d1bac46db075@freebox.fr> <08e79278-ad30-73e3-a56c-f569b3fea407@linaro.org>
-In-Reply-To: <08e79278-ad30-73e3-a56c-f569b3fea407@linaro.org>
-From:   Arnaud Vrac <avrac@freebox.fr>
-Date:   Thu, 20 Apr 2023 09:08:42 +0200
-Message-ID: <CAG9NU68AqX3P1MrrLvfSKMyw+OsfZ7tyk9F9zU7qvA-QzzqO5g@mail.gmail.com>
-Subject: Re: [PATCH 11/11] drm/msm/dpu: do not use mixer that supports dspp
- when not required
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH V6 0/3] rpmsg signaling/flowcontrol patches
+Content-Language: en-US
+To:     Sarannya S <quic_sarannya@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <swboyd@chromium.org>,
+        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>
+References: <1681971690-28858-1-git-send-email-quic_sarannya@quicinc.com>
+From:   Arnaud POULIQUEN <arnaud.pouliquen@foss.st.com>
+Organization: STMicroelectronics
+In-Reply-To: <1681971690-28858-1-git-send-email-quic_sarannya@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.201.21.178]
+X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE2.st.com
+ (10.75.129.70)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-20_04,2023-04-18_01,2023-02-09_01
+X-Spam-Status: No, score=-5.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,46 +75,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le jeu. 20 avr. 2023 =C3=A0 01:18, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> a =C3=A9crit :
->
-> On 19/04/2023 17:41, Arnaud Vrac wrote:
-> > This avoids using lm blocks that support DSPP when not needed, to
-> > keep those resources available.
->
-> This will break some of the platforms. Consider qcm2290 which has a
-> single LM with DSPP. So, _dpu_rm_check_lm_and_get_connected_blks should
-> be performed in two steps: first skip non-DSPP-enabled LMs when DSPP is
-> not required. Then, if the LM (pair) is not found, look for any suitable
-> LM(pair).
+Hello Sarannya,
 
-Good point, I'll add the change.
+On 4/20/23 08:21, Sarannya S wrote:
+> Added new IOCTLS- RPMSG_GET_OUTGOING_FLOWCONTROL and RPMSG_SET_INCOMING_FLOWCONTROL
+> to get/set the rpmsg char device's flow control signal.
+> Updated the cmd name 'RPM_CMD_SIGNALS' to 'GLINK_CMD_SIGNALS'.
+> Changed 'remote_flow' to bool type, and updated it's evaluation.
+> Updated evaluation of 'set' in rpmsg_char as 'set = !!arg'.
+> Add destination address of endpoint as parameter in rpmsg_set_flow_control.
+> Addressed review comments to change variable names/descriptions.
+> 
+> Chris Lew (2):
+>   rpmsg: glink: Add support to handle signals command
+>   rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL support
+> 
+> Deepak Kumar Singh (1):
+>   rpmsg: core: Add signal API support
 
->
-> >
-> > Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/m=
-sm/disp/dpu1/dpu_rm.c
-> > index f4dda88a73f7d..4b393d46c743f 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> > @@ -362,7 +362,7 @@ static bool _dpu_rm_check_lm_and_get_connected_blks=
-(struct dpu_rm *rm,
-> >       *pp_idx =3D idx;
-> >
-> >       if (!reqs->topology.num_dspp)
-> > -             return true;
-> > +             return !lm_cfg->dspp;
-> >
-> >       idx =3D lm_cfg->dspp - DSPP_0;
-> >       if (idx < 0 || idx >=3D ARRAY_SIZE(rm->dspp_blks)) {
-> >
->
-> --
-> With best wishes
-> Dmitry
->
+Please increase the version each time you push an update, otherwise it is very
+difficult to track the update.
+So this one should be V7
+
+It is also helpful for reviewers and maintainers to include in your cover-letter
+ a summary of the changes from the previous version.
+
+Regards,
+Arnaud
+
+> 
+>  drivers/rpmsg/qcom_glink_native.c | 64 +++++++++++++++++++++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_char.c        | 49 ++++++++++++++++++++++++++----
+>  drivers/rpmsg/rpmsg_core.c        | 21 +++++++++++++
+>  drivers/rpmsg/rpmsg_internal.h    |  2 ++
+>  include/linux/rpmsg.h             | 15 +++++++++
+>  include/uapi/linux/rpmsg.h        | 11 ++++++-
+>  6 files changed, 155 insertions(+), 7 deletions(-)
+> 
