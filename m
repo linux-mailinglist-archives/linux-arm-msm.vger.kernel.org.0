@@ -2,69 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBF2E6E8BEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:56:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 688626E8CBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 10:28:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234194AbjDTH4v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 03:56:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35384 "EHLO
+        id S234038AbjDTI2Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 04:28:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234145AbjDTH4u (ORCPT
+        with ESMTP id S233960AbjDTI2Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 03:56:50 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 463F99F;
-        Thu, 20 Apr 2023 00:56:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1681977402; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=Hbag0RAoEZRHvnf+y2hVaDNPqbwgAHBK4tdVDOoGA0slfcyetg5zGA4jeL2WLZ71SD
-    so+3sLWUqkPgLEmMh/yb1KqRuUbKUgQHr7Kwwo+S6IbmY8xiPtrK0G8L5dYotFREQlWN
-    w58BGe5/rHxHBr+zI6ShQZkZxvjYt4pbcfrbnd0WC7g8jFzoBAJblzQeTUbe/ty+73G5
-    qQq8kzTEBdtMnnGzneyfzviyABpZOlFWr3ypox+p/p5+I846Xo0FRQD4aRZSyOcPVfIY
-    9lltigyX9U0JTMy62/a6FrThU2Q7eP4B9BreIoW3P/S++o4l/+hms9PQ8AyOCUBpW3Y/
-    TPew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1681977402;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=E1r58knnZcTJfyLKMrluT0Wkf1/93vrtGp+3WtvroyE=;
-    b=TgnIIVsur2yWffR0YyQYZj0dH0+oLsJahupuiEtbyD/fMTChXVB4i8lVma4KNkyz6G
-    kcElOEuWrCn4U0f0c4iJt5X/UkpknyakhdpO1oNLaS/gnbvNBseqzyheiKf0TB++Tb8P
-    rmgzUevhWznIpH4E1UZrXMGj8/3MaYt3VWUIuzJbPgK68JKbd86a8UCBBag68hK05dA9
-    AHvxE5gwu4bSDT32b7M4ukDvYJ7Ngwf/E/Yr2jH4uY5/aM81IXIA2Qt4eMTUVjHalzqQ
-    buQ2LNgeGiP8aM9nUubkzfaldbBd0uEPlgk2km7viSEoK52hIcipvmtPa4wcHieKpd8l
-    vnvw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1681977402;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=E1r58knnZcTJfyLKMrluT0Wkf1/93vrtGp+3WtvroyE=;
-    b=kmkJymG7M1pR1/W+ZvItc9JkLDGphnDLxf32ZKdW2UPNX+djr8nykW4cBDMrlpw7PF
-    MKAjT7b61tpGpfiVRZ1HGDi3dGHjHfgbjuQpOJEpYQjv5OoDFVGaXK4X2aFWGNZWTqF5
-    S19GxdGyChBD3JAtjP56TL+HJY8IVf88YHFNEVl+QjQ3XDOe7ih2Zljs3k0xEY+CI84z
-    /XYF4b7haOncpuAwglqJtHC8t5/KYr2eQvSCaTvtHo4BfwOcMW7VD/t5Cp9KZwU9xetX
-    KPOcZ9PnvP++Kwb4K/E6/iPs6FkjpgyWPxzMW5cflWiQly1irrvcrFzEYL/HO4+U1kmv
-    Hgow==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1681977402;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=E1r58knnZcTJfyLKMrluT0Wkf1/93vrtGp+3WtvroyE=;
-    b=tL3qDVz3v5OOC6iwNpXe+7eoR9pUkKDRIPDY6qK6pQmJKfYiSFeuRXbmDIHu2E7kHx
-    SlRBOSHzhS8/PRBiRaAQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z2F1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az3K7ugnHn
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 20 Apr 2023 09:56:42 +0200 (CEST)
-Date:   Thu, 20 Apr 2023 09:56:36 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
+        Thu, 20 Apr 2023 04:28:24 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E9D3AAF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 01:28:22 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b4e5fdb1eso975476b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 01:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1681979301; x=1684571301;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zMHkc4ddxtiZDR/vOhmkpTYUjNc5FBHmkFEOL3O5eEI=;
+        b=nY87j4ncBYV8Afs/V05HISSZlKNEMmYjThXCGm+F6KttBojRYQ5N5hQdAsjE1vBrc8
+         TGCt2pgjC8AXgYN62q8Dl4spXMAvwsYeklhz6EIP3kLFlZSjWECd6LX8Z7aIv9Yc3Ah8
+         ueiZwqaAFjLjT/Gk9a/0K0cItsTmGBsF768/AW7fPJsic0xufVWg5A7leHR7+QKdCTeL
+         RzhWetGOAZK0qrq8qQD3SDqOYq+KBVqKtq6eYMSH8JNF/LKC9QjPB7lsSCE94hkLjNyI
+         5tWfcUtlNbN0y+0HjFb6a9f+YE9SDAOJo+7RaFPBcj+FrsAawSqShedRhiEYQBPsg84b
+         dpUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681979301; x=1684571301;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zMHkc4ddxtiZDR/vOhmkpTYUjNc5FBHmkFEOL3O5eEI=;
+        b=LNlpmCeS+JiZpQaCstjaVEjv8YNstidmrl8KWjovM59fgB1OYQfOqMHyXGMDkYx0Fg
+         hnP8kcywpWdj8xWwcYgPCsv8r6rF7KIyldguS878UoU8kCePfj2cfOKDO/WbSp5Idhmh
+         23H5OVLSH/iugCw1cxsVDfW+dS+0vlvhYjzUnu/bmvZrggYCE6ULOMzQe+G6q93NoJoO
+         IDT6cwHe/ByIZLKpspv/PM6m1JrlU4lipNXx9DcMYI4oaqzEORe9haZ8O3g6lhuxvNFJ
+         Ayy+plqVKfYSSdEtONFdZ6xhgwHrOQlS4aORA5IiErnzdpEoA3hgCx743Luk3dC9xJuc
+         xx2g==
+X-Gm-Message-State: AAQBX9eZtiAJkiHJTb+KL8s13ote+8feGGUAMeeORYz3pGHiqomMZ7SH
+        kzqkOSSA+gedN1BGXOepNtmd
+X-Google-Smtp-Source: AKy350YfTe+XSl06gctWCjJwT+JzE2EjX7cwndeGei8fwbiqk9lB3+gCjl3ILwy6bQ1KDlmAM2Lplw==
+X-Received: by 2002:a05:6a20:734c:b0:ec:9d9c:4a05 with SMTP id v12-20020a056a20734c00b000ec9d9c4a05mr1371094pzc.13.1681979301536;
+        Thu, 20 Apr 2023 01:28:21 -0700 (PDT)
+Received: from thinkpad ([117.207.29.62])
+        by smtp.gmail.com with ESMTPSA id m24-20020a62a218000000b0063d5fa9fb66sm712056pff.49.2023.04.20.01.28.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 01:28:21 -0700 (PDT)
+Date:   Thu, 20 Apr 2023 13:58:11 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -75,20 +62,20 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
-Message-ID: <ZEDwLB3RwT6mHIu4@gerhold.net>
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH RFT v2 01/14] dt-bindings: clock: qcom,rpmcc: Add a way
+ to enable unused clock cleanup
+Message-ID: <20230420082811.GA6308@thinkpad>
 References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
- <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
+ <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230303-topic-rpmcc_sleep-v2-1-ae80a325fe94@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,18 +83,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 20, 2023 at 03:50:16AM +0200, Konrad Dybcio wrote:
-> On 8.03.2023 22:35, Konrad Dybcio wrote:
-> > Keepalive clocks for other platforms were gathered by digging in old
-> > downstream kernels, please give them a test.
-> I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
-> some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
-> are NOT governed by interconnect.. So before we can disable clocks,
-> both will need to be implemented.. ugh... I was hoping we could avoid
-> having it in rpmcc..
+On Wed, Mar 08, 2023 at 10:35:17PM +0100, Konrad Dybcio wrote:
+> Disabling RPMCC clocks can be a bit touchy. If we can't guarantee all
+> (or at least most) of the oneline peripherals ask the interconnect
+> framework to keep their buses online and guarantee enough bandwidth,
+> we're relying on bootloader defaults to keep the said buses alive through
+> RPM requests and rate setting on RPM clocks.
+> 
+> Without that in place, the RPM clocks are never enabled in the CCF, which
+> qualifies them to be cleaned up, since - as far as Linux is concerned -
+> nobody's using them and they're just wasting power. Doing so will end
+> tragically, as within miliseconds we'll get *some* access attempt on an
+> unlocked bus which will cause a platform crash.
+> 
+> On the other hand, if we want to save power and put well-supported
+> platforms to sleep, we should be shutting off at least some of these
+> clocks (this time with a clear distinction of which ones are *actually*
+> not in use, coming from the interconnect driver).
+> 
+> To differentiate between these two cases while not breaking older DTs,
+> introduce an opt-in property to correctly mark RPM clocks as enabled
+> after handoff (the initial max freq vote) and hence qualify them for the
+> common unused clock cleanup.
 > 
 
-Can you give an example? Which clocks are affected on which SoC?
+My 2 cents here...
 
-Thanks,
-Stephan
+First, this property doesn't belong in DT at all as it is OS specific handling.
+This leaves us with the option of using a cmdline or module params for rmpcc.
+But we already have one (clk_ignore_unused), so the platforms making use of old
+DTB's should use that instead.
+
+And that get's rid of the debate that when you start disabling rpmcc clocks, old
+platforms will break. I don't see a valid point to keep the old platforms alive
+since their DTB (firmware) is broken already. So either they have to fix the DTB
+or use a cmdline option.
+
+- Mani
+
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> index 2a95bf8664f9..386153f61971 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.yaml
+> @@ -58,6 +58,12 @@ properties:
+>      minItems: 1
+>      maxItems: 2
+>  
+> +  qcom,clk-disable-unused:
+> +    type: boolean
+> +    description:
+> +      Indicates whether unused RPM clocks can be shut down with the common
+> +      unused clock cleanup. Requires a functional interconnect driver.
+> +
+>  required:
+>    - compatible
+>    - '#clock-cells'
+> 
+> -- 
+> 2.39.2
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
