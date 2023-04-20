@@ -2,81 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1A646E9B24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:57:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 388D66E9B2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 20:01:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbjDTR5R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 13:57:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53528 "EHLO
+        id S231722AbjDTSBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 14:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230141AbjDTR5Q (ORCPT
+        with ESMTP id S230003AbjDTSBK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:57:16 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB8219A1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:57:15 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id vc20so8170060ejc.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:57:14 -0700 (PDT)
+        Thu, 20 Apr 2023 14:01:10 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0AF4359F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 11:01:06 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2a8afef50f2so6760091fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 11:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682013433; x=1684605433;
+        d=linaro.org; s=google; t=1682013665; x=1684605665;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dAr/LIDlGatkoRn7/ee7RkK9qX5KXHUaiCQKcYx4heQ=;
-        b=oqYAYTMFxDORiQ4wijHNnpfbTMjjvGTX7+71JMGGnTHplTY+CZa/+qns7HaFROzvgI
-         uChGjaDR+IV2P2RGg9gjqdVSEftPOkUeLikUWuSexT90zN5MzJDY15yq9SkK0NDxbzqH
-         ZUzq0yQcf7UAHPdm8K0EoB6mAeBTusy15I3ZdiE9GFBZ95/+O4IHC5unQsqBmEhXuLsa
-         Pw4q3d7/Y6qh2QaGz3giYki6B6dYJ4/RRBcMm9DgXS84ldV771TzVQ2BhZYRtW9XT23+
-         uS5+W8RqsS4r7JuDp5E3yiP+bw25wTnrML1Hm2yDiOHUa6mDORENHZtx4/ON5odj8KPJ
-         bdbw==
+        bh=Z71ifX+3bePpNj6BLLcg5VtBqXd9L7O317uWqrrJ0jY=;
+        b=pE+i+7GJa5mGP7pN8Pn/lkXCkEzxDPET5cjPLpsKLHlB5SOlbsMB/KdJ2IzfMqoct1
+         3KFZxKRhEhli0IYmucY4Q8zCh/1a/6DGntfRe0LET2s7QWjth1Bg+NpqtMDBXiBXOnUe
+         cauvCYkY2ogSQL2IHhC9whcnIKmRbPeONT+b8S5FJQeKeQjd5iOsJh3fiGp9foZR+bF3
+         /bGTiMol8JDDNJXT72B3BAWUB+2dy+aq7u7rwLeE8IaZc9W/hZgrUfVPL2/j9saUDW4I
+         UDEdX1GkW7RTjlNqhKgklK0LleQ6PaOFO5FN8bL2flD4helzqVcRGVySbsIFdWn8PJ7a
+         8HLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682013433; x=1684605433;
+        d=1e100.net; s=20221208; t=1682013665; x=1684605665;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dAr/LIDlGatkoRn7/ee7RkK9qX5KXHUaiCQKcYx4heQ=;
-        b=ZyaMLvrJ2WvraXs81xoU/VK3VKvVmsUydL0njSYddGiQkCrDtYFfVKd7rqvXVbJ/mB
-         hHAJaOigcU3t2Y5L+Dr/atyCNa1YlDWGlrqzeVcLioU5HHpoE7VVbOCVzhqJKjNyYG+D
-         HXJtbJl1+/yeO3kxQghkklx9Y+eSqPQoVESO3p7D2jJQNevgUr8qcunrORgLfraNqKoz
-         8656N3BiRQhc8UsahQgrZMxldNKXKvZZ9JDo0+HYxcwpirDMSxfPxP4bMxSQ0Zkv5WU7
-         XIxc+bZjRthtFgkx3bQdwpsFji63ktvi3YHHNvZMjHf/K79EoO68WMmY5clvpefgjfgk
-         vIOg==
-X-Gm-Message-State: AAQBX9dBqXLuTN1VFPhSY9XY3/0T48kdisDYJB13eRLVs5h6HCX5WGYN
-        5x+vR8JRbwnk/0rQCAKPrCC/5A==
-X-Google-Smtp-Source: AKy350bqZvE/WlssqOI0yjNdobQJVWq7CkZhGDtFN1P681JhE2lw9iuEvfuhP21LgvcKbpg72QxBdw==
-X-Received: by 2002:a17:906:fb16:b0:953:517a:8f1a with SMTP id lz22-20020a170906fb1600b00953517a8f1amr2236602ejb.58.1682013433347;
-        Thu, 20 Apr 2023 10:57:13 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:bcb8:77e6:8f45:4771? ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
-        by smtp.gmail.com with ESMTPSA id hb8-20020a170906b88800b0094bb4c75695sm956766ejb.194.2023.04.20.10.57.12
+        bh=Z71ifX+3bePpNj6BLLcg5VtBqXd9L7O317uWqrrJ0jY=;
+        b=LTdzaHJGJT/UtFK7sUBCrswGbLN3KdFEgaFZWfHUCEoKhvxUPyUGBw8VSe7BSOfl1a
+         +NIHJT9/cKHtWvdKeRYs0pl/4sMHLHmGedX9Xer9s/PKCpxE9SrbLDN2AM0EAzMSqdlY
+         3NbySnMt9neKt3ZY/WtkeSizmKmY4IW+4XwobsCwNeq1fmSWexMcXzObaRyUREu/q+zd
+         usUbuyhpOBUyiIb0K9UF9LAu8NkWmDIOWrd2ObRG4iPFSG5OofbL9/aEFk08I7lMwdlg
+         iGqrjPGRKEfH3UaFwqdBOLCen2Jvi7N/hGSHrk6LrO5MTJbT2Ffd61UgKrKpD/SHR2gK
+         JaQQ==
+X-Gm-Message-State: AAQBX9cgjCLbf3+by9DEbXnrxcFULFXqXnO6h6FYa+fNhn+M3cmXe+bQ
+        qIQbjI4C2PJCWlp3zS87BtWEIQ==
+X-Google-Smtp-Source: AKy350YhBge2kn5asPvQjIsoowiT2dTTKXXJSITeKrLIxWF5Sj2L/FGZ7oX9ry4+1WWCmJi5XWCL3w==
+X-Received: by 2002:a05:6512:145:b0:4ed:c6d5:bdc with SMTP id m5-20020a056512014500b004edc6d50bdcmr738154lfo.24.1682013665093;
+        Thu, 20 Apr 2023 11:01:05 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id q2-20020ac25a02000000b004b4cbc942a3sm290839lfn.127.2023.04.20.11.01.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 10:57:12 -0700 (PDT)
-Message-ID: <41daab8e-e116-83b3-234f-ece43817a0f5@linaro.org>
-Date:   Thu, 20 Apr 2023 19:57:11 +0200
+        Thu, 20 Apr 2023 11:01:04 -0700 (PDT)
+Message-ID: <6a335df7-ff0b-098a-feec-45714159df04@linaro.org>
+Date:   Thu, 20 Apr 2023 21:01:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/6] ASoC: codecs: wcd938x: Check for enumeration before
- using TX device
-Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Patrick Lai <quic_plai@quicinc.com>
-References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
- <20230420101617.142225-4-krzysztof.kozlowski@linaro.org>
- <dfe88b94-215b-a86f-60b4-25d2f9ea0e5f@linux.intel.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <dfe88b94-215b-a86f-60b4-25d2f9ea0e5f@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 0/2] DPU1 GC1.8 wiring-up
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230420-topic-dpu_gc-v1-0-d9d1a5e40917@linaro.org>
+ <5b133c55-e4f5-bfd2-b542-a7d44313c038@linaro.org>
+ <c0e0a55a-cc37-fe8a-8d8a-5fe257f99b9a@linaro.org>
+ <3f3b3637-ed85-09a1-22b7-3ccd4bc929bb@quicinc.com>
+ <2dff9d62-cffe-c66f-9e50-3ecd64e44d37@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <2dff9d62-cffe-c66f-9e50-3ecd64e44d37@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -88,106 +84,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 16:18, Pierre-Louis Bossart wrote:
+On 20/04/2023 04:36, Konrad Dybcio wrote:
 > 
 > 
-> On 4/20/23 05:16, Krzysztof Kozlowski wrote:
->> Qualcomm WCD938x Soundwire codecs come as two Soundwire devices - TX
->> and RX - on two Soundwire buses.  In DTS they are represented as three
->> device nodes: Soundwire TX, Soundwire RX and the platform codec node
->> (binding to this driver).
+> On 20.04.2023 03:28, Abhinav Kumar wrote:
 >>
->> Probing (and Soundwire enumeration) of all devices can happen in any
->> order, but only the Soundwire TX WCD938x device is used for accessing
->> actual WCD938x registers.  It is possible that component bind() in the
->> platform driver will be called too early, before the Soundwire TX device
->> is fully enumerated.  This might work or might not, but we cannot handle
->> it correctly from the codec driver.  It's job for Soundwire master to
->> bring up devices in correct order.
-> 
-> That last sentence isn't aligned with the way enumeration works in
-> general for SoundWire.
-
-I was rather referring to driver point of view. The Qualcomm Soundwire
-should work, not expect devices to be powered off during their bind...
-
-> 
-> The Manager starts the clock, usually after a bus reset, and waits for
-> Peripherals to signal their presence with Device0 Attached.
-> 
-> If multiple Peripherals are attached as Device0, the enumeration will
-> resolve conflicts at the hardware level, and the Manager *cannot*
-> control the order of enumeration; the order is defined by the values in
-> the devID registers, whichever Peripheral has the highest value in the
-> DevID registers wins the enumeration, and others have to back-off and be
-> enumerated later.
-> 
-> Probing and enumeration are also different concepts. The SoundWire
-> design allows for drivers to be probed even in the absence of any active
-> hardware. This was added on purpose so that the driver could e.g.
-> program a GPIO or talk to a power-management chip to allow SoundWire
-> devices to start interacting with the bus.
-> 
-> see also suggestion below...
-> 
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >>
->> ---
+>> On 4/19/2023 6:26 PM, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 20.04.2023 03:25, Dmitry Baryshkov wrote:
+>>>> On 20/04/2023 04:14, Konrad Dybcio wrote:
+>>>>> Almost all SoCs from SDM845 to SM8550 inclusive feature a GC1.8
+>>>>> dspp sub-block in addition to PCCv4. The other block differ a bit
+>>>>> more, but none of them are supported upstream.
+>>>>>
+>>>>> This series adds configures the GCv1.8 on all the relevant SoCs.
+>>>>
+>>>> Does this mean that we will see gamma_lut support soon?
+>>> No promises, my plate is not even full, it's beyond overflowing! :P
+>>>
+>>> Konrad
 >>
->> Cc: Patrick Lai <quic_plai@quicinc.com>
->> ---
->>  sound/soc/codecs/wcd938x.c | 11 +++++++++++
->>  1 file changed, 11 insertions(+)
+>> So I think I wrote about this before during the catalog rework/fixes that the gc registers are not written to / programmed.
 >>
->> diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
->> index 212667a7249c..e8e07e120fa1 100644
->> --- a/sound/soc/codecs/wcd938x.c
->> +++ b/sound/soc/codecs/wcd938x.c
->> @@ -77,6 +77,8 @@
->>  #define WCD938X_MBHC_MOISTURE_RREF      R_24_KOHM
->>  #define WCD_MBHC_HS_V_MAX           1600
->>  
->> +#define WCD938X_ENUM_TIMEOUT_MS		500
->> +
->>  #define WCD938X_EAR_PA_GAIN_TLV(xname, reg, shift, max, invert, tlv_array) \
->>  {	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname, \
->>  	.access = SNDRV_CTL_ELEM_ACCESS_TLV_READ |\
->> @@ -4425,6 +4427,15 @@ static int wcd938x_bind(struct device *dev)
->>  	wcd938x->sdw_priv[AIF1_PB]->slave_irq = wcd938x->virq;
->>  	wcd938x->sdw_priv[AIF1_CAP]->slave_irq = wcd938x->virq;
->>  
->> +	/*
->> +	 * Before any TX slave regmap usage, be sure the TX slave is actually
->> +	 * enumerated.
->> +	 */
-> 
-> ...
-> 
-> the alternative is to move regmap to be cache-only in the probe and
-> remove the cache-only property when the device is enumerated.
+>> If thats not done, is there any benefit to this series?
+> Completeness and preparation for the code itself, if nothing else?
 
-The driver wants already to use the regmap in RW just few lines below in
-wcd938x_set_micbias_data().
+The usual problem is that if something is not put to use, it quickly 
+rots or becomes misused for newer platforms. We have seen this with the 
+some of DPU features.
 
-I guess I could move this entire piece of code to other place...
+In case of GC (and the freshly defined DPU_DSPP_IGC, but not used) we 
+have three options:
+- drop the unused GC from msm8998_sblk.
+- keep things as is, single unused GC entry
+- fill all the sblk with the correct information in hope that it stays 
+correct
 
-> 
-> That's a trick that's used for all resume cases in codecs in Intel
-> platforms, and we need to extend it for the startup cases as well.
+Each of these options has its own drawbacks. I have slight bias towards 
+the last option, to have the information in place (as long as it is 
+accurate).
 
-Can you point me to some specific piece of driver, so I could see how it
-is done? It might help me to prepare a better patch for this.
-
-> 
->> +	ret = wait_for_completion_timeout(&wcd938x->tx_sdw_dev->enumeration_complete,
->> +					  msecs_to_jiffies(WCD938X_ENUM_TIMEOUT_MS));
->> +	if (!ret)
->> +		dev_warn(dev, "Enumeration timeout in bind, possible failures in accessing registers\n");
->> +
->>  	ret = wcd938x_set_micbias_data(wcd938x);
->>  	if (ret < 0) {
->>  		dev_err(dev, "%s: bad micbias pdata\n", __func__);
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
