@@ -2,45 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E75C6E9E84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:01:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCECC6E9EAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:20:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232856AbjDTWBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 18:01:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36040 "EHLO
+        id S232630AbjDTWU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 18:20:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232851AbjDTWBo (ORCPT
+        with ESMTP id S229736AbjDTWU2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 18:01:44 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94AFE5265
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:01:38 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8AA41204BD;
-        Fri, 21 Apr 2023 00:01:36 +0200 (CEST)
-Date:   Fri, 21 Apr 2023 00:01:35 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Thu, 20 Apr 2023 18:20:28 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B252689
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:20:27 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec8148f73eso913369e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682029225; x=1684621225;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0QW2zFEjgoUsaSsxeB6v7NVOeo+doEcmv6Xwkw75TFw=;
+        b=qX9nkfpbyJjng6ZSha7rHGcg4LudKd3zSrQNn0RR5uF1qMb/HDTzv5Ygyp7yz5JUby
+         x+O1vf9GjBtAXRMaFcMQJsseHfBHftKtS2GGSlKHy6bJ+s58OX012Te2Hj3Ie0m+VjI3
+         TjrB7NMPSfeFaDXX1tzrCf/EDlBBycUodM8JCXTkDRvL2kzdvZz+83MKUXhIgwHnHURB
+         FXHSEHoku5wDTH4+Ij2eO44jPWiA6hQpXJHCdbgp+gJ+crH+oZJQKm6s5DvSstYRE/cC
+         RVSv1Ga5xyYN0ZIror7eizBU1aaHZbRhjipk/BAOsRSFaW2x00OrZo5jEGbDL4z2tqMK
+         gMoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682029225; x=1684621225;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0QW2zFEjgoUsaSsxeB6v7NVOeo+doEcmv6Xwkw75TFw=;
+        b=AYpuzKvQKpIcxDRk3mFvpa9062N5d47FcWbJ+WsQqfKJanOuNW2FW/6w+IsaxUf+TJ
+         agBG1JDTS5ZAEdvmjY77EGoW5jiXE2Dha4A7Lx/bV8ZDdBngBFxA3jjVaHhC4oz1TrRp
+         JHK4hOM/kYBn7TZKI4WE8tmo4jou/gXUfOAv3zbBOn8mR4t3jOaxOdUPP1RnOxmO92PQ
+         bFf25e8h0+v8vPPePFe5Dnr2ilp/AIeP+iniUHhQGQ02uCVhZPPxXWKf/koUka2mBZ/v
+         tBf6Aagx7GDwWW7Vkpne2QDaBxMayZAjeSvPtGLObA91gNDuNaZpaj2T2XqDVwooBfPK
+         xoIA==
+X-Gm-Message-State: AAQBX9d4bTaK0QIWIiDmcSNrIKlL15OsfASqoER+WFILqMKC+FNLa3Iu
+        ayWgv7+HB1EgWiLolJ8NDUzOEA==
+X-Google-Smtp-Source: AKy350bMn6KVhj21+we3mlghC+POksK+s8xQxvWGGN3UFAziRJEF3Lev22U9KKRMAJ1zT38co8wU8Q==
+X-Received: by 2002:ac2:4891:0:b0:4ec:8d97:9479 with SMTP id x17-20020ac24891000000b004ec8d979479mr777600lfc.20.1682029225592;
+        Thu, 20 Apr 2023 15:20:25 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id n5-20020ac242c5000000b004ec88753502sm347146lfl.111.2023.04.20.15.20.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 15:20:25 -0700 (PDT)
+Message-ID: <61bdd089-89b7-749b-95bd-c7e61c396e29@linaro.org>
+Date:   Fri, 21 Apr 2023 01:20:24 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [Freedreno] [PATCH 1/3] drm/msm/dpu: Drop unused members from HW
+ structs
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/dpu: drop the regdma configuration
-Message-ID: <5p4ospar4woaefr76x5rv6f5mgj76mzkuqihjdrngmntulaiwi@pe5sa75avguz>
-References: <20230420200742.1200531-1-dmitry.baryshkov@linaro.org>
- <75d7qx65ksvzgwb7xdkn26krqyih3ipi4hjyvw5mvgfsafvjnu@zauwifqiirk4>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <75d7qx65ksvzgwb7xdkn26krqyih3ipi4hjyvw5mvgfsafvjnu@zauwifqiirk4>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+References: <20230418-dpu-drop-useless-for-lookup-v1-0-b9897ceb6f3e@somainline.org>
+ <20230418-dpu-drop-useless-for-lookup-v1-1-b9897ceb6f3e@somainline.org>
+ <7ad86cd9-4b30-e7f1-780f-2c1c7093087e@linaro.org>
+ <cd308be9-5420-6d75-da23-e844107ec275@quicinc.com>
+ <2ujeakobg7oulzarvzjktx5elo4ckpjq5pbknr3jx3h43snmry@yd4j64s7tqy5>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <2ujeakobg7oulzarvzjktx5elo4ckpjq5pbknr3jx3h43snmry@yd4j64s7tqy5>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -49,51 +92,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Whoops, looks like I wrongly lost all the cc's when importing b4-am's
-mbx file which is just a patch with a few but not all email headers.
-Cc'ing everyone on this occasion with my review.
+On 21/04/2023 00:39, Marijn Suijten wrote:
+> On 2023-04-20 08:46:46, Abhinav Kumar wrote:
+>>
+>>
+>> On 4/20/2023 7:33 AM, Dmitry Baryshkov wrote:
+>>> On 18/04/2023 02:14, Marijn Suijten wrote:
+>>>> Some of these members were initialized while never read, while others
+>>>> were not even assigned any value at all.  Drop them to save some space,
+>>>> and above all confusion when looking at these members.
+>>>>
+>>>> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+>>>> Fixes: 84a33d0fd921 ("drm/msm/dpu: add dpu_hw_wb abstraction for
+>>>> writeback blocks")
+>>>
+>>> The fixes headers are slightly questionable, as unused fields are not a
+>>> bug. Nevertheless:
+>>>
+>>
+>> Yes, I would also not treat this as a "fix" but just cleanup.
+> 
+> Ack to both.  This seems like a fine line to me as the fields are not
+> contributing to anything except confusion.  Specifically hw_mdp which is
+> never initialized and may accidentally be used without realizing that
+> it'll stay NULL, but that is again up to the developer using the field
+> at that point.
+> 
+> Feel free to drop them while applying, or should I reword the message to
+> at least still link these commits to mention the origin of the unused
+> fields?
 
-On 2023-04-20 23:33:07, Marijn Suijten wrote:
-> On 2023-04-20 23:07:42, Dmitry Baryshkov wrote:
-> > The regdma is currently not used by the current driver. We have no way
-> 
-> Nit: 2x current
-> 
-> > to practically verify that the regdma is described correctly. Drop it
-> > now.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Do we need to keep the `regdma` range that is `ioremap`ed in
-> `dpu_kms.c`?  Only msm8998-dpu allows it in the bindings anyway.
-> 
-> > ---
-> >  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  2 -
-> >  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  2 -
-> >  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 40 -------------------
-> >  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 18 ---------
-> >  12 files changed, 78 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> > index 2b3ae84057df..aa923fb2ebcb 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> > @@ -195,8 +195,6 @@ const struct dpu_mdss_cfg dpu_msm8998_cfg = {
-> >  	.intf = msm8998_intf,
-> >  	.vbif_count = ARRAY_SIZE(msm8998_vbif),
-> >  	.vbif = msm8998_vbif,
-> > -	.reg_dma_count = 0,
-> > -	.perf = &msm8998_perf_data,
-> 
-> Don't think you intended to remove the perf data?  There's no dma_cfg
-> member because the count is zero.
+I'm fine with having the Fixes removed. If you can send the v2 reordered 
+& with tags removed, that would be the best.
 
-- Marijn
+> 
+> - Marijn
+
+-- 
+With best wishes
+Dmitry
+
