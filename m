@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1DD16E86D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 02:48:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB4756E86F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 02:50:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230298AbjDTAsv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 20:48:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48340 "EHLO
+        id S232635AbjDTAu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 20:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229700AbjDTAsu (ORCPT
+        with ESMTP id S232152AbjDTAuN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 20:48:50 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A51A30D4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 17:48:48 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2a7b02615f1so1847451fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 17:48:48 -0700 (PDT)
+        Wed, 19 Apr 2023 20:50:13 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 017534EF6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 17:49:34 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id z38so915435ljq.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 17:49:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681951726; x=1684543726;
+        d=linaro.org; s=google; t=1681951771; x=1684543771;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OckS2BfEFVMjSC+akapUtOqBGX/h+ZT6q2PObAak2Jo=;
-        b=of1Fe8+rte+0q44lW2Pg7/jkv2JzJlXjSP69V35PiAbAOAs/B9KhJLoCz9d19XqEJL
-         5W2ccPRIyN/bgBXduTDul0iKVct2nTk4w7Pu4JGXa7lX9UnCYthGhuqWoAv91VabCxW1
-         +WGoCq5ZkBNqMVoYQA0tlpiJgUsUVkXUZQUjskRvSra5x9Fx3XKbtJ9ewW5MmfNtCx1g
-         3k80PIUsffeJWuj5lBuK3lxnXv9HMJ13e2WkXsdmklu0EVcrsxEXtRTYS1i/0OBC2BS/
-         mRymuc04+Hdsw72uuZC897kL2Lbzz+MK/yfugTsLsxXHcsh/Pp6OmW3zsPqyq/6C6YH0
-         Dzcw==
+        bh=nBTNgbwSnEqrTM/8Zo3F3tUjXoH2/yS/Mjd7eOQXnxA=;
+        b=d4mVL2ra6uk1DxPznvuIlP+NohLtEcADu43dZmKn68AbF9I1zDQUZtYdsL9Ka0fhK3
+         yBoz6Y7I3MnVwjpbhFc9Th4t+ZXspnyWt7Lc6y12HI5yaJ6oqi4MJEWpl1d7uYP8stbM
+         LNKY3VIrY9nuQjCTDZIOnB5RGi61FRnWR7cQ4mUK/Zf7IQ/ucseIb93BUhbJqZoJKQ/m
+         z7tRSVl+KOi6Rk5qzuPo+pDa1Dr99MX2uMLjhsgfGnfHbDtTrro1EULq4qpm9VahfKvA
+         VpcozY7D8YtZNPLSSDC+bUNOOjPLdDTCgCy4RrCInmG9axwD2Gd/JZj5qr3K9X17LUen
+         jbhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681951726; x=1684543726;
+        d=1e100.net; s=20221208; t=1681951771; x=1684543771;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OckS2BfEFVMjSC+akapUtOqBGX/h+ZT6q2PObAak2Jo=;
-        b=c84EikUk1nv3d8v1TDgCBKjUqhcRd8ZiaVuoQ6MBgyRrH2gmVrwpgoGNEhgNXgFRcY
-         wifdhfNSJHLcpAvdrcemmk6wJGhsls/FrWqGJlfW0shenFrsrc8FRkGWcRuYiMpplDDO
-         dE7fqBiMRjLYedQvTpI5dLt+aP8F4cUMAMWew7slaKalSya7wvLKe4BM0LBCkvpjNdUB
-         N6qDnsWKzdCYBEzk2Rp/6G3EyG04WKm/BQRhmaEGiK+uZ2hX7x0w2X/ZiXH6ZX/JKAU3
-         gAfMK8Z0P4+GCiqEFVO9wL0FRXpf7Ob0fdeJI9wCbHjleEfn1+Bn9f2VDeCzLcdSzcNH
-         O84A==
-X-Gm-Message-State: AAQBX9fkM7h1mkQKU6K/qZ+0fADiDhSLI5U0xfdAwbUWDLZqa7HFDMaA
-        BVYb1YX4yZYq5paPw5LhwvGGIw==
-X-Google-Smtp-Source: AKy350ZUT8RCWkMoPsNeeBL58+bY0ydYaCEMQ4R5U9q6ztvXkYBk1u005WXgty5JHgzOTpeqwCX+mQ==
-X-Received: by 2002:ac2:5929:0:b0:4ed:d5ce:7df0 with SMTP id v9-20020ac25929000000b004edd5ce7df0mr1773953lfi.7.1681951726537;
-        Wed, 19 Apr 2023 17:48:46 -0700 (PDT)
+        bh=nBTNgbwSnEqrTM/8Zo3F3tUjXoH2/yS/Mjd7eOQXnxA=;
+        b=WmlMPEDTr5RRL9Kyt1Gk/02eVG8O7m5VaChfdHllNttBxWAUuYqHCbt4HoMKPP5YP7
+         xcruI3s4rC7ZNRp2ME4FFub++AQJp9DEO0pbPWCGtU4Ht9I2FPZ5oM0X86loI2O1+TJv
+         6nfaPhTNDsKnM7shtvJgbY0+zPFn1voJWPhKMnN1KiF7Rde+5ilOlizqU94jGlLaThgX
+         9odORwGOHFJHy0GTKIZiWSKgZr/F9rP+LdZtxRWdXHEw/13D0Ko+CpfWThfzWzU+26eA
+         rjAJjcctfyWXOX/WdNTRIBVsrf4BsEp/hLz6GuVT4dUPBHgXrI7xFBOtJXVh1HkUjFVY
+         oqjQ==
+X-Gm-Message-State: AAQBX9d4CcQTdrIJ5fIUF9HP6vjTVN7iBPySYFkWh0M+aC6WxEgQAULI
+        +y3xK13eS8TCN/flQLct5LbtnA==
+X-Google-Smtp-Source: AKy350a58zmn+YohNF/dZT6zaO4ejf273w1HbL0Zriw2gCHMn/70LvEy/Q0m9ouzpmYgb6kSJCE2QA==
+X-Received: by 2002:a2e:6e0f:0:b0:2a8:bd3a:d418 with SMTP id j15-20020a2e6e0f000000b002a8bd3ad418mr2264178ljc.52.1681951771044;
+        Wed, 19 Apr 2023 17:49:31 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v6-20020a2e9606000000b002a77f45cc00sm18114ljh.29.2023.04.19.17.48.45
+        by smtp.gmail.com with ESMTPSA id w4-20020a2e9584000000b002a8bae7f9e8sm17599ljh.129.2023.04.19.17.49.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 17:48:45 -0700 (PDT)
-Message-ID: <e129858e-5d8d-32d5-96ca-07ab4f1ea938@linaro.org>
-Date:   Thu, 20 Apr 2023 03:48:45 +0300
+        Wed, 19 Apr 2023 17:49:30 -0700 (PDT)
+Message-ID: <c4344301-2c89-3b8b-2a5c-e6523f078fd9@linaro.org>
+Date:   Thu, 20 Apr 2023 03:49:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 08/17] drm/msm/dpu: Drop unused poll_timeout_wr_ptr
- PINGPONG callback
+Subject: Re: [PATCH v2 09/17] drm/msm/dpu: Move autorefresh disable from CMD
+ encoder to pingpong
 Content-Language: en-GB
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -84,9 +84,9 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Archit Taneja <architt@codeaurora.org>,
         Sravanthi Kollukuduru <skolluku@codeaurora.org>
 References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-8-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-9-ef76c877eb97@somainline.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230411-dpu-intf-te-v2-8-ef76c877eb97@somainline.org>
+In-Reply-To: <20230411-dpu-intf-te-v2-9-ef76c877eb97@somainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -100,19 +100,28 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 17/04/2023 23:21, Marijn Suijten wrote:
-> This callback was migrated from downstream when DPU1 was first
-> introduced to mainline, but never used by any component.  Drop it to
-> save some lines and unnecessary confusion.
+> This autorefresh disable logic in the physical command-mode encoder
+> consumes three callbacks to the pingpong block, and will explode in
+> unnecessary complexity when the same callbacks need to be called on the
+> interface block instead to accommodate INTF TE support.  To clean this
+> up, move the logic into the pingpong block under a disable_autorefresh
+> callback, replacing the aforementioned three get_autorefresh,
+> setup_autorefresh and get_vsync_info callbacks.
+> 
+> The same logic will have to be replicated to the interface block when it
+> receives INTF TE support, but it is less complex than constantly
+> switching on a "has_intf_te" boolean to choose a callback.
 > 
 > Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 18 ------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h |  6 ------
->   2 files changed, 24 deletions(-)
+>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   | 60 ++--------------------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    | 47 +++++++++++++++--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    | 25 ++-------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  4 ++
+>   4 files changed, 57 insertions(+), 79 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 
 -- 
 With best wishes
