@@ -2,82 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7CFF6E9064
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:37:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A00256E9080
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:42:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234610AbjDTKhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46764 "EHLO
+        id S234951AbjDTKmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:42:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231978AbjDTKgM (ORCPT
+        with ESMTP id S233899AbjDTKlv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:36:12 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8DF7A88
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:33:44 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso467961e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:33:44 -0700 (PDT)
+        Thu, 20 Apr 2023 06:41:51 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B833883FC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:40:30 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2a8aea0c7dcso3775571fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681986823; x=1684578823;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1681987229; x=1684579229;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Km7fYpP6TW/v//SsQT00GnyneejX9uUDDOVhZE5n5xI=;
-        b=omq6USS+6wPohpA8a0n0uXqurlRJCRBlTGmxbfed9VYsZHD6xxp8Z7lnZYfHm7JF1I
-         Ugpb+KXIro1kjq1OfPs/dZ6amfgct3ZJMGypRTpYuXvYKpOIUql260eVCSIMUrd5WgjY
-         +GpYIVfVvePMUmhYkvkT1o0AGpbnHfyTNjN1ZFAiNSBto9kJZJW3xqHauaSmXBWxOxlo
-         rINiyoQlHMS/gGmDujvisgk8WaJgXNBaKbfyRczEyQWAOV7mmXi7kLfxPt5NCz2a8A6d
-         zoE+048Nw6BlGD5ThUmW0JyZND4vPI5ZFOpBhYp+4uCOfMUTcCFM6P7YFbN2ZP+Y9nF3
-         thDQ==
+        bh=jvpctlVTJ1U3NkaamvHUx4lltTx2+8ORxLeM8FtUVpM=;
+        b=ApAKhT1sM3KPSUG0xc4B8WNojVMTwaVEy8yQ0NtoSlWtHiLV508ALD+W2+LyBqkcmV
+         BJ10MPqeCcGHLEYrixfR5Hg/+TB2IA++Cih2ntgQVHQ8VZCSEk0+SLy89+kqMERRDlyG
+         G/4KymO6c6wq/ahstnZVmmVqEKiB3X977c8LhhO1uz2lN2huNAT+OBUQDkpse6jKeIjh
+         GAjCG3uiTdspE5kMf2hrxiEbnzsS6WJ1z4GArqBzeGh0cQBtVl8OhG/sHFug+9sGHurp
+         Yg89E7oKGLrdvwis6NpIH7dZmkjfzc+b+C40/JVB+FLSypcrPXIyHEQV7de46Rc1if5B
+         myjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681986823; x=1684578823;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1681987229; x=1684579229;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Km7fYpP6TW/v//SsQT00GnyneejX9uUDDOVhZE5n5xI=;
-        b=dQ+c00Mo7OcYd+BSI+bupCR7kaUsTS3raIFuhsW+8K2gJ+AmTO8LztrnLPDZp0OAny
-         W+PPFjgi7KVwkmR5wgV5phe1+K0zd1+u+1ecc3fpgxW3VAAHTyWYqogB53gqo4+ujsSA
-         1TVL1PF46P2qA4Y8zqb2VpTu+MIYemkrdD3/ge16Zvh9RySE4tNdG7yvpgKk/XfY2Syn
-         LeeHQjddlgSbQNwESVs2izVdb/gT+MXFdu9bB1T5FRTwhYlF5NsKTKfH5I7F48ubdHh8
-         7c85ZBy/2HfA+jeraDAIKsn8dr/VxiyF5QGbcAAJNdCD7hfb+bZfOgVUVrrRqev60ixc
-         VRtg==
-X-Gm-Message-State: AAQBX9e7uGqDigcXHMsdg68p8Lu7MkgtC94H2nqK3+qFv+Nf7hl8JVyc
-        PmkTmW3WynOrbqY89nlDEmEQJA==
-X-Google-Smtp-Source: AKy350bbg9I6ZBPxb4VonvL9ujTQrhDttBE9Pxlis6/qvpG/a5zlxV4mrfqhjY4IdvKCqIzishwMyQ==
-X-Received: by 2002:ac2:5444:0:b0:4eb:2529:cbb2 with SMTP id d4-20020ac25444000000b004eb2529cbb2mr445613lfn.49.1681986822894;
-        Thu, 20 Apr 2023 03:33:42 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id n1-20020a2e8781000000b002a7e9e4e9dcsm190172lji.114.2023.04.20.03.33.42
+        bh=jvpctlVTJ1U3NkaamvHUx4lltTx2+8ORxLeM8FtUVpM=;
+        b=EOHqE7b9pbeoX6zsCB9QYCMBSGPI/zzV+9jlpey/nWzQ7SRys0sCfLWh8kZ3D+fWZH
+         BBEGVPERnV9gcnoTdzKQm739b798/PkZzC48709T78x785+BVjFvtfHkG0U8Pp8bVQ7R
+         p06kwJblDsLekZQ+C/IV6OqU5zAqJXVJ4fsvqFAdNcBSaXDkl9dRr3T4yAxy+I+UQGQ2
+         3nZ0kZJe4zpzJrwFKt0KXjXrUTGI9jDNaIhkD+tpuhkBff/5n4S8s+H+dFTBTDMqo+JV
+         p91xGfoAXzDJvwVDCpYQFCfMPzn0HusLQK2Tscs7N3s+Q336jEsXQf0BXRznCQcV9uSB
+         ErtA==
+X-Gm-Message-State: AAQBX9dzLdTOxBNJBtcJn1ACbHxhe/dh+y3KgGtC/15ROh7eF+Ng75Xi
+        G/QAkjtn0kgKJ2RzqW+jUuBYFqvCft0PqpMbyck=
+X-Google-Smtp-Source: AKy350bo4obzA3arKwwe6MWk7x6ej3rKRw0ia25dayIgHfP2h0gbpHYkQFjPBSqTrtkH/QImfQa61g==
+X-Received: by 2002:a19:a40a:0:b0:4eb:5305:a70f with SMTP id q10-20020a19a40a000000b004eb5305a70fmr272344lfc.50.1681987228751;
+        Thu, 20 Apr 2023 03:40:28 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id d25-20020ac25459000000b004eae73a0530sm176472lfn.39.2023.04.20.03.40.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 03:33:42 -0700 (PDT)
-Message-ID: <2c4d7635-4b59-fcbd-133e-984205379e11@linaro.org>
-Date:   Thu, 20 Apr 2023 13:33:41 +0300
+        Thu, 20 Apr 2023 03:40:28 -0700 (PDT)
+Message-ID: <bb28a19d-a6a4-89a2-1d7b-99146220d923@linaro.org>
+Date:   Thu, 20 Apr 2023 12:40:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 2/2] clk: qcom: Introduce SM8350 VIDEOCC
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] media: dt-bindings: qcom: camss: correct unit address
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Del Regno <angelogioacchino.delregno@somainline.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230413-topic-lahaina_vidcc-v3-0-0e404765f945@linaro.org>
- <20230413-topic-lahaina_vidcc-v3-2-0e404765f945@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230413-topic-lahaina_vidcc-v3-2-0e404765f945@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20230420072442.36308-1-krzysztof.kozlowski@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230420072442.36308-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,19 +84,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/04/2023 15:53, Konrad Dybcio wrote:
-> Add support for the Video Clock Controller found on the SM8350 SoC.
+
+
+On 20.04.2023 09:24, Krzysztof Kozlowski wrote:
+> Match unit-address to first reg entry.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   drivers/clk/qcom/Kconfig          |   9 +
->   drivers/clk/qcom/Makefile         |   1 +
->   drivers/clk/qcom/videocc-sm8350.c | 552 ++++++++++++++++++++++++++++++++++++++
->   3 files changed, 562 insertions(+)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+Konrad
+>  Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml | 2 +-
+>  Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml | 2 +-
+>  Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml  | 2 +-
+>  Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml  | 2 +-
+>  4 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+> index 12ec3e1ea869..abd444e12d05 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-camss.yaml
+> @@ -155,7 +155,7 @@ examples:
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+>      #include <dt-bindings/clock/qcom,gcc-msm8916.h>
+>  
+> -    camss: camss@1b00000 {
+> +    camss: camss@1b0ac00 {
+>        compatible = "qcom,msm8916-camss";
+>  
+>        clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>,
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> index 6aeb3d6d02d5..db2604802d51 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
+> @@ -221,7 +221,7 @@ examples:
+>      #include <dt-bindings/clock/qcom,gcc-msm8996.h>
+>      #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
+>  
+> -    camss: camss@a00000 {
+> +    camss: camss@a34000 {
+>        compatible = "qcom,msm8996-camss";
+>  
+>        clocks = <&mmcc CAMSS_TOP_AHB_CLK>,
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> index b28c8e17f158..2f23baf32b61 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm660-camss.yaml
+> @@ -227,7 +227,7 @@ examples:
+>      #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+>      #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+>  
+> -    camss: camss@ca00000 {
+> +    camss: camss@ca00020 {
+>        compatible = "qcom,sdm660-camss";
+>  
+>        clocks = <&mmcc CAMSS_AHB_CLK>,
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> index f9a003882f84..8f5c9aff37fb 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-camss.yaml
+> @@ -219,7 +219,7 @@ examples:
+>        #address-cells = <2>;
+>        #size-cells = <2>;
+>  
+> -      camss: camss@a00000 {
+> +      camss: camss@acb3000 {
+>          compatible = "qcom,sdm845-camss";
+>  
+>          clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
