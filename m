@@ -2,130 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9ABF6E8B5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:26:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1F8C6E8B72
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 09:28:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbjDTH0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 03:26:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39586 "EHLO
+        id S234103AbjDTH2w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 03:28:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233735AbjDTH0i (ORCPT
+        with ESMTP id S234057AbjDTH2v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 03:26:38 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E360103
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:26:37 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id xd13so4266992ejb.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:26:37 -0700 (PDT)
+        Thu, 20 Apr 2023 03:28:51 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2B635AA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:28:22 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id u3so4100871ejj.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 00:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20221208.gappssmtp.com; s=20221208; t=1681975596; x=1684567596;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LaCVvuCh0ifaod/8Osz9wRqo6LYk9iFhMUaDZ5ywzU4=;
-        b=HSxwHGoFkt1pfTNx3P/aMn78Qft/H5J/iUpd5Dtt67Q3lLbJ2cqELZ280B8RVP9ZI6
-         3YEMJHi59bhftwaSq+SH/3AXJhaP72uPkdWkxKcscMJxNwhsArxyCQV7s5V83hTyicNF
-         nfjlFpvVTHCEdsqLwdIe8aEJFzXtSrtI/GvaNr8cKS6z9VHGyaaq4Dns5byfIuQr3B/g
-         QY46hQIq0uY417faOyPO4xbA9sv6kwLDQzVR6AVEpIOMOkDjU2X38NFzBnTFtIBRCzsn
-         J8DeyanOx0w8Wa8rRbKW0DbN7Z7jtmPwVRGE8siIG3mhgk7dzNOISL3OOSA5cpmjtj3d
-         ZFMw==
+        d=linaro.org; s=google; t=1681975693; x=1684567693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5gylQokwHrbKYZEvA2K7+6XwCFe14DDzlgchEo04KvA=;
+        b=PutHU7bS6zImLQPyXAcvT5qTwrDitmhfAm5VM1+biikonfodBkAl+VjkfwYnfuDbnr
+         8DABuf5pRWz4qsEN5FJr/iEZW/KlsYhRmn7Apoj12ZPet64lIiCBhz8KDwA3PLzGuTwf
+         ZOtuwuGepUi9L22adCrN1IVo8Q4r5vfmiIb7RqpHG5yzZkc5LfDuqnwFpN8CeTOLP2pI
+         UdAzq7jL2e73KouKLIjISvE2g5W3gNBMKpN3LCCqnDuZ6np0h/opk1L2+gzWfegQJOvt
+         Ak3rVuqinaeEcG3E8tT6KeMnXd7bz2hZpwYPAr9bf6beTjSDMfsNTLEmYq65ikpAimQ1
+         xeFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681975596; x=1684567596;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LaCVvuCh0ifaod/8Osz9wRqo6LYk9iFhMUaDZ5ywzU4=;
-        b=V6cqLTpq7TJgakOGuCvgvVWoscJz/8h8AtEqKa5fIMRGIokgqhqw4WwqXxlqDJizL9
-         HsKYQhlC3Jx9OZIh7b6kwyANvkXz5VSFzlhwrvowHyPYfkjTcarHRkQhJVWYo5pecc1E
-         dCpywOIcgqG4y2uk9mV+oDUwRNiFYBKnQ1LXDOqc7/xMkQKs8x9Ulj9VkRLzNxhB9c+O
-         9JBE1wApsKjAROpXu0akU2kFoHAyNzechp1YFWPAtQYigjyznCk8NvH6ck9VXghvHlZG
-         hgjdWgc9Dpy+EhuJYay+G3RHKtbjOqFXUaZg4un4gXCSFjKm1F6VkXZFTWl3pe0cgs76
-         WrQQ==
-X-Gm-Message-State: AAQBX9drd5va+Ny2b2wRkvy3VTp47h0d0CWvg3klAMw1o74i0wBUbRnV
-        MSzrYzjxuYBklALyYXkJwnKZLWNv5zSP4ia94wQP
-X-Google-Smtp-Source: AKy350b+6jWk+FNIWk6cavQH152CzIc90gdPX+pCwubbVAUdMA3XRND8Zrw5SaaDEkP1wAvzR+tWGB6OxqTQhZLcC8g=
-X-Received: by 2002:a17:906:4b17:b0:94a:4c68:c1aa with SMTP id
- y23-20020a1709064b1700b0094a4c68c1aamr241124eju.7.1681975595637; Thu, 20 Apr
- 2023 00:26:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
- <20230419-dpu-tweaks-v1-4-d1bac46db075@freebox.fr> <74c59560-8a79-150f-0c1e-13f22eb35cb2@linaro.org>
-In-Reply-To: <74c59560-8a79-150f-0c1e-13f22eb35cb2@linaro.org>
-From:   Arnaud Vrac <avrac@freebox.fr>
-Date:   Thu, 20 Apr 2023 09:26:24 +0200
-Message-ID: <CAG9NU6_Ua_XLa+c=_93fs5chzQTyPf11W4F87UYbny1k-feoJw@mail.gmail.com>
-Subject: Re: [PATCH 04/11] drm/msm/dpu: allow using lm mixer base stage
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        d=1e100.net; s=20221208; t=1681975693; x=1684567693;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5gylQokwHrbKYZEvA2K7+6XwCFe14DDzlgchEo04KvA=;
+        b=JVRsdDG7j1YwOBv+cSNxpGSSPzQojAIriThiHbYUiguX3I6D5R3TvmKvXesVnWybyP
+         08uA0v9Ze4NfJLfWFmgDcNNmZF0oNkys+S+orEHgvASnXxgLG6kKh3n/QdX5RPc8aEoz
+         m/5Sqd+1JgO2OML5oRQzYs/ebyPYAm7K4alIp/MgA3PD3vzEsi+nlwGtMhJkFn5G2U2W
+         zh71Jk3Zwggyq36nbV3RZth4QA4jXEoER7CTH6k9yTRTUAlw803vvwAh3Fcu2B5WcSZC
+         we516ChsDcMaTUGcKX8HAjuyY2KPY57ygLYtCQMTBPtDhfb/6ArJhq+H4+O8u+wF9rMR
+         6P5g==
+X-Gm-Message-State: AAQBX9co1HXWdgsheDn/vznjb6VwxIbXvPna1DGcJ5M1D6G860KADuax
+        HomxsVwfjZ6aXP/ZQnaPBavVfA==
+X-Google-Smtp-Source: AKy350Z2Pe07K6VAQBdXbOWfVpcV85qsOc3+ruWuxMJ8aAHh/6Nhgchll3UoLIwNDYYAPVPdf4QCtg==
+X-Received: by 2002:a17:906:1055:b0:94f:6218:191e with SMTP id j21-20020a170906105500b0094f6218191emr517129ejj.20.1681975693177;
+        Thu, 20 Apr 2023 00:28:13 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
+        by smtp.gmail.com with ESMTPSA id oz5-20020a170906cd0500b0094f58a85bc5sm390396ejb.180.2023.04.20.00.28.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 00:28:12 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] ARM: dts: qcom: ipq4019: fix broken NAND controller properties override
+Date:   Thu, 20 Apr 2023 09:28:11 +0200
+Message-Id: <20230420072811.36947-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le jeu. 20 avr. 2023 =C3=A0 00:43, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> a =C3=A9crit :
->
-> On 19/04/2023 17:41, Arnaud Vrac wrote:
-> > The dpu backend already handles applying alpha to the base stage, so we
-> > can use it to render the bottom plane in all cases. This allows mixing
-> > one additional plane with the hardware mixer.
-> >
-> > Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
->
-> This might require additional changes. First, for the STAGE_BASE pipe
-> in the source split mode (iow using two LMs) should programmed with
-> respect to the right LM's x offset (rather than usual left top-left LM).
-> See  mdss_mdp_pipe_position_update().
+After renaming NAND controller node name from "qpic-nand" to
+"nand-controller", the board DTS/DTSI also have to be updated:
 
-Ok, I did test with 2 LMs and it seems to be working, I'll investigate.
+  Warning (unit_address_vs_reg): /soc/qpic-nand@79b0000: node has a unit name, but no reg or ranges property
 
->
-> Also this might need some interaction with CTL_MIXER_BORDER_OUT being
-> set or not. If I remember correctly, if there bottom plane is not
-> fullscreen or if there are no planes at all, we should set
-> CTL_MIXER_BORDER_OUT (which takes STAGE_BASE) and start assigning them
-> from STAGE0. If not, we can use STAGE_BASE.
+Cc: <stable@vger.kernel.org>
+Fixes: 9e1e00f18afc ("ARM: dts: qcom: Fix node name for NAND controller node")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts |  8 ++++----
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi   | 10 +++++-----
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi   | 12 ++++++------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-I also tested with both fullscreen and non-fullscreen primary plane,
-and no plane. I'll check this.
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
+index 79b0c6318e52..0993f840d1fc 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
+@@ -11,9 +11,9 @@ soc {
+ 		dma-controller@7984000 {
+ 			status = "okay";
+ 		};
+-
+-		qpic-nand@79b0000 {
+-			status = "okay";
+-		};
+ 	};
+ };
++
++&nand {
++	status = "okay";
++};
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
+index a63b3778636d..468ebc40d2ad 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1.dtsi
+@@ -102,10 +102,10 @@ pci@40000000 {
+ 			status = "okay";
+ 			perst-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
+ 		};
+-
+-		qpic-nand@79b0000 {
+-			pinctrl-0 = <&nand_pins>;
+-			pinctrl-names = "default";
+-		};
+ 	};
+ };
++
++&nand {
++	pinctrl-0 = <&nand_pins>;
++	pinctrl-names = "default";
++};
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
+index 0107f552f520..7ef635997efa 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1.dtsi
+@@ -65,11 +65,11 @@ i2c@78b7000 { /* BLSP1 QUP2 */
+ 		dma-controller@7984000 {
+ 			status = "okay";
+ 		};
+-
+-		qpic-nand@79b0000 {
+-			pinctrl-0 = <&nand_pins>;
+-			pinctrl-names = "default";
+-			status = "okay";
+-		};
+ 	};
+ };
++
++&nand {
++	pinctrl-0 = <&nand_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++};
+-- 
+2.34.1
 
->
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/dr=
-m/msm/disp/dpu1/dpu_plane.c
-> > index 14b5cfe306113..148921ed62f85 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> > @@ -881,7 +881,7 @@ static int dpu_plane_atomic_check(struct drm_plane =
-*plane,
-> >       r_pipe->multirect_mode =3D DPU_SSPP_MULTIRECT_NONE;
-> >       r_pipe->sspp =3D NULL;
-> >
-> > -     pstate->stage =3D DPU_STAGE_0 + pstate->base.normalized_zpos;
-> > +     pstate->stage =3D DPU_STAGE_BASE + pstate->base.normalized_zpos;
-> >       if (pstate->stage >=3D pdpu->catalog->caps->max_mixer_blendstages=
-) {
-> >               DPU_ERROR("> %d plane stages assigned\n",
-> >                         pdpu->catalog->caps->max_mixer_blendstages - DP=
-U_STAGE_0);
-> >
->
-> --
-> With best wishes
-> Dmitry
->
