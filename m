@@ -2,79 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A5676E8FEA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:18:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A7DF6E9001
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:22:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234783AbjDTKSe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 06:18:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59152 "EHLO
+        id S234052AbjDTKWE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:22:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232922AbjDTKRp (ORCPT
+        with ESMTP id S234188AbjDTKVg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 06:17:45 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B39E7EEC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:16:32 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5066ce4f490so673463a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:16:31 -0700 (PDT)
+        Thu, 20 Apr 2023 06:21:36 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD6A64C10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:20:43 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id l15so2167896ljq.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 03:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681985790; x=1684577790;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gxQN4hZ4JVSgplNB9vM+TACxEqA37qdo6fBUY/Qfhug=;
-        b=ZdhT1l/Ewnw8PJH9WHmYU66panGvAGmseKsA1QI14AcHKVjKMxVnU3LzsyflnJaSsT
-         0SsaSKbcWs7WckSg27jljRg6VV3DwqhpTLP6IQGi/ukXFFUEFcPf77aJPNk1r6zWsAej
-         9naiRVNvRcz5F/OBPqzOYQqWgb9MZD3r9qf94IrZh9CvL8ZXCvkjTR+YO2hbADbWUKv2
-         ATvis3qRCxbidFKHfTut9rMBICDy00uRi9OXLFLIijGALI+2XDJdj8NJtdDDNAw5xgeF
-         S4oFzhhbIZ37jr7lIrwpStGblZyQ9UE3jwRtyUfVymNzKv5D2vUZWLGXgfJtzCSOUzME
-         rw4Q==
+        d=linaro.org; s=google; t=1681986042; x=1684578042;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=K4p+Jwfh4f6O4EpesT7nZbdGy3tVSOOPuyRDN6YS6gs=;
+        b=EAwDI9yyVDLLbl6cAmcIwJbwcp8ZpDiZ7blcuGT4r1FqsctbdaZ4XrGUljVnifY3Zn
+         Gndd3JpvtkoUpNJkkB37SgCfPDPh3+TTL6sH3TGYYmTp99MHNg1Q5KxI+eItbzsIWlRv
+         UDveXKcjkTTPp4ZqP0Hx+0XrHpoNUfoJDi/J2NinFWQ1GW19KdEjHhm80L9X4DW/rc1j
+         eFWJVxxL9lI1ylb4JevgcquIYmeSA+0qUBd/wWCniICejXyZTJVK4RLwiUlHvueh+dUa
+         W/ST1rGntxJ+10N1r1mCsoT4xsmxNi34U/nXKOmhH6O6HRePbYTO9OLzUdPrQjc+Oq84
+         5BCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681985790; x=1684577790;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gxQN4hZ4JVSgplNB9vM+TACxEqA37qdo6fBUY/Qfhug=;
-        b=lXRagEuPzaHfvlHp5cGB9o+PuC6UrInU+jnbACEMBA+fCk3YnQ9vk5cOxOYYMmciCD
-         x6mXSm9INEHdqMcrtSwNXVdttpVi6MOOZl86QkqvuDQsdIFpKHAkb2Lo3TnmBirwZnVU
-         vY1me1JUFNjM/sR9K7xDWowmbIb7acKWd+QhSnNDXK9qUYCB8rV38t6cC1Uya+6UAeb6
-         Sal15mOi6do3CmazobM6QV6q6+gAn7KxUrMnmcLCNm0/o8f3q+NtlQblARMXvhGJmQMF
-         wD+klbkYehaU4Tquf9Ptpx6dM+tCbxdMtkggauGQadHNqqqJWRWw52aGlluOssveY7F9
-         3hxg==
-X-Gm-Message-State: AAQBX9fCmCDrDXLr3xNu9/LrTDPAFJNyq1SYnKaT4LvlZhoEIVortYHj
-        e1KujjshhkBfP3cBfI8LmbvHBg==
-X-Google-Smtp-Source: AKy350ZGpkQT2xEEpIlm7akllE9wiybPG/3gcFKmyhXXX82oydlx7HcP+cAwnEryxuxKBnISy8rfiQ==
-X-Received: by 2002:aa7:d78d:0:b0:506:be3f:ebb5 with SMTP id s13-20020aa7d78d000000b00506be3febb5mr1365210edq.1.1681985790496;
-        Thu, 20 Apr 2023 03:16:30 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
-        by smtp.gmail.com with ESMTPSA id l22-20020aa7c3d6000000b00506be898998sm588954edr.29.2023.04.20.03.16.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Apr 2023 03:16:30 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Patrick Lai <quic_plai@quicinc.com>
-Subject: [PATCH 6/6] soundwire: qcom: do not probe devices before bus/link init
-Date:   Thu, 20 Apr 2023 12:16:17 +0200
-Message-Id: <20230420101617.142225-7-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
-References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20221208; t=1681986042; x=1684578042;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=K4p+Jwfh4f6O4EpesT7nZbdGy3tVSOOPuyRDN6YS6gs=;
+        b=fpeuLfC9+Tox386/4+BjL4/SEsO04FcriFWacNplfT9fD7+FcVCO/xWBjRssZweAyv
+         A32UzSY7vggHZUp1hMhkcDD5I2NWzhUK6/KMBs30eSmOQvfPrfqpV1ljhzGFsSi0OdQ+
+         QaPHgB/kz7pGmu6ynkm4571SuN5g3GiIpKp/y7MgQ1L4g0wbcAG5Dq2Hg0Idj+9HGVOk
+         SwzsigGfgkWRhMdy1H4TvsLamvTUpDS4mkYThPliimSAdGuUHU+ccA2n0WXxUAMLAW/u
+         tmZ25Jg+2in+D46enMY2I3C8TWfvXuBQhB/cQcXb36QD+HVweC82bOWe+aZYrSFQ5Gd8
+         DWgQ==
+X-Gm-Message-State: AAQBX9e7LZ2oQAe3NCfm9tmxPUyc187LJe5JQzLpEpTj4qVHIzzfhuaz
+        hRBOacWVcqrdr6pXd9Js/Lw8Gw==
+X-Google-Smtp-Source: AKy350YWnFordrnmpiF7wIFWOYpQ/eTVAH3HUoCFwHRfS6GXxx1v6PZoYzAu8N/3JQL6nqKGub3QJA==
+X-Received: by 2002:a2e:9895:0:b0:2a8:bc05:1d7a with SMTP id b21-20020a2e9895000000b002a8bc051d7amr258934ljj.30.1681986042057;
+        Thu, 20 Apr 2023 03:20:42 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id n3-20020a2e8783000000b002a8e4678da4sm186778lji.139.2023.04.20.03.20.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Apr 2023 03:20:41 -0700 (PDT)
+Message-ID: <b9b6e799-c8a2-7d8c-4d87-56d899048454@linaro.org>
+Date:   Thu, 20 Apr 2023 12:20:39 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
+ <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
+ <ZEDwLB3RwT6mHIu4@gerhold.net>
+ <6175f709-8c88-6ec3-4c31-cac9f2440b52@linaro.org>
+ <ZEEOJ7VhccqCNTbj@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <ZEEOJ7VhccqCNTbj@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,223 +88,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Soundwire devices are supposed to be kept in reset state (powered off)
-till their probe() or component bind() callbacks.  However if they are
-already powered on, then they might enumerate before the master
-initializes bus in qcom_swrm_init() leading to occasional errors like:
 
-  qcom-soundwire 6d30000.soundwire-controller: Qualcomm Soundwire controller v2.0.0 Registered
-  wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:4 (ops wcd938x_sdw_component_ops)
-  wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:3 (ops wcd938x_sdw_component_ops)
-  qcom-soundwire 6ad0000.soundwire-controller: swrm_wait_for_wr_fifo_avail err write overflow
 
-The problem primarily lies in Qualcomm Soundwire controller probe() sequence:
-1. request_threaded_irq()
-2. sdw_bus_master_add() - which will cause probe() and component bind()
-   of Soundwire devices, e.g. WCD938x codec drivers.  Device drivers
-   might already start accessing their registers.
-3. qcom_swrm_init() - which initializes the link/bus and enables
-   interrupts.
+On 20.04.2023 12:04, Stephan Gerhold wrote:
+> On Thu, Apr 20, 2023 at 11:36:24AM +0200, Konrad Dybcio wrote:
+>> On 20.04.2023 09:56, Stephan Gerhold wrote:
+>>> On Thu, Apr 20, 2023 at 03:50:16AM +0200, Konrad Dybcio wrote:
+>>>> On 8.03.2023 22:35, Konrad Dybcio wrote:
+>>>>> Keepalive clocks for other platforms were gathered by digging in old
+>>>>> downstream kernels, please give them a test.
+>>>> I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
+>>>> some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
+>>>> are NOT governed by interconnect.. So before we can disable clocks,
+>>>> both will need to be implemented.. ugh... I was hoping we could avoid
+>>>> having it in rpmcc..
+>>> Can you give an example? Which clocks are affected on which SoC?
+>> msm8998/sdm660 and PNoC
+> 
+> I don't see a PNoC for 8998/660, do you mean the "cnoc_periph_clk"
+It's the same, but Qualcomm kept changing the name every kernel
+release, so that's why we have 50 defines for the same thing
+upstream :(
 
-Any access to device registers at (2) above, will fail because link/bus
-is not yet initialized.
 
-However the fix is not as simple as moving qcom_swrm_init() before
-sdw_bus_master_add(), because this will cause early interrupt of new
-slave attached.  The interrupt handler expects bus master (ctrl->bus.md)
-to be allocated, so this would lead to NULL pointer exception.
+> downstream? Like the other NoCs it seems to be a RPM_BUS_CLK_TYPE, which
+> means it does fit best into interconnect in my opinion. From a quick
+> grep I don't see any usage of it in msm-4.4 downstream other than the
+> active-only keepalive vote. So maybe you could just send that vote once
+> in icc_rpm_smd and then ignore that clock (don't expose it at all)?
+Hm, perhaps that does sound like a good idea! As far as I understand,
+it's governed internally.. Older SoCs had a separate PNoC fabric
+exposed.
 
-Rework the init sequence and change the interrupt handler.  The correct
-sequence fixing accessing device registers before link init is now:
-1. qcom_swrm_init()
-2. request_threaded_irq()
-3. sdw_bus_master_add()
-which still might cause early interrupts, if Soundwire devices are not
-in powered off state before their probe.  This early interrupt issue is
-fixed by checking if bus master (ctrl->bus.md) was allocated and if not,
-scheduling delayed work for enumerating the slave device.  Since we
-actually can handle early interrupt now, drop IRQF_TRIGGER_RISING flag
-from the interrupt, because it is not really valid and driver should use
-flags provided by DTS.
+Konrad
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-Change context depends on:
-https://lore.kernel.org/r/20230209131336.18252-3-srinivas.kandagatla@linaro.org
-https://lore.kernel.org/all/20230418095447.577001-1-krzysztof.kozlowski@linaro.org/
-
-Cc: Patrick Lai <quic_plai@quicinc.com>
----
- drivers/soundwire/qcom.c | 89 ++++++++++++++++++++++++++++++++--------
- 1 file changed, 72 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 679990dc3cc4..802d939ce7aa 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -19,6 +19,7 @@
- #include <linux/slimbus.h>
- #include <linux/soundwire/sdw.h>
- #include <linux/soundwire/sdw_registers.h>
-+#include <linux/workqueue.h>
- #include <sound/pcm_params.h>
- #include <sound/soc.h>
- #include "bus.h"
-@@ -187,6 +188,7 @@ struct qcom_swrm_ctrl {
- #endif
- 	struct completion broadcast;
- 	struct completion enumeration;
-+	struct delayed_work new_slave_work;
- 	/* Port alloc/free lock */
- 	struct mutex port_lock;
- 	struct clk *hclk;
-@@ -606,6 +608,37 @@ static int qcom_swrm_enumerate(struct sdw_bus *bus)
- 	return 0;
- }
- 
-+static void qcom_swrm_new_slave(struct work_struct *work)
-+{
-+	struct qcom_swrm_ctrl *ctrl = container_of(work, struct qcom_swrm_ctrl,
-+						   new_slave_work.work);
-+
-+	/*
-+	 * All Soundwire slave deviecs are expected to be in reset state (powered down)
-+	 * during sdw_bus_master_add().  The slave device should be brougth
-+	 * from reset by its probe() or bind() function, as a result of
-+	 * sdw_bus_master_add().
-+	 * Add a simple check to avoid NULL pointer except on early interrupts.
-+	 * Note that if this condition happens, the slave device will not be
-+	 * enumerated. Its driver should be fixed.
-+	 *
-+	 * smp_load_acquire() paired with sdw_master_device_add().
-+	 */
-+	if (!smp_load_acquire(&ctrl->bus.md)) {
-+		dev_err(ctrl->dev,
-+			"Got unexpected, early interrupt, device will not be enumerated\n");
-+		return;
-+	}
-+
-+	clk_prepare_enable(ctrl->hclk);
-+
-+	qcom_swrm_get_device_status(ctrl);
-+	qcom_swrm_enumerate(&ctrl->bus);
-+	sdw_handle_slave_status(&ctrl->bus, ctrl->status);
-+
-+	clk_disable_unprepare(ctrl->hclk);
-+};
-+
- static irqreturn_t qcom_swrm_wake_irq_handler(int irq, void *dev_id)
- {
- 	struct qcom_swrm_ctrl *ctrl = dev_id;
-@@ -668,9 +701,17 @@ static irqreturn_t qcom_swrm_irq_handler(int irq, void *dev_id)
- 					dev_dbg(ctrl->dev, "Slave status not changed %x\n",
- 						slave_status);
- 				} else {
--					qcom_swrm_get_device_status(ctrl);
--					qcom_swrm_enumerate(&ctrl->bus);
--					sdw_handle_slave_status(&ctrl->bus, ctrl->status);
-+					unsigned long delay = 0;
-+
-+					/*
-+					 * See qcom_swrm_new_slave() for
-+					 * explanation. smp_load_acquire() paired
-+					 * with sdw_master_device_add().
-+					 */
-+					if (!smp_load_acquire(&ctrl->bus.md))
-+						delay = 10;
-+					schedule_delayed_work(&ctrl->new_slave_work,
-+							      delay);
- 				}
- 				break;
- 			case SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET:
-@@ -780,6 +821,7 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
- 
- 	ctrl->intr_mask = SWRM_INTERRUPT_STATUS_RMSK;
- 	/* Mask soundwire interrupts */
-+
- 	if (ctrl->version < SWRM_VERSION_2_0_0)
- 		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_MASK_ADDR],
- 				SWRM_INTERRUPT_STATUS_RMSK);
-@@ -1485,6 +1527,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
- 	mutex_init(&ctrl->port_lock);
- 	init_completion(&ctrl->broadcast);
- 	init_completion(&ctrl->enumeration);
-+	INIT_DELAYED_WORK(&ctrl->new_slave_work, qcom_swrm_new_slave);
- 
- 	ctrl->bus.ops = &qcom_swrm_ops;
- 	ctrl->bus.port_ops = &qcom_swrm_port_ops;
-@@ -1514,9 +1557,10 @@ static int qcom_swrm_probe(struct platform_device *pdev)
- 
- 	ctrl->reg_read(ctrl, SWRM_COMP_HW_VERSION, &ctrl->version);
- 
-+	qcom_swrm_init(ctrl);
-+
- 	ret = devm_request_threaded_irq(dev, ctrl->irq, NULL,
- 					qcom_swrm_irq_handler,
--					IRQF_TRIGGER_RISING |
- 					IRQF_ONESHOT,
- 					"soundwire", ctrl);
- 	if (ret) {
-@@ -1524,18 +1568,6 @@ static int qcom_swrm_probe(struct platform_device *pdev)
- 		goto err_clk;
- 	}
- 
--	ctrl->wake_irq = of_irq_get(dev->of_node, 1);
--	if (ctrl->wake_irq > 0) {
--		ret = devm_request_threaded_irq(dev, ctrl->wake_irq, NULL,
--						qcom_swrm_wake_irq_handler,
--						IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
--						"swr_wake_irq", ctrl);
--		if (ret) {
--			dev_err(dev, "Failed to request soundwire wake irq\n");
--			goto err_init;
--		}
--	}
--
- 	pm_runtime_set_autosuspend_delay(dev, 3000);
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_mark_last_busy(dev);
-@@ -1549,7 +1581,18 @@ static int qcom_swrm_probe(struct platform_device *pdev)
- 		goto err_clk;
- 	}
- 
--	qcom_swrm_init(ctrl);
-+	ctrl->wake_irq = of_irq_get(dev->of_node, 1);
-+	if (ctrl->wake_irq > 0) {
-+		ret = devm_request_threaded_irq(dev, ctrl->wake_irq, NULL,
-+						qcom_swrm_wake_irq_handler,
-+						IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+						"swr_wake_irq", ctrl);
-+		if (ret) {
-+			dev_err(dev, "Failed to request soundwire wake irq\n");
-+			goto err_init;
-+		}
-+	}
-+
- 	wait_for_completion_timeout(&ctrl->enumeration,
- 				    msecs_to_jiffies(TIMEOUT_MS));
- 	ret = qcom_swrm_register_dais(ctrl);
-@@ -1589,6 +1632,18 @@ static int qcom_swrm_remove(struct platform_device *pdev)
- {
- 	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(&pdev->dev);
- 
-+	/*
-+	 * Mask interrupts to be sure no delayed work can be scheduler after
-+	 * removing Soundwire bus master.
-+	 */
-+	if (ctrl->version < SWRM_VERSION_2_0_0)
-+		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_MASK_ADDR],
-+				0);
-+	if (ctrl->mmio)
-+		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_CPU_EN],
-+				0);
-+
-+	cancel_delayed_work_sync(&ctrl->new_slave_work);
- 	sdw_bus_master_delete(&ctrl->bus);
- 	clk_disable_unprepare(ctrl->hclk);
- 
--- 
-2.34.1
-
+> 
+> Thanks,
+> Stephan
