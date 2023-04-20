@@ -2,80 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 784D66E87A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 03:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA44A6E8868
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 05:07:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231241AbjDTBu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 21:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50346 "EHLO
+        id S232516AbjDTDH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 23:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231994AbjDTBu0 (ORCPT
+        with ESMTP id S233790AbjDTDGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 21:50:26 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5682A49ED
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 18:50:20 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4edc114c716so245829e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 18:50:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681955418; x=1684547418;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nizPB57M3kviIBPTCEgCjkwcM2uwJN4yH7DbrqfjL/U=;
-        b=ijQFQOl0D+QxNYBLRsK03sCXvJSoXgkQ1tUoaxJ05thU2CniCDwmoENBu7lAqIOemt
-         9YrZQ1wxTOAqcrtydHSRhMzT9DozrQz9PnEF0lis0N7rI62uSCRqghv+Zwrle9os8HAN
-         gulc/qnPAky5h3942ws0EVPI4lF88ABikgUsbx1du9dmIIm1QH463wt9nvl7EOcSUu2y
-         pLezI17uxqXEUa5kRlmt+zUyf9BeG2e+E9GifCyK1IU+sl0+vRaD9tuOksNSwpl3oFFQ
-         Fp2DLHNRg1fp07/nPoC+prTmzfrdrNI75sUpODnTM2fjIYommNuGaebDkP9f/zInnXja
-         VdPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681955418; x=1684547418;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nizPB57M3kviIBPTCEgCjkwcM2uwJN4yH7DbrqfjL/U=;
-        b=gmvOFAKqimY7KoePgLqs069hiXTqZNvJMo0qKNyiUvD9lb0ftuT64nMabfXk8EUueQ
-         DHuAbyakZSWbfIHlmSDCmSacQ1D1dVfHpA/gApORky2GOLSab/emxxL1tzB4Un9ZkafI
-         leB4x+MxKKFdbApbVlHXM7w9Ng/PZ5ww57VfJFrJ1KUa/rBiVs9ubY+g+WPAzAlud6eG
-         CftJmF7qbDtgSdeuo7i3UNr0s/hIxkTzpYqjt3/GeL7nRLcJ7DGfSqC93z6hNOL7zSb+
-         tdYERqZMhWkAcYGSHMCrqBn5yqQXPJ0AM4f4vWQyTFyyKTJJHYx3CIGNZifonXdX0fl7
-         qpLw==
-X-Gm-Message-State: AAQBX9c8ZC1gh0+whle2h75UHr410sFdp17Be1Lcrnisadd73KKdosSf
-        5lCgFo6v9y/Oi/kHpCGCIjX+LA==
-X-Google-Smtp-Source: AKy350ZBHPNjSoDhsEErAWQW3i0ayKz28VoblspqqpkAPk69WKIMkGhhqmI1kaVf9dno1FI7mXTyGA==
-X-Received: by 2002:ac2:4c1a:0:b0:4eb:1606:48db with SMTP id t26-20020ac24c1a000000b004eb160648dbmr4418362lfq.22.1681955418544;
-        Wed, 19 Apr 2023 18:50:18 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id v20-20020ac25614000000b004edd4566110sm58915lfd.286.2023.04.19.18.50.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 18:50:18 -0700 (PDT)
-Message-ID: <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
-Date:   Thu, 20 Apr 2023 03:50:16 +0200
+        Wed, 19 Apr 2023 23:06:43 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD1749E0;
+        Wed, 19 Apr 2023 20:06:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681959976; x=1713495976;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Vrqpja8Z1hSqrZRC7tQPIr/La29qW5DFqZCbyUZi4Kk=;
+  b=GA2wWuKshoPOsjO2o1ZeEtriDk66nkCmLlQap2sYskLFmetyjGzP3jt7
+   Fhnschzkp29FjNBJp6s9Gq9lCUSXgSMcKsFUuuCrs33KCLIxhZrXhrhLF
+   D3RtDtccHZlqoUPqoOncBhubnpeZMhwZWvBNNGLjO/Tc+ABEok8fYJqQe
+   on6S2s+t9Og/ai1i2I7gtrPxqT494LQtZuD2xUai0AG1qr9ifRsqZ2k8W
+   A8n4jxkJC6drodLRHuowBaCIRD/+iPDIy1txcSGqphFGFStfZw2Ix2Fzt
+   WMKjCJyvfUA1mAQkwDM9ZMsM54b8l3wQjWTGX+hy8vMdEk7fHQrw4cRB0
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="431896672"
+X-IronPort-AV: E=Sophos;i="5.99,211,1677571200"; 
+   d="scan'208";a="431896672"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2023 20:06:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="760978836"
+X-IronPort-AV: E=Sophos;i="5.99,211,1677571200"; 
+   d="scan'208";a="760978836"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 19 Apr 2023 20:06:13 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1ppKcf-000fPU-0A;
+        Thu, 20 Apr 2023 03:06:13 +0000
+Date:   Thu, 20 Apr 2023 11:05:54 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>, mani@kernel.org,
+        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        quic_srichara@quicinc.com, quic_mdalam@quicinc.com
+Subject: Re: [PATCH V2] mtd: rawnand: qcom: Implement exec_op()
+Message-ID: <202304201013.6bradWxp-lkp@intel.com>
+References: <20230419093617.27134-1-quic_mdalam@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230419093617.27134-1-quic_mdalam@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,72 +68,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Md,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on mtd/nand/next]
+[also build test WARNING on linus/master v6.3-rc7 next-20230419]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/mtd-rawnand-qcom-Implement-exec_op/20230419-173849
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
+patch link:    https://lore.kernel.org/r/20230419093617.27134-1-quic_mdalam%40quicinc.com
+patch subject: [PATCH V2] mtd: rawnand: qcom: Implement exec_op()
+config: s390-randconfig-r034-20230418 (https://download.01.org/0day-ci/archive/20230420/202304201013.6bradWxp-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 437b7602e4a998220871de78afcb020b9c14a661)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install s390 cross compiling tool for clang build
+        # apt-get install binutils-s390x-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/a2d1599a63e93bde90166287021663cfc13c91b2
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Md-Sadre-Alam/mtd-rawnand-qcom-Implement-exec_op/20230419-173849
+        git checkout a2d1599a63e93bde90166287021663cfc13c91b2
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=s390 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=s390 SHELL=/bin/bash drivers/mtd/nand/raw/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202304201013.6bradWxp-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In file included from drivers/mtd/nand/raw/qcom_nandc.c:9:
+   In file included from include/linux/dma-mapping.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __raw_readb(PCI_IOBASE + addr);
+                             ~~~~~~~~~~ ^
+   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:37:59: note: expanded from macro '__le16_to_cpu'
+   #define __le16_to_cpu(x) __swab16((__force __u16)(__le16)(x))
+                                                             ^
+   include/uapi/linux/swab.h:102:54: note: expanded from macro '__swab16'
+   #define __swab16(x) (__u16)__builtin_bswap16((__u16)(x))
+                                                        ^
+   In file included from drivers/mtd/nand/raw/qcom_nandc.c:9:
+   In file included from include/linux/dma-mapping.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/big_endian.h:35:59: note: expanded from macro '__le32_to_cpu'
+   #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
+                                                             ^
+   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
+   #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
+                                                        ^
+   In file included from drivers/mtd/nand/raw/qcom_nandc.c:9:
+   In file included from include/linux/dma-mapping.h:10:
+   In file included from include/linux/scatterlist.h:9:
+   In file included from arch/s390/include/asm/io.h:75:
+   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writeb(value, PCI_IOBASE + addr);
+                               ~~~~~~~~~~ ^
+   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:692:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsb(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:700:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsw(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:708:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           readsl(PCI_IOBASE + addr, buffer, count);
+                  ~~~~~~~~~~ ^
+   include/asm-generic/io.h:717:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesb(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:726:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesw(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+   include/asm-generic/io.h:735:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           writesl(PCI_IOBASE + addr, buffer, count);
+                   ~~~~~~~~~~ ^
+>> drivers/mtd/nand/raw/qcom_nandc.c:2617:2: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
+           default:
+           ^
+   drivers/mtd/nand/raw/qcom_nandc.c:2617:2: note: insert 'break;' to avoid fall-through
+           default:
+           ^
+           break; 
+   13 warnings generated.
 
 
-On 8.03.2023 22:35, Konrad Dybcio wrote:
-> v1 -> v2:
-> - Use CLK_IS_CRITICAL instead of leaving a clk enable vote, expand macros
->   to do so
-> - Fix the keepalive clocks for 8998 & 660 (CNoC -> PNoC, it was
->   confusingly named cnoc_periph downstream)
-> - Introduce .determinte_rate to ensure we don't set keepalive clocks'
->   rates below 19.2 MHz
-> - Add a (!conditional!) way to test the ultimate goal of all these changes
->   by essentially enabling unused clk cleanup through a dt property (for
->   legacy reasons)
-> 
-> v2 was tested on:
-> 
-> - MSM8996 Sony Kagura (can disable unused)
-> - MSM8998 Sony Maple (can disable unused with OOT icc)
-> - SM6375 Sony PDX225 (can disable unused with OOT icc)
-> 
-> v1: https://lore.kernel.org/r/20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org
-> 
-> This series brings support for a couple of things necessary for the full
-> system idle on SMD RPM SoCs, namely unused clk shutdown and keepalive
-> votes (permanent active votes that are required on certain clocks for the
-> platform to function).
-> 
-> Tested on MSM8996 and SM6375, does not seem to introduce any additional
-> regressions.
-> 
-> Keepalive clocks for other platforms were gathered by digging in old
-> downstream kernels, please give them a test.
-I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
-some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
-are NOT governed by interconnect.. So before we can disable clocks,
-both will need to be implemented.. ugh... I was hoping we could avoid
-having it in rpmcc..
+vim +2617 drivers/mtd/nand/raw/qcom_nandc.c
 
-Konrad
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Konrad Dybcio (11):
->       dt-bindings: clock: qcom,rpmcc: Add a way to enable unused clock cleanup
->       clk: qcom: smd-rpm_ Make __DEFINE_CLK_SMD_RPM_BRANCH_PREFIX accept flags
->       clk: qcom: smd-rpm: Make DEFINE_CLK_SMD_RPM_BRANCH_A accept flags
->       clk: qcom: smd-rpm: Make BI_TCXO_AO critical
->       clk: qcom: smd-rpm: Make __DEFINE_CLK_SMD_RPM_PREFIX accept flags
->       clk: qcom: smd-rpm: Separate out a macro for defining an AO clock
->       clk: qcom: smd-rpm: Add support for keepalive votes
->       clk: qcom: smd-rpm: Introduce DEFINE_CLK_SMD_RPM_BUS_KEEPALIVE
->       clk: qcom: smd-rpm: Hook up PCNoC_0 keep_alive
->       clk: qcom: smd-rpm: Hook up CNoC_1 and SNoC_2 keep_alive
->       arm64: dts: qcom: msm8996: Enable rpmcc unused clk disablement
-> 
-> Shawn Guo (3):
->       clk: qcom: smd-rpm: Add .is_enabled hook
->       clk: qcom: smd-rpm: Add .is_prepared hook
->       clk: qcom: smd-rpm: Mark clock enabled in clk_smd_rpm_handoff()
-> 
->  .../devicetree/bindings/clock/qcom,rpmcc.yaml      |   6 +
->  arch/arm64/boot/dts/qcom/msm8996.dtsi              |   1 +
->  drivers/clk/qcom/clk-smd-rpm.c                     | 133 +++++++++++++++------
->  3 files changed, 106 insertions(+), 34 deletions(-)
-> ---
-> base-commit: fc31900c948610e7b5c2f15fb7795832c8325327
-> change-id: 20230303-topic-rpmcc_sleep-d67aad9f3012
-> 
-> Best regards,
+  2587	
+  2588	static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 cmd,
+  2589				       struct qcom_op *q_op)
+  2590	{
+  2591		int ret = 0;
+  2592	
+  2593		switch (cmd) {
+  2594		case NAND_CMD_RESET:
+  2595			ret = OP_RESET_DEVICE;
+  2596			break;
+  2597		case NAND_CMD_READID:
+  2598			ret = OP_FETCH_ID;
+  2599			break;
+  2600		case NAND_CMD_PARAM:
+  2601			if (nandc->props->qpic_v2)
+  2602				ret = OP_PAGE_READ_ONFI_READ;
+  2603			else
+  2604				ret = OP_PAGE_READ;
+  2605			break;
+  2606		case NAND_CMD_ERASE1:
+  2607		case NAND_CMD_ERASE2:
+  2608			ret = OP_BLOCK_ERASE;
+  2609			break;
+  2610		case NAND_CMD_STATUS:
+  2611			ret = OP_CHECK_STATUS;
+  2612			break;
+  2613		case NAND_CMD_PAGEPROG:
+  2614			ret = OP_PROGRAM_PAGE;
+  2615			q_op->flag = NAND_CMD_PAGEPROG;
+  2616			nandc->exec_opwrite = true;
+> 2617		default:
+  2618			break;
+  2619		}
+  2620	
+  2621		return ret;
+  2622	}
+  2623	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
