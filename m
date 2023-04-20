@@ -2,85 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 783D36E9CDD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 22:09:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E5FD6E9D4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 22:37:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231946AbjDTUJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 16:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39192 "EHLO
+        id S231287AbjDTUho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 16:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbjDTUJS (ORCPT
+        with ESMTP id S231166AbjDTUho (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 16:09:18 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 252C11FCA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 13:09:16 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4edb26f762dso836189e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 13:09:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682021354; x=1684613354;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M3Y9Il1oqwyiPf5dbbjjrGSxVhkcdbFOHAXUkuBeIj4=;
-        b=zxnUBz/XDQ02FR4wGa8lMypLEZQCrNT0gmPf4maNMnbuMNfuSFaPqvxs9d4PUfa7vN
-         Bj3V1ZrWP17FJrRl6FDueGniOvbu267cwf6v2e3pJuEPctgNdy6gahF6PuqZoRi4MQKO
-         SSposQliOyvlNLX4LPx8ZSBxLjwN+i4pPe6yc3H3vv3lEKNRlwS4NR6g4aV+qppSXPfP
-         rKs/iwDmzkhrHb6CWALpgVhQtqWZKZJA2pKpHr5ehUVj1dmdb7mIsp7ZxGiAw8GZnrJi
-         qIDZaNPWczBRC+yYJABQAIyYHK5pmcMcXorn9ohRbAcvuDQuhe8YyFf6ro6hTcpBV/vr
-         zKWA==
+        Thu, 20 Apr 2023 16:37:44 -0400
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5304D10E0;
+        Thu, 20 Apr 2023 13:37:43 -0700 (PDT)
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-38dfa504391so869257b6e.3;
+        Thu, 20 Apr 2023 13:37:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682021354; x=1684613354;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M3Y9Il1oqwyiPf5dbbjjrGSxVhkcdbFOHAXUkuBeIj4=;
-        b=esEfvGuLlSvlAGxhZlLTJFCtTgHvVDikqyyS7Wuqw/hIDNt4cihYNUUPQ21+JlduBA
-         smClQNPN+j+txPwYxIcAzJN3o0ZxU/bqzi9FKmfvtYDOBeoO5WOkW1mZi/qN669JDbBD
-         YaHQuUh4JKE2/Y+CHSV7ZRJ2rrzWJpsmRNIwsFvIju4vM4Hj//C0t8NS4wCH/m9tXQ0W
-         MVkGhwQgwOBmVTLdXdpzRzUsl9vhP7XZLN1z6kaKBlKvNiow+esZhLePyb0rI321usC7
-         zkPJBBo9wpVSx9mqGELmSWM7J+33pQ7i7bJVpKPKBsRSOm+uA3As9dJbCEJtOhxeSIYM
-         46kg==
-X-Gm-Message-State: AAQBX9cbpf+a/cVzIhYr8nJfjwrnDqVZZQGOIsRWooNnksRzvcKme4H0
-        PKUE5Go22Hg9j88QuU+I4/XXPA==
-X-Google-Smtp-Source: AKy350anF3iZ+VdWnOCjhqu7EDNHAFUSTDeDIECpJaTV9PMZ9UMJUEOYkat++z42gxxU67nMXSQZDA==
-X-Received: by 2002:ac2:4219:0:b0:4db:3e56:55c8 with SMTP id y25-20020ac24219000000b004db3e5655c8mr665153lfh.59.1682021354370;
-        Thu, 20 Apr 2023 13:09:14 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id s6-20020a19ad46000000b004db51387ad6sm318181lfd.129.2023.04.20.13.09.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 13:09:13 -0700 (PDT)
-Message-ID: <47d32e5e-49ad-3ffa-2862-26b78c9c6a98@linaro.org>
-Date:   Thu, 20 Apr 2023 23:09:13 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 0/2] DPU1 GC1.8 wiring-up
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        d=1e100.net; s=20221208; t=1682023062; x=1684615062;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d8FJdD4kjLm/hVjdcv73QbssVlPxYomGy/qXm+SYTd8=;
+        b=jjMTU78rL6pZsR236cBp5EHEV6DbCNXrzSnZL6KUytIlwHAlZvljfBS5VV25omRsU1
+         sPBofaFqqgc2gjPW2SMqvombxUU7lINeVZ0O86GSFvUm7eyVl2YLFioe7zJFVAelXep/
+         SuDnDljnHC3T098GGi/jOVcRzD7C2YPFvUvLYaYYS1liK7lPex3zOgyMi4KqlIqqrH3q
+         MEseO8bsYu76hXjGLRsvndM1l3D1zUR80j4txvvFnzF3mfJqDZ2meGWl8qziKXLNOR62
+         D+hblVXj7nC22B+1KSS5xk/yWktWoi5ihBtUWsTDA63wmfpl2C1DFLO91sDXCcxT1u5U
+         lblg==
+X-Gm-Message-State: AAQBX9cBgt6KKVrjSmiU6GHo3OGGVrCKbszonrZ2ymVdDfiGgnSjuvR7
+        DVcY6WUXpAIAH2eoTgU0Vw==
+X-Google-Smtp-Source: AKy350bS7On3P2idz+6zujSpiV6+igakBQK6inZE10KuPexfzZrc6bXmNRnKOEAjYNpCXhI4DPhCIw==
+X-Received: by 2002:aca:502:0:b0:38c:6997:ca18 with SMTP id 2-20020aca0502000000b0038c6997ca18mr1525896oif.46.1682023062465;
+        Thu, 20 Apr 2023 13:37:42 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id l83-20020acabb56000000b003646062e83bsm952774oif.29.2023.04.20.13.37.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 13:37:41 -0700 (PDT)
+Received: (nullmailer pid 3459023 invoked by uid 1000);
+        Thu, 20 Apr 2023 20:37:41 -0000
+Date:   Thu, 20 Apr 2023 15:37:41 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230420-topic-dpu_gc-v1-0-d9d1a5e40917@linaro.org>
- <5b133c55-e4f5-bfd2-b542-a7d44313c038@linaro.org>
- <c0e0a55a-cc37-fe8a-8d8a-5fe257f99b9a@linaro.org>
- <3f3b3637-ed85-09a1-22b7-3ccd4bc929bb@quicinc.com>
- <2dff9d62-cffe-c66f-9e50-3ecd64e44d37@linaro.org>
- <6a335df7-ff0b-098a-feec-45714159df04@linaro.org>
- <b134d09c-55fa-7879-80ff-900e39c20c3d@quicinc.com>
- <0f469b3c-5f0f-e027-8a9f-d1233169c04a@linaro.org>
- <951c7bbd-c239-336d-1914-af76f79a69d6@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <951c7bbd-c239-336d-1914-af76f79a69d6@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH] dt-bindings: soc: qcom: Drop unneeded quotes
+Message-ID: <168202301515.3458100.10435265872091186659.robh@kernel.org>
+References: <20230327170205.4106310-1-robh@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230327170205.4106310-1-robh@kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,88 +70,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 22:53, Abhinav Kumar wrote:
-> 
-> 
-> On 4/20/2023 12:51 PM, Dmitry Baryshkov wrote:
->> On 20/04/2023 22:47, Abhinav Kumar wrote:
->>>
->>>
->>> On 4/20/2023 11:01 AM, Dmitry Baryshkov wrote:
->>>> On 20/04/2023 04:36, Konrad Dybcio wrote:
->>>>>
->>>>>
->>>>> On 20.04.2023 03:28, Abhinav Kumar wrote:
->>>>>>
->>>>>>
->>>>>> On 4/19/2023 6:26 PM, Konrad Dybcio wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 20.04.2023 03:25, Dmitry Baryshkov wrote:
->>>>>>>> On 20/04/2023 04:14, Konrad Dybcio wrote:
->>>>>>>>> Almost all SoCs from SDM845 to SM8550 inclusive feature a GC1.8
->>>>>>>>> dspp sub-block in addition to PCCv4. The other block differ a bit
->>>>>>>>> more, but none of them are supported upstream.
->>>>>>>>>
->>>>>>>>> This series adds configures the GCv1.8 on all the relevant SoCs.
->>>>>>>>
->>>>>>>> Does this mean that we will see gamma_lut support soon?
->>>>>>> No promises, my plate is not even full, it's beyond overflowing! :P
->>>>>>>
->>>>>>> Konrad
->>>>>>
->>>>>> So I think I wrote about this before during the catalog 
->>>>>> rework/fixes that the gc registers are not written to / programmed.
->>>>>>
->>>>>> If thats not done, is there any benefit to this series?
->>>>> Completeness and preparation for the code itself, if nothing else?
->>>>
->>>> The usual problem is that if something is not put to use, it quickly 
->>>> rots or becomes misused for newer platforms. We have seen this with 
->>>> the some of DPU features.
->>>>
->>>> In case of GC (and the freshly defined DPU_DSPP_IGC, but not used) 
->>>> we have three options:
->>>> - drop the unused GC from msm8998_sblk.
->>>> - keep things as is, single unused GC entry
->>>> - fill all the sblk with the correct information in hope that it 
->>>> stays correct
->>>>
->>>> Each of these options has its own drawbacks. I have slight bias 
->>>> towards the last option, to have the information in place (as long 
->>>> as it is accurate).
->>>>
->>>
->>> My vote is for (1) . Today, GC is unused and from the discussion 
->>> here, there is no concrete plan to add it. If we keep extending an 
->>> unused bitmask for all the chipsets including the ones which will get 
->>> added in the future in the hope that someday the feature comes, it 
->>> doesnt sound like a good idea.
->>>
->>> I would rather do (1), if someone has time.
->>
->> Agree, this was the second item on my preference list. Could you 
->> please send this oneliner?
->>
-> 
-> Sure, i will send this by tomorrow, but its not a oneliner. Need to get 
-> rid of below too:
-> 
-> 470 struct dpu_dspp_sub_blks {
-> 471     struct dpu_pp_blk gc;
 
-Agree.
-
+On Mon, 27 Mar 2023 12:02:04 -0500, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
 > 
->>> OR lets stay at (2) till someone does (1).
->>>
->>> When someone implements GC, we can re-use this patch and that time 
->>> keep konrad's author rights or co-developed by.
->>>
->>>
->>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,apr.yaml     | 4 ++--
+>  Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml     | 4 ++--
+>  Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.yaml | 4 ++--
+>  Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 4 ++--
+>  Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml    | 4 ++--
+>  Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml     | 4 ++--
+>  Documentation/devicetree/bindings/soc/qcom/qcom,wcnss.yaml   | 2 +-
+>  7 files changed, 13 insertions(+), 13 deletions(-)
+> 
 
--- 
-With best wishes
-Dmitry
+Applied, thanks!
 
