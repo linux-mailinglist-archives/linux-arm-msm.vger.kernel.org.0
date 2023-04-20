@@ -2,154 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42E486E8EA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 11:54:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ACE16E8ECB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 12:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234281AbjDTJyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 05:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40170 "EHLO
+        id S229729AbjDTKCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 06:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234231AbjDTJyH (ORCPT
+        with ESMTP id S233978AbjDTKCY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 05:54:07 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B06E26BD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 02:54:02 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso447020e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 02:54:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681984440; x=1684576440;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mGGvYz0vqZ33n+fo0Tr5AwZsVe0Xqlv0TtcIG/mEdRM=;
-        b=FOLFkVdZ0v44OL6a8anDA51YEWjj1ueQkF6fXUjxy9/2GrffrqyIQV4jqMAU1uWkRr
-         IWmpPCKlgCSgBGZMOJk6lL+d19uqtXDYozyUl9ylDc0qsVqkyUc8vgPHwgBhis+sblZr
-         6CYCqqz9RHKsO8DpEvpLTEilZK5we08WkBhros9yXgygNmPXxqYgjjCmolN1dxR7GvcJ
-         Lh8WHR6ozwt7UrrvN5dPMdMc+JRM7zwSWRJkrbmE1ZQT2D+UvPnfylsDYrlF/kJMe7Da
-         AYtlBZ9czPCkn8xBazSzW6BKVro0eq8UvzoZOy5DTGeA2gHGeTsVxt9tua8feP17iUUP
-         TBLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681984440; x=1684576440;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mGGvYz0vqZ33n+fo0Tr5AwZsVe0Xqlv0TtcIG/mEdRM=;
-        b=Vulo6jXnNdbcmo8sWFrzwBuvTBwTeH97BzIM7+kMP5FhByTTimgL4BHrhzDDZX+16m
-         gQQsLp/ifwbLV5Qw7BcdVRnKsghhaIyjDgUqEjEaihTHh/l9mrFYrRvT1IP7FSx6NJg5
-         htWGJSOXx27mKZ7ZcKBDqIkOGM+sgGpTTcdWF2QjdhOu/yvh++JwyJi5j8q810H9G/3g
-         8H3O2V111zHSo0+uq7/ENlqEM3Fvs1zYwX4VTXXY8ZrZ/tzWwwFbGC8DVGwJ2cuaTlD3
-         7rvCgZ22b2WMz2Mi71WYbZ9CsdxZNSnxnmMKWV9nr6b56Gg5C4BjGNzk64TaRC5cmM8s
-         LByQ==
-X-Gm-Message-State: AAQBX9cUfA/XKpmDxry1xpx1IV1TRKT7qcZaKwkxH7F5D+tnR9O5mB6X
-        hl75T+icow0aOUeDFfztGoAnhg==
-X-Google-Smtp-Source: AKy350Y7UIxnxGPQnkZd6F1ty5wN9QW7ABmp+6yZagCX0dwlMCfwws+fXNS7jbCUDatA5h7CGh55LA==
-X-Received: by 2002:ac2:4a8c:0:b0:4ee:e0c7:435f with SMTP id l12-20020ac24a8c000000b004eee0c7435fmr116894lfp.61.1681984440112;
-        Thu, 20 Apr 2023 02:54:00 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id v28-20020ac2559c000000b004edc608d86bsm162230lfg.104.2023.04.20.02.53.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 02:53:59 -0700 (PDT)
-Message-ID: <bcbda796-908a-43d5-0744-c03656fda47b@linaro.org>
-Date:   Thu, 20 Apr 2023 12:53:58 +0300
+        Thu, 20 Apr 2023 06:02:24 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F582703;
+        Thu, 20 Apr 2023 03:02:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1681984942; x=1713520942;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=BJ8FeGpPWT+byd7+7AOk70gXCbuSUqNXSNoscAHOLMc=;
+  b=F6z8VLyRsuYQ0hONjs99X+HmPl9Ex1jsKwm03EyIvA4m5ZvMkgEc7n3i
+   h4BN3uKHqu88yflWA9tEgn36DQVOQrFSsQQ+RiePrRzkxCkFWz8AtdCpc
+   UMgA2qSwssDT/7/dbcwcZddUKKuTSNlXsTK3er+NJeQJap01IVZmPBKYC
+   o96Wxwm44qO/5vA4xf+9yAnmVKXq9YrUHRUoQjpsolUC8lr+GUypPUicz
+   G68ZxdgNaJ/Nh+IbA5fUSsCk78cXKq+mA+Myq5azTRrj6BsjPsflS7RNp
+   fKR75BdtXSAUbU9EjHxNF7bWAJaBrTPb0dYEzO6akwf3SIMA5RX9Ep0Ye
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="326019861"
+X-IronPort-AV: E=Sophos;i="5.99,212,1677571200"; 
+   d="scan'208";a="326019861"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2023 03:02:22 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10685"; a="1021531041"
+X-IronPort-AV: E=Sophos;i="5.99,212,1677571200"; 
+   d="scan'208";a="1021531041"
+Received: from ubik.fi.intel.com (HELO localhost) ([10.237.72.184])
+  by fmsmga005.fm.intel.com with ESMTP; 20 Apr 2023 03:02:17 -0700
+From:   Alexander Shishkin <alexander.shishkin@linux.intel.com>
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>
+Cc:     Mao Jinlong <quic_jinlmao@quicinc.com>,
+        linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+        linux-doc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        alexander.shishkin@linux.intel.com
+Subject: Re: [PATCH v2] stm: class: Add MIPI OST protocol support
+In-Reply-To: <20230419141328.37472-1-quic_jinlmao@quicinc.com>
+References: <20230419141328.37472-1-quic_jinlmao@quicinc.com>
+Date:   Thu, 20 Apr 2023 13:02:16 +0300
+Message-ID: <87cz3yyiqf.fsf@ubik.fi.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 04/11] drm/msm/dpu: allow using lm mixer base stage
-Content-Language: en-GB
-To:     Arnaud Vrac <avrac@freebox.fr>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
- <20230419-dpu-tweaks-v1-4-d1bac46db075@freebox.fr>
- <74c59560-8a79-150f-0c1e-13f22eb35cb2@linaro.org>
- <CAG9NU6_Ua_XLa+c=_93fs5chzQTyPf11W4F87UYbny1k-feoJw@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAG9NU6_Ua_XLa+c=_93fs5chzQTyPf11W4F87UYbny1k-feoJw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 10:26, Arnaud Vrac wrote:
-> Le jeu. 20 avr. 2023 à 00:43, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> a écrit :
->>
->> On 19/04/2023 17:41, Arnaud Vrac wrote:
->>> The dpu backend already handles applying alpha to the base stage, so we
->>> can use it to render the bottom plane in all cases. This allows mixing
->>> one additional plane with the hardware mixer.
->>>
->>> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
->>
->> This might require additional changes. First, for the STAGE_BASE pipe
->> in the source split mode (iow using two LMs) should programmed with
->> respect to the right LM's x offset (rather than usual left top-left LM).
->> See  mdss_mdp_pipe_position_update().
-> 
-> Ok, I did test with 2 LMs and it seems to be working, I'll investigate.
+Mao Jinlong <quic_jinlmao@quicinc.com> writes:
 
-The only reference I have here is the fbdev driver, see [1]. The newer 
-SDE driver doesn't handle STAGE_BASE vs STAGE0 (and DPU inherited that 
-design). Maybe this got fixed in hw at some point.
+> Add MIPI OST(Open System Trace) protocol support for stm to format
+> the traces. OST over STP packet consists of Header/Payload/End. In
+> header, there will be STARTSIMPLE/VERSION/ENTITY/PROTOCOL. STARTSIMPLE
+> is used to signal the beginning of a simplified OST base protocol
+> packet.The Entity ID field is a one byte unsigned number that identifies
+> the source. FLAG packet is used for END token.
 
-[1] 
-https://git.codelinaro.org/clo/la/kernel/msm-4.19/-/blob/LE.UM.4.4.1.r2-17500-QRB5165.0/drivers/video/fbdev/msm/mdss_mdp_pipe.c#L1789
+We'd need a better explanation of what OST is, maybe a link to the spec
+if one exists.
 
-I think, it only concerns the src_split + multirect cases, where the 
-rectangle base point is on the right LM.
+Another thing that this patch does is adding source identification,
+which needs to be described better.
 
-> 
->>
->> Also this might need some interaction with CTL_MIXER_BORDER_OUT being
->> set or not. If I remember correctly, if there bottom plane is not
->> fullscreen or if there are no planes at all, we should set
->> CTL_MIXER_BORDER_OUT (which takes STAGE_BASE) and start assigning them
->> from STAGE0. If not, we can use STAGE_BASE.
-> 
-> I also tested with both fullscreen and non-fullscreen primary plane,
-> and no plane. I'll check this.
+[...]
 
-Yes, the DPU driver always enables the MIXER_BORDER_OUT.
+> +CONFIG_STM_PROTO_OST is for p_ost driver enablement. Once this config
+> +is enabled, you can select the p_ost protocol by command below:
+> +
+> +# mkdir /sys/kernel/config/stp-policy/stm0:p_ost.policy
+> +
+> +The policy name format is extended like this:
+> +    <device_name>:<protocol_name>.<policy_name>
+> +
+> +With coresight-stm device, it will be look like "stm0:p_ost.policy".
 
-> 
->>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>> index 14b5cfe306113..148921ed62f85 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->>> @@ -881,7 +881,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->>>        r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
->>>        r_pipe->sspp = NULL;
->>>
->>> -     pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
->>> +     pstate->stage = DPU_STAGE_BASE + pstate->base.normalized_zpos;
->>>        if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
->>>                DPU_ERROR("> %d plane stages assigned\n",
->>>                          pdpu->catalog->caps->max_mixer_blendstages - DPU_STAGE_0);
->>>
->>
->> --
->> With best wishes
->> Dmitry
->>
+The part about protocol selection should probably be in stm.rst
+instead.
 
--- 
-With best wishes
-Dmitry
+> +You can check if the protocol is set successfully by:
+> +# cat /sys/kernel/config/stp-policy/stm0:p_ost.policy/protocol
+> +p_ost
 
+A successful mkdir is technically enough.
+
+> +With MIPI OST protocol driver, the attributes for each protocol node is:
+> +# mkdir /sys/kernel/config/stp-policy/stm0:p_ost.policy/default
+> +# ls /sys/kernel/config/stp-policy/stm0:p_ost.policy/default
+> +channels  entity    masters
+
+Where's "entity_available"?
+
+> +The entity here is the set the entity that p_ost supports. Currently
+> +p_ost supports ftrace and console entity.
+> +
+> +Get current available entity that p_ost supports:
+> +# cat /sys/kernel/config/stp-policy/stm0:p_ost.policy/default/entity_available
+> +ftrace console
+> +
+> +Set entity:
+> +# echo 'ftrace' > /sys/kernel/config/stp-policy/stm0:p_ost.policy/default/entity
+
+This is not a very good example, as it will flag everything that goes
+through STM as "ftrace", which is probably not what anybody wants.
+
+The bigger question is, why do we need to set the source type (for
+which "entity" is not a very good name, btw) in the configfs when
+corresponding stm source drivers already carry this information.
+There should be a way to propagate the source type from stm source
+driver to the protocol driver without relying on the user to set it
+correctly.
+
+> +See Documentation/ABI/testing/configfs-stp-policy-p_ost for more details.
+> diff --git a/drivers/hwtracing/stm/Kconfig b/drivers/hwtracing/stm/Kconfig
+> index eda6b11d40a1..daa4aa09f64d 100644
+> --- a/drivers/hwtracing/stm/Kconfig
+> +++ b/drivers/hwtracing/stm/Kconfig
+> @@ -40,6 +40,20 @@ config STM_PROTO_SYS_T
+>  
+>  	  If you don't know what this is, say N.
+>  
+> +config STM_PROTO_OST
+> +	tristate "MIPI OST STM framing protocol driver"
+> +	default CONFIG_STM
+> +	help
+> +	  This is an implementation of MIPI OST protocol to be used
+> +	  over the STP transport. In addition to the data payload, it
+> +	  also carries additional metadata for entity, better
+> +	  means of trace source identification, etc.
+
+What does "entity" mean here?
+
+[...]
+
+> +#define OST_TOKEN_STARTSIMPLE		(0x10)
+> +#define OST_VERSION_MIPI1		(0x10 << 8)
+
+Either write them as bits (BIT(12)) or as a hex value (0x1000).
+
+> +/* entity id to identify the source*/
+> +#define OST_ENTITY_FTRACE		(0x01 << 16)
+> +#define OST_ENTITY_CONSOLE		(0x02 << 16)
+> +
+> +#define OST_CONTROL_PROTOCOL		(0x0 << 24)
+
+Zero, really? At this point I'm wondering if this code has even been
+tested.
+
+[...]
+
+> +static ssize_t
+> +ost_t_policy_entity_store(struct config_item *item, const char *page,
+> +			size_t count)
+> +{
+> +	struct mutex *mutexp = &item->ci_group->cg_subsys->su_mutex;
+> +	struct ost_policy_node *pn = to_pdrv_policy_node(item);
+> +	char str[10] = "";
+> +
+> +	mutex_lock(mutexp);
+> +	if (sscanf(page, "%s", str) != 1)
+> +		return -EINVAL;
+> +	mutex_unlock(mutexp);
+
+You forgot to release the mutex in the error path.
+Also, why do you need a mutex around sscanf() in the first place?
+Also, the sscanf() can overrun str.
+
+> +	if (!strcmp(str, str_ost_entity_type[OST_ENTITY_TYPE_FTRACE]))
+> +		pn->entity_type = OST_ENTITY_TYPE_FTRACE;
+> +	else if (!strcmp(str, str_ost_entity_type[OST_ENTITY_TYPE_CONSOLE]))
+> +		pn->entity_type = OST_ENTITY_TYPE_CONSOLE;
+
+Why can't you strcmp() on the page directly?
+Also, this is where you do want to hold the mutex.
+Also, what if there are more source types?
+
+> +	else
+> +		return -EINVAL;
+> +	return count;
+> +}
+> +CONFIGFS_ATTR(ost_t_policy_, entity);
+> +
+> +static ssize_t ost_t_policy_entity_available_show(struct config_item *item,
+> +				char *page)
+> +{
+> +	return scnprintf(page, PAGE_SIZE, "%s\n", "ftrace console");
+
+Don't hardcode these.
+
+> +}
+> +CONFIGFS_ATTR_RO(ost_t_policy_, entity_available);
+> +
+> +static struct configfs_attribute *ost_t_policy_attrs[] = {
+> +	&ost_t_policy_attr_entity,
+> +	&ost_t_policy_attr_entity_available,
+> +	NULL,
+> +};
+> +
+> +static ssize_t notrace ost_write(struct stm_data *data,
+> +		struct stm_output *output, unsigned int chan,
+> +		const char *buf, size_t count)
+> +{
+> +	unsigned int c = output->channel + chan;
+> +	unsigned int m = output->master;
+> +	const unsigned char nil = 0;
+> +	u32 header = DATA_HEADER;
+> +	u8 trc_hdr[16];
+> +	ssize_t sz;
+> +
+> +	struct ost_output *op = output->pdrv_private;
+
+As said above, the stm source driver that calls here already knows its
+own source type, there's no need to store it separately.
+
+> +
+> +	/*
+> +	 * Identify the source by entity type.
+> +	 * If entity type is not set, return error value.
+> +	 */
+> +	if (op->node.entity_type == OST_ENTITY_TYPE_FTRACE) {
+> +		header |= OST_ENTITY_FTRACE;
+> +	} else if (op->node.entity_type == OST_ENTITY_TYPE_CONSOLE) {
+> +		header |= OST_ENTITY_CONSOLE;
+> +	} else {
+> +		pr_debug("p_ost: Entity must be set for trace data.");
+
+You forgot a newline.
+Also, this message seems to be quite useless: it's either a nop or a
+dmesg storm. In general, it's a bad idea to printk() in the write
+callback.
+
+> +		return -EINVAL;
+> +	}
+> +
+> +	/*
+> +	 * STP framing rules for OST frames:
+> +	 *   * the first packet of the OST frame is marked;
+> +	 *   * the last packet is a FLAG with timestamped tag.
+> +	 */
+> +	/* Message layout: HEADER / DATA / TAIL */
+> +	/* HEADER */
+> +	sz = data->packet(data, m, c, STP_PACKET_DATA, STP_PACKET_MARKED,
+> +			  4, (u8 *)&header);
+> +	if (sz <= 0)
+> +		return sz;
+> +
+> +	/* DATA */
+> +	*(u16 *)(trc_hdr) = STM_MAKE_VERSION(0, 4);
+> +	*(u16 *)(trc_hdr + 2) = STM_HEADER_MAGIC;
+> +	*(u32 *)(trc_hdr + 4) = raw_smp_processor_id();
+> +	*(u64 *)(trc_hdr + 8) = task_tgid_nr(get_current());
+
+What's the value in exporting PIDs when there are PID namespaces? How is
+this useful? Also, neither console nor ftrace are required to come in a
+task context.
+
+I already asked in the previous version, why is trc_hdr not a struct?
+
+There also used to be a timestamp field in trc_hdr, what happened to it?
+
+Regards,
+--
+Alex
