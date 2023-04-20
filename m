@@ -2,84 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A6CF6E9AB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:27:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 32A996E9AC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 19:32:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229448AbjDTR1y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 13:27:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33810 "EHLO
+        id S231561AbjDTRc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 13:32:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231441AbjDTR1v (ORCPT
+        with ESMTP id S230037AbjDTRc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 13:27:51 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D526D49DB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:27:47 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-507bdc5ca2aso1163686a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:27:47 -0700 (PDT)
+        Thu, 20 Apr 2023 13:32:57 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C58640D0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:32:55 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id h4so3714662ljb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 10:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682011666; x=1684603666;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qs3hS1zEcbd6LvW4gA839iJscm7oDwTflWd6VJTMIkA=;
-        b=LQ92EKM0FhI2a7WhS8KC2S2HlkKIfkw4TWDVyq4861pzjOA3488Sb2Jm9+FJFTSDfd
-         vO4WIDkoHElxe4j9hWc4dgkfd0wocJjCUoH8KLEZdL64v+BAxCo6SQZURV4Xx1STy7Wz
-         VkOYdPU54A0vrdCRPzGP6/ZVCVc4VV4O2dRhOxe46kd3JLC8Io5w1UcqgRUhOpA9JHJD
-         tYDLXvpnCCtEuJK/kz935CIr6N+r90q2bO0DG1oDrHYhffo53xdtbHHAp4f/tXgZlFnn
-         QxqA3UFM1nVZf2abwDMejQ/G0xeSA95ZRG6N9NpcvziK/H9r9EJzR9MUZylimVb5X5SV
-         C9Zg==
+        d=linaro.org; s=google; t=1682011973; x=1684603973;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PMu93c2gYoXnO7B9slEwJygFJeopiwqYcQo4P3f1t+8=;
+        b=iOcSFGPT5NJMqkObNfENlnMWQuLzr8RN5hOMtxdkuzAlNCuVD2FzhRLMQfJHnD/rcL
+         9vYI7APHo51IEmPTUGT9PWxkRFkt14t1iIm4ZTKCuRRTtByxzY8NUgGNU8iaE7qspKJO
+         cJ9t75rLBwYhMeSNGlDJJgIsLCql7UQCEhGmSLxT2StD12AIJtomZy+GI+GHpMQm7/M7
+         cWW8ZJO0A7o2r/4Jmeu1x96MVBHq1QzLRQK870r4N1jZdFLg0iA/8BNf/VK/YRxb7TMi
+         lfhT1kzv0N2abbRC4Y43TryISMWJEtgnXDHZ9xU5+qOnM8t5lMojeoAKC+UCKnqofrFq
+         +Swg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682011666; x=1684603666;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qs3hS1zEcbd6LvW4gA839iJscm7oDwTflWd6VJTMIkA=;
-        b=LW21qFZ+Fg5vXlku+ygZsrTO1PZAwY+SCOiu6Le+l18NvtyvaLVwUVIq1QQPrtY0ws
-         Vv8Ai37ANqOOmwI/C2v/n4DQGDeVYZaoIFiia12tp5G+OnjoMkogKRk8Ak1DNrWVstEr
-         kJvvElkD78WWaDo8fyZju1mvShSgAVvyEtkH93ymmxtxm1dReK12BV+2vulZRZdg1vNI
-         OV1bpvkKm+gV362RnKwdPqMnqUwImC4v9D+wwbRJ2MjF97Ew6h6XQM0YbpadpUah+37p
-         d+/Wmqtr79W1t7QXLvlVZBEqgCrD/jX1LSMQPf8Qhv7x0P0frO0givGCMls5DmFxbs9l
-         pgPw==
-X-Gm-Message-State: AAQBX9cujrpmxpqc2c2kLb8TdmqqNIwOV1/lqHmGAT11+ZZeHuiH4Uf2
-        X3WJrBxvEIc6vZ9W4tdL/G5tqw==
-X-Google-Smtp-Source: AKy350YOpwmLNpt73flS8U2L5sl5fGklkf6iG6tZDTuKotTJFGawChDefw8Dm8dZ67D8xoCc5A+Ozw==
-X-Received: by 2002:a50:fa89:0:b0:4fa:b302:84d4 with SMTP id w9-20020a50fa89000000b004fab30284d4mr2418861edr.13.1682011666275;
-        Thu, 20 Apr 2023 10:27:46 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:bcb8:77e6:8f45:4771? ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
-        by smtp.gmail.com with ESMTPSA id y10-20020aa7d50a000000b00506a5606343sm963515edq.14.2023.04.20.10.27.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 10:27:45 -0700 (PDT)
-Message-ID: <beaec77b-9a61-6afd-59fa-fa726cae7a54@linaro.org>
-Date:   Thu, 20 Apr 2023 19:27:44 +0200
+        d=1e100.net; s=20221208; t=1682011973; x=1684603973;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PMu93c2gYoXnO7B9slEwJygFJeopiwqYcQo4P3f1t+8=;
+        b=jC76tEca4BNEqhfBP4RVH/B2FLb7QxDjwHR7AjZ1KVfbUvnYHfJhCq9Q7K/RnG9GhL
+         mn/tYn6cjCCrTRzBkXGs6xDGOQmVXB/i91817klQHk8sEnPpA93X9Q8l/OK5LXU8Gq4I
+         Go/5sccW6FjVX5sImOCmM3m26xgjd4QjjwPh8yOM6fY7Gsyn1xp2E2zCKs0PRMmm6+dt
+         zRDvo6CqYelLXXCZyXtPXl0SvXFn9sGsUnpX3yDMScYchHE4wpfRiehBfI5uja0kN+Nt
+         RpH2htW7zLBbQfvXlGud7U2rUknbGVYWOUDsIWzdDvam0z7ImSnMaH4NVTxqAvNlHJ+l
+         uPUg==
+X-Gm-Message-State: AAQBX9fkhaib5uzLQ+jC0Hr5rAuw+mrCLH56veXmAfq5CojKAQcZbbh8
+        QABDHdgrZkmY9dMXuCi+oSz8Tw==
+X-Google-Smtp-Source: AKy350YCIvzoC3bQqiv88BMnSKxCl7YsUyoUIg1If3KsIYiPncBILvB5mXz90XG0MQbAiVWdugjCnw==
+X-Received: by 2002:a05:651c:312:b0:2a9:7985:b2f5 with SMTP id a18-20020a05651c031200b002a97985b2f5mr1705522ljp.24.1682011973237;
+        Thu, 20 Apr 2023 10:32:53 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id e22-20020a2e8ed6000000b002a8c1462ecbsm309597ljl.137.2023.04.20.10.32.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 10:32:52 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v4 0/2] SM8350 VIDEOCC
+Date:   Thu, 20 Apr 2023 19:32:49 +0200
+Message-Id: <20230413-topic-lahaina_vidcc-v4-0-86c714a66a81@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 5/6] soudnwire: master: protect concurrecnt check for
- bus->md
-Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     Patrick Lai <quic_plai@quicinc.com>
-References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
- <20230420101617.142225-6-krzysztof.kozlowski@linaro.org>
- <7ee41bcb-8656-49ec-40b6-15072c080d08@linux.intel.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <7ee41bcb-8656-49ec-40b6-15072c080d08@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIAEF3QWQC/43NTQrCMBAF4KtI1kbya6kr7yEiSZq2AyUpSQ1K6
+ d2ddieCdPlmeN+bSfYJfCaXw0ySL5AhBgzqeCCuN6HzFBrMRDAhmeKSTnEERwfTGwjmUaBxjlr
+ XGGtVpbUSBJvWZE9tMsH12A3PYcDjmHwLr23qdsfcQ55iem/Lha/X/yOFU0a5VG1thTDayuuAz
+ xRPMXVkBYvYgQhE2krwRrPKa61/ELkDkYgwr5iqzrqt1TeyLMsHXkaHplYBAAA=
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1682011971; l=1530;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=93PGuTesqpL9Pwcb1WJp1xK9V1diRq1o/c76V6de+NU=;
+ b=ythZ0cYRp+yVZKrwisW/OSq+a6uSM+i7d5ETgnwQsvLfui6DeWGYKABlE3Yf43lH9+ay5jIDl7eU
+ Vs9qZAFZAUXPBo6iysebo1QLgFiDr+5ymi1OHNoKskgLFDYIKNoV
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,49 +91,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 18:42, Pierre-Louis Bossart wrote:
-> typos in commit title...
-> 
-> On 4/20/23 05:16, Krzysztof Kozlowski wrote:
->> The Soundwire master controllers might want to check for bus->md
-> 
-> Apologies for being pedantic but 'manager' and 'controller' are
-> different concepts in SoundWire, see DisCo spec.
-> It's not a 1:1 mapping, a controller can rely on M managers
+v3 -> v4:
+- pick up rb
+- include qcom,gcc.yaml in the binding
 
-I wrote master, not manager. For the Qualcomm case one controller is one
-master, but in general I try to avoid the master/slave terminology.
+v3: https://lore.kernel.org/r/20230413-topic-lahaina_vidcc-v3-0-0e404765f945@linaro.org
 
-> 
->> initialization to avoid race between early interrupt and finish of
->> sdw_bus_master_add()/sdw_master_device_add().  Such early interrupt can
->> happen if Soundwire devices are not powered off during their probe.
->>
->> Add a store release barrier, so the Soundwire controllers can safely
->> check it in concurrent (e.g. in interrupt) way.
-> 
-> Can you elaborate on the race condition? I am not following what breaks,
-> and what entity generates the 'early interrupt'.
+v2 -> v3:
+- Use a consistent VIDEO_CC_ prefix for resets
+- Separate out the binding (and don't pick up the rb as a consequence)
+- drop all pm_clks code
 
-The condition is explained in next patch. If you think it's better, I
-can squash it with next.
+v2: https://lore.kernel.org/r/20230413-topic-lahaina_vidcc-v2-0-f721d507e555@linaro.org
 
-If the condition is still not clear, drop a note in next patch, so I
-will elaborate there.
+v1 -> v2:
+- "){" -> ") {"
+- subsys_initcall -> module_platform_driver
+- constify lucid_5lpe_vco & .hw.init
+- devm_add_action_or_reset -> devm_pm_runtime_enable
 
-> 
-> I am specifically concerned about adding this in common code without any
-> matching smp_load_acquire() - which is only added in the following patch
-> for the Qualcomm manager only, but not added for Intel/AMD managers. Is
-> this not a problem?
+v1: https://lore.kernel.org/r/20230413-topic-lahaina_vidcc-v1-0-134f9b22a5b3@linaro.org
 
-Shouldn't be. The barrier just won't be effective for these drivers, but
-that should not be a problem, because I also did not add to these
-checking bus->md in a concurrent path.
+This serires brings support for SM8350 videocc and updates the
+related dt-bindings.
 
-Basically the barrier here is necessary because I want to check bus->md
-in Qualcomm master interrupt handler.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: clock: Add SM8350 VIDEOCC
+      clk: qcom: Introduce SM8350 VIDEOCC
+
+ .../bindings/clock/qcom,sm8350-videocc.yaml        |  68 +++
+ drivers/clk/qcom/Kconfig                           |   9 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/videocc-sm8350.c                  | 552 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,sm8350-videocc.h    |  35 ++
+ include/dt-bindings/reset/qcom,sm8350-videocc.h    |  18 +
+ 6 files changed, 683 insertions(+)
+---
+base-commit: 67d5d9f013d6c3829383c08162939cabff14fccc
+change-id: 20230413-topic-lahaina_vidcc-bcdabb475542
 
 Best regards,
-Krzysztof
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
