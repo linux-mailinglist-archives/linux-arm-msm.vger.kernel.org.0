@@ -2,80 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C81F36E950A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 14:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 900DB6E9531
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 15:00:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230200AbjDTMuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 08:50:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42068 "EHLO
+        id S231234AbjDTNAV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 09:00:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231463AbjDTMuA (ORCPT
+        with ESMTP id S230045AbjDTNAU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 08:50:00 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 496A910D2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 05:49:58 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id fy21so6050244ejb.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 05:49:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681994997; x=1684586997;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=86inLg404iy6XZr71SasfCq+JcTZG2gc/SGQxXWY/6o=;
-        b=ewdl5zIzTb8Mb0OWtnf8fTIKE8H0qqG6mX9jAgtmwfdnUfORpwAQluc2xLkCrrbD6I
-         z+xRcFlNRGEYEQ5IuiTscCoq/5gl88w/CRG+eBGnkMaZOoibewDxQkXy2VVRTbzlaBKq
-         MUaQjvweyhGGi6IvJVOO3j3olh9q8tAh15GRlSNPiZKhwH0vqvLmqk3FFbLUJkX5loUB
-         aRhfZNeA3aOK0vushyxTKhGd2VZHLGuKOwWBVf+/N0fYOJ4y0AAGCM2KxDJ5gVFnC2gp
-         iHOmsM5nbquivT3o43u/ZgDhncRWA4bE6ezOoaOrxJJljYYaQRbckSkwhXfYRCx9OiUf
-         O4tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681994997; x=1684586997;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=86inLg404iy6XZr71SasfCq+JcTZG2gc/SGQxXWY/6o=;
-        b=XTW3J2yBdIxq98pDXCktZnvKr7WAU1T+QaZSmWTuO6AuVFtD9AFf0GNTLYvAKnpVDy
-         A7pfAniZZihQ+jT5/LMRJ7kBFdzsY3RdGqlQkwG9+rw+G5BukI9UhKV3I9WB9dp4dK9N
-         RA95JzjB7XG8t44tNjN3+3UFJnSg64HvLJ80bbESOghROMNH2nZ0TTkMj/QCMPrJ/7Cw
-         TX1U8kErLds47Z5jkZthLOXyHAUk8YRSTPE2itMAuEGrrYqyG1I/rEpU5KnhPkVQAvwW
-         MvkD5lAmFNtflvbdDqCSsM7YbnW7+pyNE5rltfedrKLpz1YpYRhuLARfchhsQLscb28M
-         HpBg==
-X-Gm-Message-State: AAQBX9cvWFvQfKWBytxs6L9ywYHEreavUUQHoqBepVPUUnVre3aECL4h
-        dn2cOXhK938k6nd3NwoA7lsEzw==
-X-Google-Smtp-Source: AKy350Yx+YoxEu26bUs+n4hWzHl2DS/ZsBBqF9kIcEeumzVXzc+55WJ2bfeR5ZuzHO7Iv3lxtaHQqw==
-X-Received: by 2002:a17:906:53d2:b0:930:b130:b7b with SMTP id p18-20020a17090653d200b00930b1300b7bmr1640306ejo.6.1681994996750;
-        Thu, 20 Apr 2023 05:49:56 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:bcb8:77e6:8f45:4771? ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
-        by smtp.gmail.com with ESMTPSA id o9-20020a170906774900b0094f8ec35070sm697649ejn.113.2023.04.20.05.49.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 05:49:56 -0700 (PDT)
-Message-ID: <daa2de06-9906-cc4c-600e-9f16351d7d43@linaro.org>
-Date:   Thu, 20 Apr 2023 14:49:55 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] ARM: dts: qcom: ipq4019: fix broken NAND controller
- properties override
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thu, 20 Apr 2023 09:00:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3269740E7;
+        Thu, 20 Apr 2023 06:00:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B10396496A;
+        Thu, 20 Apr 2023 13:00:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A9DC433D2;
+        Thu, 20 Apr 2023 13:00:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1681995618;
+        bh=CbmhJ3ZmVyg2k2Wza3FXUHP83EnEg08C0pPRDzyTo5c=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bAnJ6mgoMDNZ3IS69NorlaK/rufDvakTN1i7fT5q559Ukqs3hl+WiRBur3cF6T74O
+         vISmrHH9rSPS9BEUt4DjfjA7n5Tc9obUVfJwQUucBA4Sez3TpKs3WufBtpROiWwolb
+         Wto99A1LUUgOYiD20XqGjDWc4x7pg9sSk4rGLgXTdU/ag41t8hZhVi2KbPwyqhGz8l
+         KWh4IymK+Ug9WONtMrPTMp5Hc2nuXiBc5R64rLKp/UA+znk5ZhjfIKhhxDmfAqTXXO
+         WjQ2cSueIwsrPTHlsNfV7QXo260JSHc8OHjA4OFSbw7Feh/cl9GytBQNYH8d00jO41
+         fvau9+erQLAgQ==
+Date:   Thu, 20 Apr 2023 14:00:06 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     stable@vger.kernel.org
-References: <20230420072811.36947-1-krzysztof.kozlowski@linaro.org>
- <ab7c0eab-4b80-2186-de92-dea3df58c298@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ab7c0eab-4b80-2186-de92-dea3df58c298@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Patrick Lai <quic_plai@quicinc.com>
+Subject: Re: [PATCH 1/6] ASoC: wcd938x: switch to using gpiod API
+Message-ID: <d746ee5f-283d-44ce-b72c-18c8955d38b1@sirena.org.uk>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-2-krzysztof.kozlowski@linaro.org>
+ <6b355201-a957-4fca-a513-d5fa0742fb40@sirena.org.uk>
+ <fe6202ee-2552-8b5c-c2d5-f2f7042b901d@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PfnKUriuZ2R4YLEv"
+Content-Disposition: inline
+In-Reply-To: <fe6202ee-2552-8b5c-c2d5-f2f7042b901d@linaro.org>
+X-Cookie: Above all else -- sky.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,22 +70,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 12:42, Konrad Dybcio wrote:
-> 
-> 
-> On 20.04.2023 09:28, Krzysztof Kozlowski wrote:
->> After renaming NAND controller node name from "qpic-nand" to
->> "nand-controller", the board DTS/DTSI also have to be updated:
->>
->>   Warning (unit_address_vs_reg): /soc/qpic-nand@79b0000: node has a unit name, but no reg or ranges property
->>
->> Cc: <stable@vger.kernel.org>
-> Cc: <stable@vger.kernel.org> # 5.12
-> 
-> (g show 9e1e00f18afc:Makefile | head, rounded up to first release)
 
-You do not have to do this. The Fixes tag defines backporting.
+--PfnKUriuZ2R4YLEv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Best regards,
-Krzysztof
+On Thu, Apr 20, 2023 at 02:30:17PM +0200, Krzysztof Kozlowski wrote:
+> On 20/04/2023 13:58, Mark Brown wrote:
+> > On Thu, Apr 20, 2023 at 12:16:12PM +0200, Krzysztof Kozlowski wrote:
 
+> >> -	gpio_direction_output(wcd938x->reset_gpio, 0);
+> >> -	/* 20us sleep required after pulling the reset gpio to LOW */
+> >> +	gpiod_set_value_cansleep(wcd938x->reset_gpio, 1);
+> >> +	/* 20us sleep required after asserting the reset gpio */
+
+> > This is inverting the sense of the GPIO in the API from active low to
+> > active high which will mean we're introducing a new reliance on having
+> > the signal described as active low in DT.  That's an ABI concern.
+
+> It's bringing it to the correct level. Old code was not respecting the
+> DTS thus if such DTS came with inverted design, the driver would not work.
+
+Sure, but OTOH if the user didn't bother specifying as active low it
+would work.  I suspect it's more likely that someone missed a flag that
+had no practical impact in DT than that someone would add an inverter to
+their design.
+
+> We were already fixing the upstream DTS users and I thought all of them
+> are fixed since long time (half a year) or even correct from the
+> beginning. Now I found one more case with incorrect level, which I will fix.
+
+That's just upstream, what about any downstream users?
+
+> > I remain deeply unconvinced that remapping active low outputs like this
+> > in the GPIO API is helping.
+
+> The code is mapping them to correct state. The previous state was
+> incorrect and did not allow to handle active high (which can happen).
+> This is the effort to make code correct - driver and DTS.
+
+We could handle inversions through an explicit property if that were
+needed, that would be a less problematic transition and clearer in the
+consumer code.
+
+--PfnKUriuZ2R4YLEv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmRBN1UACgkQJNaLcl1U
+h9ARLgf8DLC7sm26xjBonZJsiIb04p8lxnLkqb2sEIpOo1F5Wjc4SP5X97YAICDM
+E/UU3m0cvSWhzwHCy6JhM8IeudyRAOdzUeg5mfDt6QSE/bhynllmcgA5lid8/3IQ
+SPdchu68hQL8tsFn0QCtSapGBDfpHJ2Np0URhl/Ej4k/1Iij4uWIC9BNNg+oyGt5
+Cj6wcxugplyc3Mjnb/qW263HNA6cDNXUl6zxNBkPckbdFhuTQGazigpv+sdA7ZFc
+i4quuojHDlbkABb8Cs2oT/rYFH5hBLRVaa+2hwHWX0hLKPmzZSeqkMz7Xq9/2R4k
+VXlD4DkgX5ctElHSCn/c3mVLzvaa+Q==
+=ksk9
+-----END PGP SIGNATURE-----
+
+--PfnKUriuZ2R4YLEv--
