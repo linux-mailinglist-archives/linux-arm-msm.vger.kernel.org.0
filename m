@@ -2,78 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5A986E968F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:03:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51A2C6E96DA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 16:18:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231825AbjDTODt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 10:03:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33320 "EHLO
+        id S232078AbjDTOSM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 10:18:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230025AbjDTODt (ORCPT
+        with ESMTP id S232113AbjDTORt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 10:03:49 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AAAA1FC9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:03:36 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id q21so3001182ljp.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:03:36 -0700 (PDT)
+        Thu, 20 Apr 2023 10:17:49 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF4B7A8B
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:17:19 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id sz19so6816694ejc.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 07:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681999414; x=1684591414;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1682000221; x=1684592221;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NVkfX9ez3svxYnnM8rJPmrSpJjSKXj7Id4d2FlN3kdo=;
-        b=KqeZisWyrlpuDhOBtUm7MpDZRVm7fv6Ei87iod2bozueBqbASVy7qkz9awjAAVSP5G
-         YDnnpUgTd7mwlkUWt7aH1UYTPsy4Hk8bptdN7qqtXz6sN3sMqtqR15StRbdvsf3ixTaV
-         UNqN/1J3WmYyn+lJaeiZ0nOOWHRh5RGrGYeWFVOfI1N3FdHEKDIw9aqK0IWbwlkKi6bp
-         NMhO2QeiJZZhKRZ6AKbth5AIz/xO1JoKcWWV019YJcp2fd0K+lSkvREX95yT15aACGRu
-         snhW/lsMW4uu65AaijRCk8SCWAtcefRydH8VPjx78sD9fwFVNGpfgaKmmFjlmpSmcSTI
-         l+VA==
+        bh=2wQNlD/zbZubVbAb6VQ4BMWQUxzOi/x1fP1cdt2Qu0U=;
+        b=CEG9kZmAnGhpNiLQzNWUaanr8TDi+itdH6w6BGOHZV/L3Khz0ly4xEA6gOdmHxZAlb
+         va83cflx0YB2yZcMQY9uMW0TpxNvxehn9oHGxtjCt4/9u4rUbiBuT0dVeY5NFlxvx2cB
+         bRb8X6MSjNs20/5o9kMnm8w9QWTAWNu/kiwWEfMFRzuWhnfdPkPKFFdbmyPKcN3bDPtg
+         z+oEVSu3+7bKJVVbhSwN+EsWcpG+NC9H7gWiTkQie0CUO2aN04WEHKB7JHuKsykGUrvn
+         HJXGkYX+CUHMsushEYqon31xu4I6Q8lD8aeUhH3/dnEeMihCJoWmWeretCmKy+9Lrl42
+         FSvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681999414; x=1684591414;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1682000221; x=1684592221;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NVkfX9ez3svxYnnM8rJPmrSpJjSKXj7Id4d2FlN3kdo=;
-        b=MQAUFjQFk0B4UsKbfE5QfEGk6vT4tob+t9rYLaWm3R+QCrexYv53ozBpAT/ir1b+QJ
-         zrZhQ1PaWfLLkIxuzQTGfxrpLRj/1nrbNu1M8b9kTZTiSeX72nmsAp1OD1pGMEgwlT93
-         dHumB6gazFAnBAV7YI0XFn/3KhFvQK4wjWqpGEPhuhawPf9z+YeRJPkkJ9OxOSbqyDjD
-         UuY/Us3lJyeJp2R2Lv1xigHqfAaiEiNPcYAzGM4Zu/1K0ISNSeZsVmrlp42dAPgNOpnd
-         hS3NPEyxlpWVPojOgUWzKJIw9L9nnD5WU0AJCb4NQrtInGWCuUdqrk4PBhPECrFvzEZD
-         E5gQ==
-X-Gm-Message-State: AAQBX9dq/DAam+tSbS7t/OBXXp77zVqlyjMDf2PRAmSCXURMWyieoaEx
-        3SbebdfXTHUyh5QCAx9+b7+6Ug==
-X-Google-Smtp-Source: AKy350aSqD3HOes9oTjJ/n7YRoirlTchXOp15cOD09I43xK+WajJIRohATh87yc9DNwJ8QMiWGguPA==
-X-Received: by 2002:a05:651c:1504:b0:2a8:bb0a:2214 with SMTP id e4-20020a05651c150400b002a8bb0a2214mr2441992ljf.12.1681999414124;
-        Thu, 20 Apr 2023 07:03:34 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id n21-20020a2e86d5000000b002a77792f2c5sm244736ljj.62.2023.04.20.07.03.33
+        bh=2wQNlD/zbZubVbAb6VQ4BMWQUxzOi/x1fP1cdt2Qu0U=;
+        b=BLeiKgs3U2NcbG0k+GiPV5DgiCY8O3DKScYlhbPO8+1EI6tIF9MnCPYVyykAFshm1O
+         rmghrit6314kETNtmkQEa4PAeanDoH46C/Rof62kAqEymaxC7YVWp46HISRJwCcmfwpe
+         YZu6CTpAyYNugrKrG695mPAR1kQp1wPJWy1aXtL2KmjFkd0f/p5HzxUpsHW9XREXzntw
+         jnfTl2EpZ57YoiclHK9I1dUanpIWd6vNQRIJCQgI5H0X7g+pdGuQDE4aMK+und+2E2M4
+         k1yzarrUfPO0E42/ZRh0ezMJeWmKD+uM3UYC2kCttQmQGkpyxlY5y2EAxB/t8Ok6WrRd
+         HvAA==
+X-Gm-Message-State: AAQBX9coNIz+NU7lBzoZNgJv0Zq584KMH9w9Jt+iSqdSQS1PGBNUvk0B
+        gmvU2+8Xy7pzvSvNcuobP37dzw==
+X-Google-Smtp-Source: AKy350aRuYn9h0pCNvXsQuwGrEtaGF1pLj3VELsUGLD94aFA63MGBQRcR7yq4IQshi2XqiqXYm/pqg==
+X-Received: by 2002:a17:906:a9b:b0:94f:3521:394 with SMTP id y27-20020a1709060a9b00b0094f35210394mr1655353ejf.51.1682000220961;
+        Thu, 20 Apr 2023 07:17:00 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:bcb8:77e6:8f45:4771? ([2a02:810d:15c0:828:bcb8:77e6:8f45:4771])
+        by smtp.gmail.com with ESMTPSA id mb20-20020a170906eb1400b0094f432f2429sm773438ejb.109.2023.04.20.07.16.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 07:03:33 -0700 (PDT)
-Message-ID: <c2c0567a-8205-510d-bc0d-35b28dd64f70@linaro.org>
-Date:   Thu, 20 Apr 2023 17:03:33 +0300
+        Thu, 20 Apr 2023 07:17:00 -0700 (PDT)
+Message-ID: <3eb0cbb4-f6d9-db8a-031e-92627e70f41e@linaro.org>
+Date:   Thu, 20 Apr 2023 16:16:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3] drm/msm/dpu: always program DSC active bits
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
-        airlied@gmail.com, agross@kernel.org, andersson@kernel.org,
-        quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1681490777-15351-1-git-send-email-quic_khsieh@quicinc.com>
- <zs762prrzv2geulwa7ztlolmxgldiyynk22m5ak4ejbyzbctrp@jprtanslko7c>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <zs762prrzv2geulwa7ztlolmxgldiyynk22m5ak4ejbyzbctrp@jprtanslko7c>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 1/6] ASoC: wcd938x: switch to using gpiod API
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Patrick Lai <quic_plai@quicinc.com>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-2-krzysztof.kozlowski@linaro.org>
+ <6b355201-a957-4fca-a513-d5fa0742fb40@sirena.org.uk>
+ <fe6202ee-2552-8b5c-c2d5-f2f7042b901d@linaro.org>
+ <d746ee5f-283d-44ce-b72c-18c8955d38b1@sirena.org.uk>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <d746ee5f-283d-44ce-b72c-18c8955d38b1@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -81,70 +90,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/04/2023 02:02, Marijn Suijten wrote:
-> On 2023-04-14 09:46:17, Kuogee Hsieh wrote:
->> In current code, the dsc active bits are set only if the cfg->dsc is set.
+On 20/04/2023 15:00, Mark Brown wrote:
+> On Thu, Apr 20, 2023 at 02:30:17PM +0200, Krzysztof Kozlowski wrote:
+>> On 20/04/2023 13:58, Mark Brown wrote:
+>>> On Thu, Apr 20, 2023 at 12:16:12PM +0200, Krzysztof Kozlowski wrote:
 > 
-> This is the old sentence from v1 again, did you accidentally send the
-> wrong patch as the improvements from v2 are missing?
+>>>> -	gpio_direction_output(wcd938x->reset_gpio, 0);
+>>>> -	/* 20us sleep required after pulling the reset gpio to LOW */
+>>>> +	gpiod_set_value_cansleep(wcd938x->reset_gpio, 1);
+>>>> +	/* 20us sleep required after asserting the reset gpio */
 > 
->> However, for displays which are hot-pluggable, there can be a use-case
->> of disconnecting a DSC supported sink and connecting a non-DSC sink.
->>
->> For those cases we need to clear DSC active bits during teardown.
+>>> This is inverting the sense of the GPIO in the API from active low to
+>>> active high which will mean we're introducing a new reliance on having
+>>> the signal described as active low in DT.  That's an ABI concern.
 > 
-> At least teardown is one word again, v2 had "tear down" which is wrong.
+>> It's bringing it to the correct level. Old code was not respecting the
+>> DTS thus if such DTS came with inverted design, the driver would not work.
 > 
->> As discuss at [1], clear DSC active bit will handled at reset_intf_cfg()
+> Sure, but OTOH if the user didn't bother specifying as active low it
+> would work.  I suspect it's more likely that someone missed a flag that
+> had no practical impact in DT than that someone would add an inverter to
+> their design.
 > 
-> discussed* as pointed out by Dmitry, and make it clear that this is
-> about clearing CTL_DSC_ACTIVE (and CTL_DSC_FLUSH?) specifically.  Once
-> that is moved to reset_intf_cfg(), this patch should be reverted as
-> there is no need to write the registers once again when cfg->dsc equals
-> 0.
+>> We were already fixing the upstream DTS users and I thought all of them
+>> are fixed since long time (half a year) or even correct from the
+>> beginning. Now I found one more case with incorrect level, which I will fix.
+> 
+> That's just upstream, what about any downstream users?
 
-Kuogee, can we please get a proper v4? With all the relevant changes 
-from v2, with the changelog, etc.
+Life of downstream. We all know the drill: merge your DTS or suffer. The
+WCD938x codecs are moderately new, so I do not expect many downstream
+users. They are in theory possible, because driver was merged in
+v5.14-rc1 and for the newest products Qualcomm uses v5.15. Although now
+it is v5.15, but the time driver was merged, maybe it was v5.10.
 
-Otherwise the present Reviewed-by tags are just incorrect.
+I could rework this patch to provide backwards compatible solution like
+I did for WSA:
+https://lore.kernel.org/all/20230102114152.297305-4-krzysztof.kozlowski@linaro.org/
+
+There are downsides of it, but as you pointed out - it's actually very
+rare to have the signal inverted in hardware.
 
 > 
-> - Marijn
+>>> I remain deeply unconvinced that remapping active low outputs like this
+>>> in the GPIO API is helping.
 > 
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
->> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->>
->> [1] https://lore.kernel.org/linux-arm-msm/ec045d6b-4ffd-0f8c-4011-8db45edc6978@quicinc.com/
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 7 +++----
->>   1 file changed, 3 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->> index bbdc95c..88e4efe 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
->> @@ -541,10 +541,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->>   	if (cfg->merge_3d)
->>   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->>   			      BIT(cfg->merge_3d - MERGE_3D_0));
->> -	if (cfg->dsc) {
->> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
->> -		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
->> -	}
->> +
->> +	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
->> +	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
->>   }
->>   
->>   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
+>> The code is mapping them to correct state. The previous state was
+>> incorrect and did not allow to handle active high (which can happen).
+>> This is the effort to make code correct - driver and DTS.
+> 
+> We could handle inversions through an explicit property if that were
+> needed, that would be a less problematic transition and clearer in the
+> consumer code.
 
--- 
-With best wishes
-Dmitry
+I am not sure if it is worth. The DTS is supposed to describe hardware,
+so even if reset pin flag was not effective, it is a mistake to describe
+it as ACTIVE_HIGH. Do we care about keeping broken code happy? If yes,
+then property is the way to go. If partially, then I can add
+backwards-compatible approach like I mentioned above.
+
+Best regards,
+Krzysztof
 
