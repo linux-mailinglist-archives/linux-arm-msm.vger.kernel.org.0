@@ -2,111 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E80126E9350
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 13:48:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F7F06E9371
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 13:55:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234026AbjDTLsL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 07:48:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
+        id S231864AbjDTLzm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 07:55:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234013AbjDTLsK (ORCPT
+        with ESMTP id S229520AbjDTLzm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 07:48:10 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F1310C2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 04:48:09 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4edcdfa8638so499623e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 04:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681991287; x=1684583287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bbzxcashoCDQOSY342pzyq2G7WMo2lq5fOYuUvS4juM=;
-        b=j/jHkLE3rW45/Eb7oViVdeEuTCbgLb3dJ1DaMd4dkcG01aQyARQoL9vKLJR2MAqee7
-         9/3JlhAnHnLuU5TPyvUqpriI5zwG5X73t7jJvMB6ItPvtgLqClrqmHcWiDU3Fgr68EOt
-         Pz/XwjHx8Mrv4E8ouFFU0BffiAqbKJ59MdCI/Vr+RxyP+dGsBQ7JrUIZCBn2n97qQZH2
-         TX7GTJ3swuBByfoww/DVAh3x+0SUqiWdBhIXQx+Vko5CGEVs8GQYU1Iu3Y9gLauHr4me
-         MjKBtTJdHvDteIYw7vS1pTGCbALFrcQPRW84yAevZ+wNzQ4N+9FCDincpXVOfcjvOMwY
-         BgTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681991287; x=1684583287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bbzxcashoCDQOSY342pzyq2G7WMo2lq5fOYuUvS4juM=;
-        b=lFoZzfJxZXpDzVeOjbKC1kR6l1YoYozT6O+5IK6d8rcKjOWaRJ0XWpLSWShn44pqSJ
-         aqtHfTTW3r45BHInEx2zQG91Hr66HtrbGKJ7nv1sZ1zy4Td+IGmP+MwFSfOzU5eUnLF2
-         BXbbJ5G606HEjBJJrZNoYDJMyVCuaunz1/itaDXa9Z4rIguvyvilQvtKS/1/nJrzFWTo
-         +17bCSH3M0TwSI5BjYtmjILx9GgX+Vw1P2YsFlX9JhVT9YlNyVXO99O5O01LVIckVUme
-         0KzG1I4O4eMo0dCiuXJmiUxcFMSZJPwXGUDrIdQYYWeu0JlBxZwMd1n0H5ZRxF5MotQD
-         zBrQ==
-X-Gm-Message-State: AAQBX9caSoQkhCs0dCzSaN9p9Ok1NIKM72Bw2ZjxHvNM7aHuFmM1dvVT
-        aAWwD/6LEm0BS4TvYqBVTcm2Uw==
-X-Google-Smtp-Source: AKy350bDBd5I0jzSrTgkcplYpxYdInqlBZJb94gB+M0ExOUSpGan2r6Fowa9JWmLRx3tG5jrkzMKMg==
-X-Received: by 2002:a19:f80b:0:b0:4eb:2523:e929 with SMTP id a11-20020a19f80b000000b004eb2523e929mr375118lff.43.1681991287486;
-        Thu, 20 Apr 2023 04:48:07 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id y21-20020ac24215000000b004ece331c830sm192447lfh.206.2023.04.20.04.48.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 04:48:07 -0700 (PDT)
-Message-ID: <a2addd26-e027-c5f5-ee40-e8e5be9d866c@linaro.org>
-Date:   Thu, 20 Apr 2023 14:48:06 +0300
+        Thu, 20 Apr 2023 07:55:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F4E125;
+        Thu, 20 Apr 2023 04:55:40 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33KApa5i012564;
+        Thu, 20 Apr 2023 11:55:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=OpqjDS71NuvgVPcPQLeQrnkxWH3dmPrKI46AvafwSK0=;
+ b=aKtqgIijTEpFO/3ArVHZG74+d+B/sIookBOI4jMYjsygwwZYBJ7Lx8Z0FYYw9SsHlEpt
+ oZno6ZOq3x5rB3U2c0Mjlxo03OAvigTDcVUO4OXK345kQTVFJpPj6q+NHi7vl/GEMf8I
+ zCulE3ijnDpvHSDDurjt+Cp9A/n5e1oDN1ZZrYtkwJrfZdbxVChhE02sdtYpZQmHgOy2
+ ByC+89V3OM8VOMm7E5JbpUHVeDKMcv8ipJ2YYrNE9mmfCRtTwJ7b44JMSRLAPq1EFX+2
+ ttrd4nauYDyCfB896te6Xog4mM5o5iH+yLpUCNBYHDL++ZdvsMYPVHwMsa9AKAE7rm8S Tg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q2p4v9wdu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Apr 2023 11:55:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33KBtZYD017399
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 20 Apr 2023 11:55:35 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 20 Apr 2023 04:55:32 -0700
+From:   Taniya Das <quic_tdas@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_skakitap@quicinc.com>,
+        <quic_cponnapa@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH] clk: qcom: camcc-sc7180: Add parent dependency to all camera GDSCs
+Date:   Thu, 20 Apr 2023 17:25:20 +0530
+Message-ID: <20230420115520.16472-1-quic_tdas@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 1/2] drm/msm/dpu1: Rename sm8150_dspp_blk to
- sdm845_dspp_blk
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230420-topic-dpu_gc-v1-0-d9d1a5e40917@linaro.org>
- <20230420-topic-dpu_gc-v1-1-d9d1a5e40917@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230420-topic-dpu_gc-v1-1-d9d1a5e40917@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eYoN-tAZHMFiDmuzlDfaydVaQ2Tsq7hl
+X-Proofpoint-ORIG-GUID: eYoN-tAZHMFiDmuzlDfaydVaQ2Tsq7hl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-20_07,2023-04-20_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ bulkscore=0 impostorscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 spamscore=0 mlxlogscore=666 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304200096
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 04:14, Konrad Dybcio wrote:
-> SDM845 was the first SoC to include both PCC v4 and GC v1.8.
-> We don't currently support any other blocks but the common config
-> for these two can be reused for a large amount of SoCs.
-> 
-> Rename it to indicate the origin of that combo.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h  | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 8 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           | 2 +-
->   9 files changed, 27 insertions(+), 27 deletions(-)
+Mark titan_top_gdsc as parent to all other camera GDSCs.
 
-For the patch itself:
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+ drivers/clk/qcom/camcc-sc7180.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
+index e2b4804695f3..8a4ba7a19ed1 100644
+--- a/drivers/clk/qcom/camcc-sc7180.c
++++ b/drivers/clk/qcom/camcc-sc7180.c
+@@ -1480,12 +1480,21 @@ static struct clk_branch cam_cc_sys_tmr_clk = {
+ 	},
+ };
 
--- 
-With best wishes
-Dmitry
++static struct gdsc titan_top_gdsc = {
++	.gdscr = 0xb134,
++	.pd = {
++		.name = "titan_top_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
+ static struct gdsc bps_gdsc = {
+ 	.gdscr = 0x6004,
+ 	.pd = {
+ 		.name = "bps_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ 	.flags = HW_CTRL,
+ };
+
+@@ -1495,6 +1504,7 @@ static struct gdsc ife_0_gdsc = {
+ 		.name = "ife_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ };
+
+ static struct gdsc ife_1_gdsc = {
+@@ -1503,6 +1513,7 @@ static struct gdsc ife_1_gdsc = {
+ 		.name = "ife_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &titan_top_gdsc.pd,
+ };
+
+ static struct gdsc ipe_0_gdsc = {
+@@ -1512,15 +1523,9 @@ static struct gdsc ipe_0_gdsc = {
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+ 	.flags = HW_CTRL,
++	.parent = &titan_top_gdsc.pd,
+ };
+
+-static struct gdsc titan_top_gdsc = {
+-	.gdscr = 0xb134,
+-	.pd = {
+-		.name = "titan_top_gdsc",
+-	},
+-	.pwrsts = PWRSTS_OFF_ON,
+-};
+
+ static struct clk_hw *cam_cc_sc7180_hws[] = {
+ 	[CAM_CC_PLL2_OUT_EARLY] = &cam_cc_pll2_out_early.hw,
+--
+2.17.1
 
