@@ -2,80 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8DD476E877F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 03:36:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 784D66E87A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 20 Apr 2023 03:50:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbjDTBgU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 19 Apr 2023 21:36:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43202 "EHLO
+        id S231241AbjDTBu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 19 Apr 2023 21:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbjDTBgT (ORCPT
+        with ESMTP id S231994AbjDTBu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 19 Apr 2023 21:36:19 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24D1C173D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 18:36:18 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id a10so1074853ljr.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 18:36:18 -0700 (PDT)
+        Wed, 19 Apr 2023 21:50:26 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5682A49ED
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 18:50:20 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4edc114c716so245829e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 19 Apr 2023 18:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681954576; x=1684546576;
+        d=linaro.org; s=google; t=1681955418; x=1684547418;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hT/95VjOVyKO2T89/0I5XEoyuSp1YYge4tfF3uB8zg0=;
-        b=aQmh+2X+m1r5KN/IFBsO7Dh4brwJDxvSv03WBhSjp5FcgMBhIdC2TZAZofOewtHBaG
-         rod4IkuKDY4gR6vWu09pf5B9gV3+HLlo7DVvXnXNInqNdMBhGGqSloP685b2BP2Q1ZP+
-         JQDNmMFBzqUlVUx5Mbvn0+3yQDVmI6O6izzuK/RvkGKJNbDFKJ8GQ0OXspdBEVrzQ1Hu
-         4ENw5p2v47DmlStJxwWB999K8MIQnzxB79wpsft/VOYKnWsXmbNcSYxd9vjlwznd+LeR
-         4d8a7/7jKNcTMfPxN8QrCMZiWhP+qZcVYyu4C/pPmWRhdL4QKePzBcP6AxFY/ki42l6F
-         dreg==
+        bh=nizPB57M3kviIBPTCEgCjkwcM2uwJN4yH7DbrqfjL/U=;
+        b=ijQFQOl0D+QxNYBLRsK03sCXvJSoXgkQ1tUoaxJ05thU2CniCDwmoENBu7lAqIOemt
+         9YrZQ1wxTOAqcrtydHSRhMzT9DozrQz9PnEF0lis0N7rI62uSCRqghv+Zwrle9os8HAN
+         gulc/qnPAky5h3942ws0EVPI4lF88ABikgUsbx1du9dmIIm1QH463wt9nvl7EOcSUu2y
+         pLezI17uxqXEUa5kRlmt+zUyf9BeG2e+E9GifCyK1IU+sl0+vRaD9tuOksNSwpl3oFFQ
+         Fp2DLHNRg1fp07/nPoC+prTmzfrdrNI75sUpODnTM2fjIYommNuGaebDkP9f/zInnXja
+         VdPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681954576; x=1684546576;
+        d=1e100.net; s=20221208; t=1681955418; x=1684547418;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hT/95VjOVyKO2T89/0I5XEoyuSp1YYge4tfF3uB8zg0=;
-        b=V1zl8MDQOa6h/N0Pq5Nq+Mtv+SxrDPHc9YXzixGbuxevZ8fTvHEYl5UhmboQFWdOQk
-         cj+JBDuZsQIax9dHYmBxyFjthx5mUfIwvPLE7FAevRFHkXcm789EN7tjWbqawtyyq0tF
-         vxZ6pSF320ylp9404QBmHw8VL7g+qtDXdNGO1kJj3fyRIjt/c9toi/k6E1oteFLBoEmk
-         WxL8s6XG2Vn+nHat0c52BtYxRVV1IPdLeG1Uzpra3HWmpK60tfxR34H1cZZcw6qQUpFO
-         VZxa/B4n54LwiR3xm0jqnFAOA/4tzS9LYanstvl1tDXIqwdlQB0DKNea3SIP2mEe1AdC
-         muKw==
-X-Gm-Message-State: AAQBX9dfdj2rQ66VqA/6rG36yCTRnrjtECzHLcITphxF/uR8GZE5beK4
-        4f+q4qkcjPQ6LxUTryQ9LEKAFg==
-X-Google-Smtp-Source: AKy350YiZKM6D3SyMMYJ7buEtOzY/rVkSbU/XM10s6fY0nV5WmwAeAeJO6Jk0/pLS6YLUe6bZ8ECFw==
-X-Received: by 2002:a2e:9b17:0:b0:2a7:81fb:6e6f with SMTP id u23-20020a2e9b17000000b002a781fb6e6fmr2552660lji.10.1681954576436;
-        Wed, 19 Apr 2023 18:36:16 -0700 (PDT)
+        bh=nizPB57M3kviIBPTCEgCjkwcM2uwJN4yH7DbrqfjL/U=;
+        b=gmvOFAKqimY7KoePgLqs069hiXTqZNvJMo0qKNyiUvD9lb0ftuT64nMabfXk8EUueQ
+         DHuAbyakZSWbfIHlmSDCmSacQ1D1dVfHpA/gApORky2GOLSab/emxxL1tzB4Un9ZkafI
+         leB4x+MxKKFdbApbVlHXM7w9Ng/PZ5ww57VfJFrJ1KUa/rBiVs9ubY+g+WPAzAlud6eG
+         CftJmF7qbDtgSdeuo7i3UNr0s/hIxkTzpYqjt3/GeL7nRLcJ7DGfSqC93z6hNOL7zSb+
+         tdYERqZMhWkAcYGSHMCrqBn5yqQXPJ0AM4f4vWQyTFyyKTJJHYx3CIGNZifonXdX0fl7
+         qpLw==
+X-Gm-Message-State: AAQBX9c8ZC1gh0+whle2h75UHr410sFdp17Be1Lcrnisadd73KKdosSf
+        5lCgFo6v9y/Oi/kHpCGCIjX+LA==
+X-Google-Smtp-Source: AKy350ZBHPNjSoDhsEErAWQW3i0ayKz28VoblspqqpkAPk69WKIMkGhhqmI1kaVf9dno1FI7mXTyGA==
+X-Received: by 2002:ac2:4c1a:0:b0:4eb:1606:48db with SMTP id t26-20020ac24c1a000000b004eb160648dbmr4418362lfq.22.1681955418544;
+        Wed, 19 Apr 2023 18:50:18 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id x23-20020a2e7c17000000b002a5f554d263sm35310ljc.46.2023.04.19.18.36.15
+        by smtp.gmail.com with ESMTPSA id v20-20020ac25614000000b004edd4566110sm58915lfd.286.2023.04.19.18.50.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Apr 2023 18:36:16 -0700 (PDT)
-Message-ID: <2dff9d62-cffe-c66f-9e50-3ecd64e44d37@linaro.org>
-Date:   Thu, 20 Apr 2023 03:36:14 +0200
+        Wed, 19 Apr 2023 18:50:18 -0700 (PDT)
+Message-ID: <66c41caf-bf21-61af-c6e4-52b34b69c1ce@linaro.org>
+Date:   Thu, 20 Apr 2023 03:50:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 0/2] DPU1 GC1.8 wiring-up
+Subject: Re: [PATCH RFT v2 00/14] SMD RPMCC sleep preparations
 Content-Language: en-US
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230420-topic-dpu_gc-v1-0-d9d1a5e40917@linaro.org>
- <5b133c55-e4f5-bfd2-b542-a7d44313c038@linaro.org>
- <c0e0a55a-cc37-fe8a-8d8a-5fe257f99b9a@linaro.org>
- <3f3b3637-ed85-09a1-22b7-3ccd4bc929bb@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        devicetree@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+References: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <3f3b3637-ed85-09a1-22b7-3ccd4bc929bb@quicinc.com>
+In-Reply-To: <20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,53 +85,70 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 20.04.2023 03:28, Abhinav Kumar wrote:
+On 8.03.2023 22:35, Konrad Dybcio wrote:
+> v1 -> v2:
+> - Use CLK_IS_CRITICAL instead of leaving a clk enable vote, expand macros
+>   to do so
+> - Fix the keepalive clocks for 8998 & 660 (CNoC -> PNoC, it was
+>   confusingly named cnoc_periph downstream)
+> - Introduce .determinte_rate to ensure we don't set keepalive clocks'
+>   rates below 19.2 MHz
+> - Add a (!conditional!) way to test the ultimate goal of all these changes
+>   by essentially enabling unused clk cleanup through a dt property (for
+>   legacy reasons)
 > 
+> v2 was tested on:
 > 
-> On 4/19/2023 6:26 PM, Konrad Dybcio wrote:
->>
->>
->> On 20.04.2023 03:25, Dmitry Baryshkov wrote:
->>> On 20/04/2023 04:14, Konrad Dybcio wrote:
->>>> Almost all SoCs from SDM845 to SM8550 inclusive feature a GC1.8
->>>> dspp sub-block in addition to PCCv4. The other block differ a bit
->>>> more, but none of them are supported upstream.
->>>>
->>>> This series adds configures the GCv1.8 on all the relevant SoCs.
->>>
->>> Does this mean that we will see gamma_lut support soon?
->> No promises, my plate is not even full, it's beyond overflowing! :P
->>
->> Konrad
+> - MSM8996 Sony Kagura (can disable unused)
+> - MSM8998 Sony Maple (can disable unused with OOT icc)
+> - SM6375 Sony PDX225 (can disable unused with OOT icc)
 > 
-> So I think I wrote about this before during the catalog rework/fixes that the gc registers are not written to / programmed.
+> v1: https://lore.kernel.org/r/20230303-topic-rpmcc_sleep-v1-0-d9cfaf9b27a7@linaro.org
 > 
-> If thats not done, is there any benefit to this series?
-Completeness and preparation for the code itself, if nothing else?
+> This series brings support for a couple of things necessary for the full
+> system idle on SMD RPM SoCs, namely unused clk shutdown and keepalive
+> votes (permanent active votes that are required on certain clocks for the
+> platform to function).
+> 
+> Tested on MSM8996 and SM6375, does not seem to introduce any additional
+> regressions.
+> 
+> Keepalive clocks for other platforms were gathered by digging in old
+> downstream kernels, please give them a test.
+I have an implementation of rpmcc-within-icc ready(ish) locally. Turns out
+some SoCs need a keepalive (19.2MHz, active-only) vote on clocks that
+are NOT governed by interconnect.. So before we can disable clocks,
+both will need to be implemented.. ugh... I was hoping we could avoid
+having it in rpmcc..
 
 Konrad
 > 
->>>
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->>>> Konrad Dybcio (2):
->>>>         drm/msm/dpu1: Rename sm8150_dspp_blk to sdm845_dspp_blk
->>>>         drm/msm/dpu1: Enable GCv1.8 on many SoCs
->>>>
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h   | 16 ++++++++--------
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h   | 16 ++++++++--------
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h   |  4 ++--
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h  |  4 ++--
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 16 ++++++++--------
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 16 ++++++++--------
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 16 ++++++++--------
->>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 16 ++++++++--------
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c           |  4 +++-
->>>>    9 files changed, 55 insertions(+), 53 deletions(-)
->>>> ---
->>>> base-commit: 3cdbc01c40e34c57697f8934f2727a88551696be
->>>> change-id: 20230420-topic-dpu_gc-6901f75768db
->>>>
->>>> Best regards,
->>>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (11):
+>       dt-bindings: clock: qcom,rpmcc: Add a way to enable unused clock cleanup
+>       clk: qcom: smd-rpm_ Make __DEFINE_CLK_SMD_RPM_BRANCH_PREFIX accept flags
+>       clk: qcom: smd-rpm: Make DEFINE_CLK_SMD_RPM_BRANCH_A accept flags
+>       clk: qcom: smd-rpm: Make BI_TCXO_AO critical
+>       clk: qcom: smd-rpm: Make __DEFINE_CLK_SMD_RPM_PREFIX accept flags
+>       clk: qcom: smd-rpm: Separate out a macro for defining an AO clock
+>       clk: qcom: smd-rpm: Add support for keepalive votes
+>       clk: qcom: smd-rpm: Introduce DEFINE_CLK_SMD_RPM_BUS_KEEPALIVE
+>       clk: qcom: smd-rpm: Hook up PCNoC_0 keep_alive
+>       clk: qcom: smd-rpm: Hook up CNoC_1 and SNoC_2 keep_alive
+>       arm64: dts: qcom: msm8996: Enable rpmcc unused clk disablement
+> 
+> Shawn Guo (3):
+>       clk: qcom: smd-rpm: Add .is_enabled hook
+>       clk: qcom: smd-rpm: Add .is_prepared hook
+>       clk: qcom: smd-rpm: Mark clock enabled in clk_smd_rpm_handoff()
+> 
+>  .../devicetree/bindings/clock/qcom,rpmcc.yaml      |   6 +
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi              |   1 +
+>  drivers/clk/qcom/clk-smd-rpm.c                     | 133 +++++++++++++++------
+>  3 files changed, 106 insertions(+), 34 deletions(-)
+> ---
+> base-commit: fc31900c948610e7b5c2f15fb7795832c8325327
+> change-id: 20230303-topic-rpmcc_sleep-d67aad9f3012
+> 
+> Best regards,
