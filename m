@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 761A76E9F67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:53:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5F836E9F70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 00:53:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233095AbjDTWxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 18:53:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37514 "EHLO
+        id S233051AbjDTWxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 18:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232921AbjDTWxA (ORCPT
+        with ESMTP id S232679AbjDTWxt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 18:53:00 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73CED55BC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:52:53 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4edcc885d8fso991992e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:52:53 -0700 (PDT)
+        Thu, 20 Apr 2023 18:53:49 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BE844AF
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:53:31 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2a8ba23a2abso9321881fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 15:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682031172; x=1684623172;
+        d=linaro.org; s=google; t=1682031210; x=1684623210;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NoW60Lm7GdjF79mPriJg9iX4x11OKcPemy9MLkVdBxc=;
-        b=RB4YYiblAtjEpwZj0VpG1WT20iPmgOgtm07jwS9BRsoa9kYA0r794uyc6pEDrE2EeW
-         IbzBcwAQ2wjGR09Ou7aT1vOmXVc1N2In3Ykw0WgC7uM8Q2BK6NBLhB0bKTXV9svxeIIQ
-         4Fztrq6poxYy5Kb4lToyyXkbMaN7mRkXPoujcj5ggdaKC/tq2B//x/42WlZ1N4jFJc5G
-         7z4wlltyH/IoGg51bPI6nHx7sCJzkUDPjYhkHkaBaU3x6YpM2h9zNNqp9u0VbahrRBxM
-         ZTbSwdf6wVp8jBwRM8bPgUC9lg5kTSKEno5P+gnnWHZDBH4qj2PcxuMuYrR81L7+kTwz
-         1XIA==
+        bh=ce6pEJrw7tqRyJLpRXEMezCTvjoqYpZMZdtSajGXN44=;
+        b=MGA9BTGcZSHJD93go1tZ1QFmm9UrulMAvOf0fPOaovFyX0EOx1H82mcZMav6ut4ZXJ
+         0V67IyZNL5GsuqlC6Bxy+tSuYrKo1hxncDM+v+/b52Lxk5OxR96CYqQpt7XcNEROkBgD
+         9PNIk0Vorf7sw17NSGEafM1pHxmOpNtyx7WSLuJ+9h3LFGVDVFE61bpnSDfhtAsscg8n
+         CYRTHnfkzIJhN+KouINMyhVLGgL5Gexa6N7twQEJz/erAZEkqQJTiOEUYJgzo927Gxpy
+         I4Q+19IucjS6a7posiNkBhQPWvTZkpe9ZeoXqY8ZdgeO1Q34URW75kN+0I41yCDhpVFP
+         g63w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682031172; x=1684623172;
+        d=1e100.net; s=20221208; t=1682031210; x=1684623210;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NoW60Lm7GdjF79mPriJg9iX4x11OKcPemy9MLkVdBxc=;
-        b=Gkg6VGEaiimTC/fWEa9KY5u+Pc3spVOcOeHfv26Y+SRmUjNhNXDjJS28HVNksWG2MZ
-         2UEJXFvB/97E16UQGfby4q1XAtv87EAjZCbhJ3Ca1M9kWnZxySuu5J39CrArPlXaMEzj
-         mJ8kLrhWalOZqNIUnGHhFCuRgCQjbVdC2mGJbE7Kyz4tVDSHF0uo554SGEZbCm0xxgDh
-         HHEryDiv8WwULD2zSn1ozNK2ihReXlzwzYEOy8nUTLn32XygLgjCycT9s+2tF7SJZINa
-         PJakvqPA5tyJYH8y4+umB61xFzxLLuJe/pSQn9Nz2qh5ymsDi0rkAdEfDEMhUiLAqiTf
-         EqwA==
-X-Gm-Message-State: AAQBX9dFZgaRAmhx1TfNarlkTLvD5tKEzJKPmLL6k23XU1XU5zUCpjuu
-        hXFLhtzbzmy4tRwKvJ+FnFFjag==
-X-Google-Smtp-Source: AKy350aQqb8y+xF0W6oAo5D5GhlxWVGLI8E9FjmzqZU4jhc4y7WqtCf9P4PO6Z6YJJ/3nnM+xzL/Ng==
-X-Received: by 2002:ac2:44ca:0:b0:4eb:2d45:f67f with SMTP id d10-20020ac244ca000000b004eb2d45f67fmr786075lfm.33.1682031171724;
-        Thu, 20 Apr 2023 15:52:51 -0700 (PDT)
+        bh=ce6pEJrw7tqRyJLpRXEMezCTvjoqYpZMZdtSajGXN44=;
+        b=GWrIJ4DvlrsLBhQwKSk4OnbHyEeKoQSqsbX+Sst2jzNTjSvMN/HND47iJXmJ0A1aOv
+         QCe42ndQzEX31xuRvMDpChAcbbM9E5LSKTfbwz90TniKenkf1KAhZiE9yrigxKxPRrm8
+         z/2w+pjGBR5SZE2Jgh23b7BEmEUV1QwTMEAUZghob7TI/9o4vyEYnRVpxBYbO1XKdE/Q
+         K7x7px0PwxNa2nXp3OgjI6SmK3VOfbqJNuVxgoi3Kwarj4R2D0hSfKjyvnQOrs+6BBTL
+         j10N9vq6jGYCCKtHodEwDLDtfyhkvUH9CbkwYHw7t0I8rkQiaIRf4hpMvQNDGb1KW+g1
+         7JOA==
+X-Gm-Message-State: AAQBX9dIo28N8c4lvZVRqL53hvJDTNxR6B0NGQufpKLC2WIeXbPHw8Lq
+        TT1IEAcEO50Kf2BhRF1uR/5LnA==
+X-Google-Smtp-Source: AKy350bXwN5/7I7NtUsVNrh54eMPV97x8iBZbGocpm0fxXv6U5ipcBlanUTMeI6LZC1Gi7c8T8HacQ==
+X-Received: by 2002:a2e:82c3:0:b0:299:ac65:781d with SMTP id n3-20020a2e82c3000000b00299ac65781dmr130137ljh.10.1682031209877;
+        Thu, 20 Apr 2023 15:53:29 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id w3-20020ac254a3000000b004eafa141a12sm360784lfk.9.2023.04.20.15.52.51
+        by smtp.gmail.com with ESMTPSA id c7-20020a05651c014700b002a9ec7c0b4csm407820ljd.10.2023.04.20.15.53.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 15:52:51 -0700 (PDT)
-Message-ID: <353b93c5-27f5-a1a5-760d-5f7ad627a583@linaro.org>
-Date:   Fri, 21 Apr 2023 01:52:50 +0300
+        Thu, 20 Apr 2023 15:53:29 -0700 (PDT)
+Message-ID: <edb8368e-4157-bb0c-f16e-e3605c405322@linaro.org>
+Date:   Fri, 21 Apr 2023 01:53:28 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 11/13] iommu/arm-smmu-qcom: Add SM6375 DPU compatible
+Subject: Re: [PATCH v2 13/13] iommu/arm-smmu-qcom: Sort the compatible list
+ alphabetically
 Content-Language: en-GB
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -74,14 +75,14 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         iommu@lists.linux.dev
 References: <20230411-topic-straitlagoon_mdss-v2-0-5def73f50980@linaro.org>
- <20230411-topic-straitlagoon_mdss-v2-11-5def73f50980@linaro.org>
+ <20230411-topic-straitlagoon_mdss-v2-13-5def73f50980@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v2-11-5def73f50980@linaro.org>
+In-Reply-To: <20230411-topic-straitlagoon_mdss-v2-13-5def73f50980@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,15 +91,36 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/04/2023 01:31, Konrad Dybcio wrote:
-> Add the SM6375 DPU compatible to clients compatible list, as it also
-> needs the workarounds.
+> It got broken at some point, fix it up.
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This should probably come before patches 11 and 12.
+
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 2daaa600ac75..e64c737724c4 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -251,12 +251,12 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>   	{ .compatible = "qcom,sc7280-mss-pil" },
+>   	{ .compatible = "qcom,sc8180x-mdss" },
+>   	{ .compatible = "qcom,sc8280xp-mdss" },
+> -	{ .compatible = "qcom,sm8150-mdss" },
+> -	{ .compatible = "qcom,sm8250-mdss" },
+>   	{ .compatible = "qcom,sdm845-mdss" },
+>   	{ .compatible = "qcom,sdm845-mss-pil" },
+>   	{ .compatible = "qcom,sm6350-mdss" },
+>   	{ .compatible = "qcom,sm6375-mdss" },
+> +	{ .compatible = "qcom,sm8150-mdss" },
+> +	{ .compatible = "qcom,sm8250-mdss" },
+>   	{ }
+>   };
+>   
+> 
 
 -- 
 With best wishes
