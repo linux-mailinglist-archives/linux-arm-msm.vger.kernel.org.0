@@ -2,100 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E50F26EA4E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 09:36:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56BF86EA501
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 09:39:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbjDUHgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 03:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44420 "EHLO
+        id S229596AbjDUHjC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 03:39:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjDUHf7 (ORCPT
+        with ESMTP id S229603AbjDUHjB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 03:35:59 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [5.144.164.167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC54D139
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 00:35:57 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 67E053ED5F;
-        Fri, 21 Apr 2023 09:35:55 +0200 (CEST)
-Date:   Fri, 21 Apr 2023 09:35:54 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: stop mapping the regdma region
-Message-ID: <cwy7eyop2heahqvlijp6a66acwhpfcg6feq2khfw2detul6fxk@qnkhj4iwo23k>
-References: <20230420222558.1208887-1-dmitry.baryshkov@linaro.org>
- <20230420222558.1208887-2-dmitry.baryshkov@linaro.org>
+        Fri, 21 Apr 2023 03:39:01 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0657ED8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 00:38:50 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-b980e16b27bso535845276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 00:38:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682062729; x=1684654729;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GbLVXy+xDpAqXOw3eLwbqNtcQaFjWeU5ILDIT0cNbUg=;
+        b=mST3V/2nI8K5sew2KQtTF50x8ftoZePkg1QvEKHIydeu0oqB3+NYCr7eKWARFDydch
+         tGKSAhLcPy7j8fiT/jd5jrV5lTYJPAG4qPSeadhCdmY6cC5UncClXrjhPzYl51B6WzDC
+         8Mjl6sj1z0nONe1EesQqBIi1YMOGaD5OaY6fXWNqZhP5oytIv7e3WWan3IDrnQIRoHRG
+         /IXK50KeJgYzyZ6A50UMYt+GKK/iJmwxTIMfzrZDxq6KpGuy5X1aL1n2FEO4NrGiWa4E
+         w60ggOCtYHtm6nXBEPq0JDKy/VE+fjn4JDf7xmtaJ/Ayh2p9nh+AYcdAhmoDS67xWz0y
+         5MXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682062729; x=1684654729;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GbLVXy+xDpAqXOw3eLwbqNtcQaFjWeU5ILDIT0cNbUg=;
+        b=BBjFMCLwUXYrTtn6TwLl1JMxFrxVaYvMLDH9wX+aumviG11hKGoy3Ym1PkOWnsUylZ
+         dbqVuMaa2nt0AvK9usANtLa4lYRCuZeV+MXTDQaNseTmqoJh/+nnwCZVillLI90HyFar
+         NAlS833Au41HhTYXDJncLqLWfIQkHP494H+JF5OK/PTPq8OLTjJe1c3xB9RrlxWegPw9
+         quRH3faARZSCi/ytgpcWFEMPlITGmqkd1IPySG1D1nBxkAEicAQWAxGYw7JNoCvI3tIH
+         VjiUNsp88NOtspoAnjoLsn+VBsM9ta1ww5i6Cq8eMOtEvU+7bTdyj40wYmS0ouDPJpZs
+         r8ew==
+X-Gm-Message-State: AAQBX9d2LKf598WzpqZ/DlQIpSrlrmsRiFkXaFU05mUY3WVTDn2ZtCIi
+        M8hRvH+LDYQLKwtUzPJI7lXH8ZgYPQRcysqQ6wTYuQ==
+X-Google-Smtp-Source: AKy350aIpaPr4xkUOoyYRC1YeivqX5fuZiepgJF9m7/Tyv5uVXU7MJ7jIbfLDhJLisWLy8EL4Ur1dcuPwccTzu8ER1g=
+X-Received: by 2002:a0d:d742:0:b0:555:d20f:6572 with SMTP id
+ z63-20020a0dd742000000b00555d20f6572mr1162824ywd.12.1682062729773; Fri, 21
+ Apr 2023 00:38:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230420222558.1208887-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230414-immutable-irqchips-2-v1-0-6b59a5186b00@linaro.org>
+In-Reply-To: <20230414-immutable-irqchips-2-v1-0-6b59a5186b00@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 21 Apr 2023 09:38:38 +0200
+Message-ID: <CACRpkdbzNgkmhxhGTP3Rs-PkirDTXRWbOWjF1R4U61Wm1mAQaA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] pinctrl immutable irqchips
+To:     Marc Zyngier <maz@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+        Shiraz Hashim <shiraz.linux.kernel@gmail.com>, soc@kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-21 01:25:58, Dmitry Baryshkov wrote:
-> Stop mapping the regdma region. The driver does not support regdma.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Fri, Apr 14, 2023 at 4:06=E2=80=AFPM Linus Walleij <linus.walleij@linaro=
+.org> wrote:
 
-Should you add a third patch to remove this from dt-bindings?
-(msm8998 has it in both dpu and mdss files)
+> This is the final set of immutable GPIO irqchips conversions
+> for pinctrl. All done by trivial thinking.
+>
+> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 
-Regardless, the patch itself is:
+No reaction to this so I just merged these.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Marc: for the next cycle we can start checking what is left.
+I think making irq_chips unconditionally immutable is within
+reach.
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 6 ------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 2 +-
->  2 files changed, 1 insertion(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 0e7a68714e9e..28d74d4d2c1d 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1033,12 +1033,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->  		DPU_DEBUG("VBIF NRT is not defined");
->  	}
->  
-> -	dpu_kms->reg_dma = msm_ioremap_quiet(dpu_kms->pdev, "regdma");
-> -	if (IS_ERR(dpu_kms->reg_dma)) {
-> -		dpu_kms->reg_dma = NULL;
-> -		DPU_DEBUG("REG_DMA is not defined");
-> -	}
-> -
->  	dpu_kms_parse_data_bus_icc_path(dpu_kms);
->  
->  	rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index aca39a4689f4..15111e433f21 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -71,7 +71,7 @@ struct dpu_kms {
->  	const struct dpu_mdss_cfg *catalog;
->  
->  	/* io/register spaces: */
-> -	void __iomem *mmio, *vbif[VBIF_MAX], *reg_dma;
-> +	void __iomem *mmio, *vbif[VBIF_MAX];
->  
->  	struct regulator *vdd;
->  	struct regulator *mmagic;
-> -- 
-> 2.39.2
-> 
+Yours,
+Linus Walleij
