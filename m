@@ -2,78 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA3646EAF0F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:28:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83DF76EAF18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233121AbjDUQ2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 12:28:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41222 "EHLO
+        id S229920AbjDUQaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 12:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233082AbjDUQ2E (ORCPT
+        with ESMTP id S233165AbjDUQaA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 12:28:04 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380A713F8C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:28:01 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-506bfe81303so3099488a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:28:01 -0700 (PDT)
+        Fri, 21 Apr 2023 12:30:00 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CC214452
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:29:55 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5068e99960fso3150778a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682094479; x=1684686479;
+        d=linaro.org; s=google; t=1682094593; x=1684686593;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=S51TzJEKK9WWVDYr4Tc1gJpcMzkHWh1WXqblt4YDlC0=;
-        b=CETPV90ihN3b3DZOnlv9hQKr0fh4gspi1VCr9VdP4hwDkdtmZ9AgF5tdmnECAHPp+V
-         RKWp1KvQD2X5o8mx+dj5hshVZywtPp011NNTJ1RVMADvlgve1fngNYOOtu8/mkGQv8S3
-         UQ4bja+i7aMHCdtiERCr0Kgvko21kA8OJ2FNFCa6SRpFiBUyyaljnZWHdVDyu8sksfeI
-         h/qQuwtNvzj1lVvuYVJr/87Ah+oIUnGt4mEOfV5eBH3noIbpPg+/FxLR9om20wPDR89K
-         TyR4zf0P3Hb8lkQ6duOweA3p9nR6TklUsLo05M+ge6x8oJzsaY0bBFh/y2FVuvSzXZaw
-         IJhA==
+        bh=Z2lceN+RcwbSriAog87kmvBp4Ig+d6w1NXjdL4Cuf98=;
+        b=fKabE0ElpYsMxF83dciHx+q2lQtVpj8xDFMkd5xJDuLQZyduLpPWVxLtoFPO/iZH1Q
+         Z65x2GC5QMz24qKRiVygOtekLW43se+ZhZ353Mn1LGmInPlvMYOK+hLhv1xRfYZCLY2K
+         RUKkEHspFlxCO2A3jWyLFUWcSMxSuS9CPF35ZRt14uewJjtSmDfdCKytDddOfuf0Iqf+
+         twyiMIMnSDslk4ethIXrdFljQAgJ9SnckNXSQxZCoevFBi/O3nTVpsGjlg8dObloCKUV
+         KRnl2OfDq4KDoxUEWGjRGaEhnBr0fMOyZ4kuPPbj8n9s3iFwddSiX52V/6MFFP9YWyHj
+         aRxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682094479; x=1684686479;
+        d=1e100.net; s=20221208; t=1682094593; x=1684686593;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S51TzJEKK9WWVDYr4Tc1gJpcMzkHWh1WXqblt4YDlC0=;
-        b=LtVtHEDQ85pLr5ke4Qy7WfqAlLPyXyvMZ5XPG/xQLfyryBcdnQjSlhnVeoYcs07dle
-         Sr0VBAY1fTrR3bo/5RDQe7gUO/dy/GrA9geBWsdMOIF/847XrOn2d9u/PTli6t5fdwLP
-         O4PdgmiwXlhS4BCYDn6gkO57ZphFV4BdadSdvQsbEwxXr2vJxeaC2nkCkhOvSt/hIpSH
-         UEK9/aaem63+c65SStjKrnptTyeY9IqIxf7VZv9ndMPyDzsk2kiODoi8gDI5vlzqd995
-         ufmKMDCklxgAgL0tISHtS4unw7igeBglb3BCflH9FkhRbjt3fn7dmmIUH+h1wkbBrRUD
-         zXvA==
-X-Gm-Message-State: AAQBX9di2id62MtqAdgjF8N7TxknnntAA/RXZvbY4aApVZZSdR8/3VIy
-        ZSbbQmJ5y7D6Mcv8WGcvjlelBw==
-X-Google-Smtp-Source: AKy350YDsOgKLoK5tAIioZExs34dWYBZrpIx7o0tWafmx6898YyxY8cwVVzZn6+Qk1owXo7rwySlYg==
-X-Received: by 2002:a05:6402:6c7:b0:504:9345:ffa4 with SMTP id n7-20020a05640206c700b005049345ffa4mr7172456edy.21.1682094479554;
-        Fri, 21 Apr 2023 09:27:59 -0700 (PDT)
+        bh=Z2lceN+RcwbSriAog87kmvBp4Ig+d6w1NXjdL4Cuf98=;
+        b=BB2KP/79jMt0aPoZK+1rZ5PfAGdFFJD9Zf27/YBhY7NMeNWVZsilFl5cxJLA9ubjZu
+         oXP+bS6Reff9P7zXnVRmf1snWypP3FhrUz1jp02cgyfByN7LEkqaTiFBB9+9Ro3TRIa7
+         vNo5nRVbF1gjrKaPoGJ302OnAvgFIzzHvFukTTILY2+z/aAcj+ogeEfpWYpuTQQoWo8S
+         +IFKN4RqnHareyrOZhc88cYUG6uiOGTg8qk6cbdL+dPieZcr249QJV/6bObJFBwgOmg/
+         wzDHpmdlcl5jLDaX2GjLzvh48Z0q0pDUMZnFz4+f09IaHaFvZOzQmO/V6+Avq+C10Z5W
+         V88w==
+X-Gm-Message-State: AAQBX9e/WL7bhbjAXLhwFWXN3DA0dv6qCTwmEITefp4j1GoPqHaoNr4u
+        ZzPWjzR7ugUew2hPvc81HvLwWQ==
+X-Google-Smtp-Source: AKy350aIhPQmR/hsnm+P58a4r9cji9+qzdkITlRnifWQto3w83ZN/C+OETaXEew8IlrbQY0qKJho7g==
+X-Received: by 2002:a17:906:7311:b0:94a:3ff1:53ad with SMTP id di17-20020a170906731100b0094a3ff153admr3619196ejc.75.1682094593689;
+        Fri, 21 Apr 2023 09:29:53 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:687d:8c5:41cb:9883? ([2a02:810d:15c0:828:687d:8c5:41cb:9883])
-        by smtp.gmail.com with ESMTPSA id v1-20020aa7dbc1000000b005029c47f814sm1983225edt.49.2023.04.21.09.27.58
+        by smtp.gmail.com with ESMTPSA id vp3-20020a170907a48300b0094f14286f86sm2225058ejc.48.2023.04.21.09.29.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Apr 2023 09:27:59 -0700 (PDT)
-Message-ID: <f8aae62c-e3c5-5fca-7a56-0bc9c0efbd66@linaro.org>
-Date:   Fri, 21 Apr 2023 18:27:57 +0200
+        Fri, 21 Apr 2023 09:29:53 -0700 (PDT)
+Message-ID: <e4c24fcf-bd92-7208-95d8-c71cc17caf3b@linaro.org>
+Date:   Fri, 21 Apr 2023 18:29:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v8 2/8] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
- PHY
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SDX75 pinctrl
+ devicetree compatible
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Johan Hovold <johan@kernel.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-References: <cover.1680693149.git.quic_varada@quicinc.com>
- <1efa9a64499767d939efadd0aef897ac4a6e54eb.1680693149.git.quic_varada@quicinc.com>
- <0a66e291-a86d-1ff9-e674-839b8cc8f1da@linaro.org>
- <ZDz9t9TkBqZ1fcfn@hovoldconsulting.com>
- <20230421095838.GA5813@varda-linux.qualcomm.com>
+        netdev@vger.kernel.org
+References: <1682070196-980-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1682070196-980-2-git-send-email-quic_rohiagar@quicinc.com>
+ <a68e1bc8-df55-684e-300c-678565ae1dd6@linaro.org>
+ <df304802-bcd9-f241-419a-3345d79bfd1e@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230421095838.GA5813@varda-linux.qualcomm.com>
+In-Reply-To: <df304802-bcd9-f241-419a-3345d79bfd1e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,50 +84,171 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 11:58, Varadarajan Narayanan wrote:
-> On Mon, Apr 17, 2023 at 10:05:11AM +0200, Johan Hovold wrote:
->> On Thu, Apr 06, 2023 at 09:41:49AM +0200, Krzysztof Kozlowski wrote:
->>> On 05/04/2023 13:41, Varadarajan Narayanan wrote:
->>>> Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
->>>>
->>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>>> ---
->>>>  Changes in v8:
->>>> 	- Update clock names for ipq9574
->>>>
->>>>  Changes in v6:
->>>> 	- Made power-domains optional
->>>>
->>>> Note: In the earlier patch sets, had used the (legacy)
->>>> specification available in qcom,msm8996-qmp-usb3-phy.yaml. Moved
->>>> to newer specification in qcom,sc8280xp-qmp-usb3-uni-phy.yaml
->>>> ---
->>>>  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 43 +++++++++++++++++++---
->>>>  1 file changed, 37 insertions(+), 6 deletions(-)
->>
->>>> +        clock-names:
->>>> +          items:
->>>> +            - const: aux
->>>> +            - const: ref
->>>> +            - const: com_aux
->>>
->>> Can anyone explain me why do we name these (here and other Qualcomm
->>> bindings) based on clock name, not input? Just because different clock
->>> is fed to the block, does not necessarily mean the input should be named
->>> differently.
->>
->> I guess part of the answer is that this has just been copied from the
->> vendor dts and (almost) no one but Qualcomm has access to the
->> documentation. What would the input names be here?
->>
->> Also note that there are SoCs that enable both 'cfg_ahb' and 'com_aux'
->> (e.g. sc7180).
+On 21/04/2023 12:35, Rohit Agarwal wrote:
 > 
-> The clock name definitions are auto-generated based on the clock
-> tree definitions provided by the h/w team. We followed the naming
-> pattern done in the previous SoCs.
+> On 4/21/2023 3:38 PM, Krzysztof Kozlowski wrote:
+>> On 21/04/2023 11:43, Rohit Agarwal wrote:
+>>> Add device tree binding Documentation details for Qualcomm SDX75
+>>> pinctrl driver.
+>>>
+>>> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+>> Thank you for your patch. There is something to discuss/improve.
+>>
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,sdx75-tlmm
+>>> +
+>>> +  reg:
+>>> +    maxItems: 1
+>>> +
+>>> +  interrupts: true
+>>> +  interrupt-controller: true
+>>> +  "#interrupt-cells": true
+>>> +  gpio-controller: true
+>>> +
+>>> +  gpio-reserved-ranges:
+>>> +    minItems: 1
+>>> +    maxItems: 105
+>>> +
+>>> +  gpio-line-names:
+>>> +    maxItems: 133
+>> If you have 210 GPIOs, then this should be 210.
+>>
+>>> +
+>>> +  "#gpio-cells": true
+>>> +  gpio-ranges: true
+>>> +  wakeup-parent: true
+>>> +
+>>> +patternProperties:
+>>> +  "-state$":
+>>> +    oneOf:
+>>> +      - $ref: "#/$defs/qcom-sdx75-tlmm-state"
+>>> +      - patternProperties:
+>>> +          "-pins$":
+>>> +            $ref: "#/$defs/qcom-sdx75-tlmm-state"
+>>> +        additionalProperties: false
+>>> +
+>>> +$defs:
+>>> +  qcom-sdx75-tlmm-state:
+>>> +    type: object
+>>> +    description:
+>>> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+>>> +      Client device subnodes use below standard properties.
+>>> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
+>> unevaluatedProperties: false
+>>> +
+>>> +    properties:
+>>> +      pins:
+>>> +        description:
+>>> +          List of gpio pins affected by the properties specified in this
+>>> +          subnode.
+>>> +        items:
+>>> +          oneOf:
+>>> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-9])$"
+>> This says you have 210 GPIOs.
+>>
+>>> +            - enum: [ ufs_reset, sdc2_clk, sdc2_cmd, sdc2_data ]
+>> Keep these four enum values sorted alphabetically.
+>>
+>>> +        minItems: 1
+>>> +        maxItems: 36
+>>> +
+>>> +      function:
+>>> +        description:
+>>> +          Specify the alternative function to be configured for the specified
+>>> +          pins.
+>>> +        enum: [ gpio, eth0_mdc, eth0_mdio, eth1_mdc, eth1_mdio,
+>>> +                qlink0_wmss_reset, qlink1_wmss_reset, rgmii_rxc, rgmii_rxd0,
+>>> +                rgmii_rxd1, rgmii_rxd2, rgmii_rxd3,rgmii_rx_ctl, rgmii_txc,
+>>> +                rgmii_txd0, rgmii_txd1, rgmii_txd2, rgmii_txd3, rgmii_tx_ctl,
+>>> +                adsp_ext_vfr, atest_char_start, atest_char_status0,
+>>> +                atest_char_status1, atest_char_status2, atest_char_status3,
+>>> +                audio_ref_clk, bimc_dte_test0, bimc_dte_test1,
+>>> +                char_exec_pending, char_exec_release, coex_uart2_rx,
+>>> +                coex_uart2_tx, coex_uart_rx, coex_uart_tx, cri_trng_rosc,
+>>> +                cri_trng_rosc0, cri_trng_rosc1, dbg_out_clk, ddr_bist_complete,
+>>> +                ddr_bist_fail, ddr_bist_start, ddr_bist_stop, ddr_pxi0_test,
+>>> +                ebi0_wrcdc_dq2, ebi0_wrcdc_dq3, ebi2_a_d, ebi2_lcd_cs,
+>>> +                ebi2_lcd_reset, ebi2_lcd_te, emac0_mcg_pst0, emac0_mcg_pst1,
+>>> +                emac0_mcg_pst2, emac0_mcg_pst3, emac0_ptp_aux, emac0_ptp_pps,
+>>> +                emac1_mcg_pst0, emac1_mcg_pst1, emac1_mcg_pst2, emac1_mcg_pst3,
+>>> +                emac1_ptp_aux0, emac1_ptp_aux1, emac1_ptp_aux2, emac1_ptp_aux3,
+>>> +                emac1_ptp_pps0, emac1_ptp_pps1, emac1_ptp_pps2, emac1_ptp_pps3,
+>>> +                emac_cdc_dtest0, emac_cdc_dtest1, emac_pps_in, ext_dbg_uart,
+>>> +                gcc_125_clk, gcc_gp1_clk, gcc_gp2_clk, gcc_gp3_clk,
+>>> +                gcc_plltest_bypassnl, gcc_plltest_resetn, i2s_mclk,
+>>> +                jitter_bist_ref, ldo_en, ldo_update, m_voc_ext, mgpi_clk_req,
+>>> +                native0, native1, native2, native3, native_char_start,
+>>> +                native_tsens_osc, native_tsense_pwm1, nav_dr_sync, nav_gpio_0,
+>>> +                nav_gpio_1, nav_gpio_2, nav_gpio_3, pa_indicator_1, pci_e_rst,
+>>> +                pcie0_clkreq_n, pcie1_clkreq_n, pcie2_clkreq_n, pll_bist_sync,
+>>> +                pll_clk_aux, pll_ref_clk, pri_mi2s_data0, pri_mi2s_data1,
+>>> +                pri_mi2s_sck, pri_mi2s_ws, prng_rosc_test0, prng_rosc_test1,
+>>> +                prng_rosc_test2, prng_rosc_test3, qdss_cti_trig0,
+>>> +                qdss_cti_trig1, qdss_gpio_traceclk, qdss_gpio_tracectl,
+>>> +                qdss_gpio_tracedata0, qdss_gpio_tracedata1,
+>>> +                qdss_gpio_tracedata10, qdss_gpio_tracedata11,
+>>> +                qdss_gpio_tracedata12, qdss_gpio_tracedata13,
+>>> +                qdss_gpio_tracedata14, qdss_gpio_tracedata15,
+>>> +                qdss_gpio_tracedata2, qdss_gpio_tracedata3,
+>>> +                qdss_gpio_tracedata4, qdss_gpio_tracedata5,
+>>> +                qdss_gpio_tracedata6, qdss_gpio_tracedata7,
+>>> +                qdss_gpio_tracedata8, qdss_gpio_tracedata9, qlink0_b_en,
+>>> +                qlink0_b_req, qlink0_l_en, qlink0_l_req, qlink1_l_en,
+>>> +                qlink1_l_req, qup_se0_l0, qup_se0_l1, qup_se0_l2, qup_se0_l3,
+>>> +                qup_se1_l2, qup_se1_l3, qup_se2_l0, qup_se2_l1, qup_se2_l2,
+>>> +                qup_se2_l3, qup_se3_l0, qup_se3_l1, qup_se3_l2, qup_se3_l3,
+>>> +                qup_se4_l2, qup_se4_l3, qup_se5_l0, qup_se5_l1, qup_se6_l0,
+>>> +                qup_se6_l1, qup_se6_l2, qup_se6_l3, qup_se7_l0, qup_se7_l1,
+>>> +                qup_se7_l2, qup_se7_l3, qup_se8_l2, qup_se8_l3, sdc1_tb_trig,
+>>> +                sdc2_tb_trig, sec_mi2s_data0, sec_mi2s_data1, sec_mi2s_sck,
+>>> +                sec_mi2s_ws, sgmii_phy_intr0, sgmii_phy_intr1, spmi_coex_clk,
+>>> +                spmi_coex_data, spmi_vgi_hwevent, tgu_ch0_trigout,
+>>> +                tri_mi2s_data0, tri_mi2s_data1, tri_mi2s_sck, tri_mi2s_ws,
+>>> +                uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk,
+>>> +                uim2_data, uim2_present, uim2_reset, usb2phy_ac_en,
+>>> +                vsense_trigger_mirnat]
+>>> +
+>>> +      bias-disable: true
+>>> +      bias-pull-down: true
+>>> +      bias-pull-up: true
+>>> +      drive-strength: true
+>>> +      input-enable: true
+>> This is not allowed. Please rebase on pinctrl maintainer tree or next.
+> Will do this.
+>>
+>>> +      output-high: true
+>>> +      output-low: true
+>>> +
+>>> +    required:
+>>> +      - pins
+>>> +
+>>> +    additionalProperties: false
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +    tlmm: pinctrl@f100000 {
+>>> +        compatible = "qcom,sdx75-tlmm";
+>>> +        reg = <0x0f100000 0x300000>;
+>>> +        gpio-controller;
+>>> +        #gpio-cells = <2>;
+>>> +        gpio-ranges = <&tlmm 0 0 134>;
+>> Wrong number of pins. You have 210, right? This should be number of
+>> GPIOs + optionally UFS reset.
+> Thanks for reviewing the patch.
+> Actually it has 133 pins. Ok. Let me update the above property as well.
+> And just checked there is no ufs reset pin. So it should be removed 
+> completely.
 
-Are you sure? We talk about clock inputs here.
+Then the pattern for GPIOs should be narrowed and gpio-reserved-ranges
+should be (half + 1), so 67.
 
 Best regards,
 Krzysztof
