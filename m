@@ -2,117 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AB576EAEBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:09:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 870F16EAEDB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:13:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbjDUQJ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 12:09:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57898 "EHLO
+        id S233014AbjDUQM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 12:12:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232330AbjDUQJ0 (ORCPT
+        with ESMTP id S229843AbjDUQM4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 12:09:26 -0400
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD821444A;
-        Fri, 21 Apr 2023 09:09:24 -0700 (PDT)
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6a5f21a0604so1769468a34.2;
-        Fri, 21 Apr 2023 09:09:24 -0700 (PDT)
+        Fri, 21 Apr 2023 12:12:56 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5153913FBE
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:12:46 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-b8ed0fa7546so2463231276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:12:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1682093565; x=1684685565;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZKO1I2nyCroJ5CwepD9IlxcHZJ24Ly0m35i9l8S4MQs=;
+        b=HJfyn5H0QVx3NXHRM8iU50CH7Ukb/wfDINz8hm/4f7n2NjK0MiMfZadyU4/9ZxGvkJ
+         pH/IHUyy274lKYCO1jODOlPX2cacKBGdFCiGRGEYu2bzEwGpsO7LKkbrxIkAQWVLIc+j
+         byWAkFmPgv/5cQKlcgPuQSV6bzI9E6E8GcAvs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682093363; x=1684685363;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Dy8PONCFIhkTcUEPgQ+0ISj/L7cH8cV88i3Z2JVEn8I=;
-        b=dVhgD6ApEd9IGpLAGpb0LbXCEXG6Eu8QEg9tQqykI4QCfZQ4sp1xuqcg12GsxM2Aq2
-         Vf18R/kjBDaeWLq1mKi3r251wdGrRXL/kumXJvL6EV3wHMe212wYdzR/wndDmoWR0Sf/
-         zqOBh18t4TzfAf3vxI7uqEKihAA9eLar2W95NAOTvlgctS+XEtk08mQ7XPijJOI6p76Z
-         7jISBeioWcqpwIMba7R22tz9AIG7NnL/pnr1rNom5dn+B9eX35eSP7hKuH/2LyW4Xl2I
-         kIkySXyiBnNHEVnsottDG2EGCImC1eEIg59CiRQjKTeatPza0YRsgBC6zMp3n0jMkWNK
-         1efw==
-X-Gm-Message-State: AAQBX9f1UPTGqodCaHvFst7UM+10fMpfwi6tBL3l35onwEo6w6FFWcH3
-        fxtXXU8PST9JlAM778gzrg==
-X-Google-Smtp-Source: AKy350by7amp0emL+mL2CpzJ0zhDlakUU2+NGUL4HO/d07ZTE3P2I7Im/lYMDDV6YK4JiOm2Espbyw==
-X-Received: by 2002:a05:6808:151:b0:38e:46ed:7738 with SMTP id h17-20020a056808015100b0038e46ed7738mr2927007oie.0.1682093363590;
-        Fri, 21 Apr 2023 09:09:23 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id a38-20020a4a98a9000000b0053a7aaa85a0sm1916335ooj.0.2023.04.21.09.09.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 09:09:23 -0700 (PDT)
-Received: (nullmailer pid 1412184 invoked by uid 1000);
-        Fri, 21 Apr 2023 16:09:21 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        d=1e100.net; s=20221208; t=1682093565; x=1684685565;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZKO1I2nyCroJ5CwepD9IlxcHZJ24Ly0m35i9l8S4MQs=;
+        b=bOw8uBdZ42FEtlPVyV5KZ+xEEWWJwZzHnZsja2Vm7+SkIrvkKPOxJauxOsbTGjqCPI
+         6njb3okIKAlRV+o49MAmek7YHAwc6LyGo9Ipx4eeLeRa2T7b8TLsm6KjCJAla73QSucc
+         JeK6ncOHdIBkD12fLXd2OMEO9CpSiEyi0qz4DE47lf2NuUJiftgVGpnNv1km40ipivMt
+         MV2gjcBZUFMz84vS2YwUvpFkJdrcjGQkU9hrVAR5UaACKtrDsCUUsXiBaN9ovB85YzHs
+         BJHbuQAS9dBKWqrPcDqbK49uDrfbOMirKipnQ+FzKVEid8Rp7wXI3WlAx8S/cP1JVngx
+         HntQ==
+X-Gm-Message-State: AAQBX9fTsaglyZrRE8WZm0zsPKTAI3pBuGSN7gogGjGgw5/3tsC3dhJj
+        8oZ1XX1nZYYvyhpngYecjJzHqg==
+X-Google-Smtp-Source: AKy350ZfHj4U+debwEjtoM+P+zXHEbqLPoMWNeevKjzr0FvvwqIS7hVfrAuFlrrufYErsNiIub5ahw==
+X-Received: by 2002:a25:b31b:0:b0:b8c:4e4:d3d4 with SMTP id l27-20020a25b31b000000b00b8c04e4d3d4mr2748897ybj.17.1682093565513;
+        Fri, 21 Apr 2023 09:12:45 -0700 (PDT)
+Received: from localhost ([2620:0:1035:15:25e5:2115:c97c:bf00])
+        by smtp.gmail.com with UTF8SMTPSA id n12-20020a0dcb0c000000b00552e32354f8sm1038529ywd.32.2023.04.21.09.12.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Apr 2023 09:12:45 -0700 (PDT)
+From:   Mark Yacoub <markyacoub@chromium.org>
+X-Google-Original-From: Mark Yacoub <markyacoub@google.com>
+To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     seanpaul@chromium.org, dianders@chromium.org,
+        Mark Yacoub <markyacoub@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v1 2/2] dp_hdcp: Get the hdcp key from the connector prop
+Date:   Fri, 21 Apr 2023 12:12:37 -0400
+Message-ID: <20230421161237.357342-3-markyacoub@google.com>
+X-Mailer: git-send-email 2.40.0.634.g4ca3ef3211-goog
+In-Reply-To: <20230421161237.357342-1-markyacoub@google.com>
+References: <20230421161237.357342-1-markyacoub@google.com>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     linux-phy@lists.infradead.org, quic_arajkuma@quicinc.com,
-        linux-arm-msm@vger.kernel.org, quic_kathirav@quicinc.com,
-        quic_srichara@quicinc.com, linux-kernel@vger.kernel.org,
-        agross@kernel.org, quic_ipkumar@quicinc.com,
-        quic_anusha@quicinc.com, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org,
-        andersson@kernel.org, quic_sjaganat@quicinc.com
-In-Reply-To: <20230421124150.21190-2-quic_devipriy@quicinc.com>
-References: <20230421124150.21190-1-quic_devipriy@quicinc.com>
- <20230421124150.21190-2-quic_devipriy@quicinc.com>
-Message-Id: <168209295793.1394458.6036002891116983900.robh@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574
- bindings
-Date:   Fri, 21 Apr 2023 11:09:21 -0500
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Mark Yacoub <markyacoub@chromium.org>
 
-On Fri, 21 Apr 2023 18:11:49 +0530, Devi Priya wrote:
-> Add bindings for the PCIe QMP PHYs found on IPQ9574.
-> 
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->  Changes in V1:
-> 	- Introduced a new binding for ipq9574 as suggested by Krzysztof
-> 
->  .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
->  1 file changed, 90 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
-> 
+[Why]
+To support protected content, the driver requires a key.
+Currently, it's being injected from debugfs, which is not super useful
+to run a user space in the wild.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+[How]
+When the key is needed, fetch the "Content Protection Property" on the
+connector and get the key blob. Verify that the size is valid and use
+it.
 
-yamllint warnings/errors:
+Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+---
+ drivers/gpu/drm/msm/dp/dp_hdcp.c | 66 +++++++++++++++++++++++++++++---
+ 1 file changed, 61 insertions(+), 5 deletions(-)
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dts:18:18: fatal error: dt-bindings/clock/qcom,ipq9574-gcc.h: No such file or directory
-   18 |         #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1512: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230421124150.21190-2-quic_devipriy@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+diff --git a/drivers/gpu/drm/msm/dp/dp_hdcp.c b/drivers/gpu/drm/msm/dp/dp_hdcp.c
+index 191340971f943..4321d245b36c9 100644
+--- a/drivers/gpu/drm/msm/dp/dp_hdcp.c
++++ b/drivers/gpu/drm/msm/dp/dp_hdcp.c
+@@ -117,19 +117,61 @@ static bool dp_hdcp_are_keys_valid(struct drm_connector *connector,
+ 	return FIELD_GET(DP_HDCP_KEY_STATUS, val) == DP_HDCP_KEY_STATUS_VALID;
+ }
+ 
++static bool dp_hdcp_get_key_from_connector(struct drm_connector *connector,
++					   struct drm_bridge *bridge)
++{
++	struct drm_property_blob *key_blob;
++	u8 *raw_key;
++	int ret;
++	struct dp_hdcp *hdcp;
++	struct drm_device *dev = connector->dev;
++	struct drm_property *prop =
++		dev->mode_config.content_protection_key_property;
++
++	if (!prop)
++		return false;
++
++	key_blob = connector->state->content_protection_key;
++	if (!key_blob)
++		return false;
++
++	raw_key = key_blob->data;
++
++	if (key_blob->length !=
++	    DRM_HDCP_KSV_LEN + DP_HDCP_NUM_KEYS * DP_HDCP_KEY_LEN) {
++		drm_dbg_atomic(
++			dev,
++			"[CONNECTOR:%d:%s] Content Protection Key is a blob that we don't expect.\n",
++			connector->base.id, connector->name);
++		return false;
++	}
++
++	hdcp = dp_display_bridge_to_hdcp(bridge);
++	ret = dp_hdcp_ingest_key(hdcp, key_blob->data, key_blob->length);
++	if (ret)
++		return false;
++
++	return true;
++}
++
+ static int dp_hdcp_load_keys(struct drm_connector *connector, void *driver_data)
+ {
+ 	struct drm_bridge *bridge = (struct drm_bridge *)driver_data;
+ 	struct dp_hdcp *hdcp = dp_display_bridge_to_hdcp(bridge);
+ 	int i, ret = 0;
++	bool is_hdcp_key_valid;
+ 
+ 	mutex_lock(&hdcp->key_lock);
++	is_hdcp_key_valid = hdcp->key.valid;
++	mutex_unlock(&hdcp->key_lock);
+ 
+-	if (!hdcp->key.valid) {
+-		ret = -ENOENT;
+-		goto out;
++	if (!is_hdcp_key_valid &&
++	    !dp_hdcp_get_key_from_connector(connector, bridge)) {
++		return -ENOENT;
+ 	}
+ 
++	mutex_lock(&hdcp->key_lock);
++
+ 	dp_catalog_hdcp_write_aksv(hdcp->catalog, hdcp->key.ksv.words);
+ 
+ 
+@@ -139,7 +181,6 @@ static int dp_hdcp_load_keys(struct drm_connector *connector, void *driver_data)
+ 	}
+ 	dp_catalog_hdcp_post_write_key(hdcp->catalog);
+ 
+-out:
+ 	mutex_unlock(&hdcp->key_lock);
+ 	return ret;
+ }
+@@ -346,6 +387,8 @@ int dp_hdcp_attach(struct dp_hdcp *hdcp, struct drm_connector *connector,
+ 		   struct drm_bridge *bridge, struct dp_catalog *catalog)
+ {
+ 	struct drm_hdcp_helper_data *helper_data;
++	struct drm_device *dev;
++	struct drm_property *prop;
+ 
+ 	/* HDCP is not configured for this device */
+ 	if (!hdcp->parser->io.dp_controller.hdcp_key.base)
+@@ -357,7 +400,20 @@ int dp_hdcp_attach(struct dp_hdcp *hdcp, struct drm_connector *connector,
+ 		return PTR_ERR(helper_data);
+ 
+ 	helper_data->driver_data = bridge;
+-	hdcp->dev = connector->dev;
++
++	dev = connector->dev;
++	prop = dev->mode_config.content_protection_key_property;
++	if (!prop) {
++		prop = drm_property_create(dev, DRM_MODE_PROP_BLOB,
++					   "Content Protection Key", 0);
++	}
++	if (!prop)
++		return -1;
++	drm_object_attach_property(&connector->base, prop,
++				   DRM_MODE_HDCP_CONTENT_TYPE0);
++	dev->mode_config.content_protection_key_property = prop;
++
++	hdcp->dev = dev;
+ 	hdcp->connector = connector;
+ 	hdcp->helper_data = helper_data;
+ 	hdcp->catalog = catalog;
+-- 
+2.40.0.634.g4ca3ef3211-goog
 
