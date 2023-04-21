@@ -2,206 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B0EF6EA0AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 02:36:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CD956EA1F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 04:51:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbjDUAg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 20:36:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52320 "EHLO
+        id S233949AbjDUCvz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 22:51:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233110AbjDUAg1 (ORCPT
+        with ESMTP id S233767AbjDUCvS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 20:36:27 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4877949F6;
-        Thu, 20 Apr 2023 17:36:26 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33L0aGMo005655;
-        Fri, 21 Apr 2023 00:36:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UKQgIUDwzDOzUPk2VjzlD8UR5C6Y0PvdeSSx8f1Y0J0=;
- b=U5X7s20kIDyVFaT4EnoF/LQGXWa96SUNaEZlHrgPMhrf8FDALvN+WKMymWCpgGNW6LMl
- UtAScKvtvpEOOMxxNjoj662gGonf7Sb4i+4YwwQ6SnDqH7YNKU4U7RQxxYsV9GwAuAAW
- BgM9IX/XY92cu3crSHOK7oRlc1ywr+2bOYWB90lSmf0UjfGmQo+iSjATBdurI60MvXsZ
- yCsXQJbtls1bqNTtdO4IiicmnsqhDGN71X+EXcQyl+0vrnJFBJUtpgZ3BuJsaL5wWHp9
- ax1SSqPnSnkZbwfPygg3ZyhukSb/gO6pUdjXsFtYakZi3PuTRNOCvswswD4ZQEv+46ae tQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q3dcmg8sd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Apr 2023 00:36:16 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33L0aEQD031844
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Apr 2023 00:36:14 GMT
-Received: from [10.110.74.190] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 20 Apr
- 2023 17:36:13 -0700
-Message-ID: <43859b23-a324-b743-83b7-4f00c78170b5@quicinc.com>
-Date:   Thu, 20 Apr 2023 17:36:12 -0700
+        Thu, 20 Apr 2023 22:51:18 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65F057292;
+        Thu, 20 Apr 2023 19:51:17 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1a92513abebso19694875ad.2;
+        Thu, 20 Apr 2023 19:51:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682045477; x=1684637477;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dorQ2qlHIQqiNBUoiQdfsVbgm5wQDWFtkN4YHEiGiW0=;
+        b=qcJ3g04qdI5nJnF0RwVis4v7EzX0fPL613I0miXb8OBRVtnPZi9rsPKFiOjvtxzM9D
+         k4Lc3kzcMkqM07Gz7lPfr65+OH1ShvUvlu3vKZQ0fksXbAXYpykFjcdCl1ksoIWsEFYw
+         rlrADdfGdmznF4OYk1+zclIZmpe23JU/7PO2So1p+ZwS90tZHUeLdizz1m7pulXEmZhP
+         JGKQXVuxT0LKxJS228sfpj/zMqKIox+ydHEQeloOIjfeqjSuZ8kOkXhW9pxOklPjfL00
+         93syjdjXSPpvWDcKqeuDfLzjyTy/SCOqiAy9ukPDb2LF4fKF1DQoMLXT/IpOgRa9GTEE
+         ZPkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682045477; x=1684637477;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dorQ2qlHIQqiNBUoiQdfsVbgm5wQDWFtkN4YHEiGiW0=;
+        b=Z1AzSHRfN+nxvvhvI5oyr2CNGwfYyBndxOq7C9SVHs5YalzuNgEjTTUGHFFn5aFMQb
+         F4iIKSLvBJ6dzDc8D7G7th0Ue+kTOEwxu10WMObZfaRN6SewWIxtnXtc65HqQZiCiBHM
+         P9/VvrhzIR2AoK8E/2xdU/b3Jt6IA834RDdvJNJurfkp8p62tU6K7KZ28aH+9EJdq+5x
+         mMgzX1pqtWVLsR0HTvh5/J1frGjoJAx49kF7s5bKvemcNehNyobwwMlK4XY5Q8tUzloH
+         /FqTAXBW1WfvUs/lCkRM+Wkqy6N0CHvz2IrNvsUuGnOW8dBK9flCdN8I6whkOTdBQ2T/
+         ypJw==
+X-Gm-Message-State: AAQBX9cIRvImqgRtXtcU+8SMJq1857xxBswCuoWNn2J/T0yZOVHBMz13
+        kEY2a+8HpRuuNAFdVEhKaX2+h+rUlTY=
+X-Google-Smtp-Source: AKy350brCnllqVIbTvbVAizAFvwU8LbM/ZVhCoz2xu5/RFCnO/Uyv0+3NE55K22qXrDnqJDgSkgCvg==
+X-Received: by 2002:a17:902:748c:b0:1a6:be37:22e1 with SMTP id h12-20020a170902748c00b001a6be3722e1mr3102959pll.15.1682045476738;
+        Thu, 20 Apr 2023 19:51:16 -0700 (PDT)
+Received: from localhost (2603-800c-1a02-1bae-a7fa-157f-969a-4cde.res6.spectrum.com. [2603:800c:1a02:1bae:a7fa:157f:969a:4cde])
+        by smtp.gmail.com with ESMTPSA id k1-20020a170902760100b001a1adbe215asm1741130pll.142.2023.04.20.19.51.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Apr 2023 19:51:16 -0700 (PDT)
+Sender: Tejun Heo <htejun@gmail.com>
+From:   Tejun Heo <tj@kernel.org>
+To:     jiangshanlai@gmail.com
+Cc:     linux-kernel@vger.kernel.org, kernel-team@meta.com,
+        Tejun Heo <tj@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 14/22] soc: qcom: qmi: Use alloc_ordered_workqueue() to create ordered workqueues
+Date:   Thu, 20 Apr 2023 16:50:38 -1000
+Message-Id: <20230421025046.4008499-15-tj@kernel.org>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230421025046.4008499-1-tj@kernel.org>
+References: <20230421025046.4008499-1-tj@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v1 3/5] drm/msm/dpu: save dpu topology configuration
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC:     <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1682033114-28483-1-git-send-email-quic_khsieh@quicinc.com>
- <1682033114-28483-4-git-send-email-quic_khsieh@quicinc.com>
- <897af051-aed4-938a-5ab1-c44c967ab02d@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <897af051-aed4-938a-5ab1-c44c967ab02d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dZoQF6EaxQjxm3_wDYc2ly7hqZ_1UWkV
-X-Proofpoint-GUID: dZoQF6EaxQjxm3_wDYc2ly7hqZ_1UWkV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-20_17,2023-04-20_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0 impostorscore=0
- mlxlogscore=999 malwarescore=0 suspectscore=0 clxscore=1015 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304210002
-X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+BACKGROUND
+==========
 
+When multiple work items are queued to a workqueue, their execution order
+doesn't match the queueing order. They may get executed in any order and
+simultaneously. When fully serialized execution - one by one in the queueing
+order - is needed, an ordered workqueue should be used which can be created
+with alloc_ordered_workqueue().
 
-On 4/20/2023 5:12 PM, Dmitry Baryshkov wrote:
-> On 21/04/2023 02:25, Kuogee Hsieh wrote:
->> At current implementation, topology configuration is thrown away after
->> dpu_rm_reserve(). This patch save the topology so that it can be used
->> for DSC related calculation later.
-> 
-> Please take a look at 
-> https://patchwork.freedesktop.org/patch/527960/?series=115283&rev=2 .
+However, alloc_ordered_workqueue() was a later addition. Before it, an
+ordered workqueue could be obtained by creating an UNBOUND workqueue with
+@max_active==1. This originally was an implementation side-effect which was
+broken by 4c16bd327c74 ("workqueue: restore WQ_UNBOUND/max_active==1 to be
+ordered"). Because there were users that depended on the ordered execution,
+5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1 to be ordered")
+made workqueue allocation path to implicitly promote UNBOUND workqueues w/
+@max_active==1 to ordered workqueues.
 
-Let the review of this series go on and lets try to get the acks on the 
-non-topology related pieces. I think 2/5 patches in this series are 
-conflicting in the design. We will resolve that in a weeks time. 
-Meanwhile, I think we can keep the reviews / versions going on the rest.
+While this has worked okay, overloading the UNBOUND allocation interface
+this way creates other issues. It's difficult to tell whether a given
+workqueue actually needs to be ordered and users that legitimately want a
+min concurrency level wq unexpectedly gets an ordered one instead. With
+planned UNBOUND workqueue updates to improve execution locality and more
+prevalence of chiplet designs which can benefit from such improvements, this
+isn't a state we wanna be in forever.
 
-I think we can move patch 5 of this series to patch 3. That way we get 
-acks on patches 1-3 and patches 4 & 5 which deal with topology are dealt 
-with together with virtual planes.
+This patch series audits all callsites that create an UNBOUND workqueue w/
+@max_active==1 and converts them to alloc_ordered_workqueue() as necessary.
 
-I will review virtual planes next week and we will decide the best 
-course of action. Moving resource allocation to CRTC needs to be thought 
-of a bit deeper for DSC as that one is directly tied to encoder.
+WHAT TO LOOK FOR
+================
 
-> 
->>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32 
->> ++++++++++++++---------------
->>   1 file changed, 16 insertions(+), 16 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index ecb87bc..2fdacf1 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -542,13 +542,13 @@ bool dpu_encoder_use_dsc_merge(struct 
->> drm_encoder *drm_enc)
->>       return (num_dsc > 0) && (num_dsc > intf_count);
->>   }
->> -static struct msm_display_topology dpu_encoder_get_topology(
->> +static void dpu_encoder_get_topology(
->>               struct dpu_encoder_virt *dpu_enc,
->>               struct dpu_kms *dpu_kms,
->>               struct drm_display_mode *mode,
->> -            struct drm_crtc_state *crtc_state)
->> +            struct drm_crtc_state *crtc_state,
->> +            struct msm_display_topology *topology)
->>   {
->> -    struct msm_display_topology topology = {0};
->>       int i, intf_count = 0;
->>       for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
->> @@ -567,16 +567,16 @@ static struct msm_display_topology 
->> dpu_encoder_get_topology(
->>        * Add dspps to the reservation requirements if ctm is requested
->>        */
->>       if (intf_count == 2)
->> -        topology.num_lm = 2;
->> +        topology->num_lm = 2;
->>       else if (!dpu_kms->catalog->caps->has_3d_merge)
->> -        topology.num_lm = 1;
->> +        topology->num_lm = 1;
->>       else
->> -        topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
->> +        topology->num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 
->> : 1;
->>       if (crtc_state->ctm)
->> -        topology.num_dspp = topology.num_lm;
->> +        topology->num_dspp = topology->num_lm;
->> -    topology.num_intf = intf_count;
->> +    topology->num_intf = intf_count;
->>       if (dpu_enc->dsc) {
->>           /*
->> @@ -585,12 +585,10 @@ static struct msm_display_topology 
->> dpu_encoder_get_topology(
->>            * this is power optimal and can drive up to (including) 4k
->>            * screens
->>            */
->> -        topology.num_dsc = 2;
->> -        topology.num_lm = 2;
->> -        topology.num_intf = 1;
->> +        topology->num_dsc = 2;
->> +        topology->num_lm = 2;
->> +        topology->num_intf = 1;
->>       }
->> -
->> -    return topology;
->>   }
->>   static int dpu_encoder_virt_atomic_check(
->> @@ -602,7 +600,7 @@ static int dpu_encoder_virt_atomic_check(
->>       struct msm_drm_private *priv;
->>       struct dpu_kms *dpu_kms;
->>       struct drm_display_mode *adj_mode;
->> -    struct msm_display_topology topology;
->> +    struct msm_display_topology *topology;
->>       struct dpu_global_state *global_state;
->>       int i = 0;
->>       int ret = 0;
->> @@ -639,7 +637,9 @@ static int dpu_encoder_virt_atomic_check(
->>           }
->>       }
->> -    topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, 
->> crtc_state);
->> +    topology = &dpu_enc->topology;
->> +    memset(topology, 0, sizeof (*topology));
->> +    dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, 
->> topology);
->>       /*
->>        * Release and Allocate resources on every modeset
->> @@ -650,7 +650,7 @@ static int dpu_encoder_virt_atomic_check(
->>           if (!crtc_state->active_changed || crtc_state->enable)
->>               ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
->> -                    drm_enc, crtc_state, topology);
->> +                    drm_enc, crtc_state, *topology);
->>       }
->>       trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
-> 
+The conversions are from
+
+  alloc_workqueue(WQ_UNBOUND | flags, 1, args..)
+
+to
+
+  alloc_ordered_workqueue(flags, args...)
+
+which don't cause any functional changes. If you know that fully ordered
+execution is not ncessary, please let me know. I'll drop the conversion and
+instead add a comment noting the fact to reduce confusion while conversion
+is in progress.
+
+If you aren't fully sure, it's completely fine to let the conversion
+through. The behavior will stay exactly the same and we can always
+reconsider later.
+
+As there are follow-up workqueue core changes, I'd really appreciate if the
+patch can be routed through the workqueue tree w/ your acks. Thanks.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+---
+ drivers/soc/qcom/qmi_interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
+index 820bdd9f8e46..78d7361fdcf2 100644
+--- a/drivers/soc/qcom/qmi_interface.c
++++ b/drivers/soc/qcom/qmi_interface.c
+@@ -650,7 +650,7 @@ int qmi_handle_init(struct qmi_handle *qmi, size_t recv_buf_size,
+ 	if (!qmi->recv_buf)
+ 		return -ENOMEM;
+ 
+-	qmi->wq = alloc_workqueue("qmi_msg_handler", WQ_UNBOUND, 1);
++	qmi->wq = alloc_ordered_workqueue("qmi_msg_handler", 0);
+ 	if (!qmi->wq) {
+ 		ret = -ENOMEM;
+ 		goto err_free_recv_buf;
+-- 
+2.40.0
+
