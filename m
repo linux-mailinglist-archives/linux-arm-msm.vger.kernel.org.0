@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 870F16EAEDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:13:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A2B76EAF0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:28:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbjDUQM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 12:12:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
+        id S233109AbjDUQ2H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 12:28:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229843AbjDUQM4 (ORCPT
+        with ESMTP id S233075AbjDUQ2D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 12:12:56 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5153913FBE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:12:46 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-b8ed0fa7546so2463231276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:12:46 -0700 (PDT)
+        Fri, 21 Apr 2023 12:28:03 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DE1902A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:28:00 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-555d2810415so27997527b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1682093565; x=1684685565;
+        d=chromium.org; s=google; t=1682094480; x=1684686480;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=ZKO1I2nyCroJ5CwepD9IlxcHZJ24Ly0m35i9l8S4MQs=;
-        b=HJfyn5H0QVx3NXHRM8iU50CH7Ukb/wfDINz8hm/4f7n2NjK0MiMfZadyU4/9ZxGvkJ
-         pH/IHUyy274lKYCO1jODOlPX2cacKBGdFCiGRGEYu2bzEwGpsO7LKkbrxIkAQWVLIc+j
-         byWAkFmPgv/5cQKlcgPuQSV6bzI9E6E8GcAvs=
+        b=g3RnDFLE3IRBLOW7Omv+IL4sEVPhjSZaDkVIesz/E8/m//3gDrLMsuSwVNhLbJ9X2p
+         xlUPMYzjV5CN7EdNPKebyh5SpA7LDmzcz4TRXrn7Qv0SU2mgm2I8zcGGb3T7BL0luon/
+         WT7XaMP2oPdqlFOaFXLh+87xE6nLWbIARE3n0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682093565; x=1684685565;
+        d=1e100.net; s=20221208; t=1682094480; x=1684686480;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
         bh=ZKO1I2nyCroJ5CwepD9IlxcHZJ24Ly0m35i9l8S4MQs=;
-        b=bOw8uBdZ42FEtlPVyV5KZ+xEEWWJwZzHnZsja2Vm7+SkIrvkKPOxJauxOsbTGjqCPI
-         6njb3okIKAlRV+o49MAmek7YHAwc6LyGo9Ipx4eeLeRa2T7b8TLsm6KjCJAla73QSucc
-         JeK6ncOHdIBkD12fLXd2OMEO9CpSiEyi0qz4DE47lf2NuUJiftgVGpnNv1km40ipivMt
-         MV2gjcBZUFMz84vS2YwUvpFkJdrcjGQkU9hrVAR5UaACKtrDsCUUsXiBaN9ovB85YzHs
-         BJHbuQAS9dBKWqrPcDqbK49uDrfbOMirKipnQ+FzKVEid8Rp7wXI3WlAx8S/cP1JVngx
-         HntQ==
-X-Gm-Message-State: AAQBX9fTsaglyZrRE8WZm0zsPKTAI3pBuGSN7gogGjGgw5/3tsC3dhJj
-        8oZ1XX1nZYYvyhpngYecjJzHqg==
-X-Google-Smtp-Source: AKy350ZfHj4U+debwEjtoM+P+zXHEbqLPoMWNeevKjzr0FvvwqIS7hVfrAuFlrrufYErsNiIub5ahw==
-X-Received: by 2002:a25:b31b:0:b0:b8c:4e4:d3d4 with SMTP id l27-20020a25b31b000000b00b8c04e4d3d4mr2748897ybj.17.1682093565513;
-        Fri, 21 Apr 2023 09:12:45 -0700 (PDT)
+        b=YeqAG6qqPROKnjebzo0bhZ89PVO4DkfJ0V8nlAE3Pwk18Al3sO7jaXFGS6VIMIc8SB
+         hCOxo5eFR0a73WW5jbR1gU9KBqYs+/z3oI0ZwLs6FOFSX0FJqY1Yz5xZMUE/FkP1eba4
+         VScNAUQ7l5TfnXfYA/hrXVXcwM7qJSbb/L1YyWAnHa/9l34F0H46M3kyeHWu/e3tL/yU
+         kw6LD39W3GYsBKP1b91z2kOsoTdQ90j8Oydd5ZS5Qa1oqrVseWn8gr8OiwcWhBnPSqCE
+         1B8RRdhl/4TfL8w7vQDC32Vk4MqtTkA5BVFFJuThjyuau0u4BvoK4tgW26O+b9MAJqGo
+         /Nww==
+X-Gm-Message-State: AAQBX9eQKbQ4/asQ1ySwcKe+0fZNTsaY8DcX2Q3aBn2GBcK4KfV/Oy+1
+        LbkK+yIyHm8ZNl8ZXFn9M11W8A==
+X-Google-Smtp-Source: AKy350bWZ//HXXTogoYM52hKsklw5A+76WgTKpW7vs/w2gfk4xuaOgmgfr2EAMS8SOswZdedlP3CeA==
+X-Received: by 2002:a81:5f85:0:b0:544:57ba:a32e with SMTP id t127-20020a815f85000000b0054457baa32emr2458316ywb.9.1682094478553;
+        Fri, 21 Apr 2023 09:27:58 -0700 (PDT)
 Received: from localhost ([2620:0:1035:15:25e5:2115:c97c:bf00])
-        by smtp.gmail.com with UTF8SMTPSA id n12-20020a0dcb0c000000b00552e32354f8sm1038529ywd.32.2023.04.21.09.12.44
+        by smtp.gmail.com with UTF8SMTPSA id m4-20020a258004000000b00b8c31377e1bsm995731ybk.54.2023.04.21.09.27.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Apr 2023 09:12:45 -0700 (PDT)
+        Fri, 21 Apr 2023 09:27:58 -0700 (PDT)
 From:   Mark Yacoub <markyacoub@chromium.org>
 X-Google-Original-From: Mark Yacoub <markyacoub@google.com>
 To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
@@ -58,18 +58,18 @@ To:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
 Cc:     seanpaul@chromium.org, dianders@chromium.org,
         Mark Yacoub <markyacoub@chromium.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v1 2/2] dp_hdcp: Get the hdcp key from the connector prop
-Date:   Fri, 21 Apr 2023 12:12:37 -0400
-Message-ID: <20230421161237.357342-3-markyacoub@google.com>
+Subject: [PATCH v2 3/3] dp_hdcp: Get the hdcp key from the connector prop
+Date:   Fri, 21 Apr 2023 12:27:49 -0400
+Message-ID: <20230421162749.360777-4-markyacoub@google.com>
 X-Mailer: git-send-email 2.40.0.634.g4ca3ef3211-goog
-In-Reply-To: <20230421161237.357342-1-markyacoub@google.com>
-References: <20230421161237.357342-1-markyacoub@google.com>
+In-Reply-To: <20230421162749.360777-1-markyacoub@google.com>
+References: <20230421162749.360777-1-markyacoub@google.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
