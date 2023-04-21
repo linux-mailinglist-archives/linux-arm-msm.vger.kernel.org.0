@@ -2,228 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A7FE16EB3A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 23:31:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90B2D6EB3DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 23:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233329AbjDUVbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 17:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32774 "EHLO
+        id S233348AbjDUVsY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 17:48:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233046AbjDUVbk (ORCPT
+        with ESMTP id S229698AbjDUVsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 17:31:40 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2EBC2691
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 14:31:35 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2a8bca69e8bso20412601fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 14:31:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682112694; x=1684704694;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BB/WE7LZaA1/Vs5ezQQVF1bVLfOPlPyiztA5xMMxinE=;
-        b=aOr25wl73fUY388Fa0aRueT5u7yEQpF/ibKrcOEovjQxq+JOx0H71sQ7ZEFZGZ9gYb
-         JEcCkCC/Xui/V2QhFNZqLubsKZck9qCGly+8LuIoILLSoFK83DyGScd0NNEvg26A55XE
-         +esaS2t/hRdUQk4LlJG/fb+psdOURdMMlKSv9KkmUtITiVLTZbReht2un6e6AWt0sqIJ
-         BJFLYADcLQ9H+ViZiEo0gv1jvarSanCrY9UPZDijz6rdAH/GxPRCcu2NbpFr8o6co+N+
-         nOS7A4Ym4pX60/SAb2CVauQZeJRnW/nuPlum83UQTklA7Wse796LAZPdgWSfl2574Qai
-         JVRA==
+        Fri, 21 Apr 2023 17:48:22 -0400
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B8F92;
+        Fri, 21 Apr 2023 14:48:20 -0700 (PDT)
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6a438f0d9c9so2037793a34.1;
+        Fri, 21 Apr 2023 14:48:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682112694; x=1684704694;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BB/WE7LZaA1/Vs5ezQQVF1bVLfOPlPyiztA5xMMxinE=;
-        b=GiwXy725jn+mlKtNKjeDUg2K1mNrjTg8Abuktb0nXatOLNRHE0wqgwftKnM+WGP69B
-         nE4A3l9XYIx5U1xi1mPsbH60SVkpTN6QnbLLrAo/92v9i0mnfufqTsnLBrCvj54ZVcDJ
-         sKuVU+XtbTY3xwnh+HVnjt/LA3rghDLI409kBvQkEt8nUgVYqFjV4ONAHTAJ8kRepgW/
-         NxM3QYqHjQ/l6jMYKkCW+UUajaj5XgZqBkGeFA4eD0Jipxeo70AyllcuFD0WFpgHrfvc
-         cyI0ITCkIeDyuZ8FLFMbWHf4yxRixQiGWOOhL/HWZD/ShfFaUVuByqIRNWpZeZUEewlL
-         KdWw==
-X-Gm-Message-State: AAQBX9fKW1tC8ZOqZpf4o7Ws+XbWAmM6SGh0RrTnyjdH0fXjySB9lv7f
-        gFfGoz4vYwVS95dCMbjA3IXYvIKFJ1iWhXS1lqI=
-X-Google-Smtp-Source: AKy350YrSMIBZXsKHdCUp3uJ8QDs7WbfuEQo0f77Sl0GBVPoGdytji0JOLUz8bmGCv9pYSMpAv6zGA==
-X-Received: by 2002:a05:6512:38b0:b0:4ea:4793:facf with SMTP id o16-20020a05651238b000b004ea4793facfmr1468101lft.13.1682112694149;
-        Fri, 21 Apr 2023 14:31:34 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id a3-20020a056512020300b004e83fbba141sm683509lfo.164.2023.04.21.14.31.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Apr 2023 14:31:33 -0700 (PDT)
-Message-ID: <ee585ca0-b8a2-4ffd-a3a2-2639ac912377@linaro.org>
-Date:   Sat, 22 Apr 2023 00:31:32 +0300
+        d=1e100.net; s=20221208; t=1682113700; x=1684705700;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DRyhlU6c3feVqq/s8FXw+A2ovCuk/nDpRc2zb7Wb02o=;
+        b=gxNxtdjzoe/XKbmMXUtCXzrZ45OCZaKdKG0hymenhTIqIsokflVij1J/a5z1H3mrzB
+         ukna95A4RJAqJoh0clTO5u6jLou3BAKYOnEswyl2Uf6es7yAQi/WO1BlJa7U5AiRaSSv
+         FXkvIQDDXZPPpmAvx/EiOPRAWYt2sdH5TeeT7Ezy51mKWykSrWoC+8hZ6D47lfo//OH6
+         wF9uodnFsGAfVBexDHlarVcZan1cr56QcaSAvdRQuqzqGkVCk+crK4k15PtJqNoFtrUo
+         qeivE2+ZTBvYQ/J7b9g8cJ+3VhhJT7yg8ZuaR5msNtjVlMhfwqL5/wFciJpZA30Jjlef
+         LVgA==
+X-Gm-Message-State: AAQBX9fuzAnpuFXZnXdwPlDP9nW9TgYHeaq4mqAujRvNqsmuj+3u92UM
+        Sltc6f4P73HT0BFPrdEQkBk1bKF1fw==
+X-Google-Smtp-Source: AKy350aZUQfz+TT7Tkt8vP5BUlF8jQwcYin20eCbq0naZufUG8oi6julfm/UDVlx8BlcTVY1c1/c/Q==
+X-Received: by 2002:a05:6830:1698:b0:6a6:2f86:978d with SMTP id k24-20020a056830169800b006a62f86978dmr2681665otr.12.1682113700088;
+        Fri, 21 Apr 2023 14:48:20 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id dk10-20020a0568303b0a00b006a60606de62sm2128180otb.52.2023.04.21.14.48.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Apr 2023 14:48:19 -0700 (PDT)
+Received: (nullmailer pid 1812127 invoked by uid 1000);
+        Fri, 21 Apr 2023 21:48:18 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>
+Cc:     alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, patches@opensource.cirrus.com
+Subject: [PATCH] ASoC: dt-bindings: More dropping unneeded quotes
+Date:   Fri, 21 Apr 2023 16:48:10 -0500
+Message-Id: <20230421214810.1811962-1-robh@kernel.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1 4/5] drm/msm/dpu: calculate DSC encoder parameters
- dynamically
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1682033114-28483-1-git-send-email-quic_khsieh@quicinc.com>
- <1682033114-28483-5-git-send-email-quic_khsieh@quicinc.com>
- <c8089d0f-c8cd-6a24-718f-682145d04f02@linaro.org>
- <95a37ba2-29b5-47b9-48df-1bd4e4c409c5@quicinc.com>
- <62df2f48-2553-72f0-43e4-9a5d4027ab81@linaro.org>
- <e1294f23-5eda-6aa1-0363-a4d503d2fa59@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <e1294f23-5eda-6aa1-0363-a4d503d2fa59@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/04/2023 00:30, Kuogee Hsieh wrote:
-> 
-> On 4/21/2023 2:13 PM, Dmitry Baryshkov wrote:
->> On 22/04/2023 00:07, Kuogee Hsieh wrote:
->>>
->>> On 4/20/2023 5:27 PM, Dmitry Baryshkov wrote:
->>>> On 21/04/2023 02:25, Kuogee Hsieh wrote:
->>>>> During DSC preparation, add run time calculation to figure out what
->>>>> usage modes, split mode and merge mode, is going to be setup.
->>>>>
->>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>>>> ---
->>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 56 
->>>>> ++++++++++++++++-------------
->>>>>   1 file changed, 32 insertions(+), 24 deletions(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>> index 2fdacf1..5677728 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>> @@ -529,17 +529,9 @@ void dpu_encoder_helper_split_config(
->>>>>   bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->>>>>   {
->>>>>       struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
->>>>> -    int i, intf_count = 0, num_dsc = 0;
->>>>> +    struct msm_display_topology *topology = &dpu_enc->topology;
->>>>>   -    for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
->>>>> -        if (dpu_enc->phys_encs[i])
->>>>> -            intf_count++;
->>>>> -
->>>>> -    /* See dpu_encoder_get_topology, we only support 2:2:1 
->>>>> topology */
->>>>> -    if (dpu_enc->dsc)
->>>>> -        num_dsc = 2;
->>>>> -
->>>>> -    return (num_dsc > 0) && (num_dsc > intf_count);
->>>>> +    return (topology->num_dsc > topology->num_intf);
->>>>>   }
->>>>>     static void dpu_encoder_get_topology(
->>>>> @@ -1861,41 +1853,57 @@ static void dpu_encoder_prep_dsc(struct 
->>>>> dpu_encoder_virt *dpu_enc,
->>>>>       struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
->>>>>       struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
->>>>>       struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
->>>>> +    struct msm_display_topology *topology = &dpu_enc->topology;
->>>>>       int this_frame_slices;
->>>>>       int intf_ip_w, enc_ip_w;
->>>>> -    int dsc_common_mode;
->>>>> +    int dsc_common_mode = 0;
->>>>>       int pic_width;
->>>>>       u32 initial_lines;
->>>>> +    int num_dsc, num_intf;
->>>>>       int i;
->>>>>         for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
->>>>>           hw_pp[i] = dpu_enc->hw_pp[i];
->>>>>           hw_dsc[i] = dpu_enc->hw_dsc[i];
->>>>> -
->>>>> -        if (!hw_pp[i] || !hw_dsc[i]) {
->>>>> -            DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
->>>>> -            return;
->>>>> -        }
->>>>
->>> Why?
->>>
->>> MAX_CHANNELS_PER_ENC == 2
->>>
->>> This works for dsi since it use 2 dsc encoder.
->>>
->>> Since DP only use one dsc encoder, this will cause it return at loop 
->>> 2 without execute dpu_encoder_dsc_pipe_cfg().
->>
->> Then the loop should go up to num_dsc rather than MAX_CHANNELS_PER_ENC
->>
->>>
->>>>
->>>>>       }
->>>>>   -    dsc_common_mode = 0;
->>>>> +    num_dsc = topology->num_dsc;
->>>>> +    num_intf = topology->num_intf;
->>>>> +
->>>>>       pic_width = dsc->pic_width;
->>>>>   -    dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
->>>>>       if (enc_master->intf_mode == INTF_MODE_VIDEO)
->>>>>           dsc_common_mode |= DSC_MODE_VIDEO;
->>>>>   +    /*
->>>>> +     * If this encoder is driving more than one DSC encoder, they
->>>>> +     * operate in tandem, same pic dimension needs to be used by
->>>>> +     * each of them.(pp-split is assumed to be not supported)
->>>>> +     *
->>>>> +     */
->>>>> +
->>>>>       this_frame_slices = pic_width / dsc->slice_width;
->>>>>       intf_ip_w = this_frame_slices * dsc->slice_width;
->>>>> +    enc_ip_w = intf_ip_w;
->>>>> +
->>>>> +    intf_ip_w /= num_intf;
->>>>> +
->>>>> +    if (num_dsc > 1)
->>>>> +        dsc_common_mode |= DSC_MODE_SPLIT_PANEL;
->>>>> +
->>>>> +    if (dpu_encoder_use_dsc_merge(&dpu_enc->base)) {
->>>>> +        dsc_common_mode |= DSC_MODE_MULTIPLEX;
->>>>> +        /*
->>>>> +         * in dsc merge case: when using 2 encoders for the same
->>>>> +         * stream, no. of slices need to be same on both the
->>>>> +         * encoders.
->>>>> +         */
->>>>> +        enc_ip_w = intf_ip_w / 2;
->>>>
->>>> So do you want to get enc_ip_w / 2 or enc_ip_w / num_intf / 2 here?
->>> enc_ip_w / num_intf / 2
->>
->> But previously we had enc_ip_w = intf_ip_w / 2. Was it because of the 
->> assumption that num_intf = 1?
-> i think so since there is no num_intf involve at previous code.
+Another batch of dropping unneeded quotes on $id and $schema which were
+missed in the last round. Once all these are fixed, checking for this can
+be enabled in yamllint.
 
-Ack.
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ .../devicetree/bindings/sound/nvidia,tegra-audio-common.yaml  | 4 ++--
+ Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml   | 4 ++--
+ .../devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml    | 4 ++--
+ .../devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml     | 4 ++--
+ Documentation/devicetree/bindings/sound/tas2562.yaml          | 4 ++--
+ Documentation/devicetree/bindings/sound/tas2770.yaml          | 4 ++--
+ Documentation/devicetree/bindings/sound/tas27xx.yaml          | 4 ++--
+ Documentation/devicetree/bindings/sound/wlf,wm8903.yaml       | 4 ++--
+ 8 files changed, 16 insertions(+), 16 deletions(-)
 
->>
->>>>
->>>>> +    }
->>>>>   -    /*
->>>>> -     * dsc merge case: when using 2 encoders for the same stream,
->>>>> -     * no. of slices need to be same on both the encoders.
->>>>> -     */
->>>>> -    enc_ip_w = intf_ip_w / 2;
->>>>>       initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, 
->>>>> enc_ip_w);
->>>>>   -    for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
->>>>> +    for (i = 0; i < num_dsc; i++)
->>>>>           dpu_encoder_dsc_pipe_cfg(dpu_enc, hw_dsc[i], hw_pp[i], dsc,
->>>>>                       dsc_common_mode, initial_lines);
->>>>>   }
->>>>
->>
-
+diff --git a/Documentation/devicetree/bindings/sound/nvidia,tegra-audio-common.yaml b/Documentation/devicetree/bindings/sound/nvidia,tegra-audio-common.yaml
+index 7c1e9895ce85..2588589ad62d 100644
+--- a/Documentation/devicetree/bindings/sound/nvidia,tegra-audio-common.yaml
++++ b/Documentation/devicetree/bindings/sound/nvidia,tegra-audio-common.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/nvidia,tegra-audio-common.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/nvidia,tegra-audio-common.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Common properties for NVIDIA Tegra audio complexes
+ 
+diff --git a/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml b/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
+index cdbb4096fa44..9e5b30d9c6e6 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,q6apm-dai.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/qcom,q6apm-dai.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/qcom,q6apm-dai.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Qualcomm Audio Process Manager Digital Audio Interfaces
+ 
+diff --git a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml
+index 1168410f6fbd..3552c44137ed 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-clocks.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/qcom,q6dsp-lpass-clocks.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/qcom,q6dsp-lpass-clocks.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Qualcomm DSP LPASS Clock Controller
+ 
+diff --git a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
+index 044e77718a1b..08c618e7e428 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,q6dsp-lpass-ports.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/qcom,q6dsp-lpass-ports.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/qcom,q6dsp-lpass-ports.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Qualcomm DSP LPASS(Low Power Audio SubSystem) Audio Ports
+ 
+diff --git a/Documentation/devicetree/bindings/sound/tas2562.yaml b/Documentation/devicetree/bindings/sound/tas2562.yaml
+index a5bb561bfcfb..41489a3ac79f 100644
+--- a/Documentation/devicetree/bindings/sound/tas2562.yaml
++++ b/Documentation/devicetree/bindings/sound/tas2562.yaml
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2019 Texas Instruments Incorporated
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/tas2562.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/tas2562.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Texas Instruments TAS2562 Smart PA
+ 
+diff --git a/Documentation/devicetree/bindings/sound/tas2770.yaml b/Documentation/devicetree/bindings/sound/tas2770.yaml
+index 26088adb9dc2..930bd111b072 100644
+--- a/Documentation/devicetree/bindings/sound/tas2770.yaml
++++ b/Documentation/devicetree/bindings/sound/tas2770.yaml
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2019-20 Texas Instruments Incorporated
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/tas2770.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/tas2770.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Texas Instruments TAS2770 Smart PA
+ 
+diff --git a/Documentation/devicetree/bindings/sound/tas27xx.yaml b/Documentation/devicetree/bindings/sound/tas27xx.yaml
+index 8cba01316855..bda26b246634 100644
+--- a/Documentation/devicetree/bindings/sound/tas27xx.yaml
++++ b/Documentation/devicetree/bindings/sound/tas27xx.yaml
+@@ -2,8 +2,8 @@
+ # Copyright (C) 2020-2022 Texas Instruments Incorporated
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/tas27xx.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/tas27xx.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: Texas Instruments TAS2764/TAS2780 Smart PA
+ 
+diff --git a/Documentation/devicetree/bindings/sound/wlf,wm8903.yaml b/Documentation/devicetree/bindings/sound/wlf,wm8903.yaml
+index 7105ed5fd6c7..4cfa66f62681 100644
+--- a/Documentation/devicetree/bindings/sound/wlf,wm8903.yaml
++++ b/Documentation/devicetree/bindings/sound/wlf,wm8903.yaml
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+ %YAML 1.2
+ ---
+-$id: "http://devicetree.org/schemas/sound/wlf,wm8903.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++$id: http://devicetree.org/schemas/sound/wlf,wm8903.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
+ 
+ title: WM8903 audio codec
+ 
 -- 
-With best wishes
-Dmitry
+2.39.2
 
