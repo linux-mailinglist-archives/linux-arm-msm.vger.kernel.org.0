@@ -2,80 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC0E66EABE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 15:41:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7A7E6EABEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 15:43:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229830AbjDUNlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 09:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56898 "EHLO
+        id S231183AbjDUNnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 09:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232447AbjDUNlR (ORCPT
+        with ESMTP id S232552AbjDUNmx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 09:41:17 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2B012CAB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 06:40:59 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-2f46348728eso1089978f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 06:40:59 -0700 (PDT)
+        Fri, 21 Apr 2023 09:42:53 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C11118FF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 06:42:18 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-b92284f69ebso2155624276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 06:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682084458; x=1684676458;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+IQ12ka9+KfgQJAShQhyOsFc/fp4K1yZ4QJA6PrMjog=;
-        b=X7TwsI7vM3/OjY9PxeRkWlv83YMyeQLwYMPnJ39Yo8meD52QzBMmlQyTrZQLbzr/J9
-         vKb1ytQGCqR8Ig7QwsRj98P/ilzZ+9fwcOckBk0907cgDCLznXqL9gn2aeFjg1YjS30S
-         K3tk30gY07l3MvicK82XKF/ubqTaj803G35j+lWA6VW4mxOuPrLqtgVly/ux/kuuhR1R
-         9LUylGIvSoxXnEhWZTBSrbVbfcTxVbucdprxw1dfI9Ytm3Zy3BZUOkJ92jMt0J09gGXt
-         wvcLrWB/zEtSbh3S8mnL4M0rn+G9gzdRiwmCvKNzfl/ZVmmYTgUCWM6jdjtoLXRfYKJt
-         6AQA==
+        d=linaro.org; s=google; t=1682084537; x=1684676537;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JDE51zksfO+2BQYs2uxEkBWwzXHikJbqw2bzLyRXwaw=;
+        b=wpGNGkwCP6qhmDCTaIgu67XqT1Ne8yFuulkw6+VKZDDLlhH/MTjSIyQhwRY9T3goum
+         /oR12owOzVb3UpnwFxZxcN6a8zQ57W5RXkREo7mqJo2O/xt0DWcorbVH2pUIYtA76px9
+         MJ44uNf6YWHiQryP15EFD2/29KE3jBLjb1a6n9yYiXiXKvRuWnbCyr74FbU0LQZd92zJ
+         9izLLhcDEVT0XSH8RnybC46qTo2qKlBCPVJ+w68b6UVqdMsJx5r7MOoNrDgojopmlk9g
+         yAAFncbSjRK5C6++USLE/ehJIAyQSwOBAC+79NgJRZgTXLvVhreT61b8LFqvicp1uKbQ
+         PDAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682084458; x=1684676458;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+IQ12ka9+KfgQJAShQhyOsFc/fp4K1yZ4QJA6PrMjog=;
-        b=PGssF6czERJUWdVWNmN3C4b24t7w0J2j7nWUaEzWV3nLpqSqrNX2bCbssvgS8nz8Z6
-         i0WHkNrrlTtKonXg0oZ567Y9Rrq18DNGnJNGmcEUzr4afqZaqpEoxKazhFGQqlZr5ITG
-         jSVA4iBJgZrZWbXTCSRUSub3tJuczlFgdXWM3rulcBkFt4/oklIH84/cVvi2ZWM8nduA
-         Dpt/8UpMzunqs3roryyKgD3vHEUke6bLdvMCcwR/OrgVRc1OK6OU0E0LCoQdCMLjqk9K
-         POhVIizJ0hksPg9ILkmy9n4wY3FimKTQCuZE7eWtkR6So7iUfwqqTxgYugLx7TDMv48/
-         sfpQ==
-X-Gm-Message-State: AAQBX9e62VyCdOu/Wj60fnoXaPoGQvTu1MVPSQKxAEmkgA1ajE98qu83
-        SbMpBV/pr5IXXA4cRO/NGTv1BQ==
-X-Google-Smtp-Source: AKy350bKag1jGwYATg6lxcGMrOSrzw9bBFfRoW55v/yysoROm5f4qgvQ6Z2P4u+CnKtMA3unZrUk4Q==
-X-Received: by 2002:a5d:428e:0:b0:2f9:b08a:a3af with SMTP id k14-20020a5d428e000000b002f9b08aa3afmr3241703wrq.49.1682084457708;
-        Fri, 21 Apr 2023 06:40:57 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:4599:1915:621d:5b00? ([2a05:6e02:1041:c10:4599:1915:621d:5b00])
-        by smtp.googlemail.com with ESMTPSA id f3-20020adfdb43000000b002efb2d861dasm4428241wrj.77.2023.04.21.06.40.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Apr 2023 06:40:57 -0700 (PDT)
-Message-ID: <215e43c7-8b07-00e3-47bf-7913649a9662@linaro.org>
-Date:   Fri, 21 Apr 2023 15:40:56 +0200
+        d=1e100.net; s=20221208; t=1682084537; x=1684676537;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JDE51zksfO+2BQYs2uxEkBWwzXHikJbqw2bzLyRXwaw=;
+        b=fWD+69WfV45RCfpav7tqwwhvtV8cJK1uJvQLT0of5ZFmIRHKj6p2UetW7V0fQgLQ1o
+         FzF0untNsDngN4t2u738X9scPlLPi9EaAhp+18hW/Seyy2uOf98uWrxwIsz3+sQVt9te
+         YjYP8joO9CTGvE6tHaF5Wgv63/a5T7dNReR3P9gYXeMlwKklyYP2HHRa94TRj9Rleb54
+         pHb0SIwb/eOE/Yg45rbTkNjZiufT/eS6orqAQYJeP7EG4Oq1jY/E87Is6xenrldBBbpE
+         Ud/KHkDVs036I9AYsXabHHSOQzr/skA0Vbja/WNXVA2wsDOQ+b/3UAwUb+YPrvFhESVz
+         S/mA==
+X-Gm-Message-State: AAQBX9dwNsv9g0XdnogYHx8cgNGLh3Hpo45HLaHDeb4qgAqUzG5Y6vKB
+        x/H/ZWCQ+lPiH8mBFMb5wkGQ5szyr4BE5NcrV4W4CA==
+X-Google-Smtp-Source: AKy350a5SILKYcpime34mpGOMEVeRMBKWl75iNX3Pwr4E7FN7GNe+ZdrX2VuLz9ewSKOn6gkqrDRwwfejYqjRpydKAY=
+X-Received: by 2002:a25:bc8:0:b0:b92:510a:7320 with SMTP id
+ 191-20020a250bc8000000b00b92510a7320mr2321396ybl.42.1682084537629; Fri, 21
+ Apr 2023 06:42:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH] dt-bindings: thermal: qcom-tsens: correct unit address
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230420115520.16472-1-quic_tdas@quicinc.com>
+In-Reply-To: <20230420115520.16472-1-quic_tdas@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 21 Apr 2023 16:42:06 +0300
+Message-ID: <CAA8EJprthTKxCDsMHTXZrLCyhGgTfF3LvqhkrF2-b6XFygKJ2A@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: camcc-sc7180: Add parent dependency to all
+ camera GDSCs
+To:     Taniya Das <quic_tdas@quicinc.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230420072429.36255-1-krzysztof.kozlowski@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230420072429.36255-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_skakitap@quicinc.com, quic_cponnapa@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,18 +72,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 09:24, Krzysztof Kozlowski wrote:
-> Match unit-address to first reg entry.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+On Thu, 20 Apr 2023 at 14:55, Taniya Das <quic_tdas@quicinc.com> wrote:
+>
+> Mark titan_top_gdsc as parent to all other camera GDSCs.
 
-Applied, thanks
+Please expand the commit message. Your text describes what the patch
+does, but it can be observed from the patch itself. Please describe
+why it is done.
+
+>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  drivers/clk/qcom/camcc-sc7180.c | 19 ++++++++++++-------
+>  1 file changed, 12 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
+> index e2b4804695f3..8a4ba7a19ed1 100644
+> --- a/drivers/clk/qcom/camcc-sc7180.c
+> +++ b/drivers/clk/qcom/camcc-sc7180.c
+> @@ -1480,12 +1480,21 @@ static struct clk_branch cam_cc_sys_tmr_clk = {
+>         },
+>  };
+>
+> +static struct gdsc titan_top_gdsc = {
+> +       .gdscr = 0xb134,
+> +       .pd = {
+> +               .name = "titan_top_gdsc",
+> +       },
+> +       .pwrsts = PWRSTS_OFF_ON,
+> +};
+> +
+>  static struct gdsc bps_gdsc = {
+>         .gdscr = 0x6004,
+>         .pd = {
+>                 .name = "bps_gdsc",
+>         },
+>         .pwrsts = PWRSTS_OFF_ON,
+> +       .parent = &titan_top_gdsc.pd,
+>         .flags = HW_CTRL,
+>  };
+>
+> @@ -1495,6 +1504,7 @@ static struct gdsc ife_0_gdsc = {
+>                 .name = "ife_0_gdsc",
+>         },
+>         .pwrsts = PWRSTS_OFF_ON,
+> +       .parent = &titan_top_gdsc.pd,
+>  };
+>
+>  static struct gdsc ife_1_gdsc = {
+> @@ -1503,6 +1513,7 @@ static struct gdsc ife_1_gdsc = {
+>                 .name = "ife_1_gdsc",
+>         },
+>         .pwrsts = PWRSTS_OFF_ON,
+> +       .parent = &titan_top_gdsc.pd,
+>  };
+>
+>  static struct gdsc ipe_0_gdsc = {
+> @@ -1512,15 +1523,9 @@ static struct gdsc ipe_0_gdsc = {
+>         },
+>         .pwrsts = PWRSTS_OFF_ON,
+>         .flags = HW_CTRL,
+> +       .parent = &titan_top_gdsc.pd,
+>  };
+>
+> -static struct gdsc titan_top_gdsc = {
+> -       .gdscr = 0xb134,
+> -       .pd = {
+> -               .name = "titan_top_gdsc",
+> -       },
+> -       .pwrsts = PWRSTS_OFF_ON,
+> -};
+>
+>  static struct clk_hw *cam_cc_sc7180_hws[] = {
+>         [CAM_CC_PLL2_OUT_EARLY] = &cam_cc_pll2_out_early.hw,
+> --
+> 2.17.1
+>
+
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
-
+With best wishes
+Dmitry
