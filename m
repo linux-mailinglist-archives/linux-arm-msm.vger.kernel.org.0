@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 082996EB125
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 19:50:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 226756EB133
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 19:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231877AbjDURuM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 13:50:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51728 "EHLO
+        id S233546AbjDURu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 13:50:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233762AbjDURuL (ORCPT
+        with ESMTP id S233455AbjDURuq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 13:50:11 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42F167EE6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:49:49 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4ec816c9b62so2019703e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:49:49 -0700 (PDT)
+        Fri, 21 Apr 2023 13:50:46 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC9C4210B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:50:40 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2a8b766322bso18607501fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682099385; x=1684691385;
+        d=linaro.org; s=google; t=1682099439; x=1684691439;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QA8eIh8mDUQlSp+1L5GyLIAYl0/x6KnILq2r7tRuwzo=;
-        b=eKu8ReBDszsudMGS/Ft57dFRbJC+wHQNBI8td/MG+bkN6SIsv8caGgqhiAiNVG8NP+
-         3vSCF5s4z9lp2l1WBFR7AzWNmsrdYiAJa4nBqi4/twwn0RWgEDmeb+dMioLac/eNUlMJ
-         lp7XLpjWRhIB2FYH3X8+3mpulbA3jWSB74zUj5WiLhGd2XOwbpDP9t5Gu8X22TXuNEcD
-         Ehrl+jfUJi5QAL3IysYEzz+r33izDZ6EDIuKrF5P9jQl2wXV2PFvCLdLusblejHxzYfW
-         H/0AOMwV6pwiJ/EPzhX5RoatbrrCegseEHBYukJZvREIE0qW+7rojDJ1HuyFQA3EG7CV
-         M2Ew==
+        bh=KhFQgubx3BwRpneR+uPik55kKaBM11rBostrxvE6DUg=;
+        b=ZpfuMSjahsn2zfIK1YJS7GIdwB6UzWp+2za1evy8drzjnxvPZie5KKG0nDOoM6LnVj
+         GqFraHvvzX9vPHUV5WF70e5oM7Hc9QhzR8LJtNZ5NWsaBhm8ZKOxW2ufSMQQVif1vpb5
+         ujUsGDnwLHMi0SAZZzM0utYvrcaSwJiCkyb0ejIjOJDySLJHl9ap+qT+g+SGYjqRpnIZ
+         U9dOEwdeYy6fsQGWKXYW0qB3ghe4So06E3DbbhTQ/lm14BkMdNtz5zGbOkE34OzpQqa7
+         YZ9tx36Gy11cBPzdlV02uEEqtfAfOEarEYkZjF0bt2aKJcvq69/Ma1mtOeug+KsyvOp4
+         FsNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682099385; x=1684691385;
+        d=1e100.net; s=20221208; t=1682099439; x=1684691439;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QA8eIh8mDUQlSp+1L5GyLIAYl0/x6KnILq2r7tRuwzo=;
-        b=gOFgM0H0gF3iZuZcT5k6Mfb1dZPGrFl9LgLrfGROOwgoPICkBUVn5TmhNGLSivqLCw
-         1Lq23TRpiMeYHP/luhUe/gvjVB6KxSDqo+WPnnNKMBlYa+4Cr4XhCf/RXQXjsVuro6AJ
-         fE31zcsESpr9m2H1YnN5h9L6Lp6R3LPf+++lrmCXGHo35txN3kPqNBRX8riNTNkb3E0+
-         1H+I/9ji3i5H7JNDf57ebiqs7ieLzu95mqlyN9leqNS4Yf/cX/rVk248E2ksmacK9S+7
-         pGPpABWYCbGcRE3KImUQhmYJfCaIfvE46KTOn1kKeDCoFrcq9bfUOO/nWM+QQT+GX39z
-         AE3g==
-X-Gm-Message-State: AAQBX9eu5fSRXLnKv7K258iXlBlpUq2m9TPvxSvj+kg0qqOye00Sc8q7
-        rGoKZ0xxZrWnpZ59US/JHAgzLg==
-X-Google-Smtp-Source: AKy350Z/NqtsKv1DQxEaUYVtp5Q8Th1/CxJ4Z4Q6SIxaMWn4BwmuLNpuZT1lYVCslNVFrEC/uDubBw==
-X-Received: by 2002:ac2:4101:0:b0:4ed:bfcf:3109 with SMTP id b1-20020ac24101000000b004edbfcf3109mr1386854lfi.56.1682099385033;
-        Fri, 21 Apr 2023 10:49:45 -0700 (PDT)
+        bh=KhFQgubx3BwRpneR+uPik55kKaBM11rBostrxvE6DUg=;
+        b=kV1LfzBE0vizA7+sjU8gbdffHzzPv/47BmoQp0ClZTvze87hlppTafI44luHfRUKb2
+         ozCjHMKybNObnPH4kIq1TGRggWHMX0+BAnffhCoABDUHX/fFSjFWIhZQjKLyjw1bShvT
+         DuPytsNtInkW5els8iqnOpk6WjsXm133HxJERPUSpIo7+bJgVBsNZCqIvVsGsAyI2dbC
+         yO5NV4iKexJEH/6nE2C4l30BSBikbN4StW5h/ZFs+UDC5gKvdCFo91UVZv3knLR9ry7d
+         QkqgbRS55UdQqiAcInY7gSVjKDqllYUXlqW4uakTVFqZNXyAjye0JGDmmtBJRvizrRTW
+         aMVw==
+X-Gm-Message-State: AAQBX9eVYJY/uUMNauv1Iz2Ih+t6+FvzaFrtr/voaxeGRWh+uG01pza/
+        PGQgnLBqTarnLkCqlCLzfvF5ew==
+X-Google-Smtp-Source: AKy350YLl37LWk+3RtVor9s7w8AS7YAJyV+v7/RwqjI5kuzAKNNFDYjrD1jErrVutbXwsdxB1F4ZLQ==
+X-Received: by 2002:a2e:8350:0:b0:2a8:e4d3:11e2 with SMTP id l16-20020a2e8350000000b002a8e4d311e2mr832615ljh.39.1682099439063;
+        Fri, 21 Apr 2023 10:50:39 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id h25-20020ac250d9000000b004eb09820adbsm623071lfm.105.2023.04.21.10.49.44
+        by smtp.gmail.com with ESMTPSA id n3-20020a2e8783000000b002a8e4678da4sm679206lji.139.2023.04.21.10.50.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Apr 2023 10:49:44 -0700 (PDT)
-Message-ID: <fe3234f7-0f6a-aa63-c2b2-69bf3b2509f5@linaro.org>
-Date:   Fri, 21 Apr 2023 20:49:43 +0300
+        Fri, 21 Apr 2023 10:50:38 -0700 (PDT)
+Message-ID: <73e49bab-78a7-1fc2-e521-ede5429ed62e@linaro.org>
+Date:   Fri, 21 Apr 2023 20:50:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: stop mapping the regdma region
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu: drop the regdma configuration
 Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20230420222558.1208887-1-dmitry.baryshkov@linaro.org>
- <20230420222558.1208887-2-dmitry.baryshkov@linaro.org>
- <cwy7eyop2heahqvlijp6a66acwhpfcg6feq2khfw2detul6fxk@qnkhj4iwo23k>
+ <911e0a6e-eae4-8f98-8247-f6b2e8a0aeb9@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <cwy7eyop2heahqvlijp6a66acwhpfcg6feq2khfw2detul6fxk@qnkhj4iwo23k>
+In-Reply-To: <911e0a6e-eae4-8f98-8247-f6b2e8a0aeb9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,61 +81,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 10:35, Marijn Suijten wrote:
-> On 2023-04-21 01:25:58, Dmitry Baryshkov wrote:
->> Stop mapping the regdma region. The driver does not support regdma.
+On 21/04/2023 20:46, Abhinav Kumar wrote:
+> 
+> 
+> On 4/20/2023 3:25 PM, Dmitry Baryshkov wrote:
+>> The regdma is currently not used by the current driver. We have no way
+>> to practically verify that the regdma is described correctly. Drop it
+>> now.
 >>
 >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Should you add a third patch to remove this from dt-bindings?
-> (msm8998 has it in both dpu and mdss files)
-
-No. Bindings describe the hardware, and the hardware has this region. If 
-at some point it is put to use, we should not modify bindings again.
-
-> 
-> Regardless, the patch itself is:
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
 >> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 6 ------
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 2 +-
->>   2 files changed, 1 insertion(+), 7 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> index 0e7a68714e9e..28d74d4d2c1d 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
->> @@ -1033,12 +1033,6 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->>   		DPU_DEBUG("VBIF NRT is not defined");
->>   	}
->>   
->> -	dpu_kms->reg_dma = msm_ioremap_quiet(dpu_kms->pdev, "regdma");
->> -	if (IS_ERR(dpu_kms->reg_dma)) {
->> -		dpu_kms->reg_dma = NULL;
->> -		DPU_DEBUG("REG_DMA is not defined");
->> -	}
->> -
->>   	dpu_kms_parse_data_bus_icc_path(dpu_kms);
->>   
->>   	rc = pm_runtime_resume_and_get(&dpu_kms->pdev->dev);
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> index aca39a4689f4..15111e433f21 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->> @@ -71,7 +71,7 @@ struct dpu_kms {
->>   	const struct dpu_mdss_cfg *catalog;
->>   
->>   	/* io/register spaces: */
->> -	void __iomem *mmio, *vbif[VBIF_MAX], *reg_dma;
->> +	void __iomem *mmio, *vbif[VBIF_MAX];
->>   
->>   	struct regulator *vdd;
->>   	struct regulator *mmagic;
->> -- 
->> 2.39.2
->>
+> 
+> As Marijn noted, perhaps we can drop even DPU_CLK_CTRL_REG_DMA. But you 
+> can add that separately, hence
+
+I'd say it's not worth the trouble.
+
+> 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
 -- 
 With best wishes
