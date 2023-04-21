@@ -2,121 +2,561 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD74D6EAB12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 14:56:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 289156EAB96
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 15:28:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232316AbjDUM40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 08:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
+        id S232134AbjDUN21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 09:28:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232271AbjDUM4Z (ORCPT
+        with ESMTP id S232079AbjDUN2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 08:56:25 -0400
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14808196;
-        Fri, 21 Apr 2023 05:56:24 -0700 (PDT)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-187949fdb1cso1523620fac.0;
-        Fri, 21 Apr 2023 05:56:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682081783; x=1684673783;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WNkmsQxgkXH6mE112zcuABKnLRilEp0QWlma0Pk+25k=;
-        b=F4tfOFr1Mv8AmYyh7aqfS0Sc5tXZfRZqNFv27zqiROWN3L5IRnFiVMS93TfqhHIAA9
-         pQ9j2Cwdp5SdOf9CF2Jm2VhGZF7eEUif+8PtX92HxmTKBnYZSQES+lIBp+5I/AGZoSLQ
-         s+18vfqYqKFUaKCS69DXDUqWy+JTyZ8eHq6HIbOm+NWIB47AV+7OibZ9/m1jWJmVbVtv
-         ZK06evf/pUVtmLa5MEVFlzpBcAhaRFMeXT5eVBXmb0tetJ/jwMrAivWl5OA9GaREAOd7
-         trEz3BM4tSIuZ/m2NYKnwAl//T6Vrmet3KzmbvOF40kCUAig7HZvRqYsw+1jeNFDSX4v
-         Khjw==
-X-Gm-Message-State: AAQBX9cc2N2jB2NlK1eh26fPsrLDjxVgU15lYgXrMIG2rDW8eqNg+zlu
-        z5XxRy8r4oH0NLfAGP29xw==
-X-Google-Smtp-Source: AKy350aUK/1gjVKgIJev0Umt6rsPAzCW08yPNHMub51+2DshvFT6pJz3C1TMAiqoBvJgFFZk+QciSA==
-X-Received: by 2002:a05:6871:29b:b0:184:266a:142f with SMTP id i27-20020a056871029b00b00184266a142fmr3806205oae.51.1682081783200;
-        Fri, 21 Apr 2023 05:56:23 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id b35-20020a4a98e6000000b0051a6cb524b6sm1740179ooj.2.2023.04.21.05.56.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 05:56:22 -0700 (PDT)
-Received: (nullmailer pid 936707 invoked by uid 1000);
-        Fri, 21 Apr 2023 12:56:18 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Fri, 21 Apr 2023 09:28:25 -0400
+X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 21 Apr 2023 06:28:06 PDT
+Received: from ewsoutbound.kpnmail.nl (ewsoutbound.kpnmail.nl [195.121.94.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AF0F118C6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 06:28:05 -0700 (PDT)
+X-KPN-MessageId: 28358edf-e048-11ed-80ce-005056999439
+Received: from smtp.kpnmail.nl (unknown [10.31.155.8])
+        by ewsoutbound.so.kpn.org (Halon) with ESMTPS
+        id 28358edf-e048-11ed-80ce-005056999439;
+        Fri, 21 Apr 2023 15:26:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=xs4all.nl; s=xs4all01;
+        h=content-type:from:to:subject:mime-version:date:message-id;
+        bh=vWi/x44lcKq+zBKIxmLKE7euy7KJH7Kft9+PezLNV48=;
+        b=CD005T9bJeuRAh5Q4wgIWt85uqOkx9p8FU3uSvhTm5FSNOb2Ky3OrralmCIBW2/yiBQ5QZxf8lxV6
+         Dpy19hA84tPIRerz+bbT8OkD8yK7EJ0cc0oS9pGVLiT+XEJbKE3XUEzJDfjWKFPMuTpPOkT+Dmttnm
+         AG41NU5j4C99GplEKh5bTvMOWmaEZjfSa0selVJ0IOjlllrr+p9MipCqlJMhpnJrC3ZH3hZrbvvJIK
+         Mfr1izkufxZiE7pfZmALV8NVNuL66NO9mFESrNTinyDq8j5eZR98zlTVTnLlc1HBNfeYmqiwoVMSoh
+         niVK79qTw2mVAfan4LNSenuwQ00CPNQ==
+X-KPN-MID: 33|FpNjAt2YJPmYxjhhTwrVaN2WV/BCrU0VrLF2OTcB6m7OcCr/FP74Ydqk4lFQXU7
+ 8PkgFC8cVzI0PTlXA6NVlsw==
+X-KPN-VerifiedSender: Yes
+X-CMASSUN: 33|GQeUAJciaWJZk5xmJ4c0P0I17cSA8sj9F/6qI/CcTDVr/Gy7vs19kLz2PT696jE
+ B3QCVcEsQsWI7sOgmOW5uTg==
+X-Originating-IP: 173.38.220.44
+Received: from [10.47.77.214] (unknown [173.38.220.44])
+        by smtp.xs4all.nl (Halon) with ESMTPSA
+        id 300021a7-e048-11ed-b306-00505699d6e5;
+        Fri, 21 Apr 2023 15:26:58 +0200 (CEST)
+Message-ID: <85a999b2-ae13-2ab7-6706-477b9d302efa@xs4all.nl>
+Date:   Fri, 21 Apr 2023 15:26:56 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, richardcochran@gmail.com,
-        netdev@vger.kernel.org, linus.walleij@linaro.org,
-        robh+dt@kernel.org, agross@kernel.org, linux-gpio@vger.kernel.org,
-        manivannan.sadhasivam@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, konrad.dybcio@linaro.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 2/4] drm/msm: add hdmi cec support
+Content-Language: en-US
+To:     Arnaud Vrac <avrac@freebox.fr>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org
-In-Reply-To: <1682070196-980-2-git-send-email-quic_rohiagar@quicinc.com>
-References: <1682070196-980-1-git-send-email-quic_rohiagar@quicinc.com>
- <1682070196-980-2-git-send-email-quic_rohiagar@quicinc.com>
-Message-Id: <168208107990.922528.1582713033522143366.robh@kernel.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SDX75 pinctrl
- devicetree compatible
-Date:   Fri, 21 Apr 2023 07:56:18 -0500
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+References: <20230418-msm8998-hdmi-cec-v1-0-176479fb2fce@freebox.fr>
+ <20230418-msm8998-hdmi-cec-v1-2-176479fb2fce@freebox.fr>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20230418-msm8998-hdmi-cec-v1-2-176479fb2fce@freebox.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Arnaud,
 
-On Fri, 21 Apr 2023 15:13:15 +0530, Rohit Agarwal wrote:
-> Add device tree binding Documentation details for Qualcomm SDX75
-> pinctrl driver.
+Some review comments below...
+
+On 4/18/23 20:10, Arnaud Vrac wrote:
+> Some Qualcomm SoCs that support HDMI also support CEC, including MSM8996
+> and MSM8998. The hardware block can handle a single CEC logical address
+> and broadcast messages.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Port the CEC driver from downstream msm-4.4 kernel. It has been tested
+> on MSM8998 and passes the cec-compliance tool tests.
+
+Just to verify: did you run the cec-compliance --test-adapter test? That's
+the important one to verify your own driver.
+
+> 
+> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
 > ---
->  .../bindings/pinctrl/qcom,sdx75-tlmm.yaml          | 177 +++++++++++++++++++++
->  1 file changed, 177 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
+>  drivers/gpu/drm/msm/Kconfig         |   8 ++
+>  drivers/gpu/drm/msm/Makefile        |   1 +
+>  drivers/gpu/drm/msm/hdmi/hdmi.c     |  15 ++
+>  drivers/gpu/drm/msm/hdmi/hdmi.h     |  18 +++
+>  drivers/gpu/drm/msm/hdmi/hdmi_cec.c | 280 ++++++++++++++++++++++++++++++++++++
+>  5 files changed, 322 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 85f5ab1d552c4..2a02c74207935 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -165,3 +165,11 @@ config DRM_MSM_HDMI_HDCP
+>  	default y
+>  	help
+>  	  Choose this option to enable HDCP state machine
+> +
+> +config DRM_MSM_HDMI_CEC
+> +	bool "Enable HDMI CEC support in MSM DRM driver"
+> +	depends on DRM_MSM && DRM_MSM_HDMI
+> +	select CEC_CORE
+> +	default y
+> +	help
+> +	  Choose this option to enable CEC support
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 7274c41228ed9..0237a2f219ac2 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -131,6 +131,7 @@ msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
+>  
+>  msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o
+>  
+> +msm-$(CONFIG_DRM_MSM_HDMI_CEC) += hdmi/hdmi_cec.o
+>  msm-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
+>  
+>  msm-$(CONFIG_DRM_MSM_DSI) += dsi/dsi.o \
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index 3132105a2a433..1dde3890e25c0 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -11,6 +11,8 @@
+>  #include <drm/drm_bridge_connector.h>
+>  #include <drm/drm_of.h>
+>  
+> +#include <media/cec.h>
+> +
+>  #include <sound/hdmi-codec.h>
+>  #include "hdmi.h"
+>  
+> @@ -53,6 +55,9 @@ static irqreturn_t msm_hdmi_irq(int irq, void *dev_id)
+>  	if (hdmi->hdcp_ctrl)
+>  		msm_hdmi_hdcp_irq(hdmi->hdcp_ctrl);
+>  
+> +	/* Process CEC: */
+> +	msm_hdmi_cec_irq(hdmi);
+> +
+>  	/* TODO audio.. */
+>  
+>  	return IRQ_HANDLED;
+> @@ -66,6 +71,8 @@ static void msm_hdmi_destroy(struct hdmi *hdmi)
+>  	 */
+>  	if (hdmi->workq)
+>  		destroy_workqueue(hdmi->workq);
+> +
+> +	msm_hdmi_cec_exit(hdmi);
+>  	msm_hdmi_hdcp_destroy(hdmi);
+>  
+>  	if (hdmi->i2c)
+> @@ -139,6 +146,8 @@ static int msm_hdmi_init(struct hdmi *hdmi)
+>  		hdmi->hdcp_ctrl = NULL;
+>  	}
+>  
+> +	msm_hdmi_cec_init(hdmi);
+> +
+>  	return 0;
+>  
+>  fail:
+> @@ -198,6 +207,12 @@ int msm_hdmi_modeset_init(struct hdmi *hdmi,
+>  
+>  	drm_connector_attach_encoder(hdmi->connector, hdmi->encoder);
+>  
+> +	if (hdmi->cec_adap) {
+> +		struct cec_connector_info conn_info;
+> +		cec_fill_conn_info_from_drm(&conn_info, hdmi->connector);
+> +		cec_s_conn_info(hdmi->cec_adap, &conn_info);
+> +	}
+> +
+>  	ret = devm_request_irq(dev->dev, hdmi->irq,
+>  			msm_hdmi_irq, IRQF_TRIGGER_HIGH,
+>  			"hdmi_isr", hdmi);
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> index e8dbee50637fa..c639bd87f4b8f 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+> @@ -29,6 +29,7 @@ struct hdmi_audio {
+>  };
+>  
+>  struct hdmi_hdcp_ctrl;
+> +struct cec_adapter;
+>  
+>  struct hdmi {
+>  	struct drm_device *dev;
+> @@ -73,6 +74,7 @@ struct hdmi {
+>  	struct workqueue_struct *workq;
+>  
+>  	struct hdmi_hdcp_ctrl *hdcp_ctrl;
+> +	struct cec_adapter *cec_adap;
+>  
+>  	/*
+>  	* spinlock to protect registers shared by different execution
+> @@ -261,4 +263,20 @@ static inline void msm_hdmi_hdcp_off(struct hdmi_hdcp_ctrl *hdcp_ctrl) {}
+>  static inline void msm_hdmi_hdcp_irq(struct hdmi_hdcp_ctrl *hdcp_ctrl) {}
+>  #endif
+>  
+> +/*
+> + * cec
+> + */
+> +#ifdef CONFIG_DRM_MSM_HDMI_CEC
+> +int msm_hdmi_cec_init(struct hdmi *hdmi);
+> +void msm_hdmi_cec_exit(struct hdmi *hdmi);
+> +void msm_hdmi_cec_irq(struct hdmi *hdmi);
+> +#else
+> +static inline int msm_hdmi_cec_init(struct hdmi *hdmi)
+> +{
+> +	return -ENXIO;
+> +}
+> +static inline void msm_hdmi_cec_exit(struct hdmi *hdmi) {}
+> +static inline void msm_hdmi_cec_irq(struct hdmi *hdmi) {}
+> +#endif
+> +
+>  #endif /* __HDMI_CONNECTOR_H__ */
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_cec.c b/drivers/gpu/drm/msm/hdmi/hdmi_cec.c
+> new file mode 100644
+> index 0000000000000..51326e493e5da
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_cec.c
+> @@ -0,0 +1,280 @@
+> +#include <linux/iopoll.h>
+> +#include <media/cec.h>
+> +
+> +#include "hdmi.h"
+> +
+> +#define HDMI_CEC_INT_MASK ( \
+> +	HDMI_CEC_INT_TX_DONE_MASK | \
+> +	HDMI_CEC_INT_TX_ERROR_MASK | \
+> +	HDMI_CEC_INT_RX_DONE_MASK)
+> +
+> +struct hdmi_cec_ctrl {
+> +	struct hdmi *hdmi;
+> +	struct work_struct work;
+> +	spinlock_t lock;
+> +	u32 irq_status;
+> +	u32 tx_status;
+> +	u32 tx_retransmits;
+> +};
+> +
+> +static int msm_hdmi_cec_adap_enable(struct cec_adapter *adap, bool enable)
+> +{
+> +	struct hdmi_cec_ctrl *cec_ctrl = adap->priv;
+> +	struct hdmi *hdmi = cec_ctrl->hdmi;
+> +
+> +	if (enable) {
+> +		/* timer frequency, 19.2Mhz * 0.05ms / 1000ms = 960 */
+> +		hdmi_write(hdmi, REG_HDMI_CEC_REFTIMER,
+> +			   HDMI_CEC_REFTIMER_REFTIMER(960) |
+> +			   HDMI_CEC_REFTIMER_ENABLE);
+> +
+> +		/* read and write timings */
+> +		hdmi_write(hdmi, REG_HDMI_CEC_RD_RANGE, 0x30AB9888);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_WR_RANGE, 0x888AA888);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_RD_START_RANGE, 0x88888888);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_RD_TOTAL_RANGE, 0x99);
+> +
+> +		/* start bit low pulse duration, 3.7ms */
+> +		hdmi_write(hdmi, REG_HDMI_CEC_RD_ERR_RESP_LO, 74);
+> +
+> +		/* signal free time, 7 * 2.4ms */
+> +		hdmi_write(hdmi, REG_HDMI_CEC_TIME,
+> +			   HDMI_CEC_TIME_SIGNAL_FREE_TIME(7 * 48) |
+> +			   HDMI_CEC_TIME_ENABLE);
+
+The Signal Free Time changes depending on the situation (3, 5 or 7 bit
+periods). Does the hardware take care of that, or do you need to update
+this register in the transmit op as well?
+
+> +
+> +		hdmi_write(hdmi, REG_HDMI_CEC_COMPL_CTL, 0xF);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_WR_CHECK_CONFIG, 0x4);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_RD_FILTER, BIT(0) | (0x7FF << 4));
+> +
+> +		hdmi_write(hdmi, REG_HDMI_CEC_INT, HDMI_CEC_INT_MASK);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_CTRL, HDMI_CEC_CTRL_ENABLE);
+> +	} else {
+> +		hdmi_write(hdmi, REG_HDMI_CEC_INT, 0);
+> +		hdmi_write(hdmi, REG_HDMI_CEC_CTRL, 0);
+> +		cancel_work_sync(&cec_ctrl->work);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int msm_hdmi_cec_adap_log_addr(struct cec_adapter *adap, u8 logical_addr)
+> +{
+> +	struct hdmi_cec_ctrl *cec_ctrl = adap->priv;
+> +	struct hdmi *hdmi = cec_ctrl->hdmi;
+> +
+> +	hdmi_write(hdmi, REG_HDMI_CEC_ADDR, logical_addr & 0xF);
+
+So to disable the logical address you set this to 0xf, right? Since
+CEC_LOG_ADDR_INVALID is 0xff.
+
+> +
+> +	return 0;
+> +}
+> +
+> +static int msm_hdmi_cec_adap_transmit(struct cec_adapter *adap, u8 attempts,
+> +				      u32 signal_free_time, struct cec_msg *msg)
+
+Note that the SFT is passed in as an argument for those hardware devices
+that do not keep track of it themselves.
+
+> +{
+> +	struct hdmi_cec_ctrl *cec_ctrl = adap->priv;
+> +	struct hdmi *hdmi = cec_ctrl->hdmi;
+> +	u8 retransmits;
+> +	u32 broadcast;
+> +	u32 status;
+> +	int i;
+> +
+> +	/* toggle cec in order to flush out bad hw state, if any */
+> +	hdmi_write(hdmi, REG_HDMI_CEC_CTRL, 0);
+> +	hdmi_write(hdmi, REG_HDMI_CEC_CTRL, HDMI_CEC_CTRL_ENABLE);
+> +
+> +	/* flush register writes */
+> +	wmb();
+> +
+> +	retransmits = attempts ? (attempts - 1) : 0;
+> +	hdmi_write(hdmi, REG_HDMI_CEC_RETRANSMIT,
+> +		   HDMI_CEC_RETRANSMIT_ENABLE |
+> +		   HDMI_CEC_RETRANSMIT_COUNT(retransmits));
+> +
+> +	broadcast = cec_msg_is_broadcast(msg) ? HDMI_CEC_WR_DATA_BROADCAST : 0;
+> +	for (i = 0; i < msg->len; i++) {
+> +		hdmi_write(hdmi, REG_HDMI_CEC_WR_DATA,
+> +			   HDMI_CEC_WR_DATA_DATA(msg->msg[i]) | broadcast);
+> +	}
+> +
+> +	/* check line status */
+> +	if (read_poll_timeout(hdmi_read, status, !(status & HDMI_CEC_STATUS_BUSY),
+> +			      5, 1000, false, hdmi, REG_HDMI_CEC_STATUS)) {
+> +		pr_err("CEC line is busy. Retry failed\n");
+
+This doesn't look right. Normally it is the CEC hardware that will wait for the
+bus to become free, and then it will start the transmit. That is not something
+you should have to do in the driver. And this waits for just 1 ms, right? That's
+much too short if a message is currently being received.
+
+Is there documentation of the CEC hardware available somewhere? Or can you
+explain a bit about it?
+
+> +		return -EBUSY;
+> +	}
+> +
+> +	cec_ctrl->tx_retransmits = retransmits;
+> +
+> +	/* start transmission */
+> +	hdmi_write(hdmi, REG_HDMI_CEC_CTRL,
+> +		   HDMI_CEC_CTRL_ENABLE |
+> +		   HDMI_CEC_CTRL_SEND_TRIGGER |
+> +		   HDMI_CEC_CTRL_FRAME_SIZE(msg->len) |
+> +		   HDMI_CEC_CTRL_LINE_OE);
+> +
+> +	return 0;
+> +}
+> +
+> +static void msm_hdmi_cec_adap_free(struct cec_adapter *adap)
+> +{
+> +	struct hdmi_cec_ctrl *cec_ctrl = adap->priv;
+> +
+> +	cec_ctrl->hdmi->cec_adap = NULL;
+> +	kfree(cec_ctrl);
+> +}
+> +
+> +static const struct cec_adap_ops msm_hdmi_cec_adap_ops = {
+> +	.adap_enable = msm_hdmi_cec_adap_enable,
+> +	.adap_log_addr = msm_hdmi_cec_adap_log_addr,
+> +	.adap_transmit = msm_hdmi_cec_adap_transmit,
+> +	.adap_free = msm_hdmi_cec_adap_free,
+> +};
+> +
+> +#define CEC_IRQ_FRAME_WR_DONE 0x01
+> +#define CEC_IRQ_FRAME_RD_DONE 0x02
+> +
+> +static void msm_hdmi_cec_handle_rx_done(struct hdmi_cec_ctrl *cec_ctrl)
+> +{
+> +	struct hdmi *hdmi = cec_ctrl->hdmi;
+> +	struct cec_msg msg = {};
+> +	u32 data;
+> +	int i;
+> +
+> +	data = hdmi_read(hdmi, REG_HDMI_CEC_RD_DATA);
+> +	msg.len = (data & 0x1f00) >> 8;
+> +	if (msg.len < 1 || msg.len > CEC_MAX_MSG_SIZE)
+> +		return;
+> +
+> +	msg.msg[0] = data & 0xff;
+> +	for (i = 1; i < msg.len; i++)
+> +		msg.msg[i] = hdmi_read(hdmi, REG_HDMI_CEC_RD_DATA) & 0xff;
+> +
+> +	cec_received_msg(hdmi->cec_adap, &msg);
+> +}
+> +
+> +static void msm_hdmi_cec_handle_tx_done(struct hdmi_cec_ctrl *cec_ctrl)
+> +{
+> +	struct hdmi *hdmi = cec_ctrl->hdmi;
+> +	u32 tx_status;
+> +
+> +	tx_status = (cec_ctrl->tx_status & HDMI_CEC_STATUS_TX_STATUS__MASK) >>
+> +		HDMI_CEC_STATUS_TX_STATUS__SHIFT;
+> +
+> +	switch (tx_status) {
+> +	case 0:
+> +		cec_transmit_done(hdmi->cec_adap,
+> +				  CEC_TX_STATUS_OK, 0, 0, 0, 0);
+> +		break;
+> +	case 1:
+> +		cec_transmit_done(hdmi->cec_adap,
+> +				  CEC_TX_STATUS_NACK, 0, 1, 0, 0);
+
+It's not clear to me who does the retransmits. There are two possibilities:
+the hardware takes care of that, and so you just get the final result
+and you OR this status with CEC_TX_STATUS_MAX_RETRIES to indicate that
+the CEC framework shouldn't attempt to retry.
+
+Or the hardware just does a single transmit, and in that case you never
+supply the CEC_TX_STATUS_MAX_RETRIES and just leave it up to the framework
+to reissue a transmit.
+
+So here you do no supply MAX_RETRIES...
+
+> +		break;
+> +	case 2:
+> +		cec_transmit_done(hdmi->cec_adap,
+> +				  CEC_TX_STATUS_ARB_LOST, 1, 0, 0, 0);
+
+... and also not here...
+
+> +		break;
+> +	case 3:
+> +		cec_transmit_done(hdmi->cec_adap,
+> +				  CEC_TX_STATUS_MAX_RETRIES |
+> +				  CEC_TX_STATUS_NACK,
+> +				  0, cec_ctrl->tx_retransmits + 1, 0, 0);
+
+...but here you do.
+
+> +		break;
+> +	default:
+> +		cec_transmit_done(hdmi->cec_adap,
+> +				  CEC_TX_STATUS_ERROR, 0, 0, 0, 1);
+> +		break;
+> +	}
+> +}
+> +
+> +static void msm_hdmi_cec_work(struct work_struct *work)
+> +{
+> +	struct hdmi_cec_ctrl *cec_ctrl =
+> +		container_of(work, struct hdmi_cec_ctrl, work);
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&cec_ctrl->lock, flags);
+> +
+> +	if (cec_ctrl->irq_status & CEC_IRQ_FRAME_WR_DONE)
+> +		msm_hdmi_cec_handle_tx_done(cec_ctrl);
+> +
+> +	if (cec_ctrl->irq_status & CEC_IRQ_FRAME_RD_DONE)
+> +		msm_hdmi_cec_handle_rx_done(cec_ctrl);
+> +
+> +	cec_ctrl->irq_status = 0;
+> +	cec_ctrl->tx_status = 0;
+> +
+> +	spin_unlock_irqrestore(&cec_ctrl->lock, flags);
+> +}
+> +
+> +void msm_hdmi_cec_irq(struct hdmi *hdmi)
+> +{
+> +	struct hdmi_cec_ctrl *cec_ctrl;
+> +	unsigned long flags;
+> +	u32 int_status;
+> +
+> +	if (!hdmi->cec_adap)
+> +		return;
+> +
+> +	cec_ctrl = hdmi->cec_adap->priv;
+> +
+> +	int_status = hdmi_read(hdmi, REG_HDMI_CEC_INT);
+> +	if (!(int_status & HDMI_CEC_INT_MASK))
+> +		return;
+> +
+> +	spin_lock_irqsave(&cec_ctrl->lock, flags);
+> +
+> +	if (int_status & (HDMI_CEC_INT_TX_DONE | HDMI_CEC_INT_TX_ERROR)) {
+> +		cec_ctrl->tx_status = hdmi_read(hdmi, REG_HDMI_CEC_STATUS);
+> +		cec_ctrl->irq_status |= CEC_IRQ_FRAME_WR_DONE;
+> +	}
+> +
+> +	if (int_status & HDMI_CEC_INT_RX_DONE)
+> +		cec_ctrl->irq_status |= CEC_IRQ_FRAME_RD_DONE;
+> +
+> +	spin_unlock_irqrestore(&cec_ctrl->lock, flags);
+> +
+> +	hdmi_write(hdmi, REG_HDMI_CEC_INT, int_status);
+> +	queue_work(hdmi->workq, &cec_ctrl->work);
+> +}
+> +
+> +int msm_hdmi_cec_init(struct hdmi *hdmi)
+> +{
+> +	struct platform_device *pdev = hdmi->pdev;
+> +	struct hdmi_cec_ctrl *cec_ctrl;
+> +	struct cec_adapter *cec_adap;
+> +	int ret;
+> +
+> +	cec_ctrl = kzalloc(sizeof (*cec_ctrl), GFP_KERNEL);
+> +	if (!cec_ctrl)
+> +		return -ENOMEM;
+> +
+> +	cec_ctrl->hdmi = hdmi;
+> +	INIT_WORK(&cec_ctrl->work, msm_hdmi_cec_work);
+> +
+> +	cec_adap = cec_allocate_adapter(&msm_hdmi_cec_adap_ops,
+> +					cec_ctrl, "msm",
+> +					CEC_CAP_DEFAULTS |
+> +					CEC_CAP_CONNECTOR_INFO, 1);
+> +	ret = PTR_ERR_OR_ZERO(cec_adap);
+> +	if (ret < 0) {
+> +		kfree(cec_ctrl);
+> +		return ret;
+> +	}
+> +
+> +	/* Set the logical address to Unregistered */
+> +	hdmi_write(hdmi, REG_HDMI_CEC_ADDR, 0xf);
+> +
+> +	ret = cec_register_adapter(cec_adap, &pdev->dev);
+> +	if (ret < 0) {
+> +		cec_delete_adapter(cec_adap);
+> +		return ret;
+> +	}
+> +
+> +	hdmi->cec_adap = cec_adap;
+> +
+> +	return 0;
+> +}
+> +
+> +void msm_hdmi_cec_exit(struct hdmi *hdmi)
+> +{
+> +	cec_unregister_adapter(hdmi->cec_adap);
+> +}
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Final question: is this CEC device able to transmit messages when the hotplug detect
+pin is low? Some displays pull the HPD low when in Standby, but it is still possible
+to wake them up with a <Image View On> message. It is important to check that.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml:76:52: [warning] too few spaces after comma (commas)
+If this is really not possible, then the CEC_CAP_NEEDS_HPD should be set.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.example.dtb: pinctrl@f100000: uart-w-state: 'oneOf' conditional failed, one must be fixed:
-	'function' is a required property
-	'pins' is a required property
-	'rx-pins', 'tx-pins' do not match any of the regexes: 'pinctrl-[0-9]+'
-	'qup_se1_l2_mira' is not one of ['gpio', 'eth0_mdc', 'eth0_mdio', 'eth1_mdc', 'eth1_mdio', 'qlink0_wmss_reset', 'qlink1_wmss_reset', 'rgmii_rxc', 'rgmii_rxd0', 'rgmii_rxd1', 'rgmii_rxd2', 'rgmii_rxd3', 'rgmii_rx_ctl', 'rgmii_txc', 'rgmii_txd0', 'rgmii_txd1', 'rgmii_txd2', 'rgmii_txd3', 'rgmii_tx_ctl', 'adsp_ext_vfr', 'atest_char_start', 'atest_char_status0', 'atest_char_status1', 'atest_char_status2', 'atest_char_status3', 'audio_ref_clk', 'bimc_dte_test0', 'bimc_dte_test1', 'char_exec_pending', 'char_exec_release', 'coex_uart2_rx', 'coex_uart2_tx', 'coex_uart_rx', 'coex_uart_tx', 'cri_trng_rosc', 'cri_trng_rosc0', 'cri_trng_rosc1', 'dbg_out_clk', 'ddr_bist_complete', 'ddr_bist_fail', 'ddr_bist_start', 'ddr_bist_stop', 'ddr_pxi0_test', 'ebi0_wrcdc_dq2', 'ebi0_wrcdc_dq3', 'ebi2_a_d', 'ebi2_lcd_cs', 'ebi2_lcd_reset', 'ebi2_lcd_te', 'emac0_mcg_pst0', 'emac0_mcg_pst1', 'emac0_mcg_pst2', 'emac0_mcg_pst3', 'emac0_ptp_aux', 'emac0_ptp_pps', 'emac1_mcg_pst0', 'emac1_mcg_pst1', 'emac1_mcg_ps
- t2', 'emac1_mcg_pst3', 'emac1_ptp_aux0', 'emac1_ptp_aux1', 'emac1_ptp_aux2', 'emac1_ptp_aux3', 'emac1_ptp_pps0', 'emac1_ptp_pps1', 'emac1_ptp_pps2', 'emac1_ptp_pps3', 'emac_cdc_dtest0', 'emac_cdc_dtest1', 'emac_pps_in', 'ext_dbg_uart', 'gcc_125_clk', 'gcc_gp1_clk', 'gcc_gp2_clk', 'gcc_gp3_clk', 'gcc_plltest_bypassnl', 'gcc_plltest_resetn', 'i2s_mclk', 'jitter_bist_ref', 'ldo_en', 'ldo_update', 'm_voc_ext', 'mgpi_clk_req', 'native0', 'native1', 'native2', 'native3', 'native_char_start', 'native_tsens_osc', 'native_tsense_pwm1', 'nav_dr_sync', 'nav_gpio_0', 'nav_gpio_1', 'nav_gpio_2', 'nav_gpio_3', 'pa_indicator_1', 'pci_e_rst', 'pcie0_clkreq_n', 'pcie1_clkreq_n', 'pcie2_clkreq_n', 'pll_bist_sync', 'pll_clk_aux', 'pll_ref_clk', 'pri_mi2s_data0', 'pri_mi2s_data1', 'pri_mi2s_sck', 'pri_mi2s_ws', 'prng_rosc_test0', 'prng_rosc_test1', 'prng_rosc_test2', 'prng_rosc_test3', 'qdss_cti_trig0', 'qdss_cti_trig1', 'qdss_gpio_traceclk', 'qdss_gpio_tracectl', 'qdss_gpio_tracedata0', 'qdss_gpio_tra
- cedata1', 'qdss_gpio_tracedata10', 'qdss_gpio_tracedata11', 'qdss_gpio_tracedata12', 'qdss_gpio_tracedata13', 'qdss_gpio_tracedata14', 'qdss_gpio_tracedata15', 'qdss_gpio_tracedata2', 'qdss_gpio_tracedata3', 'qdss_gpio_tracedata4', 'qdss_gpio_tracedata5', 'qdss_gpio_tracedata6', 'qdss_gpio_tracedata7', 'qdss_gpio_tracedata8', 'qdss_gpio_tracedata9', 'qlink0_b_en', 'qlink0_b_req', 'qlink0_l_en', 'qlink0_l_req', 'qlink1_l_en', 'qlink1_l_req', 'qup_se0_l0', 'qup_se0_l1', 'qup_se0_l2', 'qup_se0_l3', 'qup_se1_l2', 'qup_se1_l3', 'qup_se2_l0', 'qup_se2_l1', 'qup_se2_l2', 'qup_se2_l3', 'qup_se3_l0', 'qup_se3_l1', 'qup_se3_l2', 'qup_se3_l3', 'qup_se4_l2', 'qup_se4_l3', 'qup_se5_l0', 'qup_se5_l1', 'qup_se6_l0', 'qup_se6_l1', 'qup_se6_l2', 'qup_se6_l3', 'qup_se7_l0', 'qup_se7_l1', 'qup_se7_l2', 'qup_se7_l3', 'qup_se8_l2', 'qup_se8_l3', 'sdc1_tb_trig', 'sdc2_tb_trig', 'sec_mi2s_data0', 'sec_mi2s_data1', 'sec_mi2s_sck', 'sec_mi2s_ws', 'sgmii_phy_intr0', 'sgmii_phy_intr1', 'spmi_coex_clk', 'spmi_
- coex_data', 'spmi_vgi_hwevent', 'tgu_ch0_trigout', 'tri_mi2s_data0', 'tri_mi2s_data1', 'tri_mi2s_sck', 'tri_mi2s_ws', 'uim1_clk', 'uim1_data', 'uim1_present', 'uim1_reset', 'uim2_clk', 'uim2_data', 'uim2_present', 'uim2_reset', 'usb2phy_ac_en', 'vsense_trigger_mirnat']
-	'qup_se1_l3_mira' is not one of ['gpio', 'eth0_mdc', 'eth0_mdio', 'eth1_mdc', 'eth1_mdio', 'qlink0_wmss_reset', 'qlink1_wmss_reset', 'rgmii_rxc', 'rgmii_rxd0', 'rgmii_rxd1', 'rgmii_rxd2', 'rgmii_rxd3', 'rgmii_rx_ctl', 'rgmii_txc', 'rgmii_txd0', 'rgmii_txd1', 'rgmii_txd2', 'rgmii_txd3', 'rgmii_tx_ctl', 'adsp_ext_vfr', 'atest_char_start', 'atest_char_status0', 'atest_char_status1', 'atest_char_status2', 'atest_char_status3', 'audio_ref_clk', 'bimc_dte_test0', 'bimc_dte_test1', 'char_exec_pending', 'char_exec_release', 'coex_uart2_rx', 'coex_uart2_tx', 'coex_uart_rx', 'coex_uart_tx', 'cri_trng_rosc', 'cri_trng_rosc0', 'cri_trng_rosc1', 'dbg_out_clk', 'ddr_bist_complete', 'ddr_bist_fail', 'ddr_bist_start', 'ddr_bist_stop', 'ddr_pxi0_test', 'ebi0_wrcdc_dq2', 'ebi0_wrcdc_dq3', 'ebi2_a_d', 'ebi2_lcd_cs', 'ebi2_lcd_reset', 'ebi2_lcd_te', 'emac0_mcg_pst0', 'emac0_mcg_pst1', 'emac0_mcg_pst2', 'emac0_mcg_pst3', 'emac0_ptp_aux', 'emac0_ptp_pps', 'emac1_mcg_pst0', 'emac1_mcg_pst1', 'emac1_mcg_ps
- t2', 'emac1_mcg_pst3', 'emac1_ptp_aux0', 'emac1_ptp_aux1', 'emac1_ptp_aux2', 'emac1_ptp_aux3', 'emac1_ptp_pps0', 'emac1_ptp_pps1', 'emac1_ptp_pps2', 'emac1_ptp_pps3', 'emac_cdc_dtest0', 'emac_cdc_dtest1', 'emac_pps_in', 'ext_dbg_uart', 'gcc_125_clk', 'gcc_gp1_clk', 'gcc_gp2_clk', 'gcc_gp3_clk', 'gcc_plltest_bypassnl', 'gcc_plltest_resetn', 'i2s_mclk', 'jitter_bist_ref', 'ldo_en', 'ldo_update', 'm_voc_ext', 'mgpi_clk_req', 'native0', 'native1', 'native2', 'native3', 'native_char_start', 'native_tsens_osc', 'native_tsense_pwm1', 'nav_dr_sync', 'nav_gpio_0', 'nav_gpio_1', 'nav_gpio_2', 'nav_gpio_3', 'pa_indicator_1', 'pci_e_rst', 'pcie0_clkreq_n', 'pcie1_clkreq_n', 'pcie2_clkreq_n', 'pll_bist_sync', 'pll_clk_aux', 'pll_ref_clk', 'pri_mi2s_data0', 'pri_mi2s_data1', 'pri_mi2s_sck', 'pri_mi2s_ws', 'prng_rosc_test0', 'prng_rosc_test1', 'prng_rosc_test2', 'prng_rosc_test3', 'qdss_cti_trig0', 'qdss_cti_trig1', 'qdss_gpio_traceclk', 'qdss_gpio_tracectl', 'qdss_gpio_tracedata0', 'qdss_gpio_tra
- cedata1', 'qdss_gpio_tracedata10', 'qdss_gpio_tracedata11', 'qdss_gpio_tracedata12', 'qdss_gpio_tracedata13', 'qdss_gpio_tracedata14', 'qdss_gpio_tracedata15', 'qdss_gpio_tracedata2', 'qdss_gpio_tracedata3', 'qdss_gpio_tracedata4', 'qdss_gpio_tracedata5', 'qdss_gpio_tracedata6', 'qdss_gpio_tracedata7', 'qdss_gpio_tracedata8', 'qdss_gpio_tracedata9', 'qlink0_b_en', 'qlink0_b_req', 'qlink0_l_en', 'qlink0_l_req', 'qlink1_l_en', 'qlink1_l_req', 'qup_se0_l0', 'qup_se0_l1', 'qup_se0_l2', 'qup_se0_l3', 'qup_se1_l2', 'qup_se1_l3', 'qup_se2_l0', 'qup_se2_l1', 'qup_se2_l2', 'qup_se2_l3', 'qup_se3_l0', 'qup_se3_l1', 'qup_se3_l2', 'qup_se3_l3', 'qup_se4_l2', 'qup_se4_l3', 'qup_se5_l0', 'qup_se5_l1', 'qup_se6_l0', 'qup_se6_l1', 'qup_se6_l2', 'qup_se6_l3', 'qup_se7_l0', 'qup_se7_l1', 'qup_se7_l2', 'qup_se7_l3', 'qup_se8_l2', 'qup_se8_l3', 'sdc1_tb_trig', 'sdc2_tb_trig', 'sec_mi2s_data0', 'sec_mi2s_data1', 'sec_mi2s_sck', 'sec_mi2s_ws', 'sgmii_phy_intr0', 'sgmii_phy_intr1', 'spmi_coex_clk', 'spmi_
- coex_data', 'spmi_vgi_hwevent', 'tgu_ch0_trigout', 'tri_mi2s_data0', 'tri_mi2s_data1', 'tri_mi2s_sck', 'tri_mi2s_ws', 'uim1_clk', 'uim1_data', 'uim1_present', 'uim1_reset', 'uim2_clk', 'uim2_data', 'uim2_present', 'uim2_reset', 'usb2phy_ac_en', 'vsense_trigger_mirnat']
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
+Regards,
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1682070196-980-2-git-send-email-quic_rohiagar@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+	Hans
