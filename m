@@ -2,199 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 72D236EA09B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 02:27:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B0EF6EA0AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 02:36:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231835AbjDUA1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 20:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50356 "EHLO
+        id S229521AbjDUAg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 20:36:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230450AbjDUA1o (ORCPT
+        with ESMTP id S233110AbjDUAg1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 20:27:44 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D08A044AF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:27:42 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4ec816d64afso4841270e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:27:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682036861; x=1684628861;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m0hguSLcEhIJjKI9l7bUfGJDhsIX62v6X4BxLPgYVVg=;
-        b=EtBcWOvWA9eoxdYEngxgKW+zyiQfr3a/swgMrgcwCvOTf2G+faAxKThzXliGTFbxvW
-         Of4EwSrk1E9l1ojBrSXHQzjX+OYl+XqqctCdL3yBs1FvvpYfbfIdFoJnOHzNK5bX+THT
-         SKoonmZtNHpw7UvZ5aTrnOEw0Qe1uZYjUHl/mvEv+V4D9vYukuflV6OpnbxHqGU0nQTO
-         b0NTicCOA02fNw2zGUZOzLaOnq6wWbG9e36XuyGaqngXXt4LnYNRyg8OfmQT4YHRFPeW
-         p1xua1iSCud34MeaxgPMLkUDTg2DYPNHq2AlyXmwroVFwpvLvP9P4gqDM6Z6yBqrbz91
-         o9NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682036861; x=1684628861;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m0hguSLcEhIJjKI9l7bUfGJDhsIX62v6X4BxLPgYVVg=;
-        b=ZzA4zd4bsluj4PlsRyXvMyuM+yWsZFBOQFsFAO0/rLisF36YAYzRgyS3ejZNKSIJSK
-         FvCsrUz326ktE6iJaN2JmBXy22pEfX8Q3fid55W+30qFZG4rQhvr/o0dAxnGftawOnRH
-         saf23P6kbIeifGxrZz2jeR2jZMliB++DPf13qHrSvO65dx7BKWIxXTjE/5NAExYH2gsA
-         SKJnvR1JbLh10Ft/LYcGXlBnDa3xsd/4d9XitE9lr351u7MOxVwWlEPWtMIHE0Mdk3ra
-         Etct7ZlpMpJL3VeAJ71otDwjYwxAyF4yw1Y8cAX99SQs904L/GixbDnB2i02FSt/fe0w
-         KpXQ==
-X-Gm-Message-State: AAQBX9c+NNwRIKBUjK+nnbAZH0DIgZvlMQ4OUYafNqGHCd0k+hjhO8fM
-        1y1thvHV5zYs2um7/eAVZxkPlw==
-X-Google-Smtp-Source: AKy350aStGiCG685IPf4NgeK8Bkv2nyoik3qeoVlBzvFsCPbWN+HNpCTFCgM/UoCcsEx8w2KHGp0rA==
-X-Received: by 2002:a2e:aaa3:0:b0:2a8:ea1f:428c with SMTP id bj35-20020a2eaaa3000000b002a8ea1f428cmr99257ljb.23.1682036861058;
-        Thu, 20 Apr 2023 17:27:41 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id t28-20020ac243bc000000b004edd5f7f297sm376111lfl.28.2023.04.20.17.27.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 17:27:40 -0700 (PDT)
-Message-ID: <c8089d0f-c8cd-6a24-718f-682145d04f02@linaro.org>
-Date:   Fri, 21 Apr 2023 03:27:40 +0300
+        Thu, 20 Apr 2023 20:36:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4877949F6;
+        Thu, 20 Apr 2023 17:36:26 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33L0aGMo005655;
+        Fri, 21 Apr 2023 00:36:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UKQgIUDwzDOzUPk2VjzlD8UR5C6Y0PvdeSSx8f1Y0J0=;
+ b=U5X7s20kIDyVFaT4EnoF/LQGXWa96SUNaEZlHrgPMhrf8FDALvN+WKMymWCpgGNW6LMl
+ UtAScKvtvpEOOMxxNjoj662gGonf7Sb4i+4YwwQ6SnDqH7YNKU4U7RQxxYsV9GwAuAAW
+ BgM9IX/XY92cu3crSHOK7oRlc1ywr+2bOYWB90lSmf0UjfGmQo+iSjATBdurI60MvXsZ
+ yCsXQJbtls1bqNTtdO4IiicmnsqhDGN71X+EXcQyl+0vrnJFBJUtpgZ3BuJsaL5wWHp9
+ ax1SSqPnSnkZbwfPygg3ZyhukSb/gO6pUdjXsFtYakZi3PuTRNOCvswswD4ZQEv+46ae tQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q3dcmg8sd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Apr 2023 00:36:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33L0aEQD031844
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 21 Apr 2023 00:36:14 GMT
+Received: from [10.110.74.190] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 20 Apr
+ 2023 17:36:13 -0700
+Message-ID: <43859b23-a324-b743-83b7-4f00c78170b5@quicinc.com>
+Date:   Thu, 20 Apr 2023 17:36:12 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v1 4/5] drm/msm/dpu: calculate DSC encoder parameters
- dynamically
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v1 3/5] drm/msm/dpu: save dpu topology configuration
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
 References: <1682033114-28483-1-git-send-email-quic_khsieh@quicinc.com>
- <1682033114-28483-5-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1682033114-28483-5-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <1682033114-28483-4-git-send-email-quic_khsieh@quicinc.com>
+ <897af051-aed4-938a-5ab1-c44c967ab02d@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <897af051-aed4-938a-5ab1-c44c967ab02d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dZoQF6EaxQjxm3_wDYc2ly7hqZ_1UWkV
+X-Proofpoint-GUID: dZoQF6EaxQjxm3_wDYc2ly7hqZ_1UWkV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-20_17,2023-04-20_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0 impostorscore=0
+ mlxlogscore=999 malwarescore=0 suspectscore=0 clxscore=1015 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304210002
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 02:25, Kuogee Hsieh wrote:
-> During DSC preparation, add run time calculation to figure out what
-> usage modes, split mode and merge mode, is going to be setup.
+
+
+On 4/20/2023 5:12 PM, Dmitry Baryshkov wrote:
+> On 21/04/2023 02:25, Kuogee Hsieh wrote:
+>> At current implementation, topology configuration is thrown away after
+>> dpu_rm_reserve(). This patch save the topology so that it can be used
+>> for DSC related calculation later.
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 56 ++++++++++++++++-------------
->   1 file changed, 32 insertions(+), 24 deletions(-)
+> Please take a look at 
+> https://patchwork.freedesktop.org/patch/527960/?series=115283&rev=2 .
+
+Let the review of this series go on and lets try to get the acks on the 
+non-topology related pieces. I think 2/5 patches in this series are 
+conflicting in the design. We will resolve that in a weeks time. 
+Meanwhile, I think we can keep the reviews / versions going on the rest.
+
+I think we can move patch 5 of this series to patch 3. That way we get 
+acks on patches 1-3 and patches 4 & 5 which deal with topology are dealt 
+with together with virtual planes.
+
+I will review virtual planes next week and we will decide the best 
+course of action. Moving resource allocation to CRTC needs to be thought 
+of a bit deeper for DSC as that one is directly tied to encoder.
+
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 2fdacf1..5677728 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -529,17 +529,9 @@ void dpu_encoder_helper_split_config(
->   bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->   {
->   	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
-> -	int i, intf_count = 0, num_dsc = 0;
-> +	struct msm_display_topology *topology = &dpu_enc->topology;
->   
-> -	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
-> -		if (dpu_enc->phys_encs[i])
-> -			intf_count++;
-> -
-> -	/* See dpu_encoder_get_topology, we only support 2:2:1 topology */
-> -	if (dpu_enc->dsc)
-> -		num_dsc = 2;
-> -
-> -	return (num_dsc > 0) && (num_dsc > intf_count);
-> +	return (topology->num_dsc > topology->num_intf);
->   }
->   
->   static void dpu_encoder_get_topology(
-> @@ -1861,41 +1853,57 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
->   	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
->   	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
->   	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-> +	struct msm_display_topology *topology = &dpu_enc->topology;
->   	int this_frame_slices;
->   	int intf_ip_w, enc_ip_w;
-> -	int dsc_common_mode;
-> +	int dsc_common_mode = 0;
->   	int pic_width;
->   	u32 initial_lines;
-> +	int num_dsc, num_intf;
->   	int i;
->   
->   	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
->   		hw_pp[i] = dpu_enc->hw_pp[i];
->   		hw_dsc[i] = dpu_enc->hw_dsc[i];
-> -
-> -		if (!hw_pp[i] || !hw_dsc[i]) {
-> -			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
-> -			return;
-> -		}
-
-Why?
-
->   	}
->   
-> -	dsc_common_mode = 0;
-> +	num_dsc = topology->num_dsc;
-> +	num_intf = topology->num_intf;
-> +
->   	pic_width = dsc->pic_width;
->   
-> -	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
->   	if (enc_master->intf_mode == INTF_MODE_VIDEO)
->   		dsc_common_mode |= DSC_MODE_VIDEO;
->   
-> +	/*
-> +	 * If this encoder is driving more than one DSC encoder, they
-> +	 * operate in tandem, same pic dimension needs to be used by
-> +	 * each of them.(pp-split is assumed to be not supported)
-> +	 *
-> +	 */
-> +
->   	this_frame_slices = pic_width / dsc->slice_width;
->   	intf_ip_w = this_frame_slices * dsc->slice_width;
-> +	enc_ip_w = intf_ip_w;	
-> +
-> +	intf_ip_w /= num_intf;
-> +
-> +	if (num_dsc > 1)
-> +		dsc_common_mode |= DSC_MODE_SPLIT_PANEL;
-> +
-> +	if (dpu_encoder_use_dsc_merge(&dpu_enc->base)) {
-> +		dsc_common_mode |= DSC_MODE_MULTIPLEX;
-> +		/*
-> +		 * in dsc merge case: when using 2 encoders for the same
-> +		 * stream, no. of slices need to be same on both the
-> +		 * encoders.
-> +		 */
-> +		enc_ip_w = intf_ip_w / 2;
-
-So do you want to get enc_ip_w / 2 or enc_ip_w / num_intf / 2 here?
-
-> +	}
->   
-> -	/*
-> -	 * dsc merge case: when using 2 encoders for the same stream,
-> -	 * no. of slices need to be same on both the encoders.
-> -	 */
-> -	enc_ip_w = intf_ip_w / 2;
->   	initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
->   
-> -	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> +	for (i = 0; i < num_dsc; i++)
->   		dpu_encoder_dsc_pipe_cfg(dpu_enc, hw_dsc[i], hw_pp[i], dsc,
->   					dsc_common_mode, initial_lines);
->   }
-
--- 
-With best wishes
-Dmitry
-
+>>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32 
+>> ++++++++++++++---------------
+>>   1 file changed, 16 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index ecb87bc..2fdacf1 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -542,13 +542,13 @@ bool dpu_encoder_use_dsc_merge(struct 
+>> drm_encoder *drm_enc)
+>>       return (num_dsc > 0) && (num_dsc > intf_count);
+>>   }
+>> -static struct msm_display_topology dpu_encoder_get_topology(
+>> +static void dpu_encoder_get_topology(
+>>               struct dpu_encoder_virt *dpu_enc,
+>>               struct dpu_kms *dpu_kms,
+>>               struct drm_display_mode *mode,
+>> -            struct drm_crtc_state *crtc_state)
+>> +            struct drm_crtc_state *crtc_state,
+>> +            struct msm_display_topology *topology)
+>>   {
+>> -    struct msm_display_topology topology = {0};
+>>       int i, intf_count = 0;
+>>       for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
+>> @@ -567,16 +567,16 @@ static struct msm_display_topology 
+>> dpu_encoder_get_topology(
+>>        * Add dspps to the reservation requirements if ctm is requested
+>>        */
+>>       if (intf_count == 2)
+>> -        topology.num_lm = 2;
+>> +        topology->num_lm = 2;
+>>       else if (!dpu_kms->catalog->caps->has_3d_merge)
+>> -        topology.num_lm = 1;
+>> +        topology->num_lm = 1;
+>>       else
+>> -        topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+>> +        topology->num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 
+>> : 1;
+>>       if (crtc_state->ctm)
+>> -        topology.num_dspp = topology.num_lm;
+>> +        topology->num_dspp = topology->num_lm;
+>> -    topology.num_intf = intf_count;
+>> +    topology->num_intf = intf_count;
+>>       if (dpu_enc->dsc) {
+>>           /*
+>> @@ -585,12 +585,10 @@ static struct msm_display_topology 
+>> dpu_encoder_get_topology(
+>>            * this is power optimal and can drive up to (including) 4k
+>>            * screens
+>>            */
+>> -        topology.num_dsc = 2;
+>> -        topology.num_lm = 2;
+>> -        topology.num_intf = 1;
+>> +        topology->num_dsc = 2;
+>> +        topology->num_lm = 2;
+>> +        topology->num_intf = 1;
+>>       }
+>> -
+>> -    return topology;
+>>   }
+>>   static int dpu_encoder_virt_atomic_check(
+>> @@ -602,7 +600,7 @@ static int dpu_encoder_virt_atomic_check(
+>>       struct msm_drm_private *priv;
+>>       struct dpu_kms *dpu_kms;
+>>       struct drm_display_mode *adj_mode;
+>> -    struct msm_display_topology topology;
+>> +    struct msm_display_topology *topology;
+>>       struct dpu_global_state *global_state;
+>>       int i = 0;
+>>       int ret = 0;
+>> @@ -639,7 +637,9 @@ static int dpu_encoder_virt_atomic_check(
+>>           }
+>>       }
+>> -    topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, 
+>> crtc_state);
+>> +    topology = &dpu_enc->topology;
+>> +    memset(topology, 0, sizeof (*topology));
+>> +    dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, 
+>> topology);
+>>       /*
+>>        * Release and Allocate resources on every modeset
+>> @@ -650,7 +650,7 @@ static int dpu_encoder_virt_atomic_check(
+>>           if (!crtc_state->active_changed || crtc_state->enable)
+>>               ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+>> -                    drm_enc, crtc_state, topology);
+>> +                    drm_enc, crtc_state, *topology);
+>>       }
+>>       trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
+> 
