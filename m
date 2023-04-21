@@ -2,81 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E14DA6EAFFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 19:02:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A6BD6EB09E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 19:35:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233469AbjDURAr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 13:00:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42350 "EHLO
+        id S231398AbjDURfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 13:35:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233411AbjDURAm (ORCPT
+        with ESMTP id S231282AbjDURfY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 13:00:42 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6190415A08
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:00:15 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-5069097bac7so3279882a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:00:15 -0700 (PDT)
+        Fri, 21 Apr 2023 13:35:24 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30550903A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:35:23 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id af79cd13be357-74d0d5126baso225707985a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1682096387; x=1684688387;
+        d=chromium.org; s=google; t=1682098521; x=1684690521;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QT/YYNidqu3A4BNDZJk8UgJVKfbhp8UpzHeC81fLwQU=;
-        b=D2hM9+BKb4GsOroNx+/2Qf3HuWU7SAKw0AO34XJw8mAFUTQqZpfI7shT/sgx4W5jCj
-         cFTbaR6CN2Q1yTr6s2dj9n8eQEPgiLLssKSGowQJdgtci2hIg/ixyJkJuRov67Zyorw7
-         Jq5+5BFl02Mtae9ZS+g34wWmjDpkXrUETy1LOhKFQPaZGJeQUO03YuATHQkswyLlpRoO
-         YGNowK3cmq7/Vw8J2Np0+vsY0wAc5NGd10BUB+1sz7iH0mI/AxiPDJwONrxf3rB4eTyz
-         dcjWzxXQeABQpGE+Rd5ZPuTRZpaiAcaDDpNGBXk9bF/l6fSKjogZg+YsCmyuqlTjS8Pj
-         rtqw==
+        bh=lXK86wEYiVwAAffwU2RrQU5w4OvwpRlSMCsUx9Wsyw8=;
+        b=g9RUci6GfdPCRoHhsbDogJbyd6H26hRCBNTfUpAMYmjglXbDHoKuOkyTind4TekQ1f
+         Di4L3ubZgiLXwC7t65MxULp5ienXXpdMjgSrLtinWXnrgCIfAdMMa7W9CRvhHGMdRuML
+         HZrJEnnJSZi6giQJZwFOdwPa9KfpvZ7oLFeiQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682096387; x=1684688387;
+        d=1e100.net; s=20221208; t=1682098521; x=1684690521;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QT/YYNidqu3A4BNDZJk8UgJVKfbhp8UpzHeC81fLwQU=;
-        b=DZhvv2fLM1gQwkVqeS//ZlZxnyVr9SE5HHt/iFBjzJCEA4/Pe/4RkLTOgCtvWzAe9X
-         /0ntCyaH3uHK55yQR6DbUv6ie4jEOfVFlVnvAqwpKKPxAaKBPImdzOUbqssoTtGqooZm
-         5+YYBgiTiAphX7YeHmJYVP+icQ5gefxE6s0rrxX5O2XSaaCloDr25kc+xou6FQboLcYe
-         mVEh0covy3I1TqvmrBPzIMhlIntPeyb5xTz+Amr2eg8Z0jq9wgXq+Cpx2SpxzkS/nbb/
-         iUOC7Yvm3IfTIRSbjZJkHYp25WO0r2nRFGpJUe1ZHT52rosS2FFjU7JeCFVtrf8FQES4
-         vvOA==
-X-Gm-Message-State: AAQBX9e/14aAD3BTLDmXrSlRFg36N2YeDxqMRVD0m+V2FunUk8oV/fZS
-        bVhVikCmBeJ9HNbbAmYWxnj00jWT4bwfCPvzJh8BNw==
-X-Google-Smtp-Source: AKy350b9a4jCLi4HJbMPu1T+4q9CM6Y8OH1cDOw94YTZ4Km3f1mfLPfh+N6EitCgpEUZ7xZmQHrta+EW3DOKPuAzovM=
-X-Received: by 2002:a05:6402:ca:b0:506:8884:7f5 with SMTP id
- i10-20020a05640200ca00b00506888407f5mr5245621edu.41.1682096386944; Fri, 21
- Apr 2023 09:59:46 -0700 (PDT)
+        bh=lXK86wEYiVwAAffwU2RrQU5w4OvwpRlSMCsUx9Wsyw8=;
+        b=mDk9TFhwt7wg8gVAUhvcgx27AbYDIHp2XCYQERhcu+CG0gLMmOH1eTTGOjbpuwnzBV
+         7FJjvX0wyYom2RDgC6IyZeWmkjdcT+fsObrJfIEX6pV0/N3n/3Erpz1V1pfuSxQjHmpn
+         Jl0TOUvtg0oNEwMyM6QdXm84Ffb5FA/nBQgsSxD7xrJq3Mk9G1wD8HEmdjuxmyfesHQw
+         Gpcsp1ozULsZNpzNq7/tA7ExrCjKq40Dt3QyOUYy4c8xj4b1jvWn96J3YtRW7LrKH9qi
+         pT//jTuOeJWT0/2c3kxUoBegq/1KrM/6i+cX/u3UhLoOM3bHkp2c1IK/7GziHsMH+GRn
+         5gLQ==
+X-Gm-Message-State: AAQBX9cv+q8USxj/88gDxlF82VuxelH9kk2L9+QBluit7sWW2C93aSVj
+        DSgsn/f1+yFi6XKGa3EWRslB8zOdzYASAmNbfOg=
+X-Google-Smtp-Source: AKy350bkA2kZPXGVLsK3FrEcu5EL/mjXqvh16ZfuAKNDOl1g3hCiZh5Vv4UEZ6UKMn1yVBViyQ98Ag==
+X-Received: by 2002:a05:622a:50f:b0:3eb:8f6a:a11 with SMTP id l15-20020a05622a050f00b003eb8f6a0a11mr8302860qtx.16.1682098521330;
+        Fri, 21 Apr 2023 10:35:21 -0700 (PDT)
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com. [209.85.160.177])
+        by smtp.gmail.com with ESMTPSA id dz20-20020a05620a2b9400b0074dd97b28b3sm1461872qkb.113.2023.04.21.10.35.17
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Apr 2023 10:35:17 -0700 (PDT)
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-3ef36d814a5so1199361cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 10:35:17 -0700 (PDT)
+X-Received: by 2002:ac8:588f:0:b0:3ef:26ec:f27a with SMTP id
+ t15-20020ac8588f000000b003ef26ecf27amr395030qta.13.1682098516847; Fri, 21 Apr
+ 2023 10:35:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com> <20230421-fp4-bluetooth-v1-3-0430e3a7e0a2@fairphone.com>
-In-Reply-To: <20230421-fp4-bluetooth-v1-3-0430e3a7e0a2@fairphone.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Fri, 21 Apr 2023 11:59:35 -0500
-Message-ID: <CAKXuJqgeK1i8pi5Wujy3tJRRk-6yajJtoQvZjs=639Mbid=Q0Q@mail.gmail.com>
-Subject: Re: [PATCH RFC 3/4] arm64: dts: qcom: sm6350: add uart1 node
-To:     Luca Weiss <luca.weiss@fairphone.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+References: <1681996394-13099-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1681996394-13099-6-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=VU9Zdk2wz=90cjmuBWxaVz9w+UxzrTtW_ny-jrwVLV3w@mail.gmail.com> <7a6fe89b-5898-08d3-6c44-2cfc9d8fae7a@quicinc.com>
+In-Reply-To: <7a6fe89b-5898-08d3-6c44-2cfc9d8fae7a@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 21 Apr 2023 10:35:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U_7t4H9nXy6Ku49qLqbhZ02K-_XQv_Ssgkp26s3LyDMw@mail.gmail.com>
+Message-ID: <CAD=FV=U_7t4H9nXy6Ku49qLqbhZ02K-_XQv_Ssgkp26s3LyDMw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] spi: spi-qcom-qspi: Add DMA mode support
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,115 +83,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 21, 2023 at 9:12=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.co=
-m> wrote:
->
-> Add the node describing uart1 incl. opp table and pinctrl.
->
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 63 ++++++++++++++++++++++++++++++=
-++++++
->  1 file changed, 63 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/q=
-com/sm6350.dtsi
-> index 18c4616848ce..16c5e9a6c98a 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -378,6 +378,25 @@ opp-2073600000 {
->                 };
->         };
->
-> +       qup_opp_table: opp-table-qup {
-> +               compatible =3D "operating-points-v2";
-> +
-> +               opp-75000000 {
-> +                       opp-hz =3D /bits/ 64 <75000000>;
-> +                       required-opps =3D <&rpmhpd_opp_low_svs>;
-> +               };
-> +
-> +               opp-100000000 {
-> +                       opp-hz =3D /bits/ 64 <100000000>;
-> +                       required-opps =3D <&rpmhpd_opp_svs>;
-> +               };
-> +
-> +               opp-128000000 {
-> +                       opp-hz =3D /bits/ 64 <128000000>;
-> +                       required-opps =3D <&rpmhpd_opp_nom>;
-> +               };
-> +       };
-> +
->         pmu {
->                 compatible =3D "arm,armv8-pmuv3";
->                 interrupts =3D <GIC_PPI 5 IRQ_TYPE_LEVEL_LOW>;
-> @@ -741,6 +760,22 @@ i2c0: i2c@880000 {
->                                 status =3D "disabled";
->                         };
->
-> +                       uart1: serial@884000 {
-> +                               compatible =3D "qcom,geni-uart";
-> +                               reg =3D <0 0x00884000 0 0x4000>;
-> +                               clock-names =3D "se";
-> +                               clocks =3D <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
-> +                               pinctrl-names =3D "default";
-> +                               pinctrl-0 =3D <&qup_uart1_cts>, <&qup_uar=
-t1_rts>, <&qup_uart1_tx>, <&qup_uart1_rx>;
-> +                               interrupts =3D <GIC_SPI 602 IRQ_TYPE_LEVE=
-L_HIGH>;
-> +                               power-domains =3D <&rpmhpd SM6350_CX>;
-> +                               operating-points-v2 =3D <&qup_opp_table>;
-> +                               interconnects =3D <&clk_virt MASTER_QUP_C=
-ORE_0 0 &clk_virt SLAVE_QUP_CORE_0 0>,
-> +                                               <&aggre1_noc MASTER_QUP_0=
- 0 &clk_virt SLAVE_EBI_CH0 0>;
-> +                               interconnect-names =3D "qup-core", "qup-c=
-onfig";
-> +                               status =3D "disabled";
-> +                       };
-> +
->                         i2c2: i2c@888000 {
->                                 compatible =3D "qcom,geni-i2c";
->                                 reg =3D <0 0x00888000 0 0x4000>;
-> @@ -1726,6 +1761,34 @@ qup_i2c10_default: qup-i2c10-default-state {
->                                 drive-strength =3D <2>;
->                                 bias-pull-up;
->                         };
-> +
-> +                       qup_uart1_cts: qup-uart1-cts-default-state {
-> +                               pins =3D "gpio61";
-> +                               function =3D "qup01";
-> +                               drive-strength =3D <2>;
-> +                               bias-disable;
-> +                       };
-> +
-> +                       qup_uart1_rts: qup-uart1-rts-default-state {
-> +                               pins =3D "gpio62";
-> +                               function =3D "qup01";
-> +                               drive-strength =3D <2>;
-> +                               bias-pull-down;
-> +                       };
-> +
-> +                       qup_uart1_tx: qup-uart1-tx-default-state {
-> +                               pins =3D "gpio63";
-> +                               function =3D "qup01";
-> +                               drive-strength =3D <2>;
-> +                               bias-pull-up;
-> +                       };
-> +
-tx should come after the rx, this caught me too when I was doing my
-bluetooth driver, it goes by name, not gpio#.
+Hi,
 
-> +                       qup_uart1_rx: qup-uart1-rx-default-state {
-> +                               pins =3D "gpio64";
-> +                               function =3D "qup01";
-> +                               drive-strength =3D <2>;
-> +                               bias-disable;
-> +                       };
->                 };
+On Fri, Apr 21, 2023 at 9:58=E2=80=AFAM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
 >
->                 apps_smmu: iommu@15000000 {
+> Hi,
 >
-> --
-> 2.40.0
+> Thanks a lot for the review and inputs...
 >
+>
+> On 4/20/2023 10:49 PM, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Thu, Apr 20, 2023 at 6:13=E2=80=AFAM Vijaya Krishna Nivarthi
+> > <quic_vnivarth@quicinc.com> wrote:
+> >> @@ -137,11 +155,29 @@ enum qspi_clocks {
+> >>          QSPI_NUM_CLKS
+> >>   };
+> >>
+> >> +enum qspi_xfer_mode {
+> >> +       QSPI_FIFO,
+> >> +       QSPI_DMA
+> >> +};
+> >> +
+> >> +/*
+> >> + * Number of entries in sgt returned from spi framework that-
+> >> + * will be supported. Can be modified as required.
+> >> + * In practice, given max_dma_len is 64KB, the number of
+> >> + * entries is not expected to exceed 1.
+> >> + */
+> >> +#define QSPI_MAX_SG 5
+> > I actually wonder if this would be more nicely done just using a
+> > linked list, which naturally mirrors how SGs work anyway. You'd add
+> > "struct list_head" to the end of "struct qspi_cmd_desc" and just store
+> > a pointer to the head in "struct qcom_qspi".
+> >
+> > For freeing, you can always get back the "virtual" address because
+> > it's just the address of each node. You can always get back the
+> > physical address because it's stored in "data_address".
+> >
+> Please note that in "struct qspi_cmd_desc"
+>
+> data_address - dma_address of data buffer returned by spi framework
+>
+> next_descriptor - dma_address of the next descriptor in chain
+>
+>
+> If we were to have a linked list of descriptors that we can parse and
+> free, it would require 2 more fields
+>
+> this_descriptor_dma - dma address of the current descriptor
+
+Isn't that exactly the same value as "data_address"? Sure,
+"data_address" is a u32 and the DMA address is 64-bits, but elsewhere
+in the code you already rely on the fact that the upper bits of the
+DMA address are 0 when you do:
+
+virt_cmd_desc->data_address =3D dma_ptr
+
+
+> next_descriptor_virt - virtual address of the next descriptor in chain
+
+Right, this would be the value of the next node in the linked list,
+right? So basically by adding a list_node_t you can find it easily.
+
+
+> >> +static int qcom_qspi_alloc_desc(struct qcom_qspi *ctrl, dma_addr_t dm=
+a_ptr,
+> >> +                       uint32_t n_bytes)
+> >> +{
+> >> +       struct qspi_cmd_desc *virt_cmd_desc, *prev;
+> >> +       dma_addr_t dma_cmd_desc;
+> >> +
+> >> +       /* allocate for dma cmd descriptor */
+> >> +       virt_cmd_desc =3D (struct qspi_cmd_desc *)dma_pool_alloc(ctrl-=
+>dma_cmd_pool,
+> >> +               GFP_KERNEL, &dma_cmd_desc);
+> > Remove unnecessary cast; "void *" assigns fine w/out a cast.
+> >
+> > Add "| GFP_ZERO" and then get rid of the need to clear the "reserved"
+> > and "next_descriptor" stuff below.
+> >
+> I needed __GFP_ZERO to prevent a compile error, used same.
+
+Ah, sorry. Sounds good.
+
+-Doug
