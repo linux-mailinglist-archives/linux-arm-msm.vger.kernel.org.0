@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D13C06EA071
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 02:07:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F5826EA07B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 02:12:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232363AbjDUAHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 20:07:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45488 "EHLO
+        id S232790AbjDUAMN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 20:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbjDUAHg (ORCPT
+        with ESMTP id S232762AbjDUAMM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 20:07:36 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C774208
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:07:34 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ec8149907aso1041698e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:07:34 -0700 (PDT)
+        Thu, 20 Apr 2023 20:12:12 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 463C91996
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:12:11 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4edb9039a4cso1010463e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682035653; x=1684627653;
+        d=linaro.org; s=google; t=1682035929; x=1684627929;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cLFXBTiLwMvaw8fy77PEa4Rr8nVXq3s6Busf4NAaQdk=;
-        b=yrZDLELc1gqcOYTTzXMhdoTTRq0nU+ntXeER+fEQerHoNQfzf+kZ7usuJs7Qs8ScWs
-         Ues22fDNrYj1hizTtV+oAGU8o/kQWS3DLzzln7kcdadLuSiYdAKNSta4lMSoR0ZgJ0W4
-         7j1zysrCpIdvpTYU+ea+j/KUGxFRtddP173Nc7uxMyK2m1YFQksNE7U30p17p2obZi4Q
-         XIQC+PiPYyg/CCgqG43PPbO3Gyy6Lxr0IYgzRjR52Dk/XfJalvcs3qyPkYFIaK4MVerQ
-         XVyaLjo8S4sGRe3AEEWD9gD27XcK4+C3A3AS9mPxpAU9MS8Nnw5c8hurbdfldmlykoLQ
-         K8tA==
+        bh=wfnd8gwg66uWWNFqZoU9vOCkwYs8srEJj3TQoz5dxlo=;
+        b=RY1oM4BK/5v0LprVe4rP9faKD0LmsM9Krz6cbm2zFAEGCx531mXEJChnBDKdBqtK+w
+         ApaYg5YMvD5ltAJ0db8rfPc0+pYEzXauLWhZ2dJoQQFeXx+XGB4TbaKZr6edKfJeOk5F
+         gmtQPxovj+nzakZptSyA6Xt22HpaA8emndhnW4L3DkN5ldmS/V8cC716yaCN1w6tWE08
+         XKReL/F6qnqBOm1wUTLL42L0fJufb69ehGL8hfMOljGbHyobKjUULXoxLAndCqb6kfrd
+         7M0yOC/n7tAowE+GNf4N6K4vyV4HG0ublkc11RpqBtNC1UAy9/ofLZMO9a+29J5OtLy7
+         A2sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682035653; x=1684627653;
+        d=1e100.net; s=20221208; t=1682035929; x=1684627929;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cLFXBTiLwMvaw8fy77PEa4Rr8nVXq3s6Busf4NAaQdk=;
-        b=MEFmU5+dTN0t7d1XPfNCWPmYCNylqeBqSOtWie4i56C2qt8FF0mVwPmSARSo2kBmZG
-         CyQvLJocjCVkKkcCIq7T5fK8jEIa2bh5UlGzitt5C9oUwg+hqW7TP3A3hPqiLXOtNmxM
-         olHTdjDyn6MvT4cyUjEiPBQ+iA1tWH1l75WcTB5Rh/PEL6uPgql/q9iX4TyeeRSLIJst
-         HDK2NGu3dIcrfU2ZhhHSRdw0IRbRfb4SUTvmDEMbZY1aMj4XStprOt+GMvQ1LtWmWCvz
-         LJdBRGvA0FT4bAFH7GiUtjHVMbw8W9yJaBGUctTAFeCBvp9Hk9NahlL6PxPadtIgARMn
-         hcEQ==
-X-Gm-Message-State: AAQBX9et1vwwJinUdvrgRFCYDUg69NywjUkoTAlev7K/SLhPh8c918c/
-        Wy81x1+NoPGepGcS5dHG+WEvaw==
-X-Google-Smtp-Source: AKy350anHEOXvktSuJ20WISPKkbmPhBf8HkSslFqb7f0lANUI6JSvjgax7jzs5LOxFBwdwvcW6GRNg==
-X-Received: by 2002:a2e:9e02:0:b0:2a8:ae13:cc31 with SMTP id e2-20020a2e9e02000000b002a8ae13cc31mr105168ljk.47.1682035653203;
-        Thu, 20 Apr 2023 17:07:33 -0700 (PDT)
+        bh=wfnd8gwg66uWWNFqZoU9vOCkwYs8srEJj3TQoz5dxlo=;
+        b=GjGsWcKXPvMpFJIp6HULdiDasxgdqivDY8feHUpsXpbHSoZmom44CVNRUDpHMQ69n2
+         uzJPpWHQJPTTNxnpVeqxEXCSU5A++0/fMUrFLXzhmXBvfbhB/F0k3DpYz9OscCx4z33Y
+         b36n0jZ9RXz4y0ZLZzbHEQQwxLG2OWiBH91xOfYpURTdW6BTSDtTgTgQS1PDOMn1pTX2
+         BhdzFQ49jsVCvPSSO015ovCMKwQGZlXKeokqPtww0ezmVTWGVRuTFs9vO5UqhBK6kCug
+         /SoI0QEIny7drt3ib8aUdWG1jHOApm5w6Vb8tHKfsDDxIgYyJYYu8xDyzd6o9EIl9iTP
+         Is6g==
+X-Gm-Message-State: AAQBX9c29dPyIIWam3LIFdSLHDI3azK6BlrbG5jkVcDr2cq5zcDbmW+w
+        OAcu0mF1JRrHJX5uxMjj48Fmdg==
+X-Google-Smtp-Source: AKy350byv3FyqZCdhlmwY2XmCwCEkfsVpS/0QqsRdz0fkwqLkNDUQwU9T8VyZflbSGWut/E0+W1mnw==
+X-Received: by 2002:ac2:5195:0:b0:4eb:53f7:a569 with SMTP id u21-20020ac25195000000b004eb53f7a569mr944090lfi.63.1682035929486;
+        Thu, 20 Apr 2023 17:12:09 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id i14-20020a2e864e000000b002a9f9c358d4sm195909ljj.111.2023.04.20.17.07.32
+        by smtp.gmail.com with ESMTPSA id w14-20020ac25d4e000000b004eed8de597csm375609lfd.32.2023.04.20.17.12.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 17:07:32 -0700 (PDT)
-Message-ID: <b26dfb22-bf97-b65e-ef06-62098c4eafec@linaro.org>
-Date:   Fri, 21 Apr 2023 03:07:32 +0300
+        Thu, 20 Apr 2023 17:12:09 -0700 (PDT)
+Message-ID: <897af051-aed4-938a-5ab1-c44c967ab02d@linaro.org>
+Date:   Fri, 21 Apr 2023 03:12:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v1 5/5] drm/msm/dpu: add DSC 1.2 hw blocks for relevant
- chipsets
+Subject: Re: [PATCH v1 3/5] drm/msm/dpu: save dpu topology configuration
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
         vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
         agross@kernel.org, andersson@kernel.org
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <1682033114-28483-1-git-send-email-quic_khsieh@quicinc.com>
- <1682033114-28483-6-git-send-email-quic_khsieh@quicinc.com>
+ <1682033114-28483-4-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1682033114-28483-6-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1682033114-28483-4-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,105 +82,107 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/04/2023 02:25, Kuogee Hsieh wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> Add DSC 1.2 hardware blocks to the catalog with necessary
-> sub-block and feature flag information.
-> Each display compression engine (DCE) contains dual hard
-> slice DSC encoders so both share same base address but with
-> its own different sub block address.
+> At current implementation, topology configuration is thrown away after
+> dpu_rm_reserve(). This patch save the topology so that it can be used
+> for DSC related calculation later.
 
-Please correct line wrapping. 72-75 is usually the preferred width
+Please take a look at 
+https://patchwork.freedesktop.org/patch/527960/?series=115283&rev=2 .
 
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  | 19 +++++++++++++++++++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h  | 11 +++++++++++
->   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h    | 21 +++++++++++++++++++++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h  | 19 +++++++++++++++++++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h  | 19 +++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c      | 12 ++++++++++--
->   6 files changed, 99 insertions(+), 2 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 32 ++++++++++++++---------------
+>   1 file changed, 16 insertions(+), 16 deletions(-)
 > 
-
-
-[I commented on sm8550, it applies to all the rest of platforms]
-
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 9e40303..72a7bcf 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -165,6 +165,23 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
->   	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x66700),
->   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index ecb87bc..2fdacf1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -542,13 +542,13 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+>   	return (num_dsc > 0) && (num_dsc > intf_count);
+>   }
 >   
-> +static const struct dpu_dsc_sub_blks sm8550_dsc_sblk_0 = {
-> +	.enc = {.base = 0x100, .len = 0x100},
-> +	.ctl = {.base = 0xF00, .len = 0x10},
-> +};
-> +
-> +static const struct dpu_dsc_sub_blks sm8550_dsc_sblk_1 = {
-> +	.enc = {.base = 0x200, .len = 0x100},
-> +	.ctl = {.base = 0xF80, .len = 0x10},
-> +};
-
-Please keep sblk in dpu_hw_catalog for now.
-
-> +
-> +static const struct dpu_dsc_cfg sm8550_dsc[] = {
-> +	DSC_BLK_1_2("dsc_0", DSC_0, 0x80000, 0x100, 0, sm8550_dsc_sblk_0),
-> +	DSC_BLK_1_2("dsc_0", DSC_1, 0x80000, 0x100, 0, sm8550_dsc_sblk_1),
-
-Is there a reason why index in "dsc_N" doesn't match the DSC_n which 
-comes next to it?
-
-> +	DSC_BLK_1_2("dsc_1", DSC_2, 0x81000, 0x100, BIT(DPU_DSC_NATIVE_422_EN), sm8550_dsc_sblk_0),
-> +	DSC_BLK_1_2("dsc_1", DSC_3, 0x81000, 0x100, BIT(DPU_DSC_NATIVE_422_EN), sm8550_dsc_sblk_1),
-> +};
-> +
->   static const struct dpu_intf_cfg sm8550_intf[] = {
->   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->   	/* TODO TE sub-blocks for intf1 & intf2 */
-> @@ -218,6 +235,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
->   	.dspp = sm8550_dspp,
->   	.pingpong_count = ARRAY_SIZE(sm8550_pp),
->   	.pingpong = sm8550_pp,
-> +	.dsc = sm8550_dsc,
-> +	.dsc_count = ARRAY_SIZE(sm8550_dsc),
->   	.merge_3d_count = ARRAY_SIZE(sm8550_merge_3d),
->   	.merge_3d = sm8550_merge_3d,
->   	.intf_count = ARRAY_SIZE(sm8550_intf),
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 03f162a..be08158 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -1,6 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0-only
->   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
-> - * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
->    */
+> -static struct msm_display_topology dpu_encoder_get_topology(
+> +static void dpu_encoder_get_topology(
+>   			struct dpu_encoder_virt *dpu_enc,
+>   			struct dpu_kms *dpu_kms,
+>   			struct drm_display_mode *mode,
+> -			struct drm_crtc_state *crtc_state)
+> +			struct drm_crtc_state *crtc_state,
+> +			struct msm_display_topology *topology)
+>   {
+> -	struct msm_display_topology topology = {0};
+>   	int i, intf_count = 0;
 >   
->   #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
-> @@ -540,7 +540,15 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
->   	{\
->   	.name = _name, .id = _id, \
->   	.base = _base, .len = 0x140, \
-> -	.features = _features, \
-> +	.features = BIT(DPU_DSC_HW_REV_1_1) | _features, \
-> +	}
-> +
-> +#define DSC_BLK_1_2(_name, _id, _base, _len, _features, _sblk) \
-> +	{\
-> +	.name = _name, .id = _id, \
-> +	.base = _base, .len = _len, \
-> +	.features = BIT(DPU_DSC_HW_REV_1_2) | _features, \
-> +	.sblk = &_sblk, \
+>   	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
+> @@ -567,16 +567,16 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>   	 * Add dspps to the reservation requirements if ctm is requested
+>   	 */
+>   	if (intf_count == 2)
+> -		topology.num_lm = 2;
+> +		topology->num_lm = 2;
+>   	else if (!dpu_kms->catalog->caps->has_3d_merge)
+> -		topology.num_lm = 1;
+> +		topology->num_lm = 1;
+>   	else
+> -		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+> +		topology->num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+>   
+>   	if (crtc_state->ctm)
+> -		topology.num_dspp = topology.num_lm;
+> +		topology->num_dspp = topology->num_lm;
+>   
+> -	topology.num_intf = intf_count;
+> +	topology->num_intf = intf_count;
+>   
+>   	if (dpu_enc->dsc) {
+>   		/*
+> @@ -585,12 +585,10 @@ static struct msm_display_topology dpu_encoder_get_topology(
+>   		 * this is power optimal and can drive up to (including) 4k
+>   		 * screens
+>   		 */
+> -		topology.num_dsc = 2;
+> -		topology.num_lm = 2;
+> -		topology.num_intf = 1;
+> +		topology->num_dsc = 2;
+> +		topology->num_lm = 2;
+> +		topology->num_intf = 1;
+>   	}
+> -
+> -	return topology;
+>   }
+>   
+>   static int dpu_encoder_virt_atomic_check(
+> @@ -602,7 +600,7 @@ static int dpu_encoder_virt_atomic_check(
+>   	struct msm_drm_private *priv;
+>   	struct dpu_kms *dpu_kms;
+>   	struct drm_display_mode *adj_mode;
+> -	struct msm_display_topology topology;
+> +	struct msm_display_topology *topology;
+>   	struct dpu_global_state *global_state;
+>   	int i = 0;
+>   	int ret = 0;
+> @@ -639,7 +637,9 @@ static int dpu_encoder_virt_atomic_check(
+>   		}
 >   	}
 >   
->   /*************************************************************
+> -	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
+> +	topology = &dpu_enc->topology;
+> +	memset(topology, 0, sizeof (*topology));
+> +	dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, topology);
+>   
+>   	/*
+>   	 * Release and Allocate resources on every modeset
+> @@ -650,7 +650,7 @@ static int dpu_encoder_virt_atomic_check(
+>   
+>   		if (!crtc_state->active_changed || crtc_state->enable)
+>   			ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+> -					drm_enc, crtc_state, topology);
+> +					drm_enc, crtc_state, *topology);
+>   	}
+>   
+>   	trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
 
 -- 
 With best wishes
