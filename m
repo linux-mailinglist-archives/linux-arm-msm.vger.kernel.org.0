@@ -2,80 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECB7E6EA057
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 01:58:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D13C06EA071
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 02:07:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232105AbjDTX6Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 20 Apr 2023 19:58:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42396 "EHLO
+        id S232363AbjDUAHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 20 Apr 2023 20:07:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231611AbjDTX6Z (ORCPT
+        with ESMTP id S229736AbjDUAHg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 20 Apr 2023 19:58:25 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1CD92680
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 16:58:23 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4ec8da7aaf8so1019269e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 16:58:23 -0700 (PDT)
+        Thu, 20 Apr 2023 20:07:36 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2C774208
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:07:34 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ec8149907aso1041698e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 20 Apr 2023 17:07:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682035102; x=1684627102;
+        d=linaro.org; s=google; t=1682035653; x=1684627653;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7AK29Vqlmjj3QqMiRI2bsAKdpcELqF+rg3ndnHxq09Y=;
-        b=FYZ/2dMxGYlduhZjTzDa90fPuGbrAZHU7W7leXYuArgvcLMh9r57wVo3PxIuUDB5/N
-         MCLuTbcmoEazsNJMhWYIvXNw48VjO0EcWk2pqfyAVjBC92uMeCa38Wu6AcRDMhgXmi7W
-         IXqnuyO5FH9CXCADxDPdWnttgNRg34/AFhfRrKHXqBLaF0qabFsuoJ5sP/JUXfxgaQkj
-         LjTCANlCnLzeo2eLVcCBkB2rhvHfQcY+B98tej7wqOYZ3g2hYWrNk+63O132akiR7i9O
-         H9uxNQrXlSBhhErYA2TzfUBA6VXbyrtU6QE/5ja+BKfZFlrH4Ikh19BBHSThA/uOsud1
-         RiIA==
+        bh=cLFXBTiLwMvaw8fy77PEa4Rr8nVXq3s6Busf4NAaQdk=;
+        b=yrZDLELc1gqcOYTTzXMhdoTTRq0nU+ntXeER+fEQerHoNQfzf+kZ7usuJs7Qs8ScWs
+         Ues22fDNrYj1hizTtV+oAGU8o/kQWS3DLzzln7kcdadLuSiYdAKNSta4lMSoR0ZgJ0W4
+         7j1zysrCpIdvpTYU+ea+j/KUGxFRtddP173Nc7uxMyK2m1YFQksNE7U30p17p2obZi4Q
+         XIQC+PiPYyg/CCgqG43PPbO3Gyy6Lxr0IYgzRjR52Dk/XfJalvcs3qyPkYFIaK4MVerQ
+         XVyaLjo8S4sGRe3AEEWD9gD27XcK4+C3A3AS9mPxpAU9MS8Nnw5c8hurbdfldmlykoLQ
+         K8tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682035102; x=1684627102;
+        d=1e100.net; s=20221208; t=1682035653; x=1684627653;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7AK29Vqlmjj3QqMiRI2bsAKdpcELqF+rg3ndnHxq09Y=;
-        b=CJkw9vqOwk3wPRlMvXjNSPKg7CJnORok/yrirnAcBtT6xRmyjYGfjNIR/owT73MmZH
-         ycfF+o8gvULARdwrjVAg3SWm5s+EDj00N4+2Q3F+2H7KjL1pYHWlNFKLsLbjSp/o8Gso
-         JLxEv2iZvzYD89txoDIjIFxg+CPrMguoNEQRcY422E5wcpgdyXPanE8IO7G/A73q98Gg
-         Bi91qNoRW/8NK86WXAL8TVWE71RC1iLaWf++6LenRrlbKLOpmxhpfSI5lL16zkzj8Yye
-         FQFGQ/Vy2ZlWIoD08JSy9Qj73cMGkH67bKege2JBAIiZjX4yYY5lkHNRvrhoXvcLup/5
-         72sQ==
-X-Gm-Message-State: AAQBX9dtqfXkQdOAgSlV2AyYHTQYM1PGbZB3SSqJVZT2DRHK9l9iMJli
-        HeMBNqAS+TH7/9pnIim4jDZmOg==
-X-Google-Smtp-Source: AKy350YWf5KVt5uMobAN0BnSlS3GmR5H5Tp+nYzhcAsHZ7p988nsIWUE1rY6pnczQp8z17yHnk/90g==
-X-Received: by 2002:ac2:48a8:0:b0:4dc:84dd:eb91 with SMTP id u8-20020ac248a8000000b004dc84ddeb91mr796914lfg.22.1682035102091;
-        Thu, 20 Apr 2023 16:58:22 -0700 (PDT)
+        bh=cLFXBTiLwMvaw8fy77PEa4Rr8nVXq3s6Busf4NAaQdk=;
+        b=MEFmU5+dTN0t7d1XPfNCWPmYCNylqeBqSOtWie4i56C2qt8FF0mVwPmSARSo2kBmZG
+         CyQvLJocjCVkKkcCIq7T5fK8jEIa2bh5UlGzitt5C9oUwg+hqW7TP3A3hPqiLXOtNmxM
+         olHTdjDyn6MvT4cyUjEiPBQ+iA1tWH1l75WcTB5Rh/PEL6uPgql/q9iX4TyeeRSLIJst
+         HDK2NGu3dIcrfU2ZhhHSRdw0IRbRfb4SUTvmDEMbZY1aMj4XStprOt+GMvQ1LtWmWCvz
+         LJdBRGvA0FT4bAFH7GiUtjHVMbw8W9yJaBGUctTAFeCBvp9Hk9NahlL6PxPadtIgARMn
+         hcEQ==
+X-Gm-Message-State: AAQBX9et1vwwJinUdvrgRFCYDUg69NywjUkoTAlev7K/SLhPh8c918c/
+        Wy81x1+NoPGepGcS5dHG+WEvaw==
+X-Google-Smtp-Source: AKy350anHEOXvktSuJ20WISPKkbmPhBf8HkSslFqb7f0lANUI6JSvjgax7jzs5LOxFBwdwvcW6GRNg==
+X-Received: by 2002:a2e:9e02:0:b0:2a8:ae13:cc31 with SMTP id e2-20020a2e9e02000000b002a8ae13cc31mr105168ljk.47.1682035653203;
+        Thu, 20 Apr 2023 17:07:33 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
-        by smtp.gmail.com with ESMTPSA id t1-20020ac25481000000b004e92c0ed7a0sm368682lfk.100.2023.04.20.16.58.21
+        by smtp.gmail.com with ESMTPSA id i14-20020a2e864e000000b002a9f9c358d4sm195909ljj.111.2023.04.20.17.07.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Apr 2023 16:58:21 -0700 (PDT)
-Message-ID: <fe419932-3a1f-033d-eb85-dfc69c97d40d@linaro.org>
-Date:   Fri, 21 Apr 2023 02:58:21 +0300
+        Thu, 20 Apr 2023 17:07:32 -0700 (PDT)
+Message-ID: <b26dfb22-bf97-b65e-ef06-62098c4eafec@linaro.org>
+Date:   Fri, 21 Apr 2023 03:07:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH v1 2/5] drm/msm/dpu: separate DSC flush update out of
- interface
+Subject: Re: [PATCH v1 5/5] drm/msm/dpu: add DSC 1.2 hw blocks for relevant
+ chipsets
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
         vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
         agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 References: <1682033114-28483-1-git-send-email-quic_khsieh@quicinc.com>
- <1682033114-28483-3-git-send-email-quic_khsieh@quicinc.com>
+ <1682033114-28483-6-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1682033114-28483-3-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1682033114-28483-6-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -83,20 +84,105 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 21/04/2023 02:25, Kuogee Hsieh wrote:
-> Current DSC flush update is piggyback inside dpu_hw_ctl_intf_cfg_v1().
-> This patch separate DSC flush away from dpu_hw_ctl_intf_cfg_v1() by
-> adding dpu_hw_ctl_update_pending_flush_dsc_v1() to handle both per
-> DSC engine and DSC flush bits at same time to make it consistent with
-> the location of flush programming of other dpu sub blocks.
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
+> Add DSC 1.2 hardware blocks to the catalog with necessary
+> sub-block and feature flag information.
+> Each display compression engine (DCE) contains dual hard
+> slice DSC encoders so both share same base address but with
+> its own different sub block address.
+
+Please correct line wrapping. 72-75 is usually the preferred width
+
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 14 ++++++++++++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  | 22 ++++++++++++++++------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h  | 10 ++++++++++
->   3 files changed, 38 insertions(+), 8 deletions(-)
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  | 19 +++++++++++++++++++
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h  | 11 +++++++++++
+>   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h    | 21 +++++++++++++++++++++
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h  | 19 +++++++++++++++++++
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h  | 19 +++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c      | 12 ++++++++++--
+>   6 files changed, 99 insertions(+), 2 deletions(-)
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+[I commented on sm8550, it applies to all the rest of platforms]
+
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 9e40303..72a7bcf 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -165,6 +165,23 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
+>   	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x66700),
+>   };
+>   
+> +static const struct dpu_dsc_sub_blks sm8550_dsc_sblk_0 = {
+> +	.enc = {.base = 0x100, .len = 0x100},
+> +	.ctl = {.base = 0xF00, .len = 0x10},
+> +};
+> +
+> +static const struct dpu_dsc_sub_blks sm8550_dsc_sblk_1 = {
+> +	.enc = {.base = 0x200, .len = 0x100},
+> +	.ctl = {.base = 0xF80, .len = 0x10},
+> +};
+
+Please keep sblk in dpu_hw_catalog for now.
+
+> +
+> +static const struct dpu_dsc_cfg sm8550_dsc[] = {
+> +	DSC_BLK_1_2("dsc_0", DSC_0, 0x80000, 0x100, 0, sm8550_dsc_sblk_0),
+> +	DSC_BLK_1_2("dsc_0", DSC_1, 0x80000, 0x100, 0, sm8550_dsc_sblk_1),
+
+Is there a reason why index in "dsc_N" doesn't match the DSC_n which 
+comes next to it?
+
+> +	DSC_BLK_1_2("dsc_1", DSC_2, 0x81000, 0x100, BIT(DPU_DSC_NATIVE_422_EN), sm8550_dsc_sblk_0),
+> +	DSC_BLK_1_2("dsc_1", DSC_3, 0x81000, 0x100, BIT(DPU_DSC_NATIVE_422_EN), sm8550_dsc_sblk_1),
+> +};
+> +
+>   static const struct dpu_intf_cfg sm8550_intf[] = {
+>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+>   	/* TODO TE sub-blocks for intf1 & intf2 */
+> @@ -218,6 +235,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+>   	.dspp = sm8550_dspp,
+>   	.pingpong_count = ARRAY_SIZE(sm8550_pp),
+>   	.pingpong = sm8550_pp,
+> +	.dsc = sm8550_dsc,
+> +	.dsc_count = ARRAY_SIZE(sm8550_dsc),
+>   	.merge_3d_count = ARRAY_SIZE(sm8550_merge_3d),
+>   	.merge_3d = sm8550_merge_3d,
+>   	.intf_count = ARRAY_SIZE(sm8550_intf),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 03f162a..be08158 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -1,6 +1,6 @@
+>   // SPDX-License-Identifier: GPL-2.0-only
+>   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+> - * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+>   #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
+> @@ -540,7 +540,15 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+>   	{\
+>   	.name = _name, .id = _id, \
+>   	.base = _base, .len = 0x140, \
+> -	.features = _features, \
+> +	.features = BIT(DPU_DSC_HW_REV_1_1) | _features, \
+> +	}
+> +
+> +#define DSC_BLK_1_2(_name, _id, _base, _len, _features, _sblk) \
+> +	{\
+> +	.name = _name, .id = _id, \
+> +	.base = _base, .len = _len, \
+> +	.features = BIT(DPU_DSC_HW_REV_1_2) | _features, \
+> +	.sblk = &_sblk, \
+>   	}
+>   
+>   /*************************************************************
 
 -- 
 With best wishes
