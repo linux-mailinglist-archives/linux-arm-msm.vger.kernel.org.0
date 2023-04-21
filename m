@@ -2,139 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FC746EAF37
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:34:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6707B6EAF76
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 21 Apr 2023 18:49:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233165AbjDUQe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 12:34:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47992 "EHLO
+        id S233221AbjDUQtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 12:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233146AbjDUQez (ORCPT
+        with ESMTP id S233209AbjDUQtJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 12:34:55 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E79E1FFE
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:34:53 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-506bfe81303so3112141a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:34:53 -0700 (PDT)
+        Fri, 21 Apr 2023 12:49:09 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D13313C2C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:49:08 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-94a39f6e8caso319771066b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 09:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682094892; x=1684686892;
+        d=linaro.org; s=google; t=1682095746; x=1684687746;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=EsgLhwa1Y3Dit9q7Aba5iOCEKA1BynatRRqIwSMY4k0=;
-        b=Am9QkEegkklyVMT9ls9O/2AuspxdFdHs/eOvjT3eAc++BPYy1vEb+tAXUb0C/YboJz
-         SUmrtlFj4TA9FvOGr2PY8fzEnrx2qL2bZuKeM6nstgGKnX0sdYIr/JNTjr275d63Pfxg
-         rc2pFlLecnCaebBKFu56vFvNECT4pSGUloBarHxzy+74pr0wNN/dQeAVWXpXXxEbJf6n
-         W423xBgzLuZ1Qv5uDS8o80sGTrYApPMceCIF8CKrPKp3du6Dqp+1n/xcndEZ2Oz2g0qh
-         44KZLpGxfoPCaRn2iS+xqARQMQo6iow15uDPYqalT1rpvBRNLxEnGWEVWj3Ek+tBXG/1
-         iSAA==
+        bh=KFbWjqroS73UgyNshkyA6Chv3Wv27it6AC9kt6qa+fY=;
+        b=PzIC3uXtnwpJnedkTaOM5p7GiQ1Rhk6L5+p19qvC4Dt+WoNwyw8dJ62aCObABctUsO
+         cOmzEjKGZsvTXItoUYAXMyeib9ZMPW1s51xCnBqxQYztcItD770tgmj/WfBrfrAtscb3
+         4tYPaqbpBrFgrYEggHBFPy1cNhiahnMVpeeOC8BdLqhTcxKKeuzZe2+msZZp5BMG+kAH
+         Z3gEoiKrzXnU/CLJtPJLruPByTcdWectUyuyUWSfgkk/vBs8N3umqpBdKoswd/YP5iQH
+         cw2r/l9dE05JPz0tAhc8xISgNiyc3pbcq+nTQoFOxzRR6p7w9bBsOOpQKRoeLXP+Gp50
+         dDiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682094892; x=1684686892;
+        d=1e100.net; s=20221208; t=1682095746; x=1684687746;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EsgLhwa1Y3Dit9q7Aba5iOCEKA1BynatRRqIwSMY4k0=;
-        b=JbRACZ6RyDQBbH92Gd8aCjKmarI9aVm7VfFyikJEtqDomBTw9JELpxeBzkmpg0BvuG
-         CJxs0W4wL6/PJVWRH6WPMBeDZKd9A3NzTgeG/Ym7KWQ8QYMfd4ArwMPgXhy+D1a5T12u
-         BGgE7pihpwCOvdwx5m7zd3jUWx03kbtQjwpL0hAZtVQI8BBgAgLWZFO2K7VhvvzXho4P
-         +fJuMlfLVnOfNVscFBRSb6kEGsr4V4UmEEAQ+Ib/Nhap4YrbKRb5g4OF+xLUigGz5Byg
-         vuGi1NCdZMbzrYiRN0SUoSI0l20nj5wfHWM+VB3qGkwgfIzvfN+t5+2FYKJzA4FAacmN
-         Onqg==
-X-Gm-Message-State: AAQBX9fwzy/c2R+PViHfgli8kuIGYyOY6u3tKYP7Uvd2jfAPmIrt38cH
-        Z9Pf29yK8nXwBB6htG6Q879Shg==
-X-Google-Smtp-Source: AKy350ZZrT448cL88phrLfnem0Nr+1DJTsIy14wJAqL7qIoVMmVdTpqr2w1NdOQJHZsBgP+kcZqzmw==
-X-Received: by 2002:aa7:d88c:0:b0:506:adf0:ead5 with SMTP id u12-20020aa7d88c000000b00506adf0ead5mr5048223edq.30.1682094891767;
-        Fri, 21 Apr 2023 09:34:51 -0700 (PDT)
+        bh=KFbWjqroS73UgyNshkyA6Chv3Wv27it6AC9kt6qa+fY=;
+        b=fUEc3jutozraFgoRGfV6+KVOAWjp65Dk9ang9L7JgfvgTuKMNGDGvSLonHevnttnlg
+         +IdW9nfg3Q254c7fkX1YSvaInhmkg2wUh+nKT1BA4atJHJHeJQoYqIcRZBIP5ziflDB9
+         KcgRaAz5EaIja07uTotJe+BMQSehdJubtPv+INRFtluY/aw/ZCAoSTgaBwwI2Xp0GlTU
+         LVfenw3ctLn7hZSDH6Gp+4C0ztV3S51RESXsqs3joNWOwy7HQgl5KkcWaJRjAvoEyLG8
+         sRbqCQuP82GbT2xA+dtuxo5b+LvhKIpkWotFtkuSuD1VK7TAn4ObjtWbSYQJGd2S8YoN
+         BoYw==
+X-Gm-Message-State: AAQBX9eIS+fjsewn3GDdzrzzmg1kwt+/ouojJu/blZOWNhwJmY31NGk8
+        LRLfCWuF1+iUeo4X9kAtyu9MrQ==
+X-Google-Smtp-Source: AKy350aLL9GGW0waHbazfqEBHSm937gbyp54HerbiEHZb9mjsANA7SEFAHMq5ViLjxtlKbP9F6b5pQ==
+X-Received: by 2002:a17:906:90c8:b0:92b:e1ff:be30 with SMTP id v8-20020a17090690c800b0092be1ffbe30mr2564169ejw.4.1682095746454;
+        Fri, 21 Apr 2023 09:49:06 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:687d:8c5:41cb:9883? ([2a02:810d:15c0:828:687d:8c5:41cb:9883])
-        by smtp.gmail.com with ESMTPSA id i21-20020a05640200d500b00501d73cfc86sm2091328edu.9.2023.04.21.09.34.50
+        by smtp.gmail.com with ESMTPSA id h11-20020a170906828b00b0094f23480619sm2302695ejx.172.2023.04.21.09.49.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Apr 2023 09:34:51 -0700 (PDT)
-Message-ID: <64d12ac8-0fc7-264a-4a73-6cb642dcc319@linaro.org>
-Date:   Fri, 21 Apr 2023 18:34:50 +0200
+        Fri, 21 Apr 2023 09:49:05 -0700 (PDT)
+Message-ID: <49e0e62e-3746-1387-fb9a-49739423fb63@linaro.org>
+Date:   Fri, 21 Apr 2023 18:49:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add SDX75 pinctrl
- devicetree compatible
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574 bindings
 Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linus.walleij@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
-        manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-References: <1682079770-27656-1-git-send-email-quic_rohiagar@quicinc.com>
- <1682079770-27656-2-git-send-email-quic_rohiagar@quicinc.com>
+        linux-phy@lists.infradead.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
+References: <20230421124150.21190-1-quic_devipriy@quicinc.com>
+ <20230421124150.21190-2-quic_devipriy@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1682079770-27656-2-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <20230421124150.21190-2-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 14:22, Rohit Agarwal wrote:
-> Add device tree binding Documentation details for Qualcomm SDX75
-> pinctrl driver.
+On 21/04/2023 14:41, Devi Priya wrote:
+> Add bindings for the PCIe QMP PHYs found on IPQ9574.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
->  .../bindings/pinctrl/qcom,sdx75-tlmm.yaml          | 168 +++++++++++++++++++++
->  1 file changed, 168 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
+>  Changes in V1:
+> 	- Introduced a new binding for ipq9574 as suggested by Krzysztof
+
+It looks it depends on the clock header.
+
+Either mention the dependency here or better convert the clock IDs to
+numerical values. With the second approach the patch can be applied
+independently from clock headers patch.
+
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
-> new file mode 100644
-> index 0000000..c141072
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
-> @@ -0,0 +1,168 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdx75-tlmm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SDX75 TLMM block
-> +
-> +maintainers:
-> +  - Rohit Agarwal <quic_rohiagar@quicinc.com>
-> +
-> +description:
-> +  Top Level Mode Multiplexer pin controller in Qualcomm SDX75 SoC.
-> +
-> +allOf:
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sdx75-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  "#interrupt-cells": true
-> +  gpio-controller: true
-> +
-> +  gpio-reserved-ranges:
-> +    minItems: 1
-> +    maxItems: 105
+>  .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
+> 
 
-maxItems: 67
+Assuming you tested it (as Rob's bot cannot due to dependency):
 
-Anyway you need to fix errors. Be sure you have yamllint and newest
-dtschema.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
