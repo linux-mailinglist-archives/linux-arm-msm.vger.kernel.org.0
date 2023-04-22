@@ -2,86 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E3E26EB830
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 11:14:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB0046EB852
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 11:56:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbjDVJOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 05:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58742 "EHLO
+        id S229473AbjDVJ4l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 05:56:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjDVJOf (ORCPT
+        with ESMTP id S229554AbjDVJ4j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 05:14:35 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADE01721;
-        Sat, 22 Apr 2023 02:14:34 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33M9BmRl018828;
-        Sat, 22 Apr 2023 09:14:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jwIMpzTLAw1N3sO+o954FUjaABUc40+u3uVtBjTNF20=;
- b=JVgeR4NLoGlL7G0cHVeJZr54Ls/9OuAsiHQxctaRlE+f5aOqn32akac3huNnjoUxSHyG
- rfyow4mHO8rmsh1YQvGwOzowbucvrENbTvkn1fM7x+TCRVzlhbYlOJeTT2nJlSh0CNHT
- vpnNQx3ktAe5U4FB+ltAU2JPQXNv99P8repHR7gE25Sb2uhimVFeqM60TqAGDdD2lNDx
- gr3+CzwB3FI/WEyPC3AeqmcBWZ9ApzVaYoRH8TfllLaEdlDRZg9ok3xEf0MFSQ3e2lgl
- bE8k8pfSy3aP8mdSo/rqzKLNeFrPAXs55+ElXFLm81Vn2/9/YbQCxGii1my03bllpweE Eg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q48ch08ne-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Apr 2023 09:14:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33M9ESe2013947
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Apr 2023 09:14:28 GMT
-Received: from [10.216.25.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 22 Apr
- 2023 02:14:22 -0700
-Message-ID: <af12bafd-9433-6639-b55f-478517ebc33d@quicinc.com>
-Date:   Sat, 22 Apr 2023 14:44:18 +0530
+        Sat, 22 Apr 2023 05:56:39 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD698199D
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 02:56:37 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4efe9a98736so210451e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 02:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682157396; x=1684749396;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RDQgb0udGi4TgE1jwB/Uj7tuQtIfaUvyOe998bYU7/g=;
+        b=PeyUjnRlP+n1PSyJQg8r/o4a3qsGPFuQeRlzl3dNs8XBPOq63Kp24A2TnJH+iSjJmA
+         0OdvWXXAu3dl6WqC+hWIvz2SworqCPnLLJ0aDIDoev0s4BiveJ+7Uj8AtATn81OoZziD
+         5Zr6Nuwo/XTa4hJNPgSS/PBuwT5FKswlkSKTQX/YYcJUADyjlnpr8pqylvaLUV8Ccja/
+         CvR9VGSAX2zDkMzmVJNKop3bEcHtFcKe8XDujzJVkZhbQmwHMGR4Yj+E4aVV5W0IkXuk
+         o7S3fS59b54kJiPxVkGsmDg8J6VwgLJmZoskjSBFWNt2VmBwYuTN5McfR5bsUz3o7+qZ
+         EgyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682157396; x=1684749396;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RDQgb0udGi4TgE1jwB/Uj7tuQtIfaUvyOe998bYU7/g=;
+        b=gS0gMmuPuO0E1AoF/UHuT/302VK4RF3MBGN9OXcGDmkWrvOjH9Dov1AxKR0fStwvSU
+         +GAXPu/LBtcgjnbsRhOzbbqI5KMHXzrsOQUnkgH8aIEHLcvwiFeh7QSNQvsyJhk3wirk
+         TNN6m0cDrflFUaU+bWxonSfeInxUZmYohu+3EeSbt3hRSrV5cUA7rjiJX9HSVToMd4rv
+         b6TNSRSgk1LUlWfXduO5j9YMaG1bzHOgxuYjMDcguhsi1wUgeAXVUws3sQzzAvhVinjP
+         hDMOr1LPvqlF2AnxJVvrd5RG0NvVDp6dFcBJsh2G1Q4i9DNReCM69tU6Ov3ob8RmKK29
+         sAJQ==
+X-Gm-Message-State: AAQBX9dyd/e21THw11l76NII+AaykTNm19dBihTYV4H1SgppHZBMvWAm
+        JrH4XjAAPtjmuHIQDxBM4HcsTA==
+X-Google-Smtp-Source: AKy350ba+xIzdatXazTSlEA/wKsneXtw4QIKpv/3TBdA/Kc+aOgterKahyAD8iJ0SzPHXPwb3CXICQ==
+X-Received: by 2002:ac2:46cf:0:b0:4e8:d733:fde6 with SMTP id p15-20020ac246cf000000b004e8d733fde6mr2005270lfo.60.1682157396034;
+        Sat, 22 Apr 2023 02:56:36 -0700 (PDT)
+Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
+        by smtp.gmail.com with ESMTPSA id b10-20020a056512024a00b004edc3bd7fa1sm837323lfo.201.2023.04.22.02.56.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Apr 2023 02:56:35 -0700 (PDT)
+Message-ID: <ff2dd271-71f7-47e0-b200-4edd2d692e71@linaro.org>
+Date:   Sat, 22 Apr 2023 11:56:33 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574 bindings
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm8953: add GPIOs
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230421-pm8953-gpio-v1-0-3d33e2de47e3@z3ntu.xyz>
+ <20230421-pm8953-gpio-v1-3-3d33e2de47e3@z3ntu.xyz>
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230421124150.21190-1-quic_devipriy@quicinc.com>
- <20230421124150.21190-2-quic_devipriy@quicinc.com>
- <49e0e62e-3746-1387-fb9a-49739423fb63@linaro.org>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <49e0e62e-3746-1387-fb9a-49739423fb63@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230421-pm8953-gpio-v1-3-3d33e2de47e3@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HMGISo8qQvS8ZoAExfut7ha-xU-K1Nfm
-X-Proofpoint-GUID: HMGISo8qQvS8ZoAExfut7ha-xU-K1Nfm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-21_08,2023-04-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- adultscore=0 impostorscore=0 spamscore=0 malwarescore=0 bulkscore=0
- mlxlogscore=999 suspectscore=0 priorityscore=1501 lowpriorityscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304220080
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,36 +83,36 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4/21/2023 10:19 PM, Krzysztof Kozlowski wrote:
-> On 21/04/2023 14:41, Devi Priya wrote:
->> Add bindings for the PCIe QMP PHYs found on IPQ9574.
->>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   Changes in V1:
->> 	- Introduced a new binding for ipq9574 as suggested by Krzysztof
+On 21.04.2023 23:56, Luca Weiss wrote:
+> Add a node for the GPIOs found on the pm8953.
 > 
-> It looks it depends on the clock header.
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  arch/arm64/boot/dts/qcom/pm8953.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> Either mention the dependency here or better convert the clock IDs to
-> numerical values. With the second approach the patch can be applied
-> independently from clock headers patch.
-Got it. will use numerical values for clock IDs.
-Just to mention, it depends on the below series which is merged in 
-linux-next/master
-https://patchwork.kernel.org/project/linux-arm-msm/cover/20230316072940.29137-1-quic_devipriy@quicinc.com/
-> 
->>
->>   .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
->>   1 file changed, 90 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
->>
-> 
-> Assuming you tested it (as Rob's bot cannot due to dependency):
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Yup, thanks!
-> 
-> Best regards,
-> Krzysztof
+> diff --git a/arch/arm64/boot/dts/qcom/pm8953.dtsi b/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> index a1d36f9ebbd2..2268daf27fa7 100644
+> --- a/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pm8953.dtsi
+> @@ -79,6 +79,16 @@ rtc@6000 {
+>  			reg-names = "rtc", "alarm";
+>  			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
+>  		};
+> +
+> +		pm8953_gpios: gpio@c000 {
+> +			compatible = "qcom,pm8953-gpio", "qcom,spmi-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			gpio-ranges = <&pm8953_gpios 0 0 8>;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+>  	};
+>  
+>  	pmic@1 {
 > 
