@@ -2,192 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FF956EB5B8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 01:25:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69D436EB622
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 02:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232316AbjDUXZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 19:25:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35884 "EHLO
+        id S233766AbjDVAGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 20:06:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233512AbjDUXZa (ORCPT
+        with ESMTP id S233753AbjDVAGI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 19:25:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B0A2171B;
-        Fri, 21 Apr 2023 16:25:28 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33LMemKM027312;
-        Fri, 21 Apr 2023 23:25:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jo698b9kC38YuFkFAulLL8uZp9Tf9BwRfwEyBVmKSGw=;
- b=MuowO5y7WcL98JrpPA1Mh5Vxsh+VrWqvSyYxmKMX99TVZcIevHPvllQUKZhKjKrmz7ZT
- rTQs/84OzlPxOMOa1vRlN/qq5UdNjBr5g9HC0bEl737UywFanVXeTpajuuit7/beGOhy
- FSNNbZ4ODXJb8SLUTRS+vKGw1Ym+0GsivGYKO+42wcm1w71560vGqZ9Vsqq7LUWQNYr1
- Maez7ybTT+LD6adVEMBwL8HKXJohg0wkceBvwVvnQwXXjaZT8GZWnAQ8Ihd707R5NzTB
- r4H8lj92n4IQmUbyOq+CuBSzMAHtpEP9NUbOfSaqtZTPbzHGgAIyIb5hTmDezs2bCGIC DA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q3phdhugu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Apr 2023 23:25:18 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33LNPHWS013848
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 21 Apr 2023 23:25:17 GMT
-Received: from [10.110.74.190] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 21 Apr
- 2023 16:25:16 -0700
-Message-ID: <50d22e0c-84b3-0678-eb06-30fb66fd24cf@quicinc.com>
-Date:   Fri, 21 Apr 2023 16:25:15 -0700
+        Fri, 21 Apr 2023 20:06:08 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A0432110
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:06:01 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-54fb4c97d55so12607447b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:06:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682121960; x=1684713960;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xO+YD26iSNYSmlzjnipo6n//XZnqdiZU5MbXowJFAto=;
+        b=Q9tFlYxp7N+1mxlzl25XZL2tPkhbxE7E+i6RzKw57sF0ZYGke+YtzMSsFk7NRtqVYA
+         tp7vnWOehv4rB6IgTMj2cApLYQ29VNz9DBcEvMVjjBMSqyMHBjDPRPDBgqiI4eNWTbeY
+         Ye8wqhl9VLEgKZexujdLyjyIWkALPRde0TRbtqQwUadnVe55IwF05aic1tn3XZviX9pN
+         1JjmzWe2zjnA9Nxv6CgZT2P9nJWhFNEBDOsm61Gezxxgi+VHvvoBQtl2W26GO+RXraY7
+         lMBP2AaDEFLMMOha30h+IKJkTcqT6nEPw56BC0aniVA8sYXFthEaeNhleJjYHpB66YLX
+         08OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682121960; x=1684713960;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xO+YD26iSNYSmlzjnipo6n//XZnqdiZU5MbXowJFAto=;
+        b=fSDmkM9rzMLCyHwGsY1/jeOQc73jMFzXT81G8VTpwTMyh6UBe6vUpUIw8yn2NlX+7+
+         iqDqY5hTXMj94e22vZ0gOZ/gzVgN6//lluMIe6/1dtOQe/Xpy+FF/mFPGd4srKb+38W9
+         7Mf/5k+Li6O1XmHnn6mKHQTU9VEzdVKx8Bc/XgrbuQ++d0i2nOzotE3GozNnVW59obNr
+         KU4X0JfiXTStdROwTNjdicHveDtW6MX2SD1IdQ6umm8nc7NenP+TM5N55tlouhIv3GSc
+         J+xL70O+6JrZ4jITsLGLSm9G4tfrXN9yJIcaW3H7getH8Fg7Mnf/mbAuymU11jbc9oTw
+         qgwQ==
+X-Gm-Message-State: AAQBX9e9mC7ykFZQWtJU/nObJouNQNKsBg/tBrmEjbDvIjC4Bmz6XKfx
+        Ppd52jDMFQ+Sq4MU3Ur4Qd+fj6bwhKJgKpMLJCJDnA==
+X-Google-Smtp-Source: AKy350Z08K5FgJgpv45/NNHDApgfPP7MHftNwuO+NiJhlwya5xRnHc1+3JSKhFhy3kz4H8xwhcCBrTYHNhl80xudzEM=
+X-Received: by 2002:a0d:d541:0:b0:54f:cbaf:36d with SMTP id
+ x62-20020a0dd541000000b0054fcbaf036dmr2944127ywd.35.1682121960536; Fri, 21
+ Apr 2023 17:06:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2 3/3] drm/msm/dpu: Pass catalog pointers directly from
- RM instead of IDs
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <~postmarketos/upstreaming@lists.sr.ht>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230418-dpu-drop-useless-for-lookup-v2-0-acb08e82ef19@somainline.org>
- <20230418-dpu-drop-useless-for-lookup-v2-3-acb08e82ef19@somainline.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230418-dpu-drop-useless-for-lookup-v2-3-acb08e82ef19@somainline.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1IVxCeOGBIg5Mg6pf_XbadZAjZAzk-sK
-X-Proofpoint-ORIG-GUID: 1IVxCeOGBIg5Mg6pf_XbadZAjZAzk-sK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-21_08,2023-04-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- mlxlogscore=897 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
- spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304210205
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+References: <20230421124938.21974-1-quic_devipriy@quicinc.com> <20230421124938.21974-7-quic_devipriy@quicinc.com>
+In-Reply-To: <20230421124938.21974-7-quic_devipriy@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 22 Apr 2023 03:05:44 +0300
+Message-ID: <CAA8EJpoqq=3o1K=yDaim=e11nEN5n+phJUSd1d5BT_VJkdv6xg@mail.gmail.com>
+Subject: Re: [PATCH V3 6/6] PCI: qcom: Add support for IPQ9574
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, mani@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/21/2023 1:53 PM, Marijn Suijten wrote:
-> The Resource Manager already iterates over all available blocks from the
-> catalog, only to pass their ID to a dpu_hw_xxx_init() function which
-> uses an _xxx_offset() helper to search for and find the exact same
-> catalog pointer again to initialize the block with, fallible error
-> handling and all.
-> 
-> Instead, pass const pointers to the catalog entries directly to these
-> _init functions and drop the for loops entirely, saving on both
-> readability complexity and unnecessary cycles at boot.
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Overall, a nice cleanup!
-
-One comment below.
-
+On Fri, 21 Apr 2023 at 15:51, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>
+> The IPQ9574 platform has 4 Gen3 PCIe controllers: two single-lane
+> and two dual-lane based on SNPS core 5.70a
+> The Qcom IP rev is 1.27.0 and Synopsys IP rev is 5.80a
+> Added a new compatible 'qcom,pcie-ipq9574' and 'ops_1_27_0'
+> which reuses all the members of 'ops_2_9_0' except for the post_init
+> as the SLV_ADDR_SPACE_SIZE configuration differs between 2_9_0
+> and 1_27_0.
+> Also, modified get_resources of 'ops 2_9_0' to get the clocks
+> from the device tree and modelled the post init sequence as
+> a common function to avoid code redundancy.
+>
+> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 37 +++++----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h        | 14 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 32 +++---------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h        | 11 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 38 ++++-----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h       | 12 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 40 ++++++-----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h       | 12 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 38 ++++-----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h         | 10 +++---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 33 +++----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 14 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 33 +++----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 39 ++++------------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h       | 12 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 33 +++----------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h       | 11 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 33 ++++---------------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h         | 11 +++----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 17 +++++-----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c            | 18 +++++-----
->   23 files changed, 139 insertions(+), 375 deletions(-)
-> 
-
-<snipped>
-
-> -struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
-> -		void __iomem *addr,
-> -		const struct dpu_mdss_cfg *m)
-> +struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
-> +		void __iomem *addr)
->   {
->   	struct dpu_hw_intf *c;
-> -	const struct dpu_intf_cfg *cfg;
+>  Changes in V3:
+>         - Rebased on top of linux-next/master
+>
+>  drivers/pci/controller/dwc/pcie-qcom.c | 61 ++++++++++++++++++--------
+>  1 file changed, 43 insertions(+), 18 deletions(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 4ab30892f6ef..3682ecdead1f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -107,6 +107,7 @@
+>
+>  /* PARF_SLV_ADDR_SPACE_SIZE register value */
+>  #define SLV_ADDR_SPACE_SZ                      0x10000000
+> +#define SLV_ADDR_SPACE_SZ_1_27_0               0x08000000
+>
+>  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
+>  #define AHB_CLK_EN                             BIT(0)
+> @@ -202,10 +203,10 @@ struct qcom_pcie_resources_2_7_0 {
+>         struct reset_control *rst;
+>  };
+>
+> -#define QCOM_PCIE_2_9_0_MAX_CLOCKS             5
+>  struct qcom_pcie_resources_2_9_0 {
+> -       struct clk_bulk_data clks[QCOM_PCIE_2_9_0_MAX_CLOCKS];
+> +       struct clk_bulk_data *clks;
+>         struct reset_control *rst;
+> +       int num_clks;
+>  };
+>
+>  union qcom_pcie_resources {
+> @@ -1050,17 +1051,10 @@ static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
+>         struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+>         struct dw_pcie *pci = pcie->pci;
+>         struct device *dev = pci->dev;
+> -       int ret;
+>
+> -       res->clks[0].id = "iface";
+> -       res->clks[1].id = "axi_m";
+> -       res->clks[2].id = "axi_s";
+> -       res->clks[3].id = "axi_bridge";
+> -       res->clks[4].id = "rchng";
+> -
+> -       ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
+> -       if (ret < 0)
+> -               return ret;
+> +       res->num_clks = devm_clk_bulk_get_all(dev, &res->clks);
+> +       if (res->clks < 0)
+> +               return res->num_clks;
+>
+>         res->rst = devm_reset_control_array_get_exclusive(dev);
+>         if (IS_ERR(res->rst))
+> @@ -1073,7 +1067,7 @@ static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
+>  {
+>         struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+>
+> -       clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
+> +       clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  }
+>
+>  static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
+> @@ -1102,19 +1096,16 @@ static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
+>
+>         usleep_range(2000, 2500);
+>
+> -       return clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> +       return clk_bulk_prepare_enable(res->num_clks, res->clks);
+>  }
+>
+> -static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> +static int qcom_pcie_post_init(struct qcom_pcie *pcie)
+>  {
+>         struct dw_pcie *pci = pcie->pci;
+>         u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+>         u32 val;
+>         int i;
+>
+> -       writel(SLV_ADDR_SPACE_SZ,
+> -               pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+> -
+>         val = readl(pcie->parf + PARF_PHY_CTRL);
+>         val &= ~PHY_TEST_PWR_DOWN;
+>         writel(val, pcie->parf + PARF_PHY_CTRL);
+> @@ -1151,6 +1142,26 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+>         return 0;
+>  }
+>
+> +static int qcom_pcie_post_init_1_27_0(struct qcom_pcie *pcie)
+> +{
+> +       writel(SLV_ADDR_SPACE_SZ_1_27_0,
+> +              pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
 > +
-> +	if (cfg->type == INTF_NONE) {
-> +		pr_err("Cannot create interface hw object for INTF_NONE type\n");
-> +		return ERR_PTR(-EINVAL);
-> +	}
+> +       qcom_pcie_post_init(pcie);
+> +
+> +       return 0;
+> +}
+> +
+> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> +{
+> +       writel(SLV_ADDR_SPACE_SZ,
+> +              pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+> +
+> +       qcom_pcie_post_init(pcie);
+> +
+> +       return 0;
+> +}
 
-The caller of dpu_hw_intf_init which is the RM already has protection 
-for INTF_NONE, see below
+I'm not sure about moving the SLV_ADDR_SPACE_SIZE initialization from
+init() to post_init(). Probably a better solution might be to have two
+init() callbacks and to call the common function from both of them.
 
-         for (i = 0; i < cat->intf_count; i++) {
-                 struct dpu_hw_intf *hw;
-                 const struct dpu_intf_cfg *intf = &cat->intf[i];
+> +
+>  static int qcom_pcie_link_up(struct dw_pcie *pci)
+>  {
+>         u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> @@ -1291,6 +1302,15 @@ static const struct qcom_pcie_ops ops_2_9_0 = {
+>         .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  };
+>
+> +/* Qcom IP rev.: 1.27.0  Synopsys IP rev.: 5.80a */
+> +static const struct qcom_pcie_ops ops_1_27_0 = {
+> +       .get_resources = qcom_pcie_get_resources_2_9_0,
+> +       .init = qcom_pcie_init_2_9_0,
+> +       .post_init = qcom_pcie_post_init_1_27_0,
+> +       .deinit = qcom_pcie_deinit_2_9_0,
+> +       .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+> +};
+> +
+>  static const struct qcom_pcie_cfg cfg_1_0_0 = {
+>         .ops = &ops_1_0_0,
+>  };
+> @@ -1323,6 +1343,10 @@ static const struct qcom_pcie_cfg cfg_2_9_0 = {
+>         .ops = &ops_2_9_0,
+>  };
+>
+> +static const struct qcom_pcie_cfg cfg_1_27_0 = {
+> +       .ops = &ops_1_27_0,
+> +};
+> +
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>         .link_up = qcom_pcie_link_up,
+>         .start_link = qcom_pcie_start_link,
+> @@ -1607,6 +1631,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>         { .compatible = "qcom,pcie-ipq8064-v2", .data = &cfg_2_1_0 },
+>         { .compatible = "qcom,pcie-ipq8074", .data = &cfg_2_3_3 },
+>         { .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+> +       { .compatible = "qcom,pcie-ipq9574", .data = &cfg_1_27_0 },
+>         { .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>         { .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+>         { .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
+> --
+> 2.17.1
+>
 
-                 if (intf->type == INTF_NONE) {
-                         DPU_DEBUG("skip intf %d with type none\n", i);
-                         continue;
-                 }
-                 if (intf->id < INTF_0 || intf->id >= INTF_MAX) {
-                         DPU_ERROR("skip intf %d with invalid id\n", 
-intf->id);
-                         continue;
-                 }
-                 hw = dpu_hw_intf_init(intf->id, mmio, cat);
 
-So this part can be dropped.
-
->   
->   	c = kzalloc(sizeof(*c), GFP_KERNEL);
->   	if (!c)
->   		return ERR_PTR(-ENOMEM);
->   
-> -	cfg = _intf_offset(idx, m, addr, &c->hw);
-> -	if (IS_ERR_OR_NULL(cfg)) {
-> -		kfree(c);
-> -		pr_err("failed to create dpu_hw_intf %d\n", idx);
-> -		return ERR_PTR(-EINVAL);
-> -	}
-> +	c->hw.blk_addr = addr + cfg->base;
-> +	c->hw.log_mask = DPU_DBG_MASK_INTF;
->   
-
-<snipped>
+-- 
+With best wishes
+Dmitry
