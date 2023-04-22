@@ -2,109 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 248576EB858
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 12:00:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 056456EB89D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 12:42:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbjDVJ76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 05:59:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38532 "EHLO
+        id S229835AbjDVKmb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 06:42:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjDVJ75 (ORCPT
+        with ESMTP id S229829AbjDVKm3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 05:59:57 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633161BC3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 02:59:56 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4ec81773cf7so2615257e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 02:59:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682157594; x=1684749594;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fRbWMrtRPw5tKO1dZRharcTg4G5vu/RojnoHNMZk0Vs=;
-        b=zhsOEGdeI+Scd7u+CJBH2RPUANEiwJt6aqS9afI/7PwJfQ7sQ6z6p0ToTX38xHSNnZ
-         q5iieMqPQCPF3klGiU4nPkxpuSOF29e5ZMw7l3mYHV4oWry7WJ+r9CWuw8mNgbwXv6bf
-         Gn4kBNGmja6T+OxQX4WrKWfc0IwzWxke+kYAmvM5APEFIsZ0/oGMeJG6ssAOPcl3rHHZ
-         BrmUWyceF6of4Zu8JudVehVEGN8NqvolGd2/ilsCi8NcWoPWC/bgWeU/QMLNG5PssoB9
-         pLuB8ZdE9tY0Fk5ON+iuJkNuQOW2fYBJKS2N/pZnRZaRGTKJ27SHpUL9joX/qTB/16gJ
-         KrJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682157594; x=1684749594;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fRbWMrtRPw5tKO1dZRharcTg4G5vu/RojnoHNMZk0Vs=;
-        b=IHlWzZTfyMvzyzcU9CiU2KZXd4E66d0gGl/2IWyzdW/6q7Udo0qd3dRfFXBx9pvlOP
-         +iGKbSTVjFefexU3LsJctT3m/lgiHYiVg2P+NFjQ0Uuw1ehlj01kXS5TrSokKY+9AqOr
-         7ou2GmuEkevomDMcCc5PpHaYfW6ZHk1mtgUhcCudpHc/2rvw4d9h8DMiowVmJPFO4bC0
-         3UBgQ1Mip2vH/1Rk/tZxhYYptGvPsdAIiezwm0NhV2RQaTuPi0MPaP2f5cTOtOuBrpYR
-         E2oEJB5D1dAAHbyJHxNP4gMIEX6nTENbzr3x95xXjHGiUF5tIWUU9LdSKAv9VsXWuFAO
-         dcBw==
-X-Gm-Message-State: AAQBX9fuxt+aqm7prjKNIC0BbqFEMaxluyhOxky8KOh5NtHB4/8iZB9D
-        KcqDL3gBYWBTlfbCHehzvb5/cg==
-X-Google-Smtp-Source: AKy350Zgzg59kN7Ze0MMHfZgL8yLoD63YAcHDChKW1pjTA37p00j1SNnA6GCQ5FsFVgDkHG0VTk0Mw==
-X-Received: by 2002:ac2:4f86:0:b0:4ec:e32f:3d29 with SMTP id z6-20020ac24f86000000b004ece32f3d29mr2069717lfs.51.1682157594670;
-        Sat, 22 Apr 2023 02:59:54 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id o22-20020ac24356000000b004edd490cf77sm822804lfl.275.2023.04.22.02.59.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 02:59:54 -0700 (PDT)
-Message-ID: <b9cd7b67-4aa6-3e84-41fe-61f2c7f0edaf@linaro.org>
-Date:   Sat, 22 Apr 2023 11:59:53 +0200
+        Sat, 22 Apr 2023 06:42:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3E7D1BCD;
+        Sat, 22 Apr 2023 03:42:28 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33MAgNqI021155;
+        Sat, 22 Apr 2023 10:42:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=T+X9O0dzGZGAvePhsQc8AMDJOlDmWVo+m06B03v2NjQ=;
+ b=WagjaMjif024olObmflDvQ1EqeSIQnOMZ6GFg0OM0wke+laGTQUJ2XK965V0GGO+Z8ia
+ lSkGALweEJrVJ/tIpo5C/FT+fqNmPBfGtcLAId2pfkeQD4XE8mcaQe2MgLZPSjJ1r63J
+ UKZiZTIkI+zg5oyCGhEcmD4zQYKODVclXrU9Q77PlyQTbol9XKpUYE0l0f3khELTKK1S
+ mTFHCF/blXBNBeJZQ+NfTKf4MlZ2WpRoM+4T8gRqXHgwov4uHoK5rYd5k+/hRkh8w4Jc
+ Mg0OG9XxriVGyYwopgzA0bfXDD4+hQ2QX3d09zRMsJMsMqgu4ObuRxTlArhpvqE6KWsY bQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q48vf89xp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 22 Apr 2023 10:42:22 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33MAgM58003650
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 22 Apr 2023 10:42:22 GMT
+Received: from sarannya-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Sat, 22 Apr 2023 03:42:18 -0700
+From:   Sarannya S <quic_sarannya@quicinc.com>
+To:     <quic_bjorande@quicinc.com>, <arnaud.pouliquen@foss.st.com>,
+        <swboyd@chromium.org>, <quic_clew@quicinc.com>,
+        <mathieu.poirier@linaro.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        Sarannya S <quic_sarannya@quicinc.com>
+Subject: [PATCH V7 0/3] rpmsg signaling/flowcontrol patches
+Date:   Sat, 22 Apr 2023 16:12:04 +0530
+Message-ID: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974: align WCNSS Bluetooth node name
- with bindings
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230421195437.31513-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230421195437.31513-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: l-PP4CmDz6vVaZ-v9Se_C4juZDQKHrnh
+X-Proofpoint-ORIG-GUID: l-PP4CmDz6vVaZ-v9Se_C4juZDQKHrnh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-21_08,2023-04-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ spamscore=0 mlxlogscore=740 phishscore=0 suspectscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304220094
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+For rpmsg_set_flow_control, change "EXPORT_SYMBOL" to "EXPORT_SYMBOL_GPL".
+Update destination parameter in rpmsg_set_flow_control().
+ 
 
+Chris Lew (2):
+  rpmsg: glink: Add support to handle signals command
+  rpmsg: char: Add RPMSG GET/SET FLOWCONTROL IOCTL support
 
-On 21.04.2023 21:54, Krzysztof Kozlowski wrote:
-> Bindings expect WCNSS Bluetooth child to be named "bluetooth":
-> 
->   remoteproc@fb204000: smd-edge:wcnss: 'bt' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Deepak Kumar Singh (1):
+  rpmsg: core: Add signal API support
 
-Konrad
->  arch/arm/boot/dts/qcom-msm8974.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> index 939449a0c695..58e144957c5d 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> @@ -746,7 +746,7 @@ wcnss {
->  
->  					qcom,mmio = <&pronto>;
->  
-> -					bt {
-> +					bluetooth {
->  						compatible = "qcom,wcnss-bt";
->  					};
->  
+ drivers/rpmsg/qcom_glink_native.c | 64 +++++++++++++++++++++++++++++++++++++++
+ drivers/rpmsg/rpmsg_char.c        | 49 ++++++++++++++++++++++++++----
+ drivers/rpmsg/rpmsg_core.c        | 21 +++++++++++++
+ drivers/rpmsg/rpmsg_internal.h    |  2 ++
+ include/linux/rpmsg.h             | 15 +++++++++
+ include/uapi/linux/rpmsg.h        | 11 ++++++-
+ 6 files changed, 155 insertions(+), 7 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
