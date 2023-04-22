@@ -2,97 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAA9F6EB66C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 02:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11F206EB675
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 02:26:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234066AbjDVAV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 20:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
+        id S232989AbjDVAZ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 20:25:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234075AbjDVAVZ (ORCPT
+        with ESMTP id S232058AbjDVAZ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 20:21:25 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D550230ED
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:21:15 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-b99489836aaso284676276.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:21:15 -0700 (PDT)
+        Fri, 21 Apr 2023 20:25:57 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D64581FC8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:25:55 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4edbd6cc46bso2375087e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682122875; x=1684714875;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vYPWYGDJMhP7eV/jzWq1VIOUpeyeWw3B0wUE4YZZCmE=;
-        b=p/bNplEChqCipEg965Y382pIyekStKKfzL2rZ+r7/98iZAysbEMBPiInYSpDkNsNrm
-         hy5DEwvn4duWAUum10kTnlcAZ5P46IFyrAmd9ueWg4yx6XMxKgm7xCadl4M7tgzwLNxc
-         BlVKJCZyoA368mMdWudGvnG5OpgrAv5vdCuP6Es4uWT1L2mOhjBilk2EluxX21EsgLR+
-         5gLyt3c1/FuX45FtZIUzxj67Mu3ZGqWEOjyFqA9jUxrWHIAPPSw718PlU5P6fpzMUfYQ
-         9/KHfk7pIzAOTQfcJrWaK20ufNMW8DSeZ9+jYP6WuMcXX+YjE4ECOYQcFw1EywSzs8ny
-         N29Q==
+        d=linaro.org; s=google; t=1682123154; x=1684715154;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7OQWCpIJTAP1Ry3VsEerFVkfg5+LmukA8mKwvl4J2fQ=;
+        b=hofCmIcOQV7vmT+uSPYmfnrarP9ImgW5VOyXN/GBZPHRTClLSUmQQ5VItaKz/ze67Y
+         qrb2AYoT3SpmTopHd4nYKj9jNmsLi1Gh8BvkUuCMoaUp5wz63YJVAXiiFJcAIdClRuFm
+         ep3L+zrUOGDG4VLjFzcxdLuoKld/BIvyKl8k7Ie9CG1cTFlz80h304tWXZSp4bEuWzqK
+         okE+GJ8I6hVdyf5kGsVivUiqlUe/qhbtpo0hxqFyXpStaLbsWkv5LwdYpHaNuEOkz0cc
+         zcRXhZZR7N+eXS04m7hbG0D66fXmPGXcHd5LniBhF1KFT5zv4Bpjsz+YvFL1Mi12QKqn
+         q3Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682122875; x=1684714875;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vYPWYGDJMhP7eV/jzWq1VIOUpeyeWw3B0wUE4YZZCmE=;
-        b=NFi3JcoeGred5+ctH31sfQFsx+4pO37l3Orohxf8j3vW86m2xRSFUb0gJMVGR4Vai0
-         eXkfJ7LSy9kdZOdAv3kmHtXldi6nDscVD/Qe9TNqw5d8qJj581z/Gn7XV6AMxRxvODFN
-         bCX09U4P86I7v3Opnhq+kYATi1iJDIxt8X0HrNGruGem0iLg/t7BfrK5j65yB35pwDgf
-         K+1Qgo/G/EeMd2yhOIKuzxTDfeU8Jgc0BQ3bpTyy+EbxvNnMswkwUlvOH5Y9Rmespt9y
-         6vzuYTmawUTzkmmKdwIh2srnatozZcl1VpIbrI5y5MRxKb15XG+atTDvafOyx5NJcA2d
-         mOzQ==
-X-Gm-Message-State: AAQBX9eQrQgxnFWAGZid4uic5ys7AkeAEs0qrQMkB1aqCgxmVmXdu6Wp
-        nzODY9k3uma7zaHKMXwdirQH0PRum5gpeXZRwq10tYtWmGbtWgXFsR8=
-X-Google-Smtp-Source: AKy350Y+lKJO2oSM2BWjg2A3ysf0G4U98qb2g2BmthOtZuVMrE/ho258xSHNWC2L91ksdI74UKOPiSBzxWADWpaq55U=
-X-Received: by 2002:a25:e784:0:b0:b96:3fd4:52eb with SMTP id
- e126-20020a25e784000000b00b963fd452ebmr3497830ybh.39.1682122875007; Fri, 21
- Apr 2023 17:21:15 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682123154; x=1684715154;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7OQWCpIJTAP1Ry3VsEerFVkfg5+LmukA8mKwvl4J2fQ=;
+        b=Ob0ipPXnbXivkXDM5cXzj9iAUc14i08NGKE8bpKlfW6X/Utg2RPGQQ4EsmihDOY/LI
+         9NPKZX5M7+fxHSP2VQqqHniIqkR1kj6hgKT/2r+k/2cIAC2KhG+ypPhZJSjCutU9lEzR
+         zQ+CW2DqrUxniWOCc1E2Pv/gc7/tKVyXmRY2EOsg1SDYR53RzwnZRBTmm1q6GMz1LPBd
+         DfUkAHDPA+9WrrJJTzPnPS8T8mZNDAmIT/zb8uUto8FIXn12X6mKArIKMJmi48cVhasQ
+         EcqbjZyh/88yOt1PHaYaLftPcxI3fPERSTcOBy4Wftq9Fu50h60k6iTo9hSFW51gsEMx
+         rM8Q==
+X-Gm-Message-State: AAQBX9dG1zaeoMHwqMPnn4ytfbBN092bdl43l6C4DMf9KyTSt1wh9xJN
+        sI6W1hx3/6GJCS/TzGSmGEcZNQ==
+X-Google-Smtp-Source: AKy350ZWdFxJ2/AmpEAZfXikVOlUeKDpM+FXXIRP9U3RhsWAlAboixbX9MLOQe98xCfm16NMrQahCw==
+X-Received: by 2002:ac2:59dc:0:b0:4eb:2d47:602 with SMTP id x28-20020ac259dc000000b004eb2d470602mr1762343lfn.59.1682123154123;
+        Fri, 21 Apr 2023 17:25:54 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a085:4d00::8a5? (dzccz6yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a085:4d00::8a5])
+        by smtp.gmail.com with ESMTPSA id c19-20020ac244b3000000b004eed68a68efsm708285lfm.280.2023.04.21.17.25.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Apr 2023 17:25:53 -0700 (PDT)
+Message-ID: <6a4bd978-14e4-4e15-49b4-6ce3e0e5d1a5@linaro.org>
+Date:   Sat, 22 Apr 2023 03:25:52 +0300
 MIME-Version: 1.0
-References: <20230421124938.21974-1-quic_devipriy@quicinc.com> <20230421124938.21974-3-quic_devipriy@quicinc.com>
-In-Reply-To: <20230421124938.21974-3-quic_devipriy@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v1 1/5] drm/msm/dpu: add support for DSC encoder v1.2
+ engine
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1682033114-28483-1-git-send-email-quic_khsieh@quicinc.com>
+ <1682033114-28483-2-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 22 Apr 2023 03:21:03 +0300
-Message-ID: <CAA8EJpr-Xppn0RCOBH-12DJeY1nc5CCgB480FZsrdi4wAY7CxQ@mail.gmail.com>
-Subject: Re: [PATCH V3 2/6] clk: qcom: gcc-ipq9574: Add PCIe pipe clocks
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, mani@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_ipkumar@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <1682033114-28483-2-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 21 Apr 2023 at 15:50, Devi Priya <quic_devipriy@quicinc.com> wrote:
->
-> Add the PCIe pipe clocks needed for enabling PCIe in IPQ9574.
->
-> Acked-by: Stephen Boyd <sboyd@kernel.org>
-> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+On 21/04/2023 02:25, Kuogee Hsieh wrote:
+> Add support for DSC 1.2 by providing the necessary hooks to program
+> the DPU DSC 1.2 encoder.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->  Changes in V3:
->         - Picked up the Acked-by tags
->
->  drivers/clk/qcom/gcc-ipq9574.c | 76 ++++++++++++++++++++++++++++++++++
->  1 file changed, 76 insertions(+)
+>   drivers/gpu/drm/msm/Makefile                   |   1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  38 ++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h     |  17 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c | 388 +++++++++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |   7 +-
+>   5 files changed, 444 insertions(+), 7 deletions(-)
+>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+> 
 
+[skipped]
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +static inline void _dsc_subblk_offset(struct dpu_hw_dsc *hw_dsc, int s_id,
+> +		u32 *offset)
+> +{
+> +	const struct dpu_dsc_sub_blks *sblk;
+> +
+> +	sblk = hw_dsc->caps->sblk;
+> +
+> +	if (s_id == DPU_DSC_ENC)
+> +		*offset = sblk->enc.base;
+> +	else if (s_id == DPU_DSC_CTL)
+> +		*offset = sblk->ctl.base;
+> +	else
+> +		DPU_ERROR("invalid DSC sub block=%d\n", s_id);
+> +}
+
+I have just sent a patchset removing the _sspp_subblk_offset. Could you 
+please inline this function too?
+
+> +
+> +static void dpu_hw_dsc_disable_1_2(struct dpu_hw_dsc *hw_dsc)
+> +{
+> +	struct dpu_hw_blk_reg_map *hw;
+> +	u32 offset;
+> +
+> +	if (!hw_dsc)
+> +		return;
+> +
+> +	_dsc_subblk_offset(hw_dsc, DPU_DSC_CTL, &offset);
+> +
+> +	hw = &hw_dsc->hw;
+> +	DPU_REG_WRITE(hw, offset + DSC_CFG, 0);
+> +
+> +	_dsc_subblk_offset(hw_dsc, DPU_DSC_ENC, &offset);
+> +
+> +	DPU_REG_WRITE(hw, offset + ENC_DF_CTRL, 0);
+> +	DPU_REG_WRITE(hw, offset + DSC_MAIN_CONF, 0);
+> +}
+> +
 
 -- 
 With best wishes
 Dmitry
+
