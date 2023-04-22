@@ -2,93 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58AB06EBA30
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 18:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 419416EBAE1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 20:32:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbjDVQJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 12:09:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46834 "EHLO
+        id S229509AbjDVScj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 14:32:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbjDVQJK (ORCPT
+        with ESMTP id S229451AbjDVSci (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 12:09:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D944C1BE3;
-        Sat, 22 Apr 2023 09:09:08 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33MFu61S009541;
-        Sat, 22 Apr 2023 16:08:56 GMT
+        Sat, 22 Apr 2023 14:32:38 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E72FE3;
+        Sat, 22 Apr 2023 11:32:37 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33MIWUDe024330;
+        Sat, 22 Apr 2023 18:32:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=82bzTA9forC2gL1CVr/H9J1y4F0eFZKRnesgn480eEw=;
- b=pR/EkArY26U6sD7qGo8R6BqzOa5gqayXA87M8BcFj9IGFGj6snHoeBAVwbRBJi4M/qNE
- mo5WVBkxpejcf3xMDd3p0AWoQIquM3E5eTB1D01XhBDNoLcI+1I9XQNxdipzaYlNz97Z
- klU1NOq9x/1SzsLfdrgFjKF5jX9rE1wHsfyYYnD7EE8uRiLENavcSIgzEiTLwV3JQcvJ
- UrZqW5QyBd7yZnjQfrkPqfIZWTg16+Rm/0e7uC1oKHxF6bPsfa4+/uvUvH4/aBybMq+s
- 4q1bo/LH7MOamquIXm9WMnrHH2zB9CPGf3wW04WeFgpX+Y+NRxxrtX4aqht+NJA74sRY 5g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q48bq0mdt-1
+ bh=Qr+PpyvLR4gWsD72o1Xmz6BhKN6P4FvdieeALxB+T4k=;
+ b=H1ocmu51rw4m3fStiF6eruc2hgdbGdOl+4kvFtjIRSL76pxuHe81aLMYsjRNzBtSbGFk
+ bBrLQVINpqcfvdwqSkFlNtKjaauC9re6+z7zwBNj3yKVtEft1f2aUrre+IldjgrvQ3Pt
+ 0scQ83IvtWpsSMiPw4KkMvmo2QNfHHxtb1CcogfdbAxFXyDluMQ90Eklaj3/NWCnKDPj
+ 2xLpLUlNxdDFobYWQtqV5SbqEe/H2f4G6y5vZh3UCYzIhIPLvf1FYgwYgqx5/ZkMFGuA
+ afFfOlRWHk18sTKx4O04sLdtND/L8HBv/c24woTs9BhD8ThY7lhqw8BosRd/0jlYlHas yw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q48ge8rc5-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Apr 2023 16:08:55 +0000
+        Sat, 22 Apr 2023 18:32:30 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33MG8tLC021226
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33MIWTAK014518
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 22 Apr 2023 16:08:55 GMT
-Received: from [10.216.16.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Sat, 22 Apr 2023 18:32:29 GMT
+Received: from [10.110.104.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 22 Apr
- 2023 09:08:48 -0700
-Message-ID: <28a58bf9-5ad8-4084-11d6-cd1b0d3a2998@quicinc.com>
-Date:   Sat, 22 Apr 2023 21:38:44 +0530
+ 2023 11:32:28 -0700
+Message-ID: <b85b5f79-0f8e-24b3-b33d-422f30f39d54@quicinc.com>
+Date:   Sat, 22 Apr 2023 11:32:27 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v6 6/8] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 0/2] DPU1 GC1.8 wiring-up
 Content-Language: en-US
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-To:     Andrew Halaney <ahalaney@redhat.com>,
-        Johan Hovold <johan+linaro@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
-        <quic_harshq@quicinc.com>, <quic_shazhuss@quicinc.com>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
- <20230405125759.4201-7-quic_kriskura@quicinc.com>
- <20230414154527.vsjtgtfsd5kc7vww@halaney-x13s>
- <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
-In-Reply-To: <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230420-topic-dpu_gc-v1-0-d9d1a5e40917@linaro.org>
+ <5b133c55-e4f5-bfd2-b542-a7d44313c038@linaro.org>
+ <c0e0a55a-cc37-fe8a-8d8a-5fe257f99b9a@linaro.org>
+ <3f3b3637-ed85-09a1-22b7-3ccd4bc929bb@quicinc.com>
+ <2dff9d62-cffe-c66f-9e50-3ecd64e44d37@linaro.org>
+ <6a335df7-ff0b-098a-feec-45714159df04@linaro.org>
+ <b134d09c-55fa-7879-80ff-900e39c20c3d@quicinc.com>
+ <0f469b3c-5f0f-e027-8a9f-d1233169c04a@linaro.org>
+ <57pxyxwluu33z4lpij5gx7biwfo5pbhdalhhxflw7esi5n3vts@qhjb7ldnz3wb>
+ <0bba90c1-01be-a76e-df12-2328b84f7298@linaro.org>
+ <b6d56e50-fb5b-1d59-7b39-a3ca2a0a8d83@quicinc.com>
+ <1f7bb81a-d38c-725a-9ee1-89efe2950b1d@linaro.org>
+ <cbafc6fd-58db-91f5-b453-4b45ba80ee4d@linaro.org>
+ <01f04f1f-12a9-8137-bf89-5bf6c1bbca77@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <01f04f1f-12a9-8137-bf89-5bf6c1bbca77@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9D_524ipiLzJk5v9Fic9Igv8FOO5EkHr
-X-Proofpoint-ORIG-GUID: 9D_524ipiLzJk5v9Fic9Igv8FOO5EkHr
+X-Proofpoint-ORIG-GUID: ZTVaMpjh7Dh42eb-K4m7sg9h7r4YlR2o
+X-Proofpoint-GUID: ZTVaMpjh7Dh42eb-K4m7sg9h7r4YlR2o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-21_08,2023-04-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- malwarescore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
- impostorscore=0 adultscore=0 phishscore=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2304220147
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ impostorscore=0 phishscore=0 adultscore=0 mlxlogscore=807 clxscore=1015
+ priorityscore=1501 spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304220169
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -97,135 +97,140 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4/16/2023 12:34 AM, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 4/14/2023 9:15 PM, Andrew Halaney wrote:
->> On Wed, Apr 05, 2023 at 06:27:57PM +0530, Krishna Kurapati wrote:
->>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
->>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
->>> platforms.
+On 4/22/2023 7:11 AM, Dmitry Baryshkov wrote:
+> On 22/04/2023 15:08, Konrad Dybcio wrote:
+>>
+>>
+>> On 22.04.2023 00:35, Dmitry Baryshkov wrote:
+>>> On 22/04/2023 01:34, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 4/20/2023 3:52 PM, Dmitry Baryshkov wrote:
+>>>>> On 20/04/2023 22:56, Marijn Suijten wrote:
+>>>>>> On 2023-04-20 22:51:22, Dmitry Baryshkov wrote:
+>>>>>>> On 20/04/2023 22:47, Abhinav Kumar wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 4/20/2023 11:01 AM, Dmitry Baryshkov wrote:
+>>>>>>>>> On 20/04/2023 04:36, Konrad Dybcio wrote:
+>>>>>>>>>>
+>>>>>>>>>>
+>>>>>>>>>> On 20.04.2023 03:28, Abhinav Kumar wrote:
+>>>>>>>>>>>
+>>>>>>>>>>>
+>>>>>>>>>>> On 4/19/2023 6:26 PM, Konrad Dybcio wrote:
+>>>>>>>>>>>>
+>>>>>>>>>>>>
+>>>>>>>>>>>> On 20.04.2023 03:25, Dmitry Baryshkov wrote:
+>>>>>>>>>>>>> On 20/04/2023 04:14, Konrad Dybcio wrote:
+>>>>>>>>>>>>>> Almost all SoCs from SDM845 to SM8550 inclusive feature a 
+>>>>>>>>>>>>>> GC1.8
+>>>>>>>>>>>>>> dspp sub-block in addition to PCCv4. The other block 
+>>>>>>>>>>>>>> differ a bit
+>>>>>>>>>>>>>> more, but none of them are supported upstream.
+>>>>>>>>>>>>>>
+>>>>>>>>>>>>>> This series adds configures the GCv1.8 on all the relevant 
+>>>>>>>>>>>>>> SoCs.
+>>>>>>>>>>>>>
+>>>>>>>>>>>>> Does this mean that we will see gamma_lut support soon?
+>>>>>>>>>>>> No promises, my plate is not even full, it's beyond 
+>>>>>>>>>>>> overflowing! :P
+>>>>>>>>>>>>
+>>>>>>>>>>>> Konrad
+>>>>>>>>>>>
+>>>>>>>>>>> So I think I wrote about this before during the catalog 
+>>>>>>>>>>> rework/fixes
+>>>>>>>>>>> that the gc registers are not written to / programmed.
+>>>>>>>>>>>
+>>>>>>>>>>> If thats not done, is there any benefit to this series?
+>>>>>>>>>> Completeness and preparation for the code itself, if nothing 
+>>>>>>>>>> else?
+>>>>>>>>>
+>>>>>>>>> The usual problem is that if something is not put to use, it 
+>>>>>>>>> quickly
+>>>>>>>>> rots or becomes misused for newer platforms. We have seen this 
+>>>>>>>>> with
+>>>>>>>>> the some of DPU features.
+>>>>>>>>>
+>>>>>>>>> In case of GC (and the freshly defined DPU_DSPP_IGC, but not 
+>>>>>>>>> used) we
+>>>>>>>>> have three options:
+>>>>>>>>> - drop the unused GC from msm8998_sblk.
+>>>>>>>>> - keep things as is, single unused GC entry
+>>>>>>>>> - fill all the sblk with the correct information in hope that 
+>>>>>>>>> it stays
+>>>>>>>>> correct
+>>>>>>>>>
+>>>>>>>>> Each of these options has its own drawbacks. I have slight bias
+>>>>>>>>> towards the last option, to have the information in place (as 
+>>>>>>>>> long as
+>>>>>>>>> it is accurate).
+>>>>>>>>>
+>>>>>>>>
+>>>>>>>> My vote is for (1) . Today, GC is unused and from the discussion 
+>>>>>>>> here,
+>>>>>>>> there is no concrete plan to add it. If we keep extending an unused
+>>>>>>>> bitmask for all the chipsets including the ones which will get 
+>>>>>>>> added in
+>>>>>>>> the future in the hope that someday the feature comes, it doesnt 
+>>>>>>>> sound
+>>>>>>>> like a good idea.
+>>>>>>>>
+>>>>>>>> I would rather do (1), if someone has time.
+>>>>>>>
+>>>>>>> Agree, this was the second item on my preference list. Could you 
+>>>>>>> please
+>>>>>>> send this oneliner?
+>>>>>>
+>>>>>> Nit (to make sure we're on the same thought here): I think it's a
+>>>>>> 3-liner: remove it from DSPP_MSM8998_MASK as well as 
+>>>>>> msm8998_dspp_sblk.
+>>>>>>
+>>>>>>>> OR lets stay at (2) till
+>>>>>>>> someone does (1).
+>>>>>>
+>>>>>> I'm personally okay leaving it in place too, with an eye on 
+>>>>>> implementing
+>>>>>> this, IGC, and other blocks at some point if there's a use for it via
+>>>>>> standard DRM properties.
+>>>>>
+>>>>> I took a quick glance. I think it is possible, but not 
+>>>>> straightforward. But I must admit here, I don't have a full picture 
+>>>>> regarding different color encodings, ranges and the rest of 
+>>>>> gamma/degamma API and usage.
+>>>>>
+>>>>
+>>>> I think its easier to remove this now and then add it when we add 
+>>>> the support. As discussed, will post this shortly.
+>>>>
+>>>> Otherwise, whenever any new chipset gets added, we will run into the 
+>>>> same question of whether to add GC or not.
 >>>
->>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>> ---
->>> Link to v5: 
->>> https://lore.kernel.org/all/20230310163420.7582-7-quic_kriskura@quicinc.com/
+>>> Yes, I absolutely agree here.
+>> Sorry for the useless patches, though I guess they were a good
+>> discussion starter..
+> 
+> If they started the discussion, they were not useless.
+> 
+
+I second that, they were not useless at all. In fact, like I mentioned 
+earlier, once GC support is added, we can re-use these catalog changes.
+
+So, this is all good work.
+
+>>
+>> Konrad
 >>>
->>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 58 ++++++++++++++++++++++++++
->>>   1 file changed, 58 insertions(+)
+>>>>
+>>>>>>
+>>>>>>>> When someone implements GC, we can re-use this patch and that 
+>>>>>>>> time keep
+>>>>>>>> konrad's author rights or co-developed by.
+>>>>>>
+>>>>>> Good to at least know all these SoCs have the same offset and 
+>>>>>> revision.
+>>>>>>
+>>>>>> - Marijn
+>>>>>
 >>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi 
->>> b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> index 42bfa9fa5b96..7b81f2b0449d 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> @@ -3108,6 +3108,64 @@ usb_1_role_switch: endpoint {
->>>               };
->>>           };
->>> +        usb_2: usb@a4f8800 {
->>> +            compatible = "qcom,sc8280xp-dwc3", "qcom,dwc3";
->>> +            reg = <0 0x0a4f8800 0 0x400>;
->>> +            #address-cells = <2>;
->>> +            #size-cells = <2>;
->>> +            ranges;
->>> +
->>> +            clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
->>> +                 <&gcc GCC_USB30_MP_MASTER_CLK>,
->>> +                 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
->>> +                 <&gcc GCC_USB30_MP_SLEEP_CLK>,
->>> +                 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
->>> +                 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
->>> +                 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
->>> +                 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
->>> +                 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
->>> +            clock-names = "cfg_noc", "core", "iface", "sleep", 
->>> "mock_utmi",
->>> +                      "noc_aggr", "noc_aggr_north", 
->>> "noc_aggr_south", "noc_sys";
->>> +
->>> +            assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
->>> +                      <&gcc GCC_USB30_MP_MASTER_CLK>;
->>> +            assigned-clock-rates = <19200000>, <200000000>;
->>> +
->>> +            interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
->>> +                        <&pdc 126 IRQ_TYPE_EDGE_RISING>,
->>> +                        <&pdc 16 IRQ_TYPE_LEVEL_HIGH>;
->>> +
->>> +            interrupt-names = "dp_hs_phy_irq", "dm_hs_phy_irq",
->>> +                        "ss_phy_irq";
->>> +
->>
->> This is breaking the current schema (with the full series applied),
->> I am not sure if a pwr_event IRQ exists or but it maybe necessary to
->> modify qcom,dwc3.yaml in order to explain hardware if it doesn't exist:
->>
->> (dtschema) ahalaney@halaney-x13s ~/git/linux-next (git)-[718f2024524f] 
->> % make CHECK_DTBS=y DT_SCHEMA_FILES=/usb/qcom,dwc3.yaml 
->> qcom/sa8540p-ride.dtb                                                                                   :(
->>    LINT    Documentation/devicetree/bindings
->>    CHKDT   Documentation/devicetree/bindings/processed-schema.json
->>    SCHEMA  Documentation/devicetree/bindings/processed-schema.json
->>    DTC_CHK arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
->> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:0: 'pwr_event' was expected
->>     From schema: 
->> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:1: 'dp_hs_phy_irq' was expected
->>     From schema: 
->> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:2: 'dm_hs_phy_irq' was expected
->>     From schema: 
->> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names: ['dp_hs_phy_irq', 'dm_hs_phy_irq', 'ss_phy_irq'] is too short
->>     From schema: 
->> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupts-extended: [[99, 127, 1], [99, 126, 1], [99, 16, 4]] is too short
->>     From schema: 
->> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> make CHECK_DTBS=y DT_SCHEMA_FILES=/usb/qcom,dwc3.yaml 
->> qcom/sa8540p-ride.dtb  22.61s user 0.54s system 99% cpu 23.172 total
->> (dtschema) ahalaney@halaney-x13s ~/git/linux-next (git)-[718f2024524f] %
->>
->> Thanks,
->> Andrew
->>
 > 
-> Hi Andrew,
-> 
->   Thanks for pointing it out. Let me check and get back on the 
-> pwr_event_irq.
-> 
-> Probably I might have missed it 😅. If so, will make sure to add it in 
-> next version.
-> 
-> Regards,
-> Krishna,
-
-
-Hi Andrew, Johan,
-
-   I was looking at the pwr_event_irq interrupts for Multiport 
-controller and see that there are two of them as per HW specs. All 
-targets till date have only 1 pwr_event_irq required.
-
-The reason I thought I missed pwr_event_irq in my patches is because in 
-downstream this is a required IRQ for all targets, so I was under 
-assumption that we need it for upstream targets as well. But upstream 
-qcom driver doesn't have support for this IRQ yet. And this has been 
-made a required one only for SC8280 [1]/[2].
-
-Probably we can proceed in one of the following ways:
-1. Remove pwr_event_irq in both bindings and DT as driver support is not 
-present currently.
-2. Update the bindings for SC8280 to include an optional secondary 
-pwr_event_irq for multiport controller.
-
-I would prefer option-1 as removing them would be better because they 
-are not being used. Please let me know your thoughts on this.
-
-[1]: 
-https://lore.kernel.org/all/20220713131340.29401-2-johan+linaro@kernel.org/
-[2]: 
-https://lore.kernel.org/all/20220713131340.29401-6-johan+linaro@kernel.org/
-
-Regards,
-Krishna,
