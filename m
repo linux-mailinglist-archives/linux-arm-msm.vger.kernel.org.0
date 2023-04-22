@@ -2,71 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A66D6EB62E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 02:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA01F6EB637
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 02:09:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233600AbjDVAIs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 21 Apr 2023 20:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48438 "EHLO
+        id S233554AbjDVAJQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 21 Apr 2023 20:09:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233554AbjDVAIp (ORCPT
+        with ESMTP id S233813AbjDVAJO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 21 Apr 2023 20:08:45 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7625C26A2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:08:44 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ec8ce03818so2359018e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:08:44 -0700 (PDT)
+        Fri, 21 Apr 2023 20:09:14 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7284926A2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:09:12 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-b8f72e5bd9bso3165359276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 21 Apr 2023 17:09:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682122123; x=1684714123;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WP6jZyGNHRewIJlCXz+F9uUuWlrE02oEGxGwZ/q40nQ=;
-        b=vckHYYxhCPBBPT+HzipZYP9N/5gRxfYkengL8ShZnTcx9ugr5POFUiTkJTtdlTVx9q
-         ZPPIfvgmG9lt8O1kpyGLTAovTOJBTk65GsC3ryUOixXsd1ad7oElOyK/ZjN+f6eguDf0
-         P/VrRdHZSi+K6GMlQRLaIZDH+nyM0s/J8lMEnQIDl6twf5YWwSTi5yHpAPw1kmIMY4R8
-         +Eu7fibBl81qxW4/YEPZyINpebLXQ8A4PaSVJbt8hyTbC8VJs/9kop3BdUOTj8cqOQBs
-         0iOCuwkES/w+MlWZfm03qA642GyHMoft4cZw0YCoAhwVmGf0NDglzQqLhF737XErQ/yt
-         cJpQ==
+        d=linaro.org; s=google; t=1682122151; x=1684714151;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=MmdtSh1w/AUsFLevVQK84fJ32J2WUs/jp0y/0rXdHOc=;
+        b=lbNqDq7FL+eHY0F/4x20VfGmaNxBVQkHRX1smlrAvAwO2PYd7PPVRyF6nDKQUWSynF
+         aaT8ElQtpKBYzL8CilDIeZontx72c77/FYA2K4RWLELEKk+0VNVOI7C6ODyC5LuMQ8cW
+         2gVlJltSlPoLhI73VglEjQ2UpeXnlEIwNEK404tdG0E3ROhZV9wlzt0Ufn4GKpNhX/OT
+         FRPTTzPa8pYITQzBwEq1Ekbyg3ENyqcWAJDGptbpnYR3dWXMfHfHRjjZSHkl7IXp0ol+
+         foU5BKQg95VeZ1DX/rZH9UsOG0qJPBN1gq+fIMhiehZ9S5qBBqK6RnjK8nI5PindSbCR
+         emlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682122123; x=1684714123;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WP6jZyGNHRewIJlCXz+F9uUuWlrE02oEGxGwZ/q40nQ=;
-        b=Ab8VQKHMxYsFy4Z2peGnKRlvkxk+742bCjvUY8tiG4zbfuluS3WurOmhDeIxjcypwM
-         XVfL9UGl/2ogw1AkxlH+bVY566t8/eV7+ZVjIukVHJNA61PjXMoDF0abMr6sx1cc79cJ
-         dCC9UYMfyOlDoV7NCm5CoaT5Ob5bSkflTfHjKdP/lGqgyk02Nls9KTQ63tvcebWEdrex
-         NCvXOHZfSiiliicI2aU2ry4x0+ZGNHWpT0fWvkbz7zgLAucbhYBMPpBEk6tUy9QaYrr2
-         YHvnjSh5TpicL+5jZ3nx4jqemkHg187jeh3UXv74R/Pmmla7q6HddYjnrRcmBFskSPhE
-         h/PA==
-X-Gm-Message-State: AAQBX9ehWTFS3H40oBW4mlf/ymdt5IMisosR6ky0d7geUWXj//cb+7NZ
-        OcibcZ8jnr9F9yKldb4hapFS1g==
-X-Google-Smtp-Source: AKy350ZMCAdwH1cE95oOlgbmi+djz0yk6b01uaFZAYDxBEQkCcdYAJjp8s0Dmo45RYkJtN14EwQu0w==
-X-Received: by 2002:a05:6512:145:b0:4e0:a426:6ddc with SMTP id m5-20020a056512014500b004e0a4266ddcmr1543409lfo.0.1682122122747;
-        Fri, 21 Apr 2023 17:08:42 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id g24-20020a2e9cd8000000b002a8bce7ce0dsm744681ljj.107.2023.04.21.17.08.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Apr 2023 17:08:42 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 3/3] drm/msm/dpu: access CSC/CSC10 registers directly
-Date:   Sat, 22 Apr 2023 03:08:39 +0300
-Message-Id: <20230422000839.1921358-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20230422000839.1921358-1-dmitry.baryshkov@linaro.org>
-References: <20230422000839.1921358-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1682122151; x=1684714151;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MmdtSh1w/AUsFLevVQK84fJ32J2WUs/jp0y/0rXdHOc=;
+        b=PZkDnrAJaJEti+nYLzwPif96fm7/hFoBoIBi5M0cc8gk0ev534eyBGxaH/1zJzv1iT
+         Zb8h7OuBtsf/YXmAHSNlp/B4FffE9nK7iPnLuR6M699zbR65TKM05jNhyPC1ZpMzM46+
+         Vdyls8jy2XMrYJJ+v+Lp2dO34b2zOP+ad962kO1FVbNDSGd+oGssDZU6CXwnjDiEjQsT
+         3pUmiM+1vJWuOwRrxMzVWbtOy3K+bYfMgpcESsVIfrjQgNQV7/sJ25ArDYU+uOb7//c3
+         1gVaiv006FUlV8d1ukMB02HyCc1V4H3yKBd5ZFMNO/mKx5DwMlneZx94RTXGNlBp+b4f
+         vuEQ==
+X-Gm-Message-State: AAQBX9fKxeh9VXVSSeI0mgbzEqS8SGyBtw/pfj5eo5IB1uU+K2QCrwaY
+        CQbjscPKj1sHkxBMip4mOy5bXzBEWHHPVZoLQEeRTg==
+X-Google-Smtp-Source: AKy350b+L7wCHVqP/UYw/lYuSGq2eOHagsapMSK+wVxHlAmrKjAoUyAzY8gAYEeJb7AKvcAd6Hno1NVDdenS+k1+P0I=
+X-Received: by 2002:a25:e0d5:0:b0:b98:41a9:8db9 with SMTP id
+ x204-20020a25e0d5000000b00b9841a98db9mr4365078ybg.0.1682122151678; Fri, 21
+ Apr 2023 17:09:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230421133922.8520-1-quic_shazhuss@quicinc.com> <20230421133922.8520-5-quic_shazhuss@quicinc.com>
+In-Reply-To: <20230421133922.8520-5-quic_shazhuss@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 22 Apr 2023 03:09:00 +0300
+Message-ID: <CAA8EJppLfk4DZ8Qc8qKH=--vXGQcVY_eZ8hQCb5s3CGR54v2Hg@mail.gmail.com>
+Subject: Re: [PATCH v1 4/6] phy: qcom-qmp: Add SA8775P USB3 UNI phy
+To:     Shazad Hussain <quic_shazhuss@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -77,99 +75,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Stop using _sspp_subblk_offset() to get offset of the csc_blk. Inline
-this function and use ctx->cap->sblk->csc_blk.base directly.
+On Fri, 21 Apr 2023 at 16:41, Shazad Hussain <quic_shazhuss@quicinc.com> wrote:
+>
+> The SA8775P platform has 5nm USB3 UNI phy attached to the USB0 and USB1
+> controllers.
+>
+> Add QMP PHY config, pcs entries and support for the new compatible for
+> SA8775P platform.
+>
+> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 45 +++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
+>
 
-As this was the last user, drop _sspp_subblk_offset() too.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 43 +++++----------------
- 1 file changed, 9 insertions(+), 34 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index 22c59f2250be..f4698e28e197 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -136,30 +136,6 @@
- #define TS_CLK			19200000
- 
- 
--static int _sspp_subblk_offset(struct dpu_hw_sspp *ctx,
--		int s_id,
--		u32 *idx)
--{
--	int rc = 0;
--	const struct dpu_sspp_sub_blks *sblk;
--
--	if (!ctx || !ctx->cap || !ctx->cap->sblk)
--		return -EINVAL;
--
--	sblk = ctx->cap->sblk;
--
--	switch (s_id) {
--	case DPU_SSPP_CSC:
--	case DPU_SSPP_CSC_10BIT:
--		*idx = sblk->csc_blk.base;
--		break;
--	default:
--		rc = -EINVAL;
--	}
--
--	return rc;
--}
--
- static void dpu_hw_sspp_setup_multirect(struct dpu_sw_pipe *pipe)
- {
- 	struct dpu_hw_sspp *ctx = pipe->sspp;
-@@ -210,19 +186,16 @@ static void _sspp_setup_opmode(struct dpu_hw_sspp *ctx,
- static void _sspp_setup_csc10_opmode(struct dpu_hw_sspp *ctx,
- 		u32 mask, u8 en)
- {
--	u32 idx;
-+	const struct dpu_sspp_sub_blks *sblk = ctx->cap->sblk;
- 	u32 opmode;
- 
--	if (_sspp_subblk_offset(ctx, DPU_SSPP_CSC_10BIT, &idx))
--		return;
--
--	opmode = DPU_REG_READ(&ctx->hw, SSPP_VIG_CSC_10_OP_MODE + idx);
-+	opmode = DPU_REG_READ(&ctx->hw, sblk->csc_blk.base + SSPP_VIG_CSC_10_OP_MODE);
- 	if (en)
- 		opmode |= mask;
- 	else
- 		opmode &= ~mask;
- 
--	DPU_REG_WRITE(&ctx->hw, SSPP_VIG_CSC_10_OP_MODE + idx, opmode);
-+	DPU_REG_WRITE(&ctx->hw, sblk->csc_blk.base + SSPP_VIG_CSC_10_OP_MODE, opmode);
- }
- 
- /*
-@@ -530,18 +503,20 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_sw_pipe *pipe,
- static void dpu_hw_sspp_setup_csc(struct dpu_hw_sspp *ctx,
- 		const struct dpu_csc_cfg *data)
- {
--	u32 idx;
-+	u32 offset;
- 	bool csc10 = false;
- 
--	if (_sspp_subblk_offset(ctx, DPU_SSPP_CSC, &idx) || !data)
-+	if (!ctx || !data)
- 		return;
- 
-+	offset = ctx->cap->sblk->csc_blk.base;
-+
- 	if (test_bit(DPU_SSPP_CSC_10BIT, &ctx->cap->features)) {
--		idx += CSC_10BIT_OFFSET;
-+		offset += CSC_10BIT_OFFSET;
- 		csc10 = true;
- 	}
- 
--	dpu_hw_csc_setup(&ctx->hw, idx, data, csc10);
-+	dpu_hw_csc_setup(&ctx->hw, offset, data, csc10);
- }
- 
- static void dpu_hw_sspp_setup_solidfill(struct dpu_sw_pipe *pipe, u32 color)
 -- 
-2.30.2
-
+With best wishes
+Dmitry
