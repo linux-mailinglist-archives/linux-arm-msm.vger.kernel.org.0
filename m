@@ -2,99 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EDAB6EBBFE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Apr 2023 00:16:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 063936EBC14
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 23 Apr 2023 01:30:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbjDVWQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 18:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39550 "EHLO
+        id S229694AbjDVXaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 19:30:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229801AbjDVWQy (ORCPT
+        with ESMTP id S229556AbjDVXaA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 18:16:54 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2734D26BE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 15:16:31 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-2f40b891420so2928832f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 15:16:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1682201789; x=1684793789;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FAcEHpRyaO1VrwCQ6C3hSL9cSf9f8unSS7yQpJNhFBc=;
-        b=DY2Ad11m7+YFSzcEHfjQbGflLO9YolWZmtHC3UbbnuaeFjwvWcBkEsBgL770Q0lyCg
-         y8oszNz+TSSCwuRwIU+sfbznw4vZavqYJMUON3VuZYItB2hGiHCQGOL79QWSvhcSSz3/
-         XbH7WL9PyVf3GMKTcVPV48VZrZIuuTMf8rTV7L1TMHci4DA/mYUUuDTLRCj1JLVDWfup
-         1kogRGRxTV7OM3hPdIUoiLxM6hMnU6mbk3X6D+2RV8QdM0dStMn27GB/tXoPSGtYJ8ud
-         hEdkVx//sOx35csdDfne5JqY5zAyF2t75kXExTaMxI7HRn6JcbNIBDydrhwft5NP1Qaf
-         Rn2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682201789; x=1684793789;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FAcEHpRyaO1VrwCQ6C3hSL9cSf9f8unSS7yQpJNhFBc=;
-        b=Bg9ofWW0VpC/JLhZBDhAAFh8lVXux7bNjpTa31wq9yRc4HEq28ADhPTd8FOv0d7hq9
-         gidZkNO/BOTyEP/C6Q/4/zxApYjdtqfrE1egz6mEHGO093EX5wfVrXFMXjOig4M7wWNC
-         p6Z2wv+auH3U5b79Uz3tcorvJgzPAfMJrD/p9ZbDOcTlQQdfp2Y+zs4k975c2Cda8a3C
-         E7T5c1eF6EvE7SlZxPXAPF4LjTVD6foUxqa0bXbd/9saV72Ws5qn/SHxtyg0hzU+E5N+
-         DUnLXBRL/+/QmTYsMpCHhfUL4np5SXWd5QZhj0mhyoMMV7ycmRyysOuzcB8yMS8beZFj
-         bxiQ==
-X-Gm-Message-State: AAQBX9cL1f8A5FFsaqNS3Q9tLFfxRKLvdgoVHeOXpSLnecXyYERsztpN
-        PMYQtoSqN+NjvYIHV894h1rmcQ==
-X-Google-Smtp-Source: AKy350aUkncBG1Wucp0ooIQNdZWBpg4cRTj2E6ZWGyiW+vfE3DG9fe5mIkySexaG3ugZmz1U0Wyj4w==
-X-Received: by 2002:a5d:6711:0:b0:2fe:562c:c0e6 with SMTP id o17-20020a5d6711000000b002fe562cc0e6mr6183440wru.42.1682201789595;
-        Sat, 22 Apr 2023 15:16:29 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id w6-20020adfee46000000b002f0442a2d3asm7399795wro.48.2023.04.22.15.16.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 15:16:29 -0700 (PDT)
-Message-ID: <c0a231db-ba7c-c540-a745-3fd3dc47abe0@nexus-software.ie>
-Date:   Sat, 22 Apr 2023 23:16:27 +0100
+        Sat, 22 Apr 2023 19:30:00 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D30C213D;
+        Sat, 22 Apr 2023 16:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1682206199; x=1713742199;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=mk/rUj7xZQRo0wJpLXl0vUvyBjGAGS0GDp1KvZ8ywtY=;
+  b=UoL4LXvPoiGlOnYHwheXZtEUEvL1NSWHDO3PWJCWFFbcg5zQTJlVUwL0
+   W4PJQswd5xW0ZaDUEmIEUVXmFYZRpKRjApFOkYgROLQ/eoHmUITCsYmQ4
+   zSmmsJSqCbI6ZiqURc6qLcLT2ysRK+9OownHzdMkzgQpzkYkWc2Clq8RO
+   cz+WXqkwpK4fEmGRqqiX2b1jLJBLhxRtXo96Kab3skzLEfiMh/rMs999Q
+   /HP9vudGfVf6fi/ugfNyeowuWfCqP1z9sErcAl5jfd3FwsGNw/HySjoMM
+   W1KhNWL4YxKbmXlFca6CSBwjrStQJ5Yc1aImEM2EbSoqLxw2GAJYNSogE
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10688"; a="335096975"
+X-IronPort-AV: E=Sophos;i="5.99,219,1677571200"; 
+   d="scan'208";a="335096975"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2023 16:29:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10688"; a="781954255"
+X-IronPort-AV: E=Sophos;i="5.99,219,1677571200"; 
+   d="scan'208";a="781954255"
+Received: from lkp-server01.sh.intel.com (HELO b613635ddfff) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 22 Apr 2023 16:29:55 -0700
+Received: from kbuild by b613635ddfff with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pqMfz-000hZ8-0g;
+        Sat, 22 Apr 2023 23:29:55 +0000
+Date:   Sun, 23 Apr 2023 07:29:37 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: Re: [PATCH V5 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
+Message-ID: <202304230707.TM8MomW0-lkp@intel.com>
+References: <142bfd034c12c245cda9f1dee20a05188b63494d.1681799201.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v5 00/14] Add Qualcomm PMIC TPCM support
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, andersson@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
-References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
- <CRVOZOPMKBX4.2T7FOCWF0RKBJ@otso>
- <10551f5e-4516-c0cc-0b04-73aa38f80a2c@linaro.org>
- <CRWA2OP2T6KT.RCWAVWF5Q2T2@otso>
- <ccc9fa4c-ca52-d8f3-a8b3-45031bea673f@linaro.org>
- <CRYUWMIJDSB2.BJWEPJEA3Y1D@otso>
- <75d00efb-ff3c-b1f8-a141-3fa78a39557a@linaro.org>
- <CS2D1E4ZYKZ8.2CWDCP9VR0C11@otso>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <CS2D1E4ZYKZ8.2CWDCP9VR0C11@otso>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,NO_DNS_FOR_FROM,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <142bfd034c12c245cda9f1dee20a05188b63494d.1681799201.git.quic_schowdhu@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 11:26, Luca Weiss wrote:
-> With the "user-space triggered role-switching" patch I can see that
-> whatever scenario the USB-C port is in, the role is stuck on "device".
+Hi Souradeep,
 
-Hmm.
+kernel test robot noticed the following build warnings:
 
-Could you share a branch ?
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on krzk-dt/for-next linus/master v6.3-rc7 next-20230421]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
----
-bod
+url:    https://github.com/intel-lab-lkp/linux/commits/Souradeep-Chowdhury/dt-bindings-sram-qcom-imem-Add-Boot-Stat-region-within-IMEM/20230418-144757
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/142bfd034c12c245cda9f1dee20a05188b63494d.1681799201.git.quic_schowdhu%40quicinc.com
+patch subject: [PATCH V5 2/3] soc: qcom: boot_stat: Add Driver Support for Boot Stats
+config: nios2-randconfig-s033-20230423 (https://download.01.org/0day-ci/archive/20230423/202304230707.TM8MomW0-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 12.1.0
+reproduce:
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # apt-get install sparse
+        # sparse version: v0.6.4-39-gce1a6720-dirty
+        # https://github.com/intel-lab-lkp/linux/commit/1e2fc43bcc0869349f7e3698fceebbcc8333d1f3
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Souradeep-Chowdhury/dt-bindings-sram-qcom-imem-Add-Boot-Stat-region-within-IMEM/20230418-144757
+        git checkout 1e2fc43bcc0869349f7e3698fceebbcc8333d1f3
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=nios2 olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__' O=build_dir ARCH=nios2 SHELL=/bin/bash drivers/soc/qcom/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202304230707.TM8MomW0-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/soc/qcom/boot_stats.c:70:36: sparse: sparse: incorrect type in argument 4 (different address spaces) @@     expected void *data @@     got struct boot_stats [noderef] __iomem *b_stats @@
+   drivers/soc/qcom/boot_stats.c:70:36: sparse:     expected void *data
+   drivers/soc/qcom/boot_stats.c:70:36: sparse:     got struct boot_stats [noderef] __iomem *b_stats
+   drivers/soc/qcom/boot_stats.c:71:72: sparse: sparse: incorrect type in argument 4 (different address spaces) @@     expected void *data @@     got struct boot_stats [noderef] __iomem *b_stats @@
+   drivers/soc/qcom/boot_stats.c:71:72: sparse:     expected void *data
+   drivers/soc/qcom/boot_stats.c:71:72: sparse:     got struct boot_stats [noderef] __iomem *b_stats
+
+vim +70 drivers/soc/qcom/boot_stats.c
+
+    52	
+    53	static int boot_stats_probe(struct platform_device *pdev)
+    54	{
+    55		struct device *bootstat_dev = &pdev->dev;
+    56		struct bs_data *drvdata;
+    57	
+    58		drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
+    59		platform_set_drvdata(pdev, drvdata);
+    60	
+    61		drvdata->dbg_dir = debugfs_create_dir(dev_name(bootstat_dev), NULL);
+    62		if (IS_ERR(drvdata->dbg_dir))
+    63			return dev_err_probe(bootstat_dev, -ENOENT, "failed to create debugfs directory");
+    64	
+    65		drvdata->b_stats = devm_of_iomap(bootstat_dev, bootstat_dev->of_node, 0, NULL);
+    66		if (!drvdata->b_stats)
+    67			return dev_err_probe(bootstat_dev, -ENOMEM, "failed to map imem region\n");
+    68	
+    69		debugfs_create_file("pre_abl_time", 0200, drvdata->dbg_dir,
+  > 70				    drvdata->b_stats, &pre_abl_time_fops);
+    71		debugfs_create_file("abl_time", 0200, drvdata->dbg_dir, drvdata->b_stats, &abl_time_fops);
+    72	
+    73		return 0;
+    74	}
+    75	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
