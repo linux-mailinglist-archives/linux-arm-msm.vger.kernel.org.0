@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4B4F6EB912
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 14:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FBBD6EB921
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 14:19:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbjDVMLA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 08:11:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48942 "EHLO
+        id S229702AbjDVMTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 08:19:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbjDVMLA (ORCPT
+        with ESMTP id S229591AbjDVMTV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 08:11:00 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E58621FCC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:10:58 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4eed6ddcae1so11620372e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:10:58 -0700 (PDT)
+        Sat, 22 Apr 2023 08:19:21 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D75E198A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:19:20 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ec817060cdso2835118e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682165457; x=1684757457;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1682165958; x=1684757958;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XPnDF9DYM/NKDMLhSe3+ERdFQloF9vFQjHlbD109zt0=;
-        b=NC5nBS9GOvTeZcG3repZOpLz3E9YKYGLizrTJ2BDD6eW2BTL5jfSVdgabcYuNCLjOM
-         WW2VZxrSQwIsAWjCKE6SO2ClAaEFixljd6fDlSz7co1Y5txHKiZQk7/OnkyRzhDsTtyd
-         LNvdoleCD+nUJhT75ncZESs6aeJZFlRArFHnCIWcM/oMaGx4+Ad25QFcSXC7CLrj0kdS
-         SeYw4klaP90YhSK1A3kHYr4+q9dSqZLfRDw3l+ZMHlSl+RDIAHCjFh8+9/0PtUUXviQS
-         9VQPGAtrSIVBRgk/Eef6z8+zsXhlygFTpsx7eh5naCThMLNbLdZ25/wgZKzu+CW/wmzl
-         rZpA==
+        bh=fs5WpnEzScYRY0NWX98UQblKp+aME7xLTSV7j9HLXyA=;
+        b=haGLbmX02zS0oMyXKvxUEmeulckl7+xD3FP7P4FFRUBxO4LhDVIS7MIJ3dOpYNcQ6f
+         tDG+KibL7sZ+u7JcC0G0Iy7pXilEO4gMBpXUR8I8bkQh/aG8bfS7BzP3DWo02fU3sDd0
+         9PixJ+OE9FylpKA1LqaBNXcF6p8icAEXzY8ZN2MLyI+TVfkuKgsxRamjZsqR8eDiX0tf
+         bQ1iivSxPgzKp85e2UA6UaQo0fux83aqaKHQHLS0NLWMBiTmbz9tLijbvlGMaCa3Crty
+         9fWPjX9kyZRXM9CoLM4sIjKCsKlOZuJBrwdkG4ubOc0UGgD6GddojixeQNsgibQCG9/M
+         ZzjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682165457; x=1684757457;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1682165958; x=1684757958;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XPnDF9DYM/NKDMLhSe3+ERdFQloF9vFQjHlbD109zt0=;
-        b=HkmmfuPDeVSOpkKS3iPeVDlq1L5g2dP9NbZzuePa7JD8gx7Z+IxAoATfashY+tuZEH
-         2BfFT1+RwWaM4rKmg5Z52cyYHN5I+LxM/DKimiERHpUXFmEoJTKV+ngEgftshaEvdo1m
-         voR6r4FG10Al6MZrXUY8MQT7GBYn0+E/duS59Q80dPGArHSU7wWh7xecZMVZE3IpFU86
-         0s8a4qPvzwiUn06M93jVYWbJvKz5kcH4N+AMk+28dID/Oqx+8M/oAkwDnwzqKEDmnniw
-         +zBNLOTToHH2IeqqL3Ru3OiKRE/Pesxru7/ROU2WUHZCse3rWmOb94iwV1/ch5WsVezA
-         a0Ww==
-X-Gm-Message-State: AAQBX9fI/6EItEvYjloXe8XbIehakVsay7tnrVXjG/1nZ8HGBek/XlPh
-        cRZAydaE/7NiA0ElxyeSjnSwqw==
-X-Google-Smtp-Source: AKy350b+41OQZx0jt34QgFSz8mpHAcQA7Q4IfXLOTt1Aty4YMRkKmMvzXO8PsN8Eud0T9Lm1G0kumw==
-X-Received: by 2002:a05:6512:3e16:b0:4eb:41ac:e33 with SMTP id i22-20020a0565123e1600b004eb41ac0e33mr3783203lfv.19.1682165457203;
-        Sat, 22 Apr 2023 05:10:57 -0700 (PDT)
+        bh=fs5WpnEzScYRY0NWX98UQblKp+aME7xLTSV7j9HLXyA=;
+        b=G5DqNqtoF/7yYfYshPB8V6oLdni1BvVT8IOIAx5lbdf2+FhGSoQREAnvcXy0MXjI8I
+         Vie0kcCcLJvk//N9jaGIswLzDFYk2t0xY2Oa3JsDwo6PWl7ZY2jNMLG8ZUQykXOid3MU
+         e7b263sY2ewlq5TGuwfLLoLsjVBgdS9CEBHpqfllgSwhTiaQHqSrmeaTNOAMiQvH3His
+         ukAx2gEv0VFbLWD5mM08742ZkoJcDAgZ35jYX772vo5XKX8mH9KE8neD5Z4hWQ1lr4z9
+         gHqKCftOy2XemPWHHgPrTv8bJRF5K+GRqDc+FK7A3oCyG99hsqATHAl0Y3q75k8Kvsu1
+         9G2g==
+X-Gm-Message-State: AAQBX9eKMVK0kwpwIgW4lBMoIDfv9xLWcjb36cXPAFaIsaiLximUv8vo
+        QGdgD0a0y8h66VCsF0knOc2AvA==
+X-Google-Smtp-Source: AKy350ayaic7fsPd2jMuxHiut+KzG0HpH3HoR/EcTNQb+rSltT42PSrtvGO7fjkAgct6AKKJbmYenQ==
+X-Received: by 2002:ac2:5a19:0:b0:4ed:c76b:6aaf with SMTP id q25-20020ac25a19000000b004edc76b6aafmr2152132lfn.56.1682165958424;
+        Sat, 22 Apr 2023 05:19:18 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id m12-20020a056512014c00b004eed4c80b55sm866517lfo.156.2023.04.22.05.10.55
+        by smtp.gmail.com with ESMTPSA id u6-20020ac248a6000000b004eb51cfb147sm869940lfg.115.2023.04.22.05.19.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 05:10:56 -0700 (PDT)
-Message-ID: <01d06e66-9535-cb4c-6ea8-102f8b16f8b8@linaro.org>
-Date:   Sat, 22 Apr 2023 14:10:55 +0200
+        Sat, 22 Apr 2023 05:19:18 -0700 (PDT)
+Message-ID: <30e57210-c356-4663-be72-3f876605b390@linaro.org>
+Date:   Sat, 22 Apr 2023 14:19:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: msm8998: add hdmi cec pinctrl nodes
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8994: fix duplicated @6c00000
+ reserved memory
 Content-Language: en-US
-To:     Arnaud Vrac <avrac@freebox.fr>, Rob Clark <robdclark@gmail.com>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-References: <20230418-msm8998-hdmi-cec-v1-0-176479fb2fce@freebox.fr>
- <20230418-msm8998-hdmi-cec-v1-4-176479fb2fce@freebox.fr>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230420180746.860934-1-krzysztof.kozlowski@linaro.org>
+ <20230420180746.860934-2-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230418-msm8998-hdmi-cec-v1-4-176479fb2fce@freebox.fr>
+In-Reply-To: <20230420180746.860934-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,41 +83,59 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.04.2023 20:10, Arnaud Vrac wrote:
-> HDMI is not enabled yet on msm8998 so the pinctrl nodes are not
-> used.
+On 20.04.2023 20:07, Krzysztof Kozlowski wrote:
+> Reserved memory @6c00000 is defined in MSM8994 DTSI and few boards:
 > 
-> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+>   Warning (unique_unit_address_if_enabled): /reserved-memory/reserved@6c00000: duplicate unit-address (also used in node /reserved-memory/hole2@6c00000)
+>   Warning (unique_unit_address_if_enabled): /reserved-memory/reserved@6c00000: duplicate unit-address (also used in node /reserved-memory/memory@6c00000)
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-Are they supposed to be identical?
+I only see the downstream entry for this specific address on the
+Lumia UEFIs, not in Xiaomi or Sony downstreams.. I'll investigate
+a bit more including booting downstream and checking dmesg,
+maybe it's reserved dynamically..
 
 Konrad
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts        | 1 +
+>  arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi | 1 +
+>  arch/arm64/boot/dts/qcom/msm8994.dtsi                    | 2 +-
+>  3 files changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index b150437a83558..fb4aa376ef117 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -1312,6 +1312,20 @@ blsp2_i2c6_sleep: blsp2-i2c6-sleep-state {
->  				drive-strength = <2>;
->  				bias-pull-up;
->  			};
-> +
-> +			hdmi_cec_default: hdmi-cec-default-state {
-> +				pins = "gpio31";
-> +				function = "hdmi_cec";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
-> +
-> +			hdmi_cec_sleep: hdmi-cec-sleep-state {
-> +				pins = "gpio31";
-> +				function = "hdmi_cec";
-> +				drive-strength = <2>;
-> +				bias-pull-up;
-> +			};
+> diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+> index fcca1ba94da6..501e05efbef4 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
+> @@ -15,6 +15,7 @@
+>  /delete-node/ &audio_mem;
+>  /delete-node/ &mpss_mem;
+>  /delete-node/ &peripheral_region;
+> +/delete-node/ &res_hyp_mem;
+>  /delete-node/ &rmtfs_mem;
+>  
+>  / {
+> diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+> index 2861bcdf87b7..cbc84459a5ae 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
+> @@ -23,6 +23,7 @@
+>  /delete-node/ &mba_mem;
+>  /delete-node/ &mpss_mem;
+>  /delete-node/ &peripheral_region;
+> +/delete-node/ &res_hyp_mem;
+>  /delete-node/ &rmtfs_mem;
+>  /delete-node/ &smem_mem;
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+> index 5a7923d7c62a..405778d92b43 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+> @@ -231,7 +231,7 @@ adsp_mem: memory@c9400000 {
+>  			no-map;
 >  		};
 >  
->  		remoteproc_mss: remoteproc@4080000 {
-> 
+> -		reserved@6c00000 {
+> +		res_hyp_mem: reserved@6c00000 {
+>  			reg = <0 0x06c00000 0 0x400000>;
+>  			no-map;
+>  		};
