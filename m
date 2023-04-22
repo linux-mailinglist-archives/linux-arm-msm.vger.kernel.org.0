@@ -2,78 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C2FC6EB9CA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 16:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58AB06EBA30
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 18:09:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbjDVOxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 10:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59234 "EHLO
+        id S229716AbjDVQJL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 12:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229717AbjDVOxP (ORCPT
+        with ESMTP id S229556AbjDVQJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 10:53:15 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F9A31981
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 07:53:14 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4edb93139ddso2774926e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 07:53:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682175192; x=1684767192;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5QiuEHyuEVtBRzcyBFE0SWW5sqcYBYGFxWhmKx74IZ8=;
-        b=Th/CwVCXT4rTyRaAz1noHSnkdLNoKTfuOM+TrtVbtMSZIcWpDQDwjN7n1tfoEVnvjI
-         6hCutSz4I0vQ3gJLJAB8UhaZ7GwgKb7W3Oy+h5RvPlw1W3Mbm3jD2g1oooMVZjQ9lD5r
-         qarAWgnR5yNuFpkAXayyL5kre/7fOFEeFr6EaeksMqLOOz0JJ3aT20LFSeDuBGKlnuG5
-         EAZ3o8GMc+zLJ/KqvKbBtB2TDsa6D4sPMaHqogHO28p0/K4rwBkPwWlBADYx19/PS73z
-         onMF/h4YAcqKi2P92Xf4T8ZSQQUCTY7ZvxAPWQ6sC3wLeNf/qk/wQDaBHs/FD6kiIv1x
-         A20w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682175192; x=1684767192;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5QiuEHyuEVtBRzcyBFE0SWW5sqcYBYGFxWhmKx74IZ8=;
-        b=htrOu2snE7p4tpHkwDZJwGdIqHozUxUg3ULYtK5V7KBDmWpHwSLvXRsTAF3bqOb1qC
-         3PjIMRgohPQ+aiHFvtv4FWvMEvsjV/o66lGqniXkj6Rc7ZWNKkwdjjLzT5RUakUNO257
-         WWwPx6wZ4R1IBSapTA1AkUk1F85nri2+GDpx1WZfmer2eVCke4t604dW4x33+w6fJ5tL
-         coDisPFS8JOdoOiEOKY7kgD5TV6QacoiACXLvk0ZFCIiOyxe3UOt08g7cP9Bk94ONa4i
-         R/jLDbziiVKQfN0CHFAIwvOZoEzh23DBfYxb+aO6KXdYybEmYOncWchUjgRNJH1wChRp
-         3UTg==
-X-Gm-Message-State: AAQBX9ejQ3mgI51LuNGvvKGh0Zb9AHqTGSsoWK8HjXrlIX/xZvWWwIft
-        YYmKclI2vxhusoK2f2jwJRdwFw==
-X-Google-Smtp-Source: AKy350aS5rCVAH7NM9Ys5LmRcmqCGbhFgBWCpE7TWaSLkEFqfkYjTCWiRhBmIuzdFWVtJQGL99DamA==
-X-Received: by 2002:a2e:93d6:0:b0:298:a840:ec65 with SMTP id p22-20020a2e93d6000000b00298a840ec65mr1218001ljh.36.1682175192235;
-        Sat, 22 Apr 2023 07:53:12 -0700 (PDT)
-Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id g11-20020a2eb0cb000000b002a9f966f4b3sm793957ljl.26.2023.04.22.07.53.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 07:53:11 -0700 (PDT)
-Message-ID: <0cd2b623-a625-11d7-f562-3af97367bfec@linaro.org>
-Date:   Sat, 22 Apr 2023 16:53:10 +0200
+        Sat, 22 Apr 2023 12:09:10 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D944C1BE3;
+        Sat, 22 Apr 2023 09:09:08 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33MFu61S009541;
+        Sat, 22 Apr 2023 16:08:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=82bzTA9forC2gL1CVr/H9J1y4F0eFZKRnesgn480eEw=;
+ b=pR/EkArY26U6sD7qGo8R6BqzOa5gqayXA87M8BcFj9IGFGj6snHoeBAVwbRBJi4M/qNE
+ mo5WVBkxpejcf3xMDd3p0AWoQIquM3E5eTB1D01XhBDNoLcI+1I9XQNxdipzaYlNz97Z
+ klU1NOq9x/1SzsLfdrgFjKF5jX9rE1wHsfyYYnD7EE8uRiLENavcSIgzEiTLwV3JQcvJ
+ UrZqW5QyBd7yZnjQfrkPqfIZWTg16+Rm/0e7uC1oKHxF6bPsfa4+/uvUvH4/aBybMq+s
+ 4q1bo/LH7MOamquIXm9WMnrHH2zB9CPGf3wW04WeFgpX+Y+NRxxrtX4aqht+NJA74sRY 5g== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q48bq0mdt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 22 Apr 2023 16:08:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33MG8tLC021226
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 22 Apr 2023 16:08:55 GMT
+Received: from [10.216.16.28] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 22 Apr
+ 2023 09:08:48 -0700
+Message-ID: <28a58bf9-5ad8-4084-11d6-cd1b0d3a2998@quicinc.com>
+Date:   Sat, 22 Apr 2023 21:38:44 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v5 11/14] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
- usb-role-switching for usb_1
+Subject: Re: [PATCH v6 6/8] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     caleb.connolly@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com
-References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
- <20230413113438.1577658-12-bryan.odonoghue@linaro.org>
- <31bf025d-decf-c30c-8ffe-7e935bb31790@linaro.org>
-In-Reply-To: <31bf025d-decf-c30c-8ffe-7e935bb31790@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+To:     Andrew Halaney <ahalaney@redhat.com>,
+        Johan Hovold <johan+linaro@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_wcheng@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_harshq@quicinc.com>, <quic_shazhuss@quicinc.com>
+References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+ <20230405125759.4201-7-quic_kriskura@quicinc.com>
+ <20230414154527.vsjtgtfsd5kc7vww@halaney-x13s>
+ <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
+In-Reply-To: <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9D_524ipiLzJk5v9Fic9Igv8FOO5EkHr
+X-Proofpoint-ORIG-GUID: 9D_524ipiLzJk5v9Fic9Igv8FOO5EkHr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-21_08,2023-04-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
+ impostorscore=0 adultscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2303200000 definitions=main-2304220147
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,62 +97,135 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 22.04.2023 16:52, Konrad Dybcio wrote:
+On 4/16/2023 12:34 AM, Krishna Kurapati PSSNV wrote:
 > 
 > 
-> On 13.04.2023 13:34, Bryan O'Donoghue wrote:
->> Switch on usb-role-switching for usb_1 via TCPM. We need to declare
->> usb-role-switch in &usb_1 and associate with the remote-endpoint in TCPM
->> which provides the necessary signal.
+> On 4/14/2023 9:15 PM, Andrew Halaney wrote:
+>> On Wed, Apr 05, 2023 at 06:27:57PM +0530, Krishna Kurapati wrote:
+>>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+>>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+>>> platforms.
+>>>
+>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>> ---
+>>> Link to v5: 
+>>> https://lore.kernel.org/all/20230310163420.7582-7-quic_kriskura@quicinc.com/
+>>>
+>>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 58 ++++++++++++++++++++++++++
+>>>   1 file changed, 58 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi 
+>>> b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> index 42bfa9fa5b96..7b81f2b0449d 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> @@ -3108,6 +3108,64 @@ usb_1_role_switch: endpoint {
+>>>               };
+>>>           };
+>>> +        usb_2: usb@a4f8800 {
+>>> +            compatible = "qcom,sc8280xp-dwc3", "qcom,dwc3";
+>>> +            reg = <0 0x0a4f8800 0 0x400>;
+>>> +            #address-cells = <2>;
+>>> +            #size-cells = <2>;
+>>> +            ranges;
+>>> +
+>>> +            clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
+>>> +                 <&gcc GCC_USB30_MP_MASTER_CLK>,
+>>> +                 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
+>>> +                 <&gcc GCC_USB30_MP_SLEEP_CLK>,
+>>> +                 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+>>> +                 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
+>>> +                 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
+>>> +                 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
+>>> +                 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
+>>> +            clock-names = "cfg_noc", "core", "iface", "sleep", 
+>>> "mock_utmi",
+>>> +                      "noc_aggr", "noc_aggr_north", 
+>>> "noc_aggr_south", "noc_sys";
+>>> +
+>>> +            assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+>>> +                      <&gcc GCC_USB30_MP_MASTER_CLK>;
+>>> +            assigned-clock-rates = <19200000>, <200000000>;
+>>> +
+>>> +            interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+>>> +                        <&pdc 126 IRQ_TYPE_EDGE_RISING>,
+>>> +                        <&pdc 16 IRQ_TYPE_LEVEL_HIGH>;
+>>> +
+>>> +            interrupt-names = "dp_hs_phy_irq", "dm_hs_phy_irq",
+>>> +                        "ss_phy_irq";
+>>> +
 >>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> This belongs to the SoC DTSI as it describes the capabilities
-> of the USB controllers on the chip.
+>> This is breaking the current schema (with the full series applied),
+>> I am not sure if a pwr_event IRQ exists or but it maybe necessary to
+>> modify qcom,dwc3.yaml in order to explain hardware if it doesn't exist:
+>>
+>> (dtschema) ahalaney@halaney-x13s ~/git/linux-next (git)-[718f2024524f] 
+>> % make CHECK_DTBS=y DT_SCHEMA_FILES=/usb/qcom,dwc3.yaml 
+>> qcom/sa8540p-ride.dtb                                                                                   :(
+>>    LINT    Documentation/devicetree/bindings
+>>    CHKDT   Documentation/devicetree/bindings/processed-schema.json
+>>    SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>>    DTC_CHK arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
+>> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:0: 'pwr_event' was expected
+>>     From schema: 
+>> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:1: 'dp_hs_phy_irq' was expected
+>>     From schema: 
+>> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:2: 'dm_hs_phy_irq' was expected
+>>     From schema: 
+>> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names: ['dp_hs_phy_irq', 'dm_hs_phy_irq', 'ss_phy_irq'] is too short
+>>     From schema: 
+>> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupts-extended: [[99, 127, 1], [99, 126, 1], [99, 16, 4]] is too short
+>>     From schema: 
+>> /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>> make CHECK_DTBS=y DT_SCHEMA_FILES=/usb/qcom,dwc3.yaml 
+>> qcom/sa8540p-ride.dtb  22.61s user 0.54s system 99% cpu 23.172 total
+>> (dtschema) ahalaney@halaney-x13s ~/git/linux-next (git)-[718f2024524f] %
+>>
+>> Thanks,
+>> Andrew
+>>
 > 
-> Also please add a newline before each subnode.
-To be clear, I meant the port definitions and properties,
-not the DWC<->PMIC_TCPM port assignments
+> Hi Andrew,
+> 
+>   Thanks for pointing it out. Let me check and get back on the 
+> pwr_event_irq.
+> 
+> Probably I might have missed it 😅. If so, will make sure to add it in 
+> next version.
+> 
+> Regards,
+> Krishna,
 
-Konrad
-> 
-> Konrad
->>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 19 ++++++++++++++++++-
->>  1 file changed, 18 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> index 1e0b6fd59abc9..b5cc45358a474 100644
->> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
->> @@ -1273,7 +1273,13 @@ &usb_1 {
->>  };
->>  
->>  &usb_1_dwc3 {
->> -	dr_mode = "peripheral";
->> +	dr_mode = "otg";
->> +	usb-role-switch;
->> +	port {
->> +		dwc3_role_switch_in: endpoint {
->> +			remote-endpoint = <&pm8150b_role_switch_out>;
->> +		};
->> +	};
->>  };
->>  
->>  &usb_1_hsphy {
->> @@ -1359,5 +1365,16 @@ connector {
->>  					 PDO_FIXED_DUAL_ROLE |
->>  					 PDO_FIXED_USB_COMM |
->>  					 PDO_FIXED_DATA_SWAP)>;
->> +		ports {
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			port@0 {
->> +				reg = <0>;
->> +				pm8150b_role_switch_out: endpoint {
->> +					remote-endpoint = <&dwc3_role_switch_in>;
->> +				};
->> +			};
->> +		};
->>  	};
->>  };
+
+Hi Andrew, Johan,
+
+   I was looking at the pwr_event_irq interrupts for Multiport 
+controller and see that there are two of them as per HW specs. All 
+targets till date have only 1 pwr_event_irq required.
+
+The reason I thought I missed pwr_event_irq in my patches is because in 
+downstream this is a required IRQ for all targets, so I was under 
+assumption that we need it for upstream targets as well. But upstream 
+qcom driver doesn't have support for this IRQ yet. And this has been 
+made a required one only for SC8280 [1]/[2].
+
+Probably we can proceed in one of the following ways:
+1. Remove pwr_event_irq in both bindings and DT as driver support is not 
+present currently.
+2. Update the bindings for SC8280 to include an optional secondary 
+pwr_event_irq for multiport controller.
+
+I would prefer option-1 as removing them would be better because they 
+are not being used. Please let me know your thoughts on this.
+
+[1]: 
+https://lore.kernel.org/all/20220713131340.29401-2-johan+linaro@kernel.org/
+[2]: 
+https://lore.kernel.org/all/20220713131340.29401-6-johan+linaro@kernel.org/
+
+Regards,
+Krishna,
