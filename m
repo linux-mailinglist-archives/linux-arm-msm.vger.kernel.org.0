@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E1F46EB924
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 14:20:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 251B26EB929
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 22 Apr 2023 14:29:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbjDVMUW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 22 Apr 2023 08:20:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52028 "EHLO
+        id S229698AbjDVM3W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 22 Apr 2023 08:29:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbjDVMUV (ORCPT
+        with ESMTP id S229652AbjDVM3W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 22 Apr 2023 08:20:21 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6A9198D
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:20:19 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2a8baeac4d1so24246941fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:20:19 -0700 (PDT)
+        Sat, 22 Apr 2023 08:29:22 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F461BD1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:29:20 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2a8bbea12d7so25450041fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 22 Apr 2023 05:29:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682166018; x=1684758018;
+        d=linaro.org; s=google; t=1682166559; x=1684758559;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YbDC/ViUiQ09TaRrRepbHTTbvIE8/HYr1vg91d/EXqs=;
-        b=QOOQ3lGE1xpwVOv/8LU5bKXuEYTPBcUl9NjaZ+707t8rGSYsXMdHA8NWbdAvL8NRhI
-         tPShEa1646PQGg5DIsPzu4Z5at8XnQWNEErogRBre1zQqkvkjHQSlZ196puZVW4jNxBl
-         32qit/urhHTLYYJLdf+qr2kc5GfT389B384uzyvw4uD+82y1Nc6Q5kZ9vupkiVzjpGj6
-         F9vEctjrs6Hu1MkL+C18C9EgGFnQoLSDUlrxvafPCbPxkpSqzq3BVTP/gMvjETPhc0xa
-         2Xtav/CF6lUSWuO6JXFGEyZEHa3brbyQsYVmnFXyMdbDbalET14vAnd9tBD8lpx4IYLh
-         r9og==
+        bh=c/sd8+90mWOvfj0mCOmTgWR1MxRpJMuPvMYRFU54ny4=;
+        b=JwvxIRx7wnqJYQpaovZKej+sEnuMtC3tpvW7MnDhW8U9zwGPdlr6r5gTEwspjpZ3b/
+         qoOvtO0swuoTixlSWKf17NdNUhzI33DpCcOASOkNr+ryREqQV3MDwbhIZPr2Gwln8Sx5
+         ByIo5tSRHhux8+eOvFvNbz0TVUKRpOh1EA8zeYwxZOle2Mp9vzHrB8BDte21Uy9c4xl+
+         sIjlvGAHzbfm8CKKaw4es4QqqTXwbAP4yJ56PZ3nWaERmRI8etDKQHyUeuAleyhUvPoB
+         DlOKz1nOLVn1JN2+v4IqYDQGA5JGzlmRKJO/CbeFz8DXBa0fu+DeiXxA0AiUTOpdrTfs
+         B2ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682166018; x=1684758018;
+        d=1e100.net; s=20221208; t=1682166559; x=1684758559;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YbDC/ViUiQ09TaRrRepbHTTbvIE8/HYr1vg91d/EXqs=;
-        b=M1h8IUFqEUFSPNV5ppM7kV9wvw/epTKj9C3I5WE6qx/kcV9h2vZzTambPoMcfQJ2+x
-         QgVH/YJAnJKa01Whxb1sS4A9e1Nk+aE4O2SUaTkYROIz+qhWgwgYoA6GSitY3zttFYzq
-         y3ImnABcEA/piBa0PCBxpEd4FJD2OG/s3KpJa8WYprpPzpSvQbwF3qFCg52c/Q2dw7Rr
-         eeCgEA/sYQdvZ4wytLELaWy+5uJOQNc45NjLpGcJV6qsOOgzVB1Xby0UY5jQG6zr6UGr
-         DtiuDpiliCQjSntTJwlvtoCB2+AYfTlmt50QBRHLDyH7r3+2EIDg+NU8UqdKX4rryvta
-         slgA==
-X-Gm-Message-State: AAQBX9fR1i7kieCI4yJf+Gh5wcykAotoXlkez8AXZjEE3uMaN4w2bwbt
-        B0IruCuETlMf2J4dHaowlNA1Xg==
-X-Google-Smtp-Source: AKy350ZLtiNjfBDqwuoCFA6CkoTMhuWea78JYwUYJmE/MD3HxnAcvMpsDvgrrLUmDA2KnT9v4GDTcQ==
-X-Received: by 2002:a2e:b61a:0:b0:2a7:ac9d:a64 with SMTP id r26-20020a2eb61a000000b002a7ac9d0a64mr1252533ljn.43.1682166018260;
-        Sat, 22 Apr 2023 05:20:18 -0700 (PDT)
+        bh=c/sd8+90mWOvfj0mCOmTgWR1MxRpJMuPvMYRFU54ny4=;
+        b=WgWO5pgUQgn4/xahN7YFwvG8jvSb3rD/+lRNRc6z64MbkG5vFECiu7u/rGGKFSHyum
+         JZobrhdpmTXFkVKZEz3FylzF5EXOsSw3z6PnT6rQxj/DbJgCC/ExRP0XuxFLSNyks6LL
+         2cNvhWyJKlPXJ4j78YHXwj0wzWz3C8pbOxC/plVzc9O5/tyKS2xw4EldB4RxwhPOA6Nm
+         ZKaZgshPzKLnqPpr7HIQioUcosdfxAOJd5oOB5BvMV22Rt0wFLjUMBpl8/nAtKOrBTYc
+         p8etpW2X0rTOrUL/19wn8wmwfeQHatnP/yw8T5T3AVQJIa9IBRKYpxccCEIzOpRrF0Lg
+         MgbQ==
+X-Gm-Message-State: AAQBX9fGk5i5bvDAERBk5MEzTOWUVvS9oRt7VBoZrYP7sHTOfN3U6hiy
+        pUzki5rQ3RqVCjlwf0uaughepg==
+X-Google-Smtp-Source: AKy350ZnxLlEHGU0yVQpDZlzCuo1hlwMOdcu3otyXWFQM6LKiqgYXp8f1zOrb9MK9k1mA8vm/Smemw==
+X-Received: by 2002:a2e:3213:0:b0:2a8:e642:8cdb with SMTP id y19-20020a2e3213000000b002a8e6428cdbmr1205087ljy.49.1682166558915;
+        Sat, 22 Apr 2023 05:29:18 -0700 (PDT)
 Received: from [192.168.1.101] (abyj144.neoplus.adsl.tpnet.pl. [83.9.29.144])
-        by smtp.gmail.com with ESMTPSA id z17-20020a2e8e91000000b002a8a77f4d03sm971651ljk.59.2023.04.22.05.20.17
+        by smtp.gmail.com with ESMTPSA id x23-20020a2e7c17000000b002a5f554d263sm970784ljc.46.2023.04.22.05.29.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 22 Apr 2023 05:20:17 -0700 (PDT)
-Message-ID: <99b71397-9d51-4cfa-533b-992369b74541@linaro.org>
-Date:   Sat, 22 Apr 2023 14:20:16 +0200
+        Sat, 22 Apr 2023 05:29:18 -0700 (PDT)
+Message-ID: <a3117f35-bf2d-09f9-439f-b656aa1278dc@linaro.org>
+Date:   Sat, 22 Apr 2023 14:29:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8992-libra: drop duplicated
- reserved memory
+Subject: Re: [RFT PATCH 1/3] arm64: dts: qcom: msm8996: correct /soc/bus
+ ranges
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -66,15 +66,14 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230420180746.860934-1-krzysztof.kozlowski@linaro.org>
- <20230420180746.860934-3-krzysztof.kozlowski@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230420180746.860934-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230420180746.860934-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,39 +83,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 20.04.2023 20:07, Krzysztof Kozlowski wrote:
-> There are two entries for similar reserved memory: qseecom@cb400000 and
-> audio@cb400000.  Keep the qseecom as it is longer.
+> The bus@0 node should have reg or ranges to fix dtbs W=1 warnings:
 > 
->   Warning (unique_unit_address_if_enabled): /reserved-memory/audio@cb400000: duplicate unit-address (also used in node /reserved-memory/qseecom@cb400000)
+>   Warning (unit_address_vs_reg): /soc@0/bus@0: node has a unit name, but no reg or ranges property
+>   Warning (simple_bus_reg): /soc@0/bus@0: missing or empty reg/ranges property
 > 
-> Fixes: 69876bc6fd4d ("arm64: dts: qcom: msm8992-libra: Fix the memory map")
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
 > ---
 > 
-> Maybe the original intention was to use different address for audio res.
-> memory?
+> Please kindly test on hardware.
 > ---
-Similar story to patch 2, I'll recheck on a device
-soon(tm)
+PCIe Wi-Fi still comes up and connects to the network
+(it doesn't really work reliably but it never quite did -
+brcmfmac is brcmfmac :/)
+
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # MSM8996 Kagura
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts | 5 -----
->  1 file changed, 5 deletions(-)
+
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-> index 501e05efbef4..133f9c2540bc 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dts
-> @@ -110,11 +110,6 @@ rmtfs_mem: rmtfs@ca100000 {
->  			qcom,client-id = <1>;
->  		};
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index e160d5e6863f..a88d0a9bb7e5 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -1832,7 +1832,7 @@ bus@0 {
+>  			compatible = "simple-pm-bus";
+>  			#address-cells = <1>;
+>  			#size-cells = <1>;
+> -			ranges;
+> +			ranges = <0x0 0x0 0xffffffff>;
 >  
-> -		audio_mem: audio@cb400000 {
-> -			reg = <0 0xcb000000 0 0x400000>;
-> -			no-mem;
-> -		};
-> -
->  		qseecom_mem: qseecom@cb400000 {
->  			reg = <0 0xcb400000 0 0x1c00000>;
->  			no-mem;
+>  			pcie0: pcie@600000 {
+>  				compatible = "qcom,pcie-msm8996";
