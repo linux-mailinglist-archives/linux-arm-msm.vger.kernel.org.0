@@ -2,267 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 581FA6ECF76
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 15:43:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5180D6ECF94
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 15:50:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232321AbjDXNnk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 09:43:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49398 "EHLO
+        id S232925AbjDXNt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 09:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232020AbjDXNni (ORCPT
+        with ESMTP id S232936AbjDXNtZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 09:43:38 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94C5975F;
-        Mon, 24 Apr 2023 06:43:07 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33OBvEGA012942;
-        Mon, 24 Apr 2023 13:42:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cVqPvvQlpQHEtwMA0GHXvEDbmIKaWD6JR6LYtWuYSjs=;
- b=AIdr4/EqKtx0U/k5kB4OVSdEENwX52rHQc+USUWu8PVhpoy9Mw3b/YLs+ZT2pU0xK4mu
- DVxy4+pTdmxMeJD1nCCPsPoWUexOfMwMeZi6+1YmXU+HpU+PTpK1MpEDjQzgCNoV8XF/
- YYJGec4UeClsSQQRTVaJZ6xgH2+lhFf6ZTumEvLgGQcb8455d8jogI7ng6OZRopcpk/F
- e5FxsC/rN4PlNEUne7rk9eOrb5VfB5nk+vcdf96XKldqXBfW1esSTV/oPjzjpK7XBMsz
- Jb5SVbbV7D3UOc+AeFkT04+PUuzA32qGtry2B1myoRPuQC7Csnt0iqxxx69akqhLFSW2 RA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q5r0urdy9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Apr 2023 13:42:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33ODgUY8027454
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Apr 2023 13:42:30 GMT
-Received: from [10.239.133.9] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 24 Apr
- 2023 06:42:26 -0700
-Message-ID: <a9d4e5d1-0e1f-13b5-cf3a-464e61594990@quicinc.com>
-Date:   Mon, 24 Apr 2023 21:42:24 +0800
+        Mon, 24 Apr 2023 09:49:25 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B237D83
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 06:48:54 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f199696149so13843205e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 06:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682344131; x=1684936131;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XqANcJGhDQ25M/IWMKz8eDStyZUXzuPnfRXSZoU//+c=;
+        b=xZcHO8GyGzRTPD747BQrcz2zbTYMnVou0BMHLN7q60lUS9HRovlKiXD5WGgScsLmr2
+         n4FPtn/Dwajil5UaBSH+bTQ/bk4KFNFlS9SOzzaPKcQ1+XxD/or6P+9EstG0j2O3LXMp
+         MwXjhWBke0uZLpL3x+fRvu0ECRkPWnRvoaMC6HyK1nO1w8hD9jiBEs0whyj1hN52TWer
+         5L/csQUt0yomO6OlFRqu5XYveBw0XE2y+/NzXYVOCiKv/LUUKribcSgxCIMSuHwUK92B
+         3+t6Hi/e8l/qCmV/AVXryN3W32xrI1+TKOR9qkr76JvGeKo1jgn5KEvUuIcN9SyH0DZ/
+         ONvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682344131; x=1684936131;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XqANcJGhDQ25M/IWMKz8eDStyZUXzuPnfRXSZoU//+c=;
+        b=LUrQrcFkfw3HHjG14CZ+h5XORB60zH+768wkXTkLwq2FpvKSd1AoqIU+qZ8Kgn1JjY
+         XbQBjtNuQTECHuWrE2yUjpHLBfn52CAHzJyZaQ2+i5ZiQVRyo0wn8nxU/Q5GJuVK20+B
+         gR2s3pbvl6yxTYm6Z9vp0f1TV4UHarvv5z7U3XiytSlIHLp+DTYaQ6SOyUODnzDoxH2h
+         B3w1TbjzFWEPo/UQtnvUD3QHSxckDEIvEj89zD8sO/ArQNA6l/in6U8u+urWaRPbUNq5
+         unPCScAFzZUzqPi6ccP1xVux8yM/ude+hy5wE9VhUl26sgeG2VZFCZUoaYACbaa9mS/K
+         jGIA==
+X-Gm-Message-State: AAQBX9dXm7dpvMc7N5ayuv5wDmj1n48e46iG2kZreY9KeTQJmOOCJBsg
+        APeXmucN+eitIRSDo2B2pvw/Lg==
+X-Google-Smtp-Source: AKy350b+XIBsEARtQuxURrcCS/5P3tB1xKkwtb3Crp9CCJ/46SuZlz73bF1xzaWnQtA9aHQui6e1zw==
+X-Received: by 2002:a1c:f601:0:b0:3f1:7331:38b1 with SMTP id w1-20020a1cf601000000b003f1733138b1mr7633801wmc.14.1682344131435;
+        Mon, 24 Apr 2023 06:48:51 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id e22-20020a5d5956000000b003012030a0c6sm10840246wri.18.2023.04.24.06.48.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Apr 2023 06:48:50 -0700 (PDT)
+Message-ID: <c893f0c6-48c5-bf02-3d1e-cffe3d257659@linaro.org>
+Date:   Mon, 24 Apr 2023 14:48:49 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] coresight: core: Add coresight name support
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Rob Herring <robh@kernel.org>,
-        "Sudeep Holla" <sudeep.holla@arm.com>
-CC:     <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Tingwei Zhang" <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>
-References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
- <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
- <180a66b1-6996-c705-5d8a-0a69ce0353d7@quicinc.com>
- <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
- <619818ad-71cb-6c07-bcae-ea9398f08878@arm.com>
- <6b976d2b-3c78-96e4-bf35-3ef88828a9dd@quicinc.com>
- <f5a1d873-8aa0-ea11-28df-8857fc256862@arm.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v5 13/14] usb: typec: qcom: Add Qualcomm PMIC TCPM support
 Content-Language: en-US
-From:   Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <f5a1d873-8aa0-ea11-28df-8857fc256862@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oHW-G3COBQcgsMcVL-mSsb11yCwyJTzb
-X-Proofpoint-ORIG-GUID: oHW-G3COBQcgsMcVL-mSsb11yCwyJTzb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-24_07,2023-04-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxlogscore=999 phishscore=0 mlxscore=0 spamscore=0 priorityscore=1501
- malwarescore=0 impostorscore=0 lowpriorityscore=0 clxscore=1011
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304240123
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     linux@roeck-us.net, gregkh@linuxfoundation.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
+        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
+References: <20230413113438.1577658-1-bryan.odonoghue@linaro.org>
+ <20230413113438.1577658-14-bryan.odonoghue@linaro.org>
+ <ZEZ/6Y4dNmcZ7aHo@kuha.fi.intel.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <ZEZ/6Y4dNmcZ7aHo@kuha.fi.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 3/17/2023 10:25 PM, Suzuki K Poulose wrote:
+On 24/04/2023 14:11, Heikki Krogerus wrote:
+> I think you need to rewrite the commit message - you still have that
+> third driver in there - but otherwise I don't have any more comments.
+> I hope Guenter has time to check this. In any case, FWIW:
+> 
+> Acked-by: Heikki Krogerus<heikki.krogerus@linux.intel.com>
 
-> On 17/03/2023 05:34, Jinlong Mao wrote:
->>
->> On 3/13/2023 5:16 PM, Suzuki K Poulose wrote:
->>> Cc: Rob
->>>
->>> On 01/03/2023 15:11, Jinlong Mao wrote:
->>>> Hi Suzuki,
->>>>
->>>> On 2/9/2023 10:16 AM, Jinlong Mao wrote:
->>>>>
->>>>> On 2/8/2023 10:26 PM, Suzuki K Poulose wrote:
->>>>>> On 08/02/2023 11:07, Mao Jinlong wrote:
->>>>>>> Apart from STM and ETM sources, there will be more sources added to
->>>>>>> coresight components. For example, there are over 10 TPDM sources.
->>>>>>> Add coresight name support for custom names which will be
->>>>>>> easy to identify the source.
->>>>>>>
->>>>>>
->>>>>> As we have previously discussed, please don't make this a generic
->>>>>> code change. If your device has a "specifici" name, use that for
->>>>>> allocating in the driver and leave the core code alone.
->>>>>>
->>>>>> Suzuki
->>>>>>
->>>>> Hi Suzuki,
->>>>>
->>>>> Not only for TPDMs. There could be dozens of CTI devices.
->>>>> It is hard for user to know which CTI device it is with current 
->>>>> names.
->>>>>
->>>>> Thanks
->>>>> Jinlong Mao
->>>>
->>>> The coresight name support is applicable to CTI and TPDM devices.
->>>> This is a generic change for the source which has dozens of devices.
->>>
->>> I took a look at the CTI situation and I agree that the situation
->>> is a bit tricky. The CTI could be connected to multiple devices,
->>> some of them may not be even CoreSight devices. Given there could
->>> be numerous of them, we need some way to make the "devices" naming
->>> a bit more intuitive.
->>>
->>> Before we go ahead and add something specific to coresight, I would
->>> like to see if there is a generic property. Ideally, the "labels"
->>> in the DTS sources would have been an ideal choice, but can't
->>> see how that is available in the FDT.
->>>
->>> Suzuki
->> Hi Suzuki,
->>
->> Shall we use the full_name of device_node struct as coresight 
->> component's name ?
->>
->>    struct device_node {
->>      const char *name;
->>      phandle phandle;
->> *    const char *full_name;
->>
->> *For component below, the full_name will be "coresight-tpdm-ipcc".
->> *
->> **coresight-tpdm-ipcc* {
->
-> Does that go against the convention of naming the DT nodes ?
-> I am not sure. Also, we would need a way to solve this for ACPI too.
->
-> Suzuki
-Hi Suzuki,
+appreciated
 
-Does ACPI device also use "coresight_alloc_device_name" to get the 
-device's name ?
-
-Thanks
-Jinlong Mao
-
->
->
->>      compatible = "qcom,coresight-tpdm", "arm,primecell";
->>      reg = <0 0x10c29000 0 0x1000>;
->>
->>      clocks = <&aoss_qmp>;
->>      clock-names = "apb_pclk";
->>
->>      out-ports {
->>              port {
->>                      tpdm_ipcc_out_tpda_dl_center_27: endpoint {
->>                              remote-endpoint =
->> <&tpda_dl_center_27_in_tpdm_ipcc>;
->>                      };
->>              };
->>      };
->> };*
->>
->> *Thanks
->> Jinlong Mao
->>>
->>>
->>>>
->>>> Thanks
->>>> Jinlong Mao
->>>>
->>>>>>
->>>>>>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>>>>>> ---
->>>>>>>   drivers/hwtracing/coresight/coresight-core.c | 34 
->>>>>>> +++++++++++---------
->>>>>>>   1 file changed, 19 insertions(+), 15 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
->>>>>>> b/drivers/hwtracing/coresight/coresight-core.c
->>>>>>> index d3bf82c0de1d..5e95d9c7f256 100644
->>>>>>> --- a/drivers/hwtracing/coresight/coresight-core.c
->>>>>>> +++ b/drivers/hwtracing/coresight/coresight-core.c
->>>>>>> @@ -1733,28 +1733,32 @@ char *coresight_alloc_device_name(struct 
->>>>>>> coresight_dev_list *dict,
->>>>>>>   {
->>>>>>>       int idx;
->>>>>>>       char *name = NULL;
->>>>>>> +    const char *coresight_name = NULL;
->>>>>>>       struct fwnode_handle **list;
->>>>>>> +    struct device_node *node = dev->of_node;
->>>>>>>         mutex_lock(&coresight_mutex);
->>>>>>>   -    idx = coresight_search_device_idx(dict, dev_fwnode(dev));
->>>>>>> -    if (idx < 0) {
->>>>>>> -        /* Make space for the new entry */
->>>>>>> -        idx = dict->nr_idx;
->>>>>>> -        list = krealloc_array(dict->fwnode_list,
->>>>>>> -                      idx + 1, sizeof(*dict->fwnode_list),
->>>>>>> -                      GFP_KERNEL);
->>>>>>> -        if (ZERO_OR_NULL_PTR(list)) {
->>>>>>> -            idx = -ENOMEM;
->>>>>>> -            goto done;
->>>>>>> +    if (!of_property_read_string(node, "coresight-name", 
->>>>>>> &coresight_name))
->>>>>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s", 
->>>>>>> coresight_name);
->>>>>>> +    else {
->>>>>>> +        idx = coresight_search_device_idx(dict, dev_fwnode(dev));
->>>>>>> +        if (idx < 0) {
->>>>>>> +            /* Make space for the new entry */
->>>>>>> +            idx = dict->nr_idx;
->>>>>>> +            list = krealloc_array(dict->fwnode_list,
->>>>>>> +                          idx + 1, sizeof(*dict->fwnode_list),
->>>>>>> +                          GFP_KERNEL);
->>>>>>> +            if (ZERO_OR_NULL_PTR(list))
->>>>>>> +                goto done;
->>>>>>> +
->>>>>>> +            list[idx] = dev_fwnode(dev);
->>>>>>> +            dict->fwnode_list = list;
->>>>>>> +            dict->nr_idx = idx + 1;
->>>>>>>           }
->>>>>>>   -        list[idx] = dev_fwnode(dev);
->>>>>>> -        dict->fwnode_list = list;
->>>>>>> -        dict->nr_idx = idx + 1;
->>>>>>> +        name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", 
->>>>>>> dict->pfx, idx);
->>>>>>>       }
->>>>>>> -
->>>>>>> -    name = devm_kasprintf(dev, GFP_KERNEL, "%s%d", dict->pfx, 
->>>>>>> idx);
->>>>>>>   done:
->>>>>>>       mutex_unlock(&coresight_mutex);
->>>>>>>       return name;
->>>>>>
->>>>> _______________________________________________
->>>>> CoreSight mailing list -- coresight@lists.linaro.org
->>>>> To unsubscribe send an email to coresight-leave@lists.linaro.org
->>>
->
+---
+bod
