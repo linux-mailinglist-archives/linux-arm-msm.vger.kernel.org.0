@@ -2,107 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 534CA6ED00F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 16:12:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3430E6ED06D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 16:39:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231715AbjDXOMC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 10:12:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46398 "EHLO
+        id S231694AbjDXOjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 10:39:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231544AbjDXOMB (ORCPT
+        with ESMTP id S231588AbjDXOju (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 10:12:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D40B7D84;
-        Mon, 24 Apr 2023 07:12:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C1C3361A2B;
-        Mon, 24 Apr 2023 14:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B69C433EF;
-        Mon, 24 Apr 2023 14:11:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1682345519;
-        bh=rXDHwC4VVIDhGhpP6nmTzwKeAZm5iA95fSY6qeiaDfk=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=ecpuOMTszADJgavY0i4FFYrmRsSE82tCm+QPqEkdo5TNJZ0aomGalWpUZP0Ssb37+
-         6BRaY9kgbQwqrNhHiAnWG5WmonxJCpgW7u0su6XQrV4B5V5qAzwpLIhlrluayElPR/
-         9LvYnxGL2AR/Jo5Ejdd9VZ2uR/rElBYlR3kFXPr+bNZk1kYpGQ/G/iNoQL5vYnmfNC
-         2gWYQtekVQ8MyM+tQvnoS0fEqOvYMNWiu0AMPp90UfQoLGH2XYKkZ+TzqGbivTB67f
-         sYnPOiDz75wq5eq8MMpVpB6nSElpSmDbIzBWx/M92Sn27+kD8rIcS+lMpc/OCpiMRO
-         6XOmZzurWJmLg==
-Message-ID: <4a2f1ed0-015b-9953-1656-5d90020b7c10@kernel.org>
-Date:   Mon, 24 Apr 2023 17:11:52 +0300
+        Mon, 24 Apr 2023 10:39:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEF8F49D1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 07:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1682347142;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=BigudKcOA1SWNAOg8hWRkq+6kqvUQ8WQtVHc52aXCFk=;
+        b=QdlHiYhZTLpqw49T+hhMgSsurWxT/MDTOLh8N2V9LB8T3If1qI5chWQ/j13V39UQjD957Q
+        WbV7csIHADxzuks6I9WXI0G2kM3r6YLIJkK/lj37QP2yZfhsxXBrEQWuQe4fiMfi7PjZwD
+        eW5tDa8ouImHLQ8JlIxu7dnpbGVJsP8=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-604-nApYBCw4Mh2JZOnbJ2R4iw-1; Mon, 24 Apr 2023 10:39:00 -0400
+X-MC-Unique: nApYBCw4Mh2JZOnbJ2R4iw-1
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-6a5f1bc4b26so4089997a34.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 07:39:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682347140; x=1684939140;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BigudKcOA1SWNAOg8hWRkq+6kqvUQ8WQtVHc52aXCFk=;
+        b=XKG4leNKp+7TeeNaXCsvfugvQJYgjwCLJF46Ij4ZK5Fev/KWZHt/dmkh85ZNtRtcXg
+         8hNhVr3XW4lU82VKbSuAknWCMSMmh5HKO3fzD4gNZdBPvLJ3jCeN2FE7GFUyXcK6R+0k
+         7hoY41yzq9khikNZaU5UcmgSbLET9bvVXsbdfJOwUZzWm9nw8NORvuCcnc655upgeZDZ
+         qXaCcRNxxZLjbELrPQm0YUembTe1t8NqlridhpX8E7vTwPVJrCzwxiyta8ZXxCgC575F
+         Gb/VFuJ1xqASevVAVqe9L5JWXiQ895luzc2Wjz9eSowMp/KCgcoAWinLa8iocKsKBX0H
+         NjDQ==
+X-Gm-Message-State: AAQBX9f17in4bdM7DOWStg/eV+AEiR9MGpTLqDi5DS/j4T3wSXTUGBAH
+        U3zyFq2kWByZBnGfE8APibGMb27Poi7zhufiwBWz38mkYmwdMfxwviBCqRA9F47pd2w+zG+B4bS
+        +uOYrnKJDuG5H3JqiPgGxDFNkzQ==
+X-Received: by 2002:a05:6830:1603:b0:6a5:f6f6:4ebf with SMTP id g3-20020a056830160300b006a5f6f64ebfmr7763128otr.37.1682347140016;
+        Mon, 24 Apr 2023 07:39:00 -0700 (PDT)
+X-Google-Smtp-Source: AKy350a4cPtmKSKYUPwFELwY06yqIRsIWSQ/yGP+ZB1JxXAGRtizSylDhCPYxVdKzDUhmtvHwVE2aw==
+X-Received: by 2002:a05:6830:1603:b0:6a5:f6f6:4ebf with SMTP id g3-20020a056830160300b006a5f6f64ebfmr7763119otr.37.1682347139827;
+        Mon, 24 Apr 2023 07:38:59 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::22])
+        by smtp.gmail.com with ESMTPSA id z18-20020a05683010d200b006a32ba92994sm349236oto.23.2023.04.24.07.38.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Apr 2023 07:38:59 -0700 (PDT)
+Date:   Mon, 24 Apr 2023 09:38:57 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: sa8155p-adp: Make -cells decimal
+Message-ID: <20230424143857.373kjvi42c7acsbp@halaney-x13s>
+References: <20230421205512.339850-1-ahalaney@redhat.com>
+ <20230421205512.339850-2-ahalaney@redhat.com>
+ <abd106b1-6650-6a7c-1c8b-3609e47b0161@linaro.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 4/5] drm/msm/mdss: Handle the reg bus ICC path
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230417-topic-dpu_regbus-v2-0-91a66d04898e@linaro.org>
- <20230417-topic-dpu_regbus-v2-4-91a66d04898e@linaro.org>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20230417-topic-dpu_regbus-v2-4-91a66d04898e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abd106b1-6650-6a7c-1c8b-3609e47b0161@linaro.org>
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Konrad,
+On Mon, Apr 24, 2023 at 09:21:45AM +0200, Krzysztof Kozlowski wrote:
+> On 21/04/2023 22:55, Andrew Halaney wrote:
+> > The property logically makes sense in decimal, and is the standard used
+> > elsewhere.
+> > 
+> > Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> > ---
+> > 
+> > Changes since v2:
+> >     * Collect tags
+> > Changes since v1:
+> >     * New patch (Konrad)
+> 
+> Doing such changes per one board will be a lot of churn...
+> 
 
-On 18.04.23 15:10, Konrad Dybcio wrote:
-> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
-> another path that needs to be handled to ensure MDSS functions properly,
-> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
-> 
-> Gating that path may have a variety of effects.. from none to otherwise
-> inexplicable DSI timeouts..
-> 
-> On the MDSS side, we only have to ensure that it's on at what Qualcomm
-> downstream calls "77 MHz", a.k.a 76.8 Mbps and turn it off at suspend.
-> 
-> To achieve that, make msm_mdss_icc_request_bw() accept a boolean to
-> indicate whether we want the busses to be on or off, as this function's
-> only use is to vote for minimum or no bandwidth at all.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/gpu/drm/msm/msm_mdss.c | 17 +++++++++++++----
->   1 file changed, 13 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-[..]
-> -static void msm_mdss_icc_request_bw(struct msm_mdss *msm_mdss, unsigned long bw)
-> +static void msm_mdss_icc_request_bw(struct msm_mdss *msm_mdss, bool enable)
->   {
->   	int i;
->   
->   	for (i = 0; i < msm_mdss->num_mdp_paths; i++)
-> -		icc_set_bw(msm_mdss->mdp_path[i], 0, Bps_to_icc(bw));
-> +		icc_set_bw(msm_mdss->mdp_path[i], 0, enable ? Bps_to_icc(MIN_IB_BW) : 0);
-> +
-> +	if (msm_mdss->reg_bus_path)
-> +		icc_set_bw(msm_mdss->reg_bus_path, 0, enable ? 76800 : 0);
+Agreed, are you suggesting I drop this patch (and if we do this sort of
+cleanup to do it in bulk)? Sorry, not entirely sure I am picking up what
+that comment is implying.
 
-Please use Bps_to_icc, kbps_to_icc or any of the other macros.
+Personally, I'd prefer to keeping that patch as this series is trying to
+clean up the particular ethernet node.. but if the purpose of the series
+was just to clean -cells up then I'd go with the bulk approach.
 
-BR,
-Georgi
+So as is, I'm going to leave it like so unless you have specific advice
+against doing so.
+
+Thanks,
+Andrew
+
