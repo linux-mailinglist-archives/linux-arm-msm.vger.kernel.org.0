@@ -2,137 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3FDE6ED0B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 16:52:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAF946ED2ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 18:57:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbjDXOwR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 10:52:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42056 "EHLO
+        id S231533AbjDXQ5C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 12:57:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231819AbjDXOwF (ORCPT
+        with ESMTP id S230355AbjDXQ5B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 10:52:05 -0400
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 124A59036
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 07:51:40 -0700 (PDT)
-Received: by mail-io1-xd31.google.com with SMTP id ca18e2360f4ac-763da065494so13445339f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 07:51:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1682347891; x=1684939891;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0LGZkqwX4EU9DdgtbcEz0RVWmR0Z/MRzMUh+6ISg2Gg=;
-        b=ju0Z/nU47kuo9LbsbKWAIdpPtbsi86JUxRXuEcBMEheuXMbmkyxHEWVusQecwm9Wlf
-         OP8mhegcV3fWzzeIUajBH64IBj37Wfrrr6M5wCCKG6kif7d7AEB9yBggff4HLVUIXiqo
-         gjqj27Y5GWnHhF99fYzSRMruEGvVKXIGwRWYY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682347891; x=1684939891;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0LGZkqwX4EU9DdgtbcEz0RVWmR0Z/MRzMUh+6ISg2Gg=;
-        b=hfj86AyfB4FVzefDydCyk4N+X0j1jmnCPjtIIGEDghFaPEgOKltpJpvN/a9rsSIpJR
-         i8vM/4YygGCJE+DNc+x2FRBxHU6KLI2a2uG63NlyibimUntNaT7mtL0WoKpPxWWIfyzE
-         Rhto6hGoFUU/IDvsSwQgANw6/UY1kNEgB8PquOEdC7U0xUboEwJPpOa1kCOphizCdt6w
-         y2ehLgw5uncf14jcjoYL2566C4dI70JLFs7sZrlL51kt5CucEwGO75wVxgw629a/RCWb
-         UcOeYskxGWmHt47i55PLuizsKi6XweqrGqq4yaICvpkMlI3qgirOaw3DgVPQw+h683gP
-         E2Bg==
-X-Gm-Message-State: AAQBX9ewkKDv+W+RxzgyDrYKD59Bf2CIgWxu6IXyMOfMNljEgAn3Oqb/
-        FxYSCkhlJngnHEb8f1PUC2P7G0SNzdLPSJY+gCY=
-X-Google-Smtp-Source: AKy350YaIpK+VZgL2MbBM7Dh+WtOpmhrvJ3usJiQ4nFpJG/NkC4sOulqYWsnXUQZci9M0ZqH8Icd3Q==
-X-Received: by 2002:a05:6e02:683:b0:32b:5dec:1476 with SMTP id o3-20020a056e02068300b0032b5dec1476mr5413365ils.29.1682347891097;
-        Mon, 24 Apr 2023 07:51:31 -0700 (PDT)
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com. [209.85.166.180])
-        by smtp.gmail.com with ESMTPSA id g6-20020a05663816c600b0040fc56ad9fasm500021jat.9.2023.04.24.07.51.26
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Apr 2023 07:51:27 -0700 (PDT)
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-329577952c5so1050925ab.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 07:51:26 -0700 (PDT)
-X-Received: by 2002:a92:c24c:0:b0:32b:5cff:3e3b with SMTP id
- k12-20020a92c24c000000b0032b5cff3e3bmr455771ilo.9.1682347886370; Mon, 24 Apr
- 2023 07:51:26 -0700 (PDT)
+        Mon, 24 Apr 2023 12:57:01 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D3BA1BFF;
+        Mon, 24 Apr 2023 09:56:56 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33OFb9kp009958;
+        Mon, 24 Apr 2023 16:55:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ibcvq83T8ea5Zx9L7cpwBc6UOXr5caP2oYnDsWVp1IY=;
+ b=n99EL/gGtC3DZ3hVF7p/iZAM6zRz+mw8IJ8KooXvE3GgQe9LrEULLYsPzp5q+EMpB8FD
+ j7hHi/tkozlkPEL+XFMamsv/80WENEF3xq67lAImmzR5OgHzh+5J/jU0Xzg3vu6NeSQv
+ Er9Dr+OZqa9QfUYLsbwHWr8k5jjG1dVETLRiYaYm+2LaFSFoaK7kwChhWegh46p5DBVq
+ HdKTQarpYqkCUzLpcIo7pXapZQ2R0IJR+OGRGQ2atoSfkRpKmGhzy6gKhHwfqihWlb3Y
+ bGORnRlxPvDitLj2YsEXvQOcFlDPx3iHLIi+B96NqKrxrgwAPqeYmfv5JADBKtI5PhmG uQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q5mnnh9qm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Apr 2023 16:55:48 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33OGtkJd026082
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Apr 2023 16:55:47 GMT
+Received: from [10.110.104.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 24 Apr
+ 2023 09:55:45 -0700
+Message-ID: <e4a771f2-b390-ea8e-ee8b-b8d0860c834f@quicinc.com>
+Date:   Mon, 24 Apr 2023 09:55:44 -0700
 MIME-Version: 1.0
-References: <1682328761-17517-1-git-send-email-quic_vnivarth@quicinc.com> <1682328761-17517-6-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1682328761-17517-6-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 24 Apr 2023 07:51:13 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XEsLeAzFDqcXjeGAxovSwzVENeF4km5wLkhjgpSOKR5g@mail.gmail.com>
-Message-ID: <CAD=FV=XEsLeAzFDqcXjeGAxovSwzVENeF4km5wLkhjgpSOKR5g@mail.gmail.com>
-Subject: Re: [PATCH v5 5/5] spi: spi-qcom-qspi: Add DMA mode support
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
-        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v2 01/17] drm/msm/dpu: Remove unused INTF0 interrupt mask
+ from SM6115/QCM2290
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Sean Paul" <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Chandan Uddaraju" <chandanu@codeaurora.org>
+CC:     <~postmarketos/upstreaming@lists.sr.ht>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        "Jami Kettunen" <jami.kettunen@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Archit Taneja <architt@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>
+References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-1-ef76c877eb97@somainline.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230411-dpu-intf-te-v2-1-ef76c877eb97@somainline.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 31_lSA82AM0D1kln3gWakn39Hun2n1mE
+X-Proofpoint-ORIG-GUID: 31_lSA82AM0D1kln3gWakn39Hun2n1mE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-24_10,2023-04-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 mlxlogscore=694 spamscore=0 clxscore=1011
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304240151
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Mon, Apr 24, 2023 at 2:32=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> Current driver supports only PIO mode.
->
-> HW supports DMA, so add DMA mode support to the driver
-> for better performance for larger xfers.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
-> v4 -> v5:
-> - dropped xfer_mode
-> - clear all interrupts in handle_err()
-> - dont log ptr value
-> - dropped some dev_err()
-> - converted some dev_err() to dev_warn_once()
-> - drop few redundant comments
-> - can_dma() disabled if iommus not present in dev_node
-> - other nits
->
-> v3 -> v4:
-> - corrected tabs spacing
-> - dropped dma data descriptors
-> - dropped INVALID from xfer_mode enum
-> - qspi_buswidth_to_iomode() to return iomode without shifting
-> - dropped non-functional change in qcom_qspi_set_speed()
-> - drop redundant call to wmb()
-> - fallback to pio if dma fails to setup
-> - use dmam_pool_create() the devm version
-> - thus drop dma_pool_destroy()
-> - set dma_alignment field in probe()
-> - other minor changes
->
-> v2 -> v3:
-> - dropped Reported-by tag
->
-> v1 -> v2:
-> - modified commit message
-> - addressed kernel test robot error
-> - correct placement of header file includes
-> - added more comments
-> - coding style related changes
-> - renamed variables
-> - used u32/u8 instead of uint32_t/8_t
-> - removed unnecessary casting
-> - retain same MSTR_CONFIG as PIO for DMA
-> - unset fragment bit only for last cmd_desc of last xfer
-> ---
->  drivers/spi/spi-qcom-qspi.c | 218 ++++++++++++++++++++++++++++++++++++++=
-++++--
->  1 file changed, 212 insertions(+), 6 deletions(-)
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+On 4/17/2023 1:21 PM, Marijn Suijten wrote:
+> Neither of these SoCs has INTF0, they only have a DSI interface on index
+> 1.  Stop enabling an interrupt that can't fire.
+> 
+> Fixes: 3581b7062cec ("drm/msm/disp/dpu1: add support for display on SM6115")
+> Fixes: 5334087ee743 ("drm/msm: add support for QCM2290 MDSS")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+
+Yes, this is right, Both of these chipsets only have DSI on index 1.
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+
