@@ -2,195 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F29B46ED807
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 00:36:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59A076ED833
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 00:55:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232312AbjDXWgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 18:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51878 "EHLO
+        id S233116AbjDXWzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 18:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232445AbjDXWfz (ORCPT
+        with ESMTP id S233109AbjDXWzE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 18:35:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B8910FC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 15:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1682375710;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=p8uiUKAh1MkDDewdBSb2LEHqUzT7fTsXNylXR5bsSUM=;
-        b=Tth1v41jzZi4uccRiwTDTOoBM+Cd5O/9IOdGPeVAjGQ5VEzpgF1Ybbg3Z07tCxIfGr4Nkt
-        q5fSqG1R+b9259JCQDOrgsn1V0xGC+4u9eqEly7utuvaN9ZXmUCv0Fy7wWp8qYQtemQ/EH
-        l4/7yoIkMqFEDyThcO4JNHOMHeqgmpw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-BFlZHjRfOduEBsuoTQ82yg-1; Mon, 24 Apr 2023 18:35:08 -0400
-X-MC-Unique: BFlZHjRfOduEBsuoTQ82yg-1
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-3ef3ca5b5afso66018541cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 15:35:08 -0700 (PDT)
+        Mon, 24 Apr 2023 18:55:04 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D871658F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 15:55:03 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-54f99770f86so59902777b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 15:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682376902; x=1684968902;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=urRO9IkUTIq77dWBTXZerCEWau63FaL24inu94rfVRU=;
+        b=Fj1zGw/wYbq+07TYyjORi45sEzGM7qvwbMznjo8nS4KsNBNm4YzAM1V+WPLq9gsxuI
+         kh0qqol2A8VD75bHUtunyouL5wqCJvHHLwdZ2kIqA9ySn3bhEWrKjlYZtsHegztjKUek
+         La5Yx4yKHV6f5OaZKYUZYPBhjeDEdOVk/Gs+Rw/cLwqKZlSO8OMPqhHjnwHSFZ35IxhL
+         x2DB+Z6QIgVqv2TvjEjVPJdV6A6Ddflyu/S5QJIuXqvqKaim8U35+mA9wGz96CbIQvgW
+         ihtl8N66kc1MVo+ymSNznW98yAKPwYpwDXFDxdxqpYnHXHepsGxigg4Io8lpVJAtAyAA
+         ICVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682375708; x=1684967708;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p8uiUKAh1MkDDewdBSb2LEHqUzT7fTsXNylXR5bsSUM=;
-        b=X3ZWW2AvPYvkJOt2zMwTJ9hrT7F9I0rvryYdPCnzC75XRSdAUACx2t570Quh2JhbDg
-         4aFii/MKeWC1QHXWmhMptb+qh6uPi1WyUhPrLpaLlkSfm7QY23+yu06E46YBqGE6yBtn
-         xlyQYz4wnTnoOII8UO/jyC0AhAr1gY9Z8cFYLgZpenyo37+hnQsYVmSWak4S5m/fMQdZ
-         jYx5gzsOosxmxaXz7WlqyejTWnUTbt5O4P8o3Q5QVqh2nBFTabhu6joTq2WgtQ259cGl
-         7Rd+FmwReYWv8x4SaWS2V9ArmPgyumCBaq8IT7bGTnOD1MZq9Z8g3bblmzNlI8EgLJoZ
-         e1Kw==
-X-Gm-Message-State: AAQBX9dmNOW7QTu3DSS2kMiUU3Dbx3NEvF0cupNTifBHZY06HiNnkhwS
-        PxNynikzdi6I517HbWqAHAEYofqXX6CKaLg4y3zrlJxA8f+r3yC1m3jDDcIdaLni/aPELC3rRtW
-        d6rA/or+IaV31d31agjtAQVf2/g==
-X-Received: by 2002:ac8:7f42:0:b0:3ed:4a17:8b0f with SMTP id g2-20020ac87f42000000b003ed4a178b0fmr24709358qtk.25.1682375708326;
-        Mon, 24 Apr 2023 15:35:08 -0700 (PDT)
-X-Google-Smtp-Source: AKy350aBh9WN4eEBfeqITYWvJioz91FsGNrKf2GwcoO3UjeLguJG/OpDDT7yB41icNJRnpnxpchBoA==
-X-Received: by 2002:ac8:7f42:0:b0:3ed:4a17:8b0f with SMTP id g2-20020ac87f42000000b003ed4a178b0fmr24709331qtk.25.1682375707944;
-        Mon, 24 Apr 2023 15:35:07 -0700 (PDT)
-Received: from fedora (modemcable181.5-202-24.mc.videotron.ca. [24.202.5.181])
-        by smtp.gmail.com with ESMTPSA id a9-20020ac844a9000000b003d3a34d2eb2sm3997005qto.41.2023.04.24.15.35.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Apr 2023 15:35:07 -0700 (PDT)
-Date:   Mon, 24 Apr 2023 18:35:04 -0400
-From:   Adrien Thierry <athierry@redhat.com>
-To:     Shazad Hussain <quic_shazhuss@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
-Message-ID: <ZEcEGJiikEC2wIVE@fedora>
-References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
+        d=1e100.net; s=20221208; t=1682376902; x=1684968902;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=urRO9IkUTIq77dWBTXZerCEWau63FaL24inu94rfVRU=;
+        b=hdIG9cYHKZAznxCsIafd+Zk8SUtMuqDL9wAnz7dqrTSGASRzX7T91p6mIngc4oK6t8
+         kpeokoLu5kf89CnMNFvKMVMGXlS4hit7uquBEvRDjU1bDDEYe0aAoDRd5uNMhRv0hfBe
+         PaA1y3lIH/ICAWa74omLFNeYRaTvNT5ZnNuqbxCBZJ5Sro04N3ryDzpS/G2x+qNzAFZJ
+         hA/yJQonch89rCBNehkAmuCrCxBOg1iOSkOCDZdlkRXzxev1L90XzXpat8jA/JeBQEy4
+         dvsXo3/jl2v0yKG980sau6XRO1io1rWOxFCdb69WqTXHnRHY2ANHQ82qm3EuC+uWHotv
+         C9mg==
+X-Gm-Message-State: AAQBX9deEJCTsxqnkxG0NORR6axwTCxgklrzHzkH7GQrJv3HOW0Q19OE
+        36nbAXJYpgESTN4CVj4blSP56nkuwi/aHuWFSOUjZw==
+X-Google-Smtp-Source: AKy350a7hTDcEHQz7tXIlrO4+/3AZkbk17Ezhn1rQv8pT/D+TxdwqMjvZ14uStOuiJ4HRFQt0n/D+sMyLS5x0fXlnIs=
+X-Received: by 2002:a81:4e10:0:b0:54c:16e:6581 with SMTP id
+ c16-20020a814e10000000b0054c016e6581mr9732607ywb.37.1682376902478; Mon, 24
+ Apr 2023 15:55:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230418-dpu-drop-useless-for-lookup-v2-0-acb08e82ef19@somainline.org>
+ <20230418-dpu-drop-useless-for-lookup-v2-3-acb08e82ef19@somainline.org>
+ <50d22e0c-84b3-0678-eb06-30fb66fd24cf@quicinc.com> <ymq4kstme55dm3j5kr6trevnwdelhjq7e7m4yky6zcbnf7auid@66l7inxz4oq2>
+In-Reply-To: <ymq4kstme55dm3j5kr6trevnwdelhjq7e7m4yky6zcbnf7auid@66l7inxz4oq2>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 25 Apr 2023 01:54:51 +0300
+Message-ID: <CAA8EJprYQUFER6x1+ucHX_Ze2uqWc6xoEaYDdJ1s0jgZjPJ0QQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] drm/msm/dpu: Pass catalog pointers directly from
+ RM instead of IDs
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shazad,
+On Tue, 25 Apr 2023 at 01:03, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2023-04-21 16:25:15, Abhinav Kumar wrote:
+> >
+> >
+> > On 4/21/2023 1:53 PM, Marijn Suijten wrote:
+> > > The Resource Manager already iterates over all available blocks from the
+> > > catalog, only to pass their ID to a dpu_hw_xxx_init() function which
+> > > uses an _xxx_offset() helper to search for and find the exact same
+> > > catalog pointer again to initialize the block with, fallible error
+> > > handling and all.
+> > >
+> > > Instead, pass const pointers to the catalog entries directly to these
+> > > _init functions and drop the for loops entirely, saving on both
+> > > readability complexity and unnecessary cycles at boot.
+> > >
+> > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> > Overall, a nice cleanup!
+> >
+> > One comment below.
+> >
+> > > ---
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 37 +++++----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h        | 14 ++++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 32 +++---------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h        | 11 +++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 38 ++++-----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h       | 12 +++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +-
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 40 ++++++-----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h       | 12 +++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 38 ++++-----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h         | 10 +++---
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 33 +++----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 14 ++++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 33 +++----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 39 ++++------------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h       | 12 +++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 33 +++----------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h       | 11 +++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 33 ++++---------------
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h         | 11 +++----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 17 +++++-----
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c            | 18 +++++-----
+> > >   23 files changed, 139 insertions(+), 375 deletions(-)
+> > >
+> >
+> > <snipped>
+> >
+> > > -struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
+> > > -           void __iomem *addr,
+> > > -           const struct dpu_mdss_cfg *m)
+> > > +struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
+> > > +           void __iomem *addr)
+> > >   {
+> > >     struct dpu_hw_intf *c;
+> > > -   const struct dpu_intf_cfg *cfg;
+> > > +
+> > > +   if (cfg->type == INTF_NONE) {
+> > > +           pr_err("Cannot create interface hw object for INTF_NONE type\n");
+> > > +           return ERR_PTR(-EINVAL);
+> > > +   }
+> >
+> > The caller of dpu_hw_intf_init which is the RM already has protection
+> > for INTF_NONE, see below
+> >
+> >          for (i = 0; i < cat->intf_count; i++) {
+> >                  struct dpu_hw_intf *hw;
+> >                  const struct dpu_intf_cfg *intf = &cat->intf[i];
+> >
+> >                  if (intf->type == INTF_NONE) {
+> >                          DPU_DEBUG("skip intf %d with type none\n", i);
+> >                          continue;
+> >                  }
+> >                  if (intf->id < INTF_0 || intf->id >= INTF_MAX) {
+> >                          DPU_ERROR("skip intf %d with invalid id\n",
+> > intf->id);
+> >                          continue;
+> >                  }
+> >                  hw = dpu_hw_intf_init(intf->id, mmio, cat);
+> >
+> > So this part can be dropped.
+>
+> I mainly intended to keep original validation where _intf_offset would
+> skip INTF_NONE, and error out.  RM init is hence expected to filter out
+> INTF_NONE instead of running into that `-EINVAL`, which I maintained
+> here.
+>
+> If you think there won't be another caller of dpu_hw_intf_init, and that
+> such validation is hence excessive, I can remove it in a followup v3.
 
-On Fri, Apr 21, 2023 at 07:09:15PM +0530, Shazad Hussain wrote:
-> Update relavent DT bindings for USB, add new config to the phy driver,
-> add USB and PHY nodes to the .dtsi and enable them in the board .dts
-> for the sa8775p-ride platform.
-> 
-> Shazad Hussain (6):
->   dt-bindings: usb: qcom,dwc3: Add bindings for SA8775P
->   dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for SA8775P
->   dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add SA8775P USB PHY
->     binding
->   phy: qcom-qmp: Add SA8775P USB3 UNI phy
->   arm64: dts: qcom: sa8775p: add USB nodes
->   arm64: dts: qcom: sa8775p-ride: enable USB nodes
-> 
->  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |   1 +
->  .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |   1 +
->  .../devicetree/bindings/usb/qcom,dwc3.yaml    |   5 +
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |  92 +++++++
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 239 +++++++++++++++++-
->  drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |  45 ++++
->  6 files changed, 381 insertions(+), 2 deletions(-)
-> 
-> -- 
-> 2.17.1
-> 
+I'd prefer to see the checks at dpu_rm to be dropped.
+dpu_hw_intf_init() (and other dpu_hw_foo_init() functions) should be
+self-contained. If they can not init HW block (e.g. because the index
+is out of the boundaries), they should return an error.
 
-Thanks for posting this. I tested the series on the sa8775p, and it seems
-initialization for the controller at a400000 sometimes fails with a
-timeout (-110) error:
+>
+> - Marijn
+>
+> > >     c = kzalloc(sizeof(*c), GFP_KERNEL);
+> > >     if (!c)
+> > >             return ERR_PTR(-ENOMEM);
+> > >
+> > > -   cfg = _intf_offset(idx, m, addr, &c->hw);
+> > > -   if (IS_ERR_OR_NULL(cfg)) {
+> > > -           kfree(c);
+> > > -           pr_err("failed to create dpu_hw_intf %d\n", idx);
+> > > -           return ERR_PTR(-EINVAL);
+> > > -   }
+> > > +   c->hw.blk_addr = addr + cfg->base;
+> > > +   c->hw.log_mask = DPU_DBG_MASK_INTF;
+> > >
+> >
+> > <snipped>
 
-    dwc3 a400000.usb: Adding to iommu group 2
-    xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
-    xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
-    xhci-hcd xhci-hcd.0.auto: can't setup: -110
-    xhci-hcd xhci-hcd.0.auto: USB bus 1 deregistered
-    xhci-hcd: probe of xhci-hcd.0.auto failed with error -110
-    dwc3 a600000.usb: Adding to iommu group 3
-    dwc3 a800000.usb: Adding to iommu group 4
-    xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-    xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 1
-    xhci-hcd xhci-hcd.1.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x0000000000010010
-    xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a800000
-    xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-    xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 2
-    xhci-hcd xhci-hcd.1.auto: Host supports USB 3.1 Enhanced SuperSpeed
-    hub 1-0:1.0: USB hub found
-    hub 1-0:1.0: 1 port detected
-    usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
-    hub 2-0:1.0: USB hub found
-    hub 2-0:1.0: 1 port detected
 
-In this case, only usb devices for a800000 are showing:
 
-    dracut:/# ls -alh /sys/bus/usb/devices
-    total 0
-    drwxr-xr-x 2 root root 0 Feb 27 00:00 .
-    drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1/1-0:1.0
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2/2-0:1.0
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2
-
-This happens approximately 1 out of 2 reboots. Here's the kernel output
-when initialization succeeds:
-
-    dwc3 a600000.usb: Adding to iommu group 2
-    dwc3 a800000.usb: Adding to iommu group 3
-    xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
-    xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
-    xhci-hcd xhci-hcd.0.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x0000000000010010
-    xhci-hcd xhci-hcd.0.auto: irq 161, io mem 0x0a800000
-    xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
-    xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 2
-    xhci-hcd xhci-hcd.0.auto: Host supports USB 3.1 Enhanced SuperSpeed
-    hub 1-0:1.0: USB hub found
-    hub 1-0:1.0: 1 port detected
-    usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
-    hub 2-0:1.0: USB hub found
-    hub 2-0:1.0: 1 port detected
-    dwc3 a400000.usb: Adding to iommu group 4
-    xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
-    xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 3
-    xhci-hcd xhci-hcd.1.auto: USB3 root hub has no ports
-    xhci-hcd xhci-hcd.1.auto: hcc params 0x0220fe65 hci version 0x110 quirks 0x0000000000010010
-    xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a400000
-    hub 3-0:1.0: USB hub found
-    hub 3-0:1.0: 1 port detected
-
-And the list of usb devices:
-
-    dracut:/# ls -alh /sys/bus/usb/devices
-    total 0
-    drwxr-xr-x 2 root root 0 Feb 27 00:00 .
-    drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1/1-0:1.0
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2/2-0:1.0
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 3-0:1.0 -> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3/3-0:1.0
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2
-    lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb3 -> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3
-
-Have you also encountered this?
-
-Best,
-
-Adrien
-
+-- 
+With best wishes
+Dmitry
