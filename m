@@ -2,140 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D18386ED7DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 00:26:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85FCC6ED7E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 00:27:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229688AbjDXW0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 18:26:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44714 "EHLO
+        id S232619AbjDXW1G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 18:27:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229929AbjDXW0H (ORCPT
+        with ESMTP id S232505AbjDXW1F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 18:26:07 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D99593C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 15:25:35 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A9DAE3F5BC;
-        Tue, 25 Apr 2023 00:25:32 +0200 (CEST)
-Date:   Tue, 25 Apr 2023 00:25:31 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Archit Taneja <architt@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Subject: Re: [PATCH v2 03/17] drm/msm/dpu: Move non-MDP_TOP INTF_INTR offsets
- out of hwio header
-Message-ID: <7j6ww6nkplq6adjgpzu3uyswdmid2oxldpwlmis6cyw7tcbkrh@whpmzhsl5rpj>
-References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-3-ef76c877eb97@somainline.org>
- <62d78d23-e191-a64f-5c4c-cd2c26217bdf@quicinc.com>
+        Mon, 24 Apr 2023 18:27:05 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E60D3A5CC;
+        Mon, 24 Apr 2023 15:26:37 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5E4E74B3;
+        Mon, 24 Apr 2023 15:27:21 -0700 (PDT)
+Received: from [10.57.56.16] (unknown [10.57.56.16])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6D3C43F64C;
+        Mon, 24 Apr 2023 15:26:35 -0700 (PDT)
+Message-ID: <0ee62e42-2a9d-789c-86ad-8f92b08b31ac@arm.com>
+Date:   Mon, 24 Apr 2023 23:26:33 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <62d78d23-e191-a64f-5c4c-cd2c26217bdf@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.10.0
+Subject: Re: [PATCH] coresight: core: Add coresight name support
+To:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Cc:     coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+References: <20230208110716.18321-1-quic_jinlmao@quicinc.com>
+ <3c105c79-f523-653e-5154-7ba641e51a96@arm.com>
+ <180a66b1-6996-c705-5d8a-0a69ce0353d7@quicinc.com>
+ <b7abee2a-99ca-26d6-5850-60ee19d9c0e9@quicinc.com>
+ <619818ad-71cb-6c07-bcae-ea9398f08878@arm.com>
+ <6b976d2b-3c78-96e4-bf35-3ef88828a9dd@quicinc.com>
+ <f5a1d873-8aa0-ea11-28df-8857fc256862@arm.com>
+ <a9d4e5d1-0e1f-13b5-cf3a-464e61594990@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <a9d4e5d1-0e1f-13b5-cf3a-464e61594990@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-24 13:44:55, Abhinav Kumar wrote:
+On 24/04/2023 14:42, Jinlong Mao wrote:
+> On 3/17/2023 10:25 PM, Suzuki K Poulose wrote:
 > 
+>> On 17/03/2023 05:34, Jinlong Mao wrote:
+>>>
+>>> On 3/13/2023 5:16 PM, Suzuki K Poulose wrote:
+>>>> Cc: Rob
+>>>>
+>>>> On 01/03/2023 15:11, Jinlong Mao wrote:
+>>>>> Hi Suzuki,
+>>>>>
+>>>>> On 2/9/2023 10:16 AM, Jinlong Mao wrote:
+>>>>>>
+>>>>>> On 2/8/2023 10:26 PM, Suzuki K Poulose wrote:
+>>>>>>> On 08/02/2023 11:07, Mao Jinlong wrote:
+>>>>>>>> Apart from STM and ETM sources, there will be more sources added to
+>>>>>>>> coresight components. For example, there are over 10 TPDM sources.
+>>>>>>>> Add coresight name support for custom names which will be
+>>>>>>>> easy to identify the source.
+>>>>>>>>
+>>>>>>>
+>>>>>>> As we have previously discussed, please don't make this a generic
+>>>>>>> code change. If your device has a "specifici" name, use that for
+>>>>>>> allocating in the driver and leave the core code alone.
+>>>>>>>
+>>>>>>> Suzuki
+>>>>>>>
+>>>>>> Hi Suzuki,
+>>>>>>
+>>>>>> Not only for TPDMs. There could be dozens of CTI devices.
+>>>>>> It is hard for user to know which CTI device it is with current 
+>>>>>> names.
+>>>>>>
+>>>>>> Thanks
+>>>>>> Jinlong Mao
+>>>>>
+>>>>> The coresight name support is applicable to CTI and TPDM devices.
+>>>>> This is a generic change for the source which has dozens of devices.
+>>>>
+>>>> I took a look at the CTI situation and I agree that the situation
+>>>> is a bit tricky. The CTI could be connected to multiple devices,
+>>>> some of them may not be even CoreSight devices. Given there could
+>>>> be numerous of them, we need some way to make the "devices" naming
+>>>> a bit more intuitive.
+>>>>
+>>>> Before we go ahead and add something specific to coresight, I would
+>>>> like to see if there is a generic property. Ideally, the "labels"
+>>>> in the DTS sources would have been an ideal choice, but can't
+>>>> see how that is available in the FDT.
+>>>>
+>>>> Suzuki
+>>> Hi Suzuki,
+>>>
+>>> Shall we use the full_name of device_node struct as coresight 
+>>> component's name ?
+>>>
+>>>    struct device_node {
+>>>      const char *name;
+>>>      phandle phandle;
+>>> *    const char *full_name;
+>>>
+>>> *For component below, the full_name will be "coresight-tpdm-ipcc".
+>>> *
+>>> **coresight-tpdm-ipcc* {
+>>
+>> Does that go against the convention of naming the DT nodes ?
+>> I am not sure. Also, we would need a way to solve this for ACPI too.
+>>
+>> Suzuki
+> Hi Suzuki,
 > 
-> On 4/17/2023 1:21 PM, Marijn Suijten wrote:
-> > These offsets do not fall under the MDP TOP block and do not fit the
-> > comment right above.  Move them to dpu_hw_interrupts.c next to the
-> > repsective MDP_INTF_x_OFF interrupt block offsets.
-> > 
-> > Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> This change itself is fine, hence
-> 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> One comment below.
-> 
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 5 ++++-
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h          | 3 ---
-> >   2 files changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> > index 53326f25e40e..85c0bda3ff90 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> > @@ -15,7 +15,7 @@
-> >   
-> >   /*
-> >    * Register offsets in MDSS register file for the interrupt registers
-> > - * w.r.t. to the MDP base
-> > + * w.r.t. the MDP base
-> >    */
-> >   #define MDP_SSPP_TOP0_OFF		0x0
-> >   #define MDP_INTF_0_OFF			0x6A000
-> > @@ -24,6 +24,9 @@
-> >   #define MDP_INTF_3_OFF			0x6B800
-> >   #define MDP_INTF_4_OFF			0x6C000
-> >   #define MDP_INTF_5_OFF			0x6C800
-> > +#define INTF_INTR_EN			0x1c0
-> > +#define INTF_INTR_STATUS		0x1c4
-> > +#define INTF_INTR_CLEAR			0x1c8
-> >   #define MDP_AD4_0_OFF			0x7C000
-> >   #define MDP_AD4_1_OFF			0x7D000
-> >   #define MDP_AD4_INTR_EN_OFF		0x41c
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> > index feb9a729844a..5acd5683d25a 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> > @@ -21,9 +21,6 @@
-> >   #define HIST_INTR_EN                    0x01c
-> >   #define HIST_INTR_STATUS                0x020
-> >   #define HIST_INTR_CLEAR                 0x024
-> 
-> Even HIST_INTR_*** need to be moved then.
+> Does ACPI device also use "coresight_alloc_device_name" to get the 
+> device's name ?
 
-These are relative to MDP_SSPP_TOP0_OFF too just like
-INTR(2)_{CLEAR,EN,STATUS} so I left them here.  Otherwise, *all* these
-interrupt masks are probably best moved to dpu_hw_interrupts.c for
-clarity, as that's also the only place they are used?
+All driver code is common for both DT & ACPI. The only difference is
+the coresight_get_platform_data() which uses DT vs ACPI information
+and populates the platform_data.  See coresight-platform.c.
 
-Let me know which way you prefer.
+Suzuki
 
-- Marijn
 
-> > -#define INTF_INTR_EN                    0x1C0
-> > -#define INTF_INTR_STATUS                0x1C4
-> > -#define INTF_INTR_CLEAR                 0x1C8
-> >   #define SPLIT_DISPLAY_EN                0x2F4
-> >   #define SPLIT_DISPLAY_UPPER_PIPE_CTRL   0x2F8
-> >   #define DSPP_IGC_COLOR0_RAM_LUTN        0x300
-> > 
