@@ -2,124 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47D5C6ED7AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 00:18:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AE976ED7D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 00:24:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232442AbjDXWSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 18:18:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
+        id S231814AbjDXWYo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 18:24:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232071AbjDXWSR (ORCPT
+        with ESMTP id S231694AbjDXWYm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 18:18:17 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03F635272
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 15:18:15 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 378C93F5CF;
-        Tue, 25 Apr 2023 00:18:06 +0200 (CEST)
-Date:   Tue, 25 Apr 2023 00:18:04 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Archit Taneja <architt@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Subject: Re: [PATCH v2 02/17] drm/msm/dpu: Remove TE2 block and feature from
- DPU >= 7.0.0 hardware
-Message-ID: <l3adl3saeqovypmluubddp6kqcjducn75ifpf63ylbecuprpi3@gpoks434n4yg>
-References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-2-ef76c877eb97@somainline.org>
- <ca4012ee-d964-c2e9-b437-b03277d71529@quicinc.com>
+        Mon, 24 Apr 2023 18:24:42 -0400
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C0FAD15;
+        Mon, 24 Apr 2023 15:24:09 -0700 (PDT)
+Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-74dd7f52f18so1440544885a.0;
+        Mon, 24 Apr 2023 15:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682375046; x=1684967046;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=29IkbevyZ1JNfaYOQPn+HUpDLJ8b+PXRIDIYtEtvSPw=;
+        b=IenoMxH48zII5fB58Gv60rUYDA9EtMMTbp/ZPDsVe6TBLDWwJpDQNL0U/+HtpDrCsX
+         fYcOvs90TmBzvujQKZgX1eQmTxHrD8IQ8eq3PJOqaDLWqpZdTwfMfBvVmqcqO28ToIw7
+         /P7xxKrOhgtS2jNLZBQf3OSYmuIwjEkZ1S/W3qfD2WGO2+JW+Io3zDwpMSpXDXbRTpHh
+         uitadTIFC1oliUm/1Zh59RVMfDNq9tD4dKeTBpg9+/lExxyEH32RZcEQz0uV3npjXStN
+         Fms3lNhl1J8Rm6im79IxUzwKmWZ7e0Mj4EIC16F0L0FGCYsa066ivIKjU382HCqCopQ+
+         ujLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682375046; x=1684967046;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=29IkbevyZ1JNfaYOQPn+HUpDLJ8b+PXRIDIYtEtvSPw=;
+        b=lWo6nHAEfIOipfehf51FecZAfITaBM+vqDI9AxHUmuzcndFEglOb0AJ8Uhr1I/52hR
+         Eet8hpcwTmTbLeaR2m9B6S6b1kRCuRuwTZHnJu9Cvrq0El6o4LCxTuaBDTVJTfLWlAz8
+         hrWOclISrYufvtlI9zBC65yS5zL7kNwChco2caNqY/avRXu8qICtfDzU+aTftUA8+ved
+         ZVseMEawpFJHLFG2OrysugFRGA4gDF5MtaUjnHcE+ycSC9Lqa3U15Qwj6ZsCqMdHyrqU
+         wIFwqbGUpvR1grvAafJQHw975KIW7+XqBLKNh+8tWn/9Je+CwNfUrKrJCz2Xm3se0ZG2
+         Difw==
+X-Gm-Message-State: AAQBX9evpql8NFCSW+pZM1zNy3cCMQ9Ff+kjz1SpUOhdIf7WIIklykZl
+        0C1ZdtxDgMQ2/xVNoZ18G33sixilGgh6Cu5xiZ8=
+X-Google-Smtp-Source: AKy350ZaN4hyLvIPAT5s597oFwGJxWUglXzPuWB3KyxTTdt5lEGprQ4ln3wBEVVlH0j6U9Xj73/XDG6Es3m1QFoaTr0=
+X-Received: by 2002:a05:6214:5195:b0:5ef:512d:2d47 with SMTP id
+ kl21-20020a056214519500b005ef512d2d47mr22906279qvb.19.1682375046222; Mon, 24
+ Apr 2023 15:24:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca4012ee-d964-c2e9-b437-b03277d71529@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+Date:   Tue, 25 Apr 2023 00:23:54 +0200
+Message-ID: <CA+_ehUw3eAEHRsi1ATSKeK4jtX+EoVSwUodNL3bcpTJaX-r9cA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        WEIRD_QUOTING autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-24 13:41:07, Abhinav Kumar wrote:
-> 
-> 
-> On 4/17/2023 1:21 PM, Marijn Suijten wrote:
-> > No hardware beyond kona (sm8250) defines the TE2 PINGPONG sub-block
-> > offset downstream.  Even though neither downstream nor upstream utilizes
-> > these registers in any way, remove the erroneous specification for
-> > SC8280XP, SM8350 and SM8450 to prevent confusion.
-> > 
-> > Note that downstream enables the PPSPLIT (split-FIFO) topology (single
-> > LM for 2 PP and 2 INTF) based on the presence of a TE2 block.
-> > 
-> > Fixes: f0a1bdf64dd7 ("drm/msm/dpu: Introduce SC8280XP")
-> > Fixes: 0a72f23f6ef8 ("drm/msm/dpu: Add SM8350 to hw catalog")
-> > Fixes: 8cbbc3396065 ("drm/msm/dpu: add support for SM8450")
-> 
-> I cannot find any commits with those hashes.
-> 
-> Should this be
-> 
-> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-> Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-> Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
+Il giorno mar 25 apr 2023 alle ore 00:10 Rob Herring
+<robh+dt@kernel.org> ha scritto:
+>
+> On Tue, Mar 29, 2022 at 8:27=E2=80=AFAM Ansuel Smith <ansuelsmth@gmail.co=
+m> wrote:
+> >
+> > On Tue, Mar 29, 2022 at 03:20:18PM +0200, Krzysztof Kozlowski wrote:
+> > > On 28/03/2022 02:09, Ansuel Smith wrote:
+> > > > Hi,
+> > > > as the title say, the intention of this ""series"" is to finally ca=
+tegorize
+> > > > the ARM dts directory in subdirectory for each oem.
+> > > >
+> > > > The main reason for this is that it became unpractical to handle 26=
+00
+> > > > dts files and try to even understand/edit/check the situation for a
+> > > > specific target.
+> > > >
+> > > > In arm64 we already have this kind of separation and I honestly thi=
+nk
+> > > > that this was never proposed for ARM due to the fact that there are
+> > > > 2600+ files to sort and the fact that it will be a mess to merge th=
+is
+> > > > entirely but IMHO with a little bit of effort we can finally solve =
+this
+> > > > problem and have a well organized directory just like arm64.
+> > > >
+> > > > Some prerequisite on how this work was done:
+> > > > - This comes entirely from a python script created by me for the ta=
+sk.
+> > > >   linked here [1]
+> > > > - I had to manually categorize all the different arch in the makefi=
+le
+> > > >   based on the oem. I searched every arch on the internet trying to
+> > > >   understand the correct oem. I hope they are correct but I would l=
+ove
+> > > >   some comments about them.
+> > > > - This current ""series"" is all squashed in one big commit to bett=
+er
+> > > >   receive comments for this. The final version ideally would have a=
+ll
+> > > >   changes in separate commits. The script can already do this, it's=
+ just
+> > > >   commented.
+> > > >
+> > > > Here is a list of some discoveries while doing all the sorting.
+> > > > These are totally additional reason why we need this.
+> > > >
+> > > > While creating the script I discovered some funny things:
+> > > > - We have orphan dts! There are dts that are never compiled and are
+> > > >   there just for reference. We would never have noticed this withou=
+t this
+> > > >   change and probably nobody noticed it. They are currently all lis=
+ted
+> > > >   in the python script.
+> > > > - We have dtsi shared across different oem. My current solution for=
+ them
+> > > >   is: NOT SORT THEM and leave them in the generic directory and cre=
+ate a
+> > > >   link in each oem dts that points to these dtsi. This is to try in
+> > > >   every way possible to skip any additional changes to the dts.
+> > > >   Current dtsi that suffers from this are only 3. (listed in the sc=
+ript)
+> > > > - arm64 dts and dtsi reference ARM dts. Obviously this change would=
+ cause
+> > > >   broken include for these special dtsi. The script creates a depen=
+dency
+> > > >   table of the entire arm64 directory and fix every broken dependen=
+cy
+> > > >   (hoping they all use a sane include logic... regex is used to par=
+se
+> > > >   all the different dependency)
+> > > >
+> > > > So in short the script does the following steps:
+> > > > 1. Enumerate all the action to do... (dts to move, scan dependency =
+for
+> > > >    the dts...)
+> > > > 2. Generate the arm64 dependency
+> > > > 3. Creates the Makefile
+> > > > 4. Generate the Makefiles for the current oem
+> > > > 5. Move all the related dts and dtsi for the current oem
+> > > > 6. Check broken dependency and fix them by editing the dts and writ=
+ing
+> > > >    the correct include (or fix any symbolic link)
+> > > >
+> > > > This is an output that describes all the things done by the script =
+[2]
+> > > >
+> > > > I really hope I didn't commit any logic mistake in the script but m=
+ost
+> > > > of the work should be done.
+> > > >
+> > >
+> > > +Cc Arnd and Olof,
+> > >
+> > > Ansuel,
+> > > Thanks for you patch. Please cc the SoC maintainers in such submissio=
+ns.
+> > > It seems that you got some quite nice discussion, but still the core
+> > > folks are not Cced, so no one would be able to take your patch...
+> > >
+> >
+> > I had some problem with gmail and sending mail too much users. I put Ro=
+b
+> > and You and all the various list to try to workaround the "gmail spam
+> > protection"
+> >
+> > > I am pretty sure we were discussing such split idea in the past and i=
+t
+> > > did not get traction, but I cannot recall the exact discussion.
+> > >
+> >
+> > I think the main issue here is how to handle bot and how problematic is
+> > to merge this. As written in the cover letter the final version of this
+> > should be a big series of 50+ patch with every commit specific to each
+> > oem. In theory we should be able to merge the different oem separately
+> > and try to at least start the categorization.
+> > Another idea I got to at least have a "migration path" is to convert
+> > every dts in the dts/ directory to a symbolic link that target the dts
+> > in the correct oem. But I assume that would fix only part of the proble=
+m
+> > and git am will still be problematic.
+>
+> I have a script[1] that does the conversion written the last time this
+> came up. Just have to agree on directory names. I think the easiest
+> would be for Arnd/Olof to run it at the end of a merge window before
+> rc1.
+>
+> I'm very much in favor of this happening especially before *any*
+> overlays are added to add to the mess (it's probably already
+> happened).
+>
+> Rob
+>
+> [1] https://lore.kernel.org/all/20181204183649.GA5716@bogus/
 
-Yes they are, thanks for spotting that.  These patches were on drm-msm
-/ msm-next when I made this patch on January 11th, hence these were the
-hashes given to me by git bisect: see how those patches have an author
-timestamp of January 9th, while the proper hashes that landed upstream
-have a hash of January 12th: the branch has been force-pushed after.
+Hi Rob,
+thanks for recovering this. I remember also providing a script.
 
-Old:
+Anyway considering the amount of stuff to move, I feel like some
+OEM might be problematic to move due to rebase and merging problems.
 
-https://gitlab.freedesktop.org/drm/msm/-/commit/f0a1bdf64dd7
-https://gitlab.freedesktop.org/drm/msm/-/commit/0a72f23f6ef8
-https://gitlab.freedesktop.org/drm/msm/-/commit/8cbbc3396065
+We should consider accepting moving only some and keep other
+in the unsorted path. And move them at the first time possible with
+the help of the maintainers.
 
-New:
-
-https://gitlab.freedesktop.org/drm/msm/-/commit/4a352c2fc15a
-https://gitlab.freedesktop.org/drm/msm/-/commit/0e91bcbb0016
-https://gitlab.freedesktop.org/drm/msm/-/commit/100d7ef6995d
-
-> Will wait for a day to fix this up, otherwise I will do it while applying.
-
-Thanks, that's appreciated.
-
-- Marijn
-
-> > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  4 ++--
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
-> >   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  4 ++--
-> >   3 files changed, 10 insertions(+), 10 deletions(-)
-
-<snip>
+One main blocker of this is some qcom dts that are linked to arm64
+directory, so for some dts special care is needed.
