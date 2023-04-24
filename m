@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F0876ED63E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 22:42:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FFEA6ED649
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 24 Apr 2023 22:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232431AbjDXUm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 16:42:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48008 "EHLO
+        id S230093AbjDXUqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 16:46:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232317AbjDXUmZ (ORCPT
+        with ESMTP id S229688AbjDXUqA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 16:42:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E83361B2;
-        Mon, 24 Apr 2023 13:42:24 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33OKf9uT026649;
-        Mon, 24 Apr 2023 20:41:12 GMT
+        Mon, 24 Apr 2023 16:46:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F8B618E;
+        Mon, 24 Apr 2023 13:45:59 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33OIdIxI015572;
+        Mon, 24 Apr 2023 20:45:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=IsjhE9LHHR+B0RZQMgMZOn/HKJ0BcKSpzl4QRRZhkZA=;
- b=O3luM5fyy/6Df93zRaWG/YL2T4x6NBggLFquN5M3PexMve3iKc1WtNSLeP8kX8Dl+Yro
- 3WnMN21xgQRuRtHMvJydinxikYz3fellCaMB66aTYNR74Yx6j3d3L6/IrM2+QG1WxWl/
- 20stP5n4tVMBq0kcH2hLnptvsyfbztb1qYi6tla7CqoiNtFwa5Wk+pJxuFFUffpqTY1i
- hWAZu0EHOAGymlkWDbOTgdOXk8JMqdmC10vQyWCt2+skEpxgJ2JYgQoemujQuFb1ZcLh
- 81dEUot7OvAw6BQmc5fYlayVTzLoDCmB/hLHFSBQCsRKkZq/qlhnSV0JfcgBH5YJp3L4 aQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q5qv1sby3-1
+ bh=NvwkZ6kAkQqlU3nvA+hkJSMUBJeAdRt++vxUhCRkN20=;
+ b=hJ7wm7wiqqn5Wi4DCen2DhP/KrF6ahfr6Z9empRGBr+UNgoxQOjAkdAcJ1hBZXjwewyu
+ /ElGNZFznPzZVCCh95iBZ/cQpnXv5+hpYDCixQEoJqP5JTkB8LDBESeqCh88ty2kjvyN
+ Umgu/hFj3i7IemMAAJWouY3+u/pnMcZTAjXm8oamuywcSngEQoz05S1Gwrgbp9Y95yE0
+ ejubPOspqru5e+j0aigDIvoHOSlRCpIF2kZxrOdqQzQITTbdrFMzCr4MPQS3IKNJ62Wl
+ BlTeo/yYYWyx4UTkdygKNMJzIRI/MkxLPlyc8Yplx8xX9PKTUrQmtLHWkkHQNBvJcEwx kw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q5r0usc9n-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Apr 2023 20:41:11 +0000
+        Mon, 24 Apr 2023 20:44:59 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33OKfAMs005179
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33OKiwDp026790
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 24 Apr 2023 20:41:10 GMT
+        Mon, 24 Apr 2023 20:44:58 GMT
 Received: from [10.110.104.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 24 Apr
- 2023 13:41:08 -0700
-Message-ID: <ca4012ee-d964-c2e9-b437-b03277d71529@quicinc.com>
-Date:   Mon, 24 Apr 2023 13:41:07 -0700
+ 2023 13:44:56 -0700
+Message-ID: <62d78d23-e191-a64f-5c4c-cd2c26217bdf@quicinc.com>
+Date:   Mon, 24 Apr 2023 13:44:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [PATCH v2 02/17] drm/msm/dpu: Remove TE2 block and feature from
- DPU >= 7.0.0 hardware
+Subject: Re: [PATCH v2 03/17] drm/msm/dpu: Move non-MDP_TOP INTF_INTR offsets
+ out of hwio header
 Content-Language: en-US
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -73,30 +73,30 @@ CC:     <~postmarketos/upstreaming@lists.sr.ht>,
         Archit Taneja <architt@codeaurora.org>,
         Sravanthi Kollukuduru <skolluku@codeaurora.org>
 References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-2-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-3-ef76c877eb97@somainline.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230411-dpu-intf-te-v2-2-ef76c877eb97@somainline.org>
+In-Reply-To: <20230411-dpu-intf-te-v2-3-ef76c877eb97@somainline.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QKAQVALvF4UdfzcbzGVqYpaWvuH9YuHr
-X-Proofpoint-ORIG-GUID: QKAQVALvF4UdfzcbzGVqYpaWvuH9YuHr
+X-Proofpoint-GUID: A3vEk8sHJRjI9vUaRaLuFkhpO-rUaah-
+X-Proofpoint-ORIG-GUID: A3vEk8sHJRjI9vUaRaLuFkhpO-rUaah-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-24_11,2023-04-21_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- phishscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 suspectscore=0
- clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ mlxlogscore=999 phishscore=0 mlxscore=0 spamscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2303200000 definitions=main-2304240187
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -106,95 +106,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 4/17/2023 1:21 PM, Marijn Suijten wrote:
-> No hardware beyond kona (sm8250) defines the TE2 PINGPONG sub-block
-> offset downstream.  Even though neither downstream nor upstream utilizes
-> these registers in any way, remove the erroneous specification for
-> SC8280XP, SM8350 and SM8450 to prevent confusion.
+> These offsets do not fall under the MDP TOP block and do not fit the
+> comment right above.  Move them to dpu_hw_interrupts.c next to the
+> repsective MDP_INTF_x_OFF interrupt block offsets.
 > 
-> Note that downstream enables the PPSPLIT (split-FIFO) topology (single
-> LM for 2 PP and 2 INTF) based on the presence of a TE2 block.
-> 
-> Fixes: f0a1bdf64dd7 ("drm/msm/dpu: Introduce SC8280XP")
-> Fixes: 0a72f23f6ef8 ("drm/msm/dpu: Add SM8350 to hw catalog")
-> Fixes: 8cbbc3396065 ("drm/msm/dpu: add support for SM8450")
-
-I cannot find any commits with those hashes.
-
-Should this be
-
-Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
-
-Will wait for a day to fix this up, otherwise I will do it while applying.
-
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
 > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+This change itself is fine, hence
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+One comment below.
+
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   |  4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 12 ++++++------
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   |  4 ++--
->   3 files changed, 10 insertions(+), 10 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 5 ++++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h          | 3 ---
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index ca107ca8de46..41ef0c8fc993 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -127,10 +127,10 @@ static const struct dpu_dspp_cfg sm8350_dspp[] = {
->   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index 53326f25e40e..85c0bda3ff90 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -15,7 +15,7 @@
 >   
->   static const struct dpu_pingpong_cfg sm8350_pp[] = {
-> -	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> -	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
->   	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sdm845_pp_sblk,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index 9aab110b8c44..12c14d15e386 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -121,17 +121,17 @@ static const struct dpu_dspp_cfg sc8280xp_dspp[] = {
->   };
->   
->   static const struct dpu_pingpong_cfg sc8280xp_pp[] = {
-> -	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk,
->   		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8), -1),
-> -	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk,
->   		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9), -1),
-> -	PP_BLK_TE("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sdm845_pp_sblk,
->   		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10), -1),
-> -	PP_BLK_TE("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sdm845_pp_sblk,
->   		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11), -1),
-> -	PP_BLK_TE("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sdm845_pp_sblk,
->   		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30), -1),
-> -	PP_BLK_TE("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sdm845_pp_sblk,
->   		  DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31), -1),
->   };
->   
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 02a259b6b426..e409c119b0a2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -128,10 +128,10 @@ static const struct dpu_dspp_cfg sm8450_dspp[] = {
->   };
->   /* FIXME: interrupts */
->   static const struct dpu_pingpong_cfg sm8450_pp[] = {
-> -	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> -	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk_te,
-> +	PP_BLK("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
->   	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sdm845_pp_sblk,
+>   /*
+>    * Register offsets in MDSS register file for the interrupt registers
+> - * w.r.t. to the MDP base
+> + * w.r.t. the MDP base
+>    */
+>   #define MDP_SSPP_TOP0_OFF		0x0
+>   #define MDP_INTF_0_OFF			0x6A000
+> @@ -24,6 +24,9 @@
+>   #define MDP_INTF_3_OFF			0x6B800
+>   #define MDP_INTF_4_OFF			0x6C000
+>   #define MDP_INTF_5_OFF			0x6C800
+> +#define INTF_INTR_EN			0x1c0
+> +#define INTF_INTR_STATUS		0x1c4
+> +#define INTF_INTR_CLEAR			0x1c8
+>   #define MDP_AD4_0_OFF			0x7C000
+>   #define MDP_AD4_1_OFF			0x7D000
+>   #define MDP_AD4_INTR_EN_OFF		0x41c
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> index feb9a729844a..5acd5683d25a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> @@ -21,9 +21,6 @@
+>   #define HIST_INTR_EN                    0x01c
+>   #define HIST_INTR_STATUS                0x020
+>   #define HIST_INTR_CLEAR                 0x024
+
+Even HIST_INTR_*** need to be moved then.
+
+> -#define INTF_INTR_EN                    0x1C0
+> -#define INTF_INTR_STATUS                0x1C4
+> -#define INTF_INTR_CLEAR                 0x1C8
+>   #define SPLIT_DISPLAY_EN                0x2F4
+>   #define SPLIT_DISPLAY_UPPER_PIPE_CTRL   0x2F8
+>   #define DSPP_IGC_COLOR0_RAM_LUTN        0x300
 > 
