@@ -2,73 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 895606ED84A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 01:04:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D0A96ED858
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 01:11:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233162AbjDXXD6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 19:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32798 "EHLO
+        id S230355AbjDXXLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 19:11:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232965AbjDXXDr (ORCPT
+        with ESMTP id S229755AbjDXXLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 19:03:47 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B26C9755
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 16:03:44 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-54f8e823e47so57139827b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 16:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682377423; x=1684969423;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xRrth/2rPlHJRD57ZDquRzBPnCdvHhyHdVMWOLBhruc=;
-        b=pwTi6X4Nah2HOzAB1Ma+a9krICtX2pHckFVINb88v52GBWheZ7jNNAHDVo8Dnp5zsZ
-         wuJDfJTRWf9GdX6CanriP+Pu1yBthY4U12nueDOM1sq+a9AYrud+7bkuee8qPbzhqQNS
-         eSF8AfTN5oMY3xh7hUEhIiu5DCIlMS8bs+rduoF78daKpkxi+ykuz0ImcKQt4grSnFyx
-         O3tIl8t1S3YoAf+71PDzbzsIStpGrhiNCSpgRfO8l1LD20TmV+aOAm4DdrhMmbHJXXtM
-         9nWRUsfqJeEv+wO+5qHzsDsCN5nmk6Mg96rCymIFnFZk+Az51S7i5tUAwERWVkxY3c1p
-         dK2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682377423; x=1684969423;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xRrth/2rPlHJRD57ZDquRzBPnCdvHhyHdVMWOLBhruc=;
-        b=IV1EXyccH43f5rPEJ3NxnP4VdHzUBP7lxpYcqfXIvBbdpnuHCMRvCraxt9YPxXF2fV
-         FCaGfraV0TbziqhFj9YbEdhn6/8J4np9rGTiZvfcXG89POmbJuoawQDSwikxuyMjUuL4
-         4La39LpGnxhvLgXcJzocig9mrYDoKnGVUD7jT6PO649WKnM4Ejqy0p1dtkPZgNVA4Nit
-         gElfhTMEppUMaM24kLve2Hm0OVR0JewqKmf74bxGplfsQjZzkXMFUGt/tS7rut/QUnEL
-         OQOVNlGC2gfaEA8WGZS21bBIuR81GREW+NL0V6ADtd+fuRIOTu7Pf7WgNAMvrLO0wGQo
-         RtXA==
-X-Gm-Message-State: AAQBX9dGlKDiTGtCvrLaTRM1JqgTTVM+ETnma87GqKdT49NCUgAOKl+k
-        4o6DVY6ndIo/XdovIJFYIt0qX0NgK5H5JOQeIUDu4w==
-X-Google-Smtp-Source: AKy350bUIDhOyA/75JWrk6ft3Se2t9sPXfgR909GdW/OWl6txSewv5q6VCQpcF8tzR9yOS7WWg8fvn4NqZyvM03Udk8=
-X-Received: by 2002:a0d:e68b:0:b0:54f:9e41:df5a with SMTP id
- p133-20020a0de68b000000b0054f9e41df5amr9223949ywe.15.1682377423165; Mon, 24
- Apr 2023 16:03:43 -0700 (PDT)
+        Mon, 24 Apr 2023 19:11:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35599025;
+        Mon, 24 Apr 2023 16:11:01 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33OMWh3L005351;
+        Mon, 24 Apr 2023 23:09:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8GdsQCr0p4YLH4qvUym0R6hMLq4gi02IrKOF11qjjxM=;
+ b=GonEO0e8cnPaHgdUgLhLR1Kqg2EA8P9/zCIsmWpzlyPpgJRrxRJ3gc6XyYbw6FAa1wIT
+ EoMsQIm2LXTWU8UhZWJo8EFRAA2vE4QeAK3BwO/NJVpObseDxXUJNVeu9OwUDZ8hUtk+
+ OCyPbnk49TrxbLN9A4oPNCJMdu+FaadVZ781Nrrh78W2kBR79fXUO81JuyP262V1EKpl
+ DT5yRfwUEhd2ei6bXDsb75I6gOBW/GYCMxwz3+wltZv4dzcTxZD2KZwoxn6Jl/cZgBUY
+ iNMoBnpGjXkBIZ2G453xN3aIx6ScGkDv/4iJA0o9IOZRBM4v4x4E2qNoS6d5m4e7N+dJ vw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q61jdr57d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Apr 2023 23:09:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33ON9msF024347
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 24 Apr 2023 23:09:48 GMT
+Received: from [10.110.104.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 24 Apr
+ 2023 16:09:46 -0700
+Message-ID: <65bb4d8a-c607-4152-0ae3-bf3134955925@quicinc.com>
+Date:   Mon, 24 Apr 2023 16:09:45 -0700
 MIME-Version: 1.0
-References: <20230421133922.8520-1-quic_shazhuss@quicinc.com> <ZEcEGJiikEC2wIVE@fedora>
-In-Reply-To: <ZEcEGJiikEC2wIVE@fedora>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 25 Apr 2023 02:03:32 +0300
-Message-ID: <CAA8EJpr27=2jAXbamN6J7yF+7G=L5Af8+XReB5UnFuihcEwMQA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
-To:     Adrien Thierry <athierry@redhat.com>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [Freedreno] [PATCH v2 04/17] drm/msm/dpu: Fix PP_BLK_DIPHER ->
+ DITHER typo
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        "Jami Kettunen" <jami.kettunen@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-kernel@vger.kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Vinod Koul <vkoul@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>
+References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-4-ef76c877eb97@somainline.org>
+ <a0a0b8fb-0d6b-d11b-5596-d61c41aabe7f@quicinc.com>
+ <bhatfkgdkjt2bih4lcwa5cxcp3w2tkjrqmbdhqhzqa2cizrmxs@py3gr5vifsoc>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <bhatfkgdkjt2bih4lcwa5cxcp3w2tkjrqmbdhqhzqa2cizrmxs@py3gr5vifsoc>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BM0PKs6kXF-Aeb2IrdblbYtISv0IQxnd
+X-Proofpoint-GUID: BM0PKs6kXF-Aeb2IrdblbYtISv0IQxnd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-24_11,2023-04-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 clxscore=1015 mlxlogscore=999 malwarescore=0 phishscore=0
+ adultscore=0 mlxscore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304240210
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,124 +108,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Apr 2023 at 01:36, Adrien Thierry <athierry@redhat.com> wrote:
->
-> Hi Shazad,
->
-> On Fri, Apr 21, 2023 at 07:09:15PM +0530, Shazad Hussain wrote:
-> > Update relavent DT bindings for USB, add new config to the phy driver,
-> > add USB and PHY nodes to the .dtsi and enable them in the board .dts
-> > for the sa8775p-ride platform.
-> >
-> > Shazad Hussain (6):
-> >   dt-bindings: usb: qcom,dwc3: Add bindings for SA8775P
-> >   dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for SA8775P
-> >   dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add SA8775P USB PHY
-> >     binding
-> >   phy: qcom-qmp: Add SA8775P USB3 UNI phy
-> >   arm64: dts: qcom: sa8775p: add USB nodes
-> >   arm64: dts: qcom: sa8775p-ride: enable USB nodes
-> >
-> >  .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |   1 +
-> >  .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |   1 +
-> >  .../devicetree/bindings/usb/qcom,dwc3.yaml    |   5 +
-> >  arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |  92 +++++++
-> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 239 +++++++++++++++++-
-> >  drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |  45 ++++
-> >  6 files changed, 381 insertions(+), 2 deletions(-)
-> >
-> > --
-> > 2.17.1
-> >
->
-> Thanks for posting this. I tested the series on the sa8775p, and it seems
-> initialization for the controller at a400000 sometimes fails with a
-> timeout (-110) error:
->
->     dwc3 a400000.usb: Adding to iommu group 2
->     xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
->     xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
->     xhci-hcd xhci-hcd.0.auto: can't setup: -110
->     xhci-hcd xhci-hcd.0.auto: USB bus 1 deregistered
->     xhci-hcd: probe of xhci-hcd.0.auto failed with error -110
-
-Semi-random suggestion, but could you please try using
-clk_regmap_phy_mux/clk_regmap_phy_mux_ops for USB pipe clk src?
 
 
->     dwc3 a600000.usb: Adding to iommu group 3
->     dwc3 a800000.usb: Adding to iommu group 4
->     xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
->     xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 1
->     xhci-hcd xhci-hcd.1.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x0000000000010010
->     xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a800000
->     xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
->     xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 2
->     xhci-hcd xhci-hcd.1.auto: Host supports USB 3.1 Enhanced SuperSpeed
->     hub 1-0:1.0: USB hub found
->     hub 1-0:1.0: 1 port detected
->     usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
->     hub 2-0:1.0: USB hub found
->     hub 2-0:1.0: 1 port detected
->
-> In this case, only usb devices for a800000 are showing:
->
->     dracut:/# ls -alh /sys/bus/usb/devices
->     total 0
->     drwxr-xr-x 2 root root 0 Feb 27 00:00 .
->     drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1/1-0:1.0
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2/2-0:1.0
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2
->
-> This happens approximately 1 out of 2 reboots. Here's the kernel output
-> when initialization succeeds:
->
->     dwc3 a600000.usb: Adding to iommu group 2
->     dwc3 a800000.usb: Adding to iommu group 3
->     xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
->     xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
->     xhci-hcd xhci-hcd.0.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x0000000000010010
->     xhci-hcd xhci-hcd.0.auto: irq 161, io mem 0x0a800000
->     xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
->     xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 2
->     xhci-hcd xhci-hcd.0.auto: Host supports USB 3.1 Enhanced SuperSpeed
->     hub 1-0:1.0: USB hub found
->     hub 1-0:1.0: 1 port detected
->     usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
->     hub 2-0:1.0: USB hub found
->     hub 2-0:1.0: 1 port detected
->     dwc3 a400000.usb: Adding to iommu group 4
->     xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
->     xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 3
->     xhci-hcd xhci-hcd.1.auto: USB3 root hub has no ports
->     xhci-hcd xhci-hcd.1.auto: hcc params 0x0220fe65 hci version 0x110 quirks 0x0000000000010010
->     xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a400000
->     hub 3-0:1.0: USB hub found
->     hub 3-0:1.0: 1 port detected
->
-> And the list of usb devices:
->
->     dracut:/# ls -alh /sys/bus/usb/devices
->     total 0
->     drwxr-xr-x 2 root root 0 Feb 27 00:00 .
->     drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1/1-0:1.0
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2/2-0:1.0
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 3-0:1.0 -> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3/3-0:1.0
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2
->     lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb3 -> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3
->
-> Have you also encountered this?
->
-> Best,
->
-> Adrien
->
+On 4/24/2023 3:30 PM, Marijn Suijten wrote:
+> On 2023-04-24 13:53:13, Abhinav Kumar wrote:
+>>
+>>
+>> On 4/17/2023 1:21 PM, Marijn Suijten wrote:
+>>> SM8550 only comes with a DITHER subblock inside the PINGPONG block,
+>>> hence the name and a block length of zero.  However, the PP_BLK macro
+>>> name was typo'd to DIPHER rather than DITHER.
+>>>
+>>> Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>
+>> This change itself is fine, hence
+>>
+>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>
+>> one comment below
+>>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 16 ++++++++--------
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c         |  2 +-
+>>>    2 files changed, 9 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>> index 9e403034093f..d0ab351b6a8b 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>> @@ -132,28 +132,28 @@ static const struct dpu_dspp_cfg sm8550_dspp[] = {
+>>>    		 &sm8150_dspp_sblk),
+>>>    };
+>>>    static const struct dpu_pingpong_cfg sm8550_pp[] = {
+>>
+>> dither block should be present on many other chipsets too but looks like
+>> on sm8550 was enabling it. Not sure how it was validated there. But we
+>> are enabling dither, even other chipsets have this block.
+> 
+> Correct, they all seem to have it starting at sdm845.  My patch message
+> seems to lack the word "exclusively" as the PP on sm8550 appears to
+> exclusively contain a DITHER subblock (unless other blocks are available
+> that simply aren't supported within this driver yet) and no other
+> registers.  Hence this aptly named macro exist to emit just the feature
+> bitflag for that and a .len of zero.
+> 
 
+I think after the TE blocks were moved to INTF, dither is the only 
+sub-block for all Ping-Pongs not just in sm8550.
 
--- 
-With best wishes
-Dmitry
+> Now, whether we should have the features contain subblock flags rather
+> than just scanning for their id's or presence in the subblocks is a
+> different discussion / cleanup we should have.
+> 
+
+Yes, separate patch and hence I gave R-b on this one. But had to leave 
+this comment to not lose context.
+
+> - Marijn
+> 
+>>> -	PP_BLK_DIPHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
+>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sc7280_pp_sblk,
+>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sc7280_pp_sblk,
+>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sc7280_pp_sblk,
+>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sc7280_pp_sblk,
+>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
+>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
+>>>    			-1,
+>>>    			-1),
+>>> -	PP_BLK_DIPHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
+>>> +	PP_BLK_DITHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
+>>>    			-1,
+>>>    			-1),
+>>>    };
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> index 03f162af1a50..ca8a02debda9 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> @@ -491,7 +491,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+>>>    	.len = 0x20, .version = 0x20000},
+>>>    };
+>>>    
+>>> -#define PP_BLK_DIPHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
+>>> +#define PP_BLK_DITHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
+>>>    	{\
+>>>    	.name = _name, .id = _id, \
+>>>    	.base = _base, .len = 0, \
+>>>
