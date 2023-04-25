@@ -2,237 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87E296EE3DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 16:27:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B2EA6EE473
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 17:07:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233910AbjDYO1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 10:27:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41240 "EHLO
+        id S234436AbjDYPH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 11:07:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbjDYO1D (ORCPT
+        with ESMTP id S234404AbjDYPH0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 10:27:03 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81DC613FB2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 07:26:57 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-b95fb433f59so10372242276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 07:26:57 -0700 (PDT)
+        Tue, 25 Apr 2023 11:07:26 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9053259DC
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 08:07:24 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id e9e14a558f8ab-32ad0eb84ffso15197715ab.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 08:07:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682432816; x=1685024816;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kbD1oCQK52/WTKujUBAVRhz/h35B5FS7o9GLDaVgvUg=;
-        b=LGMfNC+nTBPrgf5Af4/ohQbKn6AHdljSnvffiECsphEFyX2qT8Hs2n0Gx7F3gWZykf
-         qoFYEV1yL3d6olaNXixbV0ToXH+YiGnkItVrvaUAgVuVEOMMA3b59FZ31O/b1spF5HEr
-         kDnVT6TuLrCVaHerZkdIlH2BxP8CF+RxHQIk1zHiKAbASGrAmQg3aFaObODMbiSf+D3p
-         txoJTRej2XbvfmsWEYM9WCjZx/W05d3b/tdEKIiUMYuMLymdXjKs5mfEQupYxeNm+E9u
-         v22VYQphIBWtpGwWL9GmzD17igHcxbfeKxYaPp57XcSozb8Tiy5dWmHA9WCZLnSt64eK
-         qHlw==
+        d=chromium.org; s=google; t=1682435242; x=1685027242;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NpYAGainFDoBezMAz2LIC0vmyd867yd+Zieo+NHOeqA=;
+        b=JPHtlFSiQLQnKeb7TxFoE1q3rU7exdTzXYAXxnAA5b6Tm6o4O7aPZlFiOlSxwoviHY
+         zhPWugfMD0te18c5UWjN2JVJEl2CfHMiPHna2z6ohig0evNHnA/dyT007/ICHbPdPU9m
+         27QdZ5nByZnOWSob8NxsCwxafN5A/VKmdkVHY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682432816; x=1685024816;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kbD1oCQK52/WTKujUBAVRhz/h35B5FS7o9GLDaVgvUg=;
-        b=kTHZoHlW2Gu0wga1Kp4+21WwXk+pK6uev6sHjQ2Todh2BoHlM588yhyxJPoILqXzjo
-         Cx+v+/qiqAtQqFntXjolDhXNOxOA/+fKUJtwaIImCNvB1csws45DBHPl++NZG5YmbLip
-         KWgDGHqfqKhyWh04PEP3twEgokkqORHYv8bycySx/BjEauL/DWw55VbepVw/8olEtfYZ
-         a9Fu+7EatSvVoHVLJIqwHjXNUxxh4Xd1drQItLuEdcgqMnh3nQbdc7UgedypHGPZS6T8
-         ocJTVPElEiVuZgT0Z4ZVufO/0c1tFeg9CqmHIrm9NTMZVxbkJcx9f8kgvubWA465Pz00
-         rbww==
-X-Gm-Message-State: AAQBX9e5WwW3kq7BLG5G4EnxuOuk4lnKBzqWf+cJwTVe20yfixmpWxXJ
-        2A7GmHfBRfDtcOUvE84jqIWeBz0rE/IKSqSjqru49g==
-X-Google-Smtp-Source: AKy350aTQoPi8zTpL/bCLMkql0SQ8OHvzQ1OTTg3cKITKDykkBSd009WKdo8gkgJlYdMZLO5iqTwEK2tJwdYiHg9Gxc=
-X-Received: by 2002:a25:aab2:0:b0:b92:32aa:be5c with SMTP id
- t47-20020a25aab2000000b00b9232aabe5cmr12680159ybi.49.1682432816630; Tue, 25
- Apr 2023 07:26:56 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682435242; x=1685027242;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NpYAGainFDoBezMAz2LIC0vmyd867yd+Zieo+NHOeqA=;
+        b=lwuzXNlYS5uIl1scyPxS4cHBbV6JRyfQ4F3ug6u8ooFMa3cehiCAT5C8/57YUmM0cR
+         SpAWb0RUnNh/zVa/zltLmqlOiI3MRRh72zswLWpXmK7XCrQtdJG22VeXzn8rGzi2CuSK
+         WiGpbnW6DvQ8daS42vd8p94xF4lZSqJz3zYgkFenmkXCS98soC8l/u9JA5SFdbkB+6Gp
+         y6MGly0eHmgcs4fALAx5uqC6bpaLctjW9ufPLgbkkZktLAa0HKJTl6JFTk9jtxl8CCUX
+         B2olynFYL1U/2588e5ToaUxrQzEqYDtvDUABsH+Hy9VBn5siV9MOkseOD1jWe5a+ewKR
+         PQ0g==
+X-Gm-Message-State: AAQBX9cOBi3VnogwvBos8pD5JwzolIajEtTaT9lhtpXFhMD4Wc+Px028
+        wOPlNlhEvWQe1Ji1mzVs90kszslCY7hYxDjV+uc=
+X-Google-Smtp-Source: AKy350Y62YCC73TRNmCWt/d2PwTzpziKMfR5HnjvthrCbKWE2Ref0kYXNKEo1qRmlN+I+nCZqcpjXQ==
+X-Received: by 2002:a05:6e02:152:b0:32b:4cdc:d0cf with SMTP id j18-20020a056e02015200b0032b4cdcd0cfmr6964136ilr.3.1682435242334;
+        Tue, 25 Apr 2023 08:07:22 -0700 (PDT)
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
+        by smtp.gmail.com with ESMTPSA id cx27-20020a056638491b00b0040fa19472bcsm4130361jab.92.2023.04.25.08.07.18
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Apr 2023 08:07:19 -0700 (PDT)
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-329577952c5so88445ab.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 08:07:18 -0700 (PDT)
+X-Received: by 2002:a05:6e02:1d96:b0:32a:dc6a:3b97 with SMTP id
+ h22-20020a056e021d9600b0032adc6a3b97mr320927ila.0.1682435237664; Tue, 25 Apr
+ 2023 08:07:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230418-dpu-drop-useless-for-lookup-v2-0-acb08e82ef19@somainline.org>
- <20230418-dpu-drop-useless-for-lookup-v2-3-acb08e82ef19@somainline.org>
- <50d22e0c-84b3-0678-eb06-30fb66fd24cf@quicinc.com> <ymq4kstme55dm3j5kr6trevnwdelhjq7e7m4yky6zcbnf7auid@66l7inxz4oq2>
- <CAA8EJprYQUFER6x1+ucHX_Ze2uqWc6xoEaYDdJ1s0jgZjPJ0QQ@mail.gmail.com>
- <c809476f-74bc-0399-08f9-1bf26e7170fa@quicinc.com> <r2tndjr5jbjtrwwti6l3ag7562e53nqx2uk6vz6fx43yc7sncl@eypc37r2ey3j>
- <31f116f6-a6b7-1241-83bc-96c31e718f3f@linaro.org> <m5z5mv5hbdgpjbfo3mqo5s3egshnlu77nla4b7txddlsbk5fvi@jitwvapbr7wr>
-In-Reply-To: <m5z5mv5hbdgpjbfo3mqo5s3egshnlu77nla4b7txddlsbk5fvi@jitwvapbr7wr>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 25 Apr 2023 17:26:45 +0300
-Message-ID: <CAA8EJpoCeCkucvb=a+1ken_yR=8FvcECrvajOk5MxgO-j2nD6A@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] drm/msm/dpu: Pass catalog pointers directly from
- RM instead of IDs
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 25 Apr 2023 08:07:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UKpe2rixisrp213w57dF6zgFK909v1-inTNXiu=FVLjA@mail.gmail.com>
+Message-ID: <CAD=FV=UKpe2rixisrp213w57dF6zgFK909v1-inTNXiu=FVLjA@mail.gmail.com>
+Subject: Re: [PATCH] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Apr 2023 at 11:55, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> On 2023-04-25 10:54:47, Dmitry Baryshkov wrote:
-> > On 25/04/2023 10:16, Marijn Suijten wrote:
-> > > On 2023-04-24 16:23:17, Abhinav Kumar wrote:
-> > >>
-> > >>
-> > >> On 4/24/2023 3:54 PM, Dmitry Baryshkov wrote:
-> > >>> On Tue, 25 Apr 2023 at 01:03, Marijn Suijten
-> > >>> <marijn.suijten@somainline.org> wrote:
-> > >>>>
-> > >>>> On 2023-04-21 16:25:15, Abhinav Kumar wrote:
-> > >>>>>
-> > >>>>>
-> > >>>>> On 4/21/2023 1:53 PM, Marijn Suijten wrote:
-> > >>>>>> The Resource Manager already iterates over all available blocks from the
-> > >>>>>> catalog, only to pass their ID to a dpu_hw_xxx_init() function which
-> > >>>>>> uses an _xxx_offset() helper to search for and find the exact same
-> > >>>>>> catalog pointer again to initialize the block with, fallible error
-> > >>>>>> handling and all.
-> > >>>>>>
-> > >>>>>> Instead, pass const pointers to the catalog entries directly to these
-> > >>>>>> _init functions and drop the for loops entirely, saving on both
-> > >>>>>> readability complexity and unnecessary cycles at boot.
-> > >>>>>>
-> > >>>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > >>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > >>>>>
-> > >>>>> Overall, a nice cleanup!
-> > >>>>>
-> > >>>>> One comment below.
-> > >>>>>
-> > >>>>>> ---
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 37 +++++----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h        | 14 ++++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 32 +++---------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h        | 11 +++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 38 ++++-----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h       | 12 +++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +-
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 40 ++++++-----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h       | 12 +++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 38 ++++-----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h         | 10 +++---
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 33 +++----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 14 ++++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 33 +++----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 39 ++++------------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h       | 12 +++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 33 +++----------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h       | 11 +++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 33 ++++---------------
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h         | 11 +++----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 17 +++++-----
-> > >>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c            | 18 +++++-----
-> > >>>>>>     23 files changed, 139 insertions(+), 375 deletions(-)
-> > >>>>>>
-> > >>>>>
-> > >>>>> <snipped>
-> > >>>>>
-> > >>>>>> -struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
-> > >>>>>> -           void __iomem *addr,
-> > >>>>>> -           const struct dpu_mdss_cfg *m)
-> > >>>>>> +struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
-> > >>>>>> +           void __iomem *addr)
-> > >>>>>>     {
-> > >>>>>>       struct dpu_hw_intf *c;
-> > >>>>>> -   const struct dpu_intf_cfg *cfg;
-> > >>>>>> +
-> > >>>>>> +   if (cfg->type == INTF_NONE) {
-> > >>>>>> +           pr_err("Cannot create interface hw object for INTF_NONE type\n");
-> > >>>>>> +           return ERR_PTR(-EINVAL);
-> > >>>>>> +   }
-> > >>>>>
-> > >>>>> The caller of dpu_hw_intf_init which is the RM already has protection
-> > >>>>> for INTF_NONE, see below
-> > >>>>>
-> > >>>>>            for (i = 0; i < cat->intf_count; i++) {
-> > >>>>>                    struct dpu_hw_intf *hw;
-> > >>>>>                    const struct dpu_intf_cfg *intf = &cat->intf[i];
-> > >>>>>
-> > >>>>>                    if (intf->type == INTF_NONE) {
-> > >>>>>                            DPU_DEBUG("skip intf %d with type none\n", i);
-> > >>>>>                            continue;
-> > >>>>>                    }
-> > >>>>>                    if (intf->id < INTF_0 || intf->id >= INTF_MAX) {
-> > >>>>>                            DPU_ERROR("skip intf %d with invalid id\n",
-> > >>>>> intf->id);
-> > >>>>>                            continue;
-> > >>>>>                    }
-> > >>>>>                    hw = dpu_hw_intf_init(intf->id, mmio, cat);
-> > >>>>>
-> > >>>>> So this part can be dropped.
-> > >>>>
-> > >>>> I mainly intended to keep original validation where _intf_offset would
-> > >>>> skip INTF_NONE, and error out.  RM init is hence expected to filter out
-> > >>>> INTF_NONE instead of running into that `-EINVAL`, which I maintained
-> > >>>> here.
-> > >>>>
-> > >>>> If you think there won't be another caller of dpu_hw_intf_init, and that
-> > >>>> such validation is hence excessive, I can remove it in a followup v3.
-> > >>>
-> > >>> I'd prefer to see the checks at dpu_rm to be dropped.
-> > >>> dpu_hw_intf_init() (and other dpu_hw_foo_init() functions) should be
-> > >>> self-contained. If they can not init HW block (e.g. because the index
-> > >>> is out of the boundaries), they should return an error.
-> > >>>
-> > >>
-> > >> They already do that today because even without this it will call into
-> > >> _intf_offset() and that will bail out for INTF_NONE.
-> > >>
-> > >> I feel this is a duplicated check because the caller with the loop needs
-> > >> to validate the index before passing it to dpu_hw_intf_init() otherwise
-> > >> the loop will get broken at the first return of the error and rest of
-> > >> the blocks will also not be initialized.
-> > >
-> > > To both: keep in mind that the range-checks we want to remove from
-> > > dpu_rm_init validate the ID (index?) of a block.  This check is for the
-> > > *TYPE* of an INTF block, to skip it gracefully if no hardware is mapped
-> > > there.  As per the first patch of this series SM6115/QCM2290 only have a
-> > > DSI interface which always sits at ID 1, and ID 0 has its TYPE set to
-> > > INTF_NONE and is skipped.
-> > >
-> > > Hence we _should_ keep the graceful TYPE check in dpu_rm_init() to skip
-> > > calling this function _and assigning it to the rm->hw_intf array_.  But
-> > > I can remove the second TYPE check here in dpu_hw_intf_init() if you
-> > > prefer.
-> >
-> > We can return NULL from dpu_hw_foo_init(), which would mean that the
-> > block was skipped or is not present.
->
-> An then replace the `if INTF_NONE continue` logic in dpu_rm_init with a
-> check for NULL that skips, and a check for IS_ERR` that goes to `fail`?
+Hi,
 
-You can just drop the INTF_NONE in dpu_rm. If dpu_hw_intf_init()
-returns NULL, the rest of the code in dpu_rm will work correctly.
-
+On Tue, Apr 25, 2023 at 1:42=E2=80=AFAM Vijaya Krishna Nivarthi
+<quic_vnivarth@quicinc.com> wrote:
 >
-> Should I do that in a new or the same patch for v3?
+> The CS_TOGGLE bit when set is supposed to instruct FW to
+> toggle CS line between words. The driver with intent of
+> disabling this behaviour has been unsetting BIT(0). This has
+> not caused any trouble so far because the original BIT(1)
+> is untouched and BIT(0) likely wasn't being used.
 >
-> Note that there's a similar check for the `pingpong` "id" member of
-> every Layer Mixer.
+> Correct this to prevent a potential future bug.
 >
-> - Marijn
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+>  drivers/spi/spi-geni-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index ba7be50..8a7d1c2 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -35,7 +35,7 @@
+>  #define CS_DEMUX_OUTPUT_SEL    GENMASK(3, 0)
+>
+>  #define SE_SPI_TRANS_CFG       0x25c
+> -#define CS_TOGGLE              BIT(0)
+> +#define CS_TOGGLE              BIT(1)
 
+Looks right to me from the datasheet I have access to. It's definitely
+specified in an odd way on the datasheet, which lists bit 1 as this,
+bit 2 and 3 as reserved, but bit 0 is absent. ...but seems like this
+is really supposed to be 1.
 
+I guess this never mattered because all we ever did was clear the bit
+at init time and it must have already been cleared? ...and, of course,
+on many Chromebooks we moved to just using a GPIO...
 
--- 
-With best wishes
-Dmitry
+Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for
+GENI based QUP")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
