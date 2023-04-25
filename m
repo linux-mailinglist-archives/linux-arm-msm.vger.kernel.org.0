@@ -2,121 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B2EA6EE473
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 17:07:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 049666EE516
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 17:58:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234436AbjDYPH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 11:07:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39322 "EHLO
+        id S234495AbjDYP6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 11:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234404AbjDYPH0 (ORCPT
+        with ESMTP id S234320AbjDYP6M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 11:07:26 -0400
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9053259DC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 08:07:24 -0700 (PDT)
-Received: by mail-il1-x132.google.com with SMTP id e9e14a558f8ab-32ad0eb84ffso15197715ab.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 08:07:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1682435242; x=1685027242;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NpYAGainFDoBezMAz2LIC0vmyd867yd+Zieo+NHOeqA=;
-        b=JPHtlFSiQLQnKeb7TxFoE1q3rU7exdTzXYAXxnAA5b6Tm6o4O7aPZlFiOlSxwoviHY
-         zhPWugfMD0te18c5UWjN2JVJEl2CfHMiPHna2z6ohig0evNHnA/dyT007/ICHbPdPU9m
-         27QdZ5nByZnOWSob8NxsCwxafN5A/VKmdkVHY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682435242; x=1685027242;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NpYAGainFDoBezMAz2LIC0vmyd867yd+Zieo+NHOeqA=;
-        b=lwuzXNlYS5uIl1scyPxS4cHBbV6JRyfQ4F3ug6u8ooFMa3cehiCAT5C8/57YUmM0cR
-         SpAWb0RUnNh/zVa/zltLmqlOiI3MRRh72zswLWpXmK7XCrQtdJG22VeXzn8rGzi2CuSK
-         WiGpbnW6DvQ8daS42vd8p94xF4lZSqJz3zYgkFenmkXCS98soC8l/u9JA5SFdbkB+6Gp
-         y6MGly0eHmgcs4fALAx5uqC6bpaLctjW9ufPLgbkkZktLAa0HKJTl6JFTk9jtxl8CCUX
-         B2olynFYL1U/2588e5ToaUxrQzEqYDtvDUABsH+Hy9VBn5siV9MOkseOD1jWe5a+ewKR
-         PQ0g==
-X-Gm-Message-State: AAQBX9cOBi3VnogwvBos8pD5JwzolIajEtTaT9lhtpXFhMD4Wc+Px028
-        wOPlNlhEvWQe1Ji1mzVs90kszslCY7hYxDjV+uc=
-X-Google-Smtp-Source: AKy350Y62YCC73TRNmCWt/d2PwTzpziKMfR5HnjvthrCbKWE2Ref0kYXNKEo1qRmlN+I+nCZqcpjXQ==
-X-Received: by 2002:a05:6e02:152:b0:32b:4cdc:d0cf with SMTP id j18-20020a056e02015200b0032b4cdcd0cfmr6964136ilr.3.1682435242334;
-        Tue, 25 Apr 2023 08:07:22 -0700 (PDT)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id cx27-20020a056638491b00b0040fa19472bcsm4130361jab.92.2023.04.25.08.07.18
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Apr 2023 08:07:19 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-329577952c5so88445ab.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 08:07:18 -0700 (PDT)
-X-Received: by 2002:a05:6e02:1d96:b0:32a:dc6a:3b97 with SMTP id
- h22-20020a056e021d9600b0032adc6a3b97mr320927ila.0.1682435237664; Tue, 25 Apr
- 2023 08:07:17 -0700 (PDT)
+        Tue, 25 Apr 2023 11:58:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490A3C17A;
+        Tue, 25 Apr 2023 08:58:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D8BB4627EB;
+        Tue, 25 Apr 2023 15:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4722BC433AE;
+        Tue, 25 Apr 2023 15:58:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1682438290;
+        bh=itrfj1uL7ULKhIO/qSGGwopdMhHtcuGv7fowY1MDPYk=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=EgTh2lVlpMtQ5px5R+jV+EfXPM/vMd0vZZcesoDR/dZgys7DryqsRrWS2pdpS9uas
+         OYd9yTEmElOVrIZbn0OqVscAcdbafdiKbG9xGY95F+dXOVKPpAW5UFqkaPFQaikMgo
+         aWZCYgp15j+P/IiGD62g++flweL1qEmmRIyA46J9ZxdgcgQr67x7Q3TlACfNIAqEWA
+         ybnHZqICC3N6Bh2h/8vZ/QwOp/oM5lTZZiMl9J1LI5jXGxCqVcLQ5wSHavpOM+9lzJ
+         GcWe9oPB1zz3J6OXPcR6ftsIf9jN3vnmyzPm8qTrcAX6jvM8Z/Yhdc9tzdb3LHV6hX
+         cc5h5IH4H4Nww==
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-b8f510fecf4so8839269276.1;
+        Tue, 25 Apr 2023 08:58:10 -0700 (PDT)
+X-Gm-Message-State: AAQBX9emzZf9PORKzjyHfI5irsQQKf8MEyvZsMuWVRFxGXK0/SrZpWgE
+        A34Q+tos0Tb/oPdrg5JeObgsZsyFUvrEKoiU8g==
+X-Google-Smtp-Source: AKy350bpts/PPga3+dzd9vak+rbAaLdXpa4DHHS4UXvr1kLSlKfqR897O6l7AESMOVdvAuhJNuLkwu1gSc/085IiOR0=
+X-Received: by 2002:a25:b097:0:b0:b97:f46:a2b8 with SMTP id
+ f23-20020a25b097000000b00b970f46a2b8mr12284894ybj.17.1682438288965; Tue, 25
+ Apr 2023 08:58:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 25 Apr 2023 08:07:05 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UKpe2rixisrp213w57dF6zgFK909v1-inTNXiu=FVLjA@mail.gmail.com>
-Message-ID: <CAD=FV=UKpe2rixisrp213w57dF6zgFK909v1-inTNXiu=FVLjA@mail.gmail.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+In-Reply-To: <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 25 Apr 2023 10:57:57 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+Message-ID: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Apr 25, 2023 at 2:28=E2=80=AFAM Geert Uytterhoeven <geert@linux-m68=
+k.org> wrote:
+>
+> Hi Rob,
+>
+> On Tue, Apr 25, 2023 at 12:16=E2=80=AFAM Rob Herring <robh+dt@kernel.org>=
+ wrote:
+> > I have a script[1] that does the conversion written the last time this
+> > came up. Just have to agree on directory names. I think the easiest
+> > would be for Arnd/Olof to run it at the end of a merge window before
+> > rc1.
+>
+> "emev2" and "sh7" are missing for renesas.
 
-On Tue, Apr 25, 2023 at 1:42=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> The CS_TOGGLE bit when set is supposed to instruct FW to
-> toggle CS line between words. The driver with intent of
-> disabling this behaviour has been unsetting BIT(0). This has
-> not caused any trouble so far because the original BIT(1)
-> is untouched and BIT(0) likely wasn't being used.
->
-> Correct this to prevent a potential future bug.
->
-> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> ---
->  drivers/spi/spi-geni-qcom.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index ba7be50..8a7d1c2 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -35,7 +35,7 @@
->  #define CS_DEMUX_OUTPUT_SEL    GENMASK(3, 0)
->
->  #define SE_SPI_TRANS_CFG       0x25c
-> -#define CS_TOGGLE              BIT(0)
-> +#define CS_TOGGLE              BIT(1)
+No doubt it's been bitrotting (or I may have missed some).
 
-Looks right to me from the datasheet I have access to. It's definitely
-specified in an odd way on the datasheet, which lists bit 1 as this,
-bit 2 and 3 as reserved, but bit 0 is absent. ...but seems like this
-is really supposed to be 1.
+> Does your script also cater for .dts files not matching any pattern,
+> but including a .dtsi file that does match a pattern?
 
-I guess this never mattered because all we ever did was clear the bit
-at init time and it must have already been cleared? ...and, of course,
-on many Chromebooks we moved to just using a GPIO...
+I assume I built everything after moving, but maybe not...
 
-Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for
-GENI based QUP")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+That's all just "details". First, we need agreement on a) moving
+things to subdirs and b) doing it 1-by-1 or all at once. So far we've
+been stuck on a) for being 'too much churn'.
+
+One nice thing with subdirs is 'make CHECK_DTBS=3Dy
+arch/arm/boot/dts/foo/' can build everything for a platform family
+without having to mess with the kconfig. Maybe most folks don't care,
+but I do. My CI job running schema checks looks like this to deal with
+grouping the arm dts files (this list is probably out of date too, but
+less so):
+
+        if [ "$ARCH" =3D "arm" ]; then
+            VENDOR_LIST=3D"alphascale alpine artpec aspeed axm bcm cx9
+(ecx|highbank) \
+              efm ep7 imx1 imx23 imx28 imx27 imx5 imx6 imx7 ls vf qcom \
+              (am3|am4|am5|dra|keystone|omap|compulab|logicpd|elpida|motoro=
+la-cpcap|da|dm)
+\
+              nspire armada dove kirkwood orion mvebu mmp2 berlin pxa
+(arm-|integ|mps|ve) \
+              (at91|sama|usb_|tny_|mpa1600|animeo_ip|aks-cdu|ethernut5|evk-=
+pro3|pm9g45|ge86)
+\
+              exynos s3c s5p gemini (hisi|hi3|hip) mt meson moxa nuvo
+lpc owl ox8 \
+              (r7|r8|r9|emev2|sh73a|gr-|iwg) (rk|rv11) socfpga stm
+(sti|st-pin) ste \
+              spear (sun|axp) tegra uniph (vt8500|wm8) xen zynq"
+        else
+            VENDOR_LIST=3D$(ls arch/$ARCH/boot/dts/ | xargs)
+        fi
+
+Rob
