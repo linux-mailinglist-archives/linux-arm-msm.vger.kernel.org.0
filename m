@@ -2,113 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBEDA6EDB00
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 06:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 649546EDBE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 08:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232302AbjDYE6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 00:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40546 "EHLO
+        id S233530AbjDYGse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 02:48:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232603AbjDYE62 (ORCPT
+        with ESMTP id S233518AbjDYGsd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 00:58:28 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0175A8A74
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 21:58:26 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-50674656309so8079648a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 21:58:26 -0700 (PDT)
+        Tue, 25 Apr 2023 02:48:33 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7CA4BB8B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 23:48:12 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-95316faa3a8so994882166b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 23:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1682398705; x=1684990705;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=fairphone.com; s=fair; t=1682405291; x=1684997291;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b0Eu6RwlDMBI2VACTLVW3OyI+qTBgEnmFpIUv7kN7Xg=;
-        b=f7goMULptLM/h4aCQSheJXz1NcaoQxEI6Y09Gh8UZTO77/S24BAPjTWfUCQvp4jqNX
-         qaAnVant+f04AGkWz61s25P0VxS6cO0gxQSRz+l9tfT/E6rCBaxrTHC+EyAn8iCDtgKY
-         cV30I4N67+Tl6b8aNJCy7WUOEt91S4PrhzlZ1sLAx6WKXGdVvBm4KuG0e0TY1Ut3gNj2
-         R+jAy3FVLCXRZpzRCYtr06tBO4ZaVPmHAPQmTGZsxiiWpFWPMOmNsvokQBJoh044w5ig
-         RPVeNSJf/y1LvkvIBPi003s3V8hIcycBahJjyKKt89NOrJ+OwMfFKYNeI5VJdefT7W+M
-         5WVA==
+        bh=M1ZE7zkQJkA5e8pU4DAT31Q8ZdOD3Fw5YHswnvzUZmg=;
+        b=olsY2tC3Gx43o+1zlMobkyWpvjqynYcSpBNJpha9GJ236pWS48I5T6fRMsjnEXvXW6
+         nPi0bqOs+1TlaWLvYdtK05Phwd64bnf8h8lpwCoavOQKecIrT39b+c9OXon5xQQ/G8v5
+         C9ljuQugTDRKMyiQ5qglbXWyDGR5BHf2xgBOnY4Ic4pvsZ2wdQd/paK4gDRXz5hVaFo1
+         4sGV2PZjTYKCVn15Pw/Akl3g3hkRNCNsRHG7vFd0Yq0YJiWgig0JZOf8yfF87vpttcMF
+         HG7HPRei4vraUYDcnXZreqsqGm02uputbga0Nei8umyDLFxVgq8OAfyloV/3rrSUMB2q
+         yv+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682398705; x=1684990705;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b0Eu6RwlDMBI2VACTLVW3OyI+qTBgEnmFpIUv7kN7Xg=;
-        b=ILOTeFT2otuRhYHNtGDhtQqlke+GTriA9E2o6IzBM32PH/agasHOjVX9LnkA7Se4Aj
-         UtlQ2/cluobmYZwj1MTKHgJZgUbgmBvaNDsspJ1ErNCtJjezQ3uA6ca2hjDft9Pi5+lP
-         L72dDHXS3spxyYJLQLwiRvwSUVCpjvvZFPoPhRxmyIyHVfYXZZv6FCZOOYN89JQoMXsT
-         sI9oqVaWXVFW6gIqPA7j8UPmk92Y7e2dFDMMgGMsGKqG1y4CLm1Bq4r/7ChyH94LIoZn
-         vQa+D1Cm5sc9ijMGJQifX5Q5Sp9cDNPDiap7U5h163NQdRGk4O4oTzU/D6ZhbLtMdVQY
-         AAjw==
-X-Gm-Message-State: AAQBX9fIHro1QxBeEHIBWeETiPk+z2Mr251Xv5pvRoLtC/DT0xRGaacD
-        QgY0cZmImpaW+MlmxTrc5M+p4iMfVvh7W9kUL0ECgA==
-X-Google-Smtp-Source: AKy350auphzv7gCr2o8Iiur9PYK2zIXYRVW6d8MJgcNm8GMQeGwmvI+FOwh/BdkzaQO41xURDxBCvys3dBu3FMP0kdw=
-X-Received: by 2002:aa7:c916:0:b0:504:78aa:4f2d with SMTP id
- b22-20020aa7c916000000b0050478aa4f2dmr13658270edt.0.1682398705333; Mon, 24
- Apr 2023 21:58:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
-In-Reply-To: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Mon, 24 Apr 2023 23:58:14 -0500
-Message-ID: <CAKXuJqiL6_Mrh07HrBm6hMc3wZkW7vcfxR3_+h4_pY6hjMf2XQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] phy: qcom-qmp-combo: Support orientation switching
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20221208; t=1682405291; x=1684997291;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=M1ZE7zkQJkA5e8pU4DAT31Q8ZdOD3Fw5YHswnvzUZmg=;
+        b=c9YRDBLRe/yx9CA7FyHdRO+FJwIhIkBc92BhhGgLLX/PD4U1lhckSwl9fUVQBmulLu
+         iiQMwTJa1OUq31TIeLxgbujP8NDuSZ4oY8cENNeU48a2vl+k7LshYxh065MtsvQyhExN
+         tfRKf3dbiD3k6SdPSpUOaNl3Ui1QvLq4sYXRB1iGlPTmoKzi+BKSO930f2u/8+e7uWfZ
+         xq1akasMOeNkBADv1cGfV6+Bhw6BqCUflJ2UqLC7lptUOuICTA5rK5HxaoVx2XeDM07Z
+         JQEQWKGf3SL7Cz6ORypk4A7NtbJfEEiGGOCuHbH71V2Tk8Ha2XM0VMR3rETRMMjlBI0s
+         du1Q==
+X-Gm-Message-State: AAQBX9cw7ZItvhL0/kdoty0aZRSAouaZQbLCX7OiqmxfNxCTdcT+0fzx
+        qUo2e6o8YRycTb88CzQcK4vy4Q==
+X-Google-Smtp-Source: AKy350Z1GFt6IUApk1g0YPdKIdF8wPBWzQ1iG4DdhA44udPMwwV1bqNKEmVs8J1NANW0v9bSPKkIgg==
+X-Received: by 2002:a17:907:38c:b0:94e:fdec:67e2 with SMTP id ss12-20020a170907038c00b0094efdec67e2mr12906256ejb.77.1682405291266;
+        Mon, 24 Apr 2023 23:48:11 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id sd14-20020a170906ce2e00b0094f5d1bbb21sm6340135ejb.102.2023.04.24.23.48.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Apr 2023 23:48:10 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Tue, 25 Apr 2023 08:48:10 +0200
+Message-Id: <CS5MWGNURMH4.2VD8BIIJ3V3Q4@otso>
+Subject: Re: [PATCH RFC 0/4] Add WCN3988 Bluetooth support for Fairphone 4
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Eric Dumazet" <edumazet@google.com>,
+        "Jakub Kicinski" <kuba@kernel.org>,
+        "Paolo Abeni" <pabeni@redhat.com>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Balakrishna Godavarthi" <bgodavar@codeaurora.org>,
+        "Rocky Liao" <rjliao@codeaurora.org>,
+        "Marcel Holtmann" <marcel@holtmann.org>,
+        "Johan Hedberg" <johan.hedberg@gmail.com>,
+        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.14.0
+References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com>
+ <0f2af683-07f9-7fc7-a043-ee55e41d65c3@linaro.org>
+In-Reply-To: <0f2af683-07f9-7fc7-a043-ee55e41d65c3@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Sat Apr 22, 2023 at 2:03 PM CEST, Konrad Dybcio wrote:
+>
+>
+> On 21.04.2023 16:11, Luca Weiss wrote:
+> > Just to start with the important part why this is an RFC:
+> >=20
+> > While Bluetooth chip init works totally fine and bluez seems to be
+> > fairly happy with it, there's a (major) problem with scanning, as shown
+> > with this bluetoothctl snippet and dmesg snippet:
+> >=20
+> >   [bluetooth]# scan on
+> >   Failed to start discovery: org.bluez.Error.InProgress
+> >=20
+> >   [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
+> >=20
+> > This opcode should be the following:
+> >=20
+> >   include/net/bluetooth/hci.h:#define HCI_OP_LE_SET_SCAN_PARAM    0x200=
+b
+> Not a bluetooth expert or anything, but does that thing support
+> bluetooth LE?
 
-On Mon, Apr 24, 2023 at 10:40=E2=80=AFPM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> This adds support for USB and DisplayPort orientation switching to the
-> QMP combo PHY, as well as updating the sc8280xp devices to include the
-> QMP in the SuperSpeed graph.
->
-> Bjorn Andersson (7):
->   dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Add ports and
->     orientation-switch
->   phy: qcom-qmp-combo: Move phy_mutex out of com_init/exit
->   phy: qcom-qmp-combo: Introduce orientation variable
->   phy: qcom-qmp-combo: Introduce orientation switching
->   phy: qcom-qmp-combo: Introduce drm_bridge
->   arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed graph
->   arm64: dts: qcom: sc8280xp-x13s: Add QMP to SuperSpeed graph
->
->  .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  51 ++++
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  28 ++-
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  28 ++-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  34 +++
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 227 ++++++++++++++----
->  5 files changed, 309 insertions(+), 59 deletions(-)
->
-> --
-> 2.39.2
->
-Thank you! I have been looking forward to this patchset for a while :)
+I don't know too much about Bluetooth details either, but hasn't
+Bluetooth LE been a consistently supported thing since like 10 years?
 
-Tested with 05ac:1460 Apple, Inc. Digital AV Multiport Adapter and
-0639:7210 Chrontel, Inc. Billboard and both work with orientation
-switching.
+All the info I can easily find just states SM7225 SoC supports
+"Bluetooth 5.1".
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
+Regards
+Luca
+
+>
+> Konrad
+> >=20
+> > Unfortunately trying various existing code branches in the Bluetooth
+> > driver doesn't show any sign of making this work and I don't really kno=
+w
+> > where to look to debug this further.
+> >=20
+> > On the other hand "discoverable on" makes the device show up on other
+> > devices during scanning , so the RF parts of the Bluetooth chip are
+> > generally functional for sure.
+> >=20
+> > Any ideas are welcome.
+> >=20
+> > @Bjorn: Patch "arm64: dts: qcom: sm6350: add uart1 node" should be fine
+> > to take regardless the RFC status, I don't think the problem is caused
+> > there.
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> > Luca Weiss (4):
+> >       dt-bindings: net: qualcomm: Add WCN3988
+> >       Bluetooth: btqca: Add WCN3988 support
+> >       arm64: dts: qcom: sm6350: add uart1 node
+> >       arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth
+> >=20
+> >  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |  2 +
+> >  arch/arm64/boot/dts/qcom/sm6350.dtsi               | 63 ++++++++++++++=
+++++++++
+> >  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 17 ++++++
+> >  drivers/bluetooth/btqca.c                          | 13 ++++-
+> >  drivers/bluetooth/btqca.h                          | 12 ++++-
+> >  drivers/bluetooth/hci_qca.c                        | 12 +++++
+> >  6 files changed, 115 insertions(+), 4 deletions(-)
+> > ---
+> > base-commit: cf4c0112a0350cfe8a63b5eb3377e2366f57545b
+> > change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
+> >=20
+> > Best regards,
+
