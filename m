@@ -2,45 +2,45 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C7206EE621
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 18:53:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69E306EE646
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 19:03:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234441AbjDYQxT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 12:53:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
+        id S234874AbjDYRDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 13:03:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234426AbjDYQxS (ORCPT
+        with ESMTP id S234583AbjDYRDY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 12:53:18 -0400
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 879B1D307;
-        Tue, 25 Apr 2023 09:53:12 -0700 (PDT)
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-38e2740958aso2235765b6e.1;
-        Tue, 25 Apr 2023 09:53:12 -0700 (PDT)
+        Tue, 25 Apr 2023 13:03:24 -0400
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB083A9E;
+        Tue, 25 Apr 2023 10:03:22 -0700 (PDT)
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1881333ac1cso4484388fac.1;
+        Tue, 25 Apr 2023 10:03:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682441592; x=1685033592;
+        d=1e100.net; s=20221208; t=1682442202; x=1685034202;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xsSaFPoEnp1cGsorTT7ZaH8aG8h2ymJ3AbL8g9oAX2c=;
-        b=cjW8wW9V34uotDp0F3DfgWyO4QJ8Kzxa8C9LmcfFRlvEq4+vJgN3v4APp9Uktv8ZNd
-         Ok704JoruZrTDrp1J4zdp4PffbO60iMG096h7Wg0OWCsmuW4JZrX3eMQjWSrL7myzrie
-         40hEoNjOzKiNASjaHRqUZPYBqjX0NmD+gGZ8yfYEiqKxsa0AB7qjXutSe4N6R4pKCg+Z
-         ki12G05LXS767LmtLmw1uc0TX+G7D/4pC6BbpfWcd54QpGAqV3KXEHgI91o3Ci3PVirb
-         XKbPG3AN0PJtjC+vx9XSJt+MDpl0nfSnS8oCBi92mBzNsjnAuw8BABeiGUVuyhDsn/Cx
-         ZbMg==
-X-Gm-Message-State: AAQBX9ejuv3mE8vTgIqd0Zy0kgfJjfVOXj5ZSKSlvQlkPD9HrN7PGX8C
-        n06J+Dwrjmfd/nDfBNNaOw==
-X-Google-Smtp-Source: AKy350bfrDTwQxvMUyap3y3hJHSKG/gULg481X3pOZQCJmRNZ5VYkfUL4Idx8sx5O25r4MyufQ1RvQ==
-X-Received: by 2002:a05:6808:1392:b0:387:14b7:f8e7 with SMTP id c18-20020a056808139200b0038714b7f8e7mr10106662oiw.38.1682441591645;
-        Tue, 25 Apr 2023 09:53:11 -0700 (PDT)
+        bh=+ZDfXI7hMbqGi7E82l8vWt9jneZ/T4Uui2TLcBQz+KM=;
+        b=kXfx2b3L4bnge026GVI+Baha9Pm8eGEVPhWVcu3AxXkOsXy1eSP2CQdX2VR/CO6omc
+         H2O0kgDR1dJ17ftcLQ2jNq8eZMjZGp5gL+eKSsuKR+qAzGQRfUVu3Rr5/AmoKjHw8PnZ
+         kObEHSvcxYWMoZDWIUp2NCORTWmg8TaXrlzucj8UUugkHcUjlaLJDCKpXdvjxReY/7/j
+         fUBqz/zq2bLC6VP/UB/n6Bfc4F5qBMgx4X2/wsEGouSAs0gu+LoP5mjY2zi2Y9Dn1fg8
+         z0pPLLOvSCh9DL26TIzb6PUhILB4gsASxscZ5sofjo9njdGSzAMpQx6rFvYTOXqU3WdT
+         acww==
+X-Gm-Message-State: AAQBX9fY16/235yO43rt2YP33pxb2jglwYRgX2ZKnyax0UvoIE+43bbR
+        bJhafSRXbGS54M2lcz1ByA==
+X-Google-Smtp-Source: AKy350Yul7/EEVvrMD/ABdCsLr9ode6pBn2tmtKnE0Rjjz8gJcwSoneSAZlS17HOt1THyFiTOOIaeQ==
+X-Received: by 2002:a05:6870:63a4:b0:17e:6eaa:945f with SMTP id t36-20020a05687063a400b0017e6eaa945fmr12199364oap.8.1682442201994;
+        Tue, 25 Apr 2023 10:03:21 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id z9-20020a056808048900b0038dd5bf922bsm5772958oid.22.2023.04.25.09.53.10
+        by smtp.gmail.com with ESMTPSA id b1-20020a056870b24100b0018045663fc5sm5678632oam.48.2023.04.25.10.03.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 09:53:11 -0700 (PDT)
-Received: (nullmailer pid 1931342 invoked by uid 1000);
-        Tue, 25 Apr 2023 16:53:10 -0000
-Date:   Tue, 25 Apr 2023 11:53:10 -0500
+        Tue, 25 Apr 2023 10:03:21 -0700 (PDT)
+Received: (nullmailer pid 1948453 invoked by uid 1000);
+        Tue, 25 Apr 2023 17:03:20 -0000
+Date:   Tue, 25 Apr 2023 12:03:20 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>,
@@ -59,7 +59,7 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         iommu@lists.linux.dev
 Subject: Re: [PATCH v2 03/13] dt-bindings: display/msm: Add SM6350 DPU
-Message-ID: <20230425165310.GA1928942-robh@kernel.org>
+Message-ID: <20230425170320.GA1931576-robh@kernel.org>
 References: <20230411-topic-straitlagoon_mdss-v2-0-5def73f50980@linaro.org>
  <20230411-topic-straitlagoon_mdss-v2-3-5def73f50980@linaro.org>
 MIME-Version: 1.0
@@ -68,9 +68,9 @@ Content-Disposition: inline
 In-Reply-To: <20230411-topic-straitlagoon_mdss-v2-3-5def73f50980@linaro.org>
 X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -113,9 +113,42 @@ On Fri, Apr 21, 2023 at 12:31:12AM +0200, Konrad Dybcio wrote:
 > +    items:
 > +      - description: Address offset and size for mdp register set
 > +      - description: Address offset and size for vbif register set
+> +
+> +  reg-names:
+> +    items:
+> +      - const: mdp
+> +      - const: vbif
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display axi clock
+> +      - description: Display ahb clock
+> +      - description: Display rot clock
+> +      - description: Display lut clock
+> +      - description: Display core clock
+> +      - description: Display vsync clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bus
+> +      - const: iface
+> +      - const: rot
+> +      - const: lut
+> +      - const: core
+> +      - const: vsync
 
-Drop 'Address offset and size for '
+Is there some reason the clocks are in different order? They appear to 
+be the same minus the 'throttle' clock. Is there really no 'throttle' 
+clock? Maybe this platform just tied it to one of the same clocks in the 
+above?
 
-With that,
+I really hate the mess that is clocks. We have the same or related 
+blocks with just totally different names and order. The result is 
+if/then schemas or separate schemas like this. Neither option is great, 
+but at least the if/then schemas provides some motivation to not have 
+pointless variations like this. </rant>
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+As it seems the only difference between these 2 bindings is 1 extra 
+clock, can't they be shared?
+
+Rob
