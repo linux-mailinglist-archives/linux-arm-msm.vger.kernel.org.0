@@ -2,161 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 649546EDBE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 08:48:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 160656EDBEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 08:54:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233530AbjDYGse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 02:48:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53222 "EHLO
+        id S233526AbjDYGyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 02:54:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233518AbjDYGsd (ORCPT
+        with ESMTP id S233407AbjDYGyr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 02:48:33 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7CA4BB8B
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 23:48:12 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-95316faa3a8so994882166b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 24 Apr 2023 23:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1682405291; x=1684997291;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M1ZE7zkQJkA5e8pU4DAT31Q8ZdOD3Fw5YHswnvzUZmg=;
-        b=olsY2tC3Gx43o+1zlMobkyWpvjqynYcSpBNJpha9GJ236pWS48I5T6fRMsjnEXvXW6
-         nPi0bqOs+1TlaWLvYdtK05Phwd64bnf8h8lpwCoavOQKecIrT39b+c9OXon5xQQ/G8v5
-         C9ljuQugTDRKMyiQ5qglbXWyDGR5BHf2xgBOnY4Ic4pvsZ2wdQd/paK4gDRXz5hVaFo1
-         4sGV2PZjTYKCVn15Pw/Akl3g3hkRNCNsRHG7vFd0Yq0YJiWgig0JZOf8yfF87vpttcMF
-         HG7HPRei4vraUYDcnXZreqsqGm02uputbga0Nei8umyDLFxVgq8OAfyloV/3rrSUMB2q
-         yv+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682405291; x=1684997291;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=M1ZE7zkQJkA5e8pU4DAT31Q8ZdOD3Fw5YHswnvzUZmg=;
-        b=c9YRDBLRe/yx9CA7FyHdRO+FJwIhIkBc92BhhGgLLX/PD4U1lhckSwl9fUVQBmulLu
-         iiQMwTJa1OUq31TIeLxgbujP8NDuSZ4oY8cENNeU48a2vl+k7LshYxh065MtsvQyhExN
-         tfRKf3dbiD3k6SdPSpUOaNl3Ui1QvLq4sYXRB1iGlPTmoKzi+BKSO930f2u/8+e7uWfZ
-         xq1akasMOeNkBADv1cGfV6+Bhw6BqCUflJ2UqLC7lptUOuICTA5rK5HxaoVx2XeDM07Z
-         JQEQWKGf3SL7Cz6ORypk4A7NtbJfEEiGGOCuHbH71V2Tk8Ha2XM0VMR3rETRMMjlBI0s
-         du1Q==
-X-Gm-Message-State: AAQBX9cw7ZItvhL0/kdoty0aZRSAouaZQbLCX7OiqmxfNxCTdcT+0fzx
-        qUo2e6o8YRycTb88CzQcK4vy4Q==
-X-Google-Smtp-Source: AKy350Z1GFt6IUApk1g0YPdKIdF8wPBWzQ1iG4DdhA44udPMwwV1bqNKEmVs8J1NANW0v9bSPKkIgg==
-X-Received: by 2002:a17:907:38c:b0:94e:fdec:67e2 with SMTP id ss12-20020a170907038c00b0094efdec67e2mr12906256ejb.77.1682405291266;
-        Mon, 24 Apr 2023 23:48:11 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id sd14-20020a170906ce2e00b0094f5d1bbb21sm6340135ejb.102.2023.04.24.23.48.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Apr 2023 23:48:10 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 25 Apr 2023 08:48:10 +0200
-Message-Id: <CS5MWGNURMH4.2VD8BIIJ3V3Q4@otso>
-Subject: Re: [PATCH RFC 0/4] Add WCN3988 Bluetooth support for Fairphone 4
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        "Eric Dumazet" <edumazet@google.com>,
-        "Jakub Kicinski" <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Balakrishna Godavarthi" <bgodavar@codeaurora.org>,
-        "Rocky Liao" <rjliao@codeaurora.org>,
-        "Marcel Holtmann" <marcel@holtmann.org>,
-        "Johan Hedberg" <johan.hedberg@gmail.com>,
-        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.14.0
-References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com>
- <0f2af683-07f9-7fc7-a043-ee55e41d65c3@linaro.org>
-In-Reply-To: <0f2af683-07f9-7fc7-a043-ee55e41d65c3@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 25 Apr 2023 02:54:47 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BB549EA;
+        Mon, 24 Apr 2023 23:54:42 -0700 (PDT)
+Received: from SoMainline.org (unknown [89.205.225.90])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DA7451F557;
+        Tue, 25 Apr 2023 08:54:36 +0200 (CEST)
+Date:   Tue, 25 Apr 2023 08:54:35 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH v2 04/17] drm/msm/dpu: Fix PP_BLK_DIPHER ->
+ DITHER typo
+Message-ID: <5td7ikd76obc5bn5sndnt7fbzjuwmyxtu35ma3lykzmmbyfffk@b24jh6imaocy>
+References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-4-ef76c877eb97@somainline.org>
+ <a0a0b8fb-0d6b-d11b-5596-d61c41aabe7f@quicinc.com>
+ <bhatfkgdkjt2bih4lcwa5cxcp3w2tkjrqmbdhqhzqa2cizrmxs@py3gr5vifsoc>
+ <65bb4d8a-c607-4152-0ae3-bf3134955925@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <65bb4d8a-c607-4152-0ae3-bf3134955925@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat Apr 22, 2023 at 2:03 PM CEST, Konrad Dybcio wrote:
->
->
-> On 21.04.2023 16:11, Luca Weiss wrote:
-> > Just to start with the important part why this is an RFC:
-> >=20
-> > While Bluetooth chip init works totally fine and bluez seems to be
-> > fairly happy with it, there's a (major) problem with scanning, as shown
-> > with this bluetoothctl snippet and dmesg snippet:
-> >=20
-> >   [bluetooth]# scan on
-> >   Failed to start discovery: org.bluez.Error.InProgress
-> >=20
-> >   [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
-> >=20
-> > This opcode should be the following:
-> >=20
-> >   include/net/bluetooth/hci.h:#define HCI_OP_LE_SET_SCAN_PARAM    0x200=
-b
-> Not a bluetooth expert or anything, but does that thing support
-> bluetooth LE?
+On 2023-04-24 16:09:45, Abhinav Kumar wrote:
+<snip>
+> >> dither block should be present on many other chipsets too but looks like
+> >> on sm8550 was enabling it. Not sure how it was validated there. But we
+> >> are enabling dither, even other chipsets have this block.
+> > 
+> > Correct, they all seem to have it starting at sdm845.  My patch message
+> > seems to lack the word "exclusively" as the PP on sm8550 appears to
+> > exclusively contain a DITHER subblock (unless other blocks are available
+> > that simply aren't supported within this driver yet) and no other
+> > registers.  Hence this aptly named macro exist to emit just the feature
+> > bitflag for that and a .len of zero.
+> > 
+> 
+> I think after the TE blocks were moved to INTF, dither is the only 
+> sub-block for all Ping-Pongs not just in sm8550.
 
-I don't know too much about Bluetooth details either, but hasn't
-Bluetooth LE been a consistently supported thing since like 10 years?
+So you are asking / leaving context to make all >= 5.0.0 pingpong blocks
+use this macro with only a single DITHER sblk in PP?
 
-All the info I can easily find just states SM7225 SoC supports
-"Bluetooth 5.1".
+As far as I recall SM8550 is the first SoC to use zero registers in PP,
+which is specifically what this macro takes care of too.  Then, there
+are only a few SoCs downstream still (erroneously?) referencing TE2 as
+the only other sub-blk, those SoCs still use sdm845_pp_sblk_te.
 
-Regards
-Luca
+> > Now, whether we should have the features contain subblock flags rather
+> > than just scanning for their id's or presence in the subblocks is a
+> > different discussion / cleanup we should have.
+> > 
+> 
+> Yes, separate patch and hence I gave R-b on this one. But had to leave 
+> this comment to not lose context.
 
->
-> Konrad
-> >=20
-> > Unfortunately trying various existing code branches in the Bluetooth
-> > driver doesn't show any sign of making this work and I don't really kno=
-w
-> > where to look to debug this further.
-> >=20
-> > On the other hand "discoverable on" makes the device show up on other
-> > devices during scanning , so the RF parts of the Bluetooth chip are
-> > generally functional for sure.
-> >=20
-> > Any ideas are welcome.
-> >=20
-> > @Bjorn: Patch "arm64: dts: qcom: sm6350: add uart1 node" should be fine
-> > to take regardless the RFC status, I don't think the problem is caused
-> > there.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> > Luca Weiss (4):
-> >       dt-bindings: net: qualcomm: Add WCN3988
-> >       Bluetooth: btqca: Add WCN3988 support
-> >       arm64: dts: qcom: sm6350: add uart1 node
-> >       arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth
-> >=20
-> >  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |  2 +
-> >  arch/arm64/boot/dts/qcom/sm6350.dtsi               | 63 ++++++++++++++=
-++++++++
-> >  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 17 ++++++
-> >  drivers/bluetooth/btqca.c                          | 13 ++++-
-> >  drivers/bluetooth/btqca.h                          | 12 ++++-
-> >  drivers/bluetooth/hci_qca.c                        | 12 +++++
-> >  6 files changed, 115 insertions(+), 4 deletions(-)
-> > ---
-> > base-commit: cf4c0112a0350cfe8a63b5eb3377e2366f57545b
-> > change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
-> >=20
-> > Best regards,
+Fwiw this is a different suggestion: we already have these flags in the
+sub-block `.id` field so there seems to be no reason to duplicate info
+in the top-level `.features` field, deduplicating some info and
+simplifying some defines.
 
+- Marijn
+
+> > - Marijn
+> > 
+> >>> -	PP_BLK_DIPHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
+> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sc7280_pp_sblk,
+> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sc7280_pp_sblk,
+> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sc7280_pp_sblk,
+> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sc7280_pp_sblk,
+> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
+> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
+> >>>    			-1,
+> >>>    			-1),
+> >>> -	PP_BLK_DIPHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
+> >>> +	PP_BLK_DITHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
+> >>>    			-1,
+> >>>    			-1),
+> >>>    };
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> >>> index 03f162af1a50..ca8a02debda9 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> >>> @@ -491,7 +491,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+> >>>    	.len = 0x20, .version = 0x20000},
+> >>>    };
+> >>>    
+> >>> -#define PP_BLK_DIPHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
+> >>> +#define PP_BLK_DITHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
+> >>>    	{\
+> >>>    	.name = _name, .id = _id, \
+> >>>    	.base = _base, .len = 0, \
+> >>>
