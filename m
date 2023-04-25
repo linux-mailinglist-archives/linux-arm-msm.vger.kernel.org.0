@@ -2,52 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 645906ED9C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 03:21:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B3D16ED9C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 03:22:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232845AbjDYBVP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 24 Apr 2023 21:21:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33788 "EHLO
+        id S232892AbjDYBWm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 24 Apr 2023 21:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231189AbjDYBVO (ORCPT
+        with ESMTP id S232073AbjDYBWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 24 Apr 2023 21:21:14 -0400
+        Mon, 24 Apr 2023 21:22:41 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A03AF2B;
-        Mon, 24 Apr 2023 18:21:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720F05273;
+        Mon, 24 Apr 2023 18:22:40 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0B36D62AA7;
-        Tue, 25 Apr 2023 01:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D61C433EF;
-        Tue, 25 Apr 2023 01:21:02 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 083ED62AAB;
+        Tue, 25 Apr 2023 01:22:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F69FC433D2;
+        Tue, 25 Apr 2023 01:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1682385662;
-        bh=v//103zktW+KRAFVWHcAVD9l53YozrBZU4dBe3nF8Os=;
+        s=k20201202; t=1682385759;
+        bh=NXv2pfWTZu2vC/ltC9EBZjzxRHTO+30j39cQI4dlOcI=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=LIx60s20ICfNxrpjPUlY8JsZ4eKnCbOwL//cn8DLX8TI430TELNtVzrENVHUhmHLN
-         mMLgH/CPOFXsBfz2Fs+mjoXcp83uvePzyVaKyrq2rG63Z4xmrGqteEP0QQC2nixwSk
-         4Tsl5z83qHSsGHAnAYuc7enTvLjHBI1B4g6KsJ0k0tYM5InSHwjLLsdClbQ+B8Q2ww
-         HIKJDAjP/avENQsN4/NzlSF0wE+ruP/E5/HwEcXRZszkqU/JLH5Z2tGeLQBsuUJq3d
-         9OyIOGVUsrD+V2G4AjvLtsDpoav7z63KfywOfex+OXNpCQZI5Y8Jh9swc5Jj1ewlFG
-         nvrzSqlhD6NZQ==
-Message-ID: <732840a4fd807fa4fbf2a458716fc68a.sboyd@kernel.org>
+        b=QJz5cVl4PhMTJze+KDFWmNZN+FXdOg3aVsZ/KR+Y+3QjbyY2nS/TfywqnRsgKaBTF
+         nJOqM35LATYQeGQr6PFCS97a2xp7TeBqn8cgkHFXYJSlODrxGYHdKzrCrhv7upaRdI
+         fboWksg5SsnAYQjZRPz19/6iyzcpJf4r+wR/b/pu0id/R/6Ez82JngI29Mc5HdjFmv
+         O8Bmf3dc/gJ5pNaUv8rJ+LoLGgboVQ960jpOhZ5gKQ/rpJTNAGAjFwVf4rgcqzf8Vl
+         g6etBREYdQfQnQQPaBlWU+ihDWuorrak90eRAdlGNJyOQwFwiru1icSFqgY4W4j5oK
+         Atl76ju7cy1Xw==
+Message-ID: <2b56630aa93c1c1e9cd45a745046a12e.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAA8EJprthTKxCDsMHTXZrLCyhGgTfF3LvqhkrF2-b6XFygKJ2A@mail.gmail.com>
-References: <20230420115520.16472-1-quic_tdas@quicinc.com> <CAA8EJprthTKxCDsMHTXZrLCyhGgTfF3LvqhkrF2-b6XFygKJ2A@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: camcc-sc7180: Add parent dependency to all camera GDSCs
+In-Reply-To: <1c6fe00696f808e889ce72571b8ed8e7fa20f661.1682092324.git.quic_varada@quicinc.com>
+References: <cover.1682092324.git.quic_varada@quicinc.com> <1c6fe00696f808e889ce72571b8ed8e7fa20f661.1682092324.git.quic_varada@quicinc.com>
+Subject: Re: [PATCH v9 4/8] clk: qcom: gcc-ipq9574: Add USB related clocks
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_skakitap@quicinc.com, quic_cponnapa@quicinc.com
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Date:   Mon, 24 Apr 2023 18:20:58 -0700
+Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, devicetree@vger.kernel.org,
+        gregkh@linuxfoundation.org, kishon@kernel.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-usb@vger.kernel.org, mturquette@baylibre.com,
+        quic_wcheng@quicinc.com, robh+dt@kernel.org, vkoul@kernel.org
+Date:   Mon, 24 Apr 2023 18:22:35 -0700
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -59,13 +61,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2023-04-21 06:42:06)
-> On Thu, 20 Apr 2023 at 14:55, Taniya Das <quic_tdas@quicinc.com> wrote:
-> >
-> > Mark titan_top_gdsc as parent to all other camera GDSCs.
->=20
-> Please expand the commit message. Your text describes what the patch
-> does, but it can be observed from the patch itself. Please describe
-> why it is done.
+Quoting Varadarajan Narayanan (2023-04-21 08:54:46)
+> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq957=
+4.c
+> index a4cf750..8d7f543 100644
+> --- a/drivers/clk/qcom/gcc-ipq9574.c
+> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+> @@ -2025,6 +2025,41 @@ static struct clk_regmap_mux usb0_pipe_clk_src =3D=
+ {
+>         },
+>  };
+> =20
+> +static struct clk_branch gcc_usb0_pipe_clk =3D {
+> +       .halt_reg =3D 0x2c054,
+> +       .halt_check =3D BRANCH_HALT_DELAY,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x2c054,
+> +               .enable_mask =3D BIT(0),
+> +               .hw.init =3D &(struct clk_init_data){
 
-+1 and also add a Fixes tag because I'm guessing this is a fix.
+const
+
+> +                       .name =3D "gcc_usb0_pipe_clk",
+> +                       .parent_hws =3D (const struct clk_hw *[]) {
+> +                               &usb0_pipe_clk_src.clkr.hw
+> +                       },
+> +                       .num_parents =3D 1,
+> +                       .flags =3D CLK_SET_RATE_PARENT,
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch gcc_usb0_sleep_clk =3D {
+> +       .halt_reg =3D 0x2c058,
+> +       .clkr =3D {
+> +               .enable_reg =3D 0x2c058,
+> +               .enable_mask =3D BIT(0),
+> +               .hw.init =3D &(struct clk_init_data){
+
+const
+
+> +                       .name =3D "gcc_usb0_sleep_clk",
+> +                       .parent_hws =3D (const struct clk_hw *[]) {
+> +                               &gcc_sleep_clk_src.clkr.hw
+> +                       },
+> +                       .num_parents =3D 1,
+> +                       .flags =3D CLK_SET_RATE_PARENT,
+> +                       .ops =3D &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+>  static const struct freq_tbl ftbl_sdcc_apps_clk_src[] =3D {
+>         F(144000, P_XO, 16, 12, 125),
+>         F(400000, P_XO, 12, 1, 5),
