@@ -2,249 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93A7E6EE917
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 22:34:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67B156EE92C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 22:43:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbjDYUeV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 16:34:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45102 "EHLO
+        id S236199AbjDYUnm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 16:43:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbjDYUeU (ORCPT
+        with ESMTP id S230043AbjDYUnl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 16:34:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC76F14453
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 13:33:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1682454817;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=h5tdSr0yUH0NfUrSmIfXDBJS+fKv28jR9I4BQNRViKk=;
-        b=K6H9L8z7fMhUw9Ga+hYEt44DYk0aoeAJwvh1T+QkmOFd72VfBc5RXkIWzPIhlRnUaI5Iho
-        R1kYTOA5G512zJVEQE3/BxC9OxZLlDe+gW0iNHWK9uWecKHAGvK6IsgesUvAUuUsgyjAQs
-        FGMbWmMeNcQgrNb2reYjxYEyivX0dMo=
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
- [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-MwgMGH00NkS_DIHZ-jA9YQ-1; Tue, 25 Apr 2023 16:33:35 -0400
-X-MC-Unique: MwgMGH00NkS_DIHZ-jA9YQ-1
-Received: by mail-oo1-f69.google.com with SMTP id 006d021491bc7-5469ab1632eso4459331eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 13:33:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682454815; x=1685046815;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h5tdSr0yUH0NfUrSmIfXDBJS+fKv28jR9I4BQNRViKk=;
-        b=eVW4FfXaS+x1DQ0yLvItYNEDLbLcggeiF45MkoS3DeDTaRFEKs3TOhf+jxGyx/lRzH
-         qRAZ2ZB/H+YRsC9hQTxZsSiY3MnM03MDFWTLN1UR6qZpkj3dDxbUgdYw+DXXIkc69riu
-         DFz72bBraL+suzvRtEfKbNNwgGh/Bv0XO8dyD2kexhSfDJNuXphDI/2oAozCYllvAyRO
-         CBWqydMSfD9KNvjlG7oKvLzlWztN1il8LxX9HqiQPwr3swxM8M9x3+iGMaJHAmFdskAI
-         NbWymDTfax7s2lfulozLnfYQNzfDZ6WET1ZHDyqn0EBB5iA17FfKwCmr6Xv7wK32PRDX
-         bQ5w==
-X-Gm-Message-State: AAQBX9eaiurRrMkTLXthRzeU4ZQCbqXCemXx9T/E8KIU8xecCJOqCOkN
-        IRGvx2OppIkwksNYZZN+6Q6ySPTeDvs9mdX3uu7P+y1F1d83q/qXbpPBb3F5blgasSipvxLEGb8
-        mwBGbNpAJ/YcqnbGbvuzBbvvGwA==
-X-Received: by 2002:a05:6808:1885:b0:38e:4a25:2125 with SMTP id bi5-20020a056808188500b0038e4a252125mr10743320oib.18.1682454813586;
-        Tue, 25 Apr 2023 13:33:33 -0700 (PDT)
-X-Google-Smtp-Source: AKy350bV2wSHJIhY5qS6dBbjNydN6E9nxfDFfxEa+5HJvmGjHUeuCswJpaJeLjx3DBjNrKQVTWLfUA==
-X-Received: by 2002:a05:6808:1885:b0:38e:4a25:2125 with SMTP id bi5-20020a056808188500b0038e4a252125mr10743275oib.18.1682454811825;
-        Tue, 25 Apr 2023 13:33:31 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::22])
-        by smtp.gmail.com with ESMTPSA id g3-20020a056870c38300b0018456166c7asm5908752oao.39.2023.04.25.13.33.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Apr 2023 13:33:31 -0700 (PDT)
-Date:   Tue, 25 Apr 2023 15:33:28 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 25 Apr 2023 16:43:41 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A07AD14453;
+        Tue, 25 Apr 2023 13:43:39 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4D84F1F949;
+        Tue, 25 Apr 2023 22:43:36 +0200 (CEST)
+Date:   Tue, 25 Apr 2023 22:43:34 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v6 6/8] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <20230425203328.hrz5dw7f2vsbbbgk@halaney-x13s>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
- <20230405125759.4201-7-quic_kriskura@quicinc.com>
- <20230414154527.vsjtgtfsd5kc7vww@halaney-x13s>
- <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
- <28a58bf9-5ad8-4084-11d6-cd1b0d3a2998@quicinc.com>
+        Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>
+Subject: Re: [Freedreno] [PATCH v2 04/17] drm/msm/dpu: Fix PP_BLK_DIPHER ->
+ DITHER typo
+Message-ID: <6crk3acgxcdfdokpgcfjkojs2wdjoxalkmctqfgtc725wsgoep@kdj4zbavbe62>
+References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
+ <20230411-dpu-intf-te-v2-4-ef76c877eb97@somainline.org>
+ <a0a0b8fb-0d6b-d11b-5596-d61c41aabe7f@quicinc.com>
+ <bhatfkgdkjt2bih4lcwa5cxcp3w2tkjrqmbdhqhzqa2cizrmxs@py3gr5vifsoc>
+ <65bb4d8a-c607-4152-0ae3-bf3134955925@quicinc.com>
+ <5td7ikd76obc5bn5sndnt7fbzjuwmyxtu35ma3lykzmmbyfffk@b24jh6imaocy>
+ <7541b780-482e-ea92-f788-18c8fbf45d77@quicinc.com>
+ <o536qdkbrqob5wux7jvmo7expwn4bdlj7vy7egjfsyydxp5myb@xjhmolci5jzl>
+ <cc537736-a555-dc3e-2e53-f1d4479eab21@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <28a58bf9-5ad8-4084-11d6-cd1b0d3a2998@quicinc.com>
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+In-Reply-To: <cc537736-a555-dc3e-2e53-f1d4479eab21@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 22, 2023 at 09:38:44PM +0530, Krishna Kurapati PSSNV wrote:
+On 2023-04-25 09:47:30, Abhinav Kumar wrote:
 > 
 > 
-> On 4/16/2023 12:34 AM, Krishna Kurapati PSSNV wrote:
+> On 4/25/2023 9:33 AM, Marijn Suijten wrote:
+> > On 2023-04-25 09:18:58, Abhinav Kumar wrote:
+> >>
+> >>
+> >> On 4/24/2023 11:54 PM, Marijn Suijten wrote:
+> >>> On 2023-04-24 16:09:45, Abhinav Kumar wrote:
+> >>> <snip>
+> >>>>>> dither block should be present on many other chipsets too but looks like
+> >>>>>> on sm8550 was enabling it. Not sure how it was validated there. But we
+> >>>>>> are enabling dither, even other chipsets have this block.
+> >>>>>
+> >>>>> Correct, they all seem to have it starting at sdm845.  My patch message
+> >>>>> seems to lack the word "exclusively" as the PP on sm8550 appears to
+> >>>>> exclusively contain a DITHER subblock (unless other blocks are available
+> >>>>> that simply aren't supported within this driver yet) and no other
+> >>>>> registers.  Hence this aptly named macro exist to emit just the feature
+> >>>>> bitflag for that and a .len of zero.
+> >>>>>
+> >>>>
+> >>>> I think after the TE blocks were moved to INTF, dither is the only
+> >>>> sub-block for all Ping-Pongs not just in sm8550.
+> >>>
+> >>> So you are asking / leaving context to make all >= 5.0.0 pingpong blocks
+> >>> use this macro with only a single DITHER sblk in PP?
+> >>>
+> >>> As far as I recall SM8550 is the first SoC to use zero registers in PP,
+> >>> which is specifically what this macro takes care of too.  Then, there
+> >>> are only a few SoCs downstream still (erroneously?) referencing TE2 as
+> >>> the only other sub-blk, those SoCs still use sdm845_pp_sblk_te.
+> >>>
+> >>
+> >> So, what I didnt follow is why should sm8450 use PP_BLK_TE Vs sm8550
+> >> should use PP_BLK_DIPHER?
+> >>
+> >> Atleast for those two, both should be using PP_BLK_DIPHER.
+> >>
+> >> Thats what I was trying to note here.
+> >>
+> >> This isnt even right as there is no PP_BLK_TE in sm8450.
 > > 
+> > SM8450 doesn't use PP_BLK_TE (TE2) anymore since the second patch in
+> > this series.  If you think it should use the DITHER (not DIPHER!) macro
+> > instead of the regular PP_BLK with a size of 0xd4, we can do that in
+> > another patch as that's not strictly related to this series.
 > > 
-> > On 4/14/2023 9:15 PM, Andrew Halaney wrote:
-> > > On Wed, Apr 05, 2023 at 06:27:57PM +0530, Krishna Kurapati wrote:
-> > > > Add USB and DWC3 node for tertiary port of SC8280 along with multiport
-> > > > IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
-> > > > platforms.
-> > > > 
-> > > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> > > > ---
-> > > > Link to v5: https://lore.kernel.org/all/20230310163420.7582-7-quic_kriskura@quicinc.com/
-> > > > 
-> > > >   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 58 ++++++++++++++++++++++++++
-> > > >   1 file changed, 58 insertions(+)
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > index 42bfa9fa5b96..7b81f2b0449d 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > > > @@ -3108,6 +3108,64 @@ usb_1_role_switch: endpoint {
-> > > >               };
-> > > >           };
-> > > > +        usb_2: usb@a4f8800 {
-> > > > +            compatible = "qcom,sc8280xp-dwc3", "qcom,dwc3";
-> > > > +            reg = <0 0x0a4f8800 0 0x400>;
-> > > > +            #address-cells = <2>;
-> > > > +            #size-cells = <2>;
-> > > > +            ranges;
-> > > > +
-> > > > +            clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
-> > > > +                 <&gcc GCC_USB30_MP_MASTER_CLK>,
-> > > > +                 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
-> > > > +                 <&gcc GCC_USB30_MP_SLEEP_CLK>,
-> > > > +                 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
-> > > > +                 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
-> > > > +                 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
-> > > > +                 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
-> > > > +                 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
-> > > > +            clock-names = "cfg_noc", "core", "iface", "sleep",
-> > > > "mock_utmi",
-> > > > +                      "noc_aggr", "noc_aggr_north",
-> > > > "noc_aggr_south", "noc_sys";
-> > > > +
-> > > > +            assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
-> > > > +                      <&gcc GCC_USB30_MP_MASTER_CLK>;
-> > > > +            assigned-clock-rates = <19200000>, <200000000>;
-> > > > +
-> > > > +            interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
-> > > > +                        <&pdc 126 IRQ_TYPE_EDGE_RISING>,
-> > > > +                        <&pdc 16 IRQ_TYPE_LEVEL_HIGH>;
-> > > > +
-> > > > +            interrupt-names = "dp_hs_phy_irq", "dm_hs_phy_irq",
-> > > > +                        "ss_phy_irq";
-> > > > +
-> > > 
-> > > This is breaking the current schema (with the full series applied),
-> > > I am not sure if a pwr_event IRQ exists or but it maybe necessary to
-> > > modify qcom,dwc3.yaml in order to explain hardware if it doesn't exist:
-> > > 
-> > > (dtschema) ahalaney@halaney-x13s ~/git/linux-next
-> > > (git)-[718f2024524f] % make CHECK_DTBS=y
-> > > DT_SCHEMA_FILES=/usb/qcom,dwc3.yaml qcom/sa8540p-ride.dtb                                                                                  
-> > > :(
-> > >    LINT    Documentation/devicetree/bindings
-> > >    CHKDT   Documentation/devicetree/bindings/processed-schema.json
-> > >    SCHEMA  Documentation/devicetree/bindings/processed-schema.json
-> > >    DTC_CHK arch/arm64/boot/dts/qcom/sa8540p-ride.dtb
-> > > /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:0: 'pwr_event' was expected
-> > >     From schema: /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > > /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:1: 'dp_hs_phy_irq' was expected
-> > >     From schema: /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > > /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names:2: 'dm_hs_phy_irq' was expected
-> > >     From schema: /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > > /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupt-names: ['dp_hs_phy_irq', 'dm_hs_phy_irq', 'ss_phy_irq'] is too short
-> > >     From schema: /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > > /home/ahalaney/git/linux-next/arch/arm64/boot/dts/qcom/sa8540p-ride.dtb: usb@a4f8800: interrupts-extended: [[99, 127, 1], [99, 126, 1], [99, 16, 4]] is too short
-> > >     From schema: /home/ahalaney/git/linux-next/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > > make CHECK_DTBS=y DT_SCHEMA_FILES=/usb/qcom,dwc3.yaml
-> > > qcom/sa8540p-ride.dtb  22.61s user 0.54s system 99% cpu 23.172 total
-> > > (dtschema) ahalaney@halaney-x13s ~/git/linux-next (git)-[718f2024524f] %
-> > > 
-> > > Thanks,
-> > > Andrew
-> > > 
+> 
+> Yes, thanks for pointing the TE2 was removed in the prev patch of this 
+> series for sm8450. I was just focusing too much on this patch.
+> 
+> And Yes, I think we should use the DIPHER ..... oh sorry .... DITHER ;)
+> 
+> Yes, it can go as a different series, like I already wrote many times in 
+> this.
+
+Thanks, that'd be great.  I wasn't sure at this point what you wanted to
+be changed here, after commenting on a typo fix rather than i.e. patch 2
+that deals with the TE2 sub-block of PP :)
+
+> But atleast now, someone will remember to do it.
+> 
+> > Note that that's the only difference between these macros.  The size
+> > becomes 0 but the .features mask is the same (SM8450 uses
+> > PINGPONG_SM8150_MASK).
 > > 
-> > Hi Andrew,
+> > These patches are anyway already distracting from my series, but were
+> > easier to do in one go as I was touching the PP and INTF catalog blocks
+> > regardless.
 > > 
-> >   Thanks for pointing it out. Let me check and get back on the
-> > pwr_event_irq.
+> > While at it, perhaps we should check if the version and offset for the
+> > DITHER block are correct?  SM8450 uses SDM845 sblk definitions.
 > > 
-> > Probably I might have missed it 😅. If so, will make sure to add it in
-> > next version.
-> > 
-> > Regards,
-> > Krishna,
 > 
-> 
-> Hi Andrew, Johan,
-> 
->   I was looking at the pwr_event_irq interrupts for Multiport controller and
-> see that there are two of them as per HW specs. All targets till date have
-> only 1 pwr_event_irq required.
-> 
-> The reason I thought I missed pwr_event_irq in my patches is because in
-> downstream this is a required IRQ for all targets, so I was under assumption
-> that we need it for upstream targets as well. But upstream qcom driver
-> doesn't have support for this IRQ yet. And this has been made a required one
-> only for SC8280 [1]/[2].
-> 
-> Probably we can proceed in one of the following ways:
-> 1. Remove pwr_event_irq in both bindings and DT as driver support is not
-> present currently.
-> 2. Update the bindings for SC8280 to include an optional secondary
-> pwr_event_irq for multiport controller.
-> 
-> I would prefer option-1 as removing them would be better because they are
-> not being used. Please let me know your thoughts on this.
-> 
-> [1]:
-> https://lore.kernel.org/all/20220713131340.29401-2-johan+linaro@kernel.org/
-> [2]:
-> https://lore.kernel.org/all/20220713131340.29401-6-johan+linaro@kernel.org/
-> 
+> Yes I already checked. the version and offset of dither are same between 
+> sm8450 and sm8550.
 
-Personally, I prefer option 2 since the IRQ does exist technically
-(although it isn't currently used), I like it being described... it
-makes the dt-binding a more complete description of the hardware.
+Thanks for checking, so then sm8450 is wrong on multiple occasions.
+Let's check all other SoCs that use sdm845_pp_sblk whether they should
+have used sc7280_pp_sblk instead.
 
-I am unsure of the rules wrt dt-bindings and usage in drivers, but I
-always like to view it as "this is a description of the hardware", and
-the driver bit is just nice to have to ensure that whoever is adding the
-binding is actually describing things sufficiently.
-
-You could probably add a new compatible string for the multiport
-sc8280xp IP as well, and make the second IRQ non-optional in dt-binding
-evaluation? That seems more inline with reality, the regular IP has 1
-pwr_event_irq, multiport on this platform has 2, they behave slightly
-differently and thus they deserve their own string to match on despite
-being on the same platform.
-
-Please note, I'm just a contributor -- I would not be surprised to find
-out that my view is not aligned with what maintainers here think, but
-that's my interpretation of things!
-
-Hope that helps,
-Andrew
-
+- Marijn
