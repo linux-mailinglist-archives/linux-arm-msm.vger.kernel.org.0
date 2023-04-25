@@ -2,114 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7E3B6EDD84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 10:00:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADEB16EDDD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 10:22:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233480AbjDYIAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 04:00:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34974 "EHLO
+        id S232851AbjDYIWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 04:22:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233440AbjDYIAm (ORCPT
+        with ESMTP id S233364AbjDYIWM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 04:00:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149325586;
-        Tue, 25 Apr 2023 01:00:36 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A432262C51;
-        Tue, 25 Apr 2023 08:00:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B19AC4339B;
-        Tue, 25 Apr 2023 08:00:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1682409635;
-        bh=cDv3M/1s+tjOQjJbPUGblM4x/VHbLIoWAfEO3RoBZLM=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=t8tVDcisi1Ua1xsK0eh4wXd6TRl8zqRR065VHttovC11XtMZF6D/4bba5k+B9QVcD
-         wosEZN7on9/BZBObgZeW4zV919V5Z45lRsX9k7Fm3mqp0kUE89nHF/t0zlqhvF9+dB
-         2h6Dz3k0IgtGd470zSwjfCJivMhODaPf9YsDcjkg014i+ABYaNR22jfQS6VgIFy5WX
-         vVhV9/8kPwppHz662OIcc0AhHtcKwYVCwvnfRzqmvB8PESp/To9CcsNdaTVKSHAQ9+
-         fTB2q5Cbai6xwkIifbnmNyaVCEpLHdO8kzBQU4MtjB0kPYGm2MS/weEHAZC22lIJik
-         7OelZpaQThsmg==
-Message-ID: <7fe274df-6bcd-5993-d6cc-8fbcef435866@kernel.org>
-Date:   Tue, 25 Apr 2023 10:00:26 +0200
+        Tue, 25 Apr 2023 04:22:12 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED7A49F8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 01:22:09 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-94f6c285d92so1015037066b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 01:22:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682410928; x=1685002928;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a5M63yXC89QfRSmv3dCKp93F3Y3Fbl8p/U1KJ7S4Fng=;
+        b=dlPrks6xdXwghpZwvziO2uRXW4X5ATOV8+w81+Lb/aaWdOw7EJb46Wqm/eiTeLtjcD
+         IUEYf3jqI/y6pMTBQ00ANWUSWyCe68RaRQQqd6t9IenFIRcbidjGTUWutpWJwqgrZAGW
+         CClGulPCJPTG4jdFv3h+S0B1SE/SbdTaA7hx7IzqHM9gtmmYAD6RehXVGRorqcEGRy3Z
+         n4arEpAHAI3IHNRzbQLbADcUGuLK9DfOGE7F+OnlO3pqBIpKExindkfWbW7VEhVISTMZ
+         s/s8oK4C9nHmnTUfv7YsQtHX+x7ojzN+1AnBTHHPhdR/W5AEyPPNGhwa4Ezqs1gu5EAW
+         bxeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682410928; x=1685002928;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a5M63yXC89QfRSmv3dCKp93F3Y3Fbl8p/U1KJ7S4Fng=;
+        b=YA/XLLAroAR5FvgHfFWMoEMPY5ueqlJoBG6rkZ83NkVDdQ4PkNRwmpS2RozOiY2rsU
+         3f9BUrttMVd7hG1rwUc6SKPIz3U/d3K7+ifZJIJ1PirpViM2BhQdXmMIbIjeZSOTgZZY
+         HXnUFRdm97s95NQGAzqo6gwCtbHcOtqU0/hXFIQpkR7qKVTPZW/3OtAjHc7PYLBVFuhk
+         4Z6ERNcIxrmt/Pb7lFfjSncTIcDEv2un2E3d/Sk4vTBN6pEkvxlKMNpPCBt0GfcjFowx
+         EYMfhB1Phh1RF26hJXmVKFgyy6HTtN978mR/BP2DRyxjd8jEVoeZRdeRWBeUER8TqaHr
+         XOKQ==
+X-Gm-Message-State: AAQBX9ft7COFSVkfCVDhMo84d92Lb4vQ8ngjdFoQvgoCI0mWWvkiST2P
+        PpPR0RjD58S8/CwTtWMWtsEfJQ==
+X-Google-Smtp-Source: AKy350YLaW2i01uHETH49mSc7VM59UHdglmwNh5PVhWvo5DVwnmN26hC+CweeGHmTknkrmPXpglo7A==
+X-Received: by 2002:a17:907:168d:b0:92b:f118:ef32 with SMTP id hc13-20020a170907168d00b0092bf118ef32mr13623125ejc.48.1682410928292;
+        Tue, 25 Apr 2023 01:22:08 -0700 (PDT)
+Received: from [192.168.9.102] ([195.167.132.10])
+        by smtp.gmail.com with ESMTPSA id x20-20020aa7d394000000b00504803f4071sm5409238edq.44.2023.04.25.01.22.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Apr 2023 01:22:07 -0700 (PDT)
+Message-ID: <fa548aa4-6d17-0981-227a-bed6aedcb34f@linaro.org>
+Date:   Tue, 25 Apr 2023 10:22:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: sa8155p-adp: Make -cells decimal
 Content-Language: en-US
-To:     Rob Herring <robh+dt@kernel.org>,
-        Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
-        linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
- <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230421205512.339850-1-ahalaney@redhat.com>
+ <20230421205512.339850-2-ahalaney@redhat.com>
+ <abd106b1-6650-6a7c-1c8b-3609e47b0161@linaro.org>
+ <20230424143857.373kjvi42c7acsbp@halaney-x13s>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230424143857.373kjvi42c7acsbp@halaney-x13s>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/04/2023 00:10, Rob Herring wrote:
->> I had some problem with gmail and sending mail too much users. I put Rob
->> and You and all the various list to try to workaround the "gmail spam
->> protection"
->>
->>> I am pretty sure we were discussing such split idea in the past and it
->>> did not get traction, but I cannot recall the exact discussion.
+On 24/04/2023 16:38, Andrew Halaney wrote:
+> On Mon, Apr 24, 2023 at 09:21:45AM +0200, Krzysztof Kozlowski wrote:
+>> On 21/04/2023 22:55, Andrew Halaney wrote:
+>>> The property logically makes sense in decimal, and is the standard used
+>>> elsewhere.
 >>>
+>>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+>>> ---
+>>>
+>>> Changes since v2:
+>>>     * Collect tags
+>>> Changes since v1:
+>>>     * New patch (Konrad)
 >>
->> I think the main issue here is how to handle bot and how problematic is
->> to merge this. As written in the cover letter the final version of this
->> should be a big series of 50+ patch with every commit specific to each
->> oem. In theory we should be able to merge the different oem separately
->> and try to at least start the categorization.
->> Another idea I got to at least have a "migration path" is to convert
->> every dts in the dts/ directory to a symbolic link that target the dts
->> in the correct oem. But I assume that would fix only part of the problem
->> and git am will still be problematic.
+>> Doing such changes per one board will be a lot of churn...
+>>
 > 
-> I have a script[1] that does the conversion written the last time this
-> came up. Just have to agree on directory names. I think the easiest
-> would be for Arnd/Olof to run it at the end of a merge window before
-> rc1.
-> 
-> I'm very much in favor of this happening especially before *any*
-> overlays are added to add to the mess (it's probably already
-> happened).
-> 
-> Rob
-> 
-> [1] https://lore.kernel.org/all/20181204183649.GA5716@bogus/
+> Agreed, are you suggesting I drop this patch (and if we do this sort of
+> cleanup to do it in bulk)? Sorry, not entirely sure I am picking up what
+> that comment is implying.
 
-This is the thread I was thinking about. Looks good for me (the original
-script with exynos->samsung).
+Yes, I suggest to fix all Qualcomm arm64 boards with one patch. There
+are just few more occurrences of this. It's also pure cleanup, no
+functional change.
+
+> 
+> Personally, I'd prefer to keeping that patch as this series is trying to
+> clean up the particular ethernet node.. but if the purpose of the series
+> was just to clean -cells up then I'd go with the bulk approach.
+> 
+> So as is, I'm going to leave it like so unless you have specific advice
+> against doing so.
 
 Best regards,
 Krzysztof
