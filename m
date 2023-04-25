@@ -2,161 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 160656EDBEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 08:54:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72F256EDC53
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 09:16:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233526AbjDYGyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 02:54:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
+        id S233349AbjDYHQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 03:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233407AbjDYGyr (ORCPT
+        with ESMTP id S232222AbjDYHQ1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 02:54:47 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BB549EA;
-        Mon, 24 Apr 2023 23:54:42 -0700 (PDT)
+        Tue, 25 Apr 2023 03:16:27 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6D89001
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 00:16:24 -0700 (PDT)
 Received: from SoMainline.org (unknown [89.205.225.90])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DA7451F557;
-        Tue, 25 Apr 2023 08:54:36 +0200 (CEST)
-Date:   Tue, 25 Apr 2023 08:54:35 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 297F31F6C4;
+        Tue, 25 Apr 2023 09:16:21 +0200 (CEST)
+Date:   Tue, 25 Apr 2023 09:16:19 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Archit Taneja <architt@codeaurora.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH v2 04/17] drm/msm/dpu: Fix PP_BLK_DIPHER ->
- DITHER typo
-Message-ID: <5td7ikd76obc5bn5sndnt7fbzjuwmyxtu35ma3lykzmmbyfffk@b24jh6imaocy>
-References: <20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org>
- <20230411-dpu-intf-te-v2-4-ef76c877eb97@somainline.org>
- <a0a0b8fb-0d6b-d11b-5596-d61c41aabe7f@quicinc.com>
- <bhatfkgdkjt2bih4lcwa5cxcp3w2tkjrqmbdhqhzqa2cizrmxs@py3gr5vifsoc>
- <65bb4d8a-c607-4152-0ae3-bf3134955925@quicinc.com>
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] drm/msm/dpu: Pass catalog pointers directly from
+ RM instead of IDs
+Message-ID: <r2tndjr5jbjtrwwti6l3ag7562e53nqx2uk6vz6fx43yc7sncl@eypc37r2ey3j>
+References: <20230418-dpu-drop-useless-for-lookup-v2-0-acb08e82ef19@somainline.org>
+ <20230418-dpu-drop-useless-for-lookup-v2-3-acb08e82ef19@somainline.org>
+ <50d22e0c-84b3-0678-eb06-30fb66fd24cf@quicinc.com>
+ <ymq4kstme55dm3j5kr6trevnwdelhjq7e7m4yky6zcbnf7auid@66l7inxz4oq2>
+ <CAA8EJprYQUFER6x1+ucHX_Ze2uqWc6xoEaYDdJ1s0jgZjPJ0QQ@mail.gmail.com>
+ <c809476f-74bc-0399-08f9-1bf26e7170fa@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <65bb4d8a-c607-4152-0ae3-bf3134955925@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <c809476f-74bc-0399-08f9-1bf26e7170fa@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-24 16:09:45, Abhinav Kumar wrote:
-<snip>
-> >> dither block should be present on many other chipsets too but looks like
-> >> on sm8550 was enabling it. Not sure how it was validated there. But we
-> >> are enabling dither, even other chipsets have this block.
+On 2023-04-24 16:23:17, Abhinav Kumar wrote:
+> 
+> 
+> On 4/24/2023 3:54 PM, Dmitry Baryshkov wrote:
+> > On Tue, 25 Apr 2023 at 01:03, Marijn Suijten
+> > <marijn.suijten@somainline.org> wrote:
+> >>
+> >> On 2023-04-21 16:25:15, Abhinav Kumar wrote:
+> >>>
+> >>>
+> >>> On 4/21/2023 1:53 PM, Marijn Suijten wrote:
+> >>>> The Resource Manager already iterates over all available blocks from the
+> >>>> catalog, only to pass their ID to a dpu_hw_xxx_init() function which
+> >>>> uses an _xxx_offset() helper to search for and find the exact same
+> >>>> catalog pointer again to initialize the block with, fallible error
+> >>>> handling and all.
+> >>>>
+> >>>> Instead, pass const pointers to the catalog entries directly to these
+> >>>> _init functions and drop the for loops entirely, saving on both
+> >>>> readability complexity and unnecessary cycles at boot.
+> >>>>
+> >>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> >>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>
+> >>> Overall, a nice cleanup!
+> >>>
+> >>> One comment below.
+> >>>
+> >>>> ---
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c        | 37 +++++----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h        | 14 ++++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c        | 32 +++---------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h        | 11 +++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c       | 38 ++++-----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.h       | 12 +++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  2 +-
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c       | 40 ++++++-----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h       | 12 +++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c         | 38 ++++-----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h         | 10 +++---
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.c    | 33 +++----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_merge3d.h    | 14 ++++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 33 +++----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c       | 39 ++++------------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h       | 12 +++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.c       | 33 +++----------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_vbif.h       | 11 +++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c         | 33 ++++---------------
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h         | 11 +++----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c           | 17 +++++-----
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c            | 18 +++++-----
+> >>>>    23 files changed, 139 insertions(+), 375 deletions(-)
+> >>>>
+> >>>
+> >>> <snipped>
+> >>>
+> >>>> -struct dpu_hw_intf *dpu_hw_intf_init(enum dpu_intf idx,
+> >>>> -           void __iomem *addr,
+> >>>> -           const struct dpu_mdss_cfg *m)
+> >>>> +struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
+> >>>> +           void __iomem *addr)
+> >>>>    {
+> >>>>      struct dpu_hw_intf *c;
+> >>>> -   const struct dpu_intf_cfg *cfg;
+> >>>> +
+> >>>> +   if (cfg->type == INTF_NONE) {
+> >>>> +           pr_err("Cannot create interface hw object for INTF_NONE type\n");
+> >>>> +           return ERR_PTR(-EINVAL);
+> >>>> +   }
+> >>>
+> >>> The caller of dpu_hw_intf_init which is the RM already has protection
+> >>> for INTF_NONE, see below
+> >>>
+> >>>           for (i = 0; i < cat->intf_count; i++) {
+> >>>                   struct dpu_hw_intf *hw;
+> >>>                   const struct dpu_intf_cfg *intf = &cat->intf[i];
+> >>>
+> >>>                   if (intf->type == INTF_NONE) {
+> >>>                           DPU_DEBUG("skip intf %d with type none\n", i);
+> >>>                           continue;
+> >>>                   }
+> >>>                   if (intf->id < INTF_0 || intf->id >= INTF_MAX) {
+> >>>                           DPU_ERROR("skip intf %d with invalid id\n",
+> >>> intf->id);
+> >>>                           continue;
+> >>>                   }
+> >>>                   hw = dpu_hw_intf_init(intf->id, mmio, cat);
+> >>>
+> >>> So this part can be dropped.
+> >>
+> >> I mainly intended to keep original validation where _intf_offset would
+> >> skip INTF_NONE, and error out.  RM init is hence expected to filter out
+> >> INTF_NONE instead of running into that `-EINVAL`, which I maintained
+> >> here.
+> >>
+> >> If you think there won't be another caller of dpu_hw_intf_init, and that
+> >> such validation is hence excessive, I can remove it in a followup v3.
 > > 
-> > Correct, they all seem to have it starting at sdm845.  My patch message
-> > seems to lack the word "exclusively" as the PP on sm8550 appears to
-> > exclusively contain a DITHER subblock (unless other blocks are available
-> > that simply aren't supported within this driver yet) and no other
-> > registers.  Hence this aptly named macro exist to emit just the feature
-> > bitflag for that and a .len of zero.
+> > I'd prefer to see the checks at dpu_rm to be dropped.
+> > dpu_hw_intf_init() (and other dpu_hw_foo_init() functions) should be
+> > self-contained. If they can not init HW block (e.g. because the index
+> > is out of the boundaries), they should return an error.
 > > 
 > 
-> I think after the TE blocks were moved to INTF, dither is the only 
-> sub-block for all Ping-Pongs not just in sm8550.
-
-So you are asking / leaving context to make all >= 5.0.0 pingpong blocks
-use this macro with only a single DITHER sblk in PP?
-
-As far as I recall SM8550 is the first SoC to use zero registers in PP,
-which is specifically what this macro takes care of too.  Then, there
-are only a few SoCs downstream still (erroneously?) referencing TE2 as
-the only other sub-blk, those SoCs still use sdm845_pp_sblk_te.
-
-> > Now, whether we should have the features contain subblock flags rather
-> > than just scanning for their id's or presence in the subblocks is a
-> > different discussion / cleanup we should have.
-> > 
+> They already do that today because even without this it will call into 
+> _intf_offset() and that will bail out for INTF_NONE.
 > 
-> Yes, separate patch and hence I gave R-b on this one. But had to leave 
-> this comment to not lose context.
+> I feel this is a duplicated check because the caller with the loop needs 
+> to validate the index before passing it to dpu_hw_intf_init() otherwise 
+> the loop will get broken at the first return of the error and rest of 
+> the blocks will also not be initialized.
 
-Fwiw this is a different suggestion: we already have these flags in the
-sub-block `.id` field so there seems to be no reason to duplicate info
-in the top-level `.features` field, deduplicating some info and
-simplifying some defines.
+To both: keep in mind that the range-checks we want to remove from
+dpu_rm_init validate the ID (index?) of a block.  This check is for the
+*TYPE* of an INTF block, to skip it gracefully if no hardware is mapped
+there.  As per the first patch of this series SM6115/QCM2290 only have a
+DSI interface which always sits at ID 1, and ID 0 has its TYPE set to
+INTF_NONE and is skipped.
+
+Hence we _should_ keep the graceful TYPE check in dpu_rm_init() to skip
+calling this function _and assigning it to the rm->hw_intf array_.  But
+I can remove the second TYPE check here in dpu_hw_intf_init() if you
+prefer.
 
 - Marijn
-
-> > - Marijn
-> > 
-> >>> -	PP_BLK_DIPHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_0", PINGPONG_0, 0x69000, MERGE_3D_0, sc7280_pp_sblk,
-> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_1", PINGPONG_1, 0x6a000, MERGE_3D_0, sc7280_pp_sblk,
-> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_2", PINGPONG_2, 0x6b000, MERGE_3D_1, sc7280_pp_sblk,
-> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_3", PINGPONG_3, 0x6c000, MERGE_3D_1, sc7280_pp_sblk,
-> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_4", PINGPONG_4, 0x6d000, MERGE_3D_2, sc7280_pp_sblk,
-> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
-> >>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
-> >>>    			-1,
-> >>>    			-1),
-> >>> -	PP_BLK_DIPHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
-> >>> +	PP_BLK_DITHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
-> >>>    			-1,
-> >>>    			-1),
-> >>>    };
-> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>> index 03f162af1a50..ca8a02debda9 100644
-> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >>> @@ -491,7 +491,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
-> >>>    	.len = 0x20, .version = 0x20000},
-> >>>    };
-> >>>    
-> >>> -#define PP_BLK_DIPHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
-> >>> +#define PP_BLK_DITHER(_name, _id, _base, _merge_3d, _sblk, _done, _rdptr) \
-> >>>    	{\
-> >>>    	.name = _name, .id = _id, \
-> >>>    	.base = _base, .len = 0, \
-> >>>
