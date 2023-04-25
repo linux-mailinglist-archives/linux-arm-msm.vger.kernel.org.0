@@ -2,119 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADEB16EDDD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 10:22:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DC186EDE60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 25 Apr 2023 10:44:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232851AbjDYIWN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 04:22:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44520 "EHLO
+        id S233754AbjDYIom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 04:44:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233364AbjDYIWM (ORCPT
+        with ESMTP id S233855AbjDYIoW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 04:22:12 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED7A49F8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 01:22:09 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-94f6c285d92so1015037066b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 01:22:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682410928; x=1685002928;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a5M63yXC89QfRSmv3dCKp93F3Y3Fbl8p/U1KJ7S4Fng=;
-        b=dlPrks6xdXwghpZwvziO2uRXW4X5ATOV8+w81+Lb/aaWdOw7EJb46Wqm/eiTeLtjcD
-         IUEYf3jqI/y6pMTBQ00ANWUSWyCe68RaRQQqd6t9IenFIRcbidjGTUWutpWJwqgrZAGW
-         CClGulPCJPTG4jdFv3h+S0B1SE/SbdTaA7hx7IzqHM9gtmmYAD6RehXVGRorqcEGRy3Z
-         n4arEpAHAI3IHNRzbQLbADcUGuLK9DfOGE7F+OnlO3pqBIpKExindkfWbW7VEhVISTMZ
-         s/s8oK4C9nHmnTUfv7YsQtHX+x7ojzN+1AnBTHHPhdR/W5AEyPPNGhwa4Ezqs1gu5EAW
-         bxeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682410928; x=1685002928;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a5M63yXC89QfRSmv3dCKp93F3Y3Fbl8p/U1KJ7S4Fng=;
-        b=YA/XLLAroAR5FvgHfFWMoEMPY5ueqlJoBG6rkZ83NkVDdQ4PkNRwmpS2RozOiY2rsU
-         3f9BUrttMVd7hG1rwUc6SKPIz3U/d3K7+ifZJIJ1PirpViM2BhQdXmMIbIjeZSOTgZZY
-         HXnUFRdm97s95NQGAzqo6gwCtbHcOtqU0/hXFIQpkR7qKVTPZW/3OtAjHc7PYLBVFuhk
-         4Z6ERNcIxrmt/Pb7lFfjSncTIcDEv2un2E3d/Sk4vTBN6pEkvxlKMNpPCBt0GfcjFowx
-         EYMfhB1Phh1RF26hJXmVKFgyy6HTtN978mR/BP2DRyxjd8jEVoeZRdeRWBeUER8TqaHr
-         XOKQ==
-X-Gm-Message-State: AAQBX9ft7COFSVkfCVDhMo84d92Lb4vQ8ngjdFoQvgoCI0mWWvkiST2P
-        PpPR0RjD58S8/CwTtWMWtsEfJQ==
-X-Google-Smtp-Source: AKy350YLaW2i01uHETH49mSc7VM59UHdglmwNh5PVhWvo5DVwnmN26hC+CweeGHmTknkrmPXpglo7A==
-X-Received: by 2002:a17:907:168d:b0:92b:f118:ef32 with SMTP id hc13-20020a170907168d00b0092bf118ef32mr13623125ejc.48.1682410928292;
-        Tue, 25 Apr 2023 01:22:08 -0700 (PDT)
-Received: from [192.168.9.102] ([195.167.132.10])
-        by smtp.gmail.com with ESMTPSA id x20-20020aa7d394000000b00504803f4071sm5409238edq.44.2023.04.25.01.22.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Apr 2023 01:22:07 -0700 (PDT)
-Message-ID: <fa548aa4-6d17-0981-227a-bed6aedcb34f@linaro.org>
-Date:   Tue, 25 Apr 2023 10:22:06 +0200
+        Tue, 25 Apr 2023 04:44:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DD641547F;
+        Tue, 25 Apr 2023 01:42:08 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33P8dnwS017610;
+        Tue, 25 Apr 2023 08:40:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=CJFda1HHrboza25Ghy1e5r7VY3fKqD57pup/Hc23itc=;
+ b=ZwI8yMQw57gIIcSK5P/dqFe7ulG3bKVZlgw7gHgaYxpUUT9OFlphj/47rcktOBNq9aEA
+ LpvBwNEv6Rw4hG82td8UR+tGbr7csFM1vBxRkL18T1+7YKjt9j35xgmmkjUdbGoMEmK4
+ qg5ry93OBHtUZkL2IL57RS6aWik/OeePBrGqdlctA3oeSp/w8IkFTMUKOEg3JlOhPzoB
+ BeIx4Zz01cwHsfHBMZ4Lf6ILbPD5mVMHwHaWHzRcNdPZ39POhpbM6TY+YFs7RKLdfF7K
+ rQzUqyG8IId6rqsaURB/tTTw3JZPYSu9hP7JsnTFr4iKyW96gobYw9/Vxo8V+fYx3OCJ SQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q6bgp807u-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Apr 2023 08:40:49 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33P8eVk1001924
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 25 Apr 2023 08:40:31 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 25 Apr 2023 01:40:25 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
+Subject: [PATCH V3 0/6] Incremental patches on minimal boot support
+Date:   Tue, 25 Apr 2023 14:10:04 +0530
+Message-ID: <20230425084010.15581-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: sa8155p-adp: Make -cells decimal
-Content-Language: en-US
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230421205512.339850-1-ahalaney@redhat.com>
- <20230421205512.339850-2-ahalaney@redhat.com>
- <abd106b1-6650-6a7c-1c8b-3609e47b0161@linaro.org>
- <20230424143857.373kjvi42c7acsbp@halaney-x13s>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230424143857.373kjvi42c7acsbp@halaney-x13s>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LN7GkLXPxYtizxXBwUBFIBVG3NHnHDh9
+X-Proofpoint-ORIG-GUID: LN7GkLXPxYtizxXBwUBFIBVG3NHnHDh9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-25_03,2023-04-21_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxscore=0 mlxlogscore=999 suspectscore=0 adultscore=0 priorityscore=1501
+ phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304250076
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/04/2023 16:38, Andrew Halaney wrote:
-> On Mon, Apr 24, 2023 at 09:21:45AM +0200, Krzysztof Kozlowski wrote:
->> On 21/04/2023 22:55, Andrew Halaney wrote:
->>> The property logically makes sense in decimal, and is the standard used
->>> elsewhere.
->>>
->>> Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
->>> ---
->>>
->>> Changes since v2:
->>>     * Collect tags
->>> Changes since v1:
->>>     * New patch (Konrad)
->>
->> Doing such changes per one board will be a lot of churn...
->>
-> 
-> Agreed, are you suggesting I drop this patch (and if we do this sort of
-> cleanup to do it in bulk)? Sorry, not entirely sure I am picking up what
-> that comment is implying.
+Patchset V9 of the series: Add minimal boot support for IPQ9574 has been
+merged and is available in linux-next/master.
+V12 being the latest revision posted in the series, the delta between
+revisions V9 and V12 is posted as a separate series as suggested by 
+Bjorn to avoid possible confusions.
 
-Yes, I suggest to fix all Qualcomm arm64 boards with one patch. There
-are just few more occurrences of this. It's also pure cleanup, no
-functional change.
+This series adds the delta changes between revisions V9 and V12.
 
-> 
-> Personally, I'd prefer to keeping that patch as this series is trying to
-> clean up the particular ethernet node.. but if the purpose of the series
-> was just to clean -cells up then I'd go with the bulk approach.
-> 
-> So as is, I'm going to leave it like so unless you have specific advice
-> against doing so.
+V9 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230316072940.29137-1-quic_devipriy@quicinc.com/
 
-Best regards,
-Krzysztof
+V12 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230410135948.11970-1-quic_devipriy@quicinc.com/
+
+Changes in V3:
+	- Detailed change logs are added to the respective patches.
+
+Changes in V2:
+https://lore.kernel.org/linux-arm-msm/20230417053355.25691-1-quic_devipriy@quicinc.com/
+	- Updated the subject & commit message of [PATCH V2 1/4]
+	- No changes were made to any other patches
+
+Changes in V1:
+	- The Delta between V9 & V12 is added to the change log of
+	  the respective patches for quick reference
+
+Devi Priya (6):
+  arm64: dts: qcom: ipq9574: Update the size of GICC & GICV regions
+  dt-bindings: clock: qcom,ipq9574-gcc: Add maintainer
+  clk: qcom: gcc-ipq9574: Clean up included headers
+  clk: qcom: gcc-ipq9574: constify struct clk_init_data
+  arm64: dts: qcom: ipq9574: Drop bias_pll_ubi_nc_clk input
+  arm64: dts: qcom: ipq9574: rename al02-c7 dts to rdp433
+
+ .../bindings/clock/qcom,ipq9574-gcc.yaml      |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +-
+ ...ipq9574-al02-c7.dts => ipq9574-rdp433.dts} |   2 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |  14 +-
+ drivers/clk/qcom/gcc-ipq9574.c                | 434 +++++++++---------
+ 5 files changed, 224 insertions(+), 229 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{ipq9574-al02-c7.dts => ipq9574-rdp433.dts} (97%)
+
+-- 
+2.17.1
 
