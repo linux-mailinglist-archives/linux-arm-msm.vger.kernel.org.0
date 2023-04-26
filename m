@@ -2,108 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E2866EFA84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 20:57:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC3BC6EFAA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 21:08:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234988AbjDZS5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Apr 2023 14:57:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35638 "EHLO
+        id S232584AbjDZTIg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Apr 2023 15:08:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233612AbjDZS53 (ORCPT
+        with ESMTP id S239072AbjDZTIf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Apr 2023 14:57:29 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898F58A7B;
-        Wed, 26 Apr 2023 11:56:54 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-504eb1155d3so782816a12.1;
-        Wed, 26 Apr 2023 11:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682535411; x=1685127411;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MIRwizkBlsL+ifd8FsbkRK/NdvO25L/3LYIQ1whi6m8=;
-        b=iQViXoJSnBRS387pYZ2Uoxdt6y376s9PMxxA7oQEPsb5RTOV2toAcjzikM5NhxG0Jo
-         yxg1mbXWan8zXLsHw3BUaePoMKBBqOnCmzYljgceDUeNhq4eQQxoQvb7x7VJC3Bc9e8e
-         wZw0z48eyzE7uER+ncDOGELSmqYRhrS/3eOOz8ZX6+CxsrU1DJF40GrYF9ZMkN1SpTmP
-         trvR9zno3ZeFccOHyzjQ1OtI5Unw8Hv+x1QNDE4sOcLxPwmrXV1dZwYoD/z28FlNxBsU
-         Y0TOXNZrSFX1zt6wEbP6bscdUKqO9C1hqQ9u1eDckhhI1etFwKwMJJzCRaTklqW+Y6eN
-         J0dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682535411; x=1685127411;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MIRwizkBlsL+ifd8FsbkRK/NdvO25L/3LYIQ1whi6m8=;
-        b=JgQ46j9943MBfWFLeQZejzFJoXbzKuCmRipdhio+4l+dC4VgqIxR0ugpAsUKbpPa68
-         neeaYMgG1HzIdHQID9IquRxhjIw7/sQ7CMvFgR7TFTHiu8367th/hfYK3fNjpNS1d5gO
-         mQmTU2838Sgo7DkKi0e2cof+vY7Bf67U8tVWAr0oscTCdconLS5Ohn3ahp/fQcO8ZMOy
-         JiA6J+RnQcRrf4fujrgUo3oObJiYHiO3jVyDCzHwpIOEXl1p6ZoMkx5c2tYIFygZWKg4
-         ZTUV+unBsPzYkeqggzletkuSmDUbwS79jlgnGS56rDp2uyL6J6Bhafd7ehKnOF0a5dPP
-         meBw==
-X-Gm-Message-State: AC+VfDzFbmons6aS8YFhQFY4E4L8YD9vV9AgsJmzmY6LZzubCWcet9yX
-        wZ2ygqTVSEUy8uzZttpUm8k=
-X-Google-Smtp-Source: ACHHUZ5zDTZfGl4gnFj8hI971RkQcX3E0Eq/1CIGPwLFd3QdP/E7NCuX8auzUcLCJtXt+rudRRdmYQ==
-X-Received: by 2002:a17:906:eda6:b0:94e:6edc:71bc with SMTP id sa6-20020a170906eda600b0094e6edc71bcmr3201176ejb.25.1682535410890;
-        Wed, 26 Apr 2023 11:56:50 -0700 (PDT)
-Received: from fedora.. (cpezg-94-253-129-198-cbl.xnet.hr. [94.253.129.198])
-        by smtp.googlemail.com with ESMTPSA id qt2-20020a170906ece200b0094e1344ddfdsm8501348ejb.34.2023.04.26.11.56.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Apr 2023 11:56:50 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: ipq8074: Add QUP5 SPI node
-Date:   Wed, 26 Apr 2023 20:56:47 +0200
-Message-Id: <20230426185647.180166-1-robimarko@gmail.com>
-X-Mailer: git-send-email 2.40.0
+        Wed, 26 Apr 2023 15:08:35 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2401718B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Apr 2023 12:08:34 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A1F3C3F7C9;
+        Wed, 26 Apr 2023 21:08:29 +0200 (CEST)
+Date:   Wed, 26 Apr 2023 21:08:28 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: Re: [PATCH v3 06/21] drm/msm/dpu: Use V2 DITHER PINGPONG sub-block
+ in SM8[34]50/SC8280XP
+Message-ID: <vwejuayy7ulq3frpqpqetkyhyefgrmgo6222how4hp4bissepx@uauvwlhsekgn>
+References: <20230411-dpu-intf-te-v3-0-693b17fe6500@somainline.org>
+ <20230411-dpu-intf-te-v3-6-693b17fe6500@somainline.org>
+ <d44022e0-bc09-122e-5a48-1994cb025ba8@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d44022e0-bc09-122e-5a48-1994cb025ba8@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add node to support the QUP5 SPI controller inside of IPQ8074.
-Some devices use this bus in order to manage external switches.
+On 2023-04-26 09:24:19, Abhinav Kumar wrote:
+> 
+> 
+> On 4/25/2023 4:05 PM, Marijn Suijten wrote:
+> > According to downstream sources this DITHER sub-block sits at an offset
+> > of 0xe0 with version 0x20000.  The PP_BLK_DITHER macro is _not_ used as
+> > downstream still says the size of the PINGPONG block is 0xd4 and not 0.
+> > 
+> 
+> the PINGPONG block size is 0x0 on sm8350, sm8450 and sc8280xp.
+> 
+> and length of dither is 0x20 and they all start at 0xe0.
+> 
+> So now does anything prevent us from using PP_BLK_DITHER macro for these?
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+Nothing prevents it from being used (if you are referring to our
+previous conversations) besides this information not being available in
+public DTS (I simply did not know) and the fact that all these many
+fixes - however necessary they are - distract from the main topic of
+this series: bringing INTF TE support to DPU1.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index 64c2a30d9c25..4a682e3442f8 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -774,6 +774,20 @@ blsp1_i2c5: i2c@78b9000 {
- 			status = "disabled";
- 		};
- 
-+		blsp1_spi5: spi@78b9000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x78b9000 0x600>;
-+			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP1_QUP5_SPI_APPS_CLK>,
-+				 <&gcc GCC_BLSP1_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
-+			dma-names = "tx", "rx";
-+			status = "disabled";
-+		};
-+
- 		blsp1_i2c6: i2c@78ba000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			#address-cells = <1>;
--- 
-2.40.0
+I'll fit in that patch though, as I have to send v4 anyway.
 
+- Marijn
