@@ -2,130 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A5726EF481
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 14:41:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B52C6EF65B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 16:26:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240657AbjDZMli (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Apr 2023 08:41:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49868 "EHLO
+        id S241330AbjDZO0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Apr 2023 10:26:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240547AbjDZMlh (ORCPT
+        with ESMTP id S241122AbjDZO0D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Apr 2023 08:41:37 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B0C6585;
-        Wed, 26 Apr 2023 05:40:48 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-63b50a02bffso5810689b3a.2;
-        Wed, 26 Apr 2023 05:40:48 -0700 (PDT)
+        Wed, 26 Apr 2023 10:26:03 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51570729B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Apr 2023 07:26:02 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-2fe3fb8e25fso4477271f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Apr 2023 07:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682512843; x=1685104843;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sosN6q7mjWABQa1iFcHLQ7HcWfsjeMtm3Mt392Dc1Ok=;
-        b=LHEhXfBwsoX5wQPtnAnd/oSeQOBl5rvEvn7Jq2inf11DTsMzwiilhui/ckik+6rGNf
-         qeVSAL7SRVHE2nj23tcVdeylQ9ODv7KttwZEha1dl04Uz2VuK3FanEMlfBA1WRgs8POM
-         G5Ae8uveZTMTYzFkzAjfO1rOf0DgWsHV2pin2KVCMJlqlF0CcP/ObpMkkG2KwrmYvR+a
-         DjmeyUb0tbVgM1POPQ0QoY/JJ/MDIiTWVHa4UgyNxL2IJW8DVXfSmB5msXnAe6NgA4Vu
-         9O2zG9VNIeDLh8bo3BQSxEQsCc1d9giheLcKV3mnd6NGuLTmQZvN7zs67YTC7hIIblOE
-         w+zw==
+        d=linaro.org; s=google; t=1682519161; x=1685111161;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OfmaskdBjQn3V5pOU3nprV90+II0lcnGqRpRtitTHfw=;
+        b=ejTmsmGfYQfwJCYh6kZezZgGeKRbb0HzEjKYT/IboF11o/HdoNgxLOpZAZsrm2vC8i
+         ia7HvN71f04tSXEL5MQS74Sj/NqB3UZVN+My+uY8NpNR/2NNeFyWPchfQsGGPM0q0buZ
+         PVkLzJMvIyL1wg7fKdzDsyuBvSiH+/DkkcLbpEIlAjDxQ8roicZVcMkrcN6FQjge62Zo
+         OFkCa2wn8c+SIBktB+C5PVCj2dzNBZBKNQEqz0YBr319hwWwHXOHCLctdzsx4camiqS/
+         dZwfnuPLy2GpXpLBsQdyMyOx0dN9Y4lpDqmg/RZG+jjCVPVOaKeRztbWkF/Gai8OskA9
+         vKdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682512843; x=1685104843;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sosN6q7mjWABQa1iFcHLQ7HcWfsjeMtm3Mt392Dc1Ok=;
-        b=laY1g3/GrjsQ6Cof10eQNHdDnE27AbqVACq7n8aOglPYPRggiFrWG75i0Xw8RJM65n
-         3oaHTNch7AwsUVfyFbceA0NnHrTJssnZVKHhYuIF8URNBO3CyPoSHoRnRNtaolzdS525
-         +4u3iOvD2NWNcCVtC6UjSRr5oqp0JbslcsyJ0O6WMNTjKu6bONUmIGvCrYDqpoKIUT6n
-         eOgGsa2j2AUDnPU0BYP5wsTDuLD2EaVIephtpHKOQiaej8ikbYDZWMtR43Ak9E2Yctkd
-         ZA6d1X5ZObKyhZxfGeg2P9tv5A3Nu4qc059Nkdx5Ur76h4BAgTqJ8ge7Q1/kX+RXML76
-         2LyA==
-X-Gm-Message-State: AAQBX9djMclM9mLzcH5oYmposuvuA1TNtX0NoOynuUkLJPokiGRcWutp
-        qtKacXBKnxjjPKa8oNSOEzZgwTzUbRIpLxYwsLRzF15QqsRNww==
-X-Google-Smtp-Source: AKy350ayHesJaV9Si6f/E/Wp+h9A2uT5MsJ/lHDtqljcQwtP1Ri7lwAypa0hf/VN91OAfADvz6myhrHxslCOx7xdqxE=
-X-Received: by 2002:a05:6a20:12ca:b0:f3:1b6:f468 with SMTP id
- v10-20020a056a2012ca00b000f301b6f468mr19381338pzg.6.1682512843128; Wed, 26
- Apr 2023 05:40:43 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682519161; x=1685111161;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OfmaskdBjQn3V5pOU3nprV90+II0lcnGqRpRtitTHfw=;
+        b=SYTepSqIyMURWMP+eJN9iHbCv2LxY4v0bY8b//ayZvR0NPw9uPZuwjEwUexsmlWewE
+         i2VywCPZDuibTIWDWB+gDcXqZOFzBx6o4d7N0X9YDEn1/m08vAbFPFAfPncpd0cuEr4e
+         JxPvIW2Nccx+DNEBeZ+1HbQVUkZL8D2euxd33xi71Eh4B+K5/4Cub+XSEke5sZgiYPxH
+         gmhiZwlRHQUvtHtryJo7RqEpAq+iXJJIqWooyy0OJ/amzc13cJIUU2AchqwriJ9ZSY5K
+         cDdJyns4g2BRiRC2dqFFJJtEf4uwr37vBlDE+18AaGC/5Iem6qJ+Y/5tSXaWrOu8aRsC
+         VhSg==
+X-Gm-Message-State: AAQBX9dh3x94X9Gss7HjOt8YllQieO+goNqdlcK10SZE+NyQQ0UpgkSW
+        hIJpSSzIa7zPfMTM1RaOTLn+jA==
+X-Google-Smtp-Source: AKy350azFtxzLU/AHkuy/1AtdTBiM0pSm/amOMmVdp7ABZ+fS+j9uw2EfwnjcnvcZ0si6esLY5S6Ww==
+X-Received: by 2002:a5d:6708:0:b0:2f5:8116:6458 with SMTP id o8-20020a5d6708000000b002f581166458mr14728187wru.66.1682519160710;
+        Wed, 26 Apr 2023 07:26:00 -0700 (PDT)
+Received: from linaro.org ([82.79.186.233])
+        by smtp.gmail.com with ESMTPSA id m4-20020adffa04000000b002fe96f0b3acsm15944215wrr.63.2023.04.26.07.25.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Apr 2023 07:25:59 -0700 (PDT)
+Date:   Wed, 26 Apr 2023 17:25:58 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Johan Hovold <johan@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/7] phy: qcom-qmp-combo: Support orientation switching
+Message-ID: <ZEk0dnfoV9IlHlyt@linaro.org>
+References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-References: <20221105194943.826847-1-robimarko@gmail.com> <20221105194943.826847-2-robimarko@gmail.com>
- <20221107174727.GA7535@thinkpad> <87cz9xcqbd.fsf@kernel.org>
- <877czn8c2n.fsf@kernel.org> <CA+HBbNFCFtJwzN=6SCsWnDmAjPkmxE4guH1RrLc+-HByLcVVXA@mail.gmail.com>
- <87k02jzgkz.fsf@kernel.org> <CA+HBbNHi0zTeV0DRmwLjZu+XzUQEZQNnSpBMeQeUPiBu3v-2BQ@mail.gmail.com>
- <87358hyp3x.fsf@kernel.org> <CA+HBbNGdOrOiCxhSouZ6uRPRnZmsBSAL+wWpLkczMK9cO8Mczg@mail.gmail.com>
- <877cxsdrax.fsf@kernel.org> <CA+HBbNGbg88_3FDu+EZhqMj0UKb8Ja_vyYsxGtmJ_HGt4fNVBQ@mail.gmail.com>
- <87y1q8ccc4.fsf@kernel.org> <CA+HBbNH2fzr_knOE9EWD4bUi-guvRa07FAxc9WyCH0jK10BLvw@mail.gmail.com>
- <87fsafpg63.fsf@kernel.org>
-In-Reply-To: <87fsafpg63.fsf@kernel.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 26 Apr 2023 14:40:32 +0200
-Message-ID: <CAOX2RU5EaRrcKW7uhmDQbUO-TzOOnKAsx5HKtRjMDTMBEZj4tA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] wifi: ath11k: use unique QRTR instance ID
-To:     Kalle Valo <kvalo@kernel.org>
-Cc:     Robert Marko <robert.marko@sartura.hr>,
-        Manivannan Sadhasivam <mani@kernel.org>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        gregkh@linuxfoundation.org, elder@linaro.org,
-        hemantk@codeaurora.org, quic_jhugo@quicinc.com,
-        quic_qianyu@quicinc.com, bbhatt@codeaurora.org,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, ansuelsmth@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Still not sure what you mean. Are you saying that this patch under
-> discussion ("wifi: ath11k: use unique QRTR instance ID") also works with
-> QCA6390 and it's possible to connect two QCA6390 devices on the same
-> host?
->
-> Or are you referring to some other hack? Or have I totally
-> misunderstood? :)
+On 23-04-24 20:40:03, Bjorn Andersson wrote:
+> This adds support for USB and DisplayPort orientation switching to the
+> QMP combo PHY, as well as updating the sc8280xp devices to include the
+> QMP in the SuperSpeed graph.
+> 
 
-We probably have a misunderstanding, QCA6390 does not work with
-("wifi: ath11k: use unique QRTR instance ID"), that is why we in OpenWrt
-limited it to QCN9074 only so far.
+Tested this entire patchset on my X13s. Therefore:
 
->
-> > so that is why its quite important for OpenWrt to have a generic
-> > solution that works on all cards.
->
-> I fully agree on importance of having a generic solution. It's just sad
-> that it seems people who designed this didn't consider about having
-> multiple devices on the same host. It looks like there's no easy way to
-> implement a generic solution, we have only bad choices to choose from.
-> Your solution[1] is racy and writing to a register which is marked as
-> read-only in the spec.
+Tested-by: Abel Vesa <abel.vesa@linaro.org>
 
-I agree, this is purely a hack based on what QCA is doing downstream where
-they hardcode the QRTR ID in DTS and write to the same register.
-
->
-> Qualcomm's solution[2] needs changes in firmware and it's uncertain if
-> I'm able to convince all firmware teams to implement the support.
-> (Currently only QCN9074 firmware supports this.)
->
-> Thoughts?
-
-I mean, we need some kind of a solution cause trying to pitch using a QCA
-AX SoC-s and PCI cards but then saying that they cannot use AHB+PCI
-or multiple PCI cards at the same time are not viable.
-
-Regards,
-Robert
->
-> [1] https://patchwork.kernel.org/project/linux-wireless/patch/20221105194943.826847-2-robimarko@gmail.com/
->
-> [2] https://patchwork.kernel.org/project/linux-wireless/patch/20230111170033.32454-1-kvalo@kernel.org/
->
-> --
-> https://patchwork.kernel.org/project/linux-wireless/list/
->
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> Bjorn Andersson (7):
+>   dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Add ports and
+>     orientation-switch
+>   phy: qcom-qmp-combo: Move phy_mutex out of com_init/exit
+>   phy: qcom-qmp-combo: Introduce orientation variable
+>   phy: qcom-qmp-combo: Introduce orientation switching
+>   phy: qcom-qmp-combo: Introduce drm_bridge
+>   arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed graph
+>   arm64: dts: qcom: sc8280xp-x13s: Add QMP to SuperSpeed graph
+> 
+>  .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  51 ++++
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  28 ++-
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  28 ++-
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  34 +++
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 227 ++++++++++++++----
+>  5 files changed, 309 insertions(+), 59 deletions(-)
+> 
+> -- 
+> 2.39.2
+> 
