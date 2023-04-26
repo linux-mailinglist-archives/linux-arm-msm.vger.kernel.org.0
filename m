@@ -2,29 +2,39 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D6BE6EFBBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 22:35:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A56DC6EFD3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 00:37:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239475AbjDZUfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Apr 2023 16:35:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53756 "EHLO
+        id S234547AbjDZWh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Apr 2023 18:37:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239458AbjDZUfm (ORCPT
+        with ESMTP id S233605AbjDZWhZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Apr 2023 16:35:42 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEF62694;
-        Wed, 26 Apr 2023 13:35:24 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        Wed, 26 Apr 2023 18:37:25 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1193BE6D;
+        Wed, 26 Apr 2023 15:37:19 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2FC763F7AD;
-        Wed, 26 Apr 2023 22:35:21 +0200 (CEST)
-Date:   Wed, 26 Apr 2023 22:35:19 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 486DF2012C;
+        Thu, 27 Apr 2023 00:37:16 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
+Subject: [PATCH v4 00/22] drm/msm/dpu: Implement tearcheck support on INTF
+ block
+Date:   Thu, 27 Apr 2023 00:37:14 +0200
+Message-Id: <20230411-dpu-intf-te-v4-0-27ce1a5ab5c6@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJqnSWQC/33OTQrCMBCG4atI1k7JJDWprryHuOjPpI5oWpJaF
+ OndTQuuKi7fgXn43iJSYIrisHmLQCNH7nyKfLsR9aX0LQE3qYWSSsscEZr+AewHBwMBlabIHWq
+ ShRbpow/k+Llop3PqC8ehC68FH3G+zo5CpVHhTkqTKcTCSEC4l4GvPosPvg7kj7G7l+xv7CnrQ
+ itmbFRfYD1kVCCBnDV1YS1Ve/sT0H8AnQCz1xVaRyZNWwHTNH0A2KETdy0BAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -33,8 +43,8 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Bjorn Andersson <andersson@kernel.org>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -43,19 +53,10 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH v3 06/21] drm/msm/dpu: Use V2 DITHER PINGPONG sub-block
- in SM8[34]50/SC8280XP
-Message-ID: <5i3lldg2ayomfs2yo3bs2bfbuhwocujedegcz57ptowlg24ckk@euxp6sz3lvqh>
-References: <20230411-dpu-intf-te-v3-0-693b17fe6500@somainline.org>
- <20230411-dpu-intf-te-v3-6-693b17fe6500@somainline.org>
- <d44022e0-bc09-122e-5a48-1994cb025ba8@quicinc.com>
- <vwejuayy7ulq3frpqpqetkyhyefgrmgo6222how4hp4bissepx@uauvwlhsekgn>
- <e0a64c2b-6178-6513-d7ba-d6a79831f21d@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e0a64c2b-6178-6513-d7ba-d6a79831f21d@quicinc.com>
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
@@ -65,44 +66,153 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-26 12:11:39, Abhinav Kumar wrote:
-> 
-> 
-> On 4/26/2023 12:08 PM, Marijn Suijten wrote:
-> > On 2023-04-26 09:24:19, Abhinav Kumar wrote:
-> >>
-> >>
-> >> On 4/25/2023 4:05 PM, Marijn Suijten wrote:
-> >>> According to downstream sources this DITHER sub-block sits at an offset
-> >>> of 0xe0 with version 0x20000.  The PP_BLK_DITHER macro is _not_ used as
-> >>> downstream still says the size of the PINGPONG block is 0xd4 and not 0.
-> >>>
-> >>
-> >> the PINGPONG block size is 0x0 on sm8350, sm8450 and sc8280xp.
-> >>
-> >> and length of dither is 0x20 and they all start at 0xe0.
-> >>
-> >> So now does anything prevent us from using PP_BLK_DITHER macro for these?
-> > 
-> > Nothing prevents it from being used (if you are referring to our
-> > previous conversations) besides this information not being available in
-> > public DTS (I simply did not know) and the fact that all these many
-> > fixes - however necessary they are - distract from the main topic of
-> > this series: bringing INTF TE support to DPU1.
-> > 
-> 
-> Yeah, you could have sent these as a separate series if you wanted to 
-> stick to this one being only intf te.
+Since DPU 5.0.0 the TEARCHECK registers and interrupts moved out of the
+PINGPONG block and into the INTF.  Implement the necessary callbacks in
+the INTF block, and use these callbacks together with the INTF_TEAR
+interrupts.  Additionally, disable previous register writes and remove
+unused interrupts in the PINGPONG and MDP_TOP blocks for these newer
+platforms.
 
-As already explained in IRC, and repeating here for posterity:
+With these patches the devices on DPU >= 5.0.0 listed below now update
+their panels at 60fps without tearing (nor sluggishness), and without
+repeated timeouts in dmesg.
 
-Maintaining two heavily-dependent series that constantly touch the exact
-same lines in the catalog for many SoCs at once is pretty much
-impossible.  Doing it that way relies on one of the two series to be
-easily pick-able so that the other can proceed through a few review
-rounds and revisions without constantly conflicting or having to be
-rebased on the other.  And that doesn't apply here: both INTF TE and the
-fixes have required extra revisions.  And then, some of the fixes are
-even preliminary to INTF TE support.
+Tested on the following devices with command-mode panels and TE pins:
 
-- Marijn
+- Sony Xperia XZ3 (sdm845, DPU 4.0.0, cmdmode panel): no regressions on
+  PINGPONG TE;
+- Sony Xperia 5 (sm8150, DPU 5.0.0);
+- Sony Xperia 10 II (sm6125, DPU 5.0.4).
+
+---
+Changes in v4:
+- Drop indentation changes from patch 17/21 by initially reserving
+  enough in 10/21;
+- Drop documentation indentation changes in patch 18/21;
+- Drop existing "TODO TE sub-blocks" from SM8550 in patch 18/21;
+- Drop TE2 sub-block and feature flag from all DPU >= 5.0.0 instead of
+  just DPU >= 7.0.0 hardware (patch 2/21);
+  - Use double tabs in SC8280XP PP newline indentation to match the
+    other files, and not having to change it every time the opening
+    brace of the macro changes;
+  - Drop review tags after changing this patch significantly;
+- Insert new patch that sets the PINGPONG block length to zero on DPU >=
+  7.0.0 via the PP_BLK_DITHER macro.
+
+v3: https://lore.kernel.org/r/20230411-dpu-intf-te-v3-0-693b17fe6500@somainline.org
+
+Changes in v3:
+- Use new commit hashes in Fixes: tags after drm-msm's msm-next was
+  force-pushed;
+- Rename dpu_hw_setup_vsync_source to
+  dpu_hw_setup_vsync_source_and_vsync_sel and drop _v1 suffix from
+  dpu_hw_setup_vsync_source_v1;
+- Refactor dpu_hw_interrupts register offsets to take the block offset
+  as argument and compute the actual register with a base offset and
+  stride, rather than hardcoding the many per-INTF and per-AD4 register
+  offsets with fixed stride manually;
+- Split INTF_TEAR interrupt additions into a core (dpu_hw_interrupts.c)
+  and catalog patch;
+- Add new patch to make DITHER sub-block of SM8[34]50 and SC8280XP V2
+  instead of V1.
+
+v2: https://lore.kernel.org/r/20230411-dpu-intf-te-v2-0-ef76c877eb97@somainline.org
+
+Changes in v2:
+- Rebase on -next with all the new SC8280XP and SM8[345]50 support;
+  - Remove duplicate PP_BLK_TE macro now that .features is an argument;
+  - Fix PP_BLK_DIPHER -> DITHER typo that was added recently;
+  - Add INTF_TEAR interrupt blocks for DPU 7.0.0 (moved to different
+    register range);
+  - Describe INTF_TEAR support for the newly added SM8350, SM8450,
+    SM8550 and SC8280XP SoCs;
+  - Remove TE2 subblocks from 8[34]50 and sc8280xp (new patch);
+- Rebase on -next with DPU catalog rework;
+  - Remove dpu_hw_intf_v1_get_status which was inlined in the original
+    dpu_hw_intf_get_status function in e3969eadc8ee ("drm/msm/disp/dpu:
+    get timing engine status from intf status register");
+  - Many changes to move all catalog edits to separate files;
+- Add documentation for DPU_MDP_VSYNC_SEL;
+- Fix sdm8150_mdp typo, should be sm8150_mdp;
+- Move unrelated INTF_INTR offsets out of hwio header (new patch);
+- Remove _reg argument from INTF_BLK, since we now have a third
+  interrupt with a different base register.  To prevent confusion all
+  three interrupts should provide the final value from DPU_IRQ_IDX
+  directly.
+- Only request the new tear_rd_ptr in a new INTF_BLK_DSI_TE macro;
+- Drop stray INTF_MISR_SIGNATURE register definition;
+- Clean up registers in dpu_hw_intf.c (many new patches);
+- merged setup_tearcheck() and enable_tearcheck() callbacks;
+- replaced enable_tearcheck(false) with new disable_tearcheck()
+  callback;
+- Moved dpu_encoder_phys_cmd_enable_te intestines (just autorefresh
+  disablement) to INTF and PP block, replacing 3 callbacks in both
+  blocks with just a single disable_autorefresh() callback.
+
+v1: https://lore.kernel.org/r/20221231215006.211860-1-marijn.suijten@somainline.org
+
+---
+Konrad Dybcio (1):
+      drm/msm/dpu: Move dpu_hw_{tear_check,pp_vsync_info} to dpu_hw_mdss.h
+
+Marijn Suijten (21):
+      drm/msm/dpu: Remove unused INTF0 interrupt mask from SM6115/QCM2290
+      drm/msm/dpu: Remove TE2 block and feature from DPU >= 5.0.0 hardware
+      drm/msm/dpu: Move non-MDP_TOP INTF_INTR offsets out of hwio header
+      drm/msm/dpu: Reindent REV_7xxx interrupt masks with tabs
+      drm/msm/dpu: Fix PP_BLK_DIPHER -> DITHER typo
+      drm/msm/dpu: Use V2 DITHER PINGPONG sub-block in SM8[34]50/SC8280XP
+      drm/msm/dpu: Set PINGPONG block length to zero for DPU >= 7.0.0
+      drm/msm/dpu: Remove duplicate register defines from INTF
+      drm/msm/dpu: Remove extraneous register define indentation
+      drm/msm/dpu: Sort INTF registers numerically
+      drm/msm/dpu: Take INTF index as parameter in interrupt register defines
+      drm/msm/dpu: Drop unused poll_timeout_wr_ptr PINGPONG callback
+      drm/msm/dpu: Move autorefresh disable from CMD encoder to pingpong
+      drm/msm/dpu: Disable pingpong TE on DPU 5.0.0 and above
+      drm/msm/dpu: Disable MDP vsync source selection on DPU 5.0.0 and above
+      drm/msm/dpu: Factor out shared interrupt register in INTF_BLK macro
+      drm/msm/dpu: Describe TEAR interrupt registers for DSI interfaces
+      drm/msm/dpu: Add TEAR-READ-pointer interrupt to INTF block
+      drm/msm/dpu: Merge setup_- and enable_tearcheck pingpong callbacks
+      drm/msm/dpu: Implement tearcheck support on INTF block
+      drm/msm/dpu: Remove intr_rdptr from DPU >= 5.0.0 pingpong config
+
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |  26 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  26 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  40 +--
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  48 ++--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  40 +--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  16 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  15 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  15 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  40 +--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  22 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  64 +++--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  46 ++--
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  37 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  11 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  10 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   | 210 ++++++++--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  45 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   5 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 183 +++++++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h  |   4 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 268 ++++++++++++++++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  25 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  48 ++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |  83 ++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h    |  64 +----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |  50 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h           |   3 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |   4 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |  14 ++
+ 29 files changed, 973 insertions(+), 489 deletions(-)
+---
+base-commit: b7455b10da762f2d447678c88e37cc1eb6cb45ee
+change-id: 20230411-dpu-intf-te-ea684f13e083
+
+Best regards,
+-- 
+Marijn Suijten <marijn.suijten@somainline.org>
+
