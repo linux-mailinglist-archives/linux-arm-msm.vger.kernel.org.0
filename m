@@ -2,117 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 474726EEAEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 01:14:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3921D6EEB2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 02:01:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236180AbjDYXOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 25 Apr 2023 19:14:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43756 "EHLO
+        id S237902AbjDZABl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 25 Apr 2023 20:01:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234664AbjDYXOJ (ORCPT
+        with ESMTP id S237905AbjDZABk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 25 Apr 2023 19:14:09 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA0E146CC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 16:13:31 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A9D781F9AA;
-        Wed, 26 Apr 2023 01:13:28 +0200 (CEST)
-Date:   Wed, 26 Apr 2023 01:13:27 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Tue, 25 Apr 2023 20:01:40 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DD6B146F6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 17:01:38 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5066ce4f725so9426888a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 25 Apr 2023 17:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682467297; x=1685059297;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yTdc9DJ14HbNnnfxarhYVsLnqLsfg9vMdDLB5FChyxE=;
+        b=T2u6R7p0/3Naz9CpQHHIiQlXKSa/8shAFvj+JmuSUz71hjyl/B7wfyjWpKY2MSwt9X
+         kxiSDY2DP8qtEX0Yr4FIsYI2hg7SSG7pTRcabKuDw80MFxmROsrTI++g1HtIGdhFzmID
+         vV+CyugLT6r83uuMVEXW1xXRZqH+T9Wkm1WSrxGD5YEIhPe0nETPbDe1fy8Kt83zxaa+
+         q/vJVVVrSwfux57up5piUclqlR84rIcI5jwSpigbe5uK1sYaZLNbRQ3UUxoJP4iZUv1H
+         ICuzx0Fk90LCu7cjfqcqSSJXvCxy7j3Fzn070mx6aJRI4ndd8TQO64D0zX7Gui2YHRlf
+         s23Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682467297; x=1685059297;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yTdc9DJ14HbNnnfxarhYVsLnqLsfg9vMdDLB5FChyxE=;
+        b=LqFp1vK7EJhTQ+af3TJt4jegsIqIjxbUIsUjFCiFayMsgKUJ1DxRFPIvv1WsWVY9+h
+         6+uYxDWQlD1illIDFMd0EecPtDcJqjNVlSnKgu0d3ErOGCDjAgaeF0QdpwTgjBxpzcED
+         3nuiapyQMRfNc0AX1x6ocKEvuxheCcXBN1G+5+KHFYupIRvOa52GfSvy2r2lyuTVBi7D
+         mX3cS+964LcXuzmQ/0NPYybeUyrTPU3ESddxpHEDkGuLhgQjbjtvBDm10ehG33xLpbwq
+         Nfq/k8jcy0bMcquOBm73VgBZehhoPd7H7VQcIwZSwszicn10dnkpnhhUf+UIUK1Cr0F9
+         UB5Q==
+X-Gm-Message-State: AAQBX9eubvt8Lk/mxYHmN54/3X07cUzyObwi1N8V9j2vcglJSLTosgTS
+        X861j95dlKA1C2fEb5rv6VAb5A==
+X-Google-Smtp-Source: AKy350Yi+SP1ungFzVgkmrReJnEHkZSbkfMXXsoAkLVpKsdFjozoiLrSA2Mv5lSGeMBCu/kUCxwNeQ==
+X-Received: by 2002:a17:907:8b87:b0:94f:21f3:b5f8 with SMTP id tb7-20020a1709078b8700b0094f21f3b5f8mr14879847ejc.21.1682467296852;
+        Tue, 25 Apr 2023 17:01:36 -0700 (PDT)
+Received: from [172.23.2.4] ([31.221.30.162])
+        by smtp.gmail.com with ESMTPSA id op4-20020a170906bce400b0094f39379230sm7381550ejb.163.2023.04.25.17.01.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Apr 2023 17:01:36 -0700 (PDT)
+Message-ID: <41d74c67-3d66-a363-f888-ee7763c76495@linaro.org>
+Date:   Wed, 26 Apr 2023 03:01:35 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v3 04/21] drm/msm/dpu: Reindent REV_7xxx interrupt masks
+ with tabs
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Archit Taneja <architt@codeaurora.org>,
-        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jeykumar Sankaran <jsanka@codeaurora.org>,
-        Sean Paul <sean@poorly.run>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH v2 04/17] drm/msm/dpu: Fix PP_BLK_DIPHER ->
- DITHER typo
-Message-ID: <dztjb5n24rdodxwp5sqovzykn5iq47qohyx6dxtra3gjpfg7sw@zbsl2zhg7i4f>
-References: <5td7ikd76obc5bn5sndnt7fbzjuwmyxtu35ma3lykzmmbyfffk@b24jh6imaocy>
- <7541b780-482e-ea92-f788-18c8fbf45d77@quicinc.com>
- <o536qdkbrqob5wux7jvmo7expwn4bdlj7vy7egjfsyydxp5myb@xjhmolci5jzl>
- <cc537736-a555-dc3e-2e53-f1d4479eab21@quicinc.com>
- <6crk3acgxcdfdokpgcfjkojs2wdjoxalkmctqfgtc725wsgoep@kdj4zbavbe62>
- <a8f33707-b9ea-5595-e458-4f56c24c1167@quicinc.com>
- <klrcz6zw4syxllhtbuclo65lo73kdunl5syuuoiv6zzkf3fadl@rgjc7rlgaoxq>
- <5661d20d-81e9-61ba-b556-d90b5b8fdb4d@quicinc.com>
- <ztgyg2uplm7fbju7hfxvc6547zvttnslotwook2wmejiytlq7u@clq6zzwgvc5c>
- <a1501b6c-6859-549a-5739-67afdec8865b@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a1501b6c-6859-549a-5739-67afdec8865b@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20230411-dpu-intf-te-v3-0-693b17fe6500@somainline.org>
+ <20230411-dpu-intf-te-v3-4-693b17fe6500@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230411-dpu-intf-te-v3-4-693b17fe6500@somainline.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-25 15:37:44, Abhinav Kumar wrote:
+On 26/04/2023 02:05, Marijn Suijten wrote:
+> Use tabs for consistency with the other interrupt register definitions,
+> rather than spaces.
 > 
-> 
-> On 4/25/2023 3:15 PM, Marijn Suijten wrote:
-> > On 2023-04-25 14:55:56, Abhinav Kumar wrote:
-> > <snip>
-> >>> I'll see whether I can include these fixes before sending v3 (got all
-> >>> the other changes in and am all-ready to send it): is there any other
-> >>> SoC you're seeing this issue on?
-> >>>
-> >>
-> >> Thats alright, you can have it in a separate series not v3 of this one.
-> >>
-> >> I am picking up the fixes from this one now.
-> >>
-> >> I will update the other SOCs on IRC or even better i will take up this
-> >> cleanup.
-> > 
-> > I already have the fix patch in my tree that is compatible with the
-> > other patches, and will send those in a minute.  All DPU >= 7.0.0 seems
-> > to be affected, both SM8350 and SM8450 need to use the SC7280 sblk with
-> > DITHER V2 at 0xe0 (SM8250 is still V1).  I believe SC8280XP should also
-> > be updated but do not have access to DTS: where can I find that (what is
-> > its codename again?) or can you otherwise confirm this for me?
-> > 
-> 
-> Sure, I can wait another day too. Dont want to rush you too much for this.
+> Fixes: ed6154a136e4 ("drm/msm/disp/dpu1: add intf offsets for SC7280 target")
+> Fixes: 89688e2119b2 ("drm/msm/dpu: Add more of the INTF interrupt regions")
+> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
 
-Thank you.  There are even more Fixes: patches now as well as some small
-wording cleanups.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> 8280xp still has dither at 0xe0 and yes its version is V2.
 
-Thanks!  Added that info now.  Is the PP blk still length 0xd4?
+-- 
+With best wishes
+Dmitry
 
-> 8280xp's DTS is not located in the techpack. Its a different tree.
-
-A tree that's... not public?
-
-- Marijn
