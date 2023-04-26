@@ -2,209 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6F336EF221
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 12:34:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85CEC6EF3F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 26 Apr 2023 14:06:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239750AbjDZKet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Apr 2023 06:34:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34920 "EHLO
+        id S240767AbjDZMGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 26 Apr 2023 08:06:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240462AbjDZKeX (ORCPT
+        with ESMTP id S240267AbjDZMGN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Apr 2023 06:34:23 -0400
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com [IPv6:2607:f8b0:4864:20::e33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD41A4EFA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Apr 2023 03:33:53 -0700 (PDT)
-Received: by mail-vs1-xe33.google.com with SMTP id ada2fe7eead31-42e3647a43bso1706568137.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 26 Apr 2023 03:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1682505231; x=1685097231;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h1fGPJlHu6l7X7WsfJvCNS6QR0SA3h2Zw922iWfKNZI=;
-        b=Usx265iOT6v3GkItV6XMI1RJds2zK7WSYjz50PJ3sA8RJnt6tLsQLuYW2LrHDbMRaD
-         RXCR8AaaCRnukMDfzvKidWKkfPdBJ8AUw37ccahtk2drjUPT83q+hlgqYc4wI1toM3E1
-         8ZFsSVrcHHBqf1vkDBipQ4F/pxpm0vz/cLtrdF7ReExpjEgTSIRD3iaI8AAe2X9MYCiP
-         8vlVMESiGnxx1G/yJhgb0P5igOIlSAY9ekmaAocYIWZfZkCptiKT5UOGYOb69yPYL0jN
-         eBjaBBrIuvmSdyDfyKQ3Bf+p6LiO3ELzfgMt6E8lRqjHOXUKQubgjd5oDd/MSDiFOJa7
-         cX2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682505231; x=1685097231;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h1fGPJlHu6l7X7WsfJvCNS6QR0SA3h2Zw922iWfKNZI=;
-        b=Z07ZOyx1DoL5cZyKCJkJjKibQGzJ4hFvTSNb0wDn3dPVHgTGtfG8sRK+zbpeGKdgtU
-         jXyXwDYnceERieR1QlTWwqP+70Yf8jaPmHXNgY3GMu4hNKZ46orKn1ujnGYUZRI1Vw5F
-         gqnrg4Dcoc1ieCpi0cfy3MYNEt81B7YqDSwCJCs0opVfvJHwtAlTPSycbaIRydnuR9Tx
-         PFWjMijvwNxFG8CSLyp0NDhhEsq9VtiUXQXHhPsMnvbu1i2kFJwyOnglyEkWj17GHHy2
-         WHDVT6WSkFP3ReI+HBvwBtdEy3jzRWbdBpVNyyRqVURs1Hq+D9nyuYQ7UEblYQzGfB5l
-         n/zQ==
-X-Gm-Message-State: AAQBX9e9XUNdv56VfaQbuCS5/38n98H6n1u+DavaQMMzp5gO/DC47zWT
-        8jEtxWyZBvjApxW9/VmC3Nqvfmxvl2VmLDATyYmiu+Ns1VqZmsOgG24=
-X-Google-Smtp-Source: AKy350bLbcQ1HvoG8xLjW8UzSGSFRdqFANyqcXcuOcFFdYFn0JripAqDqG1+77edDeeYwIMoHU4hKkN7U0F6NAPVC4s=
-X-Received: by 2002:a05:6102:34e2:b0:42f:cfdc:4803 with SMTP id
- bi2-20020a05610234e200b0042fcfdc4803mr9106697vsb.33.1682505231629; Wed, 26
- Apr 2023 03:33:51 -0700 (PDT)
+        Wed, 26 Apr 2023 08:06:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93F241B6;
+        Wed, 26 Apr 2023 05:06:11 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33QAq4XQ028089;
+        Wed, 26 Apr 2023 12:05:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Z2jHxQbkgWifyzS7It9g20bYYdz3itj1DvYyz0UFD2w=;
+ b=cwKoDA6wwWge/jJD6apwLlcxzvcVXqmBSaqDdbtuk+R7YPLS2U5mMlSJrxodhsfYcjYr
+ r3f9vrbsbQe22vES5eI0wiP89EyqnsS6/NqzvLgYMfLEI40MKEX/saeMT0xCtBPEEFNn
+ iLC1cWRWSRWCCvaJorgigbijWd5mV+2T/f1WeuX3nMc93dfpUWdCz+KPeGray7SvJ/oU
+ aa8Cat/Qi9g6yzcvrNFx60T4zdHXAJsDMWdHdKIwcvzU3WNgn1Ks/LvZlbaVMRMsX7iq
+ c23RcOn+G+jiTFfR75Do7oUqs7eDQKaBMNxrCnSQLp3LiL+4VT+nwmHN80rs2GtJZvwH SA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q6rk0sfsa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Apr 2023 12:05:56 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33QC5t6n001527
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 26 Apr 2023 12:05:55 GMT
+Received: from [10.218.19.109] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 26 Apr
+ 2023 05:05:50 -0700
+Message-ID: <f051bfe8-e612-f54e-7729-7816591fa21c@quicinc.com>
+Date:   Wed, 26 Apr 2023 17:35:40 +0530
 MIME-Version: 1.0
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com> <20230425034010.3789376-6-quic_bjorande@quicinc.com>
-In-Reply-To: <20230425034010.3789376-6-quic_bjorande@quicinc.com>
-From:   "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
-Date:   Wed, 26 Apr 2023 11:33:40 +0100
-Message-ID: <CAJB8c04ah3YfK2VGxDhHMHK4KVJ7kZQv0b5JfPBu7jOk3mFQRA@mail.gmail.com>
-Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
+To:     Adrien Thierry <athierry@redhat.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>
+References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
+ <ZEcEGJiikEC2wIVE@fedora>
+Content-Language: en-US
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <ZEcEGJiikEC2wIVE@fedora>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: cp0MOlgnQ56BPstlgv_si6hnHIMqXW7n
+X-Proofpoint-ORIG-GUID: cp0MOlgnQ56BPstlgv_si6hnHIMqXW7n
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-26_04,2023-04-26_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ clxscore=1011 spamscore=0 mlxlogscore=604 lowpriorityscore=0 mlxscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2304260108
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 4:40=E2=80=AFAM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> The QMP combo PHY sits in an of_graph connected between the DisplayPort
-> controller and a USB Type-C connector (or possibly a redriver).
->
-> The TCPM needs to be able to convey the HPD signal to the DisplayPort
-> controller, but no directly link is provided by DeviceTree so the signal
-> needs to "pass through" the QMP combo phy.
->
-> Handle this by introducing a drm_bridge which upon initialization finds
-> the next bridge (i.e. the usb-c-connector) and chain this together. This
-> way HPD changes in the connector will propagate to the DisplayPort
-> driver.
->
-> The connector bridge is resolved lazily, as the TCPM is expected to be
-> able to resolve the typec mux and switch at probe time, so the QMP combo
-> phy will probe before the TCPM.
->
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 36 +++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qual=
-comm/phy-qcom-qmp-combo.c
-> index 5d6d6ef3944b..84bc08002537 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -22,6 +22,8 @@
->  #include <linux/usb/typec.h>
->  #include <linux/usb/typec_mux.h>
->
-> +#include <drm/drm_bridge.h>
-> +
->  #include <dt-bindings/phy/phy-qcom-qmp.h>
->
->  #include "phy-qcom-qmp.h"
-> @@ -1332,6 +1334,8 @@ struct qmp_combo {
->         struct clk_hw dp_link_hw;
->         struct clk_hw dp_pixel_hw;
->
-> +       struct drm_bridge bridge;
-> +
->         struct typec_switch_dev *sw;
->         enum typec_orientation orientation;
->  };
-> @@ -3196,6 +3200,34 @@ static int qmp_combo_register_clocks(struct qmp_co=
-mbo *qmp, struct device_node *
->         return devm_add_action_or_reset(qmp->dev, phy_clk_release_provide=
-r, dp_np);
->  }
->
-> +static int qmp_combo_bridge_attach(struct drm_bridge *bridge,
-> +                                  enum drm_bridge_attach_flags flags)
-> +{
-> +       struct qmp_combo *qmp =3D container_of(bridge, struct qmp_combo, =
-bridge);
-> +       struct drm_bridge *next_bridge;
-> +
-> +       if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
-> +               return -EINVAL;
-> +
-> +       next_bridge =3D devm_drm_of_get_bridge(qmp->dev, qmp->dev->of_nod=
-e, 0, 0);
-> +       if (IS_ERR(next_bridge))
-> +               return dev_err_probe(qmp->dev, PTR_ERR(next_bridge), "fai=
-led to acquire drm_bridge\n");
-> +
-> +       return drm_bridge_attach(bridge->encoder, next_bridge, bridge, DR=
-M_BRIDGE_ATTACH_NO_CONNECTOR);
-> +}
-> +
-> +static const struct drm_bridge_funcs qmp_combo_bridge_funcs =3D {
-> +       .attach =3D qmp_combo_bridge_attach,
-> +};
-> +
-> +static int qmp_combo_dp_register_bridge(struct qmp_combo *qmp)
-> +{
-> +       qmp->bridge.funcs =3D &qmp_combo_bridge_funcs;
-> +       qmp->bridge.of_node =3D qmp->dev->of_node;
-> +
-> +       return devm_drm_bridge_add(qmp->dev, &qmp->bridge);
-> +}
-> +
->  static int qmp_combo_parse_dt_lecacy_dp(struct qmp_combo *qmp, struct de=
-vice_node *np)
->  {
->         struct device *dev =3D qmp->dev;
-> @@ -3459,6 +3491,10 @@ static int qmp_combo_probe(struct platform_device =
-*pdev)
->         if (ret)
->                 return ret;
->
-> +       ret =3D qmp_combo_dp_register_bridge(qmp);
-> +       if (ret)
-> +               return ret;
-> +
->         /* Check for legacy binding with child nodes. */
->         usb_np =3D of_get_child_by_name(dev->of_node, "usb3-phy");
->         if (usb_np) {
-> --
-> 2.39.2
->
+Hi Adrien,
 
-You need to add some or all of these
-       select DRM_DISPLAY_DP_HELPER
-       select DRM_DISPLAY_HELPER
-       select DRM_DP_AUX_BUS
-       select DRM_KMS_HELPER
-       select DRM_MIPI_DSI
-       select DRM_PANEL
+On 4/25/2023 4:05 AM, Adrien Thierry wrote:
+> Hi Shazad,
+> 
+> On Fri, Apr 21, 2023 at 07:09:15PM +0530, Shazad Hussain wrote:
+>> Update relavent DT bindings for USB, add new config to the phy driver,
+>> add USB and PHY nodes to the .dtsi and enable them in the board .dts
+>> for the sa8775p-ride platform.
+>>
+>> Shazad Hussain (6):
+>>    dt-bindings: usb: qcom,dwc3: Add bindings for SA8775P
+>>    dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for SA8775P
+>>    dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add SA8775P USB PHY
+>>      binding
+>>    phy: qcom-qmp: Add SA8775P USB3 UNI phy
+>>    arm64: dts: qcom: sa8775p: add USB nodes
+>>    arm64: dts: qcom: sa8775p-ride: enable USB nodes
+>>
+>>   .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |   1 +
+>>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |   1 +
+>>   .../devicetree/bindings/usb/qcom,dwc3.yaml    |   5 +
+>>   arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |  92 +++++++
+>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 239 +++++++++++++++++-
+>>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |  45 ++++
+>>   6 files changed, 381 insertions(+), 2 deletions(-)
+>>
+>> -- 
+>> 2.17.1
+>>
+> 
+> Thanks for posting this. I tested the series on the sa8775p, and it seems
+> initialization for the controller at a400000 sometimes fails with a
+> timeout (-110) error:
+> 
+>      dwc3 a400000.usb: Adding to iommu group 2
+>      xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+>      xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
+>      xhci-hcd xhci-hcd.0.auto: can't setup: -110
+>      xhci-hcd xhci-hcd.0.auto: USB bus 1 deregistered
+>      xhci-hcd: probe of xhci-hcd.0.auto failed with error -110
+>      dwc3 a600000.usb: Adding to iommu group 3
+>      dwc3 a800000.usb: Adding to iommu group 4
+>      xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
+>      xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 1
+>      xhci-hcd xhci-hcd.1.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x0000000000010010
+>      xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a800000
+>      xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
+>      xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 2
+>      xhci-hcd xhci-hcd.1.auto: Host supports USB 3.1 Enhanced SuperSpeed
+>      hub 1-0:1.0: USB hub found
+>      hub 1-0:1.0: 1 port detected
+>      usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+>      hub 2-0:1.0: USB hub found
+>      hub 2-0:1.0: 1 port detected
+> 
+> In this case, only usb devices for a800000 are showing:
+> 
+>      dracut:/# ls -alh /sys/bus/usb/devices
+>      total 0
+>      drwxr-xr-x 2 root root 0 Feb 27 00:00 .
+>      drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1/1-0:1.0
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2/2-0:1.0
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2
+> 
+> This happens approximately 1 out of 2 reboots. Here's the kernel output
+> when initialization succeeds:
+> 
+>      dwc3 a600000.usb: Adding to iommu group 2
+>      dwc3 a800000.usb: Adding to iommu group 3
+>      xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+>      xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
+>      xhci-hcd xhci-hcd.0.auto: hcc params 0x0110ffc5 hci version 0x110 quirks 0x0000000000010010
+>      xhci-hcd xhci-hcd.0.auto: irq 161, io mem 0x0a800000
+>      xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+>      xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 2
+>      xhci-hcd xhci-hcd.0.auto: Host supports USB 3.1 Enhanced SuperSpeed
+>      hub 1-0:1.0: USB hub found
+>      hub 1-0:1.0: 1 port detected
+>      usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+>      hub 2-0:1.0: USB hub found
+>      hub 2-0:1.0: 1 port detected
+>      dwc3 a400000.usb: Adding to iommu group 4
+>      xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
+>      xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus number 3
+>      xhci-hcd xhci-hcd.1.auto: USB3 root hub has no ports
+>      xhci-hcd xhci-hcd.1.auto: hcc params 0x0220fe65 hci version 0x110 quirks 0x0000000000010010
+>      xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a400000
+>      hub 3-0:1.0: USB hub found
+>      hub 3-0:1.0: 1 port detected
+> 
+> And the list of usb devices:
+> 
+>      dracut:/# ls -alh /sys/bus/usb/devices
+>      total 0
+>      drwxr-xr-x 2 root root 0 Feb 27 00:00 .
+>      drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1/1-0:1.0
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2/2-0:1.0
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 3-0:1.0 -> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3/3-0:1.0
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2
+>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb3 -> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3
+> 
+> Have you also encountered this?
+> 
 
+I did try 10 reboots and did not encounter this issue on my setup tough.
 
-/opt/linaro/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-l=
-inux-gnu-ld:
-Unexpected GOT/PLT entries detected!
-/opt/linaro/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch64-l=
-inux-gnu-ld:
-Unexpected run-time procedure linkages detected!
-drivers/phy/qualcomm/phy-qcom-qmp-combo.o: In function
-`qmp_combo_bridge_attach':
-phy-qcom-qmp-combo.c:(.text+0xb50): undefined reference to
-`devm_drm_of_get_bridge'
-phy-qcom-qmp-combo.c:(.text+0xb6c): undefined reference to `drm_bridge_atta=
-ch'
-drivers/phy/qualcomm/phy-qcom-qmp-combo.o: In function `qmp_combo_probe':
-phy-qcom-qmp-combo.c:(.text+0x13fc): undefined reference to
-`devm_drm_bridge_add'
+> Best,
+> 
+> Adrien
+> 
 
 ---
-bod
+-Shazad
