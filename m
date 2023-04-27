@@ -2,231 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 090F36F0304
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 11:04:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 289B76F0368
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 11:30:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242817AbjD0JDx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 05:03:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34612 "EHLO
+        id S243369AbjD0JaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 05:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242961AbjD0JDw (ORCPT
+        with ESMTP id S243339AbjD0J34 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 05:03:52 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 472E555AF;
-        Thu, 27 Apr 2023 02:03:17 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33R5Wc4C015988;
-        Thu, 27 Apr 2023 09:01:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UaxooDr7ehm/68Nui88ZmexVMahZ4HXut41Qs3E+wk4=;
- b=acVjIDHJZqncF1LPjXrouSgkGGGMzOWlZPir7zw2POZlQfdgmuIwtS43jgyMzWR8eRBn
- 637+8DEgyiaLVokaVf9cM5qtBbn/Wp8YmG3C0FPDKczhlHQNInvF6uZXocwsSX6UInaH
- ZY7IRwxbsGpfUmNb14CB9SkvLBYXceweTTJH24eWI7ixDke2DTPhx+ukCKi2ktKuoVn1
- nWCx0Ye++IyjbWGsxyY0ndKJ2I/2gN9QVpH/l9v/jBuebWLrJFJpWXXK74pqKkEwLodB
- w2hdPOnkRKnp7vWX+F0ausXPr8ZbUE85PV7WLMox58lUZWXTokPRtwr9Y0liveHU0cEA 4Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7k090e12-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 09:01:54 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33R91rr5003734
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 09:01:53 GMT
-Received: from taozha-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 27 Apr 2023 02:01:47 -0700
-From:   Tao Zhang <quic_taozha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-Subject: [PATCH v4 11/11] coresight-tpdm: Add nodes for dsb msr support
-Date:   Thu, 27 Apr 2023 17:00:37 +0800
-Message-ID: <1682586037-25973-12-git-send-email-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
-References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+        Thu, 27 Apr 2023 05:29:56 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB6419A5;
+        Thu, 27 Apr 2023 02:29:54 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2a8ba23a2abso79717031fa.2;
+        Thu, 27 Apr 2023 02:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682587793; x=1685179793;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dtD7IiWzzBaXMSHlZSv0jhO4Rxpgph8daQMT7xR7Jbs=;
+        b=bqrrw75wgRIQ8NTrsdCsR+UK1qmNnlQR8s1tDWFKAsEQxYMWytbVGl+dcn90HX71h/
+         6p6dlDMyYn+fBziBdOtbfMILYoJdal7AFy3R0aD+umZJYIYrdcKO+1S/jJ/B05fv5yUy
+         8sx5OY3A1Kau8kgH7S4+k4w7mNbaLOrIkI+D3AvdT+75sXjc7VXofoBxZi0Q1Be1OHoo
+         0JaHrKQU0jDj5RLi/PFi4RDaMcBdjcLf1oOhOHTsAAFYL2zFwv9jboZsEyxr6Syc2BH8
+         mdLhUvWM2wu2n/OI9ByR6/2ArM7dR11rpm5I93IDjsZWQ70xQi3jj8hmhvjEEzi3wmMF
+         CK7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682587793; x=1685179793;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dtD7IiWzzBaXMSHlZSv0jhO4Rxpgph8daQMT7xR7Jbs=;
+        b=KTyEiUneYtopvN2RYxAqCB3s6GR1eDarOdcPPaiJh/kw0o2vYGg/HRkkXa6//zg8gK
+         pxDaggI5RDOdBDkukHaAWwWiOfMRO+vJXc0kOrnn9SiERCc2ynAEus8/L5UGMJa3J47t
+         SODAomjk/SHB7iBRMHZKGlgNDJQJ16p4WOoqjPpKFdUGQfSEGD8qARFAQXcgfAYdIAJ1
+         abZqdyFznsHmWXzI9uEfcGlr2oshvePStVFf0J2u5901wc23TBr4SuRBB8/r+AG4car8
+         rB1RydCFPaSGZ5iLveThTWNAkXVzTDaKcV9tbP/6IjbYj0BUT65UQfkaAc3UqZY++i77
+         Ep7Q==
+X-Gm-Message-State: AC+VfDyKb/EXX9MKN/fsWvm0SQaZx+irOvFDhe8arhX86Li4/t/TN+tt
+        vlGZ8UInrwnxjW9gjHWhKycNQfIz4aypek6V4w0=
+X-Google-Smtp-Source: ACHHUZ7R9LwU69d0Cw5S9lVWiOG8whrxQWdlWZXE8ZXA2S/YMzHSkgtDGuX/puDwa/j+qs59y9ju0mDl65qKV1Gp0yQ=
+X-Received: by 2002:ac2:51c3:0:b0:4ef:fddf:d5fa with SMTP id
+ u3-20020ac251c3000000b004effddfd5famr391280lfm.27.1682587792950; Thu, 27 Apr
+ 2023 02:29:52 -0700 (PDT)
 MIME-Version: 1.0
+References: <20230323013655.366-1-k1rh4.lee@gmail.com>
+In-Reply-To: <20230323013655.366-1-k1rh4.lee@gmail.com>
+From:   sangsup lee <k1rh4.lee@gmail.com>
+Date:   Thu, 27 Apr 2023 18:29:16 +0900
+Message-ID: <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
+Subject: Re: [PATCH v2] misc: fastrpc: Fix a Use after-free-bug by race condition
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4PPAXmT7hbhQwkwcJzfzTWlKqaPcSK-J
-X-Proofpoint-GUID: 4PPAXmT7hbhQwkwcJzfzTWlKqaPcSK-J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-27_06,2023-04-26_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 mlxscore=0
- malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304270078
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the nodes for DSB subunit MSR(mux select register) support.
-The TPDM MSR (mux select register) interface is an optional
-interface and associated bank of registers per TPDM subunit.
-The intent of mux select registers is to control muxing structures
-driving the TPDM’s’ various subunit interfaces.
+Is there any comment for this issue?
+(reference: https://www.spinics.net/lists/kernel/msg4731408.html)
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
----
- .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 15 ++++++
- drivers/hwtracing/coresight/coresight-tpdm.c       | 53 ++++++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpdm.h       |  3 ++
- 3 files changed, 71 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index 639b6fb8..f746f25 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -170,3 +170,18 @@ Description:
- 		Accepts only one of the 2 values -  0 or 1.
- 		0 : Set the DSB pattern type to value.
- 		1 : Set the DSB pattern type to toggle.
-+
-+What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_msr
-+Date:		March 2023
-+KernelVersion	6.3
-+Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-+Description:
-+		(Write) Set the MSR(mux select register) of DSB tpdm. Read
-+		the MSR(mux select register) of DSB tpdm.
-+
-+		Expected format is the following:
-+		<integer1> <integer2>
-+
-+		Where:
-+		<integer1> : Index number of MSR register
-+		<integer2> : The value need to be written
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index 627de36..5fe0bd5c 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -240,6 +240,14 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
- 			if (!drvdata->dsb)
- 				return -ENOMEM;
- 		}
-+		if (!of_property_read_u32(drvdata->dev->of_node,
-+			   "qcom,dsb_msr_num", &drvdata->dsb->msr_num)) {
-+			drvdata->dsb->msr = devm_kzalloc(drvdata->dev,
-+				   (drvdata->dsb->msr_num * sizeof(*drvdata->dsb->msr)),
-+				   GFP_KERNEL);
-+			if (!drvdata->dsb->msr)
-+				return -ENOMEM;
-+		}
- 	}
- 
- 	return 0;
-@@ -765,6 +773,50 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(dsb_trig_ts);
- 
-+static ssize_t dsb_msr_show(struct device *dev,
-+				 struct device_attribute *attr,
-+				 char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned int i;
-+	ssize_t size = 0;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
-+		size += sysfs_emit_at(buf, size,
-+				  "%u 0x%x\n", i, drvdata->dsb->msr[i]);
-+	}
-+	spin_unlock(&drvdata->spinlock);
-+
-+	return size;
-+}
-+
-+static ssize_t dsb_msr_store(struct device *dev,
-+				  struct device_attribute *attr,
-+				  const char *buf,
-+				  size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned int num, val;
-+	int nval;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return -EINVAL;
-+
-+	nval = sscanf(buf, "%u %x", &num, &val);
-+	if ((nval != 2) || (num >= (drvdata->dsb->msr_num - 1)))
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	drvdata->dsb->msr[num] = val;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_msr);
-+
- static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_mode.attr,
- 	&dev_attr_dsb_edge_ctrl.attr,
-@@ -777,6 +829,7 @@ static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_trig_patt_mask.attr,
- 	&dev_attr_dsb_trig_ts.attr,
- 	&dev_attr_dsb_trig_type.attr,
-+	&dev_attr_dsb_msr.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index 9ad32a6..05e9f8e 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.h
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -18,6 +18,7 @@
- #define TPDM_DSB_XPMR(n)	(0x7E8 + (n * 4))
- #define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
- #define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
-+#define TPDM_DSB_MSR(n)		(0x980 + (n * 4))
- 
- /* Enable bit for DSB subunit */
- #define TPDM_DSB_CR_ENA		BIT(0)
-@@ -113,6 +114,8 @@ struct dsb_dataset {
- 	u32				trig_patt_mask[TPDM_DSB_MAX_PATT];
- 	bool			trig_ts;
- 	bool			trig_type;
-+	u32				msr_num;
-+	u32				*msr;
- };
- 
- /**
--- 
-2.7.4
-
+2023=EB=85=84 3=EC=9B=94 23=EC=9D=BC (=EB=AA=A9) =EC=98=A4=EC=A0=84 10:37, =
+Sangsup Lee <k1rh4.lee@gmail.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
+> From: Sangsup lee <k1rh4.lee@gmail.com>
+>
+> This patch adds mutex_lock for fixing an Use-after-free bug.
+> fastrpc_req_munmap_impl can be called concurrently in multi-threded envir=
+onments.
+> The buf which is allocated by list_for_each_safe can be used after anothe=
+r thread frees it.
+>
+> Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
+> ---
+>  V1 -> V2: moving the locking to ioctl.
+>
+>  drivers/misc/fastrpc.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 93ebd174d848..aa1cf0e9f4ed 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file *file,=
+ unsigned int cmd,
+>                 err =3D fastrpc_req_mmap(fl, argp);
+>                 break;
+>         case FASTRPC_IOCTL_MUNMAP:
+> +               mutex_lock(&fl->mutex);
+>                 err =3D fastrpc_req_munmap(fl, argp);
+> +               mutex_unlock(&fl->mutex);
+>                 break;
+>         case FASTRPC_IOCTL_MEM_MAP:
+>                 err =3D fastrpc_req_mem_map(fl, argp);
+> --
+> 2.25.1
+>
