@@ -2,99 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5621F6F0382
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 11:40:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA3536F03B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 11:52:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243001AbjD0Jj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 05:39:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56870 "EHLO
+        id S243252AbjD0Jwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 05:52:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243094AbjD0Jj5 (ORCPT
+        with ESMTP id S243051AbjD0Jwf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 05:39:57 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 671B74208
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 02:39:55 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-94f9cd65b1aso235485266b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 02:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google; t=1682588394; x=1685180394;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ijOvNVXHQPQ7K3a8mfotlj3EqkLbm2iNVAzawaQHZIw=;
-        b=kFa3Dgvsdqo+BXHl6yahcNl1383pNFvNtKjCwWMfHTj+Bit3JIwCGJEQDI6N/QU00j
-         7X00IV28cyVTxMhXOHSSaNOtJlIO/f240AjyaV+PfAb4s7UETaAAtwNr4ZxvB9KF2UtB
-         pZGfcxrFXB1KoRo0EnWbU8+HE3g7nM63d1OjQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682588394; x=1685180394;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ijOvNVXHQPQ7K3a8mfotlj3EqkLbm2iNVAzawaQHZIw=;
-        b=cpyLYrUAQUTdfBBRmAvv004ornF6GH/ruYtfWXLKiMcjq9Bhe+DxTEYBQWUC9Uf0vU
-         OM7GKM/QOT9r8R3V7slBbv19htgtWWAYdgwHd/lw6rZ8J6Muc626dohx5PRimS2zDtNN
-         68SEfnwoXrXVBgT0HWh9Xc78fbphAwWuQZ/qxpN6+bBdZL98v8UHKyZX/xOg5GHY5Geh
-         c/NTm6iIuOBUdpYZTbyO0GHKDr0lJINnXz1X7vKGKvzKD1t7u9n5eLsljit82EUosQXm
-         uqcCwzqanyhbcEcts/ScztDBNbN/pXJwE4P3EHHKvNu1KR4vOUa3zU9KCE4HmE6/ooFI
-         EhhQ==
-X-Gm-Message-State: AC+VfDy8hz2LSb09By9LeRADL9xQfF/NtVWwHUyKJwVG+yPRES8ng4xD
-        tNufRxRl8ZmeMehqCTYI5xq9/tKqOjzi0hBGNVo=
-X-Google-Smtp-Source: ACHHUZ7VSLJU2Bi7Vlppn+yZkQubTXq/4j3BnKk8IoW139u/a/w2x464xtiUeWCmvDcGrbJw+QXvuw==
-X-Received: by 2002:a17:906:7491:b0:95f:db5f:73b7 with SMTP id e17-20020a170906749100b0095fdb5f73b7mr888891ejl.0.1682588393848;
-        Thu, 27 Apr 2023 02:39:53 -0700 (PDT)
-Received: from phenom.ffwll.local (212-51-149-33.fiber7.init7.net. [212.51.149.33])
-        by smtp.gmail.com with ESMTPSA id jt11-20020a170906ca0b00b00958434d4ecesm6820771ejb.13.2023.04.27.02.39.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 02:39:53 -0700 (PDT)
-Date:   Thu, 27 Apr 2023 11:39:51 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Emil Velikov <emil.l.velikov@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>
-Subject: Re: [RFC 2/3] drm/msm: Rework get_comm_cmdline() helper
-Message-ID: <ZEpC5xEZ4cueb881@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Emil Velikov <emil.l.velikov@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org,
-        open list <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <freedreno@lists.freedesktop.org>,
-        Sean Paul <sean@poorly.run>
-References: <20230417201215.448099-1-robdclark@gmail.com>
- <20230417201215.448099-3-robdclark@gmail.com>
- <58977051-197b-f1f0-c795-9037e70d7a91@linux.intel.com>
- <ZD5WLMRNibbRkGQO@phenom.ffwll.local>
- <CAF6AEGugcuV08G_pxjUGvhTbp8DFFG4ws3=oiP5PpbRf=SJdhQ@mail.gmail.com>
- <CACvgo52gByHzwtm4gxqUxZ5yJGTQ5NucBmMHSO7nLPsba3rTfw@mail.gmail.com>
- <CAF6AEGtijkCt2uUx98auFcK0GQHY=5GV7CxbOejGz22no6J0GQ@mail.gmail.com>
+        Thu, 27 Apr 2023 05:52:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2A092;
+        Thu, 27 Apr 2023 02:52:34 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E698B63C25;
+        Thu, 27 Apr 2023 09:52:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022C6C433EF;
+        Thu, 27 Apr 2023 09:52:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1682589153;
+        bh=lDpLhb6oF6to7W+j3Bea839ZLvE12k39h5dsPWICeB8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ZuX6BWDPYBtsbX8/2NU06aJrEdJZKJzgCLUP5duPvTh3xA6MHn5wjq4sY2c7y2eDM
+         sMifHQnS9CBzV0TU4SncLFWx90ofXHC9uuSDf5J40GUkKzjRIavWLrTBNPl9VC8JnK
+         EChbATmCfGQzWZHtoaYfxEwInABGzSJM+LHd8/Cs=
+Date:   Thu, 27 Apr 2023 11:52:30 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     sangsup lee <k1rh4.lee@gmail.com>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] misc: fastrpc: Fix a Use after-free-bug by race
+ condition
+Message-ID: <2023042702-shuffling-tweet-d9f6@gregkh>
+References: <20230323013655.366-1-k1rh4.lee@gmail.com>
+ <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGtijkCt2uUx98auFcK0GQHY=5GV7CxbOejGz22no6J0GQ@mail.gmail.com>
-X-Operating-System: Linux phenom 6.1.0-7-amd64 
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+In-Reply-To: <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -102,144 +56,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Apr 21, 2023 at 07:47:26AM -0700, Rob Clark wrote:
-> On Fri, Apr 21, 2023 at 2:33 AM Emil Velikov <emil.l.velikov@gmail.com> wrote:
-> >
-> > Greeting all,
-> >
-> > Sorry for the delay - Easter Holidays, food coma and all that :-)
-> >
-> > On Tue, 18 Apr 2023 at 15:31, Rob Clark <robdclark@gmail.com> wrote:
-> > >
-> > > On Tue, Apr 18, 2023 at 1:34 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> > > >
-> > > > On Tue, Apr 18, 2023 at 09:27:49AM +0100, Tvrtko Ursulin wrote:
-> > > > >
-> > > > > On 17/04/2023 21:12, Rob Clark wrote:
-> > > > > > From: Rob Clark <robdclark@chromium.org>
-> > > > > >
-> > > > > > Make it work in terms of ctx so that it can be re-used for fdinfo.
-> > > > > >
-> > > > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > > > > ---
-> > > > > >   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++--
-> > > > > >   drivers/gpu/drm/msm/msm_drv.c           |  2 ++
-> > > > > >   drivers/gpu/drm/msm/msm_gpu.c           | 13 ++++++-------
-> > > > > >   drivers/gpu/drm/msm/msm_gpu.h           | 12 ++++++++++--
-> > > > > >   drivers/gpu/drm/msm/msm_submitqueue.c   |  1 +
-> > > > > >   5 files changed, 21 insertions(+), 11 deletions(-)
-> > > > > >
-> > > > > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > > > > > index bb38e728864d..43c4e1fea83f 100644
-> > > > > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > > > > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > > > > > @@ -412,7 +412,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
-> > > > > >             /* Ensure string is null terminated: */
-> > > > > >             str[len] = '\0';
-> > > > > > -           mutex_lock(&gpu->lock);
-> > > > > > +           mutex_lock(&ctx->lock);
-> > > > > >             if (param == MSM_PARAM_COMM) {
-> > > > > >                     paramp = &ctx->comm;
-> > > > > > @@ -423,7 +423,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
-> > > > > >             kfree(*paramp);
-> > > > > >             *paramp = str;
-> > > > > > -           mutex_unlock(&gpu->lock);
-> > > > > > +           mutex_unlock(&ctx->lock);
-> > > > > >             return 0;
-> > > > > >     }
-> > > > > > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > index 3d73b98d6a9c..ca0e89e46e13 100644
-> > > > > > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > > > > > @@ -581,6 +581,8 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
-> > > > > >     rwlock_init(&ctx->queuelock);
-> > > > > >     kref_init(&ctx->ref);
-> > > > > > +   ctx->pid = get_pid(task_pid(current));
-> > > > >
-> > > > > Would it simplify things for msm if DRM core had an up to date file->pid as
-> > > > > proposed in
-> > > > > https://patchwork.freedesktop.org/patch/526752/?series=109902&rev=4 ? It
-> > > > > gets updated if ioctl issuer is different than fd opener and this being
-> > > > > context_init here reminded me of it. Maybe you wouldn't have to track the
-> > > > > pid in msm?
-> > >
-> > > The problem is that we also need this for gpu devcore dumps, which
-> > > could happen after the drm_file is closed.  The ctx can outlive the
-> > > file.
-> > >
-> > I think we all kept forgetting about that. MSM had support for ages,
-> > while AMDGPU is the second driver to land support - just a release
-> > ago.
-> >
-> > > But the ctx->pid has the same problem as the existing file->pid when
-> > > it comes to Xorg.. hopefully over time that problem just goes away.
-> >
-> > Out of curiosity: what do you mean with "when it comes to Xorg" - the
-> > "was_master" handling or something else?
-> 
-> The problem is that Xorg is the one to open the drm fd, and then
-> passes the fd to the client.. so the pid of drm_file is the Xorg pid,
-> not the client.  Making it not terribly informative.
-> 
-> Tvrtko's patch he linked above would address that for drm_file, but
-> not for other driver internal usages.  Maybe it could be wired up as a
-> helper so that drivers don't have to re-invent that dance.  Idk, I
-> have to think about it.
-> 
-> Btw, with my WIP drm sched fence signalling patch lockdep is unhappy
-> when gpu devcore dumps are triggered.  I'm still pondering how to
-> decouple the locking so that anything coming from fs (ie.
-> show_fdinfo()) is decoupled from anything that happens in the fence
-> signaling path.  But will repost this series once I get that sorted
-> out.
+On Thu, Apr 27, 2023 at 06:29:16PM +0900, sangsup lee wrote:
+> Is there any comment for this issue?
 
-So the cleanest imo is that you push most of the capturing into a worker
-that's entirely decoupled. If you have terminal context (i.e. on first
-hang they stop all further cmd submission, which is anyway what
-vk/arb_robustness want), then you don't have to capture at tdr time,
-because there's no subsequent batch that will wreck the state.
+What issue?
 
-But it only works if your gpu ctx don't have recoverable semantics.
+> (reference: https://www.spinics.net/lists/kernel/msg4731408.html)
 
-If you can't do that it's a _lot_ of GFP_ATOMIC and trylock and bailing
-out if any fails :-/
--Daniel
+Please use lore.kernel.org links, we have no control over any other
+random email archive .
+
+And the above link just points to this proposed patch.
 
 > 
-> BR,
-> -R
 > 
+> 2023년 3월 23일 (목) 오전 10:37, Sangsup Lee <k1rh4.lee@gmail.com>님이 작성:
 > >
-> > > guess I could do a similar dance to your patch to update the pid
-> > > whenever (for ex) a submitqueue is created.
-> > >
-> > > > Can we go one step further and let the drm fdinfo stuff print these new
-> > > > additions? Consistency across drivers and all that.
-> > >
-> > > Hmm, I guess I could _also_ store the overridden comm/cmdline in
-> > > drm_file.  I still need to track it in ctx (msm_file_private) because
-> > > I could need it after the file is closed.
-> > >
-> > > Maybe it could be useful to have a gl extension to let the app set a
-> > > name on the context so that this is useful beyond native-ctx (ie.
-> > > maybe it would be nice to see that "chrome: lwn.net" is using less gpu
-> > > memory than "chrome: phoronix.com", etc)
-> > >
+> > From: Sangsup lee <k1rh4.lee@gmail.com>
 > >
-> > /me awaits for the series to hit the respective websites ;-)
-> >
-> > But seriously - the series from Tvrtko (thanks for the link, will
-> > check in a moment) makes sense. Although given the livespan issue
-> > mentioned above, I don't think it's applicable here.
-> >
-> > So if it were me, I would consider the two orthogonal for the
-> > short/mid term. Fwiw this and patch 1/3 are:
-> > Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
-> >
-> > HTH
-> > -Emil
+> > This patch adds mutex_lock for fixing an Use-after-free bug.
+> > fastrpc_req_munmap_impl can be called concurrently in multi-threded environments.
+> > The buf which is allocated by list_for_each_safe can be used after another thread frees it.
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+How was this tested?
+
+> >
+> > Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
+> > ---
+> >  V1 -> V2: moving the locking to ioctl.
+> >
+> >  drivers/misc/fastrpc.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > index 93ebd174d848..aa1cf0e9f4ed 100644
+> > --- a/drivers/misc/fastrpc.c
+> > +++ b/drivers/misc/fastrpc.c
+> > @@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
+> >                 err = fastrpc_req_mmap(fl, argp);
+> >                 break;
+> >         case FASTRPC_IOCTL_MUNMAP:
+> > +               mutex_lock(&fl->mutex);
+> >                 err = fastrpc_req_munmap(fl, argp);
+> > +               mutex_unlock(&fl->mutex);
+
+Are you sure you can call this function with the lock?  If so, why isn't
+the mmap ioctl also locked?
+
+thanks,
+
+greg k-h
