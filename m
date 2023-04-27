@@ -2,236 +2,312 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B30AE6EFFAB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 05:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE76B6F0011
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 06:12:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243048AbjD0DHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 26 Apr 2023 23:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44788 "EHLO
+        id S242671AbjD0EL6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 00:11:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242989AbjD0DGa (ORCPT
+        with ESMTP id S239435AbjD0EL4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 26 Apr 2023 23:06:30 -0400
+        Thu, 27 Apr 2023 00:11:56 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 388FB46B8;
-        Wed, 26 Apr 2023 20:05:57 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33R2xOk3019904;
-        Thu, 27 Apr 2023 03:05:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=GNAlciDU+GX06s6Be7pZZX94vMNRxyGA7OeWiEL2XXg=;
- b=Us/P1zd74/aMxdwbW25Ka4Tcn6qDWMjGHVO4jV4lrFskecJK/LtXBdcuwNejq/zISXuH
- Y/I0g/I0WPtjqPO8izhhhPCs1zQeMJCTn63dWMsMhoqwxiA7K8YI9EZV+T9Jubfr92wR
- 4qhw6HRoZ/8tLCXK8GYlkYCY42omnlK8RiKOt/IlU2HPtggjhYGePBB3R3xQpWP4n5IG
- 482UpRfIKSSKKbeAtRpkpWaJuGdLBCD6Rwi3/jsVF0j+7Fn90UA0gMNd8SsiU5SpEQQl
- qrT6bgZ4K1LJamqg77Pz5dSOKzoHcCzqPt3yYFp7GuP44e6aJ0haFI9TagKEYEGM3pOA dw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q75jyhdfs-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466D32D71;
+        Wed, 26 Apr 2023 21:11:55 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33R2cJsg016944;
+        Thu, 27 Apr 2023 04:11:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=8kUH5h4/cL3cxcgQKpNam/JMS/SVACTS4Qlo/YCgyd8=;
+ b=afWyogPIZhoyvSzZACCw7WE2xiemLnk0zi+9GvR4R66ZKJ4nx9bTZMO8MhzmyuDqXxMN
+ YqEhBA6EMJV4dE47QW4nz63tI66CevH5iWqaOffKS+y/c/ZcvO5s9BrGd2nyyNW+igtT
+ 7mBQ2Ikdo+ri2nqyAf8EnBpOBzSib8cM1bi0OukBqb+GhWp9UAWpheJ2LkawO3JPCAQS
+ 2kRMwsKsNocAHUOtfXh1fWClNpSDq6hXYZFUlZqhWuHw/m/6lkQbeaJFvfJw71F5gYNZ
+ F/gxtCRb6FOO9sOKlWgi/lS9Gw+BrZbQ1kcnarRsw8xDbLbZrSRUDyuHl4Tzf1Sj7sWF bA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7dh2gfam-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 03:05:42 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33R35fkx021035
+        Thu, 27 Apr 2023 04:11:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33R4BhMt019340
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 03:05:41 GMT
-Received: from [10.216.27.110] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 26 Apr
- 2023 20:05:36 -0700
-Message-ID: <9606b8db-ab16-763f-f9df-d059dcc4e4d0@quicinc.com>
-Date:   Thu, 27 Apr 2023 08:35:33 +0530
+        Thu, 27 Apr 2023 04:11:43 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 26 Apr 2023 21:11:39 -0700
+Date:   Thu, 27 Apr 2023 09:41:35 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>
+Subject: Re: [PATCH V4 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
+Message-ID: <20230427041135.GA247926@hu-pkondeti-hyd.qualcomm.com>
+References: <cover.1681742910.git.quic_schowdhu@quicinc.com>
+ <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Adrien Thierry <athierry@redhat.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay Abraham I" <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
- <ZEcEGJiikEC2wIVE@fedora> <ac49075d-439e-da46-9ef6-0b0828f8e072@linaro.org>
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <ac49075d-439e-da46-9ef6-0b0828f8e072@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UyzYc6VkwfNEB-4TZKtjJ7LlrgmdFIkr
-X-Proofpoint-ORIG-GUID: UyzYc6VkwfNEB-4TZKtjJ7LlrgmdFIkr
+X-Proofpoint-ORIG-GUID: __PpZ6vkTpqKWt1m_hCbNgGuPnwOHwpn
+X-Proofpoint-GUID: __PpZ6vkTpqKWt1m_hCbNgGuPnwOHwpn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-27_01,2023-04-26_03,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=623 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
- mlxscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304270027
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+ definitions=2023-04-27_02,2023-04-26_03,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
+ spamscore=0 adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ mlxlogscore=999 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304270036
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Apr 17, 2023 at 08:38:15PM +0530, Souradeep Chowdhury wrote:
+> All of Qualcomm's proprietary Android boot-loaders capture boot time
+> stats, like the time when the bootloader started execution and at what
+> point the bootloader handed over control to the kernel etc. in the IMEM
+> region. This information is captured in a specific format by this driver
+> by mapping a structure to the IMEM memory region and then accessing the
+> members of the structure to show the information within debugfs file.
+> This information is useful in verifying if the existing boot KPIs have
+> regressed or not. The information is shown in milliseconds, a sample
+> log from sm8450(waipio) device is as follows:-
+> 
+> /sys/kernel/debug/146aa6b0.boot_stats # cat abl_time
+> 17898 ms
+> /sys/kernel/debug/146aa6b0.boot_stats # cat pre_abl_time
+> 2879 ms
+> 
+> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+> stage and the timestamp generated by the sleep counter is logged by
+> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+> starts execution which is logged here as "pre_abl_time" and the second
+> when it is about to load the kernel logged as "abl_time". Documentation
+> details are also added in Documentation/ABI/testing/debugfs-driver-bootstat
+> 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  Documentation/ABI/testing/debugfs-driver-bootstat |  17 ++++
+>  drivers/soc/qcom/Kconfig                          |   9 ++
+>  drivers/soc/qcom/Makefile                         |   1 +
+>  drivers/soc/qcom/boot_stats.c                     | 101 ++++++++++++++++++++++
+>  4 files changed, 128 insertions(+)
+>  create mode 100644 Documentation/ABI/testing/debugfs-driver-bootstat
+>  create mode 100644 drivers/soc/qcom/boot_stats.c
+> 
+> diff --git a/Documentation/ABI/testing/debugfs-driver-bootstat b/Documentation/ABI/testing/debugfs-driver-bootstat
+> new file mode 100644
+> index 0000000..2543029
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/debugfs-driver-bootstat
+> @@ -0,0 +1,17 @@
+> +What:		/sys/kernel/debug/...stats/pre_abl_time
+> +Date:           April 2023
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This file is used to read the KPI value pre abl time.
+> +		It shows the time in milliseconds from the starting
+> +		point of PBL to the point when the control shifted
+> +		to ABL(Qualcomm proprietary bootloader).
+> +
+> +What:           /sys/kernel/debug/...stats/abl_time
+> +Date:           April 2023
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +		This file is used to read the KPI value abl time.
+> +		It show the duration in milliseconds from the
+> +		time control switched to ABL to the point when
+> +		the linux kernel started getting loaded.
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index a8f2830..0d2cbd3 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -16,6 +16,15 @@ config QCOM_AOSS_QMP
+>  	  subsystems as well as controlling the debug clocks exposed by the Always On
+>  	  Subsystem (AOSS) using Qualcomm Messaging Protocol (QMP).
+>  
+> +config QCOM_BOOTSTAT
+> +	tristate "Qualcomm Technologies, Boot Stat driver"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	help
+> +	  This option enables driver support for boot stats. Boot stat driver logs
+> +	  the kernel bootloader information by accessing the imem region. These
+> +	  information are exposed in the form of debugfs files. This is used to
+> +	  determine if there is any regression in boot timings.
 
+should this driver depend on DEBUG_FS?
 
-On 4/27/2023 5:12 AM, Konrad Dybcio wrote:
-> 
-> On 4/24/23 23:35, Adrien Thierry wrote:
->> Hi Shazad,
->>
->> On Fri, Apr 21, 2023 at 07:09:15PM +0530, Shazad Hussain wrote:
->>> Update relavent DT bindings for USB, add new config to the phy driver,
->>> add USB and PHY nodes to the .dtsi and enable them in the board .dts
->>> for the sa8775p-ride platform.
->>>
->>> Shazad Hussain (6):
->>>    dt-bindings: usb: qcom,dwc3: Add bindings for SA8775P
->>>    dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings for SA8775P
->>>    dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add SA8775P USB PHY
->>>      binding
->>>    phy: qcom-qmp: Add SA8775P USB3 UNI phy
->>>    arm64: dts: qcom: sa8775p: add USB nodes
->>>    arm64: dts: qcom: sa8775p-ride: enable USB nodes
->>>
->>>   .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |   1 +
->>>   .../bindings/phy/qcom,usb-snps-femto-v2.yaml  |   1 +
->>>   .../devicetree/bindings/usb/qcom,dwc3.yaml    |   5 +
->>>   arch/arm64/boot/dts/qcom/sa8775p-ride.dts     |  92 +++++++
->>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 239 +++++++++++++++++-
->>>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c       |  45 ++++
->>>   6 files changed, 381 insertions(+), 2 deletions(-)
->>>
->>> -- 
->>> 2.17.1
->>>
->> Thanks for posting this. I tested the series on the sa8775p, and it seems
->> initialization for the controller at a400000 sometimes fails with a
->> timeout (-110) error:
->>
->>      dwc3 a400000.usb: Adding to iommu group 2
->>      xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
->>      xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus 
->> number 1
->>      xhci-hcd xhci-hcd.0.auto: can't setup: -110
->>      xhci-hcd xhci-hcd.0.auto: USB bus 1 deregistered
->>      xhci-hcd: probe of xhci-hcd.0.auto failed with error -110
->>      dwc3 a600000.usb: Adding to iommu group 3
->>      dwc3 a800000.usb: Adding to iommu group 4
->>      xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
->>      xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus 
->> number 1
->>      xhci-hcd xhci-hcd.1.auto: hcc params 0x0110ffc5 hci version 0x110 
->> quirks 0x0000000000010010
->>      xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a800000
->>      xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
->>      xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus 
->> number 2
->>      xhci-hcd xhci-hcd.1.auto: Host supports USB 3.1 Enhanced SuperSpeed
->>      hub 1-0:1.0: USB hub found
->>      hub 1-0:1.0: 1 port detected
->>      usb usb2: We don't know the algorithms for LPM for this host, 
->> disabling LPM.
->>      hub 2-0:1.0: USB hub found
->>      hub 2-0:1.0: 1 port detected
->>
->> In this case, only usb devices for a800000 are showing:
->>
->>      dracut:/# ls -alh /sys/bus/usb/devices
->>      total 0
->>      drwxr-xr-x 2 root root 0 Feb 27 00:00 .
->>      drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1/1-0:1.0
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2/2-0:1.0
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb1
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.1.auto/usb2
->>
->> This happens approximately 1 out of 2 reboots. Here's the kernel output
->> when initialization succeeds:
->>
->>      dwc3 a600000.usb: Adding to iommu group 2
->>      dwc3 a800000.usb: Adding to iommu group 3
->>      xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
->>      xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus 
->> number 1
->>      xhci-hcd xhci-hcd.0.auto: hcc params 0x0110ffc5 hci version 0x110 
->> quirks 0x0000000000010010
->>      xhci-hcd xhci-hcd.0.auto: irq 161, io mem 0x0a800000
->>      xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
->>      xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus 
->> number 2
->>      xhci-hcd xhci-hcd.0.auto: Host supports USB 3.1 Enhanced SuperSpeed
->>      hub 1-0:1.0: USB hub found
->>      hub 1-0:1.0: 1 port detected
->>      usb usb2: We don't know the algorithms for LPM for this host, 
->> disabling LPM.
->>      hub 2-0:1.0: USB hub found
->>      hub 2-0:1.0: 1 port detected
->>      dwc3 a400000.usb: Adding to iommu group 4
->>      xhci-hcd xhci-hcd.1.auto: xHCI Host Controller
->>      xhci-hcd xhci-hcd.1.auto: new USB bus registered, assigned bus 
->> number 3
->>      xhci-hcd xhci-hcd.1.auto: USB3 root hub has no ports
->>      xhci-hcd xhci-hcd.1.auto: hcc params 0x0220fe65 hci version 0x110 
->> quirks 0x0000000000010010
->>      xhci-hcd xhci-hcd.1.auto: irq 162, io mem 0x0a400000
->>      hub 3-0:1.0: USB hub found
->>      hub 3-0:1.0: 1 port detected
->>
->> And the list of usb devices:
->>
->>      dracut:/# ls -alh /sys/bus/usb/devices
->>      total 0
->>      drwxr-xr-x 2 root root 0 Feb 27 00:00 .
->>      drwxr-xr-x 4 root root 0 Feb 27 00:00 ..
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 1-0:1.0 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1/1-0:1.0
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 2-0:1.0 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2/2-0:1.0
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 3-0:1.0 -> 
->> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3/3-0:1.0
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb1 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb1
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb2 -> 
->> ../../../devices/platform/soc@0/a8f8800.usb/a800000.usb/xhci-hcd.0.auto/usb2
->>      lrwxrwxrwx 1 root root 0 Feb 27 00:00 usb3 -> 
->> ../../../devices/platform/soc@0/a4f8800.usb/a400000.usb/xhci-hcd.1.auto/usb3
->>
->> Have you also encountered this?
-> 
-> I've had some issues with QMPPHY not (sometimes?) probing in time on 
-> SM6115 only when built as a module.. perhaps it'd be worth checking out 
-> of it works fine with =y?
-> 
+> +
+>  config QCOM_COMMAND_DB
+>  	tristate "Qualcomm Command DB"
+>  	depends on ARCH_QCOM || COMPILE_TEST
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index 6e88da8..bdaa41a 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -1,6 +1,7 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  CFLAGS_rpmh-rsc.o := -I$(src)
+>  obj-$(CONFIG_QCOM_AOSS_QMP) +=	qcom_aoss.o
+> +obj-$(CONFIG_QCOM_BOOTSTAT) += boot_stats.o
+>  obj-$(CONFIG_QCOM_GENI_SE) +=	qcom-geni-se.o
+>  obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
+>  obj-$(CONFIG_QCOM_CPR)		+= cpr.o
+> diff --git a/drivers/soc/qcom/boot_stats.c b/drivers/soc/qcom/boot_stats.c
+> new file mode 100644
+> index 0000000..7fa8efb
+> --- /dev/null
+> +++ b/drivers/soc/qcom/boot_stats.c
+> @@ -0,0 +1,101 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2013-2019, 2021 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/debugfs.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/init.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_address.h>
+> +#include <linux/platform_device.h>
+> +
+> +#define TO_MS(timestamp) ((timestamp * 1000) / 32768)
+> +
+> +/**
+> + *  struct boot_stats - timestamp information related to boot stats
+> + *  @abl_start: Time for the starting point of the abl
+> + *  @abl_end: Time when the kernel starts loading from abl
+> + */
+> +struct boot_stats {
+> +	u32 abl_start;
+> +	u32 abl_end;
+> +} __packed;
+> +
+> +struct bs_data {
+> +	struct boot_stats __iomem *b_stats;
+> +	struct dentry *dbg_dir;
+> +};
+> +
+> +static int abl_time_show(struct seq_file *seq, void *v)
+> +{
+> +	struct boot_stats *boot_stats = seq->private;
+> +	u32 abl_time = TO_MS(boot_stats->abl_end) - TO_MS(boot_stats->abl_start);
+> +
+> +	seq_printf(seq, "%u ms\n", abl_time);
+> +	return 0;
+> +}
+> +DEFINE_SHOW_ATTRIBUTE(abl_time);
+> +
+> +static int pre_abl_time_show(struct seq_file *seq, void *v)
+> +{
+> +	struct boot_stats *boot_stats = seq->private;
+> +
+> +	seq_printf(seq, "%u ms\n", TO_MS(boot_stats->abl_start));
+> +	return 0;
+> +}
+> +DEFINE_SHOW_ATTRIBUTE(pre_abl_time);
+> +
+> +static int boot_stats_probe(struct platform_device *pdev)
+> +{
+> +	struct device *bootstat_dev = &pdev->dev;
+> +	struct bs_data *drvdata;
+> +
+> +	drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
 
-In my setup I tried keeping QMPPHY as =y only and did not see the issue
+Error handling missing.
 
-with 10 reboots.
+> +	platform_set_drvdata(pdev, drvdata);
+> +
+> +	drvdata->dbg_dir = debugfs_create_dir(dev_name(bootstat_dev), NULL);
+> +	if (IS_ERR(drvdata->dbg_dir))
+> +		return dev_err_probe(bootstat_dev, -ENOENT, "failed to create debugfs directory");
+
+%s/-ENOENT/PTR_ERR(drvdata->dbg_dir)
+
+> +
+> +	drvdata->b_stats = devm_of_iomap(bootstat_dev, bootstat_dev->of_node, 0, NULL);
+> +	if (!drvdata->b_stats)
+> +		return dev_err_probe(bootstat_dev, -ENOMEM, "failed to map imem region\n");
+
+The error handling for devm_of_iomap() is different from usual
+ioremap(). you should check for IS_ERR() and return the error code
+approriately. Also when it fails, undo the stuff done above i.e delete
+the debugfs directory.
+
+> +
+> +	debugfs_create_file("pre_abl_time", 0200, drvdata->dbg_dir,
+> +			    drvdata->b_stats, &pre_abl_time_fops);
+> +	debugfs_create_file("abl_time", 0200, drvdata->dbg_dir, drvdata->b_stats, &abl_time_fops);
+
+Why 0200 permissions for read only entries?
+
+Also consider using debugfs_create_str() which makes your driver
+simpler.
+
+> +
+> +	return 0;
+> +}
+> +
+> +void boot_stats_remove(struct platform_device *pdev)
+
+static?
+
+> +{
+> +	struct bs_data *drvdata = platform_get_drvdata(pdev);
+> +
+> +	debugfs_remove_recursive(drvdata->dbg_dir);
+> +	iounmap(drvdata->b_stats);
+
+since you used devm_of_iomap(), explicit iounmap is not needed.
+
+> +}
+> +
+> +static const struct of_device_id boot_stats_dt_match[] = {
+> +	{ .compatible = "qcom,sm8450-bootstats" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
+> +
+> +static struct platform_driver boot_stat_driver = {
+> +	.probe  = boot_stats_probe,
+> +	.remove_new = boot_stats_remove,
+> +	.driver = {
+> +		.name = "qcom-boot-stats",
+> +		.of_match_table = boot_stats_dt_match,
+> +	},
+> +};
+> +module_platform_driver(boot_stat_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
+> +MODULE_LICENSE("GPL");
+> -- 
+> 2.7.4
 > 
-> Konrad
-> 
->>
->> Best,
->>
->> Adrien
->>
----
-Shazad
+Thanks,
+Pavan
