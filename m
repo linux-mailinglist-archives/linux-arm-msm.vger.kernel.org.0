@@ -2,83 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2AD96F0686
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 15:18:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB19F6F0699
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 15:27:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243440AbjD0NS4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 09:18:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39442 "EHLO
+        id S232885AbjD0N1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 09:27:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243741AbjD0NSu (ORCPT
+        with ESMTP id S229847AbjD0N1w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 09:18:50 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F2046B1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 06:18:47 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-94a34a14a54so1615577366b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 06:18:47 -0700 (PDT)
+        Thu, 27 Apr 2023 09:27:52 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF27D2D47
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 06:27:50 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-504e232fe47so15540804a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 06:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682601526; x=1685193526;
+        d=linaro.org; s=google; t=1682602069; x=1685194069;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:reply-to:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DBQvR31EzSGB+GNpVatatuXX6PWeKiJTAais4vH/bFk=;
-        b=jt77vZhWMYW/P8VcFBxzg7ViTXMeJXQ+aRH2y09RmGV9dDdScY0TekL2bnIL/28SHr
-         DBhdVd91UTWlkg2UhRE4F+ckE1AeXBlM61+qMvGHv30Inu+2ttF7ItKOaQWwOicuNUAV
-         aZcFVoaQP/r1x0a3kiHsRwNjXjX9w4llrmBX4WqT/ZwfdXpzw/AFKW6eplYyBW46xtJV
-         DMZrYoX1Yevy7yFs+p6JOH4zk0wctp0NLQmydu5whb+yW0SAmN5bgnG78p3Hz+kxRVjn
-         2k/n+UxUpGdEyubpnO74l2gO2N930Xff54jDatHvS2N4uNEbn8h3E88ILxThNmalE1xZ
-         wMOw==
+        bh=V7xnDUz2dODxnj/h8N5FrCM6kM8AWsyfS5hNS2c2bj4=;
+        b=ysLRaQGPh0VUnYPwIlSR9xv4ak+KaD3s+6e+hZEHOEL8bwkuS9sy/uWmVRvibYwUK/
+         4QbTGFCqZcsZeMzJwd/QzgIaWgFUA98fsLCgYuMceT1m9jNotOcAmsFjHzQMdujkGJMN
+         spG99Guu9gdMbV1L0isYgvacMbgQ42HHMehqNYZPmWd8VBQWKZnPkBh6mzFDIPKgTca8
+         1d5n77YicDvN7GbB2NIPD8sgHjfsgUeMIuwauDdxlhcz/GhjBKh1oIpSLR2rKQlHCgTI
+         yCBUE8B9vaqU8s7JGPtSl13ENG52PsZ/BEktFbWxK7dYy14edj2UECcHrMy01j7OWQPU
+         iYeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682601526; x=1685193526;
+        d=1e100.net; s=20221208; t=1682602069; x=1685194069;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:reply-to:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DBQvR31EzSGB+GNpVatatuXX6PWeKiJTAais4vH/bFk=;
-        b=Xucz1ER5UU2FHYb6nMJUWBA/DV+P1V76B/Amhj60CoatvNIpbintZo/Ph2bvsTcZ5n
-         iM3EvLHd6bdDBZg6jvJDPfkSfyFVlvaFz0afaDleK9ARBks9YKU+c40uJyQnl1AmPWoE
-         SBW7WrLoaxkTJ0chLnEuv/5YnwUpTFNXxcS+QRqht7YmXxAFtddlfhOIgMm+X3m2bntj
-         FBcX/octE+Q5k8HEHd2ls2nQiOZWOYCWpl0MYxUtmMzLvzPr7U5UWRosKqBFz/ocVkvT
-         jF52DsiXzyYJs8jtkCgqeoFGFDusQaJ4Fzwl5AcFb3/BB+xxaQRX0vdpQeOSp1JKYqlG
-         GYgA==
-X-Gm-Message-State: AC+VfDySqm0v48S6oh+hslDkhw6zibt1koQ6ExpFDcZbiHMw/rZ97gvr
-        338+H7BBxia2NGsIc8MOZfdmMnvpffU7nnDJHrXvCw==
-X-Google-Smtp-Source: ACHHUZ5NPbQ4UO0fccy52C1sJlVWuBlM0HmI4LnstFrC6DQmxt/MgNO2gN7soJq77PsASAbgfJUqjA==
-X-Received: by 2002:a17:907:7fa7:b0:956:fbd7:bc5e with SMTP id qk39-20020a1709077fa700b00956fbd7bc5emr2297912ejc.64.1682601526024;
-        Thu, 27 Apr 2023 06:18:46 -0700 (PDT)
+        bh=V7xnDUz2dODxnj/h8N5FrCM6kM8AWsyfS5hNS2c2bj4=;
+        b=R4Wq1uGQEcTWgEUvgHR90Y3qATKv2MifbAjRlnoX1RZ7Vn7DOwU6DAY/EHU6SlJnYv
+         3IaIsucUzkmpvBfejX70m9BD4cSm4Jx0tinIp135uRaAWcf1wzZZo5wgrtdTXRkoe4Gk
+         l0wakG9hhxh/ZJ8aUoECYmUOWTGDR8PRo/+C0ckCJUI6GvHdRmGKU0UvhZninqpTGUF0
+         2myzvNgwRDSIWkw2YTy1CGLZik3ztH0ZFlff4EfxyZ/yNeiAdn6tiXFowdqiJJXb6f6X
+         LQQ8JVIxhdogiiL35SctIIc7bcw8vil0EO+bzr6MfCMFdCllvG+em8Az6w/xiJR2CBdL
+         uFiA==
+X-Gm-Message-State: AC+VfDw/0X/tGHtBhHpkmM8ZFNjAAKPKjr6GZt83P+83Vyma5VdGcP7u
+        3QZa0s8doAK6Dx1wttLGpIJ+tA==
+X-Google-Smtp-Source: ACHHUZ5Z/0Br9KzFA0FV3Z+N8MCgk4/6hbEyRiw2D64gbtF3sC+Dy1oXNCxQfJbmFt2pef7SAiEbmQ==
+X-Received: by 2002:a05:6402:2:b0:504:9cec:8afb with SMTP id d2-20020a056402000200b005049cec8afbmr1773400edu.2.1682602069344;
+        Thu, 27 Apr 2023 06:27:49 -0700 (PDT)
 Received: from [172.23.2.82] ([31.221.30.162])
-        by smtp.gmail.com with ESMTPSA id q22-20020aa7d456000000b005083b217cb7sm7891870edr.46.2023.04.27.06.18.45
+        by smtp.gmail.com with ESMTPSA id n20-20020a05640206d400b00504b203c4f1sm8070176edy.40.2023.04.27.06.27.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Apr 2023 06:18:45 -0700 (PDT)
-Message-ID: <ece3e721-6e67-b2a9-4544-14e41a9b8589@linaro.org>
-Date:   Thu, 27 Apr 2023 15:18:44 +0200
+        Thu, 27 Apr 2023 06:27:48 -0700 (PDT)
+Message-ID: <fc414f61-34a8-acb0-29d4-971a873562e5@linaro.org>
+Date:   Thu, 27 Apr 2023 15:27:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 4/7] phy: qcom-qmp-combo: Introduce orientation switching
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed
+ graph
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
         Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-5-quic_bjorande@quicinc.com>
+ <20230425034010.3789376-7-quic_bjorande@quicinc.com>
+ <aa94b488-cb6e-bd74-0711-b7c4c7589f7a@linaro.org>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20230425034010.3789376-5-quic_bjorande@quicinc.com>
+In-Reply-To: <aa94b488-cb6e-bd74-0711-b7c4c7589f7a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,236 +88,159 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 27/04/2023 01:33, Konrad Dybcio wrote:
+> 
+> On 4/25/23 04:40, Bjorn Andersson wrote:
+>> With support for the QMP combo phy to react to USB Type-C switch events,
+>> introduce it as the next hop for the SuperSpeed lanes of the two USB
+>> Type-C connectors, and connect the output of the DisplayPort controller
+>> to the QMP combo phy.
+>>
+>> This allows the TCPM to perform orientation switching of both USB and
+>> DisplayPort signals.
+>>
+>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 28 ++++++++++++++++---
+>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 34 +++++++++++++++++++++++
+>>   2 files changed, 58 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+>> index 547277924ea3..33c973661fa5 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+>> @@ -64,7 +64,7 @@ port@1 {
+>>                       reg = <1>;
+>>                       pmic_glink_con0_ss: endpoint {
+>> -                        remote-endpoint = <&mdss0_dp0_out>;
+>> +                        remote-endpoint = <&usb_0_qmpphy_out>;
+>>                       };
+>>                   };
+>> @@ -99,7 +99,7 @@ port@1 {
+>>                       reg = <1>;
+>>                       pmic_glink_con1_ss: endpoint {
+>> -                        remote-endpoint = <&mdss0_dp1_out>;
+>> +                        remote-endpoint = <&usb_1_qmpphy_out>;
+>>                       };
+>>                   };
+>> @@ -412,7 +412,7 @@ &mdss0_dp0 {
+>>   &mdss0_dp0_out {
+>>       data-lanes = <0 1>;
+>> -    remote-endpoint = <&pmic_glink_con0_ss>;
+>> +    remote-endpoint = <&usb_0_qmpphy_dp_in>;
+>>   };
+>>   &mdss0_dp1 {
+>> @@ -421,7 +421,7 @@ &mdss0_dp1 {
+>>   &mdss0_dp1_out {
+>>       data-lanes = <0 1>;
+>> -    remote-endpoint = <&pmic_glink_con1_ss>;
+>> +    remote-endpoint = <&usb_1_qmpphy_dp_in>;
+>>   };
+>>   &mdss0_dp3 {
+>> @@ -670,9 +670,19 @@ &usb_0_qmpphy {
+>>       vdda-phy-supply = <&vreg_l9d>;
+>>       vdda-pll-supply = <&vreg_l4d>;
+>> +    orientation-switch;
+> 
+> I believe this belongs in the SoC DTSI, as it's supported by
+> the PHY block itself
+> 
+> 
+> The rest seems to lgtm..
+> 
+> 
+> On a note, why did we end up placing pmic_glink in device
+> DTs? It's already assumed that we're using the full Qualcomm
+> stack as we use PAS for remoteprocs so I *think* we can always
+> assume pmic_glink would be there!
 
-On 25/04/2023 05:40, Bjorn Andersson wrote:
-> The data lanes of the QMP PHY is swapped in order to handle changing
-> orientation of the USB Type-C cable. Register a typec_switch device to
-> allow a TCPM to configure the orientation.
-> 
-> The newly introduced orientation variable is adjusted based on the
-> request, and the initialized components are brought down and up again.
-> To keep track of what parts needs to be cycled new variables to keep
-> track of the individual init_count is introduced.
-> 
-> Both the USB and the DisplayPort altmode signals are properly switched.
-> For DisplayPort the controller will after the TCPM having established
-> orientation power on the PHY, so this is not done implicitly, but for
-> USB the PHY typically is kept initialized across the switch, and must
-> therefor then be reinitialized.
+As we did on other board, I think because having pmic_glink depends
+on the board firmware capabilities ? Boards without USB-C won't need/have
+pmic_link right ?
 
-   therefore
-> 
-> This is based on initial work by Wesley Cheng.
-> 
-> Link: https://lore.kernel.org/r/20201009082843.28503-3-wcheng@codeaurora.org/
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 92 ++++++++++++++++++++---
->   1 file changed, 83 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 6748f31da7a3..5d6d6ef3944b 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -20,6 +20,7 @@
->   #include <linux/reset.h>
->   #include <linux/slab.h>
->   #include <linux/usb/typec.h>
-> +#include <linux/usb/typec_mux.h>
->   
->   #include <dt-bindings/phy/phy-qcom-qmp.h>
->   
-> @@ -1320,15 +1321,18 @@ struct qmp_combo {
->   
->   	struct phy *usb_phy;
->   	enum phy_mode mode;
-> +	unsigned int usb_init_count;
->   
->   	struct phy *dp_phy;
->   	unsigned int dp_aux_cfg;
->   	struct phy_configure_opts_dp dp_opts;
-> +	unsigned int dp_init_count;
->   
->   	struct clk_fixed_rate pipe_clk_fixed;
->   	struct clk_hw dp_link_hw;
->   	struct clk_hw dp_pixel_hw;
->   
-> +	struct typec_switch_dev *sw;
->   	enum typec_orientation orientation;
->   };
->   
-> @@ -2458,14 +2462,14 @@ static int qmp_combo_dp_calibrate(struct phy *phy)
->   	return 0;
->   }
->   
-> -static int qmp_combo_com_init(struct qmp_combo *qmp)
-> +static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
->   {
->   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->   	void __iomem *com = qmp->com;
->   	int ret;
->   	u32 val;
->   
-> -	if (qmp->init_count++)
-> +	if (!force && qmp->init_count++)
->   		return 0;
->   
->   	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
-> @@ -2526,11 +2530,11 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
->   	return ret;
->   }
->   
-> -static int qmp_combo_com_exit(struct qmp_combo *qmp)
-> +static int qmp_combo_com_exit(struct qmp_combo *qmp, bool force)
->   {
->   	const struct qmp_phy_cfg *cfg = qmp->cfg;
->   
-> -	if (--qmp->init_count)
-> +	if (!force && --qmp->init_count)
->   		return 0;
->   
->   	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-> @@ -2550,12 +2554,14 @@ static int qmp_combo_dp_init(struct phy *phy)
->   
->   	mutex_lock(&qmp->phy_mutex);
->   
-> -	ret = qmp_combo_com_init(qmp);
-> +	ret = qmp_combo_com_init(qmp, false);
->   	if (ret)
->   		goto out_unlock;
->   
->   	cfg->dp_aux_init(qmp);
->   
-> +	qmp->dp_init_count++;
-> +
->   out_unlock:
->   	mutex_unlock(&qmp->phy_mutex);
->   	return ret;
-> @@ -2567,8 +2573,9 @@ static int qmp_combo_dp_exit(struct phy *phy)
->   
->   	mutex_lock(&qmp->phy_mutex);
->   
-> -	qmp_combo_com_exit(qmp);
-> +	qmp_combo_com_exit(qmp, false);
->   
-> +	qmp->dp_init_count--;
->   	mutex_unlock(&qmp->phy_mutex);
->   
->   	return 0;
-> @@ -2688,16 +2695,18 @@ static int qmp_combo_usb_init(struct phy *phy)
->   	int ret;
->   
->   	mutex_lock(&qmp->phy_mutex);
-> -	ret = qmp_combo_com_init(qmp);
-> +	ret = qmp_combo_com_init(qmp, false);
->   	if (ret)
->   		goto out_unlock;
->   
->   	ret = qmp_combo_usb_power_on(phy);
->   	if (ret) {
-> -		qmp_combo_com_exit(qmp);
-> +		qmp_combo_com_exit(qmp, false);
->   		goto out_unlock;
->   	}
->   
-> +	qmp->usb_init_count++;
-> +
->   out_unlock:
->   	mutex_unlock(&qmp->phy_mutex);
->   	return ret;
-> @@ -2713,10 +2722,12 @@ static int qmp_combo_usb_exit(struct phy *phy)
->   	if (ret)
->   		goto out_unlock;
->   
-> -	ret = qmp_combo_com_exit(qmp);
-> +	ret = qmp_combo_com_exit(qmp, false);
->   	if (ret)
->   		goto out_unlock;
->   
-> +	qmp->usb_init_count--;
-> +
->   out_unlock:
->   	mutex_unlock(&qmp->phy_mutex);
->   	return ret;
-> @@ -3351,6 +3362,65 @@ static struct phy *qmp_combo_phy_xlate(struct device *dev, struct of_phandle_arg
->   	return ERR_PTR(-EINVAL);
->   }
->   
-> +#if IS_ENABLED(CONFIG_TYPEC)
-> +static int qmp_combo_typec_switch_set(struct typec_switch_dev *sw,
-> +				      enum typec_orientation orientation)
-> +{
-> +	struct qmp_combo *qmp = typec_switch_get_drvdata(sw);
-> +	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> +
-> +	if (orientation == qmp->orientation || orientation == TYPEC_ORIENTATION_NONE)
-> +		return 0;
-> +
-> +	mutex_lock(&qmp->phy_mutex);
-> +	qmp->orientation = orientation;
-> +
-> +	if (qmp->init_count) {
-> +		if (qmp->usb_init_count)
-> +			qmp_combo_usb_power_off(qmp->usb_phy);
-> +		qmp_combo_com_exit(qmp, true);
-> +
-> +		qmp_combo_com_init(qmp, true);
-> +		if (qmp->usb_init_count)
-> +			qmp_combo_usb_power_on(qmp->usb_phy);
-> +		if (qmp->dp_init_count)
-> +			cfg->dp_aux_init(qmp);
-> +	}
-> +	mutex_unlock(&qmp->phy_mutex);
-> +
-> +	return 0;
-> +}
-> +
-> +static void qmp_combo_typec_unregister(void *data)
-> +{
-> +	struct qmp_combo *qmp = data;
-> +
-> +	typec_switch_unregister(qmp->sw);
-> +}
-> +
-> +static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
-> +{
-> +	struct typec_switch_desc sw_desc = {};
-> +	struct device *dev = qmp->dev;
-> +
-> +	sw_desc.drvdata = qmp;
-> +	sw_desc.fwnode = dev->fwnode;
-> +	sw_desc.set = qmp_combo_typec_switch_set;
-> +	qmp->sw = typec_switch_register(dev, &sw_desc);
-> +	if (IS_ERR(qmp->sw)) {
-> +		dev_err(dev, "Unable to register typec switch: %pe\n", qmp->sw);
-> +		return PTR_ERR(qmp->sw);
-> +	}
-> +
-> +	return devm_add_action_or_reset(dev, qmp_combo_typec_unregister, qmp);
-> +}
-> +#else
-> +static int qmp_combo_typec_switch_register(struct qmp_combo *qmp)
-> +{
-> +	return 0;
-> +}
-> +#endif
-> +
->   static int qmp_combo_probe(struct platform_device *pdev)
->   {
->   	struct qmp_combo *qmp;
-> @@ -3385,6 +3455,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
->   	if (ret)
->   		return ret;
->   
-> +	ret = qmp_combo_typec_switch_register(qmp);
-> +	if (ret)
-> +		return ret;
-> +
->   	/* Check for legacy binding with child nodes. */
->   	usb_np = of_get_child_by_name(dev->of_node, "usb3-phy");
->   	if (usb_np) {
+Neil
 
-Thanks for taking care of this, with the commit typo fix:
+> 
+> Konrad
+> 
+>> +
+>>       status = "okay";
+>>   };
+>> +&usb_0_qmpphy_dp_in {
+>> +    remote-endpoint = <&mdss0_dp0_out>;
+>> +};
+>> +
+>> +&usb_0_qmpphy_out {
+>> +    remote-endpoint = <&pmic_glink_con0_ss>;
+>> +};
+>> +
+>>   &usb_0_role_switch {
+>>       remote-endpoint = <&pmic_glink_con0_hs>;
+>>   };
+>> @@ -697,9 +707,19 @@ &usb_1_qmpphy {
+>>       vdda-phy-supply = <&vreg_l4b>;
+>>       vdda-pll-supply = <&vreg_l3b>;
+>> +    orientation-switch;
+>> +
+>>       status = "okay";
+>>   };
+>> +&usb_1_qmpphy_dp_in {
+>> +    remote-endpoint = <&mdss0_dp1_out>;
+>> +};
+>> +
+>> +&usb_1_qmpphy_out {
+>> +    remote-endpoint = <&pmic_glink_con1_ss>;
+>> +};
+>> +
+>>   &usb_1_role_switch {
+>>       remote-endpoint = <&pmic_glink_con1_hs>;
+>>   };
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index 0e691bb0120c..1eb3a295e8fa 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -3006,6 +3006,23 @@ usb_0_qmpphy: phy@88eb000 {
+>>               #phy-cells = <1>;
+>>               status = "disabled";
+>> +
+>> +            ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +
+>> +                    usb_0_qmpphy_out: endpoint {};
+>> +                };
+>> +
+>> +                port@1 {
+>> +                    reg = <1>;
+>> +
+>> +                    usb_0_qmpphy_dp_in: endpoint {};
+>> +                };
+>> +            };
+>>           };
+>>           usb_1_hsphy: phy@8902000 {
+>> @@ -3042,6 +3059,23 @@ usb_1_qmpphy: phy@8903000 {
+>>               #phy-cells = <1>;
+>>               status = "disabled";
+>> +
+>> +            ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +
+>> +                    usb_1_qmpphy_out: endpoint {};
+>> +                };
+>> +
+>> +                port@1 {
+>> +                    reg = <1>;
+>> +
+>> +                    usb_1_qmpphy_dp_in: endpoint {};
+>> +                };
+>> +            };
+>>           };
+>>           mdss1_dp0_phy: phy@8909a00 {
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
