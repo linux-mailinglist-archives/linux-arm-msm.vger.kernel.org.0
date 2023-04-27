@@ -2,105 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E4856F0911
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 18:06:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 439606F0958
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 18:12:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243734AbjD0QGJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 12:06:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47464 "EHLO
+        id S244173AbjD0QMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 12:12:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243215AbjD0QGI (ORCPT
+        with ESMTP id S244131AbjD0QMc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 12:06:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96A612D72;
-        Thu, 27 Apr 2023 09:06:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2FCF463E1E;
-        Thu, 27 Apr 2023 16:06:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D48C433D2;
-        Thu, 27 Apr 2023 16:06:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1682611566;
-        bh=yAGznPCZ1f2WazjLpiWbzBNsj4vdYifi0lN+d8TNCtU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=E/3sEjGTsOwO5uk3d4zMUrh86nUJwkupb7f5EPLaMQVyPJSTGa1y6pdHXr9N/ncdw
-         3mMaEmPYOHF0UypoXp6I18DLEk3U91bVOy7mdxCgPNL7gUCKKU5huxVbGPdDUSN0Kt
-         pM+T9OWxhF/BhdnUuecjo+P7I53EMin0HlzUcMYSQzNsR/e85cuNE1tckjYeldSeNO
-         DbD15RCUQE3w2rlu2KkzdYxJwpvGVPUuudrOxQ5oArtC6tLrHPX1aIDcvJEo0mhSaG
-         OrEM0sRh6sIB80F5mji/rWA7k3se54UwIuJAy8NEoDTbwh5hsrBKhxxwuhusLZy2Mr
-         vLvTmz14BukJA==
-Date:   Thu, 27 Apr 2023 17:05:59 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Thu, 27 Apr 2023 12:12:32 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F4701FD4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 09:12:30 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9536df4b907so1644023266b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 09:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1682611948; x=1685203948;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HMqYIMvxQzMeNZyvXScd0d9ZjZQUVmBHnaHMVur7PZI=;
+        b=47g0X7BSbMbvv9L/Q9QUepC51/0/TQau9ztKHNIjZPRAu18BfSZwcYUZVenNlbaewp
+         NiPe9w4TDMscaoknOdvTZvqMxgBuUlKkNmelAbA/YIopx4I29Mfd1897kyLRP88TVqmc
+         8TFGrit4A0yflaIwe9JWcFsSul9heo5Du7IOoDFp+xVjVcCrm2Re6YVcjNu3brkYiqUb
+         ZitjrlWKTlpSCbK0VTC6LjRaG8a16ADuC4RtEungg1SLxdCt8myxiqRtn82yGIavrB4Y
+         mPjJo85tc81DLj8iZiLNJbtICwphoW9xH3sS7FsuxGd2WSaiRd8iICINbz1zs0LioeNr
+         Vhkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682611948; x=1685203948;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HMqYIMvxQzMeNZyvXScd0d9ZjZQUVmBHnaHMVur7PZI=;
+        b=AF6PQa5qFW+9GFM8dShXBkxJyhfAnlyoplDeUVbF+ilON3ys2KUXRygQ1WqLtcib4r
+         6kkC3gz6jPPhtKfdXLLcqfAusz9wPbJqNNeLzK8qR94XmdxWR07z/AQ1e7PBrfRMv63T
+         63DSyjaDBGw50z2Dc2ORNcZYnlGHX+cbpWBUc1vBICAZ+5qeYeMPqmcpIF51B2TGOzBt
+         N+o7av5DCji0167uRZQX7O3F2b23Vw9VfROM/tj++BXRb9+zFQzkeDrv77MSaOu/PdkP
+         wxy3MljXF4KqPvKSncX+4/OBBasVyhJlX/rl73BVS0bZbKy3bhRxc+fxYXdRw7qpY6BG
+         ZmTg==
+X-Gm-Message-State: AC+VfDxSPrJuAypXO8u2yZP9UzK5UGR7rN+QZ2Cs4f0stW9kKFM79/Io
+        7FunjmdKNyIOB95yWlDlFF0XnQ==
+X-Google-Smtp-Source: ACHHUZ7WBBja5Lx65Estj/dqaAZRltQnKHCN4a4WPD9RhhPeRBS3LNkizwx+3dPAR0i1nU1Vxk1z0Q==
+X-Received: by 2002:a17:907:3e1a:b0:957:db05:a35d with SMTP id hp26-20020a1709073e1a00b00957db05a35dmr2670020ejc.48.1682611948580;
+        Thu, 27 Apr 2023 09:12:28 -0700 (PDT)
+Received: from brgl-uxlite.. ([195.167.132.10])
+        by smtp.gmail.com with ESMTPSA id l18-20020a1709060e1200b0094f3338129asm10144096eji.141.2023.04.27.09.12.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Apr 2023 09:12:28 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-leds@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v2 8/8] Documentation: leds: Add "rgb:status" path
-Message-ID: <20230427160559.GC50521@google.com>
-References: <20230414-pmi632-v2-0-98bafa909c36@z3ntu.xyz>
- <20230414-pmi632-v2-8-98bafa909c36@z3ntu.xyz>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sa8775p: add the watchdog node
+Date:   Thu, 27 Apr 2023 18:12:18 +0200
+Message-Id: <20230427161218.201828-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230414-pmi632-v2-8-98bafa909c36@z3ntu.xyz>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 18 Apr 2023, Luca Weiss wrote:
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-> The path /sys/class/leds/rgb:status is already widely used with the
-> qcom-lpg driver and others. Document it.
+Now that the hypervisor issue is fixed, we can add the watchdog node
+for sa8775p platforms.
 
-Where is this used?
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-$ grep status drivers/leds/rgb/leds-qcom-lpg.c
-<no results>
-
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  Documentation/leds/well-known-leds.txt | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/leds/well-known-leds.txt b/Documentation/leds/well-known-leds.txt
-> index 2160382c86be..439d4dac4472 100644
-> --- a/Documentation/leds/well-known-leds.txt
-> +++ b/Documentation/leds/well-known-leds.txt
-> @@ -58,6 +58,7 @@ LEDs on notebook body, indicating that sound input / output is muted.
->  
->  * System notification
->  
-> +Good: "rgb:status"
->  Legacy: "status-led:{red,green,blue}" (Motorola Droid 4)
->  Legacy: "lp5523:{r,g,b}" (Nokia N900)
->  
-> 
-> -- 
-> 2.40.0
-> 
-
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index badabf79c6ef..0737ba38fefe 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -1008,6 +1008,13 @@ intc: interrupt-controller@17a00000 {
+ 			redistributor-stride = <0x0 0x20000>;
+ 		};
+ 
++		watchdog@17c10000 {
++			compatible = "qcom,apss-wdt-sa8775p", "qcom,kpss-wdt";
++			reg = <0x0 0x17c10000 0x0 0x1000>;
++			clocks = <&sleep_clk>;
++			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
+ 		memtimer: timer@17c20000 {
+ 			compatible = "arm,armv7-timer-mem";
+ 			reg = <0x0 0x17c20000 0x0 0x1000>;
 -- 
-Lee Jones [李琼斯]
+2.39.2
+
