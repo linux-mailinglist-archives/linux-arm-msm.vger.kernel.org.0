@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE0686F0B95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 19:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A07806F0B9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 19:55:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244167AbjD0Ry1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 13:54:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34340 "EHLO
+        id S244124AbjD0Ry6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 13:54:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244353AbjD0RyX (ORCPT
+        with ESMTP id S244559AbjD0Ry1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 13:54:23 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A79033A8D;
-        Thu, 27 Apr 2023 10:54:07 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-517bdc9e81dso5194682a12.1;
-        Thu, 27 Apr 2023 10:54:07 -0700 (PDT)
+        Thu, 27 Apr 2023 13:54:27 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD5635FC0;
+        Thu, 27 Apr 2023 10:54:14 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1a66888cb89so68369745ad.3;
+        Thu, 27 Apr 2023 10:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682618047; x=1685210047;
+        d=gmail.com; s=20221208; t=1682618054; x=1685210054;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tk36LHgT7Zd3DnVnkUrHTABb/+wFJaIJC2KssqoMtiA=;
-        b=eLrWdp6G4Kchqv4Qdaauo7bSYHMHL3SgbOabiyKhti17zyGH3h7Fn5HV8Rjz/7qIUT
-         u7lM4YrdTNZ9IYLVHRBiOuF2MFueaj6VxzcGfAm1y2HXpLywUb0Yr5/HwDnmmnahA8yY
-         gkPqgz/HtXC50zqptgdfI/DyIlOj/WpKZssQISqmRNJ3dL8peof2/aLv2sMbKyyrTpiu
-         JO3IMj1mhKLtQshAka98lVJX7Od8yfJiwNScAxYZ26Fbs4k8k6mOWaBHNe+P5BqTxET6
-         gE40PvRGCjMy/SpZLKboyq710VewPdBfOVhTqamRYrUMYAC6Ni6wHczYFR24EHIFxaXE
-         pmxw==
+        bh=3ok26iuO88WTdiTh3yqSvF0njUaJd/G7EVrYrB/tlNM=;
+        b=NGkm71aOJ/s2qjTeR/gaLYWgyuhDv8G+me2tBr6PxbRaq548LAyp+ofSB/dnvdlG4R
+         I0wgCM/25DaIqgEo3jPIP843OCkPqhy0nXXYCOS+CS1MurrPlIwbHuYOk/q+Z88c+IO0
+         P6wg134IWILVVK6Br15IsyK1zVeHw7oqYdaMNk5qyypE++AIRlcPyHqgxZEQi2AqM6ks
+         ylyb/vau7BR6OElUXcPm0NUbGJsAOUhzbqc3fv7+Ek4GhRxkujAVLcjGcNgB1cgZVi9g
+         CWzq92oioySI+k78Up20FrrLdXQHF1kGfIuEF7/Uo1Vbs43oc8ko4IPQqQhI/FALmL32
+         leFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682618047; x=1685210047;
+        d=1e100.net; s=20221208; t=1682618054; x=1685210054;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tk36LHgT7Zd3DnVnkUrHTABb/+wFJaIJC2KssqoMtiA=;
-        b=FP7BzbowclOj8d8hV2C2/Mb9OV7+9pGLX2EXkD/KGUywHgcD7tnM/J5G+W2yqRucJs
-         J3AIpAeIPXlBb7tNv15Ur7Gp5OaPkRmL/WUC5467wdhAM0LLaJB53ZMy/DMDwFuCwFXW
-         RqgcA4pjgwBSq2/85oD+DyS8z4VOovEv99VVt/G3GJawkysLef6FdXo7OWJm3DD30MwO
-         06awaCzyUqwNTL91K7RuyqhOMT5ABQ6Dip767qJK3SUxwUhsb0QiMog++4eCcqAf3uIm
-         gst61E+LCniYAm+vQZOm1JiRgLRcNpBht9Bt6n3df0te1pJtsifMrHg02dfZGsubXxWO
-         GoGQ==
-X-Gm-Message-State: AC+VfDxvKJ9YOCXrD9XBs19ruN4S8wa1OKBK33FqC/O22ZiHYvSNMra/
-        f46nZWXpjhbokPTI0xvCdPo=
-X-Google-Smtp-Source: ACHHUZ60SORnik/eSAifUwaYbsYC/Ea5qlWfZS6XAVfSHEgeUf/F/4TBA83gnvjAxC1qtMElfaHudw==
-X-Received: by 2002:a17:90b:4f4b:b0:23d:31c3:c98d with SMTP id pj11-20020a17090b4f4b00b0023d31c3c98dmr2686481pjb.15.1682618046972;
-        Thu, 27 Apr 2023 10:54:06 -0700 (PDT)
+        bh=3ok26iuO88WTdiTh3yqSvF0njUaJd/G7EVrYrB/tlNM=;
+        b=MrxZ0u9IOzmG8gvvWYHsK0xJIT1nuG2VANwuUzjGn/v9SRaoErmbrNuGzbWbLjS1Rh
+         qJB8FAkpO8swLvsJaduR6xBb+NTjpE32dvc+nnqro07Sl6CyFLbmR40VMJO4zi+dh0ie
+         b5P1UQMXGbeXnPpmknocMefJ+mY9ecP88+eXkY0IeL4wsSFDmtIMKVagdtXZcfGmGfD2
+         td325jE6Xpbtbx7/63mkJsCgU6ggRIVILF8m0oHGwHtblPq62N4/butlwBk83Wl/aPMB
+         kvra4lfmVY0HbD2OVMMWuuiEkrjDEqQDwi4wrlKw6UWdJUJ6DfK7gy1lAE8bYcXoFojs
+         z7ng==
+X-Gm-Message-State: AC+VfDxLumcfMEnEG/GgMkNeEAe0eKzvhL8qcx4FBXKvosc1fcJnbssy
+        CJoArExOjGYWbeaYIbWdUPw=
+X-Google-Smtp-Source: ACHHUZ7NYzhki84oqM5sC/T0ASeC0x8KLgCKVbwvSy/vX3s9gdhOdDf04XFw8HA41JD89ghsoCr/qw==
+X-Received: by 2002:a17:902:868a:b0:1a6:9f09:866d with SMTP id g10-20020a170902868a00b001a69f09866dmr2347865plo.61.1682618054077;
+        Thu, 27 Apr 2023 10:54:14 -0700 (PDT)
 Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id r78-20020a632b51000000b00520f316ebe3sm11614239pgr.62.2023.04.27.10.54.06
+        by smtp.gmail.com with ESMTPSA id ja14-20020a170902efce00b001a69dfd918dsm4852762plb.187.2023.04.27.10.54.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Apr 2023 10:54:06 -0700 (PDT)
+        Thu, 27 Apr 2023 10:54:13 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
@@ -63,11 +63,17 @@ Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 6/9] drm/msm: Add memory stats to fdinfo
-Date:   Thu, 27 Apr 2023 10:53:30 -0700
-Message-Id: <20230427175340.1280952-7-robdclark@gmail.com>
+Subject: [PATCH v2 9/9] drm/msm: Wire up comm/cmdline override for fdinfo
+Date:   Thu, 27 Apr 2023 10:53:33 -0700
+Message-Id: <20230427175340.1280952-10-robdclark@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230427175340.1280952-1-robdclark@gmail.com>
 References: <20230427175340.1280952-1-robdclark@gmail.com>
@@ -85,64 +91,115 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Use the new helper to export stats about memory usage.
-
-v2: Drop unintended hunk
-v3: Rebase
+Also store the override strings in drm_file so that fdinfo can display
+them.  We still need to keep our original copy as we could need these
+override strings after the device file has been closed and drm_file
+freed.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
 ---
- drivers/gpu/drm/msm/msm_drv.c |  2 ++
- drivers/gpu/drm/msm/msm_gem.c | 15 +++++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 24 +++++++++++++++++++++++-
+ drivers/gpu/drm/msm/msm_drv.c           |  2 ++
+ drivers/gpu/drm/msm/msm_gpu.h           | 10 ++++++++++
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index bb38e728864d..a20c2622a61f 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -16,6 +16,7 @@
+ #include <linux/soc/qcom/mdt_loader.h>
+ #include <linux/nvmem-consumer.h>
+ #include <soc/qcom/ocmem.h>
++#include <drm/drm_file.h>
+ #include "adreno_gpu.h"
+ #include "a6xx_gpu.h"
+ #include "msm_gem.h"
+@@ -398,7 +399,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 	switch (param) {
+ 	case MSM_PARAM_COMM:
+ 	case MSM_PARAM_CMDLINE: {
+-		char *str, **paramp;
++		char *str, *str2, **paramp;
++		struct drm_file *file = ctx->file;
+ 
+ 		str = kmalloc(len + 1, GFP_KERNEL);
+ 		if (!str)
+@@ -412,6 +414,13 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		/* Ensure string is null terminated: */
+ 		str[len] = '\0';
+ 
++		/*
++		 * We need a 2nd copy for drm_file.. this copy can't replace
++		 * our internal copy in the ctx, because we may need it for
++		 * recovery/devcoredump after the file is already closed.
++		 */
++		str2 = kstrdup(str, GFP_KERNEL);
++
+ 		mutex_lock(&gpu->lock);
+ 
+ 		if (param == MSM_PARAM_COMM) {
+@@ -425,6 +434,19 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 
+ 		mutex_unlock(&gpu->lock);
+ 
++		mutex_lock(&file->override_lock);
++
++		if (param == MSM_PARAM_COMM) {
++			paramp = &file->override_comm;
++		} else {
++			paramp = &file->override_cmdline;
++		}
++
++		kfree(*paramp);
++		*paramp = str2;
++
++		mutex_unlock(&file->override_lock);
++
+ 		return 0;
+ 	}
+ 	case MSM_PARAM_SYSPROF:
 diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 1e941aa77609..81a1371c0307 100644
+index 81a1371c0307..3a74b5653e96 100644
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -1052,6 +1052,8 @@ static void msm_show_fdinfo(struct drm_printer *p, struct drm_file *file)
- 		return;
+@@ -581,6 +581,7 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
+ 	rwlock_init(&ctx->queuelock);
  
- 	msm_gpu_show_fdinfo(priv->gpu, file->driver_priv, p);
-+
-+	drm_show_memory_stats(p, file);
+ 	kref_init(&ctx->ref);
++	ctx->file = file;
+ 	msm_submitqueue_init(dev, ctx);
+ 
+ 	ctx->aspace = msm_gpu_create_private_address_space(priv->gpu, current);
+@@ -603,6 +604,7 @@ static int msm_open(struct drm_device *dev, struct drm_file *file)
+ 
+ static void context_close(struct msm_file_private *ctx)
+ {
++	ctx->file = NULL;
+ 	msm_submitqueue_close(ctx);
+ 	msm_file_private_put(ctx);
  }
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 7a4fa1b8655b..671ce89e61b0 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -359,6 +359,16 @@ struct msm_file_private {
+ 	struct kref ref;
+ 	int seqno;
  
- static const struct file_operations fops = {
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index cd39b9d8abdb..20cfd86d2b32 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -1090,6 +1090,20 @@ int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
- 	return ret;
- }
- 
-+static enum drm_gem_object_status msm_gem_status(struct drm_gem_object *obj)
-+{
-+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-+	enum drm_gem_object_status status = 0;
++	/**
++	 * @file: link back to the associated drm_file
++	 *
++	 * Note that msm_file_private can outlive the drm_file, ie.
++	 * after the drm_file is closed but before jobs submitted have
++	 * been cleaned up.  After the drm_file is closed this will be
++	 * NULL.
++	 */
++	struct drm_file *file;
 +
-+	if (msm_obj->pages)
-+		status |= DRM_GEM_OBJECT_RESIDENT;
-+
-+	if (msm_obj->madv == MSM_MADV_DONTNEED)
-+		status |= DRM_GEM_OBJECT_PURGEABLE;
-+
-+	return status;
-+}
-+
- static const struct vm_operations_struct vm_ops = {
- 	.fault = msm_gem_fault,
- 	.open = drm_gem_vm_open,
-@@ -1104,6 +1118,7 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
- 	.vmap = msm_gem_prime_vmap,
- 	.vunmap = msm_gem_prime_vunmap,
- 	.mmap = msm_gem_object_mmap,
-+	.status = msm_gem_status,
- 	.vm_ops = &vm_ops,
- };
- 
+ 	/**
+ 	 * sysprof:
+ 	 *
 -- 
 2.39.2
 
