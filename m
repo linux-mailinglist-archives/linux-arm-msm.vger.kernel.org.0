@@ -2,157 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C6C66F0A36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 18:48:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11E006F0A48
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 18:53:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244304AbjD0Qsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 12:48:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40910 "EHLO
+        id S244259AbjD0Qxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 12:53:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243777AbjD0Qsa (ORCPT
+        with ESMTP id S229632AbjD0Qx1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 12:48:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5FC1FDA;
-        Thu, 27 Apr 2023 09:48:22 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33RGRbXp027771;
-        Thu, 27 Apr 2023 16:48:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3Bz1s2bPw4j0xZ78jaBtwrdzGbGcQMA+0N4JXTzlnEU=;
- b=kkyhEW0E+TycokSMd1xoCE5rbADjXcldTMjxTq7Ddu8xPZ+LQZ2pu4k5NX8crLvH80jV
- ZH6mlokAiuzgZ+r/42vQLsT3ehXVWXIaSal6+6FOzqTr4NtRe/Sxjk/s37HEYQ2jaQJW
- PAT2giJfsiaCjfN/jwJvRKgvF5VwE4EqqWggHbvpfL2uqb132UMMpJ63xS7A2Py/3xqU
- IsQzgaE+57fLv9BOL7Y11JH8TGmWOMKFyrt9gGJ9YWquV3B2bonyoB4bNA7GWgLn5DqP
- T1sO3a+HReQenzcb5P06UtvZ/+N73JNlTmvUq7PHpFK6veurRBw/i84WvU+yxl3AZWPe Gg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7thv0fw0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 16:48:13 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33RGmC8U022338
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 16:48:12 GMT
-Received: from [10.216.5.230] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 27 Apr
- 2023 09:48:07 -0700
-Message-ID: <5a49421b-d5a4-f8fe-cb54-2fd3b73a146b@quicinc.com>
-Date:   Thu, 27 Apr 2023 22:18:04 +0530
+        Thu, 27 Apr 2023 12:53:27 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id E31B5273B;
+        Thu, 27 Apr 2023 09:53:25 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 648B92F4;
+        Thu, 27 Apr 2023 09:54:09 -0700 (PDT)
+Received: from [10.57.82.122] (unknown [10.57.82.122])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ED5183F587;
+        Thu, 27 Apr 2023 09:53:21 -0700 (PDT)
+Message-ID: <7e2eaf1f-369a-d664-1011-3da6efb382a3@arm.com>
+Date:   Thu, 27 Apr 2023 17:53:20 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v1 1/6] dt-bindings: usb: qcom,dwc3: Add bindings for
- SA8775P
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.10.0
+Subject: Re: [PATCH v4 00/11] Add support to configure TPDM DSB subunit
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
- <20230421133922.8520-2-quic_shazhuss@quicinc.com>
- <20230427142205.GA2979206-robh@kernel.org>
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <20230427142205.GA2979206-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: XHMhw1OkXmM3D2FZrFPVbxw6H46lefbZ
-X-Proofpoint-ORIG-GUID: XHMhw1OkXmM3D2FZrFPVbxw6H46lefbZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-27_07,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0
- spamscore=0 adultscore=0 priorityscore=1501 mlxlogscore=632
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304270146
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 4/27/2023 7:52 PM, Rob Herring wrote:
-> On Fri, Apr 21, 2023 at 07:09:16PM +0530, Shazad Hussain wrote:
->> Add the compatible string for SA8775P SoC from Qualcomm.
->>
->> Set minItems to 3 for interrupts as usb2 i.e third usb port supports
->> only high speed mode and does not require ss_phy_irq.
->>
->> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> index d84281926f10..3ae02cffae49 100644
->> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> @@ -23,6 +23,7 @@ properties:
->>             - qcom,msm8998-dwc3
->>             - qcom,qcm2290-dwc3
->>             - qcom,qcs404-dwc3
->> +          - qcom,sa8775p-dwc3
->>             - qcom,sc7180-dwc3
->>             - qcom,sc7280-dwc3
->>             - qcom,sc8280xp-dwc3
->> @@ -180,6 +181,7 @@ allOf:
->>                 - qcom,msm8953-dwc3
->>                 - qcom,msm8996-dwc3
->>                 - qcom,msm8998-dwc3
->> +              - qcom,sa8775p-dwc3
->>                 - qcom,sc7180-dwc3
->>                 - qcom,sc7280-dwc3
->>                 - qcom,sdm670-dwc3
->> @@ -443,12 +445,15 @@ allOf:
->>           compatible:
->>             contains:
->>               enum:
->> +              - qcom,sa8775p-dwc3
->>                 - qcom,sc8280xp-dwc3
->>       then:
->>         properties:
->>           interrupts:
->> +          minItems: 3
+On 27/04/2023 10:00, Tao Zhang wrote:
+> Introduction of TPDM DSB subunit
+> DSB subunit is responsible for creating a dataset element, and is also
+> optionally responsible for packing it to fit multiple elements on a
+> single ATB transfer if possible in the configuration. The TPDM Core
+> Datapath requests timestamps be stored by the TPDA and then delivering
+> ATB sized data (depending on ATB width and element size, this could
+> be smaller or larger than a dataset element) to the ATB Mast FSM.
 > 
-> Now 3 interrupts is valid for qcom,sc8280xp-dwc3?
+> The DSB subunit must be configured prior to enablement. This series
+> adds support for TPDM to configure the configure DSB subunit.
 > 
+> Once this series patches are applied properly, the new tpdm nodes for
+> should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
+> which supports DSB subunit.
+> e.g.
+> /sys/devices/platform/soc@0/69d0000.tpdm/tpdm0#ls -l | grep dsb
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_edge_ctrl
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_edge_ctrl_mask
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_mode
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_mask
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_ts
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_type
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_patt_val
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_patt_mask
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_patt_val
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_ts
+> -rw-r--r--    1 root     root      4096 Jan  1 00:01 dsb_trig_type
+> 
+> We can use the commands are similar to the below to configure the
+> TPDMs which support DSB subunit. Enable coresight sink first.
+> echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+> echo 1 > /sys/bus/coresight/devices/tpdm0/reset
+> echo 0x3 0x3 0x1 > /sys/bus/coresight/devices/tpdm0/dsb_edge_ctrl_mask
+> echo 0x6d 0x6d 0 > /sys/bus/coresight/devices/tpdm0/dsb_edge_ctrl
+> echo 1 > /sys/bus/coresight/devices/tpdm0/dsb_patt_ts
+> echo 1 > /sys/bus/coresight/devices/tpdm0/dsb_patt_type
+> echo 0 > /sys/bus/coresight/devices/tpdm0/dsb_trig_ts
+> echo 0 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm0/dsb_patt_mask
+> echo 0 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm0/dsb_trig_patt_val
+> 
+> This patch series depends on patch series "[PATCH v2 0/9] coresight:
+> Fix CTI module refcount leak by making it a helper device"
+> https://patchwork.kernel.org/project/linux-arm-kernel/patch/20230425143542.2305069-14-james.clark@arm.com/
 
-Hi Rob,
-I was under the impression from [1] that usb_2 for sc8280xp has only 3
-irq's, but it seems it does required all 4 irq's.
-I would take care of this in next version of the patch. Thanks for
-pointing it out.
+There is v6 available for the above and there may be changes in the data
+structures. But the series is stable now, and may be you could cordinate
+with James and repost the series at rc1 ?
 
-[1]:
-https://lore.kernel.org/lkml/20230405125759.4201-7-quic_kriskura@quicinc.com/
+Suzuki
 
->>             maxItems: 4
->>           interrupt-names:
->> +          minItems: 3
->>             items:
->>               - const: pwr_event
->>               - const: dp_hs_phy_irq
->> -- 
->> 2.17.1
->>
--Shazad
