@@ -2,107 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA3536F03B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 11:52:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE9216F0491
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 12:55:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243252AbjD0Jwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 05:52:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37260 "EHLO
+        id S243296AbjD0KzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 06:55:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243051AbjD0Jwf (ORCPT
+        with ESMTP id S243283AbjD0KzH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 05:52:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C2A092;
-        Thu, 27 Apr 2023 02:52:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E698B63C25;
-        Thu, 27 Apr 2023 09:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022C6C433EF;
-        Thu, 27 Apr 2023 09:52:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1682589153;
-        bh=lDpLhb6oF6to7W+j3Bea839ZLvE12k39h5dsPWICeB8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZuX6BWDPYBtsbX8/2NU06aJrEdJZKJzgCLUP5duPvTh3xA6MHn5wjq4sY2c7y2eDM
-         sMifHQnS9CBzV0TU4SncLFWx90ofXHC9uuSDf5J40GUkKzjRIavWLrTBNPl9VC8JnK
-         EChbATmCfGQzWZHtoaYfxEwInABGzSJM+LHd8/Cs=
-Date:   Thu, 27 Apr 2023 11:52:30 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     sangsup lee <k1rh4.lee@gmail.com>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] misc: fastrpc: Fix a Use after-free-bug by race
- condition
-Message-ID: <2023042702-shuffling-tweet-d9f6@gregkh>
-References: <20230323013655.366-1-k1rh4.lee@gmail.com>
- <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
+        Thu, 27 Apr 2023 06:55:07 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A5D71733;
+        Thu, 27 Apr 2023 03:55:06 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-3ef33a83ff1so38120351cf.1;
+        Thu, 27 Apr 2023 03:55:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682592905; x=1685184905;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q4yxf1kUwqhXPiNIN9b61myjf5LzeWeVStu3Emj9sUI=;
+        b=o3+whjcITy9OD87HXnrfl5jdkVdRuMlIEPiCw2Fz7sT3DkKO+0WuStrjAMGaTqZnKS
+         0vKQ2NmqLPImPvOYxYepAY2qLdsqrgPFMrx3cMZXsxTLWybCRYynnl9oLGCCl0pXnrkz
+         exM8eXA9J6WcsUUGOFMn9qjNDXzPkV1HNP/ppwEELH626gMtuzC8K5/wj0EjRzwA+F4m
+         wAVKV+pp80Bpx+eYTxhbB0HLuLRc4ltLxtYFw+971lefKCJ5mNQA1KGO4EMu/Xqux1LM
+         noyRZzlfntKFCwpKkWjlThOyDZqP1zCVJIdPI+k5CCxms6m20BwHg3sYPkwHjYjrr3XP
+         0EOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682592905; x=1685184905;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Q4yxf1kUwqhXPiNIN9b61myjf5LzeWeVStu3Emj9sUI=;
+        b=ay2HemcLGZiYRrH4lkfEZUh8DaEFCG3nKN2D+Km9uwPHtRnyVca7hL05//Dc6yUIGo
+         AlMKv4u12grKZpNDP4SZufrP6JfUqOy2rQQnW9PabNMWDo+AFqZhoN8HhzUZiebzB/WO
+         YciRJY+4LQgJbk/MTI/YYiV+2LJ5IXtq/JuTp2lJKvQ3qhUpnI9Ixlt88pjOgiWCq0rh
+         EeP8w1XQuQVsMXIbw1BPZcg+pCLyA/jMFdenjLVEWSgLQ4tTfnFIPhEnSB5ByHyW/SVc
+         MekTwyUUA5FVYeFln9n9jWygLeGlFy7/ASEbn7WM27liASjU0rGhTn4lg7Nlj+Xw1uP5
+         ckPw==
+X-Gm-Message-State: AC+VfDyVoTv27XxpcNWA4M6LDcVqAIMQoneDvDg8CQuaZOE+VdzlTa1M
+        BlQMj8KG6XUVDroGjnBwzbBP+YrKS4zzPeyS4bo=
+X-Google-Smtp-Source: ACHHUZ61OHQpcgVMkmE6fFvU0vNwyM94psPjya2fSxnz75hpgVx/bTds3f02yRr3P1D/N1fOuLh6oXHHZg4N+N9utSo=
+X-Received: by 2002:ac8:7f8e:0:b0:3d8:2352:a661 with SMTP id
+ z14-20020ac87f8e000000b003d82352a661mr1543069qtj.3.1682592905720; Thu, 27 Apr
+ 2023 03:55:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <1682327030-25535-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1682327030-25535-3-git-send-email-quic_rohiagar@quicinc.com>
+ <ZEk9lySMZcrRZYwX@surfacebook> <66158251-6934-a07f-4b82-4deaa76fa482@quicinc.com>
+ <CAHp75VcCAOD3utLjjXeQ97nGcUTm7pic5F52+e7cJDxpDXwttA@mail.gmail.com> <1ed28be7-7bb5-acc5-c955-f4cf238ffc49@quicinc.com>
+In-Reply-To: <1ed28be7-7bb5-acc5-c955-f4cf238ffc49@quicinc.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Thu, 27 Apr 2023 13:54:29 +0300
+Message-ID: <CAHp75VcDBFyG9+RaOUma4y+Q0em2-Nvuk_71vDkenGk+2HJqEQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] pinctrl: qcom: Add SDX75 pincontrol driver
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 27, 2023 at 06:29:16PM +0900, sangsup lee wrote:
-> Is there any comment for this issue?
+On Thu, Apr 27, 2023 at 11:53=E2=80=AFAM Rohit Agarwal
+<quic_rohiagar@quicinc.com> wrote:
+> On 4/26/2023 10:12 PM, Andy Shevchenko wrote:
+> > On Wed, Apr 26, 2023 at 6:18=E2=80=AFPM Rohit Agarwal <quic_rohiagar@qu=
+icinc.com> wrote:
+> >> On 4/26/2023 8:34 PM, andy.shevchenko@gmail.com wrote:
 
-What issue?
+...
 
-> (reference: https://www.spinics.net/lists/kernel/msg4731408.html)
+> >> Ok, Will update this. Shall I also update "PINGROUP" to "PINCTRL_PINGR=
+OUP"?
+> > Yes, please.
+> PINCTRL_PINGROUP cannot be used as it is, since msm_pigroup has multiple
+> other fields that needs to be set
+> for each pingroup defined.
+> Would rename this to SDX75_PINGROUP, as seen on some other platforms.
+> Would that be ok?
 
-Please use lore.kernel.org links, we have no control over any other
-random email archive .
+For this patch, yes. But can you create a separate followup that
+replaces three members of struct msm_pingroup by embedding struct
+pingroup into it? There are examples of such changes in the kernel
+already. https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/com=
+mit/drivers/pinctrl?id=3D39b707fa7aba7cbfd7d53be50b6098e620f7a6d4
 
-And the above link just points to this proposed patch.
 
-> 
-> 
-> 2023년 3월 23일 (목) 오전 10:37, Sangsup Lee <k1rh4.lee@gmail.com>님이 작성:
-> >
-> > From: Sangsup lee <k1rh4.lee@gmail.com>
-> >
-> > This patch adds mutex_lock for fixing an Use-after-free bug.
-> > fastrpc_req_munmap_impl can be called concurrently in multi-threded environments.
-> > The buf which is allocated by list_for_each_safe can be used after another thread frees it.
-
-How was this tested?
-
-> >
-> > Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
-> > ---
-> >  V1 -> V2: moving the locking to ioctl.
-> >
-> >  drivers/misc/fastrpc.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > index 93ebd174d848..aa1cf0e9f4ed 100644
-> > --- a/drivers/misc/fastrpc.c
-> > +++ b/drivers/misc/fastrpc.c
-> > @@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
-> >                 err = fastrpc_req_mmap(fl, argp);
-> >                 break;
-> >         case FASTRPC_IOCTL_MUNMAP:
-> > +               mutex_lock(&fl->mutex);
-> >                 err = fastrpc_req_munmap(fl, argp);
-> > +               mutex_unlock(&fl->mutex);
-
-Are you sure you can call this function with the lock?  If so, why isn't
-the mmap ioctl also locked?
-
-thanks,
-
-greg k-h
+--=20
+With Best Regards,
+Andy Shevchenko
