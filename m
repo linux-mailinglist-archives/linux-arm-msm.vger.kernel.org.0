@@ -2,153 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5040B6F0D2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 22:32:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D54206F0D39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 22:35:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344259AbjD0Ucz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 16:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33338 "EHLO
+        id S1344278AbjD0Ue7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 16:34:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344203AbjD0Ucy (ORCPT
+        with ESMTP id S1344251AbjD0Uez (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 16:32:54 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF0E2D65;
-        Thu, 27 Apr 2023 13:32:52 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 13472200D5;
-        Thu, 27 Apr 2023 22:32:51 +0200 (CEST)
-Date:   Thu, 27 Apr 2023 22:32:49 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, quic_sbillaka@quicinc.com,
-        dianders@chromium.org, airlied@gmail.com, andersson@kernel.org,
-        robdclark@gmail.com, dri-devel@lists.freedesktop.org,
-        swboyd@chromium.org, vkoul@kernel.org, agross@kernel.org,
-        daniel@ffwll.ch, linux-arm-msm@vger.kernel.org,
-        dmitry.baryshkov@linaro.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, sean@poorly.run,
-        linux-kernel@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: always program dsc active bits
-Message-ID: <plyxdgxbiqxmlbs5d53ps6vl4zts6zlzbctrpvshnbvuontqot@uaspqab4kmjt>
-References: <z7wj2lcgcdxsqh7ylhec3ig6o4p6q37zqvpzoxp4bd4vid2z2n@ubsgt3ebqrwr>
- <83f9a438-52c5-83f3-1767-92d16518d8f0@quicinc.com>
- <feedv4isliterjtwyicqfarwuvzhtov3jkmvjcwqvt7itkyh7y@e2jq5t6r3lxc>
- <e78e576a-2a04-e7ca-f6c4-701d508541ad@quicinc.com>
- <mfzi535qsjtcznwdvgb7qyzk25rcsrkwozah6ji4thqsj73n3m@asybxllomisg>
- <049697ba-d997-62c0-6e21-ffb287ac3100@quicinc.com>
- <6s42sutrd2c6tme46t6tchd6y6wonmpwokseqqz2frkrfext7v@vnv44tzwyva4>
- <82bf6167-d621-1a4e-86f0-7a8567347722@quicinc.com>
- <2e6dwt74oyy7rroxyus6ebfbylbbtinsi7bccpqazjm64owiv4@gfs52kkq47c3>
- <8c3a210a-200b-eb1d-e39a-8aad15d790f4@quicinc.com>
+        Thu, 27 Apr 2023 16:34:55 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 726873C15;
+        Thu, 27 Apr 2023 13:34:54 -0700 (PDT)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id D6709C769B;
+        Thu, 27 Apr 2023 20:34:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1682627692; bh=T3OvB1tzubQbC9YOdAcpkzeqQ7Zla1a71M5m+zynx9g=;
+        h=From:Subject:Date:To:Cc;
+        b=SmCEhIddbU8qo9r30nyrvNuNCY9jpW+4x0ANHuM2HAsUOWW/5DaAqC7L7E7KWpjQ8
+         0K+h/6kd/MWNl3icbIN+enHvkA4z1Ecb0Waw8WzmiudgEpfqE4xPV2Ma5b4NwGoxwq
+         BdjLNxrbEPyF4GDfdcJ+ComH5h2nB2GVZUxT+oFI=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/4] Add haptics support to Nexus 5 using pwm-vibra driver
+Date:   Thu, 27 Apr 2023 22:34:25 +0200
+Message-Id: <20230427-hammerhead-vibra-v1-0-e87eeb94da51@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8c3a210a-200b-eb1d-e39a-8aad15d790f4@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFHcSmQC/x2Nyw6CMBBFf4XM2iF9EKr+CnExLYOdRYu2CdEQ/
+ t3i8uTck7tD5SJc4d7tUHiTKmtuoC8dhEj5yShzYzDKWDUYh5FS4hKZZtzEF0I1+ln7xTlNFlr
+ mqTI2kUM8w3dYE6aarjc34Njb/nuOXoUX+fx/p8dx/ADWae+YhwAAAA==
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Brian Masney <masneyb@onstation.org>
+Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1161; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=T3OvB1tzubQbC9YOdAcpkzeqQ7Zla1a71M5m+zynx9g=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkStxaNlx3juoDp2zKO6rUIrCvUpVVXgTtRJKKC
+ MT2tO8vuXKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZErcWgAKCRBy2EO4nU3X
+ VtLeEACleWKN3OlEkHXu9CpxXdHpZ9Nl3D5rf0yZw2OLXqyCmxF3LxlSRkDr4W1BXJmlUGD8RH8
+ JrTRzBdJe6cIBoU46dCLzleteX5cxy5d1g8mHugPL1jjTWQw3hnJeTNS3rtBvrx3hKx2sHxP9JH
+ r2R7z+asg6AfnjaP0yL5PFYCHwWxupdgARNkU5LTVYDw7NkRd/lZP1SyYeBB2PWI8zR5eOXWiX2
+ bp3uitpcQHjdR5yiGMf2P909ro+yIFSdiTDKw/7uaPVlXWjYwRFxHW917ad31gx9+yBIqyoOX2d
+ FngPSgA4MKSgf7BKwdrvAhZn4wN39+Np9d4MJdj4U1g3YDWecnRDWmHQ/s4/WU2Uhmehe0tg+L0
+ 5v/nlfTbCCAFMbSk5KGFZbQ0wz8hd8rAZP5IuXRy/hY+O0Iu+PpXSrZdwxUSKmXokkG1J1c7Alw
+ 3Lvm2AcT3Uv39J+CGVOSbzdKHSeQHvDoKOPHnZva9KomyiO+Js9ucBmJ2vMnWVTKTMsD3zgV/7w
+ xL3Tns2AHHgBVhKV0Ykkxt2YRhk+0U61mjJa0O+TFWVLRpicTleTX7hhFzBaTmRxnjsRCSVNI2v
+ ZfySYdlHVfvLeJFGVkXEGFQB1WtUYvKvTlqFI4paosddiHqqYF+m5iRnRyJOuPk9UGgpJDepT/J
+ 6wIlaqqTD+4NT5A==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-14 16:51:52, Abhinav Kumar wrote:
-> On 4/14/2023 4:11 PM, Marijn Suijten wrote:
-> > On 2023-04-14 10:57:45, Abhinav Kumar wrote:
-> >> On 4/14/2023 10:34 AM, Marijn Suijten wrote:
-> >>> On 2023-04-14 08:48:43, Abhinav Kumar wrote:
-> >>>> On 4/14/2023 12:35 AM, Marijn Suijten wrote:
-> >>>>> On 2023-04-12 10:33:15, Abhinav Kumar wrote:
-> >>>>> [..]
-> >>>>>>> What happens if a device boots without DSC panel connected?  Will
-> >>>>>>> CTL_DSC_FLUSH be zero and not (unnecessarily, I assume) flush any of the
-> >>>>>>> DSC blocks?  Or could this flush uninitialized state to the block?
-> >>>>>>
-> >>>>>> If we bootup without DSC panel connected, the kernel's cfg->dsc will be
-> >>>>>> 0 and default register value of CTL_DSC_FLUSH will be 0 so it wont flush
-> >>>>>> any DSC blocks.
-> >>>>>
-> >>>>> Ack, that makes sense.  However, if I connect a DSC panel, then
-> >>>>> disconnect it (now the register should be non-zero, but cfg->dsc will be
-> >>>>> zero), and then replug a non-DSC panel multiple times, it'll get flushed
-> >>>>> every time because we never clear CTL_DSC_FLUSH after that?
-> >>>>
-> >>>> If we remove it after kernel starts, that issue is there even today
-> >>>> without that change because DSI is not a hot-pluggable display so a
-> >>>> teardown wont happen when you plug out the panel. How will cfg->dsc be 0
-> >>>> then? In that case, its not a valid test as there was no indication to
-> >>>> DRM that display was disconnected so we cannot tear it down.
-> >>>
-> >>> The patch description itself describes hot-pluggable displays, which I
-> >>> believe is the upcoming DSC support for DP?  You ask how cfg->dsc can
-> >>> become zero, but this is **exactly** what the patch description
-> >>> describes, and what this patch is removing the `if` for.  If we are not
-> >>> allowed to discuss that scenario because it is not currently supported,
-> >>> neither should we allow to apply this patch.
-> >>>
-> >>> With that in mind, can you re-answer the question?
-> >>
-> >> I didnt follow what needs to be re-answered.
-> >>
-> >> This patch is being sent in preparation of the DSC over DP support. This
-> >> does not handle non-hotpluggable displays.
-> > 
-> > Good, because my question is specifically about *hotpluggable*
-> > displays/panels like the upcoming DSC support for DP.  After all there
-> > would be no point in me suggesting to connect and disconnect
-> > non-hotpluggable displays and expect something sensible to happen,
-> > wouldn't it?  Allow me to copy-paste the question again for convenience,
-> > with some minor wording changes:
-> > 
-> > 	However, if I connect a DSC DP display, then disconnect it (now the
-> > 	register should be non-zero, but cfg->dsc will be zero), and then
-> > 	connect and reconnect a non-DSC DP display multiple times, it'll get
-> > 	flushed every time because we never clear CTL_DSC_FLUSH after that?
-> > 
-> > And the missing part is: would multiple flushes be harmful in this case?
-> 
-> Well, you kept asking about "DSC panel" , that made me think you were 
-> asking about a non-hotpluggable MIPI DSI DSC panel and not DP DSC 
-> monitor. On many boards, panels can be removed/connected back to their 
-> daughter card. The term "panel" confused me a bit.
-> 
-> Now answering your question.
-> 
-> Yes, it will get flushed once every hotplug thats not too bad but 
-> importantly DSC wont be active as CTL_DSC_ACTIVE will be set to 0 so it 
-> wont cause any issue.
-> 
-> 
-> >> I do not think dynamic switch
-> >> between DSC and non-DSC of non-hotpluggable displays needs to be
-> >> discussed here as its not handled at all with or without this patch.
-> >>
-> >> We wanted to get early reviews on the patch. If you want this patch to
-> >> be absorbed when rest of DSC over DP lands, I have no concerns with
-> >> that. I wont pick this up for fixes and we will land this together with
-> >> the rest of DP over DSC.
-> > 
-> > I don't mind when and where this lands, just want to have the semantics
-> > clear around persisting the value of CTL_DSC_FLUSh in the register.
-> > 
-> > Regardless, this patch doesn't sound like a fix but a workaround until
-> > reset_intf_cfg() is fixed to be called at the right point, and extended
-> > to clear CTL_DSC_ACTIVE and flush the DSCs.  Perhaps it shouldn't have a
-> > Fixes: tag for that reason, as you intend to reinstate this
-> > if (cfg->dsc) condition when that is done?
-> > 
-> 
-> Its certainly fixing the use-case of DSC to non-DSC switching. So it is 
-> a fix.
-> 
-> But yes not the best fix possible. We have to improve it by moving this 
-> to reset_intf_cfg() as I already committed to.
+A while ago Brian Masney sent some patches for a clk-vibrator which was
+then succeeded by the idea of a clk-pwm driver that "converts" a clock
+into a PWM and to use the existing pwm-vibra driver.
 
-Ack, thanks for confirming this all and working on that, sounds good!
+Since clk-pwm has landed last year we can finally add haptics support
+upstream.
 
-- Marijn
+We just need to add support for an enable GPIO to the pwm-vibra driver
+since that also needs to be high for the haptics to work on this device.
+
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (4):
+      dt-bindings: input: pwm-vibrator: Add enable-gpio
+      Input: pwm-vibra - add newline to dev_err prints
+      Input: pwm-vibra - add support for enable GPIO
+      ARM: dts: qcom: msm8974-hammerhead: Add vibrator
+
+ .../devicetree/bindings/input/pwm-vibrator.yaml    |  2 ++
+ .../dts/qcom-msm8974-lge-nexus5-hammerhead.dts     | 35 +++++++++++++++++++++
+ drivers/input/misc/pwm-vibra.c                     | 36 ++++++++++++++++------
+ 3 files changed, 63 insertions(+), 10 deletions(-)
+---
+base-commit: dec7f67a13c3270f9a38eba227a4fc15993f01b3
+change-id: 20230427-hammerhead-vibra-06bd1bf771a3
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
