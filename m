@@ -2,116 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE7B56F04B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 13:07:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 831616F0532
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 13:52:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243594AbjD0LHd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 07:07:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54768 "EHLO
+        id S243417AbjD0Lw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 07:52:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243264AbjD0LHb (ORCPT
+        with ESMTP id S233483AbjD0Lw1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 07:07:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B53449CF;
-        Thu, 27 Apr 2023 04:07:30 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33R9efxd032126;
-        Thu, 27 Apr 2023 11:07:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vtzHUvX2ZJ0nAzBI6v6t5HuaHprgpY1tbVRgTEtl9ak=;
- b=iT/t6tPtRJ8q1x+9i3C1LY4AwY/rm+BKF9muSnkqdVpxEOEgBR9XbCGf3PfbWw6Jeaqs
- aina92xSVAmcW9yoV7oOzVuwwnDl8M0yP1oXTGhz60gzpgaeU2Yb95agdf30uXlryRpz
- sZfI1d4jmjATrleUE8ZM7XY4NR0upzLxZ0U34wvw764wBCwrNSyygt+4D6OlfLv+gf9d
- h/numVUAf0ObKQGzv70CdPN/TDwOohSDUp3y2FUIesA8A/6JRtH1Yd/1l+S7bZaiDnkp
- Em+Xihi7+fMU8jaT9fp5DzU4FmLabpEdkrnqTtCdGdc1U7Gbfoi6xAM7gQGx8rQ5yY4F vQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7kux8k57-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 11:07:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33RB7Ifa016377
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 27 Apr 2023 11:07:18 GMT
-Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 27 Apr
- 2023 04:07:14 -0700
-Message-ID: <ca738971-036b-f180-88f7-cefe0ed5a412@quicinc.com>
-Date:   Thu, 27 Apr 2023 16:37:11 +0530
+        Thu, 27 Apr 2023 07:52:27 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D922698;
+        Thu, 27 Apr 2023 04:52:26 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2a8b1b51dbdso79629741fa.0;
+        Thu, 27 Apr 2023 04:52:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682596344; x=1685188344;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O5r6ZWi9BBJ5A0FizJsC82K01BkpGtpS/NHxJTUoa3U=;
+        b=jWSrhlnxatrRKNL6zRmuH4Q0E75QRlJUDtxxcDGFg4acX0GRE74ZBnSIZNXS92EEaB
+         Qj+KLmPfIV62N/44AavFcmpzc7oq3aZuaPaAyqVtmMXwMvjYbVhPq4OJogARvnTzAUxO
+         C5gs+kH/T3mIKDUGWAomumrE4kl/GQI4u+yTXCJrAAnb7SSO9Js6d7qHmQdEA3AEqV+H
+         AbhDlRDpFj7Pk1K43arr2+El2bawE9F4nZxSO9mB+eXREMehua2BdaTjw8KbyWlr74Sn
+         d9NXHMFmEZmzw5ib044rIIE9vxDOZKekyzCXs0cs3RfezmBNXlv4avk0H2/X9ZkWmXzo
+         C9wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682596344; x=1685188344;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=O5r6ZWi9BBJ5A0FizJsC82K01BkpGtpS/NHxJTUoa3U=;
+        b=K9cul5K4OUq5x/AeK++6Xhqf/+MdU0Jw9eQR0r0PMVYrURpGwof9WkD3ICox/usBLG
+         HVL6rSq2iwjdrwd4LojQb+qF2VCrQDaYFuDsVIQLQZqQDp0TtLmyWnUatSMQWIFFQ/Eh
+         c6cFMER2hhp68cPqpobcFbXQ4cDJ4ohAw92sFgHEWsy4i/lFLdn39Lg5bAj4XHYnVIMd
+         EHb5X8MHnfwvtc4nt9aQGfpppNabGGbRws7MOcbiL64E6J/Io29HhSJkRF+P3NxDNNaX
+         1B8jA30L0gtH9FuBP9smK25Dz5SowO1LpSx5L02X4e/c41moH1kvQYDVtzdyACP70BM1
+         3PYw==
+X-Gm-Message-State: AC+VfDxrKHbQpbAKrg2k0r4Jf+2gHp7hGvUKKKtUZfIH3Pnd0hBJo5kY
+        rjJX7RzPntE8pjya7hyUorHRqZF4nwhG7wqM4JU=
+X-Google-Smtp-Source: ACHHUZ42uXCU7jrfCUcLudfxdNz7wHRJC7IWs6hLboDDRvfyVfImc7Hsjq3dx98X84fE38cfQSz8QoORBGNgofRmRrY=
+X-Received: by 2002:a2e:80c1:0:b0:2a8:c333:1886 with SMTP id
+ r1-20020a2e80c1000000b002a8c3331886mr573082ljg.6.1682596344236; Thu, 27 Apr
+ 2023 04:52:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v4 2/2] pinctrl: qcom: Add SDX75 pincontrol driver
-Content-Language: en-US
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <richardcochran@gmail.com>, <manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <netdev@vger.kernel.org>
-References: <1682327030-25535-1-git-send-email-quic_rohiagar@quicinc.com>
- <1682327030-25535-3-git-send-email-quic_rohiagar@quicinc.com>
- <ZEk9lySMZcrRZYwX@surfacebook>
- <66158251-6934-a07f-4b82-4deaa76fa482@quicinc.com>
- <CAHp75VcCAOD3utLjjXeQ97nGcUTm7pic5F52+e7cJDxpDXwttA@mail.gmail.com>
- <1ed28be7-7bb5-acc5-c955-f4cf238ffc49@quicinc.com>
- <CAHp75VcDBFyG9+RaOUma4y+Q0em2-Nvuk_71vDkenGk+2HJqEQ@mail.gmail.com>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <CAHp75VcDBFyG9+RaOUma4y+Q0em2-Nvuk_71vDkenGk+2HJqEQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4tgDf_h0YZG3yRazudrZ1kAx0iJi_ZJs
-X-Proofpoint-GUID: 4tgDf_h0YZG3yRazudrZ1kAx0iJi_ZJs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-27_07,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501 spamscore=0
- impostorscore=0 mlxlogscore=509 phishscore=0 mlxscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304270097
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20230323013655.366-1-k1rh4.lee@gmail.com> <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
+ <2023042702-shuffling-tweet-d9f6@gregkh>
+In-Reply-To: <2023042702-shuffling-tweet-d9f6@gregkh>
+From:   sangsup lee <k1rh4.lee@gmail.com>
+Date:   Thu, 27 Apr 2023 20:51:48 +0900
+Message-ID: <CAJkuJRhqU++S+xYPDFDyxawfz_ePGJ0oTk-ZZg8N8BSfKcSdDA@mail.gmail.com>
+Subject: Re: [PATCH v2] misc: fastrpc: Fix a Use after-free-bug by race condition
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+I reported fastrpc bug in
+Feb,2023.(https://lore.kernel.org/lkml/20230216014120.3110-1-k1rh4.lee@gmai=
+l.com)
 
-On 4/27/2023 4:24 PM, Andy Shevchenko wrote:
-> On Thu, Apr 27, 2023 at 11:53 AM Rohit Agarwal
-> <quic_rohiagar@quicinc.com> wrote:
->> On 4/26/2023 10:12 PM, Andy Shevchenko wrote:
->>> On Wed, Apr 26, 2023 at 6:18 PM Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
->>>> On 4/26/2023 8:34 PM, andy.shevchenko@gmail.com wrote:
-> ...
+And Srinivas recommended this patch code for patch v2.
+That's why I sent this patch v2 however, I haven't received any reply
+after that.
+
+I just want to know the next step for patching this code.
+Should I just keep waiting ? Or Please let me know if I need to
+provide you with more information.
+
+(Ps. I'm sorry, i re-send this reply because of missing text-mode )
+
+Best regards.
+
+2023=EB=85=84 4=EC=9B=94 27=EC=9D=BC (=EB=AA=A9) =EC=98=A4=ED=9B=84 6:52, G=
+reg Kroah-Hartman <gregkh@linuxfoundation.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=
+=EC=84=B1:
 >
->>>> Ok, Will update this. Shall I also update "PINGROUP" to "PINCTRL_PINGROUP"?
->>> Yes, please.
->> PINCTRL_PINGROUP cannot be used as it is, since msm_pigroup has multiple
->> other fields that needs to be set
->> for each pingroup defined.
->> Would rename this to SDX75_PINGROUP, as seen on some other platforms.
->> Would that be ok?
-> For this patch, yes. But can you create a separate followup that
-> replaces three members of struct msm_pingroup by embedding struct
-> pingroup into it? There are examples of such changes in the kernel
-> already. https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/drivers/pinctrl?id=39b707fa7aba7cbfd7d53be50b6098e620f7a6d4
+> On Thu, Apr 27, 2023 at 06:29:16PM +0900, sangsup lee wrote:
+> > Is there any comment for this issue?
 >
-Sure, create a separate followup patch referring it. Will use 
-SDX75_PINGROUP for now.
-Thanks,
-Rohit.
+> What issue?
+>
+> > (reference: https://www.spinics.net/lists/kernel/msg4731408.html)
+>
+> Please use lore.kernel.org links, we have no control over any other
+> random email archive .
+>
+> And the above link just points to this proposed patch.
+>
+> >
+> >
+> > 2023=EB=85=84 3=EC=9B=94 23=EC=9D=BC (=EB=AA=A9) =EC=98=A4=EC=A0=84 10:=
+37, Sangsup Lee <k1rh4.lee@gmail.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+> > >
+> > > From: Sangsup lee <k1rh4.lee@gmail.com>
+> > >
+> > > This patch adds mutex_lock for fixing an Use-after-free bug.
+> > > fastrpc_req_munmap_impl can be called concurrently in multi-threded e=
+nvironments.
+> > > The buf which is allocated by list_for_each_safe can be used after an=
+other thread frees it.
+>
+> How was this tested?
+>
+> > >
+> > > Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
+> > > ---
+> > >  V1 -> V2: moving the locking to ioctl.
+> > >
+> > >  drivers/misc/fastrpc.c | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > >
+> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > > index 93ebd174d848..aa1cf0e9f4ed 100644
+> > > --- a/drivers/misc/fastrpc.c
+> > > +++ b/drivers/misc/fastrpc.c
+> > > @@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file *f=
+ile, unsigned int cmd,
+> > >                 err =3D fastrpc_req_mmap(fl, argp);
+> > >                 break;
+> > >         case FASTRPC_IOCTL_MUNMAP:
+> > > +               mutex_lock(&fl->mutex);
+> > >                 err =3D fastrpc_req_munmap(fl, argp);
+> > > +               mutex_unlock(&fl->mutex);
+>
+> Are you sure you can call this function with the lock?  If so, why isn't
+> the mmap ioctl also locked?
+>
+> thanks,
+>
+> greg k-h
