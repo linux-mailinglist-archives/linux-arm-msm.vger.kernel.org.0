@@ -2,147 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 831616F0532
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 13:52:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63DFF6F05A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 14:22:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243417AbjD0Lw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 07:52:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48844 "EHLO
+        id S243845AbjD0MWb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 08:22:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233483AbjD0Lw1 (ORCPT
+        with ESMTP id S243614AbjD0MWa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 07:52:27 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D922698;
-        Thu, 27 Apr 2023 04:52:26 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2a8b1b51dbdso79629741fa.0;
-        Thu, 27 Apr 2023 04:52:26 -0700 (PDT)
+        Thu, 27 Apr 2023 08:22:30 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 814472130;
+        Thu, 27 Apr 2023 05:22:29 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-51452556acdso6211855a12.2;
+        Thu, 27 Apr 2023 05:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682596344; x=1685188344;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O5r6ZWi9BBJ5A0FizJsC82K01BkpGtpS/NHxJTUoa3U=;
-        b=jWSrhlnxatrRKNL6zRmuH4Q0E75QRlJUDtxxcDGFg4acX0GRE74ZBnSIZNXS92EEaB
-         Qj+KLmPfIV62N/44AavFcmpzc7oq3aZuaPaAyqVtmMXwMvjYbVhPq4OJogARvnTzAUxO
-         C5gs+kH/T3mIKDUGWAomumrE4kl/GQI4u+yTXCJrAAnb7SSO9Js6d7qHmQdEA3AEqV+H
-         AbhDlRDpFj7Pk1K43arr2+El2bawE9F4nZxSO9mB+eXREMehua2BdaTjw8KbyWlr74Sn
-         d9NXHMFmEZmzw5ib044rIIE9vxDOZKekyzCXs0cs3RfezmBNXlv4avk0H2/X9ZkWmXzo
-         C9wA==
+        d=gmail.com; s=20221208; t=1682598149; x=1685190149;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Je9dOfRheV0xbkP5D8rz4YMFOXvOjexxPPlhbTAEfPg=;
+        b=GQkHqLCx9QOiCVqkmdxf0PEzuwjMhhQn140pliLqoJPgOQ5nb4HFSUeFmKRAUUFL65
+         ygD+kZbwE/NQVPdP2oeBIAXKvHhkanPAeWnkIkz9JlAxYph7Rh+fF2hJqEUFSCO4jOO+
+         mie45R/RwxKV4XqV301GJksXsUh+PpMsyvjT0T/yMpZnEIFbHNI+2ADNuPmvtxQRjbL7
+         qfeqLmsNO6dxA/XznhGoOIvDCAtl/J/xBFWbEIidS5y/piZ8gfH5Z9VHGjUJbqhhVvBi
+         v4zdblaFMnGtRS50BUFUUv4E95KhJbOxxNclkMMex9+fV9mdbVYdz8xAFlZyNEYqgqnt
+         DRrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682596344; x=1685188344;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O5r6ZWi9BBJ5A0FizJsC82K01BkpGtpS/NHxJTUoa3U=;
-        b=K9cul5K4OUq5x/AeK++6Xhqf/+MdU0Jw9eQR0r0PMVYrURpGwof9WkD3ICox/usBLG
-         HVL6rSq2iwjdrwd4LojQb+qF2VCrQDaYFuDsVIQLQZqQDp0TtLmyWnUatSMQWIFFQ/Eh
-         c6cFMER2hhp68cPqpobcFbXQ4cDJ4ohAw92sFgHEWsy4i/lFLdn39Lg5bAj4XHYnVIMd
-         EHb5X8MHnfwvtc4nt9aQGfpppNabGGbRws7MOcbiL64E6J/Io29HhSJkRF+P3NxDNNaX
-         1B8jA30L0gtH9FuBP9smK25Dz5SowO1LpSx5L02X4e/c41moH1kvQYDVtzdyACP70BM1
-         3PYw==
-X-Gm-Message-State: AC+VfDxrKHbQpbAKrg2k0r4Jf+2gHp7hGvUKKKtUZfIH3Pnd0hBJo5kY
-        rjJX7RzPntE8pjya7hyUorHRqZF4nwhG7wqM4JU=
-X-Google-Smtp-Source: ACHHUZ42uXCU7jrfCUcLudfxdNz7wHRJC7IWs6hLboDDRvfyVfImc7Hsjq3dx98X84fE38cfQSz8QoORBGNgofRmRrY=
-X-Received: by 2002:a2e:80c1:0:b0:2a8:c333:1886 with SMTP id
- r1-20020a2e80c1000000b002a8c3331886mr573082ljg.6.1682596344236; Thu, 27 Apr
- 2023 04:52:24 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1682598149; x=1685190149;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Je9dOfRheV0xbkP5D8rz4YMFOXvOjexxPPlhbTAEfPg=;
+        b=fv36iiC6hfnLFNE9gSKrbl6UWdp0sdR2ENLYlg6o3j9ta+hYkki+UOPVnwfdwpSysP
+         gI2jHErHwrenHlzBDjAFQImB+KSAe6baw1LTHMFGmvwfWpMqmhrSQgHhXezTVds0N+K0
+         RaxP0noipJ9b3xhdOZaO4FYo4UwG6y7GuXUmYc3zvGGgS0qjNGVU26coFpzs1Qx/ltyG
+         n2jyRYirBBi8J7bc+q2LDZVnjx0RvOIbeh3jDrxfMQy9uef0PozkmWT+U1WObk3fSElL
+         aik9JL9hw/oadLW7emjjc4MzuD7KcN0SJkJMC3waE58fUOTPRZbmx6EcutzEEpG0oBTr
+         TOQA==
+X-Gm-Message-State: AC+VfDyZMVTQmsq0FUYeE1i747F3NpPePyO9QOF1s9KFnDzho7Afsg+c
+        WVN5TvPK6j1b/+i7OKV3OFg=
+X-Google-Smtp-Source: ACHHUZ60LSwIT0w8lkNEvMzM0Y0TrOpiNVgl24TggeN+M+JPyg2fFsrpOK3fdBeW4lKJvNEje1Dz8w==
+X-Received: by 2002:a17:90a:f312:b0:24c:1cc:e15 with SMTP id ca18-20020a17090af31200b0024c01cc0e15mr1813547pjb.12.1682598148867;
+        Thu, 27 Apr 2023 05:22:28 -0700 (PDT)
+Received: from localhost.localdomain (n220246252240.netvigator.com. [220.246.252.240])
+        by smtp.gmail.com with ESMTPSA id ot2-20020a17090b3b4200b0023cfdbb6496sm13443011pjb.1.2023.04.27.05.22.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Apr 2023 05:22:28 -0700 (PDT)
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jianhua Lu <lujianhua000@gmail.com>,
+        Rob Herring <robh@kernel.org>
+Subject: [PATCH v2] dt-bindings: display/msm: dsi-controller-main: Document qcom,master-dsi and qcom,sync-dual-dsi
+Date:   Thu, 27 Apr 2023 20:21:32 +0800
+Message-Id: <20230427122132.24840-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20230323013655.366-1-k1rh4.lee@gmail.com> <CAJkuJRjFCXkS+osc8ezpAw0E2W7WMAJnnxMt_cs4deqgm5OzHw@mail.gmail.com>
- <2023042702-shuffling-tweet-d9f6@gregkh>
-In-Reply-To: <2023042702-shuffling-tweet-d9f6@gregkh>
-From:   sangsup lee <k1rh4.lee@gmail.com>
-Date:   Thu, 27 Apr 2023 20:51:48 +0900
-Message-ID: <CAJkuJRhqU++S+xYPDFDyxawfz_ePGJ0oTk-ZZg8N8BSfKcSdDA@mail.gmail.com>
-Subject: Re: [PATCH v2] misc: fastrpc: Fix a Use after-free-bug by race condition
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I reported fastrpc bug in
-Feb,2023.(https://lore.kernel.org/lkml/20230216014120.3110-1-k1rh4.lee@gmai=
-l.com)
+This fixes warning:
+  sm8250-xiaomi-elish-csot.dtb: dsi@ae94000: Unevaluated properties are not allowed ('qcom,master-dsi', 'qcom,sync-dual-dsi' were unexpected)
 
-And Srinivas recommended this patch code for patch v2.
-That's why I sent this patch v2 however, I haven't received any reply
-after that.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+Changes in v2:
+  - pick up tags
+  - fix typo (need -> needs)
 
-I just want to know the next step for patching this code.
-Should I just keep waiting ? Or Please let me know if I need to
-provide you with more information.
+ .../bindings/display/msm/dsi-controller-main.yaml    | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-(Ps. I'm sorry, i re-send this reply because of missing text-mode )
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+index e6c1ebfe8a32..130e16d025bc 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -82,6 +82,18 @@ properties:
+       Indicates if the DSI controller is driving a panel which needs
+       2 DSI links.
+ 
++  qcom,master-dsi:
++    type: boolean
++    description: |
++      Indicates if the DSI controller is the master DSI controller when
++      qcom,dual-dsi-mode enabled.
++
++  qcom,sync-dual-dsi:
++    type: boolean
++    description: |
++      Indicates if the DSI controller needs to sync the other DSI controller
++      with MIPI DCS commands when qcom,dual-dsi-mode enabled.
++
+   assigned-clocks:
+     minItems: 2
+     maxItems: 4
+-- 
+2.39.2
 
-Best regards.
-
-2023=EB=85=84 4=EC=9B=94 27=EC=9D=BC (=EB=AA=A9) =EC=98=A4=ED=9B=84 6:52, G=
-reg Kroah-Hartman <gregkh@linuxfoundation.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=
-=EC=84=B1:
->
-> On Thu, Apr 27, 2023 at 06:29:16PM +0900, sangsup lee wrote:
-> > Is there any comment for this issue?
->
-> What issue?
->
-> > (reference: https://www.spinics.net/lists/kernel/msg4731408.html)
->
-> Please use lore.kernel.org links, we have no control over any other
-> random email archive .
->
-> And the above link just points to this proposed patch.
->
-> >
-> >
-> > 2023=EB=85=84 3=EC=9B=94 23=EC=9D=BC (=EB=AA=A9) =EC=98=A4=EC=A0=84 10:=
-37, Sangsup Lee <k1rh4.lee@gmail.com>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
-> > >
-> > > From: Sangsup lee <k1rh4.lee@gmail.com>
-> > >
-> > > This patch adds mutex_lock for fixing an Use-after-free bug.
-> > > fastrpc_req_munmap_impl can be called concurrently in multi-threded e=
-nvironments.
-> > > The buf which is allocated by list_for_each_safe can be used after an=
-other thread frees it.
->
-> How was this tested?
->
-> > >
-> > > Signed-off-by: Sangsup lee <k1rh4.lee@gmail.com>
-> > > ---
-> > >  V1 -> V2: moving the locking to ioctl.
-> > >
-> > >  drivers/misc/fastrpc.c | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > >
-> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > > index 93ebd174d848..aa1cf0e9f4ed 100644
-> > > --- a/drivers/misc/fastrpc.c
-> > > +++ b/drivers/misc/fastrpc.c
-> > > @@ -1901,7 +1901,9 @@ static long fastrpc_device_ioctl(struct file *f=
-ile, unsigned int cmd,
-> > >                 err =3D fastrpc_req_mmap(fl, argp);
-> > >                 break;
-> > >         case FASTRPC_IOCTL_MUNMAP:
-> > > +               mutex_lock(&fl->mutex);
-> > >                 err =3D fastrpc_req_munmap(fl, argp);
-> > > +               mutex_unlock(&fl->mutex);
->
-> Are you sure you can call this function with the lock?  If so, why isn't
-> the mmap ioctl also locked?
->
-> thanks,
->
-> greg k-h
