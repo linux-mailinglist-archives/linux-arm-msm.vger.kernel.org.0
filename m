@@ -2,85 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB19F6F0699
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 15:27:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 599FE6F070F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 16:15:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232885AbjD0N1x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 09:27:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
+        id S243889AbjD0OP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 10:15:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbjD0N1w (ORCPT
+        with ESMTP id S243830AbjD0OP0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 09:27:52 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF27D2D47
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 06:27:50 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-504e232fe47so15540804a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 06:27:50 -0700 (PDT)
+        Thu, 27 Apr 2023 10:15:26 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B821B3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 07:15:25 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-94ef0a8546fso1391913666b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 07:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682602069; x=1685194069;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=V7xnDUz2dODxnj/h8N5FrCM6kM8AWsyfS5hNS2c2bj4=;
-        b=ysLRaQGPh0VUnYPwIlSR9xv4ak+KaD3s+6e+hZEHOEL8bwkuS9sy/uWmVRvibYwUK/
-         4QbTGFCqZcsZeMzJwd/QzgIaWgFUA98fsLCgYuMceT1m9jNotOcAmsFjHzQMdujkGJMN
-         spG99Guu9gdMbV1L0isYgvacMbgQ42HHMehqNYZPmWd8VBQWKZnPkBh6mzFDIPKgTca8
-         1d5n77YicDvN7GbB2NIPD8sgHjfsgUeMIuwauDdxlhcz/GhjBKh1oIpSLR2rKQlHCgTI
-         yCBUE8B9vaqU8s7JGPtSl13ENG52PsZ/BEktFbWxK7dYy14edj2UECcHrMy01j7OWQPU
-         iYeQ==
+        d=linaro.org; s=google; t=1682604924; x=1685196924;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lqzI0wZ2EqQrQrjO8vqAoXJym2hVEg0r8e35+35xmQw=;
+        b=q2xrjcGWRoZmThPFkxvA4QmteJ3wUDZ408LAWzx4rwMTFR/z8YJNxIz+O2Mjg2MMmX
+         M5IsGnIEtDuyGpAX1CRk6f58dZCv1E2AmvkDqebIDtkyNzcZuwZRDrQBn8zySmo2Tz7X
+         YAXCaU2n/ykqnbd9cSgSmfHAyZ+iTDqXTu7iSfhqrWbFE37HlWlAAYDlDuFCQ7GXFmFk
+         fo4JFEU6Lwzii5xIPQXV3ZscUExZZGpdIyNBNhYPf1JM2BDfXqFuvQSPxq3FKavbqGBi
+         J7sgqHN90xjjTkPCgKmF4a2X8Z4FQ2RqtsnSA1NlFkj1aT/RpV/P5V9NqRDnMcCK7lXE
+         R5xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682602069; x=1685194069;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V7xnDUz2dODxnj/h8N5FrCM6kM8AWsyfS5hNS2c2bj4=;
-        b=R4Wq1uGQEcTWgEUvgHR90Y3qATKv2MifbAjRlnoX1RZ7Vn7DOwU6DAY/EHU6SlJnYv
-         3IaIsucUzkmpvBfejX70m9BD4cSm4Jx0tinIp135uRaAWcf1wzZZo5wgrtdTXRkoe4Gk
-         l0wakG9hhxh/ZJ8aUoECYmUOWTGDR8PRo/+C0ckCJUI6GvHdRmGKU0UvhZninqpTGUF0
-         2myzvNgwRDSIWkw2YTy1CGLZik3ztH0ZFlff4EfxyZ/yNeiAdn6tiXFowdqiJJXb6f6X
-         LQQ8JVIxhdogiiL35SctIIc7bcw8vil0EO+bzr6MfCMFdCllvG+em8Az6w/xiJR2CBdL
-         uFiA==
-X-Gm-Message-State: AC+VfDw/0X/tGHtBhHpkmM8ZFNjAAKPKjr6GZt83P+83Vyma5VdGcP7u
-        3QZa0s8doAK6Dx1wttLGpIJ+tA==
-X-Google-Smtp-Source: ACHHUZ5Z/0Br9KzFA0FV3Z+N8MCgk4/6hbEyRiw2D64gbtF3sC+Dy1oXNCxQfJbmFt2pef7SAiEbmQ==
-X-Received: by 2002:a05:6402:2:b0:504:9cec:8afb with SMTP id d2-20020a056402000200b005049cec8afbmr1773400edu.2.1682602069344;
-        Thu, 27 Apr 2023 06:27:49 -0700 (PDT)
-Received: from [172.23.2.82] ([31.221.30.162])
-        by smtp.gmail.com with ESMTPSA id n20-20020a05640206d400b00504b203c4f1sm8070176edy.40.2023.04.27.06.27.48
+        d=1e100.net; s=20221208; t=1682604924; x=1685196924;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lqzI0wZ2EqQrQrjO8vqAoXJym2hVEg0r8e35+35xmQw=;
+        b=O0Df1cEeIC20Wc7JhuR+CYzNB5J1T6jSjH09+yRaHv3p1irBILSZeXfcoOBWfku5in
+         /wVTcE6sBi10rC8BThMJP/UeNHOvOHX3ArcK/O3yRJ1ylXyX3FAE8mFvxdWEEzNYmcxb
+         gj1QUO0dmX4jqIz7Nw78TtERCiTYeJmNkya0VEeD5dunziFtSa1VqfwWlE+z0IXcZiAO
+         eVVt38iM74D1Twqnh6VnpRSY/CI3GrkWEvP+FKUHXSy1i+bnfJi3hxe3bwSxNdTuIlmi
+         WZlTB+0K/JLewSsFJTqOKurVBz2Ewxy/fERl8GXZya2n9slyMRaI3BIqXr27T3DMFM/T
+         UWpQ==
+X-Gm-Message-State: AC+VfDzcBYFNTx3fizrUzEA1klb0RB7M7yRs2rMCIsBM8WqWa6zp6RQc
+        7ZyHQv8stfFZI+eB3fDg78s7HA==
+X-Google-Smtp-Source: ACHHUZ5dGF5nSry14i4bNMUV9qu86lYwG1gJxFEaX/tWakik5oSiGyZqTA3ZLSg6+Q3Lrb4MV+sXRg==
+X-Received: by 2002:a17:906:7307:b0:958:489f:d050 with SMTP id di7-20020a170906730700b00958489fd050mr2012618ejc.43.1682604923689;
+        Thu, 27 Apr 2023 07:15:23 -0700 (PDT)
+Received: from [172.23.2.5] ([195.167.132.10])
+        by smtp.gmail.com with ESMTPSA id pv4-20020a170907208400b0094f49f58019sm9658604ejb.27.2023.04.27.07.15.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Apr 2023 06:27:48 -0700 (PDT)
-Message-ID: <fc414f61-34a8-acb0-29d4-971a873562e5@linaro.org>
-Date:   Thu, 27 Apr 2023 15:27:47 +0200
+        Thu, 27 Apr 2023 07:15:23 -0700 (PDT)
+Message-ID: <544e3e61-d471-f0b5-4daf-53bfc531f361@linaro.org>
+Date:   Thu, 27 Apr 2023 17:15:22 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 6/7] arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed
- graph
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v4 02/22] drm/msm/dpu: Remove TE2 block and feature from
+ DPU >= 5.0.0 hardware
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Johan Hovold <johan@kernel.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-7-quic_bjorande@quicinc.com>
- <aa94b488-cb6e-bd74-0711-b7c4c7589f7a@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <aa94b488-cb6e-bd74-0711-b7c4c7589f7a@linaro.org>
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20230411-dpu-intf-te-v4-0-27ce1a5ab5c6@somainline.org>
+ <20230411-dpu-intf-te-v4-2-27ce1a5ab5c6@somainline.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230411-dpu-intf-te-v4-2-27ce1a5ab5c6@somainline.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,159 +95,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 01:33, Konrad Dybcio wrote:
+On 27/04/2023 01:37, Marijn Suijten wrote:
+> No hardware beyond kona (sm8250, DPU 6.0.0) defines the TE2 PINGPONG
+> sub-block offset downstream, and according to insiders no DPU >= 5.0.0
+> hardware has support for it either.  Especially since neither downstream
+> nor upstream utilize these registers in any way, remove the erroneous
+> specification from SM8150, SC8180X, SM8250, SC7180, SM8350, SC8280XP and
+> SM8450 to prevent confusion.
 > 
-> On 4/25/23 04:40, Bjorn Andersson wrote:
->> With support for the QMP combo phy to react to USB Type-C switch events,
->> introduce it as the next hop for the SuperSpeed lanes of the two USB
->> Type-C connectors, and connect the output of the DisplayPort controller
->> to the QMP combo phy.
->>
->> This allows the TCPM to perform orientation switching of both USB and
->> DisplayPort signals.
->>
->> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 28 ++++++++++++++++---
->>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 34 +++++++++++++++++++++++
->>   2 files changed, 58 insertions(+), 4 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
->> index 547277924ea3..33c973661fa5 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
->> @@ -64,7 +64,7 @@ port@1 {
->>                       reg = <1>;
->>                       pmic_glink_con0_ss: endpoint {
->> -                        remote-endpoint = <&mdss0_dp0_out>;
->> +                        remote-endpoint = <&usb_0_qmpphy_out>;
->>                       };
->>                   };
->> @@ -99,7 +99,7 @@ port@1 {
->>                       reg = <1>;
->>                       pmic_glink_con1_ss: endpoint {
->> -                        remote-endpoint = <&mdss0_dp1_out>;
->> +                        remote-endpoint = <&usb_1_qmpphy_out>;
->>                       };
->>                   };
->> @@ -412,7 +412,7 @@ &mdss0_dp0 {
->>   &mdss0_dp0_out {
->>       data-lanes = <0 1>;
->> -    remote-endpoint = <&pmic_glink_con0_ss>;
->> +    remote-endpoint = <&usb_0_qmpphy_dp_in>;
->>   };
->>   &mdss0_dp1 {
->> @@ -421,7 +421,7 @@ &mdss0_dp1 {
->>   &mdss0_dp1_out {
->>       data-lanes = <0 1>;
->> -    remote-endpoint = <&pmic_glink_con1_ss>;
->> +    remote-endpoint = <&usb_1_qmpphy_dp_in>;
->>   };
->>   &mdss0_dp3 {
->> @@ -670,9 +670,19 @@ &usb_0_qmpphy {
->>       vdda-phy-supply = <&vreg_l9d>;
->>       vdda-pll-supply = <&vreg_l4d>;
->> +    orientation-switch;
+> Note that downstream enables the PPSPLIT (split-FIFO) topology (single
+> LM for 2 PP and 2 INTF) based on the presence of a TE2 block.
 > 
-> I believe this belongs in the SoC DTSI, as it's supported by
-> the PHY block itself
-> 
-> 
-> The rest seems to lgtm..
-> 
-> 
-> On a note, why did we end up placing pmic_glink in device
-> DTs? It's already assumed that we're using the full Qualcomm
-> stack as we use PAS for remoteprocs so I *think* we can always
-> assume pmic_glink would be there!
+> Fixes: 386fced3f76f ("drm/msm/dpu: add SM8150 to hw catalog")
+> Fixes: 7bdc0c4b8126 ("msm:disp:dpu1: add support for display for SC7180 target")
+> Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
+> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
+> Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-As we did on other board, I think because having pmic_glink depends
-on the board firmware capabilities ? Boards without USB-C won't need/have
-pmic_link right ?
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Neil
-
-> 
-> Konrad
-> 
->> +
->>       status = "okay";
->>   };
->> +&usb_0_qmpphy_dp_in {
->> +    remote-endpoint = <&mdss0_dp0_out>;
->> +};
->> +
->> +&usb_0_qmpphy_out {
->> +    remote-endpoint = <&pmic_glink_con0_ss>;
->> +};
->> +
->>   &usb_0_role_switch {
->>       remote-endpoint = <&pmic_glink_con0_hs>;
->>   };
->> @@ -697,9 +707,19 @@ &usb_1_qmpphy {
->>       vdda-phy-supply = <&vreg_l4b>;
->>       vdda-pll-supply = <&vreg_l3b>;
->> +    orientation-switch;
->> +
->>       status = "okay";
->>   };
->> +&usb_1_qmpphy_dp_in {
->> +    remote-endpoint = <&mdss0_dp1_out>;
->> +};
->> +
->> +&usb_1_qmpphy_out {
->> +    remote-endpoint = <&pmic_glink_con1_ss>;
->> +};
->> +
->>   &usb_1_role_switch {
->>       remote-endpoint = <&pmic_glink_con1_hs>;
->>   };
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> index 0e691bb0120c..1eb3a295e8fa 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> @@ -3006,6 +3006,23 @@ usb_0_qmpphy: phy@88eb000 {
->>               #phy-cells = <1>;
->>               status = "disabled";
->> +
->> +            ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@0 {
->> +                    reg = <0>;
->> +
->> +                    usb_0_qmpphy_out: endpoint {};
->> +                };
->> +
->> +                port@1 {
->> +                    reg = <1>;
->> +
->> +                    usb_0_qmpphy_dp_in: endpoint {};
->> +                };
->> +            };
->>           };
->>           usb_1_hsphy: phy@8902000 {
->> @@ -3042,6 +3059,23 @@ usb_1_qmpphy: phy@8903000 {
->>               #phy-cells = <1>;
->>               status = "disabled";
->> +
->> +            ports {
->> +                #address-cells = <1>;
->> +                #size-cells = <0>;
->> +
->> +                port@0 {
->> +                    reg = <0>;
->> +
->> +                    usb_1_qmpphy_out: endpoint {};
->> +                };
->> +
->> +                port@1 {
->> +                    reg = <1>;
->> +
->> +                    usb_1_qmpphy_dp_in: endpoint {};
->> +                };
->> +            };
->>           };
->>           mdss1_dp0_phy: phy@8909a00 {
+> ---
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  4 ++--
+>   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  4 ++--
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  4 ++--
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  4 ++--
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  4 ++--
+>   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 24 +++++++++++-----------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  4 ++--
+>   7 files changed, 24 insertions(+), 24 deletions(-)-- 
+With best wishes
+Dmitry
 
