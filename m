@@ -2,92 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 599FE6F070F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 16:15:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1442A6F0740
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Apr 2023 16:23:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243889AbjD0OP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 27 Apr 2023 10:15:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35268 "EHLO
+        id S244042AbjD0OW6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 27 Apr 2023 10:22:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243830AbjD0OP0 (ORCPT
+        with ESMTP id S244014AbjD0OWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 27 Apr 2023 10:15:26 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B821B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 07:15:25 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-94ef0a8546fso1391913666b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 07:15:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682604924; x=1685196924;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lqzI0wZ2EqQrQrjO8vqAoXJym2hVEg0r8e35+35xmQw=;
-        b=q2xrjcGWRoZmThPFkxvA4QmteJ3wUDZ408LAWzx4rwMTFR/z8YJNxIz+O2Mjg2MMmX
-         M5IsGnIEtDuyGpAX1CRk6f58dZCv1E2AmvkDqebIDtkyNzcZuwZRDrQBn8zySmo2Tz7X
-         YAXCaU2n/ykqnbd9cSgSmfHAyZ+iTDqXTu7iSfhqrWbFE37HlWlAAYDlDuFCQ7GXFmFk
-         fo4JFEU6Lwzii5xIPQXV3ZscUExZZGpdIyNBNhYPf1JM2BDfXqFuvQSPxq3FKavbqGBi
-         J7sgqHN90xjjTkPCgKmF4a2X8Z4FQ2RqtsnSA1NlFkj1aT/RpV/P5V9NqRDnMcCK7lXE
-         R5xQ==
+        Thu, 27 Apr 2023 10:22:44 -0400
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DA54C24;
+        Thu, 27 Apr 2023 07:22:14 -0700 (PDT)
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-187af4a5453so3227351fac.1;
+        Thu, 27 Apr 2023 07:22:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682604924; x=1685196924;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lqzI0wZ2EqQrQrjO8vqAoXJym2hVEg0r8e35+35xmQw=;
-        b=O0Df1cEeIC20Wc7JhuR+CYzNB5J1T6jSjH09+yRaHv3p1irBILSZeXfcoOBWfku5in
-         /wVTcE6sBi10rC8BThMJP/UeNHOvOHX3ArcK/O3yRJ1ylXyX3FAE8mFvxdWEEzNYmcxb
-         gj1QUO0dmX4jqIz7Nw78TtERCiTYeJmNkya0VEeD5dunziFtSa1VqfwWlE+z0IXcZiAO
-         eVVt38iM74D1Twqnh6VnpRSY/CI3GrkWEvP+FKUHXSy1i+bnfJi3hxe3bwSxNdTuIlmi
-         WZlTB+0K/JLewSsFJTqOKurVBz2Ewxy/fERl8GXZya2n9slyMRaI3BIqXr27T3DMFM/T
-         UWpQ==
-X-Gm-Message-State: AC+VfDzcBYFNTx3fizrUzEA1klb0RB7M7yRs2rMCIsBM8WqWa6zp6RQc
-        7ZyHQv8stfFZI+eB3fDg78s7HA==
-X-Google-Smtp-Source: ACHHUZ5dGF5nSry14i4bNMUV9qu86lYwG1gJxFEaX/tWakik5oSiGyZqTA3ZLSg6+Q3Lrb4MV+sXRg==
-X-Received: by 2002:a17:906:7307:b0:958:489f:d050 with SMTP id di7-20020a170906730700b00958489fd050mr2012618ejc.43.1682604923689;
-        Thu, 27 Apr 2023 07:15:23 -0700 (PDT)
-Received: from [172.23.2.5] ([195.167.132.10])
-        by smtp.gmail.com with ESMTPSA id pv4-20020a170907208400b0094f49f58019sm9658604ejb.27.2023.04.27.07.15.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Apr 2023 07:15:23 -0700 (PDT)
-Message-ID: <544e3e61-d471-f0b5-4daf-53bfc531f361@linaro.org>
-Date:   Thu, 27 Apr 2023 17:15:22 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v4 02/22] drm/msm/dpu: Remove TE2 block and feature from
- DPU >= 5.0.0 hardware
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        d=1e100.net; s=20221208; t=1682605326; x=1685197326;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0uNuPX9j/yoNVZcLdhFFButCZsuO2r4zsFdcSvMmbBk=;
+        b=Qo3MLuGHQ3HQUaIgUY+e3UKif++mRPZJNT/2tt2GXs46GddO+TOBTKPQq8sI/08cXn
+         do3N00/a9jt/ztMCyeauH1AGwXRF7OlftVB2mgcFDonCjfbLImMvVwNGkyhNQqbiNsK0
+         ypsaVjcNZEI1E8qxaKYa5ccAGtjVKNsbJXa2qqMNTNx9ojKUfwtkq1GvmzDlgvrzdbCp
+         Mp5nfQqf1OIUHcV5HcpPUEqz+S5xWIfxQhuDmRnG+IDoEVcoEFERVkDGqhvqLhSDMjnF
+         P5BBpwrADKkc16t1cs9To86fUHU6rkRfcHonotts2/IgCr0ifghouFc4nN6jbNmdVbnd
+         4MDA==
+X-Gm-Message-State: AC+VfDxKoCvNnZReZivEat5LW+l+lx1PaTJg23CSUfPW68ZVVFR+W1hD
+        Z5VIX5IcXFE7S/MWJJqxEw==
+X-Google-Smtp-Source: ACHHUZ4CFW+3aUpv2Gg8lfnGV/FuJC7CWrOe8fE8e37VwwGCL5yIS19C5JgRYyZkhI4eSfurt5Zw7A==
+X-Received: by 2002:a05:6870:42d4:b0:188:77b:7c59 with SMTP id z20-20020a05687042d400b00188077b7c59mr1091719oah.19.1682605326276;
+        Thu, 27 Apr 2023 07:22:06 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m41-20020a4a952c000000b005251e3f92ecsm8440186ooi.47.2023.04.27.07.22.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Apr 2023 07:22:05 -0700 (PDT)
+Received: (nullmailer pid 2989656 invoked by uid 1000);
+        Thu, 27 Apr 2023 14:22:05 -0000
+Date:   Thu, 27 Apr 2023 09:22:05 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Shazad Hussain <quic_shazhuss@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-References: <20230411-dpu-intf-te-v4-0-27ce1a5ab5c6@somainline.org>
- <20230411-dpu-intf-te-v4-2-27ce1a5ab5c6@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230411-dpu-intf-te-v4-2-27ce1a5ab5c6@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH v1 1/6] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SA8775P
+Message-ID: <20230427142205.GA2979206-robh@kernel.org>
+References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
+ <20230421133922.8520-2-quic_shazhuss@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230421133922.8520-2-quic_shazhuss@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,35 +73,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 01:37, Marijn Suijten wrote:
-> No hardware beyond kona (sm8250, DPU 6.0.0) defines the TE2 PINGPONG
-> sub-block offset downstream, and according to insiders no DPU >= 5.0.0
-> hardware has support for it either.  Especially since neither downstream
-> nor upstream utilize these registers in any way, remove the erroneous
-> specification from SM8150, SC8180X, SM8250, SC7180, SM8350, SC8280XP and
-> SM8450 to prevent confusion.
+On Fri, Apr 21, 2023 at 07:09:16PM +0530, Shazad Hussain wrote:
+> Add the compatible string for SA8775P SoC from Qualcomm.
 > 
-> Note that downstream enables the PPSPLIT (split-FIFO) topology (single
-> LM for 2 PP and 2 INTF) based on the presence of a TE2 block.
+> Set minItems to 3 for interrupts as usb2 i.e third usb port supports
+> only high speed mode and does not require ss_phy_irq.
 > 
-> Fixes: 386fced3f76f ("drm/msm/dpu: add SM8150 to hw catalog")
-> Fixes: 7bdc0c4b8126 ("msm:disp:dpu1: add support for display for SC7180 target")
-> Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-> Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
 > ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  4 ++--
->   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  4 ++--
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  4 ++--
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  4 ++--
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  4 ++--
->   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 24 +++++++++++-----------
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  4 ++--
->   7 files changed, 24 insertions(+), 24 deletions(-)-- 
-With best wishes
-Dmitry
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index d84281926f10..3ae02cffae49 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -23,6 +23,7 @@ properties:
+>            - qcom,msm8998-dwc3
+>            - qcom,qcm2290-dwc3
+>            - qcom,qcs404-dwc3
+> +          - qcom,sa8775p-dwc3
+>            - qcom,sc7180-dwc3
+>            - qcom,sc7280-dwc3
+>            - qcom,sc8280xp-dwc3
+> @@ -180,6 +181,7 @@ allOf:
+>                - qcom,msm8953-dwc3
+>                - qcom,msm8996-dwc3
+>                - qcom,msm8998-dwc3
+> +              - qcom,sa8775p-dwc3
+>                - qcom,sc7180-dwc3
+>                - qcom,sc7280-dwc3
+>                - qcom,sdm670-dwc3
+> @@ -443,12 +445,15 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,sa8775p-dwc3
+>                - qcom,sc8280xp-dwc3
+>      then:
+>        properties:
+>          interrupts:
+> +          minItems: 3
 
+Now 3 interrupts is valid for qcom,sc8280xp-dwc3?
+
+>            maxItems: 4
+>          interrupt-names:
+> +          minItems: 3
+>            items:
+>              - const: pwr_event
+>              - const: dp_hs_phy_irq
+> -- 
+> 2.17.1
+> 
