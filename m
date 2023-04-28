@@ -2,133 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C76816F1A18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 15:59:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 742996F1AE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 16:53:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233549AbjD1N7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 09:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56172 "EHLO
+        id S230464AbjD1OxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 10:53:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229844AbjD1N7d (ORCPT
+        with ESMTP id S229671AbjD1OxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 09:59:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF851735;
-        Fri, 28 Apr 2023 06:59:32 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33S8WERM030672;
-        Fri, 28 Apr 2023 13:59:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sXgCvAqReI9c/G7x++MikQU7zyYHVvzEj4BLpnZ95vs=;
- b=BZtgEM2Wd+iRqqSBZ3I8lwxG1KsFuz7BM/yFBEebC5/e93kmn8N9Y4ySc878FW39AvdN
- lBocCXPxNdb2mc5r0z7wfRScS5eOSP0+cIquQ/KpOt+HeAZHj2cg62KCrbtA+UdZT4yv
- +K58qsB3ELNPpmQ09L3kXMJn+V4u1H/ABPz0lNo4WhnJw8wTlhKuarUZwv8tIzjWZX05
- yMWKzLy253iO8wdysGIZ03Vm+NLhWvTzhiZoCRiZRAhTOiP7SAFgZgoGVNmGF7yTmXiw
- 27/1F/dMoEOl8g8FuLouuIpS10Qg/pAr30QLvUr5J1gMN1VbnVHfnFdXMXmJDlPgSbx0 Xg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7xdyagg5-1
+        Fri, 28 Apr 2023 10:53:14 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374CE2122;
+        Fri, 28 Apr 2023 07:53:13 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33S6eDJI032672;
+        Fri, 28 Apr 2023 14:53:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=5oeIbV8UvlJ5JROKNH6686U+PKzEtgZIdR3pU3FMn7g=;
+ b=Tm/rq5mfA7kLimWJqoNa+4We5G74jG+KZJWL0NKUiVKJQJ5EgkzKAbSqXMrlGVmYmTtH
+ Slm7XepXoG7ofqycrdPFdOBJXb5noNNwWPWmwSLpwjS+RSCk3HPP5hVev+i5A/WrzjCi
+ 2QY+bXFC98EIlaS+anfisKFNFOFB/8PnAnRv73jlh65SB12pxcyJepeijiidMcxHDW/e
+ Tadu//h/emLMCcMn9+nYumX4vjw2dq97S1abRf8OT1iF8y85G+nyZfrrXxqKqM9JJrrb
+ db8s3nPjJVBQ06PjnRZU3c0Zo/MthyAVXMQN0PAxWcx4JTBH3MO08mTl9RSn6mOJth/X OA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7thv3bnr-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 13:59:24 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SDxFNV025719
+        Fri, 28 Apr 2023 14:53:02 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SEr0IB007151
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 13:59:15 GMT
-Received: from [10.216.44.214] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 28 Apr
- 2023 06:59:09 -0700
-Message-ID: <3fe4ff88-4640-a348-e88f-ef7d8bcbef19@quicinc.com>
-Date:   Fri, 28 Apr 2023 19:29:06 +0530
+        Fri, 28 Apr 2023 14:53:00 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 28 Apr 2023 07:52:56 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH 0/4] Enable IPQ9574 TSENS support
+Date:   Fri, 28 Apr 2023 20:22:30 +0530
+Message-ID: <cover.1682682753.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH v2 1/6] dt-bindings: usb: qcom,dwc3: Add bindings for
- SA8775P
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC:     <dmitry.baryshkov@linaro.org>, <athierry@redhat.com>,
-        <robh@kernel.org>, <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay Abraham I" <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20230428130824.23803-1-quic_shazhuss@quicinc.com>
- <20230428130824.23803-2-quic_shazhuss@quicinc.com>
- <4b690859-be5a-c331-8243-b875136d4807@linaro.org>
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <4b690859-be5a-c331-8243-b875136d4807@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZoZMd2WWWcv0frsVlMOGPDzxgLeb-BuF
-X-Proofpoint-ORIG-GUID: ZoZMd2WWWcv0frsVlMOGPDzxgLeb-BuF
+X-Proofpoint-GUID: VJ-Bi3OhTMsb8ynlKJVe9HryL0SRDtPB
+X-Proofpoint-ORIG-GUID: VJ-Bi3OhTMsb8ynlKJVe9HryL0SRDtPB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-28_04,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 adultscore=0 mlxlogscore=390 clxscore=1015 mlxscore=0
- spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304280115
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ spamscore=0 adultscore=0 priorityscore=1501 mlxlogscore=764
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304280119
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+This patch set enables tsens in IPQ9574
 
-On 4/28/2023 6:57 PM, Krzysztof Kozlowski wrote:
-> On 28/04/2023 15:08, Shazad Hussain wrote:
->> Add the compatible string for SA8775P SoC from Qualcomm.
->>
->> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
->> ---
-> 
-> (...)
-> 
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,sa8775p-dwc3
->> +    then:
->> +      properties:
->> +        interrupts:
->> +          minItems: 3
->> +          maxItems: 4
->> +        interrupt-names:
->> +          minItems: 3
->> +          items:
->> +            - const: pwr_event
->> +            - const: dp_hs_phy_irq
->> +            - const: dm_hs_phy_irq
->> +            - const: ss_phy_irq
-> 
-> Why the last interrupt line is optional? Is it really optional?
-> 
+Depends on
+	https://lore.kernel.org/linux-arm-msm/20230406061314.10916-1-quic_devipriy@quicinc.com/
 
-Third usb controller i.e usb_2 supports only high speed, so I believe
-ss_phy_irq is not required for that instance.
+Praveenkumar I (2):
+  dt-bindings: thermal: tsens: Add ipq9574 compatible
+  thermal/drivers/tsens: Add IPQ9574 support
 
-> Best regards,
-> Krzysztof
-> 
+Varadarajan Narayanan (2):
+  arm64: dts: qcom: ipq9574: add tsens node
+  arm64: dts: qcom: ipq9574: add thermal zone nodes
 
--Shazad
+ .../devicetree/bindings/thermal/qcom-tsens.yaml    |   3 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              | 217 +++++++++++++++++++++
+ drivers/thermal/qcom/tsens.c                       |   3 +
+ 3 files changed, 223 insertions(+)
+
+-- 
+2.7.4
+
