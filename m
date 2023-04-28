@@ -2,104 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 600006F1F3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 22:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D87276F2030
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 23:41:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbjD1UV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 16:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44082 "EHLO
+        id S1346186AbjD1Vlq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 17:41:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345946AbjD1UV4 (ORCPT
+        with ESMTP id S1346220AbjD1Vlp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 16:21:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764BF2720;
-        Fri, 28 Apr 2023 13:21:44 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33SJ17PI010240;
-        Fri, 28 Apr 2023 20:21:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jLyPbtzvBUyAfoKSLhDpM3wpUyv5i2Vpizt0weLRsa4=;
- b=bXRDvUkIeRKig/SwyTPjKTnYLcprzEzecs1Aw3F9pv7c4tTDYFzxjJmbsPDk74Q//jk7
- yw8P/5aFSdOlgSqE7jXx/r1sc1n8Z/BJwfSvaznTS8S3Jbdc99zI6dL9dacnyLFQmqlN
- lsf6soBFrUwTW4VilhGhHT0F1KvYAYWDYmiv7Kowd1dIilM1ONqayoZW9UpeN1MoFF+C
- 9nm5NTIlsDOk8QxrLHfB1zkbhwTsVbRVrSg7qXOkei8CoGLtsMFzJDbwym4tDYgb9qQv
- lObcCIHFfng4NHasq4qzIu8I0OVcRj1j2eIF3h38K9k2HZEdT6VO4ddmuV8xCJyAzh37 iQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q850ctr4n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 20:21:38 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SKLb6C016478
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 20:21:37 GMT
-Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 28 Apr 2023 13:21:36 -0700
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jianhua Lu <lujianhua000@gmail.com>
-CC:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2] dt-bindings: display/msm: dsi-controller-main: Document qcom,master-dsi and qcom,sync-dual-dsi
-Date:   Fri, 28 Apr 2023 13:21:21 -0700
-Message-ID: <168271324255.1535.12569960424133230551.b4-ty@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230427122132.24840-1-lujianhua000@gmail.com>
-References: <20230427122132.24840-1-lujianhua000@gmail.com>
+        Fri, 28 Apr 2023 17:41:45 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D89E726BF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 14:41:42 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-2f939bea9ebso219131f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 14:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682718101; x=1685310101;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E1Eb5RgOQ6G6T/ToVAmMxv+nVh8+Egk1H9oMyEZ/kPI=;
+        b=B/Iiy08dVrTDqQP14DEVLVYhm+dghBPD41nm5Po2ZOuME8qd4mRykxC/KUS1dma/B8
+         OYe4mDjjXpKf/mjMk/TINQ2iqlM7f9KPy3QRKOW4LctPN9VjIQFkKZ9bMxW3L71cjS4n
+         5Vg0L1BGlUKVQxuvhloewhVnEI5cwoh1WLquTnvm8+uN8LOIW8L5mxApE/yg0hq+CPvf
+         AxJx5nX4jrGwm5xKVJ4ZcxJLOV8AzTqeA5Rlp/1R318ochH9XwDOwv5ykAM+4socbTnM
+         3GDRpzhwcs1Yc2y0k6suRwULbbgiY2ZDeB51EF4xiUDHCQlaAuVq2nInSiOXRthJQS+q
+         hOgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682718101; x=1685310101;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E1Eb5RgOQ6G6T/ToVAmMxv+nVh8+Egk1H9oMyEZ/kPI=;
+        b=Hn85nQDNl6tJgXPaCO6RM7PbJquE+rCvqPpxeEtbCUDEkv0O+W7U1VZqu5c3W3cxtN
+         hOV5onN5o6W2EPqpvhtdlxOLw+4Trq5B4TS6pO7TsLrl5prv8C8q7w/8m5EfEQ6Sogd5
+         Yk5hr/8j78rSDUFoYqzTRFJ+490yRfq/89ETAvXXgv6+vLTNozaFukVDXyLa32ivhp8r
+         oei7EnjxoPDA36wrIPR+V8+z6Z0NzA8cUtFEWzXHUawnY38+i1QbO4TP2Zt6mwTUQN1Q
+         s3QL91Ehgznyt7VRdTRkixCHzMnm1LLSI0/CZRhUC9P3q/UtedK3h7xp7R2FM+XcbuO3
+         tG3w==
+X-Gm-Message-State: AC+VfDzWdVuX69y+Q+6VvoCCPBcYoOuBrBlBgtVudIaHexlrnKs+6ea7
+        FVLfzgiOUlSQqY1XMzF8esN1qQ==
+X-Google-Smtp-Source: ACHHUZ5RGdr21sjT6mATshpr/YItNaJEnWe3GQDudidU/5n3YX0H1yKJh85dhh6eziC69IuYXUMV6Q==
+X-Received: by 2002:adf:e481:0:b0:2ee:f1f0:14bb with SMTP id i1-20020adfe481000000b002eef1f014bbmr5138651wrm.49.1682718101303;
+        Fri, 28 Apr 2023 14:41:41 -0700 (PDT)
+Received: from [10.6.26.43] ([212.140.138.202])
+        by smtp.gmail.com with ESMTPSA id d15-20020adfe84f000000b002fb60c7995esm22205929wrn.8.2023.04.28.14.41.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Apr 2023 14:41:40 -0700 (PDT)
+Message-ID: <3dc6e993-bcca-4e0d-5aca-686fcc8b5b73@linaro.org>
+Date:   Sat, 29 Apr 2023 00:41:39 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: D2rw4HD4qY9sb1xwqJLU7kIY_Mgf15A3
-X-Proofpoint-GUID: D2rw4HD4qY9sb1xwqJLU7kIY_Mgf15A3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-28_06,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- suspectscore=0 mlxlogscore=893 mlxscore=0 phishscore=0 bulkscore=0
- adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304280167
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
+Content-Language: en-GB
+To:     Adrien Thierry <athierry@redhat.com>
+Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
+ <ZEcEGJiikEC2wIVE@fedora>
+ <CAA8EJpr27=2jAXbamN6J7yF+7G=L5Af8+XReB5UnFuihcEwMQA@mail.gmail.com>
+ <ZEgV+H3yZLp48Dlc@fedora>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <ZEgV+H3yZLp48Dlc@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Thu, 27 Apr 2023 20:21:32 +0800, Jianhua Lu wrote:
-> This fixes warning:
->   sm8250-xiaomi-elish-csot.dtb: dsi@ae94000: Unevaluated properties are not allowed ('qcom,master-dsi', 'qcom,sync-dual-dsi' were unexpected)
+On 25/04/2023 21:03, Adrien Thierry wrote:
+> Hi Dmitry,
 > 
+>> Semi-random suggestion, but could you please try using
+>> clk_regmap_phy_mux/clk_regmap_phy_mux_ops for USB pipe clk src?
+> 
+> Which specific clock are you refering to? I'm not very familiar with
+> those, in the device tree I'm seeing "pipe" clocks for usb_0 and usb_1
+> phys, but not for usb_2, which is the one that's causing issues.
 > 
 
-Applied, thanks!
+Ah, I see. Could you please try adding the 
+'qcom,select-utmi-as-pipe-clk' property to the usb_2 host node and 
+running the test again?
 
-[1/1] dt-bindings: display/msm: dsi-controller-main: Document qcom,master-dsi and qcom,sync-dual-dsi
-      https://gitlab.freedesktop.org/abhinavk/msm/-/commit/ca29699a57ec
 
-Best regards,
 -- 
-Abhinav Kumar <quic_abhinavk@quicinc.com>
+With best wishes
+Dmitry
+
