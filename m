@@ -2,76 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39A1B6F20EF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 00:37:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FA146F2145
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 01:45:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346796AbjD1Whd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 18:37:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49060 "EHLO
+        id S1346783AbjD1Xpk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 19:45:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346748AbjD1Whc (ORCPT
+        with ESMTP id S229558AbjD1Xpj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 18:37:32 -0400
+        Fri, 28 Apr 2023 19:45:39 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F3CA97;
-        Fri, 28 Apr 2023 15:37:31 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7F9F1992;
+        Fri, 28 Apr 2023 16:45:37 -0700 (PDT)
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33SJ9cJv008763;
-        Fri, 28 Apr 2023 22:37:26 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33SNc5vf008823;
+        Fri, 28 Apr 2023 23:45:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=YoSilu77Juqav4uFECUwWsVVGvTcpVdYAT4bQdmnNaE=;
- b=Cuh3+my1aC61ND3crOKY7s1tbbN65iQoWuDhTsHpwaNdeBLpCPWbGZlcfKeYHAl3B65G
- G6yGNvP7WwXpD6nXpSWHjTIuSvvv0S+CAfwIFedPyrqwkYM5RZFdLsrbIEddFQAxyn+o
- pIFAoy7svJb1JaCDHuB3PhzRrXKx3mw7svvNYYb+2jOMC33Vi638ufLmmMxitKqL1P6o
- qLewhE6TwPSr/uXa5SN0ugkqMXyUTrcC+XtRnTRr7CXjqprON4yLz3tWnD/IzGW4zt6g
- AaKe6lQ1pVtj7qaAybtcfNYdbsJPVDTsInsv/2utV4BifinsFkJkJ3uy0tz5nl6MHP2/ 6A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8abpt85s-1
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=gpTxBVsfAtDeHFs2kPWqK0Ec4OipNHEJXXJ1WX1DTUY=;
+ b=bzXd8uXT+x94sjZhVOm1N1TJXGy0XdLBOHy8eAaYWGfMvf9NhgPr8X6Cvqez5TwcVh0T
+ /sucQacs/rYEyhnk5RHPIkxjIwbRjbavbFoh7hNWU+pwUfZ4R2/0F6ijXvQf2HARPvQL
+ mVZ26c0w76wo+RBpJgXR34yxf/kmb5JNOmjQg2hZh6j5r2Q61qkVItN7+N1lbKlr69wi
+ 9Q5nEYRJjTwF2RE40crT4bjO8RfvoiIBwKsOu+X8fL+fQF6rISprshtJ1VpRKqXiK8F+
+ VDOFX4FoY1MwL+BJ4FxNia+RO2KxsJNoBUrnxuCBOASbpNZUTL55vlJhFX5jxognfJ0Q ZA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8abptb3u-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 22:37:26 +0000
+        Fri, 28 Apr 2023 23:45:27 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SMbPQS030459
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SNjQ1A003002
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 22:37:25 GMT
-Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
+        Fri, 28 Apr 2023 23:45:26 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 28 Apr 2023 15:37:24 -0700
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
-        <marijn.suijten@somainline.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3 4/4] drm/msm/dpu: drop DSPP_MSM8998_MASK from hw catalog
-Date:   Fri, 28 Apr 2023 15:36:46 -0700
-Message-ID: <20230428223646.23595-4-quic_abhinavk@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230428223646.23595-1-quic_abhinavk@quicinc.com>
-References: <20230428223646.23595-1-quic_abhinavk@quicinc.com>
+ 15.2.986.42; Fri, 28 Apr 2023 16:45:26 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 0/7] add DSC 1.2 dpu supports
+Date:   Fri, 28 Apr 2023 16:45:04 -0700
+Message-ID: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wz4DVunhIB-C9geqtkNaLEbs_rmmxWmG
-X-Proofpoint-GUID: wz4DVunhIB-C9geqtkNaLEbs_rmmxWmG
+X-Proofpoint-ORIG-GUID: o33wNw1FM5wdSdtmgUJ6ZSfqHPFT9eh0
+X-Proofpoint-GUID: o33wNw1FM5wdSdtmgUJ6ZSfqHPFT9eh0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-04-28_08,2023-04-27_01,2023-02-09_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
  phishscore=0 suspectscore=0 spamscore=0 impostorscore=0 mlxscore=0
  bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
- mlxlogscore=884 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304280188
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304280199
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -82,47 +79,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since GC and IGC masks have now been dropped DSPP_MSM8998_MASK
-is same as DSPP_SC7180_MASK. Since DSPP_SC7180_MASK is used more
-than DSPP_MSM8998_MASK, lets drop the latter.
+This series adds the DPU side changes to support DSC 1.2 encoder. This
+was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+The DSI and DP parts will be pushed later on top of this change.
+This seriel is rebase on [1], [2] and catalog fixes from [3].
 
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 2 --
- 2 files changed, 2 insertions(+), 4 deletions(-)
+[1]: https://patchwork.freedesktop.org/series/116851/
+[2]: https://patchwork.freedesktop.org/series/116615/
+[3]: https://patchwork.freedesktop.org/series/112332/
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index bdcd554fc8a8..a4679f72a262 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -127,9 +127,9 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
- };
- 
- static const struct dpu_dspp_cfg msm8998_dspp[] = {
--	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_MSM8998_MASK,
-+	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
- 		 &msm8998_dspp_sblk),
--	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_MSM8998_MASK,
-+	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
- 		 &msm8998_dspp_sblk),
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 791a6fc8bdbf..efd466f6122b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -91,8 +91,6 @@
- 
- #define MERGE_3D_SM8150_MASK (0)
- 
--#define DSPP_MSM8998_MASK BIT(DPU_DSPP_PCC)
--
- #define DSPP_SC7180_MASK BIT(DPU_DSPP_PCC)
- 
- #define INTF_SDM845_MASK (0)
+Abhinav Kumar (2):
+  drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
+  drm/msm/dpu: add dsc blocks for remaining chipsets in catalog
+
+Kuogee Hsieh (5):
+  drm/msm/dpu: add support for DSC encoder v1.2 engine
+  drm/msm/dpu: separate DSC flush update out of interface
+  drm/msm/dpu: add DPU_PINGPONG_DSC feature PP_BLK and PP_BLK_TE
+  drm/msm/dpu: save dpu topology configuration
+  drm/msm/dpu: calculate DSC encoder parameters dynamically
+
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |  19 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |   8 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  26 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  35 ++-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  26 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |   4 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |   2 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |   2 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 102 ++++---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  35 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  36 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  22 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 335 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+ 23 files changed, 642 insertions(+), 116 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+
 -- 
-2.40.1
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
