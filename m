@@ -2,143 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 144626F19C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 15:38:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C76816F1A18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 15:59:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346324AbjD1NiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 09:38:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46460 "EHLO
+        id S233549AbjD1N7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 09:59:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346208AbjD1NiU (ORCPT
+        with ESMTP id S229844AbjD1N7d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 09:38:20 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B9D35B8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 06:38:17 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f09b4a1527so100968755e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 06:38:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682689096; x=1685281096;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=awr90pDSVtfyy1jd/suGdmmMMbIzI+zduHlGNGrtMxw=;
-        b=DK9RVn9I2jrEnbfhIqefEft0dxw3pPj9Tmez44q30xQGunOW5BKzt656k4Zwb+QvqA
-         QnPRKI+QpF0wKVjuXSxUhEgINyUMvfPnUMN6FY5QUPinUXTCsPzC3kzdZB9DrJPFy0D9
-         mCPI38C+pi/6SPUnoAFb4JCg5VpSvUCWA1EK0HokthXoE+ICqz8wrJeV8bstKe8t4XB2
-         8q5vBGsWeSvBy1b+siABTEAfFcgEa5FSXObhJ4x/N5f0m4gpHXTeIIeJ51jN2rbiVZZq
-         ZWOT14kZVWyjNohmQAizYT7bfd6UgnAd9rHrl8ACuHaaFxj2Fjzo/s3tooHm8irkuGLp
-         GJZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682689096; x=1685281096;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=awr90pDSVtfyy1jd/suGdmmMMbIzI+zduHlGNGrtMxw=;
-        b=j2b8EzwlOUzcP2F5fTXeJXmDUNmbbDcgbFpZptY8q3AnmKG3sSNg9MsE/7SC3jhtrk
-         SNa29eCmAwHNphPxTWTJomYr+S886TovfitqlU647M35XnhUcCOohBGhPcvDf9H3Uw4P
-         zjhMwQNNebiPgn+YolKPv0TmkOl2u+UbaLXzKjqn8B/4PtDQbWe93+eSWgA6Pwf82dZL
-         jnrRQTvkPrhzDGn5ZK9XXNEihTSVEThRYigxLZMvYdUu0TEr+i06xnZXds0fpQSnbnBx
-         lfxBr20WYNDjFuY/6EFi0gZ7qo/iQXKDOGIwQlE4bmFvCpynWayXNzWpxXWfrtgMz0Ez
-         uvTQ==
-X-Gm-Message-State: AC+VfDzoB4/HM9nwU4gh90dL84Ebuo6CfmoxM56cV3BXwDhH74mGfPv1
-        MBWBExp/SAhYS1DC2dwnP2zQ4g==
-X-Google-Smtp-Source: ACHHUZ7Li1J3Go9LqCYnt2dUoy8OLEwkppMDtn0ZUPfIxAq4HnbEkWk05MJi7txIpvF9W8iCOao85w==
-X-Received: by 2002:a1c:ed0e:0:b0:3f1:7372:66d1 with SMTP id l14-20020a1ced0e000000b003f1737266d1mr4315648wmh.0.1682689096103;
-        Fri, 28 Apr 2023 06:38:16 -0700 (PDT)
-Received: from [172.23.2.142] ([195.167.132.10])
-        by smtp.gmail.com with ESMTPSA id o2-20020a05600c4fc200b003f1738e64c0sm28006319wmq.20.2023.04.28.06.38.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Apr 2023 06:38:15 -0700 (PDT)
-Message-ID: <af7e5037-50b2-5ee3-83cc-42311483bc85@linaro.org>
-Date:   Fri, 28 Apr 2023 15:38:14 +0200
+        Fri, 28 Apr 2023 09:59:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF851735;
+        Fri, 28 Apr 2023 06:59:32 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33S8WERM030672;
+        Fri, 28 Apr 2023 13:59:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=sXgCvAqReI9c/G7x++MikQU7zyYHVvzEj4BLpnZ95vs=;
+ b=BZtgEM2Wd+iRqqSBZ3I8lwxG1KsFuz7BM/yFBEebC5/e93kmn8N9Y4ySc878FW39AvdN
+ lBocCXPxNdb2mc5r0z7wfRScS5eOSP0+cIquQ/KpOt+HeAZHj2cg62KCrbtA+UdZT4yv
+ +K58qsB3ELNPpmQ09L3kXMJn+V4u1H/ABPz0lNo4WhnJw8wTlhKuarUZwv8tIzjWZX05
+ yMWKzLy253iO8wdysGIZ03Vm+NLhWvTzhiZoCRiZRAhTOiP7SAFgZgoGVNmGF7yTmXiw
+ 27/1F/dMoEOl8g8FuLouuIpS10Qg/pAr30QLvUr5J1gMN1VbnVHfnFdXMXmJDlPgSbx0 Xg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7xdyagg5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Apr 2023 13:59:24 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SDxFNV025719
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Apr 2023 13:59:15 GMT
+Received: from [10.216.44.214] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 28 Apr
+ 2023 06:59:09 -0700
+Message-ID: <3fe4ff88-4640-a348-e88f-ef7d8bcbef19@quicinc.com>
+Date:   Fri, 28 Apr 2023 19:29:06 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v9 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2 1/6] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SA8775P
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-References: <cover.1682092324.git.quic_varada@quicinc.com>
- <dc573596d863767748d0bc9541bd4e6c0abef441.1682092324.git.quic_varada@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <dc573596d863767748d0bc9541bd4e6c0abef441.1682092324.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC:     <dmitry.baryshkov@linaro.org>, <athierry@redhat.com>,
+        <robh@kernel.org>, <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>
+References: <20230428130824.23803-1-quic_shazhuss@quicinc.com>
+ <20230428130824.23803-2-quic_shazhuss@quicinc.com>
+ <4b690859-be5a-c331-8243-b875136d4807@linaro.org>
+From:   Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <4b690859-be5a-c331-8243-b875136d4807@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZoZMd2WWWcv0frsVlMOGPDzxgLeb-BuF
+X-Proofpoint-ORIG-GUID: ZoZMd2WWWcv0frsVlMOGPDzxgLeb-BuF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-28_04,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ phishscore=0 adultscore=0 mlxlogscore=390 clxscore=1015 mlxscore=0
+ spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304280115
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/04/2023 17:54, Varadarajan Narayanan wrote:
-> Add USB phy and controller related nodes
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> 
-> ---
->  Changes in v8:
-> 	- Change clocks order to match the bindings
->  Changes in v7:
-> 	- Change com_aux -> cfg_ahb
->  Changes in v6:
-> 	- Introduce fixed regulators for the phy
-> 	- Resolved all 'make dtbs_check' messages
-> 
->  Changes in v5:
-> 	- Fix additional comments
-> 	- Edit nodes to match with qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> 	- 'make dtbs_check' giving the following messages since
-> 	  ipq9574 doesn't have power domains. Hope this is ok
-> 
-> 		/local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: phy@7d000: 'power-domains' is a required property
->         	From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> 		/local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: usb@8a00000: 'power-domains' is a required property
->         	From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> 
->  Changes in v4:
-> 	- Use newer bindings without subnodes
-> 	- Fix coding style issues
-> 
->  Changes in v3:
-> 	- Insert the nodes at proper location
-> 
->  Changes in v2:
-> 	- Fixed issues flagged by Krzysztof
-> 	- Fix issues reported by make dtbs_check
-> 	- Remove NOC related clocks (to be added with proper
-> 	  interconnect support)
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 120 ++++++++++++++++++++++++++++++++++
->  1 file changed, 120 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 6a8680a..a6790fb 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -150,6 +150,33 @@
->  		method = "smc";
->  	};
->  
-> +	reg_usb_3p3: s3300 {
+Hi Krzysztof,
 
-Nothing improved here.
+On 4/28/2023 6:57 PM, Krzysztof Kozlowski wrote:
+> On 28/04/2023 15:08, Shazad Hussain wrote:
+>> Add the compatible string for SA8775P SoC from Qualcomm.
+>>
+>> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+>> ---
+> 
+> (...)
+> 
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,sa8775p-dwc3
+>> +    then:
+>> +      properties:
+>> +        interrupts:
+>> +          minItems: 3
+>> +          maxItems: 4
+>> +        interrupt-names:
+>> +          minItems: 3
+>> +          items:
+>> +            - const: pwr_event
+>> +            - const: dp_hs_phy_irq
+>> +            - const: dm_hs_phy_irq
+>> +            - const: ss_phy_irq
+> 
+> Why the last interrupt line is optional? Is it really optional?
+> 
 
-Node names should be generic, so at least regulator prefix or suffix.
-Prefix is preferred as it keeps them grouped.
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+Third usb controller i.e usb_2 supports only high speed, so I believe
+ss_phy_irq is not required for that instance.
 
+> Best regards,
+> Krzysztof
+> 
 
-Best regards,
-Krzysztof
-
+-Shazad
