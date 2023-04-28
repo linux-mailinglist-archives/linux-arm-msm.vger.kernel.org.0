@@ -2,412 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBE5C6F16FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 13:45:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18C3C6F17AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 14:25:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345888AbjD1Lpz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 07:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39590 "EHLO
+        id S229551AbjD1MZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 08:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230226AbjD1Lpy (ORCPT
+        with ESMTP id S1345781AbjD1MYx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 07:45:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 202515BB2;
-        Fri, 28 Apr 2023 04:45:50 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33SBUiUB024655;
-        Fri, 28 Apr 2023 11:45:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=eMlmCPXOYlfghcZ5ReYKOmVkdZz0QefrbdVESqio7UY=;
- b=PjjvfSt4brREymp9wrQ8rXvt+2WlZzjVQnJX+5P2vnm7zz0nBG7uwUHnh58YKLY+BYDR
- 2saOq+TOG7eH9kW4fLW9qhWQ/+M6tfkJ1mTxFvHcTzZrT5ZpWo+wqV/c0WY18hbo3a+7
- 7p8Iab+yukP1sQED/kOWY8tNaeCodcsiNHv9M6/C1kRuRcyS5nrcf55jCrXEBG1yRFHj
- 1ldtPsrKASdNdrpeVQ9YXMmmGK06dml75b7DRq9E7utQUpHP4FytIrFFuVEzWjif0cYe
- PmYnLPxwJtGAzpRBMULV4Szoy3aH/tXiQRio0D2IaCTkUIeDyn7ZEuSVIR2MiyWRsUGL Ag== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8db4014n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 11:45:38 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SBjbBF020692
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 11:45:37 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 28 Apr 2023 04:45:32 -0700
-Date:   Fri, 28 Apr 2023 17:15:28 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v8 7/8] arm64: dts: qcom: ipq9574: Add USB related nodes
-Message-ID: <20230428114527.GA28972@varda-linux.qualcomm.com>
-References: <cover.1680693149.git.quic_varada@quicinc.com>
- <55db8487a7cbf3354749dd2d3a35c05bfd9fa4fc.1680693149.git.quic_varada@quicinc.com>
- <e142ff5d-543f-80bb-94f9-3f1fb90f1b83@linaro.org>
- <20230424090402.GB21232@varda-linux.qualcomm.com>
- <CAA8EJprqH5esxQkH3v-1i539OO3jQG9fN-YOqjZTwEqqgUfUyg@mail.gmail.com>
- <20230426095157.GA884@varda-linux.qualcomm.com>
- <8f2eefc5-abc9-4cce-2170-7202b148e9c7@linaro.org>
+        Fri, 28 Apr 2023 08:24:53 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF764699
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 05:24:50 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9536df4b907so1856643266b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 05:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682684689; x=1685276689;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q3bSao3dIZoa2P7axrw3LC5ax3R0t4aXyUSCE/k2fx0=;
+        b=hNoVP1s2EzPBTmSV7px5DfkOZBqeNBXHMNN2cqR9fS17u3XRJg3pbzdUCwEHVxyLOA
+         +Gy2BR4VLzzuLUrNyeDsuDYCIohyASa/0eD94XO5vnVOwT/DK3d5q0wPYWPu/HfHtLd8
+         bZmRyhe7h9AnA4GgnLhwEsU0jPS2N4KtwCuPjI3MsF9bWvM6agYp+wzpLbk/9rsTeo9/
+         stVLxwIAhj+xCNHp2/mWNi/2JcHiTCQvMXTD5FcCkOesCyH+bpDI7Q2vmnCsMrGA9Bk1
+         3TNe3N8nPgX9ORJJc2O+OmY6fqtdkFKNoEPhUDBWOo68c2xtFJRnQXkuwrtI/JQ3JcgZ
+         m8tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682684689; x=1685276689;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q3bSao3dIZoa2P7axrw3LC5ax3R0t4aXyUSCE/k2fx0=;
+        b=WphMsUjp/99EZJmz2vf8P61fXj5IeL/5ALC54yIYG0hsb7FTIV1JoMQT/uGYhXwgsj
+         j2hcJjjFLoU6A0vgPZj58cFkwygmVL8x1iLz4jhgOlqqfWckUG1oC1XQOZ4GFFd167xk
+         yjNzqEOZ0UBor6wMdOJxoWrRKGn9WCEvFjDDsOskiynZJaRBXY4lxiE7p3gQkRGQBIho
+         w/i8iZ4U3qfhht3E+xU3lkyT9pV3lfEwwFR0omHwNujMPi8yOQLL2Fowsg/E+9A/vhtx
+         gkQ3Ix77PlhsHoornxEQTbHrYLGEL8MgbZf/1AhQtgi4nsU5Y90ibxJDaRU2VsPUM3Vr
+         gldg==
+X-Gm-Message-State: AC+VfDx0l96oqZRCKQEIJjok3XrFQ+DzEMqAD80enxvJEBNjpcrt6HZK
+        QNT07gLBlXM+x2RTtSy9mMWUcw==
+X-Google-Smtp-Source: ACHHUZ77IOZK63RmVT8TpDfpoFZAJAjx69P/jqEggrfGcqWpRilr9vvnEpGwCjb2+M/FqeNTEFkqmw==
+X-Received: by 2002:a17:906:5d09:b0:94e:ea07:4b87 with SMTP id g9-20020a1709065d0900b0094eea074b87mr4788932ejt.27.1682684689278;
+        Fri, 28 Apr 2023 05:24:49 -0700 (PDT)
+Received: from [172.23.4.26] ([31.221.30.162])
+        by smtp.gmail.com with ESMTPSA id my17-20020a1709065a5100b0095728081944sm9873225ejc.146.2023.04.28.05.24.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Apr 2023 05:24:48 -0700 (PDT)
+Message-ID: <7b67a1cb-0c3e-22be-a104-c10407dad5a7@linaro.org>
+Date:   Fri, 28 Apr 2023 13:24:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <8f2eefc5-abc9-4cce-2170-7202b148e9c7@linaro.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: stgstj_82b58dvM3B7CmkzdV5oGYzpq-
-X-Proofpoint-GUID: stgstj_82b58dvM3B7CmkzdV5oGYzpq-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-28_04,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
- phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304280097
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v2 07/13] drm/msm/dpu: Add SM6350 support
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20230411-topic-straitlagoon_mdss-v2-0-5def73f50980@linaro.org>
+ <20230411-topic-straitlagoon_mdss-v2-7-5def73f50980@linaro.org>
+ <k25jg7cez2kimpxr4ztbdzjr2adq6a2vjknyvfe5frxujtogfg@vhfdyt45unv6>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <k25jg7cez2kimpxr4ztbdzjr2adq6a2vjknyvfe5frxujtogfg@vhfdyt45unv6>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 27, 2023 at 08:50:39PM +0300, Dmitry Baryshkov wrote:
-> On 26/04/2023 12:51, Varadarajan Narayanan wrote:
-> >On Mon, Apr 24, 2023 at 02:17:06PM +0300, Dmitry Baryshkov wrote:
-> >>On Mon, 24 Apr 2023 at 12:04, Varadarajan Narayanan
-> >><quic_varada@quicinc.com> wrote:
-> >>>
-> >>>On Sat, Apr 22, 2023 at 12:07:01AM +0300, Dmitry Baryshkov wrote:
-> >>>>On 05/04/2023 14:41, Varadarajan Narayanan wrote:
-> >>>>>Add USB phy and controller related nodes
-> >>>>>
-> >>>>>Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >>>>>---
-> >>>>>  Changes in v8:
-> >>>>>     - Change clocks order to match the bindings
-> >>>>>  Changes in v7:
-> >>>>>     - Change com_aux -> cfg_ahb
-> >>>>>  Changes in v6:
-> >>>>>     - Introduce fixed regulators for the phy
-> >>>>>     - Resolved all 'make dtbs_check' messages
-> >>>>>
-> >>>>>  Changes in v5:
-> >>>>>     - Fix additional comments
-> >>>>>     - Edit nodes to match with qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> >>>>>     - 'make dtbs_check' giving the following messages since
-> >>>>>       ipq9574 doesn't have power domains. Hope this is ok
-> >>>>>
-> >>>>>             /local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: phy@7d000: 'power-domains' is a required property
-> >>>>>             From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
-> >>>>>             /local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: usb@8a00000: 'power-domains' is a required property
-> >>>>>             From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> >>>>>
-> >>>>>  Changes in v4:
-> >>>>>     - Use newer bindings without subnodes
-> >>>>>     - Fix coding style issues
-> >>>>>
-> >>>>>  Changes in v3:
-> >>>>>     - Insert the nodes at proper location
-> >>>>>
-> >>>>>  Changes in v2:
-> >>>>>     - Fixed issues flagged by Krzysztof
-> >>>>>     - Fix issues reported by make dtbs_check
-> >>>>>     - Remove NOC related clocks (to be added with proper
-> >>>>>       interconnect support)
-> >>>>>---
-> >>>>>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 120 ++++++++++++++++++++++++++++++++++
-> >>>>>  1 file changed, 120 insertions(+)
-> >>>>>
-> >>>>>diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>>>>index 43a3dbe..1242382 100644
-> >>>>>--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>>>>+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> >>>>>@@ -150,6 +150,33 @@
-> >>>>>             method = "smc";
-> >>>>>     };
-> >>>>>+    reg_usb_3p3: s3300 {
-> >>>>
-> >>>>The node names do not look generic enough. Please take a look at other
-> >>>>platforms.
-> >>>
-> >>>Please see below.
-> >>>
-> >>>>>+            compatible = "regulator-fixed";
-> >>>>>+            regulator-min-microvolt = <3300000>;
-> >>>>>+            regulator-max-microvolt = <3300000>;
-> >>>>>+            regulator-boot-on;
-> >>>>>+            regulator-always-on;
-> >>>>>+            regulator-name = "usb-phy-vdd-dummy";
-> >>>>
-> >>>>This also doesn't look correct. This regulator should not just fill the gap.
-> >>>>Does it represent a generic voltage network on the board?
-> >>>>
-> >>>>Please do not add 'dummy' voltage regulators if there is no real voltage
-> >>>>wire.
-> >>>
-> >>>These are real voltage wires. I used dummy since they are
-> >>>always-on and cannot be increased/decreased (i.e. fixed).
-> >>>Would something along the following lines be appropriate?
-> >>
-> >>Still not fully correct. Please use regulator name that corresponds to
-> >>the power grid on the board schematics. I don't think that you have a
-> >>separate power grids for USB PHY.
-> >>
-> >>>
-> >>>         vreg_ae10_3p3: s3300 {
-> >>
-> >>Naming suggests that these voltages are generated by some PMIC. Is
-> >>this correct? If so, please describe the PMIC instead.
-> >
-> >SS PHY needs two supplies and HS PHY needs three supplies. 3.3V
-> >and 0.925V are from fixed DC - DC regulators and 1.8V is
-> >generated from MP5496 PMIC. Would the following node definitions
-> >be ok?
-> >
-> >usb_hs_vreg0: usb_hs_vreg0 {
-> >	compatible = "regulator-fixed";
-> >	regulator-min-microvolt = <3300000>;
-> >	regulator-max-microvolt = <3300000>;
-> >	regulator-boot-on;
-> >	regulator-always-on;
-> >	regulator-name = "usb-phy-vdd";
-> >};
-> >
-> >usb_hs_vreg1: usb_hs_vreg1 {
-> >	compatible = "regulator-fixed";
-> >	regulator-min-microvolt = <925000>;
-> >	regulator-max-microvolt = <925000>;
-> >	regulator-boot-on;
-> >	regulator-always-on;
-> >	regulator-name = "usb-phy";
-> >};
+[...]
+
+
+>> +
+>> +static const struct dpu_caps sm6350_dpu_caps = {
+>> +	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>> +	.max_mixer_blendstages = 0x7,
+>> +	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+> I thought it was QSEED3LITE, but doesn't really matter as both are
+> handled similarly.  It'll anyway change when I resubmit:
 >
-> Again. The voltage rails on the board are not USB-specific, are they? So why
-> are you declaring usb-phy regulators? Would another consumer of 3.3V rail
-> use the same usb-phy-vdd regulator?
-
-Ok. Will rename them as follows
-
-	usb_hs_vreg0 -> fixed_3p3
-	usb_hs_vreg1 -> fixed_0p925
-
-	regulator-name = "usb-phy-vdd";	-> fixed_3p3
-	regulator-name = "usb-phy";	-> fixed_0p925
-
-> >&rpm_requests {
-> >	regulators {
-> >		compatible = "qcom,rpm-mp5496-regulators";
-> >		.
-> >		.
-> >		.
-> >		ipq9574_l2: l2 {
+> https://lore.kernel.org/linux-arm-msm/20230215-sspp-scaler-version-v1-0-416b1500b85b@somainline.org/T/#u
 >
-> mp5496_l2
+> which should hardcode the register value directly, making this field
+> superfluous.
 
-Ok.
+Okay, so I'll just resubmit as-is, I suppose?
 
-Thanks
-Varada
+[...]
 
-> >			regulator-min-microvolt = <1800000>;
-> >			regulator-max-microvolt = <1800000>;
-> >			regulator-boot-on;
-> >			regulator-always-on;
-> >		};
-> >	};
-> >};
-> >
-> >Thanks
-> >Varada
-> >
-> >>>                 compatible = "regulator-fixed";
-> >>>                 regulator-min-microvolt = <3300000>;
-> >>>                 regulator-max-microvolt = <3300000>;
-> >>>                 regulator-boot-on;
-> >>>                 regulator-always-on;
-> >>>                 regulator-name = "usb-phy-vdd";
-> >>>         };
-> >>>
-> >>>         vreg_ad8_1p8: s1800 {
-> >>>                 compatible = "regulator-fixed";
-> >>>                 regulator-min-microvolt = <1800000>;
-> >>>                 regulator-max-microvolt = <1800000>;
-> >>>                 regulator-boot-on;
-> >>>                 regulator-always-on;
-> >>>                 regulator-name = "usb-phy-pll";
-> >>>         };
-> >>>
-> >>>         vreg_ad9_0p925: s0925 {
-> >>>                 compatible = "regulator-fixed";
-> >>>                 regulator-min-microvolt = <925000>;
-> >>>                 regulator-max-microvolt = <925000>;
-> >>>                 regulator-boot-on;
-> >>>                 regulator-always-on;
-> >>>                 regulator-name = "usb-phy";
-> >>>         };
-> >>>
-> >>>Thanks
-> >>>Varada
-> >>>
-> >>>>>+    };
-> >>>>>+
-> >>>>>+    reg_usb_1p8: s1800 {
-> >>>>>+            compatible = "regulator-fixed";
-> >>>>>+            regulator-min-microvolt = <1800000>;
-> >>>>>+            regulator-max-microvolt = <1800000>;
-> >>>>>+            regulator-boot-on;
-> >>>>>+            regulator-always-on;
-> >>>>>+            regulator-name = "usb-phy-pll-dummy";
-> >>>>>+    };
-> >>>>>+
-> >>>>>+    reg_usb_0p925: s0925 {
-> >>>>>+            compatible = "regulator-fixed";
-> >>>>>+            regulator-min-microvolt = <925000>;
-> >>>>>+            regulator-max-microvolt = <925000>;
-> >>>>>+            regulator-boot-on;
-> >>>>>+            regulator-always-on;
-> >>>>>+            regulator-name = "usb-phy-dummy";
-> >>>>>+    };
-> >>>>>+
-> >>>>>     reserved-memory {
-> >>>>>             #address-cells = <2>;
-> >>>>>             #size-cells = <2>;
-> >>>>>@@ -179,6 +206,52 @@
-> >>>>>             #size-cells = <1>;
-> >>>>>             ranges = <0 0 0 0xffffffff>;
-> >>>>>+            usb_0_qusbphy: phy@7b000 {
-> >>>>>+                    compatible = "qcom,ipq9574-qusb2-phy";
-> >>>>>+                    reg = <0x0007b000 0x180>;
-> >>>>>+                    #phy-cells = <0>;
-> >>>>>+
-> >>>>>+                    clocks = <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> >>>>>+                             <&xo_board_clk>;
-> >>>>>+                    clock-names = "cfg_ahb",
-> >>>>>+                                  "ref";
-> >>>>>+
-> >>>>>+                    vdd-supply = <&reg_usb_0p925>;
-> >>>>>+                    vdda-pll-supply = <&reg_usb_1p8>;
-> >>>>>+                    vdda-phy-dpdm-supply = <&reg_usb_3p3>;
-> >>>>>+
-> >>>>>+                    resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
-> >>>>>+                    status = "disabled";
-> >>>>>+            };
-> >>>>>+
-> >>>>>+            usb_0_qmpphy: phy@7d000 {
-> >>>>>+                    compatible = "qcom,ipq9574-qmp-usb3-phy";
-> >>>>>+                    reg = <0x0007d000 0xa00>;
-> >>>>>+                    #phy-cells = <0>;
-> >>>>>+
-> >>>>>+                    clocks = <&gcc GCC_USB0_AUX_CLK>,
-> >>>>>+                             <&xo_board_clk>,
-> >>>>>+                             <&gcc GCC_USB0_PHY_CFG_AHB_CLK>,
-> >>>>>+                             <&gcc GCC_USB0_PIPE_CLK>;
-> >>>>>+                    clock-names = "aux",
-> >>>>>+                                  "ref",
-> >>>>>+                                  "cfg_ahb",
-> >>>>>+                                  "pipe";
-> >>>>>+
-> >>>>>+                    resets = <&gcc GCC_USB0_PHY_BCR>,
-> >>>>>+                             <&gcc GCC_USB3PHY_0_PHY_BCR>;
-> >>>>>+                    reset-names = "phy",
-> >>>>>+                                  "phy_phy";
-> >>>>>+
-> >>>>>+                    vdda-pll-supply = <&reg_usb_1p8>;
-> >>>>>+                    vdda-phy-supply = <&reg_usb_0p925>;
-> >>>>>+
-> >>>>>+                    status = "disabled";
-> >>>>>+
-> >>>>>+                    #clock-cells = <0>;
-> >>>>>+                    clock-output-names = "usb0_pipe_clk";
-> >>>>>+            };
-> >>>>>+
-> >>>>>             pcie0_phy: phy@84000 {
-> >>>>>                     compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
-> >>>>>                     reg = <0x00084000 0x1000>;
-> >>>>>@@ -548,6 +621,53 @@
-> >>>>>                     status = "disabled";
-> >>>>>             };
-> >>>>>+            usb3: usb@8a00000 {
-> >>>>>+                    compatible = "qcom,ipq9574-dwc3", "qcom,dwc3";
-> >>>>>+                    reg = <0x08af8800 0x400>;
-> >>>>>+                    #address-cells = <1>;
-> >>>>>+                    #size-cells = <1>;
-> >>>>>+                    ranges;
-> >>>>>+
-> >>>>>+                    clocks = <&gcc GCC_SNOC_USB_CLK>,
-> >>>>>+                             <&gcc GCC_USB0_MASTER_CLK>,
-> >>>>>+                             <&gcc GCC_ANOC_USB_AXI_CLK>,
-> >>>>>+                             <&gcc GCC_USB0_SLEEP_CLK>,
-> >>>>>+                             <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> >>>>>+
-> >>>>>+                    clock-names = "cfg_noc",
-> >>>>>+                                  "core",
-> >>>>>+                                  "iface",
-> >>>>>+                                  "sleep",
-> >>>>>+                                  "mock_utmi";
-> >>>>>+
-> >>>>>+                    assigned-clocks = <&gcc GCC_USB0_MASTER_CLK>,
-> >>>>>+                                      <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> >>>>>+                    assigned-clock-rates = <200000000>,
-> >>>>>+                                           <24000000>;
-> >>>>>+
-> >>>>>+                    interrupts-extended = <&intc GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>;
-> >>>>>+                    interrupt-names = "pwr_event";
-> >>>>>+
-> >>>>>+                    resets = <&gcc GCC_USB_BCR>;
-> >>>>>+                    status = "disabled";
-> >>>>>+
-> >>>>>+                    dwc_0: usb@8a00000 {
-> >>>>>+                            compatible = "snps,dwc3";
-> >>>>>+                            reg = <0x8a00000 0xcd00>;
-> >>>>>+                            clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
-> >>>>>+                            clock-names = "ref";
-> >>>>>+                            interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-> >>>>>+                            phys = <&usb_0_qusbphy>, <&usb_0_qmpphy>;
-> >>>>>+                            phy-names = "usb2-phy", "usb3-phy";
-> >>>>>+                            tx-fifo-resize;
-> >>>>>+                            snps,is-utmi-l1-suspend;
-> >>>>>+                            snps,hird-threshold = /bits/ 8 <0x0>;
-> >>>>>+                            snps,dis_u2_susphy_quirk;
-> >>>>>+                            snps,dis_u3_susphy_quirk;
-> >>>>>+                            dr_mode = "host";
-> >>>>>+                    };
-> >>>>>+            };
-> >>>>>+
-> >>>>>             intc: interrupt-controller@b000000 {
-> >>>>>                     compatible = "qcom,msm-qgic2";
-> >>>>>                     reg = <0x0b000000 0x1000>,  /* GICD */
-> >>>>
-> >>>>--
-> >>>>With best wishes
-> >>>>Dmitry
-> >>>>
-> >>
-> >>
-> >>
-> >>--
-> >>With best wishes
-> >>Dmitry
+
+>> +static const struct dpu_lm_cfg sm6350_lm[] = {
+>> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
+>> +		&sc7180_lm_sblk, PINGPONG_0, LM_1, DSPP_0),
+>> +	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
+>> +		&sc7180_lm_sblk, PINGPONG_1, LM_0, 0),
+> These two entries are indented with two tabs and have one character too
+> many to align with the opening parenthesis on the previous line.  Can we
+> please settle on a single style, as this commit mostly uses tabs+spaces
+> to align with the opening parenthesis?
 >
-> --
-> With best wishes
-> Dmitry
+> Dmitry vouched for `cino=(0` (when in unclosed parenthesis, align next
+> line with zero extra characters to the opening parenthesis), but I find
+> double tabs more convenient as it doesn't require reindenting when
+> changing the name of the macro (which happened too often in my INTF TE
+> series).
+
+sure, let's go with that Dmitry suggested!
+
+Konrad
+
 >
+>> +};
+>> +
+>> +static const struct dpu_dspp_cfg sm6350_dspp[] = {
+>> +	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+>> +		 &sm8150_dspp_sblk),
+>> +};
+>> +
+>> +static struct dpu_pingpong_cfg sm6350_pp[] = {
+>> +	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
+>> +	       DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>> +	       -1),
+>> +	PP_BLK("pingpong_1", PINGPONG_1, 0x70800, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
+>> +	       DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>> +	       -1),
+> Glad to see no TE2 here, we just removed it from all of DPU >= 5.0.0
+> instead of >= 7.0.0 in [1] as downstream DTS turned out to be wrong.
+>
+> [1]: https://lore.kernel.org/linux-arm-msm/20230411-dpu-intf-te-v4-2-27ce1a5ab5c6@somainline.org/
+>
+> - Marijn
+>
+>> +};
+>> +
+>> +static const struct dpu_intf_cfg sm6350_intf[] = {
+>> +	INTF_BLK("intf_0", INTF_0, 0x6a000, 0x2c0, INTF_DP, 0, 35, INTF_SC7180_MASK,
+>> +		 DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+>> +		 DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25)),
+>> +	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 35, INTF_SC7180_MASK,
+>> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+>> +			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+>> +			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+>> +};
+>> +
+>> +static const struct dpu_vbif_cfg sm6350_vbif[] = {
+>> +	{
+>> +	.name = "vbif_0", .id = VBIF_RT,
+>> +	.base = 0, .len = 0x1044,
+>> +	.features = BIT(DPU_VBIF_QOS_REMAP),
+>> +	.xin_halt_timeout = 0x4000,
+>> +	.qos_rt_tbl = {
+>> +		.npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
+>> +		.priority_lvl = sdm845_rt_pri_lvl,
+>> +	},
+>> +	.qos_nrt_tbl = {
+>> +		.npriority_lvl = ARRAY_SIZE(sdm845_nrt_pri_lvl),
+>> +		.priority_lvl = sdm845_nrt_pri_lvl,
+>> +	},
+>> +	.memtype_count = 14,
+>> +	.memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+>> +	},
+>> +};
+>> +
+>> +static const struct dpu_qos_lut_entry sm6350_qos_linear_macrotile[] = {
+>> +	{.fl = 0, .lut = 0x0011223344556677 },
+>> +	{.fl = 0, .lut = 0x0011223445566777 },
+>> +};
+>> +
+>> +static const struct dpu_perf_cfg sm6350_perf_data = {
+>> +	.max_bw_low = 4200000,
+>> +	.max_bw_high = 5100000,
+>> +	.min_core_ib = 2500000,
+>> +	.min_llcc_ib = 0,
+>> +	.min_dram_ib = 1600000,
+>> +	.min_prefill_lines = 35,
+>> +	/* TODO: confirm danger_lut_tbl */
+>> +	.danger_lut_tbl = {0xffff, 0xffff, 0x0, 0x0, 0xffff},
+>> +	.qos_lut_tbl = {
+>> +		{.nentry = ARRAY_SIZE(sm6350_qos_linear_macrotile),
+>> +		.entries = sm6350_qos_linear_macrotile
+>> +		},
+>> +		{.nentry = ARRAY_SIZE(sm6350_qos_linear_macrotile),
+>> +		.entries = sm6350_qos_linear_macrotile
+>> +		},
+>> +		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
+>> +		.entries = sc7180_qos_nrt
+>> +		},
+>> +	},
+>> +	.cdp_cfg = {
+>> +		{.rd_enable = 1, .wr_enable = 1},
+>> +		{.rd_enable = 1, .wr_enable = 0}
+>> +	},
+>> +	.clk_inefficiency_factor = 105,
+>> +	.bw_inefficiency_factor = 120,
+>> +};
+>> +
+>> +const struct dpu_mdss_cfg dpu_sm6350_cfg = {
+>> +	.caps = &sm6350_dpu_caps,
+>> +	.ubwc = &sm6350_ubwc_cfg,
+>> +	.mdp_count = ARRAY_SIZE(sm6350_mdp),
+>> +	.mdp = sm6350_mdp,
+>> +	.ctl_count = ARRAY_SIZE(sm6350_ctl),
+>> +	.ctl = sm6350_ctl,
+>> +	.sspp_count = ARRAY_SIZE(sm6350_sspp),
+>> +	.sspp = sm6350_sspp,
+>> +	.mixer_count = ARRAY_SIZE(sm6350_lm),
+>> +	.mixer = sm6350_lm,
+>> +	.dspp_count = ARRAY_SIZE(sm6350_dspp),
+>> +	.dspp = sm6350_dspp,
+>> +	.pingpong_count = ARRAY_SIZE(sm6350_pp),
+>> +	.pingpong = sm6350_pp,
+>> +	.intf_count = ARRAY_SIZE(sm6350_intf),
+>> +	.intf = sm6350_intf,
+>> +	.vbif_count = ARRAY_SIZE(sm6350_vbif),
+>> +	.vbif = sm6350_vbif,
+>> +	.reg_dma_count = 1,
+>> +	.dma_cfg = &sm8250_regdma,
+>> +	.perf = &sm6350_perf_data,
+>> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+>> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
+>> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+>> +		     BIT(MDP_INTF0_INTR) | \
+>> +		     BIT(MDP_INTF1_INTR)
+>> +};
+>> +
+>> +#endif
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> index db558a9ae36e..52750b592b36 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> @@ -806,6 +806,7 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
+>>  #include "catalog/dpu_6_0_sm8250.h"
+>>  #include "catalog/dpu_6_2_sc7180.h"
+>>  #include "catalog/dpu_6_3_sm6115.h"
+>> +#include "catalog/dpu_6_4_sm6350.h"
+>>  #include "catalog/dpu_6_5_qcm2290.h"
+>>  
+>>  #include "catalog/dpu_7_0_sm8350.h"
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> index 756bff1d2185..f9611bd75e02 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> @@ -320,6 +320,8 @@ enum dpu_qos_lut_usage {
+>>  	DPU_QOS_LUT_USAGE_LINEAR,
+>>  	DPU_QOS_LUT_USAGE_MACROTILE,
+>>  	DPU_QOS_LUT_USAGE_NRT,
+>> +	DPU_QOS_LUT_USAGE_CWB,
+>> +	DPU_QOS_LUT_USAGE_MACROTILE_QSEED,
+>>  	DPU_QOS_LUT_USAGE_MAX,
+>>  };
+>>  
+>> @@ -880,6 +882,7 @@ extern const struct dpu_mdss_cfg dpu_sc8180x_cfg;
+>>  extern const struct dpu_mdss_cfg dpu_sm8250_cfg;
+>>  extern const struct dpu_mdss_cfg dpu_sc7180_cfg;
+>>  extern const struct dpu_mdss_cfg dpu_sm6115_cfg;
+>> +extern const struct dpu_mdss_cfg dpu_sm6350_cfg;
+>>  extern const struct dpu_mdss_cfg dpu_qcm2290_cfg;
+>>  extern const struct dpu_mdss_cfg dpu_sm8350_cfg;
+>>  extern const struct dpu_mdss_cfg dpu_sc7280_cfg;
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 0e7a68714e9e..46be7ad8d615 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -1286,6 +1286,7 @@ static const struct of_device_id dpu_dt_match[] = {
+>>  	{ .compatible = "qcom,sc8180x-dpu", .data = &dpu_sc8180x_cfg, },
+>>  	{ .compatible = "qcom,sc8280xp-dpu", .data = &dpu_sc8280xp_cfg, },
+>>  	{ .compatible = "qcom,sm6115-dpu", .data = &dpu_sm6115_cfg, },
+>> +	{ .compatible = "qcom,sm6350-dpu", .data = &dpu_sm6350_cfg, },
+>>  	{ .compatible = "qcom,sm8150-dpu", .data = &dpu_sm8150_cfg, },
+>>  	{ .compatible = "qcom,sm8250-dpu", .data = &dpu_sm8250_cfg, },
+>>  	{ .compatible = "qcom,sm8350-dpu", .data = &dpu_sm8350_cfg, },
+>>
+>> -- 
+>> 2.40.0
+>>
