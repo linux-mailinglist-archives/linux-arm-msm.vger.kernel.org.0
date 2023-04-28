@@ -2,131 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA95C6F1203
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 08:55:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F3B16F1221
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 09:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345368AbjD1Gz4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 02:55:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54094 "EHLO
+        id S230137AbjD1HLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 03:11:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230187AbjD1Gzz (ORCPT
+        with ESMTP id S229680AbjD1HLG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 02:55:55 -0400
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7FA1BF8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 23:55:54 -0700 (PDT)
-Received: by mail-vs1-xe2f.google.com with SMTP id ada2fe7eead31-42ff08ab61dso2810443137.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Apr 2023 23:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1682664953; x=1685256953;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=02MWxkaQdLRTYwyy27lw5gzanHvXJVQsMktOlzAmIEM=;
-        b=ebeNvPj0ds7czi+movITwBF+RYZUj9k6IwRy5acHyTPjgL4ttUoayc4qtQ8Y1i721n
-         cWVC/OmgHvRifsKHa+q0LUntGu96Do5gqdhBHWiXUtyYF0AB6MHKJGHmatJiZHLaqJ5c
-         HNJBYH1iJcFkIZE3hd7dls2452H4HRjWJWbSjhMFOsOS3WuXgWTpGJNB+HzsiFpPt6zw
-         WpEPBkP6XP3lVja50lQsymE4YNEDI+uahKtiJcMg2/22Q78D3GZJP5zkzX93xkWXi6Ji
-         hwrGOSVhvlYL38Zp0bBOoRfuHGo3h1vanHPuQpBXPJxeDVcNGATvwUsqM01svL3BZagM
-         cNcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682664953; x=1685256953;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=02MWxkaQdLRTYwyy27lw5gzanHvXJVQsMktOlzAmIEM=;
-        b=lfp8VLtasL5WjlpnvYIONFLmxTtCSZU+A3D41zs8GJ7QacAdWqq5dRvUmdVqttow/r
-         2MybPcR5PPgNLmOU+STNzjBaxv8iRk6z3XEW2wgqZrLNN4QAwLGIIW24uJsnRmqYkVmw
-         MTJLv1Okc502lhfxokwI8/QidOCv/nBkfs8hJefgGfqdH5M73S/Cx5hm/MolQ1DosSOe
-         KBMWAW0Bll7BKQrg8YdJukEe6ofJCj9aT0EMvwIr3XdtfF9i0hLWXC5Incuzw9I4xVSJ
-         2u2boIygIbTO1q5tRT+gbSIcRpDjry7kbkwMeb77Vlb0xIsrsvnEpH7V56iZCAxHEfUq
-         QEdw==
-X-Gm-Message-State: AC+VfDxkS5t64wYPSbKaoWRh2/yDvggunMxbVfuIgiRVdkCicwlDPYUU
-        xwLsRt7/xf+a/S2HRgDoawXUWLyuXIDCYcYvXJfeWA==
-X-Google-Smtp-Source: ACHHUZ6EamEmWhWbB0deRP2ZL3ue6TcG8tSIpzkQ/uaEtAe82grayOte7QF7M0W1v9o43SUVKKxggkSC1iQSMRAIYAE=
-X-Received: by 2002:a05:6102:34ca:b0:42e:5b8c:7a2b with SMTP id
- a10-20020a05610234ca00b0042e5b8c7a2bmr1736524vst.9.1682664953609; Thu, 27 Apr
- 2023 23:55:53 -0700 (PDT)
+        Fri, 28 Apr 2023 03:11:06 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F4671FC6;
+        Fri, 28 Apr 2023 00:11:02 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33S6eC60017888;
+        Fri, 28 Apr 2023 07:09:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=r4S9H1vwWoK1+kiA09br/m7C1/tdA0ux38+UdY8IJC8=;
+ b=TRgDOuAiuEa7voWD8LojLP65cAU+eYPwSaHvdK8MyLjAWhoKHKVjVex0r8j+e6P6NBP8
+ A3ckaa63DGxZrxEQVe3dsuVAhpsUloRGI5SvHgnx8yFZmzJgN9JispzTuwEIZFSG1Vi2
+ 5eIYT+CBb95fCbyHFrCyZcxT6Nhko+nw/AS1oj3l0mspDNjiOFGxAkWmGEPsIdR8Bprw
+ N54eM/U5n29mxQAbexncaXDiPBO0Kd+FuelWQqrnCKhZwTs5hsoSyuWdcLAPSGerrxp/
+ g/RiwBtmVgjjuH43HPbJSqUpUYM6Hcv4KQRXVilx6YLej+qiYdW9tMR/2JgRTD1LRNt/ Ow== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7wq89b8t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Apr 2023 07:09:52 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33S79pGx032698
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Apr 2023 07:09:51 GMT
+Received: from [10.253.9.121] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 28 Apr
+ 2023 00:09:45 -0700
+Message-ID: <336ce7b0-45f6-85e1-14a3-9e8c94a2f6fd@quicinc.com>
+Date:   Fri, 28 Apr 2023 15:09:43 +0800
 MIME-Version: 1.0
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-6-quic_bjorande@quicinc.com> <CAJB8c04ah3YfK2VGxDhHMHK4KVJ7kZQv0b5JfPBu7jOk3mFQRA@mail.gmail.com>
- <20230427195545.GC870858@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20230427195545.GC870858@hu-bjorande-lv.qualcomm.com>
-From:   "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
-Date:   Fri, 28 Apr 2023 07:55:41 +0100
-Message-ID: <CAJB8c06zxy7Q9eSsnpOsW9ymPsCyWZ4p9oE3b4sP3YGPTiLT_A@mail.gmail.com>
-Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 2/3] dt-bindings: arm: Add Coresight Dummy Trace
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20230422073714.38844-1-quic_hazha@quicinc.com>
+ <20230422073714.38844-3-quic_hazha@quicinc.com>
+ <20230425184654.GA2063541-robh@kernel.org>
+From:   Hao Zhang <quic_hazha@quicinc.com>
+In-Reply-To: <20230425184654.GA2063541-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: iS1NqngkcR_LxwoJA8zQZjsldTzjbUq6
+X-Proofpoint-ORIG-GUID: iS1NqngkcR_LxwoJA8zQZjsldTzjbUq6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-28_02,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 mlxlogscore=935
+ bulkscore=0 suspectscore=0 phishscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304280057
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Apr 27, 2023 at 8:56=E2=80=AFPM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> On Wed, Apr 26, 2023 at 11:33:40AM +0100, Bryan O'Donoghue wrote:
-> > On Tue, Apr 25, 2023 at 4:40=E2=80=AFAM Bjorn Andersson
-> > <quic_bjorande@quicinc.com> wrote:
-> > >
-> [..]
-> > You need to add some or all of these
-> >        select DRM_DISPLAY_DP_HELPER
-> >        select DRM_DISPLAY_HELPER
-> >        select DRM_DP_AUX_BUS
-> >        select DRM_KMS_HELPER
-> >        select DRM_MIPI_DSI
-> >        select DRM_PANEL
-> >
-> >
-> > /opt/linaro/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch=
-64-linux-gnu-ld:
-> > Unexpected GOT/PLT entries detected!
-> > /opt/linaro/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin/aarch=
-64-linux-gnu-ld:
-> > Unexpected run-time procedure linkages detected!
-> > drivers/phy/qualcomm/phy-qcom-qmp-combo.o: In function
-> > `qmp_combo_bridge_attach':
-> > phy-qcom-qmp-combo.c:(.text+0xb50): undefined reference to
-> > `devm_drm_of_get_bridge'
-> > phy-qcom-qmp-combo.c:(.text+0xb6c): undefined reference to `drm_bridge_=
-attach'
-> > drivers/phy/qualcomm/phy-qcom-qmp-combo.o: In function `qmp_combo_probe=
-':
-> > phy-qcom-qmp-combo.c:(.text+0x13fc): undefined reference to
-> > `devm_drm_bridge_add'
-> >
->
-> You're correct, and TYPEC. Realized that I forgot these once I had
-> posted the patches. Will figure out the actual set for v2.
->
-> Thanks,
-> Bjorn
+Hi Rob,
 
-So I added CONFIG_DRM to Kconfig for the combo phy and then replaced
-the old patch we had with your series.
+On 4/26/2023 2:46 AM, Rob Herring wrote:
+> On Sat, Apr 22, 2023 at 03:37:13PM +0800, Hao Zhang wrote:
+>> Add new coresight-dummy.yaml file describing the bindings required
+>> to define coresight dummy trace in the device trees.
+>>
+>> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
+>> ---
+>>   .../bindings/arm/arm,coresight-dummy.yaml     | 101 ++++++++++++++++++
+>>   1 file changed, 101 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
+>> new file mode 100644
+>> index 000000000000..48d864aefaaa
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
+>> @@ -0,0 +1,101 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/arm/arm,coresight-dummy.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: ARM Coresight Dummy component
+>> +
+>> +description: |
+>> +  Coresight Dummy Trace Module is for the specific devices that kernel
+>> +  don't have permission to access or configure, e.g., CoreSight TPDMs
+>> +  on Qualcomm platforms. So there need driver to register dummy devices
+>> +  as Coresight devices. It may also be used to define components that
+>> +  may not have any programming interfaces (e.g, static links), so that
+>> +  paths can be established in the driver. Provide Coresight API for
+>> +  dummy device operations, such as enabling and disabling dummy devices.
+>> +  Build the Coresight path for dummy sink or dummy source for debugging.
+>> +
+>> +  The primary use case of the coresight dummy is to build path in kernel
+>> +  side for dummy sink and dummy source.
+> 
+> I could imagine the OS wanting to know more information than just
+> 'dummy'. Is data from an unknown source useful? Likewise, don't you want
+> to know where you are sending data too?
+> 
+The necessary information for Coresight is connection between different 
+components, so there is in-port for dummy sink and out-port for dummy 
+source. We can get the whole path from the source to sink in device tree.
 
-Works for me with my TCPM set with zero changes - aside from slotting
-the old PHY patch with your expanded series on SM8250
+>> +
+>> +maintainers:
+>> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+>> +  - Tao Zhang <quic_taozha@quicinc.com>
+>> +  - Hao Zhang <quic_hazha@quicinc.com>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    oneOf:
+>> +      - enum:
+> 
+> Don't need oneOf as there is only one entry.
+> 
+OK, I will remove it in the next version of patch.
+>> +          - arm,coresight-dummy-sink
+>> +          - arm,coresight-dummy-source
+>> +
+>> +  out-ports:
+>> +    $ref: /schemas/graph.yaml#/properties/ports
+>> +
+>> +    properties:
+>> +      port:
+>> +        description: Output connection from the source to Coresight
+>> +          Trace bus.
+>> +        $ref: /schemas/graph.yaml#/properties/port
+>> +
+>> +  in-ports:
+>> +    $ref: /schemas/graph.yaml#/properties/ports
+>> +
+>> +    properties:
+>> +      port:
+>> +        description: Input connection from the Coresight Trace bus to
+>> +          dummy sink, such as Embedded USB debugger(EUD).
+>> +        $ref: /schemas/graph.yaml#/properties/port
+>> +
+>> +required:
+>> +  - compatible
+>> +
+>> +if:
+>> +  # If the compatible contains the below value
+>> +  properties:
+>> +    compatible:
+>> +      contains:
+>> +        const: arm,coresight-dummy-sink
+>> +
+>> +then:
+>> +  required:
+>> +    - in-ports
+>> +
+>> +else:
+>> +  required:
+>> +    - out-ports
+> 
+> This still allows the nodes when they don't make sense. I think this
+> needs to be 2 schema files. The only common part is 'compatible' and
+> that's not even shared.
+>  > Rob
+Dummy driver is very simple, the only goal of it is to build a path in 
+kernel for subsystem, so we want to handle dummy source and sink in a 
+generic framework.
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-04-2=
-8-pm8150b-tcpm-qcom-wrapper-typec-mux-bjorn
+Thanks,
+Hao
