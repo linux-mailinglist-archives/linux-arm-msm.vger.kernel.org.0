@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DCE36F150D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 12:11:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41406F1511
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 12:11:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346042AbjD1KLY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 06:11:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53372 "EHLO
+        id S1345563AbjD1KLu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 06:11:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346044AbjD1KLP (ORCPT
+        with ESMTP id S1346018AbjD1KLr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 06:11:15 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3972D55A1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 03:11:11 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f315735514so53828445e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 03:11:11 -0700 (PDT)
+        Fri, 28 Apr 2023 06:11:47 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 588AA558B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 03:11:42 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f182d745deso95929745e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 03:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682676669; x=1685268669;
+        d=linaro.org; s=google; t=1682676701; x=1685268701;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wXzFdP+bsCom1eIU4RjGMEhTHDjKgk0txNlrf8+QKjQ=;
-        b=BTJadbAUme0Sy1hlHP/K4faG9iF+975AHqUFdEcWjuUQLtvs65XD2KY+1siMxyE9/l
-         o6FKRidLgEQa3A9pzVkgzokqaVHcHAnrb+4s1Q4UEVWfLL0/1joAGQSDuB+dlS23akBL
-         eyqrZ39sZx5ejMhovbd+YTearPccBC6fmWVBlfU4oU9YrcIQtMQk9gn4ejgAdj6FPium
-         Ekk9tv02jYMShgZvwUbLrSolY+Hp2a23GnYESMDuGqgnAoIfs5r83sLzmZ+IWdbiAFP8
-         AXtXAzYYNSLywuEY5PSdMDNAQYWU2M92PldMuAQnBZomC5xqs2niHsqIvpYctk5pV5HT
-         rwLw==
+        bh=q5PNyl7Qa+2k8WRnY9dW4fNFMkgSoteNciaMZ6zfFDw=;
+        b=VTdQO/1C4u+JFiRMxgn6PkFFCQ79t9jaDpVhC+ovcyG2Gk43P+tlD6UkXtqf6HtEd0
+         MDnv9aXGWYEyoAXWpyTtBZk5+CdGZDmMnGMSbAYrhEZXs8a9Hm3PASSBpxpLAkxnDxSC
+         B4tAPeeDb+sVeupa9FY7X/LcYmbbNfzUK1Z9n9Lt9wcN8+Edepx5Qh6oSj5oHUYjUYc2
+         r/bB6RtarF5RbeZT9rwaQKnR9BiO+J1f7lt3kbPtCyRcoS93pYWXpSC85DNitpACdI06
+         e8+Am4rTx2M76vOanRkSuYbGBDQCoVQC7jTZIf1pOO8u5XfTtd16DOA4TlPLa2XXTF8k
+         GzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682676669; x=1685268669;
+        d=1e100.net; s=20221208; t=1682676701; x=1685268701;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wXzFdP+bsCom1eIU4RjGMEhTHDjKgk0txNlrf8+QKjQ=;
-        b=QGNC7gdjv7zTcl3H5nbZeUedy19aRe5Z9s3/IoEHvlEHDSb/VI5qXMQluSf9SPaAta
-         U1gERuzXIF/jxHuFhgVVDBaGwjg8g5VUH+IGHQcKlPO5+nnrAg/ZFefHT9ravvr1mffI
-         J9xGTvAWmKZeVRNttE85u+zrsWXOIo6FF1LidtqEnywFccaZ0yOB/kV1yk8JQK4pRkZK
-         6WggL72P4IFV0amkOLIt64Gop2fF4B+8tXCW25qwGdeCpZGS7PT/G50cMl5GKxdQK55e
-         qBKiTZRccxzMIPnpmPHVOLDjPMR0De7xHfYOVaWZkw7EaJGq8o9xPgzeFjdDAFYjUeZt
-         Da3w==
-X-Gm-Message-State: AC+VfDxs/xSK+OhfcLssRuFFvNnamwRbNqi5skouRCeonuWbC3Enwyn4
-        6+UCyNFT8S2s7kHTDHeFnipMBA==
-X-Google-Smtp-Source: ACHHUZ40io/HDINCoZegM4FbjUwOrQojqqHLfzHukPg8uxIUh+gUZC94V0ajzwAV5EvY1bNvrk3wgQ==
-X-Received: by 2002:a7b:cb86:0:b0:3f1:8129:2c53 with SMTP id m6-20020a7bcb86000000b003f181292c53mr3712923wmi.16.1682676669381;
-        Fri, 28 Apr 2023 03:11:09 -0700 (PDT)
-Received: from [172.23.3.169] ([195.167.132.10])
-        by smtp.gmail.com with ESMTPSA id x8-20020a05600c21c800b003f2390bdd0csm15200964wmj.32.2023.04.28.03.11.08
+        bh=q5PNyl7Qa+2k8WRnY9dW4fNFMkgSoteNciaMZ6zfFDw=;
+        b=JGBC0MRFcDmguEX1LnPkIYtVYS613S4tYLRyPxQIZmqNMaQcXDsKDz1ucHNp2xDpha
+         IN7LVrVps7+9UPjcEZ/TeTVEXl0fm4W0RV4mttqgTVHI+KPvSeOMNrR/lwcOP7287WXI
+         /tNOFtD1HEOdRCsMTpu7GeuPXD80iHZZQDqSu7S76PEpyInl9XR63ZCpxp3fdn8oF39c
+         e0ildK5sjWTVHwtJ6aOUxBavDDEB4O8VQN+5sVCjyY2cqHpEVNyIMEg0IfII5zeCUgKv
+         iF4FZUEFrZEJ+A7qmtBxCaIw9hHEGfVoxzNZuoldaadaR9dZFngj0bSpsj9H9wUCNlBG
+         TkAw==
+X-Gm-Message-State: AC+VfDwZT//zolE9JXy2+Xzgn5j061wyG+f6rQMngTQwtalQwSIHOPuP
+        HezDHAVXDsL32xLkkNl07MVHzw==
+X-Google-Smtp-Source: ACHHUZ5jI/jsEazqgT7ovCnGPnDOi5yzq8Fj3ZnTQaBIv2CxZvT3M0ZTVgGRc0kycsGz3HJGzZCH5A==
+X-Received: by 2002:a1c:f217:0:b0:3f2:5be3:cd6a with SMTP id s23-20020a1cf217000000b003f25be3cd6amr3470908wmc.4.1682676700769;
+        Fri, 28 Apr 2023 03:11:40 -0700 (PDT)
+Received: from [172.23.3.169] ([31.221.30.162])
+        by smtp.gmail.com with ESMTPSA id c10-20020a7bc2aa000000b003f080b2f9f4sm27035202wmk.27.2023.04.28.03.11.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Apr 2023 03:11:09 -0700 (PDT)
-Message-ID: <7d481097-9ffc-6ac5-a53e-09772b2d5b33@linaro.org>
-Date:   Fri, 28 Apr 2023 11:11:07 +0100
+        Fri, 28 Apr 2023 03:11:40 -0700 (PDT)
+Message-ID: <918e1b13-c274-a318-9049-a1c72bf12af0@linaro.org>
+Date:   Fri, 28 Apr 2023 11:11:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 3/4] Input: pwm-vibra - add support for enable GPIO
+Subject: Re: [PATCH 4/4] ARM: dts: qcom: msm8974-hammerhead: Add vibrator
 Content-Language: en-US
 To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
         phone-devel@vger.kernel.org,
@@ -70,15 +70,15 @@ To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
 Cc:     linux-input@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20230427-hammerhead-vibra-v1-0-e87eeb94da51@z3ntu.xyz>
- <20230427-hammerhead-vibra-v1-3-e87eeb94da51@z3ntu.xyz>
+ <20230427-hammerhead-vibra-v1-4-e87eeb94da51@z3ntu.xyz>
 From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20230427-hammerhead-vibra-v1-3-e87eeb94da51@z3ntu.xyz>
+In-Reply-To: <20230427-hammerhead-vibra-v1-4-e87eeb94da51@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,69 +88,70 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 27/04/2023 21:34, Luca Weiss wrote:
-> Some pwm vibrators have a dedicated enable GPIO that needs to be set
-> high so that the vibrator works. Add support for that optionally.
+> The Nexus 5 has a vibrator connected to the clock output of GP1_CLK
+> which we can use with the clk-pwm driver, then we can use that pwm with
+> pwm-vibrator to get haptics functionality.
+> 
+> This patch is based on Brian Masney's previous patch with clk-vibrator.
 > 
 > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->   drivers/input/misc/pwm-vibra.c | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
+>   .../dts/qcom-msm8974-lge-nexus5-hammerhead.dts     | 35 ++++++++++++++++++++++
+>   1 file changed, 35 insertions(+)
 > 
-> diff --git a/drivers/input/misc/pwm-vibra.c b/drivers/input/misc/pwm-vibra.c
-> index c08971c97ad6..2ba035299db8 100644
-> --- a/drivers/input/misc/pwm-vibra.c
-> +++ b/drivers/input/misc/pwm-vibra.c
-> @@ -11,6 +11,7 @@
->    *  Copyright (C) 2010, Lars-Peter Clausen <lars@metafoo.de>
->    */
+> diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+> index ab35f2d644c0..fea8a6be9021 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+> +++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+> @@ -41,6 +41,25 @@ key-volume-down {
+>   		};
+>   	};
 >   
-> +#include <linux/gpio/consumer.h>
->   #include <linux/input.h>
->   #include <linux/kernel.h>
->   #include <linux/module.h>
-> @@ -23,6 +24,7 @@
->   
->   struct pwm_vibrator {
->   	struct input_dev *input;
-> +	struct gpio_desc *enable_gpio;
->   	struct pwm_device *pwm;
->   	struct pwm_device *pwm_dir;
->   	struct regulator *vcc;
-> @@ -48,6 +50,8 @@ static int pwm_vibrator_start(struct pwm_vibrator *vibrator)
->   		vibrator->vcc_on = true;
->   	}
->   
-> +	gpiod_set_value_cansleep(vibrator->enable_gpio, 1);
+> +	clk_pwm: pwm {
+> +		compatible = "clk-pwm";
+> +		clocks = <&mmcc CAMSS_GP1_CLK>;
 > +
->   	pwm_get_state(vibrator->pwm, &state);
->   	pwm_set_relative_duty_cycle(&state, vibrator->level, 0xffff);
->   	state.enabled = true;
-> @@ -80,6 +84,8 @@ static void pwm_vibrator_stop(struct pwm_vibrator *vibrator)
->   		pwm_disable(vibrator->pwm_dir);
->   	pwm_disable(vibrator->pwm);
->   
-> +	gpiod_set_value_cansleep(vibrator->enable_gpio, 0);
+> +		pinctrl-0 = <&vibrator_pin>;
+> +		pinctrl-names = "default";
 > +
->   	if (vibrator->vcc_on) {
->   		regulator_disable(vibrator->vcc);
->   		vibrator->vcc_on = false;
-> @@ -142,6 +148,16 @@ static int pwm_vibrator_probe(struct platform_device *pdev)
->   		return err;
->   	}
->   
-> +	vibrator->enable_gpio = devm_gpiod_get_optional(&pdev->dev, "enable",
-> +							GPIOD_OUT_LOW);
-> +	err = PTR_ERR_OR_ZERO(vibrator->enable_gpio);
-> +	if (err) {
-> +		if (err != -EPROBE_DEFER)
-> +			dev_err(&pdev->dev, "Failed to request enable gpio: %d\n",
-> +				err);
-> +		return err;
-> +	}
+> +		#pwm-cells = <2>;
+> +	};
 > +
->   	vibrator->pwm = devm_pwm_get(&pdev->dev, "enable");
->   	err = PTR_ERR_OR_ZERO(vibrator->pwm);
->   	if (err) {
+> +	vibrator {
+> +		compatible = "pwm-vibrator";
+> +		pwms = <&clk_pwm 0 100000>;
+> +		pwm-names = "enable";
+> +
+> +		vcc-supply = <&pm8941_l19>;
+> +		enable-gpios = <&tlmm 60 GPIO_ACTIVE_HIGH>;
+> +	};
+> +
+>   	vreg_wlan: wlan-regulator {
+>   		compatible = "regulator-fixed";
+>   
+> @@ -637,6 +656,22 @@ shutdown-pins {
+>   			function = "gpio";
+>   		};
+>   	};
+> +
+> +	vibrator_pin: vibrator-state {
+> +		core-pins {
+> +			pins = "gpio27";
+> +			function = "gp1_clk";
+> +			drive-strength = <6>;
+> +			bias-disable;
+> +		};
+> +
+> +		enable-pins {
+> +			pins = "gpio60";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +	};
+>   };
+>   
+>   &usb {
 > 
