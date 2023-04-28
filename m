@@ -2,108 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D87276F2030
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 23:41:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93EFD6F20E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 00:37:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346186AbjD1Vlq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 17:41:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54626 "EHLO
+        id S1346285AbjD1Wh3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 18:37:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346220AbjD1Vlp (ORCPT
+        with ESMTP id S230225AbjD1Wh2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 17:41:45 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D89E726BF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 14:41:42 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-2f939bea9ebso219131f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 14:41:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682718101; x=1685310101;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=E1Eb5RgOQ6G6T/ToVAmMxv+nVh8+Egk1H9oMyEZ/kPI=;
-        b=B/Iiy08dVrTDqQP14DEVLVYhm+dghBPD41nm5Po2ZOuME8qd4mRykxC/KUS1dma/B8
-         OYe4mDjjXpKf/mjMk/TINQ2iqlM7f9KPy3QRKOW4LctPN9VjIQFkKZ9bMxW3L71cjS4n
-         5Vg0L1BGlUKVQxuvhloewhVnEI5cwoh1WLquTnvm8+uN8LOIW8L5mxApE/yg0hq+CPvf
-         AxJx5nX4jrGwm5xKVJ4ZcxJLOV8AzTqeA5Rlp/1R318ochH9XwDOwv5ykAM+4socbTnM
-         3GDRpzhwcs1Yc2y0k6suRwULbbgiY2ZDeB51EF4xiUDHCQlaAuVq2nInSiOXRthJQS+q
-         hOgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682718101; x=1685310101;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E1Eb5RgOQ6G6T/ToVAmMxv+nVh8+Egk1H9oMyEZ/kPI=;
-        b=Hn85nQDNl6tJgXPaCO6RM7PbJquE+rCvqPpxeEtbCUDEkv0O+W7U1VZqu5c3W3cxtN
-         hOV5onN5o6W2EPqpvhtdlxOLw+4Trq5B4TS6pO7TsLrl5prv8C8q7w/8m5EfEQ6Sogd5
-         Yk5hr/8j78rSDUFoYqzTRFJ+490yRfq/89ETAvXXgv6+vLTNozaFukVDXyLa32ivhp8r
-         oei7EnjxoPDA36wrIPR+V8+z6Z0NzA8cUtFEWzXHUawnY38+i1QbO4TP2Zt6mwTUQN1Q
-         s3QL91Ehgznyt7VRdTRkixCHzMnm1LLSI0/CZRhUC9P3q/UtedK3h7xp7R2FM+XcbuO3
-         tG3w==
-X-Gm-Message-State: AC+VfDzWdVuX69y+Q+6VvoCCPBcYoOuBrBlBgtVudIaHexlrnKs+6ea7
-        FVLfzgiOUlSQqY1XMzF8esN1qQ==
-X-Google-Smtp-Source: ACHHUZ5RGdr21sjT6mATshpr/YItNaJEnWe3GQDudidU/5n3YX0H1yKJh85dhh6eziC69IuYXUMV6Q==
-X-Received: by 2002:adf:e481:0:b0:2ee:f1f0:14bb with SMTP id i1-20020adfe481000000b002eef1f014bbmr5138651wrm.49.1682718101303;
-        Fri, 28 Apr 2023 14:41:41 -0700 (PDT)
-Received: from [10.6.26.43] ([212.140.138.202])
-        by smtp.gmail.com with ESMTPSA id d15-20020adfe84f000000b002fb60c7995esm22205929wrn.8.2023.04.28.14.41.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Apr 2023 14:41:40 -0700 (PDT)
-Message-ID: <3dc6e993-bcca-4e0d-5aca-686fcc8b5b73@linaro.org>
-Date:   Sat, 29 Apr 2023 00:41:39 +0300
+        Fri, 28 Apr 2023 18:37:28 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F66E40;
+        Fri, 28 Apr 2023 15:37:27 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33SMbLOs029846;
+        Fri, 28 Apr 2023 22:37:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=gGNMIvLOzmjsnsVVRS2uN4yp1bQxftElJ84j2epJmAA=;
+ b=YEn6VPIQb1SkUnla3oErLFJ2aCdiUFuSfEpsE4qnAizdzr3w2Ux3GwrefdbJNklLEjlb
+ d430y8/6kCfKCfxR55MZ7QeCz4WSRIWCN9iHBL8s3EYBMxtYM2mkrHV4JbQz0zRj8kr/
+ C1yaoZEsaV7zw/2u/z66fB++BuVuuLRi5eGDvaXkK2i/bBS4mOhkR5uJd28SUGsm4SS9
+ l7IMXOH43esziDNQ1mlXELCkx8uDCwZUxJangwW0nMpIIfP3Itc8ITEymX5hfK2BPIvF
+ zF/e2JveajVYfGCY4xUvVSWb8xi05NNdIPI3JuL2g6CYK9IKK85/GdiBw1gwiURU5urw aQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8abpt85h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Apr 2023 22:37:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SMbJSl032506
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 28 Apr 2023 22:37:19 GMT
+Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 28 Apr 2023 15:37:19 -0700
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+CC:     <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <marijn.suijten@somainline.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 1/4] drm/msm/dpu: remove DPU_DSPP_GC handling in dspp flush
+Date:   Fri, 28 Apr 2023 15:36:43 -0700
+Message-ID: <20230428223646.23595-1-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
-Content-Language: en-GB
-To:     Adrien Thierry <athierry@redhat.com>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
- <ZEcEGJiikEC2wIVE@fedora>
- <CAA8EJpr27=2jAXbamN6J7yF+7G=L5Af8+XReB5UnFuihcEwMQA@mail.gmail.com>
- <ZEgV+H3yZLp48Dlc@fedora>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <ZEgV+H3yZLp48Dlc@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: feiBuX8HmrmS_RghykE7D3NfL7xPtjKO
+X-Proofpoint-GUID: feiBuX8HmrmS_RghykE7D3NfL7xPtjKO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-04-28_08,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 spamscore=0 impostorscore=0 mlxscore=0
+ bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ mlxlogscore=752 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2304280188
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/04/2023 21:03, Adrien Thierry wrote:
-> Hi Dmitry,
-> 
->> Semi-random suggestion, but could you please try using
->> clk_regmap_phy_mux/clk_regmap_phy_mux_ops for USB pipe clk src?
-> 
-> Which specific clock are you refering to? I'm not very familiar with
-> those, in the device tree I'm seeing "pipe" clocks for usb_0 and usb_1
-> phys, but not for usb_2, which is the one that's causing issues.
-> 
+Gamma correction blocks (GC) are not used today so lets remove
+the usage of DPU_DSPP_GC in the dspp flush to make it easier
+to remove GC from the catalog.
 
-Ah, I see. Could you please try adding the 
-'qcom,select-utmi-as-pipe-clk' property to the usb_2 host node and 
-running the test again?
+We can add this back when GC is properly supported in DPU with
+one of the standard DRM properties.
 
+changes in v3:
+	- drop the link tag which was auto added before
 
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index bbdc95ce374a..57adaebab563 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -336,9 +336,6 @@ static void dpu_hw_ctl_update_pending_flush_dspp_sub_blocks(
+ 	case DPU_DSPP_PCC:
+ 		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(4);
+ 		break;
+-	case DPU_DSPP_GC:
+-		ctx->pending_dspp_flush_mask[dspp - DSPP_0] |= BIT(5);
+-		break;
+ 	default:
+ 		return;
+ 	}
 -- 
-With best wishes
-Dmitry
+2.40.1
 
