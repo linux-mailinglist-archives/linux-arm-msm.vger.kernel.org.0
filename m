@@ -2,113 +2,328 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D30966F1CBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 18:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AD7D6F1EDA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Apr 2023 21:49:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346192AbjD1QjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 12:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56370 "EHLO
+        id S230402AbjD1Ttu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 15:49:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjD1QjE (ORCPT
+        with ESMTP id S1346407AbjD1Ttt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 12:39:04 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19CFA46A0;
-        Fri, 28 Apr 2023 09:39:03 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33S6daWg002201;
-        Fri, 28 Apr 2023 16:38:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=TqQJkjTwoWF4dMGDBX0d8aMt6DnlZbBLw5na6S7xh40=;
- b=A9lwD8qAT5QnEHd3CRQQdRbi7WlSVzMZ9vYfDscd7pmLX/GyQs3kEpBndulaXNOQWs2C
- ayw5bjmPJ+/85ny8VdW/gXuIg4WLTv4CcGdIScHVEsEpIEsM6GAzH+G24zzLCxBMu8ck
- M1KYKNaSwMlZ3NF6VLKa4aZ3YiSi2rKRRHSaMkfOJya4fLMrwhQtdH1tIo/0ahgpy558
- wzPvJWATLYyJ4eWfwn96uR5J5KhXWZzolm6c0Ea4TFM9/QbHbGunnW+HMjN1bM5sM2D6
- epgTHCrBqni/wjgjo+iLcpMdTWij5VJXBvwbiI6OXMTxp9ZKBJdzvpXEJIzziAkIAl4Q +g== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q7xdyaxky-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 16:38:49 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SGcnL5020862
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 16:38:49 GMT
-Received: from [10.110.124.105] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 28 Apr
- 2023 09:38:47 -0700
-Message-ID: <ca0d68b9-b81c-ad3f-2835-9661cc946de2@quicinc.com>
-Date:   Fri, 28 Apr 2023 09:38:46 -0700
+        Fri, 28 Apr 2023 15:49:49 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF3F1BCD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 12:49:46 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-54fc1824f0bso4067387b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 12:49:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682711386; x=1685303386;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S/ndJlRpl2jIqqzoCVeqrKVlFCiLWS3lHrlVMMffJAU=;
+        b=y4ls9Mo3jpN/beT51E7z1jkXP4P+qfI3oczrkApcuzXMQTFL0evI6GAbBqSxmVbttK
+         laipb0M9fNYjxjpA0wDNe1MZHjOdOc+Ll8ovOyM8xrJZ+fZZNBNif7fWW0FvlYgIFGOq
+         CgV+KvGUvf2MErXutLc/EQdEBRzkRjRzE0EUUBID0CF+hoYPB3b/iqtvUXTkBCE6U91d
+         ChzHxWf7UNxW1AxyaLO5XNSr7dFnq+9D3RluN2QlrB84Jr3pf2bvJLudUHvPuReNGHB+
+         kRpavEImX3L+YuH1SlQfsnm4lP1rUNuwbZU3hCYasvV2loM8I8/k7kwfb97FCWB42ylS
+         txBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682711386; x=1685303386;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S/ndJlRpl2jIqqzoCVeqrKVlFCiLWS3lHrlVMMffJAU=;
+        b=Vd3undWdFvfmJtqGljdO+XT+Syk1CNAA5LIjtO3XaX7uVQZ+rYOnefuM7kKnOQT/Vh
+         c+9XtB5WgqT9qvhDH0CDZmd02kK1H7zi2D47dycgOoaXEJ7NF4nEaIlw6z8MW8v8n7zH
+         HFZ0MrOKMJLRdJXin4yBnMUQ1tFYEp0Jyr9Iwjp+CxanyII69KTKC1w5jaP12acSuP+0
+         E34kl5GjclIYs1ExybWs4hphwkOLclPXba1I1mMBOD7jq2NNSNgG87gyptRUc9B5PFn7
+         IrWajIinMOS9kKNUxgXNip2eGNq8A7Y1AMONnFhhNw1g82QFBJsraTLcLgvjoW9ya9bb
+         H96g==
+X-Gm-Message-State: AC+VfDyet7yxgQR0uRee8J+Tl1D5G7KckX5beTviRDZBVdAhT5+/ym3F
+        m/qMfmkembaqsdu7BKW96YibADvW0Yuexz9sFj2uug==
+X-Google-Smtp-Source: ACHHUZ5+zZDhZmQBpQaKcJ+OXWrStnmqq1Ba0mGKcp6Kr+4tTfPfuN7/HvBD5YRWrAfhl6GiSIvreP36ZUwSVFKRksc=
+X-Received: by 2002:a81:4e47:0:b0:559:cbff:4aa2 with SMTP id
+ c68-20020a814e47000000b00559cbff4aa2mr670782ywb.45.1682711385615; Fri, 28 Apr
+ 2023 12:49:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] dt-bindings: display/msm: dsi-controller-main:
- Document qcom,master-dsi and qcom,sync-dual-dsi
-Content-Language: en-US
-To:     Jianhua Lu <lujianhua000@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, Rob Herring <robh@kernel.org>
-References: <20230427122132.24840-1-lujianhua000@gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230427122132.24840-1-lujianhua000@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cCp5ILIbGKeWAEiSCRIOvhfR0isVcKMf
-X-Proofpoint-ORIG-GUID: cCp5ILIbGKeWAEiSCRIOvhfR0isVcKMf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-28_04,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- phishscore=0 adultscore=0 mlxlogscore=999 clxscore=1011 mlxscore=0
- spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304280133
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+References: <cover.1682682753.git.quic_varada@quicinc.com> <1bda63e18f7257f60cc1082b423aca129abfa3b0.1682682753.git.quic_varada@quicinc.com>
+In-Reply-To: <1bda63e18f7257f60cc1082b423aca129abfa3b0.1682682753.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 28 Apr 2023 22:49:34 +0300
+Message-ID: <CAA8EJpq0RXGf8_oBa_XF0+nOg31ouMUVJ3LhNRh_HtmgJvCJHQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: ipq9574: add thermal zone nodes
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4/27/2023 5:21 AM, Jianhua Lu wrote:
-> This fixes warning:
->    sm8250-xiaomi-elish-csot.dtb: dsi@ae94000: Unevaluated properties are not allowed ('qcom,master-dsi', 'qcom,sync-dual-dsi' were unexpected)
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+On Fri, 28 Apr 2023 at 17:53, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> This patch adds thermal zone nodes for the various
+> sensors present in IPQ9574
+>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
-> Changes in v2:
->    - pick up tags
->    - fix typo (need -> needs)
-> 
->   .../bindings/display/msm/dsi-controller-main.yaml    | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 208 ++++++++++++++++++++++++++++=
+++++++
+>  1 file changed, 208 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/=
+qcom/ipq9574.dtsi
+> index 7cd5bdb..a7cb2b4c 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -947,6 +947,214 @@
+>                 };
+>         };
+>
+> +       thermal_zones: thermal-zones {
+> +               tsens_tz_sensor3 {
 
-Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI 
-bindings")
+Please provide sensible names for all thermal zones. Please follow the
+examples in other DT files.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 3>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+
+Can it really go up to 125 =C2=B0C?
+
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+
+Please provide also a passive trip point, so that the passive cooling
+can be engaged.
+
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor4 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 4>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor5 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 5>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor6 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 6>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor7 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 7>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor8 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 8>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor9 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 9>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor10 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 10>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <120000>;
+> +                                       hysteresis =3D <10000>;
+> +                                       type =3D "critical";
+> +                               };
+> +
+> +                               cpu-passive {
+> +                                       temperature =3D <110000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "passive";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor11 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 11>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <120000>;
+> +                                       hysteresis =3D <10000>;
+> +                                       type =3D "critical";
+> +                               };
+> +
+> +                               cpu-passive {
+> +                                       temperature =3D <110000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "passive";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor12 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 12>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <120000>;
+> +                                       hysteresis =3D <10000>;
+> +                                       type =3D "critical";
+> +                               };
+> +
+> +                               cpu-passive {
+> +                                       temperature =3D <110000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "passive";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor13 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 13>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <120000>;
+> +                                       hysteresis =3D <10000>;
+> +                                       type =3D "critical";
+> +                               };
+> +
+> +                               cpu-passive {
+> +                                       temperature =3D <110000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "passive";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor14 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 14>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +
+> +               tsens_tz_sensor15 {
+> +                       polling-delay-passive =3D <0>;
+> +                       polling-delay =3D <0>;
+> +                       thermal-sensors =3D <&tsens 15>;
+> +
+> +                       trips {
+> +                               cpu-critical {
+> +                                       temperature =3D <125000>;
+> +                                       hysteresis =3D <1000>;
+> +                                       type =3D "critical";
+> +                               };
+> +                       };
+> +               };
+> +       };
+> +
+>         timer {
+>                 compatible =3D "arm,armv8-timer";
+>                 interrupts =3D <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_T=
+YPE_LEVEL_LOW)>,
+> --
+> 2.7.4
+>
+
+
+--=20
+With best wishes
+Dmitry
