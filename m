@@ -2,61 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A7EF6F246C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 13:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B9986F25D5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 20:25:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbjD2LOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Apr 2023 07:14:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58362 "EHLO
+        id S229788AbjD2SY6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Apr 2023 14:24:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjD2LOR (ORCPT
+        with ESMTP id S230184AbjD2SYy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Apr 2023 07:14:17 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C22731998;
-        Sat, 29 Apr 2023 04:14:15 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 9293DC76D6;
-        Sat, 29 Apr 2023 11:14:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1682766853; bh=A8QySs6SKhnXKBxkO0+a10Q3xy1UQlrC6oSknuRX0p0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=U7zokl7PwDhkg2mUuKqWuwfT1MxrzqVZ/5hi6RDzgNWum9wURWdBcStFGLcfBVMY8
-         UaDtySh/ktQAX2Bj61orQkqqmlcte/2DFaVZsjjcp4LVEPFIEio70LtCzx+VEJ1/eZ
-         gUtBK5DhbsU6wGkMv9uelFv8KytbxGpGtKzr0API=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     Daniel Thompson <daniel.thompson@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Helge Deller <deller@gmx.de>,
-        Uwe =?ISO-8859-1?Q?Kleine=2DK=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Artur Weber <aweber.kernel@gmail.com>,
-        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-fbdev@vger.kernel.org, linux-pwm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Artur Weber <aweber.kernel@gmail.com>
-Subject: Re: [PATCH 3/4] ARM: dts: adapt to LP855X bindings changes
-Date:   Sat, 29 Apr 2023 13:14:12 +0200
-Message-ID: <3414865.QJadu78ljV@z3ntu.xyz>
-In-Reply-To: <20230429104534.28943-4-aweber.kernel@gmail.com>
-References: <20230429104534.28943-1-aweber.kernel@gmail.com>
- <20230429104534.28943-4-aweber.kernel@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        Sat, 29 Apr 2023 14:24:54 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7BD1FD4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Apr 2023 11:24:51 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-64115e652eeso19274883b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Apr 2023 11:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dabbelt-com.20221208.gappssmtp.com; s=20221208; t=1682792690; x=1685384690;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HCZIXMPhuJUf80scSK3agzn9QDDKa0LblR7ePMqe91Q=;
+        b=osIreuhFqrOaZAAl/27+IK5Hi1AB1StDT3MQB4UJdmyvLv00XqfYnZDOR5DEup+Zbc
+         EMMhztAPOHm+IIUb2Jko/Ql1Qxequoi14q5q6ioXxwV6ONNbTHbCpppQsquBotBv7NZA
+         0xsoGYgWKOy6+E6yOM0QJd1lS7m7Gz/d+GxIdfE4O363XFxvr58OuzUA8yahfjRkgl76
+         daFFl6DyngHfFxsVeUlgdYpwovv5SK9w21aq217ZLhFo3Y8jm5Njv+T6oNvGK4lJj/ES
+         nDCkxSdKHcKkITKghp2NRdG/dKj2tCryrSlZDF5O3eK56lzP0kExP10+gizADZGE0dho
+         uu6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682792690; x=1685384690;
+        h=content-transfer-encoding:mime-version:message-id:to:from:cc
+         :in-reply-to:subject:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HCZIXMPhuJUf80scSK3agzn9QDDKa0LblR7ePMqe91Q=;
+        b=gZiDCF8cvQW/eCozegU4uzFg/Z3W9FYJIOsVAadxEtHkkKAwHMB37gkiTBfj03xTLQ
+         P3nhlKLKKemHycYYbXaIDnS+EOmD3X3wXVgXqbiVIOHQQKhEhXsNNEfQB2uS26qgdGev
+         Cw889gbE6pf2Aq2aMJ2FF0xrWEKriNcPEeRl1BLu/ncXT7/he8Y+vv68jQEKXykhXCbE
+         tJyAvYY2al+CC6uHkYG3JBGBQbWwsD84YkOqNMLF4KaN4+Nw++o7n15BKZ6NtZlrjtq5
+         vZMFn5EVtchfJ6C0S2LhGzRsuA9h+ysaAzB/vzffn3fk4YV+sNpf8LVCwPQgGQ6LO84j
+         oZ/g==
+X-Gm-Message-State: AC+VfDzYpOtOctmVjeVGAGwdxYeYM5CewJE/0AGGbSUpIxHz65rESbxi
+        TlOdtkIz4iflKksI4DVf05H2ng==
+X-Google-Smtp-Source: ACHHUZ56+SNdXMph8Hdac6/dfoFg0Vhv/AYaUOOmwxyPYiHuY8kgDpOram8U+gPi6EA5PyHcO2u8+w==
+X-Received: by 2002:a17:903:41cf:b0:1a6:d0a8:c70f with SMTP id u15-20020a17090341cf00b001a6d0a8c70fmr11307108ple.5.1682792690325;
+        Sat, 29 Apr 2023 11:24:50 -0700 (PDT)
+Received: from localhost ([50.221.140.188])
+        by smtp.gmail.com with ESMTPSA id l4-20020a170902eb0400b001960706141fsm15126026plb.149.2023.04.29.11.24.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Apr 2023 11:24:49 -0700 (PDT)
+Date:   Sat, 29 Apr 2023 11:24:49 -0700 (PDT)
+X-Google-Original-Date: Sat, 29 Apr 2023 11:24:22 PDT (-0700)
+Subject:     Re: [PATCH 08/19] riscv: Add explicit include for cpu.h
+In-Reply-To: <20230329-dt-cpu-header-cleanups-v1-8-581e2605fe47@kernel.org>
+CC:     davem@davemloft.net, robh+dt@kernel.org, frowand.list@gmail.com,
+        linux@armlinux.org.uk, wens@csie.org, jernej.skrabec@gmail.com,
+        samuel@sholland.org, Paul Walmsley <paul.walmsley@sifive.com>,
+        aou@eecs.berkeley.edu, Greg KH <gregkh@linuxfoundation.org>,
+        rafael@kernel.org, daniel.lezcano@linaro.org, tglx@linutronix.de,
+        amit.kachhap@gmail.com, viresh.kumar@linaro.org,
+        lukasz.luba@arm.com, amitk@kernel.org, rui.zhang@intel.com,
+        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+        mpe@ellerman.id.au, npiggin@gmail.com, christophe.leroy@csgroup.eu,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        tiny.windzz@gmail.com, lpieralisi@kernel.org, sudeep.holla@arm.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        anup@brainfault.org, chenhuacai@kernel.org,
+        jiaxun.yang@flygoat.com, Marc Zyngier <maz@kernel.org>,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+        sparclinux@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-riscv@lists.infradead.org,
+        linux-pm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linuxppc-dev@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mips@vger.kernel.org
+From:   Palmer Dabbelt <palmer@dabbelt.com>
+To:     robh@kernel.org
+Message-ID: <mhng-3fdcd7ba-9d00-4521-a55f-367cf53f5f12@palmer-ri-x1c9a>
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,99 +91,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Samstag, 29. April 2023 12:45:33 CEST Artur Weber wrote:
-> Change underscores in ROM node names to dashes, and remove deprecated
-> pwm-period property.
-> 
-> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-
-Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
-
+On Wed, 29 Mar 2023 08:52:05 PDT (-0700), robh@kernel.org wrote:
+> Removing the include of cpu.h from of_device.h (included by
+> of_platform.h) causes an error in setup.c:
+>
+> arch/riscv/kernel/setup.c:313:22: error: arithmetic on a pointer to an incomplete type 'typeof(struct cpu)' (aka 'struct cpu')
+>
+> The of_platform.h header is not necessary either, so it can be dropped.
+>
+> Signed-off-by: Rob Herring <robh@kernel.org>
 > ---
->  .../dts/qcom-apq8026-samsung-matisse-wifi.dts |  1 -
->  ...-msm8974pro-sony-xperia-shinano-castor.dts | 23 ++++++++++---------
->  2 files changed, 12 insertions(+), 12 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts index
-> 91b860e24681..884d99297d4c 100644
-> --- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> @@ -99,7 +99,6 @@ backlight@2c {
-> 
->  			dev-ctrl = /bits/ 8 <0x80>;
->  			init-brt = /bits/ 8 <0x3f>;
-> -			pwm-period = <100000>;
-> 
->  			pwms = <&backlight_pwm 0 100000>;
->  			pwm-names = "lp8556";
-> diff --git
-> a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-> b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts index
-> 04bc58d87abf..2396253f953a 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-sony-xperia-shinano-castor.dts
-> @@ -150,47 +150,48 @@ lp8566_wled: backlight@2c {
->  		bl-name = "backlight";
->  		dev-ctrl = /bits/ 8 <0x05>;
->  		init-brt = /bits/ 8 <0x3f>;
-> -		rom_a0h {
-> +
-> +		rom-a0h {
->  			rom-addr = /bits/ 8 <0xa0>;
->  			rom-val = /bits/ 8 <0xff>;
->  		};
-> -		rom_a1h {
-> +		rom-a1h {
->  			rom-addr = /bits/ 8 <0xa1>;
->  			rom-val = /bits/ 8 <0x3f>;
->  		};
-> -		rom_a2h {
-> +		rom-a2h {
->  			rom-addr = /bits/ 8 <0xa2>;
->  			rom-val = /bits/ 8 <0x20>;
->  		};
-> -		rom_a3h {
-> +		rom-a3h {
->  			rom-addr = /bits/ 8 <0xa3>;
->  			rom-val = /bits/ 8 <0x5e>;
->  		};
-> -		rom_a4h {
-> +		rom-a4h {
->  			rom-addr = /bits/ 8 <0xa4>;
->  			rom-val = /bits/ 8 <0x02>;
->  		};
-> -		rom_a5h {
-> +		rom-a5h {
->  			rom-addr = /bits/ 8 <0xa5>;
->  			rom-val = /bits/ 8 <0x04>;
->  		};
-> -		rom_a6h {
-> +		rom-a6h {
->  			rom-addr = /bits/ 8 <0xa6>;
->  			rom-val = /bits/ 8 <0x80>;
->  		};
-> -		rom_a7h {
-> +		rom-a7h {
->  			rom-addr = /bits/ 8 <0xa7>;
->  			rom-val = /bits/ 8 <0xf7>;
->  		};
-> -		rom_a9h {
-> +		rom-a9h {
->  			rom-addr = /bits/ 8 <0xa9>;
->  			rom-val = /bits/ 8 <0x80>;
->  		};
-> -		rom_aah {
-> +		rom-aah {
->  			rom-addr = /bits/ 8 <0xaa>;
->  			rom-val = /bits/ 8 <0x0f>;
->  		};
-> -		rom_aeh {
-> +		rom-aeh {
->  			rom-addr = /bits/ 8 <0xae>;
->  			rom-val = /bits/ 8 <0x0f>;
->  		};
+> Please ack and I will take the series via the DT tree.
+> ---
+>  arch/riscv/kernel/setup.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+> index 376d2827e736..dcfa4b6fa4b1 100644
+> --- a/arch/riscv/kernel/setup.c
+> +++ b/arch/riscv/kernel/setup.c
+> @@ -8,6 +8,7 @@
+>   *  Nick Kossifidis <mick@ics.forth.gr>
+>   */
+>
+> +#include <linux/cpu.h>
+>  #include <linux/init.h>
+>  #include <linux/mm.h>
+>  #include <linux/memblock.h>
+> @@ -15,7 +16,6 @@
+>  #include <linux/console.h>
+>  #include <linux/screen_info.h>
+>  #include <linux/of_fdt.h>
+> -#include <linux/of_platform.h>
+>  #include <linux/sched/task.h>
+>  #include <linux/smp.h>
+>  #include <linux/efi.h>
 
-
-
-
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
