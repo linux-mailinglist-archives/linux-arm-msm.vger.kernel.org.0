@@ -2,190 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA3BB6F2160
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 01:46:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC2836F2198
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 02:29:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347109AbjD1XqK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 19:46:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37846 "EHLO
+        id S1347059AbjD2A35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 20:29:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347075AbjD1Xpx (ORCPT
+        with ESMTP id S229579AbjD2A34 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 19:45:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03B9059E4;
-        Fri, 28 Apr 2023 16:45:48 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33SNiOYR018675;
-        Fri, 28 Apr 2023 23:45:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=wV4LdEJ2ofwpa9JtcSJW3D1ZqHtuyZ1wracfC5aYXyg=;
- b=B47rvZvpK0GwoDfCHVs//s0/kmMN7fxUBEtkQVYod+UFR+KEYd8N+OHGGFBJD7FoOBp7
- cWPpg8Nlsd7kPQ5wvnGU50ktIurJgRUn05aowUcivYma4/mWYtfQt57tiFzw66kEleCp
- uloYC6OWe7HUpstfcJPLDtAEFc8JxJ4nNpnuzkATa2x/CdYA77l1aRdm0oXJrGWQ11PO
- aDbpixeFK8A7i+EXnZRZ3W1iMQ3DIN9qL+rC3NmI9fQAmkFkmeQaY8l1uVt+VN2TvOgr
- K/RUvKkrk6uVjzuSPPxbCmIR+62QZr8UQFDiEHTFJGuk7BCLX/FhQVBvvZCkZP5KP1X+ /g== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8abptb41-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 23:45:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33SNjef5015680
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 28 Apr 2023 23:45:40 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 28 Apr 2023 16:45:39 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
-        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 7/7] drm/msm/dpu: calculate DSC encoder parameters dynamically
-Date:   Fri, 28 Apr 2023 16:45:11 -0700
-Message-ID: <1682725511-18185-8-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
+        Fri, 28 Apr 2023 20:29:56 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97EC3AB9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 17:29:54 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-2f625d52275so318803f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 17:29:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682728193; x=1685320193;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iiCF4OnwxjmLf3NeMqtDogKkBQycEZ1KKUyCMRH1bAQ=;
+        b=Yyz+/IjOdagk+9PlvWN88UlEn1X1/vrQb3GBPQTuvSIot2K9jCdkdOnEE7Ay8UJoqb
+         b4BWOAlwfhAM33VX0MvIBFSfgC0R2sPyIS3gVm8zfuPLIJeTfA01+eoTvIyChSYKa2Zr
+         mrWiPyTC75fEVUNSs5S9idlkaKiG6XbqXUmlSJr/2oZKijf94dW+g/A1yffpRKSGGlv0
+         eVd2epif3fsb+okfFBjTSdbdDD268zSkmf907eq9Pf2gyaprgQtyqQZR7M0Wazx72ZXE
+         7025XgUWg/8YAXFMPn+eg8xV2aI5BtKJXE38jkd9Vetdx/RmiSjm0SsVPX2WIFIWuN3Z
+         l4aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682728193; x=1685320193;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iiCF4OnwxjmLf3NeMqtDogKkBQycEZ1KKUyCMRH1bAQ=;
+        b=Eg1TM3t1e5jdsD8y6VYG29zqnBspWXHaL3e7N5KhLoQC4X8bGsP8S/Zqzj/6N5DybO
+         tRh+6yV2fkqF64+/sOj2ioNJsa0UCJEECUrEveq6xx8IVHT3js5DDZMENc7VdeopMdnC
+         8qsLK60JJY3oG7Lc/reehbyyHjMbEreVCBoqeNIsWiEc+vp/f05f3eRaA5+SexcAjfca
+         2uC759utbBxtJxO8OC2H1qAvdp5Jwng3wXeYtqPGIOa89FZsnRH/TCFs+I7iHpOatS1o
+         TLP3R66QD3FU+QsfEjOo9FAMZ2b/t647lJdQISPomkIE2O65RtEOLE2J/b/GNP5/0fU7
+         g8Rg==
+X-Gm-Message-State: AC+VfDycsXIhLQvTkDtiE+m4QCYOh0/nKH0kw1F+M+rPbzIUHyDwiMx2
+        nTKkJ2KEYsLY015DcqraQAwvrw==
+X-Google-Smtp-Source: ACHHUZ6tC3OMzhsDU9xiKI+1LEOh6A9DsBYjRaeBqbDzEVQj9IGhTX6w7rY7JBvYO9jf4eb3gjKujQ==
+X-Received: by 2002:a5d:5222:0:b0:2cf:f01f:ed89 with SMTP id i2-20020a5d5222000000b002cff01fed89mr5766079wra.24.1682728193374;
+        Fri, 28 Apr 2023 17:29:53 -0700 (PDT)
+Received: from [10.6.147.212] ([212.140.138.218])
+        by smtp.gmail.com with ESMTPSA id f8-20020a5d4dc8000000b002f9e04459desm22133933wru.109.2023.04.28.17.29.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Apr 2023 17:29:52 -0700 (PDT)
+Message-ID: <5089956f-a5ee-5b18-ce83-edce6999d583@linaro.org>
+Date:   Sat, 29 Apr 2023 03:29:51 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4vm5h3j3rUeMGu9EzRr4Em6jl3s4I-Ib
-X-Proofpoint-GUID: 4vm5h3j3rUeMGu9EzRr4Em6jl3s4I-Ib
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-28_08,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 suspectscore=0 spamscore=0 impostorscore=0 mlxscore=0
- bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304280199
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v2 0/7] add DSC 1.2 dpu supports
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During DSC preparation, add run time calculation to figure out what
-usage modes, split mode and merge mode, is going to be setup.
+On 29/04/2023 02:45, Kuogee Hsieh wrote:
+> This series adds the DPU side changes to support DSC 1.2 encoder. This
+> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+> The DSI and DP parts will be pushed later on top of this change.
+> This seriel is rebase on [1], [2] and catalog fixes from [3].
+> 
+> [1]: https://patchwork.freedesktop.org/series/116851/
+> [2]: https://patchwork.freedesktop.org/series/116615/
+> [3]: https://patchwork.freedesktop.org/series/112332/
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 56 ++++++++++++++++-------------
- 1 file changed, 31 insertions(+), 25 deletions(-)
+Changelogs? There must be one, either in the cover letter or in the 
+patch commit messages (following the DRM subsystem custom).
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 2fdacf1..3d18642 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -529,17 +529,9 @@ void dpu_encoder_helper_split_config(
- bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
- {
- 	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
--	int i, intf_count = 0, num_dsc = 0;
-+	struct msm_display_topology *topology = &dpu_enc->topology;
- 
--	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
--		if (dpu_enc->phys_encs[i])
--			intf_count++;
--
--	/* See dpu_encoder_get_topology, we only support 2:2:1 topology */
--	if (dpu_enc->dsc)
--		num_dsc = 2;
--
--	return (num_dsc > 0) && (num_dsc > intf_count);
-+	return (topology->num_dsc > topology->num_intf);
- }
- 
- static void dpu_encoder_get_topology(
-@@ -1861,41 +1853,55 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
- 	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
- 	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
--	int this_frame_slices;
-+	struct msm_display_topology *topology = &dpu_enc->topology;
- 	int intf_ip_w, enc_ip_w;
--	int dsc_common_mode;
--	int pic_width;
-+	int dsc_common_mode = 0;
- 	u32 initial_lines;
-+	int num_dsc = topology->num_dsc;
-+	int num_intf = topology->num_intf;
- 	int i;
- 
--	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-+	for (i = 0; i < num_dsc; i++) {
- 		hw_pp[i] = dpu_enc->hw_pp[i];
- 		hw_dsc[i] = dpu_enc->hw_dsc[i];
- 
- 		if (!hw_pp[i] || !hw_dsc[i]) {
- 			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
- 			return;
--		}
-+		} 
- 	}
- 
--	dsc_common_mode = 0;
--	pic_width = dsc->pic_width;
-+	intf_ip_w = dsc->pic_width;
- 
--	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
- 	if (enc_master->intf_mode == INTF_MODE_VIDEO)
- 		dsc_common_mode |= DSC_MODE_VIDEO;
- 
--	this_frame_slices = pic_width / dsc->slice_width;
--	intf_ip_w = this_frame_slices * dsc->slice_width;
--
- 	/*
--	 * dsc merge case: when using 2 encoders for the same stream,
--	 * no. of slices need to be same on both the encoders.
-+	 * If this encoder is driving more than one DSC encoder, they
-+	 * operate in tandem, same pic dimension needs to be used by
-+	 * each of them.(pp-split is assumed to be not supported)
-+	 *
- 	 */
--	enc_ip_w = intf_ip_w / 2;
-+	enc_ip_w = intf_ip_w;
-+
-+	intf_ip_w /= num_intf;
-+
-+	if (num_dsc > 1)
-+		dsc_common_mode |= DSC_MODE_SPLIT_PANEL;
-+
-+	if (dpu_encoder_use_dsc_merge(&dpu_enc->base)) {
-+		dsc_common_mode |= DSC_MODE_MULTIPLEX;
-+		/*
-+		 * in dsc merge case: when using 2 encoders for the same
-+		 * stream, no. of slices need to be same on both the
-+		 * encoders.
-+		 */
-+		enc_ip_w = intf_ip_w / 2;
-+	}
-+
- 	initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
- 
--	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-+	for (i = 0; i < num_dsc; i++)
- 		dpu_encoder_dsc_pipe_cfg(dpu_enc, hw_dsc[i], hw_pp[i], dsc,
- 					dsc_common_mode, initial_lines);
- }
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+With best wishes
+Dmitry
 
