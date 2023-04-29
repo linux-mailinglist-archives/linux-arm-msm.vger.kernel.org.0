@@ -2,143 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38CCB6F23BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 10:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C52236F242A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 12:45:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230180AbjD2IqU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 29 Apr 2023 04:46:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33540 "EHLO
+        id S230453AbjD2Kp5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 29 Apr 2023 06:45:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229848AbjD2IqT (ORCPT
+        with ESMTP id S229507AbjD2Kp4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 29 Apr 2023 04:46:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343BA19AD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Apr 2023 01:46:18 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 33T8cJJK028761;
-        Sat, 29 Apr 2023 08:46:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hvONotVks+o5PvqFe1e2S4SGR+xR/2T/dU0/0aYp1LE=;
- b=BI+9gHroJQxo2/2j9+NHwFoN5nA5kdc9T8LpcB+SRrp/CCLQLUpdNmmp9SC4beiCdoT0
- 7FMnKlvkdw+o8iY7CzJd+SkL1OvikrQwt7zuO2D8z6+dBVCNgmC4cTvuqz+TP7PHgipI
- mFIzQEibX1GvKRl9HlL3eioD9ru4ZhNV14UVo0iN7ydl9Ou7wWzWNUaMBTw97l5kJjkW
- KkCQpzHLMQtaN+EEdG63iXYSwJ/9Sduw/SqVmDvEk43q4pjp24RUQF5y6A6WrSXjqtfB
- AZaZ/UzNNcjbsAbLldLpXA8xZ0yLMXaUdFEG0pUpaP5K3PJEEVLurYkp5CE94f+XagsK Xg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8umg0bvh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Apr 2023 08:46:09 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 33T8k8SK025805
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 29 Apr 2023 08:46:08 GMT
-Received: from [10.110.119.27] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 29 Apr
- 2023 01:46:08 -0700
-Message-ID: <1c0f5c9d-f38e-a008-b950-e85a5eb94633@quicinc.com>
-Date:   Sat, 29 Apr 2023 01:46:07 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] drm/msm/dpu: drop unused SSPP sub-block information
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Sat, 29 Apr 2023 06:45:56 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A5F1FCD;
+        Sat, 29 Apr 2023 03:45:55 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-506b2a08877so1150534a12.2;
+        Sat, 29 Apr 2023 03:45:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682765153; x=1685357153;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WTQTEbLPt4h9veixLWM+5ZtwRhk8Wsy+ewL1TGUe3D0=;
+        b=oH5Kvm5drzQdcOXTiqEwKZhd7EmXTc4PzAK03AaVxM3T9Y3Z4v02nzKRQw+JKmLXDa
+         hHfP3cVaROpARK80o9Px6dby16oN8U2ony8aEDqo8HHSJYrw5t9GKqy0MYpUDPsSctle
+         CB5SFrTFkL7WFcReoHDaLQ+ZnfqxjD9ApSysyxIZqU9aGCQTW2yGDXSgWl+dwsvJesdi
+         o3Ip7JbO0A3s2iZ9i4dUvZ2Whyo6X392jfNqd8+xo4TXHXLJUPAeM5t4MwR6TarTO9Uu
+         aTa8+CWtcK4O+7PvC/eVLW87vMxxlDlsx4436E1Hf3iuF1Fbl8XLaxy6kbTgA48kCq1x
+         A1gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682765153; x=1685357153;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WTQTEbLPt4h9veixLWM+5ZtwRhk8Wsy+ewL1TGUe3D0=;
+        b=KJKcNnQz/K4qo840e0i52cHK5FBN8Fecfg/r38iaC5aQ3ec41FXYatMVJkW7h5Uqef
+         pbu+SDVnJCowHLQ2qSRIoayA5f5tP1KP+epa5hqXtGXhS8E0pMpYqOenUJUmxQLaGnM7
+         +Te6ogx6Nm6k8Brz346mlf8l4gKNIYAK6rJzkaXDysVtY+IT9Did4WO7qdxUIEVzFW8s
+         sBt9Zku8dav7a8BxRtX/nUivEht+t279Np1THpbq3g7dV6p0amHmfJe06VAWsRkFkzOS
+         aH4dq+O8zke96l9YJhQCeUsE1vplqIo52nI1h5tzowKOu3Dod6WhgaUx0VyOURM7tN15
+         7maQ==
+X-Gm-Message-State: AC+VfDyzEAU3nO6bLZynWFVHn/JL7bQid25mB06bP6P25V3U8zra/aWG
+        W9HUlDSCE8shR7Cym+COV9E=
+X-Google-Smtp-Source: ACHHUZ4x/Gdg5OzSrpmM9phfXhSpLi+EARAapUnJz09J7J4N94Z160t6oxkz+44oNxD3ND2gGUwSvg==
+X-Received: by 2002:aa7:d547:0:b0:4fc:709f:7abd with SMTP id u7-20020aa7d547000000b004fc709f7abdmr1241415edr.2.1682765153465;
+        Sat, 29 Apr 2023 03:45:53 -0700 (PDT)
+Received: from localhost.my.domain (83.8.115.30.ipv4.supernova.orange.pl. [83.8.115.30])
+        by smtp.gmail.com with ESMTPSA id b11-20020a056402138b00b004bd6e3ed196sm9952522edv.86.2023.04.29.03.45.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Apr 2023 03:45:53 -0700 (PDT)
+From:   Artur Weber <aweber.kernel@gmail.com>
+To:     Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>
-References: <20230429024242.2613957-1-dmitry.baryshkov@linaro.org>
- <085c3b3a-1a29-7082-934d-497be5b050fd@quicinc.com>
- <5fbf2ba1-f8fd-1373-55f2-4eb3789bc5e7@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <5fbf2ba1-f8fd-1373-55f2-4eb3789bc5e7@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Helge Deller <deller@gmx.de>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Artur Weber <aweber.kernel@gmail.com>,
+        dri-devel@lists.freedesktop.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-fbdev@vger.kernel.org, linux-pwm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: [PATCH 0/4] video: backlight: lp855x: modernize bindings
+Date:   Sat, 29 Apr 2023 12:45:30 +0200
+Message-Id: <20230429104534.28943-1-aweber.kernel@gmail.com>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lTJcxFk4W-xWCAS2RwjA_SbD0e-915vq
-X-Proofpoint-ORIG-GUID: lTJcxFk4W-xWCAS2RwjA_SbD0e-915vq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-04-28_08,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- impostorscore=0 mlxlogscore=911 mlxscore=0 adultscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 malwarescore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2304290081
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Convert TI LP855X backlight controller bindings from TXT to YAML and,
+while we're at it, rework some of the code related to PWM handling.
+Also correct existing DTS files to avoid introducing new dtb_check
+errors.
+
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+
+Artur Weber (4):
+  dt-bindings: backlight: lp855x: convert to YAML and modernize
+  video: backlight: lp855x: get PWM for PWM mode during probe
+  ARM: dts: adapt to LP855X bindings changes
+  arm64: dts: adapt to LP855X bindings changes
+
+ .../leds/backlight/lp855x-backlight.yaml      | 148 ++++++++++++++++++
+ .../bindings/leds/backlight/lp855x.txt        |  72 ---------
+ .../dts/qcom-apq8026-samsung-matisse-wifi.dts |   1 -
+ ...-msm8974pro-sony-xperia-shinano-castor.dts |  23 +--
+ .../boot/dts/nvidia/tegra210-p2371-2180.dts   |   6 +-
+ drivers/video/backlight/lp855x_bl.c           |  48 +++---
+ 6 files changed, 188 insertions(+), 110 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/leds/backlight/lp855x-backlight.yaml
+ delete mode 100644 Documentation/devicetree/bindings/leds/backlight/lp855x.txt
 
 
-On 4/28/2023 9:30 PM, Dmitry Baryshkov wrote:
-> On 29/04/2023 07:29, Abhinav Kumar wrote:
->>
->>
->> On 4/28/2023 7:42 PM, Dmitry Baryshkov wrote:
->>> The driver  doesn't support hsic/memcolor, pcc and igc SSPP subblocks.
->>> Drop corresponding definitions.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 8 --------
->>>   1 file changed, 8 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> index 3e92c2c66716..db6488a6929d 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> @@ -384,10 +384,6 @@ struct dpu_caps {
->>>    * @qseed_ver: qseed version
->>>    * @scaler_blk:
->>>    * @csc_blk:
->>> - * @hsic:
->>> - * @memcolor:
->>> - * @pcc_blk:
->>> - * @igc_blk:
->>>    * @format_list: Pointer to list of supported formats
->>>    * @num_formats: Number of supported formats
->>>    * @virt_format_list: Pointer to list of supported formats for 
->>> virtual planes
->>> @@ -404,10 +400,6 @@ struct dpu_sspp_sub_blks {
->>>       u32 qseed_ver;
->>>       struct dpu_scaler_blk scaler_blk;
->>>       struct dpu_pp_blk csc_blk;
->>> -    struct dpu_pp_blk hsic_blk;
->>> -    struct dpu_pp_blk memcolor_blk;
->>> -    struct dpu_pp_blk pcc_blk;
->>> -    struct dpu_pp_blk igc_blk;
->>
->> I have included IGC in this patch 
->> https://patchwork.freedesktop.org/patch/534725/?series=117130&rev=1
->>
->> So that one can be dropped from this patch?
-> 
-> It will get dropped while applying because of the conflict.
-> 
+base-commit: e154a338e16cc3b3bbd54c891253319d22383746
+-- 
+2.40.1
 
-Knowing that its going to conflict, why not fix one of the patches now, 
-preferably this one since I was handling GC/IGC together in that series.
-
->>
->> Rest is fine.
->>
->>>       const u32 *format_list;
->>>       u32 num_formats;
-> 
