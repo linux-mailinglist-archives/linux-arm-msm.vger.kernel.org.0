@@ -2,112 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2EEB6F2272
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 04:42:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF3C96F2279
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Apr 2023 04:47:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbjD2Cmr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 28 Apr 2023 22:42:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35430 "EHLO
+        id S230104AbjD2CrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 28 Apr 2023 22:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjD2Cmq (ORCPT
+        with ESMTP id S229978AbjD2CrA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 28 Apr 2023 22:42:46 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6BA10F1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 19:42:45 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f1950f5628so3446555e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 19:42:45 -0700 (PDT)
+        Fri, 28 Apr 2023 22:47:00 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CD8710F1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 19:46:56 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-54f9d6eccf3so7875317b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Apr 2023 19:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682736163; x=1685328163;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5z0j9caTAK+t1Y50Hn33TpAq9vT8mZ8FHh0G4wESvXw=;
-        b=rNNhV/bQkbMsukKkYsJX1r5ywXKd+uJCgUnnhPitTcYUBiXG9DwUaO8gW+VzgOBRtO
-         rfro0ivS50rB1x6/4rIVC01AyuR1HHPusnZhKsVEnzRmsli+1ARdXGTBZ9vk+QGPE4LJ
-         xHMR+LxL4/9UH/6Ag/mJCAujoGrWXnfNJfLZ9Q0YivLb97xeIHvdYTfcTVnWbjSvsprW
-         bDi08XqzX2ZT5MeKWOzaF+kmLFOjPC+dBuceLUpcRiggZlZnTwNQ4sWiFU2mVtKGGfzP
-         FzmjYktixZEWvD9Ur9zX/j1oDHk17BfvI8EJR5jRw0J6YjCEIFAZQUgP+6WQfge0dI33
-         2aAg==
+        d=linaro.org; s=google; t=1682736415; x=1685328415;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7AvvVOSHUebik0pK4etJRGnSRHrTFQ2KZK3q3Gebd0I=;
+        b=oRptrL/V3bqyA6xemD7/7y08vO70rrFqiY7PWFElSjPjxYpT+FLfD3gxcbQiXTJFUj
+         ZOrwu5bkUeF3bLt+4MpLm+SclHRghJT/1tTK6ERtnW1dzNVboJmGTG202he4/ScubhQI
+         OlNZ9fsDjlAFMWG2CO9jp+CGQB7gc76EzFCbp4f+OU9kbbZtiJyA3vZ/X0f1cBeqFfYO
+         kM0+Kc7b1L/ijSyoUSMGRY7fgvVP0wB8A+h0hQvE+hw/NrELaVnpwk7AwsyCXmUtMONW
+         33hnZAoljh48s9FwI9h08694PlGB+VmCpfWUvkkQgaU1kwWL/QcS4X0nTMr2Dd87f5ej
+         +zFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682736163; x=1685328163;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1682736415; x=1685328415;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5z0j9caTAK+t1Y50Hn33TpAq9vT8mZ8FHh0G4wESvXw=;
-        b=YAKhFuiCjEQO1Rwlojw24tSNpg36h0/nDuzXVUJY4NbcbVI7d0g5wojqMOqFT/THi9
-         6sGikGXh5vXyJy8QF7yugBR2xRqYarirhBo5Fbc66Bp71j45uqUGr8rlnXGkXo7NJDc1
-         EzHk5ZoIK2GpvqyCV6qwsW5cw0cSSxWSXr1nvMklvXGsPjaHEHXWIk+3xJnqdxsq3kSv
-         OWf651co2AuaaO2JLKoympjlogD4EDMvF7tPBhfg8RxC9TdUory9/hF09s9px7mVcFNO
-         sY8d9NFbH7CBARmQM72iXjVjPIl3vgLa9EWd0WidxISTvb7I1FFsVONg9pCiNKcaKmPm
-         mw+Q==
-X-Gm-Message-State: AC+VfDwun4dGhkbs0+XBIo8LJqdAewKNk9YLcRyMY79Z1TIWMDmU2t9F
-        9aDSGqKuokGH/3MDKULSRXfb+Q==
-X-Google-Smtp-Source: ACHHUZ7mXx8ocQsamoMmD+wEHGo+Nr/9Lx40yplpDfClfBEbl9Lpw7Ug3RYLL8b5JfvqAMunOGv/+g==
-X-Received: by 2002:a05:600c:281:b0:3f0:9fef:1028 with SMTP id 1-20020a05600c028100b003f09fef1028mr5017684wmk.17.1682736163649;
-        Fri, 28 Apr 2023 19:42:43 -0700 (PDT)
-Received: from eriador.lumag.spb.ru ([81.145.206.52])
-        by smtp.gmail.com with ESMTPSA id l9-20020a05600c1d0900b003f17eded97bsm29827071wms.19.2023.04.28.19.42.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Apr 2023 19:42:43 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/dpu: drop unused SSPP sub-block information
-Date:   Sat, 29 Apr 2023 05:42:42 +0300
-Message-Id: <20230429024242.2613957-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+        bh=7AvvVOSHUebik0pK4etJRGnSRHrTFQ2KZK3q3Gebd0I=;
+        b=Qas5BsSawrphcG1/71MYcSKsftQ2OObVLsTYVbm7YuvLC8juvFYyb4dv9Lo4BX3dzP
+         OJlWq9U7wHKmoa64eM3aa9XFnlCd+Oo4fBzorLIVGrujRfWDO/fpOtZDUNH6beiFJP6e
+         ozGSoi+PqCHtWBGN9WkF310yUL4i8xoYV60+vknxHi6uz8hmk5347drwczHKVM00YQC6
+         LqCf3dFNUoQDkFMLRogDLog8lyzpcWantc/hoVqD/lPaQLnB7XzrKwzqNq0qO83PfW7x
+         uxZ7vjvv3lSeripKktzu3w2SnkTWQl5ecqfgiPcDWktVokpgrXQj9rdqQZNk5bXktk+k
+         X8FQ==
+X-Gm-Message-State: AC+VfDzvKhRZil8l20NTd8re3rj5RfTTeHQuGEcgxF7Hayvu5ctwmb2z
+        5G7QNEblgDUeoBIvO7JQtCIXvo5A4N+8L3gxGXPhNA==
+X-Google-Smtp-Source: ACHHUZ4fpFXcDhl7AERIyphFBcqD8k3JHX9VYqDS9GgofysSi3/+l65xDHeI+LnYc5Am7SNLLN46EdMm0xmKPRQjn/8=
+X-Received: by 2002:a81:6c4e:0:b0:54c:288a:a2a1 with SMTP id
+ h75-20020a816c4e000000b0054c288aa2a1mr5593718ywc.27.1682736415063; Fri, 28
+ Apr 2023 19:46:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1682725511-18185-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 29 Apr 2023 05:46:44 +0300
+Message-ID: <CAA8EJpqqhP1QL7TuW8JXeVFqukWggYmB1XU8OeB65fQA+jhLAg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] add DSC 1.2 dpu supports
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver  doesn't support hsic/memcolor, pcc and igc SSPP subblocks.
-Drop corresponding definitions.
+On Sat, 29 Apr 2023 at 02:45, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> This series adds the DPU side changes to support DSC 1.2 encoder. This
+> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+> The DSI and DP parts will be pushed later on top of this change.
+> This seriel is rebase on [1], [2] and catalog fixes from [3].
+>
+> [1]: https://patchwork.freedesktop.org/series/116851/
+> [2]: https://patchwork.freedesktop.org/series/116615/
+> [3]: https://patchwork.freedesktop.org/series/112332/
+>
+> Abhinav Kumar (2):
+>   drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
+>   drm/msm/dpu: add dsc blocks for remaining chipsets in catalog
+>
+> Kuogee Hsieh (5):
+>   drm/msm/dpu: add support for DSC encoder v1.2 engine
+>   drm/msm/dpu: separate DSC flush update out of interface
+>   drm/msm/dpu: add DPU_PINGPONG_DSC feature PP_BLK and PP_BLK_TE
+>   drm/msm/dpu: save dpu topology configuration
+>   drm/msm/dpu: calculate DSC encoder parameters dynamically
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 8 --------
- 1 file changed, 8 deletions(-)
+Another generic comment: this patchset doesn't have discussed RM
+changes to allocate DSC blocks in proper pairs as required by DCE.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 3e92c2c66716..db6488a6929d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -384,10 +384,6 @@ struct dpu_caps {
-  * @qseed_ver: qseed version
-  * @scaler_blk:
-  * @csc_blk:
-- * @hsic:
-- * @memcolor:
-- * @pcc_blk:
-- * @igc_blk:
-  * @format_list: Pointer to list of supported formats
-  * @num_formats: Number of supported formats
-  * @virt_format_list: Pointer to list of supported formats for virtual planes
-@@ -404,10 +400,6 @@ struct dpu_sspp_sub_blks {
- 	u32 qseed_ver;
- 	struct dpu_scaler_blk scaler_blk;
- 	struct dpu_pp_blk csc_blk;
--	struct dpu_pp_blk hsic_blk;
--	struct dpu_pp_blk memcolor_blk;
--	struct dpu_pp_blk pcc_blk;
--	struct dpu_pp_blk igc_blk;
- 
- 	const u32 *format_list;
- 	u32 num_formats;
+>
+>  drivers/gpu/drm/msm/Makefile                       |   1 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |  19 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |   8 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  26 +-
+>  .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  35 ++-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  26 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |   4 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |   2 +-
+>  .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |   2 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 102 ++++---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  35 ++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  36 ++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  22 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  14 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 335 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+>  23 files changed, 642 insertions(+), 116 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+>
+> --
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+>
+
+
 -- 
-2.39.2
-
+With best wishes
+Dmitry
