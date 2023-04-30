@@ -2,78 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 023166F28D6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Apr 2023 14:15:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B87F06F28F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Apr 2023 14:54:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231784AbjD3MPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 30 Apr 2023 08:15:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47390 "EHLO
+        id S229904AbjD3MyH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 30 Apr 2023 08:54:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbjD3MOp (ORCPT
+        with ESMTP id S230287AbjD3MyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 30 Apr 2023 08:14:45 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F6473C1B
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Apr 2023 05:14:22 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id 006d021491bc7-547303fccefso1285219eaf.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Apr 2023 05:14:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682856862; x=1685448862;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vx1dtfCg5LdAW7Qp5E1vgS8Xq+Rma2uSPIHiasEwQVc=;
-        b=gtjOP/V3uabHUu0DzgxoKnuvW8+P4w6s5us2Rz2zQJ5ytKQqLrNS65b+bgfacboufr
-         Gl9htvR+ojX5Gs9uZiT7Zyutryq5eJRlJ4A6IUgJmoI0f6gWSudh/S8cFH1yA1HXwyiW
-         r+X4+go6a/2o+uY3Ew1lJJun/o481bMMttUyuFEu9q8Hm6QjpaspLqbsFhz/4P+CzLQT
-         bTjEd9giDPvBn4GVLclmcy9/Hq5qAoltXMQAXz/+lJLuZ4Eza9nb3UXeYMFfOG/O08yY
-         VOkTsEwoHNfGsEt+FvBZsigzi0FHMnEwc1EAdMqu9Xk6Ji+GpLY0zRMqHei2bAv8DhPo
-         pG6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682856862; x=1685448862;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vx1dtfCg5LdAW7Qp5E1vgS8Xq+Rma2uSPIHiasEwQVc=;
-        b=KrvtIW3hXhcLALgkXY66gs1GK2lg10tT71FmGORHz1izzGzgEYu1W0HZIoiiUD6xqS
-         E7ZoMbbt3DmznlsSvqf6ve3azDcc4mENbAZkZTiDWQqWfNICUHywb8aOMJUK38lh6Xw3
-         B7ulXqsTN3FquLtUp4jmg0WyS4jaGdwB6xyvTAerQwvLBmLf/Ty3nInqMuOUwPy+OsDh
-         KwrchYnGZcww8XA7nMfa/VprpN4X1GrDQkRwoUjdrxsL5BVqYMTw8hHc8okULt6hB8AK
-         EqDQqSVKKfZJMmiJTy+F64sKx3SrdZbNoNSuwtalbPJ9hqYvtSLaVaRywSGJ3bVDH7w/
-         9odg==
-X-Gm-Message-State: AC+VfDxmjiegibPlc4J3RvYhBsyiaBrC2739I7Ppit5cyXzz6I9DqDC6
-        DNf4VsbKkp9/TdB73KUB9rtL3LfpDwmeAG1eSLo=
-X-Google-Smtp-Source: ACHHUZ5aTygxS2tRYSS6fZUUii7IdvFO9ob6oJAZdf0bXo+GdqpOMUk+TSTVraZnguH7Tj8EFF8viDS8QNi8cXOePcI=
-X-Received: by 2002:a4a:2c45:0:b0:54c:49d:3b4a with SMTP id
- o66-20020a4a2c45000000b0054c049d3b4amr4802996ooo.1.1682856861618; Sun, 30 Apr
- 2023 05:14:21 -0700 (PDT)
+        Sun, 30 Apr 2023 08:54:05 -0400
+Received: from hust.edu.cn (mail.hust.edu.cn [202.114.0.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 993D1271C;
+        Sun, 30 Apr 2023 05:54:02 -0700 (PDT)
+Received: from ubuntu.localdomain ([10.12.172.67])
+        (user=saraday@hust.edu.cn mech=LOGIN bits=0)
+        by mx1.hust.edu.cn  with ESMTP id 33UCr6nY027403-33UCr6nZ027403
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+        Sun, 30 Apr 2023 20:53:11 +0800
+From:   Ziliang Liao <saraday@hust.edu.cn>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     hust-os-kernel-patches@googlegroups.com,
+        Ziliang Liao <saraday@hust.edu.cn>,
+        Dongliang Mu <dzm91@hust.edu.cn>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] bus: qcom-ebi2: use prefix devm for clock resource allocation functions
+Date:   Sun, 30 Apr 2023 20:51:53 +0800
+Message-Id: <20230430125154.126863-1-saraday@hust.edu.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Received: by 2002:a05:6358:5bd5:b0:104:721a:818d with HTTP; Sun, 30 Apr 2023
- 05:14:21 -0700 (PDT)
-Reply-To: wormer.amos@aol.com
-From:   Wormer Amos <alassanediop995@gmail.com>
-Date:   Sun, 30 Apr 2023 13:14:21 +0100
-Message-ID: <CAEwTc0656k8F2VDURzGY4=z1y1M9p4tgrDfxsXnsR7dss_2ynA@mail.gmail.com>
-Subject: HELLO
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+Content-Transfer-Encoding: 8bit
+X-FEAS-AUTH-USER: saraday@hust.edu.cn
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sir/Ma'm. please kindly want to know if you're capable for business investment
-project in
-your country because i
-need a serious partnership with good background, kindly reply
-me to discuss details immediately. i will appreciate you to contact me
-on this email below.
+Smatch reports:
 
-Thanks and awaiting for your quick response,
+drivers/bus/qcom-ebi2.c:387 qcom_ebi2_probe() warn: 'ebi2clk' from
+clk_prepare_enable() not released on lines: 358.
 
-Amos!!
+drivers/bus/qcom-ebi2.c:387 qcom_ebi2_probe() warn: 'ebi2xclk' from
+clk_prepare_enabled() not released on lines: 358.
+
+The clk_disable_unprepare() is only used to explicitly release resources
+when the qcom_ebi2_probe() fails, and when executed correctly, it may
+cause resource leakage due to unknown release time.
+
+Replace devm_clk_get() and clk_prepare_enable() with
+devm_clk_get_enabled() to automatically manage the allocated resources.
+
+Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
+Signed-off-by: Ziliang Liao <saraday@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+---
+The issue is found by static analyzer. The patched code has passed
+Smatch checker, but remains untested on real device.
+
+ drivers/bus/qcom-ebi2.c | 35 ++++++++---------------------------
+ 1 file changed, 8 insertions(+), 27 deletions(-)
+
+diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
+index c1fef1b4bd89..3999e969e1cf 100644
+--- a/drivers/bus/qcom-ebi2.c
++++ b/drivers/bus/qcom-ebi2.c
+@@ -303,40 +303,28 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 	u32 val;
+ 	int ret;
+ 
+-	ebi2xclk = devm_clk_get(dev, "ebi2x");
+-	if (IS_ERR(ebi2xclk))
++	ebi2xclk = devm_clk_get_enabled(dev, "ebi2x");
++	if (IS_ERR(ebi2xclk)) {
++		dev_err(dev, "could not enable EBI2X clk");
+ 		return PTR_ERR(ebi2xclk);
+-
+-	ret = clk_prepare_enable(ebi2xclk);
+-	if (ret) {
+-		dev_err(dev, "could not enable EBI2X clk (%d)\n", ret);
+-		return ret;
+ 	}
+ 
+-	ebi2clk = devm_clk_get(dev, "ebi2");
++	ebi2clk = devm_clk_get_enabled(dev, "ebi2");
+ 	if (IS_ERR(ebi2clk)) {
+-		ret = PTR_ERR(ebi2clk);
+-		goto err_disable_2x_clk;
+-	}
+-
+-	ret = clk_prepare_enable(ebi2clk);
+-	if (ret) {
+-		dev_err(dev, "could not enable EBI2 clk\n");
+-		goto err_disable_2x_clk;
++		dev_err(dev, "could not enable EBI2 clk");
++		return PTR_ERR(ebi2clk);
+ 	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	ebi2_base = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(ebi2_base)) {
+-		ret = PTR_ERR(ebi2_base);
+-		goto err_disable_clk;
++		return PTR_ERR(ebi2_base);
+ 	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+ 	ebi2_xmem = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(ebi2_xmem)) {
+-		ret = PTR_ERR(ebi2_xmem);
+-		goto err_disable_clk;
++		return PTR_ERR(ebi2_xmem);
+ 	}
+ 
+ 	/* Allegedly this turns the power save mode off */
+@@ -378,13 +366,6 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 	if (have_children)
+ 		return of_platform_default_populate(np, NULL, dev);
+ 	return 0;
+-
+-err_disable_clk:
+-	clk_disable_unprepare(ebi2clk);
+-err_disable_2x_clk:
+-	clk_disable_unprepare(ebi2xclk);
+-
+-	return ret;
+ }
+ 
+ static const struct of_device_id qcom_ebi2_of_match[] = {
+-- 
+2.25.1
+
