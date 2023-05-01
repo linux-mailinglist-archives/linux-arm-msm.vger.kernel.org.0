@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46DB56F30A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 14:11:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC5766F30A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 14:11:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232480AbjEAMLU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 08:11:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
+        id S232470AbjEAMLV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 08:11:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232470AbjEAMLS (ORCPT
+        with ESMTP id S232467AbjEAMLT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 08:11:18 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8623CE4B
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 05:11:16 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f19afc4fd8so13335705e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 05:11:16 -0700 (PDT)
+        Mon, 1 May 2023 08:11:19 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CFD2E59
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 05:11:17 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f1728c2a57so24153815e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 05:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682943075; x=1685535075;
+        d=linaro.org; s=google; t=1682943076; x=1685535076;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gdPOb/kVKRm2CWLAaTiuZb0Yvx8fGBpCags1edg/orY=;
-        b=N8p+YFeajBoBPIuVuNaPO8zZVKM0DnysnGItaokQJ9BYrqiCY2YuwGc8BSZB2kxwSx
-         iTCaXam8Q3rg3GUlRrrNFXflyxGPJ88jplC+nJuyV0qyoPUUpnUb4MyIswfIV5m0FGwW
-         VQ7+II+5miYAbI+B062O2/ourqGdd3O2cBnq3Ebju+FT6mum1tihntwFEIuh8emWXtni
-         gMJNXpvaOQlt7rZfdB2pnfHDm95UjOP3osW2GdvYJOq2eP4EgRWsbDVc9YKrED+0o10D
-         6is+/SGjJMaKlHDOAfuLANrUM+YDLVvB6ZgF3IXj0MfHSQzVUj5Q+3T/xlndZjtuNbk6
-         9NSg==
+        bh=Mot1s4oJJqHfzgUo3NAC8eaCnGWNaTZ4CyGiPVoRb5c=;
+        b=uqOyDSC22sOs0nt4i7bdoAxv0GYcWx0ewomIfLjfn51gULBPrPS+CUF8coiWT8OLRN
+         tSEz+9b1t+X+qf8nScNMkgNef6Jwv1ogyWKKBMxZf2gNpSgoj45EA5KqMZe6YKgZQjdX
+         olBF09A5BSruO7Y6N6KUcix7jjqkDau7zKBxk3s1zxLP9nVgP2FnKefdlLoJP6bKU+Pw
+         PfVc6PMla2Y+W/TM4ml5Q3ORT1FnvdST9dnl2/N1tGlUYx2glqaWbO1iepLhpCjzvlfz
+         zDXluTc6QdtCFKdFeFXLBsgKGMpOcBJIU89UtwQ45XNvQgy2z/aUvO/jyGo2Ehw8pMkP
+         jkOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682943075; x=1685535075;
+        d=1e100.net; s=20221208; t=1682943076; x=1685535076;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gdPOb/kVKRm2CWLAaTiuZb0Yvx8fGBpCags1edg/orY=;
-        b=CpR6xfEAi+Mobt4EBSNYUBQTyNAcavotSb8FoR9Su1wFo0Ru0K2AoWfnNR633/WTye
-         dnJipYYhnBzA1s5ovfoSidXnaz6T1/uvDGpEl41Ecd2/p12O8Xh+Hd/jUto0Q6hTp3mo
-         7vT5YB/6btMZjyX3KO63vN6Z5mPa4h0zEpoe5Hd7FH2DhUgNktE9uZX8zVIfCdlJDfAa
-         s/045wBc53Q3oiQeRi5/c8gY7kVckwW+Sm7e+gbRcg+B/r0CGzwPjcAxlI28rBdpxuy0
-         sor9olOC1Ma7MHk+C23KNc9vRMvH7D6kPbZxQOrzeDQ3kA6tab/mBYrXuHZmFKeQus6b
-         WH6g==
-X-Gm-Message-State: AC+VfDzl5m8c5puYJ4KS7HKE3hHK49srb/rDqC0jrp5XYoC7eZBxTnx6
-        04ygd0RLKZTB4e57/jGLwEwZ2g==
-X-Google-Smtp-Source: ACHHUZ5unDH0Cz1OdQ96Xami9iOM40tsQFdU5LlEnhGDCdElpicSQYfFjNd+tAlYil+9qAd5Y3pd4Q==
-X-Received: by 2002:a05:600c:214e:b0:3f1:7277:eaa with SMTP id v14-20020a05600c214e00b003f172770eaamr10092767wml.31.1682943074925;
-        Mon, 01 May 2023 05:11:14 -0700 (PDT)
+        bh=Mot1s4oJJqHfzgUo3NAC8eaCnGWNaTZ4CyGiPVoRb5c=;
+        b=BJu9Z3IwnaGyqypsFuEl9KFpPk3c16n/cPGOKF7gl/f3QiV4MvI2esZn+LU1eU8W1A
+         UcJLMdcGGgqCWPVb0RWcj1XgY63A07iwwNzmEweLp6EzdB63KpQwnS6ypLhay2/HT5/3
+         bpq8GvZdL6DHtQPBw7p+wr3bSoCmXEta3VlfD4T32NtA82CSIaxnedHHttSZUrbxqWAw
+         HS0gDh4CA8twLFUvHqvyc1yKSlQME/l7J702gl/m5UvHmiUa6b38n6uTEIaDMPl2qdUy
+         iALCzz/1dHUDgDUHiK8znuk5D2qIPgSoNx22gocSSxZIBIQq3KIHzqVlocPBQoWYcSN7
+         Hwmw==
+X-Gm-Message-State: AC+VfDwXMmOgO0yHl7kw409pBKlxz4WQtVOrwCl+nOAGQ9/kI6t4j8TC
+        /9ePWV4sdGsyZoS0RPWYXlYnMcR/5Yr+NZ8zrCU=
+X-Google-Smtp-Source: ACHHUZ4xCpe9cElu8P3DGKibwgCjoYK0mIIy0HLAyq2w2hF9q2lo19kYkSKnph2M/a6OQjNfhC1b8A==
+X-Received: by 2002:a05:600c:299:b0:3f2:50ab:1bba with SMTP id 25-20020a05600c029900b003f250ab1bbamr9981355wmk.19.1682943076016;
+        Mon, 01 May 2023 05:11:16 -0700 (PDT)
 Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o10-20020a05600c510a00b003ee443bf0c7sm35856634wms.16.2023.05.01.05.11.13
+        by smtp.gmail.com with ESMTPSA id o10-20020a05600c510a00b003ee443bf0c7sm35856634wms.16.2023.05.01.05.11.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 05:11:14 -0700 (PDT)
+        Mon, 01 May 2023 05:11:15 -0700 (PDT)
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
         gregkh@linuxfoundation.org, andersson@kernel.org,
@@ -60,9 +60,9 @@ Cc:     caleb.connolly@linaro.org, bryan.odonoghue@linaro.org,
         konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
         robertom@qti.qualcomm.com,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v6 01/13] dt-bindings: regulator: qcom,usb-vbus-regulator: Mark reg as required
-Date:   Mon,  1 May 2023 13:10:59 +0100
-Message-Id: <20230501121111.1058190-2-bryan.odonoghue@linaro.org>
+Subject: [PATCH v6 02/13] dt-bindings: regulator: qcom,usb-vbus-regulator: Mark regulator-*-microamp required
+Date:   Mon,  1 May 2023 13:11:00 +0100
+Message-Id: <20230501121111.1058190-3-bryan.odonoghue@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
 References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
@@ -78,31 +78,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The regulator code needs to know the location of the register to write to
-to switch on/off. Right now we have a driver that does this, a yaml that
-partially describes it and no dts that uses it.
+The VBUS driver needs to know the regulator-min-microamp and
+regulator-max-microamp so they should both be marked as required.
 
-Switching on the VBUS for sm8250 shows that we haven't documented reg as a
-required property, do so now.
+regulator.yaml defines those two dependencies so include regulator.yaml.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+We need to change from additionalProperties: false to
+unevaluatedProperties: false.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- .../devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml   | 1 +
- 1 file changed, 1 insertion(+)
+ .../bindings/regulator/qcom,usb-vbus-regulator.yaml      | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-index b1cff3adb21b5..7a3b59f836092 100644
+index 7a3b59f836092..89c564dfa5db5 100644
 --- a/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
 +++ b/Documentation/devicetree/bindings/regulator/qcom,usb-vbus-regulator.yaml
-@@ -25,6 +25,7 @@ properties:
+@@ -14,6 +14,9 @@ description: |
+   regulator will be enabled in situations where the device is required to
+   provide power to the connected peripheral.
  
++allOf:
++  - $ref: regulator.yaml#
++
+ properties:
+   compatible:
+     enum:
+@@ -26,8 +29,10 @@ properties:
  required:
    - compatible
-+  - reg
+   - reg
++  - regulator-min-microamp
++  - regulator-max-microamp
  
- additionalProperties: false
+-additionalProperties: false
++unevaluatedProperties: false
  
+ examples:
+   - |
+@@ -37,6 +42,8 @@ examples:
+         pm8150b_vbus: usb-vbus-regulator@1100 {
+             compatible = "qcom,pm8150b-vbus-reg";
+             reg = <0x1100>;
++            regulator-min-microamp = <500000>;
++            regulator-max-microamp = <3000000>;
+         };
+      };
+ ...
 -- 
 2.39.2
 
