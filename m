@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EB0D6F32C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 17:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6CB66F32DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 17:28:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232706AbjEAPVv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 11:21:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48562 "EHLO
+        id S232363AbjEAP2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 11:28:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232301AbjEAPVt (ORCPT
+        with ESMTP id S232193AbjEAP2X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 11:21:49 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A27699D
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 08:21:47 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f1763ee8f8so15360295e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 08:21:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1682954506; x=1685546506;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gKiWqYh9XO5qAQM1s+Ma3p+jBCI9gPE5d3tSqh6MCa0=;
-        b=1wg14JkhVroeNJwAGykMLmL84VsdXQW2riCt13yjf5fCspUhukwPLkrLeWvZtdx6Y+
-         hzIgqfTops1iGoSXM1ALRKuqLRRUDF8Sfcxi/Wd1lPYJGiPyf2pDKBGPbKg3I5/oYPsV
-         soWnBr0Eh9Zw/BnzhUsBOJThdpVjOmwraxZJkeiEi52n/EY8zScjjgAaHhLsN7b/jjLL
-         HDby8pTefmIN2AXWePyjq6rWKEB5n8W/XOKGsy4XJPG5ruR/L8qg5iI97t+o6TRAga5u
-         R5iBRhDsidLv15aQkVC7qdNs1BCDdBhJCjcVDGB98uLleP/UDJa274sJfdnnueTsd/Mj
-         FUOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682954506; x=1685546506;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gKiWqYh9XO5qAQM1s+Ma3p+jBCI9gPE5d3tSqh6MCa0=;
-        b=Lz1VK9HF1KyiRvUD2bk1N4RxecWaXDld2VDTAbCJ5Qp7J3APK+i9s9TkoYVjZDB2gh
-         ILfamAmTWI9d6opWLWG+I2ca/WMWO9eYjgZBJdgFHF+yL+TC3r6lLNtuPZFU4zLmUgJ2
-         7pyhpGEp/hFr3X2aDcYdvZVjGJjXPYZdCM9AD7HCdVzHrZUmggMPyZ9Y+TgODoqBma37
-         1aUtJC/1sVz34yMDMghb0L1R/2POFvRWZC/JSP/D8mgKf+d6YxTf6MLjqTmRJoaZcDBo
-         BSrH8aw+BE+ikvBhhtsTbHbMq/5hVVepm8Uqg0QBGFlar8ijtLoeFcvL/n6dJY33Fe94
-         rdXg==
-X-Gm-Message-State: AC+VfDxpOv9awlY9pt7GV8lIpUJzPlrWFgDYbadBtyQAdFLSL2BN4SLt
-        qAcpMRaZAjFSjCcl8z+nlVpv+I0e5rkk0n4gFLA=
-X-Google-Smtp-Source: ACHHUZ4exJkxnm7bFLNwMG7ossO2cAt9qLl8HLKC4o6ACSLrL7hVkj+nwqOwptyhBk9cG5GIKSEGpA==
-X-Received: by 2002:a7b:cd09:0:b0:3f2:507f:25a4 with SMTP id f9-20020a7bcd09000000b003f2507f25a4mr10024730wmj.30.1682954506144;
-        Mon, 01 May 2023 08:21:46 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id 25-20020a05600c025900b003ed2c0a0f37sm32626835wmj.35.2023.05.01.08.21.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 08:21:45 -0700 (PDT)
-Message-ID: <b22d9fe0-b39e-75e4-fb1d-a74d45d667b8@nexus-software.ie>
-Date:   Mon, 1 May 2023 16:21:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH V2] clk: qcom: camcc-sc7180: Add parent dependency to all
- camera GDSCs
-Content-Language: en-US
-To:     Taniya Das <quic_tdas@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Mon, 1 May 2023 11:28:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942ABAA;
+        Mon,  1 May 2023 08:28:22 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 341FSIYV003625;
+        Mon, 1 May 2023 15:28:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=WxVYXWAROQLyqngVyIjkA6PL1TyrGM+M/4XnTbSf9Js=;
+ b=NikjnHdxgDowrfCxfzuCBzAH7GgfIfY3/8adlGc83PyI4gTVRvFgHP1zqg8uC9RkAk6L
+ qEoKAsma4r1Uz8TKmqBbDr7DhcpSNBOafa4dBSuChGtW5KKWfdnULvwyG+sYrHz0MaxX
+ Rgoz8+VG+S1pQ6ZMgbTno/dbX1HCYj39OfZ3/Sa9MnKNr+nRcTi8sg52S9zVvkneRgmq
+ 3+gerSOuABk59pH/KH7GFsdj3fJSbeEtgRaQvRNtYau1t3Qns1t252B57kgpYYzmp6RC
+ KDQO5gIGUyUS6uleS9KpSlECC9ZoIlniAQlZxlUyurL89yqsDhp0QpdoM3a5oOJBGQbw Ag== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3q8ub33vsr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 01 May 2023 15:28:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 341FSGhm001480
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 1 May 2023 15:28:16 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 1 May 2023 08:28:13 -0700
+From:   Taniya Das <quic_tdas@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_skakitap@quicinc.com,
-        quic_cponnapa@quicinc.com
-References: <20230501142932.13049-1-quic_tdas@quicinc.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20230501142932.13049-1-quic_tdas@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_skakitap@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH] clk: qcom: rcg: Update rcg configuration before enabling it
+Date:   Mon, 1 May 2023 20:57:32 +0530
+Message-ID: <20230501152732.9245-1-quic_tdas@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8qeVBL17wU7HePPciFAE2GRzCOu06Gat
+X-Proofpoint-ORIG-GUID: 8qeVBL17wU7HePPciFAE2GRzCOu06Gat
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-01_08,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ mlxscore=0 impostorscore=0 spamscore=0 mlxlogscore=803 lowpriorityscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2305010125
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,16 +77,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/05/2023 15:29, Taniya Das wrote:
-> Camera titan top GDSC is a parent supply to all other camera GDSCs. Titan
-> top GDSC is required to be enabled before enabling any other camera GDSCs
-> and it should be disabled only after all other camera GDSCs are disabled.
-> Ensure this behavior by marking titan top GDSC as parent of all other
-> camera GDSCs.
-> 
-> Fixes: 15d09e830bbc ("clk: qcom: camcc: Add camera clock controller driver for SC7180")
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+If rcg is in disabled state when clk_rcg2_shared_set_rate is called, the
+new configuration is written to the configuration register but it won't be
+effective in h/w yet because update bit won't be set if rcg is in disabled
+state. Since the new configuration is not yet updated in h/w, dirty bit of
+configuration register will be set in such case. Clear the dirty bit and
+update the rcg to proper new configuration by setting the update bit before
+enabling the rcg.
 
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+ drivers/clk/qcom/clk-rcg2.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 76551534f10d..b36377979f21 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -980,7 +980,13 @@ static int clk_rcg2_set_force_enable(struct clk_hw *hw)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+ 	const char *name = clk_hw_get_name(hw);
+-	int ret, count;
++	int ret, count, val;
++
++	if (!__clk_is_enabled(hw->clk)) {
++		regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CMD_REG, &val);
++		if (val & CMD_DIRTY_CFG)
++			update_config(rcg);
++	}
+
+ 	ret = regmap_update_bits(rcg->clkr.regmap, rcg->cmd_rcgr + CMD_REG,
+ 				 CMD_ROOT_EN, CMD_ROOT_EN);
+--
+2.17.1
 
