@@ -2,83 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B4CD6F366D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 20:59:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF69E6F36AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 21:25:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232805AbjEAS66 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 14:58:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41546 "EHLO
+        id S233034AbjEATZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 15:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232625AbjEAS6t (ORCPT
+        with ESMTP id S232990AbjEATYr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 14:58:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A2441708
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 11:58:48 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 341FhE0A025721;
-        Mon, 1 May 2023 18:58:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=GMHa6OHIeIVoZoQ36I9Et2ADpUxODcVxF5WZ7tZI4ww=;
- b=KdEMSnFXpewbTs1+iEg7N31cuGazszJDqVuGfxAha+pZTAfamsOoNmuddZANmsPtq9hj
- ZmRFE3e0Ulb3OtDxacxSn1Ww/YZ1EPWv+OU0MKFKYGuqDt684hifiP2v5niWwuoK2hm7
- UsG78ZH9i3DTmzMdReygTC5hPKKCn14WBnOSUcQh0yl8DnPVdzIa08kKgzmRJbn/V8lf
- DkjHS2A9ka1wTRYOPEXPQYol5AKDI74RlezRo7xGc3bNCqF6b+uKcICy/y3al4vbWSU0
- P+kgJlycnBzDUA9mJXhlktotcrpf+QDWoYDfcHVgz/o8siKUFtRlldgoLEilN0NLJBkP Wg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qa0a39ytt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 01 May 2023 18:58:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 341Iwfak003771
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 1 May 2023 18:58:41 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 1 May 2023
- 11:58:40 -0700
-Message-ID: <dfc24f9d-af35-8c42-9c78-7e2f7f81c995@quicinc.com>
-Date:   Mon, 1 May 2023 11:58:40 -0700
+        Mon, 1 May 2023 15:24:47 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF7FD1FDC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 12:24:44 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-63b60365f53so3412207b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 12:24:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682969083; x=1685561083;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zKHzO/Hrbfl8nlBv+K49ojgRoBGcaLETpzBjfih2Yvg=;
+        b=awtZMcboczzRmO3k/WSOtdFLkLw9ZCqipy/kj2LXYAAMC1JZaRS6Ip3gC8v06l/qhg
+         UwqM0M1FuhLUgHyVxQCdRcKFnfI+WayRvCFymL5DAHZooTfZAzaLd2jjnMasqUlEuUC2
+         LGJw/JSN+xq6UwI5BiiQTsdFBWqhByWOBLTP1La42194h3tacWJA3pxlOqQtEdNlSJgs
+         jnVBHDHMTzVaIap55BSazUpKs7QSI9J68JFU0uEdgMUeS75Xm7aClxG1lPbb9+MdEN2z
+         DiExM/H32yKb4yE1zceXoDw9Q5yovSdZXgZ2aUEB3Le4ZQaIZxcUHzEihEytRjnzaZGX
+         CHCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682969083; x=1685561083;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zKHzO/Hrbfl8nlBv+K49ojgRoBGcaLETpzBjfih2Yvg=;
+        b=hGws5HV5L4VlXouCCfVvh7mAeT8tQM6qB5XKhVcIhcr/dZRDo67dhnJUnSdlaI6WJ/
+         1FGR2JNYCysaE7T6I3v12orC/pwY6fhyxuVugTJPBGaf3w5U1TTVOsniUXKP82ZanZA0
+         WKAb9lAbZxGNa/rZm7RuMkRznuCFh6X37OMnBYbgDtjmLZLFvBIOSKq8xeZbCzpiktsB
+         3KupGyrOtOxi91+aqgI2KfgkEheU5113YDuZg9NpBbfmV5eJpgGsTbJNVv70sOl2MEw3
+         dL1rMb//76IYs1k82wQfQLs3bocYYgyWgpRucyRSyCvwnGqgdnru9BEDgsKTOdXGmOaw
+         fcNw==
+X-Gm-Message-State: AC+VfDzyxh6/IEsuU+2GE6ZcIu1aY/1Akwo8S7qcb0pNJlTx8csLgoyn
+        U3oJWASeG+ff5dBVp44ck2nxfE/NA80tXuzA0qk=
+X-Google-Smtp-Source: ACHHUZ7N3WIvP6+tHaTNd0enhURzMFBWQ3KuY9zg8E5vcGdwuA4Shp9ovocQHS+38FvwLQypJIrGBg==
+X-Received: by 2002:a05:6a20:1616:b0:ee:f5a4:c064 with SMTP id l22-20020a056a20161600b000eef5a4c064mr18108068pzj.62.1682969083200;
+        Mon, 01 May 2023 12:24:43 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1f3b:58fa:39f6:37e1:bb9a:a094])
+        by smtp.gmail.com with ESMTPSA id 189-20020a6304c6000000b00513cc8c9597sm17459144pge.10.2023.05.01.12.24.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 12:24:42 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
+        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
+        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Subject: [PATCH v9 0/4] Enable USB SS qmp phy for Qualcomm SM6115 SoC
+Date:   Tue,  2 May 2023 00:54:28 +0530
+Message-Id: <20230501192432.1220727-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v3] drm/msm/dpu: drop unused SSPP sub-block information
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230429212512.2947245-1-dmitry.baryshkov@linaro.org>
- <61997e7e-1a4f-8b1d-1a7d-a1ed802ae83d@quicinc.com>
- <c2e1a277-4bb7-d437-9748-be6c36e460b4@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <c2e1a277-4bb7-d437-9748-be6c36e460b4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BB-8c_WQ0jCN8jAreP31xMCQVc1cINIr
-X-Proofpoint-GUID: BB-8c_WQ0jCN8jAreP31xMCQVc1cINIr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-01_11,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 bulkscore=0 impostorscore=0 lowpriorityscore=0
- mlxlogscore=983 mlxscore=0 adultscore=0 phishscore=0 malwarescore=0
- spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305010154
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,67 +73,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes since v8:
+-----------------
+- v8 can be seen here: https://lore.kernel.org/linux-arm-msm/20230410171010.2561393-1-bhupesh.sharma@linaro.org/
+- Added driver change for new bindings used for sm6115 / qcm2290
+  devices.
 
+Changes since v7:
+-----------------
+- v7 can be seen here: https://lore.kernel.org/linux-arm-msm/20230409200934.2329297-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry and added "pipe clk".
 
-On 5/1/2023 11:56 AM, Dmitry Baryshkov wrote:
-> On 01/05/2023 21:49, Abhinav Kumar wrote:
->>
->>
->> On 4/29/2023 2:25 PM, Dmitry Baryshkov wrote:
->>> The driver  doesn't support hsic/memcolor and pcc SSPP subblocks.
->>> Drop corresponding definitions.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>
->>> Changes since v2:
->>> - Fixed commit message to remove igc block mention.
->>>
->>> Changes since v1:
->>>   - Rebased on top of 
->>> https://patchwork.freedesktop.org/patch/534725/?series=117130&rev=1
->>>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 6 ------
->>>   1 file changed, 6 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> index 69d1f1e59db1..b2831b45ac64 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> @@ -380,9 +380,6 @@ struct dpu_caps {
->>>    * @qseed_ver: qseed version
->>>    * @scaler_blk:
->>>    * @csc_blk:
->>> - * @hsic:
->>> - * @memcolor:
->>> - * @pcc_blk:
->>
->> pcc_blk is still there. So this should be dropped. Once that is fixed,
-> 
-> But the pcc_blk is removed in the next chunk. Please take a glance.
+Changes since v6:
+-----------------
+- v6 can be seen here: https://lore.kernel.org/linux-arm-msm/20230407061122.2036838-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Bjorn and Dmitry and dropped old bindings in this
+  version.
 
-Ah yes, correct, my bad, i thought this from the dpu_dspp_sub_blks but 
-this is from struct dpu_sspp_sub_blks.
+Changes since v5:
+-----------------
+- v5 can be seen here: https://lore.kernel.org/linux-arm-msm/20230405191633.1864671-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry and made [PATCH 1/2] compatible with his 
+  'split away legacy USB+DP code' series:
+  <https://patchwork.kernel.org/project/linux-phy/cover/20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
 
-Thanks for clarification. R-b is still good.
+Changes since v4:
+-----------------
+- v4 can be seen here: https://lore.kernel.org/linux-arm-msm/20230401154725.1059563-1-bhupesh.sharma@linaro.org/ 
+- Collected Krzysztof's Ack for [PATCH 1/2].
+- Added more descriptive commit logs as per Dmitry's comments on v4.
 
-> 
->>
->> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->>>    * @format_list: Pointer to list of supported formats
->>>    * @num_formats: Number of supported formats
->>>    * @virt_format_list: Pointer to list of supported formats for 
->>> virtual planes
->>> @@ -399,9 +396,6 @@ struct dpu_sspp_sub_blks {
->>>       u32 qseed_ver;
->>>       struct dpu_scaler_blk scaler_blk;
->>>       struct dpu_pp_blk csc_blk;
->>> -    struct dpu_pp_blk hsic_blk;
->>> -    struct dpu_pp_blk memcolor_blk;
->>> -    struct dpu_pp_blk pcc_blk;
->>>       const u32 *format_list;
->>>       u32 num_formats;
-> 
+Changes since v3:
+-----------------
+- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20221215094532.589291-4-bhupesh.sharma@linaro.org/
+- Fixed v4 as per the downstream driver code: https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#296
+
+This patchset adds the support for USB SS qmp phy for Qualcomm SM6115
+SoC. For the previous versions of this patch there were conversations
+on irc as to whether this was a 'qcom,usb-ssphy-qmp-usb3-or-dp' or a
+'qcom,usb-ssphy-qmp-dp-combo' as per downstream code and hardware
+documentation.
+
+But after a careful look at downstream dtsi (see [1]) it appears that
+this indeed is a 'qcom,usb-ssphy-qmp-usb3-or-dp' phy and not a
+'dp-combo' phy.
+
+[1]. https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#296
+
+Bhupesh Sharma (4):
+  dt-bindings: phy: qcom,qmp-usb: Drop legacy bindings and move to newer
+    one (SM6115 & QCM2290)
+  phy: qcom-qmp-usb: add support for updated qcm2290 / sm6115 binding
+  arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+  arm64: dts: qcom: qrb4210-rb2: Enable USB node
+
+ .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 27 ------------
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 44 ++++++++++++++++---
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 24 ++++++++++
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 29 +++++++++++-
+ .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 22 ++++++++++
+ 7 files changed, 118 insertions(+), 34 deletions(-)
+
+-- 
+2.38.1
+
