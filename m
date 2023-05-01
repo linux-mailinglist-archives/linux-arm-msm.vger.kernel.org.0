@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBEF36F3114
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 14:42:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7179D6F3118
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 14:43:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232269AbjEAMmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 08:42:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35836 "EHLO
+        id S232554AbjEAMns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 08:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231736AbjEAMmX (ORCPT
+        with ESMTP id S229816AbjEAMnr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 08:42:23 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7125E1BFB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 05:41:55 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4edcdfa8638so3039870e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 05:41:55 -0700 (PDT)
+        Mon, 1 May 2023 08:43:47 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF7EF1727
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 05:43:15 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4efe8b3f3f7so2887804e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 05:43:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682944913; x=1685536913;
+        d=linaro.org; s=google; t=1682944993; x=1685536993;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kRAAC9w75oB/bIFgwxyTbBa5xqYXWbXvoGPKDNUWQSc=;
-        b=zCAcfUi4sMydaQf3bWSZhtQ+7vrCZpB4JSecvfQIDL7W/UjnSOSDl9VWfMu+zpkfCp
-         U01caRTVNBS1XLe/DX1lIpJbicWq1AOAuLcWJ84VyfmlMbZQghUjObMbb1GUaYedx8C8
-         qEO9WpDOVMyLlPx5u3qqyg5P4MdlTsn4+E6gaCZWLjur9tNHK9kMbY7zM3nilqvXrp3N
-         hccqFYzlACsnszl2tLO7VBvueuuYQNGPRDPQoNbcxrod2ultC2xbWaW194p97m8no0Pd
-         PR4Db3+xyEQqrIkniSqcvgXpxO4LWX5keL5ULyh2VVnnfmqPjmgZ3t/ihPCevKf96C/F
-         W0SQ==
+        bh=xwPDq5ZTkDVgHb/uQb+f+dVIO2o0aAZpD6P70DMwUWI=;
+        b=Tp4VGH2K/v86k0jAdcITs8TPICO69LbiKCESGpARv9/gOoclKMAqqyzfTaRB0gt82o
+         J+kBvULZzrwHNwzfVgcNzQ20PhoOZ01drUJ4CySFSMzl+8mDACY4l7hXsSOCXYYKe0+m
+         KMXTqB1HlFsDiqf9WWAJLo1PbeJ0QHhWbUJOv1QRaW08BPrVavJeDSuu58oTWcnzy4Ed
+         7PaVTOivdw1qaZGJtAUnMO/1XfoKbk0S0fXDQHM8IgX16H5nG/Zo/u+5JHucub16CcIr
+         foCCCm4d0ueXJWwY+MiizSt2ChiSCB8+1Yn00FnNOYyVGL85djX6t0UjtoI6+XlYUIAr
+         Rx7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682944913; x=1685536913;
+        d=1e100.net; s=20221208; t=1682944993; x=1685536993;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kRAAC9w75oB/bIFgwxyTbBa5xqYXWbXvoGPKDNUWQSc=;
-        b=ClB4ucBPaoan86W/xKOhV2rw0KZ0EDw5gQe3SlOq40glHUw1amLSVvIeRbAlBAjyse
-         4yYUCOIuFcfDrkK3rT2qwKNzPW6CeeAMVbeb7OtL6F3guM9/dhUZ8mIr6/6AjDuDsHGZ
-         pS6LlMcaLDJLeQCnXrKtzxGkjjpP64loc9I6fFUa28jcz5QKvHlYqJlljoZyJ8yrsfUV
-         VCb7OubpliHxOY1VCdwrU1i9GGRYn0AK4fWIZsNv/iEnzow2CCz7DiQ+8AbUUPClax2p
-         aAaOO7FW5QvpiQdoFXS2RGWOA475PNttURUtBqaVPFML0bk7jLm0aa0zkb4ERuxogbey
-         D8lQ==
-X-Gm-Message-State: AC+VfDz7l2sPwq+oBVhYGFOpQfBFFWpJCvgef2ILJ7xU+3bUiihQ7sXL
-        f7ldv/XOGq3o4gJ3eHAhy0Mc4w==
-X-Google-Smtp-Source: ACHHUZ72hLbvezX9uXS2Nydb9J0ngfEYbPtHxnRItKvjEZMFhFA2lLzYs5k6sPy+hyIKhRZ24pQzVA==
-X-Received: by 2002:a05:6512:21ab:b0:4eb:252e:3ec5 with SMTP id c11-20020a05651221ab00b004eb252e3ec5mr3596940lft.14.1682944913514;
-        Mon, 01 May 2023 05:41:53 -0700 (PDT)
+        bh=xwPDq5ZTkDVgHb/uQb+f+dVIO2o0aAZpD6P70DMwUWI=;
+        b=aXR49PjO5OvQiZV6sZnI8QB1z5n03XnmbNhcWxGKnCs8uosUka8Y5RJtQiCrD8TgXc
+         xCFcsNKN63L59uBCzfkywGBUlqRopFn9xiUg0/f4uxQ6+0LHf6l7zYq9kkVAtmhDf85t
+         phpAZ/LnfHJr/aH83NxtPMro5l7rrdC7sbJXYKpe7bedshgWUbLu8MfKhT4vDPgeTzEV
+         z439xuXiqjUEjC1xkx4ejCqKfs5XsphUALBFeWGJT0L8IG01nlRBUqQiWSPPrL0d8jQq
+         g8qB84fZNbZtAgz3/awR9lrK+T51vFuaoDdPMggZkE6ew3zq0HLyfUTsN30+76ELjZC9
+         Cb3g==
+X-Gm-Message-State: AC+VfDx6D0qi5K1nBrndY2VEl2ZgYyKHPjaLOZqFkBsCktez+XdiwKhA
+        gNYh/+lALzEnktuOoX5lndLAcA==
+X-Google-Smtp-Source: ACHHUZ780umdJ9HJNYHcxHXY0b4RUYHj7BHsSAwYpBbHxTvtY/ATxjIdot2LYlFfq5/YiDwr0H6ixA==
+X-Received: by 2002:a2e:934c:0:b0:2a7:6e37:ee68 with SMTP id m12-20020a2e934c000000b002a76e37ee68mr3562808ljh.12.1682944992764;
+        Mon, 01 May 2023 05:43:12 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac2515b000000b004efe8174586sm4008405lfd.126.2023.05.01.05.41.52
+        by smtp.gmail.com with ESMTPSA id d14-20020ac2544e000000b004eb3b6da6f5sm4673288lfn.228.2023.05.01.05.43.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 05:41:53 -0700 (PDT)
-Message-ID: <cfe771e1-6ce8-b6c5-dd65-ed18f84543a5@linaro.org>
-Date:   Mon, 1 May 2023 14:41:51 +0200
+        Mon, 01 May 2023 05:43:12 -0700 (PDT)
+Message-ID: <d23d3757-da6f-69d7-bca9-581c489f81e6@linaro.org>
+Date:   Mon, 1 May 2023 14:43:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH] drm/msm/dsi: don't allow enabling 14nm VCO with
- unprogrammed rate
+Subject: Re: [PATCH] spi: spi-geni-qcom: Correct CS_TOGGLE bit in
+ SPI_TRANS_CFG
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230501011257.3460103-1-dmitry.baryshkov@linaro.org>
- <7cf248ee-d966-3aa5-91f1-3d93ab71cd4b@linaro.org>
- <516a1313-5dff-d471-2c41-405e2beed4d6@linaro.org>
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
+        swboyd@chromium.org, quic_vtanuku@quicinc.com
+References: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
+ <9f28dbff-ca3a-8523-5bfc-37b38bc846c3@linaro.org>
+ <1b1b095e-8fcb-37d5-7542-48a6b55f35a1@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <516a1313-5dff-d471-2c41-405e2beed4d6@linaro.org>
+In-Reply-To: <1b1b095e-8fcb-37d5-7542-48a6b55f35a1@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,55 +83,69 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 1.05.2023 14:39, Dmitry Baryshkov wrote:
-> On 01/05/2023 15:37, Konrad Dybcio wrote:
+On 1.05.2023 10:05, Vijaya Krishna Nivarthi wrote:
+> On 4/25/2023 7:15 PM, Konrad Dybcio wrote:
 >>
->>
->> On 1.05.2023 03:12, Dmitry Baryshkov wrote:
->>> If the dispcc uses CLK_OPS_PARENT_ENABLE (e.g. on QCM2290), CCF can try
->>> enabling VCO before the rate has been programmed. This can cause clock
->>> lockups and/or other boot issues. Program the VCO to the minimal PLL
->>> rate if the read rate is 0 Hz.
+>> On 4/25/23 09:42, Vijaya Krishna Nivarthi wrote:
+>>> The CS_TOGGLE bit when set is supposed to instruct FW to
+>>> toggle CS line between words. The driver with intent of
+>>> disabling this behaviour has been unsetting BIT(0). This has
+>>> not caused any trouble so far because the original BIT(1)
+>>> is untouched and BIT(0) likely wasn't being used.
 >>>
->>> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> Correct this to prevent a potential future bug.
+>>>
+>>> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 >>> ---
->> Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> Reported-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >>
->> I think this should also be implemented on other PLL gens.
->>
->>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 3 +++
->>>   1 file changed, 3 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->>> index 9f488adea7f5..3ce45b023e63 100644
->>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
->>> @@ -539,6 +539,9 @@ static int dsi_pll_14nm_vco_prepare(struct clk_hw *hw)
->>>       if (unlikely(pll_14nm->phy->pll_on))
->>>           return 0;
->>>   +    if (dsi_pll_14nm_vco_recalc_rate(hw, VCO_REF_CLK_RATE) == 0)
->>> +        dsi_pll_14nm_vco_set_rate(hw, pll_14nm->phy->cfg->min_pll_rate, VCO_REF_CLK_RATE);
->> VCO_REF_CLK_RATE ---> phy->cfg->min_pll_rate (VCO_MIN_RATE)?
+>> Has this always been the case, or did the switch to BIT(1)
+>> only occur on some recent platforms?
 > 
-> No, this is the parent rate, which is VCO_REF_CLK_RATE for all practical purposes.
-right!
+> 
+> Thank you very much for the review..
+> 
+> This has always been the case.
+> 
+> With intent of disabling CS_TOGGLE, currently, the driver is unsetting BIT(0), though it should have been BIT(1).
+> 
+> Yet no problem was encountered because
+> 
+> a) BIT(0) seems to be an unused bit
+> 
+> b) BIT(1) is probably already unset because its untouched
+> 
+> Further more, as Doug pointed we are mostly using GPIO for CS.
+> 
+> 
+> Testing with the change has not caused any regressions.
+Okay, with no deeper knowledge of the topic best I can give you is:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-This probably deserves
-
-Fixes: f079f6d999cb ("drm/msm/dsi: Add PHY/PLL for 8x96")
-
-as the driver previously allowed for erroneous (and inherently racy) behavior
 
 Konrad
 > 
+> 
+> Thank you,
+> 
+> Vijay/
+> 
+> 
+> 
 >>
 >> Konrad
->>> +
->>>       dsi_phy_write(base + REG_DSI_14nm_PHY_PLL_VREF_CFG1, 0x10);
->>>       dsi_phy_write(cmn_base + REG_DSI_14nm_PHY_CMN_PLL_CNTRL, 1);
->>>   
-> 
+>>
+>>>   drivers/spi/spi-geni-qcom.c | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+>>> index ba7be50..8a7d1c2 100644
+>>> --- a/drivers/spi/spi-geni-qcom.c
+>>> +++ b/drivers/spi/spi-geni-qcom.c
+>>> @@ -35,7 +35,7 @@
+>>>   #define CS_DEMUX_OUTPUT_SEL    GENMASK(3, 0)
+>>>     #define SE_SPI_TRANS_CFG    0x25c
+>>> -#define CS_TOGGLE        BIT(0)
+>>> +#define CS_TOGGLE        BIT(1)
+>>>     #define SE_SPI_WORD_LEN        0x268
+>>>   #define WORD_LEN_MSK        GENMASK(9, 0)
