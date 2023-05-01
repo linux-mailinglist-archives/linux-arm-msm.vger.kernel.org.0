@@ -2,175 +2,248 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 741F56F318B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 15:31:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03EBD6F31B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 May 2023 16:01:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232214AbjEANbU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 09:31:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57370 "EHLO
+        id S231249AbjEAOBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 10:01:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230391AbjEANbT (ORCPT
+        with ESMTP id S229688AbjEAOBE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 09:31:19 -0400
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FEF019F;
-        Mon,  1 May 2023 06:31:18 -0700 (PDT)
-Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-64115eef620so26732872b3a.1;
-        Mon, 01 May 2023 06:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682947878; x=1685539878;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GbvE8ZpCJPBCKMm9p4IOoIg+xSy1Zu3YjZzWHLjkQw4=;
-        b=U3vEk/KYmYFuOZ2OmJJtk7K8lEFcEU8/Kc/T1FUqtlqM4++wLdz96vcXVY945yKwYx
-         /H9ei5qwGhtm573RNTyfjTvK77zCGGnoMHGphltehmppCVdMZYxSJMcRo1SFCxx6jmyr
-         iBf6O/X2WnIvbrDrapp2bs/b3j7vXuP81YfuLPiqw8ksINQrLB6fAlwx9Ha8gTPla7ex
-         ADIQreBbnk3PwqbXNlSvPk106qLsqBELjRJUt59imVYoQtA1YjQxiBmeBd4P7KsBSqjS
-         VO6OvqaTmL559UE5h2fAnNk585orojrl31otUZxJy43rS+hWi7t14SIIhU7hw8DfoUK8
-         E0xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682947878; x=1685539878;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GbvE8ZpCJPBCKMm9p4IOoIg+xSy1Zu3YjZzWHLjkQw4=;
-        b=QxrZNPK7Nr/sl2stON2gF7cE4KUadDS3ywafnWrit7ArcYsLCxDJPNRmzmoqe/FTCc
-         fNvl71b6fyXtHPiMaD6rWHmaNWWxkA1zciEKHBHQOI0g0yCoOcIsPWKtPgiHtzGLTQiJ
-         7StqotvrgRkiLKKWcqLtaZyOJigVXUtMRRv7bsuyvC+YjHw6/V3p82gtAVNK+AG9W7+0
-         0JzNyzRuNYIaReeoLIzR6EMfFDF5nvpNZyURkYg0ReFHlckbFVelED3K3EuZsagTGqWh
-         D+FoqlB8My1fyjR9uYavnSGvBr9TjajjX/h4K+ablb+w69dzg8Qhk9Urlqn2KmC7+Vle
-         EZ1A==
-X-Gm-Message-State: AC+VfDwe0LpAFd4gB9qJ5FMvnO8CUMpOEYoHIZg7rk2o38SOAdLdxFWG
-        HbtbEgxteRqQAO7YU6jqj8c=
-X-Google-Smtp-Source: ACHHUZ6M1EMxkoKfhhNY5Agpi1DUaiuT8jFmk1iwZEGSphgKETD4Wo37AiZlJiMzkuGKvKF4a002Qg==
-X-Received: by 2002:a17:902:ecc2:b0:1a5:1842:f7da with SMTP id a2-20020a170902ecc200b001a51842f7damr22250237plh.6.1682947877722;
-        Mon, 01 May 2023 06:31:17 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id b5-20020a170902d30500b001aae64e9b36sm3117080plc.114.2023.05.01.06.31.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 May 2023 06:31:16 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date:   Mon, 1 May 2023 06:31:15 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, caleb.connolly@linaro.org,
-        konrad.dybcio@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com
-Subject: Re: [PATCH v6 07/13] usb: typec: qcom: Add Qualcomm PMIC Type-C
- driver
-Message-ID: <a427a2b7-49da-49c4-a877-f1987676a07e@roeck-us.net>
-References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
- <20230501121111.1058190-8-bryan.odonoghue@linaro.org>
+        Mon, 1 May 2023 10:01:04 -0400
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F79710D;
+        Mon,  1 May 2023 07:01:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1682949662; x=1714485662;
+  h=message-id:date:mime-version:from:subject:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=Qm+V5a7mXlhtM5xei+hBeHzRmB8KI195QQcxOYMy2bs=;
+  b=cEiWTz30D2B+VRlhJ1SUr6S9ui8XfjcNH5ore/PKrHUF96M8OTKqeA60
+   NlU2lPx6GJXZe4vRAZs7rWjLvUKIVczjNncKN/sicDE3KtZ7l10NmvZ0E
+   R+hCXVen26bPYcwToAy1OaEkSSI4tzwh1NrMllLTBWeZ4px/AZLoiVIrP
+   umGJTGk1qsNDKpck6QITmIuTTMEBerxTj/uOqKZ4qM+9R4EE9895AbOt8
+   Z9Qqrhbfh5sTJhF/E6GD6IzWQjHAYKdPcqWARoAgCH5/0vVkt66mzt/HY
+   sv1oNiqxn20dC4UmGYtgCq8+baz0my/tY1JgeiOa3TZoetOBWbOd3OvYs
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10697"; a="434464623"
+X-IronPort-AV: E=Sophos;i="5.99,241,1677571200"; 
+   d="scan'208";a="434464623"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 May 2023 07:01:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10697"; a="870186698"
+X-IronPort-AV: E=Sophos;i="5.99,241,1677571200"; 
+   d="scan'208";a="870186698"
+Received: from blele-mobl.amr.corp.intel.com (HELO [10.212.170.95]) ([10.212.170.95])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 May 2023 07:01:00 -0700
+Message-ID: <3f618297-e1cd-a46d-5318-c3b77a0fc78d@linux.intel.com>
+Date:   Mon, 1 May 2023 08:43:37 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230501121111.1058190-8-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.10.0
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Subject: Re: [PATCH 6/6] soundwire: qcom: do not probe devices before bus/link
+ init
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-7-krzysztof.kozlowski@linaro.org>
+ <28141433-2130-e278-0f59-d9ab507b9be3@linux.intel.com>
+ <42fbf7ad-54db-0917-bb85-a1be9f99cc45@linaro.org>
+Content-Language: en-US
+In-Reply-To: <42fbf7ad-54db-0917-bb85-a1be9f99cc45@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 01, 2023 at 01:11:05PM +0100, Bryan O'Donoghue wrote:
-> This commit adds a QCOM PMIC TCPM driver with an initial pm8150b
-> block.
+
+
+On 5/1/23 07:24, Krzysztof Kozlowski wrote:
+> On 20/04/2023 23:37, Pierre-Louis Bossart wrote:
+>>
+>>
+>> On 4/20/23 05:16, Krzysztof Kozlowski wrote:
+>>> Soundwire devices are supposed to be kept in reset state (powered off)
+>>> till their probe() or component bind() callbacks.  However if they are
+>>> already powered on, then they might enumerate before the master
+>>> initializes bus in qcom_swrm_init() leading to occasional errors like:
+>>
+>> The problem statement is really hard to follow.
+>>
+>> The peripheral can only be enumerated AFTER
+>> a) the manager starts the bus clock and transmitting PING frames
+>> b) the peripheral detects the sync words for 16 frames in a row.
+>> c) the peripheral reports as Attached in the Device0 slot
+>>
+>> That sequence holds whether the manager does the enumeration manually or
+>> relies on hardware-assisted autoenumeration. This is what the spec requires.
+>>
+>> So why can't the bus clock start be controlled by the manager driver,
+>> and started once all required initializations are done?
+>>
+>> I mean, there's got to be some sort of parent-child hierarchy with
+>> manager first, peripheral(s) second, I don't get how these steps could
+>> be inverted or race.
+>>
+>>>   qcom-soundwire 6d30000.soundwire-controller: Qualcomm Soundwire controller v2.0.0 Registered
+>>>   wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:4 (ops wcd938x_sdw_component_ops)
+>>>   wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:3 (ops wcd938x_sdw_component_ops)
+>>>   qcom-soundwire 6ad0000.soundwire-controller: swrm_wait_for_wr_fifo_avail err write overflow
+>>>
+>>> The problem primarily lies in Qualcomm Soundwire controller probe() sequence:
+>>> 1. request_threaded_irq()
+>>> 2. sdw_bus_master_add() - which will cause probe() and component bind()
+>>>    of Soundwire devices, e.g. WCD938x codec drivers.  Device drivers
+>>>    might already start accessing their registers.
+>>
+>> not if the bus clock hasn't started...
+>>
+>>> 3. qcom_swrm_init() - which initializes the link/bus and enables
+>>>    interrupts.
+>>
+>> if you can move the clock start in 3) then problem solved. Why can't
+>> this be done?
 > 
-> The driver is layered as follows:
+> Responding to all your three responses:
+> The clock is enabled in this 3. qcom_swrm_init(), so the old code to my
+> knowledge is written exactly how you expect.
 > 
-> qcom_pmic_typec.c : Responsible for registering with TCPM and arbitrates
->                     access to the Type-C and PDPHY hardware blocks in one
->                     place.  This presents a single TCPM device to device to
->                     the Linux TCPM layer.
+> However even with stopped clock, the device enumerates at
+> sdw_bus_master_add(), before anything is enabled.
+
+Erm, that's not physically possible...
+
+The peripheral can report as attached and be enumerated by the manager,
+i.e. assigned a non-zero "Device Number" after the peripheral
+synchronizes on 16 frames with valid static and dynamic syncwords. That
+can only happen if there is a clock toggling and PING frames transmitted
+on the data line.
+
+There's something else at play here.
+
+> I also checked the reset values of these registers - clock is off after
+> reset. Assuming of course I look at correct clock registers... but I
+> have only one.
 > 
-> qcom_pmic_typec_pdphy.c: Responsible for interfacing with the PDPHY hardware and
->                          processing power-delivery related calls from TCPM.
->                          This hardware binding can be extended to
->                          facilitate similar hardware in different PMICs.
+>>
+>>> Any access to device registers at (2) above, will fail because link/bus
+>>> is not yet initialized.
+>>>
+>>> However the fix is not as simple as moving qcom_swrm_init() before
+>>> sdw_bus_master_add(), because this will cause early interrupt of new
+>>> slave attached.  The interrupt handler expects bus master (ctrl->bus.md)
+>>> to be allocated, so this would lead to NULL pointer exception.
+>>>
+>>> Rework the init sequence and change the interrupt handler.  The correct
+>>> sequence fixing accessing device registers before link init is now:
+>>> 1. qcom_swrm_init()
+>>> 2. request_threaded_irq()
+>>> 3. sdw_bus_master_add()
+>>> which still might cause early interrupts, if Soundwire devices are not
+>>> in powered off state before their probe.  This early interrupt issue is
+>>
+>> You'd need to clarify in which step the bus clock starts. In general,
+>> you want to clock started last.
 > 
-> qcom_pmic_typec_port.c: Responsible for notifying and processing Type-C
->                         related calls from TCPM. Similar to the pdphy this
->                         layer can be extended to handle the specifics of
->                         different Qualcomm PMIC Type-C port managers.
+> Clock is enabled in qcom_swrm_init() step, but as I wrote above, it
+> looks like it does not matter for enumeration.
+
+without a clock you can't have any enumeration.
+
+
+>>> +	 * from reset by its probe() or bind() function, as a result of
+>>> +	 * sdw_bus_master_add().
+>>> +	 * Add a simple check to avoid NULL pointer except on early interrupts.
+>>> +	 * Note that if this condition happens, the slave device will not be
+>>> +	 * enumerated. Its driver should be fixed.
+>>
+>> ???
+>>
+>> The codec driver is NEVER involved in enumeration.
 > 
-> This code provides all of the same functionality as the existing
-> qcom typec driver plus power-delivery as well.
+> If the device stays in power down, only the driver bind can bring it on.
+> enumeration won't happen when device is powered down, right?
+
+The codec driver can indeed control the codec power with sideband links
+- i.e. not with SoundWire but gpios/I2C/SPI, etc. - and it could very
+well prevent the codec hardware from showing up on the bus until TBD
+platform-specific criteria are met.
+
+But that's not really taking part in the enumeration process, rather
+gating the enumeration process.
+
+>> The only thing a codec driver should do is provide a callback to be
+>> notified of a status change for additional initialization, but the
+>> enumeration can be done even in the absence of a codec driver.
+>>
+>> The proof in the pudding is that you can 'blacklist' a codec driver and
+>> bind it later, after the hardware is enumerated. You can even unbind a
+>> codec driver and nothing bad will happen (we hardened that sequence last
+>> year).
+>>
+>> probe != enumeration != initialization for SoundWire codecs.
+>>
+>> Probe and enumeration can happen in any order
+>> Initialization can only happen after both probe and enumeration happened.
 > 
-> As a result commit 6c8cf3695176 ("usb: typec: Add QCOM PMIC typec detection
-> driver") can be deleted entirely.
+> I am speaking here about component_master_ops->bind() callback.
+
+That's on the manager side, I really don't see how this is related to
+the codec?
+
+>>> +	 * removing Soundwire bus master.
+>>> +	 */
+>>> +	if (ctrl->version < SWRM_VERSION_2_0_0)
+>>> +		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_MASK_ADDR],
+>>> +				0);
+>>> +	if (ctrl->mmio)
+>>> +		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_CPU_EN],
+>>> +				0);
+>>> +
+>>> +	cancel_delayed_work_sync(&ctrl->new_slave_work);
+>>>  	sdw_bus_master_delete(&ctrl->bus);
+>>>  	clk_disable_unprepare(ctrl->hclk);
+>>
+>> should the last two be inverted? Keeping a clock running while removing
+>> stuff is asking for trouble.
+
+actually it doesn't really matter, if the interrupts are disabled first
+and you wait for in-flight work to be done. Ignore this comment.
 > 
-> References code from Jonathan Marek, Jack Pham, Wesley Cheng, Hemant Kumar,
-> Guru Das Srinagesh and Ashay Jaiswal.
+> It is a reversed probe(), which is usually correct. Do you expect
+> probe() like:
 > 
-> Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 	clk_enable
+> 	sdw_bus_master_add
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+it's likely the other way around,
 
-Couple of nits below.
+probe():
+sdw_bus_master_add
+clk_enable
 
-[ ... ]
-> +
-> +static void qcom_pmic_typec_pdphy_pd_receive(struct pmic_typec_pdphy *pmic_typec_pdphy)
-> +{
-> +	struct device *dev = pmic_typec_pdphy->dev;
-> +	struct pd_message msg;
-> +	unsigned int size, rx_status;
-> +	unsigned long flags;
-> +	int ret;
-> +
-> +	spin_lock_irqsave(&pmic_typec_pdphy->lock, flags);
-> +
-> +	ret = regmap_read(pmic_typec_pdphy->regmap,
-> +			  pmic_typec_pdphy->base + USB_PDPHY_RX_SIZE_REG, &size);
-> +	if (ret)
-> +		goto done;
-> +
-> +	/* Hardware requires +1 of the real read value to be passed */
-> +	if ((size < 1 || size > (sizeof(msg.payload) + 1))) {
+assuming that clk_enable() starts the bus - not sure it does based on
+the answers above.
 
-	if (size < 1 || size > sizeof(msg.payload) + 1) {
-
-would have been sufficient.
-
-[...]
-
-> +int qcom_pmic_typec_port_get_cc(struct pmic_typec_port *pmic_typec_port,
-> +				enum typec_cc_status *cc1,
-> +				enum typec_cc_status *cc2)
-> +{
-> +	struct device *dev = pmic_typec_port->dev;
-> +	unsigned int misc, val;
-> +	bool attached;
-> +	int ret = 0;
-> +
-> +	ret = regmap_read(pmic_typec_port->regmap,
-> +			  pmic_typec_port->base + TYPEC_MISC_STATUS_REG, &misc);
-> +	if (ret)
-> +		goto done;
-> +
-> +	attached = !!(misc & CC_ATTACHED);
-> +
-> +	if (pmic_typec_port->debouncing_cc) {
-> +		ret = -EBUSY;
-> +		goto done;
-> +	}
-> +
-> +	*cc1 = TYPEC_CC_OPEN;
-> +	*cc2 = TYPEC_CC_OPEN;
-> +
-> +	if (!(attached))
-> +		goto done;
-
-Excess () around attached
-
-Guenter
