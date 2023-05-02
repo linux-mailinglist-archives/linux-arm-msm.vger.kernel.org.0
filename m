@@ -2,169 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12F9A6F3FA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DB0C6F404A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 11:40:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233548AbjEBIwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 04:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55854 "EHLO
+        id S230484AbjEBJkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 05:40:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233276AbjEBIwc (ORCPT
+        with ESMTP id S232402AbjEBJkM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 04:52:32 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F3D19A1;
-        Tue,  2 May 2023 01:52:30 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3428Fgqj011343;
-        Tue, 2 May 2023 08:52:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+VddXSyOfzpEchGICpblvBPOtseNU5edsFWE9wjsOXU=;
- b=pdah1vVTu4Qeo+UdoCAvSmB9elJUcwJm+BG2OJGTpuFTZDXGubG+FqREbYmnf86q1ip7
- tyAE8yjGt3UBZEpbwFFsxsqMsKJX7iT6uMI80an/MwNbi3ETqUAWgePHzBEzknc5RkII
- 0yFhQ/q5aFDbUAL94QsqIzD3/f79BwBB97K8ji+4P5XzqWkeHlsUPOdDq1M/VwtbykRo
- fbjNkCoJX06j6gFJmGd40P8NqS8wo6DLj887fHgZIzsds6mapadvuZaQeHc4KVEq02wA
- j3W4UBTPOdxe8/nIJNs5/KhAtqGHRujJBo1rvG4CTix1d/t/ibqAIZELj3A2IMJC9Ajn eQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qahhk9k9h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 08:52:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3428qIsG005272
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 2 May 2023 08:52:18 GMT
-Received: from [10.216.63.8] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
- 01:52:11 -0700
-Message-ID: <aab0ee5c-4573-759a-ebda-401b041a65cb@quicinc.com>
-Date:   Tue, 2 May 2023 14:22:08 +0530
+        Tue, 2 May 2023 05:40:12 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1A2E4C1A
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 02:40:10 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b4e5fdb1eso4090908b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 02:40:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683020410; x=1685612410;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p0EM1KfEkWdmbenmmKTmndNQvUH4fhO8eMeYu5/GCBA=;
+        b=CcW+T0V+YCJiGfqC3N51BuI7OGprNz3ll0jCqRG9PepX1Hnd8e9CuYcbWSQI13YIeK
+         pYD+c/mRcFLh4xHW2eh4cmzJF3JbGi35yMohxKhNkcQh9baTgxwn8abtunikcJgHWzdA
+         NzzJFr/aSW+JpJl49GG/yD/bSc/l9sHxoQ/b/rxjPf8rg7GYTeeOXZhNzTH1199DrzKN
+         IeskilqAblrKSpUdFgDt7poc3spkR5qpIexKlfw646vrFRHHBL0k1adWYmaVEmtRcO4e
+         GZe0cT6GPs2cNa+9CjaWzktTyANRcxVEqUw21whJL62WNCfZVjd3Ei+H8sAroW1e48ej
+         spLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683020410; x=1685612410;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p0EM1KfEkWdmbenmmKTmndNQvUH4fhO8eMeYu5/GCBA=;
+        b=RT4K571N8sbiwMF0jkFKSu0BoKKOUzhfQjq/tNr1rGvD8oLk4raiIcTcCkTA9UezEE
+         N8vhEJwVOh22JXwFibwcBEBG0Dqa5GX0O43q2XpK1xEz0usSuV6YGpHaWjdLFQjqUwWR
+         Qs9yQIG27B/RMPuv76eQrLTpFW6MCHUr7CHdTy3sjhrfUQI1tDY2Qdh3i+r2MKFDjz4n
+         GZDE3CoMWStmD84kAn+IbFvRf03902bEGeipNtXHEmoRz+tsYQTk70sday0b19UjgyQk
+         DeF8jb0pCjsLeIvZXK2YsUf5GIONTcHRguvWrLtzpgjBahkTBzo0qxXbCQ8qYi3wPiyO
+         PZjQ==
+X-Gm-Message-State: AC+VfDxvdb2H+F6qf1xZTFXXDfn4w007hIcJFFgzc1gRz3SXii10S+48
+        894vSib24SqQo+GXk91bkKvKPGyHG5w6EOnVPqQ=
+X-Google-Smtp-Source: ACHHUZ5VXg2nqQCwv/AlCxkqiRBLo6bI1j9hoX7TYxNQaIxXF69693k1ls6Q+JfRbKR+GkOLO+gk8w==
+X-Received: by 2002:a05:6a20:158c:b0:f2:e399:b114 with SMTP id h12-20020a056a20158c00b000f2e399b114mr20821046pzj.1.1683020409833;
+        Tue, 02 May 2023 02:40:09 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1f3b:58fa:39f6:37e1:bb9a:a094])
+        by smtp.gmail.com with ESMTPSA id r78-20020a632b51000000b00520f316ebe3sm18201585pgr.62.2023.05.02.02.40.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 May 2023 02:40:09 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        linux-usb@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org
+Subject: [PATCH v2 0/2] Qualcomm EUD: Some cleanups
+Date:   Tue,  2 May 2023 15:09:57 +0530
+Message-Id: <20230502093959.1258889-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v7 1/9] dt-bindings: usb: qcom,dwc3: Add bindings for
- SC8280 Multiport
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        "Wesley Cheng" <quic_wcheng@quicinc.com>
-CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
-References: <20230501143445.3851-1-quic_kriskura@quicinc.com>
- <20230501143445.3851-2-quic_kriskura@quicinc.com>
- <df24efb2-8279-ef15-a118-2a24885288c8@linaro.org>
- <a001c9c0-f186-f125-daab-e646790badfe@quicinc.com>
- <0f2dea5a-b6f7-b659-f41e-55d1777b4dd1@linaro.org>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <0f2dea5a-b6f7-b659-f41e-55d1777b4dd1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: X6YDtrz8Xh7K-Ls_oMKGkWir62yNRGjU
-X-Proofpoint-GUID: X6YDtrz8Xh7K-Ls_oMKGkWir62yNRGjU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_05,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- mlxlogscore=882 phishscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 impostorscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2305020077
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes since v1:
+----------------
+- v1 can be seen here: https://lore.kernel.org/linux-arm-msm/20230104091922.3959602-2-bhupesh.sharma@linaro.org/
+- Changed the commit log for [PATCH 2/2] as per Rob's observation.
 
+This patchset targets some cleanups for the EUD dt nodes present
+in sc7280.dtsi and also adds a missing space in the compatible string
+in the example used in eud dt-binding document.
 
-On 5/2/2023 2:17 PM, Krzysztof Kozlowski wrote:
-> On 02/05/2023 10:35, Krishna Kurapati PSSNV wrote:
->>
->>
->> On 5/2/2023 1:18 PM, Krzysztof Kozlowski wrote:
->>> On 01/05/2023 16:34, Krishna Kurapati wrote:
->>>> Add the compatible string for SC8280 Multiport USB controller from
->>>> Qualcomm.
->>>>
->>>> There are 4 power event irq interrupts supported by this controller
->>>> (one for each port of multiport). Added all the 4 as non-optional
->>>> interrupts for SC8280XP-MP
->>>>
->>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>>> ---
->>>>    .../devicetree/bindings/usb/qcom,dwc3.yaml    | 21 +++++++++++++++++++
->>>>    1 file changed, 21 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>>> index d84281926f10..2c96da1ce5b8 100644
->>>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>>> @@ -26,6 +26,7 @@ properties:
->>>>              - qcom,sc7180-dwc3
->>>>              - qcom,sc7280-dwc3
->>>>              - qcom,sc8280xp-dwc3
->>>> +          - qcom,sc8280xp-dwc3-mp
->>>
->>> SC8280xp comes with two USB controllers: one single-port and one multi-port?
->>
->> Hi Krzysztof,
->>
->>     SC8280XP comes with 3 controllers. The first two are single port
->> controller and the third one is a multiport controller. In DTSI:
->> usb_0 / usb1: have compatible set to : "qcom,sc8280xp-dwc3"
->>
->> And multiport controller has it set to "qcom,sc8280xp-dwc3-mp"
-> 
-> OK, then this looks fine.
-> 
-> Please add the compatible to existing allOf:if:then to constrain clocks
-> and other pieces. If none of existing if:then: matches your case, add
-> new one.
-> 
-> Best regards,
-> Krzysztof
-> 
+Bhupesh Sharma (2):
+  arm64: dts: qcom: sc7280: Fix EUD dt node syntax
+  dt-bindings: soc: qcom: eud: Fix compatible string in the example
 
-Thanks Krzysztof. One query:
+ .../bindings/soc/qcom/qcom,eud.yaml           |  4 ++-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi          | 36 +++++++++----------
+ 2 files changed, 21 insertions(+), 19 deletions(-)
 
-Clocks are same for both single/multiport controllers. Would the 
-following be fine ?
+-- 
+2.38.1
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml 
-b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-index 2c96da1ce5b8..c0f4745febf0 100644
---- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-@@ -263,6 +263,7 @@ allOf:
-            contains:
-              enum:
-                - qcom,sc8280xp-dwc3
-+             - qcom,sc8280xp-dwc3-mp
-      then:
-        properties:
-          clocks:
-
-Regards,
-Krishna,
