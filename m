@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 604AE6F4DE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 01:53:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 163DF6F4DE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 01:54:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbjEBXxi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 19:53:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40962 "EHLO
+        id S229522AbjEBXyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 19:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbjEBXxh (ORCPT
+        with ESMTP id S229482AbjEBXyV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 19:53:37 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD661FDB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 16:53:35 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4ec8133c59eso5289721e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 16:53:35 -0700 (PDT)
+        Tue, 2 May 2023 19:54:21 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60321704
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 16:54:19 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4efe8b3f3f7so5130861e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 16:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683071613; x=1685663613;
+        d=linaro.org; s=google; t=1683071658; x=1685663658;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ikYnCdxaMcHpzqjkFoupFqqKYPTWWjl9lGsI4SHUWSo=;
-        b=bqU6Wu6QtI1UAeA92niMimxn/u9nib4/MY7p/sO5FIdbIpcqKy3nDFlhvOk1jwM5+I
-         P8beSOtLn8rJPLiA31+bgZ8sz+cmzoD7QQCFQgmYsYDcJcDNEpBj98EfNkH7xj+Wh4p7
-         PFcpJBgBXhaW00vMnshhQbKZ6EmqO01irIZYyPO8rxP48hUV0ELJGgWadWeYeO1ialMa
-         ez8uwp10JdQb6IbfRS4t0n9i3xTPk9529anqZJoKXjLVsUoNhrzfOw8Fs8TFqXlKGDGb
-         h/8NWN6TpcW1b3/b3jVTxbAEBTrcwhAiF09UKeLLzekZilkD0AsWFnwuJdZWsOHo+Vkb
-         jdxQ==
+        bh=5t+YkOkDpznQp4uoL/9fUc9/dIQJ4G85gG1Hxhyav9w=;
+        b=SvTiJQiosQNAY+ZQ5IN7hz3fY9aqBpU45Ypaqkjir6dxUUkIX2UG1mBA0v/k08gUP1
+         bO/aMHDlYOF+mRHdW1sUTedthcNUYx/Ixu561JmcK10jWT5A/aQmKylhFahDcWoh32m1
+         JhS82V6fFxwSi7ZxX01hgXEHIYZLh7SXoe0XAXKdJuH0ta6J2bA5XJo7+h3DdFHij5d5
+         e9S007yipuJkERcSBBmg6QCKMED0uoo1aOkEY1W6i4G80PNUfkIz/+3zMFUPpbxzRdyO
+         hZFiYbYRT9GWqeJRt+8o9xyNS/QiESIW+SSp59bG8dnafGgtS6k7mcxur0jaeEwKAs1O
+         6sDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683071613; x=1685663613;
+        d=1e100.net; s=20221208; t=1683071658; x=1685663658;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ikYnCdxaMcHpzqjkFoupFqqKYPTWWjl9lGsI4SHUWSo=;
-        b=FYt53nLEtyt4P8kNaQykjy1kFSjdVydCRaenkNQfpW/I8VeB09yN2PxmMTt/rwGmHm
-         rPWoZ6ll7LsQgbyzrmT6rROrIASoAaweRFY4/j/jCRXRYnNSMG72bVYnfg0ptewluv8M
-         QzVW2fpg1EydFVBu0mpQLafjpzIWrt3wVIfmuL4RpVEE8/Q8oUPYo85r8JvL1txSzj/z
-         AIiqaPdyQkARjNj7lGgppLLCoSWFGZ+qTv6/n/4avIAhDTsl4GA//2STY49nlx4LEtFl
-         paj9TVaVjLvMGgqa4VBT29Ocs9mfgkGsYdtf/0J10+MdQBuF1J3gsvwWyhmmlqkalhvh
-         fkNw==
-X-Gm-Message-State: AC+VfDz+kb1iNukZIRUXbzxIOMXUtZ+aOPTOKbYG/nCf+QKKMgtC8MAC
-        rFiNNvwoerWn37OYd81HtQkjoA==
-X-Google-Smtp-Source: ACHHUZ7v8qr4LoIXZaqu/sj2tsmtm/wyZdnsI4Ou1SPe8iPvOJAm6d8q//XaXRqze3eBjVfD0nRMvw==
-X-Received: by 2002:ac2:5457:0:b0:4cc:7282:702b with SMTP id d23-20020ac25457000000b004cc7282702bmr407148lfn.2.1683071613630;
-        Tue, 02 May 2023 16:53:33 -0700 (PDT)
+        bh=5t+YkOkDpznQp4uoL/9fUc9/dIQJ4G85gG1Hxhyav9w=;
+        b=TasCLleUjjtiZ38gBMJMVR7YLmk2BufTknZNkvhycYmk22mmGTh6iV1d2rw7j8lPxj
+         DggM0u17+yY2ognjnlAStfTt6+T4Mgavzl13+vgHOfD6J84vh/v6VQsM1/6IP+SAKpNm
+         uoVpdsUwSp+h8KfRQQhQwu4oeufkJ9uT/RpATEvjrrIvlL0s47Qz+Ow7L+Mtgjs3lemT
+         WJ2C2WWqAiThVZ+LHXGs5hY12z0dQRwjQALowYrwjqbtY5GY3iYTxNRQaM6cIijL82CW
+         oV/0txQGirVxaYCKnGaw/FgKdDvsUn7eLmBL4pTSd+V5FjrMO8rttsLIyjEDduhq6So+
+         xOkQ==
+X-Gm-Message-State: AC+VfDzR74pk4AW3vBmDJZgO0MOzbKd6iczCAdQaMefCeeIKmoufxe+b
+        2utCChVCxhvFfT0RV34EV63/HA==
+X-Google-Smtp-Source: ACHHUZ4Z1bIwEw+ukb4OHOqUK7VaV86neoYxUThsJpmsKb8C2t2M0hvpYeH+i9DgiRo+HuorOWtZ1g==
+X-Received: by 2002:a19:c216:0:b0:4f0:f3d:b8c6 with SMTP id l22-20020a19c216000000b004f00f3db8c6mr367714lfc.30.1683071658000;
+        Tue, 02 May 2023 16:54:18 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id q16-20020ac25290000000b004eff66716a6sm4010580lfm.113.2023.05.02.16.53.32
+        by smtp.gmail.com with ESMTPSA id a23-20020a19f817000000b004ee85d1444esm5636334lff.208.2023.05.02.16.54.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 16:53:33 -0700 (PDT)
-Message-ID: <84e55909-557f-8403-f029-87574d4f3481@linaro.org>
-Date:   Wed, 3 May 2023 02:53:32 +0300
+        Tue, 02 May 2023 16:54:17 -0700 (PDT)
+Message-ID: <9f977692-d74d-9f49-e626-399aeeef7f18@linaro.org>
+Date:   Wed, 3 May 2023 02:54:16 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH 4/7] drm/msm/dpu: drop duplicated intf/wb indices from
- encoder structs
+Subject: Re: [PATCH 5/7] drm/msm/dpu: inline dpu_encoder_get_wb()
 Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
- <20230430235732.3341119-5-dmitry.baryshkov@linaro.org>
- <dae23075-b907-48c0-7605-f91589630beb@quicinc.com>
- <CAA8EJppO3GhsRVY-5UjOO-GAw_NZONPaNBigO4P4_axXxNxsaA@mail.gmail.com>
- <7409245f-fe33-c892-40a8-7a8e8437f0b0@quicinc.com>
+ <20230430235732.3341119-6-dmitry.baryshkov@linaro.org>
+ <6ad0c581-1955-3013-0ef3-6340240d0c1b@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <7409245f-fe33-c892-40a8-7a8e8437f0b0@quicinc.com>
+In-Reply-To: <6ad0c581-1955-3013-0ef3-6340240d0c1b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,61 +83,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 02:19, Abhinav Kumar wrote:
+On 03/05/2023 02:51, Abhinav Kumar wrote:
 > 
 > 
-> On 5/2/2023 4:15 PM, Dmitry Baryshkov wrote:
->> On Wed, 3 May 2023 at 02:04, Abhinav Kumar <quic_abhinavk@quicinc.com> 
->> wrote:
->>>
->>>
->>>
->>> On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
->>>> Remove intf_idx and wb_idx fields from struct dpu_encoder_phys and
->>>> struct dpu_enc_phys_init_params. Set the hw_intf and hw_wb directly and
->>>> use them to get the instance index.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>
->>>   From whatever I can see, this will not affect functionality of intf or
->>> wb and cleans it up well , so I am fine with this. Hence,
->>>
->>> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>
->>> One minor comment/question.
->>>
->>> <snipped other parts>
->>>
->>>> @@ -761,7 +761,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
->>>>        struct dpu_encoder_phys_cmd *cmd_enc = NULL;
->>>>        int ret = 0;
->>>>
->>>> -     DPU_DEBUG("intf %d\n", p->intf_idx - INTF_0);
->>>
->>> Was it intentional to drop the index in this log?
+> On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
+>> The function dpu_encoder_get_wb() returns controller_id if the
+>> corresponding WB is present in the catalog. We can inline this function
+>> and rely on dpu_rm_get_wb() returning NULL for indices for which the
+>> WB is not present on the device.
 >>
->> We don't have p->intf_idx at this point. I think we can use
->> p->hw_intf->idx instead, I'll fix that for v2.
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 24 ++-------------------
+>>   1 file changed, 2 insertions(+), 22 deletions(-)
 >>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 4c85cbb030e4..507ff3f88c67 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -1277,22 +1277,6 @@ static enum dpu_intf dpu_encoder_get_intf(const 
+>> struct dpu_mdss_cfg *catalog,
+>>       return INTF_MAX;
+>>   }
+>> -static enum dpu_wb dpu_encoder_get_wb(const struct dpu_mdss_cfg 
+>> *catalog,
+>> -        enum dpu_intf_type type, u32 controller_id)
+>> -{
+>> -    int i = 0;
+>> -
+>> -    if (type != INTF_WB)
+>> -        return WB_MAX;
+>> -
+>> -    for (i = 0; i < catalog->wb_count; i++) {
+>> -        if (catalog->wb[i].id == controller_id)
+>> -            return catalog->wb[i].id;
+>> -    }
+>> -
+>> -    return WB_MAX;
+>> -}
+>> -
+>>   void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
+>>           struct dpu_encoder_phys *phy_enc)
+>>   {
+>> @@ -2261,7 +2245,6 @@ static int dpu_encoder_setup_display(struct 
+>> dpu_encoder_virt *dpu_enc,
+>>            */
+>>           u32 controller_id = disp_info->h_tile_instance[i];
+>>           enum dpu_intf intf_idx;
+>> -        enum dpu_wb wb_idx;
+>>           if (disp_info->num_of_h_tiles > 1) {
+>>               if (i == 0)
+>> @@ -2279,14 +2262,11 @@ static int dpu_encoder_setup_display(struct 
+>> dpu_encoder_virt *dpu_enc,
+>>                                   disp_info->intf_type,
+>>                                   controller_id);
+>> -        wb_idx = dpu_encoder_get_wb(dpu_kms->catalog,
+>> -                disp_info->intf_type, controller_id);
+>> -
+>>           if (intf_idx >= INTF_0 && intf_idx < INTF_MAX)
+>>               phys_params.hw_intf = dpu_rm_get_intf(&dpu_kms->rm, 
+>> intf_idx);
+>> -        if (wb_idx >= WB_0 && wb_idx < WB_MAX)
+>> -            phys_params.hw_wb = dpu_rm_get_wb(&dpu_kms->rm, wb_idx);
+>> +        if (disp_info->intf_type == INTF_WB && controller_id < WB_MAX)
+>> +            phys_params.hw_wb = dpu_rm_get_wb(&dpu_kms->rm, 
+>> controller_id);
 > 
-> Yes, I was aware that. In all other logs, intf_idx was replaced with 
-> hw_intf->idx except this one. So I was not sure if it was intentional or 
-> just removed accidentally.
+> 
+>  From what I see, with 
+> https://patchwork.freedesktop.org/patch/534776/?series=117146&rev=1 we 
+> are dropping those checks from the RM too, so we are going to rely 
+> totally on entering the values correctly in catalog from now on?
 
-Most likely it was a leftover from the interim patch where I didn't have 
-p->hw_intf. Initially I kept the code which manually set the 
-phys->hw_intf (and hw_wb), but then it was just easier to pass that 
-through the params and let the caller set it.
+Yes. I see no reason to mistrust the kernel data itself.
 
 > 
->>>
->>>> +     DPU_DEBUG("intf\n");
->>>>
->>>>        cmd_enc = kzalloc(sizeof(*cmd_enc), GFP_KERNEL);
->>
->>
->>
+>>           if (!phys_params.hw_intf && !phys_params.hw_wb) {
+>>               DPU_ERROR_ENC(dpu_enc, "no intf or wb block assigned at 
+>> idx: %d\n", i);
 
 -- 
 With best wishes
