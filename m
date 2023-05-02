@@ -2,118 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A65BA6F43E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:28:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31CF66F4436
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:50:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234107AbjEBM2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 08:28:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
+        id S233998AbjEBMuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 08:50:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233998AbjEBM2b (ORCPT
+        with ESMTP id S234216AbjEBMuD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 08:28:31 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A0912C;
-        Tue,  2 May 2023 05:28:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1683030510; x=1714566510;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=pVyqURKJmfYfAEdHqOhsTYfJHIgtzPIa63rM74G0UvM=;
-  b=Xy5QnxD/f8vrtHbq3UvFrdSlUlSL8vrbwhWGUJ3NaBkMJphVtAq4pPed
-   QZrOEkLTfupbCcyvDYapJoS+HUyu1IqvjokweM1Y9UWgwG+kBTCqi7oOV
-   9BcqkvjjLtU4TheBddpgZeH3bpohTyb+rA9bX/btQZ8aey2qmZNT6W/Mo
-   KhrAWIQdCrz+qMzdhi6r1Yg8ho8T0LOQF70IbAqyJZN2mWQzWINcZZPM3
-   Kirm996jwa+k3Vbvovvjx+cNJD9//OYDjKi8QIOX8tbvV3qOinrePcdok
-   4pwrunEnLH+9jRQ4hSFxGBekfDwXDbXp+jXtmSxSB78lK0ZqGx/wpyPM4
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10697"; a="413825454"
-X-IronPort-AV: E=Sophos;i="5.99,244,1677571200"; 
-   d="scan'208";a="413825454"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2023 05:28:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10697"; a="840277781"
-X-IronPort-AV: E=Sophos;i="5.99,244,1677571200"; 
-   d="scan'208";a="840277781"
-Received: from lkp-server01.sh.intel.com (HELO e3434d64424d) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 02 May 2023 05:28:24 -0700
-Received: from kbuild by e3434d64424d with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1ptp7H-00012g-1B;
-        Tue, 02 May 2023 12:28:23 +0000
-Date:   Tue, 2 May 2023 20:27:24 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com,
-        Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: Re: [PATCH v7 3/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-Message-ID: <202305022053.Tqtl2ROK-lkp@intel.com>
-References: <20230501143445.3851-4-quic_kriskura@quicinc.com>
+        Tue, 2 May 2023 08:50:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31545FD9;
+        Tue,  2 May 2023 05:49:54 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342BfRDA007217;
+        Tue, 2 May 2023 12:49:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=eFU69/duF9uie/h2QHhYW3EdUIBnkIDbNh7j9/8fcos=;
+ b=OfayqcMHMcI/dWuzE0c/U1UHaoxwNMk12Q9i+Mk+bTAUuLKatUgHnGs/oYSPe+lWG1En
+ gVyEUpTuSD4pMzJXY0D7EzYCQ3aw67NLlMcZzYLv+dD7Qm8lxb9sKYXZWtP2azaIXtRG
+ HbSzQTmlIp3ds0dyTBNw6jothiLxstATd0zqxfg7ZGI+9acrzolLGpLvA2ghicOPUIbz
+ damZ01VuMCxci3YBLYJmfMDPY3mv1mZufJVvH3qHUSaXRt+pXjzU4PI0jX+mZTBoK761
+ jGvE+rIkFK6GdZK/eOmAMfx/TxK5PsbymzHmHhYp5e1Nj0OUn5zGfB2sLjVp+YOXva47 Qg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qays50gxh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 02 May 2023 12:49:51 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 342CnoX4014377
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 2 May 2023 12:49:50 GMT
+Received: from [10.216.46.210] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
+ 05:49:48 -0700
+Message-ID: <219b2cf5-4218-2e5c-2f12-718d5554b2b7@quicinc.com>
+Date:   Tue, 2 May 2023 18:19:45 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230501143445.3851-4-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
+ hfi versions
+To:     Javier Martinez Canillas <javierm@redhat.com>,
+        =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>,
+        <stanimir.k.varbanov@gmail.com>
+CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
+ <2ad875b0-0be8-1897-eddd-89605ed2258b@redhat.com>
+Content-Language: en-US
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <2ad875b0-0be8-1897-eddd-89605ed2258b@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -vLTr1wctSUTtV5E_rN7mkSgAmQYdVKQ
+X-Proofpoint-ORIG-GUID: -vLTr1wctSUTtV5E_rN7mkSgAmQYdVKQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-02_07,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 clxscore=1011
+ impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305020109
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
+On 4/27/2023 8:13 PM, Javier Martinez Canillas wrote:
+> Hello Martin,
+>
+> On 4/14/23 12:12, Martin Dørum wrote:
+>> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
+>>> =4xx. The code used to unconditionally set the property in
+>> venc_set_properties, which meant that initializing the encoder would
+>> always fail unless the hfi_version was >=4xx.
+>>
+>> This patch changes venc_set_properties to only set the
+>> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
+>>
+> I would add a
+>
+> Fixes: bfee75f73c37 ("media: venus: venc: add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control")
+>
+> since that is the commit that added this property and expected it to
+> be used unconditionally in the common venus venc part.
+>
+>> Signed-off-by: Martin Dørum <dorum@noisolation.com>
+>> ---
+> I'm not familiar with the venus encoder driver but I had fixed a couple
+> of bugs on the venus decoder so I've spent some time looking at the code.
+>
+> [...]
+>
+>> +		if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
+>> +			ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+>> +			h264_transform.enable_type = 0;
+>> +			if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+>> +			    ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+>> +				h264_transform.enable_type = ctr->h264_8x8_transform;
+>> +
+>> +			ret = hfi_session_set_property(inst, ptype, &h264_transform);
+>> +			if (ret)
+>> +				return ret;
+>> +		}
+> Is true that HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8 isn't wired for
+> older HFI versions, but I wonder if that's something that was forgotten
+> when the property was added in that commit or instead should be ignored
+> as you do in your patch.
 
-kernel test robot noticed the following build warnings:
+This HFI is supported on earlier version (atleast for V3). The code [1] 
+returns from packetization layer
 
-[auto build test WARNING on usb/usb-testing]
-[also build test WARNING on usb/usb-next usb/usb-linus linus/master next-20230428]
-[cannot apply to robh/for-next v6.3]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+with -EINVAL as there was no need to set the same. Infact, 8x8 transform 
+is auto applied in video firmware
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/dt-bindings-usb-qcom-dwc3-Add-bindings-for-SC8280-Multiport/20230501-224209
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
-patch link:    https://lore.kernel.org/r/20230501143445.3851-4-quic_kriskura%40quicinc.com
-patch subject: [PATCH v7 3/9] usb: dwc3: core: Access XHCI address space temporarily to read port info
-reproduce:
-        # https://github.com/intel-lab-lkp/linux/commit/840e9a485800cf72e5fbf4dca1aaf92085aad584
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Krishna-Kurapati/dt-bindings-usb-qcom-dwc3-Add-bindings-for-SC8280-Multiport/20230501-224209
-        git checkout 840e9a485800cf72e5fbf4dca1aaf92085aad584
-        make menuconfig
-        # enable CONFIG_COMPILE_TEST, CONFIG_WARN_MISSING_DOCUMENTS, CONFIG_WARN_ABI_ERRORS
-        make htmldocs
+for High/Constrained high profile encoding. Later there were request 
+from clients as they wanted to disable
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202305022053.Tqtl2ROK-lkp@intel.com/
+this by setting false with this HFI. So it was added later for V4 and later.
 
-All warnings (new ones prefixed by >>):
+[1] 
+https://elixir.bootlin.com/linux/v6.3/source/drivers/media/platform/qcom/venus/hfi_cmds.c#L1090
 
->> Documentation/driver-api/usb/dwc3:687: ./drivers/usb/dwc3/core.h:1674: WARNING: Unexpected indentation.
->> Documentation/driver-api/usb/dwc3:687: ./drivers/usb/dwc3/core.h:1675: WARNING: Block quote ends without a blank line; unexpected unindent.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+
+>
+> In any case, this fixes a regression that you are experiencing so your
+> patch should land in my opinion and later can be added to older versions
+> if that is the correct thing to do.
+>
+> Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+>
