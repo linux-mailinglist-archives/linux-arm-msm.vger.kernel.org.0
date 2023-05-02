@@ -2,81 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5259A6F4752
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 17:35:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F404B6F4801
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 18:10:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234463AbjEBPfk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 11:35:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50510 "EHLO
+        id S233578AbjEBQKK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 12:10:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234212AbjEBPfj (ORCPT
+        with ESMTP id S233554AbjEBQKJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 11:35:39 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB172E7;
-        Tue,  2 May 2023 08:35:37 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id C6C53C76A8;
-        Tue,  2 May 2023 15:35:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683041706; bh=R9A1qU0xozFT1PTNbx8XF9Yii7u7muqM0dWSf6l21ug=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=jFIjUf8jPNHIGqUtQXcb8eZaH6a3cBc0gsQnwtR3J6XeKHROAfT8XhpfZKOzuGZUS
-         yZR6YajptRLzaksDUpkSSO0xitf2v3baxLFVVj/o6lOLNJAdgNvfU9i1dLacrFivVZ
-         3IORo94VhcuvJTJr3OFMmXTniCwvBXIXx/4V18Cs=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Tue, 2 May 2023 12:10:09 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D057422A;
+        Tue,  2 May 2023 09:09:56 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-24ded4b33d7so2066079a91.3;
+        Tue, 02 May 2023 09:09:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683043796; x=1685635796;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ptDvwkDRf8ObhvSOwyQg6eM98sWTyAdcBLxunDzT4/Q=;
+        b=I6jeZ/ilRu61CJGPkewQd5ckji494RXSK4tjlfW3RUXCQ8fq2cPtxBUZ4IwVTiKp5u
+         RcJe1BZ93BAbM5DeocsTP0z9dWVkl9adzMWVPRpP6nV75tiDGgx0hV3uDh+Qa+uIFP0n
+         bujCL8XD94uXAfUoJztpdJpmQB62wgVAewun/uB/wvS7swiWMcerxg9zK9TTTcu1l11r
+         ttYr7JDdhpY3BKEjFiikj2kLFkWliECUiWUliIG186N2p0bvp9dOwS01uL2R9sodve0U
+         hL4CRQ60epCQfDo5saLCijjO5Tbw66zCc1E5I6itAYcqSOekRhB2+fSf5prqTGoxq4Qs
+         d0bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683043796; x=1685635796;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ptDvwkDRf8ObhvSOwyQg6eM98sWTyAdcBLxunDzT4/Q=;
+        b=JE45t9xwJg44RrrL1t0+xKOfGh1sbn7fQhDpmODQY36vF/Wff/6BeJopseeVbg+VWa
+         Fyn6mlY0ow84f5k2DhkuBt0R6JD+g13LGMFhhmcpCrSYwBnquth1wURATfPhqIKP7ZK0
+         MXyaiBn344YEMHJDmaMMO9rPtc+kxqfHMoiynfgO977ycwjkZAL9Uev72PLpuSBnsv0c
+         i8NbvTMdMQhWYP6auV3wg69gnVS/IAVWIqBFHiosvn8ODPN/gH6UkhHYZMB5pvFzgfMV
+         /BYshRkVHoYBBdqmY7BrrxjHgcoh+/LwlIV0cSJRABU8ot+/mwolpil53OF2YLV9jzqL
+         gqog==
+X-Gm-Message-State: AC+VfDym2SY2PzIC/aFyf5fBWOeGmWbtCoQ+8ES3EKbQE1+AJcwchx0T
+        UlBQkYI9FMc8GsHvJhAI3jI=
+X-Google-Smtp-Source: ACHHUZ7/SR/EIzNLSBaIwWXnGdWH+wPk46JqjklNVRkl5EW8iNrCmxqTVwJA1Knq91jeiLVCwsg4Bg==
+X-Received: by 2002:a17:90a:3906:b0:24e:12f4:b74f with SMTP id y6-20020a17090a390600b0024e12f4b74fmr5249153pjb.20.1683043795714;
+        Tue, 02 May 2023 09:09:55 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id 9-20020a17090a0f0900b0024c1f1cdf98sm8120109pjy.13.2023.05.02.09.09.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 May 2023 09:09:55 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Brian Masney <masneyb@onstation.org>,
-        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/4] Input: pwm-vibra - add support for enable GPIO
-Date:   Tue, 02 May 2023 17:35:04 +0200
-Message-ID: <841522397.0ifERbkFSE@z3ntu.xyz>
-In-Reply-To: <ZFBdobY1yxMXYfFt@google.com>
-References: <20230427-hammerhead-vibra-v1-0-e87eeb94da51@z3ntu.xyz>
- <20230427-hammerhead-vibra-v1-3-e87eeb94da51@z3ntu.xyz>
- <ZFBdobY1yxMXYfFt@google.com>
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+        iommu@lists.linux.dev (open list:IOMMU SUBSYSTEM),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
+Date:   Tue,  2 May 2023 09:09:47 -0700
+Message-Id: <20230502160950.1758826-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Dienstag, 2. Mai 2023 02:47:29 CEST Dmitry Torokhov wrote:
-> On Thu, Apr 27, 2023 at 10:34:28PM +0200, Luca Weiss wrote:
-> > Some pwm vibrators have a dedicated enable GPIO that needs to be set
-> > high so that the vibrator works. Add support for that optionally.
-> 
-> So this is not simply a power supply in your case controlled by a GPIO?
-> We truly can have both GPIO and a separate regulator?
+From: Rob Clark <robdclark@chromium.org>
 
-Yes it appears to be the EN pin on the ISA1000A, see
-https://electronics.stackexchange.com/q/380475
+When the special handling of qcom,adreno-smmu was moved into
+qcom_smmu_create(), it was overlooked that we didn't have all the
+required entries in qcom_smmu_impl_of_match.  So we stopped getting
+adreno_smmu_priv on sc7180, breaking per-process pgtables.
 
-On apq8026-lg-lenok there is a similar setup for the vibration motor although 
-there I don't know whether it's actually a fixed-regulator or not, but since 
-the two devices were built in a similar time (without checking further) I 
-could assume they both contain the same IC.
+Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Regards
-Luca
-
-> 
-> Thanks.
-
-
-
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index d1b296b95c86..88c89424485b 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -512,20 +512,25 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+ 	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
+ 	{ .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm6350-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm6375-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm8150-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
++	/*
++	 * Should come after the qcom,smmu-500 fallback so smmu-500 variants of
++	 * adreno-smmu get qcom_adreno_smmu_500_impl:
++	 */
++	{ .compatible = "qcom,adreno-smmu", .data = &qcom_smmu_v2_data },
+ 	{ }
+ };
+ 
+ #ifdef CONFIG_ACPI
+ static struct acpi_platform_list qcom_acpi_platlist[] = {
+ 	{ "LENOVO", "CB-01   ", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
+ 	{ "QCOM  ", "QCOMEDK2", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
+ 	{ }
+ };
+ #endif
+-- 
+2.39.2
 
