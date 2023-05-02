@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9DED6F3CC9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 06:44:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D35F6F3CFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 07:35:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233404AbjEBEoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 00:44:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46254 "EHLO
+        id S229586AbjEBFfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 01:35:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233158AbjEBEoO (ORCPT
+        with ESMTP id S229457AbjEBFfw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 00:44:14 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BD930E4
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 21:44:13 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f315712406so151570885e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 21:44:13 -0700 (PDT)
+        Tue, 2 May 2023 01:35:52 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095A43C03
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 22:35:49 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1aaebed5bd6so16847575ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 22:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683002652; x=1685594652;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SjAkXszgotjphxC6hqTl4pNTopNCtvCijtli/J67wJc=;
-        b=Yd9IEn2UzuraiKv1BNWloSfI/gQXN5DkadhkGXQWkphj0ySFeamClw8j2hx4DSAs3h
-         rlGAuBfmcyKYnNQqq5D/+tFQKLSmFd1ZTFJPqV80nqqzKWkoa+znGBEF3u547NGEXJNI
-         iqm2Z7g8GI1qk49mcR/OgoNyY6FbqshyI48Qju3NHp3grBfodXQNONwpp9OOTr0uvqTu
-         yKxFVl7Mv3AV0//xKJ6M1yyYMpfA6yGicguTXBGhXCGNrAdm6JXmevR/NvGMPKWgaQYY
-         0YndTJ2PuvBvnL80os4TWl01o+myhzSTLQrHPIue02jmcTpg7q6Zg04pyMqvSTRA64Ax
-         tKKw==
+        d=linaro.org; s=google; t=1683005748; x=1685597748;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WalWNBbqLP5+H0yr5WCCK7jHS95uZC4dq+Re1T637XE=;
+        b=S6dGmVSsgrHaEr0TUBQULNWA571DsS9PU8wYJmxTdyAfFKX5QzPWj2G39ZuDwKD/dZ
+         CpW/WrbXbGM7nss6yYYrNrjaWa+hlMdP+Gr04koV0DYIqUDXDbqnV85ODGmAuEupk5uN
+         DEk4JmyqMPXutFY1NLeUx2QFZPM1MckjDc82OOHnNWHQ+IfzHCbS/mISMopMzzaZ5Ley
+         /+u0dqewctMvnkSqz9vRCmO4IBkWt7yJiBrb5ROnqhe38hES6+bkB1XfRQQBbrZoe9S6
+         JiDDLZqGBWtZVDVgxBIZA9jmW2arcgMqahWBFdvkH/GmHBQriD1LgK4dACkw0bVH2Biu
+         0fjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683002652; x=1685594652;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1683005748; x=1685597748;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SjAkXszgotjphxC6hqTl4pNTopNCtvCijtli/J67wJc=;
-        b=iACmlygufi2DNp1LCYFGfJ4mlXOxRC+JNzXrUP9by46EiKuQ8lkGlPAXBzFF8wxghh
-         YrfjIqjuw6nEPMa7azHv67aoIBm9Up93WRkQIMeArg8+GH3G4wgCzRpGtvblNnbqGwDK
-         gmZmdzRbQU3rJXQ3ts5LJ9c3m4xsBL9LCI38T7v/oeH7PL8sUGQnZSwHtKLJVaz1orWu
-         bzjsACVZzWU1k+0zNRgz3b9EijVBcy1aHSLgQBNpaLJGYDzgClgeajRLsWBfHi8pIRTw
-         Qp4eJyKRYWVsBLHTAST7wGedV0waO2/uXsbPA10WFIcm48noS4CfKA4y8Q5I7JVswLmz
-         x16A==
-X-Gm-Message-State: AC+VfDyn+BcTsijQ9R9cuTfqG6uViQm9m7sGbf29Gq5zGQh9DwVmoHWC
-        F/rLmP3ffwdcDrA+x/vq/5hUozaZ6Dljpxvt4dw/Aw==
-X-Google-Smtp-Source: ACHHUZ5rCXKUpxDP0Ua+qlPJBj8KodZY1HXjjK+w2EHgd7XTKUYWoJIM1m9fKouskiytgc5NlL6vNWTq/L0j9LAIv48=
-X-Received: by 2002:a5d:6e04:0:b0:2f7:cfe2:6507 with SMTP id
- h4-20020a5d6e04000000b002f7cfe26507mr14177934wrz.20.1683002651896; Mon, 01
- May 2023 21:44:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230501192432.1220727-1-bhupesh.sharma@linaro.org>
- <20230501192432.1220727-3-bhupesh.sharma@linaro.org> <1be5930d-a389-7fa0-2886-4e9af09cbf85@linaro.org>
-In-Reply-To: <1be5930d-a389-7fa0-2886-4e9af09cbf85@linaro.org>
+        bh=WalWNBbqLP5+H0yr5WCCK7jHS95uZC4dq+Re1T637XE=;
+        b=gfCLwCU3/EQLagYD6NIvgsKH8wjcFiNpeSY1imZXzozyqeF+DpCdzOuYFMBx7NtsMX
+         34X966OdL0YN4ztM6hvBnzmBXKJao/4Sr7r1ZEyX9owyLfeG9qu3oQlsrIsCRRHm1Haz
+         R0b16rUay8qZCzlPxp28pWi6YB0/0CWFHGc8e7YADiHio6572HVoPNJJsu+FS4MBtDXE
+         XKpQGos5wMx3lUDOiAURe4sZQSPnJhYVaFaXKwla37fmdel0JxpFqV2H4qGSOSglQn4N
+         058AWLvcvOb3f4zDcQsZekNHljek/VHYaZTqk/ptrOr05h/T5nNi2XaiB0gEX3klA8Vi
+         PDYw==
+X-Gm-Message-State: AC+VfDwfrLox7nADodZze0pWKIXb8Yi6msNw049tnmmHC06qXsfLclVk
+        EfowdQIKhIPBvdXHSRBsdfqiZ7F7lJejMrz1A7M=
+X-Google-Smtp-Source: ACHHUZ74rhSOrYkhGkK2AaUtssN912iRZKoGc466lxGT7AqULsRjX6hsaMu1K2GGcRE1jlHuRsSc9g==
+X-Received: by 2002:a17:903:1248:b0:1a6:a6e7:8846 with SMTP id u8-20020a170903124800b001a6a6e78846mr18260120plh.40.1683005748053;
+        Mon, 01 May 2023 22:35:48 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1f3b:58fa:39f6:37e1:bb9a:a094])
+        by smtp.gmail.com with ESMTPSA id j12-20020a170902690c00b001a6a6169d45sm18870369plk.168.2023.05.01.22.35.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 May 2023 22:35:47 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Tue, 2 May 2023 10:14:00 +0530
-Message-ID: <CAH=2NtzicVig8wv43YZS0N5LSMRpxd3U84fc=qFV+sJF9BKcig@mail.gmail.com>
-Subject: Re: [PATCH v9 2/4] phy: qcom-qmp-usb: add support for updated qcm2290
- / sm6115 binding
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.sharma@linaro.org,
         bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
         robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
-        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        dmitry.baryshkov@linaro.org
+Subject: [PATCH v10 0/4] Enable USB SS qmp phy for Qualcomm SM6115 SoC
+Date:   Tue,  2 May 2023 11:05:30 +0530
+Message-Id: <20230502053534.1240553-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,75 +74,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2 May 2023 at 05:43, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 01/05/2023 22:24, Bhupesh Sharma wrote:
-> > Add support for the new qcm2290 / sm6115 binding.
-> >
-> > The USB QMP phy on these devices supports 2 lanes. Also note that the
-> > binding now does not describe every register subregion and instead
-> > the driver holds the corresponding offsets. This also includes
-> > the PCS_MISC region.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 22 ++++++++++++++++++++++
-> >   1 file changed, 22 insertions(+)
-> >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> > index a49711c5a63d..aa143c081805 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> > @@ -1414,6 +1414,10 @@ struct qmp_usb_offsets {
-> >       u16 pcs_usb;
-> >       u16 tx;
-> >       u16 rx;
-> > +     /* for PHYs with >= 2 lanes */
-> > +     u16 tx2;
-> > +     u16 rx2;
-> > +     u16 pcs_misc;
-> >   };
-> >
-> >   /* struct qmp_phy_cfg - per-PHY initialization config */
-> > @@ -1558,6 +1562,16 @@ static const char * const qmp_phy_vreg_l[] = {
-> >       "vdda-phy", "vdda-pll",
-> >   };
-> >
-> > +static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
-> > +     .serdes         = 0,
-> > +     .pcs            = 0xc00,
-> > +     .tx             = 0x200,
-> > +     .rx             = 0x400,
-> > +     .tx2            = 0x600,
-> > +     .rx2            = 0x800,
-> > +     .pcs_misc       = 0xa00,
-> > +};
-> > +
-> >   static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
-> >       .serdes         = 0,
-> >       .pcs            = 0x0200,
-> > @@ -1922,6 +1936,8 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
-> >   static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
-> >       .lanes                  = 2,
-> >
-> > +     .offsets                = &qmp_usb_offsets_v3,
-> > +
-> >       .serdes_tbl             = qcm2290_usb3_serdes_tbl,
-> >       .serdes_tbl_num         = ARRAY_SIZE(qcm2290_usb3_serdes_tbl),
-> >       .tx_tbl                 = qcm2290_usb3_tx_tbl,
-> > @@ -2497,6 +2513,12 @@ static int qmp_usb_parse_dt(struct qmp_usb *qmp)
-> >       qmp->tx = base + offs->tx;
-> >       qmp->rx = base + offs->rx;
-> >
-> > +     if (cfg->lanes >= 2) {
-> > +             qmp->tx2 = base + offs->tx2;
-> > +             qmp->rx2 = base + offs->rx2;
-> > +             qmp->pcs_misc = base + offs->pcs_misc;
->
-> pcs_misc should also be usable for a single-lane PHYs.
+Changes since v9:
+-----------------
+- v9 can be seen here: https://lore.kernel.org/linux-arm-msm/20230501192432.1220727-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry on v9, regarding register size
+  and pcs_misc offset handling. Also collected his R-Bs.
 
-Ok. I will make it generic in the next version.
+Changes since v8:
+-----------------
+- v8 can be seen here: https://lore.kernel.org/linux-arm-msm/20230410171010.2561393-1-bhupesh.sharma@linaro.org/
+- Added driver change for new bindings used for sm6115 / qcm2290
+  devices.
 
-Thanks,
-Bhupesh
+Changes since v7:
+-----------------
+- v7 can be seen here: https://lore.kernel.org/linux-arm-msm/20230409200934.2329297-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry and added "pipe clk".
+
+Changes since v6:
+-----------------
+- v6 can be seen here: https://lore.kernel.org/linux-arm-msm/20230407061122.2036838-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Bjorn and Dmitry and dropped old bindings in this
+  version.
+
+Changes since v5:
+-----------------
+- v5 can be seen here: https://lore.kernel.org/linux-arm-msm/20230405191633.1864671-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry and made [PATCH 1/2] compatible with his 
+  'split away legacy USB+DP code' series:
+  <https://patchwork.kernel.org/project/linux-phy/cover/20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
+
+Changes since v4:
+-----------------
+- v4 can be seen here: https://lore.kernel.org/linux-arm-msm/20230401154725.1059563-1-bhupesh.sharma@linaro.org/ 
+- Collected Krzysztof's Ack for [PATCH 1/2].
+- Added more descriptive commit logs as per Dmitry's comments on v4.
+
+Changes since v3:
+-----------------
+- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20221215094532.589291-4-bhupesh.sharma@linaro.org/
+- Fixed v4 as per the downstream driver code: https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#296
+
+This patchset adds the support for USB SS qmp phy for Qualcomm SM6115
+SoC. For the previous versions of this patch there were conversations
+on irc as to whether this was a 'qcom,usb-ssphy-qmp-usb3-or-dp' or a
+'qcom,usb-ssphy-qmp-dp-combo' as per downstream code and hardware
+documentation.
+
+But after a careful look at downstream dtsi (see [1]) it appears that
+this indeed is a 'qcom,usb-ssphy-qmp-usb3-or-dp' phy and not a
+'dp-combo' phy.
+
+[1]. https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#296
+
+Bhupesh Sharma (4):
+  dt-bindings: phy: qcom,qmp-usb: Drop legacy bindings and move to newer
+    one (SM6115 & QCM2290)
+  phy: qcom-qmp-usb: add support for updated qcm2290 / sm6115 binding
+  arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+  arm64: dts: qcom: qrb4210-rb2: Enable USB node
+
+ .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 27 ------------
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 44 ++++++++++++++++---
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 24 ++++++++++
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 29 +++++++++++-
+ .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 22 ++++++++++
+ 7 files changed, 118 insertions(+), 34 deletions(-)
+
+-- 
+2.38.1
+
