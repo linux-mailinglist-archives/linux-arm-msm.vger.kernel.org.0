@@ -2,89 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EF2B6F4B5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 22:28:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43A6F6F4B62
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 22:30:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbjEBU2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 16:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56070 "EHLO
+        id S230004AbjEBUaq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 16:30:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjEBU2L (ORCPT
+        with ESMTP id S229742AbjEBUap (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 16:28:11 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C66E1988
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 13:28:09 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342JurL9011028;
-        Tue, 2 May 2023 20:27:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=bNSfF3fp8GOd4MX5IVX2LFeM5Oveea86k3zpUubxvG0=;
- b=VtXNFBspPlpx5Dx1l8HuPNfMZcGj3r+8cugJWww5TJfURpbtB6CD3OzD0Tv9MKYSE4B1
- Dr3urx8Z37nmEHFWcNOD3/MKSmQWrJUIsf7YlVxvyMxiRA2rhkxD6vpDhwIjGeZzuK03
- WACiTdjzmpHc8zQs46dX7R9Q4qDnsWTCQECZoaov6vqKuuqaIT6IEfqM+LyPRlejegGS
- MI037egkcabfNAvKtpcEAzhD34C3Tffb/R7E6CSRjVUHPqUYC3tIulf4p+NRcHy3k/fq
- RVnzk12jQFUgb7yJPDd4dweH0UbWNuOWfZmW/Wt527em1uDqTMDy9U/st6g0Pcik7nRS Gg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qan8gjq1d-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 20:27:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 342KRvub011320
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 2 May 2023 20:27:57 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
- 13:27:56 -0700
-Message-ID: <2fc36ced-039d-edc8-1695-6c79e196610e@quicinc.com>
-Date:   Tue, 2 May 2023 13:27:56 -0700
+        Tue, 2 May 2023 16:30:45 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9489319A5
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 13:30:43 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3063208beedso2064026f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 13:30:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683059442; x=1685651442;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OBB7l/srr+tP4GZyp5fCjE97P649+PUzRDgdEV6rGZA=;
+        b=dzmHK68LA8m7RO25h4HY6aS89fDoz6/gk8GyjJqsBUWSqcqLpZALgof0p5cuJDhiDY
+         LQ6uEX/cwgjhXp2ZIt6aawymZkuTbtrC0ehq4HJMTsudelWIodaou3JXcHiHpTszu7Z0
+         M5vxgpZjG12VSxAVtn2ECgjDb1dX/Iii+yH66jyuwXkyKHwz6cwCyS2hBF1t11zHfuuH
+         5qE/ooVZeOUMOvmFuYMAoz/yGMpSrO4fw8lmL62ZZgip0VXh7YlFnfdsU4OyZi9YkizO
+         Aj1brV69RIdD0O/g+KKM4wu9FGA3cUzIQnWT67f8/+Ik2Tf8jtEoSSw0vZ4UwhxPkkAO
+         Id3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683059442; x=1685651442;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OBB7l/srr+tP4GZyp5fCjE97P649+PUzRDgdEV6rGZA=;
+        b=fFeeYPuhwSlargQlaLoGIW3SozmEnqzP8EXu2iuSTxYODcwJjN24P7V9WxDk1QGlNv
+         EWMtI9pUjaQ6dXTjAy/C0MZam7t0hcDez4Lhua6euxb2hrvqvTMpu5Zbyk0v2vFgrpi6
+         VmDkg9oyTTWi6z4BMccHMXs+3C6+3mWheRUCBjhabGF+6MlxxBggQRRNhRQVmRhWFVZ5
+         qEiyLn3IP5tH5UdGTMCAAhGpumvV7qVHKgEct3kM3ZCERrl4XMoHhkuLUv3zAuOVCJeR
+         79ZEWdQp7ri6DVIM9wnlwY95f0KnNqUyGxgdJVRlaAvEsVcFsz1fLJKznsaI8z3uBD6B
+         tc3A==
+X-Gm-Message-State: AC+VfDzjOATHRgP/8w5fZOOYmDwJtTPV/lBWS3a1M0BJ+lgAQnyHV9r2
+        MbvkauWbIO01Bv6u2jvfRK+3hQ==
+X-Google-Smtp-Source: ACHHUZ4+zjK+OPKjMDt90TGnAGS5p9jXdecgcEwVnd6F5u6m6lP2kq4YpJSbU2wiyE8/PM4yYXvjsQ==
+X-Received: by 2002:adf:ec04:0:b0:2f6:ca0d:ec1c with SMTP id x4-20020adfec04000000b002f6ca0dec1cmr14541297wrn.10.1683059442008;
+        Tue, 02 May 2023 13:30:42 -0700 (PDT)
+Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id m6-20020a5d6246000000b002feea065cc9sm31808215wrv.111.2023.05.02.13.30.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 13:30:41 -0700 (PDT)
+Message-ID: <7abff69e-52ce-a781-5e0a-fac4782d26ee@linaro.org>
+Date:   Tue, 2 May 2023 21:30:40 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 1/7] drm/msm/dpu: merge dpu_encoder_init() and
- dpu_encoder_setup()
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH] Change the interrupt from level_low to edge_falling
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
- <20230430235732.3341119-2-dmitry.baryshkov@linaro.org>
- <0d09f4ea-8778-d61d-feea-c0b3a2a6ebe4@quicinc.com>
- <048b40fb-b4d0-2b33-9e97-dddec1405269@linaro.org>
- <ee9da7d9-44a7-eb99-679b-c968fdb9ef6a@quicinc.com>
- <657391b8-7a87-6fcb-44d8-de505718f351@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <657391b8-7a87-6fcb-44d8-de505718f351@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     tremblay.gabriel@gmail.com, Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230502-gtremblay-x13s-keyboard-v1-1-6bc3e59b0d39@gmail.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <20230502-gtremblay-x13s-keyboard-v1-1-6bc3e59b0d39@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: D8yCcLJMr64KaOjWRVKXZ_ToMa4AIu-d
-X-Proofpoint-ORIG-GUID: D8yCcLJMr64KaOjWRVKXZ_ToMa4AIu-d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_12,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 mlxscore=0 priorityscore=1501
- mlxlogscore=807 impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305020174
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,58 +77,62 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/1/2023 2:27 PM, Dmitry Baryshkov wrote:
-> On 02/05/2023 00:22, Abhinav Kumar wrote:
->>
->>
->> On 5/1/2023 1:45 PM, Dmitry Baryshkov wrote:
->>> On 01/05/2023 22:58, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
->>>>> There is no reason to split the dpu_encoder interface into separate
->>>>> _init() and _setup() phases. Merge them into a single function.
->>>>>
->>>>
->>>> I think the reason for having this split was to pass a valid encoder 
->>>> to the interface_modeset_init() and then do the rest of encoder 
->>>> initialization after modeset_init().
->>>>
->>>> Looking at the current code, one issue i am seeing is that you will 
->>>> now initialize the dpu_encoder's msm_display_info along with 
->>>> dpu_encoder_init().
->>>>
->>>> Most of it is fine but in the case of bonded_dsi(), I see an issue.
->>>>
->>>> The info.num_of_h_tiles++ happens after the modeset_init() of the 
->>>> second dsi but now it has been moved earlier.
->>>>
->>>> If for some reason, msm_dsi_modeset_init() fails for the second DSI, 
->>>> num_of_h_tiles will still be 2 now.
->>>
->>> If msm_dsi_modeset_init() fails, the function will err out and fail 
->>> dpu_kms initialization. So it's not important, what is the value of 
->>> num_h_tiles in this case.
->>>
->>
->> But I still feel the msm_display_info should be saved in the dpu 
->> encoder after the modeset_init() and not before. That way if some 
->> display interface specific init is done in the modeset_init(), we save 
->> the info after that.
+On 02/05/2023 19:31, Gabriel Tremblay via B4 Relay wrote:
+> From: Gabriel Tremblay <tremblay.gabriel@gmail.com>
 > 
-> Up to now we have been using 'poll' model, e.g. we specifically asked 
-> for the DSC info from the DSI host rather than making msm_dsi set it. So 
-> far I don't see a good reason why this should be changed.
 > 
+> 
+> ---
+> Lenovo's x13s internal keyboard shows responsivity issues when fast
+> typing occurs. The problem is not replicated with external HID keyboard.
+> 
+> This fix tries to alleviate the problem but requires further testing
+> and commenting.
+> 
+> Signed-off-by: Gabriel Tremblay <tremblay.gabriel@gmail.com>
 
-Ok got it, so my concern came from the fact that we individually poll 
-each feature today but lets say the number of features keeps growing we 
-will have to combine them all into xxx_xxx_get_disp_info() which fills 
-up all the fields of the display_info in one go.
+Hi Gabriel,
 
-But yes, as long as we do that before calling dpu_encoder_init() it 
-should be fine.
+Thanks for the patch. Just a small thing to improve: The subject line
+should include some reference to which part of the kernel you're
+changing as a prefix, so in this case something like:
 
-Hence,
+arm64: dts: qcom: sc8280xp-x13s: use falling edge for keyboard interrupt
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+might be a more suitable subject line. You can usually look at previous
+commits to figure out what the right prefix is, to see commits which
+touched a specific file you can do something like this:
+
+$ git log --oneline \
+	arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+
+I don't own an x13s so I can't comment on the change, but hopefully this
+is helpful for a v2 or any future patches!
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> index bdcba719fc38..e8d7f02c9bf3 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> @@ -639,7 +639,7 @@ keyboard@68 {
+>  		reg = <0x68>;
+>  
+>  		hid-descr-addr = <0x1>;
+> -		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
+> +		interrupts-extended = <&tlmm 104 IRQ_TYPE_EDGE_FALLING>;
+>  		vdd-supply = <&vreg_misc_3p3>;
+>  		vddl-supply = <&vreg_s10b>;
+>  
+> 
+> ---
+> base-commit: 84e2893b4573da3bc0c9f24e2005442e420e3831
+> change-id: 20230502-gtremblay-x13s-keyboard-289935f922e2
+> 
+> Best regards,
+
+-- 
+Kind Regards,
+Caleb (they/them)
