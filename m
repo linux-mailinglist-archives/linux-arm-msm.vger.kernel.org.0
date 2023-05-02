@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFCB46F3DFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 08:58:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 916A66F3E06
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 08:59:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232991AbjEBG6T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 02:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60766 "EHLO
+        id S229379AbjEBG74 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 02:59:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233560AbjEBG6K (ORCPT
+        with ESMTP id S233679AbjEBG7x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 02:58:10 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A443A40C2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 23:58:06 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-50b8d2eed3dso4134066a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 23:58:06 -0700 (PDT)
+        Tue, 2 May 2023 02:59:53 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E784498
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 23:59:52 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-94f6c285d92so671869066b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 23:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683010685; x=1685602685;
+        d=linaro.org; s=google; t=1683010790; x=1685602790;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6m9RHcIPcK/mHhABU/sY7MA/NMPTV0i7puXCnV2P8jM=;
-        b=AnHYGyl9itgQMEjkltPT+i4Jr7vO/8WkLQF7cmothsCUHAG91C5ouOsC5STPn8IJxU
-         eNuVB4xjBgKpICryps4QKnXzm3qarOOPMlFDqmtf/MU3OQIPRjVgV8RhKbqIAZQTTP2X
-         jNbM7sEbvHl1w1y1aaXGe7GHcVfzSqc0TlW1lGjL9xMie09vWLHOrX+bJrJR6kUe08Tj
-         1LXyQStByajEQPqUf5wMOBioM7pk7l8TrlZ/ZFrBmg6fjbP2H2OIVI8xu3mDAFP2zE3d
-         W7X+kC/JQwOgw516x8dJpmZKpHWV3pAFbX4EcUQKh1O4nexdEKmHMUk1kCkL7FNYJ8zo
-         Mvdg==
+        bh=DW2PDnB/a4GBq3xwg2xVlm3Rx3gcG7ZL6JpL2EdisVk=;
+        b=xjstnW1MhSH9xeyYTH8/rwRvI0E2oy4J378rdrNaZN4KaXOKgWIZiEjYB39J/NPG3l
+         viuRQl3QSmjJSKqeDtavFzAFMiU1x3IQtQJfpyNwbJNm/PCEb0poY6VsbQlfAfdNz7OY
+         nTc2a86IQ4oGvsDTzNNBM+nrIyf2o84PR8Es01kR3j9hKCkMMT+R7RPNj1SEx+/88BC4
+         djhM4eSMEsG9/GVKwVmUKXAY2hVa1TUN04eSOz2aJhokCNomn7DZEF4wON2Au/5zDsVX
+         nhraKmgFHVLyDrGeWLGLiywGEQF7T5LCWK91t5Ewk8amLhNXkQqq+agMldMYoeGn0zfd
+         1heQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683010685; x=1685602685;
+        d=1e100.net; s=20221208; t=1683010790; x=1685602790;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6m9RHcIPcK/mHhABU/sY7MA/NMPTV0i7puXCnV2P8jM=;
-        b=EHDHVZcq0cstzkMe/V497+XQIC8MMGd79YOaZ3kENbm2SQ8Kx2hZJpqu6P6YhvV0lD
-         k8pbscY939dD8x+fd5qLex1hLpnWNRxNOPNjA5zRPapa9yfjm0ZS55nmh+oe/jNr8Cl1
-         AN3KsuPYVSXH5FN6rJQlenTd4wEa2ptCMNEtEBNXBro8xz7EWroH6W7br8HhUTfvH8Ei
-         5rzcTFL+EZv/cFcBMTx0hujTMb/Z0m+EhEZH6FwQaR4ae3YtBNhEWIObVTSJPP9vBnWD
-         c2hSEjIMO3Yqd7O1jCJBuVeJ3TruElsXbKtpOJDjtD6hnOF02vrXWDnIypuaEZ/MhVJF
-         QqFw==
-X-Gm-Message-State: AC+VfDzOO1y7r6M5Ugb/YEsddRSi5Q5ya3lQbpp4nN1LfpUtrFsJFjt6
-        ltTdHOmJ44lDs168g9UBOOvXVA==
-X-Google-Smtp-Source: ACHHUZ5r3ZjPDDTyDDUni0Wh82eRaJzFkTRcqEvQUQEebLKQ4oCLeeRw1bsL3dNlISDXnD99fP7LoA==
-X-Received: by 2002:a17:906:fd84:b0:94e:d72b:d10c with SMTP id xa4-20020a170906fd8400b0094ed72bd10cmr17096058ejb.40.1683010684997;
-        Mon, 01 May 2023 23:58:04 -0700 (PDT)
+        bh=DW2PDnB/a4GBq3xwg2xVlm3Rx3gcG7ZL6JpL2EdisVk=;
+        b=JJp2Tj0eSovFg5NBbBZb8mWVAULgf1mErd2tCmcs+2TDJS1BoJYs5Y1FOSvZRc4B9K
+         EDX7orvpss7ZUmReyoLke07exXKq5H+9R9uBzE6fhsr/8c+oExrtsEDSSexToVSvLgQn
+         +i1HY5M1CTgQ4TN1LbQehfhbqjQlMO2R1DvZi1l9DriB/oMO6/pAdtDrP0DCNfpj3mry
+         f5Hk/LDe3LOKImQ8yvfHFLl+gP+sTmOSVO2qz8EdNL+iAgEo8ErQLWBtAStcRXFZajto
+         R3fq47BcbRD9OuHpN5XNRpmFewCCK8bwM9IkRcny9bVgQZNXCzNg8Kh/G4qXpHYbFOAR
+         SkQA==
+X-Gm-Message-State: AC+VfDyA4rB11OK6f9czzIE03yVemJOWJaBET/49o+oQXqr6SUKo3ftF
+        GGVpBh6HkxNGzzygUAehEAFd7w==
+X-Google-Smtp-Source: ACHHUZ5gJWuRuYwXpuStHz2MNXThfg91bKu7gXAVukYjt0mTT70RrG0+fDw01YPxlIk827PQzA1NQg==
+X-Received: by 2002:a17:906:fe05:b0:955:34a5:ae46 with SMTP id wy5-20020a170906fe0500b0095534a5ae46mr14123624ejb.77.1683010790500;
+        Mon, 01 May 2023 23:59:50 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:bafd:1283:b136:5f6a? ([2a02:810d:15c0:828:bafd:1283:b136:5f6a])
-        by smtp.gmail.com with ESMTPSA id rv13-20020a1709068d0d00b0095952f1b1b7sm11918971ejc.201.2023.05.01.23.58.03
+        by smtp.gmail.com with ESMTPSA id x3-20020aa7cd83000000b004fbf6b35a56sm13020285edv.76.2023.05.01.23.59.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 23:58:04 -0700 (PDT)
-Message-ID: <1c66d8a1-b4a9-1127-7884-5c36ea03b1b0@linaro.org>
-Date:   Tue, 2 May 2023 08:58:03 +0200
+        Mon, 01 May 2023 23:59:49 -0700 (PDT)
+Message-ID: <9d6c70bc-3807-edb3-560b-21f9ced7895a@linaro.org>
+Date:   Tue, 2 May 2023 08:59:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom,lcc.yaml: describe clocks
- for lcc,qcom-mdm9615
+Subject: Re: [PATCH 03/10] dt-bindings: clock: provide separate bindings for
+ qcom,gcc-mdm9615
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,9 +70,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230501203401.41393-1-dmitry.baryshkov@linaro.org>
- <20230501203401.41393-2-dmitry.baryshkov@linaro.org>
+ <20230501203401.41393-4-dmitry.baryshkov@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230501203401.41393-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230501203401.41393-4-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,15 +86,38 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/05/2023 22:33, Dmitry Baryshkov wrote:
-> Describe parent clocks used by the LCC on the MDM9615 platform. It is
-> the list as the one for msm8960/apq8064, with only difference being
-> pxo/cxo replacement.
+> The global clock controller on MDM9615 uses external CXO and PLL7
+> clocks. Split the qcom,gcc-mdm9615 to the separate schema file.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+>  .../bindings/clock/qcom,gcc-mdm9615.yaml      | 53 +++++++++++++++++++
+>  .../bindings/clock/qcom,gcc-other.yaml        |  3 --
+>  2 files changed, 53 insertions(+), 3 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-mdm9615.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-mdm9615.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-mdm9615.yaml
+> new file mode 100644
+> index 000000000000..ca26d69ccb07
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-mdm9615.yaml
+> @@ -0,0 +1,53 @@
+> +# SPDX-License-Identifier: GPL-2.0-only
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,gcc-mdm9615.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller on MDM9615
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +  - Taniya Das <tdas@codeaurora.org>
+
+Please update the email/entry. Maybe to Taniya Quic's email or to Bjorn?
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
