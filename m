@@ -2,71 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 513336F3F57
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ADCD66F3F92
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:49:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233853AbjEBIjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 04:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
+        id S233970AbjEBItO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 04:49:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233854AbjEBIjn (ORCPT
+        with ESMTP id S233927AbjEBIsp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 04:39:43 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A9AE49E1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 01:39:39 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-b9a7c1b86e8so5012563276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 01:39:39 -0700 (PDT)
+        Tue, 2 May 2023 04:48:45 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89324ECE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 01:47:41 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50bcb229adaso2289048a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 01:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683016778; x=1685608778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xQYzzCPoXqswlpvIFD6WRnJfdsdZ7oE3ts+Rlv8RaJc=;
-        b=JCYSJJycOh3uM3e1Pr69ENYHONt+EDeJ1G0216dirbDHn9z2Sp+bxDrP7VXakiMrXc
-         GJbWhGinBB3SufaTvEuBbZghU3g7Ac55Z26LjCBRnr6nkxnxAi+fgQNMrj0n40YKt0IC
-         KuzZM2Ww44iMf76utY5TImcOMS5YM0yDt8I6ugtPm12pnf0XhuX6gXmj3+TKzIqchddG
-         peVrV07kn7PywtYF5GhN3zfRqdOj3snooHwRTqkHoIDKGaZQgzPvvjtv1D2kTS3By9he
-         rtgGrmezHux9aZIytkYPbe5nf8NvKTONiI+arBnjh+DPvf0B8eoFE+QqQETYWeeEnNux
-         zK0Q==
+        d=linaro.org; s=google; t=1683017260; x=1685609260;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sCflCmx5CoveGF/v/9+Y+5fkMVwZkJVQ2C0NfAviXuo=;
+        b=jfSZLnSQ7eGu+JLRyXFjIPROXJzAOkbNbawnzcyHatN1RxRnbULg5LNS9bPF4m+9VA
+         FdWsLO4VWRYqChh1hWTldOX5pfkl4riNFSSSWrI8Cn0b5SuDynZrZu13khAQ/NVQx6My
+         JVeLBMBlgvVdz2b2Z7Zt3fy8zqVOAYXnU3SjhekdwxngD4ZktHm+EoLDiHByfDfpL2Nd
+         ZVDH1oQdqsFUkwYyo8Fx63S12c8GDvh8w7+Rc+MK9rJ+84IAjB2HXNNUaZdYkK/JeL0D
+         HLvn4UI91CLASIecCEPcPw0mwvc0SRqTu1vUgEyfDiQB1rZzqdXVgmJTWkJF0LTW4IsH
+         yOlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683016778; x=1685608778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xQYzzCPoXqswlpvIFD6WRnJfdsdZ7oE3ts+Rlv8RaJc=;
-        b=F6UKuk+0kkSkesyp2YkM6XPxbqTe2J+xgCf+4BkzNDr3ycy6E1+v9aDMwzNyn0KZp8
-         xkeQnb32iBLLVihOrittfJ/TLhctv244vqSXwTmh+Bv2BXRi7fbnF3rndXCCJNm8AWIT
-         HTzzuSpnVv3Jl1G+wYOx6egJ0RtT7BiAOnNxbcfU5vzsBTXYOVUJRhsOHIei+vvRpR7/
-         OmVZ5LPYwh5pHSl5ZCzAh1j/x+Lj4OQGdCZpS+sJqb6lPo1wcNxluye8UP1LImZHUFZy
-         wX0dY8Fmz6DH0kINLa5D7ohdc2Nt+7t/zgxsylr/3twKqqVIiwpKA/JN+oINh0wjHNpu
-         fjOg==
-X-Gm-Message-State: AC+VfDwrYAf/ndOXFNzygMB7majt0f4Rlzc+Lm1Jl5p+Vx1VF+oH9n+M
-        LNW6bvNDct942hOq2Q5E6Vp20cTqF1air/gvWmrrMw==
-X-Google-Smtp-Source: ACHHUZ5iTF/W04H0/7bScMxDWwW9LvBeXxThecO2SmLhQIi3VwlMDIRkkFwvEHZDl2GYHRMgIZ4LdcbNkrrLD1QTe+w=
-X-Received: by 2002:a25:6813:0:b0:b9a:63a2:dc6c with SMTP id
- d19-20020a256813000000b00b9a63a2dc6cmr15309161ybc.53.1683016778500; Tue, 02
- May 2023 01:39:38 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683017260; x=1685609260;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sCflCmx5CoveGF/v/9+Y+5fkMVwZkJVQ2C0NfAviXuo=;
+        b=TNSwYOdxW5OS6mK7LNg8vc9yw2Z+alxWemwnohbAZjuH5u5T668gLccDO2+XPtwvaT
+         3DyTAu81ui4rJvvaxaurKjnTtdShqdAT/bAKtrmtas131FEyn5CcrDMWQciBdvyIxGkN
+         0JNwLmA9khSQWrGbTSVc2U3zje4KegzS6VQMcfswXE6OUH9YSRgLqAUnP79Jenr2N8j4
+         oltk5l4UJEW1hmV1OmuepaKsrBBYCoy7sEphxN6zhd6cLmolpBV8c0LC9mgV1pWYgqqt
+         +0kxA6nbjw4QHZp80gCQVDQYp6nrXnVjs5qx4lYj1Hwrxt8wyvbP70Gt32IU99kGi9LK
+         psnA==
+X-Gm-Message-State: AC+VfDx1xhcYiHE4gKwJHFpBD4FOBVdh/RRKVf8CiYa4fBB0onB1ZWfu
+        sv3VY1y0K7M/24rTcJRjEsb4Uw==
+X-Google-Smtp-Source: ACHHUZ63B0Ahr5OE/6ydoe7FknwEhIFEj7JmTTSg83HbaHGsBbokJ8+Be0zQlKhO6TeLKYXynAHw6Q==
+X-Received: by 2002:a05:6402:1285:b0:506:8838:45cc with SMTP id w5-20020a056402128500b00506883845ccmr7733735edv.6.1683017260075;
+        Tue, 02 May 2023 01:47:40 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:bafd:1283:b136:5f6a? ([2a02:810d:15c0:828:bafd:1283:b136:5f6a])
+        by smtp.gmail.com with ESMTPSA id m18-20020a056402051200b0050bcd197549sm887925edv.38.2023.05.02.01.47.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 01:47:38 -0700 (PDT)
+Message-ID: <0f2dea5a-b6f7-b659-f41e-55d1777b4dd1@linaro.org>
+Date:   Tue, 2 May 2023 10:47:36 +0200
 MIME-Version: 1.0
-References: <cover.1682682753.git.quic_varada@quicinc.com> <1bda63e18f7257f60cc1082b423aca129abfa3b0.1682682753.git.quic_varada@quicinc.com>
- <CAA8EJpq0RXGf8_oBa_XF0+nOg31ouMUVJ3LhNRh_HtmgJvCJHQ@mail.gmail.com> <20230502080440.GA26126@varda-linux.qualcomm.com>
-In-Reply-To: <20230502080440.GA26126@varda-linux.qualcomm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 2 May 2023 11:39:27 +0300
-Message-ID: <CAA8EJpoHMdNFFu4rX2O_N64TV62uAEj4tZqRLpWP8WZrf-PQhQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: ipq9574: add thermal zone nodes
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Praveenkumar I <quic_ipkumar@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v7 1/9] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SC8280 Multiport
+Content-Language: en-US
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+References: <20230501143445.3851-1-quic_kriskura@quicinc.com>
+ <20230501143445.3851-2-quic_kriskura@quicinc.com>
+ <df24efb2-8279-ef15-a118-2a24885288c8@linaro.org>
+ <a001c9c0-f186-f125-daab-e646790badfe@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <a001c9c0-f186-f125-daab-e646790badfe@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,304 +92,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2 May 2023 at 11:04, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Fri, Apr 28, 2023 at 10:49:34PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, 28 Apr 2023 at 17:53, Varadarajan Narayanan
-> > <quic_varada@quicinc.com> wrote:
-> > >
-> > > This patch adds thermal zone nodes for the various
-> > > sensors present in IPQ9574
-> > >
-> > > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 208 ++++++++++++++++++++++++=
-++++++++++
-> > >  1 file changed, 208 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/=
-dts/qcom/ipq9574.dtsi
-> > > index 7cd5bdb..a7cb2b4c 100644
-> > > --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > > @@ -947,6 +947,214 @@
-> > >                 };
-> > >         };
-> > >
-> > > +       thermal_zones: thermal-zones {
-> > > +               tsens_tz_sensor3 {
-> >
-> > Please provide sensible names for all thermal zones. Please follow the
-> > examples in other DT files.
->
-> Ok.
->
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 3>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> >
-> > Can it really go up to 125 =C2=B0C?
->
-> The SoC product requirement is 120=C2=B0C. It is capable of 125=C2=B0C.
-> This was tested inside a thermal chamber and ensured that it
-> hits 125=C2=B0C and system reboots at that temperature.
+On 02/05/2023 10:35, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 5/2/2023 1:18 PM, Krzysztof Kozlowski wrote:
+>> On 01/05/2023 16:34, Krishna Kurapati wrote:
+>>> Add the compatible string for SC8280 Multiport USB controller from
+>>> Qualcomm.
+>>>
+>>> There are 4 power event irq interrupts supported by this controller
+>>> (one for each port of multiport). Added all the 4 as non-optional
+>>> interrupts for SC8280XP-MP
+>>>
+>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>> ---
+>>>   .../devicetree/bindings/usb/qcom,dwc3.yaml    | 21 +++++++++++++++++++
+>>>   1 file changed, 21 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> index d84281926f10..2c96da1ce5b8 100644
+>>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+>>> @@ -26,6 +26,7 @@ properties:
+>>>             - qcom,sc7180-dwc3
+>>>             - qcom,sc7280-dwc3
+>>>             - qcom,sc8280xp-dwc3
+>>> +          - qcom,sc8280xp-dwc3-mp
+>>
+>> SC8280xp comes with two USB controllers: one single-port and one multi-port?
+> 
+> Hi Krzysztof,
+> 
+>    SC8280XP comes with 3 controllers. The first two are single port 
+> controller and the third one is a multiport controller. In DTSI:
+> usb_0 / usb1: have compatible set to : "qcom,sc8280xp-dwc3"
+> 
+> And multiport controller has it set to "qcom,sc8280xp-dwc3-mp"
 
-ack
+OK, then this looks fine.
 
->
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> >
-> > Please provide also a passive trip point, so that the passive cooling
-> > can be engaged.
->
-> The linux kernel cannot take any steps to initiate cooling for
-> components other than the 4 CPU cores. The f/w that runs on these
-> IP blocks have to take steps to initiate cooling. Additionally,
-> the passive temperature for the non-cpu sensors are not
-> characterised yet and I don't have the values now.
->
-> We have these nodes to be able to read the temperature of the
-> other blocks via the sysfs entry /sys/devices/virtual/thermal/*/temp
-> Have given the critical trip point so that the setup is rebooted
-> if the critical temperature is reached.
->
-> Have given passive trip point for the CPU core related thermal
-> nodes (tsens_tz_sensor10, tsens_tz_sensor11, tsens_tz_sensor12
-> and tsens_tz_sensor13).
+Please add the compatible to existing allOf:if:then to constrain clocks
+and other pieces. If none of existing if:then: matches your case, add
+new one.
 
-That's the point why we asked for the logical names for the sensors,
-like we have on the other platforms. Otherwise it is very hard to
-understand what is going on.
+Best regards,
+Krzysztof
 
->
-> If this is not acceptable, please let me know. Will remove the
-> non-cpu nodes and post a patch with just the CPU entries.
-
-This is perfectly fine. Please take a look at other DTSI files.
-
->
-> Thanks
-> Varada
->
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor4 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 4>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor5 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 5>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor6 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 6>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor7 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 7>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor8 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 8>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor9 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 9>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor10 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 10>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <120000>;
-> > > +                                       hysteresis =3D <10000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +
-> > > +                               cpu-passive {
-> > > +                                       temperature =3D <110000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "passive";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor11 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 11>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <120000>;
-> > > +                                       hysteresis =3D <10000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +
-> > > +                               cpu-passive {
-> > > +                                       temperature =3D <110000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "passive";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor12 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 12>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <120000>;
-> > > +                                       hysteresis =3D <10000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +
-> > > +                               cpu-passive {
-> > > +                                       temperature =3D <110000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "passive";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor13 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 13>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <120000>;
-> > > +                                       hysteresis =3D <10000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +
-> > > +                               cpu-passive {
-> > > +                                       temperature =3D <110000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "passive";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor14 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 14>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +
-> > > +               tsens_tz_sensor15 {
-> > > +                       polling-delay-passive =3D <0>;
-> > > +                       polling-delay =3D <0>;
-> > > +                       thermal-sensors =3D <&tsens 15>;
-> > > +
-> > > +                       trips {
-> > > +                               cpu-critical {
-> > > +                                       temperature =3D <125000>;
-> > > +                                       hysteresis =3D <1000>;
-> > > +                                       type =3D "critical";
-> > > +                               };
-> > > +                       };
-> > > +               };
-> > > +       };
-> > > +
-> > >         timer {
-> > >                 compatible =3D "arm,armv8-timer";
-> > >                 interrupts =3D <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | I=
-RQ_TYPE_LEVEL_LOW)>,
-> > > --
-> > > 2.7.4
-> > >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
-
-
-
---=20
-With best wishes
-Dmitry
