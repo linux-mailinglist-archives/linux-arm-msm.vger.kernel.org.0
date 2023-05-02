@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D25A6F4368
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:11:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9198B6F4382
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:16:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234068AbjEBMLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 08:11:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37908 "EHLO
+        id S233548AbjEBMQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 08:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234145AbjEBMLA (ORCPT
+        with ESMTP id S234142AbjEBMQ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 08:11:00 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E816184
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 05:10:25 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3062d764455so1471519f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 05:10:25 -0700 (PDT)
+        Tue, 2 May 2023 08:16:28 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764C89B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 05:16:27 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-b9d8b2e1576so5487074276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 05:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683029424; x=1685621424;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=45dl8HRRntE2PbqYyAyWim4/Cl/d2w2wAiKRr5pDHQs=;
-        b=Iv/XrGVxmUP/qLDE7zU5yZMzVUJxvjI6j8Vatr0AH2Vi0rIB9g8gA8rI5sDnFiHCQf
-         fkns0nn4hrcLImuDJmbbB00sfLM2gVOAuI/kdQzmwGEYFKvJwbS9OL1dYdNzqpaAgPo2
-         jf2XfiX6BHDYs5fYUdDuoN0E39vD40PZWst/JWlEoW+Rzdj8AEaDioAN8lLnZXVD659C
-         on6sa6LcPkoWBouL5Yw2WWObr/6PAIkjqDDwgC7BdseJHvLebjmjXES0CdgugGan/8TN
-         V5aG5wesj2hQ0jh4C6MqBk7Ea/5NqVvZodDehFcDhH0m4G5/T541SztLs364BgCawvgi
-         QYww==
+        d=linaro.org; s=google; t=1683029786; x=1685621786;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=h9ardPWYosUAO+3QKtmsKLmvu8qo+YDZ1OFVvflCLdU=;
+        b=JSSUtIpFUmmQC1t2blYcBA8h1ekJDGVQFJ9WBHxN6hVxKB5iYgENAQArMQKzl4VOM5
+         QZ+p+CGq+dkk8er+1SXAde1CTpVmic2GwQaMCmkLz3ywJ78BbaxZmn2jJ7yHecOlGPnr
+         yBBo7VlMbpTQLKTRCokTaXPo24GIb3P5kDhNDbTYHoviQ8npZ6CS9T7HqTuAgc+KLGBV
+         m/9EaFV03EaoxqkSs8ayzquoQJ3HrymICjSGNEwePLRI1lMbaKCiggAWuVGqYQ60aplW
+         JpY4S1O8kq6cPLBSnFOlk9cCsVYy7OCufwJ1ixsclabW0S4Wp1bBPLsi+mw3hhpDUiBG
+         yO2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683029424; x=1685621424;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=45dl8HRRntE2PbqYyAyWim4/Cl/d2w2wAiKRr5pDHQs=;
-        b=ZSX6SDIIRgcaWnoGyTixW8Txn+6QZUSPZXMyQFr1MxMNPqHjmCA1rI8DrLw4xcbPyS
-         SELgSm3Jv5rRDVYjEidABPr/doKS9FInYQ6Hfco9CdLacXAwCTLBHSku65WRzTanpiO9
-         hXCZrJU3uFIyJfgLyUeOg+j1KR7vdQUpjU8/4GfXgSWLfIrPU8GpKIzzROqM4CRF/9Bv
-         4awR1BKNn5LXXCW77oNv431H+TinohTV4pHbLPqrHloBQBZ8UR1Hn5y99z8B7xc5/5L9
-         U//w/E+QcMxUj1E95ngDv1+FUFsBTsWFF2b4Apn1LQQGY6j/JymJpzLxANFFCDcjFgTZ
-         Rjvg==
-X-Gm-Message-State: AC+VfDzXcRZrawU08i3hmChnRjiUeLayKbDCHQFKG35EG0yWzQEOwGIH
-        P6KchKIWtjGq6Sp3o4PqMsGBNQ==
-X-Google-Smtp-Source: ACHHUZ5spGP8NeUGfX2dk8fSczipLRaoTOM3cXf5d8pIF52usTBMLGpn7EbO/uoRIAnFoZPnucylcA==
-X-Received: by 2002:a5d:6d50:0:b0:306:2638:fa6c with SMTP id k16-20020a5d6d50000000b003062638fa6cmr6795997wri.33.1683029424208;
-        Tue, 02 May 2023 05:10:24 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id ay37-20020a05600c1e2500b003f18b52c73asm35084751wmb.24.2023.05.02.05.10.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 05:10:23 -0700 (PDT)
-Message-ID: <95acfa85-d779-1459-5520-d520534c31fb@linaro.org>
-Date:   Tue, 2 May 2023 13:10:22 +0100
+        d=1e100.net; s=20221208; t=1683029786; x=1685621786;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h9ardPWYosUAO+3QKtmsKLmvu8qo+YDZ1OFVvflCLdU=;
+        b=X/sPXOuldWPoKWrB7XAnKu0JMS5JSEUAX52YteEP9wCTizk6Zdwn5TiJVt5G3x0vst
+         KEqFTo19fQCMcymhjZkwiG8eVjxTxHytXJUctes8R7rspUc98+UbuYXdb54DeqZokXZq
+         pD/WFlQAWuF3xLY/6P03XYxzQQT63lz9hUCwbqQFJaFTs3qgn6RjbeYKfs+rBcK75PDp
+         O2JYGPtJvnGB7LCNezA8DbKrYYf/7zE5lJt12Idgn2a+hFQof6pNOAiTtpb4KSMRSjVB
+         a10GohdyPmz5zn3Mt+Z8joaBtLzLd2SOhj/NRlTf0C8GN1uQd3NRZWEHLANMQJFtACWr
+         ZGsQ==
+X-Gm-Message-State: AC+VfDwRBdG+sKLlMRukveWPBA50n/MgUDFay4KJhBhfeeCisxAsF98K
+        BiOLsBLD7AVbPNM0EcmONqHxx6aZmaz9wYnSjRsUEA==
+X-Google-Smtp-Source: ACHHUZ6hzSiLDwegEeRiqDAbVdwIWCIpf8rlCKny2lSh22T8sFJachUE6vPV6cDQARuaEUD8A0ap2ZmWE7vMgw3tVME=
+X-Received: by 2002:a0d:e68b:0:b0:55a:95df:7175 with SMTP id
+ p133-20020a0de68b000000b0055a95df7175mr2167346ywe.9.1683029786689; Tue, 02
+ May 2023 05:16:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v6 12/13] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
- usb-role-switching for usb_1
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+References: <20230501203401.41393-1-dmitry.baryshkov@linaro.org>
+ <20230501203401.41393-7-dmitry.baryshkov@linaro.org> <8684a7c7-5af3-c773-4330-200e4b897937@linaro.org>
+In-Reply-To: <8684a7c7-5af3-c773-4330-200e4b897937@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 2 May 2023 15:16:15 +0300
+Message-ID: <CAA8EJpqkEA7RZBOc4xeKXBGhRuPM8W2BN8=o59b_TW6h7VOAVQ@mail.gmail.com>
+Subject: Re: [PATCH 06/10] clk: qcom: gcc-mdm9615: use proper parent for
+ pll0_vote clock
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
-Cc:     caleb.connolly@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com
-References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
- <20230501121111.1058190-13-bryan.odonoghue@linaro.org>
- <109dc9fe-5ca7-1a98-3222-8c2297f4e8ce@linaro.org>
- <b4bfe2f6-7ea3-fca5-9dc6-12270b3bbc42@linaro.org>
- <41581143-2caa-bac1-479c-c8feaf2de1b9@linaro.org>
- <378d0ec8-5ce1-57d3-eccf-8e053d647f47@linaro.org>
- <44c26ca6-12b3-74ad-70de-1dc2d4f42dca@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <44c26ca6-12b3-74ad-70de-1dc2d4f42dca@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,19 +76,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2023 12:47, Konrad Dybcio wrote:
-> 
-> this part (minus remote-endpoint) would go to pm8150b.dtsi
-> 
-> remote-endpoint would be assigned (or left empty) on a per-device basis
+On Tue, 2 May 2023 at 14:15, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 1.05.2023 22:33, Dmitry Baryshkov wrote:
+> > The pll0_vote clock definitely should have pll0 as a parent (instead of
+> > pll8).
+> >
+> > Fixes: 7792a8d6713c ("clk: mdm9615: Add support for MDM9615 Clock Controllers")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> Cc: <stable@vger.kernel.org>
 
-Hmm.
+Not sure if it warrants that, but let's include it into v2 if there is one.
 
-Yes, actually I think I can locate the connector {} defintion in the 
-pm8150b.dtsi.. you would need to have one tcpm {typec, pdphy} block per 
-type-c port so.. yes
+>
+> ?
+>
+> Konrad
+> >  drivers/clk/qcom/gcc-mdm9615.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/clk/qcom/gcc-mdm9615.c b/drivers/clk/qcom/gcc-mdm9615.c
+> > index fb5c1244fb97..2f921891008d 100644
+> > --- a/drivers/clk/qcom/gcc-mdm9615.c
+> > +++ b/drivers/clk/qcom/gcc-mdm9615.c
+> > @@ -58,7 +58,7 @@ static struct clk_regmap pll0_vote = {
+> >       .enable_mask = BIT(0),
+> >       .hw.init = &(struct clk_init_data){
+> >               .name = "pll0_vote",
+> > -             .parent_names = (const char *[]){ "pll8" },
+> > +             .parent_names = (const char *[]){ "pll0" },
+> >               .num_parents = 1,
+> >               .ops = &clk_pll_vote_ops,
+> >       },
 
-done
 
----
-bod
+
+-- 
+With best wishes
+Dmitry
