@@ -2,210 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46BAF6F466C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 16:54:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A3F96F4688
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 16:59:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234485AbjEBOyC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 10:54:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53204 "EHLO
+        id S234138AbjEBO7g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 10:59:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234487AbjEBOyA (ORCPT
+        with ESMTP id S234471AbjEBO7e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 10:54:00 -0400
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5375B210B;
-        Tue,  2 May 2023 07:53:58 -0700 (PDT)
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342ErN65031685;
-        Tue, 2 May 2023 14:53:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=A9PzCa1lY9nUR20Q3fDAZA1RsBEr5LdyYZXsjJQssc8=;
- b=itWJdKMD0Vb1kIguS2uvvFOOLyK9gL3u+2PzJEPocTOIRjyJRVVEm0u5BgKPrNWHt78+
- 9JZR5LqNUnWgKyagrJRVwRXl45H59PXlaUDtqaj2PFPMUZp3hMgAJvwvJTTuAsM4Gytp
- /bYtg7X+0tpvaSlRv4DO35XyuHtzCCy109LAtVqLIJkKtEuZTUSISou1oFEFbWv8V/ay
- Qiu1BETXlt//c8thokXeJy3C8PX+m/VFcDBVgQ7213tir+ncGT95DRwKuq7owvQ/K9oZ
- 1M6av8FikOWDloi7BlO2KaLxC5a+yU6baB8o1Bh50Gzz33k+hXMOa6DZnkhGcKbDghgq sQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qb4h3rbve-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 14:53:25 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 342Egimo031178;
-        Tue, 2 May 2023 14:52:56 GMT
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com [169.51.49.99])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qb4h3rbpg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 14:52:56 +0000
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
-        by ppma04ams.nl.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 341LC9Fa005173;
-        Tue, 2 May 2023 14:52:38 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
-        by ppma04ams.nl.ibm.com (PPS) with ESMTPS id 3q8tv6snm7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 14:52:38 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-        by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 342EqZPw54460742
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 2 May 2023 14:52:35 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id F3F742004E;
-        Tue,  2 May 2023 14:52:34 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id D981B2004D;
-        Tue,  2 May 2023 14:52:32 +0000 (GMT)
-Received: from [9.171.18.35] (unknown [9.171.18.35])
-        by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Tue,  2 May 2023 14:52:32 +0000 (GMT)
-Message-ID: <b9b6a50724b4f1ac2b98e518a8b9a820a912850f.camel@linux.ibm.com>
-Subject: Re: [PATCH 20/20] iommu: Convert remaining simple drivers to
- domain_alloc_paging()
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Steven Price <steven.price@arm.com>
-Date:   Tue, 02 May 2023 16:52:32 +0200
-In-Reply-To: <20-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
-References: <20-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.1 (3.48.1-1.fc38) 
+        Tue, 2 May 2023 10:59:34 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59FE32121
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 07:59:25 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4ec8148f73eso4608823e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 07:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683039563; x=1685631563;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vYIPK0RyXV420ws+bFuhXON4Dwa7YsOqBbgK0Ucm394=;
+        b=wqg09eyhhyGAtq2A6lcOW6KVIsz4uc+pQp+byl28tDjqTfhjLDEzD2DvcohSmnUUlF
+         iDF9iZFqw2ToV6I0t9isJ28wKjAlORuF29IRkJ8EMJCyyYy7TGR6uRLR2CT8Jlpxgw39
+         ZKLVWUtiKKC8uOOTs1C8s736+vzZRhq5z01cwo2FsFGiPaNRdcIS52yLeNK2NDFzzGrA
+         WyjYuQj1zVqd8SAd5Mp15P1qoPuJrTJ03d9q/ZyhpvYzqhvI7jdVE805B8wAGSjH+RqX
+         7FPDpvBAdhweonDwFuuLTyryGucuW1v8ByH/RDzA6juDfGAFh1b9Mq3urd3iHoamGTpr
+         5oNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683039563; x=1685631563;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vYIPK0RyXV420ws+bFuhXON4Dwa7YsOqBbgK0Ucm394=;
+        b=R77bFx6CLBGne7EVshIUcNEzOxK32Iy5Uqvn3FrKB+Z/WUrjhc9YYDRAt4BnPO6Ear
+         R6WSmLi2Hf+uX3HM7Joe2G/pqBeU7f9hUR0nL1F8gzgT0/8fzxilyuN0SJjxHV2xa8dN
+         L5fVaIoNAZV2VH1IBV+4FEhqVKIfusrcLWdeuvd/ICVDNLSzHOpLmG4wpvXxxMN90MNr
+         1SUUrjHFn4Dp65kfPHLhKqL2WDEUFxjShVZ9WLKDEqklaN7BJgn0UK3tuZ/mSXtitw17
+         FB89YRuXHLeXNeZUirlP67MEhVoJn0vUckpyWclek6odOHNmcJb0UhA1qVDgwvMxpUuX
+         coDg==
+X-Gm-Message-State: AC+VfDzeip8AxtRoqIv8mHs4KcPBZQnyRBtkLbw7/nh/asN3VU21Uf++
+        apv6kyO0R/RRtXSQiEcfX5AM8g==
+X-Google-Smtp-Source: ACHHUZ6FOPEkhUy45YwRLKoQ4LYu/pNPWGvvuBDo0//1zzEqJWAqBykvX45Pe3drLSHYQRCf20yteg==
+X-Received: by 2002:a05:6512:3750:b0:4ed:bf01:3ff3 with SMTP id a16-20020a056512375000b004edbf013ff3mr64497lfs.43.1683039563585;
+        Tue, 02 May 2023 07:59:23 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id f20-20020a19ae14000000b004d85316f2d6sm5412416lfc.118.2023.05.02.07.59.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 07:59:23 -0700 (PDT)
+Message-ID: <a8c21d66-15dd-8049-7a31-e0604d17782b@linaro.org>
+Date:   Tue, 2 May 2023 17:59:22 +0300
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: T6YFZPN53T-8NBr50MiQVf0_hbdxvlIx
-X-Proofpoint-ORIG-GUID: edimN0IzfVknfN6LBbnWL53jz6o5saRq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_09,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1011 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
- bulkscore=0 malwarescore=0 spamscore=0 phishscore=0 suspectscore=0
- mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305020124
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [Freedreno] [PATCH 3/9] drm/msm/dpu: fix the condition for (not)
+ applying QoS to CURSOR SSPP
+Content-Language: en-GB
+To:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20230430205710.3188230-1-dmitry.baryshkov@linaro.org>
+ <20230430205710.3188230-4-dmitry.baryshkov@linaro.org>
+ <f108e588-6671-ad4e-35b3-7771efab97ce@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f108e588-6671-ad4e-35b3-7771efab97ce@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2023-05-01 at 15:03 -0300, Jason Gunthorpe wrote:
-> These drivers don't support IOMMU_DOMAIN_DMA, so this commit effectively
-> allows them to support that mode.
->=20
-> The prior work to require default_domains makes this safe because every
-> one of these drivers is either compilation incompatible with dma-iommu.c,
-> or already establishing a default_domain. In both cases alloc_domain()
-> will never be called with IOMMU_DOMAIN_DMA for these drivers so it is saf=
-e
-> to drop the test.
->=20
-> Removing these tests clarifies that the domain allocation path is only
-> about the functionality of a paging domain and has nothing to do with
-> policy of how the paging domain is used for UNMANAGED/DMA/DMA_FQ.
->=20
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/fsl_pamu_domain.c | 7 ++-----
->  drivers/iommu/msm_iommu.c       | 7 ++-----
->  drivers/iommu/mtk_iommu_v1.c    | 7 ++-----
->  drivers/iommu/omap-iommu.c      | 7 ++-----
->  drivers/iommu/s390-iommu.c      | 7 ++-----
->  drivers/iommu/tegra-gart.c      | 7 ++-----
->  6 files changed, 12 insertions(+), 30 deletions(-)
->=20
->=20
----8<---
-> -static struct iommu_domain *s390_domain_alloc(unsigned domain_type)
-> +static struct iommu_domain *s390_domain_alloc_paging(struct device *dev)
->  {
->  	struct s390_domain *s390_domain;
-> =20
-> -	if (domain_type !=3D IOMMU_DOMAIN_UNMANAGED)
-> -		return NULL;
-> -
->  	s390_domain =3D kzalloc(sizeof(*s390_domain), GFP_KERNEL);
->  	if (!s390_domain)
->  		return NULL;
-> @@ -447,7 +444,7 @@ void zpci_destroy_iommu(struct zpci_dev *zdev)
->  static const struct iommu_ops s390_iommu_ops =3D {
->  	.default_domain =3D &s390_iommu_platform_domain,
->  	.capable =3D s390_iommu_capable,
-> -	.domain_alloc =3D s390_domain_alloc,
-> +	.domain_alloc_paging =3D s390_domain_alloc_paging,
+On 02/05/2023 03:56, Jeykumar Sankaran wrote:
+> 
+> 
+> On 4/30/2023 1:57 PM, Dmitry Baryshkov wrote:
+>> The function dpu_plane_sspp_update_pipe() contains code to skip enabling
+>> the QoS and OT limitis for CURSOR pipes. However all DPU since sdm845
+>> repurpose DMA SSPP for the cursor planes because they lack the real
+>> CURSOR SSPP. Fix the condition to actually check that the plane is
+>> CURSOR or not.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> index 43d9fbc0c687..36f6eb71fef8 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> @@ -1124,7 +1124,8 @@ static void dpu_plane_sspp_update_pipe(struct 
+>> drm_plane *plane,
+>>       _dpu_plane_set_qos_lut(plane, pipe, fmt, pipe_cfg);
+>>       _dpu_plane_set_danger_lut(plane, pipe, fmt);
+>> -    if (plane->type != DRM_PLANE_TYPE_CURSOR) {
+>> +    if (pipe->sspp->idx == SSPP_CURSOR0 ||
+>> +        pipe->sspp->idx == SSPP_CURSOR1) {
+> Isn't this differ from the current sequence: The existing sequence 
+> programs QOS for all the non-cursor SSPP's. This patch programs QOS only 
+> for CURSOR SSPP's.
 
-Leaving .domain_alloc unset here leads to an OOPs with your GitHub
-branch (iommu_mandatory_default) when I try to use vfio-pci for KVM
-pass-through via the following call chain:
+Thanks for the catch! I was thinking about inverting the condition and 
+ended up overengineering it.
 
-...
-vfio_group_fops_unl_ioctl()
-   vfio_group_ioctl_set_container()
-      vfio_container_attach_group()
-         iommu_group_claim_dma_owner()
-            __iommu_take_dma_ownership()
-               __iommu_group_alloc_blocking_domain()
-               __iommu_domain_alloc(=E2=80=A6, IOMMU_DOMAIN_BLOCKED)
+> 
+> If DMA SSPP's are used for cursor planes, we should ideally remove this 
+> check.
 
-The problem is that in __iommu_domain_alloc() a call to bus->iommu_ops-
->domain_alloc() is attempted for IOMMU_DOMAIN_BLCOKED even if the
-function pointer is unset.
+Unfortunately, we also support 8998 (and patches to use CURSOR SSPP were 
+posted to the mailing list). The plan is to also support some of 1.x 
+MDP5/DPU units (e.g. 8996), which would also make use of origin CURSOR 
+planes. So we can not drop this. I'll post v2 fixing the issue.
 
-So I tried with the obvious fix:
+> 
+> Jeykumar S.
+>>           _dpu_plane_set_qos_ctrl(plane, pipe, true, 
+>> DPU_PLANE_QOS_PANIC_CTRL);
+>>           _dpu_plane_set_ot_limit(plane, pipe, pipe_cfg, frame_rate);
+>>       }
 
-@@ -1947,7 +1948,7 @@ static struct iommu_domain *__iommu_domain_alloc(stru=
-ct bus_type *bus,
-        if ((type =3D=3D IOMMU_DOMAIN_UNMANAGED || type =3D=3D IOMMU_DOMAIN=
-_DMA) &&
-            bus->iommu_ops->domain_alloc_paging)
-                domain =3D bus->iommu_ops->domain_alloc_paging(dev);
--       else
-+       else if (bus->iommu_ops->domain_alloc)
-                domain =3D bus->iommu_ops->domain_alloc(type);
-        if (!domain)
-                return NULL;
-
-This then uses the fallback of an empty IOMMU_DOMAIN_UNMANAGED and I
-get a working device in the guest. Also tried hot unplug where the
-device is taken over by the host again. I think with my DMA API
-conversion patches we can support blocking domains properly but for a
-temporary solution the above may be acceptable.
-
->  	.probe_device =3D s390_iommu_probe_device,
->  	.release_device =3D s390_iommu_release_device,
->  	.device_group =3D generic_device_group,
+-- 
+With best wishes
+Dmitry
 
