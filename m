@@ -2,84 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0A0F6F4B95
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 22:45:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD7F66F4B9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 22:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbjEBUpr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 16:45:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36268 "EHLO
+        id S229604AbjEBUwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 16:52:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjEBUpq (ORCPT
+        with ESMTP id S229492AbjEBUwf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 16:45:46 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E231734
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 13:45:45 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342JumgW005591;
-        Tue, 2 May 2023 20:45:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1vgKW6jlHCKJb9xeMsFEkB7YuPkorPjAU2tq9LK6stc=;
- b=SbP9VjW3qU1bf6fZMrEguwfvOCc8u3u8fF8YuUMCwdyQV1LCxBdqjPxH73v+lAMs6seT
- DeEP62iBPZbXBO14NthpLqkq+uil5+YiMcMh9goGqHIZld3nUP/rrSp7qTAJ39h9j3Kr
- KqhnlgMIg8m3kHrLNoV033+uj6IxPlvw3zKPpwqDFYv0so2A6fTYL2g5SijeV/36k98H
- X30QAS7D5Rppaafxh8rmR9QpYBd2Gz3hAA7BmV4LFuiMhQL+87BaR4rX16fMkwRmC27L
- foPV6OsZttFWwKZMmZIjdYdrb26LOq038aV2v5zcKRFwaoQKr1NdkRrUtflaVqdcWghs ZA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qays51k9n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 20:45:35 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 342KjYo7006078
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 2 May 2023 20:45:34 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
- 13:45:34 -0700
-Message-ID: <81d97939-1369-9a2d-01bb-ad8c8a4b7e5c@quicinc.com>
-Date:   Tue, 2 May 2023 13:45:33 -0700
+        Tue, 2 May 2023 16:52:35 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CACCD1BC1;
+        Tue,  2 May 2023 13:52:33 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-94ef0a8546fso709981066b.1;
+        Tue, 02 May 2023 13:52:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683060752; x=1685652752;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VNIBDi9cX5m1XY06HfPo6MjnbSVQ9LD+YR4Pmsi5V1o=;
+        b=FKefYj9RO4YkvQeJxBIZ4V5jDtEH5tgeN4Da7uLSMZLQnW+gI6ocIjxYb+iBXY5nnz
+         wslr0Xzb7XEqmtRSypBoQAbt2b+NmByflqL+IIJXDiUNqSDEp9WZYaSESaSfCGRDVsTL
+         AyhjZ3cspla/vTrevLYItLxJhrHyab4X2hcMY+nE0XPXOZsgg8ty2dp56TZmTjJK/Le6
+         Btr1uQsJWn4U4Lv1NrIWBHdyDU+oueWnxSiaSixxAM4T7LFiknSpcJ6fOlpUJjvxrxmj
+         csJ3EsIR3zsBHPwmh/UgGcgl6M7GWJdQxx+6BSVDWZiKmHDy7oPwl6m8rh3T0odCIwDr
+         JPfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683060752; x=1685652752;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VNIBDi9cX5m1XY06HfPo6MjnbSVQ9LD+YR4Pmsi5V1o=;
+        b=Lrx0hAeZH9PuniilT+GBNY9Snr7RrJ1pp2h79Jdr1+ROVy70mASoI9hBLXngntzUeS
+         EPXWmBNBgVaW9JfSj7fyLSCxJmgs+5ID3r1cJ+uJi87sbaDOurr4pQLq9N6BUwmKVCy4
+         mnp+av7kSkxXJFfube8n9Zlf1uSTgGSoPu0nP8ELKOWl+1Cy6DhoyL5Qo2mBzz1uMgA8
+         t82F7g3CFFMEb6oxKMDYXk9RYfRbrmiAgPjpIOQm7ELL/qE6mC/nB3bX10W/QyWcJibG
+         135sT5SgmboWPdr6c7cibcxsUzFKvyUjBwG3zGR1j90nfu8oWtLHphAG9PH0R3j7Ns6Z
+         RQaw==
+X-Gm-Message-State: AC+VfDwvrIV9gIOOE6Ozx2tzrKj6GM51yINehrxrqxtQYYIZ0EQX2fB/
+        hFfYlzPkgs0fwTlL4q1Z5s8=
+X-Google-Smtp-Source: ACHHUZ7AbKyr4LGP/WwDfNoOVvrWGL/EQZ5T6bvoP2KL5poTf68C/6UHnpUmjlsQhY4gDc7hTyDfQw==
+X-Received: by 2002:a17:907:78b:b0:931:df8d:113 with SMTP id xd11-20020a170907078b00b00931df8d0113mr1166121ejb.26.1683060751893;
+        Tue, 02 May 2023 13:52:31 -0700 (PDT)
+Received: from [192.168.1.43] (hst-221-88.medicom.bg. [84.238.221.88])
+        by smtp.gmail.com with ESMTPSA id hg18-20020a1709072cd200b00965504665e2sm249627ejc.149.2023.05.02.13.52.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 13:52:31 -0700 (PDT)
+Message-ID: <5a851116-561f-2d00-1310-2debc43ce249@gmail.com>
+Date:   Tue, 2 May 2023 23:52:28 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 2/7] drm/msm/dpu: drop dpu_encoder_early_unregister
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
- <20230430235732.3341119-3-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230430235732.3341119-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: H0qZ-H44dDxgDE95wS19vUisR675HU_-
-X-Proofpoint-ORIG-GUID: H0qZ-H44dDxgDE95wS19vUisR675HU_-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_11,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
- mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305020176
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
+ hfi versions
+To:     =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>,
+        quic_vgarodia@quicinc.com
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
+Content-Language: en-US, bg-BG
+From:   Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+In-Reply-To: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,49 +78,80 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
-> There is no need to clean up debugfs manually, it will be done by the
-> DRM core on device deregistration.
+On 14.04.23 г. 13:12 ч., Martin Dørum wrote:
+> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
+>> =4xx. The code used to unconditionally set the property in
+> venc_set_properties, which meant that initializing the encoder would
+> always fail unless the hfi_version was >=4xx.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> This patch changes venc_set_properties to only set the
+> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
+> 
+> Signed-off-by: Martin Dørum <dorum@noisolation.com>
+> 
 > ---
-
-There are two reasons to have the debugfs removed in the early_unregister:
-
-1) Today, registration happens in late_register(), hence to balance the 
-the call in _dpu_encoder_init_debugfs(), this one is present.
-
-2) In drm_modeset_register_all(), if drm_connector_register_all() fails, 
-it calls drm_encoder_unregister_all() first which calls early_unregister().
-
-So to balance these out, dont we need to keep it?
-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 8 --------
->   1 file changed, 8 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 32785cb1b079..8c45c949ec39 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -2154,13 +2154,6 @@ static int dpu_encoder_late_register(struct drm_encoder *encoder)
->   	return _dpu_encoder_init_debugfs(encoder);
->   }
->   
-> -static void dpu_encoder_early_unregister(struct drm_encoder *encoder)
-> -{
-> -	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(encoder);
+> I have an APQ8016-based board. Before this patch, the Venus driver
+> would simply fail with EINVAL when trying to request buffers
+> (VIDIOC_REQBUFS). With this patch, encoding works
+> (tested using gstreamer's v4l2h264enc).
+> 
+>   drivers/media/platform/qcom/venus/venc.c | 21 +++++++++++----------
+>   1 file changed, 11 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index cdb12546c4fa..b3df805a8c9c 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -672,16 +672,17 @@ static int venc_set_properties(struct venus_inst *inst)
+>   		if (ret)
+>   			return ret;
+> 
+> -		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+> -		h264_transform.enable_type = 0;
+> -		if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+> -		    ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+> -			h264_transform.enable_type = ctr->h264_8x8_transform;
 > -
-> -	debugfs_remove_recursive(dpu_enc->debugfs_root);
-> -}
+> -		ret = hfi_session_set_property(inst, ptype, &h264_transform);
+> -		if (ret)
+> -			return ret;
 > -
->   static int dpu_encoder_virt_add_phys_encs(
->   		struct msm_display_info *disp_info,
->   		struct dpu_encoder_virt *dpu_enc,
-> @@ -2374,7 +2367,6 @@ static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
->   static const struct drm_encoder_funcs dpu_encoder_funcs = {
->   		.destroy = dpu_encoder_destroy,
->   		.late_register = dpu_encoder_late_register,
-> -		.early_unregister = dpu_encoder_early_unregister,
->   };
->   
->   struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+> +		if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
+
+Instead of doing these checks here you could do:
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c 
+b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index bc3f8ff05840..2453e5c3d244 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1064,6 +1064,7 @@ static int pkt_session_set_property_1x(struct 
+hfi_session_set_property_pkt *pkt,
+                 break;
+         }
+         case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI:
++       case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8:
+                 return -ENOTSUPP;
+
+         /* FOLLOWING PROPERTIES ARE NOT IMPLEMENTED IN CORE YET */
+
+> +			ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+> +			h264_transform.enable_type = 0;
+> +			if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+> +			    ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+> +				h264_transform.enable_type = ctr->h264_8x8_transform;
+> +
+> +			ret = hfi_session_set_property(inst, ptype, &h264_transform);
+> +			if (ret)
+> +				return ret;
+> +		}
+>   	}
+> 
+>   	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+> --
+> 2.34.1
+
+-- 
+regards,
+Stan
