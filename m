@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE8B26F43C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:24:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F6E16F43C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:25:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233961AbjEBMYx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 08:24:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49260 "EHLO
+        id S233823AbjEBMZR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 08:25:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233833AbjEBMYw (ORCPT
+        with ESMTP id S234243AbjEBMZO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 08:24:52 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE6C19BB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 05:24:50 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-b9a879cd49cso5548602276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 05:24:50 -0700 (PDT)
+        Tue, 2 May 2023 08:25:14 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28AD04C2B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 05:25:11 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55a5a830238so18839637b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 05:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683030289; x=1685622289;
+        d=linaro.org; s=google; t=1683030310; x=1685622310;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rsis98AS5y9CGrS/8TAMA+kRXIi6squrLmsCHxkr5QU=;
-        b=D7Jp0qxIyiWEYcrV8o4HDXvVeyDMa4nuVV9DA5iy1xvb98wyUKXYquMwEgXSjRqrmA
-         ng11lM+5xgUlvm9BvMIrcTo/t0JDONWgNraJPwRCxtVL1NhFQYfDSN8r1tc6SGrfNVmw
-         uURXUmj2pBsJvJrg8oWK8kqvyQ6nmvvOifuI6FupTwfpL0ib51RpQKKEhcK0Bk8IBH6x
-         3ymy4omrZOfPasvL5vhnX04eLcC/KkAn7VcDUn/2i2m3Nut1mhyVCGOPceY8sDV49dWt
-         /NnsAiZcp05m9unSUxG+uRmT0BshumSO3DFsPFhkS841ifTd5JRoeEySkm+e1ShYDvdK
-         apgQ==
+        bh=q4Hw5C2nBtTZEgNPrdfSn+t6iOR/tfBPufkhXcH+Kxg=;
+        b=QQ4wxKtCss6/4ZKcVhJ58uIueD7f6I9RxpE+EjGkvaKQ7NCSo9GJkNcFeAMq17BqKX
+         5XGp45Pg8BCDAPEAOZ0QokGy8QiQtRaMel18hgI8JcnSWOiMVRA4Z887w4td9DKo7rOE
+         kWSjSfmlFWMCFK5/WWkwEvj0emiW0F1efObLgJ0w/pBQDXtTt8Uh4yxDP5kqgc+HeJhH
+         ayr4pephHfHFTTiFzSe+89TldMyyXoqGmdvNEIiXVXIKldgNqLmJEkBc0ld0CTHSrQNP
+         MrfoHNWJcyPmoeSeRT2Pxuit5hsfH2qtekwZ8psK8rRqveQrlFYPUDEbt16OZyeilFER
+         vcQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683030289; x=1685622289;
+        d=1e100.net; s=20221208; t=1683030310; x=1685622310;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rsis98AS5y9CGrS/8TAMA+kRXIi6squrLmsCHxkr5QU=;
-        b=YRMDZcRt4kaluXl3jET2mUZdikvC4cJ1QrevMzIW0FL+DpYZQSFUTO0PcjIVaky/Ah
-         TRtquLGqvbE1a9/i6etOlosoIZjVeJZapG3Qq+2cjM3hLJKtKJZJGO7nrkA1vtH8pukD
-         tyNVnPunYl6IGZDIYg28N47essWRLNwOjInGYLXndBeW/qWVni/6QP+wDdKL9T94jcJZ
-         PNeLnu7itsoDRVxrCQzF01SKPqTyrXxsYJ3DeOtRTu0BOVno6Fs8bTKP1LbSjL6bSk0z
-         yFcCVWl5nJua7pTxJcXMXcM3kglAEX7uB/i3nysX37VfKUm9+6kWXgXfBNtkUXG7EBjA
-         7JSw==
-X-Gm-Message-State: AC+VfDxit8IvLH8JyKzSCHru9/VR6Y9VkfH1px4NRsn3KVxoZVuQkbs3
-        2z39ZAFFAVzeyHko4ORjoudAgCEf83vEmN6dFEOP1Q==
-X-Google-Smtp-Source: ACHHUZ7eeyre+CuDCWfIJhwjZRbjjp0xunX9LvJHgIBIh5xXRh9pY8dvlc0JPGXbq1IqVaRtaMl4ODqBV5bZwDJP9Q4=
-X-Received: by 2002:a81:5b43:0:b0:55a:3486:6f5b with SMTP id
- p64-20020a815b43000000b0055a34866f5bmr7760150ywb.13.1683030289668; Tue, 02
- May 2023 05:24:49 -0700 (PDT)
+        bh=q4Hw5C2nBtTZEgNPrdfSn+t6iOR/tfBPufkhXcH+Kxg=;
+        b=amWBBla9+j0aoLFvfs/brOZH0m3B46hexdyFt4ouct6mcxMzOn7jauEw5Mfyar0slk
+         /c6EdeE+53gv5oIbtj0W/bWMY8+JTNJoodj+GgEAviChehzsCrB9VEHRneww75ti0DrU
+         FpT5cyhFYTuwvveSnTECQn5ZA3dcPqhhxwBuKta5f+SR1mqh+yH927SB/wzuovDvZMhG
+         IHAeshS/CUKl7TuHX9YAG3l1b6EAynn7Apk9oGOZf6gaTw8jc3XtT+Jblbdi0nNEBioU
+         XMW2pNSN/NjXCLz6ekR2qTEXtI2d4set59vXHvudbfwNkw4ZLG4iEdEtU9Xb0rIW6gvP
+         XUJg==
+X-Gm-Message-State: AC+VfDwAT4NYZtvdj74aPV/A33ggJgsQDQr3z08wXezzjQURTEc4glrJ
+        xzqqJWF2l4sIGicBPpTFa97U95Mmbxb3BY909IPG9w==
+X-Google-Smtp-Source: ACHHUZ6v6SYwJgYmFk960nJNzc2XOxvg20x2ZYqapVYmLFWHnVY6odJTA9csZyCbabHxlhfojWaHkIb5SPxpM3Rt1AY=
+X-Received: by 2002:a0d:c683:0:b0:556:ce0a:5a16 with SMTP id
+ i125-20020a0dc683000000b00556ce0a5a16mr15407859ywd.44.1683030310357; Tue, 02
+ May 2023 05:25:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230502103810.12061-1-johan+linaro@kernel.org> <20230502103810.12061-3-johan+linaro@kernel.org>
-In-Reply-To: <20230502103810.12061-3-johan+linaro@kernel.org>
+References: <20230502103810.12061-1-johan+linaro@kernel.org> <20230502103810.12061-2-johan+linaro@kernel.org>
+In-Reply-To: <20230502103810.12061-2-johan+linaro@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 2 May 2023 15:24:38 +0300
-Message-ID: <CAA8EJpoxL7AFApp-mbbODAu6AKWM7GV2FGzq=O=WKEFZ72-SbQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] phy: qcom-qmp-pcie-msm8996: fix init-count imbalance
+Date:   Tue, 2 May 2023 15:24:59 +0300
+Message-ID: <CAA8EJpppgFK4N61XT+=VXTfWYVjA16Maoo+hEo4YyaB7HfGiCQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] phy: qcom-qmp-combo: fix init-count imbalance
 To:     Johan Hovold <johan+linaro@kernel.org>
 Cc:     Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
@@ -74,7 +74,8 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Tue, 2 May 2023 at 13:39, Johan Hovold <johan+linaro@kernel.org> wrote:
 >
 > The init counter is not decremented on initialisation errors, which
-> prevents retrying initialisation.
+> prevents retrying initialisation and can lead to the runtime suspend
+> callback attempting to disable resources that have never been enabled.
 >
 > Add the missing decrement on initialisation errors so that the counter
 > reflects the state of the device.
@@ -82,40 +83,11 @@ On Tue, 2 May 2023 at 13:39, Johan Hovold <johan+linaro@kernel.org> wrote:
 > Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
 > Cc: stable@vger.kernel.org      # 4.12
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-> index 09824be088c9..0c603bc06e09 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie-msm8996.c
-> @@ -379,7 +379,7 @@ static int qmp_pcie_msm8996_com_init(struct qmp_phy *qphy)
->         ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
->         if (ret) {
->                 dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
-> -               goto err_unlock;
-> +               goto err_decrement_count;
->         }
->
->         ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-> @@ -409,7 +409,8 @@ static int qmp_pcie_msm8996_com_init(struct qmp_phy *qphy)
->         reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->  err_disable_regulators:
->         regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
-> -err_unlock:
-> +err_decrement_count:
-> +       qmp->init_count--;
->         mutex_unlock(&qmp->phy_mutex);
->
->         return ret;
-> --
-> 2.39.2
->
-
 
 -- 
 With best wishes
