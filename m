@@ -2,81 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 59E266F44B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 15:09:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 294586F4646
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 16:45:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234061AbjEBNJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 09:09:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47760 "EHLO
+        id S234452AbjEBOpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 10:45:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234012AbjEBNJc (ORCPT
+        with ESMTP id S234179AbjEBOpa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 09:09:32 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D684EF7;
-        Tue,  2 May 2023 06:09:26 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342Btr6M020977;
-        Tue, 2 May 2023 13:09:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Per2UUiTroh2CJvOG4mI7mJYEEH8Ygu7mjGdo5v0RwM=;
- b=J/w7VDPPyPo4QBqCc3mCOwZCGonAxEOoI1r8SUGbs5HE7F0ZCUI13mLdc4P7QShPwPHq
- Z7Y8DPU6HCw6+n9+ecziwaLYWRM3s3pamdJGn+08+pzagr29hjxUR8fm9zz8xd8yRqtK
- Qo6RnJR4WVfGQVVfkPBDy1AiJ2EgNMoAakRR2lD6/a3BWWM8tSsTTAoLISG3oLzCqVdS
- AzdArPHpJRNp9nCOSNJ+uKz7an/Gm0b9DENGJul40vMoi+/d/MI9SJDt+dS2TBlK30zI
- JdtFmwTVEOuq7lan/MzYTJm+0essDzQl2FZO/rboqoxmXEFJBIhPGSsc6okBYR5VzJf2 ag== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qawct8vab-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 02 May 2023 13:09:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 342D9AmB029492
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 2 May 2023 13:09:10 GMT
-Received: from [10.50.15.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
- 06:09:06 -0700
-Message-ID: <921b7030-58d8-4a18-d52b-c3d153891deb@quicinc.com>
-Date:   Tue, 2 May 2023 18:38:54 +0530
+        Tue, 2 May 2023 10:45:30 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE1701717
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 07:45:28 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-559e2051d05so47114027b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 07:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683038728; x=1685630728;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NTBZ86MIa71wdhLiJNVYf2ScZ/YF/VVN/KJT6PzGP/s=;
+        b=aH8mipMhXlRPfGIt53xIx10PTcU3921Ln8uaf4xgONWzNjnyaKGggUn0eeDFyvNUuc
+         m4AsQOW00J89ts1hmJZOtdSWkyL3fjjaOc8ocENdqM9/QdDvCVZoj75hCsqXmGP0rJp7
+         qfzaDRWbJH+B3tU2nzN9o1SLkc4BnivrfRJWNOjbPnhxQJFwdr0UjecDM7XzRqdpjjRo
+         ssNvflVz9IN5Y9g55II4YpFpKsamUpM3dFIZHHxjW+jMQ5g5y1eE2JOh53eF8OHQkCBB
+         soWjSiJ5sebGVHuIb1DMdRHQDzufOniOpmXX3pxNYoqABWMl2Szp0e754m+a+srIgA9C
+         3NvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683038728; x=1685630728;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NTBZ86MIa71wdhLiJNVYf2ScZ/YF/VVN/KJT6PzGP/s=;
+        b=MLCZQd4HXXlpZppGzwhEh6fYCvS2xaEUOPJl00wpOOh2mDpPJUS83QREN5+D8rQIIP
+         Pc3KL9Wu8VKvQP6TrWHwG2bt+PutctoauOZ134O61+EUe4XpJUvhKZsMEMm7vg818ZPp
+         n/Cxqc+UV3JC31YWYh9J5PUQuh6EmPAiO7n8bPbZiWgJ/0exQRXx2Y2vyIav0ys+MDev
+         DT2PpBKLRHINYC5WKg5Hxy4KQiL29G5JbrxzY+Ur/s+tZ/yaSzZkeBA0n9uox+MMtuMD
+         3W/Ple6BNVWBLMsse/bQrGBPevizH0TzlDcknEJOjkYoqLXQoyuqCjuDlBVe6panGisi
+         z8zg==
+X-Gm-Message-State: AC+VfDwhTe+7dY0t3Qo7E5JUgr5dm0xTuw4n7I6Y1vybikm+eRAaQhDu
+        crP6s1QeIG6qe4NYcRO6hq0YzK3UYHUBN2t72DhTkw==
+X-Google-Smtp-Source: ACHHUZ5qZiUNmAsvaStVmdKd0XzydKOgSQ/xrcQAJSaGleuVOqeU2KmB/hNCXa6HhLhV9h8ddsC+a2OyqkzhSp6TSew=
+X-Received: by 2002:a25:ac93:0:b0:b99:860a:87d6 with SMTP id
+ x19-20020a25ac93000000b00b99860a87d6mr18240890ybi.35.1683038727829; Tue, 02
+ May 2023 07:45:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] venus: add support for 10 bit decoding.
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <linux-media@vger.kernel.org>, <stanimir.k.varbanov@gmail.com>,
-        <quic_vgarodia@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <mchehab@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <1682492417-20496-1-git-send-email-quic_dikshita@quicinc.com>
- <4434859f-a5b2-a9da-8dad-3f2c4f48cd27@linaro.org>
- <CAA8EJprKLxeHO98TayzaS-U+O9JYvVe1zDKU+XPmrKxkQ_Sp3w@mail.gmail.com>
-Content-Language: en-US
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <CAA8EJprKLxeHO98TayzaS-U+O9JYvVe1zDKU+XPmrKxkQ_Sp3w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HiwzFEeBNDNmCvOHX1uRumOoJ8vi_AcR
-X-Proofpoint-GUID: HiwzFEeBNDNmCvOHX1uRumOoJ8vi_AcR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_08,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- adultscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0 suspectscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305020112
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20230424110933.3908-1-quic_mkshah@quicinc.com> <20230424110933.3908-3-quic_mkshah@quicinc.com>
+In-Reply-To: <20230424110933.3908-3-quic_mkshah@quicinc.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 2 May 2023 16:44:52 +0200
+Message-ID: <CAPDyKFowJheraoMdJSyhdXB_FcT1oeiAwqrF8eGLC3FNVqhzCg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] cpuidle: psci: Move enabling OSI mode after power
+ domains creation
+To:     andersson@kernel.org, Maulik Shah <quic_mkshah@quicinc.com>
+Cc:     dianders@chromium.org, swboyd@chromium.org, wingers@google.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, sudeep.holla@arm.com,
+        jwerner@chromium.org, quic_lsrao@quicinc.com,
+        quic_rjendra@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,193 +71,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 5/2/2023 5:51 PM, Dmitry Baryshkov wrote:
-> On Tue, 2 May 2023 at 14:53, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->> On 26.04.2023 09:00, Dikshita Agarwal wrote:
->>> - Add support for V4L2_PIX_FMT_P010 color format.
->>> - Add handling of bit depth change from firmware.
->>> - Return P010 as preferred format for 10 bit decode.
->> Sounds like this should be 3 separate patches, preferably with
->> some insight in each commit message.
-> Absolutely. I think there were several 'split one patch per feature'
-> feedbacks for the previous series.
-
-Sure Konrad and Dmitry, I will try to split this change into separate 
-patches.
-
-Thanks,
-
-Dikshita
-
->> Konrad
->>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>> ---
->>>   drivers/media/platform/qcom/venus/helpers.c        | 25 ++++++++++++++++++++++
->>>   drivers/media/platform/qcom/venus/hfi_plat_bufs.h  |  3 +++
->>>   .../media/platform/qcom/venus/hfi_plat_bufs_v6.c   |  9 +++++++-
->>>   drivers/media/platform/qcom/venus/vdec.c           | 18 +++++++++++++---
->>>   4 files changed, 51 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
->>> index ab6a29f..193215c 100644
->>> --- a/drivers/media/platform/qcom/venus/helpers.c
->>> +++ b/drivers/media/platform/qcom/venus/helpers.c
->>> @@ -612,6 +612,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
->>>                return HFI_COLOR_FORMAT_NV12_UBWC;
->>>        case V4L2_PIX_FMT_QC10C:
->>>                return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
->>> +     case V4L2_PIX_FMT_P010:
->>> +             return HFI_COLOR_FORMAT_P010;
->>>        default:
->>>                break;
->>>        }
->>> @@ -639,12 +641,16 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
->>>        if (is_dec) {
->>>                params.width = inst->width;
->>>                params.height = inst->height;
->>> +             params.out_width = inst->out_width;
->>> +             params.out_height = inst->out_height;
->>>                params.codec = inst->fmt_out->pixfmt;
->>>                params.hfi_color_fmt = to_hfi_raw_fmt(inst->fmt_cap->pixfmt);
->>>                params.dec.max_mbs_per_frame = mbs_per_frame_max(inst);
->>>                params.dec.buffer_size_limit = 0;
->>>                params.dec.is_secondary_output =
->>>                        inst->opb_buftype == HFI_BUFFER_OUTPUT2;
->>> +             if (params.dec.is_secondary_output)
->>> +                     params.hfi_dpb_color_fmt = inst->dpb_fmt;
->>>                params.dec.is_interlaced =
->>>                        inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE;
->>>        } else {
->>> @@ -1764,6 +1770,25 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
->>>        if (!caps)
->>>                return -EINVAL;
->>>
->>> +     if (inst->bit_depth == VIDC_BITDEPTH_10 &&
->>> +         inst->session_type == VIDC_SESSION_TYPE_DEC) {
->>> +             found_ubwc =
->>> +                     find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
->>> +                                        HFI_COLOR_FORMAT_YUV420_TP10_UBWC);
->>> +             found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2,
->>> +                                        fmt);
->>> +             if (found_ubwc && found) {
->>> +                     /*
->>> +                      * Hard-code DPB buffers to be 10bit UBWC
->>> +                      * until V4L2 is able to expose compressed/tiled
->>> +                      * formats to applications.
->>> +                      */
->>> +                     *out_fmt = HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
->>> +                     *out2_fmt = fmt;
->>> +                     return 0;
->>> +             }
->>> +     }
->>> +
->>>        if (ubwc) {
->>>                ubwc_fmt = fmt | HFI_COLOR_FORMAT_UBWC_BASE;
->>>                found_ubwc = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs.h b/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
->>> index 52a51a3..25e6074 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
->>> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
->>> @@ -12,8 +12,11 @@
->>>   struct hfi_plat_buffers_params {
->>>        u32 width;
->>>        u32 height;
->>> +     u32 out_width;
->>> +     u32 out_height;
->>>        u32 codec;
->>>        u32 hfi_color_fmt;
->>> +     u32 hfi_dpb_color_fmt;
->>>        enum hfi_version version;
->>>        u32 num_vpp_pipes;
->>>        union {
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
->>> index ea25c45..08caab1 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
->>> @@ -1185,6 +1185,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
->>>        enum hfi_version version = params->version;
->>>        u32 codec = params->codec;
->>>        u32 width = params->width, height = params->height, out_min_count;
->>> +     u32 out_width = params->out_width, out_height = params->out_height;
->>>        struct dec_bufsize_ops *dec_ops;
->>>        bool is_secondary_output = params->dec.is_secondary_output;
->>>        bool is_interlaced = params->dec.is_interlaced;
->>> @@ -1235,7 +1236,13 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
->>>                bufreq->count_min = out_min_count;
->>>                bufreq->size =
->>>                        venus_helper_get_framesz_raw(params->hfi_color_fmt,
->>> -                                                  width, height);
->>> +                                                  out_width, out_height);
->>> +
->>> +             if (buftype == HFI_BUFFER_OUTPUT &&
->>> +                 params->dec.is_secondary_output)
->>> +                     bufreq->size =
->>> +                             venus_helper_get_framesz_raw(params->hfi_dpb_color_fmt,
->>> +                                                          out_width, out_height);
->>>        } else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH(version)) {
->>>                bufreq->size = dec_ops->scratch(width, height, is_interlaced);
->>>        } else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version)) {
->>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
->>> index 4ceaba3..99d0e96 100644
->>> --- a/drivers/media/platform/qcom/venus/vdec.c
->>> +++ b/drivers/media/platform/qcom/venus/vdec.c
->>> @@ -43,6 +43,10 @@ static const struct venus_format vdec_formats[] = {
->>>                .num_planes = 1,
->>>                .type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->>>        }, {
->>> +             .pixfmt = V4L2_PIX_FMT_P010,
->>> +             .num_planes = 1,
->>> +             .type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->>> +     }, {
->>>                .pixfmt = V4L2_PIX_FMT_MPEG4,
->>>                .num_planes = 1,
->>>                .type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
->>> @@ -697,6 +701,9 @@ static int vdec_set_work_route(struct venus_inst *inst)
->>>   }
->>>
->>>   #define is_ubwc_fmt(fmt) (!!((fmt) & HFI_COLOR_FORMAT_UBWC_BASE))
->>> +#define is_10bit_ubwc_fmt(fmt) (!!((fmt) & HFI_COLOR_FORMAT_10_BIT_BASE & \
->>> +                                 HFI_COLOR_FORMAT_UBWC_BASE))
->>> +
->>>
->>>   static int vdec_output_conf(struct venus_inst *inst)
->>>   {
->>> @@ -744,7 +751,7 @@ static int vdec_output_conf(struct venus_inst *inst)
->>>                inst->opb_fmt = out2_fmt;
->>>                inst->dpb_buftype = HFI_BUFFER_OUTPUT;
->>>                inst->dpb_fmt = out_fmt;
->>> -     } else if (is_ubwc_fmt(out2_fmt)) {
->>> +     } else if (is_ubwc_fmt(out2_fmt) || is_10bit_ubwc_fmt(out_fmt)) {
->>>                inst->opb_buftype = HFI_BUFFER_OUTPUT;
->>>                inst->opb_fmt = out_fmt;
->>>                inst->dpb_buftype = HFI_BUFFER_OUTPUT2;
->>> @@ -1420,7 +1427,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
->>>   static void vdec_event_change(struct venus_inst *inst,
->>>                              struct hfi_event_data *ev_data, bool sufficient)
->>>   {
->>> -     static const struct v4l2_event ev = {
->>> +     struct v4l2_event ev = {
->>>                .type = V4L2_EVENT_SOURCE_CHANGE,
->>>                .u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION };
->>>        struct device *dev = inst->core->dev_dec;
->>> @@ -1461,8 +1468,13 @@ static void vdec_event_change(struct venus_inst *inst,
->>>        inst->out_width = ev_data->width;
->>>        inst->out_height = ev_data->height;
->>>
->>> -     if (inst->bit_depth != ev_data->bit_depth)
->>> +     if (inst->bit_depth != ev_data->bit_depth) {
->>>                inst->bit_depth = ev_data->bit_depth;
->>> +             if (inst->bit_depth == VIDC_BITDEPTH_10)
->>> +                     inst->fmt_cap = &vdec_formats[3];
->>> +             else
->>> +                     inst->fmt_cap = &vdec_formats[0];
->>> +     }
->>>
->>>        if (inst->pic_struct != ev_data->pic_struct)
->>>                inst->pic_struct = ev_data->pic_struct;
+On Mon, 24 Apr 2023 at 13:10, Maulik Shah <quic_mkshah@quicinc.com> wrote:
 >
+> A switch from OSI to PC mode is only possible if all CPUs other than the
+> calling one are OFF, either through a call to CPU_OFF or not yet booted.
+>
+> Currently OSI mode is enabled before power domains are created. In cases
+> where CPUidle states are not using hierarchical CPU topology the bail out
+> path tries to switch back to PC mode which gets denied by firmware since
+> other CPUs are online at this point and creates inconsistent state as
+> firmware is in OSI mode and Linux in PC mode.
+>
+> This change moves enabling OSI mode after power domains are created,
+> this would makes sure that hierarchical CPU topology is used before
+> switching firmware to OSI mode.
+>
+> Fixes: 70c179b49870 ("cpuidle: psci: Allow PM domain to be initialized even if no OSI mode")
+> Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+
+Bjorn, can you pick up this series for 6.4-rc[n]? Moreover, I think it
+would be a good idea to tag both patch 1 and patch 2 for stable
+kernels.
+
+Kind regards
+Uffe
+
+> ---
+>  drivers/cpuidle/cpuidle-psci-domain.c | 39 +++++++++------------------
+>  1 file changed, 13 insertions(+), 26 deletions(-)
+>
+> diff --git a/drivers/cpuidle/cpuidle-psci-domain.c b/drivers/cpuidle/cpuidle-psci-domain.c
+> index c2d6d9c3c930..b88af1262f1a 100644
+> --- a/drivers/cpuidle/cpuidle-psci-domain.c
+> +++ b/drivers/cpuidle/cpuidle-psci-domain.c
+> @@ -120,20 +120,6 @@ static void psci_pd_remove(void)
+>         }
+>  }
+>
+> -static bool psci_pd_try_set_osi_mode(void)
+> -{
+> -       int ret;
+> -
+> -       if (!psci_has_osi_support())
+> -               return false;
+> -
+> -       ret = psci_set_osi_mode(true);
+> -       if (ret)
+> -               return false;
+> -
+> -       return true;
+> -}
+> -
+>  static void psci_cpuidle_domain_sync_state(struct device *dev)
+>  {
+>         /*
+> @@ -152,15 +138,12 @@ static int psci_cpuidle_domain_probe(struct platform_device *pdev)
+>  {
+>         struct device_node *np = pdev->dev.of_node;
+>         struct device_node *node;
+> -       bool use_osi;
+> +       bool use_osi = psci_has_osi_support();
+>         int ret = 0, pd_count = 0;
+>
+>         if (!np)
+>                 return -ENODEV;
+>
+> -       /* If OSI mode is supported, let's try to enable it. */
+> -       use_osi = psci_pd_try_set_osi_mode();
+> -
+>         /*
+>          * Parse child nodes for the "#power-domain-cells" property and
+>          * initialize a genpd/genpd-of-provider pair when it's found.
+> @@ -170,33 +153,37 @@ static int psci_cpuidle_domain_probe(struct platform_device *pdev)
+>                         continue;
+>
+>                 ret = psci_pd_init(node, use_osi);
+> -               if (ret)
+> -                       goto put_node;
+> +               if (ret) {
+> +                       of_node_put(node);
+> +                       goto exit;
+> +               }
+>
+>                 pd_count++;
+>         }
+>
+>         /* Bail out if not using the hierarchical CPU topology. */
+>         if (!pd_count)
+> -               goto no_pd;
+> +               return 0;
+>
+>         /* Link genpd masters/subdomains to model the CPU topology. */
+>         ret = dt_idle_pd_init_topology(np);
+>         if (ret)
+>                 goto remove_pd;
+>
+> +       /* let's try to enable OSI. */
+> +       ret = psci_set_osi_mode(use_osi);
+> +       if (ret)
+> +               goto remove_pd;
+> +
+>         pr_info("Initialized CPU PM domain topology using %s mode\n",
+>                 use_osi ? "OSI" : "PC");
+>         return 0;
+>
+> -put_node:
+> -       of_node_put(node);
+>  remove_pd:
+> +       dt_idle_pd_remove_topology(np);
+>         psci_pd_remove();
+> +exit:
+>         pr_err("failed to create CPU PM domains ret=%d\n", ret);
+> -no_pd:
+> -       if (use_osi)
+> -               psci_set_osi_mode(false);
+>         return ret;
+>  }
+>
+> --
+> 2.17.1
 >
