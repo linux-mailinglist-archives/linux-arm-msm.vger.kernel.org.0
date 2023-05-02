@@ -2,94 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D1E06F43D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:26:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A65BA6F43E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:28:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233271AbjEBM03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 08:26:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50630 "EHLO
+        id S234107AbjEBM2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 08:28:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232830AbjEBM02 (ORCPT
+        with ESMTP id S233998AbjEBM2b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 08:26:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79B3EE6A;
-        Tue,  2 May 2023 05:26:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 13B98623D1;
-        Tue,  2 May 2023 12:26:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B614C433EF;
-        Tue,  2 May 2023 12:26:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683030386;
-        bh=+tUawv5EiBg4sqiRbzAHZDe9om3TRYdvWox2tHvlSzE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BGHceCY6xP7mDbZltsp5coAmNywdFwO3NYphny/G+DLVhtX3SpVVcIBBvo9MIfDSO
-         Tre5lOjjXPdwLrYugKH+/Ay6m4KlEJXKFPuLrFbVPkHzYAwTQnyja7/bwSqMSqDyTr
-         J+U1GK9IekqBukX1SDRrZy996kb8DOFc6Cxa9nhWHXWxZWUBLUUX02Pb1I3bwU/lOe
-         pXK00VzQJK4mA4IE/TAHIhVnWc4PwKoYWUj8/Azhzae1tldMT9FI8h+VFOY890iGFo
-         plUE8p6r2qoP82JsYPRcfHPoz4mGC3Jz95/P4WxUySlPJrZzkFYVF7SVL2u4kmVeyc
-         hCceoQgLWTjmw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ptp5R-0003n8-Gn; Tue, 02 May 2023 14:26:29 +0200
-Date:   Tue, 2 May 2023 14:26:29 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Tue, 2 May 2023 08:28:31 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A0912C;
+        Tue,  2 May 2023 05:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1683030510; x=1714566510;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pVyqURKJmfYfAEdHqOhsTYfJHIgtzPIa63rM74G0UvM=;
+  b=Xy5QnxD/f8vrtHbq3UvFrdSlUlSL8vrbwhWGUJ3NaBkMJphVtAq4pPed
+   QZrOEkLTfupbCcyvDYapJoS+HUyu1IqvjokweM1Y9UWgwG+kBTCqi7oOV
+   9BcqkvjjLtU4TheBddpgZeH3bpohTyb+rA9bX/btQZ8aey2qmZNT6W/Mo
+   KhrAWIQdCrz+qMzdhi6r1Yg8ho8T0LOQF70IbAqyJZN2mWQzWINcZZPM3
+   Kirm996jwa+k3Vbvovvjx+cNJD9//OYDjKi8QIOX8tbvV3qOinrePcdok
+   4pwrunEnLH+9jRQ4hSFxGBekfDwXDbXp+jXtmSxSB78lK0ZqGx/wpyPM4
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10697"; a="413825454"
+X-IronPort-AV: E=Sophos;i="5.99,244,1677571200"; 
+   d="scan'208";a="413825454"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 May 2023 05:28:29 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10697"; a="840277781"
+X-IronPort-AV: E=Sophos;i="5.99,244,1677571200"; 
+   d="scan'208";a="840277781"
+Received: from lkp-server01.sh.intel.com (HELO e3434d64424d) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 02 May 2023 05:28:24 -0700
+Received: from kbuild by e3434d64424d with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1ptp7H-00012g-1B;
+        Tue, 02 May 2023 12:28:23 +0000
+Date:   Tue, 2 May 2023 20:27:24 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/7] phy: qcom-qmp-combo: Support orientation switching
-Message-ID: <ZFEBdT4Yh4fBItHk@hovoldconsulting.com>
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+        quic_harshq@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com,
+        Krishna Kurapati <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v7 3/9] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Message-ID: <202305022053.Tqtl2ROK-lkp@intel.com>
+References: <20230501143445.3851-4-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230501143445.3851-4-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 08:40:03PM -0700, Bjorn Andersson wrote:
-> This adds support for USB and DisplayPort orientation switching to the
-> QMP combo PHY, as well as updating the sc8280xp devices to include the
-> QMP in the SuperSpeed graph.
+Hi Krishna,
 
-Nice and clean series!
+kernel test robot noticed the following build warnings:
 
-I've tested it a bit on the X13s and verified that DP works on both
-ports and in both orientations. Coldplug also appears to work reliably.
+[auto build test WARNING on usb/usb-testing]
+[also build test WARNING on usb/usb-next usb/usb-linus linus/master next-20230428]
+[cannot apply to robh/for-next v6.3]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>	# X13s
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/dt-bindings-usb-qcom-dwc3-Add-bindings-for-SC8280-Multiport/20230501-224209
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
+patch link:    https://lore.kernel.org/r/20230501143445.3851-4-quic_kriskura%40quicinc.com
+patch subject: [PATCH v7 3/9] usb: dwc3: core: Access XHCI address space temporarily to read port info
+reproduce:
+        # https://github.com/intel-lab-lkp/linux/commit/840e9a485800cf72e5fbf4dca1aaf92085aad584
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Krishna-Kurapati/dt-bindings-usb-qcom-dwc3-Add-bindings-for-SC8280-Multiport/20230501-224209
+        git checkout 840e9a485800cf72e5fbf4dca1aaf92085aad584
+        make menuconfig
+        # enable CONFIG_COMPILE_TEST, CONFIG_WARN_MISSING_DOCUMENTS, CONFIG_WARN_ABI_ERRORS
+        make htmldocs
 
-> Bjorn Andersson (7):
->   dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Add ports and
->     orientation-switch
->   phy: qcom-qmp-combo: Move phy_mutex out of com_init/exit
->   phy: qcom-qmp-combo: Introduce orientation variable
->   phy: qcom-qmp-combo: Introduce orientation switching
->   phy: qcom-qmp-combo: Introduce drm_bridge
->   arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed graph
->   arm64: dts: qcom: sc8280xp-x13s: Add QMP to SuperSpeed graph
-> 
->  .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  51 ++++
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  28 ++-
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  28 ++-
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  34 +++
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 227 ++++++++++++++----
->  5 files changed, 309 insertions(+), 59 deletions(-)
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202305022053.Tqtl2ROK-lkp@intel.com/
 
-Johan
+All warnings (new ones prefixed by >>):
+
+>> Documentation/driver-api/usb/dwc3:687: ./drivers/usb/dwc3/core.h:1674: WARNING: Unexpected indentation.
+>> Documentation/driver-api/usb/dwc3:687: ./drivers/usb/dwc3/core.h:1675: WARNING: Block quote ends without a blank line; unexpected unindent.
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
