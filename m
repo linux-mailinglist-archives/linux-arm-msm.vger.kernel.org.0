@@ -2,123 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36AA36F4802
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 18:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D14C06F486D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 18:37:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233608AbjEBQKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 12:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42234 "EHLO
+        id S234166AbjEBQhs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 12:37:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233571AbjEBQKK (ORCPT
+        with ESMTP id S234379AbjEBQhU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 12:10:10 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8ED421C;
-        Tue,  2 May 2023 09:09:57 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-63b5fca48bcso3057925b3a.0;
-        Tue, 02 May 2023 09:09:57 -0700 (PDT)
+        Tue, 2 May 2023 12:37:20 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C821A173C
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 09:37:14 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f3331f928cso24516515e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 09:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683043797; x=1685635797;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2Jhmn/igXsSQ1CgSsPa7t8gOoGNkMRgv5IZ8g6dlT48=;
-        b=pJzuaACIWttjwELslkpHg1tCXmshS+yvKzlM2sclBeAZBqaktTCJdD8yhUTXg6i86o
-         kkwivrOJHKBy0LnooQV+X+6wciXVy1C8bgD6obbCrIovO4o7JCJyWvxNBWuuNZQdyXMh
-         ghBFTeWdu9LakvzS/7diA7EcEe5Y3IGFSGBdFG6gVFR36kYEii+W1Ln4aQrRVDL2vY6H
-         ateJACxLjPKew3Jlx77UBG5H8o/1WKbDKyW1ehws+4PP0j+NpmwJuhW9aOMcN+rRUeYY
-         RxY/MSmjaciiP9i16n2WmasfMoM65dS36Y6GCusdODbbUoFwHQFWd8EseLIOad7WuW8R
-         O72w==
+        d=linaro.org; s=google; t=1683045433; x=1685637433;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zwqdNjAxsqWdNF43eJm/VW7zQPj9015oX6KfsTDqztg=;
+        b=eNUp2crIS46e7N3KSjvRJrhQLNcLm1vPb0OJnqO7628nXtomN2YnCtYl/qhrHuyF9Q
+         UJTAHmMxFDx5KHuIyjmFzm5mW9wAZq1lmzbFzMhi/TRGULV2tUjnBzwxwFjq3LkiOAg2
+         fUpgCkzplFsMjK9xGn4EBuAVqd1+ePHSQw/3DNhxCdRAPOCnA2peHlbPsCz5coCH4Qs5
+         lXIbEYnrXuw+TZ+gyg1M8EypwAhR8iJQs7/EYlyAJUnNDKR7vhzYVZ/1ydMo0d3Ierhg
+         t9dNB4JVsjNrwygvbMrbj40XphsIjB/uyxwhUo5RbfkxEEBN3gBgvxj8xgGAj6GdXlac
+         yBKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683043797; x=1685635797;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2Jhmn/igXsSQ1CgSsPa7t8gOoGNkMRgv5IZ8g6dlT48=;
-        b=QU6aIU2TWtSH76cFaJyRA8oUIGrkY6naUYsF7fO7UOJdFNxR05q/tt5uOQWHM6WIon
-         x+fPtHA30IMUe00GXwP5RjKzTde0Dr6t8+ciR2XjnxlU5vPQ//+GLqBUSz1F80sgGzio
-         lzNfSBbHoR9FI3pyeEIbNtUUdBjM5LqJqx+G4PwaSX28Le/V1eTB6eWDUHN94R1kATTf
-         iXYMlpHn1GrFV9ojqCppttX9Ftse01aP76ciDVmKbspgj3JNMYtjqMmNPhCy/uBg6iOf
-         HjBfKkNzW+Z/XDurLqaxleA+7xSwLmgz6xyt1bxyTEDqn/Uca2WJhkPJS70DafXFih0l
-         sthw==
-X-Gm-Message-State: AC+VfDxF4QQAyK7u+5S/PVD1/fHbjW19i4nzqUs8Yyx1M2bJJLAoBpJF
-        55b73BeSK8WsLQq02FNYGfFnfEYmWC4=
-X-Google-Smtp-Source: ACHHUZ4S2jGKgufIL9tpXhjYzZqUINYF6azJ3+MOLssaF0FK1bp3oJJJR7P9lf0iUWJblNhY54sFLw==
-X-Received: by 2002:a05:6a20:d69a:b0:ee:2bc1:6e01 with SMTP id it26-20020a056a20d69a00b000ee2bc16e01mr18312922pzb.24.1683043797412;
-        Tue, 02 May 2023 09:09:57 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id u29-20020a056a00099d00b0063d2bb0d107sm22055505pfg.64.2023.05.02.09.09.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 09:09:57 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] drm/msm: Be more shouty if per-process pgtables aren't working
-Date:   Tue,  2 May 2023 09:09:48 -0700
-Message-Id: <20230502160950.1758826-2-robdclark@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230502160950.1758826-1-robdclark@gmail.com>
-References: <20230502160950.1758826-1-robdclark@gmail.com>
+        d=1e100.net; s=20221208; t=1683045433; x=1685637433;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=zwqdNjAxsqWdNF43eJm/VW7zQPj9015oX6KfsTDqztg=;
+        b=SKV7ri54nhRF0pbYpXdipVEoIHjzxkSLIbACSUAq8P0NionIhxu3XBJDfXOOBQWNCu
+         M2Fx9Ti7/EYfc5yQx+77QA8dUNyRuItl4HN9fsEfOxB0z1Kxqxq9gwW0upp/G2neAQzP
+         S7ut0hbX/dBlYAqhwbKJCLHiZrWCUWsfxB15Jzyv0zzvGGCJOEiio7Qj39xWniIjSoe/
+         Mb/LcF9BqPu+y2/SBOY4bbE7krktSfqihdAJmPQfW3iZK8182lqaAewQcR52X7+ZpnBG
+         McsL5GisPSfDyPWxWsNS/thglzcXy96Y6CsCZ6J403YXRAWnUrlI9TeIN6MUKj/ZerB9
+         Pygg==
+X-Gm-Message-State: AC+VfDzlymz+LF7xvDXx7+VH1trHIdU3jouoslybCDdM9vHFo5QrByPF
+        0F7GY2uQQ4nVvmBOu88qFJ61hQ==
+X-Google-Smtp-Source: ACHHUZ4Fe/oTsDtZ0c562/VZ5uzdNMNn2prXZBa/X9/pJeP957bny/AnzziQCqM6dsEBZio67V93rQ==
+X-Received: by 2002:a1c:7502:0:b0:3f2:54ae:6921 with SMTP id o2-20020a1c7502000000b003f254ae6921mr12863258wmc.2.1683045433269;
+        Tue, 02 May 2023 09:37:13 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id z9-20020a05600c114900b003f1745c7df3sm12742860wmz.23.2023.05.02.09.37.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 09:37:12 -0700 (PDT)
+Message-ID: <2e61e054-105c-ae22-77b8-a3f41fe3eff0@linaro.org>
+Date:   Tue, 2 May 2023 17:37:12 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
+ hfi versions
+Content-Language: en-US
+To:     =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>,
+        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hverkuil-cisco@xs4all.nl
+References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 14/04/2023 11:12, Martin Dørum wrote:
+> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
+>> =4xx. The code used to unconditionally set the property in
+> venc_set_properties, which meant that initializing the encoder would
+> always fail unless the hfi_version was >=4xx.
+> 
+> This patch changes venc_set_properties to only set the
+> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
+> 
+> Signed-off-by: Martin Dørum <dorum@noisolation.com>
+> 
+> ---
+> 
+> I have an APQ8016-based board. Before this patch, the Venus driver
+> would simply fail with EINVAL when trying to request buffers
+> (VIDIOC_REQBUFS). With this patch, encoding works
+> (tested using gstreamer's v4l2h264enc).
+> 
+>   drivers/media/platform/qcom/venus/venc.c | 21 +++++++++++----------
+>   1 file changed, 11 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+> index cdb12546c4fa..b3df805a8c9c 100644
+> --- a/drivers/media/platform/qcom/venus/venc.c
+> +++ b/drivers/media/platform/qcom/venus/venc.c
+> @@ -672,16 +672,17 @@ static int venc_set_properties(struct venus_inst *inst)
+>   		if (ret)
+>   			return ret;
+> 
+> -		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+> -		h264_transform.enable_type = 0;
+> -		if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+> -		    ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+> -			h264_transform.enable_type = ctr->h264_8x8_transform;
+> -
+> -		ret = hfi_session_set_property(inst, ptype, &h264_transform);
+> -		if (ret)
+> -			return ret;
+> -
+> +		if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
+> +			ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+> +			h264_transform.enable_type = 0;
+> +			if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+> +			    ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+> +				h264_transform.enable_type = ctr->h264_8x8_transform;
+> +
+> +			ret = hfi_session_set_property(inst, ptype, &h264_transform);
+> +			if (ret)
+> +				return ret;
+> +		}
+>   	}
+> 
+>   	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+> --
+> 2.34.1
 
-Otherwise it is not always obvious if a dt or iommu change is causing us
-to fall back to global pgtable.
+I agree that a Fixes should be added.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_iommu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Fixes: bfee75f73c37 ("media: venus: venc: add support for 
+V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control")
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index 418e1e06cdde..1b7792d35860 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -224,24 +224,25 @@ static int msm_fault_handler(struct iommu_domain *domain, struct device *dev,
- 
- struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
- {
- 	struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(parent->dev);
- 	struct msm_iommu *iommu = to_msm_iommu(parent);
- 	struct msm_iommu_pagetable *pagetable;
- 	const struct io_pgtable_cfg *ttbr1_cfg = NULL;
- 	struct io_pgtable_cfg ttbr0_cfg;
- 	int ret;
- 
-+
- 	/* Get the pagetable configuration from the domain */
- 	if (adreno_smmu->cookie)
- 		ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
--	if (!ttbr1_cfg)
-+	if (WARN_ON_ONCE(!ttbr1_cfg))
- 		return ERR_PTR(-ENODEV);
- 
- 	pagetable = kzalloc(sizeof(*pagetable), GFP_KERNEL);
- 	if (!pagetable)
- 		return ERR_PTR(-ENOMEM);
- 
- 	msm_mmu_init(&pagetable->base, parent->dev, &pagetable_funcs,
- 		MSM_MMU_IOMMU_PAGETABLE);
- 
- 	/* Clone the TTBR1 cfg as starting point for TTBR0 cfg: */
--- 
-2.39.2
+When sending out your V2, please remember to cc -> Hans Verkuil 
+<hverkuil-cisco@xs4all.nl>
 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
