@@ -2,218 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4C8E6F4D54
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 01:02:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C89066F4D63
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 01:04:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbjEBXCt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 19:02:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52392 "EHLO
+        id S229642AbjEBXEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 19:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjEBXCt (ORCPT
+        with ESMTP id S229457AbjEBXEh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 19:02:49 -0400
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B17FC3;
-        Tue,  2 May 2023 16:02:47 -0700 (PDT)
-Received: by mail-qk1-x734.google.com with SMTP id af79cd13be357-75131c2997bso37715785a.1;
-        Tue, 02 May 2023 16:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683068567; x=1685660567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RVUCe/5y2Ex7bNIQOvHne7x9R8A0wELwbdEse2WDpF8=;
-        b=iHBlY9kIRMOF3Yq8hT/HYtLwTwjoof0FVfaEhNjRSWPoYgoA1qtRUzGwD+nkjOzJPI
-         u09FXpbJrjxtM3MFyzM74JfHNsb7UZ0GJze/A7Ip/HD+5roEWeYmZwjlYu0a2cdkfbwf
-         +kLbPvAmDmxad5KujOjWnyiCW+W4okHTLQRqn4fLYSw7t/qXPwhwMm5mWSJxb8hi+d0O
-         ev3gtx0+XlazA6w82yl+mnLoL1jpad70ZxSgOz1YQXa9W1BLk0lheCYSgecLnoqpXxAH
-         /k0Y7rMrxmhfNEQZTdJyCemWb5DMYD7STFJO05Jiqj2/50xWs6TXP7C2X1ywzoueu5sn
-         IGTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683068567; x=1685660567;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RVUCe/5y2Ex7bNIQOvHne7x9R8A0wELwbdEse2WDpF8=;
-        b=Di+NvKG4ckZ2tMZKwvFQi8cPaxZKc7DjQnG0MELv79YnJb7pZi66b9mLXOkmgbf5QG
-         zP09CJXKVQLuA4XEloTvt88PFdrHsYs1ors1Swu1M707MSxKnssS+Yj4H4RJNIBkVoo/
-         82sNVkd3hsoVRHwprme2wx7IF58Rdq8p5ZhOgRaG66vAQxyS8vNRBU+GAITewKmCutUj
-         BBTuklgiDfClWfLrEBylFnNTjHgSdeald7KYE/SUKEB5OSRACoMk9dXTqsDnBFvJxCta
-         ZdbhW8oH/EKRxA48jEIs1stPWoZ0noEdMGeEXRHc1LsLazfC+siVYDN9CXg6FeLWn0lS
-         t5EA==
-X-Gm-Message-State: AC+VfDzmGexNCjYNcuB9yVziO/f075hvp5vSTohtSu8G7O7KthjPkLjW
-        gtQaRgql0W8pvLLo091+L6E4JWrI/tQ=
-X-Google-Smtp-Source: ACHHUZ4eSB1jw2dhw1LAIzPe/MR5kdc4AoCnBVEG18379hjnfMdu0BtdA7D5r0jmXaGKb3nbIbuwpA==
-X-Received: by 2002:a05:6214:d64:b0:61a:96d3:bd20 with SMTP id 4-20020a0562140d6400b0061a96d3bd20mr380920qvs.10.1683068566677;
-        Tue, 02 May 2023 16:02:46 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id t18-20020a0cea32000000b0061b71220644sm326246qvp.19.2023.05.02.16.02.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 16:02:45 -0700 (PDT)
-Message-ID: <d4b52074-d11c-4c7a-ad74-b2fce64c6d30@gmail.com>
-Date:   Tue, 2 May 2023 16:02:34 -0700
+        Tue, 2 May 2023 19:04:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 437552683
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 16:04:35 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342MSK24023201;
+        Tue, 2 May 2023 23:04:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=aCQqlxOWOUW4tpaXwOTQFsXC1G3e8ROqMcd7JKgom4w=;
+ b=L70MgH+esuR8UhHy+wgUi6/dGOPlOBKmcMz4tuI8XL5omHrypTnNswYYIVjV0Az5+YQ3
+ Ste/yZA5ll5bjLy3TeWsiYkyZ/C0hhtk12U9PAIRt0fm6YUBYW7oMETgPGDf82T/H2FO
+ xl31/fvzKfkaGDnaoFjk9FCs40QPvJDwQnogIV6AdlFMcOrWyZMka649+5LPDARcK78e
+ bxaFdbV8yZtjTYPbZ1RNBXC/SFEZJ0vAE+8mjkVlO7fX1ooIVwEK5BfpfqHdGAUh0a/X
+ CaQvu77CrZuqTOyKznr6Ee9wKJlmseRST8nl5vL+dBD1TNl1w0H9/v+iOVDUd2poLIMI pQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qawcta34v-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 02 May 2023 23:04:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 342N4ND0026819
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 2 May 2023 23:04:23 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
+ 16:04:23 -0700
+Message-ID: <dae23075-b907-48c0-7605-f91589630beb@quicinc.com>
+Date:   Tue, 2 May 2023 16:04:22 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 4/7] drm/msm/dpu: drop duplicated intf/wb indices from
+ encoder structs
 Content-Language: en-US
-To:     Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Olof Johansson <olof@lixom.net>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
-        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
- <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
- <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-From:   Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
+ <20230430235732.3341119-5-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230430235732.3341119-5-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: o9b_M4_ZRleaST5Bq2oRUxVXBMlVS0OR
+X-Proofpoint-GUID: o9b_M4_ZRleaST5Bq2oRUxVXBMlVS0OR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-02_12,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 phishscore=0
+ adultscore=0 mlxlogscore=995 impostorscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305020197
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/2/23 12:40, Rob Herring wrote:
-> On Tue, May 2, 2023 at 3:15 AM Arnd Bergmann <arnd@arndb.de> wrote:
->>
->> On Tue, Apr 25, 2023, at 17:57, Rob Herring wrote:
->>> On Tue, Apr 25, 2023 at 2:28 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
->>>
->>>> Does your script also cater for .dts files not matching any pattern,
->>>> but including a .dtsi file that does match a pattern?
->>>
->>> I assume I built everything after moving, but maybe not...
->>>
->>> That's all just "details". First, we need agreement on a) moving
->>> things to subdirs and b) doing it 1-by-1 or all at once. So far we've
->>> been stuck on a) for being 'too much churn'.
->>
->> Sorry for missing most of the discussion last week. The script sounds
->> fine to me, the only reason I didn't want to do this in the past is that
->> we had the plan to move platforms out of the kernel tree to an external
->> repository and I wanted to do this platform at a time and also only move
->> each one once. I don't think that is going to happen anytime soon now,
->> so let's just do your script.
->>
->> Can you send me the script and/or a pull request of the resulting
->> tree based on my soc/dt branch? Everything is merged upstream,
->> and I think git-merge would handle the remaining merges with any
->> other changes in mainline.
-> 
-> I've dusted off my script and made a branch[1] with the result.
-> There's just a couple of fixes needed after the script is run (see the
-> top commit). The cross arch includes are all fixed up by the script.
-> dtbs_install maintains a flat install. I compared the number of .dtbs
-> before and after to check the script.
-> 
-> I think the only issue remaining is finalizing the mapping of
-> platforms to subdirs. What I have currently is a mixture of SoC
-> families and vendors. The most notable are all the Freescale/NXP
-> platforms, pxa, socfpga, and stm32. It's not consistent with arm64
-> either. Once that's finalized, I still need to go update MAINTAINERS.
-> 
-> Here's the current mapping:
-> 
-> vendor_map = {
->      'alphascale' : 'alphascale',
->      'alpine' : 'alpine',
->      'artpec' : 'axis',
->      'axm' : 'lsi',
->      'cx9' : 'cnxt',
->      'ecx' : 'calxeda',
->      'highbank' : 'calxeda',
->      'ep7' : 'cirrus',
->      'mxs': 'mxs',
->      'imx23': 'mxs',
->      'imx28': 'mxs',
->      'sun' : 'allwinner',
->      'imx': 'imx',
->      'e6' : 'imx',
->      'e7' : 'imx',
->      'mba6' : 'imx',
->      'ls': 'fsl',
->      'vf': 'fsl',
->      'qcom': 'qcom',
->      'am3' : 'ti',
->      'am4' : 'ti',
->      'am5' : 'ti',
->      'dra' : 'ti',
->      'keystone' : 'ti',
->      'omap' : 'ti',
->      'compulab' : 'ti',
->      'logicpd' : 'ti',
->      'elpida' : 'ti',
->      'motorola' : 'ti',
->      'twl' : 'ti',
->      'da' : 'ti',
->      'dm' : 'ti',
->      'nspire' : 'nspire',
->      'armada' : 'marvell',
->      'dove' : 'marvell',
->      'kirkwood' : 'marvell',
->      'orion' : 'marvell',
->      'mvebu' : 'marvell',
->      'mmp' : 'marvell',
->      'berlin' : 'berlin',
->      'pxa2' : 'pxa',
->      'pxa3' : 'pxa',
->      'pxa' : 'marvell',
->      'arm-' : 'arm',
->      'integ' : 'arm',
->      'mps' : 'arm',
->      've' : 'arm',
->      'aspeed' : 'aspeed',
->      'ast2' : 'aspeed',
->      'facebook' : 'aspeed',
->      'ibm' : 'aspeed',
->      'openbmc' : 'aspeed',
->      'en7' : 'airoha',
->      'at91' : 'microchip',
->      'sama' : 'microchip',
->      'sam9' : 'microchip',
->      'usb_' : 'microchip',
->      'tny_' : 'microchip',
->      'mpa1600' : 'microchip',
->      'animeo_ip' : 'microchip',
->      'aks-cdu' : 'microchip',
->      'ethernut5' : 'microchip',
->      'evk-pro3' : 'microchip',
->      'pm9g45' : 'microchip',
->      'ge86' : 'microchip',
->      'bcm' : 'brcm',
 
-How about we use 'broadcom' here, to follow what arm64 does? I could 
-rename arch/mips/boot/dts/brcm to arch/mips/boot/dts/broadcom for 
-consistency, too?
--- 
-Florian
 
+On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
+> Remove intf_idx and wb_idx fields from struct dpu_encoder_phys and
+> struct dpu_enc_phys_init_params. Set the hw_intf and hw_wb directly and
+> use them to get the instance index.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+
+ From whatever I can see, this will not affect functionality of intf or 
+wb and cleans it up well , so I am fine with this. Hence,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+One minor comment/question.
+
+<snipped other parts>
+
+> @@ -761,7 +761,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+>   	struct dpu_encoder_phys_cmd *cmd_enc = NULL;
+>   	int ret = 0;
+>   
+> -	DPU_DEBUG("intf %d\n", p->intf_idx - INTF_0);
+
+Was it intentional to drop the index in this log?
+
+> +	DPU_DEBUG("intf\n");
+>   
+>   	cmd_enc = kzalloc(sizeof(*cmd_enc), GFP_KERNEL);
