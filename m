@@ -2,116 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A5DAD6F49E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 20:49:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A97246F4A08
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 21:01:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbjEBStz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 14:49:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
+        id S229609AbjEBTBT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 15:01:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjEBSty (ORCPT
+        with ESMTP id S229511AbjEBTBS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 14:49:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674C710C7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 11:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1683053348;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=DZ0W+FU8PsLfAAZv9zbz/cngBwAlCp+YIRm01kljAiE=;
-        b=WEQWVkoCRuowfnvASph77+4Thuq+xphdcVA6CEuicnmj5DXqDhKhYMsMR/SbLgN9C3Zv9Z
-        ADYuPfWKjJ5w+Kd/daYE5+s+RRQMXhknqlqEV7IVroLu5tU9guAdLWX/EE8mBWleZ6CZGJ
-        z2JW7aE+a9iIIEcyVfy7E2QT/mVd0UE=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-o9iWcb2_NMiLV9nnzcBZ8Q-1; Tue, 02 May 2023 14:49:07 -0400
-X-MC-Unique: o9iWcb2_NMiLV9nnzcBZ8Q-1
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-61b60166509so10593516d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 11:49:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683053346; x=1685645346;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DZ0W+FU8PsLfAAZv9zbz/cngBwAlCp+YIRm01kljAiE=;
-        b=EptAJCYuk+x6zF3i0rM/PjPzdDv3bRmyLNT8NsWDkKwVg4oGEzEEk/pkM80PXU6K0j
-         U5UTzOi/ziX/BH8wYBYhPxHdgJswcrCtP0esSzqpqMIZVEOT4vdCAhs4Ihe7syAYUduG
-         z8h8BDbek+MU6QHrVIXbEFGbfy9o3EHQcWUEnP0rUuJuuCBL8Ilb2GBXNOlrVcZhUOCQ
-         sDYnvE5f7VEDyav+Av/f+gsojHWxcUr+fxpA/beOBxYu7etegAFfh6srF2Uq7xZITW42
-         7Q30BYyFNg7n8L92TR22IZtwEw0nRdMYbNNVwoH1S8BX9TYxhquXRN1SCpWFc953MvLW
-         R9lQ==
-X-Gm-Message-State: AC+VfDwfJVNFt0Wr/MsIVS+8EBC6h1wjTDJC/v/DDyK/PGgxHZxWADEA
-        14oQt+sW7uwef9hRcevB5SBR19tieEyZPyRrmVcAW9Dg13vkvvS6R/A4l2g03pWeqJHDLMkiMtb
-        t4D8uIqnf+0GQumyiKcbPaf0Hw9Lmi4X4vA==
-X-Received: by 2002:ad4:596b:0:b0:616:5c8b:59d with SMTP id eq11-20020ad4596b000000b006165c8b059dmr6197875qvb.20.1683053346391;
-        Tue, 02 May 2023 11:49:06 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ5Wy2JnTAhWuNet9cEToNtvnh6Rgxw5wsbBieiyINBFnufP8DZTowekkRqdmisuq2+jBHV9JA==
-X-Received: by 2002:ad4:596b:0:b0:616:5c8b:59d with SMTP id eq11-20020ad4596b000000b006165c8b059dmr6197852qvb.20.1683053346170;
-        Tue, 02 May 2023 11:49:06 -0700 (PDT)
-Received: from fedora (modemcable181.5-202-24.mc.videotron.ca. [24.202.5.181])
-        by smtp.gmail.com with ESMTPSA id y10-20020ad445aa000000b006057140e017sm9063235qvu.89.2023.05.02.11.49.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 11:49:05 -0700 (PDT)
-Date:   Tue, 2 May 2023 14:49:03 -0400
-From:   Adrien Thierry <athierry@redhat.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
-Message-ID: <ZFFbH7bH0pCDdoN1@fedora>
-References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
- <ZEcEGJiikEC2wIVE@fedora>
- <CAA8EJpr27=2jAXbamN6J7yF+7G=L5Af8+XReB5UnFuihcEwMQA@mail.gmail.com>
- <ZEgV+H3yZLp48Dlc@fedora>
- <3dc6e993-bcca-4e0d-5aca-686fcc8b5b73@linaro.org>
+        Tue, 2 May 2023 15:01:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13562DC;
+        Tue,  2 May 2023 12:01:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A2FA662803;
+        Tue,  2 May 2023 19:01:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FE4C433A4;
+        Tue,  2 May 2023 19:01:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683054076;
+        bh=prkycoKFrtYOB9sqzJph1/Wh7+dUYl73V0ySsrK86tE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=rf/Ymu/EiSQOPePfJMJv1847ZBWRjnjneowURtOqNMODuCRTfcl2GQ0h/jO2AdmCs
+         leEyX7R6GR2dka6/IsiyySID/QcvyxsSv7fNtmEEy0Cm9A6hC1sqxMJ+9jfUBya5xj
+         ODLup2MnZzYCOUMdIZzoCrk5OSl4AOnL/7/DJbtkd5lptoW7/0YbgOkcgOH14mk6Au
+         qACeCdnoaBW8B9rF8o7n7shq7gT7w0jQTaVjP3mXHg69IyA+TLldeHm4Y1C5mj86Z3
+         uRYRPp4016gJq/2Xf9LklNYOIaWs99spKYSrk9MtOv6rk+8yKfvzOFwqXzWomFJ/+X
+         cezzz3yUhjKtA==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-4f00d3f98deso30189736e87.0;
+        Tue, 02 May 2023 12:01:15 -0700 (PDT)
+X-Gm-Message-State: AC+VfDy6HROMOBtt8vjysX7PaO7pZt0gXrzRwYR+dhVfCyhlP6x07oQQ
+        5zNawx7YmJwz7OCZi6b5qscMEp/eoQDqajAPwA==
+X-Google-Smtp-Source: ACHHUZ4aQAyOb+PGJ7PQfIp0PiLUMh7I0dBEHOyVsVppKRO7n40/yktfmotxwSexv0gCD3XVcEmYB9ah5iQIzUMa54Q=
+X-Received: by 2002:a05:6512:3b07:b0:4eb:412e:b06a with SMTP id
+ f7-20020a0565123b0700b004eb412eb06amr237890lfv.22.1683054074001; Tue, 02 May
+ 2023 12:01:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3dc6e993-bcca-4e0d-5aca-686fcc8b5b73@linaro.org>
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <CAFr9PXkgrRe-=E=GhNnZ4w1x_FMb97-_RmX6ND1vEd74_TbZSw@mail.gmail.com>
+ <4ff4f171-c5f8-87af-aad1-5e7686292288@microchip.com> <45bc13a8-1442-2dd3-b9ea-1ed2f5962bac@arm.com>
+In-Reply-To: <45bc13a8-1442-2dd3-b9ea-1ed2f5962bac@arm.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 2 May 2023 14:01:01 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqL7t47x-5U6STynwW-+4wJUhs_R9wuaQ0YOgX59aJ=vew@mail.gmail.com>
+Message-ID: <CAL_JsqL7t47x-5U6STynwW-+4wJUhs_R9wuaQ0YOgX59aJ=vew@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Daniel Palmer <daniel@0x0f.com>,
+        Ansuel Smith <ansuelsmth@gmail.com>,
+        Claudiu Beznea <Claudiu.Beznea@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Santiago Esteban <Santiago.Esteban@microchip.com>,
+        Cristian Birsan <Cristian.Birsan@microchip.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-omap@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@axis.com, linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
+        linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,WEIRD_QUOTING
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
-
-On Sat, Apr 29, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
-> On 25/04/2023 21:03, Adrien Thierry wrote:
-> > Hi Dmitry,
-> > 
-> > > Semi-random suggestion, but could you please try using
-> > > clk_regmap_phy_mux/clk_regmap_phy_mux_ops for USB pipe clk src?
-> > 
-> > Which specific clock are you refering to? I'm not very familiar with
-> > those, in the device tree I'm seeing "pipe" clocks for usb_0 and usb_1
-> > phys, but not for usb_2, which is the one that's causing issues.
-> > 
-> 
-> Ah, I see. Could you please try adding the 'qcom,select-utmi-as-pipe-clk'
-> property to the usb_2 host node and running the test again?
+On Tue, Apr 25, 2023 at 11:21=E2=80=AFAM Robin Murphy <robin.murphy@arm.com=
+> wrote:
 >
+> On 29/03/2022 9:50 am, Nicolas Ferre wrote:
+> > Ansuel, All,
+> >
+> > On 28/03/2022 at 10:55, Daniel Palmer wrote:
+> >> Hi Ansuel
+> >>
+> >> On Mon, 28 Mar 2022 at 09:09, Ansuel Smith <ansuelsmth@gmail.com> wrot=
+e:
+> >>>
+> >>> Hi,
+> >>> as the title say, the intention of this ""series"" is to finally
+> >>> categorize
+> >>> the ARM dts directory in subdirectory for each oem.
+> >>
+> >> While I agree with this change and think it's for the good (browsing
+> >> the ARM dts directory at the moment is frustrating..) I think
+> >> buildroot and others need to be told about this as it'll potentially
+> >> break their kernel build scripting for ARM and probably messes up the
+> >> configs they have for existing boards.
+> >
+> > This aspect mustn't be underestimated and I anticipate lots of issues
+> > during a long time on this particular topic of "build systems".
+> >
+> > Another aspect is CI and public or private testing farms we all have
+> > running.
+>
+> Yet another is if this affects what `make dtbs_install` does (I don't
+> know for sure, but I'd be inclined to suspect it might). Some distros
+> use that to deliver the DTBs as part of their kernel package, so if
+> paths suddenly change it could break end users' bootloader setups too.
 
-Thanks for the suggestion. I tested this but unfortunately the issue is
-still happening.
+Indeed, this came up last time. Turns out I had already implemented
+support to maintain the flat install. I just re-wrote it since
+Makefile.dtbinst changed completely since then.
 
-Best,
-
-Adrien
-
+Rob
