@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DA856F404D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 11:40:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D29A36F4056
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 11:40:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232402AbjEBJkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 05:40:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41740 "EHLO
+        id S233490AbjEBJk2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 05:40:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233603AbjEBJkR (ORCPT
+        with ESMTP id S233614AbjEBJkV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 05:40:17 -0400
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225605252
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 02:40:15 -0700 (PDT)
-Received: by mail-pg1-x52d.google.com with SMTP id 41be03b00d2f7-51fdc1a1270so2368642a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 02:40:15 -0700 (PDT)
+        Tue, 2 May 2023 05:40:21 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB044EFF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 02:40:18 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-63b4e5fdb1eso4091057b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 02:40:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683020414; x=1685612414;
+        d=linaro.org; s=google; t=1683020418; x=1685612418;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9UNC+LX2BmXQMWBXgbv+OqEeJQ6Zi4DiU1OHCYwdBxk=;
-        b=vkj+2Aa+VROJOBGgZVu0noLrlC2Fr++Ng76P03GC4WH5szz/UE8CqUPdGKM8WK5KLE
-         89SrExXi9o6RHQlRKii5Tht6RoeeLjA2KB4OCxFjj0hHSKRPXSgpJd2KoEAHQPastJFk
-         CDehPU69rtgrOqdHWhUPO2IXu51JnMV+WXP6FbtN/UId6KeshKHBeM2ZBcjF5heKRMa9
-         MR9NjL2tbfju4yvveb+JErmrq4XxZIJmn+1M2FwUgdKq8xvwRBLui3SQ1UDCPKkugah8
-         hMkNN2aXiqdG0O3OmZYXFy7Sqbh4T7/6apV2EXpMCmNaA90jGdDpfYy0VZsYeIRfs7ZA
-         vy6g==
+        bh=BCKQTZ9DOack3c36NTOm6gsaC19bGFHhcNV2eKYbI7I=;
+        b=rojoqY5BFmveWUb7kfww+A/cbN3EIDrEedpYspNvdGtQOlEfNj6iH2xMloTSlLY+Dk
+         PRzMdkv68OzH3WYhEGiRfI34SfdJKJakQHlax4TGA0+Y9CQsBP9PQU201hHXIFWBBSaA
+         kMR7iUJgA1TjlUfvh22wfQvgNYw74OwuBx+9Y0vhGXivQfB5qizw3EjhUglkH7bVNqwW
+         QlIPSQvn24R5gTTBGVXA3aKYP1eoRkX5EnTg1l3PUbTOYj2iyX3+DgfaAc+doYUYu+sB
+         HopURdN7ajn5LiIWxilReASWTcpRcZZlLHGid9gL/I8Zz2Hvqw+u7ZkGNlhi8ntJx9Yc
+         FCXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683020414; x=1685612414;
+        d=1e100.net; s=20221208; t=1683020418; x=1685612418;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9UNC+LX2BmXQMWBXgbv+OqEeJQ6Zi4DiU1OHCYwdBxk=;
-        b=a3l2K6ajw+30v4rkFQybMxVVfHENPPd3xeobhsG7QH3zrCJt+igADXDtVXLdSiKv40
-         ZiUtUCidVKxFr53W4dorYPxTuLyRQvK4GFUWRHdMAMsVVNecZP5Q07am/85FHWys2R6b
-         ObEK3KegaTqU/iFNXdqMFAu/WcJvJyCR9Vkzu97Eq9WHi5p8RaiZQLFXJrVrAp1ZGA3N
-         L4Z0VgItuc0pT/KKB64mvS16y+5PxHfcYqvUfDwJUgSLV8WNj5fGpiZyyMCbL36MTopa
-         2Hagn4X7jgI23PQnvn6IeBgpE5kS5x5jrVPMFLQT59VT0Rs6/K5/ZWPZGyayhc88R3NS
-         zOhw==
-X-Gm-Message-State: AC+VfDwD6YD33S7GmttPLukJkTN23ax6iMGsGXpggw2BjkgtcYDvIg3t
-        4+dkAoFNDY9OGwvTOH51pfJu5C/2GPShPpEx2YA=
-X-Google-Smtp-Source: ACHHUZ7VsFhBrU1B+6uS9XmXRuueMqYbmW6E4KE6Am22hhLQJXtYiUyy0uK6kgVfRcSNHH1mGjXNNw==
-X-Received: by 2002:a05:6a20:8f08:b0:ef:5f:3c15 with SMTP id b8-20020a056a208f0800b000ef005f3c15mr21494619pzk.47.1683020413833;
-        Tue, 02 May 2023 02:40:13 -0700 (PDT)
+        bh=BCKQTZ9DOack3c36NTOm6gsaC19bGFHhcNV2eKYbI7I=;
+        b=GTMlAPJ6sILOysMu52hv1GmSeFhWlb8MNDwo3fbGHT0mcIkHH8IoJMVjEo314g5OzK
+         Z+6NU8oSPwOGtjjpiBYjla8ejkBGwJl87pYvZ4WwjNoVRiRti6j+g5gkIpmkrumQ3tx5
+         Sx7VkGJC0fFgl2p3I9sP/0YlbRkg7iACmizZeHcfyk5QyyuVy4gUeJFXQOBvV8OJ1mnj
+         rpiIsD7BIq3nZuiLSGQA0Ds+lbuch5p6wKfQbbKpwSwuwpv39PmlbVdE4GtTahMdAToK
+         +1wOOxqhXuZ+c22Uj4fuEdmfh87av/5OOEUoMd5gLNY7GvEKIcTPx6XOBHPjIt5m64KB
+         dy6g==
+X-Gm-Message-State: AC+VfDxPGH6Zuf+qX5pgye9jJPlZanpUddsjUtH4bwfTihJ8S2FGGugq
+        Eb9GM+WnvXeISzeicrlLmvfp87SZbdYsV0WloBQ=
+X-Google-Smtp-Source: ACHHUZ4C66gbJED3MdZE1Q63UkJBSkKih+IdvdLla8/vYowv4aI+xwWmHcL8yto/nT1JZT/f7YkgRA==
+X-Received: by 2002:a05:6a21:398e:b0:f0:3917:5b20 with SMTP id ad14-20020a056a21398e00b000f039175b20mr21094314pzc.31.1683020418050;
+        Tue, 02 May 2023 02:40:18 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:1f3b:58fa:39f6:37e1:bb9a:a094])
-        by smtp.gmail.com with ESMTPSA id r78-20020a632b51000000b00520f316ebe3sm18201585pgr.62.2023.05.02.02.40.10
+        by smtp.gmail.com with ESMTPSA id r78-20020a632b51000000b00520f316ebe3sm18201585pgr.62.2023.05.02.02.40.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 May 2023 02:40:13 -0700 (PDT)
+        Tue, 02 May 2023 02:40:17 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
         bhupesh.sharma@linaro.org, robh+dt@kernel.org,
         linux-usb@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org
-Subject: [PATCH v2 1/2] arm64: dts: qcom: sc7280: Fix EUD dt node syntax
-Date:   Tue,  2 May 2023 15:09:58 +0530
-Message-Id: <20230502093959.1258889-2-bhupesh.sharma@linaro.org>
+Subject: [PATCH v2 2/2] dt-bindings: soc: qcom: eud: Fix compatible string in the example
+Date:   Tue,  2 May 2023 15:09:59 +0530
+Message-Id: <20230502093959.1258889-3-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230502093959.1258889-1-bhupesh.sharma@linaro.org>
 References: <20230502093959.1258889-1-bhupesh.sharma@linaro.org>
@@ -74,102 +74,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As noted by Konrad while reviewing [1], fix the EUD and DWC3
-node syntax in sc7280 dtsi file.
+As noted by Konrad while reviewing [1], the example node in the EUD
+yaml documentation has a compatible string with no space after a comma.
 
-While at it also fix the errors reported by '$ make dtbs_check'
-for the EUD node:
-
- arch/arm64/boot/dts/qcom/sc7280-crd-r3.dtb: eud@88e0000: ports:
-    'oneOf' conditional failed, one must be fixed:
-	'port' is a required property
-	'#address-cells' is a required property
-	'#size-cells' is a required property
-  From schema: Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+Fix the same.
 
 [1]. https://lore.kernel.org/linux-arm-msm/20221231131945.3286639-1-bhupesh.sharma@linaro.org
 
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 36 ++++++++++++++--------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 31728f461422..e441b1d6cad3 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -640,6 +640,18 @@ cpu7_opp_3014mhz: opp-3014400000 {
- 		};
- 	};
- 
-+	eud_typec: connector {
-+		compatible = "usb-c-connector";
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+index 14dd29471c80..f2c5ec7e6437 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+@@ -55,9 +55,10 @@ additionalProperties: false
+ examples:
+   - |
+     eud@88e0000 {
+-           compatible = "qcom,sc7280-eud","qcom,eud";
++           compatible = "qcom,sc7280-eud", "qcom,eud";
+            reg = <0x88e0000 0x2000>,
+                  <0x88e2000 0x1000>;
 +
-+		ports {
-+			port@0 {
-+				con_eud: endpoint {
-+					remote-endpoint = <&eud_con>;
-+				};
-+			};
-+		};
-+	};
+            ports {
+                    #address-cells = <1>;
+                    #size-cells = <0>;
+@@ -67,6 +68,7 @@ examples:
+                                    remote-endpoint = <&usb2_role_switch>;
+                            };
+                    };
 +
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -3421,6 +3433,7 @@ usb_2_dwc3: usb@8c00000 {
- 				phy-names = "usb2-phy";
- 				maximum-speed = "high-speed";
- 				usb-role-switch;
-+
- 				port {
- 					usb2_role_switch: endpoint {
- 						remote-endpoint = <&eud_ep>;
-@@ -3596,10 +3609,11 @@ system-cache-controller@9200000 {
- 		};
- 
- 		eud: eud@88e0000 {
--			compatible = "qcom,sc7280-eud","qcom,eud";
--			reg = <0 0x088e0000 0 0x2000>,
--			      <0 0x088e2000 0 0x1000>;
-+			compatible = "qcom,sc7280-eud", "qcom,eud";
-+			reg = <0 0x88e0000 0 0x2000>,
-+			      <0 0x88e2000 0 0x1000>;
- 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
-+
- 			ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -3610,6 +3624,7 @@ eud_ep: endpoint {
- 						remote-endpoint = <&usb2_role_switch>;
- 					};
- 				};
-+
- 				port@1 {
- 					reg = <1>;
- 					eud_con: endpoint {
-@@ -3619,21 +3634,6 @@ eud_con: endpoint {
- 			};
- 		};
- 
--		eud_typec: connector {
--			compatible = "usb-c-connector";
--			ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
--					con_eud: endpoint {
--						remote-endpoint = <&eud_con>;
--					};
--				};
--			};
--		};
--
- 		nsp_noc: interconnect@a0c0000 {
- 			reg = <0 0x0a0c0000 0 0x10000>;
- 			compatible = "qcom,sc7280-nsp-noc";
+                    port@1 {
+                            reg = <1>;
+                            eud_con: endpoint {
 -- 
 2.38.1
 
