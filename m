@@ -2,110 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 241316F49B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 20:31:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5DAD6F49E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 20:49:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233832AbjEBSb2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 14:31:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59036 "EHLO
+        id S229520AbjEBStz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 14:49:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233959AbjEBSb1 (ORCPT
+        with ESMTP id S229501AbjEBSty (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 14:31:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D126919AC;
-        Tue,  2 May 2023 11:31:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 71A9A627CA;
-        Tue,  2 May 2023 18:31:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C1A95C433D2;
-        Tue,  2 May 2023 18:31:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683052280;
-        bh=roX7J2C0cryIH4aFs82eea9tajAAQbquDLz9EWJ4Moo=;
-        h=From:Date:Subject:To:Cc:Reply-To:From;
-        b=OUOgWCiTr3qm3yoKkf+0dTdaeN1e0aW64AGHh5bhzZi8wrNmFmIHXIBKrNEOXPC7G
-         N1y8IxqSWnn+2eLrKQwjUBLtGuTnLY3RMloepvWBgqpmbx2GWdne2zF4Wr+1M0cFHS
-         uaffoc/z/okLGmZUaUl2zP+14qQJkRmLxtxwlQzDfiqJKnfdilGtiUY3hT2kInOzkH
-         UjA60H+nKjFFthiM02UEnElogeKnUsAmUpeUE9D4VN9N0hFDlUngyDyuwtxhRdPTiP
-         mhlluV0blQmVV4bQA23iXkWEWyyH3xT7iroJQSxnEXeUSN6Fo3txe9pHVfsW2SYpl4
-         RSFnEg7oNZ+zg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by smtp.lore.kernel.org (Postfix) with ESMTP id AE069C77B78;
-        Tue,  2 May 2023 18:31:20 +0000 (UTC)
-From:   Gabriel Tremblay via B4 Relay 
-        <devnull+tremblay.gabriel.gmail.com@kernel.org>
-Date:   Tue, 02 May 2023 14:31:14 -0400
-Subject: [PATCH] Change the interrupt from level_low to edge_falling
+        Tue, 2 May 2023 14:49:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674C710C7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 11:49:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1683053348;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=DZ0W+FU8PsLfAAZv9zbz/cngBwAlCp+YIRm01kljAiE=;
+        b=WEQWVkoCRuowfnvASph77+4Thuq+xphdcVA6CEuicnmj5DXqDhKhYMsMR/SbLgN9C3Zv9Z
+        ADYuPfWKjJ5w+Kd/daYE5+s+RRQMXhknqlqEV7IVroLu5tU9guAdLWX/EE8mBWleZ6CZGJ
+        z2JW7aE+a9iIIEcyVfy7E2QT/mVd0UE=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-o9iWcb2_NMiLV9nnzcBZ8Q-1; Tue, 02 May 2023 14:49:07 -0400
+X-MC-Unique: o9iWcb2_NMiLV9nnzcBZ8Q-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-61b60166509so10593516d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 11:49:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683053346; x=1685645346;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DZ0W+FU8PsLfAAZv9zbz/cngBwAlCp+YIRm01kljAiE=;
+        b=EptAJCYuk+x6zF3i0rM/PjPzdDv3bRmyLNT8NsWDkKwVg4oGEzEEk/pkM80PXU6K0j
+         U5UTzOi/ziX/BH8wYBYhPxHdgJswcrCtP0esSzqpqMIZVEOT4vdCAhs4Ihe7syAYUduG
+         z8h8BDbek+MU6QHrVIXbEFGbfy9o3EHQcWUEnP0rUuJuuCBL8Ilb2GBXNOlrVcZhUOCQ
+         sDYnvE5f7VEDyav+Av/f+gsojHWxcUr+fxpA/beOBxYu7etegAFfh6srF2Uq7xZITW42
+         7Q30BYyFNg7n8L92TR22IZtwEw0nRdMYbNNVwoH1S8BX9TYxhquXRN1SCpWFc953MvLW
+         R9lQ==
+X-Gm-Message-State: AC+VfDwfJVNFt0Wr/MsIVS+8EBC6h1wjTDJC/v/DDyK/PGgxHZxWADEA
+        14oQt+sW7uwef9hRcevB5SBR19tieEyZPyRrmVcAW9Dg13vkvvS6R/A4l2g03pWeqJHDLMkiMtb
+        t4D8uIqnf+0GQumyiKcbPaf0Hw9Lmi4X4vA==
+X-Received: by 2002:ad4:596b:0:b0:616:5c8b:59d with SMTP id eq11-20020ad4596b000000b006165c8b059dmr6197875qvb.20.1683053346391;
+        Tue, 02 May 2023 11:49:06 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5Wy2JnTAhWuNet9cEToNtvnh6Rgxw5wsbBieiyINBFnufP8DZTowekkRqdmisuq2+jBHV9JA==
+X-Received: by 2002:ad4:596b:0:b0:616:5c8b:59d with SMTP id eq11-20020ad4596b000000b006165c8b059dmr6197852qvb.20.1683053346170;
+        Tue, 02 May 2023 11:49:06 -0700 (PDT)
+Received: from fedora (modemcable181.5-202-24.mc.videotron.ca. [24.202.5.181])
+        by smtp.gmail.com with ESMTPSA id y10-20020ad445aa000000b006057140e017sm9063235qvu.89.2023.05.02.11.49.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 May 2023 11:49:05 -0700 (PDT)
+Date:   Tue, 2 May 2023 14:49:03 -0400
+From:   Adrien Thierry <athierry@redhat.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Shazad Hussain <quic_shazhuss@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Subject: Re: [PATCH v1 0/6] arm64: qcom: sa8775p: add support for USB
+Message-ID: <ZFFbH7bH0pCDdoN1@fedora>
+References: <20230421133922.8520-1-quic_shazhuss@quicinc.com>
+ <ZEcEGJiikEC2wIVE@fedora>
+ <CAA8EJpr27=2jAXbamN6J7yF+7G=L5Af8+XReB5UnFuihcEwMQA@mail.gmail.com>
+ <ZEgV+H3yZLp48Dlc@fedora>
+ <3dc6e993-bcca-4e0d-5aca-686fcc8b5b73@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230502-gtremblay-x13s-keyboard-v1-1-6bc3e59b0d39@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAPFWUWQC/zXNQQqDMBCF4avIrDs0ThSaXqV0MdExhraxTEpRx
- Ls3Cl3+PD7eClk0SoZrtYLKN+Y4pRL1qYJu5BQEY18ayJA1rSEMH5WXf/KCc20zPmTxE2uPdHH
- OtoMjEoKiPWdBr5y6cfe+OQf5031/qwxxPp5v9237AVB2ldOJAAAA
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Gabriel Tremblay <tremblay.gabriel@gmail.com>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1683052280; l=1193;
- i=tremblay.gabriel@gmail.com; s=20230502; h=from:subject:message-id;
- bh=nbP1Xx1KAt958LpS5KvFFCWaYnFLYSX2Yz32vSKwDHU=;
- b=faBX9jx+sw9zzbs1OOJBCsG/3856f4GkZfvQqQ38ycrkKmFhL/mIyyzW1Lp+daHZlpOK7/PJZ
- hxMDIG9RBBdCfD19KjPfkiBjUBQg0fEv9Dh0H/kTAUS83Kol88Ly/sL
-X-Developer-Key: i=tremblay.gabriel@gmail.com; a=ed25519;
- pk=QBcAw+03yiRPOAXsWfAlyaNIhBRPIH3l8tURId7/7Nw=
-X-Endpoint-Received: by B4 Relay for tremblay.gabriel@gmail.com/20230502 with auth_id=45
-X-Original-From: Gabriel Tremblay <tremblay.gabriel@gmail.com>
-Reply-To: <tremblay.gabriel@gmail.com>
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3dc6e993-bcca-4e0d-5aca-686fcc8b5b73@linaro.org>
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Gabriel Tremblay <tremblay.gabriel@gmail.com>
+Hi Dmitry,
 
+On Sat, Apr 29, 2023 at 12:41:39AM +0300, Dmitry Baryshkov wrote:
+> On 25/04/2023 21:03, Adrien Thierry wrote:
+> > Hi Dmitry,
+> > 
+> > > Semi-random suggestion, but could you please try using
+> > > clk_regmap_phy_mux/clk_regmap_phy_mux_ops for USB pipe clk src?
+> > 
+> > Which specific clock are you refering to? I'm not very familiar with
+> > those, in the device tree I'm seeing "pipe" clocks for usb_0 and usb_1
+> > phys, but not for usb_2, which is the one that's causing issues.
+> > 
+> 
+> Ah, I see. Could you please try adding the 'qcom,select-utmi-as-pipe-clk'
+> property to the usb_2 host node and running the test again?
+>
 
+Thanks for the suggestion. I tested this but unfortunately the issue is
+still happening.
 
----
-Lenovo's x13s internal keyboard shows responsivity issues when fast
-typing occurs. The problem is not replicated with external HID keyboard.
+Best,
 
-This fix tries to alleviate the problem but requires further testing
-and commenting.
-
-Signed-off-by: Gabriel Tremblay <tremblay.gabriel@gmail.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index bdcba719fc38..e8d7f02c9bf3 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -639,7 +639,7 @@ keyboard@68 {
- 		reg = <0x68>;
- 
- 		hid-descr-addr = <0x1>;
--		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&tlmm 104 IRQ_TYPE_EDGE_FALLING>;
- 		vdd-supply = <&vreg_misc_3p3>;
- 		vddl-supply = <&vreg_s10b>;
- 
-
----
-base-commit: 84e2893b4573da3bc0c9f24e2005442e420e3831
-change-id: 20230502-gtremblay-x13s-keyboard-289935f922e2
-
-Best regards,
--- 
-Gabriel Tremblay <tremblay.gabriel@gmail.com>
+Adrien
 
