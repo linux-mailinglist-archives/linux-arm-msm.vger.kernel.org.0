@@ -2,62 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE1366F41EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 12:43:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A42FE6F41F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 12:46:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232094AbjEBKns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 06:43:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45804 "EHLO
+        id S229457AbjEBKqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 06:46:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231915AbjEBKns (ORCPT
+        with ESMTP id S231964AbjEBKp7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 06:43:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0F2193;
-        Tue,  2 May 2023 03:43:46 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 645066136F;
-        Tue,  2 May 2023 10:43:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59D3C433D2;
-        Tue,  2 May 2023 10:43:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683024225;
-        bh=5PcTT+Mp2phj0AGBO4adQ2h/a2T5CGjfMzj/n4Uwgzw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BZ560cJnwCTkC6eAn5fQX/YYVE0IeaXkS+LYCPdcMD+0S1IOu+cBBqwxWcf8PVV3m
-         zwtI8FLnTbK4qfP7a7cVIT08y7JvQ5iRnxM4fD9fdwSrIK8vxszHCGjk36GcZvlec5
-         8WqXGDrX0hp/qPwkk3DhB323vo4MMcLr3ZrQtdEmrhZiTi88TaHhZV1gFyQ0/ElXCt
-         JYdu1LXpgn59JluFra1UBwhLgVZCy5J2vPs5UvVjLhB1u1MEUvG623ey9QanbhE9Ka
-         /MZo9hFICk6nJPyOun8GIr2jGM9oYDHDTy405ZVvb7whr4HC7IrpHxETjPq67lrXA1
-         L2DHtHv9cx+iw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ptnU4-0003Bn-Jh; Tue, 02 May 2023 12:43:48 +0200
-Date:   Tue, 2 May 2023 12:43:48 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/7] phy: qcom-qmp-combo: Move phy_mutex out of
- com_init/exit
-Message-ID: <ZFDpZMBSM4fXWzB2@hovoldconsulting.com>
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-3-quic_bjorande@quicinc.com>
+        Tue, 2 May 2023 06:45:59 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBFF010DE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 03:45:57 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-50bd2d7ba74so4461920a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 03:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683024356; x=1685616356;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2RjKRf4rxtbcC4Sh8zFnfVKYv2B+zGR4PixvmDCtDjQ=;
+        b=S4H0G+L+2uU1rG8lOMfYBkk46EkfFR11eEvSrn5PQ3z8YoATN2a5gCL8nvNoIw/DEm
+         laZDROi5tNLD9YVH/pv/ss/5VBzvIzR/yQ+HlYHgw5fXA83ZgYXJYeAKSMHUCb3pCaGp
+         gPRBwx61THx2FPYpFpyhfAQ4CuKR5xbkB2WWsQYPjIxTd4/r71xcgmu8Q8RhWDxzvt4Z
+         9G/MongLXK1GrANAK7hqdvrRkOR+5Z1jDl/DelppI/4tt0dejDDjc706QB74ZRt5SvZT
+         BFo3pJaP56ZVT9LHJOAFF6X3Hju7u0scsILsPvUpWmbvOKK1iOPwP8PcmisKQbCyrmum
+         Rdsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683024356; x=1685616356;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2RjKRf4rxtbcC4Sh8zFnfVKYv2B+zGR4PixvmDCtDjQ=;
+        b=XhEd1sPBfZGBod3x9CDaGaIZboddgLenf5xACY2h/Bqrtf3NColBoX5mkXUl9oVkkd
+         Z8x6z0tnBbRo9xuVqUZGYCApPyOz435iJt8AIBfeD1wKkzDCYVpFSNfDodEzr6CLiZoh
+         XJ02uMwRwakPklptirJPVug2Jeroh3mPnNPxGmDfV9QN5oKX15bFCeUPbPEgBKL86X+u
+         UZCmL+gzg1Bwa0BknD0Jq49b4KodP4TberuhsC5ZSlhFpckw0u6WZn6X5YmRXJblsPxQ
+         yqy80oVCtkG26rXSYD4mE1WF88Xrz9Zv4qxzxWH9Z+po8wBDtSCXgqy8aowPVh0Qd4P8
+         Q+hw==
+X-Gm-Message-State: AC+VfDzpSpitFlGOR0FALtVuWUfJmzViDUBs4eUwnpV+RuoI7opIskFj
+        MysfldvJ+1lBL0uIOqsmKcFRKA==
+X-Google-Smtp-Source: ACHHUZ7j4yYkI9Nc9gpEH5cvzDvZWy/LY1LcCUvSGpVLfs2Wdk7mJ+7jjHCPYGyLlyGRTkohW1yAYg==
+X-Received: by 2002:a17:907:8687:b0:94e:ffab:4ce3 with SMTP id qa7-20020a170907868700b0094effab4ce3mr17024356ejc.32.1683024356305;
+        Tue, 02 May 2023 03:45:56 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:bafd:1283:b136:5f6a? ([2a02:810d:15c0:828:bafd:1283:b136:5f6a])
+        by smtp.gmail.com with ESMTPSA id s22-20020a170906169600b0094f3132cb86sm15798854ejd.40.2023.05.02.03.45.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 03:45:55 -0700 (PDT)
+Message-ID: <c3107648-3041-c6e3-1380-0a2fc354889c@linaro.org>
+Date:   Tue, 2 May 2023 12:45:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230425034010.3789376-3-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v6 04/13] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy:
+ Add input and output ports
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     caleb.connolly@linaro.org, konrad.dybcio@linaro.org,
+        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com
+References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
+ <20230501121111.1058190-5-bryan.odonoghue@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230501121111.1058190-5-bryan.odonoghue@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,126 +82,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 08:40:05PM -0700, Bjorn Andersson wrote:
-> With the upcoming introduction of USB Type-C orientation switching the
-> region of mutual exclusion needs to be extended to cover both the common
-> init/exit as well as the individual functions.
+On 01/05/2023 14:11, Bryan O'Donoghue wrote:
+> Add a ports declaration which is optional containing two port@
+> declarations.
 > 
-> So move the phy_mutex one step up the stack.
+> port@0 to receive an orientation-switch message from the Type-C port or
+> redriver
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> port@1 to subsequently transmit the orientation-switch on once the PHY has
+> finished doing its orientation turn-around.
+> 
+> If ports is declared the input port port@0 is mandatory but the output
+> port@1 is optional.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 51 +++++++++++++----------
->  1 file changed, 30 insertions(+), 21 deletions(-)
+>  .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      | 38 +++++++++++++++++++
+>  1 file changed, 38 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 6850e04c329b..7280f7141961 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -2463,16 +2463,13 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
->  	void __iomem *com = qmp->com;
->  	int ret;
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+> index d307343388888..c370b9cd58c2e 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
+> @@ -65,6 +65,25 @@ properties:
+>      description: Flag the port as possible handler of orientation switching
+>      type: boolean
 >  
-> -	mutex_lock(&qmp->phy_mutex);
-> -	if (qmp->init_count++) {
-> -		mutex_unlock(&qmp->phy_mutex);
-> +	if (qmp->init_count++)
->  		return 0;
-> -	}
->  
->  	ret = regulator_bulk_enable(cfg->num_vregs, qmp->vregs);
->  	if (ret) {
->  		dev_err(qmp->dev, "failed to enable regulators, err=%d\n", ret);
-> -		goto err_unlock;
-> +		goto err;
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
 
-I was going to say that you can just return ret directly but then
-realised we have a counter imbalance here that should be fixed.
+on this level: additionalProperties: false
+(because otherwise it will allow port@2 etc)
 
-I've just sent a couple of fixes which you could rebase on:
 
-	https://lore.kernel.org/r/20230502103810.12061-1-johan+linaro@kernel.org
+Best regards,
+Krzysztof
 
->  	}
->  
->  	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
-> @@ -2514,16 +2511,13 @@ static int qmp_combo_com_init(struct qmp_combo *qmp)
->  	qphy_setbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
->  			SW_PWRDN);
->  
-> -	mutex_unlock(&qmp->phy_mutex);
-> -
->  	return 0;
->  
->  err_assert_reset:
->  	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->  err_disable_regulators:
->  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
-> -err_unlock:
-> -	mutex_unlock(&qmp->phy_mutex);
-> +err:
->  
->  	return ret;
->  }
- 
-> @@ -2686,14 +2683,19 @@ static int qmp_combo_usb_init(struct phy *phy)
->  	struct qmp_combo *qmp = phy_get_drvdata(phy);
->  	int ret;
->  
-> +	mutex_lock(&qmp->phy_mutex);
-
-Nit: I think adding a newline here would improve readability.
-
->  	ret = qmp_combo_com_init(qmp);
->  	if (ret)
-> -		return ret;
-> +		goto out_unlock;
->  
->  	ret = qmp_combo_usb_power_on(phy);
-> -	if (ret)
-> +	if (ret) {
->  		qmp_combo_com_exit(qmp);
-> +		goto out_unlock;
-> +	}
->  
-> +out_unlock:
-> +	mutex_unlock(&qmp->phy_mutex);
-
-Same here.
-
->  	return ret;
->  }
->  
-> @@ -2702,11 +2704,18 @@ static int qmp_combo_usb_exit(struct phy *phy)
->  	struct qmp_combo *qmp = phy_get_drvdata(phy);
->  	int ret;
->  
-> +	mutex_lock(&qmp->phy_mutex);
-
-And here.
-
->  	ret = qmp_combo_usb_power_off(phy);
->  	if (ret)
-> -		return ret;
-> +		goto out_unlock;
->  
-> -	return qmp_combo_com_exit(qmp);
-> +	ret = qmp_combo_com_exit(qmp);
-> +	if (ret)
-> +		goto out_unlock;
-> +
-> +out_unlock:
-> +	mutex_unlock(&qmp->phy_mutex);
-
-And here.
-
-> +	return ret;
->  }
->  
->  static int qmp_combo_usb_set_mode(struct phy *phy, enum phy_mode mode, int submode)
-
-Looks good otherwise: 
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
