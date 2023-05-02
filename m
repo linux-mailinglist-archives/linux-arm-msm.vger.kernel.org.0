@@ -2,76 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3529E6F4330
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:58:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56CE46F4344
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233998AbjEBL6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 07:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59144 "EHLO
+        id S234099AbjEBMFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 08:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233918AbjEBL6r (ORCPT
+        with ESMTP id S229722AbjEBMFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 07:58:47 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B31D4E48
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 04:58:45 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4efe9a98736so4240728e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 04:58:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683028724; x=1685620724;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6ZLjR/b8+keXd4JwUhwNrpQMc/9k78bL8mpWHNXC7FY=;
-        b=d9CnNyNC4Dr5bGdHR5X2sSmBg1SLH/sERPVg49DEiZOcOYQ/pp/YQJvwNYzkFKv7ZD
-         oO3U1Lkvuyi9EQcc0TqtwsBZd1HZ23ng+3puBWyDJedXi36eeC6ycfFsYHPyY1DG2gRw
-         14R2fUD90CnRrhnoTwEdXjIh4SneCbYaZEKzCCqZr9E5ZBKvFxR/cQeB9uNmbDnuKPnY
-         PmUt9/xG/+X0VRP5u9VPKBw86EDm/9Q5TupgvqKRISjIkKPdR8W3fSgYByUu3cEMIW2/
-         J6+0o6OCDV1clo2AhIx9BqNaNVmGl5feqb1fqmr04DAu7sLKxn5xJ39UZeqQnfdbo8Ew
-         szuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683028724; x=1685620724;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6ZLjR/b8+keXd4JwUhwNrpQMc/9k78bL8mpWHNXC7FY=;
-        b=g+TTMrJH0Bq+lHweGYZgMjKexMCrQL/4yfrk8B4TnSbKSPGIa5IgyZvs9DDsR12dCw
-         cLEt9nM80+/swFivCJZPkgie0N3XRY1ZfxOA12ZRkqJAQP9bFEAnemspDHxFBRYLKelu
-         +AL6EV0dAGJt2JBbiUD54O6znllUL1Wcx2hHt5Mb/0TB0UVCryiLX3DzxNL/rFwB/BrS
-         t0munZhEAjMfi1xtC6DnRIWdp0lOxb3qvbLYwpRMPOv7d+3d4dI7b5Pzeo6FNKdXnNr4
-         M7p1D99bZDiOwM3rwO9Jlrk6i1H+VgolEbuB6U95o/jeINnpyRykgAy0AGTwun8dlfR/
-         SmxA==
-X-Gm-Message-State: AC+VfDyNRB5kC9mphh/GUp+IZ2s/Oq1MhdT/SwGnFREZyszFLKOW2a59
-        iM8psCLhep0WoA+XJgnBHucOKw==
-X-Google-Smtp-Source: ACHHUZ6DBCWxeubXScpmVueBxthXP0zHmxD3gmdHnO6MGzNPzscZeBHyG7NUjv6mx3wCmoM7LLeXrg==
-X-Received: by 2002:ac2:5228:0:b0:4ee:e0c7:434d with SMTP id i8-20020ac25228000000b004eee0c7434dmr5108578lfl.51.1683028724007;
-        Tue, 02 May 2023 04:58:44 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id g13-20020a19ac0d000000b004dc4b00a1eesm5286239lfc.261.2023.05.02.04.58.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 04:58:43 -0700 (PDT)
-Message-ID: <1aaff58a-f07b-1e2a-e27b-df41eacd19e7@linaro.org>
-Date:   Tue, 2 May 2023 13:58:42 +0200
+        Tue, 2 May 2023 08:05:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B01865BA5;
+        Tue,  2 May 2023 05:05:51 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 455196238C;
+        Tue,  2 May 2023 12:05:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93155C4339B;
+        Tue,  2 May 2023 12:05:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683029150;
+        bh=pjosqgAvcJiDE8ocsFRuyjcgaSS47imfs2wX0R23ors=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mgrMCZV3PZlTUxJtlLltDnGq8PpAFqsf3Cpf9J8cImNxENWE13YAYt/fm9H/81QgF
+         u88v1rhOs2FgynKvqrkMA0JTGOq1ew7Ss4oLmiMy/ZOPctHcROxvgHgFMPogyAk+0g
+         XX/vZPZX9knrHjscuxBRy3Haov7Ie7VvT63/puN6exZ7bQ1ErQQyLxwL1BfZp7Jj5c
+         g5DjbazrYult8Hs3qRBcFFA3js3LEm8CnUj8xfrIB567Ti3whxP5gPqaOCZmHcEIrR
+         Dgc0iaEWGC+GI0KWCIFEWhe1ukMl+RaSO37msxENCVvU1a+SOpL7QDWYME6ijziRv4
+         qUscBxiY1BjWg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1ptolV-0003eH-Di; Tue, 02 May 2023 14:05:53 +0200
+Date:   Tue, 2 May 2023 14:05:53 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
+Message-ID: <ZFD8oQETtLuDH2Xg@hovoldconsulting.com>
+References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
+ <20230425034010.3789376-6-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qrb4210-rb2: Enable aDSP and
- cDSP remoteproc nodes
-Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski@linaro.org,
-        devicetree@vger.kernel.org
-References: <20230501105832.1185477-1-bhupesh.sharma@linaro.org>
- <20230501105832.1185477-4-bhupesh.sharma@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230501105832.1185477-4-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230425034010.3789376-6-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,38 +64,108 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 1.05.2023 12:58, Bhupesh Sharma wrote:
-> Enable the aDSP and cDSP remoteproc nodes on Qualcomm QRB4210 RB2 board.
+On Mon, Apr 24, 2023 at 08:40:08PM -0700, Bjorn Andersson wrote:
+> The QMP combo PHY sits in an of_graph connected between the DisplayPort
+> controller and a USB Type-C connector (or possibly a redriver).
 > 
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> The TCPM needs to be able to convey the HPD signal to the DisplayPort
+> controller, but no directly link is provided by DeviceTree so the signal
+> needs to "pass through" the QMP combo phy.
+> 
+> Handle this by introducing a drm_bridge which upon initialization finds
+> the next bridge (i.e. the usb-c-connector) and chain this together. This
+> way HPD changes in the connector will propagate to the DisplayPort
+> driver.
+> 
+> The connector bridge is resolved lazily, as the TCPM is expected to be
+> able to resolve the typec mux and switch at probe time, so the QMP combo
+> phy will probe before the TCPM.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 36 +++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> index bff6ba1d689f..3ab46499d3fa 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> @@ -34,6 +34,16 @@ &qupv3_id_0 {
->  	status = "okay";
->  };
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> index 5d6d6ef3944b..84bc08002537 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> @@ -22,6 +22,8 @@
+>  #include <linux/usb/typec.h>
+>  #include <linux/usb/typec_mux.h>
 >  
-> +&remoteproc_adsp {
-> +	status = "okay";
-> +	firmware-name = "qcom/sm6115/adsp.mdt";
-status last
-also, don't we want to use .mbn (squashed binary)?
+> +#include <drm/drm_bridge.h>
+> +
+>  #include <dt-bindings/phy/phy-qcom-qmp.h>
+>  
+>  #include "phy-qcom-qmp.h"
+> @@ -1332,6 +1334,8 @@ struct qmp_combo {
+>  	struct clk_hw dp_link_hw;
+>  	struct clk_hw dp_pixel_hw;
+>  
+> +	struct drm_bridge bridge;
+> +
+>  	struct typec_switch_dev *sw;
+>  	enum typec_orientation orientation;
+>  };
+> @@ -3196,6 +3200,34 @@ static int qmp_combo_register_clocks(struct qmp_combo *qmp, struct device_node *
+>  	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, dp_np);
+>  }
+>  
+> +static int qmp_combo_bridge_attach(struct drm_bridge *bridge,
+> +				   enum drm_bridge_attach_flags flags)
+> +{
+> +	struct qmp_combo *qmp = container_of(bridge, struct qmp_combo, bridge);
+> +	struct drm_bridge *next_bridge;
+> +
+> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
+> +		return -EINVAL;
+> +
+> +	next_bridge = devm_drm_of_get_bridge(qmp->dev, qmp->dev->of_node, 0, 0);
+> +	if (IS_ERR(next_bridge))
+> +		return dev_err_probe(qmp->dev, PTR_ERR(next_bridge), "failed to acquire drm_bridge\n");
 
-Konrad
+Using dev_err_probe() in an attach callback looks wrong as these
+functions should not be returning -EPROBE_DEFER (and this is not a probe
+function).
+
+> +
+> +	return drm_bridge_attach(bridge->encoder, next_bridge, bridge, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+
+This line is over 100 chars, but there should be no reason not to break
+it before 80 here.
+
+> +}
+> +
+> +static const struct drm_bridge_funcs qmp_combo_bridge_funcs = {
+> +	.attach	= qmp_combo_bridge_attach,
 > +};
 > +
-> +&remoteproc_cdsp {
-> +	status = "okay";
-> +	firmware-name = "qcom/sm6115/cdsp.mdt";
-> +};
+> +static int qmp_combo_dp_register_bridge(struct qmp_combo *qmp)
+> +{
+> +	qmp->bridge.funcs = &qmp_combo_bridge_funcs;
+> +	qmp->bridge.of_node = qmp->dev->of_node;
 > +
->  &rpm_requests {
->  	regulators {
->  		compatible = "qcom,rpm-pm6125-regulators";
+> +	return devm_drm_bridge_add(qmp->dev, &qmp->bridge);
+> +}
+
+Guess you need a dummy function also for qmp_combo_dp_register_bridge()
+in case of !CONFIG_DRM.
+
+> +
+>  static int qmp_combo_parse_dt_lecacy_dp(struct qmp_combo *qmp, struct device_node *np)
+>  {
+>  	struct device *dev = qmp->dev;
+> @@ -3459,6 +3491,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	ret = qmp_combo_dp_register_bridge(qmp);
+> +	if (ret)
+> +		return ret;
+> +
+>  	/* Check for legacy binding with child nodes. */
+>  	usb_np = of_get_child_by_name(dev->of_node, "usb3-phy");
+>  	if (usb_np) {
+
+Johan
