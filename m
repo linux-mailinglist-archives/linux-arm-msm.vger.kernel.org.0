@@ -2,124 +2,301 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C59956F4C32
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 23:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 178226F4C3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 23:34:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjEBV2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 17:28:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34582 "EHLO
+        id S229536AbjEBVeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 17:34:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229820AbjEBV2C (ORCPT
+        with ESMTP id S229496AbjEBVeG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 17:28:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C46E1FD7;
-        Tue,  2 May 2023 14:27:55 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8B659621E3;
-        Tue,  2 May 2023 21:27:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35D0C4339E;
-        Tue,  2 May 2023 21:27:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683062873;
-        bh=jCPU9c2wabBAGUXBx0w4fzzWZn23Up45NdgJcoiuHoA=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=eCASTzM/iGukkSyOO1xmCKX08vb0J66EvmpJ3xPcKf4ZlD3wmx88HpXfuZPMMpFFT
-         H9nbfyXLMAntej1+qO5mzf7D25AoWOYyo6F3Qs0gfY00G9VLPKiubPZCjXFz2PHHu0
-         wV8rmFhh5MSb3R7uSp6vG/c1qEBLQ9Fyrti1+7MxiKPdWLVeaGThAwZ/3ZmkF1uhYp
-         qxVCOztSnaupk/q8zkDhByFTTFDb/NaSjx22lihvXD/qaKs+w/Io65hRZu8dPnpfCR
-         sSC+8Nr7DAdWBvwUebIO1ei86iSlHb0a83rhNweDpi64ARuvWXMUKmRSkeQgdY93NN
-         Da8zc0cMqvOVQ==
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2a8db10a5d4so44498691fa.1;
-        Tue, 02 May 2023 14:27:53 -0700 (PDT)
-X-Gm-Message-State: AC+VfDzmGDgoBzexWQk+bZHMgSzRMIO++wkrKQqRLgL9qQ4jnbfmkHEc
-        31X30SK/4xkh6I8dATkXDcT8Lmmp0bQINzNXBQ==
-X-Google-Smtp-Source: ACHHUZ4VmzJ58Blp8vkFEMpnZTP3rUtg0aygjDIMYeTMpSWAwJvPoANOd1LtrOl749GRPWYY5WO4jHHB7hvvVyp4ngc=
-X-Received: by 2002:a2e:860b:0:b0:2a8:bb99:250d with SMTP id
- a11-20020a2e860b000000b002a8bb99250dmr5156347lji.6.1683062871907; Tue, 02 May
- 2023 14:27:51 -0700 (PDT)
+        Tue, 2 May 2023 17:34:06 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750F91724
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 14:34:04 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342LS7C7018557;
+        Tue, 2 May 2023 21:33:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=b5dtkMmKFuleYChfzzG9qNRhDs+EmSuabfd7aLYu79g=;
+ b=T6qGV4WQkqj0oafa6qLEUegZXKLuFKOYnZ+nNWh2TCGgUGHXO70PjqdOXrSN5moWrMCc
+ ctD/ccqQI3d1z1AVJ18j6HJ3Vxw2jDobDok+ZX9sOYGFYj1TpbILBHG0nyFbanZ1OlS1
+ wGfCfAXUu1gKjNngYW57ZNE4dd2tK1qO+l54ZIn7GenhKM3rG/0VqcX/9HIb7fCrmBDn
+ Wp7uonOVYnRs/n6IlyjODr8QrEqnfpT48rv90r8sSPDgiPP/FM7M38u/CVdIBN9wwl0B
+ HAHxDJmTNTPN04fdcr1HnBQKAHNoYaADmM+/Oc1gfyB5I14kOjadTEdM9/6CLjGaQ83W hw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qays51nkw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 02 May 2023 21:33:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 342LXqrN026574
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 2 May 2023 21:33:52 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
+ 14:33:51 -0700
+Message-ID: <851cacad-dd8e-46c9-31c7-bc1b946024f9@quicinc.com>
+Date:   Tue, 2 May 2023 14:33:51 -0700
 MIME-Version: 1.0
-References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
- <CACRpkdZx6vEVnxVt0tW4nYtnbv8g=Dc11sa_3myB3GW4jXk1oA@mail.gmail.com>
-In-Reply-To: <CACRpkdZx6vEVnxVt0tW4nYtnbv8g=Dc11sa_3myB3GW4jXk1oA@mail.gmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Tue, 2 May 2023 16:27:39 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKzof_mYRw9Dd0YAVWr1AFoO8gwkVUR22AJX_RF2xv0aA@mail.gmail.com>
-Message-ID: <CAL_JsqKzof_mYRw9Dd0YAVWr1AFoO8gwkVUR22AJX_RF2xv0aA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Olof Johansson <olof@lixom.net>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
-        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 3/7] drm/msm/dpu: separate common function to init
+ physical encoder
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
+ <20230430235732.3341119-4-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230430235732.3341119-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: m1zbJCNWmc9nYBiNhvMrQDCguOqfbfwH
+X-Proofpoint-ORIG-GUID: m1zbJCNWmc9nYBiNhvMrQDCguOqfbfwH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-02_12,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305020184
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 2, 2023 at 4:19=E2=80=AFPM Linus Walleij <linus.walleij@linaro.=
-org> wrote:
->
-> On Tue, May 2, 2023 at 9:40=E2=80=AFPM Rob Herring <robh+dt@kernel.org> w=
-rote:
->
-> > I've dusted off my script and made a branch[1] with the result.
-> > There's just a couple of fixes needed after the script is run (see the
-> > top commit). The cross arch includes are all fixed up by the script.
-> > dtbs_install maintains a flat install. I compared the number of .dtbs
-> > before and after to check the script.
-> >
-> > I think the only issue remaining is finalizing the mapping of
-> > platforms to subdirs. What I have currently is a mixture of SoC
-> > families and vendors. The most notable are all the Freescale/NXP
-> > platforms, pxa, socfpga, and stm32. It's not consistent with arm64
-> > either. Once that's finalized, I still need to go update MAINTAINERS.
->
-> I see my nits were fixed like I wanted them, and it's now mostly a
-> mix of soc and vendor names that make sense so from my point of view:
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
->
-> NB:
-> arch/arm64/boot/dts/arm$
-> vexpress-v2m-rs1.dtsi -> ../../../../arm/boot/dts/vexpress-v2m-rs1.dtsi
->
-> This still works after the script, yes?
 
-Yes, because in the script I do:
 
-git grep -l -F "vexpress-v2m-rs1" arch/arm64/boot/dts | xargs perl -p
--i -e "s/vexpress-v2m-rs1/arm\/arm\/vexpress-v2m-rs1/"
+On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
+> Move common DPU physical encoder initialization code to the new function
+> dpu_encoder_phys_init().
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 31 +++++++++++++++++--
+>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  3 ++
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 19 +++---------
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 20 +++---------
+>   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 19 +++---------
+>   5 files changed, 46 insertions(+), 46 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 8c45c949ec39..c60dce5861e2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -2303,8 +2303,6 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
+>   
+>   	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+>   		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+> -		atomic_set(&phys->vsync_cnt, 0);
+> -		atomic_set(&phys->underrun_cnt, 0);
+>   
+>   		if (phys->intf_idx >= INTF_0 && phys->intf_idx < INTF_MAX)
+>   			phys->hw_intf = dpu_rm_get_intf(&dpu_kms->rm, phys->intf_idx);
+> @@ -2505,3 +2503,32 @@ unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys *phys_enc)
+>   
+>   	return dpu_enc->dsc_mask;
+>   }
+> +
+> +int dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
+> +			  struct dpu_enc_phys_init_params *p)
+> +{
+> +	int i;
+> +
+> +	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+> +	phys_enc->intf_idx = p->intf_idx;
+> +	phys_enc->wb_idx = p->wb_idx;
+> +	phys_enc->parent = p->parent;
+> +	phys_enc->dpu_kms = p->dpu_kms;
+> +	phys_enc->split_role = p->split_role;
+> +	phys_enc->enc_spinlock = p->enc_spinlock;
+> +	phys_enc->enable_state = DPU_ENC_DISABLED;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+> +		phys_enc->irq[i] = -EINVAL;
+> +
+> +	atomic_set(&phys_enc->vblank_refcount, 0);
+> +	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+> +	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
+> +
+> +	atomic_set(&phys_enc->vsync_cnt, 0);
+> +	atomic_set(&phys_enc->underrun_cnt, 0);
+> +
+> +	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+> +
+> +	return 0;
+> +}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> index 1d434b22180d..7019870215c0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> @@ -405,4 +405,7 @@ void dpu_encoder_frame_done_callback(
+>   		struct drm_encoder *drm_enc,
+>   		struct dpu_encoder_phys *ready_phys, u32 event);
+>   
+> +int dpu_encoder_phys_init(struct dpu_encoder_phys *phys,
+> +			  struct dpu_enc_phys_init_params *p);
+> +
+>   #endif /* __dpu_encoder_phys_H__ */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index 74470d068622..ce86b9ef6bf1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -759,7 +759,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+>   {
+>   	struct dpu_encoder_phys *phys_enc = NULL;
+>   	struct dpu_encoder_phys_cmd *cmd_enc = NULL;
+> -	int i, ret = 0;
+> +	int ret = 0;
+>   
+>   	DPU_DEBUG("intf %d\n", p->intf_idx - INTF_0);
+>   
+> @@ -770,25 +770,16 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+>   		return ERR_PTR(ret);
+>   	}
+>   	phys_enc = &cmd_enc->base;
+> -	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+> -	phys_enc->intf_idx = p->intf_idx;
+> +
+> +	ret = dpu_encoder_phys_init(phys_enc, p);
+> +	if (ret)
+> +		return ERR_PTR(ret);
 
-Rob
+dpu_encoder_phys_init() seems to always return 0, so we can make that 
+void and drop ret and return here?
+
+>   
+>   	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
+> -	phys_enc->parent = p->parent;
+> -	phys_enc->dpu_kms = p->dpu_kms;
+> -	phys_enc->split_role = p->split_role;
+>   	phys_enc->intf_mode = INTF_MODE_CMD;
+> -	phys_enc->enc_spinlock = p->enc_spinlock;
+>   	cmd_enc->stream_sel = 0;
+> -	phys_enc->enable_state = DPU_ENC_DISABLED;
+> -	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+> -		phys_enc->irq[i] = -EINVAL;
+>   
+> -	atomic_set(&phys_enc->vblank_refcount, 0);
+> -	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+> -	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
+>   	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
+> -	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+>   	init_waitqueue_head(&cmd_enc->pending_vblank_wq);
+>   
+>   	DPU_DEBUG_CMDENC(cmd_enc, "created\n");
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> index 3a374292f311..aca3849621e2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> @@ -699,7 +699,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+>   		struct dpu_enc_phys_init_params *p)
+>   {
+>   	struct dpu_encoder_phys *phys_enc = NULL;
+> -	int i;
+> +	int ret;
+>   
+>   	if (!p) {
+>   		DPU_ERROR("failed to create encoder due to invalid parameter\n");
+> @@ -712,24 +712,14 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+>   		return ERR_PTR(-ENOMEM);
+>   	}
+>   
+> -	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+> -	phys_enc->intf_idx = p->intf_idx;
+> -
+>   	DPU_DEBUG_VIDENC(phys_enc, "\n");
+>   
+> +	ret = dpu_encoder_phys_init(phys_enc, p);
+> +	if (ret)
+> +		return ERR_PTR(ret);
+
+same here.
+
+> +
+>   	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
+> -	phys_enc->parent = p->parent;
+> -	phys_enc->dpu_kms = p->dpu_kms;
+> -	phys_enc->split_role = p->split_role;
+>   	phys_enc->intf_mode = INTF_MODE_VIDEO;
+> -	phys_enc->enc_spinlock = p->enc_spinlock;
+> -	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+> -		phys_enc->irq[i] = -EINVAL;
+> -
+> -	atomic_set(&phys_enc->vblank_refcount, 0);
+> -	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+> -	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+> -	phys_enc->enable_state = DPU_ENC_DISABLED;
+>   
+>   	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->intf_idx);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> index f879d006de21..c252127552c6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+> @@ -683,7 +683,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
+>   	struct dpu_encoder_phys *phys_enc = NULL;
+>   	struct dpu_encoder_phys_wb *wb_enc = NULL;
+>   	int ret = 0;
+> -	int i;
+>   
+>   	DPU_DEBUG("\n");
+>   
+> @@ -701,28 +700,18 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
+>   	}
+>   
+>   	phys_enc = &wb_enc->base;
+> -	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+> -	phys_enc->wb_idx = p->wb_idx;
+> +
+> +	ret = dpu_encoder_phys_init(phys_enc, p);
+> +	if (ret)
+> +		return ERR_PTR(ret);
+
+same here
+
+>   
+>   	dpu_encoder_phys_wb_init_ops(&phys_enc->ops);
+> -	phys_enc->parent = p->parent;
+> -	phys_enc->dpu_kms = p->dpu_kms;
+> -	phys_enc->split_role = p->split_role;
+>   	phys_enc->intf_mode = INTF_MODE_WB_LINE;
+> -	phys_enc->wb_idx = p->wb_idx;
+> -	phys_enc->enc_spinlock = p->enc_spinlock;
+>   
+>   	atomic_set(&wb_enc->wbirq_refcount, 0);
+>   
+> -	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+> -		phys_enc->irq[i] = -EINVAL;
+> -
+> -	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+> -	atomic_set(&phys_enc->vblank_refcount, 0);
+>   	wb_enc->wb_done_timeout_cnt = 0;
+>   
+> -	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+> -	phys_enc->enable_state = DPU_ENC_DISABLED;
+>   
+>   	DPU_DEBUG("Created dpu_encoder_phys for wb %d\n",
+>   			phys_enc->wb_idx);
