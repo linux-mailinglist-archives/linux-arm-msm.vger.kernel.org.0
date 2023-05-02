@@ -2,61 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56CE46F4344
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D25A6F4368
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 14:11:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234099AbjEBMFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 08:05:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33716 "EHLO
+        id S234068AbjEBMLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 08:11:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbjEBMFw (ORCPT
+        with ESMTP id S234145AbjEBMLA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 08:05:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B01865BA5;
-        Tue,  2 May 2023 05:05:51 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 455196238C;
-        Tue,  2 May 2023 12:05:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93155C4339B;
-        Tue,  2 May 2023 12:05:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683029150;
-        bh=pjosqgAvcJiDE8ocsFRuyjcgaSS47imfs2wX0R23ors=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mgrMCZV3PZlTUxJtlLltDnGq8PpAFqsf3Cpf9J8cImNxENWE13YAYt/fm9H/81QgF
-         u88v1rhOs2FgynKvqrkMA0JTGOq1ew7Ss4oLmiMy/ZOPctHcROxvgHgFMPogyAk+0g
-         XX/vZPZX9knrHjscuxBRy3Haov7Ie7VvT63/puN6exZ7bQ1ErQQyLxwL1BfZp7Jj5c
-         g5DjbazrYult8Hs3qRBcFFA3js3LEm8CnUj8xfrIB567Ti3whxP5gPqaOCZmHcEIrR
-         Dgc0iaEWGC+GI0KWCIFEWhe1ukMl+RaSO37msxENCVvU1a+SOpL7QDWYME6ijziRv4
-         qUscBxiY1BjWg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ptolV-0003eH-Di; Tue, 02 May 2023 14:05:53 +0200
-Date:   Tue, 2 May 2023 14:05:53 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
-Message-ID: <ZFD8oQETtLuDH2Xg@hovoldconsulting.com>
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-6-quic_bjorande@quicinc.com>
+        Tue, 2 May 2023 08:11:00 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E816184
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 05:10:25 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3062d764455so1471519f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 05:10:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683029424; x=1685621424;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=45dl8HRRntE2PbqYyAyWim4/Cl/d2w2wAiKRr5pDHQs=;
+        b=Iv/XrGVxmUP/qLDE7zU5yZMzVUJxvjI6j8Vatr0AH2Vi0rIB9g8gA8rI5sDnFiHCQf
+         fkns0nn4hrcLImuDJmbbB00sfLM2gVOAuI/kdQzmwGEYFKvJwbS9OL1dYdNzqpaAgPo2
+         jf2XfiX6BHDYs5fYUdDuoN0E39vD40PZWst/JWlEoW+Rzdj8AEaDioAN8lLnZXVD659C
+         on6sa6LcPkoWBouL5Yw2WWObr/6PAIkjqDDwgC7BdseJHvLebjmjXES0CdgugGan/8TN
+         V5aG5wesj2hQ0jh4C6MqBk7Ea/5NqVvZodDehFcDhH0m4G5/T541SztLs364BgCawvgi
+         QYww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683029424; x=1685621424;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=45dl8HRRntE2PbqYyAyWim4/Cl/d2w2wAiKRr5pDHQs=;
+        b=ZSX6SDIIRgcaWnoGyTixW8Txn+6QZUSPZXMyQFr1MxMNPqHjmCA1rI8DrLw4xcbPyS
+         SELgSm3Jv5rRDVYjEidABPr/doKS9FInYQ6Hfco9CdLacXAwCTLBHSku65WRzTanpiO9
+         hXCZrJU3uFIyJfgLyUeOg+j1KR7vdQUpjU8/4GfXgSWLfIrPU8GpKIzzROqM4CRF/9Bv
+         4awR1BKNn5LXXCW77oNv431H+TinohTV4pHbLPqrHloBQBZ8UR1Hn5y99z8B7xc5/5L9
+         U//w/E+QcMxUj1E95ngDv1+FUFsBTsWFF2b4Apn1LQQGY6j/JymJpzLxANFFCDcjFgTZ
+         Rjvg==
+X-Gm-Message-State: AC+VfDzXcRZrawU08i3hmChnRjiUeLayKbDCHQFKG35EG0yWzQEOwGIH
+        P6KchKIWtjGq6Sp3o4PqMsGBNQ==
+X-Google-Smtp-Source: ACHHUZ5spGP8NeUGfX2dk8fSczipLRaoTOM3cXf5d8pIF52usTBMLGpn7EbO/uoRIAnFoZPnucylcA==
+X-Received: by 2002:a5d:6d50:0:b0:306:2638:fa6c with SMTP id k16-20020a5d6d50000000b003062638fa6cmr6795997wri.33.1683029424208;
+        Tue, 02 May 2023 05:10:24 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id ay37-20020a05600c1e2500b003f18b52c73asm35084751wmb.24.2023.05.02.05.10.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 05:10:23 -0700 (PDT)
+Message-ID: <95acfa85-d779-1459-5520-d520534c31fb@linaro.org>
+Date:   Tue, 2 May 2023 13:10:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230425034010.3789376-6-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v6 12/13] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
+ usb-role-switching for usb_1
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, linux@roeck-us.net,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     caleb.connolly@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
+        robertom@qti.qualcomm.com
+References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
+ <20230501121111.1058190-13-bryan.odonoghue@linaro.org>
+ <109dc9fe-5ca7-1a98-3222-8c2297f4e8ce@linaro.org>
+ <b4bfe2f6-7ea3-fca5-9dc6-12270b3bbc42@linaro.org>
+ <41581143-2caa-bac1-479c-c8feaf2de1b9@linaro.org>
+ <378d0ec8-5ce1-57d3-eccf-8e053d647f47@linaro.org>
+ <44c26ca6-12b3-74ad-70de-1dc2d4f42dca@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <44c26ca6-12b3-74ad-70de-1dc2d4f42dca@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,108 +87,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 08:40:08PM -0700, Bjorn Andersson wrote:
-> The QMP combo PHY sits in an of_graph connected between the DisplayPort
-> controller and a USB Type-C connector (or possibly a redriver).
+On 02/05/2023 12:47, Konrad Dybcio wrote:
 > 
-> The TCPM needs to be able to convey the HPD signal to the DisplayPort
-> controller, but no directly link is provided by DeviceTree so the signal
-> needs to "pass through" the QMP combo phy.
+> this part (minus remote-endpoint) would go to pm8150b.dtsi
 > 
-> Handle this by introducing a drm_bridge which upon initialization finds
-> the next bridge (i.e. the usb-c-connector) and chain this together. This
-> way HPD changes in the connector will propagate to the DisplayPort
-> driver.
-> 
-> The connector bridge is resolved lazily, as the TCPM is expected to be
-> able to resolve the typec mux and switch at probe time, so the QMP combo
-> phy will probe before the TCPM.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 36 +++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 5d6d6ef3944b..84bc08002537 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -22,6 +22,8 @@
->  #include <linux/usb/typec.h>
->  #include <linux/usb/typec_mux.h>
->  
-> +#include <drm/drm_bridge.h>
-> +
->  #include <dt-bindings/phy/phy-qcom-qmp.h>
->  
->  #include "phy-qcom-qmp.h"
-> @@ -1332,6 +1334,8 @@ struct qmp_combo {
->  	struct clk_hw dp_link_hw;
->  	struct clk_hw dp_pixel_hw;
->  
-> +	struct drm_bridge bridge;
-> +
->  	struct typec_switch_dev *sw;
->  	enum typec_orientation orientation;
->  };
-> @@ -3196,6 +3200,34 @@ static int qmp_combo_register_clocks(struct qmp_combo *qmp, struct device_node *
->  	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, dp_np);
->  }
->  
-> +static int qmp_combo_bridge_attach(struct drm_bridge *bridge,
-> +				   enum drm_bridge_attach_flags flags)
-> +{
-> +	struct qmp_combo *qmp = container_of(bridge, struct qmp_combo, bridge);
-> +	struct drm_bridge *next_bridge;
-> +
-> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
-> +		return -EINVAL;
-> +
-> +	next_bridge = devm_drm_of_get_bridge(qmp->dev, qmp->dev->of_node, 0, 0);
-> +	if (IS_ERR(next_bridge))
-> +		return dev_err_probe(qmp->dev, PTR_ERR(next_bridge), "failed to acquire drm_bridge\n");
+> remote-endpoint would be assigned (or left empty) on a per-device basis
 
-Using dev_err_probe() in an attach callback looks wrong as these
-functions should not be returning -EPROBE_DEFER (and this is not a probe
-function).
+Hmm.
 
-> +
-> +	return drm_bridge_attach(bridge->encoder, next_bridge, bridge, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+Yes, actually I think I can locate the connector {} defintion in the 
+pm8150b.dtsi.. you would need to have one tcpm {typec, pdphy} block per 
+type-c port so.. yes
 
-This line is over 100 chars, but there should be no reason not to break
-it before 80 here.
+done
 
-> +}
-> +
-> +static const struct drm_bridge_funcs qmp_combo_bridge_funcs = {
-> +	.attach	= qmp_combo_bridge_attach,
-> +};
-> +
-> +static int qmp_combo_dp_register_bridge(struct qmp_combo *qmp)
-> +{
-> +	qmp->bridge.funcs = &qmp_combo_bridge_funcs;
-> +	qmp->bridge.of_node = qmp->dev->of_node;
-> +
-> +	return devm_drm_bridge_add(qmp->dev, &qmp->bridge);
-> +}
-
-Guess you need a dummy function also for qmp_combo_dp_register_bridge()
-in case of !CONFIG_DRM.
-
-> +
->  static int qmp_combo_parse_dt_lecacy_dp(struct qmp_combo *qmp, struct device_node *np)
->  {
->  	struct device *dev = qmp->dev;
-> @@ -3459,6 +3491,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
->  
-> +	ret = qmp_combo_dp_register_bridge(qmp);
-> +	if (ret)
-> +		return ret;
-> +
->  	/* Check for legacy binding with child nodes. */
->  	usb_np = of_get_child_by_name(dev->of_node, "usb3-phy");
->  	if (usb_np) {
-
-Johan
+---
+bod
