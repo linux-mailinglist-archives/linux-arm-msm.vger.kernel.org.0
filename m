@@ -2,61 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37B9A6F4304
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:48:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5627A6F4317
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:53:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229703AbjEBLsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 07:48:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53402 "EHLO
+        id S233731AbjEBLxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 07:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233842AbjEBLsQ (ORCPT
+        with ESMTP id S233276AbjEBLxP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 07:48:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4119983;
-        Tue,  2 May 2023 04:48:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D4A14616C9;
-        Tue,  2 May 2023 11:48:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A35C433D2;
-        Tue,  2 May 2023 11:48:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683028094;
-        bh=3kyH1W+UzFVD6G6EyaZ+boLKcJ0HvmBDVvQXrP6u1dg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=E4PZdjU1vyAVpd+DGdFRNTTtGZLknQ4SkJwkn/sjSZ8ngE17xYpB0aNFeBDOq99fD
-         5syZ65V0u9ik07QFAhmBux9DIbzu1lVaU99X/grjm5fV0vk6DpjUZvbutkmN02cSqE
-         pIquQjFycnjQIDnwfydJM31XPSKe4Ah963n3mqePywHueWP0lyPh5anIh3YE8ZYsKV
-         tLTy5zCcIPSvF4wRc+pVCUQn5VxZup4HfE/8nqOKvhJDoAbM3/vkSDbqwZp2O+G+Ky
-         SI+wWfNM+G1TYObsVNyfTtn8hJ8Bh+u0L9+2HoPfuDOteUH+i0J8LOqJ5stHGHwQKr
-         N3E/e0U9EtTYQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1ptoUS-0003WC-Tz; Tue, 02 May 2023 13:48:16 +0200
-Date:   Tue, 2 May 2023 13:48:16 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/7] phy: qcom-qmp-combo: Introduce orientation variable
-Message-ID: <ZFD4gM9dUQwBmSUe@hovoldconsulting.com>
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-4-quic_bjorande@quicinc.com>
+        Tue, 2 May 2023 07:53:15 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1CE49C6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 04:53:12 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2a8bca69e8bso36458791fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 04:53:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683028391; x=1685620391;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r+vglhm+bDOJd4J/XyU1wbi0B7CYN6778bxrbgNwu8M=;
+        b=XpbJ0Jmb7b9iJiwUNXj980qlB0TLLKK5sJgEucCQyCrkpTSZ9jEyN6awif0qLS3ETi
+         nt3AtmxIdP3Wxi7fz5FPLH2byBEIOrIKdGrJtP5yg816D65k5XkCeSf6K7Hlbo44IP5i
+         4R1C4aYGcmh5x62dO06f7Xhh8ZdgBLvvuvqsOVpMHBu4MtkBryfFg7GMy+0W7g0B5k4W
+         HmOeu8DosClTVGXwq0+kWLCxwvM3RJPtPjcun7S4ca8zFX/jUSiNzZBG3FiEq5kPJPI4
+         C1QpO75fwREFLYcfpWQ7jSwJ0ORX5tuWYQI0b+cGBH+81bbKry4lv9sbnBmaaLJsVsuG
+         dW3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683028391; x=1685620391;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r+vglhm+bDOJd4J/XyU1wbi0B7CYN6778bxrbgNwu8M=;
+        b=kFUmEtQ+EoJcU1LLAoAPTUExvdiRHW5H5qQ6rrgwS7wVVuVjO673v4DyGm8gTOIjpM
+         xzxuP6+nnJDFzl7VO62fH0PB2jT0KDFKqBLbBasyiVYIZuQUOWL+8SrNkvAWVKlFblSA
+         GPww5CLGgCjVm5Mu7v+701dNS2J1A2y7Gbeoc0iIlySXT/xVQbj63Xg8ToLxToKVAJoX
+         RFgOOFcxnBDRJt5T9AZXtwamtrGYjV4DmXQpAoJ9nwMxV6AySccaGhT9+mPx7gss66/7
+         2M4I64/CoLZ6+oTOTFA8e8bTKUAUF8pBxwKEIDDBLPGcfQv3FAEh0DZ3rv9QfVQbe6Fw
+         hRaQ==
+X-Gm-Message-State: AC+VfDz9Qmfee3/e1pJjmjtZQGBqmeRLLXbA2tthyZpy15WsEVQnds9M
+        arvjH+dtbsK8W9nQcFn0iPI6ew==
+X-Google-Smtp-Source: ACHHUZ4ISG19cH2dnrwpmI8cD5vPRDXErDC4hzJR3u8iZqSJ/XhHRvR86NiEt9QrNEd4xrEiJkOyEQ==
+X-Received: by 2002:ac2:4438:0:b0:4b3:d6e1:26bb with SMTP id w24-20020ac24438000000b004b3d6e126bbmr4633699lfl.29.1683028390665;
+        Tue, 02 May 2023 04:53:10 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id c20-20020ac25314000000b004f00d7fcf0fsm2693850lfh.26.2023.05.02.04.53.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 May 2023 04:53:10 -0700 (PDT)
+Message-ID: <4434859f-a5b2-a9da-8dad-3f2c4f48cd27@linaro.org>
+Date:   Tue, 2 May 2023 13:53:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230425034010.3789376-4-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH] venus: add support for 10 bit decoding.
+Content-Language: en-US
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1682492417-20496-1-git-send-email-quic_dikshita@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1682492417-20496-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,73 +77,180 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 08:40:06PM -0700, Bjorn Andersson wrote:
-> In multiple places throughout the driver code has been written in
-> prepration for handling of orientation switching.
+
+
+On 26.04.2023 09:00, Dikshita Agarwal wrote:
+> - Add support for V4L2_PIX_FMT_P010 color format.
+> - Add handling of bit depth change from firmware.
+> - Return P010 as preferred format for 10 bit decode.
+Sounds like this should be 3 separate patches, preferably with
+some insight in each commit message.
+
+Konrad
 > 
-> Introduce a typec_orientation in qmp_combo and fill out the various
-> "placeholders" with the associated logic. By initializing the
-> orientation to "normal" this change has no functional impact, but
-> reduces the size of the upcoming introduction of dynamic orientation
-> switching.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 54 +++++++++++++----------
->  1 file changed, 30 insertions(+), 24 deletions(-)
+>  drivers/media/platform/qcom/venus/helpers.c        | 25 ++++++++++++++++++++++
+>  drivers/media/platform/qcom/venus/hfi_plat_bufs.h  |  3 +++
+>  .../media/platform/qcom/venus/hfi_plat_bufs_v6.c   |  9 +++++++-
+>  drivers/media/platform/qcom/venus/vdec.c           | 18 +++++++++++++---
+>  4 files changed, 51 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 7280f7141961..6748f31da7a3 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -19,6 +19,7 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/reset.h>
->  #include <linux/slab.h>
-> +#include <linux/usb/typec.h>
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index ab6a29f..193215c 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -612,6 +612,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
+>  		return HFI_COLOR_FORMAT_NV12_UBWC;
+>  	case V4L2_PIX_FMT_QC10C:
+>  		return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+> +	case V4L2_PIX_FMT_P010:
+> +		return HFI_COLOR_FORMAT_P010;
+>  	default:
+>  		break;
+>  	}
+> @@ -639,12 +641,16 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
+>  	if (is_dec) {
+>  		params.width = inst->width;
+>  		params.height = inst->height;
+> +		params.out_width = inst->out_width;
+> +		params.out_height = inst->out_height;
+>  		params.codec = inst->fmt_out->pixfmt;
+>  		params.hfi_color_fmt = to_hfi_raw_fmt(inst->fmt_cap->pixfmt);
+>  		params.dec.max_mbs_per_frame = mbs_per_frame_max(inst);
+>  		params.dec.buffer_size_limit = 0;
+>  		params.dec.is_secondary_output =
+>  			inst->opb_buftype == HFI_BUFFER_OUTPUT2;
+> +		if (params.dec.is_secondary_output)
+> +			params.hfi_dpb_color_fmt = inst->dpb_fmt;
+>  		params.dec.is_interlaced =
+>  			inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE;
+>  	} else {
+> @@ -1764,6 +1770,25 @@ int venus_helper_get_out_fmts(struct venus_inst *inst, u32 v4l2_fmt,
+>  	if (!caps)
+>  		return -EINVAL;
 >  
->  #include <dt-bindings/phy/phy-qcom-qmp.h>
->  
-> @@ -63,6 +64,10 @@
->  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
->  #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
->  
-> +/* QPHY_V3_DP_COM_TYPEC_CTRL register bits */
-> +#define SW_PORTSELECT_VAL			BIT(0)
-> +#define SW_PORTSELECT_MUX			BIT(1)
+> +	if (inst->bit_depth == VIDC_BITDEPTH_10 &&
+> +	    inst->session_type == VIDC_SESSION_TYPE_DEC) {
+> +		found_ubwc =
+> +			find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
+> +					   HFI_COLOR_FORMAT_YUV420_TP10_UBWC);
+> +		found = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT2,
+> +					   fmt);
+> +		if (found_ubwc && found) {
+> +			/*
+> +			 * Hard-code DPB buffers to be 10bit UBWC
+> +			 * until V4L2 is able to expose compressed/tiled
+> +			 * formats to applications.
+> +			 */
+> +			*out_fmt = HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+> +			*out2_fmt = fmt;
+> +			return 0;
+> +		}
+> +	}
 > +
->  #define PHY_INIT_COMPLETE_TIMEOUT		10000
->  
->  struct qmp_phy_init_tbl {
-> @@ -1323,6 +1328,8 @@ struct qmp_combo {
->  	struct clk_fixed_rate pipe_clk_fixed;
->  	struct clk_hw dp_link_hw;
->  	struct clk_hw dp_pixel_hw;
+>  	if (ubwc) {
+>  		ubwc_fmt = fmt | HFI_COLOR_FORMAT_UBWC_BASE;
+>  		found_ubwc = find_fmt_from_caps(caps, HFI_BUFFER_OUTPUT,
+> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs.h b/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
+> index 52a51a3..25e6074 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs.h
+> @@ -12,8 +12,11 @@
+>  struct hfi_plat_buffers_params {
+>  	u32 width;
+>  	u32 height;
+> +	u32 out_width;
+> +	u32 out_height;
+>  	u32 codec;
+>  	u32 hfi_color_fmt;
+> +	u32 hfi_dpb_color_fmt;
+>  	enum hfi_version version;
+>  	u32 num_vpp_pipes;
+>  	union {
+> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> index ea25c45..08caab1 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> @@ -1185,6 +1185,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+>  	enum hfi_version version = params->version;
+>  	u32 codec = params->codec;
+>  	u32 width = params->width, height = params->height, out_min_count;
+> +	u32 out_width = params->out_width, out_height = params->out_height;
+>  	struct dec_bufsize_ops *dec_ops;
+>  	bool is_secondary_output = params->dec.is_secondary_output;
+>  	bool is_interlaced = params->dec.is_interlaced;
+> @@ -1235,7 +1236,13 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+>  		bufreq->count_min = out_min_count;
+>  		bufreq->size =
+>  			venus_helper_get_framesz_raw(params->hfi_color_fmt,
+> -						     width, height);
+> +						     out_width, out_height);
 > +
-> +	enum typec_orientation orientation;
->  };
+> +		if (buftype == HFI_BUFFER_OUTPUT &&
+> +		    params->dec.is_secondary_output)
+> +			bufreq->size =
+> +				venus_helper_get_framesz_raw(params->hfi_dpb_color_fmt,
+> +							     out_width, out_height);
+>  	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH(version)) {
+>  		bufreq->size = dec_ops->scratch(width, height, is_interlaced);
+>  	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version)) {
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 4ceaba3..99d0e96 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -43,6 +43,10 @@ static const struct venus_format vdec_formats[] = {
+>  		.num_planes = 1,
+>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>  	}, {
+> +		.pixfmt = V4L2_PIX_FMT_P010,
+> +		.num_planes = 1,
+> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+> +	}, {
+>  		.pixfmt = V4L2_PIX_FMT_MPEG4,
+>  		.num_planes = 1,
+>  		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
+> @@ -697,6 +701,9 @@ static int vdec_set_work_route(struct venus_inst *inst)
+>  }
 >  
->  static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
-> @@ -1955,29 +1962,23 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
->  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
+>  #define is_ubwc_fmt(fmt) (!!((fmt) & HFI_COLOR_FORMAT_UBWC_BASE))
+> +#define is_10bit_ubwc_fmt(fmt) (!!((fmt) & HFI_COLOR_FORMAT_10_BIT_BASE & \
+> +				    HFI_COLOR_FORMAT_UBWC_BASE))
+> +
+>  
+>  static int vdec_output_conf(struct venus_inst *inst)
 >  {
->  	u32 val;
-> -	bool reverse = false;
-> +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-
-Adding parentheses around the right-hand side should make this a little
-easier to parse.
-
-It also looks like these callbacks end up being called without holding
-the qmp->phy_mutex via phy->power_on(). Perhaps there is no risk for a
-concurrent switch notification and dp phy power-on but it's not that
-obvious.
-
-> +	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
-
-Also could you add these before u32 val to maintain an approximation of
-reverse xmas style?
-
-And similar below.
-
-Johan
+> @@ -744,7 +751,7 @@ static int vdec_output_conf(struct venus_inst *inst)
+>  		inst->opb_fmt = out2_fmt;
+>  		inst->dpb_buftype = HFI_BUFFER_OUTPUT;
+>  		inst->dpb_fmt = out_fmt;
+> -	} else if (is_ubwc_fmt(out2_fmt)) {
+> +	} else if (is_ubwc_fmt(out2_fmt) || is_10bit_ubwc_fmt(out_fmt)) {
+>  		inst->opb_buftype = HFI_BUFFER_OUTPUT;
+>  		inst->opb_fmt = out_fmt;
+>  		inst->dpb_buftype = HFI_BUFFER_OUTPUT2;
+> @@ -1420,7 +1427,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+>  static void vdec_event_change(struct venus_inst *inst,
+>  			      struct hfi_event_data *ev_data, bool sufficient)
+>  {
+> -	static const struct v4l2_event ev = {
+> +	struct v4l2_event ev = {
+>  		.type = V4L2_EVENT_SOURCE_CHANGE,
+>  		.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION };
+>  	struct device *dev = inst->core->dev_dec;
+> @@ -1461,8 +1468,13 @@ static void vdec_event_change(struct venus_inst *inst,
+>  	inst->out_width = ev_data->width;
+>  	inst->out_height = ev_data->height;
+>  
+> -	if (inst->bit_depth != ev_data->bit_depth)
+> +	if (inst->bit_depth != ev_data->bit_depth) {
+>  		inst->bit_depth = ev_data->bit_depth;
+> +		if (inst->bit_depth == VIDC_BITDEPTH_10)
+> +			inst->fmt_cap = &vdec_formats[3];
+> +		else
+> +			inst->fmt_cap = &vdec_formats[0];
+> +	}
+>  
+>  	if (inst->pic_struct != ev_data->pic_struct)
+>  		inst->pic_struct = ev_data->pic_struct;
