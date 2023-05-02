@@ -2,58 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A24416F3AFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 01:20:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86ABC6F3B3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 02:13:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbjEAXUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 19:20:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52038 "EHLO
+        id S233128AbjEBANf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 20:13:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbjEAXUu (ORCPT
+        with ESMTP id S231631AbjEBANe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 19:20:50 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D48C2D63
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 16:20:48 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3542240E49;
-        Tue,  2 May 2023 01:20:47 +0200 (CEST)
-Date:   Tue, 2 May 2023 01:20:45 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Jonathan Cameron <jic23@kernel.org>
-Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 0/5] iio: adc: qcom-spmi-vadc: Propagate fw node
- label to userspace
-Message-ID: <jj7taer4qk5whekl5tugkgdlmmxsokihxd2ay33ikvhhkig5uc@zgd4phhyb4zr>
-Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>, 
-        Jonathan Cameron <jic23@kernel.org>, phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>, 
-        Bjorn Andersson <andersson@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht, 
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-        Martin Botka <martin.botka@somainline.org>, Jami Kettunen <jami.kettunen@somainline.org>, 
-        Lars-Peter Clausen <lars@metafoo.de>, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
-        linux-kernel@vger.kernel.org
-References: <20230116220909.196926-1-marijn.suijten@somainline.org>
- <20230122165947.62e8652d@jic23-huawei>
- <20230122234137.fyziba55n3b6tx3j@SoMainline.org>
- <20230501172151.4a4b6dce@jic23-huawei>
+        Mon, 1 May 2023 20:13:34 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32FBE3AA5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 17:13:33 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f00d3f98deso25236701e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 17:13:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1682986411; x=1685578411;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w351tNiE3dJPJnhm67jSNg4416e7gcI4wPfoPQnGIBM=;
+        b=FjED+5/q1krQaL7ap7zMAcG8eqL9N6Hm8bI5422Usjc3mbN0wB7ZzuN6eZKWrVXcMg
+         tCuYVmWp3A5sXntB9Po6xBMfU1MikKvzrSsD0x7s5lA353H20wxEfmVnW+RZfhHB8iQI
+         YkwQa0e420mARgm+03XQ3XXl/GLdydLXboNzLpIYtO6NN0KwmcQ8KYqYeewUZqwHgkj9
+         1jHoQoIpWJLj6pOmJW/BkY9RvLoftiLo0P3TpVi5qTcdcqO1y4tK4nvwfTGHiHcv8pQl
+         RVmHYez/ClyovQejhqtJFSaZTVbBorfEGrQdM7H0G1gJLJdKPcIt8LUxEMIN3Eb4GVwg
+         ANyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682986411; x=1685578411;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w351tNiE3dJPJnhm67jSNg4416e7gcI4wPfoPQnGIBM=;
+        b=IyhjlFDywwyeUS3LgIZndHcUwTibrDchJICPzZwOjflRUSioUWSrxLefz+pTWMSDPn
+         mow+VCqI8ni4uUPbEqqD6N9V+/ilsKgmQr55ELp28hJb6fBAQrU1D2igfwhDu+1W6qYv
+         OBFwjyyMnswMw0R0q00BigiXSgvwMUYPHRoQzqBPljsa4ecI6xLzuPHx0ykDpV5MuNDH
+         CL6r+7efZ3gsnyiseuS3TdBkahNU1EliBsBQrSu4d5BCRIFBT8eQQrJwfzEOctsA3lpO
+         6fjJUZJm33n4vsqmK0GbRt9DbqOgPPIn+2romYmbSsJx8BeknLIeVTu9QkXv4ni1YRJy
+         4uKA==
+X-Gm-Message-State: AC+VfDyuxq76z0KhWLbCfQpBtirGKqQ+YkbVIGWQs7tfkOMtxUCqrZS8
+        HfgB5ezdIdcqJr0+PqQWl5rGAQ==
+X-Google-Smtp-Source: ACHHUZ4m2pOcnJ2XXpuOc9NrKE39dIhUO4j7GBeW/YIjThz8c7Mgq9JeOlJXny6WARYtgSZnLonlDw==
+X-Received: by 2002:a05:6512:31d4:b0:4ed:b86b:9cc9 with SMTP id j20-20020a05651231d400b004edb86b9cc9mr4849394lfe.28.1682986411299;
+        Mon, 01 May 2023 17:13:31 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id w15-20020ac2442f000000b004f09126b291sm1119870lfl.213.2023.05.01.17.13.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 May 2023 17:13:30 -0700 (PDT)
+Message-ID: <1be5930d-a389-7fa0-2886-4e9af09cbf85@linaro.org>
+Date:   Tue, 2 May 2023 03:13:30 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230501172151.4a4b6dce@jic23-huawei>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v9 2/4] phy: qcom-qmp-usb: add support for updated qcm2290
+ / sm6115 binding
+Content-Language: en-GB
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, kishon@kernel.org, vkoul@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+References: <20230501192432.1220727-1-bhupesh.sharma@linaro.org>
+ <20230501192432.1220727-3-bhupesh.sharma@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230501192432.1220727-3-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,46 +82,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-01 17:21:51, Jonathan Cameron wrote:
-> On Mon, 23 Jan 2023 00:41:37 +0100
-> Marijn Suijten <marijn.suijten@somainline.org> wrote:
+On 01/05/2023 22:24, Bhupesh Sharma wrote:
+> Add support for the new qcm2290 / sm6115 binding.
 > 
-> > On 2023-01-22 16:59:47, Jonathan Cameron wrote:
-> > > On Mon, 16 Jan 2023 23:09:04 +0100
-> > > Marijn Suijten <marijn.suijten@somainline.org> wrote:
-> > >   
-> > > > Implement read_label in qcom-spmi-vadc to see DT-specified label names
-> > > > in userspace.  At the same time clear up some documentation around
-> > > > extend_name to promote read_label, and normalize similar code in
-> > > > qcom-spmi-adc5.
-> > > >   
-> > > 
-> > > I think this is a good route forwards, but it is making changes
-> > > to ABI so I definitely want input on this from at least one of
-> > > the qualcomm maintainers before I pick it up - particularly
-> > > the changes in patch 3.
-> > > 
-> > > Don't want to cause anyone nasty surprises.  
-> > 
-> > Ack, patch 3 is the odd one of the bunch (as discussed many times
-> > prior).  It is an ABI break and would effectively obsolete "iio: adc:
-> > qcom-spmi-adc5: Fix the channel name" [1] as it then only affects a few
-> > dev_err/dev_dbg.  Let's wait and hear from Qcom maintainers.
-> > 
-> > [1]: https://lore.kernel.org/linux-arm-msm/20230118100623.42255-1-andriy.shevchenko@linux.intel.com/
+> The USB QMP phy on these devices supports 2 lanes. Also note that the
+> binding now does not describe every register subregion and instead
+> the driver holds the corresponding offsets. This also includes
+> the PCS_MISC region.
 > 
-> Perhaps time for a resend of this series (drop the RFC marking as that
-> tends to mean people don't read things if they are low on time).
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
 > 
-> I'm going to mark this in patchwork as changes requested on basis a
-> v3 will show up shortly.
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> index a49711c5a63d..aa143c081805 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> @@ -1414,6 +1414,10 @@ struct qmp_usb_offsets {
+>   	u16 pcs_usb;
+>   	u16 tx;
+>   	u16 rx;
+> +	/* for PHYs with >= 2 lanes */
+> +	u16 tx2;
+> +	u16 rx2;
+> +	u16 pcs_misc;
+>   };
+>   
+>   /* struct qmp_phy_cfg - per-PHY initialization config */
+> @@ -1558,6 +1562,16 @@ static const char * const qmp_phy_vreg_l[] = {
+>   	"vdda-phy", "vdda-pll",
+>   };
+>   
+> +static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
+> +	.serdes		= 0,
+> +	.pcs		= 0xc00,
+> +	.tx		= 0x200,
+> +	.rx		= 0x400,
+> +	.tx2		= 0x600,
+> +	.rx2		= 0x800,
+> +	.pcs_misc	= 0xa00,
+> +};
+> +
+>   static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
+>   	.serdes		= 0,
+>   	.pcs		= 0x0200,
+> @@ -1922,6 +1936,8 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
+>   static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+>   	.lanes			= 2,
+>   
+> +	.offsets		= &qmp_usb_offsets_v3,
+> +
+>   	.serdes_tbl		= qcm2290_usb3_serdes_tbl,
+>   	.serdes_tbl_num		= ARRAY_SIZE(qcm2290_usb3_serdes_tbl),
+>   	.tx_tbl			= qcm2290_usb3_tx_tbl,
+> @@ -2497,6 +2513,12 @@ static int qmp_usb_parse_dt(struct qmp_usb *qmp)
+>   	qmp->tx = base + offs->tx;
+>   	qmp->rx = base + offs->rx;
+>   
+> +	if (cfg->lanes >= 2) {
+> +		qmp->tx2 = base + offs->tx2;
+> +		qmp->rx2 = base + offs->rx2;
+> +		qmp->pcs_misc = base + offs->pcs_misc;
 
-v3 is out now after once again messing with b4 to import an older
-series, with a RESEND to include all the email addresses which b4 only
-addes after using prep --auto-to-cc, and there not being any obvious way
-to retroactively add the bunch of To:/Cc: commands to a previously sent
-version before running b4 send --resend v3.
+pcs_misc should also be usable for a single-lane PHYs.
 
-Fingers crossed it all went right and reaches the right people.
+> +	}
+> +
+>   	qmp->pipe_clk = devm_clk_get(dev, "pipe");
+>   	if (IS_ERR(qmp->pipe_clk)) {
+>   		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
 
-- Marijn
+-- 
+With best wishes
+Dmitry
+
