@@ -2,80 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22ADA6F4238
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:03:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC756F423B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:03:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233826AbjEBLDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 07:03:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
+        id S233872AbjEBLDW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 07:03:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233753AbjEBLDM (ORCPT
+        with ESMTP id S233753AbjEBLDU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 07:03:12 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB9E3C19
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 04:03:10 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f18dacd392so21622715e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 04:03:10 -0700 (PDT)
+        Tue, 2 May 2023 07:03:20 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8838A3C19
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 04:03:18 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2a8dd1489b0so34546481fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 04:03:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683025389; x=1685617389;
+        d=linaro.org; s=google; t=1683025397; x=1685617397;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=omwbtXCmGprdVyfpDAWlNQpT0MHCGGQZh74UI0S4H0s=;
-        b=A/XF1ZlGoYFgyErtfy81ofhnigJwr8K1zvzSZ3axHXBmrOu7BsuQxXmM94AuYXGuE6
-         ZF2MnjZ6R8d2F67omucqxoJ4Sbz1AuH+kRXvIPjyz8wSJVU+ZTwyGoVcpbOuZ8juaynz
-         p4qT/IIQrTMZJ1HU2mO9hczi5cxVKeKduu9OXb2tX5CptyIe12BOgBmcLAXKlXoSflb1
-         5AwSLkidXnfBe2NehdIabDM37yt0nztNC9hGujNogXpXxXXMxyYP8hlzroclpCxgPJbQ
-         qIr0crM7KhkN3dlWI5zJRHwf3jvX2MuOPbmcADmS15qL6ny2+LM7JdHzko8jKeL/QgKl
-         JBig==
+        bh=ZOMeaRlGtpfULcYehJpxEcz/nKFZB433u9YWi4JwQ/o=;
+        b=H7fMVfvhOULgMPLou1ZksP++qlsfBH6XG4uakQ8oE751XNKbvGG/oS6fR6VVAgQPHt
+         MKrNt/jAk40/jIGhf0m+mXSyaucMh9rHw9V/o69PY/NOgVLyg/b2R+j+idB3NC0uE2fD
+         eqMz1LoQcVJcQDr3MMgpIMD1CPgpD0OOQzmsUrlhSnaPIt1Y//WtQGu9P5rgNN1h13H1
+         ZVlQ8Ymlz2vmdnigNodctJ0BH4RhIfjy/CwQ8c+V+i6culX5WD5Ga83ga9E6Tr2mpX+n
+         5toTMF5crif/hE0SDscvLofw36LM8aDqq10pOTjUcj3Ji8QURfIxJTfrgxz3cL1H2Kkb
+         KFTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683025389; x=1685617389;
+        d=1e100.net; s=20221208; t=1683025397; x=1685617397;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=omwbtXCmGprdVyfpDAWlNQpT0MHCGGQZh74UI0S4H0s=;
-        b=Zn2ufG/P+wShqzXC7u4OkPSBbk227WqQUL9ev39Ylt+Y3AIdn5i/wQ+DemweDj9hjO
-         1uj/4/yKrs1SGUXQuHoKQJ8bPymS82MKU7uAVNnS/BSFUGZzWInUN/8FNG0WFq1+BnBc
-         jjP7tWBNgFvfZUeUjzpnt62VinpX0M95nkJbYonaFpmcygSrloOtSpaSXV25zxlG7PXa
-         RwHGJnygh3UKseUNghbmLrrwdokT+Iz4xL79oOABbQ+sKsMS3kPY2J9KZXoNaxBuNSFh
-         F5zTpAcR316W1oeZ680sk5BavWjJUdCxHassNX1699kFnj+Cp5+0P3xKNJ0D7I2FGTDk
-         hHwQ==
-X-Gm-Message-State: AC+VfDwrh4rPPG8Lunr9F14hircTLg1qCB0F2EPcMH1o2XnukBm7h7Cq
-        vAnhy5BZglJLNDDm48eGNnjFcw==
-X-Google-Smtp-Source: ACHHUZ7vDA6JxBmpj6Dic9Kq/hsRXtlWDtuyjDyKndSK/YCoOWRQ/quxBjO2e1CsWb5c6jAcX0b7jw==
-X-Received: by 2002:a05:600c:2248:b0:3f2:5a60:a042 with SMTP id a8-20020a05600c224800b003f25a60a042mr11383968wmm.4.1683025389137;
-        Tue, 02 May 2023 04:03:09 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id 14-20020a05600c028e00b003f18b942338sm34858707wmk.3.2023.05.02.04.03.08
+        bh=ZOMeaRlGtpfULcYehJpxEcz/nKFZB433u9YWi4JwQ/o=;
+        b=hd7D36H9ZEvrYAdtn+H8VOUMeLMKi5PpjFYgH8C3rtNAmFehSZoDBz36pLE2fno/as
+         U5aLKqxCy5t89GEqikFEo1zdkGWoCIJI8ONKBIKE7S/Ak3E3woNel6GA1F8cl3I9iLY4
+         /YHIRrxw3PcG0wE3t44dLxi+Z+IcEiKzOPycXSY+hFRoKsxjMpyrG7sqSRGgq2b++Azh
+         q9n0OZtS3SfnagLkFXggbDYTubnfr5Q5vxbO9P8aJpgsdVBtAdQVXUbUtyv8achyg/Fm
+         PfxsnWcn3yr0yxMH3hvuNWN4QongNH7YNozTBlsC9bJenD/X7geZjPrGcSuv/XcN8HLM
+         Rmyw==
+X-Gm-Message-State: AC+VfDzEqekssL8+847t52tfqR4aUEhQSxSNTayGp9DUDEB4WcIrinuz
+        vwvORhe4HU7FVzZpg1oQOvRC2w==
+X-Google-Smtp-Source: ACHHUZ5X7eDWy14NTZbF9EtgBIP0VGUzvRw4HoYZ/V+FI6FndOFiCgP9uc8M6yOxoK8bS7GWTVe59A==
+X-Received: by 2002:a2e:8756:0:b0:2a8:d39b:1496 with SMTP id q22-20020a2e8756000000b002a8d39b1496mr4405957ljj.24.1683025396788;
+        Tue, 02 May 2023 04:03:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id v3-20020a2e9f43000000b002a8d01905f7sm581783ljk.101.2023.05.02.04.03.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 04:03:08 -0700 (PDT)
-Message-ID: <b4bfe2f6-7ea3-fca5-9dc6-12270b3bbc42@linaro.org>
-Date:   Tue, 2 May 2023 12:03:07 +0100
+        Tue, 02 May 2023 04:03:16 -0700 (PDT)
+Message-ID: <543cdf95-754f-2f7c-9c5c-b901eedb441a@linaro.org>
+Date:   Tue, 2 May 2023 13:03:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v6 12/13] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
- usb-role-switching for usb_1
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 6/7] arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed
+ graph
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, linux@roeck-us.net,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     caleb.connolly@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
-        robertom@qti.qualcomm.com
-References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
- <20230501121111.1058190-13-bryan.odonoghue@linaro.org>
- <109dc9fe-5ca7-1a98-3222-8c2297f4e8ce@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <109dc9fe-5ca7-1a98-3222-8c2297f4e8ce@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     neil.armstrong@linaro.org,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Johan Hovold <johan@kernel.org>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
+ <20230425034010.3789376-7-quic_bjorande@quicinc.com>
+ <aa94b488-cb6e-bd74-0711-b7c4c7589f7a@linaro.org>
+ <fc414f61-34a8-acb0-29d4-971a873562e5@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <fc414f61-34a8-acb0-29d4-971a873562e5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,20 +86,165 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2023 12:00, Konrad Dybcio wrote:
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			port@0 {
->> +				reg = <0>;
->> +				pm8150b_role_switch_out: endpoint {
-> Similarly to the QMPPHY, the port definition can be moved to
-> the common node in the SoC DTSI
 
-But then the connector would have to be defined in the SoC dtsi and not 
-all derivatives of SoC can be assumed to have a usb-c-connector.
 
-grep "usb-c-connector" arch/arm64/boot/dts/qcom/*
+On 27.04.2023 15:27, Neil Armstrong wrote:
+> On 27/04/2023 01:33, Konrad Dybcio wrote:
+>>
+>> On 4/25/23 04:40, Bjorn Andersson wrote:
+>>> With support for the QMP combo phy to react to USB Type-C switch events,
+>>> introduce it as the next hop for the SuperSpeed lanes of the two USB
+>>> Type-C connectors, and connect the output of the DisplayPort controller
+>>> to the QMP combo phy.
+>>>
+>>> This allows the TCPM to perform orientation switching of both USB and
+>>> DisplayPort signals.
+>>>
+>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 28 ++++++++++++++++---
+>>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 34 +++++++++++++++++++++++
+>>>   2 files changed, 58 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+>>> index 547277924ea3..33c973661fa5 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+>>> @@ -64,7 +64,7 @@ port@1 {
+>>>                       reg = <1>;
+>>>                       pmic_glink_con0_ss: endpoint {
+>>> -                        remote-endpoint = <&mdss0_dp0_out>;
+>>> +                        remote-endpoint = <&usb_0_qmpphy_out>;
+>>>                       };
+>>>                   };
+>>> @@ -99,7 +99,7 @@ port@1 {
+>>>                       reg = <1>;
+>>>                       pmic_glink_con1_ss: endpoint {
+>>> -                        remote-endpoint = <&mdss0_dp1_out>;
+>>> +                        remote-endpoint = <&usb_1_qmpphy_out>;
+>>>                       };
+>>>                   };
+>>> @@ -412,7 +412,7 @@ &mdss0_dp0 {
+>>>   &mdss0_dp0_out {
+>>>       data-lanes = <0 1>;
+>>> -    remote-endpoint = <&pmic_glink_con0_ss>;
+>>> +    remote-endpoint = <&usb_0_qmpphy_dp_in>;
+>>>   };
+>>>   &mdss0_dp1 {
+>>> @@ -421,7 +421,7 @@ &mdss0_dp1 {
+>>>   &mdss0_dp1_out {
+>>>       data-lanes = <0 1>;
+>>> -    remote-endpoint = <&pmic_glink_con1_ss>;
+>>> +    remote-endpoint = <&usb_1_qmpphy_dp_in>;
+>>>   };
+>>>   &mdss0_dp3 {
+>>> @@ -670,9 +670,19 @@ &usb_0_qmpphy {
+>>>       vdda-phy-supply = <&vreg_l9d>;
+>>>       vdda-pll-supply = <&vreg_l4d>;
+>>> +    orientation-switch;
+>>
+>> I believe this belongs in the SoC DTSI, as it's supported by
+>> the PHY block itself
+>>
+>>
+>> The rest seems to lgtm..
+>>
+>>
+>> On a note, why did we end up placing pmic_glink in device
+>> DTs? It's already assumed that we're using the full Qualcomm
+>> stack as we use PAS for remoteprocs so I *think* we can always
+>> assume pmic_glink would be there!
+> 
+> As we did on other board, I think because having pmic_glink depends
+> on the board firmware capabilities ? Boards without USB-C won't need/have
+> pmic_link right ?
+PMIC_GLINK takes care of USB-C, but also enables battmgr and friends
 
----
-bod
+Konrad
+> 
+> Neil
+> 
+>>
+>> Konrad
+>>
+>>> +
+>>>       status = "okay";
+>>>   };
+>>> +&usb_0_qmpphy_dp_in {
+>>> +    remote-endpoint = <&mdss0_dp0_out>;
+>>> +};
+>>> +
+>>> +&usb_0_qmpphy_out {
+>>> +    remote-endpoint = <&pmic_glink_con0_ss>;
+>>> +};
+>>> +
+>>>   &usb_0_role_switch {
+>>>       remote-endpoint = <&pmic_glink_con0_hs>;
+>>>   };
+>>> @@ -697,9 +707,19 @@ &usb_1_qmpphy {
+>>>       vdda-phy-supply = <&vreg_l4b>;
+>>>       vdda-pll-supply = <&vreg_l3b>;
+>>> +    orientation-switch;
+>>> +
+>>>       status = "okay";
+>>>   };
+>>> +&usb_1_qmpphy_dp_in {
+>>> +    remote-endpoint = <&mdss0_dp1_out>;
+>>> +};
+>>> +
+>>> +&usb_1_qmpphy_out {
+>>> +    remote-endpoint = <&pmic_glink_con1_ss>;
+>>> +};
+>>> +
+>>>   &usb_1_role_switch {
+>>>       remote-endpoint = <&pmic_glink_con1_hs>;
+>>>   };
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> index 0e691bb0120c..1eb3a295e8fa 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>> @@ -3006,6 +3006,23 @@ usb_0_qmpphy: phy@88eb000 {
+>>>               #phy-cells = <1>;
+>>>               status = "disabled";
+>>> +
+>>> +            ports {
+>>> +                #address-cells = <1>;
+>>> +                #size-cells = <0>;
+>>> +
+>>> +                port@0 {
+>>> +                    reg = <0>;
+>>> +
+>>> +                    usb_0_qmpphy_out: endpoint {};
+>>> +                };
+>>> +
+>>> +                port@1 {
+>>> +                    reg = <1>;
+>>> +
+>>> +                    usb_0_qmpphy_dp_in: endpoint {};
+>>> +                };
+>>> +            };
+>>>           };
+>>>           usb_1_hsphy: phy@8902000 {
+>>> @@ -3042,6 +3059,23 @@ usb_1_qmpphy: phy@8903000 {
+>>>               #phy-cells = <1>;
+>>>               status = "disabled";
+>>> +
+>>> +            ports {
+>>> +                #address-cells = <1>;
+>>> +                #size-cells = <0>;
+>>> +
+>>> +                port@0 {
+>>> +                    reg = <0>;
+>>> +
+>>> +                    usb_1_qmpphy_out: endpoint {};
+>>> +                };
+>>> +
+>>> +                port@1 {
+>>> +                    reg = <1>;
+>>> +
+>>> +                    usb_1_qmpphy_dp_in: endpoint {};
+>>> +                };
+>>> +            };
+>>>           };
+>>>           mdss1_dp0_phy: phy@8909a00 {
+> 
