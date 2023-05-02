@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86ABC6F3B3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 02:13:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67A416F3B47
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 02:16:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233128AbjEBANf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 1 May 2023 20:13:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36170 "EHLO
+        id S229871AbjEBAQ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 1 May 2023 20:16:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231631AbjEBANe (ORCPT
+        with ESMTP id S229754AbjEBAQ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 1 May 2023 20:13:34 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32FBE3AA5
-        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 17:13:33 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f00d3f98deso25236701e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 17:13:33 -0700 (PDT)
+        Mon, 1 May 2023 20:16:28 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EAD026BC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  1 May 2023 17:16:27 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so4141220e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 May 2023 17:16:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1682986411; x=1685578411;
+        d=linaro.org; s=google; t=1682986585; x=1685578585;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w351tNiE3dJPJnhm67jSNg4416e7gcI4wPfoPQnGIBM=;
-        b=FjED+5/q1krQaL7ap7zMAcG8eqL9N6Hm8bI5422Usjc3mbN0wB7ZzuN6eZKWrVXcMg
-         tCuYVmWp3A5sXntB9Po6xBMfU1MikKvzrSsD0x7s5lA353H20wxEfmVnW+RZfhHB8iQI
-         YkwQa0e420mARgm+03XQ3XXl/GLdydLXboNzLpIYtO6NN0KwmcQ8KYqYeewUZqwHgkj9
-         1jHoQoIpWJLj6pOmJW/BkY9RvLoftiLo0P3TpVi5qTcdcqO1y4tK4nvwfTGHiHcv8pQl
-         RVmHYez/ClyovQejhqtJFSaZTVbBorfEGrQdM7H0G1gJLJdKPcIt8LUxEMIN3Eb4GVwg
-         ANyw==
+        bh=vNbPmr5bNbBTGpERvChrdW2sKTJp+U0aa0vtTqIBezc=;
+        b=hPtiT8DyZ40DxiHCHZDQgHQwzj1/Cv6zfCU9uuNqkyFsJQ8jvE4NE5IdL4h6TjQcC8
+         l7bwXgr1vSoi4V6XPvy7FYFbT9d19qXn81S+3zGgtvgQfLd27DfO3W0QnbVJPdrN+xne
+         E2S5SaMHxT6HtE7c0H7uzUg3VaO7vWWS15S2WeX/H0Kbd490bJMXjasJGHDbuiIILAWP
+         EdlLPfKN1szRJTSIfF0baGIc/NPI9rwSYA1WtlBZOoD/y3A2Kt+Sbwvr7g1wme/9jS6e
+         mcFnom5TmRQYbAvFyA9WdrgG9Ujq4z8mJVbk0OG3ZyRkyIrmM2mwj6FMPPQhU02htgMX
+         SH7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682986411; x=1685578411;
+        d=1e100.net; s=20221208; t=1682986585; x=1685578585;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w351tNiE3dJPJnhm67jSNg4416e7gcI4wPfoPQnGIBM=;
-        b=IyhjlFDywwyeUS3LgIZndHcUwTibrDchJICPzZwOjflRUSioUWSrxLefz+pTWMSDPn
-         mow+VCqI8ni4uUPbEqqD6N9V+/ilsKgmQr55ELp28hJb6fBAQrU1D2igfwhDu+1W6qYv
-         OBFwjyyMnswMw0R0q00BigiXSgvwMUYPHRoQzqBPljsa4ecI6xLzuPHx0ykDpV5MuNDH
-         CL6r+7efZ3gsnyiseuS3TdBkahNU1EliBsBQrSu4d5BCRIFBT8eQQrJwfzEOctsA3lpO
-         6fjJUZJm33n4vsqmK0GbRt9DbqOgPPIn+2romYmbSsJx8BeknLIeVTu9QkXv4ni1YRJy
-         4uKA==
-X-Gm-Message-State: AC+VfDyuxq76z0KhWLbCfQpBtirGKqQ+YkbVIGWQs7tfkOMtxUCqrZS8
-        HfgB5ezdIdcqJr0+PqQWl5rGAQ==
-X-Google-Smtp-Source: ACHHUZ4m2pOcnJ2XXpuOc9NrKE39dIhUO4j7GBeW/YIjThz8c7Mgq9JeOlJXny6WARYtgSZnLonlDw==
-X-Received: by 2002:a05:6512:31d4:b0:4ed:b86b:9cc9 with SMTP id j20-20020a05651231d400b004edb86b9cc9mr4849394lfe.28.1682986411299;
-        Mon, 01 May 2023 17:13:31 -0700 (PDT)
+        bh=vNbPmr5bNbBTGpERvChrdW2sKTJp+U0aa0vtTqIBezc=;
+        b=CHCHuw8O3cWBpms8fMQbtPiA7RupwqNcwGRA6kH2P5lb+GlTdbyiD232PsGncZtz+2
+         iOpVxm3SBf/Kjbrv623a7p7QRNWEEGVw2YhCJwrLlQTiP97IKUYF4ZgPbG5DbbAyH35V
+         CgOSwFhFGxsRo2E00qgBU9WsusclZx27l6d8u5S65Icp7tvH/bSTDaocQI5D+4NYNA0N
+         yvx4Ep9GqRyQoxwp49irY2mWdjEexCVCM7Gb45kYsmkQ+UNvTZbqKkz6y7g6l8hdl6Vk
+         VO3jjNQYfBFUkXXxdWA0OI3HAkVoMaZtRQgHAheV+XCAdjC0RRhA8/en24Ri21EDUZFU
+         JaXg==
+X-Gm-Message-State: AC+VfDz3BozltlDQm2AFxHPKiGWBUsAxQVFPeKI+p/2EMMiWr67Drz9T
+        CSY8cOqlpco7pKdROIgWf/XwVw==
+X-Google-Smtp-Source: ACHHUZ4gLX7H8mWJSHjWdjvuUfToGQ1BcPPIcO9rw7RnG2M0fdeOMyF40KfTWVA763tBb2KTcJ6sVw==
+X-Received: by 2002:a19:ee0c:0:b0:4ea:f526:5bef with SMTP id g12-20020a19ee0c000000b004eaf5265befmr5192356lfb.28.1682986585453;
+        Mon, 01 May 2023 17:16:25 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id w15-20020ac2442f000000b004f09126b291sm1119870lfl.213.2023.05.01.17.13.30
+        by smtp.gmail.com with ESMTPSA id u18-20020ac24c32000000b004efe8d7891esm4302694lfq.161.2023.05.01.17.16.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 May 2023 17:13:30 -0700 (PDT)
-Message-ID: <1be5930d-a389-7fa0-2886-4e9af09cbf85@linaro.org>
-Date:   Tue, 2 May 2023 03:13:30 +0300
+        Mon, 01 May 2023 17:16:25 -0700 (PDT)
+Message-ID: <4f88dc8a-0e8c-156f-bf7c-4fcf30df1037@linaro.org>
+Date:   Tue, 2 May 2023 03:16:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v9 2/4] phy: qcom-qmp-usb: add support for updated qcm2290
- / sm6115 binding
+Subject: Re: [PATCH v9 4/4] arm64: dts: qcom: qrb4210-rb2: Enable USB node
 Content-Language: en-GB
 To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
@@ -67,9 +66,9 @@ Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
         konrad.dybcio@linaro.org, kishon@kernel.org, vkoul@kernel.org,
         krzysztof.kozlowski+dt@linaro.org
 References: <20230501192432.1220727-1-bhupesh.sharma@linaro.org>
- <20230501192432.1220727-3-bhupesh.sharma@linaro.org>
+ <20230501192432.1220727-5-bhupesh.sharma@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230501192432.1220727-3-bhupesh.sharma@linaro.org>
+In-Reply-To: <20230501192432.1220727-5-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,75 +82,51 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/05/2023 22:24, Bhupesh Sharma wrote:
-> Add support for the new qcm2290 / sm6115 binding.
-> 
-> The USB QMP phy on these devices supports 2 lanes. Also note that the
-> binding now does not describe every register subregion and instead
-> the driver holds the corresponding offsets. This also includes
-> the PCS_MISC region.
+> Enable the USB controller and HS/SS PHYs on qrb4210-rb2 board.
 > 
 > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > ---
->   drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
+>   arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> index a49711c5a63d..aa143c081805 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-> @@ -1414,6 +1414,10 @@ struct qmp_usb_offsets {
->   	u16 pcs_usb;
->   	u16 tx;
->   	u16 rx;
-> +	/* for PHYs with >= 2 lanes */
-> +	u16 tx2;
-> +	u16 rx2;
-> +	u16 pcs_misc;
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> index dc80f0bca767..eae3024ce003 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -222,6 +222,30 @@ &uart4 {
+>   	status = "okay";
 >   };
 >   
->   /* struct qmp_phy_cfg - per-PHY initialization config */
-> @@ -1558,6 +1562,16 @@ static const char * const qmp_phy_vreg_l[] = {
->   	"vdda-phy", "vdda-pll",
->   };
->   
-> +static const struct qmp_usb_offsets qmp_usb_offsets_v3 = {
-> +	.serdes		= 0,
-> +	.pcs		= 0xc00,
-> +	.tx		= 0x200,
-> +	.rx		= 0x400,
-> +	.tx2		= 0x600,
-> +	.rx2		= 0x800,
-> +	.pcs_misc	= 0xa00,
+> +&usb {
+> +	status = "okay";
 > +};
 > +
->   static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
->   	.serdes		= 0,
->   	.pcs		= 0x0200,
-> @@ -1922,6 +1936,8 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
->   static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
->   	.lanes			= 2,
->   
-> +	.offsets		= &qmp_usb_offsets_v3,
+> +&usb_dwc3 {
+> +	maximum-speed = "super-speed";
+> +	dr_mode = "peripheral";
+> +};
 > +
->   	.serdes_tbl		= qcm2290_usb3_serdes_tbl,
->   	.serdes_tbl_num		= ARRAY_SIZE(qcm2290_usb3_serdes_tbl),
->   	.tx_tbl			= qcm2290_usb3_tx_tbl,
-> @@ -2497,6 +2513,12 @@ static int qmp_usb_parse_dt(struct qmp_usb *qmp)
->   	qmp->tx = base + offs->tx;
->   	qmp->rx = base + offs->rx;
->   
-> +	if (cfg->lanes >= 2) {
-> +		qmp->tx2 = base + offs->tx2;
-> +		qmp->rx2 = base + offs->rx2;
-> +		qmp->pcs_misc = base + offs->pcs_misc;
-
-pcs_misc should also be usable for a single-lane PHYs.
-
-> +	}
+> +&usb_hsphy {
+> +	vdd-supply = <&vreg_l4a_0p9>;
+> +	vdda-pll-supply = <&vreg_l12a_1p8>;
+> +	vdda-phy-dpdm-supply = <&vreg_l15a_3p128>;
 > +
->   	qmp->pipe_clk = devm_clk_get(dev, "pipe");
->   	if (IS_ERR(qmp->pipe_clk)) {
->   		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
+> +	status = "okay";
+> +};
+> +
+> +&usb_qmpphy {
+> +	vdda-phy-supply = <&vreg_l4a_0p9>;
+> +	vdda-pll-supply = <&vreg_l12a_1p8>;
+> +
+> +	status = "okay";
+> +};
+> +
+>   &xo_board {
+>   	clock-frequency = <19200000>;
+>   };
 
 -- 
 With best wishes
