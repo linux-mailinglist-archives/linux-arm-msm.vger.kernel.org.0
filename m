@@ -2,165 +2,270 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8575D6F4D0E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 00:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E04E6F4D4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 00:58:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230236AbjEBWnN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 18:43:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59628 "EHLO
+        id S230403AbjEBW6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 18:58:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230260AbjEBWm4 (ORCPT
+        with ESMTP id S230005AbjEBW6h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 18:42:56 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96A3E35B7
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 15:42:21 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f00d41df22so530155e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 15:42:21 -0700 (PDT)
+        Tue, 2 May 2023 18:58:37 -0400
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2FC40DE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 15:58:07 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-4f0037de1d1so5176408e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 15:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683067332; x=1685659332;
+        d=linaro.org; s=google; t=1683067945; x=1685659945;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1OoGjVoe5CX5x9isNYM2e3Wk8FpfphvTo6RdDOuxz1Q=;
-        b=hiNOid1JZFCR0nWkeMhUqACmCPxMSXATIgVxyAqZRb/BZ9qYmPWUOl+9U1t1l/HoId
-         Zw6kbAjPvxEr0o4ZaVdP5uxMBbCoKfdK4L6rRRbXmVxfiljUloU28QMUEdtSJWkyFoLp
-         FwvzyH68UnCS1vE/ORnBtggguwD4duZKlOXVDsLna6q+6Ko2R8Ashl3NedkducMgzDkW
-         I+OxH12oIUUrKycH/7aO62+I84j/7/UirTW7HkxzAsjgUVVZlhoNoiyfNvtyfS+lK0rI
-         YmKAp29Cd8RTuKHBvavoQGN80AyrmtTGDpwUebxnkcutAQ/1cE+n0iSL432thmlynzn0
-         2QLg==
+        bh=T1p8PAJD9DFCngojw0T3kSd1c2uyqBORxfNEmDK3GJ4=;
+        b=BUUnQw61aCluaeaOfOjylr17lq4wyiS3svEJzNGaImPvwBFbxjY1AYjKa65LSPa2ym
+         yE16k3jpuP3N8wCSlIVKGAALWKur7gs6Ffzu8U/kGAiuA1Xyx/x2hK/JJfWNLEFbZFh+
+         gw5Uv9OoWoi9etQy1IAyVFsO7YWXlAUhhQim+LNTWB6y3zMhsYaevaqfbTuzGPLNMccY
+         J+vqS7x9RyTltzOUQDkaayM18bum3WFZAKA4wqgFiMMBPsbYfXaNiW1/rSr4VdyK3Fqn
+         5j1I0Zeq+WoDj447GF++RwHlJ/hGKjEKpd2ivZT8M021uOxvON7tTCA8VLC+2Vt7SgLR
+         uLMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683067332; x=1685659332;
+        d=1e100.net; s=20221208; t=1683067945; x=1685659945;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1OoGjVoe5CX5x9isNYM2e3Wk8FpfphvTo6RdDOuxz1Q=;
-        b=VYAS7+7lMXreatLuFJEZwhsPMqDIzLwT+PRYoGu/l+CGtEmgdSZz3BtXPdt4H97bWA
-         BnOxiSOiOnOTJJ0aquvlnbyYMIcX8ft9Gdj08/bLsdxVJD2PuIxM/kjQOqzxHJuPxJps
-         nieOcY3WLkVFSLbpx298tEJI7uJAPNo92ypgLcgC4yK7XO887RVeb6B0mHeDWvG2Uqxo
-         VMNqDT89OeGjDW0OEd6gYpuwukmhCqQ+gBuVERUPJ0+reVSd0ZR0bXgkkcK1MjH5PgOx
-         p8veJgmGEx3IRcD+wf0iJYmLHsAA3nYckBw+CazKKXkOAM4i81jyEvibVMvVFSPLtSay
-         FOhA==
-X-Gm-Message-State: AC+VfDzpe9y4xSeFb0O4Z9i0GOZ2sTe92vYSBcLpFk3aNXec+D3ZE5ss
-        FX739IYQSYzv5DHq0e3S+6AanQ==
-X-Google-Smtp-Source: ACHHUZ6UfIY4PEgDDZl5KPbEeS9HO6lLQH5WJ2TyVoYK8uxLeQM1jOU8KtbNRY2Wa5bu+IJszRc06A==
-X-Received: by 2002:a05:6512:3a8d:b0:4ec:9f37:2cfb with SMTP id q13-20020a0565123a8d00b004ec9f372cfbmr31870lfu.27.1683067332313;
-        Tue, 02 May 2023 15:42:12 -0700 (PDT)
+        bh=T1p8PAJD9DFCngojw0T3kSd1c2uyqBORxfNEmDK3GJ4=;
+        b=fsKNo/nP7zVaQIFLpWp1bwoLjHL3UvhS5Kre7D1aWiHaqw2T+7tjZg4CtHs6G6kVd4
+         OAQ3Esqb7JDyT+oDCi9GIp9VhFvcrskJymrYAW7yr9LZctBw6nkid4Tg3vl9htdzl0Jq
+         N9phLN4WhKZZ9dGUZ7Nmm/lnjdVHxNBNpAgbPcuY5Pp8vtAuSBxhWMCCxXjstpDlb/x/
+         k8/sfrbprjNWIRrF/F6rl777pc3fzkN5yACPI2cCTARhCXaf5gRmngV1u9hTM/muEOIM
+         hDm1FQdc1HtF0WIvuxOwswq0yrWZB/ZKr0w+wxgWNBWgq/Dfw39e8iagCAIi4NTYsGCc
+         /fOw==
+X-Gm-Message-State: AC+VfDwriWMZvsFYsI8yC1a+YXHe7Pp5+v3pAeKzeqKxni5b2wq9r/7F
+        WgpDQxfNNKlKSiizugKnijYLNw==
+X-Google-Smtp-Source: ACHHUZ6Oo6CNJusINV9/L7Xt1q+0o1hyr6U1jjDYvnM0ZlUDdwA1vrQ5KYtmvDXiiUxPR0FKQ1HT5g==
+X-Received: by 2002:a19:c204:0:b0:4f1:223c:dc83 with SMTP id l4-20020a19c204000000b004f1223cdc83mr355945lfc.48.1683067945539;
+        Tue, 02 May 2023 15:52:25 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c2-20020ac25302000000b004e8508899basm5641431lfh.86.2023.05.02.15.42.11
+        by smtp.gmail.com with ESMTPSA id r16-20020ac24d10000000b004ddaea30ba6sm5607156lfi.235.2023.05.02.15.52.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 15:42:11 -0700 (PDT)
-Message-ID: <4315e96f-ed29-92aa-9549-d6fc9d820de6@linaro.org>
-Date:   Wed, 3 May 2023 01:42:10 +0300
+        Tue, 02 May 2023 15:52:24 -0700 (PDT)
+Message-ID: <bce93654-fc36-3d12-282d-76fafb8f51ce@linaro.org>
+Date:   Wed, 3 May 2023 01:52:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v3 3/7] drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK
- and PP_BLK_TE marcos
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
 Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
- <1683061382-32651-4-git-send-email-quic_khsieh@quicinc.com>
+To:     Rob Herring <robh+dt@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        Olof Johansson <olof@lixom.net>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
+ <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
+ <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1683061382-32651-4-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 00:02, Kuogee Hsieh wrote:
-> At legacy chipsets, it required DPU_PINGPONG_DSC bit be set to indicate
-> pingpong ops functions are required to complete DSC data path setup if
-> this chipset has DSC hardware block presented. This patch add
-> DPU_PINGPONG_DSC bit to both PP_BLK and PP_BLK_TE marcos if it has DSC
-> hardware block presented.
+On 02/05/2023 22:40, Rob Herring wrote:
+> On Tue, May 2, 2023 at 3:15 AM Arnd Bergmann <arnd@arndb.de> wrote:
+>>
+>> On Tue, Apr 25, 2023, at 17:57, Rob Herring wrote:
+>>> On Tue, Apr 25, 2023 at 2:28 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
+>>>
+>>>> Does your script also cater for .dts files not matching any pattern,
+>>>> but including a .dtsi file that does match a pattern?
+>>>
+>>> I assume I built everything after moving, but maybe not...
+>>>
+>>> That's all just "details". First, we need agreement on a) moving
+>>> things to subdirs and b) doing it 1-by-1 or all at once. So far we've
+>>> been stuck on a) for being 'too much churn'.
+>>
+>> Sorry for missing most of the discussion last week. The script sounds
+>> fine to me, the only reason I didn't want to do this in the past is that
+>> we had the plan to move platforms out of the kernel tree to an external
+>> repository and I wanted to do this platform at a time and also only move
+>> each one once. I don't think that is going to happen anytime soon now,
+>> so let's just do your script.
+>>
+>> Can you send me the script and/or a pull request of the resulting
+>> tree based on my soc/dt branch? Everything is merged upstream,
+>> and I think git-merge would handle the remaining merges with any
+>> other changes in mainline.
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    | 12 +++++-----
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  8 +++----
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 26 ++++++++++------------
->   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 24 ++++++++++----------
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 26 ++++++++++------------
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  4 ++--
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  2 +-
->   .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  8 +++----
->   9 files changed, 54 insertions(+), 58 deletions(-)
+> I've dusted off my script and made a branch[1] with the result.
+> There's just a couple of fixes needed after the script is run (see the
+> top commit). The cross arch includes are all fixed up by the script.
+> dtbs_install maintains a flat install. I compared the number of .dtbs
+> before and after to check the script.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> index 17f821c..b7cd746 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-> @@ -112,16 +112,16 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
->   };
->   
->   static const struct dpu_pingpong_cfg msm8998_pp[] = {
-> -	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-> +	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, BIT(DPU_PINGPONG_DSC), 0,
-> +			sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> -	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
-> -			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-> +	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, BIT(DPU_PINGPONG_DSC), 0,
-> +			sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> -	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
-> +	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, 0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> -	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
-> +	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, 0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
+> I think the only issue remaining is finalizing the mapping of
+> platforms to subdirs. What I have currently is a mixture of SoC
+> families and vendors. The most notable are all the Freescale/NXP
+> platforms, pxa, socfpga, and stm32. It's not consistent with arm64
+> either. Once that's finalized, I still need to go update MAINTAINERS.
+> 
+> Here's the current mapping:
+> 
+> vendor_map = {
+>      'alphascale' : 'alphascale',
+>      'alpine' : 'alpine',
+>      'artpec' : 'axis',
+>      'axm' : 'lsi',
+>      'cx9' : 'cnxt',
+>      'ecx' : 'calxeda',
+>      'highbank' : 'calxeda',
+>      'ep7' : 'cirrus',
+>      'mxs': 'mxs',
+>      'imx23': 'mxs',
+>      'imx28': 'mxs',
+>      'sun' : 'allwinner',
+>      'imx': 'imx',
+>      'e6' : 'imx',
+>      'e7' : 'imx',
+>      'mba6' : 'imx',
+>      'ls': 'fsl',
+>      'vf': 'fsl',
+>      'qcom': 'qcom',
+>      'am3' : 'ti',
+>      'am4' : 'ti',
+>      'am5' : 'ti',
+>      'dra' : 'ti',
+>      'keystone' : 'ti',
+>      'omap' : 'ti',
+>      'compulab' : 'ti',
+>      'logicpd' : 'ti',
+>      'elpida' : 'ti',
+>      'motorola' : 'ti',
+>      'twl' : 'ti',
+>      'da' : 'ti',
+>      'dm' : 'ti',
+>      'nspire' : 'nspire',
+>      'armada' : 'marvell',
+>      'dove' : 'marvell',
+>      'kirkwood' : 'marvell',
+>      'orion' : 'marvell',
+>      'mvebu' : 'marvell',
+>      'mmp' : 'marvell',
+>      'berlin' : 'berlin',
+>      'pxa2' : 'pxa',
+>      'pxa3' : 'pxa',
+>      'pxa' : 'marvell',
 
-Just to doublecheck: why don't we have DPU_PINGPONG_DSC for PP_3/_4? We 
-do have them on sdm845. Is it because we should not use DSC with thos 
-PINGPONG blocks?
+I'd question if it makes sense to split the pxa line. Yes, it was sold 
+by Intel to Marvell, but IIRC the devices still had some inheritance. 
+So, if we have the 'pxa' subdir, I'd move Marvell PXAs to that dir too.
 
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> index ceca741..8888bd9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-> @@ -110,16 +110,16 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
->   };
->   
->   static const struct dpu_pingpong_cfg sdm845_pp[] = {
-> -	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
-> +	PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
-> -	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
-> +	PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
-> -	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
-> +	PP_BLK("pingpong_2", PINGPONG_2, 0x71000, BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
-> -	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
-> +	PP_BLK("pingpong_3", PINGPONG_3, 0x71800, BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk,
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
->   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
->
-
-[skipped the rest, looks good to me]
+>      'arm-' : 'arm',
+>      'integ' : 'arm',
+>      'mps' : 'arm',
+>      've' : 'arm',
+>      'aspeed' : 'aspeed',
+>      'ast2' : 'aspeed',
+>      'facebook' : 'aspeed',
+>      'ibm' : 'aspeed',
+>      'openbmc' : 'aspeed',
+>      'en7' : 'airoha',
+>      'at91' : 'microchip',
+>      'sama' : 'microchip',
+>      'sam9' : 'microchip',
+>      'usb_' : 'microchip',
+>      'tny_' : 'microchip',
+>      'mpa1600' : 'microchip',
+>      'animeo_ip' : 'microchip',
+>      'aks-cdu' : 'microchip',
+>      'ethernut5' : 'microchip',
+>      'evk-pro3' : 'microchip',
+>      'pm9g45' : 'microchip',
+>      'ge86' : 'microchip',
+>      'bcm' : 'brcm',
+>      'exynos' : 'samsung',
+>      's3c' : 'samsung',
+>      's5p' : 'samsung',
+>      'gemini' : 'gemini',
+>      'hi3' : 'hisilicon',
+>      'hip' : 'hisilicon',
+>      'hisi' : 'hisilicon',
+>      'sd5' : 'hisilicon',
+>      'hpe' : 'hpe',
+>      'intel': 'intel',
+>      'mt' : 'mediatek',
+>      'meson' : 'meson',
+>      'moxa' : 'moxa',
+>      'mstar' : 'mstar',
+>      'nuvo' : 'nuvoton',
+>      'lpc' : 'lpc',
+>      'lan96' : 'microchip',
+>      'owl' : 'actions',
+>      'ox8' : 'oxsemi',
+>      'rda' : 'rda',
+>      'rtd' : 'realtek',
+>      'r7' : 'renesas',
+>      'r8' : 'renesas',
+>      'r9' : 'renesas',
+>      'emev2' : 'renesas',
+>      'sh73a' : 'renesas',
+>      'gr-' : 'renesas',
+>      'iwg' : 'renesas',
+>      'rk' : 'rockchip',
+>      'rv11' : 'rockchip',
+>      'rockchip' : 'rockchip',
+>      'socfpga' : 'socfpga',
+>      'stm' : 'stm32',
+>      'sti' : 'sti',
+>      'st-pin' : 'sti',
+>      'ste' : 'st-ericsson',
+>      'spear' : 'spear',
+>      'axp' : 'allwinner',
+>      'tegra' : 'nvidia',
+>      'milbeaut' : 'socionext',
+>      'uniph' : 'socionext',
+>      'vt8500' : 'vt8500',
+>      'wm8' : 'vt8500',
+>      'xen' : 'xen',
+>      'zx' : 'zte',
+>      'zynq' : 'xilinx',
+> }
+> 
+> Rob
+> 
+> [1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git arm-dts-move-v2
 
 -- 
 With best wishes
