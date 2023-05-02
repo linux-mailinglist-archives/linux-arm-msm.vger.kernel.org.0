@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AF2F6F3F3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:37:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3FFC6F3F3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:37:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233578AbjEBIhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 04:37:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43474 "EHLO
+        id S229449AbjEBIhP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 04:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233730AbjEBIhB (ORCPT
+        with ESMTP id S233158AbjEBIhO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 04:37:01 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE29E46A1
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 01:36:59 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-3063433fa66so604729f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 01:36:59 -0700 (PDT)
+        Tue, 2 May 2023 04:37:14 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62104230
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 01:37:11 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f1950f5676so35401495e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 01:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683016618; x=1685608618;
+        d=linaro.org; s=google; t=1683016630; x=1685608630;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:reply-to:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1WSe5xqDpk0+ctJixcPhOu7az5cg4xL6zGEjyZ5vq68=;
-        b=ZjBIPSKR9w7vbVF0504IgPvNTVwoEAYaiRGH6bbqEgY7cxpvOhcItSxUSvADV8bu6d
-         G3p4+RntXywMk8wSx8N3yD1gJrWiM9udz3N1ZATdoZzE0J1bVHtcACoutqw1pzQp78e+
-         vleI4xatCEbZLTo9SKsANaXiZfEYJBD9eFcVrPhGMdDRa8d/VU46rnSj+yFJWQ2CeFge
-         +PqReyszXuHFFBa4eo2oGfefukhKRMU03U5QRrJzm7DJtP0WQbTA0xNJhanpJs0MlDvI
-         SUQdeYn7ly5e9zZW+xocbFg/hsSVpyuqhod5eH0x6Oz1/D9Bpe5Gvk6wZDkksy4LKiRU
-         ku6A==
+        bh=slDIlxCzpTDEG7C8ch3ARU2YpQ8UOYPe5KwfSUBQkG0=;
+        b=g+RSpRPgBqEI2VbBOoVxQGKpa3AMHuOEqbyIRgeDneAbNNoNKoLFCGmoibDbPugIHF
+         3ruexdSS5iaVdF5K+SyQ/CdQaK7EQHF73roOyjKXZ29Hevw70t8GNVz0kTtPLtT8MS2d
+         vmow0WxbwPOWeoW1J44SKkPWcI7o9cseXERy6hYOMQZDR25xSh3r+NRUfTvADOva4g6J
+         0cSG8f0z+zzJSck4Oq2XeyeszmLIW1DlqFvLK8Q1r9zbTuoCby3UHdqhcsvR1bjp/4BA
+         VlZ9CdC/yZybqL0zSRrQ7SjTf+QVSo1frMN/wdOk788euuiAUUXxjqNhzcTPChp4VcJp
+         JVsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683016618; x=1685608618;
+        d=1e100.net; s=20221208; t=1683016630; x=1685608630;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:reply-to:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1WSe5xqDpk0+ctJixcPhOu7az5cg4xL6zGEjyZ5vq68=;
-        b=gJq0zLBZQPJxKzn8ngCJz4cEwmN8855d4vdE8R/A5MjuXjTe3sfdinqFlr4tsijvzx
-         1Uj6f1bBlWq8TzvBFJZ6tEOZRwF76otOjegr203PtDnHntkGsZhSnC5p6PH6sBWV2cEV
-         5vFYlFs4UOwIgV0jOekp9J+UHEPgK4o4wXZfrJ3oVbxQsVpX28VkqalTYbOgtN07Ce7v
-         sMBnDph32qblXc5o2tfYtcfmjtqKhja42k+eKroBqyFrkEJX3kHO+wCf8+cIEOnbSp80
-         /EzgeUnh+ySGmhc1DqlbdQWkPwDmnRejxl7wsDRsBb6NekwIzQ6hh3WqSyomHkbkb3fq
-         jefA==
-X-Gm-Message-State: AC+VfDz1VBSEe6Q6qqRdUB7AGJ9RmFJfYYogQCwf4bqV5RqdBWCOIk51
-        MGvWTkq6fZeKJht3Nx42AfxdYA==
-X-Google-Smtp-Source: ACHHUZ5oWcCDaAcb7Dfhh4s0MtRRiVGetYohgTXFxKOia+z3vJXXGP7r8Px8652qlSo9q5cq+286gQ==
-X-Received: by 2002:a5d:4fcc:0:b0:306:32c4:7e7b with SMTP id h12-20020a5d4fcc000000b0030632c47e7bmr2716985wrw.41.1683016618170;
-        Tue, 02 May 2023 01:36:58 -0700 (PDT)
+        bh=slDIlxCzpTDEG7C8ch3ARU2YpQ8UOYPe5KwfSUBQkG0=;
+        b=UAxlXBba1WXslepWQ8JcDBhdDXMBElY0D1gMMtzlP8RcdOtaplbJnoaZuiyH9bwBs6
+         dh+I7bbyiFkoeIX8+JTCk3XD0sp5gcB3IJIbu062yb7PuRP8ZA++m1rM3XkKXPJu15KY
+         QInxruiwW0sm0IgwurS/s+7JqV1Lr6Dkpl6ajGzFNqESPAXRCGRHUsxhsSy515dB6B2J
+         9C7uTuPulb5/mV8/a7vwALM3LQCruCzyQtSxUXCjgcNOJyMArQPnSdkDECQNpwdxoRqa
+         68J3goxRDtum639xqJtsBEwsq4refIgQJwpKvMeeNc1SEC5bt4Np7h7ShcmgmxfNM60D
+         whkQ==
+X-Gm-Message-State: AC+VfDxmK210VjTiBQ0GCSnwa1T+qsDE1Au28EFER49M9VXdx9B+V7zA
+        Nd4ugEng2SCCOLaIbu0a6xXBAA==
+X-Google-Smtp-Source: ACHHUZ4GLXjezsJUdfNAqEXfs4OLKLaSXBFQ+MZqXmikJdKCs4OEQl/PQUX9OqzEU4GO7wuqFkRgIw==
+X-Received: by 2002:a5d:4b0e:0:b0:304:a40c:43c6 with SMTP id v14-20020a5d4b0e000000b00304a40c43c6mr12864429wrq.11.1683016630069;
+        Tue, 02 May 2023 01:37:10 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:e265:b513:556a:4149? ([2a01:e0a:982:cbb0:e265:b513:556a:4149])
-        by smtp.gmail.com with ESMTPSA id z2-20020a5d4c82000000b003021288a56dsm29430640wrs.115.2023.05.02.01.36.56
+        by smtp.gmail.com with ESMTPSA id o17-20020a5d4751000000b003063a92bbf5sm259473wrs.70.2023.05.02.01.37.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 01:36:57 -0700 (PDT)
-Message-ID: <37a56a24-8d7e-ad98-bdb2-d7ef82db5a48@linaro.org>
-Date:   Tue, 2 May 2023 10:36:56 +0200
+        Tue, 02 May 2023 01:37:09 -0700 (PDT)
+Message-ID: <fec55fce-e156-9f15-bfb5-5f56dcdfdcef@linaro.org>
+Date:   Tue, 2 May 2023 10:37:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 09/10] ARM: dts: qcom-mdm9615: specify clocks for the lcc
- device
+Subject: Re: [PATCH 10/10] ARM: dts: qcom-mdm9615: specify gcc clocks
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -72,15 +71,15 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230501203401.41393-1-dmitry.baryshkov@linaro.org>
- <20230501203401.41393-10-dmitry.baryshkov@linaro.org>
+ <20230501203401.41393-11-dmitry.baryshkov@linaro.org>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20230501203401.41393-10-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230501203401.41393-11-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,46 +88,35 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 01/05/2023 22:34, Dmitry Baryshkov wrote:
-> Specify clocks used by the LCC device on the MDM9615 platform.
+> Fully specify the clocks used by the GCC on the mdm9615 platform.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   arch/arm/boot/dts/qcom-mdm9615.dtsi | 16 +++++++++++++++-
->   1 file changed, 15 insertions(+), 1 deletion(-)
+>   arch/arm/boot/dts/qcom-mdm9615.dtsi | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
 > diff --git a/arch/arm/boot/dts/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> index b40c52ddf9b4..556abe90cf5b 100644
+> index 556abe90cf5b..e81e5e3196d9 100644
 > --- a/arch/arm/boot/dts/qcom-mdm9615.dtsi
 > +++ b/arch/arm/boot/dts/qcom-mdm9615.dtsi
-> @@ -39,7 +39,7 @@ cpu-pmu {
->   	};
+> @@ -10,6 +10,7 @@
 >   
->   	clocks {
-> -		cxo_board {
-> +		cxo_board: cxo_board {
->   			compatible = "fixed-clock";
->   			#clock-cells = <0>;
->   			clock-frequency = <19200000>;
-> @@ -113,6 +113,20 @@ lcc: clock-controller@28000000 {
->   			reg = <0x28000000 0x1000>;
->   			#clock-cells = <1>;
+>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+>   #include <dt-bindings/clock/qcom,gcc-mdm9615.h>
+> +#include <dt-bindings/clock/qcom,lcc-msm8960.h>
+>   #include <dt-bindings/reset/qcom,gcc-mdm9615.h>
+>   #include <dt-bindings/mfd/qcom-rpm.h>
+>   #include <dt-bindings/soc/qcom,gsbi.h>
+> @@ -106,6 +107,10 @@ gcc: clock-controller@900000 {
+>   			#power-domain-cells = <1>;
 >   			#reset-cells = <1>;
+>   			reg = <0x900000 0x4000>;
 > +			clocks = <&cxo_board>,
-> +				 <&gcc PLL4_VOTE>,
-> +				 <0>,
-> +				 <0>, <0>,
-> +				 <0>, <0>,
-> +				 <0>;
+> +				 <&lcc PLL4>;
 > +			clock-names = "cxo",
-> +				      "pll4_vote",
-> +				      "mi2s_codec_clk",
-> +				      "codec_i2s_mic_codec_clk",
-> +				      "spare_i2s_mic_codec_clk",
-> +				      "codec_i2s_spkr_codec_clk",
-> +				      "spare_i2s_spkr_codec_clk",
-> +				      "pcm_codec_clk";
+> +				      "pll4";
 >   		};
 >   
->   		l2cc: clock-controller@2011000 {
+>   		lcc: clock-controller@28000000 {
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
