@@ -2,87 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D26BC6F3F1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:31:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A6656F3F25
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 10:35:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233744AbjEBIbl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 04:31:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40848 "EHLO
+        id S233523AbjEBIfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 04:35:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233657AbjEBIbk (ORCPT
+        with ESMTP id S233278AbjEBIfF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 04:31:40 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5650D469D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 01:31:38 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-94f7a7a3351so687260566b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 01:31:38 -0700 (PDT)
+        Tue, 2 May 2023 04:35:05 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E610119A1
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 01:35:01 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-b9dcd91a389so4190870276.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 01:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683016297; x=1685608297;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+vq95rI3k+qtNoUgGZVAuxriMrIyzuC5jkHyoK3pkYA=;
-        b=wCmHiPiURd74ZS0m8aQVNlCMYF4t5m815+o6DKuLU0E/9pNLe3Y+iJm0D3C040cNK+
-         fDikIztacxOhjsuWuY2SWCAX5HBn0hxBq3phZ+aNWYnNPSCJUy+ZbCIZ9gaW2l3WcBJD
-         rp8TLbzWp3+PDd78az93FsFpLXGQYTYQSVNDqwIIijScA/89YbX9ANzX2hvv3PAHXnbs
-         NfZRpggUkRSfmK4stYI0wxJTGqk27eLcyOmgdI/n4W4wlzigY25zfo8MEzqVdF5+HdAq
-         rd15GRQYH7CaseqizCOG+DpiSQs/A60dDVsZRg2Zk2/6fMQInnWw1uDa5mDAZIcz/SuO
-         CQ7A==
+        d=linaro.org; s=google; t=1683016501; x=1685608501;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EQzmsLXS8o53Z/tJTwR8dBrkRh8cGnQKwsG++ZUM2Rw=;
+        b=c38iWqoEsV2Ak6ZcqLGqtUG9fKxZwCiTxUe6opQW4xHF2//ciLjPAXSCwCkNIWhnUE
+         r7HVF0jPrO1eBnG3aH62ge5xzY7l3xtGxztlwaHJHom9tlIZ1dxTgi/qgVkOKYcfwPK+
+         f+VztAoZAyiAM3TGJ/sa2kZJVxZQnuqDvtxLs8XmahPiwWHFpTx7lYRFoEfCthesNAQs
+         99pXmMimCxFyvNswavo9rNBF3pMQhVBvP60GRPnjE8ECT1BjjW/a844NMgutFOuvBg+5
+         Rke6snxWBgVN6I1E7oqv4nv8WQdEjfkfFR5tIRXPvcMm9+BDfEFJTTI5VwyqxjDmCphp
+         MFAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683016297; x=1685608297;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+vq95rI3k+qtNoUgGZVAuxriMrIyzuC5jkHyoK3pkYA=;
-        b=UvZFMa3AFcD7s6U58QhLUhOTIyKYyNA7MfpN0QS+eBWeI60YAyjQr7Wk3tlv3AlIPe
-         EBCqfTAHvzn5XhkzEjPeehsZpaQHLU5WWDjmUe4Z5ky5ljHZ8WMIpDVd/Gj88/1RR65J
-         s0uewnifDAvLnFzGwULXHJ7zDIyTauN7XzQVCljCHRwAANnNw/epW8w8gOBWofd2EZPP
-         yxhA403N1D0jE4B5jmkNc2THBtSUULEJ3BQdfxA25GQ3+KSZmC95OeL0B0xliMBS46PT
-         SXhgxC49SQkAhkEPzpJmK8BfG8k17v/BTXWLjxCb0uIS7KTMJuHCKFohuG9vnOeEOJfs
-         C5vw==
-X-Gm-Message-State: AC+VfDxBE+Ege7N4XtFM3FYq8wzOE4/v3Dcgpn/3Fojg8vxtG1Si2IQG
-        u/SI2G3pWos1PplkN6tPDA3SKQ==
-X-Google-Smtp-Source: ACHHUZ6mElOu0Lip0J2gjJLKiz6U8CQAoJwnINNRtPIfe/suHDIiA4olQHwoLoFSOrlpBVJSn5oWyg==
-X-Received: by 2002:a17:907:7245:b0:88f:a236:69e6 with SMTP id ds5-20020a170907724500b0088fa23669e6mr13778125ejc.7.1683016296704;
-        Tue, 02 May 2023 01:31:36 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:bafd:1283:b136:5f6a? ([2a02:810d:15c0:828:bafd:1283:b136:5f6a])
-        by smtp.gmail.com with ESMTPSA id sb11-20020a170906edcb00b0094f7c1b6a94sm16021020ejb.11.2023.05.02.01.31.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 01:31:35 -0700 (PDT)
-Message-ID: <0fbd5236-d923-0a8d-c7cd-c8e814211651@linaro.org>
-Date:   Tue, 2 May 2023 10:31:33 +0200
+        d=1e100.net; s=20221208; t=1683016501; x=1685608501;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EQzmsLXS8o53Z/tJTwR8dBrkRh8cGnQKwsG++ZUM2Rw=;
+        b=TyyrBR4wZTNkEAkypDl5vO1uwepUBJQwe3qxhoICSPIN/w1lUCao5hL6YOL1dZp57C
+         PpdHWLUllWIRSLpO7oY0pO9hOsVbZ+fHBaltToz6eR9jghLzJeqoz3Bd+b/7M+fDs7kh
+         PZ3eZOl/SrxDEu6Sw1o8CyVGEOaYtY60A9/tMwPj3F2J+BlyVbsO5glhVhf/RB8qx+B8
+         QcrxgOhjCrJUnvowTsnpozwsNEtgz0zTiDOfcpEnmSJ9w68p+0HcBIr2jjsYWk5TNoN/
+         KiUIzje+rrWPwnjNPzsqoqnzR1pSg73FbK0MEPTweWLiiJaHqj8D7lZGNH63/YbW1cq3
+         MUEw==
+X-Gm-Message-State: AC+VfDyCkiBKX9QtKWJd2jbyjEHAfQI5l9wNxbW+dGz2uGf07YVul+oB
+        Qfwg/Ntn+40qT1YycvLlYQQhN5j5gIQUvZtS13v5tQ==
+X-Google-Smtp-Source: ACHHUZ7prVyExhhCDfZ9wbdVmvLpHPC8RmEbBTxceN5puB7edxWSnc7AxGder2kHWuuyjnb5ts+y/AKRZDjsq/tajN0=
+X-Received: by 2002:a25:d7d7:0:b0:b9a:66b7:673e with SMTP id
+ o206-20020a25d7d7000000b00b9a66b7673emr17241022ybg.43.1683016501059; Tue, 02
+ May 2023 01:35:01 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v3 3/4] dt-bindings: firmware: Add Qualcomm QSEECOM
- interface
-To:     Maximilian Luz <luzmaximilian@gmail.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Johan Hovold <johan@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sumit Garg <sumit.garg@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230305022119.1331495-1-luzmaximilian@gmail.com>
- <20230305022119.1331495-4-luzmaximilian@gmail.com>
- <20230308221657.GA3935330-robh@kernel.org>
- <93657561-d545-7ead-7f6c-dd2c62aab319@gmail.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <93657561-d545-7ead-7f6c-dd2c62aab319@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230421124938.21974-1-quic_devipriy@quicinc.com>
+ <20230421124938.21974-7-quic_devipriy@quicinc.com> <CAA8EJpoqq=3o1K=yDaim=e11nEN5n+phJUSd1d5BT_VJkdv6xg@mail.gmail.com>
+ <d6b5e395-6d4b-7b5d-f24f-f7dd2e901c00@quicinc.com>
+In-Reply-To: <d6b5e395-6d4b-7b5d-f24f-f7dd2e901c00@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 2 May 2023 11:34:50 +0300
+Message-ID: <CAA8EJpoaZFArA=CGg_WP5SUXWsn++M82RB21gYuy84NPfNJd+w@mail.gmail.com>
+Subject: Re: [PATCH V3 6/6] PCI: qcom: Add support for IPQ9574
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, mani@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,40 +77,149 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/03/2023 23:44, Maximilian Luz wrote:
-> On 3/8/23 23:16, Rob Herring wrote:
->> On Sun, Mar 05, 2023 at 03:21:18AM +0100, Maximilian Luz wrote:
->>> Add bindings for the Qualcomm Secure Execution Environment interface
->>> (QSEECOM).
->>
->> Pretty sure I already asked, but no answer in the commit message. Why do
->> we need this? You've already declared the platform supports SCM calls
->> with "qcom,scm". Why can't you probe whether you have QSEECOM or not? DT
->> is for non-discoverable h/w we are stuck with.
-> 
-> Yes, you've asked this before but I can only repeat what I've written in
-> my last response to your question: I am not aware of any way to properly
-> discover the interface at runtime from software.
-> 
-> If it makes you happy, I can put this in the commit message as well...
+On Tue, 2 May 2023 at 09:36, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>
+>
+>
+> On 4/22/2023 5:35 AM, Dmitry Baryshkov wrote:
+> > On Fri, 21 Apr 2023 at 15:51, Devi Priya <quic_devipriy@quicinc.com> wrote:
+> >>
+> >> The IPQ9574 platform has 4 Gen3 PCIe controllers: two single-lane
+> >> and two dual-lane based on SNPS core 5.70a
+> >> The Qcom IP rev is 1.27.0 and Synopsys IP rev is 5.80a
+> >> Added a new compatible 'qcom,pcie-ipq9574' and 'ops_1_27_0'
+> >> which reuses all the members of 'ops_2_9_0' except for the post_init
+> >> as the SLV_ADDR_SPACE_SIZE configuration differs between 2_9_0
+> >> and 1_27_0.
+> >> Also, modified get_resources of 'ops 2_9_0' to get the clocks
+> >> from the device tree and modelled the post init sequence as
+> >> a common function to avoid code redundancy.
+> >>
+> >> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> >> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> >> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> >> ---
+> >>   Changes in V3:
+> >>          - Rebased on top of linux-next/master
+> >>
+> >>   drivers/pci/controller/dwc/pcie-qcom.c | 61 ++++++++++++++++++--------
+> >>   1 file changed, 43 insertions(+), 18 deletions(-)
+> >>
+> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> index 4ab30892f6ef..3682ecdead1f 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> @@ -107,6 +107,7 @@
+> >>
+> >>   /* PARF_SLV_ADDR_SPACE_SIZE register value */
+> >>   #define SLV_ADDR_SPACE_SZ                      0x10000000
+> >> +#define SLV_ADDR_SPACE_SZ_1_27_0               0x08000000
+> >>
+> >>   /* PARF_MHI_CLOCK_RESET_CTRL register fields */
+> >>   #define AHB_CLK_EN                             BIT(0)
+> >> @@ -202,10 +203,10 @@ struct qcom_pcie_resources_2_7_0 {
+> >>          struct reset_control *rst;
+> >>   };
+> >>
+> >> -#define QCOM_PCIE_2_9_0_MAX_CLOCKS             5
+> >>   struct qcom_pcie_resources_2_9_0 {
+> >> -       struct clk_bulk_data clks[QCOM_PCIE_2_9_0_MAX_CLOCKS];
+> >> +       struct clk_bulk_data *clks;
+> >>          struct reset_control *rst;
+> >> +       int num_clks;
+> >>   };
+> >>
+> >>   union qcom_pcie_resources {
+> >> @@ -1050,17 +1051,10 @@ static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
+> >>          struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> >>          struct dw_pcie *pci = pcie->pci;
+> >>          struct device *dev = pci->dev;
+> >> -       int ret;
+> >>
+> >> -       res->clks[0].id = "iface";
+> >> -       res->clks[1].id = "axi_m";
+> >> -       res->clks[2].id = "axi_s";
+> >> -       res->clks[3].id = "axi_bridge";
+> >> -       res->clks[4].id = "rchng";
+> >> -
+> >> -       ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
+> >> -       if (ret < 0)
+> >> -               return ret;
+> >> +       res->num_clks = devm_clk_bulk_get_all(dev, &res->clks);
+> >> +       if (res->clks < 0)
+> >> +               return res->num_clks;
+> >>
+> >>          res->rst = devm_reset_control_array_get_exclusive(dev);
+> >>          if (IS_ERR(res->rst))
+> >> @@ -1073,7 +1067,7 @@ static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
+> >>   {
+> >>          struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> >>
+> >> -       clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
+> >> +       clk_bulk_disable_unprepare(res->num_clks, res->clks);
+> >>   }
+> >>
+> >>   static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
+> >> @@ -1102,19 +1096,16 @@ static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
+> >>
+> >>          usleep_range(2000, 2500);
+> >>
+> >> -       return clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> >> +       return clk_bulk_prepare_enable(res->num_clks, res->clks);
+> >>   }
+> >>
+> >> -static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> >> +static int qcom_pcie_post_init(struct qcom_pcie *pcie)
+> >>   {
+> >>          struct dw_pcie *pci = pcie->pci;
+> >>          u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> >>          u32 val;
+> >>          int i;
+> >>
+> >> -       writel(SLV_ADDR_SPACE_SZ,
+> >> -               pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+> >> -
+> >>          val = readl(pcie->parf + PARF_PHY_CTRL);
+> >>          val &= ~PHY_TEST_PWR_DOWN;
+> >>          writel(val, pcie->parf + PARF_PHY_CTRL);
+> >> @@ -1151,6 +1142,26 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> >>          return 0;
+> >>   }
+> >>
+> >> +static int qcom_pcie_post_init_1_27_0(struct qcom_pcie *pcie)
+> >> +{
+> >> +       writel(SLV_ADDR_SPACE_SZ_1_27_0,
+> >> +              pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+> >> +
+> >> +       qcom_pcie_post_init(pcie);
+> >> +
+> >> +       return 0;
+> >> +}
+> >> +
+> >> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> >> +{
+> >> +       writel(SLV_ADDR_SPACE_SZ,
+> >> +              pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+> >> +
+> >> +       qcom_pcie_post_init(pcie);
+> >> +
+> >> +       return 0;
+> >> +}
+> >
+> > I'm not sure about moving the SLV_ADDR_SPACE_SIZE initialization from
+> > init() to post_init(). Probably a better solution might be to have two
+> > init() callbacks and to call the common function from both of them.
+> >
+> Hi Dmitry, Originally, the SLV_ADDR_SPACE_SIZE initialization was done
+> part of post_init() callback only and we haven't moved it from init() to
+> post_init().We have just added two post_init() callbacks to
+> handle the SLV_ADDR_SPACE_SIZE initialization accordingly for 1_27_0 and
+> 2_9_0.
 
-Yes, please, because commit msg should answer to "why we are doing
-this", when this is not obvious. If the reviewer asks the same twice it
-means it is not obvious.
+Ack, I see then.
 
-> 
->> Why is software made non-discoverable too?
-> 
-> Please direct that question at the Qualcomm guys who actually designed
-> that interface. I can't give you an answer to that, and I'm not all that
-> happy about this either.
-> 
-> To reiterate: I've reverse engineered this based on the Windows driver.
-> The Windows driver loads on an ACPI HID and it doesn't use any function
-> to check/verify whether the interface is actually present. Adding a DT
-> entry is the straight-forward adaption to having a HID in ACPI.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
