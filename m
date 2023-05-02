@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1330C6F422D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:01:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DBE56F422F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 May 2023 13:01:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233367AbjEBLBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 07:01:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53910 "EHLO
+        id S233554AbjEBLBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 07:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233827AbjEBLB3 (ORCPT
+        with ESMTP id S233878AbjEBLBs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 07:01:29 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA8CA4686
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 04:01:27 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2a8b62cfaceso36277881fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 04:01:27 -0700 (PDT)
+        Tue, 2 May 2023 07:01:48 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07D3A4EEB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 04:01:44 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f00d3f98deso27503891e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 May 2023 04:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683025286; x=1685617286;
+        d=linaro.org; s=google; t=1683025302; x=1685617302;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3AHG7QyY7Uakdx6REQCYSG7RD4RaqzmrdD7vCsADEuw=;
-        b=MR51foAq/zrcxaAEBdjLcZ5f/OhepH79/4rBiT9OxhDshbb8bYZT6RtQ4oE1X2ukBj
-         /rsI1d3Wu/PMRo3crYuWoYmN3lDrx0E9e3/gtqUbwStUtxQsFPFghNGx7mrwN0YgDSI4
-         FXbfycGAfA8ty93bUs6XRTJqjHKl0DADM5kteuj0rH0AB5XKTOz5p96GomAV0sCNHlAt
-         dzQnsvp19Lr69C3AsXemwRV8YjesuyVbRtidpFDAiN3nzFJu8QfW10PDapR8MqMa5y7k
-         6tiVW5C4P8tnkbdzhZ/IUQNaUihUWA6lqo1L+/9PcgkDDX/ZKBet1lg4j3PAHTBGqVzY
-         fakQ==
+        bh=v50vcld9qamI/KF8qPxIrKjGZ5X082G+i+o6qlLq29M=;
+        b=dKIX3STGdFeZqEBtmd444++mC5FBOJW6C/HSJgrW4/HtEJLaDXE21FXu/RNf676cMt
+         1+8QTYZ5xOTWPOEtpldN9uHDw77cJbDCVKNZ6xSus21DrKBgT1qdeKWC38X3i5THbqsk
+         iG6rOWbOKCvufmReuSn09ZPVyqukUS9caBrYjxYEx8jVVsaf5RnCwpCI36qLLWnPeGYT
+         HpceQSQqhkU8Wxbeh8S2Yy9CENVSMPirU5K7C2gul1/a5v9BIt004faHfElWyQRV4g0c
+         8I3XiGiuZiI63hxS1wGPv1Tb2GTQ3ksFaG4CTqQl7Ow5k5tySSPajR3+R9EJeWCG6yyH
+         QGEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683025286; x=1685617286;
+        d=1e100.net; s=20221208; t=1683025302; x=1685617302;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3AHG7QyY7Uakdx6REQCYSG7RD4RaqzmrdD7vCsADEuw=;
-        b=KoTROEI15MhIMr87x8Ro44uSoyFmT1ixogYZ2uKj7IDOo5T5YCJyc/phYWu8urHPpx
-         LwIdtLW22ps1Ibru9ZV7PTulpHcc8uRueIXzMwpJ0hI+rFWSAVU8CtNqqJK+ZvWpCvjI
-         TKd+x+puK7GzNFUgpet5q1toVCo0+JX3ZHiL+4h7upQuaUxuUuEsNno/KJZJFNWOCvFa
-         txSAedN/HvZDz9hqK9BQYa4W6VfgebfZMtgF4uGl19W2YbfDQ8MFcAkjcKfn+Smbb6gq
-         vnWgaICSjTmNNaLFPQPghPQpa60NPRI6azEvV6Ad+7F3xvB+7liREeqLRnuAvbKJx4EW
-         ba2w==
-X-Gm-Message-State: AC+VfDwLdv+lhhhVuBsl8jaCLhSoazc5GzJYtLtXP1t/V2F7w77bz3WR
-        t7I3qRZQ2wsaBzYcjy+aHp7kgg==
-X-Google-Smtp-Source: ACHHUZ4gCQgkWoSRtBReko1joJOgCQi75hy+YTkIVExaO1jeKusCQ4URppbt/NV8ey8OWNhUtEpd3Q==
-X-Received: by 2002:a2e:7818:0:b0:2a8:baab:fb2e with SMTP id t24-20020a2e7818000000b002a8baabfb2emr4785110ljc.47.1683025285988;
-        Tue, 02 May 2023 04:01:25 -0700 (PDT)
+        bh=v50vcld9qamI/KF8qPxIrKjGZ5X082G+i+o6qlLq29M=;
+        b=Y/HiTYcoZ3+zOZ115yxYJIFf0ZuQgt7smr33TRUDqAyt20DkWiUqxHXnaFkEhdQ+jy
+         SbnuMsNqbA+a5s2SWH7lSNRLZXXPE+Ev/PMyUraWHYjFZnrUzPmyfD8sRT/7dcDsIlUw
+         yGi226xCplABPq0jc+WVMNa5bjvdo3sJVToQ7KtzRfyQBntNAKriB4XfKXt/LSHfulrg
+         Ns3VO54dR4ba4n9iRsM6qeupa/WkjOEky9IdY6lQzHxkyAJl1cSqKS/X2889PmxAafBR
+         FhB4/0oEmA7JDDAh9U4vWBOysyZblPeSIYdmk9L02uOjo7IhCCLVt5sTzm5HGfVOGUoD
+         kHFQ==
+X-Gm-Message-State: AC+VfDw2VuOoWSWk+YW2wnOTbv5CuNYfLZVBSbv5K5XGnOJZKPBdSuIn
+        689tbnCRGkxLR5cE+0kFG+nSJQ==
+X-Google-Smtp-Source: ACHHUZ5QEADZJD5b1gLgNxqKk4YVmBjvZtaKsFP2C9ly4bHeBPZd2w/hj8hPhp92TgvZucGAbyzagA==
+X-Received: by 2002:a05:6512:32c1:b0:4ef:ef1d:a987 with SMTP id f1-20020a05651232c100b004efef1da987mr5382694lfg.25.1683025302398;
+        Tue, 02 May 2023 04:01:42 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id z17-20020a2e8e91000000b002a8a77f4d03sm5280365ljk.59.2023.05.02.04.01.24
+        by smtp.gmail.com with ESMTPSA id c15-20020a05651221af00b004edd2dc9a09sm5349992lft.258.2023.05.02.04.01.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 04:01:25 -0700 (PDT)
-Message-ID: <62f14bec-c293-7e62-50af-9d87be5853b7@linaro.org>
-Date:   Tue, 2 May 2023 13:01:23 +0200
+        Tue, 02 May 2023 04:01:42 -0700 (PDT)
+Message-ID: <5cc6d473-5702-4735-be0a-9d8df36e43d5@linaro.org>
+Date:   Tue, 2 May 2023 13:01:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v6 13/13] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM
- orientation-switch for usb_1_qmpphy
+Subject: Re: [PATCH v6 08/13] arm64: dts: qcom: sm8250: Define ports for
+ qmpphy orientation-switching
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
         heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
@@ -67,14 +67,14 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux@roeck-us.net,
 Cc:     caleb.connolly@linaro.org, subbaram@quicinc.com, jackp@quicinc.com,
         robertom@qti.qualcomm.com
 References: <20230501121111.1058190-1-bryan.odonoghue@linaro.org>
- <20230501121111.1058190-14-bryan.odonoghue@linaro.org>
+ <20230501121111.1058190-9-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230501121111.1058190-14-bryan.odonoghue@linaro.org>
+In-Reply-To: <20230501121111.1058190-9-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,48 +85,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 1.05.2023 14:11, Bryan O'Donoghue wrote:
-> Switch on USB orientation-switching for usb_1_qmp via TCPM. Detecting the
-> orientation switch is required to get the PHY to reset and bring-up the PHY
-> with the CC lines set to the appropriate lane.
+> ports for orientation switching input and output. The individual board dts
+> files will instantiate port@0 and port@1 depending on the supported
+> feature-set.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> index b5cc45358a474..8935a8e327904 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-> @@ -1295,6 +1295,14 @@ &usb_1_qmpphy {
->  
->  	vdda-phy-supply = <&vreg_l9a_1p2>;
->  	vdda-pll-supply = <&vreg_l18a_0p92>;
-> +	orientation-switch;
-> +	ports {
-> +		port@1 {
-> +			qmpphy_typec_mux_in: endpoint {
-You defined these ports in patch 6, you can simply reference the
-labels and assign endpoints.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-> +				remote-endpoint = <&pm8150b_typec_mux_out>;
-> +			};
-> +		};
-> +	};
->  };
->  
->  &usb_2 {
-> @@ -1375,6 +1383,12 @@ pm8150b_role_switch_out: endpoint {
->  					remote-endpoint = <&dwc3_role_switch_in>;
->  				};
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index a91d1175255e8..af16d3ba76b8e 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -3581,6 +3581,19 @@ dp_phy: dp-phy@88ea200 {
+>  				#phy-cells = <0>;
+>  				#clock-cells = <1>;
 >  			};
-> +			port@1 {
-> +				reg = <1>;
-> +				pm8150b_typec_mux_out: endpoint {
-> +					remote-endpoint = <&qmpphy_typec_mux_in>;
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
 > +				};
 > +			};
 >  		};
->  	};
->  };
+>  
+>  		usb_2_qmpphy: phy@88eb000 {
