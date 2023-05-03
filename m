@@ -2,133 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 145716F58B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF3746F58D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:17:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230125AbjECNK6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 09:10:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36378 "EHLO
+        id S229901AbjECNRR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 09:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230122AbjECNKu (ORCPT
+        with ESMTP id S229793AbjECNRQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 09:10:50 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82CB35FD0
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 06:10:45 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f1cfed93e2so51530895e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 06:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683119444; x=1685711444;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dqfFtZjpBwpHnbanMeS8saew2f7WSD17vQFnp7exxSY=;
-        b=X5e6nqdeOr1LhOT2w/el4JzYGIvop1TUIUA4iuy12YgJensJNeBpHZUaRoKhT6XH8a
-         u3bnyRS1QOhwA4nS0cG/hdhqxUuMTEpSO/BqO2iTGX5bx0ZQWhAho2CVy2vEBmOl5fXG
-         lAffKN3jTYXLMBX1ln7NJi/54k2kdpgCTG5wH2ODSON0X+zAZa0gzWrR5MywWELPA+aB
-         CWkunyqovCogsBaWQTkFN4opqP3s8GZ0FTVghh45le+FlSOSl3jTTiUOO5yNoUrzc9Wx
-         fWt1dJFqXC6JaQ8Kw/+bgQfzzfI+MZh0dk1/t04bbutsAe666GuocpNGEjhzkyJW/Ufb
-         vmWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683119444; x=1685711444;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dqfFtZjpBwpHnbanMeS8saew2f7WSD17vQFnp7exxSY=;
-        b=lG7j6oac5QP5gpt1WaUCsuwsYjbUxGdGHYXlgurFy3rmhJQkHWEoVkNi4vNJX3iO+H
-         A4fiP8SELyv6akrUE2S0xLfphzKzoW9Uge/EaoeS2sDcSlrWX80zywEtMcqfaA8aIp+5
-         jNspk5DwH6N/zB7gKuEz8ey2XAx9e7DJvelcNUH0xiTs+grL87AOLvhLYDtyJ2dxMXzP
-         x2TQ7BhDwk8JF8KkWjopKgtUBczL/1mgqWg9wwhB6gWPl8WWrek03H7YbBJv2Y2FI4ZQ
-         YAi+c+/G7tStaM7NabpSbuiGhPvZEGqAwVVnpD6c3dbrxa7i1F1KA3l/IPFCMzvLXz2y
-         oDXw==
-X-Gm-Message-State: AC+VfDxhDhAjS6b7gCIe/8olzEdTOT2wXwnvllD0HfRKQjbQsYxeaigq
-        CpUosFFDiwhy5UdbmJ6a7F6N+A==
-X-Google-Smtp-Source: ACHHUZ7MqVtgOQb7P5ctA+ifWc9qBzWFe18a8FP1dLDAbK8Jws0XBRT1oGq5jHOfhrx+tCkcCQQSEQ==
-X-Received: by 2002:a7b:cb85:0:b0:3f1:7136:dd45 with SMTP id m5-20020a7bcb85000000b003f17136dd45mr14793376wmi.30.1683119444023;
-        Wed, 03 May 2023 06:10:44 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id c10-20020adffb0a000000b00306344eaebfsm5413479wrr.28.2023.05.03.06.10.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 06:10:43 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 03 May 2023 15:10:38 +0200
-Subject: [PATCH 6/6] qcom: pmic_glink: enable altmode for SM8450
+        Wed, 3 May 2023 09:17:16 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48D85592;
+        Wed,  3 May 2023 06:17:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 81EBC62D8D;
+        Wed,  3 May 2023 13:17:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E72C433AE;
+        Wed,  3 May 2023 13:17:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683119821;
+        bh=CA9HUUoFcRTgCBgzgu0IWVlQEyRERVDtXqxkChGQSj8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=Ole+wwu+SdPiS2aUQcX3tEt0J62DoRGG/xDwP1Q2hBI3sfPftXI2W3kkH/F/59E4N
+         Rj2AmEaDcZT0BpGUnm84lYZ85cuHO/HgCWs2zlik5IUL41OlHfPOy59tbtDy7fBx5t
+         ZgCFMVN0XHQ4LSBsXc2sJOPg8GrUyA3vIDNzPLKgT+G9Ro3CYUUGu+kdRKJu/W/qY+
+         Pcq0qEWFbXc19qYZkj9ZXfSABwacLhUspZQ8xEAXDZ4dRCU4ngqd8rEoQ4x7LNLiYU
+         jPAiVOLzrxahB5/VVJTZBCBCdKtT7WYvy7hBlO4AI4UaDtDdPD5K3xc7KZXakiNinj
+         sK7EXobVb5Tog==
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-4ecb137af7eso6005373e87.2;
+        Wed, 03 May 2023 06:17:01 -0700 (PDT)
+X-Gm-Message-State: AC+VfDz9CRxeX2tRbaaF+dFdO6B5N+oPzsCxKxt+48iQUzrYc8K4ONg9
+        OpoG/5TcZL4I4PgqzqBF2nlLUMI/cngH8qwU9w==
+X-Google-Smtp-Source: ACHHUZ4XoUscEY44VabA5tNDJYMyOoaF7CDhHSN63Jv4Bd86fg89uBNzW43NBIrFuEuIivWhSP0hKhXIoN/CJGAf91U=
+X-Received: by 2002:ac2:5198:0:b0:4ed:b842:3a99 with SMTP id
+ u24-20020ac25198000000b004edb8423a99mr934135lfi.59.1683119819681; Wed, 03 May
+ 2023 06:16:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230503-topic-sm8450-graphics-dp-next-v1-6-d1ee9397f2a6@linaro.org>
-References: <20230503-topic-sm8450-graphics-dp-next-v1-0-d1ee9397f2a6@linaro.org>
-In-Reply-To: <20230503-topic-sm8450-graphics-dp-next-v1-0-d1ee9397f2a6@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1399;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=qkASJFOC8Sum3nf8ciK4XNKG+cxf4hgwBJ+cUAn3rO4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkUl1NKRunTI8gTuu1bmZf0rFwrWODpoC9Ruv+xEWx
- dqZglNOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZFJdTQAKCRB33NvayMhJ0f1yEA
- DAHeZRXxPUb4hZtFMNqS8d/kOp/k4sNXsY/IAWHPTsRBj14r04Gq7SWME1lm2Q82PRKdnyGOZSHkYw
- CPhKE82yL7J6D5xPEy1mxlFFMCd8e2J2XOBXIYO7hl7IXx3qLlkQSLaDfY1YlYSUoVFzVSWX8PY1O4
- hLu7+a4PkFE/b6jGzu5RMuze6qGz5RguPb1XCQvb3Q8MiixJeAy+Es5vp7+RFsIbVj1ukmjx7BszKr
- mlsC6LKI5+Uz0KXr2QLmdp78YyJF6UsXqSVbIz6w4mqRNaEsokKPtufIx2zcvl6JBd/xZLQvnIT4fk
- G7dTJ7OyBQ/80sABtv3HxWjzxFFidNwBbbPPSUoydVNOSlAR+1fygt0HVSOIgqAdWlQbWPhuY5u1NU
- Fs7cbB1vlhrFg5uRckf8PsN0qZWnSnvW+UKfQtGpY0R6H+dOXbfAGkDKWvdt1A12+Tti2v/vQyZM7h
- lGc0TYKlVgHoYj2cq3n2Ya+8n12OINqsdAN5/kmtUTcGDSGUawiOkY8EwZn6Sl+nu7Wn3r7zeyoob9
- aUy7jcI/oqRzJTcvmvD0d7t969uAf800JjPx79ZHbQ0POfZYUlftJ4c8fH+YyOtFQ3t4dUlKk3FsiR
- SRTWTpmFONG0+TEaC+nJm1QNvBdXhHLV0O2f8/DgVJKfoJivz7hoDRwN/gAQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
+ <bce93654-fc36-3d12-282d-76fafb8f51ce@linaro.org> <CAL_JsqJXd_EpOQwwNEAn25mzFfkhEvqzur6ui5Ca+dbt2kA8-Q@mail.gmail.com>
+ <5e318b02-8f33-4e2d-a956-5660e1c60619@app.fastmail.com> <CAA8EJpq8x5wQa3fMebaSP3hCdMiCsZRaF+B4Y3N3royW_CeXCA@mail.gmail.com>
+ <4e1e70a9-9b28-410b-bd29-fb5f5805798f@app.fastmail.com>
+In-Reply-To: <4e1e70a9-9b28-410b-bd29-fb5f5805798f@app.fastmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 3 May 2023 08:16:46 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJEdZBS231TvkmmipaXEqzvDjz+A32V6uJ4zfSMAJHn2w@mail.gmail.com>
+Message-ID: <CAL_JsqJEdZBS231TvkmmipaXEqzvDjz+A32V6uJ4zfSMAJHn2w@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Olof Johansson <olof@lixom.net>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create a separate bitmask for sm8550 and enable altmode aux driver
-for sm8450 platform to enable pmic-glink altmode events.
+On Wed, May 3, 2023 at 7:19=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wrote:
+>
+> On Wed, May 3, 2023, at 14:13, Dmitry Baryshkov wrote:
+> > On Wed, 3 May 2023 at 13:39, Arnd Bergmann <arnd@arndb.de> wrote:
+>
+> >> So with pxa93x out of the picture, we can simplify it as using
+> >> 'pxa' as the name for all the above chips with an Intel XScale
+> >> core, and 'marvell' for all the other ones that have a Marvell
+> >> core and exist in mach-mmp.
+> >
+> > Should it be 'intel' for pxa[23]xx then?
+>
+> Probably yes, that would put it next to ixp4xx, which makes
+> a lot of sense (same vintage, same cpu core), though it is
+> a bit funny to have these together with lsi axxia and
+> altera socfpga, both of which are also in the intel
+> directory. socfpga is of course the only one that anybody
+> at Intel cares about these days.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/soc/qcom/pmic_glink.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+We could do a second level of directories here:
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index 8bf95df0a56a..c87056769ebd 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -338,13 +338,17 @@ static int pmic_glink_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--/* Do not handle altmode for now on those platforms */
- static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
-+							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
-+							   BIT(PMIC_GLINK_CLIENT_UCSI);
-+
-+/* Do not handle altmode for now on those platforms */
-+static const unsigned long pmic_glink_sm8550_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
- 							   BIT(PMIC_GLINK_CLIENT_UCSI);
- 
- static const struct of_device_id pmic_glink_of_match[] = {
- 	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
--	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
-+	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8550_client_mask },
- 	{ .compatible = "qcom,pmic-glink" },
- 	{}
- };
+intel/pxa/
+intel/ixp/
+intel/socfpga/
 
--- 
-2.34.1
+arm64 broadcom dts files are structured that way.
 
+Rob
