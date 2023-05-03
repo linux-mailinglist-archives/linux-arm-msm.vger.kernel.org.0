@@ -2,96 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB5496F6040
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 22:40:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE94C6F6072
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 23:09:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjECUkM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 16:40:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57520 "EHLO
+        id S229536AbjECVJT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 17:09:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229746AbjECUkL (ORCPT
+        with ESMTP id S229455AbjECVJS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 16:40:11 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 977F51BC
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 13:40:08 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-b9a6eec8611so5624796276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 13:40:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683146408; x=1685738408;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hgRsKnqFosP21nRhvJTwDb+9jWUZ4oTCBD+B9SUv1+c=;
-        b=PpH7MTH5m9dkyEXVIA4ICZkEIVn6fbuhrX3P1BdP3if0uOROgJ2F72A2yUx7yz3sXS
-         HWtVkM2kQYKv0Z/8qhzueuBS50AQOyk7K3BJwxgGieroePKE8eXjAn/Rs2ABvHBf1Ijz
-         U1P79PfFgwkyyx9FoqJJyXG0FJZj0hjbpTgXC89JzuVKxRrHt/Ymllp9Jk2sJJ4tWbfw
-         y4m4tu9rb4QhSiyNaqi6I7vrNrgcUZvWsj2crRyd3wJnXlNcu8YGFm5WF58h1WRW0V1s
-         LqLygvOy2n4JrcJ0Gc4Jwlxu7AuH88CzuoSB7p+d0z+N11Z8y9Tc5gacDsefTGoZl+E/
-         SfdQ==
+        Wed, 3 May 2023 17:09:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7CD57D96
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 14:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1683148109;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=B5wKef4dhqCkZ1S6DSh7ZtmhKxJbsxn4VyycuKkK9So=;
+        b=A8O4f99Tr/9UmSxjTfesiUwTnXJOlswEUUXRQaZt4lBGm5Wad3sCPFz28JbHbGYI6jaw40
+        PWbgIXxmw36PjtDBaVzFrhJRRaYk19NpFdI3rApuJ0ujc6VYBZc3Hdk3pxMSD64YpRTkS6
+        qSPhgXQN/rNMJ6YO5JyFDrzCgAYj1OA=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-HJPDjipQNkK2vno12OXviw-1; Wed, 03 May 2023 17:08:25 -0400
+X-MC-Unique: HJPDjipQNkK2vno12OXviw-1
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-55a37bf6fd0so79136997b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 14:08:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683146408; x=1685738408;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1683148105; x=1685740105;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hgRsKnqFosP21nRhvJTwDb+9jWUZ4oTCBD+B9SUv1+c=;
-        b=Hd1BRFEUj82kncYYHbI2MaepTI/IZouukREPYzWUp1vD9UNX8PD8JpLD9TrD92/R5b
-         jmb7BFp8sz2T6F9euH1dMCf1rZbveRqSUMV4tZRoM9u0ciDcWlxbYmDD0VGUB5EnH/Fv
-         QhOdabQP0tK9Z5HPidLhfMP84UrUtfVv/CRg3GIRnove7Z1GoaVVUkayAgcKxS9Wdqcy
-         KlBMOQxJYCnbpQXjQA+oDiwkd7z80LcfwG15uG169ggDW+8REP++bcSvvOjOCIhbpfdY
-         7sQ87cP+Ll2diI6aiu/gjak4JKcB2RWJQGdHYz5qM33az4jco7bGbQ/3knFijszoFysy
-         0PxA==
-X-Gm-Message-State: AC+VfDwAyuop9DU3gj4cNvj9adu34xsphotpw0hE6rLwmzrJmHFDsqTP
-        CJA1ItaeONJQd2UUvORKjo8d065tYCuUIJrB9fNSew==
-X-Google-Smtp-Source: ACHHUZ504wPVYlURitbUXR0w6GF5Hd5chFJsuF27bLfRTjvW8/vWf4wN9zc7VHWrnnoXqNvPfLtTOnqfU50Ll8hIGF4=
-X-Received: by 2002:a25:656:0:b0:b25:a1e1:5b65 with SMTP id
- 83-20020a250656000000b00b25a1e15b65mr3778724ybg.5.1683146407758; Wed, 03 May
- 2023 13:40:07 -0700 (PDT)
+        bh=B5wKef4dhqCkZ1S6DSh7ZtmhKxJbsxn4VyycuKkK9So=;
+        b=lb1E1AAwf+alLKbN2zRsQ3N/7pCxf3gF0Z1v0/5+jKWoHYIhcmwm2hoIEWMHRkCQnM
+         9faZBBCW0j7+n4FkeeEXkJZ98mwQWWeEx+KqTbwt3I8HtF4SVTGYFefj0AXkLz3jq1Oy
+         qrCMjir0gSNX4TDh+CLTE7ti3LJQGB3ghO1Oa6YvSrTefDEyWkTpNP8/rGaDqK900iUp
+         Mh6jccI6M/3NZds+JZ+crkWVMZjSjes8FvbGv7JNNwPss39Fai2KMRhmlwa+hwFym5lk
+         mZKSidellCAosXSJm507OQeIi4kRFMYyXNucqWHOoJpp+q2tv96wYKf+T0/lZzI1Xtkh
+         wxHg==
+X-Gm-Message-State: AC+VfDzCkZ4ZpjmIrWkSbJ6us2AIkRUsGdOB/QOFPi8HX6GDem+fMa4M
+        XxQJpMBzUtEfoouMRU49mtZnfa/eGbMyfyXqfD04RU24C7BvKVPreKsbvrtJwLWS1U1HFHvXojc
+        fMrpGW6mAP2Nb5AyLVgUZfDzS1Q==
+X-Received: by 2002:a81:4e57:0:b0:55a:1cb0:b255 with SMTP id c84-20020a814e57000000b0055a1cb0b255mr13545917ywb.37.1683148105295;
+        Wed, 03 May 2023 14:08:25 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4P64qVsOt+vjSEOVyrkpdUEM5A/1R+Ne059afhHGPa9s9fFLtwBWonVmrqTmpiGrDrGIBL1w==
+X-Received: by 2002:a81:4e57:0:b0:55a:1cb0:b255 with SMTP id c84-20020a814e57000000b0055a1cb0b255mr13545903ywb.37.1683148105041;
+        Wed, 03 May 2023 14:08:25 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id p6-20020a815b06000000b00545a081847fsm8933405ywb.15.2023.05.03.14.08.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 May 2023 14:08:24 -0700 (PDT)
+Date:   Wed, 3 May 2023 17:08:22 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v6 0/2] Add EMAC3 support for sa8540p-ride (devicetree
+ bits)
+Message-ID: <ZFLNRsIt0pu1p9fQ@brian-x1>
+References: <20230501205105.2518373-1-ahalaney@redhat.com>
 MIME-Version: 1.0
-References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
- <bce93654-fc36-3d12-282d-76fafb8f51ce@linaro.org> <CAL_JsqJXd_EpOQwwNEAn25mzFfkhEvqzur6ui5Ca+dbt2kA8-Q@mail.gmail.com>
- <5e318b02-8f33-4e2d-a956-5660e1c60619@app.fastmail.com> <CAA8EJpq8x5wQa3fMebaSP3hCdMiCsZRaF+B4Y3N3royW_CeXCA@mail.gmail.com>
- <4e1e70a9-9b28-410b-bd29-fb5f5805798f@app.fastmail.com> <CAL_JsqJEdZBS231TvkmmipaXEqzvDjz+A32V6uJ4zfSMAJHn2w@mail.gmail.com>
- <4d9b4159-88b2-48cf-84d9-34169928c8e4@app.fastmail.com>
-In-Reply-To: <4d9b4159-88b2-48cf-84d9-34169928c8e4@app.fastmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 3 May 2023 22:39:55 +0200
-Message-ID: <CACRpkdZBFqhoK7WhERX8yfBHL8kxYqnOZGgBCcWaHpT8qB2S4Q@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Olof Johansson <olof@lixom.net>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
-        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230501205105.2518373-1-ahalaney@redhat.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -99,23 +81,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 3, 2023 at 10:37=E2=80=AFPM Arnd Bergmann <arnd@arndb.de> wrote=
-:
-> On Wed, May 3, 2023, at 15:16, Rob Herring wrote:
->
-> > We could do a second level of directories here:
->
-> Works for me, but at that point, I'd really also want to do it
-> for nxp with its five or more product lines (mxs, imx, lpc,
-> s32, layerscape, vybrid)
->
-> > intel/pxa/
-> > intel/ixp/
-> > intel/socfpga/
->
-> and intel/axxia I guess.
+On Mon, May 01, 2023 at 03:51:03PM -0500, Andrew Halaney wrote:
+> This is a forward port / upstream refactor of code delivered
+> downstream by Qualcomm over at [0] to enable the DWMAC5 based
+> implementation called EMAC3 on the sa8540p-ride dev board.
+> 
+> >From what I can tell with the board schematic in hand,
+> as well as the code delivered, the main changes needed are:
+> 
+>     1. A new address space layout for dwmac5/EMAC3 MTL/DMA regs
+>     2. A new programming sequence required for the EMAC3 base platforms
+> 
+> This series addresses the devicetree changes to support this
+> hardware bringup.
+> 
+> As requested[1], it has been split up by compile deps / maintainer tree.
+> The associated v4 of the netdev specific changes can be found at [2],
+> and is merged.
+> 
+> The clock patch from this series was picked up from v5, leaving just the
+> devicetree bits here.
+> 
+> Together, they result in the ethernet controller working for
+> both controllers on this platform.
 
-This looks neat. I like it.
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-Yours,
-Linus Walleij
