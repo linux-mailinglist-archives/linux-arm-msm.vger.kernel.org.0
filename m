@@ -2,133 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADE7D6F5B8D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 17:54:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E8566F5BE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 18:25:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbjECPym (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 11:54:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38082 "EHLO
+        id S229562AbjECQZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 12:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230017AbjECPyl (ORCPT
+        with ESMTP id S229558AbjECQZF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 11:54:41 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 27E8E1992;
-        Wed,  3 May 2023 08:54:40 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0212E2F4;
-        Wed,  3 May 2023 08:55:24 -0700 (PDT)
-Received: from [10.57.82.232] (unknown [10.57.82.232])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A7AC53F67D;
-        Wed,  3 May 2023 08:54:33 -0700 (PDT)
-Message-ID: <e73c6192-8fd5-042d-ce03-095b336270ee@arm.com>
-Date:   Wed, 3 May 2023 16:54:28 +0100
+        Wed, 3 May 2023 12:25:05 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B859459C8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 09:25:01 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-50bd2d7ba74so8411992a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 09:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683131100; x=1685723100;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ze0Jut8Jaw/ifknxqzKnyodBsn/9QHtRL/qVVYq1llw=;
+        b=gz/b3Y3bnJRGNrunc5pvQ52kNHqDIXCDEt4x4jhB8mASaiBP7eBrSifq20QrXloxgD
+         Li4IrdSsWj6ezR+oguVZMmdxW0P0+tN3zyOOy52LIIkeMNMMNu4696nKi2Ja81xapDAv
+         iT1n4aJKv0PpeVaO3HbD8KRwVX1XQOChLXugETqEqhnOfifjg/1Ry5T1OqdOxwb34tUZ
+         nAWcVntJ7M0CARs7uAFvZyejjKh2pqUO/vUveWuD5VSDRqFB+phI1ToRAdMInwymNhIR
+         eHNPKGU7FOHJNktIfMGCyqkaavg5vCsUiRm4WSkYDk3uCvkuQIg42zSU2gHLaAwrQTJB
+         pvig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683131100; x=1685723100;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ze0Jut8Jaw/ifknxqzKnyodBsn/9QHtRL/qVVYq1llw=;
+        b=YodKoSEzCwdRdOLMuSXFpcQJIp9z9osyadXwNaP/6/VKZOgtB/cHSq0Y5759ZyOUEM
+         Pz8vZi2WMj98Io4a9FuHbBQVyKkzn7gVTgx/QNffaqnVrRxUFClRzOjLnuhSyKaQP0sy
+         H0tmapc6+jx/0fb1C0W8t36nMT4YYv46Y2ykL8vCUi/7QNr+CIWNK61aO5IxmRrFXMnT
+         v4Mb9MlmC+9xjkuSo8BrCAlVibjrDMgD+8WxBPV10WVYUNsub1xaGOtHIpnXVHKIDkrc
+         xNXpp5RCQFp62UIBmZbBaw0OoaMvNPtzxJPvJ3A1QvdIx2hH21tS2OREjaTCXod6eshh
+         hjMg==
+X-Gm-Message-State: AC+VfDyVg8N4MJfOKLXrS0BI7+9zfMqBb9CaZwaPgIn9FAlErsxXwepA
+        mO7I1+oqeaKmbhnbE+nLH1ARdw==
+X-Google-Smtp-Source: ACHHUZ6Ep0HhQcksbydX/7YXvwqa1Tty4Z/q8q7c2xvPyK6lt1j7GimAB71oBrZSotEDHVh5AIKLCQ==
+X-Received: by 2002:a17:907:9308:b0:94e:bf3e:638 with SMTP id bu8-20020a170907930800b0094ebf3e0638mr1939840ejc.11.1683131100188;
+        Wed, 03 May 2023 09:25:00 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:db42:e3d0:c55a:8cf1? ([2a02:810d:15c0:828:db42:e3d0:c55a:8cf1])
+        by smtp.gmail.com with ESMTPSA id sb10-20020a1709076d8a00b00958079b676asm14837366ejc.122.2023.05.03.09.24.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 09:24:59 -0700 (PDT)
+Message-ID: <faefbbed-0f62-e569-455d-0d21b363f8f3@linaro.org>
+Date:   Wed, 3 May 2023 18:24:57 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 16/20] iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
-Content-Language: en-GB
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Steven Price <steven.price@arm.com>
-References: <16-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <16-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v10 1/4] dt-bindings: phy: qcom,qmp-usb: Drop legacy
+ bindings and move to newer one (SM6115 & QCM2290)
+Content-Language: en-US
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, kishon@kernel.org, vkoul@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org
+References: <20230502053534.1240553-1-bhupesh.sharma@linaro.org>
+ <20230502053534.1240553-2-bhupesh.sharma@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230502053534.1240553-2-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 2023-05-01 19:03, Jason Gunthorpe wrote:
-> This brings back the ops->detach_dev() code that commit
-> 1b932ceddd19 ("iommu: Remove detach_dev callbacks") deleted and turns it
-> into an IDENTITY domain.
+On 02/05/2023 07:35, Bhupesh Sharma wrote:
+> 'qcom,msm8996-qmp-usb3-phy.yaml' defines bindings for several PHYs
+> which predate USB -> USB+DP migration. Since SM6115 and QCM2290
+> nodes for USB QMP phy are being added to dtsi files by followup patches,
+> move these bindings instead to the newer style
+> 'qcom,sc8280xp-qmp-usb3-uni-phy.yaml' file.
 > 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/sun50i-iommu.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
-> 
-> diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-> index 74c5cb93e90027..15fd62d360778f 100644
-> --- a/drivers/iommu/sun50i-iommu.c
-> +++ b/drivers/iommu/sun50i-iommu.c
-> @@ -772,6 +772,26 @@ static void sun50i_iommu_detach_device(struct iommu_domain *domain,
->   		sun50i_iommu_detach_domain(iommu, sun50i_domain);
->   }
->   
-> +static int sun50i_iommu_identity_attach(struct iommu_domain *identity_domain,
-> +					struct device *dev)
-> +{
-> +	struct sun50i_iommu *iommu = dev_iommu_priv_get(dev);
-> +
-> +	if (iommu->domain == identity_domain || !iommu->domain)
 
-I don't think that first condition could ever be true.
 
-Thanks,
-Robin.
+>    clock-names:
+> -    items:
+> -      - const: aux
+> -      - const: ref
+> -      - const: com_aux
+> -      - const: pipe
+> +    maxItems: 4
+>  
+>    power-domains:
+>      maxItems: 1
+> @@ -71,6 +69,42 @@ required:
+>  
+>  additionalProperties: false
+>  
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,qcm2290-qmp-usb3-phy
+> +              - qcom,sm6115-qmp-usb3-phy
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 4
+> +        clock-names:
+> +          items:
+> +            - const: cfg_ahb
+> +            - const: ref
+> +            - const: com_aux
+> +            - const: pipe
 
-> +		return 0;
-> +	sun50i_iommu_detach_device(iommu->domain, dev);
-> +	return 0;
-> +}
-> +
-> +static struct iommu_domain_ops sun50i_iommu_identity_ops = {
-> +	.attach_dev = sun50i_iommu_identity_attach,
-> +};
-> +
-> +static struct iommu_domain sun50i_iommu_identity_domain = {
-> +	.type = IOMMU_DOMAIN_IDENTITY,
-> +	.ops = &sun50i_iommu_identity_ops,
-> +};
-> +
->   static int sun50i_iommu_attach_device(struct iommu_domain *domain,
->   				      struct device *dev)
->   {
-> @@ -827,6 +847,7 @@ static int sun50i_iommu_of_xlate(struct device *dev,
->   }
->   
->   static const struct iommu_ops sun50i_iommu_ops = {
-> +	.identity_domain = &sun50i_iommu_identity_domain,
->   	.pgsize_bitmap	= SZ_4K,
->   	.device_group	= sun50i_iommu_device_group,
->   	.domain_alloc	= sun50i_iommu_domain_alloc,
+I am pretty sure I acked it and there were no changes here... but since
+you did not include it, then lets keep the clock order the same as
+sc8280xp. ABI is anyway affected, right?
+
+Best regards,
+Krzysztof
+
