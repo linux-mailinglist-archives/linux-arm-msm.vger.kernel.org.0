@@ -2,118 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B2C86F5890
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F19E6F5896
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:09:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbjECNIp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 09:08:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35024 "EHLO
+        id S229916AbjECNJG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 09:09:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbjECNIo (ORCPT
+        with ESMTP id S229618AbjECNJF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 09:08:44 -0400
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E244EDB;
-        Wed,  3 May 2023 06:08:43 -0700 (PDT)
-Date:   Wed, 03 May 2023 13:08:34 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1683119318; x=1683378518;
-        bh=FE0AjAsHQ8V9qZOKZ90iRzNLwECyVj8k679NWIOxg5I=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=OFbBLE/u0ZxoAWymbH2Y0YQX1zoXWj4iqVzV4rzwVXeIw8MMsjesaDBozx9n6whF+
-         RA5Q83IyBJNmxx7aAARj+WvJ1e4A0m01RFiXJLSB03k9Gj3rw4Er9W2cvj747zJEcI
-         26C3qL9dMfUssdYaOeRJOkEoQR95zBQH2fw8E7ZT9j4HsIV7eVY3ALnBUXaJe8S1hk
-         Vp5hNG799rTUNe51pgL86pMjoZ5fQZUA71OGElDrF3xAT+S/zjOst2JN3Nt6u/A0Dc
-         EK61T0Z1v4d0s9u1mA6cQdOnb6K4IZlbR8LqsVyfLZUUu4Czyde3vihpl2fLz98y4D
-         ciMsdVpMo8D6g==
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 0/4] clk: qcom: msm8996: add support for the CBF clock
-Message-ID: <pAOeaOsWozBaJSKchKaW2ibS6QGT7rzlZR6TF0j9TKCqVACNLxPtGJdF2tsgqSrQF4G_IqQ9iMCdxSJsRRsOy4uCwKjRK4Gs_Z522NHVDMU=@protonmail.com>
-In-Reply-To: <20230410200014.432418-1-dmitry.baryshkov@linaro.org>
-References: <20230410200014.432418-1-dmitry.baryshkov@linaro.org>
-Feedback-ID: 6882736:user:proton
+        Wed, 3 May 2023 09:09:05 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E874EDB;
+        Wed,  3 May 2023 06:09:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C1413614C8;
+        Wed,  3 May 2023 13:09:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C267C4339E;
+        Wed,  3 May 2023 13:09:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683119343;
+        bh=5Xok1b5Bon4dNBT/EG9uKl/6cvSusA5y9BN7upmEzC8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=glYqs7G41Oe7Vr2QNmHMivzZ6SgZQ51erxLwa4NoyJylHIWGgJZiJbFOEF9eZRS9n
+         xWx6cluWIvaqTZt7zXRHgIkq6tJbMsx2DRAeJtYjsXE4g6fbmacJoLd1zt/7Kc+RNb
+         DVYTcfIMk4llzEHHC0AIYjcc1NqABxKW5it0P7I3y/6ACXPplEVw9mnPneYwqWJE1j
+         DXf0Ve1xZPIJYMX1EQqZ/49QrXBsnJubhquY8wuE6I2y8dSs6L+d1Z35PcqDp/q7zl
+         io5DshylXLfwwhBVdAWKtYrKz5bhQuXIbmxPDl7QiyFIMDTq/uAziVDre8vjyLHGtq
+         jmFJ8ehjTEdAg==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ac75500798so6202301fa.0;
+        Wed, 03 May 2023 06:09:03 -0700 (PDT)
+X-Gm-Message-State: AC+VfDx8VIFGsdzwVAt9lIOTgqeOb8/Q9jS97/fHtSElo+tcs5II73Sm
+        ZIB/SgALIfvsV9uCVb4WpKzuMOObIZsxOcwOVA==
+X-Google-Smtp-Source: ACHHUZ50B+ONgazRTst79ZMphnWydxujQ+xpsmD1oxBiJc6OIwSZRmXeOONoaPS4VdIBDlX9Htpoiog7d0wWQm74E6U=
+X-Received: by 2002:a2e:80ca:0:b0:2a5:f82e:e2a6 with SMTP id
+ r10-20020a2e80ca000000b002a5f82ee2a6mr239ljg.47.1683119341121; Wed, 03 May
+ 2023 06:09:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
+ <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
+In-Reply-To: <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 3 May 2023 08:08:48 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqL-WMNxHrgCzn=LfH6gpE_Yb3uRwo97ssHPoZenK3CEeQ@mail.gmail.com>
+Message-ID: <CAL_JsqL-WMNxHrgCzn=LfH6gpE_Yb3uRwo97ssHPoZenK3CEeQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
+        Olof Johansson <olof@lixom.net>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Monday, April 10th, 2023 at 11:00 PM, Dmitry Baryshkov <dmitry.baryshkov=
-@linaro.org> wrote:
+On Wed, May 3, 2023 at 6:02=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wrote:
+>
+> On Tue, May 2, 2023, at 21:40, Rob Herring wrote:
+> > On Tue, May 2, 2023 at 3:15=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wr=
+ote:
+>
+> > vendor_map =3D {
+> >     'alphascale' : 'alphascale',
+> >     'alpine' : 'alpine',
+>
+> I would make this one 'amazon' if we go with current manufacturers.
+>
+> >     'nspire' : 'nspire',
+>
+> nspire is the name of the end-user product, so that doesn't quite
+> fit. The SoC was apparently an LSI logic Zevio, which is now owned
+> by Broadcom.
 
-> On MSM8996 two CPU clusters are interconnected using the Core Bus
-> Fabric (CBF). In order for the CPU clusters to function properly, it
-> should be clocked following the core's frequencies to provide adequate
-> bandwidth.
->=20
-> Register CBF as a clock (required for CPU to boot) and add a tiny
-> interconnect layer on top of it to let cpufreq/opp scale the CBF clock.
->=20
-> Changes since v4:
-> - Fixed typos in commit messages
->=20
-> Changes since v3:
-> - Dropped merged patches
-> - Moved interconnect shim to drivers/interconnect/icc-clk.c
->=20
-> Changes since v2:
-> - Added interconnect-related bindings
-> - Switched CPU and CBF clocks to RPM_SMD_XO_A_CLK_SRC
->=20
-> Changes since v1:
-> - Relicensed schema to GPL-2.0 + BSD-2-Clause (Krzysztof)
-> - Changed clock driver to use parent_hws (Konrad)
-> - Fixed indentation in CBF clock driver (Konrad)
-> - Changed MODULE_LICENSE of CBF clock driver to GPL from GPL-v2
-> - Switched CBF to use RPM_SMD_XO_CLK_SRC as one of the parents
-> - Enabled RPM_SMD_XO_CLK_SRC on msm8996 platform and switch to it from
-> RPM_SMD_BB_CLK1 clock
->=20
->=20
-> Dmitry Baryshkov (4):
-> dt-bindings: interconnect/msm8996-cbf: add defines to be used by CBF
-> interconnect: add clk-based icc provider support
-> clk: qcom: cbf-msm8996: scale CBF clock according to the CPUfreq
-> arm64: dts: qcom: msm8996: scale CBF clock according to the CPUfreq
->=20
-> arch/arm64/boot/dts/qcom/msm8996.dtsi | 51 ++++++
-> drivers/clk/qcom/Kconfig | 1 +
-> drivers/clk/qcom/clk-cbf-8996.c | 59 +++++-
-> drivers/interconnect/Kconfig | 6 +
-> drivers/interconnect/Makefile | 2 +
-> drivers/interconnect/icc-clk.c | 168 ++++++++++++++++++
-> .../interconnect/qcom,msm8996-cbf.h | 12 ++
-> include/linux/interconnect-clk.h | 22 +++
-> 8 files changed, 320 insertions(+), 1 deletion(-)
-> create mode 100644 drivers/interconnect/icc-clk.c
-> create mode 100644 include/dt-bindings/interconnect/qcom,msm8996-cbf.h
-> create mode 100644 include/linux/interconnect-clk.h
->=20
-> --
-> 2.30.2
+I'm inclined to leave it. I put it in the category of a one-off thing
+that's not sharing anything
 
-After adding support for MSM8996 Pro [1],
+> >     'mvebu' : 'marvell',
+> >     'mmp' : 'marvell',
+> >     'berlin' : 'berlin',
+>
+> While berlin is related to pxa/mmp, this one is now owned
+> by Synaptics, and the 64-bit versions are already in the
+> synaptics subdir, so I'd go with teh same here.
+>
+> >     'openbmc' : 'aspeed',
+> >     'en7' : 'airoha',
+>
+> airoha is a separate company now, but the hardware is still
+> shared with mediatek, so we could consider lumping it into
+> that subdir, but a separate one may be better long-term.
+>
+> >     'gemini' : 'gemini',
+>
+> This one is also a product name, not a company. Apparently,
+> gemini was originally made by Storm Semiconductor, and then
+> by Cortina, which was subsequently acquired by Inphi, and that ended
+> up in Marvell after the product was already discontinued.
+>
+> Out of the four, I'd probably go with 'cortina' as the
+> directory name.
 
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+I had 'cortina' previously. Linus wanted gemini...
 
-[1] https://lore.kernel.org/linux-arm-msm/20230503130051.144708-1-y.oudjana=
-@protonmail.com/
-
+Rob
