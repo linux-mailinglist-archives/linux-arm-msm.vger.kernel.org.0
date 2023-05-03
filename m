@@ -2,151 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 839FF6F5BF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 18:27:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 918D46F5BFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 18:29:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229536AbjECQ1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 12:27:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52728 "EHLO
+        id S229648AbjECQ3O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 12:29:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjECQ1l (ORCPT
+        with ESMTP id S229635AbjECQ3I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 12:27:41 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 906E44EF9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 09:27:37 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-50bc34b98edso6850549a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 09:27:37 -0700 (PDT)
+        Wed, 3 May 2023 12:29:08 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082CA10FE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 09:29:03 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-50bc4bc2880so6332007a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 09:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683131256; x=1685723256;
+        d=linaro.org; s=google; t=1683131341; x=1685723341;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=oofjhUkDBoyhSvfn9xrML4y1PXC5qidRBwwApXpHT6w=;
-        b=Bl4pOO1vK6PiYX4R0E5x+2r6wpefXs0TO2KYo0suP/IyYAE/jQZnl1B5t0Tj4qVi1l
-         xEKoNmVlUWxmCmnOQBTHZLS/3EF+lFZ3L7fGbfCwK3vjLscktYuQfUqLk2oBr3d9MEgW
-         WwjBrMZqWRJbtjgZvJcnJw09Cpuo1oTc3yqXZMdyvZjgY8k8IkivZs3NPjEt85kpmsWQ
-         DILKEsm1DwEmd32GhmNrmUlZQhgHTSZXlp6hM+mm2ToeslG01YtJ+CwDfNesTVlzUXDJ
-         Bu8a80YnvjDN1pzCDQLMjm0wg16nEodegUiN1zh2gIUWLCrVWboV1luik4BJhhhJJMjA
-         V2Jw==
+        bh=AeGjiRxodEeGq070SZlBIm9caXWVi3ClWZLHmGEvqS0=;
+        b=YBwc3Jr/tVLm3F5tPgm+OILYzq7Cd9J2SH4nxZklWRXu+Y5f1EkwAOw9LjMRzvwehY
+         ngZiCckoPwMlb6jqDVaatWmGG8v2BaQLMuW4VM8BzncLAbGk7bRfZEDVhdHb4q4GN672
+         MtUea+jXP9f4FJKzBlXn5T/UkiW3f04CNKlWfK5s5PqsOz8TnTkK77gCE33Xjye7rJ4o
+         pCIFh1ZU/XWZbMsMxFQDNHmoXnIo+pUrqFlX2t8Woq4em3hmi7zYbRcYEsw1KluWtiyA
+         qGuY8FBXnJkYYAnPwMxz5G4OZpGi/nFWZMSy+swzDDveFMavD6CcWREZdWw5HWxHBWQY
+         BsxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683131256; x=1685723256;
+        d=1e100.net; s=20221208; t=1683131341; x=1685723341;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oofjhUkDBoyhSvfn9xrML4y1PXC5qidRBwwApXpHT6w=;
-        b=IPaD2aUYZSH1zCx+LYoi7GVAPMdbYzn3R+ZQE4gOVEP8tyJMzjjK3mr0HiaicomaG2
-         Wbya0gHbTcXDxO3jwT/aAUQS1TH+7IZ3v4JesN3oSaQx6m648cH+OMyxvg5qQln379Ie
-         IlMA6coEHCdIAlTJN2sb/FAtrnwEWOrAlVkX0mGPO/RvauccoIxQ+Dj6CBdzBFbywJeQ
-         aD+7T1Qbi48qM0VVFQzAqCG8wOdz4lWZJUsNwUTPHm+KaSB2Y6GYtGgBlaUi2z8xptwm
-         yTx5p1FIRMtuTnxupFpjA61C98AJFx+Kj/7mpmdy+81OP0xtX/z0/fRjTsCdxp6lvSv2
-         sgag==
-X-Gm-Message-State: AC+VfDyPO6YM6L51b6xt1dYTUtdwZQqi1Fu3DB5mq6U7YtrBJZsOST7H
-        0HCYU9uNzAhkvY8GxTKPZE3H6w==
-X-Google-Smtp-Source: ACHHUZ4Heu2hUEMlfp5wVbyQPUTiI0ylQQqFhGqns/GKAE1nOsQMqxyigR11MSo5s4yCryK+QQV6Ew==
-X-Received: by 2002:a17:907:1c21:b0:94b:cd7c:59f4 with SMTP id nc33-20020a1709071c2100b0094bcd7c59f4mr3980503ejc.16.1683131255932;
-        Wed, 03 May 2023 09:27:35 -0700 (PDT)
+        bh=AeGjiRxodEeGq070SZlBIm9caXWVi3ClWZLHmGEvqS0=;
+        b=T3lFKHoB6k2DoZ92RzMHEk5BaMWowQC5Yuge0syOkXRx7ixwFcQ3WyND9om8ftHdYM
+         fIM/M+z/9HZkHhaUQh5hYFWPBbJuAvgz6s6YkmD0/jsNYUQyfo/109w6pBVknKNtcupk
+         sAu3D4CRk20g126ZN6XtQL6iVpIiLzKrucMWBG+FkhkB17eOq3sUy89jjSGUjQ+G9PfC
+         1nvhVasqlshx+MuuLgLXyt1L8zIw8wq8utY0haTbTz3mK9CAyrH3F2Ea4IQ/drHhELcM
+         ZZ85UsRv4Rlrrm+gNaohTdtD9NoKGR1TZQxPoTMsku++k9tRMxzO9n7pew1QDIWhm4CZ
+         4ZEg==
+X-Gm-Message-State: AC+VfDz3TyvtlttvXbGA9KC+GGBxVklQlEAGY0Sjl0Fhb/jrqTubH3y1
+        mbFRNJZlkx/tA67EBqONd/4LXA==
+X-Google-Smtp-Source: ACHHUZ5Yim8YQR5XyfWMJMQFx5/VrdVrOpm/MU33VXtdboHVYz2WXoeWCAoHVarw4guuWHC8hv89gA==
+X-Received: by 2002:a17:907:7290:b0:94e:1764:b09b with SMTP id dt16-20020a170907729000b0094e1764b09bmr4073320ejc.45.1683131341165;
+        Wed, 03 May 2023 09:29:01 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:db42:e3d0:c55a:8cf1? ([2a02:810d:15c0:828:db42:e3d0:c55a:8cf1])
-        by smtp.gmail.com with ESMTPSA id ia1-20020a170907a06100b009614fea69e8sm5438304ejc.74.2023.05.03.09.27.33
+        by smtp.gmail.com with ESMTPSA id dn1-20020a17090794c100b00953381ea1b7sm17454132ejc.90.2023.05.03.09.28.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 09:27:34 -0700 (PDT)
-Message-ID: <fdb8e5a9-d8a0-1881-894f-1202ceefcc21@linaro.org>
-Date:   Wed, 3 May 2023 18:27:33 +0200
+        Wed, 03 May 2023 09:29:00 -0700 (PDT)
+Message-ID: <dae43973-18d9-7096-d23d-660e71c7aa97@linaro.org>
+Date:   Wed, 3 May 2023 18:28:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
- multipd model
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8350-hdk: Add QMP & DP to
+ SuperSpeed graph
 Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     quic_sjaganat@quicinc.com, quic_gurus@quicinc.com,
-        quic_gokulsri@quicinc.com, linux-arm-msm@vger.kernel.org,
-        andersson@kernel.org, jassisinghbrar@gmail.com,
-        konrad.dybcio@linaro.org, quic_eberman@quicinc.com,
-        quic_poovendh@quicinc.com, robimarko@gmail.com,
-        mturquette@baylibre.com, mathieu.poirier@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, quic_arajkuma@quicinc.com,
-        sboyd@kernel.org, robh+dt@kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, loic.poulain@linaro.org,
-        quic_anusha@quicinc.com, linux-kernel@vger.kernel.org,
-        quic_srichara@quicinc.com, quic_kathirav@quicinc.com,
-        agross@kernel.org, linux-remoteproc@vger.kernel.org
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
- <167819522915.3831.12765243745569076133.robh@kernel.org>
- <9de5629f-0a69-7b5b-c312-ab6fe19d60f8@quicinc.com>
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20230503-topic-sm8450-graphics-dp-next-v1-0-d1ee9397f2a6@linaro.org>
+ <20230503-topic-sm8450-graphics-dp-next-v1-3-d1ee9397f2a6@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <9de5629f-0a69-7b5b-c312-ab6fe19d60f8@quicinc.com>
+In-Reply-To: <20230503-topic-sm8450-graphics-dp-next-v1-3-d1ee9397f2a6@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 12:59, Manikanta Mylavarapu wrote:
+On 03/05/2023 15:10, Neil Armstrong wrote:
+> With support for the QMP combo phy to react to USB Type-C switch events,
+> introduce it as the next hop for the SuperSpeed lanes of the Type-C
+> connector, and connect the output of the DisplayPort controller
+> to the QMP combo phy.
 > 
+> This allows the TCPM to perform orientation switching of both USB and
+> DisplayPort signals.
 > 
-> On 3/7/2023 6:53 PM, Rob Herring wrote:
->>
->> On Tue, 07 Mar 2023 10:11:27 +0530, Manikanta Mylavarapu wrote:
->>> Add new binding document for multipd model remoteproc.
->>> IPQ5018, IPQ9574 follows multipd model.
->>>
->>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>> ---
->>>   .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
->>>   1 file changed, 282 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->>>
->>
->> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
->> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->>
->> yamllint warnings/errors:
->>
->> dtschema/dtc warnings/errors:
->> Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.example.dts:22:18: fatal error: dt-bindings/clock/qcom,gcc-ipq5018.h: No such file or directory
->>     22 |         #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
->>        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> compilation terminated.
->> make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.example.dtb] Error 1
->> make[1]: *** Waiting for unfinished jobs....
->> make: *** [Makefile:1512: dt_binding_check] Error 2
->>
->> doc reference errors (make refcheckdocs):
->>
->> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com
->>
->> The base for the series is generally the latest rc1. A different dependency
->> should be noted in *this* patch.
->>
->> If you already ran 'make dt_binding_check' and didn't see the above
->> error(s), then make sure 'yamllint' is installed and dt-schema is up to
->> date:
->>
->> pip3 install dtschema --upgrade
->>
->> Please check and re-submit after running the above command yourself. Note
->> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
->> your schema. However, it must be unset to test all examples with your schema.
->>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 74 ++++++++++++++++++++++++++++++++-
+>  1 file changed, 72 insertions(+), 2 deletions(-)
 > 
-> I mentioned dependency link 
-> (https://lore.kernel.org/linux-arm-msm/20220621161126.15883-1-quic_srichara@quicinc.com/) 
-> in cover page patch because it's required for entire series. I will add 
-> dependency link's and raise new patchset.
+> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+> index 2ee1b121686a..fa835bdb7408 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
+> @@ -58,7 +58,15 @@ port@1 {
+>  					reg = <1>;
+>  
+>  					pmic_glink_ss_in: endpoint {
+> -						remote-endpoint = <&usb_1_dwc3_ss>;
+> +						remote-endpoint = <&usb_1_qmpphy_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +
+> +					pmic_glink_sbu: endpoint {
+> +						remote-endpoint = <&fsa4480_sbu_mux>;
+>  					};
+>  				};
+>  			};
+> @@ -326,6 +334,36 @@ zap-shader {
+>  	};
+>  };
+>  
+> +&i2c13 {
+> +	status = "okay";
+> +	clock-frequency = <100000>;
+> +
+> +	fsa4480@42 {
 
-Is the dependency merged for v6.4-rc1? Looks not, so this means the
-patch cannot be merged for next three months.
+Node names should be generic, so e.g. typec-mux
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
 
-Why do you need any dependency here in this binding?
+> +		compatible = "fcs,fsa4480";
+> +		reg = <0x42>;
+> +
+
 
 Best regards,
 Krzysztof
