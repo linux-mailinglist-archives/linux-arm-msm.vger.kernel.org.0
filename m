@@ -2,85 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D07506F5D16
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:34:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 036D66F5D3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:45:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229581AbjECRe4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 13:34:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
+        id S229459AbjECRpw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 13:45:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjECRez (ORCPT
+        with ESMTP id S229672AbjECRpv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 13:34:55 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890528F;
-        Wed,  3 May 2023 10:34:52 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343GcDSb010737;
-        Wed, 3 May 2023 17:34:44 GMT
+        Wed, 3 May 2023 13:45:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F307A83;
+        Wed,  3 May 2023 10:45:41 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343EpZPi023818;
+        Wed, 3 May 2023 17:45:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2SLyxb/oLFHe3Ff3BXtyoEm91MUW65yTTYRI3lRrWgE=;
- b=g34fVGZKG76Pp+sTgeZOTleEZXZjGS1NVsJf88NDukLEGQLUYpt5McGdsgJ+0XwTA13o
- yIToF6PsZSn1yGcyLa+9KCzsCY2D22Y54p6M7XXQC1FXeZ6rrmXXqU/6jvTA/m+QOmSP
- pYkarNV1HHvt0R/LdPLVJCmd4grSpOk3Uot0ZhyKenJ75eSBRxjn6/7dQjCLRJEMyEKP
- hUYv4IjDrD7h53FSR+NDCs7MZM/qtE1661UHzdRlmN8Lfj+uEz23aTsHc4mZv7zXpbji
- wquozkywd2mKLWXTdQ13D1LXgCD32/DzLwD05VuI16vuvO4IZ0E9BsFjWv76pHYlQxXK 7w== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbjwn9b7f-1
+ bh=Is8Y6+BGHnBePIXXLK0YRC8sGcEu018Q8eTRQVp6OHU=;
+ b=CBv/j3lNY37ihYpQXHTgvcTarM8Cvq1a+vplth6+AJmigRDDmYMhWizLv3iNEVyme1po
+ 02NTdo8tJlXlq+vn5gj9KUtlpm99buRWgvQmlEr5CSEG5YUjCHQLQmxymPZnL1JDVOO1
+ W5H4t3eN/gxF1VFjcmZTltX9tlyGPefKpNiJ+MNsplQ7/BC1Z4D2ziOSd+KCtDYJKnAl
+ KKXI0t2em0qL66uG1uka5Ru8gnhMPtkXETbKs+5bkRDcpgCzLWxgJlWLF3iycXrbCWji
+ lm7YSdb9P4WLdf17DVA8xeU/Am7R8TGoUKzBhCQxBKeNF4HkcZZp6azN5Go/ZvZ18AsL IQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbae92c35-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 17:34:44 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343HYhNc024246
+        Wed, 03 May 2023 17:45:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343HjTGd017696
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 17:34:43 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 3 May 2023 17:45:29 GMT
+Received: from [10.71.110.189] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
- 10:34:43 -0700
-Message-ID: <ff496926-98e3-98b4-e81c-594f4d67d123@quicinc.com>
-Date:   Wed, 3 May 2023 10:34:42 -0700
+ 10:45:28 -0700
+Message-ID: <648e7cca-8bb1-73f0-2bbb-0a6b81df3882@quicinc.com>
+Date:   Wed, 3 May 2023 10:45:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 2/4] drm/msm/dsi: Fix compressed word count calculation
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 3/7] drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK
+ and PP_BLK_TE marcos
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-2-6bc6f03ae735@quicinc.com>
- <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683061382-32651-4-git-send-email-quic_khsieh@quicinc.com>
+ <4315e96f-ed29-92aa-9549-d6fc9d820de6@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <4315e96f-ed29-92aa-9549-d6fc9d820de6@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hiUM3e70zqOygWXzuqNVxh0fZHx9FlJg
-X-Proofpoint-ORIG-GUID: hiUM3e70zqOygWXzuqNVxh0fZHx9FlJg
+X-Proofpoint-GUID: jMrv_6n3GRMqsz5lzlsFKgkPxWegoixg
+X-Proofpoint-ORIG-GUID: jMrv_6n3GRMqsz5lzlsFKgkPxWegoixg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-03_12,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030150
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 impostorscore=0 clxscore=1015 spamscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030151
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,77 +88,94 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 5/3/2023 1:26 AM, Dmitry Baryshkov wrote:
-> On 03/05/2023 04:19, Jessica Zhang wrote:
->> Currently, word count is calculated using slice_count. This is incorrect
->> as downstream uses slice per packet, which is different from
->> slice_count.
+On 5/2/2023 3:42 PM, Dmitry Baryshkov wrote:
+> On 03/05/2023 00:02, Kuogee Hsieh wrote:
+>> At legacy chipsets, it required DPU_PINGPONG_DSC bit be set to indicate
+>> pingpong ops functions are required to complete DSC data path setup if
+>> this chipset has DSC hardware block presented. This patch add
+>> DPU_PINGPONG_DSC bit to both PP_BLK and PP_BLK_TE marcos if it has DSC
+>> hardware block presented.
 >>
->> Slice count represents the number of soft slices per interface, and its
->> value will not always match that of slice per packet. For example, it is
->> possible to have cases where there are multiple soft slices per interface
->> but the panel specifies only one slice per packet.
->>
->> Thus, use the default value of one slice per packet and remove 
->> slice_count
->> from the word count calculation.
->>
->> Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to 
->> compute word count")
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 >> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++++++++-
->>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    | 12 +++++-----
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  8 +++----
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 26 
+>> ++++++++++------------
+>>   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 24 
+>> ++++++++++----------
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 26 
+>> ++++++++++------------
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  4 ++--
+>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  2 +-
+>>   .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  2 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  8 +++----
+>>   9 files changed, 54 insertions(+), 58 deletions(-)
 >>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 35c69dbe5f6f..b0d448ffb078 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -996,7 +996,14 @@ static void dsi_timing_setup(struct msm_dsi_host 
->> *msm_host, bool is_bonded_dsi)
->>           if (!msm_host->dsc)
->>               wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
->>           else
->> -            wc = msm_host->dsc->slice_chunk_size * 
->> msm_host->dsc->slice_count + 1;
->> +            /*
->> +             * When DSC is enabled, WC = slice_chunk_size * 
->> slice_per_packet + 1.
->> +             * Currently, the driver only supports default value of 
->> slice_per_packet = 1
->> +             *
->> +             * TODO: Expand drm_panel struct to hold slice_per_packet 
->> info
->> +             *       and adjust DSC math to account for 
->> slice_per_packet.
-> 
-> slice_per_packet is not a part of the standard DSC, so I'm not sure how 
-> that can be implemented. And definitely we should not care about the 
-> drm_panel here. It should be either a part of drm_dsc_config, or 
-> mipi_dsi_device.
-
-Hi Dmitry,
-
-IIRC slice per packet is given by the panel specs with the default value 
-being 1 if no value is specified, so it might be better to have it as 
-part of mipi_dsi_device.
-
-Will update the TODO comment accordingly.
-
-Thanks,
-
-Jessica Zhang
-
-> 
->> +             */
->> +            wc = msm_host->dsc->slice_chunk_size + 1;
->>           dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->>               DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+>> index 17f821c..b7cd746 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+>> @@ -112,16 +112,16 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
+>>   };
+>>     static const struct dpu_pingpong_cfg msm8998_pp[] = {
+>> -    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
+>> -            DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>> +    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 
+>> BIT(DPU_PINGPONG_DSC), 0,
+>> +            sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
+>> -    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
+>> -            DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>> +    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 
+>> BIT(DPU_PINGPONG_DSC), 0,
+>> +            sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
+>> -    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
+>> +    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, 0, sdm845_pp_sblk,
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
+>> -    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
+>> +    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, 0, sdm845_pp_sblk,
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
+>
+> Just to doublecheck: why don't we have DPU_PINGPONG_DSC for PP_3/_4? 
+> We do have them on sdm845. Is it because we should not use DSC with 
+> thos PINGPONG blocks?
+>
+I think it only have two DSPP connect to pp blocks
+>>   };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h 
+>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+>> index ceca741..8888bd9 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+>> @@ -110,16 +110,16 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+>>   };
+>>     static const struct dpu_pingpong_cfg sdm845_pp[] = {
+>> -    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
+>> +    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 
+>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
+>> -    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
+>> +    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 
+>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
+>> -    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
+>> +    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, BIT(DPU_PINGPONG_DSC), 
+>> 0, sdm845_pp_sblk,
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
+>> -    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
+>> +    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, BIT(DPU_PINGPONG_DSC), 
+>> 0, sdm845_pp_sblk,
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
 >>
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+>
+> [skipped the rest, looks good to me]
+>
