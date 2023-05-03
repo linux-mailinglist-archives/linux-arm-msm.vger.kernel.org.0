@@ -2,113 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3EDB86F53C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 10:56:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7C5D6F53D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 10:58:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbjECI4n convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 3 May 2023 04:56:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41620 "EHLO
+        id S229836AbjECI57 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 04:57:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjECI4m (ORCPT
+        with ESMTP id S229595AbjECI56 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 04:56:42 -0400
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F92C10D9;
-        Wed,  3 May 2023 01:56:41 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-b9a6ab9ede3so6855179276.2;
-        Wed, 03 May 2023 01:56:41 -0700 (PDT)
+        Wed, 3 May 2023 04:57:58 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A114640FD
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 01:57:56 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-306342d7668so1615379f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 01:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683104275; x=1685696275;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DnRb7dDXP217oGo1HF2W6EYow19JwD0ZBlHKF/B0F1s=;
+        b=nKz9j4av6PvO4+KQsmLJhqBm9WWlR9U2fpFqJBZjLhWr8IKluihScR4lvkQ3kIGfhn
+         PQF9Q/gZTh0XeEwdphja6hPZaHh+V4RhppJWnmOV6AV9xwE5JurkKluq5ZjQtQfxZzG2
+         CIOhqbug02+l0xvqhAO/ZK7wMIhe1d0dngaavzg4LCEKs2VEjH7rQqOpmIQ9NC3S/KL0
+         TMUZLzVi1DK8ayaQE1F9Nk3PNQmojFW+E42S6d/TcaTX/IcyIJ4gn0bj1f2ClE8mc3Jw
+         e6dPPjEq7iioZZLel6UjJxFAYGMgndT0LnRsggaGrQ93zmj/pIoQweqHMYk0ueXuykJ+
+         qTnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683104200; x=1685696200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nLIjSxvkFoShCDz7/AeeChAXiJ9TCtnKs3s5wZ5JN+8=;
-        b=FRpPJUrL5Hb3oc5BuMFQBhZ4kfNvTcKqJqUBY8MtwS3Rxd1E/6kRj/uMVORK4XtsJ8
-         NhiwCMkJGlulmZqTPkIQyNhEEZ8EgaL7peQWqoPL3svLDhFi2Jqf2h5Ot6oasv9w+0AB
-         43Hv5gwYZe1Qp1QTybQAbVsGPZGWdnBUo0e6KC8Psinp4ZtqJgRNnOgsG6LzyADMvOxy
-         fAvNvDamkFZAkAYlw7Wvt0/SnTk/idRl/OAV9CcxctVAaCWZYGFHr5z3Kp053v189/XA
-         47rgAz865l5z2iKIKXN6mo0MF95H6hO3+F0PH38RPzxt/VI1fo4sps6cZGAJ8VpDduRL
-         kBVg==
-X-Gm-Message-State: AC+VfDz+F4ErOC3guT9EWPgPM52AB/CRV7nShJgRHVsL5DEjIgN89qKT
-        CrL0BCLU8ge1LiLBdE/gez5cG15lQPK6ew==
-X-Google-Smtp-Source: ACHHUZ6toUWOAd7Hr3Z+9B+MCMog8Eb57DYlvSZrBCsL/ydWUww26o17p03f5N8yRj9DSX3eTb0+BQ==
-X-Received: by 2002:a25:e68d:0:b0:b9e:7f1b:ea9d with SMTP id d135-20020a25e68d000000b00b9e7f1bea9dmr4464171ybh.33.1683104200482;
-        Wed, 03 May 2023 01:56:40 -0700 (PDT)
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com. [209.85.219.172])
-        by smtp.gmail.com with ESMTPSA id z12-20020a5b020c000000b00b7767ca7485sm7179350ybl.34.2023.05.03.01.56.39
+        d=1e100.net; s=20221208; t=1683104275; x=1685696275;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DnRb7dDXP217oGo1HF2W6EYow19JwD0ZBlHKF/B0F1s=;
+        b=CCG9271aXDuRElgLt/To7jpU8JKOKE7hYKBIJhUl2HByFrsvPBbrHFwuu0I7MSVOEM
+         4qPQjW9NUvUH2rav2JMTnvxZoNqdcnxaZu3tzgerTq4t8vSP4ZPms56Uwbj5Mg0/U8GK
+         J/2bGok1P9Vo0TWakNspZsJS/OmNVlfGflkFgAaS7CRnhfWBoyHLB2E30j1EdXMXYQ7Y
+         OGfybRbghuXCzGFQSZzQsgHqh7yFY4QOll7haXGwYq87u/7tXMFhmkrZ/9EKVPJPwDLg
+         WRQpvGPbvG7SkqXBf3De7U8GkMAKw+8y/ncajw9DJdC0JQVM3KuLBECH+9CDogqBnzOD
+         bgxg==
+X-Gm-Message-State: AC+VfDyGdbZ47h6wuiIWXs+qm8xc8hf/FP1P9t06Av5CUnYxAhUc/24s
+        CM0sm+0zcWYtPalSn0R9t+hhJA==
+X-Google-Smtp-Source: ACHHUZ7rdLlv/3s8yG4JbblbnG+sbMkxQNNVv3adxxdOWjyGlPNDx1ClTj/QjF7GE76Jbpq26AhpKQ==
+X-Received: by 2002:a5d:4d44:0:b0:2fe:e435:4a17 with SMTP id a4-20020a5d4d44000000b002fee4354a17mr14436000wru.65.1683104275055;
+        Wed, 03 May 2023 01:57:55 -0700 (PDT)
+Received: from [197.55.55.58] ([93.107.151.186])
+        by smtp.gmail.com with ESMTPSA id v15-20020a05600c214f00b003f18141a016sm1224227wml.18.2023.05.03.01.57.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 01:56:39 -0700 (PDT)
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-b9a6ab9ede3so6855147276.2;
-        Wed, 03 May 2023 01:56:39 -0700 (PDT)
-X-Received: by 2002:a25:fc1b:0:b0:b9a:6f77:9018 with SMTP id
- v27-20020a25fc1b000000b00b9a6f779018mr19158460ybd.41.1683104199175; Wed, 03
- May 2023 01:56:39 -0700 (PDT)
+        Wed, 03 May 2023 01:57:54 -0700 (PDT)
+Message-ID: <36f2a720-976f-7c88-1bfb-6c226ec286d8@linaro.org>
+Date:   Wed, 3 May 2023 09:57:52 +0100
 MIME-Version: 1.0
-References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-In-Reply-To: <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Wed, 3 May 2023 10:56:26 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXjKwfBizmH8cZYEmVC2ZYLLqQG4kyrHm6Ct0j4EK4eQg@mail.gmail.com>
-Message-ID: <CAMuHMdXjKwfBizmH8cZYEmVC2ZYLLqQG4kyrHm6Ct0j4EK4eQg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-To:     Rob Herring <robh+dt@kernel.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
-        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 0/3] media: camss: Link CAMSS power domain on MSM8996
+To:     Yassine Oudjana <yassine.oudjana@gmail.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Hans Verkuil <hansverk@cisco.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230503072543.4837-1-y.oudjana@protonmail.com>
+Content-Language: en-US
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230503072543.4837-1-y.oudjana@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 03/05/2023 08:25, Yassine Oudjana wrote:
+> CAMSS on MSM8996 has been broken since commit
+> 46cc03175498 (media: camss: Split power domain management, 2022-07-04).
 
-On Tue, May 2, 2023 at 9:40 PM Rob Herring <robh+dt@kernel.org> wrote:
->     'r7' : 'renesas',
->     'r8' : 'renesas',
->     'r9' : 'renesas',
->     'emev2' : 'renesas',
->     'sh73a' : 'renesas',
->     'gr-' : 'renesas',
->     'iwg' : 'renesas',
+Don't forget to run your patches through checkpatch --strict
 
-Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
+ERROR: Please use git commit description style 'commit <12+ chars of 
+sha1> ("<title line>")' - ie: 'Commit 46cc03175498 ("media: camss: Split 
+power domain management")'
 
-Gr{oetje,eeting}s,
 
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
