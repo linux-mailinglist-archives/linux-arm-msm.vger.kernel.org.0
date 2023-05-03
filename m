@@ -2,157 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE5916F4FCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 07:53:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A4DA6F4FD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 07:57:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbjECFxY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 01:53:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58014 "EHLO
+        id S229558AbjECF5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 01:57:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjECFxX (ORCPT
+        with ESMTP id S229553AbjECF5t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 01:53:23 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B892D4E;
-        Tue,  2 May 2023 22:53:21 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50be17a1eceso1231805a12.2;
-        Tue, 02 May 2023 22:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683093200; x=1685685200;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a2gYMLkCf0GdPnxYplUvepPjaxodpVFlAP2MWVoU1EM=;
-        b=GJIX03acJJJkPStp4sekRXecEcHrHoEvJxVEjn/NjNReTpL9zPueSYqRwy6fWUkBse
-         49NGKkQ46hlOLFGQYsMlCymB7nTRzBFK7qQax/04bwHKosP9NNfHqHD148nE2kgwKN9M
-         MCFCIcwYdymxWFDFz/pQe9HWeE1J/Iq10yd6+4sMft2b/V1njiA3I8+HA5mXdWwlFKfa
-         h5f0F63TNgebAgXFiFU3ynJ/JksAImfiR9IV4E+tkuru6AU3hBLXYipjDbpbP1bbIktJ
-         Ktv3GQieJ4P+KhHVORp3WJg8+/ccw0N9y/RL8bN0P4+Aojc9oEGue+jZt2U9u5Ngq+3T
-         3CtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683093200; x=1685685200;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a2gYMLkCf0GdPnxYplUvepPjaxodpVFlAP2MWVoU1EM=;
-        b=afHn4PdrCqotcxBU+WoVlqEVxQxNM2UYx3S/wlClMCQX+bPsGJa/gi2pxCmzL++KG3
-         mu1Uj7XiXNSJM5Us4nYworaqWA77jtWmK9rsf1WnKD8EuGgD695Uo3p6skDgHmIo47P1
-         DGlGxmw+W2jhPBunOBJaUcbr+vsmhZmb1uhQ/IapUeN/rfXuWwqV3F4f4j70bi6hl3ZR
-         biDjNg58gD68/230sCrXXyucT5LCF8sufEqySun2WVXOgm2Dx4cHUTtIW8jsl9jPzaB8
-         yuA9h943XaGVKDXKl0QLkLSbfM15ikKJQYEEHKy03NJfqBNp6abD/HqP+3gX71qOgSyw
-         0GKQ==
-X-Gm-Message-State: AC+VfDx245ruLda2ntUMLLZshdtnSAVagzEIVV7EDfU5/Gkl4OpUgoYW
-        d2YbUpnQLkMaztIBRiw4jALdMrYrFfQ=
-X-Google-Smtp-Source: ACHHUZ4eDJ3PJUgsEAeenB+wTQa1fZtKVj19XcoznlgIylfQdHIcEHAIMRecOnH5Zqajj1vSjbPLlw==
-X-Received: by 2002:a05:6402:47:b0:504:a2e5:d951 with SMTP id f7-20020a056402004700b00504a2e5d951mr10500573edu.13.1683093199534;
-        Tue, 02 May 2023 22:53:19 -0700 (PDT)
-Received: from [192.168.1.43] (hst-221-88.medicom.bg. [84.238.221.88])
-        by smtp.gmail.com with ESMTPSA id d12-20020aa7d68c000000b0050bc863d32asm327326edr.27.2023.05.02.22.53.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 May 2023 22:53:19 -0700 (PDT)
-Message-ID: <33ff3062-4f50-19c4-dce3-3be17e4f7d10@gmail.com>
-Date:   Wed, 3 May 2023 08:53:17 +0300
+        Wed, 3 May 2023 01:57:49 -0400
+Received: from muru.com (muru.com [72.249.23.125])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1D7BD30E8;
+        Tue,  2 May 2023 22:57:46 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by muru.com (Postfix) with ESMTPS id 228BC80EB;
+        Wed,  3 May 2023 05:57:45 +0000 (UTC)
+Date:   Wed, 3 May 2023 08:57:43 +0300
+From:   Tony Lindgren <tony@atomide.com>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Olof Johansson <olof@lixom.net>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+Message-ID: <20230503055743.GK14287@atomide.com>
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
+ <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
+ <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
- hfi versions
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
- <5a851116-561f-2d00-1310-2debc43ce249@gmail.com>
- <03da235f-0d94-60d9-8907-9caf0991c0a6@quicinc.com>
-Content-Language: en-US, bg-BG
-From:   Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-In-Reply-To: <03da235f-0d94-60d9-8907-9caf0991c0a6@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+* Rob Herring <robh+dt@kernel.org> [230502 19:40]:
+> I've dusted off my script and made a branch[1] with the result.
+> There's just a couple of fixes needed after the script is run (see the
+> top commit). The cross arch includes are all fixed up by the script.
+> dtbs_install maintains a flat install. I compared the number of .dtbs
+> before and after to check the script.
+...
 
-On 3.05.23 г. 7:25 ч., Vikash Garodia wrote:
-> On 5/3/2023 2:22 AM, Stanimir Varbanov wrote:
->>
->>
->> On 14.04.23 г. 13:12 ч., Martin Dørum wrote:
->>> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
->>>> =4xx. The code used to unconditionally set the property in
->>> venc_set_properties, which meant that initializing the encoder would
->>> always fail unless the hfi_version was >=4xx.
->>>
->>> This patch changes venc_set_properties to only set the
->>> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
->>>
->>> Signed-off-by: Martin Dørum <dorum@noisolation.com>
->>>
->>> ---
->>>
->>> I have an APQ8016-based board. Before this patch, the Venus driver
->>> would simply fail with EINVAL when trying to request buffers
->>> (VIDIOC_REQBUFS). With this patch, encoding works
->>> (tested using gstreamer's v4l2h264enc).
->>>
->>>   drivers/media/platform/qcom/venus/venc.c | 21 +++++++++++----------
->>>   1 file changed, 11 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/venc.c 
->>> b/drivers/media/platform/qcom/venus/venc.c
->>> index cdb12546c4fa..b3df805a8c9c 100644
->>> --- a/drivers/media/platform/qcom/venus/venc.c
->>> +++ b/drivers/media/platform/qcom/venus/venc.c
->>> @@ -672,16 +672,17 @@ static int venc_set_properties(struct 
->>> venus_inst *inst)
->>>           if (ret)
->>>               return ret;
->>>
->>> -        ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
->>> -        h264_transform.enable_type = 0;
->>> -        if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
->>> -            ctr->profile.h264 == 
->>> V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
->>> -            h264_transform.enable_type = ctr->h264_8x8_transform;
->>> -
->>> -        ret = hfi_session_set_property(inst, ptype, &h264_transform);
->>> -        if (ret)
->>> -            return ret;
->>> -
->>> +        if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
->>
->> Instead of doing these checks here you could do:
->>
->> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c 
->> b/drivers/media/platform/qcom/venus/hfi_cmds.c
->> index bc3f8ff05840..2453e5c3d244 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
->> @@ -1064,6 +1064,7 @@ static int pkt_session_set_property_1x(struct 
->> hfi_session_set_property_pkt *pkt,
->>                 break;
->>         }
->>         case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI:
->> +       case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8:
->>                 return -ENOTSUPP;
->>
-> This may still deinit the session from [1] based on failure return value.
-> 
-> [1] 
-> https://elixir.bootlin.com/linux/v6.3/source/drivers/media/platform/qcom/venus/venc.c#L963
+> [1] git://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git arm-dts-move-v2
 
-No, it will not fail because of:
+Looks good to me, thanks for doing this.
 
-https://elixir.bootlin.com/linux/v6.3/source/drivers/media/platform/qcom/venus/hfi_venus.c#L1426
+Regards,
 
-
--- 
-regards,
-Stan
+Tony
