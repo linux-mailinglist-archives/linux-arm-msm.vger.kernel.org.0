@@ -2,100 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 541666F59AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 16:19:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D72AD6F59DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 16:22:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230070AbjECOTy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 10:19:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42114 "EHLO
+        id S230085AbjECOWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 10:22:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbjECOTx (ORCPT
+        with ESMTP id S230064AbjECOWI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 10:19:53 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17406A3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 07:19:52 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-94f6c285d92so1009362466b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 07:19:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683123590; x=1685715590;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uWgO7hULIYINXjGmfuoAQDTi7WMO+rhRdnfLea0FV6s=;
-        b=CP/OHCt/e7mqivbmA8RV5uShl7FpaLgGQ+cEPXffsVjXHIDDZdUZKj59N3CC7GjNox
-         77W32+m1Vevs34OaSgnTI4YZxQmonF4WchSd1O5Mf6FhU7TMpFWixFiZPu7LUXI8gAfj
-         oPk9SAjXBFPfT7fcf24IJSXcsy6oO3q1yx3M6Rn2Thyg7dEEPuwEPF6l3UWRsYaKV8mu
-         w5oE+vhGFlT2v3/mQ9LFQzNtSblCI+0IZQ/s3GEEnFN4QXgUQQB8PWbFfAFT4vnlpG3D
-         8vs1vFKNRfWsyVNr6tf9H7txea5GI2qVR5VDCEQBTQnz/tedyrZBk1oPsSYzEWsE3fhd
-         B+zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683123590; x=1685715590;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uWgO7hULIYINXjGmfuoAQDTi7WMO+rhRdnfLea0FV6s=;
-        b=F3o1rVzbT2PC6lKpYKHddVtOhucSycCwuHzXLHZSLHp05RRplhNfqJXBJnlIioEri3
-         mPQskfmdTPYbM3QSJ4DlbInWJkGWmYjZsfiSSciSSUfQA7W+Os99Hcrx+IeHjAjoxoyS
-         UWJCxo6cDc+ZUXCPj5GDa/zZTW1hWy1ZGQ3i/q8WNxF3TrvBud5LGY6td9MN8U0h5gLv
-         G3I5jX67CeaGW6sbHbXXkBAztqoetByyYwGQQok4TC+vQ2KVxc2ario1YtlzeesnJqgB
-         X5NC9q5KDYzGpzpK4ajpbDq8fhrLdZUB+8XwFkdIi5Hb8q90skKeiJIBrCyh0wMgJrey
-         akRw==
-X-Gm-Message-State: AC+VfDxys9i5/IftZKr9aw0UavOU3ThPUnDTv2m7gUk2EmpQnWnZnTXm
-        +sSkM8YT4NXlRVNXhn7ONiTLJA==
-X-Google-Smtp-Source: ACHHUZ5TWjOPSlETWTZrvGUlMvw+LaPKm7EzQMkfpLGL86DzCj1hoJhrNBBY+/0jXpFGI1jS8SdmJA==
-X-Received: by 2002:a17:907:25c1:b0:94f:62a2:d1ab with SMTP id ae1-20020a17090725c100b0094f62a2d1abmr3360895ejc.63.1683123590563;
-        Wed, 03 May 2023 07:19:50 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:db42:e3d0:c55a:8cf1? ([2a02:810d:15c0:828:db42:e3d0:c55a:8cf1])
-        by smtp.gmail.com with ESMTPSA id e6-20020a1709062c0600b0094ef2003581sm17287005ejh.153.2023.05.03.07.19.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 07:19:49 -0700 (PDT)
-Message-ID: <256d8a4e-ecad-668a-b404-fd10debdc8f5@linaro.org>
-Date:   Wed, 3 May 2023 16:19:43 +0200
+        Wed, 3 May 2023 10:22:08 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D6465BC;
+        Wed,  3 May 2023 07:21:20 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343BfjpU030761;
+        Wed, 3 May 2023 14:21:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=7khBcBG1XpYdD1x3sRYL52dOGaRGIlti36Xg5z0ye98=;
+ b=dtU3JmM06T3MUhvJK+J6EXDiMcgBxZFSeLTjlIjLT4iP1b//Ljqs0rpbGIU5W/hmr3RX
+ dMriuAxGlAHasZfKPi2QGYOuWyb35T/SFk9QKa25+yyyyM1RaVByMgU1j8CNJJpdJCwA
+ /RkQm19lyp9ZQ0TgOjqK9LPxZuGlxxAlcQCcgeVZIupV9AHgPl8gpRGw7HChKEHTM1V9
+ wmnlTBGbnfVKno2I8TzyUHip9Ra/jBbRCeT5XLNfRtEmjfLSaCShxAgppBNc7R+Sr3jo
+ SC/yNicXAcv7ygfSRcXenrudD1971tHsswhewW+4kB8sx5nAimmWlfuJG0jaCHe0zw8S JQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbbsw1qbf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 May 2023 14:21:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343EL6Uh003991
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 May 2023 14:21:06 GMT
+Received: from [10.216.34.27] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
+ 07:21:00 -0700
+Message-ID: <910de571-caaf-97df-2065-e16efa454bad@quicinc.com>
+Date:   Wed, 3 May 2023 19:50:57 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: pmk8350: add reboot-mode node using
- sdam_2 nvmem
-Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v7 5/9] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+To:     Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230503-topic-sm8450-upstream-reboot-reason-v1-0-c5ac3dd5b49f@linaro.org>
- <20230503-topic-sm8450-upstream-reboot-reason-v1-1-c5ac3dd5b49f@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230503-topic-sm8450-upstream-reboot-reason-v1-1-c5ac3dd5b49f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20230501143445.3851-1-quic_kriskura@quicinc.com>
+ <20230501143445.3851-6-quic_kriskura@quicinc.com>
+ <ZFJBN2i5tXkY8ARA@hovoldconsulting.com>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZFJBN2i5tXkY8ARA@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Ir-r3XkINdVPa2VseGizgn2wdVCWMwt_
+X-Proofpoint-ORIG-GUID: Ir-r3XkINdVPa2VseGizgn2wdVCWMwt_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-03_09,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=600 impostorscore=0 bulkscore=0 mlxscore=0 phishscore=0
+ spamscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030118
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 16:13, Neil Armstrong wrote:
-> Introduce sdam_2 node, which is to be used via nvmem for power on
-> reasons during reboot. Add supported PoN reasons supported via sdam_2
-> node.
+
+
+On 5/3/2023 4:40 PM, Johan Hovold wrote:
+> On Mon, May 01, 2023 at 08:04:41PM +0530, Krishna Kurapati wrote:
+>> Currently the DWC3 driver supports only single port controller
+>> which requires at most one HS and one SS PHY.
+>>
+>> But the DWC3 USB controller can be connected to multiple ports and
+>> each port can have their own PHYs. Each port of the multiport
+>> controller can either be HS+SS capable or HS only capable
+>> Proper quantification of them is required to modify GUSB2PHYCFG
+>> and GUSB3PIPECTL registers appropriately.
+>>
+>> Add support for detecting, obtaining and configuring phy's supported
+>> by a multiport controller and limit the max number of ports
+>> supported to 4.
+>>
+>> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/core.c | 262 +++++++++++++++++++++++++++++-----------
+>>   drivers/usb/dwc3/core.h |  12 +-
+>>   drivers/usb/dwc3/drd.c  |  13 +-
+>>   3 files changed, 209 insertions(+), 78 deletions(-)
 > 
+> Note that this patch no longer applies and you need to rebase the series
+> on mainline (e.g. including commit 1d72fab47656 ("USB: dwc3: refactor
+> phy handling").
+> 
+> Johan
 
+Hi Johan,
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+   This series is rebased on top of usb-next (on top of the above 
+mentioned patch). Probably that is why its not applying on top of 
+linux-next.
 
-Tested on HDK8450.
-
-
-
-Best regards,
-Krzysztof
-
+Regards,
+Krishna,
