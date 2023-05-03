@@ -2,115 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AC206F525C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 09:54:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0C486F5273
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 10:00:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjECHyc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 03:54:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53870 "EHLO
+        id S229784AbjECIAY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 04:00:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229767AbjECHyR (ORCPT
+        with ESMTP id S229671AbjECIAX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 03:54:17 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 569F33C29;
-        Wed,  3 May 2023 00:54:16 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50be17a1eceso1411219a12.2;
-        Wed, 03 May 2023 00:54:16 -0700 (PDT)
+        Wed, 3 May 2023 04:00:23 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35073C23
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 01:00:20 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-94f7a7a3351so934014866b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 01:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683100455; x=1685692455;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wLmnpSio5vQ/EjDA+3lL/g42L7mPofPw3du+/1V3GRA=;
-        b=mIBzN4ZIAx7HPJqQiAyClDVA/HOCx83EqaqYx+sdN4d+Fp52SbCzYEcYtX1TguFL35
-         AJ21+5v2y9q5PFnJN1Bdw0IlXl6majlUtlw7eDfgl9HKY5oghtQnZP0WEfEW2n0xW0Jd
-         W+Dh67lnwjLL+mYtVOs1CJqZZq8+wRKDyuEFDsHW/wNwnMorP4n3XNicuLH1fgecifjG
-         ao/gVRcGaGuZiuq0nOWh+8+nP5e53LN/tCMxOAwo22RdH4mvttz+T69uL23cHJFue/Np
-         lQZzuga2+vHyt+6hSzCKGLMKlVqzjdWOEYg5xzJufE/nFQED62qcGfV5b9ydWNemZ3bv
-         Z2tQ==
+        d=linaro.org; s=google; t=1683100819; x=1685692819;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lDbcd7WqGVeRLL02ERpjzOWzEQ8QCr4sxAPprp+7Tic=;
+        b=XKpO/jtQf7swVp2+niPXDJtv62ipHkMbsef5wWma2J43jj6tBUBcI3P7pEM4wjFH8p
+         5/lnpT7JqB36XiqzwMrXSsJvYLWDPtswP6ZurpYSs+er2XP9jfgmhFqcagNbcfgfR59g
+         ltJBzthBzusiNRteiPeh4jU6JdNu13Ed8B9YM/UjrgBOd3IOI/2hsx0qz6E1/8W4qdhT
+         90K5dmPn3Uucq5VP+E6ScKxCQuOAJAxVg1zJup+sSiFQ/HpIPD/23pUBX6zQTIZLhPUN
+         5yG+IHTwrOBHh5QwfAChV83KRHfWAHAe9HsMDN6pjUK59v+bsHZJj0EM8KRNzrBW/92k
+         NgDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683100455; x=1685692455;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wLmnpSio5vQ/EjDA+3lL/g42L7mPofPw3du+/1V3GRA=;
-        b=X8xYsX//FLL4nbMwp6HVamrliXlRXlQ2O5dJuxE9rXdwnIkfAnCFw7766wrfMqZ1EZ
-         7FC9LjKsj8JPapbvLz2z4lT+z+nwu/AY3UDRS7y3h1x36DIfIsxN0wpraombBv2OSqmN
-         cVH05SQcLNLpC+zRG9XUBURoA1CNWqA3N+XNJJo1hJW0+IP6cEfULQ3Zqp4wvhQF3Yh8
-         oXDNWF6qjta5tOolxMUYWM2nasrscvHMVHDH3jSyvoKlOTC5op1Pw1d8B9YE7yGFvveB
-         LM6TcnC1fzhRnT3J0AZKV7VDWZgSkfLLKYropP8LeQMEo2h5mdDyJyC7JBz6sE7nlkkq
-         VjAA==
-X-Gm-Message-State: AC+VfDx44LHaRhfKI+B6W6rwQdHA2zmkVE/TDgmX/TozWOWc8r0lUWCO
-        ThJXMtJTf+4Gxu5U9bOlqEs=
-X-Google-Smtp-Source: ACHHUZ5ch75iq1id6BgZJ9+L0KYzDCi6DHl5EyT8lz8i+s23JiM4bvG0YIdKsa/1x4rH1eC6XaVD/g==
-X-Received: by 2002:a17:907:31c4:b0:94f:e00:c8c9 with SMTP id xf4-20020a17090731c400b0094f0e00c8c9mr1765803ejb.34.1683100454508;
-        Wed, 03 May 2023 00:54:14 -0700 (PDT)
-Received: from localhost.localdomain ([95.183.227.33])
-        by smtp.gmail.com with ESMTPSA id ku15-20020a170907788f00b009571293d6acsm15815339ejc.59.2023.05.03.00.54.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 00:54:14 -0700 (PDT)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
-To:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        d=1e100.net; s=20221208; t=1683100819; x=1685692819;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lDbcd7WqGVeRLL02ERpjzOWzEQ8QCr4sxAPprp+7Tic=;
+        b=j215Cy8ZdWyz4+12y3tkcHD7YKkVElouGOVlTz7gkTloIXiVntyuDLPeywnYX/2guh
+         hSMI06v5BtUgt7V+QKrVzQgkcE7m+tytut0/BsxnO8MR4swDWGIAs5nyx0Go7S6aBJzM
+         gwzYy8xGjs8HcuTa/VtIflSBJRP34bioUTzPMCgAyo50KdGFF8xw+xnsVONxkGM5yd0A
+         9ZmHafVThS7vGyTZ0/9d6+/gwit7wT9W+YCrijuV+M6Vl9F0LXsp3V2p0Wrv2owt4aww
+         /XeAdtkjmICxgYt6tpsGKyV3szucha9RLkcAdgh1bAV9JCFnE0iZ6WCiGKeIMjIMBgU/
+         qtfw==
+X-Gm-Message-State: AC+VfDxP0rjRTtoorjgOihAQV4+yw1cSFd6LBZh2n+g6ZuqlWl2g3D6I
+        5j/QuV2o8BYhaVEeCh7tSimG5g==
+X-Google-Smtp-Source: ACHHUZ6lXDlOR3mp+rsdhGh4eUn3gQ3+nAzJWxexqEU2mAxaH0A8yN3eJHCzcLI0u1bOfl0Iqrk1Kw==
+X-Received: by 2002:a17:907:9485:b0:94f:720b:1b14 with SMTP id dm5-20020a170907948500b0094f720b1b14mr2456927ejc.29.1683100819322;
+        Wed, 03 May 2023 01:00:19 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:a40b:9d8:1fa0:ecc5? ([2a02:810d:15c0:828:a40b:9d8:1fa0:ecc5])
+        by smtp.gmail.com with ESMTPSA id bj1-20020a170906b04100b0094f7acbafe0sm16105889ejb.177.2023.05.03.01.00.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 01:00:18 -0700 (PDT)
+Message-ID: <b3e227d4-1bdf-9f58-a354-e7f798765e91@linaro.org>
+Date:   Wed, 3 May 2023 10:00:17 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 6/6] soundwire: qcom: do not probe devices before bus/link
+ init
+Content-Language: en-US
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Lad Prabhakar <prabhakar.csengg@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] media: camss: camss-video: Don't zero subdev format again after initialization
-Date:   Wed,  3 May 2023 10:53:40 +0300
-Message-Id: <20230503075340.45755-1-y.oudjana@protonmail.com>
-X-Mailer: git-send-email 2.40.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Patrick Lai <quic_plai@quicinc.com>
+References: <20230420101617.142225-1-krzysztof.kozlowski@linaro.org>
+ <20230420101617.142225-7-krzysztof.kozlowski@linaro.org>
+ <28141433-2130-e278-0f59-d9ab507b9be3@linux.intel.com>
+ <42fbf7ad-54db-0917-bb85-a1be9f99cc45@linaro.org>
+ <3f618297-e1cd-a46d-5318-c3b77a0fc78d@linux.intel.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <3f618297-e1cd-a46d-5318-c3b77a0fc78d@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+On 01/05/2023 15:43, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 5/1/23 07:24, Krzysztof Kozlowski wrote:
+>> On 20/04/2023 23:37, Pierre-Louis Bossart wrote:
+>>>
+>>>
+>>> On 4/20/23 05:16, Krzysztof Kozlowski wrote:
+>>>> Soundwire devices are supposed to be kept in reset state (powered off)
+>>>> till their probe() or component bind() callbacks.  However if they are
+>>>> already powered on, then they might enumerate before the master
+>>>> initializes bus in qcom_swrm_init() leading to occasional errors like:
+>>>
+>>> The problem statement is really hard to follow.
+>>>
+>>> The peripheral can only be enumerated AFTER
+>>> a) the manager starts the bus clock and transmitting PING frames
+>>> b) the peripheral detects the sync words for 16 frames in a row.
+>>> c) the peripheral reports as Attached in the Device0 slot
+>>>
+>>> That sequence holds whether the manager does the enumeration manually or
+>>> relies on hardware-assisted autoenumeration. This is what the spec requires.
+>>>
+>>> So why can't the bus clock start be controlled by the manager driver,
+>>> and started once all required initializations are done?
+>>>
+>>> I mean, there's got to be some sort of parent-child hierarchy with
+>>> manager first, peripheral(s) second, I don't get how these steps could
+>>> be inverted or race.
+>>>
+>>>>   qcom-soundwire 6d30000.soundwire-controller: Qualcomm Soundwire controller v2.0.0 Registered
+>>>>   wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:4 (ops wcd938x_sdw_component_ops)
+>>>>   wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:3 (ops wcd938x_sdw_component_ops)
+>>>>   qcom-soundwire 6ad0000.soundwire-controller: swrm_wait_for_wr_fifo_avail err write overflow
+>>>>
+>>>> The problem primarily lies in Qualcomm Soundwire controller probe() sequence:
+>>>> 1. request_threaded_irq()
+>>>> 2. sdw_bus_master_add() - which will cause probe() and component bind()
+>>>>    of Soundwire devices, e.g. WCD938x codec drivers.  Device drivers
+>>>>    might already start accessing their registers.
+>>>
+>>> not if the bus clock hasn't started...
+>>>
+>>>> 3. qcom_swrm_init() - which initializes the link/bus and enables
+>>>>    interrupts.
+>>>
+>>> if you can move the clock start in 3) then problem solved. Why can't
+>>> this be done?
+>>
+>> Responding to all your three responses:
+>> The clock is enabled in this 3. qcom_swrm_init(), so the old code to my
+>> knowledge is written exactly how you expect.
+>>
+>> However even with stopped clock, the device enumerates at
+>> sdw_bus_master_add(), before anything is enabled.
+> 
+> Erm, that's not physically possible...
+> 
+> The peripheral can report as attached and be enumerated by the manager,
+> i.e. assigned a non-zero "Device Number" after the peripheral
+> synchronizes on 16 frames with valid static and dynamic syncwords. That
+> can only happen if there is a clock toggling and PING frames transmitted
+> on the data line.
+> 
+> There's something else at play here.
 
-In an earlier commit, setting the which field of the subdev format struct
-in video_get_subdev_format was moved to a designated initializer that also
-zeroes all other fields. However, the memset call that was zeroing the
-fields earlier was left in place, causing the which field to be cleared
-after being set in the initializer.
+Yes, I think you are right and that "else" is my limited knowledge on
+the entire setup.
 
-Remove the memset call from video_get_subdev_format to avoid clearing the
-initialized which field.
+You gave me awesome hint in email before that probe != enumeration !=
+initialization, however the wcd938x sound codec drivers were assuming
+some steps are equal.
 
-Fixes: ecefa105cc44 ("media: Zero-initialize all structures passed to subdev pad operations")
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- drivers/media/platform/qcom/camss/camss-video.c | 1 -
- 1 file changed, 1 deletion(-)
+wcd938x comes with three devices on two drivers:
+1. RX Soundwire device (wcd938x-sdw.c driver)
+2. TX Soundwire device, which is used as regmap (also wcd938x-sdw.c driver)
+3. platform device (wcd938x.c driver) - glue and component master,
+actually having most of the code using TX Soundwire device regmap.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 898f32177b12..8640db306026 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -353,7 +353,6 @@ static int video_get_subdev_format(struct camss_video *video,
- 	if (subdev == NULL)
- 		return -EPIPE;
- 
--	memset(&fmt, 0, sizeof(fmt));
- 	fmt.pad = pad;
- 
- 	ret = v4l2_subdev_call(subdev, pad, get_fmt, NULL, &fmt);
--- 
-2.40.0
+The probe of each RX and TX Soundwire devices added components, but that
+this did not mean devices were enumerated, as you said.
+
+Considering what Mark said about using regcache (and sync it), I am now
+replacing entire solution with proper regcache handling device
+enumeration after component bind.
+
+Best regards,
+Krzysztof
 
