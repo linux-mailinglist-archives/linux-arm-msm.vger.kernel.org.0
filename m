@@ -2,121 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A8646F54ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 11:40:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F3C56F54FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 11:42:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbjECJkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 05:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39620 "EHLO
+        id S229943AbjECJmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 05:42:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229619AbjECJkC (ORCPT
+        with ESMTP id S229515AbjECJmg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 05:40:02 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92F454227
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 02:40:00 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-3062d764455so2338030f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 02:40:00 -0700 (PDT)
+        Wed, 3 May 2023 05:42:36 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A6E4ED3;
+        Wed,  3 May 2023 02:42:34 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-75131c2997bso144244485a.1;
+        Wed, 03 May 2023 02:42:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683106799; x=1685698799;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HBB9qpJkTYYA50YXDxfy8uIUZ0jceCXCGKDGT94/U+Q=;
-        b=KHG/5BA2dCS08XF2BbibbxTkzVdJYPJQuS+rtOh5FXboVLlWx4sR1NBFceoE91NtVn
-         4Uon1kA3Gnqs1XmVi5X1ud1zKhUqrX90z6/dulef2suJj1eT4Fp5Nwl1X2jd+KyBiI5x
-         P/hE+N/mqs/hvNAnIITtDklTdEx8gl1S3ig0HL0734e2Xvjw6+y6RZIt+iUSNQySTsJI
-         SLEq4UT5S3K6VpPPGt+gVMjK18cyiTfLG/yjcKtBjbJe27PPRlRPx+OJYSxcRmxg5vZw
-         rmLGnwic9fbXFiJHWr4gAOwNESlpsG5LEAkWA6LcNusZmqqm8bQ531xvKTJrjXq0U77r
-         r+eA==
+        d=gmail.com; s=20221208; t=1683106953; x=1685698953;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UswhBddqVaXIV7KahhOAL0L+vAcJJ2NqdC/L7ARqHLI=;
+        b=bBkeJTcutU1gEMmYbPqloKEmhZKGZR3vpAPR7Ly0UkZvZDSfS7SqZtHaoocQe4Xkua
+         ruNsGSw4EPvXfAczKkPscYyr7DOnesMtTPrEsZwtu/v8VA0C2oPy8KAiyqUYmd4ST1Mt
+         F4a3P3xeHlxoRjr5qfxHgTvKW5G2kHD979Wo+p2GYDISigYAmzacBXZdDX2UkDVJbLAH
+         K2v1SDwptNS+y+cBH86OVLtfuf3Hdu4FcHBkXnoXoAD6u7Q3fOEHAn51J3tzAGuQsvKG
+         Wsge8r7s9YnWEYWFCkvC2AAVGeD6+Kb/zJq0qmgLAME0Ci2Bt1iJtx0ORC3WEsRfb2uV
+         9b/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683106799; x=1685698799;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HBB9qpJkTYYA50YXDxfy8uIUZ0jceCXCGKDGT94/U+Q=;
-        b=fPiuYEAOlFYs6o/FhtS2UJE7EyX58srEMvpZUSX6gXPCF71Df33ydJvxyqXYESiaFd
-         mZJ4LporV280LwAD3mhHKP1tbh7sb/fpIvieCzxnhQRVxGnzV13KI58UxHO1SHz+e9ah
-         R3nT/3hvZjNaGgNedkqP+w9YJ6TiNpKQhcri75/SnL0TA5NMkr7l3kJRtJqtxmEK1IQF
-         9ipc3oJKmfdpBIacMLC8jxzwd4oT43qjCW+KlhbSju43JIOpNo6v3xFYeZv3VOL6ztmL
-         zvTICvFSQF2qsF4FL5iy/Mb/ojnInnzixf7OW34the2JOKyYfWCwE54xDZ/AtNykAwYy
-         QXFg==
-X-Gm-Message-State: AC+VfDzbhhD0f5ivNd5uQzCm7HY48jCAgFY2pTQobnj9fD0q/SDzh0Lw
-        QbnilVFB8ORDq17m32iVM8Pmnw==
-X-Google-Smtp-Source: ACHHUZ5q2V2/d6gZ/eg9vR4Ebv5hh+UqaafIAXihyIs6HSzA/KAu8W0Vs2yb94nR7tXoGdrpnkZIAg==
-X-Received: by 2002:adf:df06:0:b0:306:2f8e:d259 with SMTP id y6-20020adfdf06000000b003062f8ed259mr6585314wrl.57.1683106799062;
-        Wed, 03 May 2023 02:39:59 -0700 (PDT)
-Received: from [197.55.55.58] ([93.107.151.186])
-        by smtp.gmail.com with ESMTPSA id p6-20020adfcc86000000b0030644bdefd8sm845361wrj.52.2023.05.03.02.39.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 02:39:58 -0700 (PDT)
-Message-ID: <49006a56-cdd2-84f9-55f6-bd02f423b582@linaro.org>
-Date:   Wed, 3 May 2023 10:39:57 +0100
+        d=1e100.net; s=20221208; t=1683106953; x=1685698953;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UswhBddqVaXIV7KahhOAL0L+vAcJJ2NqdC/L7ARqHLI=;
+        b=U39WTqd3NMwtFhujE19T71JNvVgRVzaD+WtGaBNJHhoZQ6b70O4zAdilUuaoxcL15A
+         WSfbouWYDkmgR3oOFcADg9rf9VUYGTuU2LuA5vTtZcaZDMFU2AdYY+geLGxHvBM7YL8w
+         eqV64Y3mMdyQB7TC+s0zBFlk4jtnOcLWIPNKNfI4+t+8BYDjJ6AX6eOvLPBkP0I6y3CA
+         34NEYFB3tX/09i6tDPvUrM9xirBpsgM52UgzghR9FE22MIaUPm2q8yEMOydpJi+Khf7s
+         XlB5HVkztC7TFQVsGGVYlY42PD5FZkqJ8T7q2WzBHHGAV/0B19Vy8RFUZRdUf96o6sMV
+         wEWQ==
+X-Gm-Message-State: AC+VfDwJdsLUXhkIEKJiaMtj3Owk4CzhIIWxuUso1ZY08IQUqmWixlOB
+        caO/UaOKRdcqEW+rF3F3t0IIypJ5CoWTP6oA1/s=
+X-Google-Smtp-Source: ACHHUZ6FApUZmpoYv7ei9QTTm9Bil42o9GopYVbQ7LWiRSSlgewFbtRxNZlhfGGbv7z1d3UtbL2jGNKCTm/YkX9t5jM=
+X-Received: by 2002:a05:6214:d64:b0:5ef:653e:169b with SMTP id
+ 4-20020a0562140d6400b005ef653e169bmr2275095qvs.8.1683106953183; Wed, 03 May
+ 2023 02:42:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] media: camss: camss-video: Don't zero subdev format again
- after initialization
-Content-Language: en-US
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Sakari Ailus <sakari.ailus@linux.intel.com>,
-        Shuah Khan <skhan@linuxfoundation.org>,
-        Lad Prabhakar <prabhakar.csengg@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230503075340.45755-1-y.oudjana@protonmail.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230503075340.45755-1-y.oudjana@protonmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <1683092380-29551-1-git-send-email-quic_rohiagar@quicinc.com> <1683092380-29551-3-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <1683092380-29551-3-git-send-email-quic_rohiagar@quicinc.com>
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Wed, 3 May 2023 12:41:56 +0300
+Message-ID: <CAHp75VegxMgAamS3ORiJ2=D4MH7asD9PiWrM+3JAm-QOuEgcrg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] pinctrl: qcom: Refactor target specific pinctrl driver
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 08:53, Yassine Oudjana wrote:
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
-> 
-> In an earlier commit, setting the which field of the subdev format struct
-> in video_get_subdev_format was moved to a designated initializer that also
-> zeroes all other fields. However, the memset call that was zeroing the
-> fields earlier was left in place, causing the which field to be cleared
-> after being set in the initializer.
-> 
-> Remove the memset call from video_get_subdev_format to avoid clearing the
-> initialized which field.
-> 
-> Fixes: ecefa105cc44 ("media: Zero-initialize all structures passed to subdev pad operations")
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> ---
->   drivers/media/platform/qcom/camss/camss-video.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-> index 898f32177b12..8640db306026 100644
-> --- a/drivers/media/platform/qcom/camss/camss-video.c
-> +++ b/drivers/media/platform/qcom/camss/camss-video.c
-> @@ -353,7 +353,6 @@ static int video_get_subdev_format(struct camss_video *video,
->   	if (subdev == NULL)
->   		return -EPIPE;
->   
-> -	memset(&fmt, 0, sizeof(fmt));
->   	fmt.pad = pad;
->   
->   	ret = v4l2_subdev_call(subdev, pad, get_fmt, NULL, &fmt);
+On Wed, May 3, 2023 at 8:39=E2=80=AFAM Rohit Agarwal <quic_rohiagar@quicinc=
+.com> wrote:
+>
+> Update the msm_function and msm_pingroup structure to reuse the generic
 
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+structures
+
+> pinfunction and pingroup structures. Also refactor pinctrl drivers to adj=
+ust
+> the new macro and updated structure defined in pinctrl.h and pinctrl_msm.=
+h
+> respectively.
+
+Thanks for this, my comments below.
+
+...
+
+>  #define FUNCTION(fname)                                        \
+>         [APQ_MUX_##fname] =3D {                           \
+> -               .name =3D #fname,                         \
+> -               .groups =3D fname##_groups,               \
+> -               .ngroups =3D ARRAY_SIZE(fname##_groups),  \
+> -       }
+> +               .func =3D PINCTRL_PINFUNCTION(#fname,                    =
+ \
+> +                                       fname##_groups,                 \
+> +                                       ARRAY_SIZE(fname##_groups))      =
+       \
+> +                       }
+
+Does it really make sense to keep an additional wrapper data type that
+does not add any value? Can't we simply have
+
+  #define FUNCTION(fname)      [...fname] =3D PINCTRL_PINFUNCTION(...)
+
+?
+
+...
+
+> +               .grp =3D PINCTRL_PINGROUP("gpio"#id, gpio##id##_pins,    =
+ \
+> +                       (unsigned int)ARRAY_SIZE(gpio##id##_pins)),     \
+
+Why do you need this casting? Same Q to all the rest of the similar cases.
+
+...
+
+> +#include <linux/pinctrl/pinctrl.h>
+
+Keep it separate, and below the generic ones...
+
+>  #include <linux/pm.h>
+>  #include <linux/types.h>
+>
+
+...like here (note also a blank line).
+
+...
+
+>  /**
+>   * struct msm_function - a pinmux function
+> - * @name:    Name of the pinmux function.
+> - * @groups:  List of pingroups for this function.
+> - * @ngroups: Number of entries in @groups.
+> + * @func: Generic data of the pin function (name and groups of pins)
+>   */
+>  struct msm_function {
+> -       const char *name;
+> -       const char * const *groups;
+> -       unsigned ngroups;
+> +       struct pinfunction func;
+>  };
+
+But why? Just kill the entire structure.
+
+...
+
+>  #define FUNCTION(fname)                                        \
+
+This definition appears in many files, instead you can make a generic
+to this drivers one and use it here
+
+#define QCOM_FUNCTION(_prefix_, _fname_)
+  [_prefix_##_fname_] =3D PINCTRL_PINFUNCTION(...)
+
+#define FUNCTION(fname) QCOM_FUNCTION(msm_mux, fname)
+
+(this just a pseudocode, might not even be compilable)
+
+>         [msm_mux_##fname] =3D {                           \
+> -               .name =3D #fname,                         \
+> -               .groups =3D fname##_groups,               \
+> -               .ngroups =3D ARRAY_SIZE(fname##_groups),  \
+> +               .func =3D PINCTRL_PINFUNCTION(#fname,                    =
+ \
+> +                                       fname##_groups,                 \
+> +                                       ARRAY_SIZE(fname##_groups))      =
+       \
+>         }
+
+--=20
+With Best Regards,
+Andy Shevchenko
