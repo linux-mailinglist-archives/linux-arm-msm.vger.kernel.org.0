@@ -2,83 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65C956F6164
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 00:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F7316F618E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 00:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbjECWnH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 18:43:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41596 "EHLO
+        id S229724AbjECWxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 18:53:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjECWnG (ORCPT
+        with ESMTP id S229622AbjECWxc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 18:43:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6947593D1
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 15:42:48 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343MSoCB028356;
-        Wed, 3 May 2023 22:42:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ZYUe9H1SvY9JcpCCKhrLIpuyPXgCdFHop1Nf9gzq7zY=;
- b=jurBKqQezznJTUijscHXj6u3iERfOJ48BpcNmc5ufOljxzA5v31vZWzAvIWTTMazEyHc
- CKqh8p8QVfHXoMHQkDzXXeVKJse44+0zsJ+MIelAEfbrWQZHXSIDzqcOAs3mkIsTjmUE
- YIOXsUAT4kGyGTUIDmGb6+uGQbE3BpiIge4UfB/7lCWy11+PntFrbUt8SG4ZK7D+SOUe
- uFN1oE3o2B9opwQfVQQ1CMAqujalsUwUW37gvUvq79EljIsNHQAmfNCF9AdYGG4O19W7
- K/TjkHEiiHivhB9Oqx+QRClI+HQjwUxsVHETQURPiEcF0pA17yCt6qJfcywO9u9ww/jY Ug== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbsr40vvc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 22:42:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343MgaTN016933
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 22:42:36 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
- 15:42:36 -0700
-Message-ID: <18413e44-4d8a-fec7-9867-ab66a90b3334@quicinc.com>
-Date:   Wed, 3 May 2023 15:42:35 -0700
+        Wed, 3 May 2023 18:53:32 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1C8346A4
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 15:53:29 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-2f3fe12de15so3660669f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 15:53:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683154408; x=1685746408;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MV+u++8U/VyhhrcbPmfUOej8gTWnvvepSCv4nFZxUI8=;
+        b=z5utn/AknJmxABeeRVynXmrhi4Oc97sCAjDb0iazJnDQSytpF8KGji4soAzXjh3azn
+         cMWsjo42IeqqY92VWWLtdc7hw79ElV2ID9oKUfRnof6bYHtHzbrg7hHC2neqLKdeGH3S
+         k2nB2kQE4Glvq1bE5PfuuHykCxOJsUilzEXa1b233gF4ZwKA0A8PNTu3tQxwOpLWr4EQ
+         ByhdUaiTQboKN3+ocuPT8NLcmzrKLPq5N6pEyxf7krf4HttW1cxvTuCxFXojD9y9wILT
+         ZfszlfNZMQiB1b0u/NY6HtV/nNbCaCApTy0dj8PzIMXDZslWZgLbi0ysG3Kio00D3WfZ
+         BIGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683154408; x=1685746408;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MV+u++8U/VyhhrcbPmfUOej8gTWnvvepSCv4nFZxUI8=;
+        b=WzKmj0H//jpxiOXmj2wZtHMffQMACL/LCJT/nxfC/bbgO1C0kiVyunWYHItRwO928T
+         CXJm60xLSxzS9ftCGWJxjZ3i/Q+/RwwNkFMXn61SgssU5Q9lDh5JUQRq65OlCthhfOh2
+         R+dw2FGuUFoXqCMG44U8ChlV6B359k2wXOnFANVqJObWMeZ9I3gCt9+CLZCvVCfYbw4z
+         UfA3vuezdkCVRz2hCNnYyC9KCprD+MqwebFdSuXmatC4K/cnugbY3ZUKAO173Rv0rz7Q
+         En20FJRvcLSDbuGgYU6XyFXenHEm1jIbrOcnQ6pLYSvWkAsUGPnroZaaSVPBbUlB8R1u
+         bGWQ==
+X-Gm-Message-State: AC+VfDy1M7jmJvf82tZhzEpkHewkaPcwKkwlrXon6RHsaiHVJgLslUea
+        UCBZBa1cBl9dDM5NT9sI7avnZw==
+X-Google-Smtp-Source: ACHHUZ5eigr8TCDr+H/MP1064+RlRfGKo2BIQBROvCuaV76YQsBFIGMIvr/fz2VEdwTBR1By0hRozA==
+X-Received: by 2002:adf:ec0b:0:b0:304:8888:87ad with SMTP id x11-20020adfec0b000000b00304888887admr1072529wrn.12.1683154408135;
+        Wed, 03 May 2023 15:53:28 -0700 (PDT)
+Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id k9-20020a5d6d49000000b003068f5cca8csm334471wri.94.2023.05.03.15.53.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 15:53:27 -0700 (PDT)
+Message-ID: <575ee047-c6ce-95c3-8781-8c9a78534bb1@linaro.org>
+Date:   Wed, 3 May 2023 23:53:26 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 0/7] drm/msm/dpu: simplify DPU encoder init
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V4 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1681742910.git.quic_schowdhu@quicinc.com>
+ <C1eDJi-H9uWRAtbInRclmCgPb4EcgaeS3sk5FKO9cw8KscgMCH8dxRSvdPGUMwDFKpte7cBVeaqPhlLog-CRrg==@protonmail.internalid>
+ <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8m7CgCeYxGSyxahviruaqmOwD7TxsP68
-X-Proofpoint-ORIG-GUID: 8m7CgCeYxGSyxahviruaqmOwD7TxsP68
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-03_14,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 bulkscore=0 phishscore=0 adultscore=0 suspectscore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030195
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,35 +87,75 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
-> Rework dpu_encoder initialization code, simplifying calling sequences
-> and separating common init parts.
-
-Please mention that your series was made on top of 
-https://patchwork.freedesktop.org/series/116530/.
-
-Figured it out when I tried to apply it to my branch to test.
-
-Validated writeback just in case with this, hence please use
-
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
-
+On 17/04/2023 16:08, Souradeep Chowdhury wrote:
+> All of Qualcomm's proprietary Android boot-loaders capture boot time
+> stats, like the time when the bootloader started execution and at what
+> point the bootloader handed over control to the kernel etc. in the IMEM
+> region. This information is captured in a specific format by this driver
+> by mapping a structure to the IMEM memory region and then accessing the
+> members of the structure to show the information within debugfs file.
+> This information is useful in verifying if the existing boot KPIs have
+> regressed or not. The information is shown in milliseconds, a sample
+> log from sm8450(waipio) device is as follows:-
 > 
-> Dmitry Baryshkov (7):
->    drm/msm/dpu: merge dpu_encoder_init() and dpu_encoder_setup()
->    drm/msm/dpu: drop dpu_encoder_early_unregister
->    drm/msm/dpu: separate common function to init physical encoder
->    drm/msm/dpu: drop duplicated intf/wb indices from encoder structs
->    drm/msm/dpu: inline dpu_encoder_get_wb()
->    drm/msm/dpu: call dpu_rm_get_intf() from dpu_encoder_get_intf()
->    drm/msm/dpu: drop dpu_encoder_phys_ops.atomic_mode_set
+> /sys/kernel/debug/146aa6b0.boot_stats # cat abl_time
+> 17898 ms
+> /sys/kernel/debug/146aa6b0.boot_stats # cat pre_abl_time
+> 2879 ms
 > 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 190 ++++++++----------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  14 +-
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  20 +-
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  55 ++---
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  35 +---
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  38 +---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  87 +++-----
->   7 files changed, 155 insertions(+), 284 deletions(-)
+> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+> stage and the timestamp generated by the sleep counter is logged by
+> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+> starts execution which is logged here as "pre_abl_time" and the second
+> when it is about to load the kernel logged as "abl_time". Documentation
+> details are also added in Documentation/ABI/testing/debugfs-driver-bootstat
 > 
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+
+Hi,
+
+[...]
+> +
+> +static int boot_stats_probe(struct platform_device *pdev)
+> +{
+> +	struct device *bootstat_dev = &pdev->dev;
+> +	struct bs_data *drvdata;
+> +
+> +	drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
+> +	platform_set_drvdata(pdev, drvdata);
+> +
+> +	drvdata->dbg_dir = debugfs_create_dir(dev_name(bootstat_dev), NULL);
+
+This might be better as just "qcom_boot_stats", rather than including
+the address.
+
+[...]
+> +
+> +static const struct of_device_id boot_stats_dt_match[] = {
+> +	{ .compatible = "qcom,sm8450-bootstats" },
+
+This driver doesn't only support sm8450, I've tested this on sdm845 and
+it works just fine. Can we use a generic compatible here instead?
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
+> +
+> +static struct platform_driver boot_stat_driver = {
+> +	.probe  = boot_stats_probe,
+> +	.remove_new = boot_stats_remove,
+> +	.driver = {
+> +		.name = "qcom-boot-stats",
+> +		.of_match_table = boot_stats_dt_match,
+> +	},
+> +};
+> +module_platform_driver(boot_stat_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.7.4
+> 
+
+-- 
+Kind Regards,
+Caleb (they/them)
