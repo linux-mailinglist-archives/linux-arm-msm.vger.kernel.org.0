@@ -2,138 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F19E6F5896
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:09:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93E846F58A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:10:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbjECNJG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 09:09:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35118 "EHLO
+        id S230040AbjECNKn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 09:10:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbjECNJF (ORCPT
+        with ESMTP id S229745AbjECNKm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 09:09:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E874EDB;
-        Wed,  3 May 2023 06:09:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C1413614C8;
-        Wed,  3 May 2023 13:09:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C267C4339E;
-        Wed,  3 May 2023 13:09:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683119343;
-        bh=5Xok1b5Bon4dNBT/EG9uKl/6cvSusA5y9BN7upmEzC8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=glYqs7G41Oe7Vr2QNmHMivzZ6SgZQ51erxLwa4NoyJylHIWGgJZiJbFOEF9eZRS9n
-         xWx6cluWIvaqTZt7zXRHgIkq6tJbMsx2DRAeJtYjsXE4g6fbmacJoLd1zt/7Kc+RNb
-         DVYTcfIMk4llzEHHC0AIYjcc1NqABxKW5it0P7I3y/6ACXPplEVw9mnPneYwqWJE1j
-         DXf0Ve1xZPIJYMX1EQqZ/49QrXBsnJubhquY8wuE6I2y8dSs6L+d1Z35PcqDp/q7zl
-         io5DshylXLfwwhBVdAWKtYrKz5bhQuXIbmxPDl7QiyFIMDTq/uAziVDre8vjyLHGtq
-         jmFJ8ehjTEdAg==
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ac75500798so6202301fa.0;
-        Wed, 03 May 2023 06:09:03 -0700 (PDT)
-X-Gm-Message-State: AC+VfDx8VIFGsdzwVAt9lIOTgqeOb8/Q9jS97/fHtSElo+tcs5II73Sm
-        ZIB/SgALIfvsV9uCVb4WpKzuMOObIZsxOcwOVA==
-X-Google-Smtp-Source: ACHHUZ50B+ONgazRTst79ZMphnWydxujQ+xpsmD1oxBiJc6OIwSZRmXeOONoaPS4VdIBDlX9Htpoiog7d0wWQm74E6U=
-X-Received: by 2002:a2e:80ca:0:b0:2a5:f82e:e2a6 with SMTP id
- r10-20020a2e80ca000000b002a5f82ee2a6mr239ljg.47.1683119341121; Wed, 03 May
- 2023 06:09:01 -0700 (PDT)
+        Wed, 3 May 2023 09:10:42 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6056B5275
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 06:10:40 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3063433fa66so1832088f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 06:10:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683119439; x=1685711439;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HGhjoHsqtpGAvCt96yR+CnnEwvBFAtRaMqZAarDkXaA=;
+        b=YhG45OPWvg/KpGncWxjG8rSHhly+z9qC3UY7/iGT/zTm6UM5PbEIo1cMAUWoRflAKw
+         /FCnXVZecHknk+kn1bBahKKu6r5Ux56T6ruDxvaXcN+9RZnQiYt4QlwaY7LnJoWpzxt0
+         KArwOpw2/iDBqFR/rXgDFFbdQH/I6n6TrsYs3uG7EdOdJZpyea6My7asGIC0r7og8aPr
+         8cKpfXweTA0XJw/RnAnELw3PyGuYvmFLmBw1lqMfjELx0okO2nd6ibGRk1x8s5WAAsTQ
+         PrIYtpMdK+LfZsg7kaQNH2WNV7p8/JbUhavyEFqtSmvm8V9HsgCLxUmSrD8CFbYmOapN
+         mdbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683119439; x=1685711439;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HGhjoHsqtpGAvCt96yR+CnnEwvBFAtRaMqZAarDkXaA=;
+        b=Pgy6Jz+3usuT+y+3pDQ1eYFm0DtZJnbCK0N+x0MJskP19u5GO+VpGMBMJHW48agLqD
+         j+u4nhXyzY8UjcASsElBKhv+1MwCkL5NSZejUDLdNzqIHi53KkvI3wXtBKmpc5IpMx6/
+         HxECfMQEqPlotl15ZpvjB704xQrvAcH7pnS53gLqbENofYfTaK1hWqUau2StQDhbPbtJ
+         nsauII2ZtICf0b5TQL+5LPo68WH41qX1OdeSC+nl+VXz3wkZf0NyT8w6tVaidiMVieTc
+         jAibYmAKUxuC5C8L7EoP2iVWnCGs0rXcxSMlYmdXxSpecI7YyOBHq8aGuUknjnS0FKC+
+         qEgQ==
+X-Gm-Message-State: AC+VfDw1jdyxsuW1kW+T3V38IPdX54oRyfqvZdaJU/ODFFkRJ6QOeqev
+        D2vNnOYzZtKF218gfG0HCGkHtg==
+X-Google-Smtp-Source: ACHHUZ6H6rMEcexyjbQ76KEEHrcdFlTqDgcGpY5IB+Xv3dbWBDpeQnZ3XIOY8tmrT9xqFmUgNrFIDA==
+X-Received: by 2002:adf:cd10:0:b0:306:34ae:6a23 with SMTP id w16-20020adfcd10000000b0030634ae6a23mr80497wrm.5.1683119438816;
+        Wed, 03 May 2023 06:10:38 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id c10-20020adffb0a000000b00306344eaebfsm5413479wrr.28.2023.05.03.06.10.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 May 2023 06:10:38 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/6] arm64: qcom: sm84[34]50: enable DP altmode on USB-C
+ Connector
+Date:   Wed, 03 May 2023 15:10:32 +0200
+Message-Id: <20230503-topic-sm8450-graphics-dp-next-v1-0-d1ee9397f2a6@linaro.org>
 MIME-Version: 1.0
-References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
- <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
-In-Reply-To: <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Wed, 3 May 2023 08:08:48 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqL-WMNxHrgCzn=LfH6gpE_Yb3uRwo97ssHPoZenK3CEeQ@mail.gmail.com>
-Message-ID: <CAL_JsqL-WMNxHrgCzn=LfH6gpE_Yb3uRwo97ssHPoZenK3CEeQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Geert Uytterhoeven <geert@linux-m68k.org>,
-        Olof Johansson <olof@lixom.net>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
-        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEhdUmQC/x2NSQrDMAwAvxJ0rsBxli5fKT3IthoLUsdYaQmE/
+ D2mx5nDzA7KRVjh0exQ+CcqS6rQXhrwkdLEKKEyWGM7M5gO1yWLR/3c+sHgVChH8YohY+JtxTa
+ Qu4+WeLwGqA1HyugKJR9rJX3nucpc+C3bf/p8HccJ63ehaYQAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1917;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=MguxGlBFp7LECZBwSsQYwigxpYUvCvs4cPcikosbYP4=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkUl1LdczO4fUc0a5fL4UK3klFWGWxVU63pXBVsGxZ
+ OqU9VPWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZFJdSwAKCRB33NvayMhJ0ZsmD/
+ 0TPSbP+An/zeK+WCLDmvG1X1QZxc1rpnXMuYYJTGqNMAbEdivzMBlFqUTTU83M/veQg01ZlKnwuD8B
+ YQQ5f33pNfV2BtW7m5lR+euFF7lOrax5Kg5PPi5jZQHBdo9bblz1YwsMyWpUIA7JlWzPpkZuOK2SDr
+ ICJKIa6jVk0F3onTAU49sskw6vxZry0jbMY99OTPoMGJLIUbZD4Q+aRf3MBwRbNTDwgWKYwQFjJzHI
+ CadeVVVBVQn/lpc0WP2FBR6DZBqtJgLkyFdGL6lIe4/8RY8yfZ0SraVzq0KZ+wX6YC2zMvxTG4F89V
+ hKGZj4nsybmEIY9P2q78SmI3R0C6WpoBgrMki0x5UvggK+vT/kY2xXCwZZCuqC8vRlRy3K5OcQkv1U
+ nsTUeHb7uooGpJYtf2jUlgjzQYoPuZWLHMN/+1SVmN12IXigRJpfibb7NppwwTxu5frMZ7o1WI3+l+
+ ZgIDPWGunlQrA2JvVFG/vnOXXb0glnVNiHg1Mgo244Qo67NlZ+I/FqjncUTLkByiarUDT9HpuZT+Aa
+ rHSxvCBKSOPQTDv+C9D3gUuChfcJFhV+rq5nOo643jCA7srZrCe235lMHcWqXgRA53mQ099IpR76AL
+ hYov9E7j5iIgtPJPhobC1509UZ5y7Dr/OxMkQUcnxOKbRVn6B0XsnXPDBCig==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 3, 2023 at 6:02=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Tue, May 2, 2023, at 21:40, Rob Herring wrote:
-> > On Tue, May 2, 2023 at 3:15=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wr=
-ote:
->
-> > vendor_map =3D {
-> >     'alphascale' : 'alphascale',
-> >     'alpine' : 'alpine',
->
-> I would make this one 'amazon' if we go with current manufacturers.
->
-> >     'nspire' : 'nspire',
->
-> nspire is the name of the end-user product, so that doesn't quite
-> fit. The SoC was apparently an LSI logic Zevio, which is now owned
-> by Broadcom.
+This is the final step to achieve USB-C Altmode on the HDK8350
+and HDK8450 now DP controller support, USB3+DP Combo PHY and
+pmic glink support have been merged for those platforms.
 
-I'm inclined to leave it. I put it in the category of a one-off thing
-that's not sharing anything
+This patchset depends on the QMP Combo USB3+DP PHY orientation
+support at [1].
 
-> >     'mvebu' : 'marvell',
-> >     'mmp' : 'marvell',
-> >     'berlin' : 'berlin',
->
-> While berlin is related to pxa/mmp, this one is now owned
-> by Synaptics, and the 64-bit versions are already in the
-> synaptics subdir, so I'd go with teh same here.
->
-> >     'openbmc' : 'aspeed',
-> >     'en7' : 'airoha',
->
-> airoha is a separate company now, but the hardware is still
-> shared with mediatek, so we could consider lumping it into
-> that subdir, but a separate one may be better long-term.
->
-> >     'gemini' : 'gemini',
->
-> This one is also a product name, not a company. Apparently,
-> gemini was originally made by Storm Semiconductor, and then
-> by Cortina, which was subsequently acquired by Inphi, and that ended
-> up in Marvell after the product was already discontinued.
->
-> Out of the four, I'd probably go with 'cortina' as the
-> directory name.
+The following has been successfully tested:
+- USB-C PD Power Role, reported status are coherent
+- USB-C dual-role data
+  - USB2.0 only (no-PD) as DFP or UFP
+  - USB2.0 + USB SuperSpeed as DFP or UFP & in both orientations
+  - USB2.0 + USB SuperSpeed + DisplayPort Altmode in both orientations
+  - DisplayPort-only Altmode in both orientations
 
-I had 'cortina' previously. Linus wanted gemini...
+Data role and SuperSpeed lanes were correctly switched on the PHY
+side after USB-C removal/insertion.
 
-Rob
+[1] https://lore.kernel.org/all/20230425034010.3789376-1-quic_bjorande@quicinc.com/
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (6):
+      arm64: dts: qcom: sm8350: add ports subnodes in usb1 qmpphy node
+      arm64: dts: qcom: sm8450: add ports subnodes in usb1 qmpphy node
+      arm64: dts: qcom: sm8350-hdk: Add QMP & DP to SuperSpeed graph
+      arm64: dts: qcom: sm8450-hdk: Add QMP & DP to SuperSpeed graph
+      arm64: defconfig: enable FSA4480 driver as module
+      qcom: pmic_glink: enable altmode for SM8450
+
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 74 ++++++++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi    | 26 ++++++++++++
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 71 ++++++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 26 ++++++++++++
+ arch/arm64/configs/defconfig            |  1 +
+ drivers/soc/qcom/pmic_glink.c           |  8 +++-
+ 6 files changed, 200 insertions(+), 6 deletions(-)
+---
+base-commit: b3afd23af1d1a8b690d512be825a7a8aef991eff
+change-id: 20230503-topic-sm8450-graphics-dp-next-1dab962ae67d
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
