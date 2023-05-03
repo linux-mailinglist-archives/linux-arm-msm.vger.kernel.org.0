@@ -2,110 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 069126F56D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 13:03:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E2B76F56FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 13:10:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjECLDU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 07:03:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33932 "EHLO
+        id S229650AbjECLKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 07:10:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjECLDS (ORCPT
+        with ESMTP id S229606AbjECLKo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 07:03:18 -0400
-Received: from wnew2-smtp.messagingengine.com (wnew2-smtp.messagingengine.com [64.147.123.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86DE5B9A;
-        Wed,  3 May 2023 04:03:00 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailnew.west.internal (Postfix) with ESMTP id 6C7392B0671E;
-        Wed,  3 May 2023 07:02:32 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Wed, 03 May 2023 07:02:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-        :cc:content-transfer-encoding:content-type:content-type:date
-        :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-        1683111752; x=1683118952; bh=MMamfdw2Idw7oZk+/E3mvL+dBo0TUHD8cWv
-        2z+u/0pc=; b=WBctjyvS2xYVsNx/PXLCezyBfk6d0fNGJLAbjyR93iv+JntYfRw
-        1FknZqmA6tsFPUoOxwPIzC92Rp5Y6yMCdnzeprisuAEmk/2FwjwhujnyjmXpkimB
-        SppIL5oaBfr59F6AzPecb7p3PngCPKwbucj2v1SwZaiAn0b8V6yRvxWIATOoB1yT
-        kTJFFdKrKoLxDca9M6vO2wD00yP0v9E+Y6cH9ws5eKi/SUd2UHkyPleSrFe3oyLX
-        8GenDC9VkDzpl0DM3D3MJqCCidmbvb4oXCVvEsbwuVU7zsrm1wOjex4kRkPwyRT1
-        Y3o5kMbVVaclWgwF5PhZKyT7r7Y+YHslZ1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-        1683111752; x=1683118952; bh=MMamfdw2Idw7oZk+/E3mvL+dBo0TUHD8cWv
-        2z+u/0pc=; b=AH+K36zaN4zYugn+q+n765d7RqYhBnYAkyeBKpd/jUwnO4cc17N
-        sOtk4fgnjqgBRejjoUPfmgWTaKFP4N6l86PC9yWkTl7qSHDYKt8zUNrMJm7hgsac
-        MAKOY5kQ55a0V+cd6KgpG+xKpJy4SWbnKyPbmZiW4Z0r+3tL/pAww5DKoBXtHvDI
-        i273D40wtniWtgLX4sC5ApVUdClgCvIzPssLKxyAw/v9JuPv2gH8vOUO3lADSDBb
-        NaXuK10560hVSSAb2s815TRFlAaY6HIsVEB4nLwDJq5pD3D+mqkoaNJij4p9s68c
-        FZWuHfNk6rEKY5SsKc3Dqj2x0oLyHX/paVw==
-X-ME-Sender: <xms:Rj9SZKlTTnbDiHX55Z0zVK4RRHqTtD34Ic0kr9gu8LXRZUd5vW1sNQ>
-    <xme:Rj9SZB2RRbTSlfnvoyCiq-CjuDURcGdNgs5GoDJl4qCHFJ5-ZHoIvp9bWKCYjpXN-
-    ODT0WgrXyw40LeC0sc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvkedgfeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
-    htthgvrhhnpeegfeejhedvledvffeijeeijeeivddvhfeliedvleevheejleetgedukedt
-    gfejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:Rj9SZIovGybcnhaYiLbWAMPNr2wtxMzL-NEtbKfgejz2jVx79Q3BOw>
-    <xmx:Rj9SZOmlZGrdb2-rGVi2XdPxahue8H13hkdPES4NDGwCeY-jXgd-ew>
-    <xmx:Rj9SZI2--fY13skOLwZ1x9wt_VRgsao0yXJv8XyToKLEhPijWfOSBw>
-    <xmx:SD9SZMJstDJSwk6E9VhGeSPmli8W6KuMDF8H4lCfg1AWmdfP8FfC5WnUfw0>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id B77FBB6008D; Wed,  3 May 2023 07:02:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-386-g2404815117-fm-20230425.001-g24048151
-Mime-Version: 1.0
-Message-Id: <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
-In-Reply-To: <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
- <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
- <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-Date:   Wed, 03 May 2023 13:02:10 +0200
-From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Rob Herring" <robh+dt@kernel.org>
-Cc:     "Geert Uytterhoeven" <geert@linux-m68k.org>,
-        "Olof Johansson" <olof@lixom.net>,
-        "Christian Marangi" <ansuelsmth@gmail.com>,
-        "Krzysztof Kozlowski" <krzk@kernel.org>,
-        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
-        linux-sunxi@lists.linux.dev,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
-        linux-aspeed@lists.ozlabs.org,
-        linux-rpi-kernel@lists.infradead.org,
-        chrome-platform@lists.linux.dev,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
-        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
-        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
-        linux-rockchip@lists.infradead.org,
-        linux-realtek-soc@lists.infradead.org
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        Wed, 3 May 2023 07:10:44 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5B526A9;
+        Wed,  3 May 2023 04:10:43 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 26D3862CC7;
+        Wed,  3 May 2023 11:10:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EE0C433D2;
+        Wed,  3 May 2023 11:10:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683112242;
+        bh=s0Ua0IGvfJHjDVRFs1MEv5s7m2oj87gMVXpVRmE+ezY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ks2JmkYxOm4r8x2pfckba6C/Ure5b9zp/hQAQHQjowbCDSnCLwfhzlT2VuhYIRAMF
+         SWpqFzbbBaMAi9kuYtd8aOrX8K6Nhm42DqQ+CYAD2Vb2VNSi4alcoYDX7e5DdkuR/e
+         cD6WCF632kXF2iNHTLMMUD/uMcxSAb7njJPJatnd7bojlNfLJU4oH19OuXeGnWRmVk
+         MERDKuv7c3NYHaOoCyQZ3OV1ZoZQbJxhmhC4GWgnfvelVPEZAZsUm7po+Oec7KR9c7
+         UMIsSWnqkNAgD4Fed/D7btblZplPfCupRmVOjvR2qjzIUWhVKRueUbc7hfwTDa8Ze2
+         6DiwuIhMwJD6g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1puANj-0001mf-Rl; Wed, 03 May 2023 13:10:47 +0200
+Date:   Wed, 3 May 2023 13:10:47 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v7 5/9] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
+Message-ID: <ZFJBN2i5tXkY8ARA@hovoldconsulting.com>
+References: <20230501143445.3851-1-quic_kriskura@quicinc.com>
+ <20230501143445.3851-6-quic_kriskura@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230501143445.3851-6-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -113,91 +72,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 2, 2023, at 21:40, Rob Herring wrote:
-> On Tue, May 2, 2023 at 3:15=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> w=
-rote:
+On Mon, May 01, 2023 at 08:04:41PM +0530, Krishna Kurapati wrote:
+> Currently the DWC3 driver supports only single port controller
+> which requires at most one HS and one SS PHY.
+> 
+> But the DWC3 USB controller can be connected to multiple ports and
+> each port can have their own PHYs. Each port of the multiport
+> controller can either be HS+SS capable or HS only capable
+> Proper quantification of them is required to modify GUSB2PHYCFG
+> and GUSB3PIPECTL registers appropriately.
+> 
+> Add support for detecting, obtaining and configuring phy's supported
+> by a multiport controller and limit the max number of ports
+> supported to 4.
+> 
+> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  drivers/usb/dwc3/core.c | 262 +++++++++++++++++++++++++++++-----------
+>  drivers/usb/dwc3/core.h |  12 +-
+>  drivers/usb/dwc3/drd.c  |  13 +-
+>  3 files changed, 209 insertions(+), 78 deletions(-)
 
-> vendor_map =3D {
->     'alphascale' : 'alphascale',
->     'alpine' : 'alpine',
+Note that this patch no longer applies and you need to rebase the series
+on mainline (e.g. including commit 1d72fab47656 ("USB: dwc3: refactor
+phy handling").
 
-I would make this one 'amazon' if we go with current manufacturers.
-
->     'nspire' : 'nspire',
-
-nspire is the name of the end-user product, so that doesn't quite
-fit. The SoC was apparently an LSI logic Zevio, which is now owned
-by Broadcom.
-
->     'mvebu' : 'marvell',
->     'mmp' : 'marvell',
->     'berlin' : 'berlin',
-
-While berlin is related to pxa/mmp, this one is now owned
-by Synaptics, and the 64-bit versions are already in the
-synaptics subdir, so I'd go with teh same here.
-
->     'openbmc' : 'aspeed',
->     'en7' : 'airoha',
-
-airoha is a separate company now, but the hardware is still
-shared with mediatek, so we could consider lumping it into
-that subdir, but a separate one may be better long-term.
-
->     'gemini' : 'gemini',
-
-This one is also a product name, not a company. Apparently,
-gemini was originally made by Storm Semiconductor, and then
-by Cortina, which was subsequently acquired by Inphi, and that ended
-up in Marvell after the product was already discontinued.
-
-Out of the four, I'd probably go with 'cortina' as the
-directory name.
-
->     'meson' : 'meson',
-
--> amlogic
-
->     'moxa' : 'moxa',
->     'mstar' : 'mstar',
-
--> sigmastar
-
->     'nuvo' : 'nuvoton',
->     'lpc' : 'lpc',
-
--> nxp
-
->     'lan96' : 'microchip',
->     'owl' : 'actions',
->     'ox8' : 'oxsemi',
->     'rda' : 'rda',
-
--> unisoc
-
->     'rtd' : 'realtek',
->     'r7' : 'renesas',
->     'r8' : 'renesas',
->     'r9' : 'renesas',
->     'emev2' : 'renesas',
->     'sh73a' : 'renesas',
->     'gr-' : 'renesas',
->     'iwg' : 'renesas',
->     'rk' : 'rockchip',
->     'rv11' : 'rockchip',
->     'rockchip' : 'rockchip',
->     'socfpga' : 'socfpga',
-
--> intel
-
->     'stm' : 'stm32',
->     'sti' : 'sti',
->     'st-pin' : 'sti',
->     'ste' : 'st-ericsson',
->     'spear' : 'spear',
-
-I would put all five of these into 'st'. The ux500 was developed
-in st-ericsson, but last sold by st, and the other ones are all
-original st products.
-
-      Arnd
+Johan
