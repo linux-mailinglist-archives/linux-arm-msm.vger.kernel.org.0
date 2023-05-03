@@ -2,74 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC1DD6F56A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 12:58:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83C816F56AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 13:00:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbjECK6M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 06:58:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57776 "EHLO
+        id S229959AbjECLAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 07:00:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjECK6L (ORCPT
+        with ESMTP id S229569AbjECLAA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 06:58:11 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0C4C849DA;
-        Wed,  3 May 2023 03:58:10 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E71872F4;
-        Wed,  3 May 2023 03:58:53 -0700 (PDT)
-Received: from [10.57.82.232] (unknown [10.57.82.232])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 499853F67D;
-        Wed,  3 May 2023 03:58:04 -0700 (PDT)
-Message-ID: <32aa1228-3eb9-340a-41e7-88fdd7c0a5ac@arm.com>
-Date:   Wed, 3 May 2023 11:57:59 +0100
+        Wed, 3 May 2023 07:00:00 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8153649DE;
+        Wed,  3 May 2023 03:59:59 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3439oQNL020511;
+        Wed, 3 May 2023 10:59:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=61I/qHVeaDrVGfByyTdO3IToeDPjIKC0Vq4EoJrP05g=;
+ b=aJfdyJNgbkxy6juGv76E1/HoyOSfscT8VtxNa48kp4ElG6qu9ELD/BTDALw3qPxycn3V
+ GoAHIZChwwxfIKiDhBz7Ht7pfR/9k4jJVxPidWYrATNhNCuLxkl/6XXih82riQu6MstP
+ F4wKHIwEnT2ovYGtrKjW48BmmIx/hJQpAY9sAgvISv0P3dPJ/X31MPGAr8c5jSiTNcif
+ G61Q1dpbxJpLQdVoJCWtzksSPMKS8b0wn3YmvU9h9+L0w0bEgXaRJr1gdSUqMZEn/Rsm
+ PY+4aHhLx4j79oxTe2Au0DNdtCig7SsoqOKfcSDlO+FCz+6zn00sFi9EDuN1JuMresmT BA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbeb2s512-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 May 2023 10:59:48 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343AxKsq022293
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 May 2023 10:59:20 GMT
+Received: from [10.242.242.243] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
+ 03:59:09 -0700
+Message-ID: <9de5629f-0a69-7b5b-c312-ab6fe19d60f8@quicinc.com>
+Date:   Wed, 3 May 2023 16:29:06 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 04/20] iommu/fsl_pamu: Replace set_platform_dma_ops() with
- IOMMU_DOMAIN_PLATFORM
-Content-Language: en-GB
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Steven Price <steven.price@arm.com>
-References: <4-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <4-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
+ multipd model
+To:     Rob Herring <robh@kernel.org>
+CC:     <quic_sjaganat@quicinc.com>, <quic_gurus@quicinc.com>,
+        <quic_gokulsri@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <andersson@kernel.org>, <jassisinghbrar@gmail.com>,
+        <konrad.dybcio@linaro.org>, <quic_eberman@quicinc.com>,
+        <quic_poovendh@quicinc.com>, <robimarko@gmail.com>,
+        <mturquette@baylibre.com>, <mathieu.poirier@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <quic_arajkuma@quicinc.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <loic.poulain@linaro.org>, <quic_anusha@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <agross@kernel.org>,
+        <linux-remoteproc@vger.kernel.org>
+References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
+ <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
+ <167819522915.3831.12765243745569076133.robh@kernel.org>
+Content-Language: en-US
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <167819522915.3831.12765243745569076133.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -1i42SqUw0sue0zOijKvfEfpXK-YxAtg
+X-Proofpoint-GUID: -1i42SqUw0sue0zOijKvfEfpXK-YxAtg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-03_06,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 adultscore=0 clxscore=1011 priorityscore=1501
+ mlxlogscore=962 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2303200000 definitions=main-2305030092
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,100 +93,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-01 19:02, Jason Gunthorpe wrote:
-> It is not clear what this is actually doing, most likely this is IDENTITY
-> behavior, but I think there is a chance it is BLOCKING given how the PAMU
-> stuff is oddly used.
 
-Logically it has to be identity, since there are no DMA ops interacting 
-with this driver (it's not the TCE IOMMU of 
-arch/powerpc/kernel/iommu.c), so any device using a kernel driver rather 
-than VFIO must be using dma-direct and thus require an identity mapping.
 
-At this point I finally got sufficiently fed up of this driver always 
-being the mystery weirdo and tracked down an old QorIQ reference manual, 
-and now I have about half an hours' worth of understanding of how the 
-PAMU actually works.
-
-Based on that, what setup_liodns() is doing is indeed setting up 
-identity for everything initially. It also becomes apparent that it's 
-never supported giving a PCI device back to its regular driver after 
-using vfio-pci, since an attach/detach cycle will then leave the PPAACE 
-invalid and thus DMA blocked. Oh well, that's been broken for 10 years; 
-nobody cares. Call it an identity domain and move on.
-
-Thanks,
-Robin.
-
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/fsl_pamu_domain.c | 29 ++++++++++++++++++++++++++---
->   1 file changed, 26 insertions(+), 3 deletions(-)
+On 3/7/2023 6:53 PM, Rob Herring wrote:
 > 
-> diff --git a/drivers/iommu/fsl_pamu_domain.c b/drivers/iommu/fsl_pamu_domain.c
-> index bce37229709965..4c65f1adfe7511 100644
-> --- a/drivers/iommu/fsl_pamu_domain.c
-> +++ b/drivers/iommu/fsl_pamu_domain.c
-> @@ -283,15 +283,28 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
->   	return ret;
->   }
->   
-> -static void fsl_pamu_set_platform_dma(struct device *dev)
-> +/*
-> + * FIXME: This seems to turn off the iommu HW but it is not obvious what state
-> + * it leaves the HW in. This is probably really a BLOCKING or IDENTITY domain.
-> + * For now this ensures that the old detach_dev behavior functions about the
-> + * same as it always did, and we turn off the IOMMU whenever the UNMANAGED
-> + * domain is detached.
-> + */
-> +static int fsl_pamu_platform_attach(struct iommu_domain *platform_domain,
-> +				    struct device *dev)
->   {
->   	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
-> -	struct fsl_dma_domain *dma_domain = to_fsl_dma_domain(domain);
-> +	struct fsl_dma_domain *dma_domain;
->   	const u32 *prop;
->   	int len;
->   	struct pci_dev *pdev = NULL;
->   	struct pci_controller *pci_ctl;
->   
-> +	if (domain == platform_domain || !domain)
-> +		return 0;
-> +
-> +	dma_domain = to_fsl_dma_domain(domain);
-> +
->   	/*
->   	 * Use LIODN of the PCI controller while detaching a
->   	 * PCI device.
-> @@ -312,8 +325,18 @@ static void fsl_pamu_set_platform_dma(struct device *dev)
->   		detach_device(dev, dma_domain);
->   	else
->   		pr_debug("missing fsl,liodn property at %pOF\n", dev->of_node);
-> +	return 0;
->   }
->   
-> +static struct iommu_domain_ops fsl_pamu_platform_ops = {
-> +	.attach_dev = fsl_pamu_platform_attach,
-> +};
-> +
-> +static struct iommu_domain fsl_pamu_platform_domain = {
-> +	.type = IOMMU_DOMAIN_PLATFORM,
-> +	.ops = &fsl_pamu_platform_ops,
-> +};
-> +
->   /* Set the domain stash attribute */
->   int fsl_pamu_configure_l1_stash(struct iommu_domain *domain, u32 cpu)
->   {
-> @@ -448,11 +471,11 @@ static struct iommu_device *fsl_pamu_probe_device(struct device *dev)
->   }
->   
->   static const struct iommu_ops fsl_pamu_ops = {
-> +	.default_domain = &fsl_pamu_platform_domain,
->   	.capable	= fsl_pamu_capable,
->   	.domain_alloc	= fsl_pamu_domain_alloc,
->   	.probe_device	= fsl_pamu_probe_device,
->   	.device_group   = fsl_pamu_device_group,
-> -	.set_platform_dma_ops = fsl_pamu_set_platform_dma,
->   	.default_domain_ops = &(const struct iommu_domain_ops) {
->   		.attach_dev	= fsl_pamu_attach_device,
->   		.iova_to_phys	= fsl_pamu_iova_to_phys,
+> On Tue, 07 Mar 2023 10:11:27 +0530, Manikanta Mylavarapu wrote:
+>> Add new binding document for multipd model remoteproc.
+>> IPQ5018, IPQ9574 follows multipd model.
+>>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> ---
+>>   .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
+>>   1 file changed, 282 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+>>
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.example.dts:22:18: fatal error: dt-bindings/clock/qcom,gcc-ipq5018.h: No such file or directory
+>     22 |         #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+>        |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.example.dtb] Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [Makefile:1512: dt_binding_check] Error 2
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
+
+I mentioned dependency link 
+(https://lore.kernel.org/linux-arm-msm/20220621161126.15883-1-quic_srichara@quicinc.com/) 
+in cover page patch because it's required for entire series. I will add 
+dependency link's and raise new patchset.
+
+Thanks & Regards,
+Manikanta.
+
