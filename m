@@ -2,186 +2,231 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE496F5EA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 20:55:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC2556F5ED1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 21:04:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229708AbjECSzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 14:55:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57730 "EHLO
+        id S230099AbjECTEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 15:04:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229677AbjECSzR (ORCPT
+        with ESMTP id S230214AbjECTDy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 14:55:17 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F82C10D9
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 11:55:16 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f00d41df22so5836459e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 11:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683140114; x=1685732114;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RzlKE1lmEmo/k0biH7eOIrCi/hE0/6/rGsPN37zmsG0=;
-        b=NurSElMFDhqL82wNrV6GXMHEw++bZK414iS+75lKBU2Kpx9gxOF1D0Lfv1PMdclnO0
-         Nk4F2n8LjCEdcQrOUnuiehyRMm0B+XgX9ScJ266OkUUh5eKZhBblh6zXQpF3HTWffLC7
-         km/+DLVpnjQ0KyqRjEfjiuosJ9YijmZPU9tFvUj2UZD//d458kvckQif9AKBLCYebyzW
-         l5CHluRz4PITEpAwr5b8p3q7grZ/D3fIKLxE0nonGnD72lovDS/fbN4RWjltMoqGYGWc
-         SlC94wUQmB+7AsigCj9FicV1PvQNdsFvY9rp6Ak5SzGzthNFQhBsbNwyGdJ3qO/Ca14o
-         TQ5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683140114; x=1685732114;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RzlKE1lmEmo/k0biH7eOIrCi/hE0/6/rGsPN37zmsG0=;
-        b=MADgUF2flyK9QeMRNmXregbrhXVjL0EL58kEJ0d1g4/qwKvruhQfmeSmeriaWomR6F
-         1p6uVCMuF0+j7a8BfW+SoNz7DOJDfCSAPl865igCtBpOczl4feRQzJZyn7tzW9TXEAel
-         0L3qd+1rJNg5Isd40dpVEVW7qQW4lNv7yUbNFR9F2YrHEFRkJp/QyMyrafJf+khf0gsR
-         lr8cI2xO080cUVX+8fxxZIYkFgT/fC8RiradvCaHMq/geM92hu4D7T7tzoaux1vQmNCE
-         QRQ5aCgiiEOqFx4ACRBBl6f8jeLyKHFb2uNScHxMWGPVo3Xx95wjrv9parbCy768ATue
-         GdVA==
-X-Gm-Message-State: AC+VfDzSediRUy7GYOZ/8kjF5Z+QuG0QzOG+OeNovOv2p13jjQg4S+es
-        2El2SWO0tU5JwzfKP/46YcxmQw==
-X-Google-Smtp-Source: ACHHUZ4rxBl5rTLi/7ZYdcVQkny25pwnFx5IddcnegKa7NCertIhawpcK26CEDqB2dJiczBe6pxFkQ==
-X-Received: by 2002:ac2:4907:0:b0:4ed:d5ce:7dea with SMTP id n7-20020ac24907000000b004edd5ce7deamr816556lfi.27.1683140114314;
-        Wed, 03 May 2023 11:55:14 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m6-20020a056512014600b004efd3c2b746sm5726531lfo.162.2023.05.03.11.55.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 11:55:13 -0700 (PDT)
-Message-ID: <a40c72c2-3483-020c-907e-6c7d84e88fbd@linaro.org>
-Date:   Wed, 3 May 2023 21:55:12 +0300
+        Wed, 3 May 2023 15:03:54 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D06CA83CF;
+        Wed,  3 May 2023 12:03:49 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343IihEo005010;
+        Wed, 3 May 2023 19:03:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oISPQxluqbl4On+7YmfQeoS+KkWVMHPZzfr99WKe0Wk=;
+ b=dab2iOfMDxQFghfBkLaIJIddBluZ0miuiCNVmWwQ8TbYJqe5Dc/i8ZtZuNQVLIPl5w/S
+ skKRcOCZIELDXk0AxtkFvb6s4PWi/pWkHUsyWjLYOKQvE9/aodb7cdfbimBG0mux2VoH
+ j3MugV8GaQHv0nrVbB87jM73dZle55Zl0Xl8zeShJ6VU2hPknoCC1H1cyiP/gDvWd0dy
+ AZ/p5VtccFRmVvq8PwC+cn/DOdctetKPT8GsYhi6E0sdigTf9SIj48HP0H4hHAfrXTW2
+ B4b1P04paPi9TcUiEMICjzTdTMrtlp+5Y0CtLInN3f3UpoqymjUTAiaYWTq+o9v8OEwE hw== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbmy496pj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 May 2023 19:03:43 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343J3grO032249
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 May 2023 19:03:42 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
+ 12:03:41 -0700
+Message-ID: <7117aadb-0289-01ff-6eb9-8bfc358eca63@quicinc.com>
+Date:   Wed, 3 May 2023 12:03:40 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 3/7] drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK
- and PP_BLK_TE marcos
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
- <1683061382-32651-4-git-send-email-quic_khsieh@quicinc.com>
- <4315e96f-ed29-92aa-9549-d6fc9d820de6@linaro.org>
- <648e7cca-8bb1-73f0-2bbb-0a6b81df3882@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <648e7cca-8bb1-73f0-2bbb-0a6b81df3882@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 3/4] drm/msm/dpu: Add has_data_compress to dpu_caps
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
+ <20230405-add-dsc-support-v1-3-6bc6f03ae735@quicinc.com>
+ <v5hmqtjwd3syqwo5nqru7xgpt3rv5ubfbzt6pssriyb7cuprkf@7zdvwsil67nc>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <v5hmqtjwd3syqwo5nqru7xgpt3rv5ubfbzt6pssriyb7cuprkf@7zdvwsil67nc>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qouUC3jHjn1ltASM3U2HMI0tBlp5UiOg
+X-Proofpoint-GUID: qouUC3jHjn1ltASM3U2HMI0tBlp5UiOg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-03_13,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ impostorscore=0 adultscore=0 mlxlogscore=927 spamscore=0 phishscore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030163
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 20:45, Kuogee Hsieh wrote:
+
+
+On 5/3/2023 12:07 AM, Marijn Suijten wrote:
+> On 2023-05-02 18:19:14, Jessica Zhang wrote:
+>> Add data_compress feature to DPU HW catalog.
+>>
+>> In DPU 7.x and later, there is a DATA_COMPRESS register that must be set
+>> within the DPU INTF block for DSC to work.
+>>
+>> As core_rev (and related macros) was removed from the dpu_kms struct, the
+>> most straightforward way to indicate the presence of this register would be
+>> to have a flag in dpu_caps.
 > 
-> On 5/2/2023 3:42 PM, Dmitry Baryshkov wrote:
->> On 03/05/2023 00:02, Kuogee Hsieh wrote:
->>> At legacy chipsets, it required DPU_PINGPONG_DSC bit be set to indicate
->>> pingpong ops functions are required to complete DSC data path setup if
->>> this chipset has DSC hardware block presented. This patch add
->>> DPU_PINGPONG_DSC bit to both PP_BLK and PP_BLK_TE marcos if it has DSC
->>> hardware block presented.
->>>
->>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>> ---
->>>   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    | 12 +++++-----
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  8 +++----
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 26 
->>> ++++++++++------------
->>>   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 24 
->>> ++++++++++----------
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 26 
->>> ++++++++++------------
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  4 ++--
->>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  2 +-
->>>   .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  2 +-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  8 +++----
->>>   9 files changed, 54 insertions(+), 58 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
->>> index 17f821c..b7cd746 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
->>> @@ -112,16 +112,16 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
->>>   };
->>>     static const struct dpu_pingpong_cfg msm8998_pp[] = {
->>> -    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
->>> -            DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->>> +    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 
->>> BIT(DPU_PINGPONG_DSC), 0,
->>> +            sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
->>> -    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
->>> -            DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->>> +    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 
->>> BIT(DPU_PINGPONG_DSC), 0,
->>> +            sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
->>> -    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
->>> +    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, 0, sdm845_pp_sblk,
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
->>> -    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
->>> +    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, 0, sdm845_pp_sblk,
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
->>
->> Just to doublecheck: why don't we have DPU_PINGPONG_DSC for PP_3/_4? 
->> We do have them on sdm845. Is it because we should not use DSC with 
->> thos PINGPONG blocks?
->>
-> I think it only have two DSPP connect to pp blocks
+> This is a very generic name to have in the global dpu_caps for a very
+> specific register on the INTF block since DPU >= 7.0.0, and I doubt any
+> new catalog contributor will know how to fill this field.  After all,
+> DPU < 7.0.0 also has DCE but it is controlled via the PINGPONG block.
+> 
+> Instead, how about having it as a DPU_INTF_DATA_COMPRESS (or similar)
+> feature flag on the INTF block?  We do the same for other (register
+> related) features on the INTF block, and you did the same to disable DSC
+> callbacks on PP in [1].
 
-So, can they be connected to PP3/4 or not?
+Hi Marijn,
 
->>>   };
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
->>> index ceca741..8888bd9 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
->>> @@ -110,16 +110,16 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
->>>   };
->>>     static const struct dpu_pingpong_cfg sdm845_pp[] = {
->>> -    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, sdm845_pp_sblk_te,
->>> +    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 
->>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
->>> -    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, sdm845_pp_sblk_te,
->>> +    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 
->>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
->>> -    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
->>> +    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, BIT(DPU_PINGPONG_DSC), 
->>> 0, sdm845_pp_sblk,
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
->>> -    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
->>> +    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, BIT(DPU_PINGPONG_DSC), 
->>> 0, sdm845_pp_sblk,
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
->>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
->>>
+Sounds good.
+
+> 
+> In fact it seems that the DSC/DCE (enablement) registers have been moved
+> from PINGPONG to INTF in DPU 7.0.0.  Can you clarify in the patch
+> message for v2 that this is the case, and do the same in the linked
+> PINGPONG patch?  Perhaps these patches should be part of the same series
+> as they do not seem DSI-specific.
+
+Will make a note of the PP to INTF change in the commit message.
+
+I would prefer to keep this patch in this series is because it is needed 
+for DSI over command mode to work and the subsequent patch is 
+specifically for command mode.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/1683061382-32651-3-git-send-email-quic_khsieh@quicinc.com/
+> 
+> - Marijn
+> 
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h   | 1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h   | 1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h   | 1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h   | 1 +
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h           | 2 ++
+>>   6 files changed, 7 insertions(+)
 >>
->> [skipped the rest, looks good to me]
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+>> index f98c2a5b0e87..4160a35ff20f 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+>> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8350_dpu_caps = {
+>>   	.has_dim_layer = true,
+>>   	.has_idle_pc = true,
+>>   	.has_3d_merge = true,
+>> +	.has_data_compress = true,
+>>   	.max_linewidth = 4096,
+>>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>   };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>> index 3fd0498ab420..23230841a0d1 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>> @@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
+>>   	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+>>   	.has_dim_layer = true,
+>>   	.has_idle_pc = true,
+>> +	.has_data_compress = true,
+>>   	.max_linewidth = 2400,
+>>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>   };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>> index ce583eb14b06..c990406e4bca 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+>> @@ -15,6 +15,7 @@ static const struct dpu_caps sc8280xp_dpu_caps = {
+>>   	.has_dim_layer = true,
+>>   	.has_idle_pc = true,
+>>   	.has_3d_merge = true,
+>> +	.has_data_compress = true,
+>>   	.max_linewidth = 5120,
+>>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>   };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>> index 3950e7b946a5..7094640e2fbf 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+>> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8450_dpu_caps = {
+>>   	.has_dim_layer = true,
+>>   	.has_idle_pc = true,
+>>   	.has_3d_merge = true,
+>> +	.has_data_compress = true,
+>>   	.max_linewidth = 5120,
+>>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>   };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>> index 1b3f5424aea8..970049559e02 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8550_dpu_caps = {
+>>   	.has_dim_layer = true,
+>>   	.has_idle_pc = true,
+>>   	.has_3d_merge = true,
+>> +	.has_data_compress = true,
+>>   	.max_linewidth = 5120,
+>>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>   };
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> index b410a85c109c..c5bbd4ad6da8 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> @@ -380,6 +380,7 @@ struct dpu_rotation_cfg {
+>>    * @has_dim_layer      dim layer feature status
+>>    * @has_idle_pc        indicate if idle power collapse feature is supported
+>>    * @has_3d_merge       indicate if 3D merge is supported
+>> + * @has_data_compress  indicate if data compression is supported
+>>    * @max_linewidth      max linewidth for sspp
+>>    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
+>>    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
+>> @@ -393,6 +394,7 @@ struct dpu_caps {
+>>   	bool has_dim_layer;
+>>   	bool has_idle_pc;
+>>   	bool has_3d_merge;
+>> +	bool has_data_compress;
+>>   	/* SSPP limits */
+>>   	u32 max_linewidth;
+>>   	u32 pixel_ram_size;
 >>
-
--- 
-With best wishes
-Dmitry
-
+>> -- 
+>> 2.40.1
+>>
