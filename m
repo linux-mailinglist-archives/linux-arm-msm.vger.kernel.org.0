@@ -2,144 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 934186F6113
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 00:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 797286F613C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 00:22:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjECWKU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 18:10:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53538 "EHLO
+        id S229735AbjECWWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 18:22:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbjECWKT (ORCPT
+        with ESMTP id S229545AbjECWWt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 18:10:19 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126BF83D7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 15:10:17 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-2fa47de5b04so5577087f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 15:10:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683151815; x=1685743815;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KM+Eoku8OZr2C+7sz7eqGQokSgHhVju2rzB5GkXKvSs=;
-        b=iEqzXQ9iP1TcfpM5M0R7xpX9VPkf6KLlTxi9g54G6kOeXU9aEb95q9v6gpQoWPY4/X
-         ElJV8nWnZzUQ0JiD7qY3wxyjbRygmOxCS/OxnZchSo62oy73tWW51/fY2QX1nyLs/WMZ
-         LTDrFj9UxUbF22c9jQKyoQmt40w6nT5ft2f3BNzD6Lim35mnFdRzQX2snnjo668Lxxrc
-         XsuAsSMR6B5gyO4zGwjvAv6v01gqjOVwAiAykNfp0H1Ldx3LzjvmDUcPCcE2T9kZpavX
-         Txo67OqyjkYgK8i+yJqDj/6c4bpVsiulbLYUJzd5Jm6NmMQurM25390RNvVFcVRo+YaR
-         JL2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683151815; x=1685743815;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KM+Eoku8OZr2C+7sz7eqGQokSgHhVju2rzB5GkXKvSs=;
-        b=EpuBrF3cBQzNVcZj/cOieOoWevLYqGihYr+K7m/cuRRUWz+p9DGad6Xn9U5CdWxNdx
-         9HkW9I9sA5BW+UDDTHKYpTh8y0ZqkXjXgZ4GxZhmWQ7L17RwTkzIySnU+U64LsQlTuoL
-         5vpYIvutXLonvQrKBwFgTUt7fVVzzHYjFzqQzY8+oXnYqb/v98k3Qen68V9rXfNMJgQb
-         vmh1y4VQBRhTZfOy2LYRxflMXjFoDQ/WhrHUxZSGmUDCiSJ+FXBsY4lh6Iwp2KK1yMqv
-         0X6nATqXEp+BdKl6Wa3n4Dhmsuf2wJcpYsSZd9YIVBV0yFSpAD3sEtYkyfT1rAqDvY6w
-         YICw==
-X-Gm-Message-State: AC+VfDzvwvoAGRS+ci2i65z/KN964yqYZTKwJHSglu2rT21zZ+nx5rC6
-        Dlkc66ume+e/2iKirx5ls7pvnA==
-X-Google-Smtp-Source: ACHHUZ5OzpINizXldHsUOvhbQNgkg897DXT56Mb6xqEoyEq8YnPtxaCSPdNRDd6ZzMHawkqMmoyA1A==
-X-Received: by 2002:a05:6000:1a4f:b0:2ff:613c:af5d with SMTP id t15-20020a0560001a4f00b002ff613caf5dmr966542wry.36.1683151815562;
-        Wed, 03 May 2023 15:10:15 -0700 (PDT)
-Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id a18-20020a5d5712000000b003062675d4c9sm11934563wrv.39.2023.05.03.15.10.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 15:10:15 -0700 (PDT)
-Message-ID: <9da030c6-6a9f-6766-7120-94aaa8fcd8ab@linaro.org>
-Date:   Wed, 3 May 2023 23:10:13 +0100
+        Wed, 3 May 2023 18:22:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5D57D9E;
+        Wed,  3 May 2023 15:22:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C95DF6305C;
+        Wed,  3 May 2023 22:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE2C433A8;
+        Wed,  3 May 2023 22:22:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683152567;
+        bh=3fU8zKQCl4Kz1eWXPpHONjdIQH2Taxo8c7rFXpP8al8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=gyKS6MttCNtMBfY1UbH64Gxs+WPEh98Gt6OT01M40SteIWEK5rSEDwur1RaXFO+KB
+         k1tdcAAsc2c2rzXvd1weeyyawHuQ8Lq59qhupvTSHCEywGQVnNLirhUV5LFKBX8xed
+         l0/UGIQ3CmVjXekItREFnJAzg+8iaG+wi29nNBk6X2ZIHAF+OpORY7hcZEXw8ggyI7
+         lqhuUpVxEH1ffbseQZUFxUdR9etC+52u7eYE9GhWMkOLouRSZWF2P5Zy0o7/nRvHLU
+         sdqmfLYRY9trzvPKYYsZ5exHv0HiJ28pGmOXf1C9Ug/qGMH9We/64sSgv1jQPsw+Ts
+         HEEttqKJrWkpw==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-4eff4ea8e39so6629946e87.1;
+        Wed, 03 May 2023 15:22:47 -0700 (PDT)
+X-Gm-Message-State: AC+VfDwcjFjpxgpvwx/xjNV9IQuAxkgbI5G3tn4jZA22Ob7XCoVB3rm2
+        OozWR8Cwyhdt1FF41qXllLAt13GXoBYRCpAM1Q==
+X-Google-Smtp-Source: ACHHUZ7HeoGV7sGaLAr5Tc+TosYIxgwnkvp5ZEsh8Jj7wpXuo0FJb1Bm44GqyVTuGr9wlxbZQ+2RYfnrH8bg8TYUOtU=
+X-Received: by 2002:a19:ee03:0:b0:4ea:fa26:2378 with SMTP id
+ g3-20020a19ee03000000b004eafa262378mr1222041lfb.23.1683152565137; Wed, 03 May
+ 2023 15:22:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH V4 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
-Content-Language: en-US
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1681742910.git.quic_schowdhu@quicinc.com>
- <NO2MhqhxQqjQ33CVOtaXXxo2iBfl6Ugz1lE5oJAl-mjUyrRu4l9vCBWV8AVJZoCrVF0Cw0j49t44Bn5yEAv3mA==@protonmail.internalid>
- <bd3350e3b0b02669cffa4bdaf9a0a1d8ae9072d1.1681742910.git.quic_schowdhu@quicinc.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <bd3350e3b0b02669cffa4bdaf9a0a1d8ae9072d1.1681742910.git.quic_schowdhu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
+ <bce93654-fc36-3d12-282d-76fafb8f51ce@linaro.org> <CAL_JsqJXd_EpOQwwNEAn25mzFfkhEvqzur6ui5Ca+dbt2kA8-Q@mail.gmail.com>
+ <5e318b02-8f33-4e2d-a956-5660e1c60619@app.fastmail.com> <CAA8EJpq8x5wQa3fMebaSP3hCdMiCsZRaF+B4Y3N3royW_CeXCA@mail.gmail.com>
+ <4e1e70a9-9b28-410b-bd29-fb5f5805798f@app.fastmail.com> <CAL_JsqJEdZBS231TvkmmipaXEqzvDjz+A32V6uJ4zfSMAJHn2w@mail.gmail.com>
+ <4d9b4159-88b2-48cf-84d9-34169928c8e4@app.fastmail.com>
+In-Reply-To: <4d9b4159-88b2-48cf-84d9-34169928c8e4@app.fastmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 3 May 2023 17:22:32 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLi+h3E8wEjuzjdh-VhWac8VJAfBeAKAHMny=gg=-OQgQ@mail.gmail.com>
+Message-ID: <CAL_JsqLi+h3E8wEjuzjdh-VhWac8VJAfBeAKAHMny=gg=-OQgQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Arnd Bergmann <arnd@arndb.de>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Olof Johansson <olof@lixom.net>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, May 3, 2023 at 3:37=E2=80=AFPM Arnd Bergmann <arnd@arndb.de> wrote:
+>
+> On Wed, May 3, 2023, at 15:16, Rob Herring wrote:
+>
+> > We could do a second level of directories here:
+>
+> Works for me, but at that point, I'd really also want to do it
+> for nxp with its five or more product lines (mxs, imx, lpc,
+> s32, layerscape, vybrid)
 
+And marvell, microchip(lan96), ti, and broadcom probably. I think I
+withdraw my suggestion...
 
-On 17/04/2023 16:08, Souradeep Chowdhury wrote:
-> All Qualcomm bootloaders log useful timestamp information related
-> to bootloader stats in the IMEM region. Add the child node within
-> IMEM for the boot stat region containing register address and
-> compatible string.
-> 
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  .../devicetree/bindings/sram/qcom,imem.yaml        | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> index ba694ce..d028bed 100644
-> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> @@ -49,6 +49,28 @@ patternProperties:
->      $ref: /schemas/remoteproc/qcom,pil-info.yaml#
->      description: Peripheral image loader relocation region
-> 
-> +  "^stats@[0-9a-f]+$":
-> +    type: object
-> +    description:
-> +      Imem region dedicated for storing timestamps related
-> +      information regarding bootstats.
-> +
-> +    additionalProperties: false
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - enum:
-> +              - qcom,sm8450-bootstats
-
-This region isn't exclusive to sm8450, it exists also on sdm845 and
-presumably other platforms. Is there any need for an SoC specific
-compatible?
-
-> +          - const: qcom,imem-bootstats
-> +
-> +      reg:
-> +        maxItems: 1
-> +
-> +    required:
-> +      - compatible
-> +      - reg
-> +
->  required:
->    - compatible
->    - reg
-> --
-> 2.7.4
-> 
-
--- 
-Kind Regards,
-Caleb (they/them)
+Rob
