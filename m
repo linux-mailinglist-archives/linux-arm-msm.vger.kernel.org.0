@@ -2,331 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 20E2A6F521D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 09:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 937F06F5258
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 09:53:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbjECHpF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 03:45:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48966 "EHLO
+        id S229499AbjECHx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 03:53:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjECHpC (ORCPT
+        with ESMTP id S229841AbjECHxK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 03:45:02 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4CB1BEB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 00:44:57 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-55a2691637bso50916037b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 00:44:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683099896; x=1685691896;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=az3ZjZw5c+oMwn1F0ZqH0yI5AWLiLyNI1BlVOd3ymQ8=;
-        b=zir+QTa2OoYRyEL82qbdMjPM4PdjHMEJZY1MWJvAskJCX9GmJP35sQw11Pz/ae8iZI
-         LK1uvUO9Yb09slOZ0h2VU2o6LxBLLXBPAn0lM+i23XeI31IBGAMn9LDnPf85h3nXEu7W
-         /7lcfLKxWlWg80qPzKTTHQsA0tK94v1RQFJwLfXKFdbVSjKVvWS8G1q1Aq1g8CdRJW2P
-         RiYMX4qkZDTKuTpQoq4xXiIT9r7zG3ZeWzZP8UBf959kQlWLRLqWHI1EskALyQJ+giZY
-         SyglIN3PcF7IDp3j0DC8O9D2GxfaD5oD/I+04S+wsp9y3Rb4KP/PdyCj9ym1yV+JaqP9
-         sf6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683099896; x=1685691896;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=az3ZjZw5c+oMwn1F0ZqH0yI5AWLiLyNI1BlVOd3ymQ8=;
-        b=VEF92hCM0LhTwQ3SOdKe7YlIoyTNn3IPgxWym8/4BLufjxfXjbbl4k34loiKoyO+Sm
-         V7xol8qgDpMiorAjjRZtWaGpnuEGaR9I+U13efT0g6xS4CYt7ShC0ZGAEoTvPQicwzas
-         a7m9KwUBoXBUTHKr6Smuu7ik40vWxSrcJsc+nFsefLXRkmDARavy9EPTSNgJULJ0NWZg
-         6f0bZQ1rF9Hc0ewmWi1luRole2GQbNuQbnaJEKAhP1psrjR4msCrTBxn+FHlYC05SYjR
-         0nEzqx+do8lMZHrEeEqyCtKuuUc/XefNIzJkaw+xvSjStJYBrFyuU/oLVpjm5Mlk3qWB
-         X98g==
-X-Gm-Message-State: AC+VfDyaPrd4vWb81LvmP7D3/3MjNLJhHYV2QtacM48YBDdv4fYCeBIw
-        ZZTuwKRnLmqLPtp8OVMZpwRo1Q==
-X-Google-Smtp-Source: ACHHUZ6nzF9dKBpKYl4KrQ1B3kU7KyZBLmv5XILSEzR8eD10wsiU6RQ9szs3+zgoxeFB55g7Mr6CjQ==
-X-Received: by 2002:a0d:efc2:0:b0:556:ceb2:c462 with SMTP id y185-20020a0defc2000000b00556ceb2c462mr17663236ywe.2.1683099896640;
-        Wed, 03 May 2023 00:44:56 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id k63-20020a0dc842000000b00555ca01b112sm3283263ywd.105.2023.05.03.00.44.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 00:44:56 -0700 (PDT)
-Message-ID: <0a7caa8d-289a-d76a-d57b-611b178fdc34@linaro.org>
-Date:   Wed, 3 May 2023 10:44:52 +0300
+        Wed, 3 May 2023 03:53:10 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8EF340F1
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 00:53:07 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4DBEA1F512;
+        Wed,  3 May 2023 09:53:05 +0200 (CEST)
+Date:   Wed, 3 May 2023 09:53:03 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/7] drm/msm/dpu: add DPU_PINGPONG_DSC feature bit
+Message-ID: <b23c55ffjxvjuqbjzaa7rkueaivori6lt2h2kczi7cfzhuvuz3@pvhex7vv7ukp>
+References: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683061382-32651-3-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v1 4/4] arm64: dts: qcom: ipq9574: add thermal zone nodes
-Content-Language: en-GB
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, amitk@kernel.org,
-        thara.gopinath@gmail.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Praveenkumar I <quic_ipkumar@quicinc.com>
-References: <cover.1683027347.git.quic_varada@quicinc.com>
- <65d05b81201a8d24c14f0d7564e708348a368068.1683027347.git.quic_varada@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <65d05b81201a8d24c14f0d7564e708348a368068.1683027347.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1683061382-32651-3-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 07:46, Varadarajan Narayanan wrote:
-> This patch adds thermal zone nodes for the various
-> sensors present in IPQ9574
+On 2023-05-02 14:02:57, Kuogee Hsieh wrote:
+> Legacy DPU requires PP block to be involved during DSC setting up.
+
+This patch should clarify that "legacy" means DPU < 7.0.0, as we found
+out in [1] that PINGPONG has no more register remaining in 7.x.  In
+addition, it seems that the DCE enable register/flag moved to INTF, as
+added by Jessica in [2].  Perhaps those patches should be part of this
+series too, and this patch should mention that it was moved?
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230411-dpu-intf-te-v4-7-27ce1a5ab5c6@somainline.org/
+[2]: https://lore.kernel.org/linux-arm-msm/20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com/T/#t
+
+> This patch adds DDPU_PINGPONG_DSC feature bit to indicate that both
+> dpu_hw_pp_setup_dsc() and dpu_hw_pp_dsc_enable() pingpong ops
+> functions are required to complete DSC data path set up and start
+
+datapath setup*
+
+As already suggested by Dmitry's review in a different way, this patch
+doesn't "indicate that both ops are required to complete DSC datapath
+setup", this patch removes those callbacks from PP since DPU 7.0.0 as
+the registers are no longer present (and have been moved to the INTF in
+some form).
+
+The *implementation* is good though, and I'd r-b it after addressing the
+nits - thanks!
+
+> DSC engine.
 > 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Reported-by : Marijn Suijten <marijn.suijten@somainline.org>
 
+drop the space before :.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-one nit below.
-
-
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
-> [v1]:
-> 	Fix node names
-> ---
->   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 208 ++++++++++++++++++++++++++++++++++
->   1 file changed, 208 insertions(+)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h  | 2 ++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 9 ++++++---
+>  2 files changed, 8 insertions(+), 3 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index b22b999..bc4d061 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -1067,6 +1067,214 @@
->   		};
->   	};
->   
-> +	thermal-zones {
-> +		nss-top-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 3>;
-> +
-> +			trips {
-> +				nss-top-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		ubi-0-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 4>;
-> +
-> +			trips {
-> +				ubi_0-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		ubi-1-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 5>;
-> +
-> +			trips {
-> +				ubi_1-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		ubi-2-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 6>;
-> +
-> +			trips {
-> +				ubi_2-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		ubi-3-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 7>;
-> +
-> +			trips {
-> +				ubi_3-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		cluster0-thermal {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 71584cd..c07a6b6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -144,6 +144,7 @@ enum {
+>   * @DPU_PINGPONG_SPLIT      PP block supports split fifo
+>   * @DPU_PINGPONG_SLAVE      PP block is a suitable slave for split fifo
+>   * @DPU_PINGPONG_DITHER,    Dither blocks
+> + * @DPU_PINGPONG_DSC,	    PP ops functions required for DSC
 
-I think we were usually using cpussN instead of clusterN, but this is 
-really a minor issue, we don't have that standardized.
+Mixing tab indentation, and the comma shouldn't be there.
 
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 8>;
-> +
-> +			trips {
-> +				cpu-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		cluster1-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 9>;
-> +
-> +			trips {
-> +				cpu-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		cpu0-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 10>;
-> +
-> +			trips {
-> +				cpu-critical {
-> +					temperature = <120000>;
-> +					hysteresis = <10000>;
-> +					type = "critical";
-> +				};
-> +
-> +				cpu-passive {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "passive";
-> +				};
-> +			};
-> +		};
-> +
-> +		cpu1-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 11>;
-> +
-> +			trips {
-> +				cpu-critical {
-> +					temperature = <120000>;
-> +					hysteresis = <10000>;
-> +					type = "critical";
-> +				};
-> +
-> +				cpu-passive {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "passive";
-> +				};
-> +			};
-> +		};
-> +
-> +		cpu2-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 12>;
-> +
-> +			trips {
-> +				cpu-critical {
-> +					temperature = <120000>;
-> +					hysteresis = <10000>;
-> +					type = "critical";
-> +				};
-> +
-> +				cpu-passive {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "passive";
-> +				};
-> +			};
-> +		};
-> +
-> +		cpu3-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 13>;
-> +
-> +			trips {
-> +				cpu-critical {
-> +					temperature = <120000>;
-> +					hysteresis = <10000>;
-> +					type = "critical";
-> +				};
-> +
-> +				cpu-passive {
-> +					temperature = <110000>;
-> +					hysteresis = <1000>;
-> +					type = "passive";
-> +				};
-> +			};
-> +		};
-> +
-> +		wcss-phyb-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 14>;
-> +
-> +			trips {
-> +				wcss_phyb-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +
-> +		top-glue-thermal {
-> +			polling-delay-passive = <0>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&tsens 15>;
-> +
-> +			trips {
-> +				top_glue-critical {
-> +					temperature = <125000>;
-> +					hysteresis = <1000>;
-> +					type = "critical";
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->   	timer {
->   		compatible = "arm,armv8-timer";
->   		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+- Marijn
 
--- 
-With best wishes
-Dmitry
-
+>   * @DPU_PINGPONG_MAX
+>   */
+>  enum {
+> @@ -152,6 +153,7 @@ enum {
+>  	DPU_PINGPONG_SPLIT,
+>  	DPU_PINGPONG_SLAVE,
+>  	DPU_PINGPONG_DITHER,
+> +	DPU_PINGPONG_DSC,
+>  	DPU_PINGPONG_MAX
+>  };
+>  
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> index 3822e06..f255a04 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> @@ -264,9 +264,12 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+>  	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
+>  	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+>  	c->ops.get_line_count = dpu_hw_pp_get_line_count;
+> -	c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
+> -	c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
+> -	c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
+> +
+> +	if (features & BIT(DPU_PINGPONG_DSC)) {
+> +		c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
+> +		c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
+> +		c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
+> +	}
+>  
+>  	if (test_bit(DPU_PINGPONG_DITHER, &features))
+>  		c->ops.setup_dither = dpu_hw_pp_setup_dither;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
