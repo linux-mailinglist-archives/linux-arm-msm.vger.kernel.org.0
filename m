@@ -2,79 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 358396F5052
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 08:47:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 570D06F5083
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 09:00:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbjECGr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 02:47:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45744 "EHLO
+        id S229575AbjECHAp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 03:00:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjECGr0 (ORCPT
+        with ESMTP id S229580AbjECHAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 02:47:26 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9FE1FEC;
-        Tue,  2 May 2023 23:47:25 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3434r6xq004322;
-        Wed, 3 May 2023 06:47:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=YxnChbQsgjX63wgP7p3clK2nWccSZ5xyKu9JJhMg+ww=;
- b=KeAhjw6aC06R/MchMsPaqiLIJGWt6eXOpd6Paix9/VAgsoLo3aP3xCGSxkKL1gL29mXv
- Ablo8iZR0KbvliZE/VneR0chayV82divrOP/Bh5wpDUsCtdTv3IVBjcqge1wFrypJXm3
- i3eB50d7X8o/ENsA24sS+zHRZFRZRM9xQujKKcZSrBL/UorkfgRKkjeBDGbC5puBx0yU
- cflAbvc3AVv7Bcf9DWZJ0fnHRaLqLF2/q/1VBvSEKJtFr24o3KSmTKNNFHIXleMksJpL
- skamoa83+Qp1+9qd2a7Z6kvEaNcsKHatbwJabxACkdQyyuPJS3NaN03DlFkpqRv197EK Rg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qb9fah4fx-1
+        Wed, 3 May 2023 03:00:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FBE83C29;
+        Wed,  3 May 2023 00:00:42 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3434HMgS002393;
+        Wed, 3 May 2023 07:00:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=rlGeiNC24oO+kOGemdbbUnr0ZHU/OEeAhqGE896RQQM=;
+ b=flxwcjC2E76tsXRqh6xETW9b+865r3XjPEMSjFssYH3+IvB2zVKTJ5GfiDjES54FvvoJ
+ 6X3gPB18PS98BfaMBMSvL3G3u3CyomC6QjUoU2tQWUa7kowJcfdJexIL2hHd5TlDXp45
+ v36f4rXfihTAc+lg5GQpTXThMoB0Ci8Z4D6c6EjM2F8RIgMNlcU/eIXpPR52qDDFEDA2
+ QmyLhbsC+Y05Yg4KBVPmGZPOlH1l/AGn68Oo9xdOm0WiIjp5kHcfNnpoC0XbqwLlqd8s
+ HnkKsK6zda2TWdT7NPRk6Y55e6gfqFiYwNf6sN3JQH83gXjVoYjFQmjL1e/guUShs9VP Fw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbeb2rpap-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 06:47:23 +0000
+        Wed, 03 May 2023 07:00:37 +0000
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3436lLhB022686
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34370akI026681
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 06:47:21 GMT
-Received: from [10.216.36.190] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
- 23:47:20 -0700
-Message-ID: <24c92a72-3d32-d6ce-172b-b127d54c3c75@quicinc.com>
-Date:   Wed, 3 May 2023 12:17:17 +0530
+        Wed, 3 May 2023 07:00:36 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 3 May 2023 00:00:31 -0700
+Date:   Wed, 3 May 2023 12:30:27 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     <amitk@kernel.org>, <thara.gopinath@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+Subject: Re: [PATCH v1 1/4] dt-bindings: thermal: tsens: Add ipq9574
+ compatible
+Message-ID: <20230503070026.GA1087@varda-linux.qualcomm.com>
+References: <cover.1683027347.git.quic_varada@quicinc.com>
+ <cbf916e31b00e0e0599a3012a84a4740df89f4e0.1683027347.git.quic_varada@quicinc.com>
+ <6fbdd628-89f6-e34f-1b6e-b36e8fbd2346@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
- hfi versions
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>
-CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
- <5a851116-561f-2d00-1310-2debc43ce249@gmail.com>
- <03da235f-0d94-60d9-8907-9caf0991c0a6@quicinc.com>
- <33ff3062-4f50-19c4-dce3-3be17e4f7d10@gmail.com>
-Content-Language: en-US
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <33ff3062-4f50-19c4-dce3-3be17e4f7d10@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6fbdd628-89f6-e34f-1b6e-b36e8fbd2346@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: NEcfHzRJQXQIVNVWXFVkvWG66G1x_K8t
-X-Proofpoint-GUID: NEcfHzRJQXQIVNVWXFVkvWG66G1x_K8t
+X-Proofpoint-ORIG-GUID: SE77ZD9AvemMaEpbG1zUlMyktjE3ycL3
+X-Proofpoint-GUID: SE77ZD9AvemMaEpbG1zUlMyktjE3ycL3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-03_03,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 suspectscore=0 spamscore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 impostorscore=0
- mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030054
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+ definitions=2023-05-03_04,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2303200000 definitions=main-2305030057
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,86 +85,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 5/3/2023 11:23 AM, Stanimir Varbanov wrote:
-> Hi,
+On Wed, May 03, 2023 at 08:34:45AM +0200, Krzysztof Kozlowski wrote:
+> On 03/05/2023 06:45, Varadarajan Narayanan wrote:
+> > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >
+> > Qualcomm IPQ9574 has tsens v2.3.1 block, which is similar to IPQ8074 tsens.
+> >
+> > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+> >  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
 >
-> On 3.05.23 г. 7:25 ч., Vikash Garodia wrote:
->> On 5/3/2023 2:22 AM, Stanimir Varbanov wrote:
->>>
->>>
->>> On 14.04.23 г. 13:12 ч., Martin Dørum wrote:
->>>> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
->>>>> =4xx. The code used to unconditionally set the property in
->>>> venc_set_properties, which meant that initializing the encoder would
->>>> always fail unless the hfi_version was >=4xx.
->>>>
->>>> This patch changes venc_set_properties to only set the
->>>> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
->>>>
->>>> Signed-off-by: Martin Dørum <dorum@noisolation.com>
->>>>
->>>> ---
->>>>
->>>> I have an APQ8016-based board. Before this patch, the Venus driver
->>>> would simply fail with EINVAL when trying to request buffers
->>>> (VIDIOC_REQBUFS). With this patch, encoding works
->>>> (tested using gstreamer's v4l2h264enc).
->>>>
->>>>   drivers/media/platform/qcom/venus/venc.c | 21 +++++++++++----------
->>>>   1 file changed, 11 insertions(+), 10 deletions(-)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/venus/venc.c 
->>>> b/drivers/media/platform/qcom/venus/venc.c
->>>> index cdb12546c4fa..b3df805a8c9c 100644
->>>> --- a/drivers/media/platform/qcom/venus/venc.c
->>>> +++ b/drivers/media/platform/qcom/venus/venc.c
->>>> @@ -672,16 +672,17 @@ static int venc_set_properties(struct 
->>>> venus_inst *inst)
->>>>           if (ret)
->>>>               return ret;
->>>>
->>>> -        ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
->>>> -        h264_transform.enable_type = 0;
->>>> -        if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
->>>> -            ctr->profile.h264 == 
->>>> V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
->>>> -            h264_transform.enable_type = ctr->h264_8x8_transform;
->>>> -
->>>> -        ret = hfi_session_set_property(inst, ptype, &h264_transform);
->>>> -        if (ret)
->>>> -            return ret;
->>>> -
->>>> +        if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
->>>
->>> Instead of doing these checks here you could do:
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c 
->>> b/drivers/media/platform/qcom/venus/hfi_cmds.c
->>> index bc3f8ff05840..2453e5c3d244 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
->>> @@ -1064,6 +1064,7 @@ static int pkt_session_set_property_1x(struct 
->>> hfi_session_set_property_pkt *pkt,
->>>                 break;
->>>         }
->>>         case HFI_PROPERTY_PARAM_VENC_HDR10_PQ_SEI:
->>> +       case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8:
->>>                 return -ENOTSUPP;
->>>
->> This may still deinit the session from [1] based on failure return 
->> value.
->>
->> [1] 
->> https://elixir.bootlin.com/linux/v6.3/source/drivers/media/platform/qcom/venus/venc.c#L963
->
-> No, it will not fail because of:
->
-> https://elixir.bootlin.com/linux/v6.3/source/drivers/media/platform/qcom/venus/hfi_venus.c#L1426 
->
+> I saw already v1, so this looks like v2, not v1. Please add changelog
+> describing what you changed here.
 
-Thats correct, I missed to notice the explicit handling for -ENOTSUPP.  
-Above suggestion is better than keeping verison checks and
+No code change between v1 and v2 w.r.t this patch. The 4th patch
+alone in this series has code changes between v1 and v2.
 
-would also avoid deinit.
+> > diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > index d1ec963..8e2208c 100644
+> > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > @@ -66,6 +66,7 @@ properties:
+> >        - description: v2 of TSENS with combined interrupt
+> >          enum:
+> >            - qcom,ipq8074-tsens
+> > +          - qcom,ipq9574-tsens
+>
+> This is a friendly reminder during the review process.
+>
+> It seems my previous comments were not fully addressed. Maybe my
+> feedback got lost between the quotes, maybe you just forgot to apply it.
+> Please go back to the previous discussion and either implement all
+> requested changes or keep discussing them.
+>
+> Thank you.
 
+Sorry. Looks like I missed https://lore.kernel.org/lkml/20230502080611.GB26126@varda-linux.qualcomm.com/T/#m42a9b77be2ceddf1adc90c07f487929fcf2dbc0f
+Will take that input and post a new version.
+
+Thanks
+Varada
+
+> Best regards,
+> Krzysztof
+>
