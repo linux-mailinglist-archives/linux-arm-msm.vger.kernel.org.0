@@ -2,151 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 190056F6209
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 01:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8008C6F621E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 01:37:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbjECXYu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 19:24:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
+        id S229501AbjECXhD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 19:37:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbjECXYu (ORCPT
+        with ESMTP id S229797AbjECXhB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 19:24:50 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F8A8A74;
-        Wed,  3 May 2023 16:24:39 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343NBmCE018439;
-        Wed, 3 May 2023 23:24:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=v73srPm2Ygdh8jPbwFEnqSjx3SDVfJDGkEjFiw8b6N8=;
- b=a6Z7oRCgkYJ+3gjwA8iSf4wX+lxbEYB4a+UzonVGrvbHD1H3c2DMjtYgJruPeskWqiFT
- D3QHeQlxsWitqawZbyvl6AQpI+JXiHELjQJDKXIAuIqmENp4gpqwGRaTv4S8E+3GSTuj
- xmtmhXKq7cOormTDnMpiRoKRR2WcNYHC+uca5xqucwfzalGC/eRHhBSs25Z+coPzvOM3
- hL0pKUwYizJ+gCeYV2qVw7O2s+Szkh7O2oVmC2WncN26uw78iBvh4ro2kljjd1nysmkc
- NaqiE4WMATD7xvlKCOuw2iLrhwlfQPu5yOfm2ieEAi30zCdBdB1X3MOGjHuLUsSIGYy3 wg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbn0a9kbu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 23:24:32 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343NO8lv005662
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 23:24:08 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
- 16:24:08 -0700
-Message-ID: <5c54a6f1-63e1-0870-4fb1-f9128291d15a@quicinc.com>
-Date:   Wed, 3 May 2023 16:24:07 -0700
+        Wed, 3 May 2023 19:37:01 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [5.144.164.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C74818A6C
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 16:36:56 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8EFF320A1D;
+        Thu,  4 May 2023 01:36:54 +0200 (CEST)
+Date:   Thu, 4 May 2023 01:36:53 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 4/7] drm/msm/dpu: add PINGPONG_NONE to disconnect DSC
+ from PINGPONG
+Message-ID: <mbpdqthhi7ynb22l62pwuwuepqeh6t67ggdseltxlx25uh6a2x@sbbfuitssdv5>
+References: <1683144639-26614-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683144639-26614-5-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 3/4] drm/msm/dpu: Add has_data_compress to dpu_caps
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-3-6bc6f03ae735@quicinc.com>
- <v5hmqtjwd3syqwo5nqru7xgpt3rv5ubfbzt6pssriyb7cuprkf@7zdvwsil67nc>
- <7117aadb-0289-01ff-6eb9-8bfc358eca63@quicinc.com>
- <46an5zrsxplqo3h35okjyhfes6sqwmw5kez3nm3x5vrkqyvsn5@lxca65m7ju6n>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <46an5zrsxplqo3h35okjyhfes6sqwmw5kez3nm3x5vrkqyvsn5@lxca65m7ju6n>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ESwn2-N3gT_KrTnHV0ym-VmikpmPWYA2
-X-Proofpoint-ORIG-GUID: ESwn2-N3gT_KrTnHV0ym-VmikpmPWYA2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-03_14,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 spamscore=0 phishscore=0 mlxlogscore=825 mlxscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- adultscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030201
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1683144639-26614-5-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2023-05-03 13:10:36, Kuogee Hsieh wrote:
+> During DSC setup, the crossbar mux need to be programmed to engage
+> DSC to specified PINGPONG. Hence during tear down, the crossbar mux
+> need to be reset to disengage DSC from PINGPONG. 0X0F is written to
+> reset crossbar mux. It is not relevant to hw_pp->idx.  This patch add
+> PINGPONG_NONE to serve as disable to reset crossbar mux.
+> 
+> Changes in v4:
+> -- more details to commit text
 
+As requested in v3, this doesn't adequately explain that all you're
+doing is **removing `bool enable`** so that this function becomes
+simpler to call in the disable scenario without coming up with a random
+dpu_pingpong value that's irrelevant when enable=false.  How about the
+following wording:
 
-On 5/3/2023 4:03 PM, Marijn Suijten wrote:
-> Hi Jessica,
-> 
-> On 2023-05-03 12:03:40, Jessica Zhang wrote:
->>
->>
->> On 5/3/2023 12:07 AM, Marijn Suijten wrote:
->>> On 2023-05-02 18:19:14, Jessica Zhang wrote:
->>>> Add data_compress feature to DPU HW catalog.
->>>>
->>>> In DPU 7.x and later, there is a DATA_COMPRESS register that must be set
->>>> within the DPU INTF block for DSC to work.
->>>>
->>>> As core_rev (and related macros) was removed from the dpu_kms struct, the
->>>> most straightforward way to indicate the presence of this register would be
->>>> to have a flag in dpu_caps.
->>>
->>> This is a very generic name to have in the global dpu_caps for a very
->>> specific register on the INTF block since DPU >= 7.0.0, and I doubt any
->>> new catalog contributor will know how to fill this field.  After all,
->>> DPU < 7.0.0 also has DCE but it is controlled via the PINGPONG block.
->>>
->>> Instead, how about having it as a DPU_INTF_DATA_COMPRESS (or similar)
->>> feature flag on the INTF block?  We do the same for other (register
->>> related) features on the INTF block, and you did the same to disable DSC
->>> callbacks on PP in [1].
-> 
-> (Note: I said "you" but meant Kuogee)
-> 
->> Hi Marijn,
->>
->> Sounds good.
->>
->>>
->>> In fact it seems that the DSC/DCE (enablement) registers have been moved
->>> from PINGPONG to INTF in DPU 7.0.0.  Can you clarify in the patch
->>> message for v2 that this is the case, and do the same in the linked
->>> PINGPONG patch?  Perhaps these patches should be part of the same series
->>> as they do not seem DSI-specific.
->>
->> Will make a note of the PP to INTF change in the commit message.
-> 
-> Thanks.
-> 
->> I would prefer to keep this patch in this series is because it is needed
->> for DSI over command mode to work and the subsequent patch is
->> specifically for command mode.
-> 
-> That is fine, but do mention this in the commit message if it is
-> relevant here.  Otherwise only mention it as part of patch 4/4.
+    drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG
 
-Acked.
+    Disabling the crossbar mux between DSC and PINGPONG currently
+    requires a bogus enum dpu_pingpong value to be passed when calling
+    dsc_bind_pingpong_blk() with enable=false, even though the register
+    value written is independent of the current PINGPONG block.  Replace
+    that `bool enable` parameter with a new PINGPONG_NONE dpu_pingpong
+    flag that triggers the write of the "special" 0xF "crossbar
+    disabled" value to the register instead.
 
-Thanks,
+And don't forget to fix the log statement below.
 
-Jessica Zhang
+<snip>
 
-> 
-> - Marijn
+>  	DRM_DEBUG_KMS("%s dsc:%d %s pp:%d\n",
+> -			enable ? "Binding" : "Unbinding",
+> +			pp ? "Binding" : "Unbinding",
+>  			hw_dsc->idx - DSC_0,
+> -			enable ? "to" : "from",
+> +			pp ? "to" : "from",
+>  			pp - PINGPONG_0);
+
+This wasn't adjusted, see v3 review.
+
+- Marijn
