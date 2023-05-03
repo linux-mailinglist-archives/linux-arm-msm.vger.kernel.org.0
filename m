@@ -2,144 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4FA6F5C3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 18:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF9476F5C5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:03:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjECQt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 12:49:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37018 "EHLO
+        id S229841AbjECRDn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 13:03:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229692AbjECQta (ORCPT
+        with ESMTP id S229565AbjECRDm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 12:49:30 -0400
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2075.outbound.protection.outlook.com [40.107.96.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D47D265BD;
-        Wed,  3 May 2023 09:49:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ip+h/TdUG6D3Ivqp4EbLH92ORPDAszOuL4DM6xyJXWTqwORfVpfKdhTRgi0eAlK8p/JrBoQKUsWje21RywgC8mnT0oBYmz2VA9QmsKvNCd7KuQVN1EhI31/fZ78Ute1JeUg03jwhnYZc6Fh4smaAaV+W40TkBXqDCa40QyPd0sgrHIrc02szqQY58p2vn29Un7RAhMOuYEtyHLJxWZ4lNSKc8qxz4msKZG7dr1XVM3AxhocVvo8CZdFvkLYmyBf5JvQC30YslncBjkWFypx/mitXGN8qcbkSCjoyUWZFD46o08PONote8tU9dJpa2bKz0IwrzOlFzjlYxSlO+JpeHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=06YZqPwZh9w/sxPTWqiyu4T81+pqU91SX+dNxgVEE+Q=;
- b=MpDCRFfr1wwguKbeK/0vSvsfGXtJ5YDJDta3ufq+UCExldbu3Iue53h3FCNiEF1K9zGKVxgqLgHP17iYuDjSz6ziybS/kOJ0FNUdWT1yWpujOLk3bF23ayczITlLehihVqZ+WT7s9Dx+sr6GgR36J+fYt7GKFywkUtGHzhPesiilRmnC4ipc4tzTO6pd1oBUoJAxq1k5DctiHeJgtVBBmUmHuILqYpyGX3gNRw/wx61LAB4JdUqR33xLPB17Cu0a4URKkg7mTaryEo8sv6xv77MrCkAZzqJsaHrCLcVcG3hfaYPmIDWTWCBSB3gmCDYhvabcVClK9Hq11pZwMR08+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=06YZqPwZh9w/sxPTWqiyu4T81+pqU91SX+dNxgVEE+Q=;
- b=mkQaRNYMXTlOkuLQcUZB5+DnbKfyZSq+CYF9TbZM9HHEJWHihJ4iQNuMvd9fPU4a/KgmRRWksTgwkfXy1hbIt9/OUPk7B6Ha0J4RVe4L1QybPGoHy+F9bVFtAAdhnNSmKxISCnAt1ul3ndIQ94scIkgcIuyvcnTyOtzzRJVqPALIeQm0bw2TGKFPBqHYQAzryTPkccWpiAgAB7zh0u9CFyXR9fbSNKnhdMp8fOVJGueyhms07T1VmN8R/3W/351m3SHOANw5QeWzqEISKctVQaQ1NwKZj0HRtb71/aK8QiaC9Lbj43AT0gbHdHeEV9lDcfbRHkTyQEV4dW1aHfFJog==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by CH0PR12MB5283.namprd12.prod.outlook.com (2603:10b6:610:d6::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.22; Wed, 3 May
- 2023 16:49:24 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab%6]) with mapi id 15.20.6363.022; Wed, 3 May 2023
- 16:49:24 +0000
-Date:   Wed, 3 May 2023 13:49:17 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH 16/20] iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
-Message-ID: <ZFKQjcvUv96qQAVQ@nvidia.com>
-References: <16-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
- <e73c6192-8fd5-042d-ce03-095b336270ee@arm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e73c6192-8fd5-042d-ce03-095b336270ee@arm.com>
-X-ClientProxiedBy: BLAPR03CA0135.namprd03.prod.outlook.com
- (2603:10b6:208:32e::20) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+        Wed, 3 May 2023 13:03:42 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6B3E10F1;
+        Wed,  3 May 2023 10:03:39 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343GLZTU031407;
+        Wed, 3 May 2023 17:02:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=y8nhUca5/jXytqEZLC1ft88NVgxYtp+AuBfD2huFXQk=;
+ b=bPfvs9dcOWuNEGQ9v2MQ0bjkHTyuFxjuWzq2YTJKRi7PFEVXU0vtfOhjZax859d9v/Ym
+ /Cjqw1BcRIT9pE2Ehb+8IF5nysy0Irl5frAp/DakI1Pq3Pkjd4Gto8XDio1XFlzZc7gY
+ cWxlnsRrWMJoJt4WMLQarTvEwceLjnyaLRdoki+Rsqk1xLEMNZPDovlyCguIVxbGU87N
+ 4DQW1v2v08U3sUZGhqUZcSZQV6SRul8usyvFXtU2jkSMjH6duL/J52UAE85QSntiuMLx
+ KE7PcCCj+U5bAUfHUNVgHUzvtD+PjK+49E02XBqhvYAw5hg6NQd5M1yStwUgbkXhevTw JQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qb4e9b5wc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 May 2023 17:02:50 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343H2nG7000325
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 May 2023 17:02:49 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 3 May 2023 10:02:43 -0700
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <corbet@lwn.net>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>, <linus.walleij@linaro.org>,
+        <linux-gpio@vger.kernel.org>, <srinivas.kandagatla@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-doc@vger.kernel.org>, "Mukesh Ojha" <quic_mojha@quicinc.com>
+Subject: [PATCH v3 00/18] Add basic Minidump kernel driver support
+Date:   Wed, 3 May 2023 22:32:14 +0530
+Message-ID: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|CH0PR12MB5283:EE_
-X-MS-Office365-Filtering-Correlation-Id: c14fd38d-07cf-4cc8-e78a-08db4bf659af
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: wQKiRvz3fkdNwCDJYD0SB8eonEMqfUUdfRQ5hQnLBk2NPFPvZFuUAZ5mviNA13CqNgGw2yARRbuf5723PNfZ0Hy4o4XceTDjgDVCCOJ39yKgjfDFRXOq1a+zRiFCtlIxW6tPVJrYXwoBHo++MuFnaUajDtB/22C8f9jF94TyvOdTO8y3aA/od5mBmq+8OwV06frz8n0+UnQbERCP/wMgpK2DBT1QhKfUEqXrVqyKSsHhG909ddWD41rANB/XtXJ7599WYZ8kNgGFrkjj/XQpzCOT8FbGgwIcNsi6aREx8pSu5cZNzXoM3v2UhFtnOZG3ieHg/xEmy/P61YhuMfiAKS+uzghqlHiLFvjS059kBADmRTOaMnj2S/nL0lh3L4x9gPPYBoXoJ5+MShmcMxtUFl619Lx2oPG+rA4kNq0X8s/+xvgkQ64fMZNCnGZ2oBD9/MEMBZiu1AtdnLxjjFF9+PM+W+4L/H2vstinPAfkpZvGV3K32QhzaSkzeLMBqmaK+zfZbaj5sxKMlzQJQRcAYP2FrBUnep9vaHecdGb2CfpPmFknPRsCHH/Yzpa7hOUh
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(346002)(366004)(376002)(39860400002)(136003)(451199021)(2906002)(38100700002)(83380400001)(2616005)(26005)(6506007)(6512007)(53546011)(186003)(36756003)(8676002)(8936002)(5660300002)(7406005)(7416002)(6666004)(478600001)(316002)(4326008)(6916009)(54906003)(6486002)(86362001)(41300700001)(66476007)(66556008)(66946007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?OM4FfATwOgCSFRTU2R7crcbgcKtZPp/gnq/vPH3OpAg6M3iaY6bbbxkTZRAC?=
- =?us-ascii?Q?yA9ZO1ra1r0w4LbDnvbNnHyirrT3k6+4vZmTjpnyxCoz+kcqJlXOa4KDIACj?=
- =?us-ascii?Q?wL6Md8QTivpcIBH/iMSby6hdwW2vj/RV7lnVCIZOr+l76KBh5/KiyWW7fAz6?=
- =?us-ascii?Q?8ifBHZITBqalWpHQrHxaDguKbur6iXB5l3OxlSlpUi7ZWsdKNJfkUkXaB0B9?=
- =?us-ascii?Q?Rfs6hErkkPVyHg0UHoENo2f5ZT5v3ieIjCCKPkLGASl1fKC1XA5JAhvU2oRm?=
- =?us-ascii?Q?gxYVLaKtR9/hEeEpWFEkvp+RLQrcDwX1Rg4/SXhvOkV7kpAs+yp5u8v1yEhO?=
- =?us-ascii?Q?c6mDBFxunKQlweomAQudLW0WqjYPGzed+sCSumoxRVcCfsXbttEoUli1HsKG?=
- =?us-ascii?Q?EHWfX/6swq3XEk2h7fvbBA3ftb6oMbCt3ib9CzVeTd2/ZfNk1GZt/YwK8flg?=
- =?us-ascii?Q?ih1kFkyb/Eos9giagfe2Bjhon6OQHyMC3ByyTUFiRbFFjk0paSAsC8kqFmYJ?=
- =?us-ascii?Q?ZIx6jp3yBF4wOJlZyJc6nFYuXB6XwfeONBThZVe4Kxguj1dQawOUUjri0Kuu?=
- =?us-ascii?Q?kvKl49AwJomSvNyX6HfpuyfPoGhGapm1uAQT3d9o/sin5h490qSbLbA61OSy?=
- =?us-ascii?Q?tNk93xwt+ZY69Lb/oXOEosiFJY5zKr8SlY8txMi1RYry2snXT28yKdi27qvj?=
- =?us-ascii?Q?4hr3eIgkETzvvrZNYSN4ubl0jG6YjBXhOHgUKxqSYMDzHVw40BE3OvOANaeJ?=
- =?us-ascii?Q?nQKgAieGXdm4r3U+wajLSnxfYID/CR475ZfN6Rx6Sg7f2FOTEOKxWqkZrhNe?=
- =?us-ascii?Q?rSicZbJh6LW3hIwIfyR5X39zlneqDD2yUbj6GdAv0ysuVDFIjPGQaVka0B8W?=
- =?us-ascii?Q?bVNVZFBdwWw3FvmEay8MF6Ob+BY5yBqhyzoBFKSwESuZ0NkwjRKzC0jFalbj?=
- =?us-ascii?Q?zNsqo6Av+v4oPWX/xOx1NxotXkGfx/GQvSBJbB0DsOKE4/PEGyVF3EYjV9dz?=
- =?us-ascii?Q?rd9Ff04Nr8UX0QJjFlRSOimFCb34K6HUUQ4DgqrF/ihVwzHc8g6h8dosaqTb?=
- =?us-ascii?Q?t5UBBS8kJpiJTYABjBAZ8BN3OFS0qCY5pOnwc5Re578WO/Vu9UqLyNfiRjzo?=
- =?us-ascii?Q?YoOUleYErTz73X5mNrmFbZH9HXUXKnMgglkn2QFlbC3rpioDgVmGqODd1aC+?=
- =?us-ascii?Q?niEXtg25eRbyUqo08/FFi8fzlBc9GNInscedZVSH39jCRJCf7x+6lVq3NSbB?=
- =?us-ascii?Q?kcgtJ9t1uCNIqHuslBjAZ+2sesGCHE0PnR8Narcpjp8Z4/XP1/nkk3U+Jl21?=
- =?us-ascii?Q?Wy7Mx/lwZy58ZZyGppc3qILtEhrH42tfbowiw0L0iaHgI03kppOGIkYcY7Ut?=
- =?us-ascii?Q?HWT/7lMUdqwFIfQ5o5rALxnXoGwCZDcQhN3kp/x6wc8NMbdMDn+wObki7pEf?=
- =?us-ascii?Q?dsr6ZRxPAjHcxwTpJvTn9qX8LIQU2fUoAq1zmHLjAdneZvKEfoU8+sAg27QK?=
- =?us-ascii?Q?kgcsGLbx5gdzqXUIAVLJRXYND4Q+BK2n55iwPUNM6ZClJbvfKrqbl3sxlhAg?=
- =?us-ascii?Q?pGF87j0qhOqXYfx+yjrZBHFR16dMo2+8lUnneGGF?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c14fd38d-07cf-4cc8-e78a-08db4bf659af
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 May 2023 16:49:24.3351
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: e5Awei0QxYT9i6oBCAz6o8dyrBDUCZPBlPFyI5TH4zjqGZwIX9HrGqI8pC0qc6qD
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB5283
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SvRd_yi7ZP4GM4OvtMKgPEiZy-L_VoeU
+X-Proofpoint-ORIG-GUID: SvRd_yi7ZP4GM4OvtMKgPEiZy-L_VoeU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-03_12,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1011 malwarescore=0 suspectscore=0 spamscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030145
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -147,37 +82,244 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 03, 2023 at 04:54:28PM +0100, Robin Murphy wrote:
-> 
-> On 2023-05-01 19:03, Jason Gunthorpe wrote:
-> > This brings back the ops->detach_dev() code that commit
-> > 1b932ceddd19 ("iommu: Remove detach_dev callbacks") deleted and turns it
-> > into an IDENTITY domain.
-> > 
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> >   drivers/iommu/sun50i-iommu.c | 21 +++++++++++++++++++++
-> >   1 file changed, 21 insertions(+)
-> > 
-> > diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-> > index 74c5cb93e90027..15fd62d360778f 100644
-> > --- a/drivers/iommu/sun50i-iommu.c
-> > +++ b/drivers/iommu/sun50i-iommu.c
-> > @@ -772,6 +772,26 @@ static void sun50i_iommu_detach_device(struct iommu_domain *domain,
-> >   		sun50i_iommu_detach_domain(iommu, sun50i_domain);
-> >   }
-> > +static int sun50i_iommu_identity_attach(struct iommu_domain *identity_domain,
-> > +					struct device *dev)
-> > +{
-> > +	struct sun50i_iommu *iommu = dev_iommu_priv_get(dev);
-> > +
-> > +	if (iommu->domain == identity_domain || !iommu->domain)
-> 
-> I don't think that first condition could ever be true.
+Minidump is a best effort mechanism to collect useful and predefined data
+for first level of debugging on end user devices running on Qualcomm SoCs.
+It is built on the premise that System on Chip (SoC) or subsystem part of
+SoC crashes, due to a range of hardware and software bugs. Hence, the
+ability to collect accurate data is only a best-effort. The data collected
+could be invalid or corrupted, data collection itself could fail, and so on.
 
-Oh yes, this needs more work.. I folded sun50i_iommu_detach_device()
-into sun50i_iommu_identity_attach() and made iommu->domain be set to
-identity immediately after allocation. Now it can't be NULL
+Qualcomm devices in engineering mode provides a mechanism for generating
+full system ramdumps for post mortem debugging. But in some cases it's
+however not feasible to capture the entire content of RAM. The minidump
+mechanism provides the means for selecting which snippets should be
+included in the ramdump.
 
-Thanks
-Jason
+The core of minidump feature is part of Qualcomm's boot firmware code.
+It initializes shared memory (SMEM), which is a part of DDR and
+allocates a small section of SMEM to minidump table i.e also called
+global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
+their own table of segments to be included in the minidump and all get
+their reference from G-ToC. Each segment/region has some details like
+name, physical address and it's size etc. and it could be anywhere
+scattered in the DDR.
+
+Existing upstream Qualcomm remoteproc driver[1] already supports minidump
+feature for remoteproc instances like ADSP, MODEM, ... where predefined
+selective segments of subsystem region can be dumped as part of
+coredump collection which generates smaller size artifacts compared to
+complete coredump of subsystem on crash.
+
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
+
+In addition to managing and querying the APSS minidump description,
+the Linux driver maintains a ELF header in a segment. This segment
+gets updated with section/program header whenever a new entry gets
+registered.
+
+Patch 1/18 is very trivial change.
+Patch 2/18 moves the minidump specific data structure and macro to
+ qcom_minidump.h so that (4/18) qcom minidump driver can use.
+Patch 3/18 documents qualcomm minidump guide for users.
+Patch 4/18 implements qualcomm minidump kernel driver and exports
+ symbol which other minidump kernel client can use.
+Patch 5/18 add pending region support for the clients who came for
+registration before minidump.
+Patch 6/18 add update region support for registered clients.
+Patch 7/18 enables the qualcomm minidump driver.
+Patch 8/18 Use the exported symbol from minidump driver in qcom_common
+ for querying minidump descriptor for a subsystem.
+Patch 9-13 add qcom dynamic ramoops region support via a driver which
+ adds ramoops platform device and also register existing pstore
+ frontend regions.
+Patch 14-18 are not new and has already been through 6 versions and
+reason of adding here is for minidump testing purpose and it will be rebased
+automatically along with new version of minidump series.
+
+Testing of the patches has been done on sm8450 target after enabling config like
+CONFIG_PSTORE_RAM and CONFIG_PSTORE_CONSOLE and once the device boots up.
+Try crashing it via devmem2 0xf11c000(this is known to create xpu violation and
+and put the device in download mode) on command prompt.
+
+I have added download patch here numbered from 14/18 to 18/18
+Earlier download mode setting patches were sent separately
+https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+
+Default storage type is set to via USB, so minidump would be downloaded with the
+help of x86_64 machine (running PCAT tool) attached to Qualcomm device which has
+backed minidump boot firmware support (more can be found patch 3/18)
+
+Below patch [1] is to warm reset Qualcomm device which has upstream qcom
+watchdog driver support.
+
+After applying all patches, we can boot the device and can execute
+following command.
+
+echo mini > /sys/module/qcom_scm/parameters/download_mode
+echo c > /proc/sysrq-trigger
+
+This will make the device go to download mode and collect the minidump on to the
+attached x86 machine running the Qualcomm PCAT tool(This comes as part Qualcomm
+package manager kit).
+After that we will see a bunch of predefined registered region as binary blobs files
+starts with md_* downloaded on the x86 machine on given location in PCAT tool from
+the target device.
+
+A sample client example to dump a linux region has been given in patch 3/18 and as
+well as can be seen in patch 12/18.
+
+[1]
+--------------------------->8-------------------------------------
+
+commit f1124ccebd47550b4c9627aa162d9cdceba2b76f
+Author: Mukesh Ojha <quic_mojha@quicinc.com>
+Date:   Thu Mar 16 14:08:35 2023 +0530
+
+    do not merge: watchdog bite on panic
+
+    Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+diff --git a/drivers/watchdog/qcom-wdt.c b/drivers/watchdog/qcom-wdt.c
+index 0d2209c..767e84a 100644
+--- a/drivers/watchdog/qcom-wdt.c
++++ b/drivers/watchdog/qcom-wdt.c
+@@ -12,6 +12,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/watchdog.h>
+ #include <linux/of_device.h>
++#include <linux/panic.h>
+
+ enum wdt_reg {
+        WDT_RST,
+@@ -114,12 +115,28 @@ static int qcom_wdt_set_pretimeout(struct watchdog_device *wdd,
+        return qcom_wdt_start(wdd);
+ }
+
++static void qcom_wdt_bite_on_panic(struct qcom_wdt *wdt)
++{
++       writel(0, wdt_addr(wdt, WDT_EN));
++       writel(1, wdt_addr(wdt, WDT_BITE_TIME));
++       writel(1, wdt_addr(wdt, WDT_RST));
++       writel(QCOM_WDT_ENABLE, wdt_addr(wdt, WDT_EN));
++
++       wmb();
++
++       while(1)
++               udelay(1);
++}
++
+ static int qcom_wdt_restart(struct watchdog_device *wdd, unsigned long action,
+                            void *data)
+ {
+        struct qcom_wdt *wdt = to_qcom_wdt(wdd);
+        u32 timeout;
+
++       if (in_panic)
++               qcom_wdt_bite_on_panic(wdt);
++
+        /*
+         * Trigger watchdog bite:
+         *    Setup BITE_TIME to be 128ms, and enable WDT.
+diff --git a/include/linux/panic.h b/include/linux/panic.h
+index 979b776..f913629 100644
+--- a/include/linux/panic.h
++++ b/include/linux/panic.h
+@@ -22,6 +22,7 @@ extern int panic_on_oops;
+ extern int panic_on_unrecovered_nmi;
+ extern int panic_on_io_nmi;
+ extern int panic_on_warn;
++extern bool in_panic;
+
+ extern unsigned long panic_on_taint;
+ extern bool panic_on_taint_nousertaint;
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 487f5b0..714f7f4 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -65,6 +65,8 @@ static unsigned int warn_limit __read_mostly;
+
+ int panic_timeout = CONFIG_PANIC_TIMEOUT;
+ EXPORT_SYMBOL_GPL(panic_timeout);
++bool in_panic = false;
++EXPORT_SYMBOL_GPL(in_panic);
+
+ #define PANIC_PRINT_TASK_INFO          0x00000001
+ #define PANIC_PRINT_MEM_INFO           0x00000002
+@@ -261,6 +263,7 @@ void panic(const char *fmt, ...)
+        int old_cpu, this_cpu;
+        bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
+
++       in_panic = true;
+        if (panic_on_warn) {
+                /*
+                 * This thread may hit another WARN() in the panic path.
+--------------------------------------------------------------------------
+
+Changes in v3:
+ - Addressed most of the comments by Srini on v2 and refactored the minidump driver.
+    - Added platform device support
+    - Unregister region support.
+ - Added update region for clients.
+ - Added pending region support.
+ - Modified the documentation guide accordingly.
+ - Added qcom_pstore_ramdump client driver which happen to add ramoops platform
+   device and also registers ramoops region with minidump.
+ - Added download mode patch series with this minidump series. 
+    https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+
+Changes in v2: https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed review comment made by [quic_tsoni/bmasney] to add documentation.
+ - Addressed comments made by [srinivas.kandagatla]
+ - Dropped pstore 6/6 from the last series, till i get conclusion to get pstore
+   region in minidump.
+ - Fixed issue reported by kernel test robot.
+
+Changes in v1: https://lore.kernel.org/lkml/1676978713-7394-1-git-send-email-quic_mojha@quicinc.com/
+
+
+Mukesh Ojha (18):
+  remoteproc: qcom: Expand MD_* as MINIDUMP_*
+  remoteproc: qcom: Move minidump specific data to qcom_minidump.h
+  docs: qcom: Add qualcomm minidump guide
+  soc: qcom: Add Qualcomm minidump kernel driver
+  soc: qcom: minidump: Add pending region registration support
+  soc: qcom: minidump: Add update region support
+  arm64: defconfig: Enable Qualcomm minidump driver
+  remoterproc: qcom: refactor to leverage exported minidump symbol
+  soc: qcom: Add qcom's pstore minidump driver support
+  dt-bindings: reserved-memory: Add qcom,ramoops-minidump binding
+  arm64: dts: qcom: sm8450: Add Qualcomm ramoops minidump node
+  soc: qcom: Register pstore frontend region with minidump
+  arm64: defconfig: Enable Qualcomm pstore minidump client driver
+  firmware: qcom_scm: provide a read-modify-write function
+  pinctrl: qcom: Use qcom_scm_io_update_field()
+  firmware: scm: Modify only the download bits in TCSR register
+  firmware: qcom_scm: Refactor code to support multiple download mode
+  firmware: qcom_scm: Add multiple download mode support
+
+ Documentation/admin-guide/qcom_minidump.rst        | 246 +++++++
+ .../reserved-memory/qcom,ramoops-minidump.yaml     |  69 ++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               |  11 +
+ arch/arm64/configs/defconfig                       |   2 +
+ drivers/firmware/Kconfig                           |  11 -
+ drivers/firmware/qcom_scm.c                        |  88 ++-
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |  11 +-
+ drivers/remoteproc/qcom_common.c                   |  75 +--
+ drivers/soc/qcom/Kconfig                           |  25 +
+ drivers/soc/qcom/Makefile                          |   2 +
+ drivers/soc/qcom/qcom_minidump.c                   | 724 +++++++++++++++++++++
+ drivers/soc/qcom/qcom_pstore_minidump.c            | 194 ++++++
+ drivers/soc/qcom/smem.c                            |   8 +
+ include/linux/firmware/qcom/qcom_scm.h             |   2 +
+ include/soc/qcom/qcom_minidump.h                   | 130 ++++
+ 15 files changed, 1503 insertions(+), 95 deletions(-)
+ create mode 100644 Documentation/admin-guide/qcom_minidump.rst
+ create mode 100644 Documentation/devicetree/bindings/reserved-memory/qcom,ramoops-minidump.yaml
+ create mode 100644 drivers/soc/qcom/qcom_minidump.c
+ create mode 100644 drivers/soc/qcom/qcom_pstore_minidump.c
+ create mode 100644 include/soc/qcom/qcom_minidump.h
+
+-- 
+2.7.4
+
