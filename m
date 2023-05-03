@@ -2,49 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BE0A6F593E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:45:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D571C6F5954
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 15:50:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230218AbjECNpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 09:45:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55576 "EHLO
+        id S229773AbjECNuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 09:50:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjECNpT (ORCPT
+        with ESMTP id S229720AbjECNuO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 09:45:19 -0400
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2041.outbound.protection.outlook.com [40.107.236.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5395BBA;
-        Wed,  3 May 2023 06:45:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RWDsw3lis60pOxJsCxeTf3CrVlDbR5ofJqcsHCHVpDSfwgxoABcHH8bUbNfhrIj9LboBYPH3dEfrQi514jbwCtz2Z97pDn0yim/CkVn0juEd4sv5UZDq1w5VbnMtRAJFVGRpPBj8/ClQwYlwoASZoOv0zrHfMgQ3BEVSG14Mxn1XffzBRPfXOEIEK092uSzvrZPKE03jzYmf38mfqqlRtKVCv1W6XVCO9QzZo0nCkZPEfofmT8WeipMhd541722UdCpBroBaQq0+gfklTERJqN5jA5R/tUcVAO7CdNaRWtPkdAbyO5TizX01RCrQe8OXYKiVdOjUyo8wRpi7TDeqnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mWBH+FPAJeIOXoNU65jrAuk/Q3lzFQ9sLtzi5QbmxSw=;
- b=MH9Ww/eGlUR3DkPMVQ7Pf1M9i5SdnUG1+QM5ZvFE7enSkWNfvoN40XKJ2NnPmCpp2JXkjgsqVqFR2HPbCr68b+uj6jSkxaUIrflCnc5qxl9XDtcLtN1xu1cafGxIoQNKkeJaLQ5JZ2V1R4GDsVAZIf2vIGxk4A9VBN6gYjLrb95XjfJQKsaNQ4qOTmU4jlicxHxofCRit2LqdfVUbAwyERA+epIDo0GbapqIluNPZoNkyti+moKaR8oE0KqnF5uieVmyDeulmORvksrq+sKKAXVa7HPmWv1uTwWsoutJF9bkmHHtQwOXDf7dsCZ3xOJIFxiY67g0df9XpAJBDNgHOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mWBH+FPAJeIOXoNU65jrAuk/Q3lzFQ9sLtzi5QbmxSw=;
- b=jRv7EuJcul/DT+BcWM6CFgu8wgg2of2pMksdgAJypjksX5gIuKz+Hh32Is9q1v1HtQ5NA6Rz8mTyilJ80K4Rl4KsVFC4S65Gr01+ZIVzSXi13+8P9alQUGYY/cii7WqXxSLMz4/X2BmC2a50ReBrgydDEATHQFW6G4KCpSqXWolsiGeGvczhBMIDeetwLLZ07WVJ5C2Kf0XVv0o8Gqg5eI9AlZnOBY7QoD0ulrIvLW+ukZqNT9cNpexR47wPw02ZaC370WQqcV4xLPGLM7PQrih+aIvn5o1IB6LSrz8err/dEtrUiEhBe/K4vR4J3S79P9SOxj9cnexsO2lCyzX3lg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by BL0PR12MB4852.namprd12.prod.outlook.com (2603:10b6:208:1ce::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.22; Wed, 3 May
- 2023 13:45:13 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab%6]) with mapi id 15.20.6363.022; Wed, 3 May 2023
- 13:45:13 +0000
-Date:   Wed, 3 May 2023 10:45:11 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Wed, 3 May 2023 09:50:14 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9383CCE;
+        Wed,  3 May 2023 06:50:11 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 77F552F4;
+        Wed,  3 May 2023 06:50:55 -0700 (PDT)
+Received: from [10.57.82.232] (unknown [10.57.82.232])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 85DD63F5A1;
+        Wed,  3 May 2023 06:50:05 -0700 (PDT)
+Message-ID: <54c28f6d-23e3-f1de-3e0d-fb0fae3040cd@arm.com>
+Date:   Wed, 3 May 2023 14:50:02 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 05/20] iommu: Allow an IDENTITY domain as the
+ default_domain in ARM32
+Content-Language: en-GB
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
         AngeloGioacchino Del Regno 
@@ -73,176 +58,202 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krishna Reddy <vdumpa@nvidia.com>,
         Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
         Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
         Kevin Tian <kevin.tian@intel.com>,
         Nicolin Chen <nicolinc@nvidia.com>,
         Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH 02/20] iommu/terga-gart: Replace set_platform_dma_ops()
- with IOMMU_DOMAIN_PLATFORM
-Message-ID: <ZFJlZ03lswl9uHD0@nvidia.com>
-References: <2-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
- <1db712d2-9e33-4183-2766-34e32f170507@arm.com>
- <ZFI/D6mnLKYpdIqx@nvidia.com>
- <1a995f30-31fe-354f-ddfe-e944fa36e7a0@arm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a995f30-31fe-354f-ddfe-e944fa36e7a0@arm.com>
-X-ClientProxiedBy: YQZPR01CA0021.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:85::8) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|BL0PR12MB4852:EE_
-X-MS-Office365-Filtering-Correlation-Id: c4a5a12b-9440-473b-7541-08db4bdc9e96
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: AuyOdXMi+eNNJ22TfDgWcuBGYy1xWpsCUNkOyKkPWY7ZHR71ENGJDJ2BswxsfQUrEKVpBKGhCzamhmvKZLOJLH41JhtWD35iJmoF7Z9QDwVh2Q7oaGTOrP1Yw1fLaUNQCvK2m2qmQecB0aN+6LBzvljAo53d7k9KUeWfZ6kVCLXCtr31dVjzgQQ5b02bZou2ceQM0A7Hbd0EP5jTiaoWXV2k+UDxj0U4/GV0MFCFGm0T92Q7BR6Y8+Y4sd9J6hWxFhNfBs310uAayVfQmya4mj1eW+naMVD8DCgrtwfCBd8j/1BwPdSP//9NqK2oy+6E0DplauZMrT8L3p5t6bQaolbSsRKmgXqrWWwq+/JpbO1nDnOc+LJ2Rj6XIrzXIFgwDbtvlPaEAqY87A15xIZwAW+UNTyoLWsICGpCH0lrqP+Mw6w8ggtuq4FaK01ElrUnKDVgG1JFuI21NcDreqLuyi0Lgch9RLjVLQHxFd3OqOfxJP0MbFDzWzHRQaarnCdsxPP82MDQUmK5MVkjY4dKSHFmoHzRc1s1vI6gYL6nPGJ21dQyo/ShsK+DGyY1Yowt
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(136003)(39860400002)(366004)(346002)(396003)(451199021)(2906002)(5660300002)(7406005)(7416002)(36756003)(8676002)(8936002)(66476007)(41300700001)(66556008)(66946007)(478600001)(86362001)(316002)(4326008)(6916009)(54906003)(6486002)(38100700002)(186003)(53546011)(2616005)(83380400001)(26005)(6512007)(6506007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?PubmFGjujBwCu3hKoFxzUQDSI9RmReowcfQlN1q0LqjIXN79sjbd9HT4gMOI?=
- =?us-ascii?Q?rm9xWVsPEYSUvcngrduwq0UBwndBWbLBn7Z06v7mb2zVErkwq0kE3YjwAwdL?=
- =?us-ascii?Q?BjvsxRpH9bB9irJSuKd6KGzs9PsMTTtR0+I8wjFGbdSWJai4ANPR4Rj2YfA9?=
- =?us-ascii?Q?XbqlhQ5fGK8B3CgxwdE2xwKglZL3Ta6XbNQ36llzKn+r2eloQCbpZzFmzJPG?=
- =?us-ascii?Q?kLaN41kDH80MBhsnZemsT72ssLWHQPYb9XmE3pszWOpB60fg6VIcjiHDTqxR?=
- =?us-ascii?Q?m8EE6Xx31agJw1mVYsUb2Me5PU0Gx6ChKEJNkgBDpJBd8SU2LKoHjdsbtNTe?=
- =?us-ascii?Q?Xf/c/2gzymtiubeaRQtiX7Uah9sogfBuOOu5FNfLEQ3y8A33moQ2tDhBUNPw?=
- =?us-ascii?Q?fGG89FhcY92Ger0ADzbUrS/VhJv0xC6V9vzJ1kTAoOaAAxxN77NibM90dSFE?=
- =?us-ascii?Q?IY1+pm6CSwfm+IwPPhrRGtyXioV+oQ1QlNSjGXIQW/2d1T3kAwKsJXnNfggE?=
- =?us-ascii?Q?yhql64WUm6F+UsebAxTia8+obfiF6sWJgAR68FdQdCLsGiQ8Vnwl3RRfsKko?=
- =?us-ascii?Q?uutylkt5WI2GJGH3UKabPervj9ywu5j00m3K0hrrAdr7GlviuypUbFJe64Pi?=
- =?us-ascii?Q?JMdGqkG3cz2EmosGjWV82yFqmMctllbZbTUvXu+kSCdfLjNCGS4zfQaI5a0w?=
- =?us-ascii?Q?45zyua/7xQwe2U85B9Qu5pO8pSBzABvF1fx9Jfyf2D4wP5FVXHgFySGwbtMJ?=
- =?us-ascii?Q?iJMN5fLxcM9yN8P5fszrVNlL9ZSFm/E8mvOceXEljVxM7UKlKz06CA4xCk5X?=
- =?us-ascii?Q?RIJg6aLlSD1d8Pfq800CxtFc919EGYnXrFrA8mCfYBzr7RpvRDLshGzVypKs?=
- =?us-ascii?Q?QN9UW5ErpK/xfnXrTYhVmy+7BECvo/tpdlkmeemEHfzbxfw/4/AMvHn7NNPj?=
- =?us-ascii?Q?rmpo4a1IGjXvPHHA1YNlecEQuzqnyHeDDf7jTsp6ZhdqnT6OR+5HtB/E1ThN?=
- =?us-ascii?Q?F9KF1PdmmqnzLlsipPb3EZYJwOPXqXRId6UVTkdsWZBu9N7U4eaRKvOzq5ES?=
- =?us-ascii?Q?yMo1kqlMR1363Dk4P4W3lYFEW44fZvNmCtTIfVJ+Kp6BTWElhgP9bXjGhhze?=
- =?us-ascii?Q?2VWhyT/IA+LrJqfVsBaAbRyVp5V0AIRC/nLWeix0Q/uZJJnIt7ofrnYu2nAK?=
- =?us-ascii?Q?cskrJbHuQTK+buY/eTcWRAiHoVjj2B+d+a3Q3UXFTk5Racg85XaefD05N0yj?=
- =?us-ascii?Q?PUR7XY9pYCEaXnGVMLbGytmHKHIg5d4gUw4WKR4Vk0DaGnVqbNj8ZA1obm12?=
- =?us-ascii?Q?wd8QT4CTNGtDFCbPu40V1s7IQhn8hBpTnIo8jfE/4Ng44VS5DvJjBHljvQMF?=
- =?us-ascii?Q?JHId2o8gO8l2yq2QfhW53mBFj+BCspKV3uXIU2hq0jiuQJRTCdQsAiDnwxnE?=
- =?us-ascii?Q?FCEbkN9sC27j47+H+nvBmQR90vZ4sidq3BdOuyZyeRsrS39JU6DApBlwDUEz?=
- =?us-ascii?Q?vShF5S3ArZ9TRTLKmfqJhsWoiQfK0NyS5mIh/hNG0EjWgOvfD9kLM+emG1ar?=
- =?us-ascii?Q?+WEDloIFaFdiXykFvmM=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c4a5a12b-9440-473b-7541-08db4bdc9e96
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 May 2023 13:45:13.1336
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gdRu2TDS84EjqRKVk0VNNnmT81UQjgj6g7OYrULP8LVBL68Zy0e2RPQADEF7UR1p
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR12MB4852
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+References: <5-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <5-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 03, 2023 at 01:01:34PM +0100, Robin Murphy wrote:
-> On 2023-05-03 12:01, Jason Gunthorpe wrote:
-> > On Wed, May 03, 2023 at 10:17:29AM +0100, Robin Murphy wrote:
-> > > On 2023-05-01 19:02, Jason Gunthorpe wrote:
-> > > > tegra-gart seems to be kind of wonky since from the start its 'detach_dev'
-> > > > op doesn't actually touch hardware. It is supposed to empty the GART of
-> > > > all translations loaded into it.
-> > > 
-> > > No, detach should never tear down translations - what if other devices are
-> > > still using the domain?
-> > 
-> > ?? All other drivers do this.
+On 2023-05-01 19:02, Jason Gunthorpe wrote:
+> Even though dma-iommu.c and CONFIG_ARM_DMA_USE_IOMMU do approximately the
+> same stuff, the way they relate to the IOMMU core is quiet different.
 > 
-> The only driver I'm aware of which effectively tore down mappings by freeing
-> its pagetable on detach was sprd-iommu, and that was recently fixed on
-> account of it being clearly wrong.
-
-By "Teardown" I mean deconfigure the HW.
-
-This driver is odd because it doesn't store a page table in the
-iommu_domain, it keeps it in the GART registers so it can't actually
-detach/attach fully correctly. :(
-
-> Yes, I'm not disputing that we expect detach to remove that device's
-> *access* to the IOVA (which is what GART can't do...), but it should
-> absolutely not destroy the IOVA mapping itself. Follow that sequence with
-> iommu_attach_device(dom, dev) again and the caller can expect to be able to
-> continue using the same translation.
-
-Yes
- 
-> > If the HW is multi-device then it is supposed to have groups.
+> dma-iommu.c expects the core code to setup an UNMANAGED domain (of type
+> IOMMU_DOMAIN_DMA) and then configures itself to use that domain. This
+> becomes the default_domain for the group.
 > 
-> Groups are in fact the most practical example: set up a VFIO domain, attach
-> two groups to it, map some IOVAs, detach one of the groups, keep using the
-> other. If the detach carried an implicit iommu_unmap() there would be
-> fireworks.
-
-Yes, I'm not saying an unmap, I used the word teardown to mean remove
-the HW parts. This gart function doesn't touch the HW at all, that
-cannot be correct.
-
-It should have an xarray in the iommu_domain and on detach it should
-purge the GART registers and on attach it should load the xarray into
-the GART registers. We are also technically expecting drivers to
-support map prior to attach, eg for the direct map reserved region
-setup.
-
-> > Oh yuk, that is not an UNMANAGED domain either as we now assume empty
-> > UNMANAGED domains are blocking in the core...
+> ARM_DMA_USE_IOMMU does not use the default_domain, instead it directly
+> allocates an UNMANAGED domain and operates it just like an external
+> driver. In this case group->default_domain is NULL.
 > 
-> They are, in the sense that accesses within the aperture won't go
-> anywhere.
+> Allow iommu drivers to specify a global static identity_domain and, if
+> present, automatically use this domain as the default_domain when in
+> ARM_DMA_USE_IOMMU mode.
+> 
+> This allows drivers that implemented default_domain == NULL as an IDENTITY
+> translation to trivially get a properly labeled non-NULL default_domain on
+> ARM32 configs.
+> 
+> With this arrangment when ARM_DMA_USE_IOMMU wants to disconnect from the
+> device the normal detach_domain flow will restore the IDENTITY domain as
+> the default domain. Overall this makes attach_dev() of the IDENTITY domain
+> called in the same places as detach_dev().
+> 
+> This effectively migrates these drivers to default_domain mode. For
+> drivers that support ARM64 they will gain support for the IDENTITY
+> translation mode for the dma_api and behave in a uniform way.
+> 
+> Drivers use this by setting ops->identity_domain to a static singleton
+> iommu_domain that implements the identity attach. If the core detects
+> ARM_DMA_USE_IOMMU mode then it automatically attaches the IDENTITY domain
+> during probe.
+> 
+> If the driver does not want to support dma_api with translation then it
+> always sets default_domain to the identity domain and even if IOMMU_DMA is
+> turned on it will not allow it to be used.
 
-That is not the definition of BLOCKING we came up with.. It is every
-IOVA is blocked and the device is safe to hand to VFIO. It can't be just
-blocking a subset of the IOVA.
+Could we not retain the use of .def_domain_type for this? I think if we 
+can avoid the IOMMU_DOMAIN_PLATFORM thing altogether than that's the 
+more appealing option.
 
-> It might help if domain->geometry.force_aperture was meaningful, because
-> it's never been clear whether it was supposed to reflect a hardware
-> capability (in which case it should be false for GART) or be an instruction
-> to the user of the domain (wherein it's a bit pointless that everyone always
-> sets it).
+> This allows removing the set_platform_dma_ops() from every remaining
+> driver.
+> 
+> Add the core support and convert rockchip to use it.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/iommu.c          | 13 +++++++++++++
+>   drivers/iommu/rockchip-iommu.c | 19 +------------------
+>   include/linux/iommu.h          |  3 +++
+>   3 files changed, 17 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index ba7f38630665b5..8b9af774de68f1 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -1654,6 +1654,16 @@ iommu_group_alloc_default_domain(struct iommu_group *group, int req_type)
+>   	if (req_type)
+>   		return __iommu_group_alloc_default_domain(bus, group, req_type);
+>   
+> +	/*
+> +	 * ARM32 drivers supporting CONFIG_ARM_DMA_USE_IOMMU can declare an
+> +	 * identity_domain and it becomes their default domain. Later on
+> +	 * ARM_DMA_USE_IOMMU will install its UNMANAGED domain.
+> +	 */
+> +	if (IS_ENABLED(CONFIG_ARM_DMA_USE_IOMMU) &&
 
-force_aperture looks pointless now. Only two drivers don't set it -
-mtk_v1 and sprd.
+For the sake of reasoning, I think just use CONFIG_ARM for this. 
+Otherwise we may still end up with potential corner cases of 
+default_domain == NULL that we'd rather not have to accommodate.
 
-The only real reader is dma-iommu.c and mtk_v1 doesn't use that.
+> +	    bus->iommu_ops->identity_domain)
+> +		return __iommu_group_alloc_default_domain(
+> +			bus, group, IOMMU_DOMAIN_IDENTITY);
 
-So the only possible user is sprd.
+Why not simply return the identity_domain that we now know exists?
 
-The only thing it does is cause dma-iommu.c in ARM64 to use the
-dma-ranges from OF instead of the domain aperture. sprd has no
-dma-ranges in arch/arm64/boot/dts/sprd.
+It would seem even more logical, however, to put this ARM workaround in 
+iommu_get_default_domain_type() and keep the actual allocation path 
+clean. Do we strictly need to check for identity_domain up front? (Note 
+that as it stands this narrowly misses out on un-breaking arm-smmu for 
+32-bit)
 
-Further, sprd hard fails any map attempt outside the aperture, so it
-looks like a bug if the OF somehow chooses a wider aperture as
-dma-iommu.c will start failing maps.
+Thanks,
+Robin.
 
-Thus, I propose we just remove the whole thing. All drivers must set
-an aperture and the aperture is the pure HW capability to map an
-IOPTE at that address. ie it reflects the design of the page table
-itself and nothing else.
-
-Probably OF dma-ranges should be reflected in the pre-device reserved
-ranges?
-
-This is great, I was starting to look at this part wishing the OF path
-wasn't different, and this is a clear way forward :)
-
-For GART, I'm tempted to give GART a blocking domain and just have its
-attach always fail - this is enough to block VFIO. Keep the weirdness
-in one place.. Or ignore it since I doubt anyone is actually using
-this now.
-
-Jason
+> +
+>   	/* The driver gave no guidance on what type to use, try the default */
+>   	dom = __iommu_group_alloc_default_domain(bus, group, iommu_def_domain_type);
+>   	if (dom)
+> @@ -1923,6 +1933,9 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+>   	if (bus == NULL || bus->iommu_ops == NULL)
+>   		return NULL;
+>   
+> +	if (type == IOMMU_DOMAIN_IDENTITY && bus->iommu_ops->identity_domain)
+> +		return bus->iommu_ops->identity_domain;
+> +
+>   	domain = bus->iommu_ops->domain_alloc(type);
+>   	if (!domain)
+>   		return NULL;
+> diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+> index ea5a3088bb7e8a..9e1296a856ac4c 100644
+> --- a/drivers/iommu/rockchip-iommu.c
+> +++ b/drivers/iommu/rockchip-iommu.c
+> @@ -1017,13 +1017,8 @@ static int rk_iommu_identity_attach(struct iommu_domain *identity_domain,
+>   	return 0;
+>   }
+>   
+> -static void rk_iommu_identity_free(struct iommu_domain *domain)
+> -{
+> -}
+> -
+>   static struct iommu_domain_ops rk_identity_ops = {
+>   	.attach_dev = rk_iommu_identity_attach,
+> -	.free = rk_iommu_identity_free,
+>   };
+>   
+>   static struct iommu_domain rk_identity_domain = {
+> @@ -1031,13 +1026,6 @@ static struct iommu_domain rk_identity_domain = {
+>   	.ops = &rk_identity_ops,
+>   };
+>   
+> -#ifdef CONFIG_ARM
+> -static void rk_iommu_set_platform_dma(struct device *dev)
+> -{
+> -	WARN_ON(rk_iommu_identity_attach(&rk_identity_domain, dev));
+> -}
+> -#endif
+> -
+>   static int rk_iommu_attach_device(struct iommu_domain *domain,
+>   		struct device *dev)
+>   {
+> @@ -1087,9 +1075,6 @@ static struct iommu_domain *rk_iommu_domain_alloc(unsigned type)
+>   {
+>   	struct rk_iommu_domain *rk_domain;
+>   
+> -	if (type == IOMMU_DOMAIN_IDENTITY)
+> -		return &rk_identity_domain;
+> -
+>   	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
+>   		return NULL;
+>   
+> @@ -1214,13 +1199,11 @@ static int rk_iommu_of_xlate(struct device *dev,
+>   }
+>   
+>   static const struct iommu_ops rk_iommu_ops = {
+> +	.identity_domain = &rk_identity_domain,
+>   	.domain_alloc = rk_iommu_domain_alloc,
+>   	.probe_device = rk_iommu_probe_device,
+>   	.release_device = rk_iommu_release_device,
+>   	.device_group = rk_iommu_device_group,
+> -#ifdef CONFIG_ARM
+> -	.set_platform_dma_ops = rk_iommu_set_platform_dma,
+> -#endif
+>   	.pgsize_bitmap = RK_IOMMU_PGSIZE_BITMAP,
+>   	.of_xlate = rk_iommu_of_xlate,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index ddcad3597c177b..427490b5736d40 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -253,6 +253,8 @@ struct iommu_iotlb_gather {
+>    * @pgsize_bitmap: bitmap of all possible supported page sizes
+>    * @owner: Driver module providing these ops
+>    * @default_domain: If not NULL this will always be set as the default domain.
+> + * @identity_domain: An always available, always attachable identity
+> + *                   translation.
+>    */
+>   struct iommu_ops {
+>   	bool (*capable)(struct device *dev, enum iommu_cap);
+> @@ -287,6 +289,7 @@ struct iommu_ops {
+>   	unsigned long pgsize_bitmap;
+>   	struct module *owner;
+>   	struct iommu_domain *default_domain;
+> +	struct iommu_domain *identity_domain;
+>   };
+>   
+>   /**
