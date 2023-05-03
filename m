@@ -2,189 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FD2F6F4E00
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 02:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D9476F4E4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 03:04:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbjECAEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 2 May 2023 20:04:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43562 "EHLO
+        id S229502AbjECBEg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 2 May 2023 21:04:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229569AbjECAEX (ORCPT
+        with ESMTP id S229441AbjECBEf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 2 May 2023 20:04:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A860273F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  2 May 2023 17:04:22 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 342NCfGs012160;
-        Wed, 3 May 2023 00:04:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iV/gq21IbcuANX5Z2dnRqhVwll/YQLCH12PsbUEmsJg=;
- b=IdS/OJnRw9ZMZGZN1/Y2SEgZcgupq5dWRcrFbz/sLD2Oks1J1vxWhDNmuL6p5MyNK4nm
- 0mbWz28Cuxx5Vt0Adpn5kd0ETGZTM5CSpM1l3sdYt+X9sSE8sTy8LL5hEttvjQbuHkRI
- ffwJLfIhWXcxM6gG+RP8TZy5sEqCRpjPj7eVd0otYVXAROFYejLg25CicZoPi9UCVBdK
- 7k1pvIuMjHVElq6zti4c/X+dB31neEXRaK4hK9yrf2MoqMFj4OBAzpkL1E3HJHI+7HfP
- H91cnYa9Z6iVyBUqLGbw7sAWGi5RhTWDAzLXgPzbgxFlmAHlNIMx5G+ZJiR33miwA+Y2 eg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qawak26bf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 00:04:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34304An8027984
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 00:04:10 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 2 May 2023
- 17:04:10 -0700
-Message-ID: <0b774fad-44c2-bd38-c7c3-b1ddf05e469c@quicinc.com>
-Date:   Tue, 2 May 2023 17:04:09 -0700
+        Tue, 2 May 2023 21:04:35 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2C1B2D61;
+        Tue,  2 May 2023 18:04:33 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3C8EB629CC;
+        Wed,  3 May 2023 01:04:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94028C433AE;
+        Wed,  3 May 2023 01:04:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683075872;
+        bh=3tzUPFXqJgNCRsublfj+ZgGaTs7KzeK4/lauS5NgXbw=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=QoGLyyHrVl2A+YTplbrnYiMEIz6wk+jP9SV8dz5UCtY76MWzNfxcDGsWDt7XzaFbR
+         Xr4LoafVLAa94EjThKoFMtXLMkvCzIlI51WqQfPmq+42ZRGmwhqCuG73rtNFS7wUkc
+         +fEXrSTR/j+xouT44ufNnuT7bR771W/YBDuqC0FtyyPhTIzbPY4lJHmmC4JrKp+LqL
+         VUXrPWi4q/OV1Ezdi6st//MbXuMfXSMqmAVFzsUiMTdstEd3wZmJZlVLjAXQcv6nMA
+         7k3X1222URsa6zFwyiuGaddxH/mAzA1qAvda1W1zjhNGD1pbVwdRUepxFlVrtRcox8
+         yQNSGRSC9H6BA==
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2a8b3ecf59fso46418061fa.0;
+        Tue, 02 May 2023 18:04:32 -0700 (PDT)
+X-Gm-Message-State: AC+VfDxrX1RTlyh35LQ1lyIfjVDZ9XSpUGaNTrbWR3iI+zmU2KY74l9I
+        wqQLSzBVjWvuMwcKlKrtaLj1AvVmhDES5zIw/w==
+X-Google-Smtp-Source: ACHHUZ4mSLqb1ExsMkOjNsdZYIFyOMFO5WWfDnvfwZvuM9fv3TyrxmQhN6hT67g4AYdNW/MVo7uZ6IBv6mL14dd4tuc=
+X-Received: by 2002:a2e:8402:0:b0:2a8:d103:dc8 with SMTP id
+ z2-20020a2e8402000000b002a8d1030dc8mr4705375ljg.2.1683075870337; Tue, 02 May
+ 2023 18:04:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH 6/7] drm/msm/dpu: call dpu_rm_get_intf() from
- dpu_encoder_get_intf()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230430235732.3341119-1-dmitry.baryshkov@linaro.org>
- <20230430235732.3341119-7-dmitry.baryshkov@linaro.org>
- <d4558099-541e-cc55-860a-fe21af3a8ca6@quicinc.com>
- <72e531fe-1ee5-a850-4887-11e1835983f9@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <72e531fe-1ee5-a850-4887-11e1835983f9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: t2hT2OSHazFGsMPKAYuvmOM1whNGQHMQ
-X-Proofpoint-ORIG-GUID: t2hT2OSHazFGsMPKAYuvmOM1whNGQHMQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_13,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- suspectscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 impostorscore=0 mlxlogscore=999 phishscore=0
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305020202
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
+ <d4b52074-d11c-4c7a-ad74-b2fce64c6d30@gmail.com>
+In-Reply-To: <d4b52074-d11c-4c7a-ad74-b2fce64c6d30@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 2 May 2023 20:04:17 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKRcMSijAdiP_BpyBGRuMhscZ12QFcLBAeZ+TcaQg7r4g@mail.gmail.com>
+Message-ID: <CAL_JsqKRcMSijAdiP_BpyBGRuMhscZ12QFcLBAeZ+TcaQg7r4g@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     Florian Fainelli <f.fainelli@gmail.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Olof Johansson <olof@lixom.net>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-sunxi@lists.linux.dev,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-aspeed@lists.ozlabs.org,
+        linux-rpi-kernel@lists.infradead.org,
+        chrome-platform@lists.linux.dev,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
+        openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>,
+        linux-arm-msm@vger.kernel.org, linux-unisoc@lists.infradead.org,
+        linux-rockchip@lists.infradead.org,
+        linux-realtek-soc@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, May 2, 2023 at 6:02=E2=80=AFPM Florian Fainelli <f.fainelli@gmail.c=
+om> wrote:
+>
+> On 5/2/23 12:40, Rob Herring wrote:
+> > On Tue, May 2, 2023 at 3:15=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> wr=
+ote:
+> >>
+> >> On Tue, Apr 25, 2023, at 17:57, Rob Herring wrote:
+> >>> On Tue, Apr 25, 2023 at 2:28=E2=80=AFAM Geert Uytterhoeven <geert@lin=
+ux-m68k.org> wrote:
+> >>>
+> >>>> Does your script also cater for .dts files not matching any pattern,
+> >>>> but including a .dtsi file that does match a pattern?
+> >>>
+> >>> I assume I built everything after moving, but maybe not...
+> >>>
+> >>> That's all just "details". First, we need agreement on a) moving
+> >>> things to subdirs and b) doing it 1-by-1 or all at once. So far we've
+> >>> been stuck on a) for being 'too much churn'.
+> >>
+> >> Sorry for missing most of the discussion last week. The script sounds
+> >> fine to me, the only reason I didn't want to do this in the past is th=
+at
+> >> we had the plan to move platforms out of the kernel tree to an externa=
+l
+> >> repository and I wanted to do this platform at a time and also only mo=
+ve
+> >> each one once. I don't think that is going to happen anytime soon now,
+> >> so let's just do your script.
+> >>
+> >> Can you send me the script and/or a pull request of the resulting
+> >> tree based on my soc/dt branch? Everything is merged upstream,
+> >> and I think git-merge would handle the remaining merges with any
+> >> other changes in mainline.
+> >
+> > I've dusted off my script and made a branch[1] with the result.
+> > There's just a couple of fixes needed after the script is run (see the
+> > top commit). The cross arch includes are all fixed up by the script.
+> > dtbs_install maintains a flat install. I compared the number of .dtbs
+> > before and after to check the script.
+> >
+> > I think the only issue remaining is finalizing the mapping of
+> > platforms to subdirs. What I have currently is a mixture of SoC
+> > families and vendors. The most notable are all the Freescale/NXP
+> > platforms, pxa, socfpga, and stm32. It's not consistent with arm64
+> > either. Once that's finalized, I still need to go update MAINTAINERS.
+> >
+> > Here's the current mapping:
+> >
+> > vendor_map =3D {
+> >      'alphascale' : 'alphascale',
+> >      'alpine' : 'alpine',
+> >      'artpec' : 'axis',
+> >      'axm' : 'lsi',
+> >      'cx9' : 'cnxt',
+> >      'ecx' : 'calxeda',
+> >      'highbank' : 'calxeda',
+> >      'ep7' : 'cirrus',
+> >      'mxs': 'mxs',
+> >      'imx23': 'mxs',
+> >      'imx28': 'mxs',
+> >      'sun' : 'allwinner',
+> >      'imx': 'imx',
+> >      'e6' : 'imx',
+> >      'e7' : 'imx',
+> >      'mba6' : 'imx',
+> >      'ls': 'fsl',
+> >      'vf': 'fsl',
+> >      'qcom': 'qcom',
+> >      'am3' : 'ti',
+> >      'am4' : 'ti',
+> >      'am5' : 'ti',
+> >      'dra' : 'ti',
+> >      'keystone' : 'ti',
+> >      'omap' : 'ti',
+> >      'compulab' : 'ti',
+> >      'logicpd' : 'ti',
+> >      'elpida' : 'ti',
+> >      'motorola' : 'ti',
+> >      'twl' : 'ti',
+> >      'da' : 'ti',
+> >      'dm' : 'ti',
+> >      'nspire' : 'nspire',
+> >      'armada' : 'marvell',
+> >      'dove' : 'marvell',
+> >      'kirkwood' : 'marvell',
+> >      'orion' : 'marvell',
+> >      'mvebu' : 'marvell',
+> >      'mmp' : 'marvell',
+> >      'berlin' : 'berlin',
+> >      'pxa2' : 'pxa',
+> >      'pxa3' : 'pxa',
+> >      'pxa' : 'marvell',
+> >      'arm-' : 'arm',
+> >      'integ' : 'arm',
+> >      'mps' : 'arm',
+> >      've' : 'arm',
+> >      'aspeed' : 'aspeed',
+> >      'ast2' : 'aspeed',
+> >      'facebook' : 'aspeed',
+> >      'ibm' : 'aspeed',
+> >      'openbmc' : 'aspeed',
+> >      'en7' : 'airoha',
+> >      'at91' : 'microchip',
+> >      'sama' : 'microchip',
+> >      'sam9' : 'microchip',
+> >      'usb_' : 'microchip',
+> >      'tny_' : 'microchip',
+> >      'mpa1600' : 'microchip',
+> >      'animeo_ip' : 'microchip',
+> >      'aks-cdu' : 'microchip',
+> >      'ethernut5' : 'microchip',
+> >      'evk-pro3' : 'microchip',
+> >      'pm9g45' : 'microchip',
+> >      'ge86' : 'microchip',
+> >      'bcm' : 'brcm',
+>
+> How about we use 'broadcom' here, to follow what arm64 does? I could
+> rename arch/mips/boot/dts/brcm to arch/mips/boot/dts/broadcom for
+> consistency, too?
 
+Okay, though if starting clean I'd somewhat prefer to use the vendor
+prefix. I guess since arm and arm64 share dtsi files, they should
+match.
 
-On 5/2/2023 4:58 PM, Dmitry Baryshkov wrote:
-> On 03/05/2023 02:57, Abhinav Kumar wrote:
->>
->>
->> On 4/30/2023 4:57 PM, Dmitry Baryshkov wrote:
->>> There is little sense to get intf index just to call dpu_rm_get_intf()
->>> on it. Move dpu_rm_get_intf() call to dpu_encoder_get_intf() function.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 20 ++++++++------------
->>>   1 file changed, 8 insertions(+), 12 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 507ff3f88c67..b35e92c658ad 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -1259,22 +1259,23 @@ static void 
->>> dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
->>>       mutex_unlock(&dpu_enc->enc_lock);
->>>   }
->>> -static enum dpu_intf dpu_encoder_get_intf(const struct dpu_mdss_cfg 
->>> *catalog,
->>> +static struct dpu_hw_intf *dpu_encoder_get_intf(const struct 
->>> dpu_mdss_cfg *catalog,
->>> +        struct dpu_rm *dpu_rm,
->>>           enum dpu_intf_type type, u32 controller_id)
->>>   {
->>>       int i = 0;
->>>       if (type == INTF_WB)
->>> -        return INTF_MAX;
->>> +        return NULL;
->>>       for (i = 0; i < catalog->intf_count; i++) {
->>>           if (catalog->intf[i].type == type
->>>               && catalog->intf[i].controller_id == controller_id) {
->>> -            return catalog->intf[i].id;
->>> +            return dpu_rm_get_intf(dpu_rm, catalog->intf[i].id);
->>>           }
->>
->> Why has the for loop been retained in this function but not for 
->> writeback? is there any difference? Doesnt looks like there needs to be.
-> 
-> For writeback we always return controller_id (WB_2). For interfaces we 
-> have to map type+controller_id to the INTF instance.
-
-Ah correct, got it now. With that minor comment fixed from below,
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
-> 
->>
->>>       }
->>> -    return INTF_MAX;
->>> +    return NULL;
->>>   }
->>>   void dpu_encoder_vblank_callback(struct drm_encoder *drm_enc,
->>> @@ -2244,7 +2245,6 @@ static int dpu_encoder_setup_display(struct 
->>> dpu_encoder_virt *dpu_enc,
->>>            * h_tile_instance_ids[2] = {1, 0}; DSI1 = left, DSI0 = right
->>>            */
->>>           u32 controller_id = disp_info->h_tile_instance[i];
->>> -        enum dpu_intf intf_idx;
->>>           if (disp_info->num_of_h_tiles > 1) {
->>>               if (i == 0)
->>> @@ -2258,12 +2258,9 @@ static int dpu_encoder_setup_display(struct 
->>> dpu_encoder_virt *dpu_enc,
->>>           DPU_DEBUG("h_tile_instance %d = %d, split_role %d\n",
->>>                   i, controller_id, phys_params.split_role);
->>> -        intf_idx = dpu_encoder_get_intf(dpu_kms->catalog,
->>> -                                disp_info->intf_type,
->>> -                                controller_id);
->>> -
->>> -        if (intf_idx >= INTF_0 && intf_idx < INTF_MAX)
->>> -            phys_params.hw_intf = dpu_rm_get_intf(&dpu_kms->rm, 
->>> intf_idx);
->>> +        phys_params.hw_intf = dpu_encoder_get_intf(dpu_kms->catalog, 
->>> &dpu_kms->rm,
->>> +                               disp_info->intf_type,
->>> +                               controller_id);
->>>           if (disp_info->intf_type == INTF_WB && controller_id < WB_MAX)
->>>               phys_params.hw_wb = dpu_rm_get_wb(&dpu_kms->rm, 
->>> controller_id);
->>> @@ -2287,7 +2284,6 @@ static int dpu_encoder_setup_display(struct 
->>> dpu_encoder_virt *dpu_enc,
->>>               DPU_ERROR_ENC(dpu_enc, "failed to add phys encs\n");
->>>               break;
->>>           }
->>> -
->> unnecessary change?
-> 
-> 
-> ack, it sneaked in. I'll drop it for v2.
-> 
->>>       }
->>>       mutex_unlock(&dpu_enc->enc_lock);
-> 
+Rob
