@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5FF36F5998
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 16:13:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17FEC6F5999
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 16:13:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbjECONg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 10:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39110 "EHLO
+        id S229803AbjECONh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 10:13:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229805AbjECONf (ORCPT
+        with ESMTP id S229824AbjECONf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 3 May 2023 10:13:35 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFA8859F7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 07:13:32 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-2f6401ce8f8so3305048f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 07:13:32 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A08B5BA0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 07:13:33 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-2fddb442d47so4915709f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 07:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683123211; x=1685715211;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AwALSkvKDHtujUw26080EGh0+IX6T4U1b0JJECQI5Yg=;
-        b=K65F2ABVlyAL5wa9u9bqzQLkeyIIggK7j19+oSao42j1/RNz7OyFUTMGo3LtjYJpKP
-         OTpY+8jveYg9IWMFwE4REgNuutGIa+llCy6+orIq9KHAwsHztZ+DKdMZq85Bqtfeweus
-         i/bSo7quw4zNEjFdZiHT9Gw/XQFVO+Gl7YOnyXevNfV/cL5PagfdU1umZZKnQaY0+y4V
-         UJJsf2x0UJa8v+vNywF/UwVJy/bKTPtRNh0ykMRgy79a2zTYozLz9X7glDyNKBalbdUv
-         v8VRlruHc2KTDRPAQ/rh60rrltoFbjc9rZ94c3bAXXsL2+tdpg/4c9+K0zxdIqfQyzow
-         m0qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683123211; x=1685715211;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1683123212; x=1685715212;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AwALSkvKDHtujUw26080EGh0+IX6T4U1b0JJECQI5Yg=;
-        b=UpuDBRx4KB3526N8MNVnisViJKpVYyTuJ/vKVU9L6scS93CRmbmvj1ythRKdENHEtA
-         1EpSLFq/VRzwBtm1qDiuUihvuxoQcDJF4CmxV+ARtc6tRf2g8yj6Uy3ta3GPTQ+UfPGo
-         XTVeW/cLUQ5ivZ1bL+HEgphRgAUH6l9qWCnPMHQi/AteoeGK+mZrBU9LGMKGkLA3gDUr
-         vUWtCETe/4VGY+7A+UyR1VdP6nTJN49/B+jeRZ3aFX3Lqndrhzt/Ivt+ogqZF6WRS8LS
-         VdCr4izlGVFX+n+l66QR0dnS3DgV1BNZDGYmiTFvlE79n7kZZ5PeDH3qnkXTn2N+drBV
-         dQ4A==
-X-Gm-Message-State: AC+VfDyq8ecacoRokR7HFBaehvnwalRJsVsqnUaQlLlF92jXPP7pgNrg
-        wGK02Qk1VmeAnMAX54wP2wNHoA==
-X-Google-Smtp-Source: ACHHUZ6MOkzQkyGfaWvMMNk9dao/O7ohimeenJ7zgWo1S0c9nTeu1hwQA5p6/NQlOj2aDZe7xu4+PA==
-X-Received: by 2002:a5d:6241:0:b0:306:2c47:9736 with SMTP id m1-20020a5d6241000000b003062c479736mr175182wrv.15.1683123211117;
-        Wed, 03 May 2023 07:13:31 -0700 (PDT)
+        bh=uAIQS/BOPXMOFYhvnsG6hSIFOmKVwFFNkHh46Y8652o=;
+        b=S6TM/3QkR4jgLyb+HdKBwWKsa+TE+es479AG6l8m8gG8GzvoDEmk/Ac1rGRhIw86Wm
+         fAvPAi53M7EnosCQLDVDh52GXDanfzDKLAgUvocvNSjYMOUVoc4qQqjUixyX3r9i85Cn
+         OKzLPQ0etucCMZHhMbtKy5Eax7WM97MpIxpeGt0uGnXE07Cn17PskUDGXpoEFg6tTbx4
+         q2ac8CgjW4act5L1Q6MHisXLxBWKFSqRXKICkbBk/dG9Z1pYL8wJ9glFUtUxi0d4XvWh
+         5mYSffa2Kcb+mdm+qmU190sUvk7IGuijPKV48SzjFdED8OwQEp9ezqR9XmHFaWAwbtIZ
+         KBcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683123212; x=1685715212;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uAIQS/BOPXMOFYhvnsG6hSIFOmKVwFFNkHh46Y8652o=;
+        b=NdWcLRsxnhHsdlrQvjzDpLPARpgy0Oe9zaTqOEJF+T7j19rRFHLprv5b7O4q6W9b7A
+         fvGEpKxk2Bg/vQ4xqLXLDy7upJq1w+VNcQ+QKcuq5+zIbRUIRbBh8srUly+N3pc5rplS
+         ZwZsq+1hJri60LEK1BfJ/ZhJKvM+cAeiyIucFOPJ85MCDtQoMSQs991MLWgw488uwCWQ
+         zop50fd89gdqaVEMA18SPH0Kr6x0nxUzPA+it7Y3ily7MQKm3+c9xRWBwndPJKEb+btj
+         0Tc91F8V+Qf8JPFngrU+Le6id1SybfCiCk1fU1KsI9GKzUih/YgAVk/isE4rgjthQgE+
+         Y0SQ==
+X-Gm-Message-State: AC+VfDxK6v5F/1YMYkmHcGGKy5Iio9JjO7OcBhOErJDTrHIgkY/EMeUW
+        QOwlX4Zl63/WZbNGYywX4u0lzAilTdidv+mDaBLuSQ==
+X-Google-Smtp-Source: ACHHUZ5DkUMF/s7xhTlYY20NWHn01XdHdr7xf8YBXK6rqk7Q7SpS19cGrMo41TVkcXbqlfzfytK7Lg==
+X-Received: by 2002:a5d:5387:0:b0:2fb:bb97:d975 with SMTP id d7-20020a5d5387000000b002fbbb97d975mr151681wrv.47.1683123212008;
+        Wed, 03 May 2023 07:13:32 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id a13-20020a056000100d00b003063c130ef1sm3028638wrx.112.2023.05.03.07.13.30
+        by smtp.gmail.com with ESMTPSA id a13-20020a056000100d00b003063c130ef1sm3028638wrx.112.2023.05.03.07.13.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 May 2023 07:13:30 -0700 (PDT)
+        Wed, 03 May 2023 07:13:31 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 0/2] arm64: dts: qcom: pmk[345]50: enable reboot reason
-Date:   Wed, 03 May 2023 16:13:27 +0200
-Message-Id: <20230503-topic-sm8450-upstream-reboot-reason-v1-0-c5ac3dd5b49f@linaro.org>
+Date:   Wed, 03 May 2023 16:13:28 +0200
+Subject: [PATCH 1/2] arm64: dts: qcom: pmk8350: add reboot-mode node using
+ sdam_2 nvmem
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAdsUmQC/x2NQQrDMAwEvxJ0rsB1ahL6ldKD7SqNILGD5JRCy
- N8relpmDzMHKAmTwr07QOjDyrUYXC8d5DmWNyG/jME737vgemx144y6jrfgcN+0CcUVhVKtzSZ
- qLUhhyqMfUsx+ADOlqIRJYsmzucq+LHZuQhN//+nH8zx/SDjG5ooAAAA=
+Message-Id: <20230503-topic-sm8450-upstream-reboot-reason-v1-1-c5ac3dd5b49f@linaro.org>
+References: <20230503-topic-sm8450-upstream-reboot-reason-v1-0-c5ac3dd5b49f@linaro.org>
+In-Reply-To: <20230503-topic-sm8450-upstream-reboot-reason-v1-0-c5ac3dd5b49f@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -70,65 +71,83 @@ Cc:     Abel Vesa <abel.vesa@linaro.org>,
         linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1068;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1382;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=EON79yjoVMWcDaKmyYQsV72yLHaegDJtRDFwAQR7DHY=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkUmwJNcUBNiXogIwF9iTh1raJDqEw4lawPumc4Gho
- oVJOnDyJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZFJsCQAKCRB33NvayMhJ0W6gEA
- DHQvGUX2jQtEO4t9fk6Y4boD3lb2ELVyTrZK/sTFkmJI9HcN5eEDeX+lmSIGy9+DKRBHn5DpZ34FUt
- fVpH2PQcZJtiUBYr/4FvO60VpJc4qjlLxXu8i6wn+fdpUoLBw2EYHIU4CUvYd5vHIfDfi4zFF8sPIu
- yRr+9EuJFDQZM394NdR9R83uc4LT5GM2WY0LO1xCeS/LjdsmXjcVCz+8sS1OwyffcyqsQR8nhyimiZ
- tFnyyPcXIv0EZphFRhIi8xiYR9wc8Mmf/X5BwxQ/Bf3wAGTh1uT1MzUmizFDdlmr3ENg0svEiQe8eH
- V6HUacMQy7+I6efzIwOleolRy61IiA+voPu8Ppr1MHVDZWs+JvRzYvMht9opTcmjXVboJqOKVRYQBx
- sG1q+h2RmEi4rQqBOfxzyRa+inEG+XDxNTnHZAevo44HYjBagqQAEAUSjNOx+XQ3FAm6j/baKdBzZs
- 0v9egFp7p1a1rb8eL2g6vmTxO/F5jX+OKNwU7bXS4jGq/vMD3htRfV1Iugy4MeAD/FGXrREawZbLFt
- Vwv5ic5AzhI9LSjwgL1a327U8Tn8jeImLtxrrqh2jHu4ymV58Aa4wZv89p87FeflM0za9O79nt4aaQ
- dHuC7V/OpyPgZ0eWvRJNPgH10dE3uye+zJMIpK7HIM7Ks9ek1Sl0oNJkDQlg==
+ bh=xjYd0Xug6SR/toEiny1p/J32ShG0ZzGMNC3ZlTA4TJM=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkUmwJOOhMui4jXELLALLA5ttUwZkVWCOtnOG1IMB0
+ 0aHlc4eJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZFJsCQAKCRB33NvayMhJ0RgGD/
+ 0eLwbbBzIVCdYqMlz25/zUn4NoJy66pbXs5Kgils1XeYeaxKRVphkOIfhYAEhPpY6V+E+jo6VS72vQ
+ +Wt/JqcD6Tnrq9QzdHJ7DTi5IxZnOBF9H3LmI4KMTu42rtNz+Fqtd7kBksnyaURi5xUqkLbJAqXJb7
+ rOMkRD1XHXG8bY/Uskyk+luFtdLchHPa+Ivd8kQuEvqGfe5GV1sifVgqLYqBYIiKgdyVzDGHGOEit9
+ U2xgh1mPjeqR7b3qqP7SK84PSoIZzA8bFudMDcZf9PZTfYoNtVonqltIZEpfZFeJvigqORzdklbzlC
+ A1y7zQqOgmIlfBYFSWWbelAReMXViUnjTXPZvmNPpfl4cTx0J8XiiffqJjxquNnwn1/rV1zD6R4T1E
+ RwBDEWcQSdNO5LcF9ZMcB9mLEaZq6ildBYA1TwneelC522K1Z9vcR4dlP8Jq9t28LdF+8OWU7Qq6JJ
+ OddLaqSZQBoRZ4t7Wb4Ke4RRG4MLzHa3HKLmHYXPwPKtLjx1ZcCHXiYNhpPug3oZ39Fzw2iRaFje7o
+ +7k/g/vQsBh2PNgpBKmKF6ztODVP6tId5vuEqoEfCFNUGsY5w+n7tgcn2wvMVyresOHd4Vwmn+cswo
+ c4kzSfl4UnOGob4B2EKpvJCNAMdUaHNB/zmaqGr1+i+eWGIRpxB1yHuOTUXg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Like SA8775P (at [1]), the SM8350, SM8450 & SM8550 platforms uses
-the SDAM2 nvmem to pass the reboot reason.
-
-This simply adds the sdam2 and reboot reason nodes
-in the pmk8350 and pmk8550 dtsi.
-
-Tested with:
-
-and
-
-triggering the following ABL logs on HDK8450:
-  KeyPress:0, BootReason:2
-  Fastboot=1, Recovery:0
-and
-  KeyPress:0, BootReason:1
-  Fastboot=0, Recovery:1
-
-[1] https://lore.kernel.org/lkml/20230417145536.414490-1-brgl@bgdev.pl/T/
+Introduce sdam_2 node, which is to be used via nvmem for power on
+reasons during reboot. Add supported PoN reasons supported via sdam_2
+node.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Neil Armstrong (2):
-      arm64: dts: qcom: pmk8350: add reboot-mode node using sdam_2 nvmem
-      arm64: dts: qcom: pmk8550: add reboot-mode node using sdam_2 nvmem
-
  arch/arm64/boot/dts/qcom/pmk8350.dtsi | 23 +++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/pmk8550.dtsi | 23 +++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
----
-base-commit: 92e815cf07ed24ee1c51b122f24ffcf2964b4b13
-change-id: 20230503-topic-sm8450-upstream-reboot-reason-e5fc827bac27
+ 1 file changed, 23 insertions(+)
 
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+index f26fb7d32faf..bc6297e7253e 100644
+--- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
+@@ -13,6 +13,16 @@
+ 	#define PMK8350_SID 0
+ #endif
+ 
++/ {
++	reboot-mode {
++		compatible = "nvmem-reboot-mode";
++		nvmem-cells = <&reboot_reason>;
++		nvmem-cell-names = "reboot-mode";
++		mode-recovery = <0x01>;
++		mode-bootloader = <0x02>;
++	};
++};
++	
+ &spmi_bus {
+ 	pmk8350: pmic@PMK8350_SID {
+ 		compatible = "qcom,pmk8350", "qcom,spmi-pmic";
+@@ -66,6 +76,19 @@ pmk8350_rtc: rtc@6100 {
+ 			status = "disabled";
+ 		};
+ 
++		pmk8350_sdam_2: nvram@7100 {
++			compatible = "qcom,spmi-sdam";
++			reg = <0x7100>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++			ranges = <0 0x7100 0x100>;
++
++			reboot_reason: reboot-reason@48 {
++				reg = <0x48 0x1>;
++				bits = <1 7>;
++			};
++		};
++
+ 		pmk8350_gpios: gpio@b000 {
+ 			compatible = "qcom,pmk8350-gpio", "qcom,spmi-gpio";
+ 			reg = <0xb000>;
+
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
