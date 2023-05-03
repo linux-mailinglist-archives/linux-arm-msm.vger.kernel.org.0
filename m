@@ -2,170 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D90636F5184
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 09:30:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 111996F520A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 09:42:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229846AbjECHab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 03:30:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39410 "EHLO
+        id S229532AbjECHme (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 03:42:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbjECH3q (ORCPT
+        with ESMTP id S229486AbjECHmd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 03:29:46 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE044EE6;
-        Wed,  3 May 2023 00:29:02 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id BFD773F33A;
-        Wed,  3 May 2023 09:28:59 +0200 (CEST)
-Date:   Wed, 3 May 2023 09:28:58 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/4] drm/msm/dpu: Enable compression for command mode
-Message-ID: <hxqxnfcydzyfrlvihmil3gecan6p6xyjw44gielu63ltgtqul7@xwvoprzofq6g>
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-4-6bc6f03ae735@quicinc.com>
+        Wed, 3 May 2023 03:42:33 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CBC1997
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 00:42:31 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-50bc040c7b8so6278194a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 00:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683099750; x=1685691750;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ndE9+pB7brffk/7YIwrb3ZQg3LFDw+vNaQtTCPye8HE=;
+        b=MEuqWv5vtqiSKvg52mayWX30IwRPxUz+cfDtHkhPig2Vn4wK2G77Xqtxf0PtTqhlxA
+         16nQiG9aPckN2qpF/woUA6glbvY56otJpWOAo/zdSQFhueLPBMgTNqxG6ZkljU4pfEIC
+         h6havLlECzkgz7gUpPLZrpJSCVhTKME9HfrpRw0Ow1F29TJCux4r7Yx9BbDzXsm1RokG
+         MUUg8LuC3YWdFX9IoLMEJOWRbZiEWetJTQkUL6OzCz5FZdr4IZVSuA0PihD5lqKIDA+k
+         bYSpbiSzzvkFY2JwYdgQ/0EhEMESuAGMe1MG8FcTmx+K61vMXUUcYlrAv15cbDDo8pTf
+         QnRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683099750; x=1685691750;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ndE9+pB7brffk/7YIwrb3ZQg3LFDw+vNaQtTCPye8HE=;
+        b=VZtGcGV26qMInI0PCIjDKIgRfjvLHNya60eSffZxIG76S6IX7O1rIJpBy3u/tGBo4V
+         i1+DdXqEZyC/IKJ8FA/zJC19NBxNrsVbweJlyFcVEGLUPFhqHXqBTH+27ddWJ6tM0UVN
+         ZcKY1D1C/lJdmtr6j4yWn7T2Vm5vaBEuMAbAvTE8R5Ux7oZuJXJ/MqkaT3eHKxVhzLSB
+         L/qu+0sHwVjz1FMlc5yD7O/HjaiXaIDI6nOVhWkx4d1uyvxVMEeHZ6Jm6K/n4zL7fkOp
+         HqPj5kYmEaxF1L5m6byM3hLq9QfqBJVsmNS+ZBj5ylOBlBjQVo7+1luSbJCggN7ELfph
+         eU6g==
+X-Gm-Message-State: AC+VfDwVG7XT1inJgz9m2ER8V5zqKQlZOamCNQVrKQsvttQ6gpExVhil
+        DWi+O+Fyc0CCB1QWCv7aTXBipA==
+X-Google-Smtp-Source: ACHHUZ7SvjrzpPDWGQ6Bi44YUCZS7ALk2lsdvmVXcMSgaM0otDrRMa4BK7HRaTwIoW8KQcyO77dj2Q==
+X-Received: by 2002:a05:6402:1608:b0:50b:de1f:8792 with SMTP id f8-20020a056402160800b0050bde1f8792mr1998633edv.37.1683099750257;
+        Wed, 03 May 2023 00:42:30 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:a40b:9d8:1fa0:ecc5? ([2a02:810d:15c0:828:a40b:9d8:1fa0:ecc5])
+        by smtp.gmail.com with ESMTPSA id d16-20020aa7d5d0000000b0050bd427a539sm397161eds.60.2023.05.03.00.42.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 00:42:29 -0700 (PDT)
+Message-ID: <915eea5b-6cef-d346-7cbd-b679726113ad@linaro.org>
+Date:   Wed, 3 May 2023 09:42:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230405-add-dsc-support-v1-4-6bc6f03ae735@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/4] dt-bindings: thermal: tsens: Add ipq9574 compatible
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+References: <cover.1682682753.git.quic_varada@quicinc.com>
+ <3c6f7510d175ba5a3c81730b010f6c421b2fbf2d.1682682753.git.quic_varada@quicinc.com>
+ <16443d11-7948-d224-cfef-b6c1b5c3d60d@linaro.org>
+ <20230503071055.GB1087@varda-linux.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230503071055.GB1087@varda-linux.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-02 18:19:15, Jessica Zhang wrote:
-> Add a dpu_hw_intf op to enable data compression.
+On 03/05/2023 09:10, Varadarajan Narayanan wrote:
+> On Mon, May 01, 2023 at 09:08:49AM +0200, Krzysztof Kozlowski wrote:
+>> On 28/04/2023 16:52, Varadarajan Narayanan wrote:
+>>> From: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>
+>>> Qualcomm IPQ9574 has tsens v2.3.1 block, which is similar to IPQ8074 tsens.
+>>>
+>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 3 +++
+>>>  1 file changed, 3 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>>> index d1ec963..8e2208c 100644
+>>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>>> @@ -66,6 +66,7 @@ properties:
+>>>        - description: v2 of TSENS with combined interrupt
+>>>          enum:
+>>>            - qcom,ipq8074-tsens
+>>> +          - qcom,ipq9574-tsens
+>>
+>> Your drive change indicates they are compatible, so make them
+>> compatible. 9574 followed by 8074.
 > 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 ++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 7 +++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 2 ++
->  3 files changed, 13 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> index 74470d068622..4321a1aba17f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> Not able to understand. You want IPQ9574 to use "qcom,ipq8074-tsens"
+> instead of adding a "qcom,ipq9574-tsens" and no need to add an extra
+> entry to the driver like
 
-Can we have INTF DCE on video-mode encoders as well?
+Assuming the devices are really compatible, which your driver change
+suggests, I want to use two compatibles. 9574 followed by 8074 fallback,
+just like we do for all Qualcomm IP blocks. Then as you said - no need
+for driver change.
 
-> @@ -72,6 +72,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->  				phys_enc->hw_intf,
->  				true,
->  				phys_enc->hw_pp->idx);
-> +
-> +	if (phys_enc->dpu_kms->catalog->caps->has_data_compress &&
+Best regards,
+Krzysztof
 
-As per my suggestion on patch 3/4, drop the flag and check above and
-only check if the function is NULL (below).
-
-> +			phys_enc->hw_intf->ops.enable_compression)
-> +		phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
->  }
->  
->  static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 671048a78801..4ce7ffdd7a05 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -64,10 +64,16 @@
->  
->  #define INTF_CFG2_DATABUS_WIDEN	BIT(0)
->  #define INTF_CFG2_DATA_HCTL_EN	BIT(4)
-
-These should probably be reindented to match the below... And the rest
-of the defines use spaces instead of tabs.
-
-> +#define INTF_CFG2_DCE_DATA_COMPRESS	BIT(12)
->  
->  #define INTF_MISR_CTRL			0x180
->  #define INTF_MISR_SIGNATURE		0x184
-
-This does not seem to apply on top of:
-https://lore.kernel.org/linux-arm-msm/20230411-dpu-intf-te-v4-10-27ce1a5ab5c6@somainline.org/
-
->  
-> +static inline void dpu_hw_intf_enable_compression(struct dpu_hw_intf *ctx)
-
-Why inline?  This is used as a pointer callback.
-
-> +{
-> +	DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, INTF_CFG2_DCE_DATA_COMPRESS);
-
-dpu_hw_intf_setup_timing_engine() also programs INTF_CONFIG2.  Is it
-double-buffered, or is that config **always** unused when DSI CMD mode
-is used in conjunction with DSC/DCE?  Otherwise this should perhaps OR
-the bitflag into the register, or write the whole thing at once in
-dpu_hw_intf_setup_timing_engine()?
-
-> +}
-> +
->  static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->  		const struct intf_timing_params *p,
->  		const struct dpu_format *fmt)
-> @@ -325,6 +331,7 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
->  		ops->bind_pingpong_blk = dpu_hw_intf_bind_pingpong_blk;
->  	ops->setup_misr = dpu_hw_intf_setup_misr;
->  	ops->collect_misr = dpu_hw_intf_collect_misr;
-> +	ops->enable_compression = dpu_hw_intf_enable_compression;
-
-And per the same suggestion on patch 3/4, this is then wrapped in:
-
-    if (cap & BIT(DPU_INTF_DATA_COMPRESS))
-
-(or similary named) flag check.
-
->  }
-
-This also doesn't seem to apply on top of the INTF TE [1] support
-series, even though it depends on DSC 1.2 DPU support(s?) [2] which
-mentions it was rebase(d) on top of that.
-
-[1]: https://patchwork.freedesktop.org/series/112332/
-[2]: https://patchwork.freedesktop.org/series/116789/
-
-- Marijn
-
->  
->  struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 102c4f0e812b..99528c735368 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -60,6 +60,7 @@ struct intf_status {
->   *                     feed pixels to this interface
->   * @setup_misr: enable/disable MISR
->   * @collect_misr: read MISR signature
-> + * @enable_compression: Enable data compression
->   */
->  struct dpu_hw_intf_ops {
->  	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
-> @@ -82,6 +83,7 @@ struct dpu_hw_intf_ops {
->  			const enum dpu_pingpong pp);
->  	void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 frame_count);
->  	int (*collect_misr)(struct dpu_hw_intf *intf, u32 *misr_value);
-> +	void (*enable_compression)(struct dpu_hw_intf *intf);
->  };
->  
->  struct dpu_hw_intf {
-> 
-> -- 
-> 2.40.1
-> 
