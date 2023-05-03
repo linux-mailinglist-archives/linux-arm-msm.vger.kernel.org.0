@@ -2,176 +2,288 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0276B6F5CC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:11:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FA3F6F5CE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:18:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229519AbjECRLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 13:11:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48832 "EHLO
+        id S229506AbjECRSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 13:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjECRLH (ORCPT
+        with ESMTP id S229825AbjECRSY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 13:11:07 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A657D83;
-        Wed,  3 May 2023 10:10:41 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343EqIDA012512;
-        Wed, 3 May 2023 17:10:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=xedohLVoYxPec4E1c7GC+Ewwx4H1Qhde+jh2MpigbA8=;
- b=VDHI0sCbm0B3k+eJuLMqr9jgtlTzx5z1F3dh48dGvRsH8NLp43+fYCN9/sbF6rSFt0qK
- SZ27qxfA14As8OGee4rg6hok/iXhnhXzmrzaI5b3nXD8vYM84BKrjmTucfDogYBzvbgo
- vH/aNob8eYav6/nG/O5drpL0dEpNjVl/IVD3yO35u6r9tNJ23xxGMXobzyJ+09170Cgc
- p318fAru+8hASTlTGynnuc33oXmCObKizmClxwJsb3c2sGeXoAjDX2h7Gdp7+9z9CLbC
- BXh3ni57ygJ/5moS7Q/lF/85pYl6UeHYt+iQDZz23FXQ/RTS3DfH/IsIO8b4cGq+QwNK uw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbsr40b40-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 17:10:18 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343HAHk2014148
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 17:10:17 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
- 10:10:16 -0700
-Message-ID: <14ed17e5-de5e-3ea6-84b7-4e7c045c9765@quicinc.com>
-Date:   Wed, 3 May 2023 10:10:11 -0700
+        Wed, 3 May 2023 13:18:24 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7A0F94C07;
+        Wed,  3 May 2023 10:18:08 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D88D2F4;
+        Wed,  3 May 2023 10:18:52 -0700 (PDT)
+Received: from [10.57.82.232] (unknown [10.57.82.232])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A4EBB3F64C;
+        Wed,  3 May 2023 10:18:02 -0700 (PDT)
+Message-ID: <fa8c5e95-b8c8-f4c0-63a0-d3176718d304@arm.com>
+Date:   Wed, 3 May 2023 18:17:58 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 1/4] drm/msm/dsi: Adjust pclk rate for compression
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Subject: Re: [PATCH 18/20] iommu: Add ops->domain_alloc_paging()
+Content-Language: en-GB
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
         Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-1-6bc6f03ae735@quicinc.com>
- <dc926d1c-2637-34a7-df82-c6bd119bfadd@linaro.org>
-Content-Language: en-US
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <dc926d1c-2637-34a7-df82-c6bd119bfadd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WR23AbmmI96jLITRnwSfG4LvSAbFjoSU
-X-Proofpoint-ORIG-GUID: WR23AbmmI96jLITRnwSfG4LvSAbFjoSU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-03_12,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 bulkscore=0 phishscore=0 adultscore=0 suspectscore=0
- spamscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030146
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Samuel Holland <samuel@sholland.org>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Steven Price <steven.price@arm.com>
+References: <18-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <18-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/3/2023 1:33 AM, Dmitry Baryshkov wrote:
-> On 03/05/2023 04:19, Jessica Zhang wrote:
->> Divide the pclk rate by the compression ratio when DSC is enabled
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 14 ++++++++++----
->>   1 file changed, 10 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 43a5ec33eee8..35c69dbe5f6f 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -561,7 +561,8 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host 
->> *msm_host)
->>       clk_disable_unprepare(msm_host->byte_clk);
->>   }
->> -static unsigned long dsi_get_pclk_rate(const struct drm_display_mode 
->> *mode, bool is_bonded_dsi)
->> +static unsigned long dsi_get_pclk_rate(const struct drm_display_mode 
->> *mode,
->> +        struct drm_dsc_config *dsc, bool is_bonded_dsi)
->>   {
->>       unsigned long pclk_rate;
->> @@ -576,6 +577,11 @@ static unsigned long dsi_get_pclk_rate(const 
->> struct drm_display_mode *mode, bool
->>       if (is_bonded_dsi)
->>           pclk_rate /= 2;
->> +    /* If DSC is enabled, divide pclk by compression ratio */
->> +    if (dsc)
->> +        pclk_rate = DIV_ROUND_UP(pclk_rate,
->> +                dsc->bits_per_component * 3 / msm_dsc_get_bpp_int(dsc));
->> +
+On 2023-05-01 19:03, Jason Gunthorpe wrote:
+> This callback requests the driver to create only a __IOMMU_DOMAIN_PAGING
+> domain, so it saves a few lines in a lot of drivers needlessly checking
+> the type.
 > 
-> Don't we loose precision here?
-> Would DIV_ROUND_UP(pclk_rate * bpp, dsc->bpc * 3) be better?
+> More critically, this allows us to sweep out all the
+> IOMMU_DOMAIN_UNMANAGED and IOMMU_DOMAIN_DMA checks from a lot of the
+> drivers, simplifying what is going on in the code and ultimately removing
+> the now-unused special cases in drivers where they did not support
+> IOMMU_DOMAIN_DMA.
+> 
+> domain_alloc_paging() should return a struct iommu_domain that is
+> functionally compatible with ARM_DMA_USE_IOMMU, dma-iommu.c and iommufd.
+> 
+> Be forwards looking and pass in a 'struct device *' argument. We can
+> provide this when allocating the default_domain. No drivers will look at
+> this.
 
-Hi Dmitry,
+As discussed previously, we're going to want a way for callers to pass 
+through various options as well, initially to replace 
+iommu_set_pgtable_quirks() at the very least. Maybe passing an 
+easily-extensible structure around is the even better option? (Wherein 
+we could even strictly enforce "no drivers will look at this" for the 
+moment by leaving it empty)
 
-Acked.
+I'm hoping I'll get another version of my bus ops removal out this 
+cycle; there's obviously a lot of overlap here to figure out.
+
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/iommu.c | 40 ++++++++++++++++++++++++----------------
+>   include/linux/iommu.h |  2 ++
+>   2 files changed, 26 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index f20a031e2910b2..fee417df8f195d 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -93,6 +93,7 @@ static int iommu_bus_notifier(struct notifier_block *nb,
+>   			      unsigned long action, void *data);
+>   static void iommu_release_device(struct device *dev);
+>   static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+> +						 struct device *dev,
+>   						 unsigned type);
+>   static int __iommu_attach_device(struct iommu_domain *domain,
+>   				 struct device *dev);
+> @@ -1618,12 +1619,12 @@ static int iommu_get_def_domain_type(struct device *dev)
+>   }
+>   
+>   static struct iommu_domain *
+> -__iommu_group_alloc_default_domain(struct bus_type *bus,
+> +__iommu_group_alloc_default_domain(struct group_device *gdev,
+>   				   struct iommu_group *group, int req_type)
+>   {
+>   	if (group->default_domain && group->default_domain->type == req_type)
+>   		return group->default_domain;
+> -	return __iommu_domain_alloc(bus, req_type);
+> +	return __iommu_domain_alloc(gdev->dev->bus, gdev->dev, req_type);
+>   }
+>   
+>   /*
+> @@ -1633,9 +1634,9 @@ __iommu_group_alloc_default_domain(struct bus_type *bus,
+>   static struct iommu_domain *
+>   iommu_group_alloc_default_domain(struct iommu_group *group, int req_type)
+>   {
+> -	struct bus_type *bus =
+> -		list_first_entry(&group->devices, struct group_device, list)
+> -			->dev->bus;
+> +	struct group_device *gdev =
+> +		list_first_entry(&group->devices, struct group_device, list);
+
+Eww, why pass around a group_device that nobody wants? Keeping the 
+single dereference of ->dev here, rather than the three above and below, 
+would be cleaner. And it makes my iommu_group_first_device() helper look 
+even more appealing, if I dare say so myself :)
+
+> +	const struct iommu_ops *ops = dev_iommu_ops(gdev->dev);
+>   	struct iommu_domain *dom;
+>   
+>   	lockdep_assert_held(&group->mutex);
+> @@ -1645,14 +1646,15 @@ iommu_group_alloc_default_domain(struct iommu_group *group, int req_type)
+>   	 * domain. This should always be either an IDENTITY or PLATFORM domain.
+>   	 * Do not use in new drivers.
+>   	 */
+> -	if (bus->iommu_ops->default_domain) {
+> +	if (ops->default_domain) {
+>   		if (req_type)
+>   			return ERR_PTR(-EINVAL);
+> -		return bus->iommu_ops->default_domain;
+> +		return ops->default_domain;
+>   	}
+>   
+>   	if (req_type)
+> -		return __iommu_group_alloc_default_domain(bus, group, req_type);
+> +		return __iommu_group_alloc_default_domain(gdev, group,
+> +							  req_type);
+>   
+>   	/*
+>   	 * If ARM32 CONFIG_ARM_DMA_USE_IOMMU is enabled and the driver doesn't
+> @@ -1665,18 +1667,19 @@ iommu_group_alloc_default_domain(struct iommu_group *group, int req_type)
+>   				IS_ENABLED(CONFIG_IOMMU_DMA)));
+>   
+>   		return __iommu_group_alloc_default_domain(
+> -			bus, group, IOMMU_DOMAIN_IDENTITY);
+> +			gdev, group, IOMMU_DOMAIN_IDENTITY);
+>   	}
+>   
+>   	/* The driver gave no guidance on what type to use, try the default */
+> -	dom = __iommu_group_alloc_default_domain(bus, group, iommu_def_domain_type);
+> +	dom = __iommu_group_alloc_default_domain(gdev, group,
+> +						 iommu_def_domain_type);
+>   	if (dom)
+>   		return dom;
+>   
+>   	/* Otherwise IDENTITY and DMA_FQ defaults will try DMA */
+>   	if (iommu_def_domain_type == IOMMU_DOMAIN_DMA)
+>   		return NULL;
+> -	dom = __iommu_group_alloc_default_domain(bus, group, IOMMU_DOMAIN_DMA);
+> +	dom = __iommu_group_alloc_default_domain(gdev, group, IOMMU_DOMAIN_DMA);
+>   	if (!dom)
+>   		return NULL;
+>   
+> @@ -1930,6 +1933,7 @@ void iommu_set_fault_handler(struct iommu_domain *domain,
+>   EXPORT_SYMBOL_GPL(iommu_set_fault_handler);
+>   
+>   static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+> +						 struct device *dev,
+>   						 unsigned type)
+>   {
+>   	struct iommu_domain *domain;
+> @@ -1940,7 +1944,11 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+>   	if (type == IOMMU_DOMAIN_IDENTITY && bus->iommu_ops->identity_domain)
+>   		return bus->iommu_ops->identity_domain;
+>   
+> -	domain = bus->iommu_ops->domain_alloc(type);
+> +	if ((type == IOMMU_DOMAIN_UNMANAGED || type == IOMMU_DOMAIN_DMA) &&
+
+Logically, "type & __IOMMU_DOMAIN_PAGING", otherwise we're already 
+missing IOMMU_DOMAIN_DMA_FQ. Except maybe that's deliberate? Not sure 
+how much I like the idea of a introducing new interface design that we 
+clearly can't even convert all the current drivers to as it stands :/
+
+> +	    bus->iommu_ops->domain_alloc_paging)
+> +		domain = bus->iommu_ops->domain_alloc_paging(dev);
+> +	else
+> +		domain = bus->iommu_ops->domain_alloc(type);
+>   	if (!domain)
+>   		return NULL;
+>   
+> @@ -1964,7 +1972,7 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+>   
+>   struct iommu_domain *iommu_domain_alloc(struct bus_type *bus)
+>   {
+> -	return __iommu_domain_alloc(bus, IOMMU_DOMAIN_UNMANAGED);
+> +	return __iommu_domain_alloc(bus, NULL, IOMMU_DOMAIN_UNMANAGED);
+>   }
+>   EXPORT_SYMBOL_GPL(iommu_domain_alloc);
+>   
+> @@ -3079,15 +3087,15 @@ static int __iommu_group_alloc_blocking_domain(struct iommu_group *group)
+>   	if (group->blocking_domain)
+>   		return 0;
+>   
+> -	group->blocking_domain =
+> -		__iommu_domain_alloc(dev->dev->bus, IOMMU_DOMAIN_BLOCKED);
+> +	group->blocking_domain = __iommu_domain_alloc(dev->dev->bus, dev->dev,
+> +						      IOMMU_DOMAIN_BLOCKED);
+>   	if (!group->blocking_domain) {
+>   		/*
+>   		 * For drivers that do not yet understand IOMMU_DOMAIN_BLOCKED
+>   		 * create an empty domain instead.
+>   		 */
+>   		group->blocking_domain = __iommu_domain_alloc(
+> -			dev->dev->bus, IOMMU_DOMAIN_UNMANAGED);
+> +			dev->dev->bus, dev->dev, IOMMU_DOMAIN_UNMANAGED);
+>   		if (!group->blocking_domain)
+>   			return -EINVAL;
+>   	}
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index f6a28ab78e607e..cc9aff2d213eec 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -227,6 +227,7 @@ struct iommu_iotlb_gather {
+>    * struct iommu_ops - iommu ops and capabilities
+>    * @capable: check capability
+>    * @domain_alloc: allocate iommu domain
+> + * @domain_alloc_paging: Allocate an IOMMU_DOMAIN_UNMANAGED
+
+...except for the other types of paging-capable domain which also exist 
+and it also allocates :/
+
+There remains good reason to keep track of the distinct subtypes of 
+paging domain within the IOMMU core (i.e. between iommu.c and 
+dma-iommu.c) even if drivers do finally get absolved of all the details. 
+Sure we could come up with any number of different ways to encode those 
+distinctions, but they wouldn't be objectively better than the domain 
+flags and types we already have, they'd just be different.
 
 Thanks,
+Robin.
 
-Jessica Zhang
-
-> 
->>       return pclk_rate;
->>   }
->> @@ -585,7 +591,7 @@ unsigned long dsi_byte_clk_get_rate(struct 
->> mipi_dsi_host *host, bool is_bonded_d
->>       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->>       u8 lanes = msm_host->lanes;
->>       u32 bpp = dsi_get_bpp(msm_host->format);
->> -    unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
->> +    unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, 
->> is_bonded_dsi);
->>       u64 pclk_bpp = (u64)pclk_rate * bpp;
->>       if (lanes == 0) {
->> @@ -604,7 +610,7 @@ unsigned long dsi_byte_clk_get_rate(struct 
->> mipi_dsi_host *host, bool is_bonded_d
->>   static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool 
->> is_bonded_dsi)
->>   {
->> -    msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, 
->> is_bonded_dsi);
->> +    msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, 
->> msm_host->dsc, is_bonded_dsi);
->>       msm_host->byte_clk_rate = dsi_byte_clk_get_rate(&msm_host->base, 
->> is_bonded_dsi,
->>                               msm_host->mode);
->> @@ -634,7 +640,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host 
->> *msm_host, bool is_bonded_dsi)
->>       dsi_calc_pclk(msm_host, is_bonded_dsi);
->> -    pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) 
->> * bpp;
->> +    pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, 
->> is_bonded_dsi) * bpp;
->>       do_div(pclk_bpp, 8);
->>       msm_host->src_clk_rate = pclk_bpp;
->>
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
+>    * @probe_device: Add device to iommu driver handling
+>    * @release_device: Remove device from iommu driver handling
+>    * @probe_finalize: Do final setup work after the device is added to an IOMMU
+> @@ -258,6 +259,7 @@ struct iommu_ops {
+>   
+>   	/* Domain allocation and freeing by the iommu driver */
+>   	struct iommu_domain *(*domain_alloc)(unsigned iommu_domain_type);
+> +	struct iommu_domain *(*domain_alloc_paging)(struct device *dev);
+>   
+>   	struct iommu_device *(*probe_device)(struct device *dev);
+>   	void (*release_device)(struct device *dev);
