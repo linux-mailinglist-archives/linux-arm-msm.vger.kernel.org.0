@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C6F6E6F59F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 16:27:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2A7F6F5A47
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 16:40:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230095AbjECO1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 10:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48648 "EHLO
+        id S230212AbjECOkO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 10:40:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229757AbjECO1d (ORCPT
+        with ESMTP id S230149AbjECOkN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 10:27:33 -0400
+        Wed, 3 May 2023 10:40:13 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDB55BB8;
-        Wed,  3 May 2023 07:27:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ADF64ED2;
+        Wed,  3 May 2023 07:40:12 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B60CA62DF1;
-        Wed,  3 May 2023 14:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17874C433D2;
-        Wed,  3 May 2023 14:27:31 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CA8FB62E29;
+        Wed,  3 May 2023 14:40:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292FCC433EF;
+        Wed,  3 May 2023 14:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683124051;
-        bh=W2XOHQb6yKkoN3xJSZAY+6+X+L/JcA2LzNHxTQz5qc8=;
+        s=k20201202; t=1683124811;
+        bh=8pMKmLc4xhbl/d8v0jF7pIE0f0XSP8XV5WPvs8RNh94=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ITIgoY6nvKH+KUTYPsEf3pUMUdSpykTJkvu7bUfGyz7B2VLTm49tAqcKuarr/19Yz
-         80gzR4nDoDZ24YmfvmtE9sS6LkDbEjHEaYV7NWuS99i+QT5/T0dAiodefrZqMstP1h
-         45VhCvQFPNfXeN1wpRdZJBWsMtitxE61gk8/GTComn2b/fdiD7mRxxnOMBtPrtiQDA
-         w3Shyh4C1dv0rEdtJlHioEJ+VPuHpCa6BdZMy1FePNycjnk46QsMkJr2HIM8X12Ce+
-         agbWH4ZG2xvPMLBGTLLWBd5MerheffmuLpodwSBmifl7ICY79E/Ys1YJa+eYTlLOTk
-         io5RIaUQvWoww==
+        b=jGe8wc2wdPxW4IWW+RScbyG2F6z8C9e4TAO/38yubQjbLiAcr7sh7MHOqCQiau/85
+         OlZ+khbWrTVZxAnPxrJwPbneaWwJAqw2SOGDSePYSWlUan9TJ3rkWUpYCKJDsXJOEc
+         tx5z6oS7tSunK+9FjDmBPl0e+cHXC2udTP0EyAIczAGxAnR2ut1n66JsxAElEzm9zE
+         S2MYLY9877kzNZefayPoe4qagN+KfzCrbsVjM2QYHcScW50eIyvPawZUePQbqHdca7
+         +zm3rs6qFSv+W+TuQkyrOybbwCPnxLJLsLstviXxxuIZF1Flx07ZYO2DSwQEHC9+dP
+         1k7DkB8HqrxdQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1puDSC-00072Y-J8; Wed, 03 May 2023 16:27:36 +0200
-Date:   Wed, 3 May 2023 16:27:36 +0200
+        id 1puDeS-0007WX-SA; Wed, 03 May 2023 16:40:16 +0200
+Date:   Wed, 3 May 2023 16:40:16 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
@@ -53,17 +53,15 @@ Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
         quic_jackp@quicinc.com, quic_harshq@quicinc.com,
         ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v7 5/9] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <ZFJvWAgZ1LGloS5N@hovoldconsulting.com>
+Subject: Re: [PATCH v7 7/9] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZFJyUPqED2q9R8v8@hovoldconsulting.com>
 References: <20230501143445.3851-1-quic_kriskura@quicinc.com>
- <20230501143445.3851-6-quic_kriskura@quicinc.com>
- <ZFJBN2i5tXkY8ARA@hovoldconsulting.com>
- <910de571-caaf-97df-2065-e16efa454bad@quicinc.com>
+ <20230501143445.3851-8-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <910de571-caaf-97df-2065-e16efa454bad@quicinc.com>
+In-Reply-To: <20230501143445.3851-8-quic_kriskura@quicinc.com>
 X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -74,39 +72,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 03, 2023 at 07:50:57PM +0530, Krishna Kurapati PSSNV wrote:
-> On 5/3/2023 4:40 PM, Johan Hovold wrote:
-> > On Mon, May 01, 2023 at 08:04:41PM +0530, Krishna Kurapati wrote:
-> >> Currently the DWC3 driver supports only single port controller
-> >> which requires at most one HS and one SS PHY.
-> >>
-> >> But the DWC3 USB controller can be connected to multiple ports and
-> >> each port can have their own PHYs. Each port of the multiport
-> >> controller can either be HS+SS capable or HS only capable
-> >> Proper quantification of them is required to modify GUSB2PHYCFG
-> >> and GUSB3PIPECTL registers appropriately.
-> >>
-> >> Add support for detecting, obtaining and configuring phy's supported
-> >> by a multiport controller and limit the max number of ports
-> >> supported to 4.
-> >>
-> >> Signed-off-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> >> ---
-> >>   drivers/usb/dwc3/core.c | 262 +++++++++++++++++++++++++++++-----------
-> >>   drivers/usb/dwc3/core.h |  12 +-
-> >>   drivers/usb/dwc3/drd.c  |  13 +-
-> >>   3 files changed, 209 insertions(+), 78 deletions(-)
-> > 
-> > Note that this patch no longer applies and you need to rebase the series
-> > on mainline (e.g. including commit 1d72fab47656 ("USB: dwc3: refactor
-> > phy handling").
+On Mon, May 01, 2023 at 08:04:43PM +0530, Krishna Kurapati wrote:
+> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+> platforms.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 64 ++++++++++++++++++++++++++
+>  1 file changed, 64 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 8fa9fbfe5d00..0e4fb286956b 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3133,6 +3133,70 @@ usb_1_role_switch: endpoint {
+>  			};
+>  		};
+>  
+> +		usb_2: usb@a4f8800 {
+> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
+> +			reg = <0 0x0a4f8800 0 0x400>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
+> +				 <&gcc GCC_USB30_MP_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
+> +				 <&gcc GCC_USB30_MP_SLEEP_CLK>,
+> +				 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
+> +				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
+> +			clock-names = "cfg_noc", "core", "iface", "sleep", "mock_utmi",
+> +				      "noc_aggr", "noc_aggr_north", "noc_aggr_south", "noc_sys";
+> +
+> +			assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_MP_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <200000000>;
+> +
+> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+> +						<&pdc 126 IRQ_TYPE_EDGE_RISING>,
+> +						<&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
+> +						<GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +						<GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+> +						<GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
+> +						<GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
 
->    This series is rebased on top of usb-next (on top of the above 
-> mentioned patch). Probably that is why its not applying on top of 
-> linux-next.
+This looks wrong. You're missing the &intc phandle for the last four
+entries:
 
-Indeed it is. Sorry about the noise. Let me go double check why it did
-not apply here. Perhaps I'm missing something else from usb-next.
+  DTC     arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3372.4-3378.17: Warning (interrupts_extended_property): /soc@0/usb@a4f8800:interrupts-extended: cell 10 is not a phandle reference
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3349.22-3411.5: Warning (interrupts_extended_property): /soc@0/usb@a4f8800: Missing property '#interrupt-cells' in node /soc@0/display-subsystem@ae00000/displayport-controller@aea0000/opp-table or bad phandle (referred from interrupts-extended[10])
+  also defined at /home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sa8540p-ride.dts:312.8-317.3
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3372.4-3378.17: Warning (interrupts_extended_property): /soc@0/usb@a4f8800:interrupts-extended: cell 10 is not a phandle reference
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3349.22-3411.5: Warning (interrupts_extended_property): /soc@0/usb@a4f8800: Missing property '#interrupt-cells' in node /soc@0/display-subsystem@ae00000/displayport-controller@ae9a000/ports/port@0/endpoint or bad phandle (referred from interrupts-extended[10])
+  also defined at /home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sa8295p-adp.dts:587.8-594.3
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3372.4-3378.17: Warning (interrupts_extended_property): /soc@0/usb@a4f8800:interrupts-extended: cell 10 is not a phandle reference
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3349.22-3411.5: Warning (interrupts_extended_property): /soc@0/usb@a4f8800: Missing property '#interrupt-cells' in node /interconnect-mmss-noc or bad phandle (referred from interrupts-extended[10])
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3372.4-3378.17: Warning (interrupts_extended_property): /soc@0/usb@a4f8800:interrupts-extended: cell 10 is not a phandle reference
+/home/johan/work/linaro/src/linux/arch/arm64/boot/dts/qcom/sc8280xp.dtsi:3349.22-3411.5: Warning (interrupts_extended_property): /soc@0/usb@a4f8800: Missing property '#interrupt-cells' in node /soc@0/phy@88e7000 or bad phandle (referred from interrupts-extended[10])
+
+> +			interrupt-names = "dp_hs_phy_irq", "dm_hs_phy_irq",
+> +						"ss_phy_irq", "pwr_event_1",
+> +						"pwr_event_2", "pwr_event_3",
+> +						"pwr_event_4";
+
+Also the order does not match the binding where you had the pwr_event
+interrupts first.
 
 Johan
