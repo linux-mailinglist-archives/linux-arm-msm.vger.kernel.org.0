@@ -2,66 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F6496F5F79
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 21:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD4286F5F80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 21:58:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbjECT5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 15:57:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35438 "EHLO
+        id S229644AbjECT6Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 15:58:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjECT5F (ORCPT
+        with ESMTP id S229544AbjECT6P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 15:57:05 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DF627DB4;
-        Wed,  3 May 2023 12:57:04 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-64359d9c531so576480b3a.3;
-        Wed, 03 May 2023 12:57:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683143824; x=1685735824;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tw+MfuvJyy7U9A8Ej/IC8kSXl0aMwhX8e58xBtI5EH4=;
-        b=RiDuQr0rvOl6JjEq+TjkCKTPjddt/JtS5HkqLrkANiN1mpl9pBD8b35fTSzjyWU+Ji
-         xn3Q0WCHgHttxbQEPMdIwBNv7pD5h5wWED+Cx6B87pBkUwRZ5Jx7AtIxMjobK5fB9JmV
-         zdo7AKyww1HKF4ZVti8uJXGHPc7D/X6KCviKvhjoElI6zKyC/C9HAPy+QV9Y1vBFNI0m
-         TMig6QON2DUqK9ks/X0v4EqbXTQH1iwtifoB2zAhgrrcteDk4onKg6VfTiwBQCKi2s12
-         fujNU6cy1nqUz6guQy95cyiAJZJ+q2FiQQhTKfOHBukwcNOJJKsI7pbC+dBXCI1VM+Ye
-         H8SA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683143824; x=1685735824;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tw+MfuvJyy7U9A8Ej/IC8kSXl0aMwhX8e58xBtI5EH4=;
-        b=daPUSHp0EJe4t8aim9jCl9rnVKnUZVcxw0te4cHzW5CxWHGteos/wKEYcbQcpoHxXW
-         5BkfOc5UrWc9lhKBqw6YKvccBOr8XkZu+8ga+XPRK9I0FW/Wi7N7ZcQ+y2ztBLXHFDyQ
-         uGYVlgnxS9++IbKMVsXEQCRKyIvOiR3T7Xxqkn+mCj6JSXzyA4vTZbo3rhIilzs6Nh7G
-         nSnx7vcuvsrmrhmUXi8e7gkVtzYUiSscRDJcr96WGB987v2WYaUeQYYkbIDiu9tH0C/y
-         umM2qQAW2DIfFKy2dm/VT+J0K9qVVR08FvG13IWutNJzdUm3/3/6ZxWjVKlv4L0npACo
-         l+bA==
-X-Gm-Message-State: AC+VfDxL+orRHEm6/hX1Je3MItxNWy2Ch3OoynKYohUFAh4wDa6DYwqT
-        4DM9beym9E87sDMQ41nenj9ksuHG1nMdL8aHGqUEJa+Y
-X-Google-Smtp-Source: ACHHUZ55Ab4kZiRFReZsCAO79p9Mc6rj3ckjxcfIk4p+5Hx/eRXIA98kT4zvEcYMKN0nQYgKcA9qLBUNHJjn2D7eRwU=
-X-Received: by 2002:a05:6a00:2347:b0:643:96e:666b with SMTP id
- j7-20020a056a00234700b00643096e666bmr4990164pfj.34.1683143823964; Wed, 03 May
- 2023 12:57:03 -0700 (PDT)
+        Wed, 3 May 2023 15:58:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C04D4C29;
+        Wed,  3 May 2023 12:58:14 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343JOU6M006258;
+        Wed, 3 May 2023 19:58:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UCOhXWCZzsXVE1aRTaRL66l6NR89OJhY/cqL2K78T4o=;
+ b=bmSSJIsr/lTaIj7MnMRByLsQybF/1CZxfchFpL1pFkq2PzgzAErxeVhpZjPnaCUvRQqR
+ iyfNyLxsMFwxTTa8VEHNvQuP8mEm4JRpeHsomJjQUPMT8HrzkoPtNBiDmGl+lenz4bws
+ yMf0fWTvRvu56i6flbEkchQnL6gg12vNj+SxWSjmeLZDts0juXVfn1EDmH7R9UAUMRua
+ BLkEkT7f9LuySOgp4iHTYApqb/I4mE/KLY+9K9PRbpL4eAD6IXITiDKOtPlN5/lrjXmf
+ 31mhz4gtrjr3ZiyfBsyOKHiiV9Zx0K3wtZpEu5pz5CYLmJcpIyEZGIgiLzTuFNxxm33h Zg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qb9bhtra4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 May 2023 19:58:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343Jw2AT006878
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 May 2023 19:58:02 GMT
+Received: from [10.71.110.189] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
+ 12:58:01 -0700
+Message-ID: <fe691246-93ee-7d84-aa6b-3d4ef51a6381@quicinc.com>
+Date:   Wed, 3 May 2023 12:58:01 -0700
 MIME-Version: 1.0
-References: <20230426185647.180166-1-robimarko@gmail.com> <b5df5692-5319-b5ff-0e9a-c66fb1f8358d@linaro.org>
-In-Reply-To: <b5df5692-5319-b5ff-0e9a-c66fb1f8358d@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 3 May 2023 21:56:53 +0200
-Message-ID: <CAOX2RU5WYm-wJXByAx8yavDPhR1=2MHjj0Kh1z6h_EHhS8DVGw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: ipq8074: Add QUP5 SPI node
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 3/7] drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK
+ and PP_BLK_TE marcos
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683061382-32651-4-git-send-email-quic_khsieh@quicinc.com>
+ <4315e96f-ed29-92aa-9549-d6fc9d820de6@linaro.org>
+ <648e7cca-8bb1-73f0-2bbb-0a6b81df3882@quicinc.com>
+ <a40c72c2-3483-020c-907e-6c7d84e88fbd@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <a40c72c2-3483-020c-907e-6c7d84e88fbd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NCubpt8ns_d3_3WbCZ13bunCw8m2fhg9
+X-Proofpoint-ORIG-GUID: NCubpt8ns_d3_3WbCZ13bunCw8m2fhg9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-03_14,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 suspectscore=0 spamscore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030171
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,40 +89,118 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 1 May 2023 at 12:03, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 26/04/2023 20:56, Robert Marko wrote:
-> > Add node to support the QUP5 SPI controller inside of IPQ8074.
-> > Some devices use this bus in order to manage external switches.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > index 64c2a30d9c25..4a682e3442f8 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > @@ -774,6 +774,20 @@ blsp1_i2c5: i2c@78b9000 {
-> >                       status = "disabled";
-> >               };
-> >
-> > +             blsp1_spi5: spi@78b9000 {
-> > +                     compatible = "qcom,spi-qup-v2.2.1";
-> > +                     #address-cells = <1>;
-> > +                     #size-cells = <0>;
-> > +                     reg = <0x78b9000 0x600>;
->
-> reg is always after compatible.
 
-I agree usually, but here its just matching the same pattern like
-other BLSP nodes.
-
-Regards,
-Robert
+On 5/3/2023 11:55 AM, Dmitry Baryshkov wrote:
+> On 03/05/2023 20:45, Kuogee Hsieh wrote:
+>>
+>> On 5/2/2023 3:42 PM, Dmitry Baryshkov wrote:
+>>> On 03/05/2023 00:02, Kuogee Hsieh wrote:
+>>>> At legacy chipsets, it required DPU_PINGPONG_DSC bit be set to 
+>>>> indicate
+>>>> pingpong ops functions are required to complete DSC data path setup if
+>>>> this chipset has DSC hardware block presented. This patch add
+>>>> DPU_PINGPONG_DSC bit to both PP_BLK and PP_BLK_TE marcos if it has DSC
+>>>> hardware block presented.
+>>>>
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> ---
+>>>>   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    | 12 +++++-----
+>>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  8 +++----
+>>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 26 
+>>>> ++++++++++------------
+>>>>   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 24 
+>>>> ++++++++++----------
+>>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 26 
+>>>> ++++++++++------------
+>>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  4 ++--
+>>>>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  2 +-
+>>>>   .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  2 +-
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  8 +++----
+>>>>   9 files changed, 54 insertions(+), 58 deletions(-)
+>>>>
+>>>> diff --git 
+>>>> a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+>>>> index 17f821c..b7cd746 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+>>>> @@ -112,16 +112,16 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
+>>>>   };
+>>>>     static const struct dpu_pingpong_cfg msm8998_pp[] = {
+>>>> -    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, 
+>>>> sdm845_pp_sblk_te,
+>>>> -            DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>>>> +    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 
+>>>> BIT(DPU_PINGPONG_DSC), 0,
+>>>> +            sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
+>>>> -    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, 
+>>>> sdm845_pp_sblk_te,
+>>>> -            DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>>>> +    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 
+>>>> BIT(DPU_PINGPONG_DSC), 0,
+>>>> +            sdm845_pp_sblk_te, DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
+>>>> -    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
+>>>> +    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, 0, sdm845_pp_sblk,
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
+>>>> -    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
+>>>> +    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, 0, sdm845_pp_sblk,
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
+>>>
+>>> Just to doublecheck: why don't we have DPU_PINGPONG_DSC for PP_3/_4? 
+>>> We do have them on sdm845. Is it because we should not use DSC with 
+>>> thos PINGPONG blocks?
+>>>
+>> I think it only have two DSPP connect to pp blocks
 >
-> Best regards,
-> Krzysztof
+> So, can they be connected to PP3/4 or not?
+
+no, my previous reply is not correct.
+
+original i though pp_3/_4 are for write back.
+
+but this not correct, 2 dspp can connect to pp_3/_4 also.
+
+I will add DPU_PINGPONG_DSC to pp_3/_4.
+
+
+>
+>>>>   };
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+>>>> index ceca741..8888bd9 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+>>>> @@ -110,16 +110,16 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
+>>>>   };
+>>>>     static const struct dpu_pingpong_cfg sdm845_pp[] = {
+>>>> -    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 0, 
+>>>> sdm845_pp_sblk_te,
+>>>> +    PP_BLK_TE("pingpong_0", PINGPONG_0, 0x70000, 
+>>>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12)),
+>>>> -    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 0, 
+>>>> sdm845_pp_sblk_te,
+>>>> +    PP_BLK_TE("pingpong_1", PINGPONG_1, 0x70800, 
+>>>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk_te,
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13)),
+>>>> -    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 0, sdm845_pp_sblk,
+>>>> +    PP_BLK("pingpong_2", PINGPONG_2, 0x71000, 
+>>>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk,
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14)),
+>>>> -    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 0, sdm845_pp_sblk,
+>>>> +    PP_BLK("pingpong_3", PINGPONG_3, 0x71800, 
+>>>> BIT(DPU_PINGPONG_DSC), 0, sdm845_pp_sblk,
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+>>>>               DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
+>>>>
+>>>
+>>> [skipped the rest, looks good to me]
+>>>
 >
