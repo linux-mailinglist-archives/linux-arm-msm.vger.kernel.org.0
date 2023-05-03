@@ -2,112 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA99F6F61CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 01:10:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0ADED6F61F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 01:16:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbjECXKc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 19:10:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
+        id S229656AbjECXQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 19:16:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjECXKb (ORCPT
+        with ESMTP id S229536AbjECXQg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 19:10:31 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 312DF6E81
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 16:10:23 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A7B34401D7;
-        Thu,  4 May 2023 01:10:21 +0200 (CEST)
-Date:   Thu, 4 May 2023 01:10:20 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 0/7] add DSC 1.2 dpu supports
-Message-ID: <pctbvyuh6jpgm7ey7xlsjc3bg56gehtn7agl6n2uk7ntly2q5s@sp7wund5phee>
-References: <1683144639-26614-1-git-send-email-quic_khsieh@quicinc.com>
+        Wed, 3 May 2023 19:16:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 771157ABA;
+        Wed,  3 May 2023 16:16:18 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343MVgG3003181;
+        Wed, 3 May 2023 23:16:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UxTkhBpsnpmY6xxucMQdSRc3ibNabuhL7IWCyy9HV58=;
+ b=OxEwRao2gdkU/BHZ/KnnqFL4xHMbfOKOBYGilHy84CaNgaTnrtGxGtXlGYyo2/QyA7dK
+ yTuiBPmaxK0O9MaMVF4c/zhiXxu7TZadiHBYbcPiZ528Hxr+QJ/gPhoafHfN3PAbqGgy
+ ZJs2GrHp98yBI2oXsKBDVd1znubcPATpXpdx1w0FF/Tr7j0jZuh3zoXUYEcnAz2PhJwQ
+ xTXPykJAAxUCmDOAFmx18Cm1IY+Z4q0oMkTmXhRVmIe3cBCyn56L2cx9d/2Iego8PcXF
+ 2mMUz1turLRfcpa0ZBslNhnDI6aMDfpkMbk8PziQ+jo6MErSA4wr4Sbbwz1k6SrymO5P TA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbvghgg7x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 03 May 2023 23:16:11 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343NGA4n025281
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 3 May 2023 23:16:10 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
+ 16:16:10 -0700
+Message-ID: <714d6e3a-4ddd-bf35-0949-ce162565c000@quicinc.com>
+Date:   Wed, 3 May 2023 16:16:09 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1683144639-26614-1-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 4/4] drm/msm/dpu: Enable compression for command mode
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
+ <20230405-add-dsc-support-v1-4-6bc6f03ae735@quicinc.com>
+ <hxqxnfcydzyfrlvihmil3gecan6p6xyjw44gielu63ltgtqul7@xwvoprzofq6g>
+ <d4b7a747-77a0-95eb-1201-c8b1c80defe3@quicinc.com>
+ <3dddb676-750f-0bc7-7999-f8880c63931b@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <3dddb676-750f-0bc7-7999-f8880c63931b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: U2GBB1urOEYfUsAzrC2_eYS2JyTqpd4e
+X-Proofpoint-GUID: U2GBB1urOEYfUsAzrC2_eYS2JyTqpd4e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-03_14,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ lowpriorityscore=0 impostorscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 clxscore=1015 phishscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2303200000 definitions=main-2305030200
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-03 13:10:32, Kuogee Hsieh wrote:
-> This series adds the DPU side changes to support DSC 1.2 encoder. This
-> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
-> The DSI and DP parts will be pushed later on top of this change.
-> This seriel is rebase on [1], [2] and catalog fixes from [3].
 
-I left a bunch of comments, suggestions and questions on a few patches
-and the cover letter in v3, but some do not seem to have been
-addressed/answered.  Can you take a look?
 
-> Abhinav Kumar (2):
->   drm/msm/dpu: add dsc blocks for remaining chipsets in catalog
->   drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
+On 5/3/2023 12:51 PM, Dmitry Baryshkov wrote:
+> On 03/05/2023 22:04, Jessica Zhang wrote:
+>>
+>>
+>> On 5/3/2023 12:28 AM, Marijn Suijten wrote:
+>>> On 2023-05-02 18:19:15, Jessica Zhang wrote:
+>>>> Add a dpu_hw_intf op to enable data compression.
+>>>>
+>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 ++++
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 7 +++++++
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 2 ++
+>>>>   3 files changed, 13 insertions(+)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>> index 74470d068622..4321a1aba17f 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>>>
+>>> Can we have INTF DCE on video-mode encoders as well?
+>>
+>> Hi Marijn,
+>>
+>> Currently, there's no way to validate DSC for video mode as I've only 
+>> made changes to support DSI for command mode. We are planning to post 
+>> changes to support DSC over DP, which will include changes for video 
+>> mode.
 > 
-> Kuogee Hsieh (5):
->   drm/msm/dpu: add DPU_PINGPONG_DSC feature bit
->   drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK and PP_BLK_TE
->     marcos
+> If I remember correctly, HDK8350 panel should support DSC for both 
+> command and video modes.
 
-Since I did not get to review this patch yet:
+Hi Dmitry,
 
-  macros*
+Correct, however we are planning to submit the video mode changes with 
+the DP DSC v1.2 changes.
 
-But remember that, as per my comment in the v3 cover letter, it is
-conflicting with the catalog changes in [3].
+My current panel driver/dt changes are for command mode, so we would 
+have to spent time to also add video mode support. It would be faster to 
+land the video mode changes with DP support as that's already a work in 
+progress.
 
-- Marijn
-
->   drm/msm/dpu: add PINGPONG_NONE to disconnect DSC from PINGPONG
->   drm/msm/dpu: add support for DSC encoder v1.2 engine
->   drm/msm/dpu: separate DSC flush update out of interface
 > 
->  drivers/gpu/drm/msm/Makefile                       |   1 +
->  .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |  23 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |   8 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  26 +-
->  .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  35 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  26 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |   4 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |   2 +-
->  .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |   2 +-
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
->  .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
->  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  16 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  33 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  34 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  22 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |   7 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 385 +++++++++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
->  25 files changed, 650 insertions(+), 83 deletions(-)
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+>>
+>>>
+>>>> @@ -72,6 +72,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+>>>>                   phys_enc->hw_intf,
+>>>>                   true,
+>>>>                   phys_enc->hw_pp->idx);
+>>>> +
+>>>> +    if (phys_enc->dpu_kms->catalog->caps->has_data_compress &&
+>>>
+>>> As per my suggestion on patch 3/4, drop the flag and check above and
+>>> only check if the function is NULL (below).
+>>
+>> Acked.
+>>
+>>>
+>>>> +            phys_enc->hw_intf->ops.enable_compression)
+>>>> +        phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
+>>>>   }
+>>>>   static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int 
+>>>> irq_idx)
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> index 671048a78801..4ce7ffdd7a05 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>>> @@ -64,10 +64,16 @@
+>>>>   #define INTF_CFG2_DATABUS_WIDEN    BIT(0)
+>>>>   #define INTF_CFG2_DATA_HCTL_EN    BIT(4)
+>>>
+>>> These should probably be reindented to match the below... And the rest
+>>> of the defines use spaces instead of tabs.
+>>
+>> Fair point, though I think fixing the whitespace for these 2 macros 
+>> specifically might be better in a more relevant series.
+>>
+>> With that being said, I'll change the spacing of the DATA_COMPRESS bit 
+>> to spaces instead of tabs.
+>>
+>>>
+>>>> +#define INTF_CFG2_DCE_DATA_COMPRESS    BIT(12)
+>>>>   #define INTF_MISR_CTRL            0x180
+>>>>   #define INTF_MISR_SIGNATURE        0x184
+>>>
+>>> This does not seem to apply on top of:
+>>> https://lore.kernel.org/linux-arm-msm/20230411-dpu-intf-te-v4-10-27ce1a5ab5c6@somainline.org/
+>>
+>> Seems like I'm missing some patches from that series on my working 
+>> branch. Will rebase on top of the full series for the v2.
+>>
+>>>
+>>>> +static inline void dpu_hw_intf_enable_compression(struct 
+>>>> dpu_hw_intf *ctx)
+>>>
+>>> Why inline?  This is used as a pointer callback.
+>>
+>> Acked, will remove the inline.
+>>
+>>>
+>>>> +{
+>>>> +    DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, 
+>>>> INTF_CFG2_DCE_DATA_COMPRESS);
+>>>
+>>> dpu_hw_intf_setup_timing_engine() also programs INTF_CONFIG2.  Is it
+>>> double-buffered, or is that config **always** unused when DSI CMD mode
+>>> is used in conjunction with DSC/DCE?  Otherwise this should perhaps OR
+>>> the bitflag into the register, or write the whole thing at once in
+>>> dpu_hw_intf_setup_timing_engine()?
+>>
+>> For command mode, INTF_CONFIG2 is unused aside from setting 
+>> DATA_COMPRESS for DSC.
+>>
+>> Since setup_timing_engine() is only used for video mode, the 
+>> corresponding changes will be made in the DSC v1.2 for DP changes.
 > 
+> So, for command mode panels is this the only bit that should be set in 
+> INTF_CFG2?
+
+Yep, outside of the changes in this patch, INTF_CONFIG2 is only used in 
+the video mode setup_timing_engine() method.
+
+Thanks,
+
+Jessica Zhang
+
 > -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
+> With best wishes
+> Dmitry
 > 
