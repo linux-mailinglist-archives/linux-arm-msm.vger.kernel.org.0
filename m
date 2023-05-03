@@ -2,154 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECF406F5329
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 10:33:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 093976F536F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 10:36:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbjECIdY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 04:33:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52668 "EHLO
+        id S229965AbjECIgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 04:36:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjECIdV (ORCPT
+        with ESMTP id S230093AbjECIgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 04:33:21 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E4BE4C08
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 01:33:19 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ac6e24b985so6978711fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 01:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683102797; x=1685694797;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dbV4Q4B3dhOAP3AwRTAGuOAV9YZ9rp87vA7n2p2FyUI=;
-        b=Fd/D75Fki7x/u0oVTyoPqv/3gp1gAlzCO8im9+l7wx9iJ4CJ4eLFsK/+QjdWvxEmw8
-         ID48odi4GVfVbXfNpQSWmkzMc+kMMuf78RxDTRZFkTtDMHoGzqu1BHsBy3SB5QSZwfGp
-         rPq2JWoAeBSK+kp3F3LH2+aiI4QkcERS2IvCgNFA+f0IJHRIDMgI8786EjQyHqS22WT3
-         fyR69BjWT3LXUB8LfLgXXKLBSCaJUjRp76W8fZLUe+STxrh3omMG6zGt8otzJdbBOXbB
-         HomO3Q07tq9hdEXveN/n+YerdYz+aZtm+j7veLfB0EyefU1KpFnpeuHHz7vm3giZqK8y
-         TjwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683102797; x=1685694797;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dbV4Q4B3dhOAP3AwRTAGuOAV9YZ9rp87vA7n2p2FyUI=;
-        b=d7IutIbimQOdvNoHte0SQfjMZis3L20zU8CuTipE4cLRLqGQlgJijz/STzc/TO9uP1
-         jaH1t5Qp2TEnqA8AMfthWBkCduDDt0LWC6bJ0wqDzBFXhgpgrPv3Iu99YDg95/52Ao4V
-         bpxo7NrnaDGmfjzHPdD7az70qBUJGOv+QPll2g+uf3YrCk5QpBhS3wjMmGPkW9GxCGyH
-         0MMuTcwHyhv5wZ/5Wbl1yq59MBN0zcIuzmmmozK0CkKvxzW2zEcMzfxa4cE+NXEyYSrf
-         iH+AxJMVzcJInHwUIHRGem4vTczxAH8A3sJz5QahifDRsKS0qiewum9NgxUAWYUJYe1n
-         LZfw==
-X-Gm-Message-State: AC+VfDzG8rLnFQ/R8+BcVBn1OW8Y1xqRJB5TWJdxxk2Jj0gMtqZ55EJX
-        gWivf0C6qehpTfdglbWcdkdyd7adusD2SGI60Ws=
-X-Google-Smtp-Source: ACHHUZ43zaDbHh1HVQgUiEHs/9cXcbqHTLt7G053WYxAtaTS4qoGpMPXYxZErznSRzkva83oa+K5ig==
-X-Received: by 2002:a2e:3814:0:b0:2a8:ea1e:bde1 with SMTP id f20-20020a2e3814000000b002a8ea1ebde1mr4749911lja.50.1683102797519;
-        Wed, 03 May 2023 01:33:17 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id d20-20020a2e3614000000b002a8d2c6300bsm5846704lja.48.2023.05.03.01.33.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 01:33:16 -0700 (PDT)
-Message-ID: <dc926d1c-2637-34a7-df82-c6bd119bfadd@linaro.org>
-Date:   Wed, 3 May 2023 11:33:16 +0300
+        Wed, 3 May 2023 04:36:12 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 740FD55BB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 01:35:06 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B5F043F34A;
+        Wed,  3 May 2023 10:35:02 +0200 (CEST)
+Date:   Wed, 3 May 2023 10:35:01 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/7]  add DSC 1.2 dpu supports
+Message-ID: <iu4mpb4qfyh6b4dwsnzmojgovwg7mcq76z3sfknfmzqcwfyex4@ypz4bmfo4vft>
+References: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 1/4] drm/msm/dsi: Adjust pclk rate for compression
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-1-6bc6f03ae735@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230405-add-dsc-support-v1-1-6bc6f03ae735@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1683061382-32651-1-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 04:19, Jessica Zhang wrote:
-> Divide the pclk rate by the compression ratio when DSC is enabled
+Nit: drop leading space, use singular support*.
+
+On 2023-05-02 14:02:55, Kuogee Hsieh wrote:
+> This series adds the DPU side changes to support DSC 1.2 encoder. This
+> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+> The DSI and DP parts will be pushed later on top of this change.
+> This seriel is rebase on [1], [2] and catalog fixes from [3].
+
+rebased*
 > 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 14 ++++++++++----
->   1 file changed, 10 insertions(+), 4 deletions(-)
+> [1]: https://patchwork.freedesktop.org/series/116851/
+> [2]: https://patchwork.freedesktop.org/series/116615/
+> [3]: https://patchwork.freedesktop.org/series/112332/
+
+Was it only rebased on the catalog fixes from my INTF TE [3] support
+series?  I cannot get patch 2/7 of this series to apply cleanly on top
+of the entire INTF TE series because of a conflict with INTF TE patch
+14/22 [4].
+
+Patch 3/7 ("add DPU_PINGPONG_DSC bits into PP_BLK and PP_BLK_TE marcos")
+doesn't apply either, probably because I removed PP_BLK_TE entirely in
+that same ([4]) patch.
+
+[4]: https://lore.kernel.org/linux-arm-msm/20230411-dpu-intf-te-v4-14-27ce1a5ab5c6@somainline.org/
+
+We should discuss in what order the series are going to be picked, so
+that it is all compatible.
+
+- Marijn
+
+> Abhinav Kumar (2):
+>   drm/msm/dpu: add dsc blocks for remaining chipsets in catalog
+>   drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 43a5ec33eee8..35c69dbe5f6f 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -561,7 +561,8 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
->   	clk_disable_unprepare(msm_host->byte_clk);
->   }
->   
-> -static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode, bool is_bonded_dsi)
-> +static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
-> +		struct drm_dsc_config *dsc, bool is_bonded_dsi)
->   {
->   	unsigned long pclk_rate;
->   
-> @@ -576,6 +577,11 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode, bool
->   	if (is_bonded_dsi)
->   		pclk_rate /= 2;
->   
-> +	/* If DSC is enabled, divide pclk by compression ratio */
-> +	if (dsc)
-> +		pclk_rate = DIV_ROUND_UP(pclk_rate,
-> +				dsc->bits_per_component * 3 / msm_dsc_get_bpp_int(dsc));
-> +
-
-Don't we loose precision here?
-Would DIV_ROUND_UP(pclk_rate * bpp, dsc->bpc * 3) be better?
-
->   	return pclk_rate;
->   }
->   
-> @@ -585,7 +591,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
->   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->   	u8 lanes = msm_host->lanes;
->   	u32 bpp = dsi_get_bpp(msm_host->format);
-> -	unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
-> +	unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, is_bonded_dsi);
->   	u64 pclk_bpp = (u64)pclk_rate * bpp;
->   
->   	if (lanes == 0) {
-> @@ -604,7 +610,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
->   
->   static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   {
-> -	msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi);
-> +	msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, is_bonded_dsi);
->   	msm_host->byte_clk_rate = dsi_byte_clk_get_rate(&msm_host->base, is_bonded_dsi,
->   							msm_host->mode);
->   
-> @@ -634,7 +640,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   
->   	dsi_calc_pclk(msm_host, is_bonded_dsi);
->   
-> -	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
-> +	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, is_bonded_dsi) * bpp;
->   	do_div(pclk_bpp, 8);
->   	msm_host->src_clk_rate = pclk_bpp;
->   
+> Kuogee Hsieh (5):
+>   drm/msm/dpu: add DPU_PINGPONG_DSC feature bit
+>   drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK and PP_BLK_TE
+>     marcos
+>   drm/msm/dpu: add PINGPONG_NONE to disconnect DSC from PINGPONG
+>   drm/msm/dpu: add support for DSC encoder v1.2 engine
+>   drm/msm/dpu: separate DSC flush update out of interface
 > 
-
--- 
-With best wishes
-Dmitry
-
+>  drivers/gpu/drm/msm/Makefile                       |   1 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |  19 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |   8 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |  26 +-
+>  .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  35 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h |  26 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |   4 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |   2 +-
+>  .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |   2 +-
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  16 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  35 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  36 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  22 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |   7 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 383 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+>  25 files changed, 649 insertions(+), 82 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+> 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
