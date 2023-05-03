@@ -2,318 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D57C96F4F93
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 06:47:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB1346F4FB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 07:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbjECErX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 00:47:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47152 "EHLO
+        id S229502AbjECFjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 01:39:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjECErL (ORCPT
+        with ESMTP id S229441AbjECFjy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 00:47:11 -0400
+        Wed, 3 May 2023 01:39:54 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7050540EB;
-        Tue,  2 May 2023 21:47:00 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3434Ku6q005171;
-        Wed, 3 May 2023 04:46:49 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9E7B272A;
+        Tue,  2 May 2023 22:39:52 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3434d6T4017150;
+        Wed, 3 May 2023 05:39:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=FZAP9U5KvTotJqc0TH2vwDOXv2WZ20mB6NQ/dTJQCH0=;
- b=jl7uuV4fuqaKHdEX5IelrPuFdxsHMa9sLacEkZtMPf3w9AnnA8DDmd/alPAJfA2G6eyy
- YAjbBkwWIc0+u59fUu4owz9kBGCvDV5Wmp43O7TcGFZ3d1R36qKlDu+o78ck16gJRPQE
- Gu6AsCfFqUtgf4EV43luGELgua8Kt4ZqY8dtI4oFIXWdIXywHvvYSmsLu12uBiOkseK/
- X7qphdy0mbx1CPhMt+OwUDU1BU02gnK/MEtWag05+CrzMSgk81Qxyu2wm6uq+Wk6lMZh
- /9W29knzIekePLYfdFZIjjJI0ISeqVPyGQI49mJeDFMX6GPA4qeWlHj4cBFrn/JyugXk BA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qb4us9cx7-1
+ subject : date : message-id; s=qcppdkim1;
+ bh=ENxw/JCrLtYu8WfwwfaPXAWAiQBbLkeSry/e0BLyOs0=;
+ b=kDlaMpTor6HPVXdB8ABW1fYlu8UjAz4SD8MehlOTRwMkoAA6QyrBNJ7y+2t4oN6WRWk2
+ bTRdGd9g2OoErgg1LGcSrY1YY6or4mKMsXApjJHauh3wODLPAB1btu2elh8PT+gqZKRF
+ cIKlCBRS3vN0eSCUGZ9YL6MF6wPOlgr9tdF39J2UxW2OcaZIoGGDJwuJu2OL3mbfrrLE
+ gA/MW5H2TDLPMZRBIkQT6nrf3SvMUL3KAHHYQP2+M7Aby+yty8YznRV9aA/dtep2OTpv
+ h7ZAvgl3rNWGHMxWFH6Qrs73+pIt4k8C/u90FEFQtDhbfnJB1/wIIG+e+KWGIX1dlDV/ Zw== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbbsw0k12-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 04:46:49 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3434kmHL007182
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 04:46:48 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 2 May 2023 21:46:43 -0700
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     <amitk@kernel.org>, <thara.gopinath@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Praveenkumar I <quic_ipkumar@quicinc.com>
-Subject: [PATCH v1 4/4] arm64: dts: qcom: ipq9574: add thermal zone nodes
-Date:   Wed, 3 May 2023 10:16:02 +0530
-Message-ID: <65d05b81201a8d24c14f0d7564e708348a368068.1683027347.git.quic_varada@quicinc.com>
+        Wed, 03 May 2023 05:39:46 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3435dgXm012673;
+        Wed, 3 May 2023 05:39:42 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3q8vakyggx-1;
+        Wed, 03 May 2023 05:39:42 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3435dghQ012660;
+        Wed, 3 May 2023 05:39:42 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3435dglH012657;
+        Wed, 03 May 2023 05:39:42 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id C3C6250F8; Wed,  3 May 2023 11:09:41 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
+        manivannan.sadhasivam@linaro.org, andy.shevchenko@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v5 0/3] Add pinctrl support for SDX75
+Date:   Wed,  3 May 2023 11:09:37 +0530
+Message-Id: <1683092380-29551-1-git-send-email-quic_rohiagar@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1683027347.git.quic_varada@quicinc.com>
-References: <cover.1683027347.git.quic_varada@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: x7PRlmtq6JjWKG1jQz5bLCr2unPs7bHT
-X-Proofpoint-ORIG-GUID: x7PRlmtq6JjWKG1jQz5bLCr2unPs7bHT
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3vW9V_HkTxnzXPSA9-RFCx5U_48pvB8R
+X-Proofpoint-ORIG-GUID: 3vW9V_HkTxnzXPSA9-RFCx5U_48pvB8R
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-03_01,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
- impostorscore=0 mlxlogscore=980 spamscore=0 malwarescore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030037
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+ definitions=2023-05-03_02,2023-04-27_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ mlxlogscore=752 impostorscore=0 bulkscore=0 mlxscore=0 phishscore=0
+ spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030044
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds thermal zone nodes for the various
-sensors present in IPQ9574
+Hi,
 
-Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-[v1]:
-	Fix node names
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 208 ++++++++++++++++++++++++++++++++++
- 1 file changed, 208 insertions(+)
+Changes in v5:
+ - Refactor the pinctrl target files based on the new macro and
+    structure defined as suggested by Andy.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index b22b999..bc4d061 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -1067,6 +1067,214 @@
- 		};
- 	};
- 
-+	thermal-zones {
-+		nss-top-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 3>;
-+
-+			trips {
-+				nss-top-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 4>;
-+
-+			trips {
-+				ubi_0-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 5>;
-+
-+			trips {
-+				ubi_1-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 6>;
-+
-+			trips {
-+				ubi_2-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 7>;
-+
-+			trips {
-+				ubi_3-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cluster0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 8>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cluster1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 9>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 10>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 11>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 12>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 13>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		wcss-phyb-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 14>;
-+
-+			trips {
-+				wcss_phyb-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		top-glue-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 15>;
-+
-+			trips {
-+				top_glue-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+
- 	timer {
- 		compatible = "arm,armv8-timer";
- 		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+Changes in v4:
+ - Fixed the bindings check and rebased on linux-next.
+
+Changes in v3:
+ - Rebased the bindings on linux-next as suggested by Krzysztof.
+
+Changes in v2:
+ - Updated the bindings to clear the bindings check.
+
+This patch series adds pinctrl bindings and tlmm support for SDX75.
+
+Thanks,
+Rohit.
+
+Rohit Agarwal (3):
+  dt-bindings: pinctrl: qcom: Add SDX75 pinctrl devicetree compatible
+  pinctrl: qcom: Refactor target specific pinctrl driver
+  pinctrl: qcom: Add SDX75 pincontrol driver
+
+ .../bindings/pinctrl/qcom,sdx75-tlmm.yaml          |  169 +++
+ drivers/pinctrl/qcom/Kconfig                       |   30 +-
+ drivers/pinctrl/qcom/Makefile                      |    3 +-
+ drivers/pinctrl/qcom/pinctrl-apq8064.c             |   19 +-
+ drivers/pinctrl/qcom/pinctrl-apq8084.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-ipq4019.c             |   12 +-
+ drivers/pinctrl/qcom/pinctrl-ipq5332.c             |   12 +-
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c             |   12 +-
+ drivers/pinctrl/qcom/pinctrl-ipq8064.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-ipq8074.c             |   12 +-
+ drivers/pinctrl/qcom/pinctrl-mdm9607.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-mdm9615.c             |   12 +-
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |   18 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h                 |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8226.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8660.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8909.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8916.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8953.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8960.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8976.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8994.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8996.c             |   17 +-
+ drivers/pinctrl/qcom/pinctrl-msm8998.c             |   21 +-
+ drivers/pinctrl/qcom/pinctrl-msm8x74.c             |   22 +-
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c             |   22 +-
+ drivers/pinctrl/qcom/pinctrl-qcs404.c              |   17 +-
+ drivers/pinctrl/qcom/pinctrl-qdf2xxx.c             |    6 +-
+ drivers/pinctrl/qcom/pinctrl-qdu1000.c             |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c             |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sc7180.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sc7280.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c             |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c            |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sdm660.c              |   17 +-
+ drivers/pinctrl/qcom/pinctrl-sdm670.c              |   27 +-
+ drivers/pinctrl/qcom/pinctrl-sdm845.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sdx55.c               |   17 +-
+ drivers/pinctrl/qcom/pinctrl-sdx65.c               |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sdx75.c               | 1601 ++++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-sm6115.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm6125.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm6350.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm6375.c              |   21 +-
+ drivers/pinctrl/qcom/pinctrl-sm8150.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm8250.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm8350.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm8450.c              |   22 +-
+ drivers/pinctrl/qcom/pinctrl-sm8550.c              |   22 +-
+ 49 files changed, 2138 insertions(+), 505 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdx75.c
+
 -- 
 2.7.4
 
