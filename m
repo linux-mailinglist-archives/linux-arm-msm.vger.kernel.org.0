@@ -2,152 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E2CB6F5CF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0276B6F5CC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 19:11:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbjECRVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 13:21:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56728 "EHLO
+        id S229519AbjECRLI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 13:11:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjECRV3 (ORCPT
+        with ESMTP id S229562AbjECRLH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 13:21:29 -0400
+        Wed, 3 May 2023 13:11:07 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A05452D69;
-        Wed,  3 May 2023 10:21:27 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343F8jFY029276;
-        Wed, 3 May 2023 17:04:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=qbH7MY6GGBgS0pDOVGPhqlpYiVtd0OBI+s2aNgE53Hg=;
- b=ZsLgDONGInc7bLVlS4UT6DtybDKv1nq2gwI2A7Vxdqwwl7X3noaGIh2Nj4zsmbx6jdPS
- xGp4MDFmP277tytp0wXKtKuOJTvhvEJesSiT+lYnm38S2PuPWNMuh6syzQdSaaUrh8eQ
- zytEQdd23I1GxRCcSpw+EqDNUMFBUj4imkbNz4yQ/aj0Ppsjkz13Rvb+G8X5sfmsqjUz
- ceMtEjrG9jcO2eKuuG5WlJRL+3IYxRi99vL0x/CDR5wAS042V8Z2Uuv478c8U+dS0A86
- f8M0DgAlvJl+PqLGUmp0KVpb0l+8S4DUwGMKaSGwSVLBTmBcD6Dm8S3YMwnFhAecpMgg jQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbmy48xym-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A657D83;
+        Wed,  3 May 2023 10:10:41 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 343EqIDA012512;
+        Wed, 3 May 2023 17:10:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xedohLVoYxPec4E1c7GC+Ewwx4H1Qhde+jh2MpigbA8=;
+ b=VDHI0sCbm0B3k+eJuLMqr9jgtlTzx5z1F3dh48dGvRsH8NLp43+fYCN9/sbF6rSFt0qK
+ SZ27qxfA14As8OGee4rg6hok/iXhnhXzmrzaI5b3nXD8vYM84BKrjmTucfDogYBzvbgo
+ vH/aNob8eYav6/nG/O5drpL0dEpNjVl/IVD3yO35u6r9tNJ23xxGMXobzyJ+09170Cgc
+ p318fAru+8hASTlTGynnuc33oXmCObKizmClxwJsb3c2sGeXoAjDX2h7Gdp7+9z9CLbC
+ BXh3ni57ygJ/5moS7Q/lF/85pYl6UeHYt+iQDZz23FXQ/RTS3DfH/IsIO8b4cGq+QwNK uw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbsr40b40-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 03 May 2023 17:04:42 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343H4fEb005094
+        Wed, 03 May 2023 17:10:18 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 343HAHk2014148
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 3 May 2023 17:04:41 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 3 May 2023 10:04:35 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <corbet@lwn.net>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>, <srinivas.kandagatla@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-doc@vger.kernel.org>, "Mukesh Ojha" <quic_mojha@quicinc.com>
-Subject: [PATCH v3 18/18] firmware: qcom_scm: Add multiple download mode support
-Date:   Wed, 3 May 2023 22:32:32 +0530
-Message-ID: <1683133352-10046-19-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
-References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+        Wed, 3 May 2023 17:10:17 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 3 May 2023
+ 10:10:16 -0700
+Message-ID: <14ed17e5-de5e-3ea6-84b7-4e7c045c9765@quicinc.com>
+Date:   Wed, 3 May 2023 10:10:11 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/4] drm/msm/dsi: Adjust pclk rate for compression
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
+ <20230405-add-dsc-support-v1-1-6bc6f03ae735@quicinc.com>
+ <dc926d1c-2637-34a7-df82-c6bd119bfadd@linaro.org>
+Content-Language: en-US
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <dc926d1c-2637-34a7-df82-c6bd119bfadd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VbcRgKWOMRSE0qF1RQWPhjN5R6oFkcI2
-X-Proofpoint-GUID: VbcRgKWOMRSE0qF1RQWPhjN5R6oFkcI2
+X-Proofpoint-GUID: WR23AbmmI96jLITRnwSfG4LvSAbFjoSU
+X-Proofpoint-ORIG-GUID: WR23AbmmI96jLITRnwSfG4LvSAbFjoSU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-03_12,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- impostorscore=0 adultscore=0 mlxlogscore=999 spamscore=0 phishscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305030145
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 phishscore=0 adultscore=0 suspectscore=0
+ spamscore=0 mlxscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305030146
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, scm driver only supports full dump when download
-mode is selected. Add support to enable minidump as well as
-enable it along with fulldump.
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
- drivers/firmware/qcom_scm.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index 4e8fd4e..be7adc6 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -32,6 +32,8 @@ static u32 download_mode;
- 
- #define QCOM_DOWNLOAD_MODE_MASK 0x30
- #define QCOM_DOWNLOAD_FULLDUMP	0x1
-+#define QCOM_DOWNLOAD_MINIDUMP  0x2
-+#define QCOM_DOWNLOAD_BOTHDUMP	(QCOM_DOWNLOAD_FULLDUMP | QCOM_DOWNLOAD_MINIDUMP)
- #define QCOM_DOWNLOAD_NODUMP	0x0
- 
- struct qcom_scm {
-@@ -1422,13 +1424,16 @@ static irqreturn_t qcom_scm_irq_handler(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
--
- static int get_download_mode(char *buffer, const struct kernel_param *kp)
- {
- 	int len = 0;
- 
- 	if (download_mode == QCOM_DOWNLOAD_FULLDUMP)
- 		len = sysfs_emit(buffer, "full\n");
-+	else if (download_mode == QCOM_DOWNLOAD_MINIDUMP)
-+		len = sysfs_emit(buffer, "mini\n");
-+	else if (download_mode == QCOM_DOWNLOAD_BOTHDUMP)
-+		len = sysfs_emit(buffer, "full,mini\n");
- 	else if (download_mode == QCOM_DOWNLOAD_NODUMP)
- 		len = sysfs_emit(buffer, "off\n");
- 
-@@ -1439,8 +1444,12 @@ static int set_download_mode(const char *val, const struct kernel_param *kp)
- {
- 	u32 old = download_mode;
- 
--	if (sysfs_streq(val, "full")) {
-+	if (sysfs_streq(val, "full,mini") || sysfs_streq(val, "mini,full")) {
-+		download_mode = QCOM_DOWNLOAD_BOTHDUMP;
-+	} else if (sysfs_streq(val, "full")) {
- 		download_mode = QCOM_DOWNLOAD_FULLDUMP;
-+	} else if (sysfs_streq(val, "mini")) {
-+		download_mode = QCOM_DOWNLOAD_MINIDUMP;
- 	} else if (sysfs_streq(val, "off")) {
- 		download_mode = QCOM_DOWNLOAD_NODUMP;
- 	} else if (kstrtouint(val, 0, &download_mode) ||
-@@ -1463,7 +1472,7 @@ static const struct kernel_param_ops download_mode_param_ops = {
- 
- module_param_cb(download_mode, &download_mode_param_ops, NULL, 0644);
- MODULE_PARM_DESC(download_mode,
--		 "Download mode: off/full or 0/1 for existing users");
-+		"download mode: off/full/mini/full,mini or mini,full and 0/1 for existing users");
- 
- static int qcom_scm_probe(struct platform_device *pdev)
- {
--- 
-2.7.4
+On 5/3/2023 1:33 AM, Dmitry Baryshkov wrote:
+> On 03/05/2023 04:19, Jessica Zhang wrote:
+>> Divide the pclk rate by the compression ratio when DSC is enabled
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 14 ++++++++++----
+>>   1 file changed, 10 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
+>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index 43a5ec33eee8..35c69dbe5f6f 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -561,7 +561,8 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host 
+>> *msm_host)
+>>       clk_disable_unprepare(msm_host->byte_clk);
+>>   }
+>> -static unsigned long dsi_get_pclk_rate(const struct drm_display_mode 
+>> *mode, bool is_bonded_dsi)
+>> +static unsigned long dsi_get_pclk_rate(const struct drm_display_mode 
+>> *mode,
+>> +        struct drm_dsc_config *dsc, bool is_bonded_dsi)
+>>   {
+>>       unsigned long pclk_rate;
+>> @@ -576,6 +577,11 @@ static unsigned long dsi_get_pclk_rate(const 
+>> struct drm_display_mode *mode, bool
+>>       if (is_bonded_dsi)
+>>           pclk_rate /= 2;
+>> +    /* If DSC is enabled, divide pclk by compression ratio */
+>> +    if (dsc)
+>> +        pclk_rate = DIV_ROUND_UP(pclk_rate,
+>> +                dsc->bits_per_component * 3 / msm_dsc_get_bpp_int(dsc));
+>> +
+> 
+> Don't we loose precision here?
+> Would DIV_ROUND_UP(pclk_rate * bpp, dsc->bpc * 3) be better?
 
+Hi Dmitry,
+
+Acked.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>>       return pclk_rate;
+>>   }
+>> @@ -585,7 +591,7 @@ unsigned long dsi_byte_clk_get_rate(struct 
+>> mipi_dsi_host *host, bool is_bonded_d
+>>       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+>>       u8 lanes = msm_host->lanes;
+>>       u32 bpp = dsi_get_bpp(msm_host->format);
+>> -    unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
+>> +    unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, 
+>> is_bonded_dsi);
+>>       u64 pclk_bpp = (u64)pclk_rate * bpp;
+>>       if (lanes == 0) {
+>> @@ -604,7 +610,7 @@ unsigned long dsi_byte_clk_get_rate(struct 
+>> mipi_dsi_host *host, bool is_bonded_d
+>>   static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool 
+>> is_bonded_dsi)
+>>   {
+>> -    msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, 
+>> is_bonded_dsi);
+>> +    msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, 
+>> msm_host->dsc, is_bonded_dsi);
+>>       msm_host->byte_clk_rate = dsi_byte_clk_get_rate(&msm_host->base, 
+>> is_bonded_dsi,
+>>                               msm_host->mode);
+>> @@ -634,7 +640,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host 
+>> *msm_host, bool is_bonded_dsi)
+>>       dsi_calc_pclk(msm_host, is_bonded_dsi);
+>> -    pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) 
+>> * bpp;
+>> +    pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, 
+>> is_bonded_dsi) * bpp;
+>>       do_div(pclk_bpp, 8);
+>>       msm_host->src_clk_rate = pclk_bpp;
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
