@@ -2,195 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F7E86F5F6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 21:51:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F6496F5F79
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 May 2023 21:57:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbjECTvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 15:51:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33380 "EHLO
+        id S229628AbjECT5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 15:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229659AbjECTvO (ORCPT
+        with ESMTP id S229562AbjECT5F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 15:51:14 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDAE37AB4
-        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 12:51:10 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so10235151fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 12:51:10 -0700 (PDT)
+        Wed, 3 May 2023 15:57:05 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DF627DB4;
+        Wed,  3 May 2023 12:57:04 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-64359d9c531so576480b3a.3;
+        Wed, 03 May 2023 12:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683143469; x=1685735469;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1tCxqgTlmiK2G7G+ORn5kV305PO7Vqbz86eaQYSkvcs=;
-        b=DUHUzCP5YT3cQDg7cXTgaGrue7QXMA2tTz7mrvsv+GBZjJ8qg4GfkMSV+xn0loNOkJ
-         0Hw65/yygPdruSQKRfrJtBv6zAzJsso1g62Dy11Bi1Z5fmnCz9FAMXCuvUyDfvqa1WLy
-         eRrgaHY3T7HjcFCoymZyJYf5QTfUlpUi+ISBbtrXc6wQRUFHuGEG7GRDmRwjtfpW6YVk
-         NjaupmIK+4x41KL2XFMf2dN4TW0TlcgCQAaUXp8lT6jJB0Vackk8LpyD1XL3sGtsL6T/
-         8LzpmFR9glGuQwnYDwm5dTYhlX5YDkROcmu4XGq6otvpkNqQ5PrPyvWCY8mIayPRb01I
-         iYHw==
+        d=gmail.com; s=20221208; t=1683143824; x=1685735824;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tw+MfuvJyy7U9A8Ej/IC8kSXl0aMwhX8e58xBtI5EH4=;
+        b=RiDuQr0rvOl6JjEq+TjkCKTPjddt/JtS5HkqLrkANiN1mpl9pBD8b35fTSzjyWU+Ji
+         xn3Q0WCHgHttxbQEPMdIwBNv7pD5h5wWED+Cx6B87pBkUwRZ5Jx7AtIxMjobK5fB9JmV
+         zdo7AKyww1HKF4ZVti8uJXGHPc7D/X6KCviKvhjoElI6zKyC/C9HAPy+QV9Y1vBFNI0m
+         TMig6QON2DUqK9ks/X0v4EqbXTQH1iwtifoB2zAhgrrcteDk4onKg6VfTiwBQCKi2s12
+         fujNU6cy1nqUz6guQy95cyiAJZJ+q2FiQQhTKfOHBukwcNOJJKsI7pbC+dBXCI1VM+Ye
+         H8SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683143469; x=1685735469;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1tCxqgTlmiK2G7G+ORn5kV305PO7Vqbz86eaQYSkvcs=;
-        b=EdiS71l4Y7goYPnZoGKoIxIpcGkeSBaUGCf4V4wPB56a9uHdD1kiLMQTZSWzmBMUO2
-         ujAei3qITKUdhgGt3uQ0hz2TmtsYn8cG2kYYXLTKx8SKwyEkKQW2Hdc9qoWTiPQ3efJd
-         jRNtzitLL0/TfWQ/16BAemMhsK3GWi0/i9UAD/BMw9AAEFomHGCmYDNb0VonTBiH3UDT
-         dUGQzOx9yWfdROFgy9fJxENBFUfJQnTzd9on3lCmXx6w1SPjJHNqjuLL78+XHfHZ8Vq+
-         gUnq2UT7AV24hHO5KC2ZTC6ayP385/2CwXgnNbcXVoaUCmQd1YXqG8coesEKfTyt52TL
-         Yfow==
-X-Gm-Message-State: AC+VfDzfT9hydIiUNeK0HDWLwGz6hD7wJ73KBw+mPC7rZDLtvLpAwXtl
-        4CHM+sMMQ09Gr+ctFnsyMo9cXg==
-X-Google-Smtp-Source: ACHHUZ4jyeZqMJR9fYD6wE3w9e0cGVfq9FIbs9eUYU/anKkInfAp8yKkTd2B+mSscQpkxJ/a1ZKluA==
-X-Received: by 2002:a2e:9cc2:0:b0:2ac:6858:45b9 with SMTP id g2-20020a2e9cc2000000b002ac685845b9mr311316ljj.20.1683143468907;
-        Wed, 03 May 2023 12:51:08 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r16-20020a2e94d0000000b002aa40d705a5sm5781445ljh.11.2023.05.03.12.51.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 May 2023 12:51:08 -0700 (PDT)
-Message-ID: <3dddb676-750f-0bc7-7999-f8880c63931b@linaro.org>
-Date:   Wed, 3 May 2023 22:51:07 +0300
+        d=1e100.net; s=20221208; t=1683143824; x=1685735824;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tw+MfuvJyy7U9A8Ej/IC8kSXl0aMwhX8e58xBtI5EH4=;
+        b=daPUSHp0EJe4t8aim9jCl9rnVKnUZVcxw0te4cHzW5CxWHGteos/wKEYcbQcpoHxXW
+         5BkfOc5UrWc9lhKBqw6YKvccBOr8XkZu+8ga+XPRK9I0FW/Wi7N7ZcQ+y2ztBLXHFDyQ
+         uGYVlgnxS9++IbKMVsXEQCRKyIvOiR3T7Xxqkn+mCj6JSXzyA4vTZbo3rhIilzs6Nh7G
+         nSnx7vcuvsrmrhmUXi8e7gkVtzYUiSscRDJcr96WGB987v2WYaUeQYYkbIDiu9tH0C/y
+         umM2qQAW2DIfFKy2dm/VT+J0K9qVVR08FvG13IWutNJzdUm3/3/6ZxWjVKlv4L0npACo
+         l+bA==
+X-Gm-Message-State: AC+VfDxL+orRHEm6/hX1Je3MItxNWy2Ch3OoynKYohUFAh4wDa6DYwqT
+        4DM9beym9E87sDMQ41nenj9ksuHG1nMdL8aHGqUEJa+Y
+X-Google-Smtp-Source: ACHHUZ55Ab4kZiRFReZsCAO79p9Mc6rj3ckjxcfIk4p+5Hx/eRXIA98kT4zvEcYMKN0nQYgKcA9qLBUNHJjn2D7eRwU=
+X-Received: by 2002:a05:6a00:2347:b0:643:96e:666b with SMTP id
+ j7-20020a056a00234700b00643096e666bmr4990164pfj.34.1683143823964; Wed, 03 May
+ 2023 12:57:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 4/4] drm/msm/dpu: Enable compression for command mode
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-4-6bc6f03ae735@quicinc.com>
- <hxqxnfcydzyfrlvihmil3gecan6p6xyjw44gielu63ltgtqul7@xwvoprzofq6g>
- <d4b7a747-77a0-95eb-1201-c8b1c80defe3@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <d4b7a747-77a0-95eb-1201-c8b1c80defe3@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20230426185647.180166-1-robimarko@gmail.com> <b5df5692-5319-b5ff-0e9a-c66fb1f8358d@linaro.org>
+In-Reply-To: <b5df5692-5319-b5ff-0e9a-c66fb1f8358d@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 3 May 2023 21:56:53 +0200
+Message-ID: <CAOX2RU5WYm-wJXByAx8yavDPhR1=2MHjj0Kh1z6h_EHhS8DVGw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: ipq8074: Add QUP5 SPI node
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/05/2023 22:04, Jessica Zhang wrote:
-> 
-> 
-> On 5/3/2023 12:28 AM, Marijn Suijten wrote:
->> On 2023-05-02 18:19:15, Jessica Zhang wrote:
->>> Add a dpu_hw_intf op to enable data compression.
->>>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 ++++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 7 +++++++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 2 ++
->>>   3 files changed, 13 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> index 74470d068622..4321a1aba17f 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>
->> Can we have INTF DCE on video-mode encoders as well?
-> 
-> Hi Marijn,
-> 
-> Currently, there's no way to validate DSC for video mode as I've only 
-> made changes to support DSI for command mode. We are planning to post 
-> changes to support DSC over DP, which will include changes for video mode.
+On Mon, 1 May 2023 at 12:03, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 26/04/2023 20:56, Robert Marko wrote:
+> > Add node to support the QUP5 SPI controller inside of IPQ8074.
+> > Some devices use this bus in order to manage external switches.
+> >
+> > Signed-off-by: Robert Marko <robimarko@gmail.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
+> >  1 file changed, 14 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > index 64c2a30d9c25..4a682e3442f8 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+> > @@ -774,6 +774,20 @@ blsp1_i2c5: i2c@78b9000 {
+> >                       status = "disabled";
+> >               };
+> >
+> > +             blsp1_spi5: spi@78b9000 {
+> > +                     compatible = "qcom,spi-qup-v2.2.1";
+> > +                     #address-cells = <1>;
+> > +                     #size-cells = <0>;
+> > +                     reg = <0x78b9000 0x600>;
+>
+> reg is always after compatible.
 
-If I remember correctly, HDK8350 panel should support DSC for both 
-command and video modes.
+I agree usually, but here its just matching the same pattern like
+other BLSP nodes.
 
-> 
->>
->>> @@ -72,6 +72,10 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->>>                   phys_enc->hw_intf,
->>>                   true,
->>>                   phys_enc->hw_pp->idx);
->>> +
->>> +    if (phys_enc->dpu_kms->catalog->caps->has_data_compress &&
->>
->> As per my suggestion on patch 3/4, drop the flag and check above and
->> only check if the function is NULL (below).
-> 
-> Acked.
-> 
->>
->>> +            phys_enc->hw_intf->ops.enable_compression)
->>> +        phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
->>>   }
->>>   static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int 
->>> irq_idx)
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> index 671048a78801..4ce7ffdd7a05 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> @@ -64,10 +64,16 @@
->>>   #define INTF_CFG2_DATABUS_WIDEN    BIT(0)
->>>   #define INTF_CFG2_DATA_HCTL_EN    BIT(4)
->>
->> These should probably be reindented to match the below... And the rest
->> of the defines use spaces instead of tabs.
-> 
-> Fair point, though I think fixing the whitespace for these 2 macros 
-> specifically might be better in a more relevant series.
-> 
-> With that being said, I'll change the spacing of the DATA_COMPRESS bit 
-> to spaces instead of tabs.
-> 
->>
->>> +#define INTF_CFG2_DCE_DATA_COMPRESS    BIT(12)
->>>   #define INTF_MISR_CTRL            0x180
->>>   #define INTF_MISR_SIGNATURE        0x184
->>
->> This does not seem to apply on top of:
->> https://lore.kernel.org/linux-arm-msm/20230411-dpu-intf-te-v4-10-27ce1a5ab5c6@somainline.org/
-> 
-> Seems like I'm missing some patches from that series on my working 
-> branch. Will rebase on top of the full series for the v2.
-> 
->>
->>> +static inline void dpu_hw_intf_enable_compression(struct dpu_hw_intf 
->>> *ctx)
->>
->> Why inline?  This is used as a pointer callback.
-> 
-> Acked, will remove the inline.
-> 
->>
->>> +{
->>> +    DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, INTF_CFG2_DCE_DATA_COMPRESS);
->>
->> dpu_hw_intf_setup_timing_engine() also programs INTF_CONFIG2.  Is it
->> double-buffered, or is that config **always** unused when DSI CMD mode
->> is used in conjunction with DSC/DCE?  Otherwise this should perhaps OR
->> the bitflag into the register, or write the whole thing at once in
->> dpu_hw_intf_setup_timing_engine()?
-> 
-> For command mode, INTF_CONFIG2 is unused aside from setting 
-> DATA_COMPRESS for DSC.
-> 
-> Since setup_timing_engine() is only used for video mode, the 
-> corresponding changes will be made in the DSC v1.2 for DP changes.
-
-So, for command mode panels is this the only bit that should be set in 
-INTF_CFG2?
--- 
-With best wishes
-Dmitry
-
+Regards,
+Robert
+>
+> Best regards,
+> Krzysztof
+>
