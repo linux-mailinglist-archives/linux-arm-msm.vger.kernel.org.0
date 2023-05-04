@@ -2,138 +2,393 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE0736F6EC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:16:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA2626F6ECC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:22:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231225AbjEDPQo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 11:16:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39754 "EHLO
+        id S230095AbjEDPWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 11:22:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230364AbjEDPQn (ORCPT
+        with ESMTP id S231335AbjEDPWA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 11:16:43 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C01D1988;
-        Thu,  4 May 2023 08:16:42 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 344Dx1B9024289;
-        Thu, 4 May 2023 15:16:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=BQ/7RDNAAE8uv8lh54owpKxVRLEP1E510QxK2VrS/zY=;
- b=gwDO9hCUUcrv8ggtiEDwEEXeM8L6+vcw41rH+9o0WtrzETKtB4DgYyNkK6H93qaNfhCr
- pWQOa0AyV870RR+zefXQ6jxwZhwgUNAtadN79VpqXwHbjDq4GMOf01zpmCqL0xoN7RRb
- aQ9PyvFkhQpktrSEqtFfHvoh9AI0/RfFuqQGGUpy9sRmCfmITfC7IE622TCLo9CfDw13
- Yt9Y4qyn4eSPhxyIznarr+YnL9TvwLTb7g0IQLXM0f1CqCbyzD8lziUqrcl/oz9H+cLh
- ohpmRdfl9EBP36oeGzMRG18GLCrweQhnbCrnIFNGO2/kH7iy4OOkboF8nr+VqbAgJbWN WQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbvghjduv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 15:16:35 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344FGZoL001250
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 4 May 2023 15:16:35 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 4 May 2023 08:16:34 -0700
-Date:   Thu, 4 May 2023 08:16:33 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Johan Hovold <johan@kernel.org>
-CC:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 3/7] phy: qcom-qmp-combo: Introduce orientation variable
-Message-ID: <20230504151633.GH870858@hu-bjorande-lv.qualcomm.com>
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-4-quic_bjorande@quicinc.com>
- <ZFD4gM9dUQwBmSUe@hovoldconsulting.com>
- <20230504032907.GF870858@hu-bjorande-lv.qualcomm.com>
- <ZFO21fLWSNc7orpb@hovoldconsulting.com>
+        Thu, 4 May 2023 11:22:00 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8728C448A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 08:21:57 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-50bd37ca954so18448206a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 08:21:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683213716; x=1685805716;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PiGLn/wT6jdTg1r2CmvkzZAzbbvZRfblAofN9TNz5js=;
+        b=rmgboVQMXKVEmatJvwtVuNHvP3P5iF0N+kpJRgXsH1BmScQOnIuCKROJbbCYE+PZ4k
+         Et8mmmAv/mF+bZhgQHJ+XR624bUizkdqUuVUuv1jBHiYhFeJT5RcfE8DjfvAEp9wnJAA
+         wbv+9lUHD3qvbVnXlE/nOwl7gD95voQ8YGkx94yr7tcz1v+rGGoiSu0LP4N3pby55mZ8
+         LNElVxgA5RCmA2hRT6QwW329//xpAnnVflPZ/a6iFuijnxabI8/ZIaxsvZjmDGx1jWG8
+         Yj+QjwSjdWG+O1RF68bpnzepUOS+dpVn/Gyycl5vs4fLxBmjiiwk+M1Nd4fDxyBphS8D
+         ymWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683213716; x=1685805716;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PiGLn/wT6jdTg1r2CmvkzZAzbbvZRfblAofN9TNz5js=;
+        b=k/6nWkWMQXQV1jITrykpdhig6E2942YyN8G5SPq9tX4gJdo6zY4EZakVTw3dOPJt6x
+         ysHHhd3riJB7fVccSvMSPB585epe8wNElZx0se+12KrKeC4icnimkbbuetFPMFXxokIY
+         BpuH7cOvn456GFyP1jCjViKFuBOef4hIne6v/0NB8RUrXXnMfyNAVI64gD9x7gcuXd0g
+         TPe7szatSnF3SE7l8gmZJx+sBF8MY5e/mtkIncutxx1hfIYSLXULi+Kt+HC85LZsA6i/
+         bp1VtRtfmbGRaX2xdKMvy0tiPA4yl16vKhqeD7qk8mKegdqb2txO03YcLSVcyOLnwkBR
+         eoeg==
+X-Gm-Message-State: AC+VfDyRHms8LFPcF88iKaGEAyrpGMRi1Fo4LC98XKfCcPLb/v6z9Pza
+        sLNeBOANUj4KCzzO4Y0iWp7TVQ==
+X-Google-Smtp-Source: ACHHUZ6YZYRgQMRxf5orwNObNcMlwSymaMEoEOjw1Z1jIy3dxNIXynsfLCVhIMiU2+SX4xd8hXNFcA==
+X-Received: by 2002:a17:907:36c6:b0:94f:432f:243d with SMTP id bj6-20020a17090736c600b0094f432f243dmr5660822ejc.17.1683213715932;
+        Thu, 04 May 2023 08:21:55 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:cbf1:e7ef:fb81:e912? ([2a02:810d:15c0:828:cbf1:e7ef:fb81:e912])
+        by smtp.gmail.com with ESMTPSA id gq18-20020a170906e25200b0094eeda0df09sm18962558ejb.179.2023.05.04.08.21.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 08:21:55 -0700 (PDT)
+Message-ID: <575a422d-6224-06b7-628c-8487b47882e9@linaro.org>
+Date:   Thu, 4 May 2023 17:21:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZFO21fLWSNc7orpb@hovoldconsulting.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jhZ7efS4otM3nL5Ga2W-qcdWHkrL4bOJ
-X-Proofpoint-GUID: jhZ7efS4otM3nL5Ga2W-qcdWHkrL4bOJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_10,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- lowpriorityscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 clxscore=1015 phishscore=0 spamscore=0 adultscore=0
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2303200000 definitions=main-2305040125
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v3 04/18] soc: qcom: Add Qualcomm minidump kernel driver
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-5-git-send-email-quic_mojha@quicinc.com>
+ <c6f730b6-f702-91d4-4abd-71546e02f869@linaro.org>
+ <23b493f4-1a01-8d03-fc12-d588b2c6fd74@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <23b493f4-1a01-8d03-fc12-d588b2c6fd74@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 04, 2023 at 03:44:53PM +0200, Johan Hovold wrote:
-> On Wed, May 03, 2023 at 08:29:07PM -0700, Bjorn Andersson wrote:
-> > On Tue, May 02, 2023 at 01:48:16PM +0200, Johan Hovold wrote:
-> > > On Mon, Apr 24, 2023 at 08:40:06PM -0700, Bjorn Andersson wrote:
+On 04/05/2023 14:38, Mukesh Ojha wrote:
 > 
-> > > >  static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
-> > > > @@ -1955,29 +1962,23 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
-> > > >  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
-> > > >  {
-> > > >  	u32 val;
-> > > > -	bool reverse = false;
-> > > > +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
 > 
-> > > It also looks like these callbacks end up being called without holding
-> > > the qmp->phy_mutex via phy->power_on(). Perhaps there is no risk for a
-> > > concurrent switch notification and dp phy power-on but it's not that
-> > > obvious.
+> On 5/4/2023 5:06 PM, Krzysztof Kozlowski wrote:
+>> On 03/05/2023 19:02, Mukesh Ojha wrote:
+>>> Minidump is a best effort mechanism to collect useful and predefined
+>>> data for first level of debugging on end user devices running on
+>>> Qualcomm SoCs. It is built on the premise that System on Chip (SoC)
+>>> or subsystem part of SoC crashes, due to a range of hardware and
+>>> software bugs. Hence, the ability to collect accurate data is only
+>>> a best-effort. The data collected could be invalid or corrupted,
+>>> data collection itself could fail, and so on.
+>>>
+>>> Qualcomm devices in engineering mode provides a mechanism for
+>>> generating full system ramdumps for post mortem debugging. But in some
+>>> cases it's however not feasible to capture the entire content of RAM.
+>>> The minidump mechanism provides the means for selecting region should
+>>> be included in the ramdump. The solution supports extracting the
+>>> ramdump/minidump produced either over USB or stored to an attached
+>>> storage device.
+>>>
+>>> The core of minidump feature is part of Qualcomm's boot firmware code.
+>>> It initializes shared memory(SMEM), which is a part of DDR and
+>>> allocates a small section of it to minidump table i.e also called
+>>> global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
+>>> their own table of segments to be included in the minidump, all
+>>> references from a descriptor in SMEM (G-ToC). Each segment/region has
+>>> some details like name, physical address and it's size etc. and it
+>>> could be anywhere scattered in the DDR.
+>>>
+>>> Minidump kernel driver adds the capability to add linux region to be
+>>> dumped as part of ram dump collection. It provides appropriate symbol
+>>> to check its enablement and register client regions.
+>>>
+>>> To simplify post mortem debugging, it creates and maintain an ELF
+>>> header as first region that gets updated upon registration
+>>> of a new region.
+>>>
+>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>> ---
+>>>   drivers/soc/qcom/Kconfig         |  14 +
+>>>   drivers/soc/qcom/Makefile        |   1 +
+>>>   drivers/soc/qcom/qcom_minidump.c | 581 +++++++++++++++++++++++++++++++++++++++
+>>>   drivers/soc/qcom/smem.c          |   8 +
+>>>   include/soc/qcom/qcom_minidump.h |  61 +++-
+>>>   5 files changed, 663 insertions(+), 2 deletions(-)
+>>>   create mode 100644 drivers/soc/qcom/qcom_minidump.c
+>>>
+>>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+>>> index a491718..15c931e 100644
+>>> --- a/drivers/soc/qcom/Kconfig
+>>> +++ b/drivers/soc/qcom/Kconfig
+>>> @@ -279,4 +279,18 @@ config QCOM_INLINE_CRYPTO_ENGINE
+>>>   	tristate
+>>>   	select QCOM_SCM
+>>>   
+>>> +config QCOM_MINIDUMP
+>>> +	tristate "QCOM Minidump Support"
+>>> +	depends on ARCH_QCOM || COMPILE_TEST
+>>> +	select QCOM_SMEM
+>>> +	help
+>>> +	  Enablement of core minidump feature is controlled from boot firmware
+>>> +	  side, and this config allow linux to query and manages APPS minidump
+>>> +	  table.
+>>> +
+>>> +	  Client drivers can register their internal data structures and debug
+>>> +	  messages as part of the minidump region and when the SoC is crashed,
+>>> +	  these selective regions will be dumped instead of the entire DDR.
+>>> +	  This saves significant amount of time and/or storage space.
+>>> +
+>>>   endmenu
+>>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>>> index 0f43a88..1ebe081 100644
+>>> --- a/drivers/soc/qcom/Makefile
+>>> +++ b/drivers/soc/qcom/Makefile
+>>> @@ -33,3 +33,4 @@ obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+>>>   obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+>>>   obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+>>>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
+>>> +obj-$(CONFIG_QCOM_MINIDUMP) += qcom_minidump.o
+>>> diff --git a/drivers/soc/qcom/qcom_minidump.c b/drivers/soc/qcom/qcom_minidump.c
+>>> new file mode 100644
+>>> index 0000000..d107a86
+>>> --- /dev/null
+>>> +++ b/drivers/soc/qcom/qcom_minidump.c
+>>> @@ -0,0 +1,581 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +
+>>> +/*
+>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>>> +
+>>> +#include <linux/elf.h>
+>>> +#include <linux/err.h>
+>>> +#include <linux/errno.h>
+>>> +#include <linux/export.h>
+>>> +#include <linux/init.h>
+>>> +#include <linux/io.h>
+>>> +#include <linux/kernel.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/platform_device.h>
+>>> +#include <linux/string.h>
+>>> +#include <linux/soc/qcom/smem.h>
+>>> +#include <soc/qcom/qcom_minidump.h>
+>>> +
+>>> +/**
+>>> + * struct minidump_elfhdr - Minidump table elf header
+>>> + * @ehdr: Elf main header
+>>> + * @shdr: Section header
+>>> + * @phdr: Program header
+>>> + * @elf_offset: Section offset in elf
+>>> + * @strtable_idx: String table current index position
+>>> + */
+>>> +struct minidump_elfhdr {
+>>> +	struct elfhdr		*ehdr;
+>>> +	struct elf_shdr		*shdr;
+>>> +	struct elf_phdr		*phdr;
+>>> +	size_t			elf_offset;
+>>> +	size_t			strtable_idx;
+>>> +};
+>>> +
+>>> +/**
+>>> + * struct minidump - Minidump driver private data
+>>> + * @md_gbl_toc	: Global TOC pointer
+>>> + * @md_apss_toc	: Application Subsystem TOC pointer
+>>> + * @md_regions	: High level OS region base pointer
+>>> + * @elf		: Minidump elf header
+>>> + * @dev		: Minidump device
+>>> + */
+>>> +struct minidump {
+>>> +	struct minidump_global_toc	*md_gbl_toc;
+>>> +	struct minidump_subsystem	*md_apss_toc;
+>>> +	struct minidump_region		*md_regions;
+>>> +	struct minidump_elfhdr		elf;
+>>> +	struct device			*dev;
+>>> +};
+>>> +
+>>> +/*
+>>> + * In some of the Old Qualcomm devices, boot firmware statically allocates 300
+>>> + * as total number of supported region (including all co-processors) in
+>>> + * minidump table out of which linux was using 201. In future, this limitation
+>>> + * from boot firmware might get removed by allocating the region dynamically.
+>>> + * So, keep it compatible with older devices, we can keep the current limit for
+>>> + * Linux to 201.
+>>> + */
+>>> +#define MAX_NUM_ENTRIES	  201
+>>> +#define MAX_STRTBL_SIZE	  (MAX_NUM_ENTRIES * MAX_REGION_NAME_LENGTH)
+>>> +
+>>> +static struct minidump *__md;
+>>
+>> No, no file scope or global scope statics.
 > 
-> > It seems we're arriving here from hpd_event_thread(), while
-> > phy_power_on() and phy_power_off() will be called in some other context.
-> > I've not been able to convince myself if DP driver ensures ordering, or
-> > if we have an existing race here...
+> Sorry, this is done as per recommendation given here [1] and this 
+> matches both driver/firmware/qcom_scm.c and driver/soc/qcom/smem.c
+> implementations.
 > 
-> > Unless you insist, I would prefer to follow up with an additional patch
-> > once we've landed this series. The fix will depend on the phy_mutex
-> > shuffling patch anyways...
-> 
-> Sure.
-> 
-> But perhaps you can just move the orientation == qmp->orientation check
-> under the mutex in qmp_combo_typec_switch_set() for now (in case I
-> forgot to point that out earlier).
-> 
+> [1]
+> https://lore.kernel.org/lkml/f74dfcde-e59b-a9b3-9bbc-a8de644f6740@linaro.org/
 
-qmp_combo_probe() and qmp_combo_typec_switch_set() are the only writers
-to qmp->orientation, so that check can't race with any updates and hence
-doesn't need to be protected.
+That's not true. You had the static already in v2, before Srini commented.
 
-Reading the code again, qmp_combo_configure_dp_mode() is invoked from
-phy_power_on(), not the hpd_event_thread(), as I claimed yesterday.
+Look:
+https://lore.kernel.org/lkml/1679491817-2498-5-git-send-email-quic_mojha@quicinc.com/
 
-But we shouldn't do qmp_combo_dp_power_on() in parallel with the
-reinitialization following a switch in orientation, qmp->orientation
-might change, but we definitely would have two contexts reconfiguring
-the hardware simultaneously - perhaps this was the cause for the 10%
-crashes I hit when trying to extend this to handle typec_mux as well...
++static struct minidump minidump;
++static DEFINE_MUTEX(minidump_lock);
 
-I will grab the phy_mux in qmp_combo_configure_dp_mode() as well, thanks
-for "insisting" :)
+We do not talk about the names.
 
-Regards,
-Bjorn
+
+>>> +
+>>> +	if (size < sizeof(*mdgtoc) || !mdgtoc->status) {
+>>> +		ret = -EINVAL;
+>>> +		dev_err(&pdev->dev, "minidump table is not initialized: %d\n", ret);
+>>> +		return ret;
+>>> +	}
+>>> +
+>>> +	mutex_lock(&minidump_lock);
+>>> +	md->dev = &pdev->dev;
+>>> +	md->md_gbl_toc = mdgtoc;
+>>
+>> What are you protecting here? It's not possible to have concurrent
+>> access to md, is it?
+> 
+> Check qcom_apss_minidump_region_{register/unregister} and it is possible
+> that these API gets called parallel to this probe.
+
+Wait, you say that something can modify local variable md before it is
+assigned to __md? How?
+
+> 
+> I agree, i made a mistake in not protecting __md in {register} API
+> but did it unregister API in this patch, which i have fixed in later patch.
+
+No, you are protecting random things. Nothing will concurrently modify
+md and &pdev->dev in this moment. mdgtoc is allocated above, so also
+cannot by modified.
+
+Otherwise show me the hypothetical scenario.
+
+
+> 
+>>
+>>> +	ret = qcom_minidump_init_apss_subsystem(md);
+>>> +	if (ret) {
+>>> +		dev_err(&pdev->dev, "apss minidump initialization failed: %d\n", ret);
+>>> +		goto unlock;
+>>> +	}
+>>> +
+>>> +	__md = md;
+>>
+>> No. This is a platform device, so it can have multiple instances.
+> 
+> It can have only one instance that is created from SMEM driver probe.
+
+Anyone can instantiate more of them.... how did you solve it?
+
+
+> 
+>>
+>>> +	/* First entry would be ELF header */
+>>> +	ret = qcom_apss_minidump_add_elf_header();
+>>> +	if (ret) {
+>>> +		dev_err(&pdev->dev, "Failed to add elf header: %d\n", ret);
+>>> +		memset(md->md_apss_toc, 0, sizeof(struct minidump_subsystem));
+>>> +		__md = NULL;
+>>> +	}
+>>> +
+>>> +unlock:
+>>> +	mutex_unlock(&minidump_lock);
+>>> +	return ret;
+>>> +}
+>>> +
+>>> +static int qcom_minidump_remove(struct platform_device *pdev)
+>>> +{
+>>> +	memset(__md->md_apss_toc, 0, sizeof(struct minidump_subsystem));
+>>> +	__md = NULL;
+>>
+>> Don't use __ in variable names. Drop it everywhere.
+> 
+> As i said above, this is being followed in other drivers, so followed
+> it here as per recommendation.
+> 
+> Let @srini comeback on this.
+
+Which part of coding style recommends __ for driver code?
+
+> 
+>>
+>>> +
+>>> +	return 0;
+>>> +}
+>>> +
+>>> +static struct platform_driver qcom_minidump_driver = {
+>>> +	.probe = qcom_minidump_probe,
+>>> +	.remove = qcom_minidump_remove,
+>>> +	.driver  = {
+>>> +		.name = "qcom-minidump",
+>>> +	},
+>>> +};
+>>> +
+>>> +module_platform_driver(qcom_minidump_driver);
+>>> +
+>>> +MODULE_DESCRIPTION("Qualcomm APSS minidump driver");
+>>> +MODULE_LICENSE("GPL v2");
+>>> +MODULE_ALIAS("platform:qcom-minidump");
+>>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+>>> index 6be7ea9..d459656 100644
+>>> --- a/drivers/soc/qcom/smem.c
+>>> +++ b/drivers/soc/qcom/smem.c
+>>> @@ -279,6 +279,7 @@ struct qcom_smem {
+>>>   
+>>>   	u32 item_count;
+>>>   	struct platform_device *socinfo;
+>>> +	struct platform_device *minidump;
+>>>   	struct smem_ptable *ptable;
+>>>   	struct smem_partition global_partition;
+>>>   	struct smem_partition partitions[SMEM_HOST_COUNT];
+>>> @@ -1151,12 +1152,19 @@ static int qcom_smem_probe(struct platform_device *pdev)
+>>>   	if (IS_ERR(smem->socinfo))
+>>>   		dev_dbg(&pdev->dev, "failed to register socinfo device\n");
+>>>   
+>>> +	smem->minidump = platform_device_register_data(&pdev->dev, "qcom-minidump",
+>>> +						      PLATFORM_DEVID_NONE, NULL,
+>>> +						      0);
+>>> +	if (IS_ERR(smem->minidump))
+>>> +		dev_dbg(&pdev->dev, "failed to register minidump device\n");
+>>> +
+>>>   	return 0;
+>>>   }
+>>>   
+>>>   static int qcom_smem_remove(struct platform_device *pdev)
+>>>   {
+>>>   	platform_device_unregister(__smem->socinfo);
+>>> +	platform_device_unregister(__smem->minidump);
+>>
+>> Wrong order. You registered first socinfo, right?
+> 
+> Any order is fine here, they are not dependent.
+> But, will fix this.
+
+No, the order is always reversed from allocation. It does not matter if
+they are dependent or not.
+
+Best regards,
+Krzysztof
+
