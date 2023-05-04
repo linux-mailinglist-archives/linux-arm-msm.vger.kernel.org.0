@@ -2,133 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92E586F657E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 09:10:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDC4F6F658F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 09:14:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230023AbjEDHKM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 03:10:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
+        id S229565AbjEDHOH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 03:14:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbjEDHKL (ORCPT
+        with ESMTP id S229494AbjEDHOG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 03:10:11 -0400
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B20088E;
-        Thu,  4 May 2023 00:10:09 -0700 (PDT)
-Received: from pps.filterd (m0046661.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3445knZ4015912;
-        Thu, 4 May 2023 09:09:19 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=selector1;
- bh=BdevYqMi76NwKC3zRXAgy5PN3WHuWUsGRFi5mAmNrPU=;
- b=diBkdS5cAS1F6aGRwKb+ZnpjXcLvvpzZASwgoOP/4T8WkojTtCRd77G8y0wSpK265DFf
- 5SRXoIc/CY5v7rG7eBolJXEjxs5ZNy928g9ffgPPkIG0/TUSRBSkZ69nPsngOZ/qKR6R
- Dc+Duyu4G38L9DAJuDKUVJ6ZFi6zwRDwUa2XBGJ9YcUUsZ7jKuPAExnDi3F2gWKNlaiV
- lGX9W7eGu6apovH/vVztA94SREXjCBuLXZ1Ef+IcSl/mQmGRz5U83sXo5yh+4sPvoItI
- nXSuhuHXKRPRxWD3ghAGp+VdxBVGEfJFlyDZ2TPVqtOzUXuqFoZcaBR526anQtwoamsn 5g== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com (PPS) with ESMTPS id 3qc6uw8hjs-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 09:09:19 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id DCD5210002A;
-        Thu,  4 May 2023 09:09:16 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id F0066210F61;
-        Thu,  4 May 2023 09:09:15 +0200 (CEST)
-Received: from [10.201.21.93] (10.201.21.93) by SHFDAG1NODE1.st.com
- (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Thu, 4 May
- 2023 09:09:15 +0200
-Message-ID: <95076d3b-5667-8cb3-c09a-e0b7dc2b03c3@foss.st.com>
-Date:   Thu, 4 May 2023 09:09:14 +0200
+        Thu, 4 May 2023 03:14:06 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1807C1731
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 00:14:05 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2a8a5f6771fso1544141fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 00:14:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683184443; x=1685776443;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fC32ZRL6kv8V/7o8EGUr1mtZobBUgWUVglha3gwf8ss=;
+        b=SKg0wIfLaLDnuauS+QNo+ttQkKMyX0p/sZ1KfMllPb9bPgx0sMEFrOosJEwQJqFBdY
+         wdWWmFf8C/l/3uLBTHhG+/iyxOn6Do7W+6sFqQt5qDl2E+RCyKhHnZzHacoNRdbVqQ5m
+         lQ5ZIcWhbbQL0CTZkKKpjThRy97Kgz/haVJTKFCnvPQ2oEW2IF/OBH94ki02CmcTy9Z9
+         k6IoUswj4PAWNobK0Tkc1ASV4hmdtkx5J5nqYreU5HvczJEJYjXSZgAumAI5p92cPpoi
+         +nk+3CKDzkgfEXLkcjCpFbFW5VhLYVOpLCMdsxWsaMA2AANRUtrvcHHkQr6gzFjt3X5X
+         Jr2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683184443; x=1685776443;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fC32ZRL6kv8V/7o8EGUr1mtZobBUgWUVglha3gwf8ss=;
+        b=OEVZBi03GmLnWbc9iTeY5IVnzgxzaHOMtdRc7Uvr+tTEUb7kYn0i4iEqO6mOuxXr5P
+         GBACrG17Jg6GkXqlFJRgvprxPo0uOsRCzoFeJ2Eg1bMNgJRoskCk7xgOGJf8yOTN30LR
+         A5RbP9CkEg+68q8g1FOwEM2CieccEGR7rocFcDQfKZu3XCIXtgy8uwo09Hd/aw0HZsYD
+         Ikwi00GcDLbisQ+h9q5y/jZyxNcgwAZXfYa/i4QbKiyJ3LYSBxWhV8qEJyWjP5gxb+8V
+         8jPkA72cL/VsYfuz9ezoM1Nh/2y2PXKf4rigtg/0E//rNMdd1Vqw/70rA/KKQG1YbAL2
+         ZMzg==
+X-Gm-Message-State: AC+VfDwWHqTcuScNrkQPOlSkBE0MV/r67PEh0MbsiRx9O97ZxLdUkgrp
+        DpFQPoe1jMVZnqsbVb2eE77J1g==
+X-Google-Smtp-Source: ACHHUZ68E5CT+tz5TBMWB/yNgy/q68QX2qmngSSqztLupWyrwNdOkkrkNo9hgynnEpklbx+XHjkw6g==
+X-Received: by 2002:a2e:9785:0:b0:2ab:d1b:dcb2 with SMTP id y5-20020a2e9785000000b002ab0d1bdcb2mr635844lji.38.1683184443371;
+        Thu, 04 May 2023 00:14:03 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id f2-20020ac25082000000b004eed63bc08csm6402214lfm.131.2023.05.04.00.14.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 00:14:02 -0700 (PDT)
+Message-ID: <21b500a5-2c4a-e156-61b3-aa0a2f4f5183@linaro.org>
+Date:   Thu, 4 May 2023 09:14:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [Linux-stm32] [RFC PATCH 0/1] Categorize ARM dts directory
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v3 11/18] arm64: dts: qcom: sm8450: Add Qualcomm ramoops
+ minidump node
 Content-Language: en-US
-To:     Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>
-CC:     <linux-aspeed@lists.ozlabs.org>,
-        <linux-realtek-soc@lists.infradead.org>,
-        <linux-arm-kernel@axis.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <chrome-platform@lists.linux.dev>,
-        <linux-samsung-soc@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        <linux-rockchip@lists.infradead.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        <linux-sunxi@lists.linux.dev>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-actions@lists.infradead.org>,
-        <linux-unisoc@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-rpi-kernel@lists.infradead.org>,
-        <linux-tegra@vger.kernel.org>, <linux-amlogic@lists.infradead.org>,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        <kernel@dh-electronics.com>, Olof Johansson <olof@lixom.net>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "linux-oxnas@groups.io" <linux-oxnas@groups.io>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
- <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
- <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
- <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
-From:   Alexandre TORGUE <alexandre.torgue@foss.st.com>
-In-Reply-To: <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.201.21.93]
-X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE1.st.com
- (10.75.129.69)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_04,2023-05-03_01,2023-02-09_01
-X-Spam-Status: No, score=-7.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, corbet@lwn.net, keescook@chromium.org,
+        tony.luck@intel.com, gpiccoli@igalia.com, catalin.marinas@arm.com,
+        will@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        robh+dt@kernel.org, linus.walleij@linaro.org,
+        linux-gpio@vger.kernel.org, srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-12-git-send-email-quic_mojha@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1683133352-10046-12-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/3/23 13:02, Arnd Bergmann wrote:
-> On Tue, May 2, 2023, at 21:40, Rob Herring wrote:
->> On Tue, May 2, 2023 at 3:15 AM Arnd Bergmann <arnd@arndb.de> wrote:
+
+
+On 3.05.2023 19:02, Mukesh Ojha wrote:
+> This enable dynamic reserve memory for Qualcomm ramoops device,
+> Which will used to save ramoops frontend data and this region
+> gets dumped on crash via Qualcomm's minidump infrastructure.
+> qcom_pstore_minidump is the associated driver for this node.
 > 
-
-...
-
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8450.dtsi | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
->>      'stm' : 'stm32',
->>      'sti' : 'sti',
->>      'st-pin' : 'sti',
->>      'ste' : 'st-ericsson',
->>      'spear' : 'spear',
-> 
-> I would put all five of these into 'st'. The ux500 was developed
-> in st-ericsson, but last sold by st, and the other ones are all
-> original st products.
+> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> index 595533a..92d023f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+> @@ -614,6 +614,17 @@
+>  			reg = <0x0 0xed900000 0x0 0x3b00000>;
+>  			no-map;
+>  		};
+> +
+> +		qcom_ramoops_md_region:qcom_ramoops_md {
+Missing space after ':'
 
-Acked-by: Alexandre TORGUE <alexandre.torgue@st.com>
+node names should not contain underscores
 
-thanks
-Alex
+minidump {
 
-> 
->        Arnd
-> _______________________________________________
-> Linux-stm32 mailing list
-> Linux-stm32@st-md-mailman.stormreply.com
-> https://st-md-mailman.stormreply.com/mailman/listinfo/linux-stm32
+or
 
+ramoops {
+
+would probably be better names for this node
+> +			alloc-ranges = <0x0 0x00000000 0xffffffff 0xffffffff>;
+> +			size = <0x0 0x200000>;
+> +			no-map;
+> +		};
+> +	};
+> +
+> +	qcom_ramoops_md {
+Node names should be generic (e.g. ramdump or something) and should
+not contain underscores.
+
+Konrad
+> +		compatible = "qcom,sm8450-ramoops-minidump", "qcom,ramoops-minidump";
+> +		memory-region = <&qcom_ramoops_md_region>;
+>  	};
+>  
+>  	smp2p-adsp {
