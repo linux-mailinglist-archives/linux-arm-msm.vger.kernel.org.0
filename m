@@ -2,64 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BAB86F6C72
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 14:55:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 319BE6F6C78
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 14:57:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbjEDMzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 08:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42796 "EHLO
+        id S230361AbjEDM5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 08:57:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230361AbjEDMzX (ORCPT
+        with ESMTP id S230148AbjEDM5I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 08:55:23 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F2E2D7F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 05:55:22 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f315735514so62020405e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 05:55:22 -0700 (PDT)
+        Thu, 4 May 2023 08:57:08 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42B65FEC
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 05:57:07 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f315712406so62666835e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 05:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683204921; x=1685796921;
+        d=linaro.org; s=google; t=1683205026; x=1685797026;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TwKH5OHkDV/MpZ9yrdw81ApCoAA4gk5I47srjkhQU+0=;
-        b=YpPw9mHfAJxQ6CjbhpKohzqG56cQCfKAsDGoAtpjQT/Ev9QAxQYnrL4ZV1Askhy9PI
-         T941FhMz6i+3/qDiHy4zFYgu3EIVivdVq7QIyouI2OKNpDAzqG2H4XhR0cd+3FR+yJcw
-         hjBqp7/5UVTKhenkIVvXOYwzXB/HzQJHyif3BM1SWkUolIv+S+e6ddSWctMztZ9tzcWP
-         W4W6beeMjzo4XVjpMQxo0hhE0k3TZFuq9PTu5jBsqSfugZT8LlPCIQHgHIYVKB42VZfs
-         9sjcq+T0ekua36zu4GAL4svoSk8byRqO9AkRxKEDPQZA4IL2jc90PlkTy6FBtxwVK2a4
-         xdVQ==
+        bh=JhEPtfZr+9cfDFkYEs5Deqb0QgVZN1XabpIEoEj4cvk=;
+        b=hDS/6FJmG1vcXmIU0e4bcSnhK74uaQn0jSwNGZxO2WfePsQDyMBGTuSCOLy2FbK0qW
+         /ve9M0xS5NYWAg7uRKDj4Q8/aV6VcmdLrhYWt0tT3aHPftQOYQQoUNtjVqs91EnnXuY9
+         X9Qjr2lDJC64+7JN20gWW/bN7JkKAL6+rWqAMAAeKZJDp9KT4F6ZBFMXwRfd9XcssqHT
+         m5sFKMsV39mXGrwxDENjAWodwWB+tIFd5QuyUb915xqDeFrjABYFpRBBmb/Km9qORi9Z
+         FO5zbx7H5C3FFZO7UW7FFV8R/W7XPNzvYa2Drr1SkqbCf3u+T4mSF9oXvCb2ZArSu+pl
+         bxaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683204921; x=1685796921;
+        d=1e100.net; s=20221208; t=1683205026; x=1685797026;
         h=content-transfer-encoding:in-reply-to:organization:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TwKH5OHkDV/MpZ9yrdw81ApCoAA4gk5I47srjkhQU+0=;
-        b=aBxA3BQJvHhFuje8Q+i6fvqf14vGgtJA0H3E5k2B8hYvI9TAiVrqbCkzuW9O3ys1PJ
-         TfO5a3VWyAogzxiqYXTj6hXwOiuKEpxT4GwF4Tk1f0iTejcFNs/AFWJ3CUBLeXjamv5q
-         II/yzxgPJbVYh8ceX9r4oipMs2ku1p4hmVSFhBYNWdkV6cA3F2uii7XVMr7AH+J+0BVX
-         veWQF1Ti9ZIoqRXsPfN32Gs1AZg8WhSPJee6GmE4/cbbOYWd9p/MzMXyi3KZWWfjvScN
-         xxwtV9mxNnjGA6DHNnZcenNYzgexiK0fc56SMXkrfpSIoatHpCFoyr1hzVhJG+Bm3JXr
-         EKjA==
-X-Gm-Message-State: AC+VfDyUihMNHMu2ml24mUtTfNaili6OPzrJ7yVbPq6Q1qIv6Vi0rfSi
-        MKhaC2uY+3Wae+nShVuyPMzN1g==
-X-Google-Smtp-Source: ACHHUZ6CDWxhk+dhSH8qLQE79fBassliV0GQlKPgAAM0MVDziCfBXEKP0mKuYXtpd45JN7ujvYKCxw==
-X-Received: by 2002:a5d:61d1:0:b0:306:2be3:6d40 with SMTP id q17-20020a5d61d1000000b003062be36d40mr2268666wrv.35.1683204920678;
-        Thu, 04 May 2023 05:55:20 -0700 (PDT)
+        bh=JhEPtfZr+9cfDFkYEs5Deqb0QgVZN1XabpIEoEj4cvk=;
+        b=Ggmsst3yHGdzAD8zqeqoPmI+W2DQxMYNwJM5+g5ddojgPZ8m82m2VRlSD2//cJ9IB4
+         j7FQFghntWNMus1jq80AaySUR9oUnupfWQUjxbN+JtfpTcHhIRbPw2C5Y3OOCTICCi6j
+         box9yjTvb3n6BRH5x1XUjMM0EuJ+f5SMxNzkhiVIqgG7Vq0rNE1CqXZ13ll9tQkl3da4
+         YvHGO1QIt4wLCNZhijcAsFXTwukxJ19oBNTAPwi9h1fz4EqRge6JHVPZcBnOUS4ECyr3
+         uCWKVTgdV9dXOWDuFZx17FF4kEiAd/OjGSv1T78HFHLuspDfQDBD/X10OFYkphLsEv/b
+         oDFQ==
+X-Gm-Message-State: AC+VfDwGOReCFUUumimf8c+OiCYkzQvkLJu7pyBTNpu60MttgM7wm0ol
+        IhoaPiLvUjQlRP2v3FfEwV333w==
+X-Google-Smtp-Source: ACHHUZ5rqd3wHqCuOO0fJ1hW47ySy9xRiVsKwGXyfYQeycNMmT7FHnDTtsiXs54rb1SDpyWuTvez2Q==
+X-Received: by 2002:a5d:4686:0:b0:2fa:88d3:f8b8 with SMTP id u6-20020a5d4686000000b002fa88d3f8b8mr2379888wrq.12.1683205026087;
+        Thu, 04 May 2023 05:57:06 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:52fb:80bd:bee3:f741? ([2a01:e0a:982:cbb0:52fb:80bd:bee3:f741])
-        by smtp.gmail.com with ESMTPSA id c11-20020a5d63cb000000b003062cdc6ac5sm11554084wrw.89.2023.05.04.05.55.19
+        by smtp.gmail.com with ESMTPSA id l9-20020a7bc449000000b003f2390bdd0csm4847131wmi.32.2023.05.04.05.57.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 05:55:20 -0700 (PDT)
-Message-ID: <b18a22c0-2cc2-d361-262c-2e5cf802641b@linaro.org>
-Date:   Thu, 4 May 2023 14:55:19 +0200
+        Thu, 04 May 2023 05:57:05 -0700 (PDT)
+Message-ID: <4eda7a33-991c-598e-0531-13959be0a912@linaro.org>
+Date:   Thu, 4 May 2023 14:57:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8350-hdk: Add QMP & DP to
- SuperSpeed graph
+Subject: Re: [PATCH 1/6] arm64: dts: qcom: sm8350: add ports subnodes in usb1
+ qmpphy node
 Content-Language: en-US
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -71,10 +71,10 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20230503-topic-sm8450-graphics-dp-next-v1-0-d1ee9397f2a6@linaro.org>
- <20230503-topic-sm8450-graphics-dp-next-v1-3-d1ee9397f2a6@linaro.org>
- <c985201e-6916-1ad8-4a11-cfc3bc288733@linaro.org>
+ <20230503-topic-sm8450-graphics-dp-next-v1-1-d1ee9397f2a6@linaro.org>
+ <4ce083f8-1ad1-c5c9-59cb-7511211b574f@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <c985201e-6916-1ad8-4a11-cfc3bc288733@linaro.org>
+In-Reply-To: <4ce083f8-1ad1-c5c9-59cb-7511211b574f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,165 +87,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2023 08:53, Konrad Dybcio wrote:
+On 04/05/2023 09:38, Konrad Dybcio wrote:
 > 
 > 
 > On 3.05.2023 15:10, Neil Armstrong wrote:
->> With support for the QMP combo phy to react to USB Type-C switch events,
->> introduce it as the next hop for the SuperSpeed lanes of the Type-C
->> connector, and connect the output of the DisplayPort controller
->> to the QMP combo phy.
->>
->> This allows the TCPM to perform orientation switching of both USB and
->> DisplayPort signals.
+>> Add the USB3+DP Combo QMP PHY port subnodes in the SM8350 SoC DTSI
+>> to avoid duplication in the devices DTs.
 >>
 >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 74 ++++++++++++++++++++++++++++++++-
->>   1 file changed, 72 insertions(+), 2 deletions(-)
+>>   arch/arm64/boot/dts/qcom/sm8350.dtsi | 26 ++++++++++++++++++++++++++
+>>   1 file changed, 26 insertions(+)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
->> index 2ee1b121686a..fa835bdb7408 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
->> @@ -58,7 +58,15 @@ port@1 {
->>   					reg = <1>;
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>> index ebcb481571c2..d048f4d35c89 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+>> @@ -2149,6 +2149,32 @@ usb_1_qmpphy: phy@88e9000 {
+>>   			#phy-cells = <1>;
 >>   
->>   					pmic_glink_ss_in: endpoint {
->> -						remote-endpoint = <&usb_1_dwc3_ss>;
->> +						remote-endpoint = <&usb_1_qmpphy_out>;
+>>   			status = "disabled";
+>> +
+>> +			ports {
+>> +				#address-cells = <1>;
+>> +				#size-cells = <0>;
+>> +
+>> +				port@0 {
+>> +					reg = <0>;
+>> +
+>> +					usb_1_qmpphy_out: endpoint {
 >> +					};
 >> +				};
 >> +
->> +				port@2 {
->> +					reg = <2>;
+>> +				port@1 {
+>> +					#address-cells = <1>;
+>> +					#size-cells = <0>;
+>> +					reg = <1>;
 >> +
->> +					pmic_glink_sbu: endpoint {
->> +						remote-endpoint = <&fsa4480_sbu_mux>;
->>   					};
->>   				};
->>   			};
->> @@ -326,6 +334,36 @@ zap-shader {
->>   	};
->>   };
->>   
->> +&i2c13 {
->> +	status = "okay";
->> +	clock-frequency = <100000>;
-> Status last
+>> +					usb_1_qmpphy_usb_ss_in: endpoint@0 {
+>> +						reg = <0>;
+>> +					};
+>> +
+>> +					usb_1_qmpphy_dp_in: endpoint@1 {
+>> +						reg = <1>;
+>> +					};
+> Shouldn't dp be a separate port@2?
 
-Ack
+Probably yes, but it should be the same issue for makena, but on makena
+we do not describe the USB SS and HS links separately, but only a single
+port for QMP input has been defined in the bindings.
 
-> 
->> +
->> +	fsa4480@42 {
->> +		compatible = "fcs,fsa4480";
->> +		reg = <0x42>;
->> +
->> +		interrupts-extended = <&tlmm 2 IRQ_TYPE_LEVEL_LOW>;
->> +
->> +		vcc-supply = <&vreg_bob>;
->> +		mode-switch;
->> +		orientation-switch;
->> +		svid = /bits/ 16 <0xff01>;
->> +
->> +		ports {
->> +			#address-cells = <1>;
->> +			#size-cells = <0>;
->> +
->> +			port@0 {
->> +				reg = <0>;
->> +
->> +				fsa4480_sbu_mux: endpoint {
->> +					remote-endpoint = <&pmic_glink_sbu>;
->> +				};
->> +			};
->> +		};
->> +	};
->> +};
->> +
->>   &i2c15 {
->>   	clock-frequency = <400000>;
->>   	status = "okay";
->> @@ -370,6 +408,20 @@ &mdss {
->>   	status = "okay";
->>   };
->>   
->> +&mdss_dp {
->> +	status = "okay";
->> +
->> +	ports {
->> +		port@1 {
->> +			reg = <1>;
-> missing newline
-> 
->> +			mdss_dp0_out: endpoint {
->> +				data-lanes = <0 1>;
->> +				remote-endpoint = <&usb_1_qmpphy_dp_in>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->>   &mdss_mdp {
->>   	status = "okay";
->>   };
->> @@ -416,6 +468,10 @@ &qupv3_id_0 {
->>   	status = "okay";
->>   };
->>   
->> +&qupv3_id_1 {
->> +	status = "okay";
->> +};
->> +
->>   &qupv3_id_2 {
->>   	status = "okay";
->>   };
->> @@ -716,7 +772,7 @@ &usb_1_dwc3_hs {
->>   };
->>   
->>   &usb_1_dwc3_ss {
->> -	remote-endpoint = <&pmic_glink_ss_in>;
->> +	remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
->>   };
->>   
->>   &usb_1_hsphy {
->> @@ -732,6 +788,20 @@ &usb_1_qmpphy {
->>   
->>   	vdda-phy-supply = <&vreg_l6b_1p2>;
->>   	vdda-pll-supply = <&vreg_l1b_0p88>;
->> +
->> +	orientation-switch;
-> this is a common property which will/should be ignored if no
-> usbc is present
+Neil
 
-So, do you mean it should be in the common dtsi ? I don't see why since
-it's only true if there's an USB-C connector
-
-> 
->> +};
->> +
->> +&usb_1_qmpphy_out {
->> +	remote-endpoint = <&pmic_glink_ss_in>;
->> +};
->> +
->> +&usb_1_qmpphy_usb_ss_in {
->> +	remote-endpoint = <&usb_1_dwc3_ss>;
->> +};
->> +
->> +&usb_1_qmpphy_dp_in {
->> +	remote-endpoint = <&mdss_dp0_out>;
-> 'd' < 'o' < 'u'
-Exact...
-
-> 
-> with that fixed
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
 > Konrad
->>   };
+>> +				};
+>> +			};
+>>   		};
 >>   
->>   &usb_2 {
+>>   		usb_2_qmpphy: phy-wrapper@88eb000 {
 >>
 
