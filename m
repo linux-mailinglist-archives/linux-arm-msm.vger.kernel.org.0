@@ -2,65 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 798F86F6F40
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:41:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B98E46F6F64
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:49:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231352AbjEDPl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 11:41:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53572 "EHLO
+        id S230527AbjEDPth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 11:49:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229768AbjEDPl1 (ORCPT
+        with ESMTP id S230011AbjEDPtg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 11:41:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C42E40;
-        Thu,  4 May 2023 08:41:26 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 12CC963532;
-        Thu,  4 May 2023 15:41:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53847C433D2;
-        Thu,  4 May 2023 15:41:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683214885;
-        bh=6eAF+PDzJKSUispa3X1kRM2MZ4pCLVUtY5fjeRCGXiA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=W8Oo7i3roM/RRef6hNcEKwGGoFpbQR86l34KO/NKH1a0qCn5JBSz0FWfUB3+HaeNE
-         aLhSa1x2/xFf99elNs4U+71UWXgagW5a3BtU8JIDTjBUdq/gcJK5cSDbsTixoF4BIZ
-         gF/XGhyxVJLgHJVSnF3g3OXIHy1vMYZtgS+vGW9VXw4uLmRBvZVOoCoT616t3oF82u
-         cQXpUTlP+N9UFtEnRoiAKrEla/+JFYaWymO5VZtoeOkKZ38197H/zCECJ5d07sVRQF
-         +zC8KfxBIYAzFgJ9c2JVcHBvvSCH9JLVCgdkw768ccchzjq4WmkCebAd2Og2dovStE
-         vVIpopmID/A5w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pub5J-00014L-JQ; Thu, 04 May 2023 17:41:34 +0200
-Date:   Thu, 4 May 2023 17:41:33 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
+        Thu, 4 May 2023 11:49:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B56A1FD9;
+        Thu,  4 May 2023 08:49:35 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 344F6NRN028935;
+        Thu, 4 May 2023 15:49:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=9K2J0Qs4G+xJ3O7DzrxGeAOmOdZ1h98Wxu+vcjU/S8o=;
+ b=nXASaCIe2b7vuj5wKzXn6Lsh6LaCqOY3e2pW1NH/G3dH+t2SJer1epjCN8Vhdh9QzDJF
+ ygy4aSizT6KBpW+JCgGa8K6bH11JOSYp5Q0cRYzx1yJECGr0KwESNyDVxNy75Q1ahGA3
+ iIogo57NoTzFRrbiVDFeoi2EbDf9Ma3ur9lFVvX4c20opwS0ARfMaigWPppAx0xyVpYm
+ 0kQ0xoW/gXevJNnDFGO60VNfp2yCrq++gA2XcK9mF5+BE4w1uEioeBkOFkgdN9Qgew0g
+ jZ6vV1gKPbicSjvfpjrDD/MNKOFAferMQtSq/9EYiaY9WRqWRjMcQSeRfSz7F387yQwp DQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qcf24g3x0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 04 May 2023 15:49:24 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344FnNk1023626
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 4 May 2023 15:49:23 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 4 May 2023 08:49:23 -0700
+Date:   Thu, 4 May 2023 08:49:22 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Johan Hovold <johan@kernel.org>
+CC:     Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/7] phy: qcom-qmp-combo: Introduce orientation variable
-Message-ID: <ZFPSLTgOiPMgwHzP@hovoldconsulting.com>
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
+Message-ID: <20230504154922.GI870858@hu-bjorande-lv.qualcomm.com>
 References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-4-quic_bjorande@quicinc.com>
- <ZFD4gM9dUQwBmSUe@hovoldconsulting.com>
- <20230504032907.GF870858@hu-bjorande-lv.qualcomm.com>
- <ZFO21fLWSNc7orpb@hovoldconsulting.com>
- <20230504151633.GH870858@hu-bjorande-lv.qualcomm.com>
+ <20230425034010.3789376-6-quic_bjorande@quicinc.com>
+ <ZFD8oQETtLuDH2Xg@hovoldconsulting.com>
+ <20230504031354.GE870858@hu-bjorande-lv.qualcomm.com>
+ <ZFNvHgaYsHUc2Y9L@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20230504151633.GH870858@hu-bjorande-lv.qualcomm.com>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <ZFNvHgaYsHUc2Y9L@hovoldconsulting.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rS1tuSDLI98ujxrx2JOQ8tBxi81fl5Zp
+X-Proofpoint-GUID: rS1tuSDLI98ujxrx2JOQ8tBxi81fl5Zp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-04_10,2023-05-04_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 malwarescore=0 clxscore=1015 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305040128
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -68,64 +85,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 04, 2023 at 08:16:33AM -0700, Bjorn Andersson wrote:
-> On Thu, May 04, 2023 at 03:44:53PM +0200, Johan Hovold wrote:
-> > On Wed, May 03, 2023 at 08:29:07PM -0700, Bjorn Andersson wrote:
-> > > On Tue, May 02, 2023 at 01:48:16PM +0200, Johan Hovold wrote:
-> > > > On Mon, Apr 24, 2023 at 08:40:06PM -0700, Bjorn Andersson wrote:
-> > 
-> > > > >  static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
-> > > > > @@ -1955,29 +1962,23 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
-> > > > >  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
-> > > > >  {
-> > > > >  	u32 val;
-> > > > > -	bool reverse = false;
-> > > > > +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-> > 
-> > > > It also looks like these callbacks end up being called without holding
-> > > > the qmp->phy_mutex via phy->power_on(). Perhaps there is no risk for a
-> > > > concurrent switch notification and dp phy power-on but it's not that
-> > > > obvious.
-> > 
-> > > It seems we're arriving here from hpd_event_thread(), while
-> > > phy_power_on() and phy_power_off() will be called in some other context.
-> > > I've not been able to convince myself if DP driver ensures ordering, or
-> > > if we have an existing race here...
-> > 
-> > > Unless you insist, I would prefer to follow up with an additional patch
-> > > once we've landed this series. The fix will depend on the phy_mutex
-> > > shuffling patch anyways...
-> > 
-> > Sure.
-> > 
-> > But perhaps you can just move the orientation == qmp->orientation check
-> > under the mutex in qmp_combo_typec_switch_set() for now (in case I
-> > forgot to point that out earlier).
-> > 
+On Thu, May 04, 2023 at 10:38:54AM +0200, Johan Hovold wrote:
+> On Wed, May 03, 2023 at 08:13:54PM -0700, Bjorn Andersson wrote:
+> > On Tue, May 02, 2023 at 02:05:53PM +0200, Johan Hovold wrote:
+> > > On Mon, Apr 24, 2023 at 08:40:08PM -0700, Bjorn Andersson wrote:
+> > > > The QMP combo PHY sits in an of_graph connected between the DisplayPort
+> > > > controller and a USB Type-C connector (or possibly a redriver).
+> > > > 
+> > > > The TCPM needs to be able to convey the HPD signal to the DisplayPort
+> > > > controller, but no directly link is provided by DeviceTree so the signal
+> > > > needs to "pass through" the QMP combo phy.
+> > > > 
+> > > > Handle this by introducing a drm_bridge which upon initialization finds
+> > > > the next bridge (i.e. the usb-c-connector) and chain this together. This
+> > > > way HPD changes in the connector will propagate to the DisplayPort
+> > > > driver.
+> > > > 
+> > > > The connector bridge is resolved lazily, as the TCPM is expected to be
+> > > > able to resolve the typec mux and switch at probe time, so the QMP combo
+> > > > phy will probe before the TCPM.
+> > > > 
+> > > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > > > ---
+> > > >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 36 +++++++++++++++++++++++
+> > > >  1 file changed, 36 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > > > index 5d6d6ef3944b..84bc08002537 100644
+> > > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 > 
-> qmp_combo_probe() and qmp_combo_typec_switch_set() are the only writers
-> to qmp->orientation, so that check can't race with any updates and hence
-> doesn't need to be protected.
-
-Only if you happen to know that the callers of
-qmp_combo_typec_switch_set() are serialised, right? That happens to be
-the case for pmic_glink, but it may not be the case generally.
- 
-> Reading the code again, qmp_combo_configure_dp_mode() is invoked from
-> phy_power_on(), not the hpd_event_thread(), as I claimed yesterday.
-
-Yeah, but phy_power_on() is typically called from that thread. But
-perhaps not only from there.
-
-> But we shouldn't do qmp_combo_dp_power_on() in parallel with the
-> reinitialization following a switch in orientation, qmp->orientation
-> might change, but we definitely would have two contexts reconfiguring
-> the hardware simultaneously - perhaps this was the cause for the 10%
-> crashes I hit when trying to extend this to handle typec_mux as well...
+> > > > @@ -3196,6 +3200,34 @@ static int qmp_combo_register_clocks(struct qmp_combo *qmp, struct device_node *
+> > > >  	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, dp_np);
+> > > >  }
+> > > >  
+> > > > +static int qmp_combo_bridge_attach(struct drm_bridge *bridge,
+> > > > +				   enum drm_bridge_attach_flags flags)
+> > > > +{
+> > > > +	struct qmp_combo *qmp = container_of(bridge, struct qmp_combo, bridge);
+> > > > +	struct drm_bridge *next_bridge;
+> > > > +
+> > > > +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
+> > > > +		return -EINVAL;
+> > > > +
+> > > > +	next_bridge = devm_drm_of_get_bridge(qmp->dev, qmp->dev->of_node, 0, 0);
+> > > > +	if (IS_ERR(next_bridge))
+> > > > +		return dev_err_probe(qmp->dev, PTR_ERR(next_bridge), "failed to acquire drm_bridge\n");
+> > > 
+> > > Using dev_err_probe() in an attach callback looks wrong as these
+> > > functions should not be returning -EPROBE_DEFER (and this is not a probe
+> > > function).
+> > 
+> > The problem is that this might return EPROBE_DEFER, and at least today
+> > propagates out to returning EPROBE_DEFER from our DP controller's
+> > bind().
 > 
-> I will grab the phy_mux in qmp_combo_configure_dp_mode() as well, thanks
-> for "insisting" :)
+> Due to the known issue with the MSM driver panel lookup, or due to some
+> more fundamental problem with the stack?
+> 
 
-:)
+No, but looks for the drm_bridge in the connector.
 
-Johan
+> At least in the former case, I don't think we should hide the fact that
+> we have an unresolved issue with the MSM driver this way even if it
+> means printing an extra error message until it has been resolved (cf.
+> the panel lookup errors that we've intentionally kept in place).
+> 
+> > This is not optimal, but unfortunately we have a two way dependency
+> > across the of_graph, so we need to make one of the sides lazy...
+> 
+> But this comments seems to suggest this is a bigger issue than the panel
+> lookup.
+> 
+> Could you describe the issue in some more detail (e.g. when would you
+> see -EPROBE_DEFER here)?
+> 
+
+pmic_glink needs to look up the typec_switch_dev through the of_graph,
+which won't be present until the QMP phy is probed. And the QMP phy is
+looking for the connector, which won't be present until pmic_glink has
+found the QMP phy.
+
+So what I'm saying is that either pmic_glink or QMP needs to look up the
+other side lazily.
+
+
+The attach happens during bind of the msm_drm component, so at least
+today it's a consistent path to return EPROBE_DEFER in the DP
+controller...
+
+Regards,
+Bjorn
