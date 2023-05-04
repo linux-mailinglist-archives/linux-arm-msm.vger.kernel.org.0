@@ -2,138 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 735026F6784
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 10:30:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D0586F679F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 10:38:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230384AbjEDIa5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 04:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38826 "EHLO
+        id S229845AbjEDIiu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 04:38:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230105AbjEDIaZ (ORCPT
+        with ESMTP id S229772AbjEDIit (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 04:30:25 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B215FCE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 01:27:32 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-6436e004954so306326b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 01:27:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683188851; x=1685780851;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fz6g2/625qlFmhiR93VnIJ+EVOsf12tbuuuDirZwZ9U=;
-        b=uh/cVkAvbCAQeNz+eFz44pqdjg9k5CWL5VqL1bx9HCYSnp54SVpjfh+R89DQ3unScf
-         saWw0OzTNf3ReNCe4N6JqvMpOxFz5ATlmbMkuYTWgnHHzAYfdUL+A3KKAOFOAOR/DE7f
-         1PT6V6GD0pxlBsO6yDgIiO7UM+33qmlscNyrseKXanMfXdvJCox4Qvyqy5/7WIDobQ9P
-         8MMPZvhLdmas2kEuxJwqjufeFWPC7iDi7nx0meJab/Zy6+6NYLtZr/1uqUX9lv7zcPlC
-         1i7U1iIIJ7ylSMdxDWz4xRQBCDATihGJr85QSD81mMELTbvY/oYX3oXJWRv24m2SETBQ
-         ed5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683188851; x=1685780851;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fz6g2/625qlFmhiR93VnIJ+EVOsf12tbuuuDirZwZ9U=;
-        b=RPCqKBHEXmtwIZhsSm97TgNQhC/MrUUhSHpPyc0C1qab/zova2weeKApzMTP/2MFmu
-         TuZ3zrd6TZtkEfg11hLDmktKEjeVQzsxiGGkAlcA0M6m2IubJRW9CIVdAPRsVdhf26PF
-         uS+UXBaiWYI038g2iEqN8tIa44TNY1rDNcOArIVPvdmAnOZXGLA20JaOUtF7aXCCQlcu
-         /+e2fG2J2V8qAIv2goW8Tm5wJwwj84OTM/o30cADlNLkI/eVMG+4+9bRHcjXE6hQ/LCg
-         GM5pJfx5pfR6s/muHgrKlLtNzjHe6WiND8/qBoBGavYthptwIxIKCYvM5HUWNPiBY/X/
-         jo5Q==
-X-Gm-Message-State: AC+VfDx+tKxEWBv+vXrTmt91aRDMQNCGM6F6tiCobmS0dSD/78CWHRJx
-        KW4km68+b7OAoGV/ciaE1LhEt3nYauJzkMMz7VI=
-X-Google-Smtp-Source: ACHHUZ5pJk4+pL/gurW2SaGLZq20EkbWIIas0Rnxk/sNmRNhNANYG/Q7F0Ky1Z8TEduY/ecGWla3qQ==
-X-Received: by 2002:a05:6a00:b86:b0:63d:3a18:4a03 with SMTP id g6-20020a056a000b8600b0063d3a184a03mr1878881pfj.5.1683188851588;
-        Thu, 04 May 2023 01:27:31 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.65.180])
-        by smtp.gmail.com with ESMTPSA id s1-20020a056a00178100b00625d84a0194sm24913973pfg.107.2023.05.04.01.27.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 May 2023 01:27:31 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        linux-usb@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        krzysztof.kozlowski@linaro.org
-Subject: [PATCH v3 5/5] arm64: dts: qcom: qrb4210-rb2: Enable EUD debug peripheral
-Date:   Thu,  4 May 2023 13:56:44 +0530
-Message-Id: <20230504082644.1461582-6-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230504082644.1461582-1-bhupesh.sharma@linaro.org>
-References: <20230504082644.1461582-1-bhupesh.sharma@linaro.org>
+        Thu, 4 May 2023 04:38:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE7B01722;
+        Thu,  4 May 2023 01:38:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5E2E76326B;
+        Thu,  4 May 2023 08:38:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC04EC433D2;
+        Thu,  4 May 2023 08:38:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683189527;
+        bh=lyHDvvruE+QpJiz2b8/hfSd8MdRly286qX04fvZa2mM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ueEtORMx7XS5bd+UDk3Hr/ohERrwMQUCuGtyanSCF/qNjohVAwU4el94X3HosnmfN
+         ETP75+9gTknkcKlqcBro8PMcmkQI7ZzOBReJPYQADnyMQRLe/dBXro9plhtEFfRidH
+         NyA0Y+AjLTD5OKqjaR+a9yqC0sa3/+ByJf/grmabaGxmiMBkrzfUD8UcI3yEeK3Xdz
+         wS/ljmpfls87SrEw+JM6buDTQYapRU9QVBx1bafQxfv7JXiRrp8uxVPWti2GrNhRU6
+         4QJTIzdfnCejK4fqWTeTJdDAjl6yleCjTYdtyuzp5dONrJS2aN8hveC3VVMITijJ0g
+         tNWkAGSCuPTZw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1puUUJ-0005SO-05; Thu, 04 May 2023 10:38:55 +0200
+Date:   Thu, 4 May 2023 10:38:54 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
+Message-ID: <ZFNvHgaYsHUc2Y9L@hovoldconsulting.com>
+References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
+ <20230425034010.3789376-6-quic_bjorande@quicinc.com>
+ <ZFD8oQETtLuDH2Xg@hovoldconsulting.com>
+ <20230504031354.GE870858@hu-bjorande-lv.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230504031354.GE870858@hu-bjorande-lv.qualcomm.com>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the USB-C type port on the Qualcomm QRB4210-RB2 board
-can be set primarily in a 'device' configuration (with the default
-DIP switch settings), it makes sense to enable the EUD debug
-peripheral on the board by default by setting the USB 'dr_mode' property
-as 'otg'.
+On Wed, May 03, 2023 at 08:13:54PM -0700, Bjorn Andersson wrote:
+> On Tue, May 02, 2023 at 02:05:53PM +0200, Johan Hovold wrote:
+> > On Mon, Apr 24, 2023 at 08:40:08PM -0700, Bjorn Andersson wrote:
+> > > The QMP combo PHY sits in an of_graph connected between the DisplayPort
+> > > controller and a USB Type-C connector (or possibly a redriver).
+> > > 
+> > > The TCPM needs to be able to convey the HPD signal to the DisplayPort
+> > > controller, but no directly link is provided by DeviceTree so the signal
+> > > needs to "pass through" the QMP combo phy.
+> > > 
+> > > Handle this by introducing a drm_bridge which upon initialization finds
+> > > the next bridge (i.e. the usb-c-connector) and chain this together. This
+> > > way HPD changes in the connector will propagate to the DisplayPort
+> > > driver.
+> > > 
+> > > The connector bridge is resolved lazily, as the TCPM is expected to be
+> > > able to resolve the typec mux and switch at probe time, so the QMP combo
+> > > phy will probe before the TCPM.
+> > > 
+> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > > ---
+> > >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 36 +++++++++++++++++++++++
+> > >  1 file changed, 36 insertions(+)
+> > > 
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > > index 5d6d6ef3944b..84bc08002537 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 
-Now, the EUD debug peripheral can be enabled by executing:
- $ echo 1 > /sys/bus/platform/drivers/qcom_eud/1610000.eud/enable
+> > > @@ -3196,6 +3200,34 @@ static int qmp_combo_register_clocks(struct qmp_combo *qmp, struct device_node *
+> > >  	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, dp_np);
+> > >  }
+> > >  
+> > > +static int qmp_combo_bridge_attach(struct drm_bridge *bridge,
+> > > +				   enum drm_bridge_attach_flags flags)
+> > > +{
+> > > +	struct qmp_combo *qmp = container_of(bridge, struct qmp_combo, bridge);
+> > > +	struct drm_bridge *next_bridge;
+> > > +
+> > > +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
+> > > +		return -EINVAL;
+> > > +
+> > > +	next_bridge = devm_drm_of_get_bridge(qmp->dev, qmp->dev->of_node, 0, 0);
+> > > +	if (IS_ERR(next_bridge))
+> > > +		return dev_err_probe(qmp->dev, PTR_ERR(next_bridge), "failed to acquire drm_bridge\n");
+> > 
+> > Using dev_err_probe() in an attach callback looks wrong as these
+> > functions should not be returning -EPROBE_DEFER (and this is not a probe
+> > function).
+> 
+> The problem is that this might return EPROBE_DEFER, and at least today
+> propagates out to returning EPROBE_DEFER from our DP controller's
+> bind().
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 27 +++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+Due to the known issue with the MSM driver panel lookup, or due to some
+more fundamental problem with the stack?
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 1a0776a0cfd0..0ce72f1ebc10 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -30,6 +30,10 @@ vph_pwr: vph-pwr-regulator {
- 	};
- };
- 
-+&eud {
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -253,7 +257,28 @@ &usb {
- 
- &usb_dwc3 {
- 	maximum-speed = "super-speed";
--	dr_mode = "peripheral";
-+
-+	/*
-+	 * There is only one USB DWC3 controller on QRB4210 board and it is connected
-+	 * via a DIP Switch:
-+	 * - to either an USB - C type connector or an USB - A type connector
-+	 *   (via a GL3590-S hub), and
-+	 * - to either an USB - A type connector (via a GL3590-S hub) or a connector
-+	 *   for further connection with a mezzanine board.
-+	 *
-+	 * All of the above hardware muxes would allow us to hook things up in
-+	 * different ways to some potential benefit for static configurations (for e.g.
-+	 * on one hand we can have two USB - A type connectors and a USB - Ethernet
-+	 * connection available and on the other we can use the USB - C type in
-+	 * peripheral mode).
-+	 *
-+	 * Note that since the USB - C type can be used only in peripehral mode,
-+	 * so hardcoding the mode to 'peripheral' here makes sense.
-+	 *
-+	 * However since we want to use the EUD debug device, we set the mode as
-+	 * 'otg' here.
-+	 */
-+	dr_mode = "otg";
- };
- 
- &usb_hsphy {
--- 
-2.38.1
+At least in the former case, I don't think we should hide the fact that
+we have an unresolved issue with the MSM driver this way even if it
+means printing an extra error message until it has been resolved (cf.
+the panel lookup errors that we've intentionally kept in place).
 
+> This is not optimal, but unfortunately we have a two way dependency
+> across the of_graph, so we need to make one of the sides lazy...
+
+But this comments seems to suggest this is a bigger issue than the panel
+lookup.
+
+Could you describe the issue in some more detail (e.g. when would you
+see -EPROBE_DEFER here)?
+
+Johan
