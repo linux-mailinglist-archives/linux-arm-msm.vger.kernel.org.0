@@ -2,127 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F04656F7094
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F2A06F70A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:15:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229821AbjEDRNT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 13:13:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46014 "EHLO
+        id S229661AbjEDRPY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 13:15:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbjEDRNS (ORCPT
+        with ESMTP id S229781AbjEDRPX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 13:13:18 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C8555BF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:12:51 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4eff055d4d3so866990e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 10:12:51 -0700 (PDT)
+        Thu, 4 May 2023 13:15:23 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CD33AA7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:15:21 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-2f27a9c7970so718359f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 10:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683220369; x=1685812369;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s/CEdgtUpi43mveuf39uYFXUUNC2tD6NAcNS1FOuE/c=;
-        b=glRedMD+CCYZs68XnbUGejYxfbxN2A1ctKi63s1kFo+NAe4Xu3ziikfeT3YuW0p7c/
-         lByRyNIfiUVM7PTYuqX3EJOx71gldftTyQDl/+J2iJJgq90sFOSiOmXsWPAwoyTUS04o
-         A9/r4kXkz3UOogc1qvYCpzK3Wvx5hvrR4XNZbX3DpWizl5//rtTQFe8C+5Rpq7rO2M7Q
-         JA1UDuXS4Ls7GB6g6/CctAC8DJvYYTn4FBVQqMMhn2PxMPru2YxOdSnG2OvCuKX90gHY
-         WLkLXeuXv/T+5t1csToF9pQ7o9W4nTMiCeuvDus+4n8ptyclcQpnVYxL7CP8z9JUAVVV
-         xaXg==
+        d=linaro.org; s=google; t=1683220519; x=1685812519;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mPxz+XWlXQuQsb3fDFfD8YJvL7javRdaPks0ljDpTFI=;
+        b=WMc5XOjIqzCkMxkbelUG6Azyo4ovAmJa42k7u5K/7aE8Jiq4UM/D+KcQ1DsJe0g1bC
+         KYOvHpsOYgPBdZ0LUD2qWE4IWTaC+hT/9jRqtVw2UWPoGwK50I8k26bS7cgAGWyUjquY
+         WzbZV1B4j3d5qoDLD4DtXuyvDBYfX9JEUzRnCe9XCPyUPnmofVkRuFTfTW6hmWi4cJYj
+         zLqXqh03Keffm5TXqSVCRDCe9VKWAdZcWa03BRrEsrtWKWvj4XjPB3R8lc8NE6unTq6B
+         35Swcg4+nLD0+CIWEK/+ldi8CF3WzMt1AvWI8KmafB/AJaQ4dSZcrVPHZFhln+wie3ky
+         uTwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683220369; x=1685812369;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s/CEdgtUpi43mveuf39uYFXUUNC2tD6NAcNS1FOuE/c=;
-        b=Qu5jvXlbvFw9XappNCMpGjU0k7vx/0E8LjKybW7x/QtovSLPkWm1yZjvVOPLLJeFA9
-         XT4huXNGyUjYCONqMpHDfo+fWW4nmxUURbTtBtxmN/xqRxK5p/0vWv7QNn4789N8FdnR
-         4LYDo218VwiBAdTOL+2ocK7qzuH3Ls9jsiv5sF4GsFxVV0PjAIQFaBsFDdSprDo672E/
-         a6fqDy0hkugCrORQUE8yvtEzc0RT5buHlS4MlPOM/EtxLlNqqn/dY7y3ysAthcRjKxms
-         Y3zyv9WlreqBqgAYEMoAsPyHKrG6fJjPmgec5a0GY5LYd+ZjMNHoC31EROrKlrdZaKs0
-         /3vg==
-X-Gm-Message-State: AC+VfDxgqQ7jKuAbhoeM24IL+gYSmVagGxOLV9wliYzEWrRlWnV2X6ZM
-        J7JzDX4BJQodO0uAJpdDWkL7eA==
-X-Google-Smtp-Source: ACHHUZ7hTVLK8eEhO1dOL53juI+UHyGvUD0vBRFkSB59bxxkMCyfvfsmbQkNLpxSxsSiACB0FK7TKA==
-X-Received: by 2002:ac2:4887:0:b0:4f0:223e:7916 with SMTP id x7-20020ac24887000000b004f0223e7916mr2104795lfc.62.1683220369491;
-        Thu, 04 May 2023 10:12:49 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id s5-20020ac25fa5000000b004e83f386878sm6567522lfe.153.2023.05.04.10.12.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 10:12:49 -0700 (PDT)
-Message-ID: <40e5dd8a-e729-524d-8c16-1999ba4ff279@linaro.org>
-Date:   Thu, 4 May 2023 19:12:47 +0200
+        d=1e100.net; s=20221208; t=1683220519; x=1685812519;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mPxz+XWlXQuQsb3fDFfD8YJvL7javRdaPks0ljDpTFI=;
+        b=G4GcRa28BfRoMkQAcXjgBAD9jUcwAfMxLFoQRBbQee6ZVhTq27SawHnOnNjvR8mjYQ
+         YReQUiy82vWj3gLm5NAJUo31S3ng/A5EIHzzfJFVRZUw3zlU/qko/CRj6sPuElxq627q
+         Ud1fuVipH1oMwOXJwjs+WUkT5zVG8ULL6stzEq1ry1c+S2vL4qI6jS/SlZaPaLMFBHep
+         VDH9NKLTRRJqFoySkDkVfSRzs+B/HtAhboaCsKerfG2YETW4fSdJUBnPex1Iku/d0EWA
+         TKfe3hoJyro43l6BOFS9S+3SarpEmlonYqRyL3QPgD2RLP4bkSQ40WKmfqdkaYn607Pq
+         8Liw==
+X-Gm-Message-State: AC+VfDzVsWehFSO5UH0oVjjXwDrgbtwq1RHYW/H/rndItRWlx0zFLn5x
+        XEDC0ilYJ+DA9HdfPIcQgDagthDS4/VnATLfXOR1Gg==
+X-Google-Smtp-Source: ACHHUZ7OBUvbjJ8DH6bij+IQ1ETjKEi6vzhPPQ7PS0McYH+SJEvnAvTYVizHZBdeou6PKE2blxE+YQprpGkcPiIC4LE=
+X-Received: by 2002:adf:e60b:0:b0:2e9:bb2f:ce03 with SMTP id
+ p11-20020adfe60b000000b002e9bb2fce03mr3254064wrm.0.1683220519370; Thu, 04 May
+ 2023 10:15:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: enable AOSS
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230504161755.197417-1-brgl@bgdev.pl>
- <20230504161755.197417-2-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230504161755.197417-2-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230501105832.1185477-1-bhupesh.sharma@linaro.org>
+ <20230501105832.1185477-4-bhupesh.sharma@linaro.org> <1aaff58a-f07b-1e2a-e27b-df41eacd19e7@linaro.org>
+In-Reply-To: <1aaff58a-f07b-1e2a-e27b-df41eacd19e7@linaro.org>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Thu, 4 May 2023 22:45:08 +0530
+Message-ID: <CAH=2NtziEnOquGBukh221Lv6++QJdrEEkU1v469QqvR+AZRYyg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qrb4210-rb2: Enable aDSP and
+ cDSP remoteproc nodes
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski@linaro.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 2 May 2023 at 17:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 1.05.2023 12:58, Bhupesh Sharma wrote:
+> > Enable the aDSP and cDSP remoteproc nodes on Qualcomm QRB4210 RB2 board.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> > index bff6ba1d689f..3ab46499d3fa 100644
+> > --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> > @@ -34,6 +34,16 @@ &qupv3_id_0 {
+> >       status = "okay";
+> >  };
+> >
+> > +&remoteproc_adsp {
+> > +     status = "okay";
+> > +     firmware-name = "qcom/sm6115/adsp.mdt";
+> status last
+> also, don't we want to use .mbn (squashed binary)?
 
+Ok, let me fix this in the next version.
 
-On 4.05.2023 18:17, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Enable the always-on subsystem controller on SA8775P platforms for use
-> by upcoming support for other peripherals.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 0737ba38fefe..c5e2e3256bc4 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -9,6 +9,7 @@
->  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
->  #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
->  #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
-> +#include <dt-bindings/mailbox/qcom-ipcc.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  
-> @@ -752,6 +753,16 @@ pdc: interrupt-controller@b220000 {
->  			interrupt-controller;
->  		};
->  
-> +		aoss_qmp: power-management@c300000 {
-> +			compatible = "qcom,sa8775p-aoss-qmp", "qcom,aoss-qmp";
-> +			reg = <0x0 0x0c300000 0x0 0x400>;
-> +			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
-> +					       IPCC_MPROC_SIGNAL_GLINK_QMP
-> +					       IRQ_TYPE_EDGE_RISING>;
-> +			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +			#clock-cells = <0>;
-> +		};
-> +
->  		spmi_bus: spmi@c440000 {
->  			compatible = "qcom,spmi-pmic-arb";
->  			reg = <0x0 0x0c440000 0x0 0x1100>,
+Thanks,
+Bhupesh
