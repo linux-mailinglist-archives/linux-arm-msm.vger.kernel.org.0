@@ -2,565 +2,295 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 043ED6F6F07
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:35:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F5776F6F22
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231445AbjEDPfd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 11:35:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49506 "EHLO
+        id S231479AbjEDPfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 11:35:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231177AbjEDPfb (ORCPT
+        with ESMTP id S229905AbjEDPfv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 11:35:31 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CBB946B7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 08:35:20 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so768446e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 08:35:20 -0700 (PDT)
+        Thu, 4 May 2023 11:35:51 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B16D49D5
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 08:35:47 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-50bd2d7ba74so18423213a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 08:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683214518; x=1685806518;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Af5SqekPBEom0vEag8U4p6PWeBcNrRdYpyMbeAH6Mb8=;
-        b=YIyrjkRBkAzfUBq645F480kpgg7PNBy3VO0BO+do7swbVemd0sWW9TiiTR7OFgMS8b
-         wHiH8sh2NAhryve1RcQ+ChPYrmlbRzaNHmPnZae/P5Hpfo8uSa+/R2dFk4HaBdrgvZ1B
-         JaRN0SHXq1Ag5MP2oOm+u4SSSNO94urhU6WI7c4yBRfqG8ZsPr/IoHWc6uheGE1RXKsq
-         aTeu4YWw76NVPxsEGtVKnhSCFLfKnPA4yx+GeQyBAT38Jyfoma2/ZeuR10HWZ8z9xRD7
-         Qb6RNrLd6UkAqhQk5GibHKLdJ+SlmnXcmXUZyTVSnxAw49fXWQHiwNOAvS9D12Ck3Fcy
-         svug==
+        d=linaro.org; s=google; t=1683214546; x=1685806546;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ejh4crEBOmtG4UC1kk86Qe+Ml+DMERXcjPl1rLzWy/A=;
+        b=ls54MAt8vRmbuJ1pN0j4ExdrRZHf+goxJOCk/9QMiAqwRIBARCMMukGq/VbAKOcY78
+         VxEyPKBChJVz+IAbsnORgTExobdIYSaeClyyQxx+7vReGRsZCfRj5cKRxvadkGy+9yRL
+         GntWHAQPYQCGLp8OH13fWxsDwlbpFqg+c/5APdKPbIZM15PxLigaHs8HGSddisPFzYjl
+         7UqxhldoUQlLoR6qcEVmkjXOJra+5fX+s9IBxQo5+yVsqWYvpp6Um3TuGMUPiu8EeVXq
+         hWDdoJwjIVQHPnACEgc2n6ldlghABF1CSS29tYYuI3DZR+QX570Nn0Hg0UiXsVmvSmxt
+         HN3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683214518; x=1685806518;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Af5SqekPBEom0vEag8U4p6PWeBcNrRdYpyMbeAH6Mb8=;
-        b=YcG0o+pUkF28Z1dkbQYY3ARdUE4zpKFmntXXHEa4py+pF9Cna/ce69Z8zjMyBIl3wq
-         y/uIVXamLt4b81eseL+rUExqHP7CAdshfdReej4gU8kwtPdS1Pvr/vMeUgIbqrAxe/lA
-         O1A+ozOMOtu7V8eHZqfX8zUZUv+55Nl6zBEcB0Ysq7dHX7vAXWCbM1p5BJb3nnalbjiO
-         HQUnFW4zJQMeXZxxB4mqGP77rMFMmHT3odC6fiRj4YrfD+fEfcA0hku1WfzVvwjnfOWE
-         sokpjGIsJvCa+uGIca3mp1PcbHsO5D6CDr51ddjZXp2BhBAEUe2B8znVfHjk67gMrzHy
-         lK9w==
-X-Gm-Message-State: AC+VfDyB0UFfRtuWBxkLJSvirXpTjnSvPdCN1GzXIjyU/+DCrqo5QNGr
-        Q4He1PZPui4qjljj5QuAxqXCnA==
-X-Google-Smtp-Source: ACHHUZ4RH2BR4haWotdaF0UHCpYEExvVWtKv53r0hamfJBZDTQnBT3SybUGzw+orb1rTi5SJKczJSg==
-X-Received: by 2002:a05:6512:374c:b0:4ec:7b87:931a with SMTP id a12-20020a056512374c00b004ec7b87931amr2435602lfs.13.1683214518719;
-        Thu, 04 May 2023 08:35:18 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id n15-20020a056512388f00b004e96afb1e9asm6608753lft.253.2023.05.04.08.35.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 May 2023 08:35:18 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Suraj Kandpal <suraj.kandpal@intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v5 8/8] drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
-Date:   Thu,  4 May 2023 18:35:11 +0300
-Message-Id: <20230504153511.4007320-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
-References: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1683214546; x=1685806546;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ejh4crEBOmtG4UC1kk86Qe+Ml+DMERXcjPl1rLzWy/A=;
+        b=UMxK0PDeYx8fG8EQaNwna7/7EFXuGLB9HpuYzWAarj4p7cV/801zaFilRtkZtZtCNk
+         oOThunZ4nIgMSCN5ui5xNifosC6b9eopH/lZ22MjMecOgw0JhLrgyfwzPym2cVf8fPji
+         Cp88gxtaZRdh+us3Ju8l2Gw61xmDT38vRfxvXgYgJeVPyy+sB1D24zreVZ4OWcMkJ8i8
+         /r2wUKN/U9O96S/tapPc3GuGlj+zZA9U54Ob63coXTeeiX88hY117dzwzuNypj3uv6by
+         LpXuKwCOXJ1cXSc+MsCK97qAHzhYVyCNLBvkmivNqXNe//JWnxrR65QaNJ9MafKk3syg
+         AAfg==
+X-Gm-Message-State: AC+VfDzmKEC2MwSnXlFg+an46kD8E0k1yqSdRWzmdxpT/O9rB0EKDN6d
+        UbVGC0ftdlT+7CrUnaZ7CRv16Q==
+X-Google-Smtp-Source: ACHHUZ7jzfDt06eS0CGkxF6QauQkCZSpGzNA36btONhIeYYIhlGdGvHung1H+PrKfGrXAL7Q3uqFrg==
+X-Received: by 2002:a17:907:72d1:b0:94f:1d54:95d2 with SMTP id du17-20020a17090772d100b0094f1d5495d2mr6179188ejc.15.1683214545801;
+        Thu, 04 May 2023 08:35:45 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:cbf1:e7ef:fb81:e912? ([2a02:810d:15c0:828:cbf1:e7ef:fb81:e912])
+        by smtp.gmail.com with ESMTPSA id l13-20020a170906230d00b0094f2f1c5ea1sm19210155eja.174.2023.05.04.08.35.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 08:35:44 -0700 (PDT)
+Message-ID: <62b81216-120b-40c0-bcf4-d3d3867200e0@linaro.org>
+Date:   Thu, 4 May 2023 17:35:43 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v3 09/18] soc: qcom: Add qcom's pstore minidump driver
+ support
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-10-git-send-email-quic_mojha@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <1683133352-10046-10-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Include RC parameters for YCbCr 4:2:2 and 4:2:0 configurations.
+On 03/05/2023 19:02, Mukesh Ojha wrote:
+> This driver was inspired from the fact pstore ram region should be
+> fixed and boot firmware need to have awarness about this region,
+> so that it will be persistent across boot. But, there are many
+> QCOM SoC which does not support warm boot from hardware but they
+> have minidump support from the software, and for them, there is
+> no need of this pstore ram region to be fixed, but at the same
+> time have interest in the pstore frontends. So, this driver
+> get the dynamic reserved region from the ram and register the
+> ramoops platform device.
+> 
+>  +---------+     +---------+   +--------+     +---------+
+>  | console |     | pmsg    |   | ftrace |     | dmesg   |
+>  +---------+     +---------+   +--------+     +---------+
+>        |             |             |              |
+>        |             |             |              |
+>        +------------------------------------------+
+>                           |
+>                          \ /
+>                   +----------------+
+>             (1)   |pstore frontends|
+>                   +----------------+
+>                           |
+>                          \ /
+>                  +------------------- +
+>             (2)  | pstore backend(ram)|
+>                  +--------------------+
+>                           |
+>                          \ /
+>                  +--------------------+
+>             (3)  |qcom_pstore_minidump|
+>                  +--------------------+
+>                           |
+>                          \ /
+>                    +---------------+
+>             (4)    | qcom_minidump |
+>                    +---------------+
+> 
+> This driver will route all the pstore front data to the stored
+> in qcom pstore reserved region and the reason of showing an
+> arrow from (3) to (4) as qcom_pstore_minidump driver will register
+> all the available frontends region with qcom minidump driver
+> in upcoming patch.
+> 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>  drivers/soc/qcom/Kconfig                |  11 +++
+>  drivers/soc/qcom/Makefile               |   1 +
+>  drivers/soc/qcom/qcom_pstore_minidump.c | 116 ++++++++++++++++++++++++++++++++
+>  3 files changed, 128 insertions(+)
+>  create mode 100644 drivers/soc/qcom/qcom_pstore_minidump.c
+> 
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index 15c931e..afdc634 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -293,4 +293,15 @@ config QCOM_MINIDUMP
+>  	  these selective regions will be dumped instead of the entire DDR.
+>  	  This saves significant amount of time and/or storage space.
+>  
+> +config QCOM_PSTORE_MINIDUMP
+> +	tristate "Pstore support for QCOM Minidump"
+> +	depends on ARCH_QCOM
+> +	depends on PSTORE_RAM
+> +	depends on QCOM_MINIDUMP
+> +	help
+> +	  Enablement of this driver ensures that ramoops region can be anywhere
+> +	  reserved in ram instead of being fixed address which needs boot firmware
+> +	  awareness. So, this driver creates plaform device and registers available
+> +	  frontend region with the Qualcomm's minidump driver.
+> +
+>  endmenu
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index 1ebe081..02d30d7 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -34,3 +34,4 @@ obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+>  obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+>  obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
+>  obj-$(CONFIG_QCOM_MINIDUMP) += qcom_minidump.o
+> +obj-$(CONFIG_QCOM_PSTORE_MINIDUMP) += qcom_pstore_minidump.o
+> diff --git a/drivers/soc/qcom/qcom_pstore_minidump.c b/drivers/soc/qcom/qcom_pstore_minidump.c
+> new file mode 100644
+> index 0000000..8d58500
+> --- /dev/null
+> +++ b/drivers/soc/qcom/qcom_pstore_minidump.c
+> @@ -0,0 +1,116 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of_reserved_mem.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pstore_ram.h>
+> +#include <soc/qcom/qcom_minidump.h>
+> +
+> +struct qcom_ramoops_config {
+> +	unsigned long	record_size;
+> +	unsigned long	console_size;
+> +	unsigned long	ftrace_size;
+> +	unsigned long	pmsg_size;
+> +	unsigned int	mem_type;
+> +	unsigned int	flags;
+> +	int		max_reason;
+> +};
+> +
+> +struct qcom_ramoops_dd {
+> +	struct ramoops_platform_data qcom_ramoops_pdata;
+> +	struct platform_device *ramoops_pdev;
+> +};
+> +
+> +static struct qcom_ramoops_config default_ramoops_config = {
 
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/display/drm_dsc_helper.c | 438 +++++++++++++++++++++++
- include/drm/display/drm_dsc_helper.h     |   2 +
- 2 files changed, 440 insertions(+)
+Cannot this be const?
 
-diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
-index aec6f8c201af..65e810a54257 100644
---- a/drivers/gpu/drm/display/drm_dsc_helper.c
-+++ b/drivers/gpu/drm/display/drm_dsc_helper.c
-@@ -740,6 +740,438 @@ static const struct rc_parameters_data rc_parameters_1_2_444[] = {
- 	{ /* sentinel */ }
- };
- 
-+static const struct rc_parameters_data rc_parameters_1_2_422[] = {
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 8,
-+		{ 512, 15, 6144, 3, 12, 11, 11, {
-+			{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 10, -10 }, { 5, 11, -12 },
-+			{ 5, 11, -12 }, { 9, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 10,
-+		{ 512, 15, 6144, 7, 16, 15, 15, {
-+			{ 0, 8, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 14, -10 }, { 9, 15, -12 },
-+			{ 9, 15, -12 }, { 13, 16, -12 }, { 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 12,
-+		{ 512, 15, 6144, 11, 20, 19, 19, {
-+			{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 18, -10 },
-+			{ 13, 19, -12 }, { 13, 19, -12 }, { 17, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 14,
-+		{ 512, 15, 6144, 15, 24, 23, 23, {
-+			{ 0, 12, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 22, -10 }, { 17, 22, -10 },
-+			{ 17, 23, -12 }, { 17, 23, -12 }, { 21, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 16,
-+		{ 512, 15, 6144, 19, 28, 27, 27, {
-+			{ 0, 12, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 15, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 26, -10 }, { 21, 26, -10 },
-+			{ 21, 27, -12 }, { 21, 27, -12 }, { 25, 28, -12 },
-+			{ 28, 29, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 8,
-+		{ 410, 15, 5632, 3, 12, 11, 11, {
-+			{ 0, 3, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 2, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 9, -10 }, { 5, 10, -10 }, { 5, 10, -10 },
-+			{ 5, 11, -12 }, { 7, 11, -12 }, { 11, 12, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 10,
-+		{ 410, 15, 5632, 7, 16, 15, 15, {
-+			{ 0, 7, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 6, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 13, -10 }, { 9, 14, -10 }, { 9, 14, -10 },
-+			{ 9, 15, -12 }, { 11, 15, -12 }, { 15, 16, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 12,
-+		{ 410, 15, 5632, 11, 20, 19, 19, {
-+			{ 0, 11, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 10, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 17, -10 }, { 13, 18, -10 },
-+			{ 13, 18, -10 }, { 13, 19, -12 }, { 15, 19, -12 },
-+			{ 19, 20, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 14,
-+		{ 410, 15, 5632, 15, 24, 23, 23, {
-+			{ 0, 11, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 13, 18, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 21, -10 }, { 17, 22, -10 },
-+			{ 17, 22, -10 }, { 17, 23, -12 }, { 19, 23, -12 },
-+			{ 23, 24, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 16,
-+		{ 410, 15, 5632, 19, 28, 27, 27, {
-+			{ 0, 11, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 16, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 25, -10 }, { 21, 26, -10 },
-+			{ 21, 26, -10 }, { 21, 27, -12 }, { 23, 27, -12 },
-+			{ 27, 28, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 8,
-+		{ 341, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 8, -8 }, { 3, 9, -10 }, { 5, 9, -10 }, { 5, 9, -12 },
-+			{ 5, 9, -12 }, { 7, 10, -12 }, { 10, 11, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 10,
-+		{ 341, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
-+			{ 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 12, -8 }, { 7, 13, -10 }, { 9, 13, -10 }, { 9, 13, -12 },
-+			{ 9, 13, -12 }, { 11, 14, -12 }, { 14, 15, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 12,
-+		{ 341, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
-+			{ 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 16, -8 }, { 11, 17, -10 }, { 13, 17, -10 },
-+			{ 13, 17, -12 }, { 13, 17, -12 }, { 15, 18, -12 },
-+			{ 18, 19, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 14,
-+		{ 341, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 6, 2 }, { 7, 10, 0 }, { 9, 13, 0 }, { 11, 16, -2 },
-+			{ 14, 17, -4 }, { 15, 18, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 20, -8 }, { 15, 21, -10 }, { 17, 21, -10 },
-+			{ 17, 21, -12 }, { 17, 21, -12 }, { 19, 22, -12 },
-+			{ 22, 23, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 16,
-+		{ 341, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 6, 2 }, { 6, 11, 0 }, { 11, 15, 0 }, { 14, 18, -2 },
-+			{ 18, 21, -4 }, { 19, 22, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 24, -8 }, { 19, 25, -10 }, { 21, 25, -10 },
-+			{ 21, 25, -12 }, { 21, 25, -12 }, { 23, 26, -12 },
-+			{ 26, 27, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 8,
-+		{ 273, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 0, 10 }, { 0, 1, 8 }, { 0, 1, 6 }, { 0, 2, 4 },
-+			{ 1, 2, 2 }, { 1, 3, 0 }, { 1, 3, -2 }, { 2, 4, -4 },
-+			{ 2, 5, -6 }, { 3, 5, -8 }, { 4, 6, -10 }, { 4, 7, -10 },
-+			{ 5, 7, -12 }, { 7, 8, -12 }, { 8, 9, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 10,
-+		{ 273, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 10 }, { 2, 5, 8 }, { 3, 5, 6 }, { 4, 6, 4 },
-+			{ 5, 6, 2 }, { 5, 7, 0 }, { 5, 7, -2 }, { 6, 8, -4 },
-+			{ 6, 9, -6 }, { 7, 9, -8 }, { 8, 10, -10 }, { 8, 11, -10 },
-+			{ 9, 11, -12 }, { 11, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 12,
-+		{ 273, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 4, 10 }, { 2, 7, 8 }, { 4, 9, 6 }, { 6, 11, 4 },
-+			{ 9, 11, 2 }, { 9, 11, 0 }, { 9, 12, -2 }, { 10, 12, -4 },
-+			{ 11, 13, -6 }, { 11, 13, -8 }, { 12, 14, -10 },
-+			{ 13, 15, -10 }, { 13, 15, -12 }, { 15, 16, -12 },
-+			{ 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 14,
-+		{ 273, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 4, 10 }, { 3, 8, 8 }, { 6, 11, 6 }, { 9, 14, 4 },
-+			{ 13, 15, 2 }, { 13, 15, 0 }, { 13, 16, -2 }, { 14, 16, -4 },
-+			{ 15, 17, -6 }, { 15, 17, -8 }, { 16, 18, -10 },
-+			{ 17, 19, -10 }, { 17, 19, -12 }, { 19, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 16,
-+		{ 273, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 4, 10 }, { 4, 9, 8 }, { 8, 13, 6 }, { 12, 17, 4 },
-+			{ 17, 19, 2 }, { 17, 20, 0 }, { 17, 20, -2 }, { 18, 20, -4 },
-+			{ 19, 21, -6 }, { 19, 21, -8 }, { 20, 22, -10 },
-+			{ 21, 23, -10 }, { 21, 23, -12 }, { 23, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{ /* sentinel */ }
-+};
-+
-+static const struct rc_parameters_data rc_parameters_1_2_420[] = {
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 8,
-+		{ 512, 12, 6144, 3, 12, 11, 11, {
-+			{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 10, -10 }, { 5, 11, -12 },
-+			{ 5, 11, -12 }, { 9, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 10,
-+		{ 512, 12, 6144, 7, 16, 15, 15, {
-+			{ 0, 8, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 14, -10 }, { 9, 15, -12 },
-+			{ 9, 15, -12 }, { 13, 16, -12 }, { 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 12,
-+		{ 512, 12, 6144, 11, 20, 19, 19, {
-+			{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 18, -10 },
-+			{ 13, 19, -12 }, { 13, 19, -12 }, { 17, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 14,
-+		{ 512, 12, 6144, 15, 24, 23, 23, {
-+			{ 0, 12, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 22, -10 }, { 17, 22, -10 },
-+			{ 17, 23, -12 }, { 17, 23, -12 }, { 21, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 16,
-+		{ 512, 12, 6144, 19, 28, 27, 27, {
-+			{ 0, 12, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 15, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 26, -10 }, { 21, 26, -10 },
-+			{ 21, 27, -12 }, { 21, 27, -12 }, { 25, 28, -12 },
-+			{ 28, 29, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 8,
-+		{ 410, 15, 5632, 3, 12, 11, 11, {
-+			{ 0, 3, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 2, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 9, -10 }, { 5, 10, -10 }, { 5, 10, -10 },
-+			{ 5, 11, -12 }, { 7, 11, -12 }, { 11, 12, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 10,
-+		{ 410, 15, 5632, 7, 16, 15, 15, {
-+			{ 0, 7, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 6, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 13, -10 }, { 9, 14, -10 }, { 9, 14, -10 },
-+			{ 9, 15, -12 }, { 11, 15, -12 }, { 15, 16, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 12,
-+		{ 410, 15, 5632, 11, 20, 19, 19, {
-+			{ 0, 11, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 10, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 17, -10 }, { 13, 18, -10 },
-+			{ 13, 18, -10 }, { 13, 19, -12 }, { 15, 19, -12 },
-+			{ 19, 20, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 14,
-+		{ 410, 15, 5632, 15, 24, 23, 23, {
-+			{ 0, 11, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 13, 18, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 21, -10 }, { 17, 22, -10 },
-+			{ 17, 22, -10 }, { 17, 23, -12 }, { 19, 23, -12 },
-+			{ 23, 24, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 16,
-+		{ 410, 15, 5632, 19, 28, 27, 27, {
-+			{ 0, 11, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 16, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 25, -10 }, { 21, 26, -10 },
-+			{ 21, 26, -10 }, { 21, 27, -12 }, { 23, 27, -12 },
-+			{ 27, 28, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 8,
-+		{ 341, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 8, -8 }, { 3, 9, -10 }, { 5, 9, -10 }, { 5, 9, -12 },
-+			{ 5, 9, -12 }, { 7, 10, -12 }, { 10, 12, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 10,
-+		{ 341, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
-+			{ 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 12, -8 }, { 7, 13, -10 }, { 9, 13, -10 }, { 9, 13, -12 },
-+			{ 9, 13, -12 }, { 11, 14, -12 }, { 14, 15, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 12,
-+		{ 341, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
-+			{ 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 16, -8 }, { 11, 17, -10 }, { 13, 17, -10 },
-+			{ 13, 17, -12 }, { 13, 17, -12 }, { 15, 18, -12 },
-+			{ 18, 19, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 14,
-+		{ 341, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 6, 2 }, { 7, 10, 0 }, { 9, 13, 0 }, { 11, 16, -2 },
-+			{ 14, 17, -4 }, { 15, 18, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 20, -8 }, { 15, 21, -10 }, { 17, 21, -10 },
-+			{ 17, 21, -12 }, { 17, 21, -12 }, { 19, 22, -12 },
-+			{ 22, 23, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 16,
-+		{ 341, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 6, 2 }, { 6, 11, 0 }, { 11, 15, 0 }, { 14, 18, -2 },
-+			{ 18, 21, -4 }, { 19, 22, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 24, -8 }, { 19, 25, -10 }, { 21, 25, -10 },
-+			{ 21, 25, -12 }, { 21, 25, -12 }, { 23, 26, -12 },
-+			{ 26, 27, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 8,
-+		{ 256, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 0, 10 }, { 0, 1, 8 }, { 0, 1, 6 }, { 0, 2, 4 },
-+			{ 1, 2, 2 }, { 1, 3, 0 }, { 1, 3, -2 }, { 2, 4, -4 },
-+			{ 2, 5, -6 }, { 3, 5, -8 }, { 4, 6, -10 }, { 4, 7, -10 },
-+			{ 5, 7, -12 }, { 7, 8, -12 }, { 8, 9, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 10,
-+		{ 256, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 10 }, { 2, 5, 8 }, { 3, 5, 6 }, { 4, 6, 4 },
-+			{ 5, 6, 2 }, { 5, 7, 0 }, { 5, 7, -2 }, { 6, 8, -4 },
-+			{ 6, 9, -6 }, { 7, 9, -8 }, { 8, 10, -10 }, { 8, 11, -10 },
-+			{ 9, 11, -12 }, { 11, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 12,
-+		{ 256, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 4, 10 }, { 2, 7, 8 }, { 4, 9, 6 }, { 6, 11, 4 },
-+			{ 9, 11, 2 }, { 9, 11, 0 }, { 9, 12, -2 }, { 10, 12, -4 },
-+			{ 11, 13, -6 }, { 11, 13, -8 }, { 12, 14, -10 },
-+			{ 13, 15, -10 }, { 13, 15, -12 }, { 15, 16, -12 },
-+			{ 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 14,
-+		{ 256, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 4, 10 }, { 3, 8, 8 }, { 6, 11, 6 }, { 9, 14, 4 },
-+			{ 13, 15, 2 }, { 13, 15, 0 }, { 13, 16, -2 }, { 14, 16, -4 },
-+			{ 15, 17, -6 }, { 15, 17, -8 }, { 16, 18, -10 },
-+			{ 17, 19, -10 }, { 17, 19, -12 }, { 19, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 16,
-+		{ 256, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 4, 10 }, { 4, 9, 8 }, { 8, 13, 6 }, { 12, 17, 4 },
-+			{ 17, 19, 2 }, { 17, 20, 0 }, { 17, 20, -2 }, { 18, 20, -4 },
-+			{ 19, 21, -6 }, { 19, 21, -8 }, { 20, 22, -10 },
-+			{ 21, 23, -10 }, { 21, 23, -12 }, { 23, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{ /* sentinel */ }
-+};
-+
- static const struct rc_parameters *get_rc_params(const struct rc_parameters_data *rc_parameters,
- 						 u16 dsc_bpp,
- 						 u8 bits_per_component)
-@@ -782,6 +1214,12 @@ int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params
- 	case DRM_DSC_1_1_PRE_SCR:
- 		data = rc_parameters_pre_scr;
- 		break;
-+	case DRM_DSC_1_2_422:
-+		data = rc_parameters_1_2_422;
-+		break;
-+	case DRM_DSC_1_2_420:
-+		data = rc_parameters_1_2_420;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
-index c634bb2935d3..0bb0c3afd740 100644
---- a/include/drm/display/drm_dsc_helper.h
-+++ b/include/drm/display/drm_dsc_helper.h
-@@ -13,6 +13,8 @@
- enum drm_dsc_params_kind {
- 	DRM_DSC_1_2_444,
- 	DRM_DSC_1_1_PRE_SCR, /* legacy params from DSC 1.1 */
-+	DRM_DSC_1_2_422,
-+	DRM_DSC_1_2_420,
- };
- 
- void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
--- 
-2.39.2
+
+> +	.mem_type = 2,
+> +	.record_size = 0x0,
+> +	.console_size = 0x200000,
+> +	.ftrace_size = 0x0,
+> +	.pmsg_size = 0x0,
+> +};
+> +
+> +static struct qcom_ramoops_dd *qcom_rdd;
+
+Drop file scope variable. It's not even used.
+
+> +static int qcom_ramoops_probe(struct platform_device *pdev)
+> +{
+> +	struct device_node *of_node = pdev->dev.of_node;
+> +	struct device_node *node;
+> +	const struct qcom_ramoops_config *cfg;
+> +	struct ramoops_platform_data *pdata;
+> +	struct reserved_mem *rmem;
+> +	long ret;
+> +
+> +	node = of_parse_phandle(of_node, "memory-region", 0);
+> +	if (!node)
+> +		return -ENODEV;
+> +
+> +	rmem = of_reserved_mem_lookup(node);
+> +	of_node_put(node);
+> +	if (!rmem) {
+> +		dev_err(&pdev->dev, "failed to locate DT /reserved-memory resource\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	qcom_rdd = devm_kzalloc(&pdev->dev, sizeof(*qcom_rdd), GFP_KERNEL);
+> +	if (!qcom_rdd)
+> +		return -ENOMEM;
+> +
+> +	cfg = of_device_get_match_data(&pdev->dev);
+> +	if (!cfg) {
+> +		dev_err(&pdev->dev, "failed to get supported matched data\n");
+> +		return -ENOENT;
+> +	}
+> +
+> +	pdata = &qcom_rdd->qcom_ramoops_pdata;
+> +	pdata->mem_size = rmem->size;
+> +	pdata->mem_address = rmem->base;
+> +	pdata->mem_type = cfg->mem_type;
+> +	pdata->record_size = cfg->record_size;
+> +	pdata->console_size = cfg->console_size;
+> +	pdata->ftrace_size = cfg->ftrace_size;
+> +	pdata->pmsg_size = cfg->pmsg_size;
+> +	pdata->max_reason = KMSG_DUMP_PANIC;
+> +
+> +	qcom_rdd->ramoops_pdev = platform_device_register_data(NULL, "ramoops", -1,
+> +							       pdata, sizeof(*pdata));
+> +	if (IS_ERR(qcom_rdd->ramoops_pdev)) {
+> +		ret = PTR_ERR(qcom_rdd->ramoops_pdev);
+> +		dev_err(&pdev->dev, "could not create platform device: %ld\n", ret);
+> +		qcom_rdd->ramoops_pdev = NULL;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static int qcom_ramoops_remove(struct platform_device *pdev)
+
+Use instead .remove_new callback.
+
+> +{
+> +	platform_device_unregister(qcom_rdd->ramoops_pdev);
+> +	qcom_rdd->ramoops_pdev = NULL;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_ramoops_of_match[] = {
+> +	{ .compatible = "qcom,sm8450-ramoops-minidump", .data = &default_ramoops_config },
+
+You don't need this entry.
+
+> +	{ .compatible = "qcom,ramoops-minidump", .data = &default_ramoops_config },
+> +	{}
+> +};
+> +
+> +MODULE_DEVICE_TABLE(of, qcom_ramoops_of_match);
+
+Blank line goes after the MODULE_DEVICE_TABLE, not before.
+
+
+Best regards,
+Krzysztof
 
