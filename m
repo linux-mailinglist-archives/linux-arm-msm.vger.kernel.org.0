@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C15C6F6FD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 18:22:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26AEE6F6FE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 18:26:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbjEDQWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 12:22:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47520 "EHLO
+        id S229784AbjEDQ0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 12:26:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjEDQWJ (ORCPT
+        with ESMTP id S229653AbjEDQ0H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 12:22:09 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC4643A88
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 09:22:07 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ac733b813fso8211181fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 09:22:07 -0700 (PDT)
+        Thu, 4 May 2023 12:26:07 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31CBA2D62
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 09:26:06 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f00d41df22so11255282e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 09:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683217326; x=1685809326;
+        d=linaro.org; s=google; t=1683217564; x=1685809564;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y0//78+uXYFr6PUUQe4KmtdkJ/mFw3NuDFvW5FcRoZQ=;
-        b=b2PPRS393qwzfXujkfb1itL3HU4nmRZ2GeFjtSbxbb4B5LWfmP2u/7SUg3VP6ZfnId
-         JuSqBYz9XknIcLBR5BSO2b+0duwUwM6ypEiA3aRpz5wbdWz9R1ricHxiKK4T2KEmbbEY
-         ok27nLjU0jqjlBkP5hxLkRSPXDJeJgFdP4Trcaecy4XbcnrZfB+3zH2CavTN2tAw+Pon
-         8iFEHWgBI3j0XanI+EcsXcaFZlZ2hf5NiG47XY6zSAJ1wqtVBW58mT+QrBuWKw5dLsrY
-         YloQuSMGfNajcySaziY/1qubxqI6oztOMv4Iw0Ue8pZEt89v6IbF4iQeFhe5uL+NYcYO
-         T9TQ==
+        bh=3oaodqov9+zMBxA9jjLMyaN6+ESrOud/sUhJoj5OmZI=;
+        b=vXy4JFrQdRVgIww90EhIOZIkG0xpsOoEGeSnR8G7dQdy++A5WO8p7uoDaur3QIhWlu
+         EMEhBtNEJKSRRNKS74KSRMa2srx/+yh15u5Lq8OW9qzCCqxsKvudEnI8v7eh4IiEYfu1
+         JJ5tHtst43PB9HcP3VfIdV02P6sgrIgmTul+P3gtaeG9h0Y5WIzeRAfnRt/DSnnVSkR0
+         wX6Uh2StBLfqQsJ1FRAwqirfZy2V0lZx5msKE2sty76/SS+Nc6sxoUk8yON3rhVqEvtE
+         vmP5koveHNK4fX+UA7LhY9wAzodzuunEN3uAAOw0PCYfHc/BhjwLVSR+ud0NBMLGUniS
+         A3Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683217326; x=1685809326;
+        d=1e100.net; s=20221208; t=1683217564; x=1685809564;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y0//78+uXYFr6PUUQe4KmtdkJ/mFw3NuDFvW5FcRoZQ=;
-        b=DgSCbqm3QLVa6q0cmOqVW2eW97AJ22O9Th9y+0273ogGlpqyx48qANq6vfpWxDSAns
-         kaUMgswnMsq0aPvb4SGM7K0DqyKb/LOxOqYyVatqoqh6fIfbA28ok1TwUfZYbVQUaMNh
-         YfELjDy8iOaK5+Vj3vIo1GOl64YDD4gudLDl5j+h63YOpJjd3CiRPELFhQ026eMUHmxV
-         Se/KvAwf8x8Me4DLaE9bgKKJhBhWMvNAHoglcx+/T8RbAAQpOUb0hE2V5LtLqqe6Yg1k
-         DED1Fo72R5spFWp9yU1t1hGCd+0LtX7L6pUejFu65gUludObu18JwaXEGs5PaEEF+DXC
-         ACkQ==
-X-Gm-Message-State: AC+VfDxvIwsVRQ7i0THTdU4bKAEkwUZX82CK2ASAQ2iqeDoYgHmmidr5
-        eVepLu5T0YUZ028pA9UBLK0jsA==
-X-Google-Smtp-Source: ACHHUZ7nzyVmwttPurr+ePQF0cmLpk+IMorprUHkikxMLmIjeifJSsAylHxffCQRQTHoMTrpLLc5bA==
-X-Received: by 2002:a2e:a30b:0:b0:2aa:af16:5c55 with SMTP id l11-20020a2ea30b000000b002aaaf165c55mr1105267lje.44.1683217326048;
-        Thu, 04 May 2023 09:22:06 -0700 (PDT)
+        bh=3oaodqov9+zMBxA9jjLMyaN6+ESrOud/sUhJoj5OmZI=;
+        b=kn9q9A7c65D1SEp9ue5VT6Y1OEBCCZzjvwRXIm87kgvug7O4JuA16cpL2Y+DMYnpLL
+         Bd3HeC5mQV+A9M3ggltatRMACmSGwQFZ9km0UA4a1Y2nOey8jYCVZaKfuApomRUrns7p
+         PWIZnl2eCsNBeosADg6ArmL1ec9PswCfvcEnjmmAsZB+4/qV9lrX6bBOeMNEjCHK8boA
+         cSis6xCnY3hk5eeF+Vu82gnvcjMlWNtkbW5OUj3WtgE6n3Sg61xQDJit322q6lcKeZm3
+         3zES9Z0WsFUe1Axq0OgDfj6GnU44iS27im7hlzotLVzHsVf0hmVwAzMoVmZv9niTsGs+
+         W7Zw==
+X-Gm-Message-State: AC+VfDyWqLRnOpE7yXLEqzK+UpJfaZIICkoOO87WZJGyUCw42txkqytC
+        gM/MimBf0x/FKIT8nIrMC/3IXA==
+X-Google-Smtp-Source: ACHHUZ5AQHC5LfEEzcxFVSKjL6WCfaAGAhtN3hRrxCx4XMt4upQLrNpg3oQqb82KL4pM6oVqkdmJbA==
+X-Received: by 2002:a2e:b904:0:b0:2a8:a6b5:2042 with SMTP id b4-20020a2eb904000000b002a8a6b52042mr984606ljb.19.1683217564444;
+        Thu, 04 May 2023 09:26:04 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id p16-20020a2e8050000000b002a8c409f1f5sm6658915ljg.110.2023.05.04.09.22.05
+        by smtp.gmail.com with ESMTPSA id n1-20020a2e8781000000b002a7e9e4e9dcsm6611553lji.114.2023.05.04.09.26.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 09:22:05 -0700 (PDT)
-Message-ID: <4d6568cd-3678-f3ec-36b3-0b4b474d9871@linaro.org>
-Date:   Thu, 4 May 2023 19:22:05 +0300
+        Thu, 04 May 2023 09:26:04 -0700 (PDT)
+Message-ID: <77c4ba62-1566-993b-ec33-0da2fa9936ec@linaro.org>
+Date:   Thu, 4 May 2023 19:26:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
@@ -135,10 +135,12 @@ On 04/05/2023 09:26, Krzysztof Kozlowski wrote:
 > 
 > Also see many discussions on LKML about this.
 
-
-I checked the closest relative: qcom_stats.c driver. It defines several 
-platform-specific overrides and also a generic "qcom,rpm-stats" / 
-"qcom,rpmh-stats" drivers.
+After taking another glance at the parent device (IMEM), I start to 
+think that we should not be defining the device at all. The imem has the 
+SoC name in it. So I think there should be a proper driver for IMEM. 
+Then it will instantiate the ABL stats platform device depending on the 
+SoC compat. Also this would allow us to rewrite qcom_pil_info_init() in 
+a way to query IMEM instead of poking into DT directly.
 
 -- 
 With best wishes
