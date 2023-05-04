@@ -2,155 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1F2E6F6ED8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:24:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CB536F6EFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 17:35:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231433AbjEDPYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 11:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42962 "EHLO
+        id S231224AbjEDPfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 11:35:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231417AbjEDPYc (ORCPT
+        with ESMTP id S230310AbjEDPfV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 11:24:32 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F8A546B9
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 08:24:30 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5083bd8e226so923211a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 08:24:29 -0700 (PDT)
+        Thu, 4 May 2023 11:35:21 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4DE4C24
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 08:35:14 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4ec8149907aso771168e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 08:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683213868; x=1685805868;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YpvVYRaSZSo/qHq4l0Ax63FC86wa0lwjbGgjNwrdoNY=;
-        b=PPlAan2314hetKUG7RtPJNXrKa0PbsOZ339lsVS0hQXVOEcWk2YEu2357kxSoKUsc3
-         6Xqbyjqvv0MonXmmR9Ypq1Rb1MYW8vyiEDkiD5l1QgFhOSDsSStltezXLWrQxCtKI+Cz
-         Kl8kRV6vGbwdXKdq9xAmyijEYHtsg2XID1ZnEqCsXf7UEeLULAr8ek0hA/RcVx4I2Lt8
-         eRuTdcvu6YetKtycGT/XfuZJkyPNSNP3Tz5sYjml9rcLNP2cLs/qTqhZpavmFuSjC7t2
-         GS+jQd8odsE6H4jQ72zZlpXNybI/koZGf6QiyAytuvzw6py0+DPi10UqV4iFsap4cUEA
-         77Hg==
+        d=linaro.org; s=google; t=1683214512; x=1685806512;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BjnjiQnONrT/gH4SwOB2yPNHL2j+rUciqyrZ2Jp9GXY=;
+        b=B/Dn75TTcotcycsQm+2hyfdFbPA2AXB/+01rDumU7GgqFoHs8KpV8XvFXioYxb9woF
+         6LlnPd9+Qs6HLorL27lusaC7M8P+0492CUEfnwJ/qCywYLc/CYPVTlgIxE+cO1gSfldB
+         hpLe49hI6XC01W45KNqtTMdp9Uhs5XECSD0Gn+bCSQwBaoxImSTlMzJ72S2fC8pFNMWy
+         pR2vusvH54lAANJTqQKfPzPIaCmuU5YautcekOZ9p0iH+bFDqFM7YuYxw8+h5F8iILnL
+         zxu6NMEy+7/5WAwiBEqbn4AnAcuBFIngQ5DaYhflPO6GB4FGf9gFMzlUAh9YZL+YM0fD
+         bosw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683213868; x=1685805868;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YpvVYRaSZSo/qHq4l0Ax63FC86wa0lwjbGgjNwrdoNY=;
-        b=JpWiDYBhI+mdX37ToDbM8vC1PS+P1HiUOF+xPwhtwdukgVVky8LitnG5wtT5uj0wGU
-         YDNuWzD+K5g7qxNm1BMdS3Z/JnCVjC8TE0IhWDAm71IZPoMioRmxef2dSlsMTasB4dZy
-         oPUD/vBtmFtRv4StsAouou0DCqwX27JK4AC0RhWZFrFSVxprjjp7k6HXzbEEcFwBZhGs
-         tJ2muZ2LBkxJhK+Uvfpj+Qtjk4iuTgsEieZvy9/hZrGpyj3r8VkBXM9RDKiGtBTVTVHE
-         H44z6EBziO+4kOt0XdHcpfk3j5KYSwUJ3IRCgMjNfjRM7E1LFB+vcBE56JmfNqU8+V+V
-         RjIw==
-X-Gm-Message-State: AC+VfDwsf87GgHebEJowLHZzDlzRk1V9ucScwMZF9ctN58+J+mxeJHFg
-        0SJc49w08OD1PGAO876qSLyYbw==
-X-Google-Smtp-Source: ACHHUZ7gh7wB1JRUTh/FK6dClK2y7GMFZoT+TpZPzjkz+MVSYYieOMcTNt1MkABNcqdtMhm7bA/izA==
-X-Received: by 2002:a05:6402:746:b0:50b:c971:c14b with SMTP id p6-20020a056402074600b0050bc971c14bmr2159293edy.11.1683213868504;
-        Thu, 04 May 2023 08:24:28 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:cbf1:e7ef:fb81:e912? ([2a02:810d:15c0:828:cbf1:e7ef:fb81:e912])
-        by smtp.gmail.com with ESMTPSA id d18-20020a50fe92000000b0050470aa444fsm1951945edt.51.2023.05.04.08.24.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 08:24:28 -0700 (PDT)
-Message-ID: <12131791-c775-cfc3-824a-e59c4e0ea338@linaro.org>
-Date:   Thu, 4 May 2023 17:24:26 +0200
+        d=1e100.net; s=20221208; t=1683214512; x=1685806512;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BjnjiQnONrT/gH4SwOB2yPNHL2j+rUciqyrZ2Jp9GXY=;
+        b=aq3P4gnvJeha/fSGSyTziv4kTgoFm5mIc6P5r316GkUlWnvzXvPqDlAtBOMwr3o3Dq
+         zJzkmY1WyfU9VZ32MJdlZim5Alzd/gYYDWTR3EeYyMAvYXanC646zh/YC5oXodZBiYsA
+         yorgBeu2dx7/BDxZAgOiPjN+Tuh8CiHftHlTD9Tl5nUW/NbIZDW+pc8SH7cSoj5BH54Y
+         5TbxmWZqjGRKoWAhbS4ssAgkM0tC0dhhJt19VEalJFtqxv6NTFyBpRPZlrC1zYF6yluw
+         vyf0eKIR6mSpKdQi6jOO7CYcgDLGBvggTXArVuF85Dwvda1wePrnd45wXkBtVqfTMJNL
+         yyuA==
+X-Gm-Message-State: AC+VfDzH9UnU2r6goqkK3CttRQlXF++NtToK1GuKWTdcdqSawzXbUDUR
+        eyPfHSI4wbvQp8Qz901sPL+QFQ==
+X-Google-Smtp-Source: ACHHUZ4qy1tlAc/kotyebm2J1Wa+PSnxnDPWRb7lwf9N+rL2F62ADTbh5+whm/pxm2v3Tu1Y11L3xg==
+X-Received: by 2002:ac2:5189:0:b0:4eb:7e:1fa5 with SMTP id u9-20020ac25189000000b004eb007e1fa5mr1781803lfi.8.1683214512187;
+        Thu, 04 May 2023 08:35:12 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id n15-20020a056512388f00b004e96afb1e9asm6608753lft.253.2023.05.04.08.35.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 May 2023 08:35:11 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
+        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/8] drm/i915: move DSC RC tables to drm_dsc_helper.c
+Date:   Thu,  4 May 2023 18:35:03 +0300
+Message-Id: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v3 07/18] arm64: defconfig: Enable Qualcomm minidump
- driver
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
-References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
- <1683133352-10046-8-git-send-email-quic_mojha@quicinc.com>
- <ad9915b2-56ff-3f95-7c92-fae597d6ed43@linaro.org>
- <4325c2e7-8ca1-7e45-db14-5ba8bc83f5d7@quicinc.com>
- <a4118697-d575-6499-ed8e-656e51ca0da3@linaro.org>
- <2fb1658a-3a38-7eb4-0e6e-d8c61981bdab@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2fb1658a-3a38-7eb4-0e6e-d8c61981bdab@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2023 16:43, Mukesh Ojha wrote:
-> 
-> 
-> On 5/4/2023 6:02 PM, Krzysztof Kozlowski wrote:
->> On 04/05/2023 13:45, Mukesh Ojha wrote:
->>>
->>>
->>> On 5/4/2023 4:53 PM, Krzysztof Kozlowski wrote:
->>>> On 03/05/2023 19:02, Mukesh Ojha wrote:
->>>>> Previous patches add the Qualcomm minidump driver support, so
->>>>> lets enable minidump config so that it can be used by kernel
->>>>> clients.
->>>>>
->>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>>>
->>>> This patchset is split too much. Defconfig change is one change. Not two
->>>> or three.
->>>>
->>>>> ---
->>>>>    arch/arm64/configs/defconfig | 1 +
->>>>>    1 file changed, 1 insertion(+)
->>>>>
->>>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->>>>> index a24609e..831c942 100644
->>>>> --- a/arch/arm64/configs/defconfig
->>>>> +++ b/arch/arm64/configs/defconfig
->>>>> @@ -1250,6 +1250,7 @@ CONFIG_QCOM_STATS=m
->>>>>    CONFIG_QCOM_WCNSS_CTRL=m
->>>>>    CONFIG_QCOM_APR=m
->>>>>    CONFIG_QCOM_ICC_BWMON=m
->>>>> +CONFIG_QCOM_MINIDUMP=y
->>>>
->>>> This must be a module.
->>>
->>> Why do you think this should be a module ?
->>>
->>> Is it because, it is lying here among others '=m' ?
->>
->> Because we want and insist on everything being a module. That's the
->> generic rule. There are exceptions, so if this justifies being an
->> exception, please bring appropriate arguments.
->>
->>>
->>> Or you have some other reasoning ? like it is for qcom specific
->>> soc and can not be used outside ? but that is not true for
->>> all configs mentioned here.
->>>
->>> The reason behind making it as '=y' was, to collect information from
->>> core kernel data structure as well as the information like percpu data,
->>> run queue, irq stat kind of information on kernel crash on a target
->>> running some perf configuration(android phone).
->>
->> I don't understand why =m stops you from all that.
-> 
-> How do i get kernel symbol address from a modules
-> can we use kallsyms_lookup_name from modules ?
+Other platforms (msm) will benefit from sharing the DSC config setup
+functions. This series moves parts of static DSC config data from the
+i915 driver to the common helpers to be used by other drivers.
 
-You allow it to be a module in patch #4, so I think you solved it,
-right? Otherwise it could not be a module?
+Note: the RC parameters were cross-checked against config files found in
+DSC model 2021062, 20161212 (and 20150914). The first patch modifies
+tables according to those config files, while preserving parameter
+values using the code. I have not changed one of the values in the
+pre-SCR config file as it clearly looks like a typo in the config file,
+considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
 
-Anyway, where do you use kallsyms_lookup_name()? I cannot find it in
-your patch.
+Chances since v4:
+- Rebased on top of drm-intel-next
+- Cut the first 8 patches of the series to ease merging. The rest of the
+  patches will go afterwards.
 
-Best regards,
-Krzysztof
+Chances since v3:
+- Rebased on top of drm-intel-next
+- Dropped the msm patch to make patchset fully mergeable through
+  drm-intel
+- Made drm_dsc_set_const_params() ignore rc_model_size, picked up
+  drm_dsc_set_initial_scale_value() patch by Jessica and switched
+  intel_vdsc.c to use those two helpers.
+- Added a patch to make i915 actually use rc_tgt_offset_high,
+  rc_tgt_offset_low and rc_edge_factor from struct drm_dsc_config.
+
+Chances since v2:
+- Rebased on top of drm-intel-next
+
+Chances since v1:
+- Made drm_dsc_rc_buf_thresh static rather than exporting it
+- Switched drm_dsc_rc_buf_thresh loop to use ARRAY_SIZE. Added
+  BUILD_BUG_ON's to be sure that array sizes are correct
+- Fixed rc_parameters_data indentation to be logical and tidy
+- Fixed drm_dsc_setup_rc_params() kerneldoc
+- Added a clause to drm_dsc_setup_rc_params() to verify bpp and bpc
+  being set.
+- Fixed range_bpg_offset programming in calculate_rc_params()
+- Fixed bpp vs bpc bug in intel_dsc_compute_params()
+- Added FIXME comment next to the customizations in
+  intel_dsc_compute_params().
+
+Dmitry Baryshkov (8):
+  drm/i915/dsc: change DSC param tables to follow the DSC model
+  drm/i915/dsc: move rc_buf_thresh values to common helper
+  drm/i915/dsc: move DSC tables to DRM DSC helper
+  drm/i915/dsc: stop using interim structure for calculated params
+  drm/display/dsc: use flat array for rc_parameters lookup
+  drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
+  drm/display/dsc: include the rest of pre-SCR parameters
+  drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
+
+ drivers/gpu/drm/display/drm_dsc_helper.c  | 986 ++++++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_vdsc.c | 443 ++--------
+ include/drm/display/drm_dsc_helper.h      |   9 +
+ 3 files changed, 1042 insertions(+), 396 deletions(-)
+
+-- 
+2.39.2
 
