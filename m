@@ -2,183 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E36796F6C80
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 14:58:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A10056F6CB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 15:14:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbjEDM6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 08:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45182 "EHLO
+        id S230270AbjEDNOn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 09:14:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230225AbjEDM6W (ORCPT
+        with ESMTP id S230159AbjEDNOm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 08:58:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267B0619A;
-        Thu,  4 May 2023 05:58:18 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3449ILrK001703;
-        Thu, 4 May 2023 12:57:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=J1bg+67OkOUP3/dK1K1LsKhWG0uCqMtDTWZMZgrQfbc=;
- b=Jnd2L3BKOh0hzEf3BHp6OarNMGf67ji3SisnK50NmboWbvZNLNDemWXht0+7/zDtKq+w
- ub5SOCF/iXg13rcImAV+5CzZ68H31uqW5SF4dmqoX5+8jbXqyHkgok3AM4tXVowX5cX4
- Wh9kXPHm43ctsrADpiQbAHHXTyPsDxjgxi2U/Du1YNKaFviiPMRZhbzrPvGMMNbYetNc
- 5GQ6IVgDvq6Xz/p6SksudKW1u5Nf7JDrFhRzoczkbuq2D1lbQBEENQdq08FJDfVi2AnZ
- Ir3jyRN3JrHwfmTfSocBFN2VZgqShaDC1o1LExP3i8oM2v4bfcSPZsIu3aF1yEYbNt8H dw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qc5041466-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 12:57:58 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344CvuxW007531
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 4 May 2023 12:57:56 GMT
-Received: from [10.216.46.158] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
- 05:57:48 -0700
-Message-ID: <d80868bf-610d-7e79-d279-da704efb38f0@quicinc.com>
-Date:   Thu, 4 May 2023 18:27:45 +0530
+        Thu, 4 May 2023 09:14:42 -0400
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2062.outbound.protection.outlook.com [40.107.102.62])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DAF36194;
+        Thu,  4 May 2023 06:14:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=h04D2tz1PBIG7m/ma/heLA5CI/Mxl90uKuB9oAbowaMbfYARM9s0lC//SoAsHbIn0On+77HeI6Nf1OCAkzROOfWG8NDIpY/EXb3FQDiaJ3socXMQ+rdPruPIK0mGYUd+e9THV82k4TD8JlvAnJna6GNYMdLXqXZS8GZAMAC01OW57YND+aggSge14dO3MTpCkExsK1P3BLXGz/iR4dqGeltro0TrAs/Z4dUVrnGCrl2osZ9SKAhSpOdL3+1tyomgqVovjRK382R51vAQgHK9wnz8cT91NDZ6AQaKWoGvn2DbYWAbd9a2L/kYfbml9yyOjRjmGEdzxV/I91wad5hHJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9c++qFGxC41nKYtAqjLjUljavOozQm0MlK+NZdBecY4=;
+ b=oFgp7yr5LzoJ34ZSsOG+enp360GwtrRSG+ygIfMAwSNsOCUipgoQXFkYN4Rx0K4IiurHY0l2VJ+Tcx1jhT+VrB+tvdk1hU2Q1WP5L7db0I/x0trcg5HywPxOkKa5Pb6e8/mXzXpLvLDq8LeFHy33ZX+Ft6gSF0QlR0bokTqUoRRzerXk4miP5wgtmw6o4MgP89372GpHHh8aUh06JooUfwqk6HykeKjf+Uh/GQ4MOPH+bAVfIvsc5+s9DiwsZaBaqGvqe5cLQQBslefI/1ioFJY8LEboJvpS3ITMVmfkf7o9BBb8Ul/xvUuaRS9L6b0z1Ln62U6Bgne244zzc+StsQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9c++qFGxC41nKYtAqjLjUljavOozQm0MlK+NZdBecY4=;
+ b=pflt9Qvy6F0LNb2pQB/xQimzuvzqKiYPMhZkRNcdiLj9irglsjQhyV5X0bxRnT0vG+UeyQZDIU58Kv1AqohbgjT1hBN7WOmEqu5iuBNv9CTJpdpF2eZeLPwYeuHBn699LWb0OgUz1ubeo0KL03djA5j72w7vBlJoXCg2nkNaqFqkQo5FMl7C5w2cKXyAP49f7VvTFukYuSxu8jPL2jyeKiSeiVKf1eLVxwyf3J4VjfSMo6DlAWMHlkv/aW6az3Myedd5n/BQzfp/y3N1kTGReSP5Z6EQmi/3Ihavcd+jKr8Aa3rf8Y7Mn/2MtcSpeVyGuq9dJFtZ1wD4YwKJ1tGykw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by SA0PR12MB4416.namprd12.prod.outlook.com (2603:10b6:806:99::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.22; Thu, 4 May
+ 2023 13:14:39 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::f7a7:a561:87e9:5fab]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::f7a7:a561:87e9:5fab%6]) with mapi id 15.20.6363.022; Thu, 4 May 2023
+ 13:14:39 +0000
+Date:   Thu, 4 May 2023 10:14:37 -0300
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Niklas Schnelle <schnelle@linux.ibm.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH 18/20] iommu: Add ops->domain_alloc_paging()
+Message-ID: <ZFOvvdneHI5yZlPy@nvidia.com>
+References: <18-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
+ <fa8c5e95-b8c8-f4c0-63a0-d3176718d304@arm.com>
+ <ZFK3dfb4bFiJjw9M@nvidia.com>
+ <c643db828f441009a5281127122a967c7fcc7149.camel@linux.ibm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c643db828f441009a5281127122a967c7fcc7149.camel@linux.ibm.com>
+X-ClientProxiedBy: BL0PR05CA0030.namprd05.prod.outlook.com
+ (2603:10b6:208:91::40) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 02/18] remoteproc: qcom: Move minidump specific data to
- qcom_minidump.h
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <corbet@lwn.net>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>, <srinivas.kandagatla@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-doc@vger.kernel.org>
-References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
- <1683133352-10046-3-git-send-email-quic_mojha@quicinc.com>
- <fe94ed5c-c444-436d-720a-c96538c1026d@linaro.org>
- <e69862cc-4185-a7a2-07b2-15e331c4678a@quicinc.com>
- <659a9637-f82c-054b-99a8-dc25416c8e13@linaro.org>
- <33ea7c3b-4317-5aff-5e6a-af6e093d45a0@quicinc.com>
- <1a4f4b55-6284-6149-4c7b-7b45fa1de291@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1a4f4b55-6284-6149-4c7b-7b45fa1de291@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9cR2SwDduMYBWJe-GF40DEwl8u4KK33H
-X-Proofpoint-ORIG-GUID: 9cR2SwDduMYBWJe-GF40DEwl8u4KK33H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_08,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1 phishscore=0 malwarescore=0
- suspectscore=0 adultscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=1 priorityscore=1501 mlxlogscore=222 mlxscore=1 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2305040106
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|SA0PR12MB4416:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f4149c1-b495-4bb1-4b80-08db4ca183e3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Bw6uKJV6Iwq4KSDYTLaJsTTS72J/fdlySCgjK/ZNt4ioDPlRz7+vtYBbdTi88IM/MAZPD0MdRFMeQ5OvK0o0Q7+HC8ku+U/h40C1o08ltm/lPWb394gj3KtuYHBH3nhKd+XhmSLm49Z1G69dVqxKhomZUsBsJJWEzK2Vnp1udPx+M0MxpsSRuvWjNdSmGHWB3KJM1wm7r10EtTRfkI7R0xgXjVmp9NkxgULrznDkDEBlW5iDNeeJ4coBX6/ZUScLxxid+bi9dcQMt+26x+Ao6qX5JHzkiz7S1QJZOXo6ghsGifj/KT6kBnnJwgr9cGQiF+6XHG/yFC511yWM87AY+iPCamhG8olbJklBXexmZ+cVFAXfKrLIQl0zV32VVC9gARF2pFUOhgPi1+n9ntCx6+DJoBqplmjQ9g1jpIUS2Bc+C4+19LReHtArp+e2weReE5SD+VcXdyrdJYkpPh31vkVyR4XoMCab5kWXol+9HvQC4/ZvKQ66FzhelmLjqb05RMQGRJhLxTaTuF2BZg5mjv78zVFdj/Aaew2I1EU4ZFamnV7AStU6mRfGw5zPmf1y
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(39860400002)(346002)(366004)(376002)(136003)(451199021)(86362001)(36756003)(54906003)(316002)(66946007)(66556008)(6916009)(4326008)(6486002)(478600001)(66476007)(41300700001)(8936002)(8676002)(5660300002)(7416002)(2906002)(7406005)(38100700002)(186003)(53546011)(26005)(6506007)(6512007)(83380400001)(2616005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4Wfv2YqVkxUG1Ft1TCoBQBqPRyJmWHgc1Hg/olwlcaYH8Vgvlq/Rob6G3z5z?=
+ =?us-ascii?Q?kFtKdXbEULEJwhN9EMU5vCPzaDeyi5kMxOVJ7Aq0oj7pVMnG0RhfFyFpUpbo?=
+ =?us-ascii?Q?HCIw9nliK/NDrGsBsu8bbqXtrj4HWpkNvsAalu3qMHlm1A3vwRr1JjofpMKe?=
+ =?us-ascii?Q?CLbsLCgABOM7ID4UxUkFp0U+dxUjXVPUzzvQ6EE4IFuFsVaOVLIsTUYVLtpt?=
+ =?us-ascii?Q?TNfNCxP9GzRJmjUTsSjXA4CLKfoqMdNPvrVcfBIf0vop/RSWPSidoxj6vr8Q?=
+ =?us-ascii?Q?mHh13unmM703V+Yy10TuYVK9YzZ6GzkBVnOGbs3RbVJDDdasDB93wh2XexC+?=
+ =?us-ascii?Q?cI2sol/JiQVCvqYG6vDiYjgB4fhV+/F2LwALJk7mJzQQU93sF083HIfIHwxh?=
+ =?us-ascii?Q?RUSJOsXU5luZPPOU04/18BWxhr3viQdlxICDg/1ILjtu0VFJ7+3sGgYel1zA?=
+ =?us-ascii?Q?ddWQdgkv4bL82xXJb+vBUsuW0sEzT09n/Fl187BveKxvMJqwdYeROjYdC+Ug?=
+ =?us-ascii?Q?1qhVBU+eKBM7r5nIIa9yWqTFsMuYgVF6cAjHML3V7zluTo+6egA6dwCtvNdh?=
+ =?us-ascii?Q?votsMbTdirP51OWW5Wr7wU/GvQyk/DWYaEHGaxHEhz4gyuOg1IMWNcCA9Bq+?=
+ =?us-ascii?Q?afdvXzdKUaKYB3nRu/DM0yFLUrfy7Wqsub9BTDJUYpPDwJc5rOgiDQ2UEQqg?=
+ =?us-ascii?Q?Hhb5FMBWPRAcleuwG4JrQaGUUuFQuh/rtFal8TG8QfWzqsHh+xxBuwTXZc1I?=
+ =?us-ascii?Q?KJMS97ACLzy1rAJTKVC5tveAF69WVWnYpZ4eq2dVJGy4vIkmquyMolDJdLx7?=
+ =?us-ascii?Q?xekj6mB8x3a2YMrHWCS3v8Q06nWpFXX9KIkitmnP6xjGK0gmpDRyV0jS4qXM?=
+ =?us-ascii?Q?SuIzhXAokKjS4NOqDEzFtknKoO2U1tpVWpttpJT7Qa8spCPc4lwV/8GRCxPA?=
+ =?us-ascii?Q?Fsqot9vjkhPkH+TZiWJMRNeqY2tI5u7bW39uyJ5+w5WVaeEsqUOb0eg7w2Rz?=
+ =?us-ascii?Q?3JZaBoChRluIU5DZGSup6kBE2Kc2hrHv4Gz+nun8jOAeqmW6t2YpUNOiS2sm?=
+ =?us-ascii?Q?lKtLZr9XwAu/ZK7/IT5I+EsZy7VfWzxntp3ldjpqDnYFQ6K+wq4Enaa5UH8Z?=
+ =?us-ascii?Q?0rtYZ5kxAIO2Qj7xxVAwn/gGrf6t+YfDlMYMqkzLOv0f6DUeEeGgh5XnxMXC?=
+ =?us-ascii?Q?LurmK+R1xIDwc36iS36grp4zjzTXC1ghG03n0GFaVx98O29H1CpWNiKLUzLX?=
+ =?us-ascii?Q?DxEybTlw/fbf3aYEWcFlSLsq+M9UkAGOseMqgeKeHozh5MBpWsc0S9B0II2z?=
+ =?us-ascii?Q?pN5RlrsHz1vxZrEu/1sna4XliCMG7k65g/Syh6z/hdBVcjtsc5grM/xozWYZ?=
+ =?us-ascii?Q?AEYv1OOxQV6Fd4NJ5p5f6SIAmTfEtHrL6IfZDWXnChX7Goopig1xzbnSJDF3?=
+ =?us-ascii?Q?J7FnuQW+EPam4jY+CrsiRqvb8gGM1dqIeWMhJQwXtY8bija9xVPUUi5yeKIv?=
+ =?us-ascii?Q?UISFMdc4UTfCginopJFCXw9LU+mJYJu3J/obHoxjdY1jHbXlc8MUgPQq3BHC?=
+ =?us-ascii?Q?GTiXwWaW+rwNsDdanCoB4mRZRseZRIJza2ayn18i?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f4149c1-b495-4bb1-4b80-08db4ca183e3
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 May 2023 13:14:39.1068
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YzXdjaNUFIbufmTmDwYlcuidR2Vvhpsy4wq2cckJvCBRsI3mrJH6CbHd92x8xIBd
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4416
+X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/4/2023 6:06 PM, Krzysztof Kozlowski wrote:
-> On 04/05/2023 14:26, Mukesh Ojha wrote:
->>
->>
->> On 5/4/2023 5:33 PM, Krzysztof Kozlowski wrote:
->>> On 04/05/2023 13:58, Mukesh Ojha wrote:
->>>>
->>>>
->>>> On 5/4/2023 5:08 PM, Krzysztof Kozlowski wrote:
->>>>> On 03/05/2023 19:02, Mukesh Ojha wrote:
->>>>>> Move minidump specific data types and macros to a separate internal
->>>>>> header(qcom_minidump.h) so that it can be shared among different
->>>>>> Qualcomm drivers.
->>>>>
->>>>> No, this is not internal header. You moved it to global header.
->>>>>
->>>>> There is no reason driver internals should be exposed to other unrelated
->>>>> subsystems.
->>>>>
->>>>>>
->>>>>> There is no change in functional behavior after this.
->>>>>
->>>>> It is. You made all these internal symbols available to others.
->>>>>
->>>>>>
->>>>>
->>>>> This comes without justification why other drivers needs to access
->>>>> private and internal data. It does not look correct design. NAK.
->>>>
->>>> Thanks for catching outdated commit text, will fix the commit with
->>>> more descriptive reasoning.
->>>>
->>>> It has to be global so that co-processor minidump and apss minidump can
->>>> share data structure and they are lying in different directory.
->>>>
->>>
->>> Then you should not share all the internals of memory layout but only
->>> few pieces necessary to talk with minidump driver. The minidump driver
->>> should organize everything how it wants.
->>
->> These are core data structure which is shared with boot firmware and the
->> one's are moved here all are required by minidump driver .
+On Thu, May 04, 2023 at 02:35:35PM +0200, Niklas Schnelle wrote:
+> On Wed, 2023-05-03 at 16:35 -0300, Jason Gunthorpe wrote:
+> > On Wed, May 03, 2023 at 06:17:58PM +0100, Robin Murphy wrote:
+> > > On 2023-05-01 19:03, Jason Gunthorpe wrote:
+> > > > 
+> ---8<---
+> > 
+> > > > @@ -1940,7 +1944,11 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+> > > >   	if (type == IOMMU_DOMAIN_IDENTITY && bus->iommu_ops->identity_domain)
+> > > >   		return bus->iommu_ops->identity_domain;
+> > > > -	domain = bus->iommu_ops->domain_alloc(type);
+> > > > +	if ((type == IOMMU_DOMAIN_UNMANAGED || type == IOMMU_DOMAIN_DMA) &&
+> > > 
+> > > Logically, "type & __IOMMU_DOMAIN_PAGING", otherwise we're already missing
+> > > IOMMU_DOMAIN_DMA_FQ. Except maybe that's deliberate? 
+> > 
+> > It is deliberate for now, if it included FQ it would cause a bunch of
+> > ARM64 drivers to switch to lazy mode. I'll add a comment.
+> > 
+> > I have drafted a followup series that removes all the
+> > DMA/DMA_FQ/UNMANAGED checks from the remaining 6 drivers. I did this
+> > by adding an op flag 'prefer to use FQ' and made the core code drive
+> > the FQ decision from ops.
 > 
-> I am not sure if I understand correctly. If they are all required by
-> minidump driver, then this must not be in include, but stay with
-> minidump. Remoteproc then should not touch it.
-> 
-> I don't understand why internals of minidump should be important for
-> remoteproc. If they are, means you broken encapsulation.
-> 
->>
->> If you follow here[1], i raised by concern to make this particular one's
->> as private and later to avoid confusion went with single header.
->> But if others agree, I will keep the one that get shared with minidump
->> as separate one or if relative path of headers are allowed that can make
->> it private between these drivers(which i don't think, will be allowed or
->> recommended).
-> 
-> Let's be specific: why MD_REGION_VALID must be available for remoteproc
-> or any other driver after introducing qcom minidump driver?
+> Ah that sounds like it could fit very well with s390's need for an even
+> lazier flush mode to handle the virtualized IOMMU with slow IOTLB flush
+> case aka _SQ / single flush queue mode. When you have anything ready
+> give me a ping and I can rework my DMA conversion on top of this.
 
-Forget about this driver for a moment.
+I'd like to get your S390 dma-api conversion merged ASAP!
 
-I am not sure  how much you know about existing qcom_minidump()
-implementation and why is it there in first place in remoteproc
-code in driver/remoteproc/qcom_common.c
+I have this general objective to get the modern architectures onto
+dma-iommu.c because I want to add new things to the dma-api :\
 
-The idea is, remoteproc co-processor like adsp/cdsp etc. may have their
-static predefined region (segments) to be collected on their crash which 
-is what exactly existing qcom_minidump() is doing.
+I had imagined a new op flag because it is is pretty simple, but a
+op->get_performance or something that reports some data that could
+help dma-iommu.c decide if lazy mode is worthwhile and if there is
+other tuning sounds interesting too..
 
-Now, after this minidump series, APSS (linux) will have it's
-own of collecting linux client region independent of whether
-remoteproc minidump collection.
-
-I think, are you hinting to move all minidump related code from 
-remoteproc to qcom_minidump driver, is this what are you trying
-to say ?
-
--- Mukesh
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Jason
+ 
