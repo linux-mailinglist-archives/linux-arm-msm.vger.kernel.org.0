@@ -2,75 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68D2C6F68CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 12:03:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 600766F68D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 12:08:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229914AbjEDKDN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 06:03:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39972 "EHLO
+        id S229982AbjEDKI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 06:08:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbjEDKDL (ORCPT
+        with ESMTP id S229745AbjEDKI4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 06:03:11 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CF34C29
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 03:03:08 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac806f4fccso3281731fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 03:03:08 -0700 (PDT)
+        Thu, 4 May 2023 06:08:56 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA16D49F7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 03:08:53 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f00d41df22so9156975e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 03:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683194586; x=1685786586;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oUjsjGTbqIUYScp9njKat3CizREnO8jx2KX+bdN1BJY=;
-        b=CPobskDKj4JOvCKQUhjMFk2j+rNgdljiKRXgs3ZimA3rWp6MFfWF4W5OKEmxFXaUbs
-         NZzNy5rpxac1ArkeQbAmqlB6CwCPj15pbQnUja1zgKE8vk9kACCAXaNvVU7+lYUYFJCC
-         ECpQoVYzaV/05wKu3Rbmzr1p/vyWC3ZRu9AXgzHqtIlJEdNGGdeHh87tesWu4SzDL4Z4
-         YmKuOzmUDQe5Yio2jNXxNaOSvEDE8NIB/wke23lrsLaTpCJ2QHyd9WUD2TUXY45B9gaV
-         o5YZQEx3ERgl870yiDXFjmu/IYwiKAPgCIiJG+ycMtnRyS7EqaeA1eNO16QxmJltGJBn
-         clgw==
+        d=linaro.org; s=google; t=1683194932; x=1685786932;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jfq4Q0bzKgqrrdmGoknn8Gs1xzMa+RN+wrvnwiQJFjM=;
+        b=cSyFFQbvDN3WMuHAWCxfwE8GIqkKZ2xDrgeCKigzBghlDNPxcVEPKbZitXUsUPmgjD
+         PLh1yVu99pW7I1KjB7wNs3LebkD+4TymZRwylcxhj8RgdkcpawQxGSFN32ZetVaJBG8u
+         5TDmGIi3rLctyZrmXmVGKlWpz8ZyGdmAMTYoW+UZXuHercyRCxpgd9YbYh1jub883fRI
+         Y7M+tEKbV89W8fa5t+TDKGemGjc84/Uqn2Eklx/4fZnG1okOPAW0ONplIG7vwmpUQciv
+         fhSVoF96Neg1+uCMWWfgtBKJkFOohrqxnlmyzc/5sxI/We33grIu7gaSMIIQkzX5Lphe
+         6bEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683194586; x=1685786586;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683194932; x=1685786932;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oUjsjGTbqIUYScp9njKat3CizREnO8jx2KX+bdN1BJY=;
-        b=CEVB8YFK1wDVf9wpr97s9OL3wcPlNB2OkelD+uesBjt4HyetPUZqY/mgFEb54kcbwO
-         t7UJxjje0z1PW5MyQ3lv/3CK4KVxaY5EBnk1HWAb8HLkYc3VOf2wu2t1Sk9FbD7pvOWm
-         H08covz1BY9uc7HLTqZ46lXKmeObPilwQrEHLgQ2cbUEPKbfh/Gm/rEzAYCxgFhF1N/E
-         7IVZwh6iNph0oKUnqigKWAcrgfL6sbaHUf3GEwDIUGHXurqe88Ewm7ConO5iRI/qGjdA
-         97NvrRPIChJq5SFDiF2bBk8gE0aJJAgCFscHa5lq6d1VcvhKRdIUQzeoWFmfw3s+WBAW
-         CFjA==
-X-Gm-Message-State: AC+VfDznJEqBqXXQFgWm6t7MbGgvP7S2d3wGRtZKZ0I6DwoGrzosdLr1
-        gRqaqbShTlUG1h75hvpcsaSdqENKBfA6grOR2fA=
-X-Google-Smtp-Source: ACHHUZ4OM3+BDd3VMsH9rAG/LXoVUh12dUYOeg15PSF7P2vyTthIJZf1ZbobVtmp54OmFpOnxdkHfw==
-X-Received: by 2002:a2e:b003:0:b0:2ac:798d:1529 with SMTP id y3-20020a2eb003000000b002ac798d1529mr728777ljk.29.1683194586479;
-        Thu, 04 May 2023 03:03:06 -0700 (PDT)
+        bh=jfq4Q0bzKgqrrdmGoknn8Gs1xzMa+RN+wrvnwiQJFjM=;
+        b=HNVyUxOnw0LRHT7mjnyS3AOSP7rVSwF5sWYeDdal19JWIHLuW1/P89QPGOUkAAnnkq
+         +pwGDO00Mt3MveIKzd/9kIMfFK29v+T402j0A0ah+DGjKq5pxLTjEHaSBQZk0KpM4y/B
+         RGnD5CEG9XgPkUpKeZSk8SRFRWNt91XMGnnOuY+Lq54q3X7rf3o42bRLJIZiq7GyfCne
+         NX+v47ERZCYHAbCyJ1RoQS1cOehrWvS3m9/54GJeY7OrBLIF4I83o/umXVf2QjEjVeTz
+         HN5kh3pzwGPiSlxNWN3X60ZLoLreK54UD33XD9uJ84XjJKVe0sno3J5yQtmREEiOrDDO
+         mdWw==
+X-Gm-Message-State: AC+VfDymSEqNFhfl47b9TmbV5nPPo/9ICcCE3/LBCcS1rQ7lk6/nmjEh
+        kxVFXyRGEQD08tyYRidR4rmZdg==
+X-Google-Smtp-Source: ACHHUZ6Cq/N2Z10u4/9KpdPELT4RkD+I/Ruwf4DKPzXnq0qBktOAKbyATb7vY1fXJ1VKdyn8ZgZiog==
+X-Received: by 2002:a2e:721a:0:b0:2a4:fada:edd1 with SMTP id n26-20020a2e721a000000b002a4fadaedd1mr669030ljc.16.1683194932007;
+        Thu, 04 May 2023 03:08:52 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id i14-20020a2e864e000000b002a9f9c358d4sm6352511ljj.111.2023.05.04.03.03.05
+        by smtp.gmail.com with ESMTPSA id u22-20020a2ea176000000b002ab1216de44sm5108191ljl.71.2023.05.04.03.08.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 03:03:06 -0700 (PDT)
-Message-ID: <bb2e9963-54da-8314-5eea-d6619108b2c3@linaro.org>
-Date:   Thu, 4 May 2023 12:03:04 +0200
+        Thu, 04 May 2023 03:08:51 -0700 (PDT)
+Message-ID: <37603081-e41a-2977-7905-2063abed98cc@linaro.org>
+Date:   Thu, 4 May 2023 12:08:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: qrb4210-rb2: Enable EUD debug
+ peripheral
 Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Viswanath Boma <quic_vboma@quicinc.com>
-References: <1683193152-5808-1-git-send-email-quic_dikshita@quicinc.com>
- <1683193152-5808-2-git-send-email-quic_dikshita@quicinc.com>
- <966416d1-3ddd-26ba-63ec-2323062dfda5@linaro.org>
- <2a8e6199-179d-ac66-5ce6-d014d5534819@quicinc.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, linux-usb@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org
+References: <20230504082644.1461582-1-bhupesh.sharma@linaro.org>
+ <20230504082644.1461582-6-bhupesh.sharma@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v3 1/3] venus: add firmware version based check
-In-Reply-To: <2a8e6199-179d-ac66-5ce6-d014d5534819@quicinc.com>
+In-Reply-To: <20230504082644.1461582-6-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -83,167 +82,67 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4.05.2023 11:49, Dikshita Agarwal wrote:
+On 4.05.2023 10:26, Bhupesh Sharma wrote:
+> Since the USB-C type port on the Qualcomm QRB4210-RB2 board
+> can be set primarily in a 'device' configuration (with the default
+> DIP switch settings), it makes sense to enable the EUD debug
+> peripheral on the board by default by setting the USB 'dr_mode' property
+> as 'otg'.
 > 
-> On 5/4/2023 3:12 PM, Konrad Dybcio wrote:
->>
->> On 4.05.2023 11:39, Dikshita Agarwal wrote:
->>> Add firmware version based checks to enable/disable
->>> features for different SOCs.
->>>
->>> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
->>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>> Tested-by: Nathan Hebert <nhebert@chromium.org>
->>> ---
->>>   drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
->>>   drivers/media/platform/qcom/venus/hfi_msgs.c | 27 +++++++++++++++++++++++++--
->>>   2 files changed, 45 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->>> index 32551c2..2f2176f 100644
->>> --- a/drivers/media/platform/qcom/venus/core.h
->>> +++ b/drivers/media/platform/qcom/venus/core.h
->>> @@ -202,6 +202,11 @@ struct venus_core {
->>>       unsigned int core0_usage_count;
->>>       unsigned int core1_usage_count;
->>>       struct dentry *root;
->>> +    struct venus_img_version {
->>> +        u32 major;
->>> +        u32 minor;
->>> +        u32 rev;
->>> +    } venus_ver;
->>>   };
->>>     struct vdec_controls {
->>> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->>>       return NULL;
->>>   }
->>>   +static inline bool
->>> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->>> +{
->>> +    return ((core)->venus_ver.major == vmajor &&
->>> +        (core)->venus_ver.minor == vminor &&
->>> +        (core)->venus_ver.rev >= vrev);
->>> +}
->>> +
->>> +static inline bool
->>> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->>> +{
->>> +    return ((core)->venus_ver.major == vmajor &&
->>> +        (core)->venus_ver.minor == vminor &&
->>> +        (core)->venus_ver.rev <= vrev);
->>> +}
->>>   #endif
->>> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
->>> index df96db3..4854863 100644
->>> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
->>> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
->>> @@ -248,13 +248,16 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->>>   }
->>>     static void
->>> -sys_get_prop_image_version(struct device *dev,
->>> +sys_get_prop_image_version(struct venus_core *core,
->>>                  struct hfi_msg_sys_property_info_pkt *pkt)
->>>   {
->>> +    struct device *dev = core->dev;
->>>       u8 *smem_tbl_ptr;
->>>       u8 *img_ver;
->>>       int req_bytes;
->>>       size_t smem_blk_sz;
->>> +    int ret;
->>> +    u8 *ver_str;
->>>         req_bytes = pkt->hdr.size - sizeof(*pkt);
->>>   @@ -263,6 +266,26 @@ sys_get_prop_image_version(struct device *dev,
->>>           return;
->>>         img_ver = pkt->data;
->>> +    if (IS_V6(core) && core->res->num_vpp_pipes == 1) {
->>> +        ret = sscanf(img_ver, "14:video-firmware.%u.%u-%u",
->>> +                 &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->> This is still not perfect, 8350 has 4 vpp pipes and its firmware is
->> also denominated with "video-firmware".. perhaps we can just try
->> each variant until we reach ret == 3?
+> Now, the EUD debug peripheral can be enabled by executing:
+>  $ echo 1 > /sys/bus/platform/drivers/qcom_eud/1610000.eud/enable
 > 
-> sc7280 onward firmware have image string as "video-firmware".
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 27 +++++++++++++++++++++++-
+>  1 file changed, 26 insertions(+), 1 deletion(-)
 > 
-> Support for 8350 is not yet added in venus driver, any required change for the same can be done
-> 
-> when support will be added for the same.
-I understand, but that doesn't mean this can't be improved:
-
-ret = sscanf(.. video-firmware .. )
-if (ret == 2) {
-	/* video-firmware string doesn't provide rev info */
-	ver.rev = (something);
-	goto done;
-}
-
-ret = sscanf(.. VIDEO.VE .. )
-if (ret == 3)
-	goto done;
-
-ret = sscanf(.. VIDEO.VPU .. )
-if (ret != 3) {
-	/* We ran out of options! */
-	return -EINVAL;
-}
-
-done:
-	// continue the code flow
-
-
-> 
->>> +        if (ret != 2) {
->> 3?
-> 
-> this image version string doesn't return valid revision hence checking against 2 (major and minor versions)
-So why are you filling the revision field with an invalid value?
-
-let's take a version string from a firmware I have on hand:
-
-14:video-firmware.1.0-3fb5add1d3ac96f8f74facd537845a6ceb5a99e4
-
-this will evaluate to:
-
-maj = 1
-min = 0
-rev = 3
-
-since it's incorrect, drop the last argument and initialize it with
-something like UINT_MAX or 0xdeadbeef
-
-On a note, you left ver_str unused in this patch, so it doesn't work
-for VIDEO.VPU anyway
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> index 1a0776a0cfd0..0ce72f1ebc10 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -30,6 +30,10 @@ vph_pwr: vph-pwr-regulator {
+>  	};
+>  };
+>  
+> +&eud {
+> +	status = "okay";
+> +};
+> +
+>  &qupv3_id_0 {
+>  	status = "okay";
+>  };
+> @@ -253,7 +257,28 @@ &usb {
+>  
+>  &usb_dwc3 {
+>  	maximum-speed = "super-speed";
+> -	dr_mode = "peripheral";
+> +
+> +	/*
+> +	 * There is only one USB DWC3 controller on QRB4210 board and it is connected
+> +	 * via a DIP Switch:
+> +	 * - to either an USB - C type connector or an USB - A type connector
+> +	 *   (via a GL3590-S hub), and
+> +	 * - to either an USB - A type connector (via a GL3590-S hub) or a connector
+> +	 *   for further connection with a mezzanine board.
+> +	 *
+> +	 * All of the above hardware muxes would allow us to hook things up in
+> +	 * different ways to some potential benefit for static configurations (for e.g.
+> +	 * on one hand we can have two USB - A type connectors and a USB - Ethernet
+> +	 * connection available and on the other we can use the USB - C type in
+> +	 * peripheral mode).
+> +	 *
+> +	 * Note that since the USB - C type can be used only in peripehral mode,
+> +	 * so hardcoding the mode to 'peripheral' here makes sense.
+> +	 *
+> +	 * However since we want to use the EUD debug device, we set the mode as
+> +	 * 'otg' here.
+> +	 */
+> +	dr_mode = "otg";
+So if I understand correctly, EUD works via the type-C connector and
+only when the switch is turned such that the type-C connector is in use?
 
 Konrad
-> 
-> Thanks,
-> 
-> Dikshita
-> 
->>
->> Konrad
->>> +            dev_dbg(dev, VDBGL "error reading F/W version\n");
->>> +            return;
->>> +        }
->>> +    } else {
->>> +        if (IS_V6(core))
->>> +            ver_str = "14:VIDEO.VPU.%u.%u-%u";
->>> +        else
->>> +            ver_str = "14:VIDEO.VE.%u.%u-%u";
->>> +
->>> +        ret = sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u",
->>> +                 &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->>> +        if (ret != 3) {
->>> +            dev_dbg(dev, VDBGL "error reading F/W version\n");
->>> +            return;
->>> +        }
->>> +    }
->>>         dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->>>   @@ -286,7 +309,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->>>         switch (pkt->property) {
->>>       case HFI_PROPERTY_SYS_IMAGE_VERSION:
->>> -        sys_get_prop_image_version(dev, pkt);
->>> +        sys_get_prop_image_version(core, pkt);
->>>           break;
->>>       default:
->>>           dev_dbg(dev, VDBGL "unknown property data\n");
+>  };
+>  
+>  &usb_hsphy {
