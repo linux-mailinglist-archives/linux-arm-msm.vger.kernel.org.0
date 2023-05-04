@@ -2,123 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95CB16F70C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBA3A6F70D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:28:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229739AbjEDRVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 13:21:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53050 "EHLO
+        id S229742AbjEDR2Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 13:28:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjEDRU7 (ORCPT
+        with ESMTP id S229609AbjEDR2Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 13:20:59 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73FCBE5D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:20:58 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4ec9c7c6986so909564e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 10:20:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683220857; x=1685812857;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=x03inJk1u8Dl+C485ZgejmLGtZM16EKxZlLJMRQD5GU=;
-        b=CI0xsUrSJoPZc3hn8va7m74kLj9rg4kPxmQ2T1/R068MJp5jW7mBh1Pcox80Uuf7B0
-         Q3Gbvi8g8KBRtJcqNzvdrg3aMMfdsVinB7BvmCIpUN1coOQnGsPPpo3fSSnGPTgN049X
-         h2HJZnYfUVjNz1qBnbciaG59E7P6UEsvBdFvd9MocP+XJmek9XdZWZp46gpPcmLqrknQ
-         Yr9RRdTU6LvcA6J3aztC9CgYtnQThTNbivXAnrv6zJtCb93ckSpOgkHzGqW3axD5I7sT
-         Kdqaz3BS06CYmvqURLZlutmRWo1lo0vKRg40JqAC5NbmxUQiEX0D7Ol8No6LOdBxO42E
-         UKpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683220857; x=1685812857;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x03inJk1u8Dl+C485ZgejmLGtZM16EKxZlLJMRQD5GU=;
-        b=DJLPemg8sTuIJqwTNlqHLQ/huCCGIc89HHfQ4UB2o8y/AR02SecsYHTBzUiD18zXDz
-         zH9PHeFb3oXM154Lhq8f6QZI5atMyAdho71o+OIS0kp3RuFUH/kTJxVfwBpjWAdYcXfP
-         ofafajyUezHCMzoXWFDRdyUgRX/u6uLkzLXKKy8pmOfypG7TnBAtaJCWqekXobmmMDq/
-         +g+aYC+8H8HlZFlHFZ5LfbXT6FNpHzjNB4WyHr/5SM3en7fvgA7LXA5H5EyKIJXSylLi
-         ub/Y7Ds2yAsgnwgKpjc6RmFJpL9U8I0KHv0qDw7g8Mh0TPFjHjxpksfBLR/ZdseCH+5/
-         /FqA==
-X-Gm-Message-State: AC+VfDyjFYVws2ls5dSwdftAZ4Af1nfXhp3RlBzqYK9vPIqkiB4HwyTw
-        emE7O1dDIT/TX6FQUzksYld82Q==
-X-Google-Smtp-Source: ACHHUZ4C6t1iYtTRYW+vZQQ/bmsstMMU41QpxPtkhpn1Yrgd4/LIy3h5wflkeRXteZ14Wf2EjtrHUw==
-X-Received: by 2002:a05:6512:38b1:b0:4ec:a9c5:f3ae with SMTP id o17-20020a05651238b100b004eca9c5f3aemr1879977lft.11.1683220856716;
-        Thu, 04 May 2023 10:20:56 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id i20-20020ac25234000000b004eb07f5cde6sm6591133lfl.297.2023.05.04.10.20.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 10:20:56 -0700 (PDT)
-Message-ID: <02f5d449-a64b-8f5e-6b72-2fdf8d9bafbe@linaro.org>
-Date:   Thu, 4 May 2023 19:20:55 +0200
+        Thu, 4 May 2023 13:28:24 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF2E75247
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:28:20 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1C82B20C3D;
+        Thu,  4 May 2023 19:28:15 +0200 (CEST)
+Date:   Thu, 4 May 2023 19:28:14 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 4/7] drm/msm/dpu: Introduce PINGPONG_NONE to
+ disconnect DSC from PINGPONG
+Message-ID: <j6fllkmd4e75hss6dwxdiiu4keocknt5zg2iu6jgj5nsfku6d6@5ec25ecgpvva>
+References: <1683218805-23419-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683218805-23419-5-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 4/4] venus: return P010 as preferred format for 10 bit
- decode
-Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <1683196599-3730-1-git-send-email-quic_dikshita@quicinc.com>
- <1683196599-3730-5-git-send-email-quic_dikshita@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1683196599-3730-5-git-send-email-quic_dikshita@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1683218805-23419-5-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 4.05.2023 12:36, Dikshita Agarwal wrote:
-> If bit depth is detected as 10 bit by firmware, return
-> P010 as preferred decoder format to the client.
+On 2023-05-04 09:46:42, Kuogee Hsieh wrote:
+> Disabling the crossbar mux between DSC and PINGPONG currently
+> requires a bogus enum dpu_pingpong value to be passed when calling
+> dsc_bind_pingpong_blk() with enable=false, even though the register
+> value written is independent of the current PINGPONG block.  Replace
+> that `bool enable` parameter with a new PINGPONG_NONE dpu_pingpong
+> flag that triggers the write of the "special" 0xF "crossbar
+> disabled" value to the register instead.
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Changes in v4:
+> -- more details to commit text
+> 
+> Changes in v5:
+> -- rewording commit text suggested by Marijn
+> -- add DRM_DEBUG_KMS for DSC unbinding case
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Thanks for bearing with all the comments thus far!
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
 > ---
->  drivers/media/platform/qcom/venus/vdec.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c  | 15 ++++++++-------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h  |  1 -
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  3 ++-
+>  4 files changed, 11 insertions(+), 10 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 69f7f6e..ed11dc2 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1468,8 +1468,13 @@ static void vdec_event_change(struct venus_inst *inst,
->  	inst->out_width = ev_data->width;
->  	inst->out_height = ev_data->height;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index cf1de5d..ffa6f04 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1850,7 +1850,7 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+>  		hw_pp->ops.setup_dsc(hw_pp);
 >  
-> -	if (inst->bit_depth != ev_data->bit_depth)
-> +	if (inst->bit_depth != ev_data->bit_depth) {
->  		inst->bit_depth = ev_data->bit_depth;
-> +		if (inst->bit_depth == VIDC_BITDEPTH_10)
-> +			inst->fmt_cap = &vdec_formats[3];
-> +		else
-> +			inst->fmt_cap = &vdec_formats[0];
-This doesn't scale and is very error-prone, please enumerate the
-entries and assign it using the enumerator, like:
-
-enum {
-	VDEC_FORMAT_FOO,
-	...
-};
-
-... vdec_formats[] = {
-	[VDEC_FORMAT_FOO] = { foo, bar, baz }
-}
-
-Konrad
-> +	}
+>  	if (hw_dsc->ops.dsc_bind_pingpong_blk)
+> -		hw_dsc->ops.dsc_bind_pingpong_blk(hw_dsc, true, hw_pp->idx);
+> +		hw_dsc->ops.dsc_bind_pingpong_blk(hw_dsc, hw_pp->idx);
 >  
->  	if (inst->pic_struct != ev_data->pic_struct)
->  		inst->pic_struct = ev_data->pic_struct;
+>  	if (hw_pp->ops.enable_dsc)
+>  		hw_pp->ops.enable_dsc(hw_pp);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> index 4a6bbcc..47cb9f3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+> @@ -157,7 +157,6 @@ static void dpu_hw_dsc_config_thresh(struct dpu_hw_dsc *hw_dsc,
+>  
+>  static void dpu_hw_dsc_bind_pingpong_blk(
+>  		struct dpu_hw_dsc *hw_dsc,
+> -		bool enable,
+>  		const enum dpu_pingpong pp)
+>  {
+>  	struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+> @@ -166,14 +165,16 @@ static void dpu_hw_dsc_bind_pingpong_blk(
+>  
+>  	dsc_ctl_offset = DSC_CTL(hw_dsc->idx);
+>  
+> -	if (enable)
+> +	if (pp)
+>  		mux_cfg = (pp - PINGPONG_0) & 0x7;
+>  
+> -	DRM_DEBUG_KMS("%s dsc:%d %s pp:%d\n",
+> -			enable ? "Binding" : "Unbinding",
+> -			hw_dsc->idx - DSC_0,
+> -			enable ? "to" : "from",
+> -			pp - PINGPONG_0);
+> +	if (pp)
+> +		DRM_DEBUG_KMS("Binding dsc:%d to pp:%d\n",
+> +				hw_dsc->idx - DSC_0,
+> +				pp - PINGPONG_0);
+> +	else
+> +		DRM_DEBUG_KMS("Unbinding dsc:%d from any pp\n",
+> +				hw_dsc->idx - DSC_0);
+>  
+>  	DPU_REG_WRITE(c, dsc_ctl_offset, mux_cfg);
+>  }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> index 287ec5f..138080a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h
+> @@ -44,7 +44,6 @@ struct dpu_hw_dsc_ops {
+>  				  struct drm_dsc_config *dsc);
+>  
+>  	void (*dsc_bind_pingpong_blk)(struct dpu_hw_dsc *hw_dsc,
+> -				  bool enable,
+>  				  enum dpu_pingpong pp);
+>  };
+>  
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> index 1913a19..02a0f48 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> @@ -191,7 +191,8 @@ enum dpu_dsc {
+>  };
+>  
+>  enum dpu_pingpong {
+> -	PINGPONG_0 = 1,
+> +	PINGPONG_NONE,
+> +	PINGPONG_0,
+>  	PINGPONG_1,
+>  	PINGPONG_2,
+>  	PINGPONG_3,
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
