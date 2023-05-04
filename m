@@ -2,72 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 090136F6885
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 11:43:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 692BE6F688A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 11:44:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230377AbjEDJni (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 05:43:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58364 "EHLO
+        id S230404AbjEDJo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 05:44:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230340AbjEDJnh (ORCPT
+        with ESMTP id S230416AbjEDJo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 05:43:37 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAD0A3C39
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 02:43:35 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4efe8991b8aso300316e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 02:43:35 -0700 (PDT)
+        Thu, 4 May 2023 05:44:26 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3E249DA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 02:44:23 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2a7b02615f1so3296051fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 02:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683193414; x=1685785414;
+        d=linaro.org; s=google; t=1683193462; x=1685785462;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZgXOhUfnp5pJIsv21UC9FCZiuaRHfI+r6ej6LwX1czA=;
-        b=x4mY+8MQ4cCMDgMWtjDPg1XoNMPfyfWnbJSFBHQQct9ML+Y6lmtuKv2846Ji5ouFPc
-         c0mH8wwu6vmFRJXSGNEr735/lrU2kZKG+ymEcPeN2kyG1Z+liGB1pKnthPOxxffOcMzp
-         fQlTyYGYWk3NuZKc1FmC+2g2e5MQwVA6BDaqMMTwL1C5NLiPbD2sntuf4By79PcBg7YS
-         qVSd7Zn6SKsM4gfck2xE2qVKxgmvqkYmTOipajIGoJ/PbmsVMilFE+3VyuE9FOifI5oy
-         2boyoqnZynoupHM3YiHhThJrIZ4qXR9ZrsPAPp4zaMJBXiLENNNOsLzlln6wE3lugFPH
-         XctQ==
+        bh=9njODLCNLbHQNVRY81oeORhaVkjNI1laFxTWtA6AgaA=;
+        b=zhgvuFIRzrM51QDY6wTBprMPX9veIqzRc5EM6dHt2vZPiej8HoBRQGUEo43K9K/KW0
+         uKth7EscB7FtDuUYCKHy43qzEA3qdOSIy4ppprJASE8+EKdKKdASvn3T8KipkzcdlQ8S
+         0PI+pvKOyg6TDCQV3TB9kpKGx2NK1NuXVNomjLW/oyaQvO121Bts2tOlCJ6W6f3TiBZY
+         tKTBofbsrPSwkAJFoS3P8N5Vw/E+SaQ+utb247TKieBnYnRk3P24aU8x2FQ7a/WUm9G7
+         JzUXlaC31OYjRN3d8i+zq7Lk38b+JBJKpcIqjZPlVw+BSH3e5PUdld1a5SuR7dr8tpzt
+         Zmyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683193414; x=1685785414;
+        d=1e100.net; s=20221208; t=1683193462; x=1685785462;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZgXOhUfnp5pJIsv21UC9FCZiuaRHfI+r6ej6LwX1czA=;
-        b=Z3hzMr+jMm4trsbcGaOfXALNpKRdI+EQ3Fs/vMP8I34d/KnScZkDa8f4RUDpM2XlzC
-         mJw0UD90GBAH6WIxr5RtXXlDJlyr/B7m/sot37FMQ3FqpC7imEFsFAR1zjmW8jeFqCit
-         qURPAWzv4jGIEa+QVCKOzGu64i0OBfzQhHhxmNFwyOKnO7OU1IICOGwLGk5eAymU5kiW
-         kdEX5IkxyDvBzpbN2tkaXtlrbM8yZKkdPkI3fzlaatUDpx18kMwBfeQyzpWXJnwEJc3T
-         1BY992VHg0NEffFdA7YP7IRSiyiKG5oUPa56BtZRxxyWkHPSp9C8Cc5nA+jtM74o/FGn
-         4Rww==
-X-Gm-Message-State: AC+VfDzYSAoy006svk6SVIvt/6H5KoG71tUodfVBP0Lv922qYp70ZzNR
-        5m39pR6Tmbf3mWNtL714AwrRQg==
-X-Google-Smtp-Source: ACHHUZ4F6Ifn9xK8prHeWXgzeH8ijLXnXm406B+U0B6h42hqXIHYNu7HqD6BQHTdIkLVeduFOV9NLQ==
-X-Received: by 2002:a19:c209:0:b0:4e0:a426:6ddc with SMTP id l9-20020a19c209000000b004e0a4266ddcmr1490243lfc.0.1683193413979;
-        Thu, 04 May 2023 02:43:33 -0700 (PDT)
+        bh=9njODLCNLbHQNVRY81oeORhaVkjNI1laFxTWtA6AgaA=;
+        b=HGaPyh7Sqf7773PJzdoNsNDhvR6g6p2MHv56Iz4ieCGjwRYT21MabfA+XpWRax1emQ
+         cW0sFej56fJbBiX7R6fR6KcD3tlGjbOWYhlsqukk/vTxSg05MIOONKCVlp4iMSruQoXo
+         wYz+GmUUn14TCEj6wqMpXf/mR61NNmi4QshUOhJxAOBwoMotODgK7LeKQls6o9/S6/zo
+         vSI//S/KvZdHcaxNO6x8vk4dgsfhYlYrXlCKkCKGGjUvRtPm/1iRVrTgl7Q0YK0EW9HL
+         Wgk/Q2rb68q6WdTChAydLX2aXvuRX/EuxeXIff3QMGCiVkkAY55G30kyOKygmGV6xmHm
+         rRPw==
+X-Gm-Message-State: AC+VfDzjMItB8CPvbwRm+phRvznOzqmUiGIkO3yP8a0KGJDWpwOdxgMY
+        +YGjxe+cs6DnV6y5n+KxzywlpA==
+X-Google-Smtp-Source: ACHHUZ4uuwHo2dPaFCoN/WbGJfTFdw3/ka6SrsbQ9GM48Hrb5u5H0sgdIErZjxmM70Y+Z1svXLP1DA==
+X-Received: by 2002:a2e:87d1:0:b0:2ac:8090:630e with SMTP id v17-20020a2e87d1000000b002ac8090630emr272688ljj.28.1683193461726;
+        Thu, 04 May 2023 02:44:21 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id f16-20020ac25330000000b004f1411c0ac5sm307138lfh.79.2023.05.04.02.43.32
+        by smtp.gmail.com with ESMTPSA id a6-20020ac25206000000b004eff6dd9072sm4821551lfl.111.2023.05.04.02.44.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 02:43:33 -0700 (PDT)
-Message-ID: <b4abc8aa-bcd6-ae5c-1bab-5916f1e4a541@linaro.org>
-Date:   Thu, 4 May 2023 11:43:32 +0200
+        Thu, 04 May 2023 02:44:21 -0700 (PDT)
+Message-ID: <9f536adc-1787-ea4f-f624-4f0cc0f1ab60@linaro.org>
+Date:   Thu, 4 May 2023 11:44:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v3 2/3] venus: enable sufficient sequence change support
- for vp9
+Subject: Re: [PATCH v3 1/5] usb: misc: eud: Fix eud sysfs path (use
+ 'qcom_eud')
 Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Viswanath Boma <quic_vboma@quicinc.com>
-References: <1683193152-5808-1-git-send-email-quic_dikshita@quicinc.com>
- <1683193152-5808-3-git-send-email-quic_dikshita@quicinc.com>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, linux-usb@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org
+References: <20230504082644.1461582-1-bhupesh.sharma@linaro.org>
+ <20230504082644.1461582-2-bhupesh.sharma@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1683193152-5808-3-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <20230504082644.1461582-2-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,68 +82,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4.05.2023 11:39, Dikshita Agarwal wrote:
-> VP9 supports resolution change at interframe.
-> Currenlty, if sequence change is detected at interframe and
-> resources are sufficient, sequence change event is not raised
-> by firmware to driver until the next keyframe.
-> This change add the HFI to notify the sequence change in this
-> case to driver.
+On 4.05.2023 10:26, Bhupesh Sharma wrote:
+> The eud sysfs enablement path is currently mentioned in the
+> Documentation as:
+>   /sys/bus/platform/drivers/eud/.../enable
 > 
-> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> Tested-by: Nathan Hebert <nhebert@chromium.org>
+> Instead it should be:
+>   /sys/bus/platform/drivers/qcom_eud/.../enable
+> 
+> Fix the same.
+> 
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/media/platform/qcom/venus/hfi_cmds.c   | 1 +
->  drivers/media/platform/qcom/venus/hfi_helper.h | 2 ++
->  drivers/media/platform/qcom/venus/vdec.c       | 8 ++++++++
->  3 files changed, 11 insertions(+)
+>  Documentation/ABI/testing/sysfs-driver-eud | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> index 930b743..e2539b5 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> @@ -521,6 +521,7 @@ static int pkt_session_set_property_1x(struct hfi_session_set_property_pkt *pkt,
->  		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*en);
->  		break;
->  	}
-> +	case HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT:
->  	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER: {
->  		struct hfi_enable *in = pdata;
->  		struct hfi_enable *en = prop_data;
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index d2d6719..2e03b6e 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -469,6 +469,8 @@
->  #define HFI_PROPERTY_PARAM_VDEC_PIXEL_BITDEPTH			0x1003007
->  #define HFI_PROPERTY_PARAM_VDEC_PIC_STRUCT			0x1003009
->  #define HFI_PROPERTY_PARAM_VDEC_COLOUR_SPACE			0x100300a
-> +#define HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT \
-> +								0x100300b
->  
->  /*
->   * HFI_PROPERTY_CONFIG_VDEC_COMMON_START
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 4ceaba3..f0394b9 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -671,6 +671,14 @@ static int vdec_set_properties(struct venus_inst *inst)
->  			return ret;
->  	}
->  
-> +	/* Enabling sufficient sequence change support for VP9 */
-> +	if (is_fw_rev_or_newer(inst->core, 5, 4, 51)) {
-> +		ptype = HFI_PROPERTY_PARAM_VDEC_ENABLE_SUFFICIENT_SEQCHANGE_EVENT;
-> +		ret = hfi_session_set_property(inst, ptype, &en);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
->  	ptype = HFI_PROPERTY_PARAM_VDEC_CONCEAL_COLOR;
->  	conceal = ctr->conceal_color & 0xffff;
->  	conceal |= ((ctr->conceal_color >> 16) & 0xffff) << 10;
+> diff --git a/Documentation/ABI/testing/sysfs-driver-eud b/Documentation/ABI/testing/sysfs-driver-eud
+> index 83f3872182a4..2bab0db2d2f0 100644
+> --- a/Documentation/ABI/testing/sysfs-driver-eud
+> +++ b/Documentation/ABI/testing/sysfs-driver-eud
+> @@ -1,4 +1,4 @@
+> -What:		/sys/bus/platform/drivers/eud/.../enable
+> +What:		/sys/bus/platform/drivers/qcom_eud/.../enable
+>  Date:           February 2022
+>  Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>  Description:
