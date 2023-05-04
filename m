@@ -2,47 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C2786F77E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 23:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4F7F6F7845
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 23:39:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbjEDVRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 17:17:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50534 "EHLO
+        id S229653AbjEDVjs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 17:39:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjEDVRh (ORCPT
+        with ESMTP id S230097AbjEDVjr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 17:17:37 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CD51BDA
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 14:17:35 -0700 (PDT)
+        Thu, 4 May 2023 17:39:47 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8249411D93
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 14:39:46 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 820BA2128F;
-        Thu,  4 May 2023 23:17:33 +0200 (CEST)
-Date:   Thu, 4 May 2023 23:17:32 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 935F3212FE;
+        Thu,  4 May 2023 23:39:43 +0200 (CEST)
+Date:   Thu, 4 May 2023 23:39:42 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] drm/msm/dsi: Adjust pclk rate for compression
-Message-ID: <hetttr6ug6sbt3g3fwmuqkx5f7betgxtzyuaovo62h5ams3th7@7xbztyqgyrz5>
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-1-6bc6f03ae735@quicinc.com>
- <lq6le3pxya3op2nke53uniusr3chtkmqdfrc7wkv4tylqb2fio@esjoh4f63g5q>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 3/7] drm/msm/dpu: add DPU_PINGPONG_DSC bits into
+ PP_BLK and PP_BLK_TE marcos
+Message-ID: <55aa25pdeaqbuc2x2v3xkmcatlzmn2c5pn2py5qnqz7bnrp6s4@3vkwwnn4uasi>
+References: <1683218805-23419-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683218805-23419-4-git-send-email-quic_khsieh@quicinc.com>
+ <ljt5mp4ew5lcrrrdd7xyof3jv3friafbmr3im35ddwxjc42ekh@toez7xfdreg2>
+ <CAA8EJpreM9i3DUp+93K7p14f_tNMy-m+C-WdyN5_drmmkGV66g@mail.gmail.com>
+ <u7hlzltevx675gfg4w6emmeceo6nj76taqeecsor6iqsi3hmki@lg43y65m6chz>
+ <11ef769a-5089-57d4-db87-4c5766d98206@quicinc.com>
+ <6qg25ffuq6xcfz3vuqm5lguspihjospctjclxmwyu2ifau4p7b@txywjmir7lg5>
+ <9011a078-9962-b3de-6427-b9114fcd0cf4@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <lq6le3pxya3op2nke53uniusr3chtkmqdfrc7wkv4tylqb2fio@esjoh4f63g5q>
+In-Reply-To: <9011a078-9962-b3de-6427-b9114fcd0cf4@quicinc.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -50,130 +56,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-04 22:33:17, Marijn Suijten wrote:
-> Title suggestion: use the wording "reduce pclk rate" :)
+On 2023-05-04 12:50:57, Abhinav Kumar wrote:
 > 
-> (Eventually "when DSC is enabled", instead of "for compression")
 > 
-> On 2023-05-02 18:19:12, Jessica Zhang wrote:
-> > Divide the pclk rate by the compression ratio when DSC is enabled
+> On 5/4/2023 12:36 PM, Marijn Suijten wrote:
+> > On 2023-05-04 11:25:44, Abhinav Kumar wrote:
+> > <snip>
+> >>> Sure, if you really prefer a split I'd go for two patches:
+> >>> 1. Add the flag to the enum and catalog;
+> >>> 2. Add the ops guard (functional change).
+> >>>
+> >>> Then don't forget to reword the commit message, following the guidelines
+> >>> below and the suggestion for 2/7.
+> >>>
+> >>> - Marijn
+> >>
+> >> Plan sounds good to me.
+> >>
+> >> Marijn, we will wait for a couple of days to post the next rev but would
+> >> be hard more than that as we need to pick up other things which are
+> >> pending on top of this. Hence would appreciate if you can finish reviews
+> >> by then.
 > > 
-> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > It depends on how many more revisions are needed after that, and not all
+> > patches in this series have an r-b just yet.  Given the amount of review
+> > comments that are still trickling in (also on patches that already have
+> > maintainer r-b) I don't think we're quite there to start thinging about
+> > picking this up in drm-msm just yet.  I doubt anyone wants a repeat of
+> > the original DSC series, which went through many review rounds yet still
+> > required multiple series of bugfixes (some of which were pointed out and
+> > ignored in review) to be brought to a working state.  But the split
+> > across topics per series already makes this a lot less likely, many
+> > thanks for that.
+> > 
 > 
-> Thank you so much for sending this.   The compression ratio was applied
-> to hdisplay
+> I think the outstanding comments shouldnt last more than 1-2 revs more 
+> on this one as its mostly due to multiple patches on the list touching 
+> catalog at the same time. I have been monitoring the comments closely 
+> even though I dont respond to all of them.
+> 
+> One of the major reasons of the number of issues with DSC 1.1 was QC 
+> didn't really have the devices or panels to support it. Thats why I 
+> changed that this time around to take more control of validation of DSC 
+> 1.2 and ofcourse decided to break up of series into the least amount of 
+> functionality needed to keep the DPU driver intact.
 
-In hindsight, on the note of hdisplay, dsi_timing_setup() actually only
-divides the visual portion - that is hdisplay out of htotal - without
-affecting the back and front porch.
+Really glad that you are able to test and validate it now, that goes a
+long way.  Does that also mean you can post the panel patches quickly,
+so that everyone has a point of reference?  As you said that is one of
+the main points where DSC 1.1 "went wrong" (a misunderstanding of
+drm_dsc_config).
 
-Since this clock inside the mode is based on the full htotal * vtotal *
-..., should we compensate for that and only divide the visual portion of
-the clock signal by 3?  Otherwise we might not have enough clockticks to
-perform the front and back porch (even though CMD mode doesn't really
-have porches, I have yet to properly understand that part of the
-signal).
+> All that being said, we still value your comments and would gladly wait 
+> for a couple of days like I already wrote. But there are more 
+> incremental series on top of this:
+> 
+> -> DSI changes for DSC 1.2
+> -> proper teardown for DSC
+> -> DSC pair allocation support
+> -> DSC 1.2 over DP
+
+Yeah, I'm familiar with the concept of having many dependent series, and
+now DSC series are even rebasing on DPU (catalog) cleanups to preempt
+conflicts, which is really hard to follow.
+Dmitry just pushed v5 of "drm/i915/dsc: change DSC param tables to
+follow the DSC model" [1] and seems to have dropped some patches that
+some of these series are depending on, resulting in compilation
+failures.  Other series don't seem to fully mention all their
+dependencies.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230504153511.4007320-1-dmitry.baryshkov@linaro.org/T/#u
+
+So, for this to go as convenient as possible, do you have a list of
+series, in a desired order that they should be reviewed and tested?
+That way I can direct my priorities and help achieve the goal of picking
+base dependencies as early as possible.
+
+For example, one of the many series regresses DSC on the Xperia XZ3
+(SDM845), but I have yet to bisect and understand which patch it is.
+Will let you know as soon as I get my tree in order.
 
 - Marijn
-
-> , but not the clocks yet, and with this patch I get a massive
-> reduction in clock speeds on the Xperia XZ3, without regressions nor
-> affecting performance/fps:
-> 
->           gcc_sys_noc_cpuss_ahb_clk       1        1        0    19200000          0     0  50000         Y
->           gcc_cpuss_ahb_clk           1        1        0    19200000          0     0  50000         Y
->     bi_tcxo                           6        6        0    19200000          0     0  50000         Y
->        dsi0vco_clk                    1        1        0  [-1873793994-]{+1249195898+}          0     0  50000         Y
->           dsi0_pll_out_div_clk        1        1        0   [-1873793994-]{+624597949+}          0     0  50000         Y
->              dsi0_pll_post_out_div_clk       0        0        0   [-468448498-]{+156149487+}          0     0  50000         Y
->              dsi0_pll_bit_clk         2        2        0   [-1873793994-]{+624597949+}          0     0  50000         Y
->                 dsi0_pclk_mux         1        1        0   [-1873793994-]{+624597949+}          0     0  50000         Y
->                    dsi0_phy_pll_out_dsiclk       1        1        0   [-312298999-]{+104099659+}          0     0  50000         Y
->                       disp_cc_mdss_pclk0_clk_src       1        1        0   [-312298999-]{+104099659+}          0     0  50000         Y
->                          disp_cc_mdss_pclk0_clk       1        1        0   [-312298999-]{+104099659+}          0     0  50000         Y
->                 dsi0_pll_by_2_bit_clk       0        0        0   [-936896997-]{+312298974+}          0     0  50000         Y
->                 dsi0_phy_pll_out_byteclk       1        1        0    [-234224249-]{+78074743+}          0     0  50000         Y
->                    disp_cc_mdss_byte0_clk_src       2        2        0    [-234224249-]{+78074743+}          0     0  50000         Y
->                       disp_cc_mdss_byte0_div_clk_src       1        1        0    [-117112125-]{+39037372+}          0     0  50000         Y
->                          disp_cc_mdss_byte0_intf_clk       1        1        0    [-117112125-]{+39037372+}          0     0  50000         Y
->                       disp_cc_mdss_byte0_clk       1        1        0    [-234224249-]{+78074743+}          0     0  50000         Y
->        gpu_cc_pll1                    0        0        0   500000097          0     0  50000         N
->        disp_cc_mdss_dp_pixel_clk_src       0        0        0    19200000          0     0  50000         N
->           disp_cc_mdss_dp_pixel_clk       0        0        0    19200000          0     0  50000         N
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> > ---
-> >  drivers/gpu/drm/msm/dsi/dsi_host.c | 14 ++++++++++----
-> >  1 file changed, 10 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > index 43a5ec33eee8..35c69dbe5f6f 100644
-> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> > @@ -561,7 +561,8 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-> >  	clk_disable_unprepare(msm_host->byte_clk);
-> >  }
-> >  
-> > -static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode, bool is_bonded_dsi)
-> > +static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
-> 
-> It is a bit unfortunate that this function is called so often with the
-> same parameters, doing the same calculation over and over.
-> 
-> > +		struct drm_dsc_config *dsc, bool is_bonded_dsi)
-> >  {
-> >  	unsigned long pclk_rate;
-> >  
-> > @@ -576,6 +577,11 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode, bool
-> >  	if (is_bonded_dsi)
-> >  		pclk_rate /= 2;
-> >  
-> > +	/* If DSC is enabled, divide pclk by compression ratio */
-> > +	if (dsc)
-> > +		pclk_rate = DIV_ROUND_UP(pclk_rate,
-> > +				dsc->bits_per_component * 3 / msm_dsc_get_bpp_int(dsc));
-> 
-> Don't forget to mention that this series depends on the DSC helpers.  I
-> don't think the linked DSC 1.2 series depends on it (at least it doesn't
-> mention it):
-> 
-> https://lore.kernel.org/linux-arm-msm/20230329-rfc-msm-dsc-helper-v6-2-cb7f59f0f7fb@quicinc.com/
-> 
-> - Marijn
-> 
-> > +
-> >  	return pclk_rate;
-> >  }
-> >  
-> > @@ -585,7 +591,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
-> >  	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-> >  	u8 lanes = msm_host->lanes;
-> >  	u32 bpp = dsi_get_bpp(msm_host->format);
-> > -	unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
-> > +	unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, is_bonded_dsi);
-> >  	u64 pclk_bpp = (u64)pclk_rate * bpp;
-> >  
-> >  	if (lanes == 0) {
-> > @@ -604,7 +610,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
-> >  
-> >  static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >  {
-> > -	msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi);
-> > +	msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, is_bonded_dsi);
-> >  	msm_host->byte_clk_rate = dsi_byte_clk_get_rate(&msm_host->base, is_bonded_dsi,
-> >  							msm_host->mode);
-> >  
-> > @@ -634,7 +640,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >  
-> >  	dsi_calc_pclk(msm_host, is_bonded_dsi);
-> >  
-> > -	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
-> > +	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, is_bonded_dsi) * bpp;
-> >  	do_div(pclk_bpp, 8);
-> >  	msm_host->src_clk_rate = pclk_bpp;
-> >  
-> > 
-> > -- 
-> > 2.40.1
-> > 
