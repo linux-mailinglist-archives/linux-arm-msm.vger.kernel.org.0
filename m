@@ -2,82 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2562F6F68AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 11:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1EEC6F68B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 11:53:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230466AbjEDJty (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 05:49:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34488 "EHLO
+        id S229883AbjEDJxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 05:53:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbjEDJts (ORCPT
+        with ESMTP id S229830AbjEDJxB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 05:49:48 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5516DCF;
-        Thu,  4 May 2023 02:49:45 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34497SP8013584;
-        Thu, 4 May 2023 09:49:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=UQPUlmPmNanPg8OKy+iGNIWO7846v755QPw/YyYIMJ4=;
- b=f8pzcjSBmHTO0eFBnbpwKFI13fX9For8Zf/qjw1hPMAn7z6gPB0MLRnsYvTWIBbNQ7jR
- TqfULSlk+uFz/BLgKFy2lqSGT1/P5IA43o3NpHVyENsNAQOaNmqb8FHn4S6Qmno14w2f
- /vnDUH+PkG5BN46tzMwA+cidUELdZ17C76T4p9Anxscq62hJN5MKtz2x4JwkFJjd/y1z
- lv9rNTa/63alH262KZwkIpabzvCGFkdv40pXrQGz+qDnVS5ZRz26aif9lqTawcAOm+EO
- Ghym2I3rpblP4t37+tTbUqdWWpHBZ6pDHp6pI1xs+DGAT0UN+3IP4AuuuyFZZMCQa81h Ig== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qc2aj0wch-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 09:49:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3449ndif030467
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 4 May 2023 09:49:39 GMT
-Received: from [10.50.19.178] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
- 02:49:35 -0700
-Message-ID: <2a8e6199-179d-ac66-5ce6-d014d5534819@quicinc.com>
-Date:   Thu, 4 May 2023 15:19:20 +0530
+        Thu, 4 May 2023 05:53:01 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD9246B7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 02:52:59 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac7de2b72fso3258601fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 02:52:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683193978; x=1685785978;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H/afJh8bH/tuC1t+asdJHb/ezmrayWriLxQ8fMkd3vA=;
+        b=Hif8EqmA9C2QMNDyyT3bkRyP6xMg66FXo/miU7RmPJz0fhyPquHk+/uCMfT2AMat4N
+         2h6TnKAZG/QJG3TGX/919pSYTUALtt/gD028JGhWC78aAvgSSuBOQfLBrS1XK51gQbiU
+         JoWs++glwd86xaAkvH8SEHkecAVteqcykEEiegmnY2NFk7H474d9m6qTe0B1Yg/PydA3
+         9WzWdRR+Bx4ZFxlzYcMLQCwAsdLVlzrdxy4M0gxmQkJiGkspzd9R8x9BWamyrL8oXBc+
+         H0Dfoy5RfJ6yQ3i9Hp74D2YM2PH8xwTvJNjKVbRo/3KmnkHZbT80Ecn8iuNblq0dKXbr
+         vtSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683193978; x=1685785978;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H/afJh8bH/tuC1t+asdJHb/ezmrayWriLxQ8fMkd3vA=;
+        b=dcMRnEWhex8mOQ3e2J3H3VbbIHsjPMiVSjPgZty2J+TdC6id3OXSBILBZbzUVw+W29
+         XMkVZG/MoeJCp3lN3X+7Ku1VXM7CCfFT/fo82hlJH6QPvSVndOr5Aagkle+Nxz71neot
+         PJseG1k45nwzaP9CE7R5E7ePoSzHfK4ioZB3nch6P2sbxo5NPW+UkuCMUx3BWigE47wT
+         nUUJMtfJW6UhwFYlaHSe5CknEuooPVf25iSl8gU2bn5uAyVPsuTCOyqNxWdxzozFl7sU
+         1VJW3zVxBLTwOIgBVC4Rteg2ohk4oi7sKGgt55Q2+RWGjxA2rW0auZbXIJWNdcK6XX3D
+         3rwg==
+X-Gm-Message-State: AC+VfDzTBT/EWETtZ6tR5km4Y0Wicyb+DaSQbnoJokRdxHE7FtI2e3uF
+        U/7aQD1eLqywxH653wZ7lpNvRw==
+X-Google-Smtp-Source: ACHHUZ6Uo2GwzwrnFjQF30xD7dWUUZ6HID8Tpr8OtP9D1dHZ59Uhm25BqIhlRRzs6Dnlr8FRK/EziQ==
+X-Received: by 2002:a2e:8445:0:b0:2a7:763e:f158 with SMTP id u5-20020a2e8445000000b002a7763ef158mr729113ljh.19.1683193977716;
+        Thu, 04 May 2023 02:52:57 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id d20-20020a2e96d4000000b002aa42d728d9sm566548ljj.36.2023.05.04.02.52.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 02:52:57 -0700 (PDT)
+Message-ID: <344b34d8-c69e-bde4-7446-30d32657ee40@linaro.org>
+Date:   Thu, 4 May 2023 11:52:55 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v3 1/3] venus: add firmware version based check
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-media@vger.kernel.org>, <stanimir.k.varbanov@gmail.com>,
-        <quic_vgarodia@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <mchehab@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Viswanath Boma" <quic_vboma@quicinc.com>
-References: <1683193152-5808-1-git-send-email-quic_dikshita@quicinc.com>
- <1683193152-5808-2-git-send-email-quic_dikshita@quicinc.com>
- <966416d1-3ddd-26ba-63ec-2323062dfda5@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
 Content-Language: en-US
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <966416d1-3ddd-26ba-63ec-2323062dfda5@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        robh+dt@kernel.org, linux-usb@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org
+References: <20230504082644.1461582-1-bhupesh.sharma@linaro.org>
+ <20230504082644.1461582-4-bhupesh.sharma@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v3 3/5] usb: misc: eud: Add driver support for SM6115 /
+ SM4250
+In-Reply-To: <20230504082644.1461582-4-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 23Ve5pRgRD6nFpppVn3y-fN_GdqJRiCu
-X-Proofpoint-GUID: 23Ve5pRgRD6nFpppVn3y-fN_GdqJRiCu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_06,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- adultscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 priorityscore=1501 phishscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2305040079
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,134 +81,197 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 5/4/2023 3:12 PM, Konrad Dybcio wrote:
->
-> On 4.05.2023 11:39, Dikshita Agarwal wrote:
->> Add firmware version based checks to enable/disable
->> features for different SOCs.
->>
->> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->> Signed-off-by: Viswanath Boma <quic_vboma@quicinc.com>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> Tested-by: Nathan Hebert <nhebert@chromium.org>
->> ---
->>   drivers/media/platform/qcom/venus/core.h     | 20 ++++++++++++++++++++
->>   drivers/media/platform/qcom/venus/hfi_msgs.c | 27 +++++++++++++++++++++++++--
->>   2 files changed, 45 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
->> index 32551c2..2f2176f 100644
->> --- a/drivers/media/platform/qcom/venus/core.h
->> +++ b/drivers/media/platform/qcom/venus/core.h
->> @@ -202,6 +202,11 @@ struct venus_core {
->>   	unsigned int core0_usage_count;
->>   	unsigned int core1_usage_count;
->>   	struct dentry *root;
->> +	struct venus_img_version {
->> +		u32 major;
->> +		u32 minor;
->> +		u32 rev;
->> +	} venus_ver;
->>   };
->>   
->>   struct vdec_controls {
->> @@ -500,4 +505,19 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
->>   	return NULL;
->>   }
->>   
->> +static inline bool
->> +is_fw_rev_or_newer(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->> +{
->> +	return ((core)->venus_ver.major == vmajor &&
->> +		(core)->venus_ver.minor == vminor &&
->> +		(core)->venus_ver.rev >= vrev);
->> +}
->> +
->> +static inline bool
->> +is_fw_rev_or_older(struct venus_core *core, u32 vmajor, u32 vminor, u32 vrev)
->> +{
->> +	return ((core)->venus_ver.major == vmajor &&
->> +		(core)->venus_ver.minor == vminor &&
->> +		(core)->venus_ver.rev <= vrev);
->> +}
->>   #endif
->> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
->> index df96db3..4854863 100644
->> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
->> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
->> @@ -248,13 +248,16 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
->>   }
->>   
->>   static void
->> -sys_get_prop_image_version(struct device *dev,
->> +sys_get_prop_image_version(struct venus_core *core,
->>   			   struct hfi_msg_sys_property_info_pkt *pkt)
->>   {
->> +	struct device *dev = core->dev;
->>   	u8 *smem_tbl_ptr;
->>   	u8 *img_ver;
->>   	int req_bytes;
->>   	size_t smem_blk_sz;
->> +	int ret;
->> +	u8 *ver_str;
->>   
->>   	req_bytes = pkt->hdr.size - sizeof(*pkt);
->>   
->> @@ -263,6 +266,26 @@ sys_get_prop_image_version(struct device *dev,
->>   		return;
->>   
->>   	img_ver = pkt->data;
->> +	if (IS_V6(core) && core->res->num_vpp_pipes == 1) {
->> +		ret = sscanf(img_ver, "14:video-firmware.%u.%u-%u",
->> +			     &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
-> This is still not perfect, 8350 has 4 vpp pipes and its firmware is
-> also denominated with "video-firmware".. perhaps we can just try
-> each variant until we reach ret == 3?
 
-sc7280 onward firmware have image string as "video-firmware".
+On 4.05.2023 10:26, Bhupesh Sharma wrote:
+> Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
+> 
+> On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
+> needs to be accessed only via the secure world (through 'scm'
+> calls).
+> 
+> Also, the enable bit inside 'tcsr_check_reg' needs to be set
+> first to set the eud in 'enable' mode on these SoCs.
+> 
+> Since this difference comes from how the firmware is configured, so
+> the driver now relies on the presence of an extra boolean DT property
+> to identify if secure access is needed.
+> 
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>  drivers/usb/misc/Kconfig    |  1 +
+>  drivers/usb/misc/qcom_eud.c | 66 ++++++++++++++++++++++++++++++++++---
+>  2 files changed, 62 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
+> index 99b15b77dfd5..fe1b5fec1dfc 100644
+> --- a/drivers/usb/misc/Kconfig
+> +++ b/drivers/usb/misc/Kconfig
+> @@ -147,6 +147,7 @@ config USB_APPLEDISPLAY
+>  config USB_QCOM_EUD
+>  	tristate "QCOM Embedded USB Debugger(EUD) Driver"
+>  	depends on ARCH_QCOM || COMPILE_TEST
+> +	select QCOM_SCM
+>  	select USB_ROLE_SWITCH
+>  	help
+>  	  This module enables support for Qualcomm Technologies, Inc.
+> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> index b7f13df00764..b4736edcc64c 100644
+> --- a/drivers/usb/misc/qcom_eud.c
+> +++ b/drivers/usb/misc/qcom_eud.c
+> @@ -5,12 +5,14 @@
+>  
+>  #include <linux/bitops.h>
+>  #include <linux/err.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/iopoll.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> +#include <linux/of_device.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/slab.h>
+>  #include <linux/sysfs.h>
+> @@ -30,15 +32,22 @@
+>  #define EUD_INT_SAFE_MODE	BIT(4)
+>  #define EUD_INT_ALL		(EUD_INT_VBUS | EUD_INT_SAFE_MODE)
+>  
+> +struct eud_soc_cfg {
+> +	u32 tcsr_check_offset;
+> +};
+Not sure if turning this into a struct is necessary.. can't
+we just store the offset, or do we expect more changes?
 
-Support for 8350 is not yet added in venus driver, any required change 
-for the same can be done
+> +
+>  struct eud_chip {
+>  	struct device			*dev;
+>  	struct usb_role_switch		*role_sw;
+> +	const struct eud_soc_cfg	*eud_cfg;
+>  	void __iomem			*base;
+>  	void __iomem			*mode_mgr;
+>  	unsigned int			int_status;
+>  	int				irq;
+>  	bool				enabled;
+>  	bool				usb_attached;
+> +	bool				secure_mode_enable;
+> +	phys_addr_t			secure_mode_mgr;
+>  };
+>  
+>  static int enable_eud(struct eud_chip *priv)
+> @@ -46,7 +55,11 @@ static int enable_eud(struct eud_chip *priv)
+>  	writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
+>  	writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
+>  			priv->base + EUD_REG_INT1_EN_MASK);
+> -	writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
+> +
+> +	if (priv->secure_mode_mgr)
+> +		qcom_scm_io_writel(priv->secure_mode_mgr + EUD_REG_EUD_EN2, BIT(0));
+#define [field name] BIT(0)
 
-when support will be added for the same.
+> +	else
+> +		writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
+s/1/[field name]/
 
->> +		if (ret != 2) {
-> 3?
+>  
+>  	return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
+>  }
+> @@ -54,7 +67,11 @@ static int enable_eud(struct eud_chip *priv)
+>  static void disable_eud(struct eud_chip *priv)
+>  {
+>  	writel(0, priv->base + EUD_REG_CSR_EUD_EN);
+> -	writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
+> +
+> +	if (priv->secure_mode_mgr)
+> +		qcom_scm_io_writel(priv->secure_mode_mgr + EUD_REG_EUD_EN2, 0);
+> +	else
+> +		writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
+>  }
+>  
+>  static ssize_t enable_show(struct device *dev,
+> @@ -178,12 +195,15 @@ static void eud_role_switch_release(void *data)
+>  static int eud_probe(struct platform_device *pdev)
+>  {
+>  	struct eud_chip *chip;
+> +	struct resource *res;
+> +	phys_addr_t tcsr_base, tcsr_check;
+>  	int ret;
+>  
+>  	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+>  	if (!chip)
+>  		return -ENOMEM;
+>  
+> +
+?
 
-this image version string doesn't return valid revision hence checking 
-against 2 (major and minor versions)
+>  	chip->dev = &pdev->dev;
+>  
+>  	chip->role_sw = usb_role_switch_get(&pdev->dev);
+> @@ -200,9 +220,40 @@ static int eud_probe(struct platform_device *pdev)
+>  	if (IS_ERR(chip->base))
+>  		return PTR_ERR(chip->base);
+>  
+> -	chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+> -	if (IS_ERR(chip->mode_mgr))
+> -		return PTR_ERR(chip->mode_mgr);
+> +	chip->secure_mode_enable = of_property_read_bool(chip->dev->of_node,
+> +						"qcom,secure-mode-enable");
+If we map this region iff it's supposed to be used, we may just check
+for its presence and skip the additional property. Then, the address
+being non-NULL would invalidate the boolean property.
 
-Thanks,
+> +	/*
+> +	 * EUD block on a few Qualcomm SoCs need secure register access.
+> +	 * Check for the same.
+> +	 */
+> +	if (chip->secure_mode_enable) {
+> +		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> +		if (!res)
+> +			return dev_err_probe(chip->dev, -ENODEV,
+> +					     "failed to get secure_mode_mgr reg base\n");
+> +
+> +		chip->secure_mode_mgr = res->start;
+> +	} else {
+> +		chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
+> +		if (IS_ERR(chip->mode_mgr))
+> +			return PTR_ERR(chip->mode_mgr);
+> +	}
+> +
+> +	/* Check for any SoC specific config data */
+> +	chip->eud_cfg = of_device_get_match_data(&pdev->dev);
+> +	if (chip->eud_cfg) {
+> +		res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
+I'd vouch to use _byname, in case we get some EUD impl that needs a
+different sort of a register set..
 
-Dikshita
+> +		if (!res)
+> +			return dev_err_probe(chip->dev, -ENODEV,
+> +					     "failed to get tcsr reg base\n");
+> +
+> +		tcsr_base = res->start;
+> +		tcsr_check = tcsr_base + chip->eud_cfg->tcsr_check_offset;
+> +
+> +		ret = qcom_scm_io_writel(tcsr_check, BIT(0));
+s/BIT(0)/..
 
->
-> Konrad
->> +			dev_dbg(dev, VDBGL "error reading F/W version\n");
->> +			return;
->> +		}
->> +	} else {
->> +		if (IS_V6(core))
->> +			ver_str = "14:VIDEO.VPU.%u.%u-%u";
->> +		else
->> +			ver_str = "14:VIDEO.VE.%u.%u-%u";
->> +
->> +		ret = sscanf(img_ver, "14:VIDEO.VE.%u.%u-%u",
->> +			     &core->venus_ver.major, &core->venus_ver.minor, &core->venus_ver.rev);
->> +		if (ret != 3) {
->> +			dev_dbg(dev, VDBGL "error reading F/W version\n");
->> +			return;
->> +		}
->> +	}
->>   
->>   	dev_dbg(dev, VDBGL "F/W version: %s\n", img_ver);
->>   
->> @@ -286,7 +309,7 @@ static void hfi_sys_property_info(struct venus_core *core,
->>   
->>   	switch (pkt->property) {
->>   	case HFI_PROPERTY_SYS_IMAGE_VERSION:
->> -		sys_get_prop_image_version(dev, pkt);
->> +		sys_get_prop_image_version(core, pkt);
->>   		break;
->>   	default:
->>   		dev_dbg(dev, VDBGL "unknown property data\n");
+Konrad
+> +		if (ret)
+> +			return dev_err_probe(chip->dev, ret, "failed to write tcsr check reg\n");
+> +	}
+>  
+>  	chip->irq = platform_get_irq(pdev, 0);
+>  	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
+> @@ -230,8 +281,13 @@ static int eud_remove(struct platform_device *pdev)
+>  	return 0;
+>  }
+>  
+> +static const struct eud_soc_cfg sm6115_eud_cfg = {
+> +	.tcsr_check_offset = 0x25018,
+> +};
+> +
+>  static const struct of_device_id eud_dt_match[] = {
+>  	{ .compatible = "qcom,sc7280-eud" },
+> +	{ .compatible = "qcom,sm6115-eud", .data = &sm6115_eud_cfg },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, eud_dt_match);
