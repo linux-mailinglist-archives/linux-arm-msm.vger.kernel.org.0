@@ -2,131 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B95B86F70FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:36:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAA5A6F7148
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:41:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229754AbjEDRgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 13:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34846 "EHLO
+        id S229548AbjEDRl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 13:41:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjEDRgA (ORCPT
+        with ESMTP id S229522AbjEDRl5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 13:36:00 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382AF40D5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:35:59 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 384D820C74;
-        Thu,  4 May 2023 19:35:57 +0200 (CEST)
-Date:   Thu, 4 May 2023 19:35:55 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 2/7] drm/msm/dpu: add DPU_PINGPONG_DSC feature bit
-Message-ID: <e42qmaqhejk6gcnhgtbuztmowsxqg6tcq6snvuikibximazfmm@jimsewkykwnt>
-References: <1683218805-23419-1-git-send-email-quic_khsieh@quicinc.com>
- <1683218805-23419-3-git-send-email-quic_khsieh@quicinc.com>
+        Thu, 4 May 2023 13:41:57 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6263B12C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:41:56 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2a8a600bd05so9425581fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 10:41:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683222114; x=1685814114;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=79MOg7QbCHRbZVd2yVEk/t8BbXdEpJCqhPy1l88Ze6o=;
+        b=WrS356SMAo46HY+ISN51yC+xVSCUXioS5qyyYwBRnIFtu7ynnJBKqSn2QvtL8zwmW8
+         yrhXI/X1/HChLcDXRl3srNrMVHeG4Wt4fFeIQYZmXiKbsZ86s7HvY8Gk7g7pp9L7dQEx
+         BmOkZfyOY1tZNOBaKnTGbiUhfPWZWAAmpLJiYxlfGhPO+1bf/nDi+kP9O6FRqSoG/7H8
+         8SjzqZXZvf6TH1clb+HAVD2ZVAJ1bhYQ8s0g0LiOQrSIfcPRAygRC+6ufWGJk9g14jjl
+         TmIGvkafcDKjHfLpE1AVmvaV3t8x1EgEjefdkZ7BTweV04BE48rOx61aESnuycdHgwOc
+         wxOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683222114; x=1685814114;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=79MOg7QbCHRbZVd2yVEk/t8BbXdEpJCqhPy1l88Ze6o=;
+        b=O2TSc3JDHefCOurKgpnLFt0oK/2uCEJq/gJRbYVAY9o6GmlE+WwxsOn3hA0221IYar
+         HPK0ZnvQv9jPAxUAlF7NR/kv9RifP9jvPyfNe4TyuxRN6atxJ1rU2UFSW4XOL2q3qFRW
+         727zTkSQXhk9QkXhnu2Z8GvwY6ty5OCSJx7dN7n3S1fsCBbLlio1bp3xEcH7wXME0RuQ
+         1GcD1OaFYSvTc/NxKHDUeyqsmwwlFOQS9VeSbGOf4ZmQQmHTu2KGMRq//0p2+ZM1PTcb
+         EmdL7xn7zEsuxxVf31mpMng1sK5hCuKRn4Fa+sqAMQCJrgIZtkt3AdCuERlEKOHtu5dO
+         2RDw==
+X-Gm-Message-State: AC+VfDw4RR3gr9bWCNpv+OekFy5dqN2qBdXmZfVMfaFGr3NwUuWA+I57
+        GsIucTZazjnOV6cW/mNy283hXg==
+X-Google-Smtp-Source: ACHHUZ6RbSS1yohK8MisAsSW0zXZnlYws8g3m0szZIM5R4qggWj81HSXrdgWs5S78o7j/OVy2AcpKg==
+X-Received: by 2002:a2e:83c8:0:b0:2ab:e50:315a with SMTP id s8-20020a2e83c8000000b002ab0e50315amr1040763ljh.51.1683222114606;
+        Thu, 04 May 2023 10:41:54 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id h7-20020a2e3a07000000b002a7aefa4bf7sm6633903lja.53.2023.05.04.10.41.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 10:41:54 -0700 (PDT)
+Message-ID: <db8ef06b-a729-a085-8671-2b4d99a8e2b2@linaro.org>
+Date:   Thu, 4 May 2023 19:41:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1683218805-23419-3-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
+Content-Language: en-US
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230502160950.1758826-1-robdclark@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230502160950.1758826-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-04 09:46:40, Kuogee Hsieh wrote:
-> DPU < 7.0.0 requires the  PINGPONG block to be involved during
 
-Nit: double space.
 
-> DSC setting up. Since DPU < 7.0.0, enabling and starting the DSC
-
-That should be >=.
-
-> encoder engine moved to INTF with the help of the flush mechanism.
-> Add a DPU_PINGPONG_DSC feature bit to restrict the availability of
-> dpu_hw_pp_setup_dsc() and dpu_hw_pp_dsc_{enable,disable}() on the
-> PINGPONG block to DPU < 7.0.0 hardware, as the registers are not
-> available [in the PINGPONG block] on DPU 7.0.0 and higher anymore.
-> Existing call-sites to these callbacks already skip calling into
-> them if the function pointer is NULL.
+On 2.05.2023 18:09, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Changes in v4:
-> -- add more details commit text
+> When the special handling of qcom,adreno-smmu was moved into
+> qcom_smmu_create(), it was overlooked that we didn't have all the
+> required entries in qcom_smmu_impl_of_match.  So we stopped getting
+> adreno_smmu_priv on sc7180, breaking per-process pgtables.
 > 
-> Changes in v5:
-> -- reword commit text suggested by Marijn
-> -- delet comma
-> -- use test_bit()
-> 
-> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-This patch isn't strictly bisectable, but I'll explain in patch 3/7.
-After addressing the '<' -> '>=' typo above, this is:
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
+> Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h  | 4 +++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 6 ++++++
->  2 files changed, 9 insertions(+), 1 deletion(-)
+I believe the issue here is the lack of qcom,sc7180-smmu-v2 instead.
+
+qcom,adreno-smmu does not have to imply the "qcom smmu v2" impl
+
+Konrad
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 6ee48f0..dc0a4da 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -144,7 +144,8 @@ enum {
->   * @DPU_PINGPONG_TE2        Additional tear check block for split pipes
->   * @DPU_PINGPONG_SPLIT      PP block supports split fifo
->   * @DPU_PINGPONG_SLAVE      PP block is a suitable slave for split fifo
-> - * @DPU_PINGPONG_DITHER,    Dither blocks
-> + * @DPU_PINGPONG_DITHER     Dither blocks
-> + * @DPU_PINGPONG_DSC        PP ops functions required for DSC
->   * @DPU_PINGPONG_MAX
->   */
->  enum {
-> @@ -153,6 +154,7 @@ enum {
->  	DPU_PINGPONG_SPLIT,
->  	DPU_PINGPONG_SLAVE,
->  	DPU_PINGPONG_DITHER,
-> +	DPU_PINGPONG_DSC,
->  	DPU_PINGPONG_MAX
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index d1b296b95c86..88c89424485b 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -512,20 +512,25 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>  	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
+>  	{ .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm6350-smmu-v2", .data = &qcom_smmu_v2_data },
+>  	{ .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm6375-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm8150-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
+> +	/*
+> +	 * Should come after the qcom,smmu-500 fallback so smmu-500 variants of
+> +	 * adreno-smmu get qcom_adreno_smmu_500_impl:
+> +	 */
+> +	{ .compatible = "qcom,adreno-smmu", .data = &qcom_smmu_v2_data },
+>  	{ }
 >  };
 >  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> index 79e4576..e7f47a4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-> @@ -295,6 +295,12 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
->  	c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
->  	c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
->  
-> +	if (test_bit(DPU_PINGPONG_DSC, &features)) {
-> +		c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
-> +		c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
-> +		c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
-> +	}
-> +
->  	if (test_bit(DPU_PINGPONG_DITHER, &features))
->  		c->ops.setup_dither = dpu_hw_pp_setup_dither;
+>  #ifdef CONFIG_ACPI
+>  static struct acpi_platform_list qcom_acpi_platlist[] = {
+>  	{ "LENOVO", "CB-01   ", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
+>  	{ "QCOM  ", "QCOMEDK2", 0x8180, ACPI_SIG_IORT, equal, "QCOM SMMU" },
+>  	{ }
 >  };
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+>  #endif
