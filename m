@@ -2,134 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B7246F6D50
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 15:51:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB8886F6D79
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 16:04:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230435AbjEDNvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 09:51:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42424 "EHLO
+        id S231308AbjEDOEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 10:04:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbjEDNvX (ORCPT
+        with ESMTP id S231310AbjEDOEo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 09:51:23 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF9C7AB2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 06:51:19 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f37a36b713so5490845e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 06:51:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683208277; x=1685800277;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ia+gttW4I6LvUBG5SY7+uvZOarzTht1TFNe05mMpTpk=;
-        b=pB+A7cw/XPrev2umTc3YsHilspF6/U/QiIgfXIniedgiA08ah46Deykj946XMt0u2y
-         Mw+tBWUfmBc4iaXx5HNGNp944Puirx1W0gsAjLeqU8v0GTl4+2WSMWcMYBJyPfmagPtc
-         JjQXWu5XVJ7Qg1Sr52c08EgHuYMgbB+9RMEzHg8qsv/MweVK0BVQnEffpSXVijyW0UI0
-         oAZ+N6Fd8fGQuSatWZHCrO8qVLlpYBerll24uNGCmp223+7HStfZWX0nXRcoYyasosjh
-         iqnlSL4E/SRzrxmm5EGEvjLpIn2oyKifdqbIMpoFt6APqYxykGIDAF53fPdzzD2Mwvbg
-         c0BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683208277; x=1685800277;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ia+gttW4I6LvUBG5SY7+uvZOarzTht1TFNe05mMpTpk=;
-        b=E0AzjGBir8VegGVXOvagYFt+OGIjIU81KseobzxVd//agWPn6rKJgPzdmoiQ7JuAY6
-         1XC8RFvjH4E4XAZVve1rMpUoIClwV51MC7Wk02X3u8X/CUdivVKiiBKQDg19/WoDH8MN
-         UCdbY7djxnujEbXekGZmH6HaUQJSvu2DHwSVYIdNgsJa20EwbJ+jty+HSgmnBwihHXOd
-         UaYHTXW1XGdw1aiPOjbHXGSaJ4Fr7UiugwdoEeGkrzetVsl/kk2v6Trbh6z/lJ5Ev/BB
-         DWOE3LBygAKLPbF4I/rAk5ZuU/qX/AVyUKn421uM7kWOXKVyK0ZzajuFEZa7c0TnsvPV
-         MWxQ==
-X-Gm-Message-State: AC+VfDznutxuZIXnmq1ZHS3nMPYPCa+dUiSegexYyKGlpwIAJZ8zejcP
-        9eJOjirtQGOM9cecfztljOfN+BwTNSxWStoZWSA=
-X-Google-Smtp-Source: ACHHUZ6ZwWaOz2K2WY4hZIZsmmaqvKeH1ItRgvGs0B/4byIMgWQUU4hx3hiPHFqMPR4D2l2Nrt2SUg==
-X-Received: by 2002:a7b:c4d9:0:b0:3ee:96f0:ea31 with SMTP id g25-20020a7bc4d9000000b003ee96f0ea31mr16924743wmk.18.1683208277602;
-        Thu, 04 May 2023 06:51:17 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v15-20020a05600c214f00b003f18141a016sm5010961wml.18.2023.05.04.06.51.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 06:51:17 -0700 (PDT)
-Message-ID: <66b8e665-1038-127a-1f4f-20d8fe7bcd8e@linaro.org>
-Date:   Thu, 4 May 2023 14:51:16 +0100
+        Thu, 4 May 2023 10:04:44 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7510C86B4;
+        Thu,  4 May 2023 07:04:43 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34470PpV019322;
+        Thu, 4 May 2023 14:04:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=O2HZAVGgMqOM1nhiFWSbffcr2h3NIs/YgmWGVPBFBHk=;
+ b=HK+0eKIjVZTz2E3WtFhc6poQnCUkvHgVOe3D40tQhPHroXcS9t1113SvSJ5YNlCQqis6
+ o4Ny7nhnMlCYGpvdq/p4+nAaa3ItHH6Ka+yI+kQA5G4AqQw40sfuVtMA6qQNSnpaNXnB
+ +E6i3TBKhRcoR8RhEhw6UsPXBFKEO4JA+8SJLc559+3HxI5u9UwCzuwMyS8ZhRlvxm2E
+ VKxwmUGTFLKqSwv6d4HRCZXjPElUkgtEp8V4C6jTQEGaThRHKY4f1DU1P9x8qe4UD6W1
+ p1VMWs4bsm2TXvFEPeyhiy9qRF0QCq8h+jNGbuxqh5dXbvexii4vslwBcdLZpK0ukZYx qQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qc50419yf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 04 May 2023 14:04:35 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344E4YMH024591
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 4 May 2023 14:04:34 GMT
+Received: from [10.252.212.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
+ 07:04:31 -0700
+Message-ID: <facc9800-6af4-5cb3-bd22-b22b2250090a@quicinc.com>
+Date:   Thu, 4 May 2023 19:34:28 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
 Subject: Re: [PATCH 0/4] venus: add support for 10 bit decoding
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        <linux-media@vger.kernel.org>, <stanimir.k.varbanov@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mchehab@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
 References: <1683196599-3730-1-git-send-email-quic_dikshita@quicinc.com>
  <8df7f24b-9dbe-4491-bcb1-f53021bb482f@linaro.org>
-In-Reply-To: <8df7f24b-9dbe-4491-bcb1-f53021bb482f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <66b8e665-1038-127a-1f4f-20d8fe7bcd8e@linaro.org>
+Content-Language: en-US
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <66b8e665-1038-127a-1f4f-20d8fe7bcd8e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QviRIapVLx6W-XTPU26tMQLk-N4yaRlO
+X-Proofpoint-ORIG-GUID: QviRIapVLx6W-XTPU26tMQLk-N4yaRlO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-04_09,2023-05-04_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 bulkscore=0 clxscore=1011 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 mlxlogscore=999 mlxscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2305040115
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2023 14:49, Bryan O'Donoghue wrote:
-> On 04/05/2023 11:36, Dikshita Agarwal wrote:
->> This series includes the changes to
->>    - add V4L2_PIX_FMT_P010 as supported decoder format.
->>    - consider dpb color format while calculating buffer
->>      size for dpb buffers.
->>    - update dpb and opb color format when bit depth
->>      changes is detected, also update preferred color
->>      format to P010 in this case.
+
+On 5/4/2023 7:21 PM, Bryan O'Donoghue wrote:
+> On 04/05/2023 14:49, Bryan O'Donoghue wrote:
+>> On 04/05/2023 11:36, Dikshita Agarwal wrote:
+>>> This series includes the changes to
+>>>    - add V4L2_PIX_FMT_P010 as supported decoder format.
+>>>    - consider dpb color format while calculating buffer
+>>>      size for dpb buffers.
+>>>    - update dpb and opb color format when bit depth
+>>>      changes is detected, also update preferred color
+>>>      format to P010 in this case.
+>>>
+>>> With this series, divided the previous version [1] into
+>>> multiple patches as suggested in review comments.
+>>>
+>>> [1] 
+>>> https://patchwork.linuxtv.org/project/linux-media/list/?series=10376
+>>>
+>>> Dikshita Agarwal (4):
+>>>    venus: add support for V4L2_PIX_FMT_P010 color format
+>>>    venus: update calculation for dpb buffers
+>>>    venus: add handling of bit depth change from firmwar
+>>>    venus: return P010 as preferred format for 10 bit decode
+>>>
+>>>   drivers/media/platform/qcom/venus/helpers.c        | 24 
+>>> ++++++++++++++++++++++
+>>>   drivers/media/platform/qcom/venus/hfi_plat_bufs.h  |  3 +++
+>>>   .../media/platform/qcom/venus/hfi_plat_bufs_v6.c   |  8 +++++++-
+>>>   drivers/media/platform/qcom/venus/vdec.c           | 16 
+>>> +++++++++++++--
+>>>   4 files changed, 48 insertions(+), 3 deletions(-)
+>>>
 >>
->> With this series, divided the previous version [1] into
->> multiple patches as suggested in review comments.
+>> For future reference a series like this should:
 >>
->> [1] https://patchwork.linuxtv.org/project/linux-media/list/?series=10376
+>> 1. Include a log of what changed between the last series and this
+>> 2. Describe which comments you addressed
+>>     I generally try to say
+>>     "Added newline to dts - Konrad"
+>>     "Sent the series as a -v3 - Bryan"
+>>     etc
+>> 3. Ideally provide a link to the previous series in
 >>
->> Dikshita Agarwal (4):
->>    venus: add support for V4L2_PIX_FMT_P010 color format
->>    venus: update calculation for dpb buffers
->>    venus: add handling of bit depth change from firmwar
->>    venus: return P010 as preferred format for 10 bit decode
+>> https://lore.kernel.org/linux-arm-msm/1682492417-20496-1-git-send-email-quic_dikshita@quicinc.com/ 
 >>
->>   drivers/media/platform/qcom/venus/helpers.c        | 24 
->> ++++++++++++++++++++++
->>   drivers/media/platform/qcom/venus/hfi_plat_bufs.h  |  3 +++
->>   .../media/platform/qcom/venus/hfi_plat_bufs_v6.c   |  8 +++++++-
->>   drivers/media/platform/qcom/venus/vdec.c           | 16 +++++++++++++--
->>   4 files changed, 48 insertions(+), 3 deletions(-)
+>> 4. Use versioning
+>>     This set should be prefixed with "v2-0000-cover-letter" 
+>> "v2-0001-add-support" etc
 >>
-> 
-> For future reference a series like this should:
-> 
-> 1. Include a log of what changed between the last series and this
-> 2. Describe which comments you addressed
->     I generally try to say
->     "Added newline to dts - Konrad"
->     "Sent the series as a -v3 - Bryan"
->     etc
-> 3. Ideally provide a link to the previous series in
-> 
-> https://lore.kernel.org/linux-arm-msm/1682492417-20496-1-git-send-email-quic_dikshita@quicinc.com/
-> 4. Use versioning
->     This set should be prefixed with "v2-0000-cover-letter" 
-> "v2-0001-add-support" etc
-> 
-> "git format-patch mybase..targettip --cover-letter -v2"
-> 
+>> "git format-patch mybase..targettip --cover-letter -v2"
+>>
+>> ---
+>> bod
+>
+> Doh I see you did most of that - just missed the V2.
+>
+> Please remember to version your subsequent series. "git format-patch -v2"
+
+Does this qualify for a version upgrade when a single patch is 
+subsequently raised as series ? IMO, the link
+
+to previous single patch in cover letter and then starting the series 
+(as v0) seems to provide the required info.
+
+>
 > ---
 > bod
-
-Doh I see you did most of that - just missed the V2.
-
-Please remember to version your subsequent series. "git format-patch -v2"
-
----
-bod
