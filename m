@@ -2,91 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03FBE6F76D2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 22:18:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A9AF6F770D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 22:33:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230191AbjEDUSy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 16:18:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
+        id S229906AbjEDUdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 16:33:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232525AbjEDUSa (ORCPT
+        with ESMTP id S231178AbjEDUcl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 16:18:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 655C720743;
-        Thu,  4 May 2023 13:04:29 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 344Jj7Vf025862;
-        Thu, 4 May 2023 20:03:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=faCqG69qLyLkXNye9eJMNdCtp6uyP6oT4gzqngATrec=;
- b=eq1yNutC0JmmZKW0YoVrypbffkMclIMUN7xMUkKZg5zN/4Qsy44ibp9K7OoAe4I/GdKY
- CNXlUX1NnoIQtNTS3xlQqxdU9/k8V8+LfEC5lAB6o6f9s2CHfJ5nnVloWDkeG/chskEs
- Tcm2YYWgvY+20ooOXLPCbCyXOT5vtB/+b0ffmEWMTo7CMWbi0jk9Gh0+eezDCIsqy4Bj
- UKUzetmJicGbIKinARjKd9ZmA+hZeHCAYf11ooUqhFxfZUXFoG0+PB0CQNrly101tA83
- Z/9ympe2YsyHo7qfzwAhurarhW6ZWZN6H34pDIfyY3o4DbRKovYbCKy57+3kxwlVkbIj Yg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qc652j1fb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 20:03:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344K32qA004827
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 4 May 2023 20:03:02 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
- 13:03:01 -0700
-Message-ID: <85397bfb-a2d8-856d-c747-f303b8e1d598@quicinc.com>
-Date:   Thu, 4 May 2023 13:03:01 -0700
+        Thu, 4 May 2023 16:32:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E501912E9C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 13:21:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1683231615;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=w1AF1GZ0WT5pOD5hZDOW/UjsIUcOtqbdTWX7manOxFE=;
+        b=XYoenRai9A8k3RwpOGhjDlnOWaAcbKWdO0x6+7wB+Oq2nLER/loM6YCB7PfdAj0AORnj5h
+        iozvuHwrlj3Bj9jQOqgf6dDuGh+zLo1GipsvLQt2OwFmgMGXfCuMo4GYNGgJ7SLJ59R243
+        qR1s2nz8D4eDsX2ZqAtovMl8bWCb5PU=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-445-Vbvy60BOMFOOvmypN78_Jw-1; Thu, 04 May 2023 16:07:03 -0400
+X-MC-Unique: Vbvy60BOMFOOvmypN78_Jw-1
+Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-6a5f602a905so512052a34.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 13:07:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683230822; x=1685822822;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w1AF1GZ0WT5pOD5hZDOW/UjsIUcOtqbdTWX7manOxFE=;
+        b=eRqkSI7zwxId4JoSHMkfewy8GOGHRQ35KAvNfx8MjsZZjllzy/Rw8oAkYCzhnQsB9K
+         m6x43AH1MtlOVh/20DE0CS+iysEN4gpRKWl4i99N605yfIJ2N1Novvq95LN5+R/MlYVV
+         V9SYX3E9zKoqNxLky05LHfgnUhzPrrcylXuiMTB2ZdydU+dSoJNXjI3yjHrQQAJxOxCY
+         k3LXNIM7tGK/XoXAaflEMkavHf03wn55D/eml01FoAXtmMQAeVJG+EW4Tw44NH8CA/tG
+         Irbpg/rk9rhuzeZeG2RcmGs+TgPtFMcUNyHZCCSmBuTiT1mhJjgqjNlPoivgtUgHvn2t
+         vqxQ==
+X-Gm-Message-State: AC+VfDxR7v/V4SeZBclt7vJkPTenO6QnOZRI7Y8exVPpmIXmcFCbsis4
+        zODcAMWS3SaDDdXIaK2UDrFSw2O3BsIDmZabIMslyeE1iQlxgSzCT+uQxOo2KV8Enf7sC/nbkhR
+        yDwZseJzpDv+83To7PAwLEmA7uw==
+X-Received: by 2002:a05:6808:2908:b0:38c:4c09:562b with SMTP id ev8-20020a056808290800b0038c4c09562bmr2161218oib.13.1683230822470;
+        Thu, 04 May 2023 13:07:02 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ7VkFRsQ30RP8BdLiC5yw8mFsv18WmnGMIJaxjTVfEq37GPL76+In3y48ZZ235FmIqKb8QOpQ==
+X-Received: by 2002:a05:6808:2908:b0:38c:4c09:562b with SMTP id ev8-20020a056808290800b0038c4c09562bmr2161213oib.13.1683230822199;
+        Thu, 04 May 2023 13:07:02 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::22])
+        by smtp.gmail.com with ESMTPSA id o20-20020a056808125400b003908004b37dsm1966248oiv.26.2023.05.04.13.07.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 May 2023 13:07:01 -0700 (PDT)
+Date:   Thu, 4 May 2023 15:06:59 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v7 9/9] arm64: dts: qcom: sa8540-ride: Enable first port
+ of tertiary usb controller
+Message-ID: <20230504200659.aphlfmk5przvfthi@halaney-x13s>
+References: <20230501143445.3851-1-quic_kriskura@quicinc.com>
+ <20230501143445.3851-10-quic_kriskura@quicinc.com>
+ <0e76a9f6-f062-2802-d9de-3c0b2b897a4e@linaro.org>
+ <50c37e0c-3171-bce2-d97e-371150e1854f@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v5 3/7] drm/msm/dpu: add DPU_PINGPONG_DSC bits into PP_BLK
- and PP_BLK_TE marcos
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <quic_sbillaka@quicinc.com>, <freedreno@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1683218805-23419-1-git-send-email-quic_khsieh@quicinc.com>
- <1683218805-23419-4-git-send-email-quic_khsieh@quicinc.com>
- <ljt5mp4ew5lcrrrdd7xyof3jv3friafbmr3im35ddwxjc42ekh@toez7xfdreg2>
- <CAA8EJpreM9i3DUp+93K7p14f_tNMy-m+C-WdyN5_drmmkGV66g@mail.gmail.com>
- <u7hlzltevx675gfg4w6emmeceo6nj76taqeecsor6iqsi3hmki@lg43y65m6chz>
- <11ef769a-5089-57d4-db87-4c5766d98206@quicinc.com>
- <6qg25ffuq6xcfz3vuqm5lguspihjospctjclxmwyu2ifau4p7b@txywjmir7lg5>
- <9011a078-9962-b3de-6427-b9114fcd0cf4@quicinc.com>
- <06864435-3db9-a91c-2e99-69829d8296b1@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <06864435-3db9-a91c-2e99-69829d8296b1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pw0kleZpK45N4rfOhAvW4dqBBZydbELg
-X-Proofpoint-ORIG-GUID: pw0kleZpK45N4rfOhAvW4dqBBZydbELg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_13,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxlogscore=999 mlxscore=0 bulkscore=0 clxscore=1015 spamscore=0
- impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305040162
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <50c37e0c-3171-bce2-d97e-371150e1854f@quicinc.com>
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,94 +94,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+nit I just noticed: s/sa8540-ride/sa8540p-ride/
+please during the next spin!
 
-
-On 5/4/2023 12:59 PM, Dmitry Baryshkov wrote:
-> On 04/05/2023 22:50, Abhinav Kumar wrote:
->>
->>
->> On 5/4/2023 12:36 PM, Marijn Suijten wrote:
->>> On 2023-05-04 11:25:44, Abhinav Kumar wrote:
->>> <snip>
->>>>> Sure, if you really prefer a split I'd go for two patches:
->>>>> 1. Add the flag to the enum and catalog;
->>>>> 2. Add the ops guard (functional change).
->>>>>
->>>>> Then don't forget to reword the commit message, following the 
->>>>> guidelines
->>>>> below and the suggestion for 2/7.
->>>>>
->>>>> - Marijn
->>>>
->>>> Plan sounds good to me.
->>>>
->>>> Marijn, we will wait for a couple of days to post the next rev but 
->>>> would
->>>> be hard more than that as we need to pick up other things which are
->>>> pending on top of this. Hence would appreciate if you can finish 
->>>> reviews
->>>> by then.
->>>
->>> It depends on how many more revisions are needed after that, and not all
->>> patches in this series have an r-b just yet.  Given the amount of review
->>> comments that are still trickling in (also on patches that already have
->>> maintainer r-b) I don't think we're quite there to start thinging about
->>> picking this up in drm-msm just yet.  I doubt anyone wants a repeat of
->>> the original DSC series, which went through many review rounds yet still
->>> required multiple series of bugfixes (some of which were pointed out and
->>> ignored in review) to be brought to a working state.  But the split
->>> across topics per series already makes this a lot less likely, many
->>> thanks for that.
->>>
->>
->> I think the outstanding comments shouldnt last more than 1-2 revs more 
->> on this one as its mostly due to multiple patches on the list touching 
->> catalog at the same time. I have been monitoring the comments closely 
->> even though I dont respond to all of them.
->>
->> One of the major reasons of the number of issues with DSC 1.1 was QC 
->> didn't really have the devices or panels to support it. Thats why I 
->> changed that this time around to take more control of validation of 
->> DSC 1.2 and ofcourse decided to break up of series into the least 
->> amount of functionality needed to keep the DPU driver intact.
->>
->> All that being said, we still value your comments and would gladly 
->> wait for a couple of days like I already wrote. But there are more 
->> incremental series on top of this:
->>
->> -> DSI changes for DSC 1.2
->> -> proper teardown for DSC
->> -> DSC pair allocation support
->> -> DSC 1.2 over DP
->>
->> We will be posting all of these within next couple of weeks on top of 
->> this.
+On Thu, May 04, 2023 at 11:33:44PM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> I'd say, it's fine to post them now, as we have more or less agreed on 
-> the helper series. The interface between the series should be stable then.
 > 
-> The RM series is probably the one having bigger dependencies/conflicts 
-> on other pending patches (include virtual wide planes)
+> On 5/2/2023 4:37 PM, Konrad Dybcio wrote:
+> > 
+> > 
+> > On 1.05.2023 16:34, Krishna Kurapati wrote:
+> > > There is now support for the multiport USB controller this uses so
+> > > enable it.
+> > > 
+> > > The board only has a single port hooked up (despite it being wired up to
+> > > the multiport IP on the SoC). There's also a USB 2.0 mux hooked up,
+> > > which by default on boot is selected to mux properly. Grab the gpio
+> > > controlling that and ensure it stays in the right position so USB 2.0
+> > > continues to be routed from the external port to the SoC.
+> > > 
+> > > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> > > ---
+> > same comments as patch 8
+> > 
+> > Konrad
+> 
+> Hi Konrad,
+> 
+>   Sure, will add a default value for drive-strength for this pinctrl node.
+> 
+> Hi Andrew Halaney,
+> 
+>  I currently don't have a Ride device with me to test this change. Can you
+> help test this patch on SA8540-Ride including (drive-strength = <2>;)
+> property (which I believe is the default value).
+> 
+> I can test the same on SA8295-ADP and can push the next version quickly.
 > 
 
-1 is already posted, will keep fixing review comments
-2 will be posted pretty soon
+The patch here for sa8540p-ride already includes the drive strength. I
+did pull this on top of usb-next and it is working well for me in a
+quick sanity test. Konrad's pinctrl-names/pinctrl-0 swap is purely
+cosmetic of course, but for what is worth that works fine too.
 
-DSC1.2 over DSI will be complete with this set.
+I'd add my Tested-by for this patch, but it seems silly since I authored
+the original :)
 
-I will finish up virtual planes review by early next week. Already 
-underway ...
+Also, make CHECK_DTBS=y qcom/sa8540p-ride.dtb is still reporting issues,
+but other reviewers have highlighted that I believe. Just for the record
+though, make sure you get those silenced!
 
-3 & 4 will be posted soon after that.
+I look forward to the next revision.
 
->>
->>> In other words, let's take it slow and do things properly this time. And
->>> who knows, perhaps the rest of these patches are more straightforward.
->>>
->>
->> Ack. the intent is always to do things right the first time.
->>
->>> - Marijn
->>>
->>> <snip>
+Thanks,
+Andrew
+
+> Regards,
+> Krishna,
 > 
+> > >   arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 22 ++++++++++++++++++++++
+> > >   1 file changed, 22 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> > > index 24fa449d48a6..53d47593306e 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> > > @@ -309,6 +309,19 @@ &usb_2_qmpphy0 {
+> > >   	status = "okay";
+> > >   };
+> > > +&usb_2 {
+> > > +	pinctrl-names = "default";
+> > > +	pinctrl-0 = <&usb2_en_state>;
+> > > +
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&usb_2_dwc3 {
+> > > +	dr_mode = "host";
+> > > +	phy-names = "usb2-port0", "usb3-port0";
+> > > +	phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>;
+> > > +};
+> > > +
+> > >   &xo_board_clk {
+> > >   	clock-frequency = <38400000>;
+> > >   };
+> > > @@ -401,4 +414,13 @@ wake-pins {
+> > >   			bias-pull-up;
+> > >   		};
+> > >   	};
+> > > +
+> > > +	usb2_en_state: usb2-en-state {
+> > > +		/* TS3USB221A USB2.0 mux select */
+> > > +		pins = "gpio24";
+> > > +		function = "gpio";
+> > > +		drive-strength = <2>;
+> > > +		bias-disable;
+> > > +		output-low;
+> > > +	};
+> > >   };
+> 
+
