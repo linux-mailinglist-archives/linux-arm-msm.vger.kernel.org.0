@@ -2,100 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DC4F6F6D1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 15:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7739A6F6D4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 15:50:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230083AbjEDNot (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 09:44:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35630 "EHLO
+        id S230428AbjEDNuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 09:50:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230500AbjEDNot (ORCPT
+        with ESMTP id S231216AbjEDNuJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 09:44:49 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E5467D93;
-        Thu,  4 May 2023 06:44:47 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A6967633EA;
-        Thu,  4 May 2023 13:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116E2C433EF;
-        Thu,  4 May 2023 13:44:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683207886;
-        bh=cxXZ0Mv9fZe8AzkErEvTVxOOrlIoataPJcnAJ93nNR4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=O315kDjLiPUAsQ6xGpos4WTKEs50qI7zNpaj3f5JBpT11niVq2Dd4d0nT4K+WWtC6
-         bihPy/onuSp3833LpgoGH3e1AeRuCL3oBwHcyGEzQ/5zvencqvm51XpP7wCIulpwsG
-         T/rIndpoISt6pzekCOJk/PuT/VFxrsK0UMfKL+OFYDqQif6XoSP7jPd7ekerDuLNw6
-         WoXACFIqNAA2xC9mPvNVqYkqvayWczEmfyy0OJFQwZoAObGqcUWWAtZS3jiyBaWsAp
-         Ywse2+V3+hjXG/wFqwGAs4foDgViBq2TSYTgsj4CsDelqYDKwNMBRYhlGNsDcGOJJp
-         CVgaKL/iiCKjw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1puZGP-00078W-RV; Thu, 04 May 2023 15:44:54 +0200
-Date:   Thu, 4 May 2023 15:44:53 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/7] phy: qcom-qmp-combo: Introduce orientation variable
-Message-ID: <ZFO21fLWSNc7orpb@hovoldconsulting.com>
-References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-4-quic_bjorande@quicinc.com>
- <ZFD4gM9dUQwBmSUe@hovoldconsulting.com>
- <20230504032907.GF870858@hu-bjorande-lv.qualcomm.com>
+        Thu, 4 May 2023 09:50:09 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8426D7D9F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 06:49:54 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f1e2555b5aso4224845e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 06:49:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683208193; x=1685800193;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j2X8b+BROLb0l/VBCzn6Vje7GJpf2io4XYFX9tdubz8=;
+        b=xI5mweAXgPJ5ZneC2In+CIz/9gJ/jXfDImYzvinOtc0FVfry41QaS7UB54IebENhET
+         PV5Kt6eplwujbVoK7a/bOaKRnpDP2YI3xLa8th9AQm/tAEXpp8DVM4sgHGISUbSPz5LD
+         Wk/l53UA2T9u4Q1V3yZnUuEo79jb5px76IRpjtl3/GEII7fvHNcdLYa1LPyuViFTp06a
+         nOZHRj0gkopEhk/KIm7qF906YzeMY32h19kcTJs71LCkDUdE6eyzqdHYH8KZ3ZCUn3AG
+         md61h5czSGCMp297+PwroWXe/lB/6IwDkNQfNUkKiM67DPl5nqPw/+4nlzjAB3M8Gvya
+         sdZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683208193; x=1685800193;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j2X8b+BROLb0l/VBCzn6Vje7GJpf2io4XYFX9tdubz8=;
+        b=RXZBjtBWk4EnenVen12QDkBHi/yNyJhdmDBxV4ZeDAHjNOSxVFG2nKUwmNxWL70atK
+         krGA9Qmqu1TeKoJbN8WyG5VhrJctSiE4hYT0OUPNnHQXKEgOaLud/ZCiQlJE0TTh+zgz
+         GkiJOgAKPkMgGUmL1AgH0bEApEKYZtuniD03YBYHnluV2IsNET+g3Z5QAyoGgNTTIO8f
+         j0V54WQMJ4dAI3SduF4ITo43TSFlD/fyg6pNSrKPoKV6k4hkbTtGw4pCnaW3tEa/AKy8
+         VTa854hFQ6J+MdQfjVKj8l3ne11NcFLMxsDiXFnW2peLI1yC98MnZFVlcrCTGHGKJ850
+         UsOw==
+X-Gm-Message-State: AC+VfDxGEfxMBODdzF0aYiJuoxOZlKEmkXOb5D7K8y8FN1aq6McZ1boo
+        npF2bJVQHC3IQQg7OPS/LBw+xFbfE1HNQh5h/zI=
+X-Google-Smtp-Source: ACHHUZ7aqyaWyrvs1VipqgPBXmyd2QsycmpeRQCTGJiilXe6vVjB8PxxJutHkzce+dAbuj/rmE3ncw==
+X-Received: by 2002:a1c:7c19:0:b0:3f1:8c5f:dfc5 with SMTP id x25-20020a1c7c19000000b003f18c5fdfc5mr17534214wmc.39.1683208192899;
+        Thu, 04 May 2023 06:49:52 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id l9-20020a7bc449000000b003f2390bdd0csm4979526wmi.32.2023.05.04.06.49.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 06:49:52 -0700 (PDT)
+Message-ID: <8df7f24b-9dbe-4491-bcb1-f53021bb482f@linaro.org>
+Date:   Thu, 4 May 2023 14:49:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230504032907.GF870858@hu-bjorande-lv.qualcomm.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 0/4] venus: add support for 10 bit decoding
+Content-Language: en-US
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1683196599-3730-1-git-send-email-quic_dikshita@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <1683196599-3730-1-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 03, 2023 at 08:29:07PM -0700, Bjorn Andersson wrote:
-> On Tue, May 02, 2023 at 01:48:16PM +0200, Johan Hovold wrote:
-> > On Mon, Apr 24, 2023 at 08:40:06PM -0700, Bjorn Andersson wrote:
+On 04/05/2023 11:36, Dikshita Agarwal wrote:
+> This series includes the changes to
+>    - add V4L2_PIX_FMT_P010 as supported decoder format.
+>    - consider dpb color format while calculating buffer
+>      size for dpb buffers.
+>    - update dpb and opb color format when bit depth
+>      changes is detected, also update preferred color
+>      format to P010 in this case.
+> 
+> With this series, divided the previous version [1] into
+> multiple patches as suggested in review comments.
+> 
+> [1] https://patchwork.linuxtv.org/project/linux-media/list/?series=10376
+> 
+> Dikshita Agarwal (4):
+>    venus: add support for V4L2_PIX_FMT_P010 color format
+>    venus: update calculation for dpb buffers
+>    venus: add handling of bit depth change from firmwar
+>    venus: return P010 as preferred format for 10 bit decode
+> 
+>   drivers/media/platform/qcom/venus/helpers.c        | 24 ++++++++++++++++++++++
+>   drivers/media/platform/qcom/venus/hfi_plat_bufs.h  |  3 +++
+>   .../media/platform/qcom/venus/hfi_plat_bufs_v6.c   |  8 +++++++-
+>   drivers/media/platform/qcom/venus/vdec.c           | 16 +++++++++++++--
+>   4 files changed, 48 insertions(+), 3 deletions(-)
+> 
 
-> > >  static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
-> > > @@ -1955,29 +1962,23 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
-> > >  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
-> > >  {
-> > >  	u32 val;
-> > > -	bool reverse = false;
-> > > +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
+For future reference a series like this should:
 
-> > It also looks like these callbacks end up being called without holding
-> > the qmp->phy_mutex via phy->power_on(). Perhaps there is no risk for a
-> > concurrent switch notification and dp phy power-on but it's not that
-> > obvious.
+1. Include a log of what changed between the last series and this
+2. Describe which comments you addressed
+    I generally try to say
+    "Added newline to dts - Konrad"
+    "Sent the series as a -v3 - Bryan"
+    etc
+3. Ideally provide a link to the previous series in
+ 
+https://lore.kernel.org/linux-arm-msm/1682492417-20496-1-git-send-email-quic_dikshita@quicinc.com/
+4. Use versioning
+    This set should be prefixed with "v2-0000-cover-letter" 
+"v2-0001-add-support" etc
 
-> It seems we're arriving here from hpd_event_thread(), while
-> phy_power_on() and phy_power_off() will be called in some other context.
-> I've not been able to convince myself if DP driver ensures ordering, or
-> if we have an existing race here...
+"git format-patch mybase..targettip --cover-letter -v2"
 
-> Unless you insist, I would prefer to follow up with an additional patch
-> once we've landed this series. The fix will depend on the phy_mutex
-> shuffling patch anyways...
-
-Sure.
-
-But perhaps you can just move the orientation == qmp->orientation check
-under the mutex in qmp_combo_typec_switch_set() for now (in case I
-forgot to point that out earlier).
-
-Johan
+---
+bod
