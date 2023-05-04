@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 586D76F6330
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 05:15:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E66A6F6354
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 05:30:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbjEDDPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 3 May 2023 23:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39374 "EHLO
+        id S229633AbjEDDaE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 3 May 2023 23:30:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229871AbjEDDOe (ORCPT
+        with ESMTP id S229501AbjEDDaD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 3 May 2023 23:14:34 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA04310F1;
-        Wed,  3 May 2023 20:14:12 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3442jXpT020185;
-        Thu, 4 May 2023 03:14:05 GMT
+        Wed, 3 May 2023 23:30:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FDE9198E;
+        Wed,  3 May 2023 20:29:57 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3443M0iN010768;
+        Thu, 4 May 2023 03:29:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
  cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=n9RlB2veIaoxal2ZlrI+/GHr2aanJqNh+I7gk2LeQ5o=;
- b=RV39TjzW+kdjI5pMQAOIxPgio1ER/v51JlQfrfO5n9X1hPsodsR/OutwqW8/+B9V9Oyd
- AX6HbTDsbTrxnUNxF769NWuokzgPKggaeuPw8tBJftr8d82qTSV9jv6HJtQE5PjgItAB
- rSo0tLXJeUQDbcmZou8gHUzzmVxIq0fdfIhwIuvFDlXPmztrGHpH/pFefYLkY3kJdKQG
- Sa3QiXaeqPnXmCcGE3Ek6VPhVc9mGjMnPAeOMRPBq9JpLfqx0pb24c0HCKv04Q1Ey4Rs
- QkqcLSryKylbRQXYyP9G9anVrYu53CqXwoUCbybuECYBqPRSEgLstKea4/cVbCrOnPto jw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbbsw31vn-1
+ in-reply-to; s=qcppdkim1; bh=8Fr63kfb0qAml3Qgr7x5BnMF93LqV2bwaEcrP8GYe+U=;
+ b=bFUNwaj/CokqNgWgcymo+gSJPsEz36yv1ioeKPRhEyaRl9wTL//tbtt0UeYM/D1+xNJb
+ t0iEJc+f41F1ZnzABRUnw39A3FUDpgNhBS8A00GytQITOJ9PfD08iS/WMmwXE0m4Z7jW
+ iqyArHj5ng9BzLO9DI2r67msSJrMk6ckgMUur+Wy0jphEAm6OCVaCy0Uf689DOqsVAOT
+ Kn5Y/OMxOQE7MX9vpXV2qCvD5TztnveBTZzVRUeJppP3N0FOj/LepznYM9M6LMhka7Zz
+ sUByF6/eZSZ7QL3/cRAIxWL+1tK4P3my5ve9OWfvgiTyhEXMkRDCJVm9Wjf2sfCot/cH XQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qbeb2twe9-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 03:14:04 +0000
+        Thu, 04 May 2023 03:29:48 +0000
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3443E3s2031920
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3443T8V9014515
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 4 May 2023 03:14:03 GMT
+        Thu, 4 May 2023 03:29:08 GMT
 Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 3 May 2023 20:13:56 -0700
-Date:   Wed, 3 May 2023 20:13:54 -0700
+ 15.2.986.42; Wed, 3 May 2023 20:29:08 -0700
+Date:   Wed, 3 May 2023 20:29:07 -0700
 From:   Bjorn Andersson <quic_bjorande@quicinc.com>
 To:     Johan Hovold <johan@kernel.org>
 CC:     Vinod Koul <vkoul@kernel.org>,
@@ -49,157 +49,124 @@ CC:     Vinod Koul <vkoul@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 5/7] phy: qcom-qmp-combo: Introduce drm_bridge
-Message-ID: <20230504031354.GE870858@hu-bjorande-lv.qualcomm.com>
+Subject: Re: [PATCH 3/7] phy: qcom-qmp-combo: Introduce orientation variable
+Message-ID: <20230504032907.GF870858@hu-bjorande-lv.qualcomm.com>
 References: <20230425034010.3789376-1-quic_bjorande@quicinc.com>
- <20230425034010.3789376-6-quic_bjorande@quicinc.com>
- <ZFD8oQETtLuDH2Xg@hovoldconsulting.com>
+ <20230425034010.3789376-4-quic_bjorande@quicinc.com>
+ <ZFD4gM9dUQwBmSUe@hovoldconsulting.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <ZFD8oQETtLuDH2Xg@hovoldconsulting.com>
+In-Reply-To: <ZFD4gM9dUQwBmSUe@hovoldconsulting.com>
 X-Originating-IP: [10.49.16.6]
 X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JoMKxxekBbMUyLVZ0r1yWGsy1BoMnbKa
-X-Proofpoint-ORIG-GUID: JoMKxxekBbMUyLVZ0r1yWGsy1BoMnbKa
+X-Proofpoint-ORIG-GUID: F59Z4Zrn3cNGM6MqNcKJpje30pYIbVf7
+X-Proofpoint-GUID: F59Z4Zrn3cNGM6MqNcKJpje30pYIbVf7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-03_16,2023-05-03_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0
- mlxlogscore=999 impostorscore=0 bulkscore=0 mlxscore=0 phishscore=0
- spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305040025
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+ definitions=2023-05-04_01,2023-05-03_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=999 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2303200000 definitions=main-2305040028
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 02, 2023 at 02:05:53PM +0200, Johan Hovold wrote:
-> On Mon, Apr 24, 2023 at 08:40:08PM -0700, Bjorn Andersson wrote:
-> > The QMP combo PHY sits in an of_graph connected between the DisplayPort
-> > controller and a USB Type-C connector (or possibly a redriver).
+On Tue, May 02, 2023 at 01:48:16PM +0200, Johan Hovold wrote:
+> On Mon, Apr 24, 2023 at 08:40:06PM -0700, Bjorn Andersson wrote:
+> > In multiple places throughout the driver code has been written in
+> > prepration for handling of orientation switching.
 > > 
-> > The TCPM needs to be able to convey the HPD signal to the DisplayPort
-> > controller, but no directly link is provided by DeviceTree so the signal
-> > needs to "pass through" the QMP combo phy.
-> > 
-> > Handle this by introducing a drm_bridge which upon initialization finds
-> > the next bridge (i.e. the usb-c-connector) and chain this together. This
-> > way HPD changes in the connector will propagate to the DisplayPort
-> > driver.
-> > 
-> > The connector bridge is resolved lazily, as the TCPM is expected to be
-> > able to resolve the typec mux and switch at probe time, so the QMP combo
-> > phy will probe before the TCPM.
+> > Introduce a typec_orientation in qmp_combo and fill out the various
+> > "placeholders" with the associated logic. By initializing the
+> > orientation to "normal" this change has no functional impact, but
+> > reduces the size of the upcoming introduction of dynamic orientation
+> > switching.
 > > 
 > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > > ---
-> >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 36 +++++++++++++++++++++++
-> >  1 file changed, 36 insertions(+)
+> >  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 54 +++++++++++++----------
+> >  1 file changed, 30 insertions(+), 24 deletions(-)
 > > 
 > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > index 5d6d6ef3944b..84bc08002537 100644
+> > index 7280f7141961..6748f31da7a3 100644
 > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> > @@ -22,6 +22,8 @@
-> >  #include <linux/usb/typec.h>
-> >  #include <linux/usb/typec_mux.h>
+> > @@ -19,6 +19,7 @@
+> >  #include <linux/regulator/consumer.h>
+> >  #include <linux/reset.h>
+> >  #include <linux/slab.h>
+> > +#include <linux/usb/typec.h>
 > >  
-> > +#include <drm/drm_bridge.h>
-> > +
 > >  #include <dt-bindings/phy/phy-qcom-qmp.h>
 > >  
-> >  #include "phy-qcom-qmp.h"
-> > @@ -1332,6 +1334,8 @@ struct qmp_combo {
+> > @@ -63,6 +64,10 @@
+> >  /* QPHY_V3_PCS_MISC_CLAMP_ENABLE register bits */
+> >  #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
+> >  
+> > +/* QPHY_V3_DP_COM_TYPEC_CTRL register bits */
+> > +#define SW_PORTSELECT_VAL			BIT(0)
+> > +#define SW_PORTSELECT_MUX			BIT(1)
+> > +
+> >  #define PHY_INIT_COMPLETE_TIMEOUT		10000
+> >  
+> >  struct qmp_phy_init_tbl {
+> > @@ -1323,6 +1328,8 @@ struct qmp_combo {
+> >  	struct clk_fixed_rate pipe_clk_fixed;
 > >  	struct clk_hw dp_link_hw;
 > >  	struct clk_hw dp_pixel_hw;
-> >  
-> > +	struct drm_bridge bridge;
 > > +
-> >  	struct typec_switch_dev *sw;
-> >  	enum typec_orientation orientation;
+> > +	enum typec_orientation orientation;
 > >  };
-> > @@ -3196,6 +3200,34 @@ static int qmp_combo_register_clocks(struct qmp_combo *qmp, struct device_node *
-> >  	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, dp_np);
-> >  }
 > >  
-> > +static int qmp_combo_bridge_attach(struct drm_bridge *bridge,
-> > +				   enum drm_bridge_attach_flags flags)
-> > +{
-> > +	struct qmp_combo *qmp = container_of(bridge, struct qmp_combo, bridge);
-> > +	struct drm_bridge *next_bridge;
-> > +
-> > +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
-> > +		return -EINVAL;
-> > +
-> > +	next_bridge = devm_drm_of_get_bridge(qmp->dev, qmp->dev->of_node, 0, 0);
-> > +	if (IS_ERR(next_bridge))
-> > +		return dev_err_probe(qmp->dev, PTR_ERR(next_bridge), "failed to acquire drm_bridge\n");
+> >  static void qmp_v3_dp_aux_init(struct qmp_combo *qmp);
+> > @@ -1955,29 +1962,23 @@ static void qmp_v3_configure_dp_tx(struct qmp_combo *qmp)
+> >  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
+> >  {
+> >  	u32 val;
+> > -	bool reverse = false;
+> > +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
 > 
-> Using dev_err_probe() in an attach callback looks wrong as these
-> functions should not be returning -EPROBE_DEFER (and this is not a probe
-> function).
+> Adding parentheses around the right-hand side should make this a little
+> easier to parse.
 > 
-
-The problem is that this might return EPROBE_DEFER, and at least today
-propagates out to returning EPROBE_DEFER from our DP controller's
-bind().
-
-This is not optimal, but unfortunately we have a two way dependency
-across the of_graph, so we need to make one of the sides lazy...
-
-> > +
-> > +	return drm_bridge_attach(bridge->encoder, next_bridge, bridge, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> 
-> This line is over 100 chars, but there should be no reason not to break
-> it before 80 here.
-> 
-> > +}
-> > +
-> > +static const struct drm_bridge_funcs qmp_combo_bridge_funcs = {
-> > +	.attach	= qmp_combo_bridge_attach,
-> > +};
-> > +
-> > +static int qmp_combo_dp_register_bridge(struct qmp_combo *qmp)
-> > +{
-> > +	qmp->bridge.funcs = &qmp_combo_bridge_funcs;
-> > +	qmp->bridge.of_node = qmp->dev->of_node;
-> > +
-> > +	return devm_drm_bridge_add(qmp->dev, &qmp->bridge);
-> > +}
-> 
-> Guess you need a dummy function also for qmp_combo_dp_register_bridge()
-> in case of !CONFIG_DRM.
+> It also looks like these callbacks end up being called without holding
+> the qmp->phy_mutex via phy->power_on(). Perhaps there is no risk for a
+> concurrent switch notification and dp phy power-on but it's not that
+> obvious.
 > 
 
-Right, missed that dependency. Will wrap this and provide a dummy.
+It seems we're arriving here from hpd_event_thread(), while
+phy_power_on() and phy_power_off() will be called in some other context.
+I've not been able to convince myself if DP driver ensures ordering, or
+if we have an existing race here...
 
-Thanks,
+Unless you insist, I would prefer to follow up with an additional patch
+once we've landed this series. The fix will depend on the phy_mutex
+shuffling patch anyways...
+
+> > +	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
+> 
+> Also could you add these before u32 val to maintain an approximation of
+> reverse xmas style?
+> 
+
+I'd be happy to do so :)
+
+Regards,
 Bjorn
 
-> > +
-> >  static int qmp_combo_parse_dt_lecacy_dp(struct qmp_combo *qmp, struct device_node *np)
-> >  {
-> >  	struct device *dev = qmp->dev;
-> > @@ -3459,6 +3491,10 @@ static int qmp_combo_probe(struct platform_device *pdev)
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	ret = qmp_combo_dp_register_bridge(qmp);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> >  	/* Check for legacy binding with child nodes. */
-> >  	usb_np = of_get_child_by_name(dev->of_node, "usb3-phy");
-> >  	if (usb_np) {
+> And similar below.
 > 
 > Johan
