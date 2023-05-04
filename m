@@ -2,120 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 830CF6F6FC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 18:18:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52DF76F6FC5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 18:19:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbjEDQSF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 12:18:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45040 "EHLO
+        id S229714AbjEDQT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 12:19:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229673AbjEDQSD (ORCPT
+        with ESMTP id S229700AbjEDQTY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 12:18:03 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15C435A2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 09:18:01 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f3331f928cso5606625e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 09:18:01 -0700 (PDT)
+        Thu, 4 May 2023 12:19:24 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8456C3AA3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 09:19:21 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ac836f4447so988301fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 09:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1683217080; x=1685809080;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DIphhPWEW6QhcmnY41fehaOD6U9YlzY9aj8W7kOg/UY=;
-        b=e7KJ8WwmpXY+57f1RUShDYhnKIjBlpjiFN1eTMVKS1hsdwA7IrbsLVryzSTqOImyCC
-         W76MJAufjtEhtOeb59WrX67xTMu7kistTli6d60blS+PQf9mrBfPQUpbJkKt28t/lv17
-         2oBJpI5nkrI5zK4U3vLoTN1ziE/++oMWxcTYN3/1YGIFYyBOarLM/JSk7aBfcjM6lrnW
-         Lnf0mZd+Lvl0DnY1/7G0hiYW3hJUoXrZGid8CsR8COj2E4r6vH8YJgGWrCOA4bwz54/C
-         A5jntb33t8TH7TMf6h0obQqOrwtKdVpFf/TMYv91aIo85neF3I4xcRW/p1kBL1IyINi2
-         E6yA==
+        d=linaro.org; s=google; t=1683217160; x=1685809160;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Vo5rW4D2buAZqQwwd6Aqk9WkGhPA3mqzeuCzA9HHXHw=;
+        b=bUS8e2wntjbH4LIDt48dgSCo0uqIWnegtQFEJEgwSD+CzwL21vgpK5JkWWVj3T+tla
+         sqUyyzUosaupjxiWJbAPlBW4UUGCbCf4q6sqkDbjIH4muva3RDC4O50rzSHBQE2DNBDZ
+         ikn/K2HRBqPqKWbg/eTC83hl6CQ4EV0bp5bubAjtDAHgqM4vB4WZBXQ7V7sZfkxNAHoa
+         uy6yCVsWnURMRQEqsTybCcqhifPVDKNybbFdg36mCjF6sFDoYbpI5eVFagzkFcJbfH1R
+         boWNBH6H7/ohyRj5ppNy4W0PVwi2Nm/mWuzXN65Odc14yHxcwscxpaWRQ0Ej37iJCmCr
+         FqaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683217080; x=1685809080;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DIphhPWEW6QhcmnY41fehaOD6U9YlzY9aj8W7kOg/UY=;
-        b=TIR9r1nnaxjiKF47TrTmcluF3lQNGueqrMTrRQXme1gsmklaDMBLKCOBCeIe19noim
-         POKAIqE8hSmJwiECHV9BZAzq9uFUCJv4hSIA5ceGdZ82vinjmZ6p6lbHPfPiBvX2DwBe
-         tiBZsXC4clwvcYGVxCP/lmAbh15xqXsmzh6oGQq60RUWDYViIolOB/H+hj5iuBlvgBr1
-         5uEJMm3K2hmbaxOOm2aDy5CwkbBvTCGGGN07WcSNVb50s/ZjOBOcpg4MNXGzus77UilF
-         E1zeH0wriliHvGBKbEQ8Sg4jBMot6Fog4wA3//kYxyQE0G2M2rOXaIkgXwmbLDi0kBje
-         J0pw==
-X-Gm-Message-State: AC+VfDy0xhWNyPUnPkgBfVLu/Zhovp/xVUWFq0C7dzwosU89tWXVy8/Y
-        rqac+FRpFlIn63BALWOOAKQAMw==
-X-Google-Smtp-Source: ACHHUZ6zM0Qu/02PWwFJOw+0PQcAqjiuO/4pf2cnPLzI1JY9nb7q4IJdzOQpub6VMV6otNzuwWEVRw==
-X-Received: by 2002:a05:600c:218c:b0:3f1:8aaa:c20c with SMTP id e12-20020a05600c218c00b003f18aaac20cmr206926wme.7.1683217080528;
-        Thu, 04 May 2023 09:18:00 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:14d4:bf3e:d1a3:623])
-        by smtp.gmail.com with ESMTPSA id u19-20020a7bc053000000b003f09d7b6e20sm5336293wmc.2.2023.05.04.09.17.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 May 2023 09:18:00 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8775p: enable AOSS
-Date:   Thu,  4 May 2023 18:17:55 +0200
-Message-Id: <20230504161755.197417-2-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230504161755.197417-1-brgl@bgdev.pl>
-References: <20230504161755.197417-1-brgl@bgdev.pl>
+        d=1e100.net; s=20221208; t=1683217160; x=1685809160;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vo5rW4D2buAZqQwwd6Aqk9WkGhPA3mqzeuCzA9HHXHw=;
+        b=i4HPNRvQMrpJMBD/18SvlqIww0Gp9mI/LnbJkP2hIrupAGjaVlzlPS6F1TepjrpsPS
+         jYq7WDgA8Tg1TLPmEdBxAjc/ettmwRwvetoCx3oLXpbPs6jRTGQDV22swqXQxdi/GcKd
+         HWwMoHHwXrrNNgvl2VVLZ/DgeCYiaK3FXpEjsxk/m/D6qsJnb/DHhIlaCOoUX7d3M8k4
+         Z2/noMv/9ufo42UyVYEqvU2g8WyfyG5CpYBiw7wFZQyykrUD8C6UNWJ3uew5I+9Xo2zz
+         4LgTJGoYMn2FdwcszC1jSGmwHkReRmn+28bUVvDqOX8SUsXAWBLjkj4BnvaMyH9MUJWB
+         bH3A==
+X-Gm-Message-State: AC+VfDyq6zfvM5jij5SZ8oJa3lPkHYyZZw4Zo4EW2ae6IhGiK3Kwlx0c
+        MUmo6ocNLbgKeIw8/1ec/ye/hQ==
+X-Google-Smtp-Source: ACHHUZ7FQe9V76G9mpp4s9UGUHEHt3Z6SAErVNGGT9aBvjJDagHMe8oKF+6DaUEkU1YasdRhd6V0JA==
+X-Received: by 2002:a2e:8356:0:b0:2a8:e6fd:5e57 with SMTP id l22-20020a2e8356000000b002a8e6fd5e57mr1180897ljh.11.1683217159769;
+        Thu, 04 May 2023 09:19:19 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id j25-20020a2e8519000000b002a76c16ad65sm6634378lji.87.2023.05.04.09.19.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 09:19:19 -0700 (PDT)
+Message-ID: <35ac64ab-512d-1425-7a1b-6e8d3806c8a8@linaro.org>
+Date:   Thu, 4 May 2023 19:19:18 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH V4 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
+ Stats
+Content-Language: en-GB
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1681742910.git.quic_schowdhu@quicinc.com>
+ <C1eDJi-H9uWRAtbInRclmCgPb4EcgaeS3sk5FKO9cw8KscgMCH8dxRSvdPGUMwDFKpte7cBVeaqPhlLog-CRrg==@protonmail.internalid>
+ <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
+ <575ee047-c6ce-95c3-8781-8c9a78534bb1@linaro.org>
+ <f42637c8-400b-e39f-412d-60328e176585@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <f42637c8-400b-e39f-412d-60328e176585@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 04/05/2023 09:35, Souradeep Chowdhury wrote:
+> 
+> 
+> On 5/4/2023 4:23 AM, Caleb Connolly wrote:
+>>
+>>
+>> On 17/04/2023 16:08, Souradeep Chowdhury wrote:
+>>> All of Qualcomm's proprietary Android boot-loaders capture boot time
+>>> stats, like the time when the bootloader started execution and at what
+>>> point the bootloader handed over control to the kernel etc. in the IMEM
+>>> region. This information is captured in a specific format by this driver
+>>> by mapping a structure to the IMEM memory region and then accessing the
+>>> members of the structure to show the information within debugfs file.
+>>> This information is useful in verifying if the existing boot KPIs have
+>>> regressed or not. The information is shown in milliseconds, a sample
+>>> log from sm8450(waipio) device is as follows:-
+>>>
+>>> /sys/kernel/debug/146aa6b0.boot_stats # cat abl_time
+>>> 17898 ms
+>>> /sys/kernel/debug/146aa6b0.boot_stats # cat pre_abl_time
+>>> 2879 ms
+>>>
+>>> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+>>> stage and the timestamp generated by the sleep counter is logged by
+>>> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+>>> starts execution which is logged here as "pre_abl_time" and the second
+>>> when it is about to load the kernel logged as "abl_time". Documentation
+>>> details are also added in 
+>>> Documentation/ABI/testing/debugfs-driver-bootstat
+>>>
+>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>
+>> Hi,
+>>
+>> [...]
+>>> +
+>>> +static int boot_stats_probe(struct platform_device *pdev)
+>>> +{
+>>> +    struct device *bootstat_dev = &pdev->dev;
+>>> +    struct bs_data *drvdata;
+>>> +
+>>> +    drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
+>>> +    platform_set_drvdata(pdev, drvdata);
+>>> +
+>>> +    drvdata->dbg_dir = debugfs_create_dir(dev_name(bootstat_dev), 
+>>> NULL);
+>>
+>> This might be better as just "qcom_boot_stats", rather than including
+>> the address.
+> 
+> We usually use the dev_name to represent the one to one correspondence 
 
-Enable the always-on subsystem controller on SA8775P platforms for use
-by upcoming support for other peripherals.
+Who is "we"?
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+> of the debugfs file with the device. Will create the root dir as
+> "qcom_boot_stats" and push the dev_name dir inside it.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 0737ba38fefe..c5e2e3256bc4 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
- #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
- #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
-+#include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- 
-@@ -752,6 +753,16 @@ pdc: interrupt-controller@b220000 {
- 			interrupt-controller;
- 		};
- 
-+		aoss_qmp: power-management@c300000 {
-+			compatible = "qcom,sa8775p-aoss-qmp", "qcom,aoss-qmp";
-+			reg = <0x0 0x0c300000 0x0 0x400>;
-+			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
-+					       IPCC_MPROC_SIGNAL_GLINK_QMP
-+					       IRQ_TYPE_EDGE_RISING>;
-+			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+			#clock-cells = <0>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
- 			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0 0x0c440000 0x0 0x1100>,
+No, this doesn't sound logical. Please use just the "qcom_boot_stats" as 
+Caleb suggested.
+
+> 
+>>
+>> [...]
+>>> +
+>>> +static const struct of_device_id boot_stats_dt_match[] = {
+>>> +    { .compatible = "qcom,sm8450-bootstats" },
+>>
+>> This driver doesn't only support sm8450, I've tested this on sdm845 and
+>> it works just fine. Can we use a generic compatible here instead?
+> 
+> We can add soc specific compatibles here to extend support for other 
+> socs. This also captures the SoCs for which the driver is supported 
+> which won't be the case if we use a generic compatible.
+
+No. If there is no difference between SoCs, please don't add 
+soc-specific compatibles. They pollute the kernel and provide no 
+additional benefits. Please use generic compatible and add 
+platform-specific ones only if you have something to override.
+
+> 
+> 
+>>> +    { }
+>>> +};
+>>> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
+>>> +
+>>> +static struct platform_driver boot_stat_driver = {
+>>> +    .probe  = boot_stats_probe,
+>>> +    .remove_new = boot_stats_remove,
+>>> +    .driver = {
+>>> +        .name = "qcom-boot-stats",
+>>> +        .of_match_table = boot_stats_dt_match,
+>>> +    },
+>>> +};
+>>> +module_platform_driver(boot_stat_driver);
+>>> +
+>>> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
+>>> +MODULE_LICENSE("GPL");
+>>> -- 
+>>> 2.7.4
+>>>
+>>
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
