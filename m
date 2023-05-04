@@ -2,103 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D86086F70B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:17:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 461926F70BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 19:18:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbjEDRRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 13:17:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50292 "EHLO
+        id S230010AbjEDRSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 13:18:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbjEDRRg (ORCPT
+        with ESMTP id S229984AbjEDRSX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 13:17:36 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548224C07
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:17:28 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-306f2b42a86so541666f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 10:17:28 -0700 (PDT)
+        Thu, 4 May 2023 13:18:23 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F415B46A1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 10:18:18 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f13c577e36so908289e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 10:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683220647; x=1685812647;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cesjGSXjro2rP21G4rfu9sFt4XxldgqoChhP56PAftQ=;
-        b=bQdeDQMoqV7rN3vtRGhuybfgZUuJhgEUVdxXqmYM7fXnW2PqGNOgSJ5R6CMyD52tPv
-         mCug7r5DbZYfxwOJtGTBXzqCbIs3ufbeU3rVJNAs5nJwu+7q4Xlp4VZfKOO4MS0A9Mxs
-         Bg+8wmqHFB24tZgMY9WCZ7v8zSqMEi+bXRYOv9Kww/18HOBH64iwPFRXv31tq8IOMWVh
-         l3LX663CNri3IIuBBsGdMoDaG2WBxJRpSp0o5f4tiPGbekCmb4FwJiWA3U5LAo7rf+Pc
-         fsOdURUFTsmH2m188oxX65a/uWielZM7BHes83NUjeWRoRyALkL4xkmtuVR+V2+Sztb0
-         mZCw==
+        d=linaro.org; s=google; t=1683220697; x=1685812697;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ydyx1GdsGCwv5KCUKCfbJnd97Kzneu6w6rXsPTn81eI=;
+        b=iyCx7DxjVrprI1HjHon8qcUNj/3kNRBnJZi32NW8/58NlhrpZVPdElQR+foWPWluSn
+         NYQl5rz8gmDzEfMRF21I9RPRHwDA1sHb03qxdgpVG8/gI5iO24XTvtDw5HeSyVXCWzd2
+         Hr7t0jDxC4PhY5q1h4ZHwRWzxKnSTSnOhzyG2sgOdsGRihj9fNynBrB5zL6xZB2JsFYc
+         Bram+l9udSKDtDh01jc5bGFoPrUiRUtF/VpNaJkO+PO4eUFw7Miy1+0Wmy3n8e9m0Cds
+         QQ+aSqEhULKDAwxjPybMkFnDU+Y78tQKhvyuZ6I8g+H1gJdsJxDgMa+cFI580x36gVKY
+         Hcxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683220647; x=1685812647;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cesjGSXjro2rP21G4rfu9sFt4XxldgqoChhP56PAftQ=;
-        b=AnYRirPn5V2qjAUgj171bFksQMUSuBbEAyU6FzASFmCzMHiCTKN2VAf/rk8BOBVQfd
-         YsGZa+ggAseT8CiZbHDFewgolP8fxgjJ/+yJJA2p3W5kXLJwqQ9HfT2pv11qivPp7zfi
-         kS+LbrbUzoIbZ4s0CccqEWUbvCwUINcLWnsTGDjkO1gaEZBR9qZMj7TrS6ZoKrcEshL5
-         0d5Zu4oxFBJorBknPXTXsetD7ZObDhW4S52G+S6Zz6jzUu6Yc03ouJtfB9RYPv0GRBEh
-         pWFRlvHSkVYH9LyyC81eHMxnz/WKpUliR3j5B5vY14XRtrXMdrnlhid9hShEVmdIOJAJ
-         vTqw==
-X-Gm-Message-State: AC+VfDy3cEs0umWe2oe8HoRAkA+Y7g7kK7RWI55eSF25sVqlicfVTTzJ
-        XHINXFGZbDOjbj7fw0j8osVTHEvSbEGrOzbGRS7Y9g==
-X-Google-Smtp-Source: ACHHUZ7NHJwYpkgXge7DBw6W2FOE8VnwhC47ZVAWC4H18sdpK0BPJ9hjuCVU4kLBbw7ShhCY+1y34VcTfC58/BaM5JU=
-X-Received: by 2002:a5d:5447:0:b0:2f9:1224:2475 with SMTP id
- w7-20020a5d5447000000b002f912242475mr3184075wrv.68.1683220646768; Thu, 04 May
- 2023 10:17:26 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683220697; x=1685812697;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ydyx1GdsGCwv5KCUKCfbJnd97Kzneu6w6rXsPTn81eI=;
+        b=av55qNn/XqxjrfUMrBbqcq/PmtwWgeRgMg0qe4/8PKReLQ5dad4RE8ptHfsfNTLZMo
+         RF6tmOfxPboBBgk8VwiFC4+l9FFx0XXkN/ouDeCzgfi+Zuugw8RnNODLUUj+ssU4a/3I
+         wQDtlaquHywmUD3XxLDWQYyeBrab5yYW/5khtMNGu/hgLsUxRMw5FFGK4UOBcI7KsKAu
+         CuT3xjFzlcWnHl+P15Imw1yOKm75cAM90o/sNRZwu1A28Zlr46BrQLChoiDvF1oW5rhn
+         XRBJwMtxzYUvRd9OkIkJcE8qiL2zfD0fZY7MEtfcuHXyYPmhvWvLwBG1Fib9+GvLdpxV
+         SADw==
+X-Gm-Message-State: AC+VfDx/+/WOZr7Mme/RHifmBzbuPFu/dRekaGgqbeZFQTA4curX18a5
+        UkTZd6nCQzujxc7pTM+YRw6OAQ==
+X-Google-Smtp-Source: ACHHUZ5ssfT50ILMzEsxKpgixIlrOqcvEuA6cBO3L/j3snk5NZs8da2dQHx460ta/wwMMzdpGye1nw==
+X-Received: by 2002:ac2:51db:0:b0:4ec:9f24:3e5c with SMTP id u27-20020ac251db000000b004ec9f243e5cmr2044378lfm.2.1683220697209;
+        Thu, 04 May 2023 10:18:17 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id c17-20020ac24151000000b004cb43eb09dfsm6612921lfi.123.2023.05.04.10.18.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 May 2023 10:18:16 -0700 (PDT)
+Message-ID: <0e0f3d0f-5d9a-12d0-3859-32cdb464d5e6@linaro.org>
+Date:   Thu, 4 May 2023 19:18:15 +0200
 MIME-Version: 1.0
-References: <20230501105832.1185477-1-bhupesh.sharma@linaro.org>
- <20230501105832.1185477-2-bhupesh.sharma@linaro.org> <3b84361e-fba0-3551-be55-474495f02a01@linaro.org>
-In-Reply-To: <3b84361e-fba0-3551-be55-474495f02a01@linaro.org>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Thu, 4 May 2023 22:47:15 +0530
-Message-ID: <CAH=2Ntzk09vT===p0dd69RckDx_+2k_UPqd=YyagkJJhwfv-JQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: qrb4210-rb2: Add SD pinctrl states
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/4] venus: add support for V4L2_PIX_FMT_P010 color format
+Content-Language: en-US
+To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <1683196599-3730-1-git-send-email-quic_dikshita@quicinc.com>
+ <1683196599-3730-2-git-send-email-quic_dikshita@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1683196599-3730-2-git-send-email-quic_dikshita@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 2 May 2023 at 17:27, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 1.05.2023 12:58, Bhupesh Sharma wrote:
-> > Add the default and sleep pinctrl states for SDHC1 & 2 controllers
-> > on QRB4210 RB2 board.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 15 +++++++++++++++
-> >  1 file changed, 15 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > index dc80f0bca767..5a5294cc6e45 100644
-> > --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> > @@ -190,6 +190,10 @@ vreg_l24a_2p96: l24 {
-> >  };
-> >
-> >  &sdhc_1 {
-> > +     pinctrl-names = "default", "sleep";
-> > +     pinctrl-0 = <&sdc1_state_on>;
-> > +     pinctrl-1 = <&sdc1_state_off>;
-> property-n
-> property-names
->
-> Other than that:
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Sure, let me fix this in v3.
 
-Thanks,
-Bhupesh
+On 4.05.2023 12:36, Dikshita Agarwal wrote:
+> add V4L2_PIX_FMT_P010 as supported color format for decoder.
+> 
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  drivers/media/platform/qcom/venus/helpers.c | 2 ++
+>  drivers/media/platform/qcom/venus/vdec.c    | 4 ++++
+>  2 files changed, 6 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index ab6a29f..5946def 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -612,6 +612,8 @@ static u32 to_hfi_raw_fmt(u32 v4l2_fmt)
+>  		return HFI_COLOR_FORMAT_NV12_UBWC;
+>  	case V4L2_PIX_FMT_QC10C:
+>  		return HFI_COLOR_FORMAT_YUV420_TP10_UBWC;
+> +	case V4L2_PIX_FMT_P010:
+> +		return HFI_COLOR_FORMAT_P010;
+>  	default:
+>  		break;
+>  	}
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 4ceaba3..687d62e 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -43,6 +43,10 @@ static const struct venus_format vdec_formats[] = {
+>  		.num_planes = 1,
+>  		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>  	}, {
+> +		.pixfmt = V4L2_PIX_FMT_P010,
+> +		.num_planes = 1,
+> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+> +	}, {
+>  		.pixfmt = V4L2_PIX_FMT_MPEG4,
+>  		.num_planes = 1,
+>  		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
