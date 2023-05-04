@@ -2,85 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 304836F64D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 08:21:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCEAE6F64DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 08:22:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229833AbjEDGVt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 02:21:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
+        id S229848AbjEDGWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 02:22:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbjEDGVq (ORCPT
+        with ESMTP id S229719AbjEDGWu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 02:21:46 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE285198A;
-        Wed,  3 May 2023 23:21:43 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-5083bd8e226so2675a12.3;
-        Wed, 03 May 2023 23:21:43 -0700 (PDT)
+        Thu, 4 May 2023 02:22:50 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5733D26B5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  3 May 2023 23:22:48 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bd2d7ba74so13857899a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 May 2023 23:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683181302; x=1685773302;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sdb7gDmzA/OxsJ8oOXOihmXXjZdQ7p+LmmhLEKFuDak=;
-        b=Bx7iJpPeZaagU7I/xMfJMspxMOtxyFL+/s79rDidoxakV9/QqlEPidcnhSfpvA9tYg
-         mRbG0ZWOMdpTCaQ/073232XQSalFQT1KT4mw1y/pmCj96SBSu9ZTQZ+0LpnAH/TDkVSM
-         e+qen5HULM7NFLvUzvH+3sKtGtwjyAiMNiZVya4Ptpq0SlL5nZAIUWlHV/yeIUGtWw9U
-         bQa6zEEMxnH99LVja7oo8bp50tUwnu17nmcqzhKNM+2OTmikoM3pEUAk4K/fCanVQm9R
-         WfgG2mGiBKO02mykM5kY4IwS0uHcY9xS4lUWHSnjtO37asYv+K8PSMdHURvSxN33u6Hu
-         pv0g==
+        d=linaro.org; s=google; t=1683181367; x=1685773367;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p/ezhV0uzxF2JPR+QsyPD3go+DnG9ZqfpAlPDNo59BU=;
+        b=FZr+RqtyNO6t70vl1mH0S3PoDI+Feat2fU49VarExfWXxyhRIwPhWMxXE3sbdO5dUz
+         BEXBHD0b6XSZRmz3D0bL+WGP88pl+wtiBr483QPFpjQAmzuPCmFKUEReGd9lLgGgrbfV
+         QLSN3hsGWneqjyEUIGhCX6Q8zyD/Y5cg3KoeY0jvyW4KnJhfFGYMfDjNTqocWSLzxWLZ
+         iDirhyqaU7dLBaaGFkWYjFPCgV22hCr30/z3RkDVafdfLxP89j7l/RXms6YdDds7HTUh
+         OOXh8kus/hLEcXvbGSjFvSAal4hqA4gW1ElEBWzlqnWDYAw8ashqwKlHsAEPkCmgjaq0
+         JZRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683181302; x=1685773302;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sdb7gDmzA/OxsJ8oOXOihmXXjZdQ7p+LmmhLEKFuDak=;
-        b=eXcPfhXTLF2J+Pt4lN5e8tseTxgi8SICVUJHeKpiVHuiZd6OFOCYzga+MPDAWeylCb
-         hZkNlmspGFV7hwrcoO0kIZKDcj/Oaf0VebjIP8fGnRumy8DUVb9ZZ5L9h3VxYn01yVOm
-         wdmLdFhfuEuECPfcyCrDxCf8uaAy8lsl/IlVbBM0KG17kjSmYxFAXJbkq9wQA9gLmU7l
-         FGTp/CYJRjJZNwWbcwW6h1bngn1FgmBoU9lCui0THrGHArlpLLfTIrZlhPCoTpGXD6wQ
-         cTTLUjG5PB5LQ42lyVEyTWhzNpZ2GCOA3h72h4oppwHhBOgTca97FsO6rM2i8ILC6xoK
-         Ao/g==
-X-Gm-Message-State: AC+VfDxNY1jaOOoJtkkhK5Q8JhLyn5Qplb4LS4qh6c6nWZgftVFLr4lF
-        BfJa3l+abo35mbYquFllNgU2llDzZbEUV3cYbhI=
-X-Google-Smtp-Source: ACHHUZ7r/yVa5bvFkK+1XXEjZWHNeSrTzRUpn8NAF1qy9eZ7rlXUXzdir1dN2fW5UOiL/fdjzP7FeBuhXze1cSB4wRA=
-X-Received: by 2002:a17:907:7e8e:b0:94f:7edf:8fa1 with SMTP id
- qb14-20020a1709077e8e00b0094f7edf8fa1mr6230887ejc.32.1683181301725; Wed, 03
- May 2023 23:21:41 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683181367; x=1685773367;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p/ezhV0uzxF2JPR+QsyPD3go+DnG9ZqfpAlPDNo59BU=;
+        b=mGPcLpyUj/ihB1o7c6I4jyganJWgJF1ljsecelzc1NMER0DybIN4TkusrtUM4VHIEt
+         TO9LRFkO8VtsBXTf/fQkXD6KWGSD01OhVLUBprLAxNRKFNHweSoZ/JQCiD47EyRbysW9
+         PBSfwDndAJvbjOM0ovGAjtiD3bVzLGmKuFN+aaECz+fmjboRFO5+la+NXYn+V0zb6335
+         9Ksq2bXalrUgBpmVXUlcjIN8Ua9DcTn8w9zU+f7gkWDQL0TmOwNo+Ss05+9utuB3raFg
+         swnp+MuDzfTJCpGFR7CF1yIFx4OtimNhdNEAm0EpUWyd7ypG8XxF+9mi0hB7SOmRX0+j
+         Ynrw==
+X-Gm-Message-State: AC+VfDyDSN74dymwQPe5S2tSHiORQFT8rvQfylT56s5eX7SGyaEv3CHp
+        j1Nn4dD1AtZnsh0aHhQ5Le2yXQ==
+X-Google-Smtp-Source: ACHHUZ5YCAFEI+pgFzkMJzHr/+9eQUl3KiHxLZwYIw60wPS7QQGj7GHaO9b5Gh6FVgQ+5HXKe9AWvw==
+X-Received: by 2002:a17:906:ef06:b0:94e:4285:390c with SMTP id f6-20020a170906ef0600b0094e4285390cmr3543751ejs.10.1683181366679;
+        Wed, 03 May 2023 23:22:46 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:cbf1:e7ef:fb81:e912? ([2a02:810d:15c0:828:cbf1:e7ef:fb81:e912])
+        by smtp.gmail.com with ESMTPSA id hf27-20020a1709072c5b00b0095fde299e83sm9673960ejc.214.2023.05.03.23.22.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 May 2023 23:22:45 -0700 (PDT)
+Message-ID: <1b449a78-b57e-7e1e-0261-d35a5a2582a6@linaro.org>
+Date:   Thu, 4 May 2023 08:22:44 +0200
 MIME-Version: 1.0
-References: <20230424231558.70911-1-quic_eberman@quicinc.com> <20230424231558.70911-7-quic_eberman@quicinc.com>
-In-Reply-To: <20230424231558.70911-7-quic_eberman@quicinc.com>
-From:   Jassi Brar <jassisinghbrar@gmail.com>
-Date:   Thu, 4 May 2023 01:21:30 -0500
-Message-ID: <CABb+yY3ojsGNm1w+QSn2BnbOMdcQZAV+=UYiMiBrs=jujP=pSg@mail.gmail.com>
-Subject: Re: [PATCH v12 06/25] mailbox: Add Gunyah message queue mailbox
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/4] dt-bindings: thermal: tsens: Add ipq9574 compatible
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+References: <cover.1682682753.git.quic_varada@quicinc.com>
+ <3c6f7510d175ba5a3c81730b010f6c421b2fbf2d.1682682753.git.quic_varada@quicinc.com>
+ <16443d11-7948-d224-cfef-b6c1b5c3d60d@linaro.org>
+ <20230503071055.GB1087@varda-linux.qualcomm.com>
+ <915eea5b-6cef-d346-7cbd-b679726113ad@linaro.org>
+ <20230504045757.GA13434@varda-linux.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230504045757.GA13434@varda-linux.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,23 +85,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Apr 24, 2023 at 6:16=E2=80=AFPM Elliot Berman <quic_eberman@quicinc=
-.com> wrote:
->
-> Gunyah message queues are a unidirectional inter-VM pipe for messages up
-> to 1024 bytes. This driver supports pairing a receiver message queue and
-> a transmitter message queue to expose a single mailbox channel.
->
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  Documentation/virt/gunyah/message-queue.rst |   8 +
->  drivers/mailbox/Makefile                    |   2 +
->  drivers/mailbox/gunyah-msgq.c               | 210 ++++++++++++++++++++
->  include/linux/gunyah.h                      |  57 ++++++
->
-include/linux/gunyah.h  and
-Documentation/virt/gunyah/message-queue.rst would need to exist for
-this patch to apply.
-If you made this patch as the first in series, then I could apply.
+On 04/05/2023 06:57, Varadarajan Narayanan wrote:
+> On Wed, May 03, 2023 at 09:42:28AM +0200, Krzysztof Kozlowski wrote:
+>> On 03/05/2023 09:10, Varadarajan Narayanan wrote:
+>>> On Mon, May 01, 2023 at 09:08:49AM +0200, Krzysztof Kozlowski wrote:
+>>>> On 28/04/2023 16:52, Varadarajan Narayanan wrote:
+>>>>> From: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>>>
+>>>>> Qualcomm IPQ9574 has tsens v2.3.1 block, which is similar to IPQ8074 tsens.
+>>>>>
+>>>>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+>>>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>> ---
+>>>>>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 3 +++
+>>>>>  1 file changed, 3 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>>>>> index d1ec963..8e2208c 100644
+>>>>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+>>>>> @@ -66,6 +66,7 @@ properties:
+>>>>>        - description: v2 of TSENS with combined interrupt
+>>>>>          enum:
+>>>>>            - qcom,ipq8074-tsens
+>>>>> +          - qcom,ipq9574-tsens
+>>>>
+>>>> Your drive change indicates they are compatible, so make them
+>>>> compatible. 9574 followed by 8074.
+>>>
+>>> Not able to understand. You want IPQ9574 to use "qcom,ipq8074-tsens"
+>>> instead of adding a "qcom,ipq9574-tsens" and no need to add an extra
+>>> entry to the driver like
+>>
+>> Assuming the devices are really compatible, which your driver change
+>> suggests, I want to use two compatibles. 9574 followed by 8074 fallback,
+>> just like we do for all Qualcomm IP blocks. Then as you said - no need
+>> for driver change.
+> 
+> With schema like this
+> 	items:
+> 	  - enum:
+> 	      - qcom,ipq8074-tsens
+> 	      - qcom,ipq9574-tsens
+> and DTS as
+> 	compatible = "qcom,ipq9574-tsens", "qcom,ipq8074-tsens";
 
-cheers.
+This file (and many others) shows you how to encode it in the DT schema
+
+https://elixir.bootlin.com/linux/v6.3-rc6/source/Documentation/devicetree/bindings/sound/nvidia,tegra210-ope.yaml#L31
+
+> 
+> 'make dtbs_check' gives the following error
+> 
+> arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: thermal-sensor@4a9000: compatible: 'oneOf' conditional failed, one must be fixed:
+>         ['qcom,ipq9574-tsens', 'qcom,ipq8074-tsens'] is too long
+> 
+> To fix the above error, I have to change the schema as
+> 
+> 	items:
+> 	  - enum:
+> 	      - qcom,ipq8074-tsens
+> 	      - qcom,ipq9574-tsens
+> 	  - const: qcom,tsens-v2-combined-int
+
+This is not what we talked about.
+
+Best regards,
+Krzysztof
+
