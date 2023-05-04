@@ -2,105 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8B736F6DB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 16:28:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFE4D6F6DEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 16:44:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbjEDO2c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 10:28:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60146 "EHLO
+        id S230280AbjEDOoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 10:44:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbjEDO2c (ORCPT
+        with ESMTP id S230430AbjEDOoX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 10:28:32 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D36889017
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 07:28:14 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-2f95231618aso396733f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 07:28:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1683210493; x=1685802493;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DeYBoTOUVqJj803Ofa1fS+lSuPAgR5WnQRE3r1FG7lU=;
-        b=BSHwV5QrhS+DbQpHCP8+VaWtrikezygTm6Fh3fInKLZ2z6ncleQl166P7CW3qesgtQ
-         hVxyBYWY27Fz7feLW5IMVnXEoO24Qa/j4+JokhnGw6b1kiAhVlrDfV2+HoJ6BF9CNJyA
-         81fg4cFwNu2JvYUmDrqqvdpm7IgjjT8PQe87ERqKzh/ixQ3Ga2q0rsvRycgzk+OYgkRa
-         sj6utuHisHOe7vB4UXe8nkesIjI4aeXu6IH97Ag3o4NCyTMX4OOcWMQxJd+LZRfmrRw4
-         M4RPhfjekhDMs1zsEK0IEbXQfOxRQGHLvFAOAK7zcNY6TVFwstYu4lnvQxDsy75pZDkf
-         1ohQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683210493; x=1685802493;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DeYBoTOUVqJj803Ofa1fS+lSuPAgR5WnQRE3r1FG7lU=;
-        b=csS8X7vIHIIvbCOqVU69I9HsHePNG3v5mDVapgGo81ymM9qfl4i7zH5T66PNRJcwTo
-         NmlcY2TH11MfHm8R8scr/sb75xTRO8JvxF4BwP4YU8axuSEZV27XoREBqAAh5xrSX7Wi
-         XBzVEAzDNhZKB7628caPMVuUasabodLTpHUgZe0Iz+5oiOmjvjKZgNP0L4/l7O1oAhiD
-         oaDG5DR/JUM9XeOf9Ll1HnVUGkm8HeQYn5fs/wcJ5XGM/rnuOYRgAE90kJmJYjrF3fGc
-         kGcrI5TrxTi7eUkvfTKk8M5pn7n3Gg1mWZ+SqV18yJrc1XUs0t8MV/X+rHa28fPR9TVG
-         JaaA==
-X-Gm-Message-State: AC+VfDwT7pZTNoFA3vgbW+tEhNIENmY4IcmDQUBVr1o1ltj8f9J/LhlX
-        aIkTYzxtJ3CVaxNcmMMvruV4tw==
-X-Google-Smtp-Source: ACHHUZ4yZAMzfPUsO5Y9Mfbn5+au6koMHjJ0U46skIVR6HdLMxX+NXOuyrw+epY+bOVC2QPZOmWeMg==
-X-Received: by 2002:a5d:564e:0:b0:306:439e:e6c with SMTP id j14-20020a5d564e000000b00306439e0e6cmr2857959wrw.49.1683210493322;
-        Thu, 04 May 2023 07:28:13 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id u6-20020adff886000000b002f28de9f73bsm36996749wrp.55.2023.05.04.07.28.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 07:28:11 -0700 (PDT)
-Message-ID: <b79dcf81-2eb4-c376-e1a8-e947ffa6c70a@nexus-software.ie>
-Date:   Thu, 4 May 2023 15:28:10 +0100
+        Thu, 4 May 2023 10:44:23 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13DC1212D;
+        Thu,  4 May 2023 07:44:22 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3444xV5g003734;
+        Thu, 4 May 2023 14:43:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=o4esY378CGg1puYP89nqAn0HOXZL3EM2geQTdW+QLbo=;
+ b=UPjpZb1qGSrKjQlftJhEQMMfNElvZE5HXMYbduhMmh+I8D8HTIJ4osVqWHSyJJbHPlI0
+ q2fXy1DD3CjMY5psdeBH2epFAVaeMdgvWObQ0OlL8r8Hx4ms1Ij/UjZTn4Oeo7xPJNY9
+ 749ItGS5Y8UN9orbYR3FoF0/+/FKRmrvfOSlT6jjBl+Ju6dv3dVBuo54ODSDtuUDHGBR
+ z+5d1BDldYXKOork3mbqfURg/uZIIsz5vu7iIennM3UnIIX6gXbEekL4/ANGY97TAroR
+ HX9q8mOdrY318alLjohhZXF6Q24QIvo2ytNpfNnq+PXqvuba6F54QMPNLKuI/YZSVTgF Dg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qc652h9yt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 04 May 2023 14:43:45 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344EhiWo016505
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 4 May 2023 14:43:44 GMT
+Received: from [10.216.46.158] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
+ 07:43:37 -0700
+Message-ID: <2fb1658a-3a38-7eb4-0e6e-d8c61981bdab@quicinc.com>
+Date:   Thu, 4 May 2023 20:13:34 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 0/4] venus: add support for 10 bit decoding
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 07/18] arm64: defconfig: Enable Qualcomm minidump
+ driver
 Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        linux-media@vger.kernel.org, stanimir.k.varbanov@gmail.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        mchehab@kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <1683196599-3730-1-git-send-email-quic_dikshita@quicinc.com>
- <8df7f24b-9dbe-4491-bcb1-f53021bb482f@linaro.org>
- <66b8e665-1038-127a-1f4f-20d8fe7bcd8e@linaro.org>
- <facc9800-6af4-5cb3-bd22-b22b2250090a@quicinc.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <facc9800-6af4-5cb3-bd22-b22b2250090a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <corbet@lwn.net>,
+        <keescook@chromium.org>, <tony.luck@intel.com>,
+        <gpiccoli@igalia.com>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <robh+dt@kernel.org>, <linus.walleij@linaro.org>,
+        <linux-gpio@vger.kernel.org>, <srinivas.kandagatla@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-doc@vger.kernel.org>
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-8-git-send-email-quic_mojha@quicinc.com>
+ <ad9915b2-56ff-3f95-7c92-fae597d6ed43@linaro.org>
+ <4325c2e7-8ca1-7e45-db14-5ba8bc83f5d7@quicinc.com>
+ <a4118697-d575-6499-ed8e-656e51ca0da3@linaro.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <a4118697-d575-6499-ed8e-656e51ca0da3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VXrFV397fZXsjxuO3pxir-3bNZM62dOx
+X-Proofpoint-ORIG-GUID: VXrFV397fZXsjxuO3pxir-3bNZM62dOx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-04_10,2023-05-04_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxlogscore=945 mlxscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305040120
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2023 15:04, Vikash Garodia wrote:
->> Doh I see you did most of that - just missed the V2.
+
+
+On 5/4/2023 6:02 PM, Krzysztof Kozlowski wrote:
+> On 04/05/2023 13:45, Mukesh Ojha wrote:
 >>
->> Please remember to version your subsequent series. "git format-patch -v2"
+>>
+>> On 5/4/2023 4:53 PM, Krzysztof Kozlowski wrote:
+>>> On 03/05/2023 19:02, Mukesh Ojha wrote:
+>>>> Previous patches add the Qualcomm minidump driver support, so
+>>>> lets enable minidump config so that it can be used by kernel
+>>>> clients.
+>>>>
+>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>>
+>>> This patchset is split too much. Defconfig change is one change. Not two
+>>> or three.
+>>>
+>>>> ---
+>>>>    arch/arm64/configs/defconfig | 1 +
+>>>>    1 file changed, 1 insertion(+)
+>>>>
+>>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+>>>> index a24609e..831c942 100644
+>>>> --- a/arch/arm64/configs/defconfig
+>>>> +++ b/arch/arm64/configs/defconfig
+>>>> @@ -1250,6 +1250,7 @@ CONFIG_QCOM_STATS=m
+>>>>    CONFIG_QCOM_WCNSS_CTRL=m
+>>>>    CONFIG_QCOM_APR=m
+>>>>    CONFIG_QCOM_ICC_BWMON=m
+>>>> +CONFIG_QCOM_MINIDUMP=y
+>>>
+>>> This must be a module.
+>>
+>> Why do you think this should be a module ?
+>>
+>> Is it because, it is lying here among others '=m' ?
 > 
-> Does this qualify for a version upgrade when a single patch is 
-> subsequently raised as series ? IMO, the link
+> Because we want and insist on everything being a module. That's the
+> generic rule. There are exceptions, so if this justifies being an
+> exception, please bring appropriate arguments.
 > 
-> to previous single patch in cover letter and then starting the series 
-> (as v0) seems to provide the required info.
+>>
+>> Or you have some other reasoning ? like it is for qcom specific
+>> soc and can not be used outside ? but that is not true for
+>> all configs mentioned here.
+>>
+>> The reason behind making it as '=y' was, to collect information from
+>> core kernel data structure as well as the information like percpu data,
+>> run queue, irq stat kind of information on kernel crash on a target
+>> running some perf configuration(android phone).
+> 
+> I don't understand why =m stops you from all that.
 
-Hmm. I'd say any series should have an increment in it to differentiate, 
-with the exception being RESEND.
+How do i get kernel symbol address from a modules
+can we use kallsyms_lookup_name from modules ?
 
-Also you are splitting one patch into four.
+--Mukesh
 
-Looking through a bunch of email it might be not immediately obvious to 
-understand that the new series and old series differ, which is IMO how 
-the version numbers help others to know what's going on.
-
----
-bod
+  What's more, I don't
+> understand why do you refer to the Android here. This is a development
+> and debugging Linux defconfig, not Android reference config for vendors...
+> 
+> Best regards,
+> Krzysztof
+> 
