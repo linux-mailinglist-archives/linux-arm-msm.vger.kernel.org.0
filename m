@@ -2,82 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 26AEE6F6FE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 18:26:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14F626F6FF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 May 2023 18:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbjEDQ0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 12:26:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
+        id S229849AbjEDQev (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 12:34:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbjEDQ0H (ORCPT
+        with ESMTP id S229928AbjEDQeq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 12:26:07 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31CBA2D62
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 09:26:06 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f00d41df22so11255282e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 09:26:06 -0700 (PDT)
+        Thu, 4 May 2023 12:34:46 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170A24C07
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 09:34:37 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-50bcae898b2so1226584a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 09:34:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683217564; x=1685809564;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1683218075; x=1685810075;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3oaodqov9+zMBxA9jjLMyaN6+ESrOud/sUhJoj5OmZI=;
-        b=vXy4JFrQdRVgIww90EhIOZIkG0xpsOoEGeSnR8G7dQdy++A5WO8p7uoDaur3QIhWlu
-         EMEhBtNEJKSRRNKS74KSRMa2srx/+yh15u5Lq8OW9qzCCqxsKvudEnI8v7eh4IiEYfu1
-         JJ5tHtst43PB9HcP3VfIdV02P6sgrIgmTul+P3gtaeG9h0Y5WIzeRAfnRt/DSnnVSkR0
-         wX6Uh2StBLfqQsJ1FRAwqirfZy2V0lZx5msKE2sty76/SS+Nc6sxoUk8yON3rhVqEvtE
-         vmP5koveHNK4fX+UA7LhY9wAzodzuunEN3uAAOw0PCYfHc/BhjwLVSR+ud0NBMLGUniS
-         A3Mg==
+        bh=nszTvAg6fphYuzaPSYnd3w5WMHZrZJJaEUI5zTnvsx4=;
+        b=dhxD37R48wLSmMqoo+yOvb619nXn47MDnAlUoME6jFo/UJ4C+dA44spBJdEsQXo/BB
+         ZJATJlWpYr1F5QCJ6s4RbliW9MHK/oFSkY0nYFR4f0yiNMmYfywayOEQedzYAybRAfgf
+         l926ylMz4mrzTXBojvCkJGyiiK4Nt/Z5vnxxDPKwxpzhN8BnWyhI/3Z3fqL0sARvjGL3
+         nEqAjz6mwz7o5kO33wL8e4wrte01H86lLz7FmFbBcYDnJfOE+HEmf+MVoK+XrfQByDpC
+         YLwdqYNtyB4F+0X8T4psmNmW2EkRXtWJoHu47vmhJk6a1mzVnGPmJcViYA00Qi45MKpn
+         NCJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683217564; x=1685809564;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1683218075; x=1685810075;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3oaodqov9+zMBxA9jjLMyaN6+ESrOud/sUhJoj5OmZI=;
-        b=kn9q9A7c65D1SEp9ue5VT6Y1OEBCCZzjvwRXIm87kgvug7O4JuA16cpL2Y+DMYnpLL
-         Bd3HeC5mQV+A9M3ggltatRMACmSGwQFZ9km0UA4a1Y2nOey8jYCVZaKfuApomRUrns7p
-         PWIZnl2eCsNBeosADg6ArmL1ec9PswCfvcEnjmmAsZB+4/qV9lrX6bBOeMNEjCHK8boA
-         cSis6xCnY3hk5eeF+Vu82gnvcjMlWNtkbW5OUj3WtgE6n3Sg61xQDJit322q6lcKeZm3
-         3zES9Z0WsFUe1Axq0OgDfj6GnU44iS27im7hlzotLVzHsVf0hmVwAzMoVmZv9niTsGs+
-         W7Zw==
-X-Gm-Message-State: AC+VfDyWqLRnOpE7yXLEqzK+UpJfaZIICkoOO87WZJGyUCw42txkqytC
-        gM/MimBf0x/FKIT8nIrMC/3IXA==
-X-Google-Smtp-Source: ACHHUZ5AQHC5LfEEzcxFVSKjL6WCfaAGAhtN3hRrxCx4XMt4upQLrNpg3oQqb82KL4pM6oVqkdmJbA==
-X-Received: by 2002:a2e:b904:0:b0:2a8:a6b5:2042 with SMTP id b4-20020a2eb904000000b002a8a6b52042mr984606ljb.19.1683217564444;
-        Thu, 04 May 2023 09:26:04 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id n1-20020a2e8781000000b002a7e9e4e9dcsm6611553lji.114.2023.05.04.09.26.03
+        bh=nszTvAg6fphYuzaPSYnd3w5WMHZrZJJaEUI5zTnvsx4=;
+        b=Lirg6CJ5TnTASkr2YdNtyWjwk4MPXc78ovC83VNl3izz3UgDMcGhmmsWbN9Kud16b7
+         2CacZ15m9M/9Jc6WuGth2qg7mGtR5avuaB28xYCrtMMGtuGWkDvSty5tImilQC3Efz6i
+         14JJ4AsffWA943O8S6XBnkLjqq1nyezf9r3MRpwkzypnGZzhwclel4WL5JbcCNSe7rLw
+         Dwleshla+361VivrUf3wbizD0c63jNPnvRtNFCGOlhHcmerZmSEuXtp57goASBYypavW
+         Apbff27VylkiN7pXXcgIoAkEhQBLxn6Vd9sq/SZZ1U7aAFCg7QYgQ+lidyCSOTDStSIx
+         P3xg==
+X-Gm-Message-State: AC+VfDxX7J2oo8qtpd1NNMABvimXbU6bkJH3uz1+KBnUVjrNSSzWG6GA
+        oMK03u9XtS1TkOhmNyHVCyjuSw==
+X-Google-Smtp-Source: ACHHUZ7UTw09BUZkzS6zw6s3B83bTJ2iIzEWu8O3/gcd5QbYIqL3Pcttt0DLEfeqNgf6m6beVNV0ow==
+X-Received: by 2002:a17:907:a412:b0:961:be96:b0e0 with SMTP id sg18-20020a170907a41200b00961be96b0e0mr6847612ejc.73.1683218075231;
+        Thu, 04 May 2023 09:34:35 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:bdb9:99c4:33a5:6114? ([2a02:810d:15c0:828:bdb9:99c4:33a5:6114])
+        by smtp.gmail.com with ESMTPSA id n20-20020a1709065db400b00965b439027csm802967ejv.195.2023.05.04.09.34.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 May 2023 09:26:04 -0700 (PDT)
-Message-ID: <77c4ba62-1566-993b-ec33-0da2fa9936ec@linaro.org>
-Date:   Thu, 4 May 2023 19:26:03 +0300
+        Thu, 04 May 2023 09:34:34 -0700 (PDT)
+Message-ID: <500e5abc-fb71-8468-a6b0-3ced2676b57c@linaro.org>
+Date:   Thu, 4 May 2023 18:34:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V4 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
-Content-Language: en-GB
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1681742910.git.quic_schowdhu@quicinc.com>
- <NO2MhqhxQqjQ33CVOtaXXxo2iBfl6Ugz1lE5oJAl-mjUyrRu4l9vCBWV8AVJZoCrVF0Cw0j49t44Bn5yEAv3mA==@protonmail.internalid>
- <bd3350e3b0b02669cffa4bdaf9a0a1d8ae9072d1.1681742910.git.quic_schowdhu@quicinc.com>
- <9da030c6-6a9f-6766-7120-94aaa8fcd8ab@linaro.org>
- <3ef818c8-1ee4-5bee-6b37-20658b2e4637@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <3ef818c8-1ee4-5bee-6b37-20658b2e4637@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v3 04/18] soc: qcom: Add Qualcomm minidump kernel driver
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-5-git-send-email-quic_mojha@quicinc.com>
+ <c6f730b6-f702-91d4-4abd-71546e02f869@linaro.org>
+ <23b493f4-1a01-8d03-fc12-d588b2c6fd74@quicinc.com>
+ <575a422d-6224-06b7-628c-8487b47882e9@linaro.org>
+In-Reply-To: <575a422d-6224-06b7-628c-8487b47882e9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -89,60 +86,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2023 09:26, Krzysztof Kozlowski wrote:
-> On 04/05/2023 00:10, Caleb Connolly wrote:
->>
->>
->> On 17/04/2023 16:08, Souradeep Chowdhury wrote:
->>> All Qualcomm bootloaders log useful timestamp information related
->>> to bootloader stats in the IMEM region. Add the child node within
->>> IMEM for the boot stat region containing register address and
->>> compatible string.
+On 04/05/2023 17:21, Krzysztof Kozlowski wrote:
 >>>
->>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>> ---
->>>   .../devicetree/bindings/sram/qcom,imem.yaml        | 22 ++++++++++++++++++++++
->>>   1 file changed, 22 insertions(+)
+>>>> +	ret = qcom_minidump_init_apss_subsystem(md);
+>>>> +	if (ret) {
+>>>> +		dev_err(&pdev->dev, "apss minidump initialization failed: %d\n", ret);
+>>>> +		goto unlock;
+>>>> +	}
+>>>> +
+>>>> +	__md = md;
 >>>
->>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>> index ba694ce..d028bed 100644
->>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>> @@ -49,6 +49,28 @@ patternProperties:
->>>       $ref: /schemas/remoteproc/qcom,pil-info.yaml#
->>>       description: Peripheral image loader relocation region
->>>
->>> +  "^stats@[0-9a-f]+$":
->>> +    type: object
->>> +    description:
->>> +      Imem region dedicated for storing timestamps related
->>> +      information regarding bootstats.
->>> +
->>> +    additionalProperties: false
->>> +
->>> +    properties:
->>> +      compatible:
->>> +        items:
->>> +          - enum:
->>> +              - qcom,sm8450-bootstats
+>>> No. This is a platform device, so it can have multiple instances.
 >>
->> This region isn't exclusive to sm8450, it exists also on sdm845 and
->> presumably other platforms. Is there any need for an SoC specific
->> compatible?
+>> It can have only one instance that is created from SMEM driver probe.
 > 
-> Yes.
-> https://elixir.bootlin.com/linux/v6.1-rc1/source/Documentation/devicetree/bindings/writing-bindings.rst#L42
-> 
-> Also see many discussions on LKML about this.
+> Anyone can instantiate more of them.... how did you solve it?
 
-After taking another glance at the parent device (IMEM), I start to 
-think that we should not be defining the device at all. The imem has the 
-SoC name in it. So I think there should be a proper driver for IMEM. 
-Then it will instantiate the ABL stats platform device depending on the 
-SoC compat. Also this would allow us to rewrite qcom_pil_info_init() in 
-a way to query IMEM instead of poking into DT directly.
+To clarify - sprinkling more of singletons makes everything tightly
+coupled, difficult to debug and non-portable. You cannot have two
+instances, you have to control concurrent initialization by yourself in
+each of such singletons.
 
--- 
-With best wishes
-Dmitry
+I understand sometimes they are unavoidable, for example when this does
+not map to hardware property. However here you have the parent - smem -
+which can return you valid instance. Thus you avoid entire problem of
+file-scope variables.
+
+Best regards,
+Krzysztof
 
