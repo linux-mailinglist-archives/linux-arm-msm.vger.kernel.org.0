@@ -2,123 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 014AB6F7E37
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 09:55:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C726D6F7E9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 10:22:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230403AbjEEHzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 03:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
+        id S230233AbjEEIWT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 04:22:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjEEHzs (ORCPT
+        with ESMTP id S229789AbjEEIWS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 03:55:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 517D917DF1;
-        Fri,  5 May 2023 00:55:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id DD5B863C09;
-        Fri,  5 May 2023 07:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F23DC433D2;
-        Fri,  5 May 2023 07:55:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683273343;
-        bh=C0NxPbnK07NPfnCGHwtR10e2LP53WWBmIi+P/DTZCUE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=j1mK3nKHO+Ac7/NW8Ugie16wfX1T5Rfbckz+i/6/1RsJl9jBmm2Ak4VOsieXsEoNT
-         7OV4Yl/wkfeCdNMzEeQAB4KKnMU10Ntjz2SmA0CE+MNo3O5PbO1aTv6U0vBxrzRA5Q
-         D/npfNIEpZy0CQ5fCuAi2QjYdvdO4dJvbvOMuvkU+YZ87A/UlWVwpce2GtA02WuD3g
-         dRHcRf/jf073XJGlOl0fqvGY1Ewlj1wwH9RxE2U7PjUqOVM8uH8XRe9cckU97A0J+S
-         asR6b5BU6HaF3pomhF4ZvEq1Dh3XYZVVVq3ckbjGmuIBO/tf8DtLH8GU1tuB0P1i2z
-         7bVHV7Ix72h4g==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1puqIC-0006lu-UO; Fri, 05 May 2023 09:55:53 +0200
-Date:   Fri, 5 May 2023 09:55:52 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Andrew Halaney <ahalaney@redhat.com>,
-        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Johan Hovold <johan+linaro@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
-        quic_harshq@quicinc.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v6 6/8] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <ZFS2iJOfhsM8gxK5@hovoldconsulting.com>
-References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
- <20230405125759.4201-7-quic_kriskura@quicinc.com>
- <20230414154527.vsjtgtfsd5kc7vww@halaney-x13s>
- <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
- <28a58bf9-5ad8-4084-11d6-cd1b0d3a2998@quicinc.com>
- <20230425203328.hrz5dw7f2vsbbbgk@halaney-x13s>
+        Fri, 5 May 2023 04:22:18 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD1F1161B;
+        Fri,  5 May 2023 01:22:17 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34580Dwl010410;
+        Fri, 5 May 2023 08:22:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=WYrLfNctlHC0zQd+1qhdOywPx+RCuci0//8rOx7EPM8=;
+ b=C1irO3nbzOOKMdSq1oaww6v+qhRoIYUzW82lX/VFkl1eVDT6HYTQOSSicnxlE//Gnv5q
+ NO3QibwfV2Uie4kUJZQU8YEBRQiQtHQRfyJC4AVBDbYLNV7A3y/vEpu4uHZJrL54HN/i
+ 4XnLZFieWCUmCw6T45+/f7WhX6TKj5fH25cFUoT0opnoMIFth1VPYSjezErZrF+CwfOj
+ jSh8gbdIPkXbXXpA5mOl3+TIcYRUNELnTohJeBp2Xk8cwsyuwX/u01gQBVuKsRrBgSmc
+ luQLiETcTCFDI9XuPcrNAR7iYKW6tMHGgACsVtk2saDm8891aKY/QTqxdkcgRz/oUi1S HQ== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qcf24hty6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 05 May 2023 08:22:06 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3458M5Oh023648
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 5 May 2023 08:22:05 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 5 May 2023 01:21:59 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <gregkh@linuxfoundation.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v10 0/9] Enable IPQ9754 USB
+Date:   Fri, 5 May 2023 13:05:01 +0530
+Message-ID: <cover.1683183860.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230425203328.hrz5dw7f2vsbbbgk@halaney-x13s>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 85E7EeZO04de2_AaM0ppfw3kSfARRNhX
+X-Proofpoint-GUID: 85E7EeZO04de2_AaM0ppfw3kSfARRNhX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-04_15,2023-05-04_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ suspectscore=0 bulkscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 malwarescore=0 clxscore=1011 mlxlogscore=689
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305050069
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 25, 2023 at 03:33:28PM -0500, Andrew Halaney wrote:
-> On Sat, Apr 22, 2023 at 09:38:44PM +0530, Krishna Kurapati PSSNV wrote:
+This patch series adds the relevant phy and controller
+configurations for enabling USB on IPQ9754
 
-> > Hi Andrew, Johan,
-> > 
-> >   I was looking at the pwr_event_irq interrupts for Multiport controller and
-> > see that there are two of them as per HW specs. All targets till date have
-> > only 1 pwr_event_irq required.
-> > 
-> > The reason I thought I missed pwr_event_irq in my patches is because in
-> > downstream this is a required IRQ for all targets, so I was under assumption
-> > that we need it for upstream targets as well. But upstream qcom driver
-> > doesn't have support for this IRQ yet. And this has been made a required one
-> > only for SC8280 [1]/[2].
-> > 
-> > Probably we can proceed in one of the following ways:
-> > 1. Remove pwr_event_irq in both bindings and DT as driver support is not
-> > present currently.
-> > 2. Update the bindings for SC8280 to include an optional secondary
-> > pwr_event_irq for multiport controller.
-> > 
-> > I would prefer option-1 as removing them would be better because they are
-> > not being used. Please let me know your thoughts on this.
-> > 
-> > [1]:
-> > https://lore.kernel.org/all/20220713131340.29401-2-johan+linaro@kernel.org/
-> > [2]:
-> > https://lore.kernel.org/all/20220713131340.29401-6-johan+linaro@kernel.org/
-> > 
-> 
-> Personally, I prefer option 2 since the IRQ does exist technically
-> (although it isn't currently used), I like it being described... it
-> makes the dt-binding a more complete description of the hardware.
-> 
-> I am unsure of the rules wrt dt-bindings and usage in drivers, but I
-> always like to view it as "this is a description of the hardware", and
-> the driver bit is just nice to have to ensure that whoever is adding the
-> binding is actually describing things sufficiently.
+Depends on:
+https://lore.kernel.org/all/20230217142030.16012-1-quic_devipriy@quicinc.com/
+https://lore.kernel.org/lkml/20230407155727.20615-1-quic_devipriy@quicinc.com/T/
 
-As Andrew mentioned, the binding should reflect the hardware and not
-what is currently supported in some version of software. 
+[v10]:
+	- Fix regulator definitions
+	- Address couple of other comments
 
-It looks like you even had four of these pwr_event interrupt line
-judging from your last iteration of this series.
+[v9]:
+	- Update bindings to make power-domains as optional since
+	  IPQ9574 doesn't have GDSCs
 
-Johan
+[v8]:
+	- Update bindings for the clock name change
+[v7]:
+	- com_aux -> cfg_ahb in patch 7
+
+[v6]:
+        - Incorporated review comments
+	- Resolve make dtbs_check messages
+	- Fixed pcs_usb offset
+	- Board dts file name changed
+
+[v5]:
+        - Incorporated review comments
+	- 'make dtbs_check' giving the following messages since
+	  ipq9574 doesn't have power domains. Hope this is ok
+
+		/local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: phy@7d000: 'power-domains' is a required property
+        	From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml
+		/local/mnt/workspace/varada/varda-linux/arch/arm64/boot/dts/qcom/ipq9574-al02-c7.dtb: usb@8a00000: 'power-domains' is a required property
+        	From schema: /local/mnt/workspace/varada/varda-linux/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+
+	- Move qmp phy DT node to newer specification
+
+[v4]:
+        - Incorporated review comments
+	- Address all 'make dtbs_check' errors
+
+[v3]:
+        - Incorporated review comments regarding coding style
+
+[v2]:
+        - Incorporated review comments regarding coding style,
+          maintaining sorted order of entries and unused phy register
+          offsets
+        - Removed NOC clock entries from DT node (will be implemented
+          later with interconnect support)
+        - Fixed 'make dtbs_check' errors/warnings
+
+[v1]:
+        https://lore.kernel.org/linux-arm-msm/5dac3aa4-8dc7-f9eb-5cf3-b361efdc9494@linaro.org/T/
+
+Varadarajan Narayanan (9):
+  dt-bindings: phy: qcom,qusb2: Document IPQ9574 compatible
+  dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3 PHY
+  dt-bindings: usb: dwc3: Add IPQ9574 compatible
+  clk: qcom: gcc-ipq9574: Add USB related clocks
+  phy: qcom-qusb2: add QUSB2 support for IPQ9574
+  phy: qcom: qmp: Update IPQ9574 USB Phy initialization Sequence
+  arm64: dts: qcom: ipq9574: Add USB related nodes
+  arm64: dts: qcom: ipq9574: Add LDO regulator node
+  arm64: dts: qcom: ipq9574: Enable USB
+
+ .../devicetree/bindings/phy/qcom,qusb2-phy.yaml    |   3 +-
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        |  41 ++++++--
+ .../devicetree/bindings/usb/qcom,dwc3.yaml         |   3 +-
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts        |  30 ++++++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              | 104 +++++++++++++++++++
+ drivers/clk/qcom/gcc-ipq9574.c                     |  37 +++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c            | 115 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qusb2.c              |   3 +
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h       |   2 +
+ 9 files changed, 330 insertions(+), 8 deletions(-)
+
+-- 
+2.7.4
+
