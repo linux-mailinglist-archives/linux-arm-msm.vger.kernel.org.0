@@ -2,88 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4D3E6F828B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 14:05:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 717F96F8291
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 14:08:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232065AbjEEMFp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 08:05:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58486 "EHLO
+        id S232073AbjEEMIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 08:08:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232076AbjEEMFo (ORCPT
+        with ESMTP id S232003AbjEEMIU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 08:05:44 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49AF9EF1
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 05:05:42 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-52c690f7fa4so1075005a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 05:05:42 -0700 (PDT)
+        Fri, 5 May 2023 08:08:20 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778C31163D
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 05:08:19 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-50bc4bc2880so2656708a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 05:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683288342; x=1685880342;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NWXugzf9IwHfTkCjdGSHgOMZEK8Ay75ykttzhebpUiU=;
-        b=MoZOxXq9olSI26ve+QVUvreFy9I9MRIXESMUrHNeIjgS5/+xdLE0FVbj59UlK0dXpo
-         Q/e8zaee6rgmO4GHx5yoaRQGUspVlyNXRfRySTLh5DzY4a1E0UiK3Hv9jIJgi5T7e1Bk
-         XR1H0/3hihiZr6fXhJIAYrynGI3y50rEivNnNauUJ9KPTPyuI518qRiUK/kIxhu+Pno9
-         vZxWBgZrNry2ERbCaYItbfH3or7E7rhUqbjHlLmAASiQvxgjEVX06jciXovgtZVhJxwK
-         pmVNl4dz4CSr8gdfh6Sm6ut98FjZ9xhwd9aoWakMgBjWfQq8MPA043RTcNTW/J6tBVrx
-         R0ZQ==
+        d=linaro.org; s=google; t=1683288498; x=1685880498;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=c4MyBlhMRNEJ76ND8FNJlKsIqlx5Berxx/rM+PzkENI=;
+        b=ImUMzA/W01t8yRDSNaBWijx/h7BS8hCq09w4pFTehFHgg63MhRUdJ1eRUEX5KTXcau
+         TdKCOIxuL8P5dWppjNMg9qvbUWcNwtd4ZfG3bDUFbYbYO9ZBd6pCmkjiFTwx3RoFL/Ko
+         SxM9qZQN4uhopLERejzvdhXxE4f1utHNZKYeuEVz7qoE3GXcydyj/mlpVvO3v+3rd9As
+         hr4eBVhU/LEsPp7X1jOoqiaZpjgC80cgqDtNdS4w5Ty9PVClF/0I8NYDXbpKrOnl2yj/
+         JKA2aCWF9A4Ib3/gfoib3u41Qmk96k/fBsTMcuMunG7E3+ML/qsd27G1ypUJz5Wb+Eps
+         mnzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683288342; x=1685880342;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NWXugzf9IwHfTkCjdGSHgOMZEK8Ay75ykttzhebpUiU=;
-        b=lPKkC80hzdDyXPmKIIJf5+W9X7VIfwN6hza9msYsJitjdpQ+rxrgNW/iXnBMgyGzbo
-         WkH5fvNzfiwS/dAmA77f7r9MEIh6g0pKGYiTDTSWO4quSZZtZGcrAHUmnWEw3PldwFfb
-         3/9I1b15UjsDleMEic38rmqkRUM2wiOwoT1KXlHB9MeAZyzgaPFKAsXZayp10FoqVV7T
-         4IYCyxESmyBCFY44ZxzW1RrdllaKtixcrcgVLvRQN8phw6a9e+eP8W46jCzmjBDVcrXW
-         Znz8SRkOg67Lnk1Tql6MhPE4md3kB47/RYY6wBtmykmxsE3LTTy6AG1QUKMwiP4z4jTe
-         akgw==
-X-Gm-Message-State: AC+VfDzCOJf+9SrKLocgq6Sr2Rhlx67MvxdaJ3YoC3hLnoQ70BWx5QDG
-        vA43vx5op2/74CmggByahxIfiQ==
-X-Google-Smtp-Source: ACHHUZ5krNkiPeRVhHxeYrz0et4F4wGWS5JLUD/rLBhKxSpjJ0ze4Kz+k3UrsgXBdBFupw0mQlVyAA==
-X-Received: by 2002:a17:902:6901:b0:1a1:956e:5417 with SMTP id j1-20020a170902690100b001a1956e5417mr985308plk.22.1683288341941;
-        Fri, 05 May 2023 05:05:41 -0700 (PDT)
-Received: from leoy-yangtze.lan ([107.151.177.135])
-        by smtp.gmail.com with ESMTPSA id v24-20020a17090331d800b001a245b49731sm1623301ple.128.2023.05.05.05.05.32
+        d=1e100.net; s=20221208; t=1683288498; x=1685880498;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c4MyBlhMRNEJ76ND8FNJlKsIqlx5Berxx/rM+PzkENI=;
+        b=VPuoPFoNP799mRccjXkcHmA5lvY1dP1E8eUir8H4rLGRGRR2pokjWdWsmz1i7yVq42
+         TDd/1h51qcsmSqpkVVTTKKjp0zDWfMOiRfPvMJ47P3HNA5cNmTKJa+zryGG+fs61P4E0
+         6l3u7yLHzWZpNSQIgmI37YC+8Ffs2WyxaQNP79nbeD8W7hyqBhXKZdE5YX78QU3Dqxjp
+         0mq0M0SfjLVlBQMMNKRUbI3v4toyakA/p8bwlAGcxbsXwpe/kwMmYifoMyqEnT3lzKuR
+         zfergfDhFbg8cbRT/ISDSz1xywfhEexsoGLyyAaPYQqApl5FLFZEGCWBykt7Dqjv3bqv
+         yyZQ==
+X-Gm-Message-State: AC+VfDxef9AdNokgot8ImtlfACd+dOwXJamt/UgWTj8zz6wo/UK4xNuY
+        Rt6sLPRN2pb4mK9ZDeZw0RBNMA==
+X-Google-Smtp-Source: ACHHUZ7oRezOiA0q3tP14l/JvlAbvxNmEOu/Na6EEdCWy+5j3ZvmDfOZW2tI7OBXv5uBm0JTno5SJw==
+X-Received: by 2002:a17:907:7285:b0:953:7e12:838a with SMTP id dt5-20020a170907728500b009537e12838amr964097ejc.67.1683288497933;
+        Fri, 05 May 2023 05:08:17 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:52e:24ce:bbc1:127d])
+        by smtp.gmail.com with ESMTPSA id ze16-20020a170906ef9000b00965ec1faf27sm457551ejb.74.2023.05.05.05.08.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 05:05:41 -0700 (PDT)
-Date:   Fri, 5 May 2023 20:05:29 +0800
-From:   Leo Yan <leo.yan@linaro.org>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc:     Hao Zhang <quic_hazha@quicinc.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
+        Fri, 05 May 2023 05:08:17 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
         Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] dt-bindings: arm: Add Coresight Dummy Trace
-Message-ID: <20230505120529.GB898031@leoy-yangtze.lan>
-References: <20230505092422.32217-1-quic_hazha@quicinc.com>
- <20230505092422.32217-3-quic_hazha@quicinc.com>
- <958ae925-dee2-3273-0cd6-b5edc891ba70@arm.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Kumar Thella <sthella@codeaurora.org>,
+        Keiji Hayashibara <hayashibara.keiji@socionext.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Peng Fan <peng.fan@oss.nxp.com>
+Subject: [PATCH 1/5] dt-bindings: nvmem: mxs-ocotp: drop unneeded address/size-cells
+Date:   Fri,  5 May 2023 14:08:10 +0200
+Message-Id: <20230505120814.1057152-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <958ae925-dee2-3273-0cd6-b5edc891ba70@arm.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -94,125 +87,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 05, 2023 at 11:54:03AM +0100, Suzuki Kuruppassery Poulose wrote:
+Referenced nvmem.yaml schema already defines address/size-cells, so
+remove redundant entries and use unevaluatedProperties: false.
 
-[...]
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> > +title: ARM Coresight Dummy component
-> > +
-> > +description: |
-> > +  Coresight Dummy Trace Module is for the specific devices that kernel
-> > +  don't have permission to access or configure, e.g., CoreSight TPDMs
-> > +  on Qualcomm platforms. So there need driver to register dummy devices
-> > +  as Coresight devices. It may also be used to define components that
-> > +  may not have any programming interfaces (e.g, static links), so that
-> > +  paths can be established in the driver. Provide Coresight API for
-> > +  dummy device operations, such as enabling and disabling dummy devices.
-> > +  Build the Coresight path for dummy sink or dummy source for debugging. > +
-> > +  The primary use case of the coresight dummy is to build path in kernel
-> > +  side for dummy sink and dummy source.
-> > +
-> > +maintainers:
-> > +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> > +  - Tao Zhang <quic_taozha@quicinc.com>
-> > +  - Hao Zhang <quic_hazha@quicinc.com>
-> > +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> 
-> Given this is a generic "CoreSight" component, I would prefer to have the
-> CoreSight subsystem maintainers listed here (too). I don't mind
-> the entries above, but would like to make sure that the subsystem
-> people are aware of the changes happening here. Please use:
-> 
-> Mike Leach <mike.leach@linaro.org>
-> Suzuki K Poulose <suzuki.poulose@arm.com>
-> Leo Yan <leo.yan@linaro.org>
+---
 
-Given I am spending little time on CoreSight reviewing, I'd like to
-use James Clark's email address to replace my own; I believe this
-would benefit long term maintenance.
+Cc: Peng Fan (OSS) <peng.fan@oss.nxp.com>
+---
+ Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-  James Clark <james.clark@arm.com>
+diff --git a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+index 8938eec22b52..a9b822aeaa7e 100644
+--- a/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
++++ b/Documentation/devicetree/bindings/nvmem/mxs-ocotp.yaml
+@@ -18,12 +18,6 @@ properties:
+       - fsl,imx23-ocotp
+       - fsl,imx28-ocotp
+ 
+-  "#address-cells":
+-    const: 1
+-
+-  "#size-cells":
+-    const: 1
+-
+   reg:
+     maxItems: 1
+ 
+@@ -35,7 +29,7 @@ required:
+   - reg
+   - clocks
+ 
+-additionalProperties: false
++unevaluatedProperties: false
+ 
+ examples:
+   - |
+-- 
+2.34.1
 
-Thanks!
-
-> With the above:
-> 
-> Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-> 
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - enum:
-> > +          - arm,coresight-dummy-sink
-> > +          - arm,coresight-dummy-source
-> > +
-> > +  out-ports:
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
-> > +    properties:
-> > +      port:
-> > +        description: Output connection from the source to Coresight
-> > +          Trace bus.
-> > +        $ref: /schemas/graph.yaml#/properties/port
-> > +
-> > +  in-ports:
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
-> > +    properties:
-> > +      port:
-> > +        description: Input connection from the Coresight Trace bus to
-> > +          dummy sink, such as Embedded USB debugger(EUD).
-> > +        $ref: /schemas/graph.yaml#/properties/port
-> > +
-> > +required:
-> > +  - compatible
-> > +
-> > +if:
-> > +  # If the compatible contains the below value
-> > +  properties:
-> > +    compatible:
-> > +      contains:
-> > +        const: arm,coresight-dummy-sink
-> > +
-> > +then:
-> > +  required:
-> > +    - in-ports
-> > +
-> > +else:
-> > +  required:
-> > +    - out-ports
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  # Minimum dummy sink definition. Dummy sink connect to coresight replicator.
-> > +  - |
-> > +    sink {
-> > +      compatible = "arm,coresight-dummy-sink";
-> > +
-> > +      in-ports {
-> > +        port {
-> > +          eud_in_replicator_swao: endpoint {
-> > +            remote-endpoint = <&replicator_swao_out_eud>;
-> > +          };
-> > +        };
-> > +      };
-> > +    };
-> > +
-> > +  # Minimum dummy source definition. Dummy source connect to coresight funnel.
-> > +  - |
-> > +    source {
-> > +      compatible = "arm,coresight-dummy-source";
-> > +
-> > +      out-ports {
-> > +        port {
-> > +          dummy_riscv_out_funnel_swao: endpoint {
-> > +            remote-endpoint = <&funnel_swao_in_dummy_riscv>;
-> > +          };
-> > +        };
-> > +      };
-> > +    };
-> > +
-> > +...
-> 
