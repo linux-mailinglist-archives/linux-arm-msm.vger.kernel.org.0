@@ -2,71 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F06A6F7E4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 09:58:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 014AB6F7E37
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 09:55:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231489AbjEEH6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 03:58:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41772 "EHLO
+        id S230403AbjEEHzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 03:55:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231448AbjEEH54 (ORCPT
+        with ESMTP id S230211AbjEEHzs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 03:57:56 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0A251885B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 00:57:54 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6436dfa15b3so1030686b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 00:57:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683273474; x=1685865474;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GD6YbDZJJDCG3Q5EdUcKmwfee5oU9TXm3B1yJ9ZVarQ=;
-        b=N1TugOu6fhexCXgNCR5Maq3QrUAZ66h96UWDhvmdBaRm7Ua3+mAADc7WA+HKuk2fSq
-         IlZdjnIq6SiBa8G33g+2c/DHK47vfAvA8YQQR0eF4eAXaA9lpKf7K6hAIW6swx6EwMvN
-         rFvASjyBhqRRb90KTXKESqI0rBcsJ0cvtiGpis7DAQsXxyIgN+2WIJ+i57EnNwbkdCu/
-         jPSHyvBxAqdqL3ENIPHEdB/2/EDmzhx5Q0MB+x76S7zh7VogpPs4ziVbPpVbTuZB21jv
-         bNVgX/wPL5k86SSIkRn9A0e32BQg1mxc1KFIj+5u5A2RW6pWZDlnqOjOgbxq+oIdwfhZ
-         TYfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683273474; x=1685865474;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GD6YbDZJJDCG3Q5EdUcKmwfee5oU9TXm3B1yJ9ZVarQ=;
-        b=Y5T/TUUPQZd2jOhZsZHjRlYOFbUXsrHSnbB4KObaABn0fpdrSItLPKMeIs8IwAovhI
-         4eixp8LttwRlXfAQEACDGB0HRllzJyufXCgbqKhJ5M/OnnlRl+x/ibn85Nl/11nI6Frj
-         XGWvpBIozyicUxqTvPoSIQYdbZlopdFEXvu/FRHib7y2xR2gFfTBHA/EKWyKzrRAVeGl
-         t/hFJTppwwVcaiUodCl1iveibt/hVjd/cRi7pEE76Wf+kvhdKPmQqAqOXgTUfYdKVxdF
-         QTOSV3bwL8o1AjAzJty0Yv+MU0yratnqbPx85hIJ1fZLd6rHXZixaUEG5/gGe1C5mHRX
-         tT/g==
-X-Gm-Message-State: AC+VfDwvmGc5Uq1j6frBPBnFYeJEPrz8XcdRfMFy4JvV3mwhlWwvsuwE
-        5i9FGGUAOHgv7HKtxajjwXybHeuXjhrPse1dFns=
-X-Google-Smtp-Source: ACHHUZ58rGOnzG8XteNveNsjh99imnsda89PwBgCattqqQeSOK7NDttTHPHxNTkEnvAFf11gZ2caTg==
-X-Received: by 2002:a05:6a00:2401:b0:63d:3339:e967 with SMTP id z1-20020a056a00240100b0063d3339e967mr1299592pfh.19.1683273474272;
-        Fri, 05 May 2023 00:57:54 -0700 (PDT)
-Received: from localhost.localdomain ([223.233.65.180])
-        by smtp.gmail.com with ESMTPSA id p17-20020aa78611000000b006242f4a8945sm988873pfn.182.2023.05.05.00.57.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 00:57:53 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski@linaro.org, devicetree@vger.kernel.org
-Subject: [PATCH v3 3/3] arm64: dts: qcom: qrb4210-rb2: Enable aDSP and cDSP remoteproc nodes
-Date:   Fri,  5 May 2023 13:23:54 +0530
-Message-Id: <20230505075354.1634547-4-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230505075354.1634547-1-bhupesh.sharma@linaro.org>
-References: <20230505075354.1634547-1-bhupesh.sharma@linaro.org>
+        Fri, 5 May 2023 03:55:48 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 517D917DF1;
+        Fri,  5 May 2023 00:55:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DD5B863C09;
+        Fri,  5 May 2023 07:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F23DC433D2;
+        Fri,  5 May 2023 07:55:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683273343;
+        bh=C0NxPbnK07NPfnCGHwtR10e2LP53WWBmIi+P/DTZCUE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=j1mK3nKHO+Ac7/NW8Ugie16wfX1T5Rfbckz+i/6/1RsJl9jBmm2Ak4VOsieXsEoNT
+         7OV4Yl/wkfeCdNMzEeQAB4KKnMU10Ntjz2SmA0CE+MNo3O5PbO1aTv6U0vBxrzRA5Q
+         D/npfNIEpZy0CQ5fCuAi2QjYdvdO4dJvbvOMuvkU+YZ87A/UlWVwpce2GtA02WuD3g
+         dRHcRf/jf073XJGlOl0fqvGY1Ewlj1wwH9RxE2U7PjUqOVM8uH8XRe9cckU97A0J+S
+         asR6b5BU6HaF3pomhF4ZvEq1Dh3XYZVVVq3ckbjGmuIBO/tf8DtLH8GU1tuB0P1i2z
+         7bVHV7Ix72h4g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1puqIC-0006lu-UO; Fri, 05 May 2023 09:55:53 +0200
+Date:   Fri, 5 May 2023 09:55:52 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Andrew Halaney <ahalaney@redhat.com>,
+        Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_wcheng@quicinc.com, quic_jackp@quicinc.com,
+        quic_harshq@quicinc.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v6 6/8] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZFS2iJOfhsM8gxK5@hovoldconsulting.com>
+References: <20230405125759.4201-1-quic_kriskura@quicinc.com>
+ <20230405125759.4201-7-quic_kriskura@quicinc.com>
+ <20230414154527.vsjtgtfsd5kc7vww@halaney-x13s>
+ <333ce700-8ca2-e230-3b5a-a95e4c021e45@quicinc.com>
+ <28a58bf9-5ad8-4084-11d6-cd1b0d3a2998@quicinc.com>
+ <20230425203328.hrz5dw7f2vsbbbgk@halaney-x13s>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230425203328.hrz5dw7f2vsbbbgk@halaney-x13s>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,36 +76,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the aDSP and cDSP remoteproc nodes on Qualcomm QRB4210 RB2 board.
+On Tue, Apr 25, 2023 at 03:33:28PM -0500, Andrew Halaney wrote:
+> On Sat, Apr 22, 2023 at 09:38:44PM +0530, Krishna Kurapati PSSNV wrote:
 
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> > Hi Andrew, Johan,
+> > 
+> >   I was looking at the pwr_event_irq interrupts for Multiport controller and
+> > see that there are two of them as per HW specs. All targets till date have
+> > only 1 pwr_event_irq required.
+> > 
+> > The reason I thought I missed pwr_event_irq in my patches is because in
+> > downstream this is a required IRQ for all targets, so I was under assumption
+> > that we need it for upstream targets as well. But upstream qcom driver
+> > doesn't have support for this IRQ yet. And this has been made a required one
+> > only for SC8280 [1]/[2].
+> > 
+> > Probably we can proceed in one of the following ways:
+> > 1. Remove pwr_event_irq in both bindings and DT as driver support is not
+> > present currently.
+> > 2. Update the bindings for SC8280 to include an optional secondary
+> > pwr_event_irq for multiport controller.
+> > 
+> > I would prefer option-1 as removing them would be better because they are
+> > not being used. Please let me know your thoughts on this.
+> > 
+> > [1]:
+> > https://lore.kernel.org/all/20220713131340.29401-2-johan+linaro@kernel.org/
+> > [2]:
+> > https://lore.kernel.org/all/20220713131340.29401-6-johan+linaro@kernel.org/
+> > 
+> 
+> Personally, I prefer option 2 since the IRQ does exist technically
+> (although it isn't currently used), I like it being described... it
+> makes the dt-binding a more complete description of the hardware.
+> 
+> I am unsure of the rules wrt dt-bindings and usage in drivers, but I
+> always like to view it as "this is a description of the hardware", and
+> the driver bit is just nice to have to ensure that whoever is adding the
+> binding is actually describing things sufficiently.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index abea44fd369d..3e8ace0ceebc 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -34,6 +34,18 @@ &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&remoteproc_adsp {
-+	firmware-name = "qcom/qrb4210-rb2/adsp.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/qrb4210-rb2/cdsp.mbn";
-+
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm6125-regulators";
--- 
-2.38.1
+As Andrew mentioned, the binding should reflect the hardware and not
+what is currently supported in some version of software. 
 
+It looks like you even had four of these pwr_event interrupt line
+judging from your last iteration of this series.
+
+Johan
