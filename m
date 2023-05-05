@@ -2,211 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 417C36F82AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 14:11:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 770896F82ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 14:29:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231995AbjEEMLu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 08:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35602 "EHLO
+        id S231256AbjEEM3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 08:29:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231941AbjEEMLt (ORCPT
+        with ESMTP id S229717AbjEEM3D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 08:11:49 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028081A10C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 05:11:48 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4eff50911bfso1900670e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 05:11:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683288706; x=1685880706;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2h/CWEwyJq3P5FCMXAryqXO9WR4aBfMB6PjoKhzl8U4=;
-        b=Zbu8EzgqpkD96pt/0mSDWzGiFSmWODcuaUmVyreABq7m1znvVzYxy3l3faRkivY2vY
-         oLDI2Z5XuRhTnKbuFBXLPc79Hw/MPZxeUXAQnNwDtXe14aQjma+HI0G1sbW7eDeTzzEv
-         ET9OzwJbVh4F0fVY55KUrnh73Q4nFx6eiftAoxcso4H8tEn0IhBMqdm5mBrn4c6XKXWU
-         aYEgXzNvaiCEIbvMqEm/CYVmSXbLBHRsfCj5feqRL4dfICy7bloK6AgaXukl9ki6l80Z
-         qywFsTyxuplXRXKuaqUoh1JXnQdVgz6mEfvzQ40jCwV+5MiGVQDFUocZaHQ7RJY3r3C4
-         dEGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683288706; x=1685880706;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2h/CWEwyJq3P5FCMXAryqXO9WR4aBfMB6PjoKhzl8U4=;
-        b=bT7Qih0E+Nr3NL+Eumu2HRYaeXcwfUbJdwGvnC8pJYLML/si2rGlpqp87kRX2CZOdu
-         JVyuEDdkdOw9Cmee+mMf/vdJ2hijaIE1fYCuD/4MGyo/WkdznMDVCCOWwF43Utw9p6BM
-         Sgjt2zR95mFsvnWHvtWWNSUFh38487oQ1Xn6oRl2vPkcolXiqQE7KSHkE96QkmvSg9d0
-         Yz5LK6vFHVxR9NQrfqTnR9QuuGlq1GrUGS43wq73u/NjKcg0Ab84Aol5zAreqCkELOM4
-         CXpaucdhB55+U1d4gSehZsoZ5ayXnERwX1HTIpqLbXYMZKJAwZPiuwN23+vIHGuAhV73
-         1ytw==
-X-Gm-Message-State: AC+VfDzi/Ope+Mk4qeZFhuYJANY8RMBsgRppv2iTymDSBEf4yij5TqvP
-        ShoM45i59GEOOOE+L3qxFUAI7g==
-X-Google-Smtp-Source: ACHHUZ65oVZBAu9sTHfvlhswi1d1wC5/971YPvE+M2PAFaQfj7qir5wd68R9OeFyzxYBUMg/1QjD6w==
-X-Received: by 2002:ac2:5108:0:b0:4f1:1de7:1aab with SMTP id q8-20020ac25108000000b004f11de71aabmr554324lfb.44.1683288706252;
-        Fri, 05 May 2023 05:11:46 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b21-20020ac25635000000b004f13633c260sm264975lff.145.2023.05.05.05.11.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 05:11:45 -0700 (PDT)
-Message-ID: <91a390b2-db3d-90f4-a2e2-6ccb75303d04@linaro.org>
-Date:   Fri, 5 May 2023 15:11:44 +0300
+        Fri, 5 May 2023 08:29:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB4051A60D;
+        Fri,  5 May 2023 05:29:01 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 345CLNiP000435;
+        Fri, 5 May 2023 12:28:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=5ZJjBSmdXDaEq2r2N/huRVsdp9Ac+rumdEOi8OpMmdI=;
+ b=FgP+w0zjRucwlFoZDkFhK72gy9auR3Tsv5VyTi1xajE1wC/8U0zzn5BMSkmuqVdJ04lC
+ 7v4Kgcpe1/sysDTAHM6s8+t3DEyLGlU+3DdcPhq4BhV64Qrev2zviDrmI8UcbBxyZQFj
+ hBO5cOc8tmZENyb8m+fKt0p/pcrDZ6XC04uv9aS2k7xKyw+4aoflkeDbGWckQAacU46q
+ +jZ82AgG3nYPEnIqTkvOujQH22jfIJnzJm8mVhG9Zdoh0KbTOKkWwrRnSEMDWEb0wk4p
+ EzMrEOyEkw9KGZRRVq/f++ICgim8G7iH9FNTAYLalyx75XBQI9FpYdB33eGvF+nHowII ig== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qctfq0w6y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 05 May 2023 12:28:28 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 345CSRZ2004868
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 5 May 2023 12:28:27 GMT
+Received: from [10.216.37.178] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 5 May 2023
+ 05:28:22 -0700
+Message-ID: <baddb9a3-f995-7b03-b3cb-1784ccb1c2a2@quicinc.com>
+Date:   Fri, 5 May 2023 17:58:19 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v2 07/13] drm/msm/dpu: Add SM6350 support
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20230411-topic-straitlagoon_mdss-v2-0-5def73f50980@linaro.org>
- <20230411-topic-straitlagoon_mdss-v2-7-5def73f50980@linaro.org>
- <k25jg7cez2kimpxr4ztbdzjr2adq6a2vjknyvfe5frxujtogfg@vhfdyt45unv6>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <k25jg7cez2kimpxr4ztbdzjr2adq6a2vjknyvfe5frxujtogfg@vhfdyt45unv6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 01/18] media: venus: hfi_venus: Only consider
+ sys_idle_indicator on V1
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Marijn Suijten" <marijn.suijten@somainline.org>
+References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
+ <20230228-topic-venus-v2-1-d95d14949c79@linaro.org>
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20230228-topic-venus-v2-1-d95d14949c79@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EhCk6l82_NSYFpqGnYtWdP3p0EJEo5RQ
+X-Proofpoint-ORIG-GUID: EhCk6l82_NSYFpqGnYtWdP3p0EJEo5RQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-05_19,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1011
+ mlxlogscore=999 adultscore=0 phishscore=0 malwarescore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305050103
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 18:37, Marijn Suijten wrote:
-> On 2023-04-21 00:31:16, Konrad Dybcio wrote:
->> Add SM6350 support to the DPU1 driver to enable display output.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> After addressing the comments from Dmitry (CURSOR0->DMA1 and
-> CURSOR1->DMA2), this is:
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> See below for some nits.
+On 5/4/2023 1:30 PM, Konrad Dybcio wrote:
+> As per information from Qualcomm [1], this property is not really
+> supported beyond msm8916 (HFI V1) and some newer HFI versions really
+> dislike receiving it, going as far as crashing the device.
+>
+> Only consider toggling it (via the module option) on HFIV1.
+> While at it, get rid of the global static variable (which defaulted
+> to zero) which was never explicitly assigned to for V1.
+>
+> Note: [1] is a reply to the actual message in question, as lore did not
+> properly receive some of the emails..
+>
+> [1] https://lore.kernel.org/lkml/955cd520-3881-0c22-d818-13fe9a47e124@linaro.org/
+> Fixes: 7ed9e0b3393c ("media: venus: hfi, vdec: v6 Add IS_V6() to existing IS_V4() if locations")
+> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/media/platform/qcom/venus/hfi_venus.c | 18 ++++++------------
+>   1 file changed, 6 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+> index 2ad40b3945b0..bff435abd59b 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+> @@ -131,7 +131,6 @@ struct venus_hfi_device {
+>   
+>   static bool venus_pkt_debug;
+>   int venus_fw_debug = HFI_DEBUG_MSG_ERROR | HFI_DEBUG_MSG_FATAL;
+> -static bool venus_sys_idle_indicator;
+>   static bool venus_fw_low_power_mode = true;
+>   static int venus_hw_rsp_timeout = 1000;
+>   static bool venus_fw_coverage;
+> @@ -947,17 +946,12 @@ static int venus_sys_set_default_properties(struct venus_hfi_device *hdev)
+>   	if (ret)
+>   		dev_warn(dev, "setting fw debug msg ON failed (%d)\n", ret);
+>   
+> -	/*
+> -	 * Idle indicator is disabled by default on some 4xx firmware versions,
+> -	 * enable it explicitly in order to make suspend functional by checking
+> -	 * WFI (wait-for-interrupt) bit.
+> -	 */
+> -	if (IS_V4(hdev->core) || IS_V6(hdev->core))
+> -		venus_sys_idle_indicator = true;
+> -
+> -	ret = venus_sys_set_idle_message(hdev, venus_sys_idle_indicator);
+> -	if (ret)
+> -		dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
+> +	/* HFI_PROPERTY_SYS_IDLE_INDICATOR is not supported beyond 8916 (HFI V1) */
+> +	if (IS_V1(hdev->core)) {
+> +		ret = venus_sys_set_idle_message(hdev, false);
+> +		if (ret)
+> +			dev_warn(dev, "setting idle response ON failed (%d)\n", ret);
+> +	}
 
-[...]
+This property was enabled in video firmware for SDM845 by default from 
+version #7. Need to confirm if patch[1]
 
->> +static const struct dpu_mdp_cfg sm6350_mdp[] = {
->> +	{
->> +	.name = "top_0", .id = MDP_TOP,
->> +	.base = 0x0, .len = 0x494,
->> +	.features = 0,
->> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
->> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
->> +	.clk_ctrls[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
->> +	.clk_ctrls[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
->> +	.clk_ctrls[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
->> +	},
->> +};
->> +
->> +static const struct dpu_ctl_cfg sm6350_ctl[] = {
->> +	{
->> +	.name = "ctl_0", .id = CTL_0,
->> +	.base = 0x1000, .len = 0x1dc,
->> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
->> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
->> +	},
->> +	{
->> +	.name = "ctl_1", .id = CTL_1,
->> +	.base = 0x1200, .len = 0x1dc,
->> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
->> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
->> +	},
->> +	{
->> +	.name = "ctl_2", .id = CTL_2,
->> +	.base = 0x1400, .len = 0x1dc,
->> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
->> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
->> +	},
->> +	{
->> +	.name = "ctl_3", .id = CTL_3,
->> +	.base = 0x1600, .len = 0x1dc,
->> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
->> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
->> +	},
->> +};
->> +
->> +static const struct dpu_sspp_cfg sm6350_sspp[] = {
->> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
->> +		 sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
->> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
->> +		 sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
->> +	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_CURSOR_SDM845_MASK,
->> +		 sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
->> +	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK,
->> +		 sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
->> +};
->> +
->> +static const struct dpu_lm_cfg sm6350_lm[] = {
->> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
->> +		&sc7180_lm_sblk, PINGPONG_0, LM_1, DSPP_0),
->> +	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
->> +		&sc7180_lm_sblk, PINGPONG_1, LM_0, 0),
-> 
-> These two entries are indented with two tabs and have one character too
-> many to align with the opening parenthesis on the previous line.  Can we
-> please settle on a single style, as this commit mostly uses tabs+spaces
-> to align with the opening parenthesis?
-> 
-> Dmitry vouched for `cino=(0` (when in unclosed parenthesis, align next
-> line with zero extra characters to the opening parenthesis), but I find
-> double tabs more convenient as it doesn't require reindenting when
-> changing the name of the macro (which happened too often in my INTF TE
-> series).
+was added before the default enablement in firmware. This patch need to 
+be verified on SDM845 for suspend
 
-I mainly vote for 'cino=(0' for indenting conditions (where double tab 
-is confusing) and for function calls. I do not have a strong opinion 
-about macros expansions. We have been using double-tab there, which is 
-fine with me.
+functionality, before removing it for V4 to avoid power regression.
 
-Another option (which I personally find more appealing, but it doesn't 
-play well with the current guidelines) is to have all macro arguments in 
-a single line. It makes it easier to compare things.
+[1] 17cd3d1d2e52: media: venus: hfi_venus: add suspend functionality for 
+Venus 4xx
 
-And another option would be to expand these macros up to some point. 
-Previous experience with clock and interconnect drivers showed that 
-expanding such multi-arg acros makes it _easier_ to handle the data. 
-Counterintuitive, but true.
+-Vikash
 
-> 
->> +};
->> +
->> +static const struct dpu_dspp_cfg sm6350_dspp[] = {
->> +	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
->> +		 &sm8150_dspp_sblk),
->> +};
->> +
->> +static struct dpu_pingpong_cfg sm6350_pp[] = {
->> +	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
->> +	       DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
->> +	       -1),
->> +	PP_BLK("pingpong_1", PINGPONG_1, 0x70800, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
->> +	       DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
->> +	       -1),
-
-[skipped the rest]
-
--- 
-With best wishes
-Dmitry
-
+>   
+>   	ret = venus_sys_set_power_control(hdev, venus_fw_low_power_mode);
+>   	if (ret)
+>
