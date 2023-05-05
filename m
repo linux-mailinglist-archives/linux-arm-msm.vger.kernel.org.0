@@ -2,151 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 481C26F7930
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 00:34:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C923F6F7AA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 03:19:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229545AbjEDWeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 4 May 2023 18:34:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35578 "EHLO
+        id S229827AbjEEBTY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 4 May 2023 21:19:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjEDWeT (ORCPT
+        with ESMTP id S229459AbjEEBTY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 4 May 2023 18:34:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 975857AA3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 15:34:17 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 344MTPCr001012;
-        Thu, 4 May 2023 22:34:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/Lv0bJIN+ShY3qSC4jGguki7sQttneND8/KAditTJBk=;
- b=YpPAu+Qn3gcZ/y7FY989wlECqQiqUZcmF7ZxbEk6sdl+un+99h8UEKfZpnbhlGiewToc
- NOC+DxNcpT0qpezM+F5J9IDzedUijymmeu2ePCF8PJJpr7K5pOma4PwoJuZxwGtZrB2c
- OmkKGnyZlHIPX3LC1//5E/bHL7JA3d+Od07sVFhf7E3kWdRaUDPHaGasdl8mIyN5EQ3e
- tDm6cxzykr5AlVmB3153K+JJGw2nltgp1xdJJ4SJN52QKQ8v8/B9GgUUXqgVLsHP8NRp
- uyW/hmxdMtrHzkVGbTtzp91HVuOhdFc/6eULkCg5k1gl/ZvcmpvPIMd+lvTl9RRmvwDH Jw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qc5042cva-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 04 May 2023 22:34:10 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 344MY9pl001521
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 4 May 2023 22:34:09 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
- 15:34:09 -0700
-Message-ID: <4e7f88f9-037b-b5d4-3079-81f394da657f@quicinc.com>
-Date:   Thu, 4 May 2023 15:34:08 -0700
+        Thu, 4 May 2023 21:19:24 -0400
+Received: from hust.edu.cn (unknown [202.114.0.240])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1AFAA12494;
+        Thu,  4 May 2023 18:19:21 -0700 (PDT)
+Received: from d202180596$hust.edu.cn ( [10.12.189.15] ) by
+ ajax-webmail-app2 (Coremail) ; Fri, 5 May 2023 09:18:16 +0800 (GMT+08:00)
+X-Originating-IP: [10.12.189.15]
+Date:   Fri, 5 May 2023 09:18:16 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From:   d202180596@hust.edu.cn
+To:     "andy gross" <agross@kernel.org>,
+        "bjorn andersson" <andersson@kernel.org>,
+        "konrad dybcio" <konrad.dybcio@linaro.org>,
+        "wolfram sang" <wsa@kernel.org>,
+        "ivan t. ivanov" <iivanov@mm-sol.com>,
+        "sricharan r" <sricharan@codeaurora.org>,
+        "naveen kaje" <nkaje@codeaurora.org>,
+        "austin christ" <austinwc@codeaurora.org>
+Cc:     hust-os-kernel-patches@googlegroups.com,
+        "andy gross" <agross@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20220802(cbd923c5)
+ Copyright (c) 2002-2023 www.mailtech.cn hust
+In-Reply-To: <20230418135612.598-1-d202180596@hust.edu.cn>
+References: <20230418135612.598-1-d202180596@hust.edu.cn>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v6 6/7] drm/msm/dsi: update hdisplay calculation for
- dsi_timing_setup
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230329-rfc-msm-dsc-helper-v6-0-cb7f59f0f7fb@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v6-6-cb7f59f0f7fb@quicinc.com>
- <ynr6n5p2envixdn6pycjo4fat6n64xe4pkplhq5c2ukhi2q2tf@hqlsuusl66cl>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <ynr6n5p2envixdn6pycjo4fat6n64xe4pkplhq5c2ukhi2q2tf@hqlsuusl66cl>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RF3tCV6BhW5bZOiKq1hn7pwbIEzpXcYT
-X-Proofpoint-ORIG-GUID: RF3tCV6BhW5bZOiKq1hn7pwbIEzpXcYT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_13,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- suspectscore=0 adultscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 mlxscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2305040182
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Message-ID: <5c9f1e4d.47382.187e97d01a5.Coremail.d202180596@hust.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: GQEQrADX4JVYWVRkMDEDBQ--.4113W
+X-CM-SenderInfo: rgsqjiiyqvmlo6kx23oohg3hdfq/1tbiAQoCE17Em5bqRAAAsj
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+        daVFxhVjvjDU=
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/4/2023 2:56 PM, Marijn Suijten wrote:
-> On 2023-04-12 16:25:20, Jessica Zhang wrote:
->> hdisplay for compressed images should be calculated as bytes_per_slice *
->> slice_count. Thus, use MSM DSC helper to calculate hdisplay for
->> dsi_timing_setup instead of directly using mode->hdisplay.
->>
->> Changes in v3:
->> - Split from previous patch
->> - Initialized hdisplay as uncompressed pclk per line at the beginning of
->>    dsi_timing_setup as to not break dual DSI calculations
->>
->> Changes in v4:
->> - Moved pclk_per_intf calculations to DSC hdisplay adjustments
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 508577c596ff..ae966d4e349d 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   		 * pulse width same
->>   		 */
->>   		h_total -= hdisplay;
->> -		hdisplay /= 3;
->> +		hdisplay = msm_dsc_get_pclk_per_intf(msm_host->dsc) / 3;
-> 
-> This patch is unfortunately regressing the Sony Xperia XZ3 (sdm845,
-> single DSI), which will only show garbage when it is applied.
-> 
-> Are you sure this is correct, and the helper is returning the right
-> values?  I'll see if I can help review and validate those later, and
-> debug if necessary.
-
-Hi Marijn,
-
-Just checking, are you testing this with the DSI for DSC v1.2 changes? 
-That series includes a fix to the word count calculation [1] needed to 
-get DSC working.
-
-Thanks,
-
-Jessica Zhang
-
-[1] https://patchwork.freedesktop.org/patch/535115/?series=117219&rev=1
-
-> 
-> - Marijn
-> 
->>   		h_total += hdisplay;
->>   		ha_end = ha_start + hdisplay;
->>   	}
->>
->> -- 
->> 2.40.0
->>
+Cj4gLS0tLS3ljp/lp4vpgq7ku7YtLS0tLQo+IOWPkeS7tuS6ujogIlNodWFpIEppYW5nIiA8ZDIw
+MjE4MDU5NkBodXN0LmVkdS5jbj4KPiDlj5HpgIHml7bpl7Q6IDIwMjMtMDQtMTggMjE6NTY6MTIg
+KOaYn+acn+S6jCkKPiDmlLbku7bkuro6ICJBbmR5IEdyb3NzIiA8YWdyb3NzQGtlcm5lbC5vcmc+
+LCAiQmpvcm4gQW5kZXJzc29uIiA8YW5kZXJzc29uQGtlcm5lbC5vcmc+LCAiS29ucmFkIER5YmNp
+byIgPGtvbnJhZC5keWJjaW9AbGluYXJvLm9yZz4sICJXb2xmcmFtIFNhbmciIDx3c2FAa2VybmVs
+Lm9yZz4sICJJdmFuIFQuIEl2YW5vdiIgPGlpdmFub3ZAbW0tc29sLmNvbT4sICJTcmljaGFyYW4g
+UiIgPHNyaWNoYXJhbkBjb2RlYXVyb3JhLm9yZz4sICJOYXZlZW4gS2FqZSIgPG5rYWplQGNvZGVh
+dXJvcmEub3JnPiwgIkF1c3RpbiBDaHJpc3QiIDxhdXN0aW53Y0Bjb2RlYXVyb3JhLm9yZz4KPiDm
+ioTpgIE6IGh1c3Qtb3Mta2VybmVsLXBhdGNoZXNAZ29vZ2xlZ3JvdXBzLmNvbSwgIlNodWFpIEpp
+YW5nIiA8ZDIwMjE4MDU5NkBodXN0LmVkdS5jbj4sICJBbmR5IEdyb3NzIiA8YWdyb3NzQGNvZGVh
+dXJvcmEub3JnPiwgbGludXgtYXJtLW1zbUB2Z2VyLmtlcm5lbC5vcmcsIGxpbnV4LWkyY0B2Z2Vy
+Lmtlcm5lbC5vcmcsIGxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmcKPiDkuLvpopg6IFtQQVRD
+SF0gaTJjOiBxdXA6IEFkZCBtaXNzaW5nIHVud2luZCBnb3RvIGluIHF1cF9pMmNfcHJvYmUoKQo+
+IAo+IFNtYXRjaCBXYXJuczoKPiAJZHJpdmVycy9pMmMvYnVzc2VzL2kyYy1xdXAuYzoxNzg0IHF1
+cF9pMmNfcHJvYmUoKQo+IAl3YXJuOiBtaXNzaW5nIHVud2luZCBnb3RvPwo+IAo+IFRoZSBnb3Rv
+IGxhYmVsICJmYWlsX3J1bnRpbWUiIGFuZCAiZmFpbCIgd2lsbCBkaXNhYmxlIHF1cC0+cGNsaywg
+Cj4gYnV0IGhlcmUgcXVwLT5wY2xrIGZhaWxlZCB0byBvYnRhaW4sIGluIG9yZGVyIHRvIGJlIGNv
+bnNpc3RlbnQsIAo+IGNoYW5nZSB0aGUgZGlyZWN0IHJldHVybiB0byBnb3RvIGxhYmVsICJmYWls
+X2RtYSIuCj4gCj4gRml4ZXM6IDEwYzVhODQyNTk2OCAoImkyYzogcXVwOiBOZXcgYnVzIGRyaXZl
+ciBmb3IgdGhlIFF1YWxjb21tIFFVUCBJMkMgY29udHJvbGxlciIpCj4gRml4ZXM6IDUxNWRhNzQ2
+OTgzYiAoImkyYzogcXVwOiBhZGQgQUNQSSBzdXBwb3J0IikKPiBTaWduZWQtb2ZmLWJ5OiBTaHVh
+aSBKaWFuZyA8ZDIwMjE4MDU5NkBodXN0LmVkdS5jbj4KPiBSZXZpZXdlZC1ieTogRG9uZ2xpYW5n
+IE11IDxkem05MUBodXN0LmVkdS5jbj4KPiAtLS0KPiBUaGUgaXNzdWUgaXMgZm91bmQgYnkgc3Rh
+dGljIGFuYWx5c2lzIGFuZCByZW1haW5zIHVudGVzdGVkLgo+IC0tLQo+ICBkcml2ZXJzL2kyYy9i
+dXNzZXMvaTJjLXF1cC5jIHwgMjEgKysrKysrKysrKysrKystLS0tLS0tCj4gIDEgZmlsZSBjaGFu
+Z2VkLCAxNCBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS9k
+cml2ZXJzL2kyYy9idXNzZXMvaTJjLXF1cC5jIGIvZHJpdmVycy9pMmMvYnVzc2VzL2kyYy1xdXAu
+Ywo+IGluZGV4IDJlMTUzZjJmNzFiNi4uNzg2ODIzODhlMDJlIDEwMDY0NAo+IC0tLSBhL2RyaXZl
+cnMvaTJjL2J1c3Nlcy9pMmMtcXVwLmMKPiArKysgYi9kcml2ZXJzL2kyYy9idXNzZXMvaTJjLXF1
+cC5jCj4gQEAgLTE3NTIsMTYgKzE3NTIsMjEgQEAgc3RhdGljIGludCBxdXBfaTJjX3Byb2JlKHN0
+cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCj4gIAlpZiAoIWNsa19mcmVxIHx8IGNsa19mcmVx
+ID4gSTJDX01BWF9GQVNUX01PREVfUExVU19GUkVRKSB7Cj4gIAkJZGV2X2VycihxdXAtPmRldiwg
+ImNsb2NrIGZyZXF1ZW5jeSBub3Qgc3VwcG9ydGVkICVkXG4iLAo+ICAJCQljbGtfZnJlcSk7Cj4g
+LQkJcmV0dXJuIC1FSU5WQUw7Cj4gKwkJcmV0ID0gLUVJTlZBTDsKPiArCQlnb3RvIGZhaWxfZG1h
+Owo+ICAJfQo+ICAKPiAgCXF1cC0+YmFzZSA9IGRldm1fcGxhdGZvcm1faW9yZW1hcF9yZXNvdXJj
+ZShwZGV2LCAwKTsKPiAtCWlmIChJU19FUlIocXVwLT5iYXNlKSkKPiAtCQlyZXR1cm4gUFRSX0VS
+UihxdXAtPmJhc2UpOwo+ICsJaWYgKElTX0VSUihxdXAtPmJhc2UpKSB7Cj4gKwkJcmV0ID0gUFRS
+X0VSUihxdXAtPmJhc2UpOwo+ICsJCWdvdG8gZmFpbF9kbWE7Cj4gKwl9Cj4gIAo+ICAJcXVwLT5p
+cnEgPSBwbGF0Zm9ybV9nZXRfaXJxKHBkZXYsIDApOwo+IC0JaWYgKHF1cC0+aXJxIDwgMCkKPiAt
+CQlyZXR1cm4gcXVwLT5pcnE7Cj4gKwlpZiAocXVwLT5pcnEgPCAwKSB7Cj4gKwkJcmV0ID0gcXVw
+LT5pcnE7Cj4gKwkJZ290byBmYWlsX2RtYTsKPiArCX0KPiAgCj4gIAlpZiAoaGFzX2FjcGlfY29t
+cGFuaW9uKHF1cC0+ZGV2KSkgewo+ICAJCXJldCA9IGRldmljZV9wcm9wZXJ0eV9yZWFkX3UzMihx
+dXAtPmRldiwKPiBAQCAtMTc3NSwxMyArMTc4MCwxNSBAQCBzdGF0aWMgaW50IHF1cF9pMmNfcHJv
+YmUoc3RydWN0IHBsYXRmb3JtX2RldmljZSAqcGRldikKPiAgCQlxdXAtPmNsayA9IGRldm1fY2xr
+X2dldChxdXAtPmRldiwgImNvcmUiKTsKPiAgCQlpZiAoSVNfRVJSKHF1cC0+Y2xrKSkgewo+ICAJ
+CQlkZXZfZXJyKHF1cC0+ZGV2LCAiQ291bGQgbm90IGdldCBjb3JlIGNsb2NrXG4iKTsKPiAtCQkJ
+cmV0dXJuIFBUUl9FUlIocXVwLT5jbGspOwo+ICsJCQlyZXQgPSBQVFJfRVJSKHF1cC0+Y2xrKTsK
+PiArCQkJZ290byBmYWlsX2RtYTsKPiAgCQl9Cj4gIAo+ICAJCXF1cC0+cGNsayA9IGRldm1fY2xr
+X2dldChxdXAtPmRldiwgImlmYWNlIik7Cj4gIAkJaWYgKElTX0VSUihxdXAtPnBjbGspKSB7Cj4g
+IAkJCWRldl9lcnIocXVwLT5kZXYsICJDb3VsZCBub3QgZ2V0IGlmYWNlIGNsb2NrXG4iKTsKPiAt
+CQkJcmV0dXJuIFBUUl9FUlIocXVwLT5wY2xrKTsKPiArCQkJcmV0ID0gUFRSX0VSUihxdXAtPnBj
+bGspOwo+ICsJCQlnb3RvIGZhaWxfZG1hOwo+ICAJCX0KPiAgCQlxdXBfaTJjX2VuYWJsZV9jbG9j
+a3MocXVwKTsKPiAgCQlzcmNfY2xrX2ZyZXEgPSBjbGtfZ2V0X3JhdGUocXVwLT5jbGspOwo+IC0t
+IAo+IDIuMjUuMQoKcGluZz8g
