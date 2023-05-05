@@ -2,89 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B7C76F8979
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:24:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DB5A6F897F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:26:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233184AbjEETYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 15:24:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52750 "EHLO
+        id S232782AbjEET0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 15:26:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233075AbjEETYT (ORCPT
+        with ESMTP id S233097AbjEET0f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 15:24:19 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D504EDE
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:24:16 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac8ee9cf7aso3900981fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:24:15 -0700 (PDT)
+        Fri, 5 May 2023 15:26:35 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F8B46AD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:26:33 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4eff4ea8e39so2495361e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683314654; x=1685906654;
+        d=linaro.org; s=google; t=1683314791; x=1685906791;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WFtYkfF8p6muyP6sCedXWbjjpL9Y5mT+RA/iKNtBB10=;
-        b=VJ3LTdfpRrRm4cs5dtmtqonfhNqUXH23FibixicFrTmZRVei3kjJhYv+BuKziaFbQW
-         KLz5rSjmnkHN22BFCqt400ZTtqtKEvqlqxIlmfE/5DY4kFDiOWtpH/4cUcrPS4E3DX/v
-         8rM7/CU8GhkUd+Ck/CPQ5P8/eecBk/5Q6L6mPfQZY7DmeYjoIb5ChQ72HOtkimkfScXS
-         h7NGPWVK37KTsQfX6kkLJlspagmr0NF/Fvf0CDE/8iEibJ69PL+5VOrNIkKZUWBWp7Sc
-         2GsGFUmlJ9mJo7xLvrUjc+ayGbFOi7UilS0bqbNCrCU6OL1ZRINKl7H4ZqmcCK9dI86c
-         dvZQ==
+        bh=3iZJ9fGhjhbbNzeAFBlmfcQc+gjKnOZ5KfzSZflffhY=;
+        b=MVs6djWgRKnZBGYNxps9/00kkcIaVpTanY0bv6lV+9QuA7oAe+zMsz/Z9EBDcKc5jl
+         0bqAauyycDZjfZh1tkcrdMerW9qhOGSVeeYM4Fd6ZlZNFK6+cdVq0a+UL/rxP6xwo4IY
+         S63BnY3xe3LWVd49BKJaKOA7Urzl2zKsNijhneotxntoU1K40jMqh+zqtBv0Rn34ki/1
+         9n67nRds4PjfHaAPCTyIZkogoQtU23tkya5NLJWqZDASMq8Ln+Xy6lgTaVVwE94O93Cu
+         sNmWOMTBAaL1qlI0iEpgjS9M/pOeVNknYAGpwJfX7m7Uo3VrhkJzQYkn8sixe31WzEg0
+         zXeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683314654; x=1685906654;
+        d=1e100.net; s=20221208; t=1683314791; x=1685906791;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WFtYkfF8p6muyP6sCedXWbjjpL9Y5mT+RA/iKNtBB10=;
-        b=JZlJ3vgc92cq4AhOBsKvZ8dfGcR1FJE2Fckc6Yq+IzIi/R9Z4/nySCNGnA3Th5ZPd4
-         PuduJ0CpVJQdF4f9tP6tjAfkzHX8wQcSMIRfgFLe50KgyI73E2pRQXjmrT6atisvwQ/5
-         6Ojnz0ySLUie+ud1qnMytBBMwFxjndnnSnOCfFlCekRUtcZw/4f9eV+ScGck/wfAgtMI
-         e9KerGplNVA/Uhi1km7n22BdZKij5W3hfIMByd6fWAr3lBx2BpTgOkRwvrxRyfVVojvm
-         F9S1e9SL/TgCnAradjwtjs6P2bqGsyRL4U4IxpfzYxIyVosO7oBt0JRWXxNaixpjNErK
-         CR4A==
-X-Gm-Message-State: AC+VfDx0IopniaxtNANdadbzhy83wEPMPtxde+B6w8fF2eCi+o83bqI1
-        Wb35XQT41L2PiDoovZYvSRe9jA==
-X-Google-Smtp-Source: ACHHUZ54q+neVDa21tI+PCZkTtJCDWQQqHFBfX132vGVIsROm4MXbqMnO9o91Xe4jw6Z90CxQZA62Q==
-X-Received: by 2002:ac2:5a5e:0:b0:4f1:3b3e:2143 with SMTP id r30-20020ac25a5e000000b004f13b3e2143mr693303lfn.38.1683314654273;
-        Fri, 05 May 2023 12:24:14 -0700 (PDT)
+        bh=3iZJ9fGhjhbbNzeAFBlmfcQc+gjKnOZ5KfzSZflffhY=;
+        b=CiCwXYvd2vFsxGKYmdYTfXGsnHwyHMalSU82pUQts7Wt5w5mwVxtCCbuL31I5lJJDm
+         fXOddjbtanmzH5j4TANssn24slUyTcwxiS8tdooO9lc8PsiWGj2gqv3m0nVdCi/+C+bD
+         jxgdIFUIq00CS7MPvhjSjMPXsZjagWNCC/nXRT9Zo26Ht4dcaqlbKuMrboP+t1D+USnG
+         CYCC0a0Wi653MI7nXUUz380Givn8qfC0/tCRk3+N3MiZrRhatbIM5hLBXq3l34vdvTa3
+         F36lYesNZNn2lnm9NtgZvPUG2/lORPYlyZERRLNB89fJ1/Eiromi4p0gqIHgApUAmSFo
+         dslA==
+X-Gm-Message-State: AC+VfDwU+olT3CJ2oNt1zpH1HKjkYea3ruR99cXcwpdIbwngrAp36vlQ
+        lPFlbNHvC9Si3MGOc61NjwVllw==
+X-Google-Smtp-Source: ACHHUZ7BIu14SzjFhQTIytIPXgPw1F11LQCkHeaQR0KLUgWzQKpVnrM71jbROal0OQ7L/ot5xDESgg==
+X-Received: by 2002:a05:6512:3905:b0:4a4:68b9:1a14 with SMTP id a5-20020a056512390500b004a468b91a14mr743687lfu.60.1683314791074;
+        Fri, 05 May 2023 12:26:31 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id z28-20020a05651c023c00b002ab59a09d75sm84477ljn.120.2023.05.05.12.24.12
+        by smtp.gmail.com with ESMTPSA id n6-20020a056512388600b004eaeb0a984csm387537lft.88.2023.05.05.12.26.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 12:24:13 -0700 (PDT)
-Message-ID: <9acc7001-2b3a-f635-9814-95850a71f142@linaro.org>
-Date:   Fri, 5 May 2023 21:24:12 +0200
+        Fri, 05 May 2023 12:26:30 -0700 (PDT)
+Message-ID: <958fec66-2978-1d45-baad-c735fab85108@linaro.org>
+Date:   Fri, 5 May 2023 21:26:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v2 06/18] media: venus: firmware: Leave a clue for
- homegrown porters
+Subject: Re: [PATCH v10 8/9] arm64: dts: qcom: ipq9574: Add LDO regulator node
 Content-Language: en-US
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>
-References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
- <20230228-topic-venus-v2-6-d95d14949c79@linaro.org>
- <ef50ac6c-a635-7f83-c484-a4f91b5e5d12@quicinc.com>
- <579f3480-1cbc-5688-7226-986205b5825e@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+References: <cover.1683183860.git.quic_varada@quicinc.com>
+ <8894bf2c44eaf4959c7a1966b66229e6cf5cda96.1683183860.git.quic_varada@quicinc.com>
+ <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <579f3480-1cbc-5688-7226-986205b5825e@quicinc.com>
+In-Reply-To: <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -94,45 +85,50 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.05.2023 15:00, Vikash Garodia wrote:
-> 
-> On 5/5/2023 6:27 PM, Vikash Garodia wrote:
+On 5.05.2023 11:29, Dmitry Baryshkov wrote:
+> On Fri, 5 May 2023 at 11:23, Varadarajan Narayanan
+> <quic_varada@quicinc.com> wrote:
 >>
->> On 5/4/2023 1:31 PM, Konrad Dybcio wrote:
->>> Leave a clue about where the seemingly magic values come from, as it
->>> is not obvious and requires some digging downstream..
-> Rephrase the commit text.
-Please be more specific, do you want me to use the
-explanations you gave in the previous reply?
+>> Add LDO regulator node
+> 
+> As this LDO is provided by the PMIC, it would be nice to know why it
+> is modelled as an always-on regulator instead of the proper PMIC
+> regulator. Up to now we were doing this only for the outstanding power
+> rails like CX/MX or EBI.
+(which we then stopped registering as regulators and started
+to manage through rpm(h)pd drivers and the genpd framework)
 
 Konrad
->>> Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
->>> ---
->>>   drivers/media/platform/qcom/venus/firmware.c | 7 +++++++
->>>   1 file changed, 7 insertions(+)
->>>
->>> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
->>> index cfb11c551167..a4cd919e1dbe 100644
->>> --- a/drivers/media/platform/qcom/venus/firmware.c
->>> +++ b/drivers/media/platform/qcom/venus/firmware.c
->>> @@ -241,6 +241,13 @@ int venus_boot(struct venus_core *core)
->>>           return ret;
->>>         if (core->use_tz && res->cp_size) {
->>> +        /*
->>> +         * Clues for porting using downstream data:
->>> +         * cp_start = 0
->>> +         * cp_size = venus_ns/virtual-addr-pool[0] (yes, addr not size)
+> 
 >>
->> The field is the start address of ns context bank. Since the cp_start is 0, the start address for (next) non-secure context bank
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> ---
+>>  Changes in v10:
+>>         - Add LDO regulator node
+>> ---
+>>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 7 +++++++
+>>  1 file changed, 7 insertions(+)
 >>
->> is interpreted as size of the (previous) content protection region.
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>> index bdc1434..1f5d14f 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+>> @@ -60,6 +60,13 @@
+>>                         regulator-min-microvolt = <725000>;
+>>                         regulator-max-microvolt = <1075000>;
+>>                 };
+>> +
+>> +               mp5496_l2: l2 {
+>> +                       regulator-min-microvolt = <1800000>;
+>> +                       regulator-max-microvolt = <1800000>;
+>> +                       regulator-boot-on;
+>> +                       regulator-always-on;
+>> +               };
+>>         };
+>>  };
 >>
->>> +         * cp_nonpixel_start = venus_sec_non_pixel/virtual-addr-pool[0]
->>> +         * cp_nonpixel_size = venus_sec_non_pixel/virtual-addr-pool[1]
->>> +         */
->>>           ret = qcom_scm_mem_protect_video_var(res->cp_start,
->>>                                res->cp_size,
->>>                                res->cp_nonpixel_start,
->>>
+>> --
+>> 2.7.4
+>>
+> 
+> 
