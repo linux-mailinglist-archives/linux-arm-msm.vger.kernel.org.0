@@ -2,421 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F6FF6F7C72
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 07:36:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E1766F7D00
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 08:37:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjEEFgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 01:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59966 "EHLO
+        id S230044AbjEEGhS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 02:37:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjEEFgQ (ORCPT
+        with ESMTP id S230448AbjEEGhR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 01:36:16 -0400
+        Fri, 5 May 2023 02:37:17 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA1611558;
-        Thu,  4 May 2023 22:36:14 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3454HFDr023499;
-        Fri, 5 May 2023 05:34:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+wjAs5fToFkOWO4a/n9QJ3tzstnM/tfFB2MeAAMz60c=;
- b=f9ugbWCN8pskJ70gZgJmGi3NsHJyf8jFkVGQl7S/y5zCkxfl56RxK1B2K2KpNj96vSKm
- ZBJFVLCzh4yQjX4rr02DMlSsVvuyFQXJIhM5/Je+hZmQocRhhrCZbAOuDkJPEG3R4Nwu
- bAx5W5wAqhlVHT8w6ld7tbF3wukNQU/EkQU+eNdG2HiZp0MOg5rmu4nfZZCXYLHZ420j
- hBL0UUfEG5Icb0q1xmQ1wtZRNRffSFdM8/liz9X6waDH7Ku7V79BT/mFtzIzeD8YJZ1f
- JFym1PGX0b1WxWtdS42tfsl7xbD0G7K4UcC5YCmQkIvlgEiTLTAEThwXcREkfAxU3Ukp hQ== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qctfu85h0-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10DE19ED8;
+        Thu,  4 May 2023 23:37:16 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3455PHrL027684;
+        Fri, 5 May 2023 06:36:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=dxOB1odZqFKrhagzqZ8KJ+oLXGpFNY/hGhvyFR++l/s=;
+ b=ElxIOTE6RAto/UUvhdNpMLcUyqeCgsK2ei5QwIeHomCS4Vk/V1sF11p5TFfnXHSoaJZW
+ TKzhh68g2xY6Zdb93rGFkiH8VDi3sMjEcCMnndbt9Z5BCVFsaE928N03QYqAUK/aV8ZV
+ AHenP40bd8TzAEcTaUIUjmsGjLCGpmqcM+TrHP2TlFroaflzCHo45YC65zPXhpUNUQwN
+ r5MusSfJnXyOeEwjrYVwcDDHLXJqpl7AISgPgfywcMXB23gKtzVGcG4mFiy5zhVvAnaz
+ 63NGsIa8fLVmRxo7XKTvLp8YOtXgrMi17JdCYm3hMTEqkf0Xxf46TxqMr9WJ7nRkoviG bw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qcumk84sk-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 05 May 2023 05:34:45 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3455YiuX012035
+        Fri, 05 May 2023 06:36:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3456auoV009480
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 5 May 2023 05:34:44 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 4 May 2023
- 22:34:38 -0700
-Message-ID: <04ead29c-7fd1-df0d-f313-2fc0edfe9010@quicinc.com>
-Date:   Fri, 5 May 2023 11:04:35 +0530
+        Fri, 5 May 2023 06:36:56 GMT
+Received: from hu-schowdhu-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 4 May 2023 23:36:55 -0700
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Subject: [PATCH V23 0/3] misc: Add driver support for Data Capture and Compare unit(DCC)
+Date:   Thu, 4 May 2023 23:36:20 -0700
+Message-ID: <cover.1683265984.git.quic_schowdhu@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 04/18] soc: qcom: Add Qualcomm minidump kernel driver
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <corbet@lwn.net>,
-        <keescook@chromium.org>, <tony.luck@intel.com>,
-        <gpiccoli@igalia.com>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <robh+dt@kernel.org>, <linus.walleij@linaro.org>,
-        <linux-gpio@vger.kernel.org>, <srinivas.kandagatla@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-doc@vger.kernel.org>
-References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
- <1683133352-10046-5-git-send-email-quic_mojha@quicinc.com>
- <c6f730b6-f702-91d4-4abd-71546e02f869@linaro.org>
- <23b493f4-1a01-8d03-fc12-d588b2c6fd74@quicinc.com>
- <575a422d-6224-06b7-628c-8487b47882e9@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <575a422d-6224-06b7-628c-8487b47882e9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4R-6zqruaxS_Bvqy053CSofvBhq92lT-
-X-Proofpoint-ORIG-GUID: 4R-6zqruaxS_Bvqy053CSofvBhq92lT-
+X-Proofpoint-GUID: 9js7TwbCASGjqgl8XfMZwTOgAPFxw53U
+X-Proofpoint-ORIG-GUID: 9js7TwbCASGjqgl8XfMZwTOgAPFxw53U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-04_15,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 malwarescore=0 suspectscore=0
- spamscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305050047
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ mlxlogscore=999 clxscore=1015 adultscore=0 suspectscore=0 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305050056
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+In case of a system crash or manual software triggers by the user the DCC hardware
+stores the value at the register addresses which can be used for debugging purposes.
+The DCC driver provides the user with debugfs interface to configure the register
+addresses. The options that the DCC hardware provides include reading from registers,
+writing to registers, first reading and then writing to registers and looping
+through the values of the same register.
 
+In certain cases a register write needs to be executed for accessing the rest of the
+registers, also the user might want to record the changing values of a register with
+time for which he has the option to use the loop feature.
 
-On 5/4/2023 8:51 PM, Krzysztof Kozlowski wrote:
-> On 04/05/2023 14:38, Mukesh Ojha wrote:
->>
->>
->> On 5/4/2023 5:06 PM, Krzysztof Kozlowski wrote:
->>> On 03/05/2023 19:02, Mukesh Ojha wrote:
->>>> Minidump is a best effort mechanism to collect useful and predefined
->>>> data for first level of debugging on end user devices running on
->>>> Qualcomm SoCs. It is built on the premise that System on Chip (SoC)
->>>> or subsystem part of SoC crashes, due to a range of hardware and
->>>> software bugs. Hence, the ability to collect accurate data is only
->>>> a best-effort. The data collected could be invalid or corrupted,
->>>> data collection itself could fail, and so on.
->>>>
->>>> Qualcomm devices in engineering mode provides a mechanism for
->>>> generating full system ramdumps for post mortem debugging. But in some
->>>> cases it's however not feasible to capture the entire content of RAM.
->>>> The minidump mechanism provides the means for selecting region should
->>>> be included in the ramdump. The solution supports extracting the
->>>> ramdump/minidump produced either over USB or stored to an attached
->>>> storage device.
->>>>
->>>> The core of minidump feature is part of Qualcomm's boot firmware code.
->>>> It initializes shared memory(SMEM), which is a part of DDR and
->>>> allocates a small section of it to minidump table i.e also called
->>>> global table of content (G-ToC). Each subsystem (APSS, ADSP, ...) has
->>>> their own table of segments to be included in the minidump, all
->>>> references from a descriptor in SMEM (G-ToC). Each segment/region has
->>>> some details like name, physical address and it's size etc. and it
->>>> could be anywhere scattered in the DDR.
->>>>
->>>> Minidump kernel driver adds the capability to add linux region to be
->>>> dumped as part of ram dump collection. It provides appropriate symbol
->>>> to check its enablement and register client regions.
->>>>
->>>> To simplify post mortem debugging, it creates and maintain an ELF
->>>> header as first region that gets updated upon registration
->>>> of a new region.
->>>>
->>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>>> ---
->>>>    drivers/soc/qcom/Kconfig         |  14 +
->>>>    drivers/soc/qcom/Makefile        |   1 +
->>>>    drivers/soc/qcom/qcom_minidump.c | 581 +++++++++++++++++++++++++++++++++++++++
->>>>    drivers/soc/qcom/smem.c          |   8 +
->>>>    include/soc/qcom/qcom_minidump.h |  61 +++-
->>>>    5 files changed, 663 insertions(+), 2 deletions(-)
->>>>    create mode 100644 drivers/soc/qcom/qcom_minidump.c
->>>>
->>>> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->>>> index a491718..15c931e 100644
->>>> --- a/drivers/soc/qcom/Kconfig
->>>> +++ b/drivers/soc/qcom/Kconfig
->>>> @@ -279,4 +279,18 @@ config QCOM_INLINE_CRYPTO_ENGINE
->>>>    	tristate
->>>>    	select QCOM_SCM
->>>>    
->>>> +config QCOM_MINIDUMP
->>>> +	tristate "QCOM Minidump Support"
->>>> +	depends on ARCH_QCOM || COMPILE_TEST
->>>> +	select QCOM_SMEM
->>>> +	help
->>>> +	  Enablement of core minidump feature is controlled from boot firmware
->>>> +	  side, and this config allow linux to query and manages APPS minidump
->>>> +	  table.
->>>> +
->>>> +	  Client drivers can register their internal data structures and debug
->>>> +	  messages as part of the minidump region and when the SoC is crashed,
->>>> +	  these selective regions will be dumped instead of the entire DDR.
->>>> +	  This saves significant amount of time and/or storage space.
->>>> +
->>>>    endmenu
->>>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->>>> index 0f43a88..1ebe081 100644
->>>> --- a/drivers/soc/qcom/Makefile
->>>> +++ b/drivers/soc/qcom/Makefile
->>>> @@ -33,3 +33,4 @@ obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
->>>>    obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
->>>>    obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
->>>>    obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
->>>> +obj-$(CONFIG_QCOM_MINIDUMP) += qcom_minidump.o
->>>> diff --git a/drivers/soc/qcom/qcom_minidump.c b/drivers/soc/qcom/qcom_minidump.c
->>>> new file mode 100644
->>>> index 0000000..d107a86
->>>> --- /dev/null
->>>> +++ b/drivers/soc/qcom/qcom_minidump.c
->>>> @@ -0,0 +1,581 @@
->>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>> +
->>>> +/*
->>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +
->>>> +#include <linux/elf.h>
->>>> +#include <linux/err.h>
->>>> +#include <linux/errno.h>
->>>> +#include <linux/export.h>
->>>> +#include <linux/init.h>
->>>> +#include <linux/io.h>
->>>> +#include <linux/kernel.h>
->>>> +#include <linux/module.h>
->>>> +#include <linux/platform_device.h>
->>>> +#include <linux/string.h>
->>>> +#include <linux/soc/qcom/smem.h>
->>>> +#include <soc/qcom/qcom_minidump.h>
->>>> +
->>>> +/**
->>>> + * struct minidump_elfhdr - Minidump table elf header
->>>> + * @ehdr: Elf main header
->>>> + * @shdr: Section header
->>>> + * @phdr: Program header
->>>> + * @elf_offset: Section offset in elf
->>>> + * @strtable_idx: String table current index position
->>>> + */
->>>> +struct minidump_elfhdr {
->>>> +	struct elfhdr		*ehdr;
->>>> +	struct elf_shdr		*shdr;
->>>> +	struct elf_phdr		*phdr;
->>>> +	size_t			elf_offset;
->>>> +	size_t			strtable_idx;
->>>> +};
->>>> +
->>>> +/**
->>>> + * struct minidump - Minidump driver private data
->>>> + * @md_gbl_toc	: Global TOC pointer
->>>> + * @md_apss_toc	: Application Subsystem TOC pointer
->>>> + * @md_regions	: High level OS region base pointer
->>>> + * @elf		: Minidump elf header
->>>> + * @dev		: Minidump device
->>>> + */
->>>> +struct minidump {
->>>> +	struct minidump_global_toc	*md_gbl_toc;
->>>> +	struct minidump_subsystem	*md_apss_toc;
->>>> +	struct minidump_region		*md_regions;
->>>> +	struct minidump_elfhdr		elf;
->>>> +	struct device			*dev;
->>>> +};
->>>> +
->>>> +/*
->>>> + * In some of the Old Qualcomm devices, boot firmware statically allocates 300
->>>> + * as total number of supported region (including all co-processors) in
->>>> + * minidump table out of which linux was using 201. In future, this limitation
->>>> + * from boot firmware might get removed by allocating the region dynamically.
->>>> + * So, keep it compatible with older devices, we can keep the current limit for
->>>> + * Linux to 201.
->>>> + */
->>>> +#define MAX_NUM_ENTRIES	  201
->>>> +#define MAX_STRTBL_SIZE	  (MAX_NUM_ENTRIES * MAX_REGION_NAME_LENGTH)
->>>> +
->>>> +static struct minidump *__md;
->>>
->>> No, no file scope or global scope statics.
->>
->> Sorry, this is done as per recommendation given here [1] and this
->> matches both driver/firmware/qcom_scm.c and driver/soc/qcom/smem.c
->> implementations.
->>
->> [1]
->> https://lore.kernel.org/lkml/f74dfcde-e59b-a9b3-9bbc-a8de644f6740@linaro.org/
-> 
-> That's not true. You had the static already in v2, before Srini commented.
-> 
-> Look:
-> https://lore.kernel.org/lkml/1679491817-2498-5-git-send-email-quic_mojha@quicinc.com/
-> 
-> +static struct minidump minidump;
-> +static DEFINE_MUTEX(minidump_lock);
-> 
-> We do not talk about the names.
+The options mentioned above are exposed to the user by debugfs files once the driver
+is probed. The details and usage of this debugfs files are documented in
+Documentation/ABI/testing/debugfs-driver-dcc.
 
-I apologize for this.
+As an example let us consider a couple of debug scenarios where DCC has been proved to be
+effective for debugging purposes:-
 
-> 
-> 
->>>> +
->>>> +	if (size < sizeof(*mdgtoc) || !mdgtoc->status) {
->>>> +		ret = -EINVAL;
->>>> +		dev_err(&pdev->dev, "minidump table is not initialized: %d\n", ret);
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	mutex_lock(&minidump_lock);
->>>> +	md->dev = &pdev->dev;
->>>> +	md->md_gbl_toc = mdgtoc;
->>>
->>> What are you protecting here? It's not possible to have concurrent
->>> access to md, is it?
->>
->> Check qcom_apss_minidump_region_{register/unregister} and it is possible
->> that these API gets called parallel to this probe.
-> 
-> Wait, you say that something can modify local variable md before it is
-> assigned to __md? How?
+i)TimeStamp Related Issue
 
-No.
+On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+instead of proper timestamp values.
 
->>
->> I agree, i made a mistake in not protecting __md in {register} API
->> but did it unregister API in this patch, which i have fixed in later patch.
-> 
-> No, you are protecting random things. Nothing will concurrently modify
-> md and &pdev->dev in this moment. mdgtoc is allocated above, so also
-> cannot by modified.
-> 
-> Otherwise show me the hypothetical scenario.
+Proper timestamp:
+Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
 
-You are correct, it should just protect the assignment.
-__md = md;
+Zero timestamp:
+Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
 
-Thanks
-> 
-> 
->>
->>>
->>>> +	ret = qcom_minidump_init_apss_subsystem(md);
->>>> +	if (ret) {
->>>> +		dev_err(&pdev->dev, "apss minidump initialization failed: %d\n", ret);
->>>> +		goto unlock;
->>>> +	}
->>>> +
->>>> +	__md = md;
->>>
->>> No. This is a platform device, so it can have multiple instances.
->>
->> It can have only one instance that is created from SMEM driver probe.
-> 
-> Anyone can instantiate more of them.... how did you solve it?
-> 
-> 
->>
->>>
->>>> +	/* First entry would be ELF header */
->>>> +	ret = qcom_apss_minidump_add_elf_header();
->>>> +	if (ret) {
->>>> +		dev_err(&pdev->dev, "Failed to add elf header: %d\n", ret);
->>>> +		memset(md->md_apss_toc, 0, sizeof(struct minidump_subsystem));
->>>> +		__md = NULL;
->>>> +	}
->>>> +
->>>> +unlock:
->>>> +	mutex_unlock(&minidump_lock);
->>>> +	return ret;
->>>> +}
->>>> +
->>>> +static int qcom_minidump_remove(struct platform_device *pdev)
->>>> +{
->>>> +	memset(__md->md_apss_toc, 0, sizeof(struct minidump_subsystem));
->>>> +	__md = NULL;
->>>
->>> Don't use __ in variable names. Drop it everywhere.
->>
->> As i said above, this is being followed in other drivers, so followed
->> it here as per recommendation.
->>
->> Let @srini comeback on this.
-> 
-> Which part of coding style recommends __ for driver code?
+Now this is a non-fatal issue and doesn't need a system reset, but still needs
+to be rootcaused and fixed for those who do care about coresight etm traces.
+Since this is a timestamp issue, we would be looking for any timestamp related
+clocks and such.
 
-Will fix this.
+We get all the clk register details from IP documentation and configure it
+via DCC config_read debugfs node. Before that we set the current linked list.
 
-> 
->>
->>>
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static struct platform_driver qcom_minidump_driver = {
->>>> +	.probe = qcom_minidump_probe,
->>>> +	.remove = qcom_minidump_remove,
->>>> +	.driver  = {
->>>> +		.name = "qcom-minidump",
->>>> +	},
->>>> +};
->>>> +
->>>> +module_platform_driver(qcom_minidump_driver);
->>>> +
->>>> +MODULE_DESCRIPTION("Qualcomm APSS minidump driver");
->>>> +MODULE_LICENSE("GPL v2");
->>>> +MODULE_ALIAS("platform:qcom-minidump");
->>>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
->>>> index 6be7ea9..d459656 100644
->>>> --- a/drivers/soc/qcom/smem.c
->>>> +++ b/drivers/soc/qcom/smem.c
->>>> @@ -279,6 +279,7 @@ struct qcom_smem {
->>>>    
->>>>    	u32 item_count;
->>>>    	struct platform_device *socinfo;
->>>> +	struct platform_device *minidump;
->>>>    	struct smem_ptable *ptable;
->>>>    	struct smem_partition global_partition;
->>>>    	struct smem_partition partitions[SMEM_HOST_COUNT];
->>>> @@ -1151,12 +1152,19 @@ static int qcom_smem_probe(struct platform_device *pdev)
->>>>    	if (IS_ERR(smem->socinfo))
->>>>    		dev_dbg(&pdev->dev, "failed to register socinfo device\n");
->>>>    
->>>> +	smem->minidump = platform_device_register_data(&pdev->dev, "qcom-minidump",
->>>> +						      PLATFORM_DEVID_NONE, NULL,
->>>> +						      0);
->>>> +	if (IS_ERR(smem->minidump))
->>>> +		dev_dbg(&pdev->dev, "failed to register minidump device\n");
->>>> +
->>>>    	return 0;
->>>>    }
->>>>    
->>>>    static int qcom_smem_remove(struct platform_device *pdev)
->>>>    {
->>>>    	platform_device_unregister(__smem->socinfo);
->>>> +	platform_device_unregister(__smem->minidump);
->>>
->>> Wrong order. You registered first socinfo, right?
->>
->> Any order is fine here, they are not dependent.
->> But, will fix this.
-> 
-> No, the order is always reversed from allocation. It does not matter if
-> they are dependent or not.
+/* Program the linked list with the addresses */
+echo R 0x10c004 > /sys/kernel/debug/qcom-dcc/../3/config
+echo R 0x10c008 > /sys/kernel/debug/qcom-dcc/../3/config
+echo R 0x10c00c > /sys/kernel/debug/qcom-dcc/../3/config
+echo R 0x10c010 > /sys/kernel/debug/qcom-dcc/../3/config
+..... and so on for other timestamp related clk registers
 
-Ok
+/* Other way of specifying is in "addr len" pair, in below case it
+specifies to capture 4 words starting 0x10C004 */
 
-> 
-> Best regards,
-> Krzysztof
-> 
+echo R 0x10C004 4 > /sys/kernel/debug/qcom-dcc/../3/config_read
 
--- Mukesh
+/* Enable DCC */
+echo 1 > /sys/kernel/debug/qcom-dcc/../3/enable
+
+/* Run the timestamp test for working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram1.bin
+
+/* Run the timestamp test for non-working case */
+
+/* Send SW trigger */
+echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
+
+/* Read SRAM */
+cat /dev/dcc_sram > dcc_sram2.bin
+
+Get the parser from [1] and checkout the latest branch.
+
+/* Parse the SRAM bin */
+python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+
+Sample parsed output of dcc_sram1.bin:
+
+<hwioDump version="1">
+         <timestamp>03/14/21</timestamp>
+             <generator>Linux DCC Parser</generator>
+                 <chip name="None" version="None">
+                 <register address="0x0010c004" value="0x80000000" />
+                 <register address="0x0010c008" value="0x00000008" />
+                 <register address="0x0010c00c" value="0x80004220" />
+                 <register address="0x0010c010" value="0x80000000" />
+             </chip>
+     <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+</hwioDump>
+
+ii)NOC register errors
+
+A particular class of registers called NOC which are functional registers was reporting
+errors while logging the values.To trace these errors the DCC has been used effectively.
+The steps followed were similar to the ones mentioned above.
+In addition to NOC registers a few other dependent registers were configured in DCC to
+monitor it's values during a crash. A look at the dependent register values revealed that
+the crash was happening due to a secured access to one of these dependent registers.
+All these debugging activity and finding the root cause was achieved using DCC.
+
+DCC parser is available at the following open source location
+
+https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
+
+Souradeep Chowdhury (3):
+  dt-bindings: misc: qcom,dcc: Add the dtschema
+  misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+  MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+    support
+
+ Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
+ .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
+ MAINTAINERS                                   |    8 +
+ drivers/misc/Kconfig                          |    9 +
+ drivers/misc/Makefile                         |    1 +
+ drivers/misc/qcom-dcc.c                       | 1325 +++++++++++++++++
+ 6 files changed, 1392 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+ create mode 100644 drivers/misc/qcom-dcc.c
+
+-- 
+2.17.1
+
