@@ -2,79 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 571D96F7DB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 09:23:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 277506F7E13
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 09:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbjEEHXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 03:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51088 "EHLO
+        id S231368AbjEEHm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 03:42:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230104AbjEEHXX (ORCPT
+        with ESMTP id S231370AbjEEHmy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 03:23:23 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B059712085
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 00:23:22 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-517c840f181so694391a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 00:23:22 -0700 (PDT)
+        Fri, 5 May 2023 03:42:54 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B3A617FEB
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 00:42:50 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f20215fa70so9732005e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 00:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683271402; x=1685863402;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+        d=linaro.org; s=google; t=1683272569; x=1685864569;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=A2yKNPJcgXuBTQDFXv4jaSslsM07zOnVYJZxig2x9i4=;
-        b=dtQzQov+0p/RzYncCKQaVUMWU4t0WRUjybRHMJNDo1UG/1cPQe3Y8DxjAEjSl3fd57
-         q74DqkaAW1ScT6BEoKbWfoebFZz2nOIX9fcHj9Ro+igFh82W5lwL97XV7LrqqoIchuwp
-         d3Ijwz4zwgFkHpk6SIX8fQksa00DUyL2dUKAyhEYroI3jtJgMF8jOFQ8dpw6NR1Fx7q3
-         76WWls16JOCb9I5L2qvkCxW8T7wlfBLsgPsa3Vhz/l3Ndxd+RrveS92skLlZEWnlS4xC
-         IbOyilaUksuYX8xbjDxIGgOvSxnYYES4ip3NjuldvcinXYo3+nMcs8X+AuZN6ctnaqQ9
-         pi0w==
+        bh=X0YN5W0LPlKPzpypfatqj33JsLIdDk9xz6FiE+5eHUE=;
+        b=H3G3kDsoUB6tldvJFxZWuxGL17kvtDHQttrVE3BM4D4q93skWFZTPK3dkiaVrRowKf
+         iIEfkiycBF0w4GgRrUPQSc143tHiA3sVwoawpqDldo7VeKOT9Btiqe12iy4zK9ymdPTK
+         UI0bFfm1eizCepM10ycLWLWwOSdW8E0d1EqOcqiOTKZCxDmxFrdPDoVsVC90LsRe21nN
+         4hdi4A5v8Mr2z0Z72VLbi7oTpGUzpPt7SBzdlzwUn0U2GSNmp1lbYJHDxOoC5Ei3Bacj
+         xLs/02qJasuRu6UEq3T6cSYw8lu3QI765+OU4yCoCpVlPzT5p6vY27IcO8c/QeBMg8YY
+         9PIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683271402; x=1685863402;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683272569; x=1685864569;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A2yKNPJcgXuBTQDFXv4jaSslsM07zOnVYJZxig2x9i4=;
-        b=A8FyW7gZghhdMAjPJzriHnQFdz/ta4LwiMrAg0LkQkydoduXzn7h3Vp1WEa/uJad7G
-         FjVnO0fGN1v59gg5pqh3bgkCKaYHydI6iuLzh+TdKfyJuljCTe7g4tty2fbnS+2g6pl2
-         s7zIrIW89qSSsRazfUXvgjpmfkHeMbkLjVVHR5kkCvjnIVM4lHUrCM0aEb6rPcBEafd+
-         u9NBF3AltWCrj48oAd9W7l6z+24NhqtPtGhUO/KRW91KNtTJ0KRstdOgmZvSuIyi2L4M
-         vpGkayq2YLjomrVwRoD26c8S6oEE+NHGsVxnb/+ciRbA+CJEc7UmqgCJrFfNKwvOxgly
-         7j1g==
-X-Gm-Message-State: AC+VfDzJw9KRUJiItJTeFB9mhRRSW9b1kH939xLSQ3Ygt+Tps3KCp56r
-        heOMaXzM3hwkWA47hSzzfel6Pw==
-X-Google-Smtp-Source: ACHHUZ6ltTmBcEmc6ra7RXQIFPm3nD026L5Oiar11un/XedEAE/88qZiBIBzWQk2h06gO9CvWul6ig==
-X-Received: by 2002:a17:902:ba86:b0:1a6:bd5c:649d with SMTP id k6-20020a170902ba8600b001a6bd5c649dmr539297pls.56.1683271402127;
-        Fri, 05 May 2023 00:23:22 -0700 (PDT)
-Received: from [192.168.1.8] ([223.233.65.180])
-        by smtp.gmail.com with ESMTPSA id v4-20020a1709029a0400b001aafe56ea70sm959277plp.5.2023.05.05.00.23.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 00:23:21 -0700 (PDT)
-Message-ID: <00fbdc3d-901d-e3f7-9128-ddf070242217@linaro.org>
-Date:   Fri, 5 May 2023 12:53:15 +0530
+        bh=X0YN5W0LPlKPzpypfatqj33JsLIdDk9xz6FiE+5eHUE=;
+        b=PMlVfcdInaBCIRJg4UM6APUTFnSMT90CD0HKWju7F4JkIi3/majXVY8nXmaZ3Q6Jqd
+         2G7UxH7Wr8ONffGFyg74uK4KrTF6+6YgI4LtYCDmKhSa84hE33AVUlOHZsan/r9cfnlw
+         7/MDDxoEmdLVd0FksM8EbqVemgkYPKv7o5MHt9/Gmk30qMbvXV3xqvou4UtbNR19h/7D
+         IkB6RfmCzJy18yR5A+vRHAaCXn0IacjMmEsyq1IVJYbw0KQZKixzR0Sn1k9QKbutFzZY
+         38FX7Fhn1lZCqZj3YGki5NUXEwbOW5mwRFmR4vjFZ5UtzEomD09KH+plm2ROWAtxKJ7y
+         8Umw==
+X-Gm-Message-State: AC+VfDxJLn7QpwmMFB0e2GlreV88yQZVtD1B7fAf4xAwOZLHF/BIxxJE
+        Ru9IKfcgfRfW5WzsjcaQgLoeHw==
+X-Google-Smtp-Source: ACHHUZ557C+5NiAT/VVERnB2kIdbITR+K945g324cnQaz2MPoOKZ70EhHM93mgYjMKq9+0QJjemUZA==
+X-Received: by 2002:a05:600c:2298:b0:3f1:98df:bc03 with SMTP id 24-20020a05600c229800b003f198dfbc03mr381819wmf.25.1683272568932;
+        Fri, 05 May 2023 00:42:48 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id s6-20020adff806000000b003068f5cca8csm1459185wrp.94.2023.05.05.00.42.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 May 2023 00:42:46 -0700 (PDT)
+Date:   Fri, 5 May 2023 10:42:43 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     d202180596@hust.edu.cn
+Cc:     andy gross <agross@kernel.org>,
+        bjorn andersson <andersson@kernel.org>,
+        konrad dybcio <konrad.dybcio@linaro.org>,
+        wolfram sang <wsa@kernel.org>,
+        "ivan t. ivanov" <iivanov@mm-sol.com>,
+        sricharan r <sricharan@codeaurora.org>,
+        naveen kaje <nkaje@codeaurora.org>,
+        austin christ <austinwc@codeaurora.org>,
+        hust-os-kernel-patches@googlegroups.com,
+        andy gross <agross@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+Message-ID: <e7f22f7c-8552-4766-a770-fa2d29e5068d@kili.mountain>
+References: <20230418135612.598-1-d202180596@hust.edu.cn>
+ <5c9f1e4d.47382.187e97d01a5.Coremail.d202180596@hust.edu.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-Subject: Re: [PATCH v10 1/4] dt-bindings: phy: qcom,qmp-usb: Drop legacy
- bindings and move to newer one (SM6115 & QCM2290)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        konrad.dybcio@linaro.org, kishon@kernel.org, vkoul@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org
-References: <20230502053534.1240553-1-bhupesh.sharma@linaro.org>
- <20230502053534.1240553-2-bhupesh.sharma@linaro.org>
- <faefbbed-0f62-e569-455d-0d21b363f8f3@linaro.org>
- <CAH=2NtzfH+7XMFdCq0JENgpJymsHNUfzwhWmDx=g8xBJ4aACpA@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAH=2NtzfH+7XMFdCq0JENgpJymsHNUfzwhWmDx=g8xBJ4aACpA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5c9f1e4d.47382.187e97d01a5.Coremail.d202180596@hust.edu.cn>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,80 +84,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
-
-On 5/4/23 10:42 PM, Bhupesh Sharma wrote:
-> On Wed, 3 May 2023 at 21:55, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 02/05/2023 07:35, Bhupesh Sharma wrote:
->>> 'qcom,msm8996-qmp-usb3-phy.yaml' defines bindings for several PHYs
->>> which predate USB -> USB+DP migration. Since SM6115 and QCM2290
->>> nodes for USB QMP phy are being added to dtsi files by followup patches,
->>> move these bindings instead to the newer style
->>> 'qcom,sc8280xp-qmp-usb3-uni-phy.yaml' file.
->>>
->>
->>
->>>     clock-names:
->>> -    items:
->>> -      - const: aux
->>> -      - const: ref
->>> -      - const: com_aux
->>> -      - const: pipe
->>> +    maxItems: 4
->>>
->>>     power-domains:
->>>       maxItems: 1
->>> @@ -71,6 +69,42 @@ required:
->>>
->>>   additionalProperties: false
->>>
->>> +allOf:
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            enum:
->>> +              - qcom,qcm2290-qmp-usb3-phy
->>> +              - qcom,sm6115-qmp-usb3-phy
->>> +    then:
->>> +      properties:
->>> +        clocks:
->>> +          maxItems: 4
->>> +        clock-names:
->>> +          items:
->>> +            - const: cfg_ahb
->>> +            - const: ref
->>> +            - const: com_aux
->>> +            - const: pipe
->>
->> I am pretty sure I acked it and there were no changes here... but since
->> you did not include it, then lets keep the clock order the same as
->> sc8280xp. ABI is anyway affected, right?
+On Fri, May 05, 2023 at 09:18:16AM +0800, d202180596@hust.edu.cn wrote:
 > 
-> Yes, I forgot to include your Ack in this version :(
-> Ok, I will fix the clock order in v11.
+> > -----原始邮件-----
+> > 发件人: "Shuai Jiang" <d202180596@hust.edu.cn>
+> > 发送时间: 2023-04-18 21:56:12 (星期二)
+              ^^^^^^^^^^
 
-I just noticed that the clock orders are actually the same as sc8280xp.
-The only clock diff between sm6115 and sc8280xp is actually 'cfg_ahb' 
-clock used by sm6115 instead of 'aux' used by sc8280xp.
+You can't ping the list when the merge window is open.  You have to wait
+for a couple weeks after.
 
-So, the clock order for sc8280xp is:
-+            - const: aux
-+            - const: ref
-+            - const: com_aux
-+            - const: pipe
+The weeks before and during the merge window are busy and then afterward
+maintainers have to deal with the backlog of postponed stuff...
 
-whereas the same for sm6115 is:
-+            - const: cfg_ahb
-+            - const: ref
-+            - const: com_aux
-+            - const: pipe
+Just be patient.
 
-
-Or, am I missing something? If not, may be I can include your Ack to 
-help get this applied :)
-
-Thanks,
-Bhupesh
+regards,
+dan carpenter
