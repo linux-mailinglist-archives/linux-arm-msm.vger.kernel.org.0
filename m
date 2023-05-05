@@ -2,76 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88BD66F8536
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 17:03:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84AD06F859A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 17:25:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232361AbjEEPDB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 11:03:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44190 "EHLO
+        id S232563AbjEEPZY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 11:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232033AbjEEPC7 (ORCPT
+        with ESMTP id S232033AbjEEPY6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 11:02:59 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC7017FDB
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 08:02:58 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f1950f569eso13419455e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 08:02:58 -0700 (PDT)
+        Fri, 5 May 2023 11:24:58 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAB361A624
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 08:23:23 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-50bd2d7ba74so28105234a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 08:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683298977; x=1685890977;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wnwRc6d0+9EWZZzimRgYOvHwHdEA2vECtr+bww8AbFg=;
-        b=FibUsG3XI9Lq7wQ10qHYw/Bvt6sUQW4LEEw3nWXXvzewtyxloN0yZOkBzvfttujGim
-         vFuP0GcJta/xmjbRYfKkiefgfPljvOLCmDY+0Tgsdsp19o9n5gEKo1Gj1zbWYg7Nf2tZ
-         UCrzqRNmkJMrp7xnq9s9QSQ/LnF+qK7X/2Jh6eNcQxEdIEL/sVMzTsHZ57nTC/44lee1
-         p2eCF1D9kOyvOCrc0QSM1K23acPCaZeJAuKMf4omicQI9iSY8qLbrYMEfImx8ioyAKxe
-         W1OfYq9B+1cLYhMFilkzud3FPlXJD9hk2esMl5kBpPXhYS0V/WTtByoTE7bcB+wBw1tJ
-         mcBg==
+        d=linaro.org; s=google; t=1683300186; x=1685892186;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PJ0MjyN2tPXJnBiN7+wdwcYqZoiGnIUzbIIwgINFMQk=;
+        b=t9cPpIqjIu7IP/FdOUGPJXKMeX+ktMi3VAhNdww6MEKLAn96lOAvAwzMNvfTc9Jjga
+         WnoJJ131iQm+jk9XN/xGVpPUI64t7dQi0B4H96pUjMS2LeGH0cQSJsGjVBL33BBlXiqM
+         mn41G/W98ig6WwbwBP4ik9n1E0dScC9iDZTbx+UPNxbO0MrjMACBQUIOxjRtsPxDP52v
+         NYCuj+zDxmf79qI+sY4hweoZ3QB8TlacHWry4QETuSMhODClU/hDrmLsx38jxYNCgc+K
+         NEvScEv3zGQ3SXf+QfEANMhP9xpl7hUoAP686nFlLu59btn+5YLdemzDKtqsvKgl4bOf
+         t+Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683298977; x=1685890977;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wnwRc6d0+9EWZZzimRgYOvHwHdEA2vECtr+bww8AbFg=;
-        b=O4BgMZuTM61x2d9IhDDaTROwZDKZxYhSRhhYAZbpabmKKQ0GG0ouzZjfFK0f+UPowz
-         nNngUiluE1jk0T7bZ+tWGO1NZ+8p6u6NaCsXRcORtJVqiLijbcUE8gWpH9NaxNf5V5Ah
-         xi+Vzkoh4qs/lvEKmoGWcy2jwVW4/ao15PvgEI75LsUn7oFoG35BvrnhOafJb4vnQhs4
-         jT1nKphDOuyiEf3SgVBgVKLlH5e9nYk1utBssBIf4+EU2mLNNLAA6TNh/FYAlm/8wdma
-         9MAkK49nToS6BQPdpGki7K29aYS3sH4k5CcZIj/hqi+5YGDTMCt3Yea7oofSQVYDFd+P
-         8AyA==
-X-Gm-Message-State: AC+VfDyXZMXyJllLRNC1si/7Z2VmWRJ/aYHMBh4+NjGe5Ebq+gt23q3R
-        EfrIB3gCYaNIbNZMhk+2spCkgg==
-X-Google-Smtp-Source: ACHHUZ4orA7JAVJkHC48E6ikDofmVT5wSbQFY3BgobWZT+r3BuhvDX8LQwhPbFjsUaNlsygGnWg7Fg==
-X-Received: by 2002:a05:600c:2293:b0:3f3:1fa6:d2a8 with SMTP id 19-20020a05600c229300b003f31fa6d2a8mr1436996wmf.25.1683298976745;
-        Fri, 05 May 2023 08:02:56 -0700 (PDT)
-Received: from hackbox.lan ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id a6-20020a1cf006000000b003f0aefcc457sm8262189wmb.45.2023.05.05.08.02.55
+        d=1e100.net; s=20221208; t=1683300186; x=1685892186;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PJ0MjyN2tPXJnBiN7+wdwcYqZoiGnIUzbIIwgINFMQk=;
+        b=jzxhfq83DzzmbyU3O+7EEMuW36pWYWaD2e/nv5QOch3CspFflL40MxDYzcx9zJ8FSq
+         nD1+3beqRiYWAZJ9/GbojCXSIHEt7R+Rbhml4Sa6X6B4S5s9OA4QwFKulSBa1q0LrtHr
+         TLH5vr2WPQgEBcrF0W9r7kgUKEcCymbAcpMyjgo7aY0XQ0vl32B5V49bgdHaZ8hUcVKF
+         MfrDpLjc8O0IOMaYB7ylne/XWDqKDSvpvT9AP7Np3Pl061AScHJt3tNJFwYJm0z7ibcY
+         wf13l05Xk4oIW1hOg++iECZlN82aq7cyZ95xy3DErzc8vvO7DeLyHmoOcuwP/n6/DGxZ
+         hMkw==
+X-Gm-Message-State: AC+VfDywNYe3ysUMNTZgkX3ntCzxfd1FGDU/6k8tO5jINxMAWwqyDg1C
+        10PlpkJShIekuo/0Bau9yjFxAw==
+X-Google-Smtp-Source: ACHHUZ5N5HWekvFr0K66lggYS0aqJcCoHia21AcHCedlBnfdA7aLDt9GxSSzEBIoWYEuVNio2WSufQ==
+X-Received: by 2002:a17:907:7f02:b0:958:46aa:7f99 with SMTP id qf2-20020a1709077f0200b0095846aa7f99mr2781417ejc.7.1683300186053;
+        Fri, 05 May 2023 08:23:06 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:52e:24ce:bbc1:127d])
+        by smtp.gmail.com with ESMTPSA id hy19-20020a1709068a7300b00961277a426dsm1053667ejc.205.2023.05.05.08.23.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 08:02:56 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Fri, 05 May 2023 08:23:05 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>
-Subject: [RFC PATCH v4 2/2] PM: domains: Skip disabling unused until sync state
-Date:   Fri,  5 May 2023 18:02:41 +0300
-Message-Id: <20230505150241.3469424-3-abel.vesa@linaro.org>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Akash Asthana <akashast@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org
+Subject: [PATCH] serial: qcom-geni: fix enabling deactivated interrupt
+Date:   Fri,  5 May 2023 17:23:01 +0200
+Message-Id: <20230505152301.2181270-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230505150241.3469424-1-abel.vesa@linaro.org>
-References: <20230505150241.3469424-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,154 +78,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-By storing the status of the domain at boot, specified by the provider,
-we can decide to skip powering 'off' the domain on the late initcall,
-strictly based on the status boot being 'on' or 'unknown', and then
-assume the provider will disable it from its sync state callback.
-Also, provide a generic genpd sync state callback for those providers
-that only need that when they state synced.
+The driver have a race, experienced only with PREEMPT_RT patchset:
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+CPU0                         | CPU1
+==================================================================
+qcom_geni_serial_probe       |
+  uart_add_one_port          |
+                             | serdev_drv_probe
+                             |   qca_serdev_probe
+                             |     serdev_device_open
+                             |       uart_open
+                             |         uart_startup
+                             |           qcom_geni_serial_startup
+                             |             enable_irq
+                             |               __irq_startup
+                             |                 WARN_ON()
+                             |                 IRQ not activated
+  request_threaded_irq       |
+    irq_domain_activate_irq  |
+
+The warning:
+
+  894000.serial: ttyHS1 at MMIO 0x894000 (irq = 144, base_baud = 0) is a MSM
+  serial serial0: tty port ttyHS1 registered
+  WARNING: CPU: 7 PID: 107 at kernel/irq/chip.c:241 __irq_startup+0x78/0xd8
+  ...
+  qcom_geni_serial 894000.serial: serial engine reports 0 RX bytes in!
+
+Adding UART port triggers probe of child serial devices - serdev and
+eventually Qualcomm Bluetooth hci_qca driver.  This opens UART port
+which enables the interrupt before it got activated in
+request_threaded_irq().  The issue originates in commit f3974413cf02
+("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup") and discussion on
+mailing list [1].  However the above commit does not explain why the
+uart_add_one_port() is moved above requesting interrupt.
+
+[1] https://lore.kernel.org/all/5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com/
+
+Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
+Cc: <stable@vger.kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/base/power/domain.c | 51 +++++++++++++++++++++++++++++++++++--
- include/linux/pm_domain.h   |  5 ++++
- 2 files changed, 54 insertions(+), 2 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index 33a3945c023e..9cc0ce43b47b 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -125,6 +125,7 @@ static const struct genpd_lock_ops genpd_spin_ops = {
- #define genpd_unlock(p)			p->lock_ops->unlock(p)
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 08dc3e2a729c..8582479f0211 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1664,19 +1664,18 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+ 	uport->private_data = &port->private_data;
+ 	platform_set_drvdata(pdev, port);
  
- #define genpd_status_on(genpd)		(genpd->status == GENPD_STATE_ON)
-+#define genpd_boot_keep_on(genpd)	(!(genpd->boot_status == GENPD_STATE_OFF))
- #define genpd_is_irq_safe(genpd)	(genpd->flags & GENPD_FLAG_IRQ_SAFE)
- #define genpd_is_always_on(genpd)	(genpd->flags & GENPD_FLAG_ALWAYS_ON)
- #define genpd_is_active_wakeup(genpd)	(genpd->flags & GENPD_FLAG_ACTIVE_WAKEUP)
-@@ -654,6 +655,29 @@ static void genpd_queue_power_off_work(struct generic_pm_domain *genpd)
- 	queue_work(pm_wq, &genpd->power_off_work);
- }
+-	ret = uart_add_one_port(drv, uport);
+-	if (ret)
+-		return ret;
+-
+ 	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
+ 	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
+ 			IRQF_TRIGGER_HIGH, port->name, uport);
+ 	if (ret) {
+ 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+-		uart_remove_one_port(drv, uport);
+ 		return ret;
+ 	}
  
-+/**
-+ * pm_genpd_power_off_unused_sync_state - Power off all domains for provider.
-+ * @dev: Provider's device.
-+ *
-+ * Request power off for all unused domains of the provider.
-+ * This should be used exclusively as sync state callback for genpd providers.
-+ */
-+void pm_genpd_power_off_unused_sync_state(struct device *dev)
-+{
-+	struct generic_pm_domain *genpd;
++	ret = uart_add_one_port(drv, uport);
++	if (ret)
++		return ret;
 +
-+	mutex_lock(&gpd_list_lock);
-+
-+	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-+		if (genpd->provider->dev == dev && genpd_boot_keep_on(genpd)) {
-+			genpd->boot_status = GENPD_STATE_OFF;
-+			genpd_queue_power_off_work(genpd);
-+		}
-+
-+	mutex_unlock(&gpd_list_lock);
-+}
-+EXPORT_SYMBOL_GPL(pm_genpd_power_off_unused_sync_state);
-+
- /**
-  * genpd_power_off - Remove power from a given PM domain.
-  * @genpd: PM domain to power down.
-@@ -674,6 +698,12 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
- 	unsigned int not_suspended = 0;
- 	int ret;
- 
-+	/*
-+	 * If the domain was left enabled at boot stage,
-+	 * abort power off until sync state is reached.
-+	 */
-+	if (genpd_boot_keep_on(genpd))
-+		return -EBUSY;
  	/*
- 	 * Do not try to power off the domain in the following situations:
- 	 * (1) The domain is already in the "power off" state.
-@@ -763,6 +793,12 @@ static int genpd_power_on(struct generic_pm_domain *genpd, unsigned int depth)
- 	struct gpd_link *link;
- 	int ret = 0;
- 
-+	/*
-+	 * Just in case this is the first power on request, mark the boot
-+	 * status of it as 'off'.
-+	 */
-+	genpd->boot_status = GENPD_STATE_OFF;
-+
- 	if (genpd_status_on(genpd))
- 		return 0;
- 
-@@ -1095,8 +1131,16 @@ static int __init genpd_power_off_unused(void)
- 
- 	mutex_lock(&gpd_list_lock);
- 
-+	/*
-+	 * If the provider has registered a 'sync state' callback,
-+	 * assume that callback will power off its registered unused domains,
-+	 * otherwise we power them off from here.
-+	 */
- 	list_for_each_entry(genpd, &gpd_list, gpd_list_node)
--		genpd_queue_power_off_work(genpd);
-+		if (!dev_has_sync_state(&genpd->dev)) {
-+			genpd->boot_status = GENPD_STATE_OFF;
-+			genpd_queue_power_off_work(genpd);
-+		}
- 
- 	mutex_unlock(&gpd_list_lock);
- 
-@@ -1124,6 +1168,9 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
- {
- 	struct gpd_link *link;
- 
-+	if (genpd_boot_keep_on(genpd))
-+		return;
-+
- 	if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
- 		return;
- 
-@@ -2064,7 +2111,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
- 	genpd->gov = gov;
- 	INIT_WORK(&genpd->power_off_work, genpd_power_off_work_fn);
- 	atomic_set(&genpd->sd_count, 0);
--	genpd->status = boot_status;
-+	genpd->status = genpd->boot_status = boot_status;
- 	genpd->device_count = 0;
- 	genpd->provider = NULL;
- 	genpd->has_provider = false;
-diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-index c545e44ee52b..86bb531a319c 100644
---- a/include/linux/pm_domain.h
-+++ b/include/linux/pm_domain.h
-@@ -132,6 +132,7 @@ struct generic_pm_domain {
- 	const char *name;
- 	atomic_t sd_count;	/* Number of subdomains with power "on" */
- 	enum gpd_status status;	/* Current state of the domain */
-+	enum gpd_status boot_status;	/* Boot state of the domain */
- 	unsigned int device_count;	/* Number of devices */
- 	unsigned int suspended_count;	/* System suspend device counter */
- 	unsigned int prepared_count;	/* Suspend counter of prepared devices */
-@@ -233,6 +234,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
- 		  struct dev_power_governor *gov,
- 		  enum gpd_status boot_status);
- int pm_genpd_remove(struct generic_pm_domain *genpd);
-+void pm_genpd_power_off_unused_sync_state(struct device *dev);
- int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
- int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
- int dev_pm_genpd_remove_notifier(struct device *dev);
-@@ -281,6 +283,9 @@ static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
- 	return -EOPNOTSUPP;
- }
- 
-+static inline void pm_genpd_power_off_unused_sync_state(struct device *dev)
-+{ }
-+
- static inline int dev_pm_genpd_set_performance_state(struct device *dev,
- 						     unsigned int state)
- {
+ 	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
+ 	 * enabled/disabled from dev_pm_arm_wake_irq during system
 -- 
 2.34.1
 
