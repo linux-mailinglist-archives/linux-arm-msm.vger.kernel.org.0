@@ -2,133 +2,258 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DB5A6F897F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:26:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 853716F8A13
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 22:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232782AbjEET0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 15:26:35 -0400
+        id S231636AbjEEUUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 16:20:15 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233097AbjEET0f (ORCPT
+        with ESMTP id S230329AbjEEUUP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 15:26:35 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F8B46AD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:26:33 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4eff4ea8e39so2495361e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:26:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683314791; x=1685906791;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3iZJ9fGhjhbbNzeAFBlmfcQc+gjKnOZ5KfzSZflffhY=;
-        b=MVs6djWgRKnZBGYNxps9/00kkcIaVpTanY0bv6lV+9QuA7oAe+zMsz/Z9EBDcKc5jl
-         0bqAauyycDZjfZh1tkcrdMerW9qhOGSVeeYM4Fd6ZlZNFK6+cdVq0a+UL/rxP6xwo4IY
-         S63BnY3xe3LWVd49BKJaKOA7Urzl2zKsNijhneotxntoU1K40jMqh+zqtBv0Rn34ki/1
-         9n67nRds4PjfHaAPCTyIZkogoQtU23tkya5NLJWqZDASMq8Ln+Xy6lgTaVVwE94O93Cu
-         sNmWOMTBAaL1qlI0iEpgjS9M/pOeVNknYAGpwJfX7m7Uo3VrhkJzQYkn8sixe31WzEg0
-         zXeg==
+        Fri, 5 May 2023 16:20:15 -0400
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D173744A4;
+        Fri,  5 May 2023 13:20:13 -0700 (PDT)
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6a5e8baad21so1725961a34.2;
+        Fri, 05 May 2023 13:20:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683314791; x=1685906791;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3iZJ9fGhjhbbNzeAFBlmfcQc+gjKnOZ5KfzSZflffhY=;
-        b=CiCwXYvd2vFsxGKYmdYTfXGsnHwyHMalSU82pUQts7Wt5w5mwVxtCCbuL31I5lJJDm
-         fXOddjbtanmzH5j4TANssn24slUyTcwxiS8tdooO9lc8PsiWGj2gqv3m0nVdCi/+C+bD
-         jxgdIFUIq00CS7MPvhjSjMPXsZjagWNCC/nXRT9Zo26Ht4dcaqlbKuMrboP+t1D+USnG
-         CYCC0a0Wi653MI7nXUUz380Givn8qfC0/tCRk3+N3MiZrRhatbIM5hLBXq3l34vdvTa3
-         F36lYesNZNn2lnm9NtgZvPUG2/lORPYlyZERRLNB89fJ1/Eiromi4p0gqIHgApUAmSFo
-         dslA==
-X-Gm-Message-State: AC+VfDwU+olT3CJ2oNt1zpH1HKjkYea3ruR99cXcwpdIbwngrAp36vlQ
-        lPFlbNHvC9Si3MGOc61NjwVllw==
-X-Google-Smtp-Source: ACHHUZ7BIu14SzjFhQTIytIPXgPw1F11LQCkHeaQR0KLUgWzQKpVnrM71jbROal0OQ7L/ot5xDESgg==
-X-Received: by 2002:a05:6512:3905:b0:4a4:68b9:1a14 with SMTP id a5-20020a056512390500b004a468b91a14mr743687lfu.60.1683314791074;
-        Fri, 05 May 2023 12:26:31 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id n6-20020a056512388600b004eaeb0a984csm387537lft.88.2023.05.05.12.26.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 12:26:30 -0700 (PDT)
-Message-ID: <958fec66-2978-1d45-baad-c735fab85108@linaro.org>
-Date:   Fri, 5 May 2023 21:26:28 +0200
+        d=1e100.net; s=20221208; t=1683318013; x=1685910013;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jeVjl15EmXwPrSoTLLJ5uHm4Jcc6syTLqrZaF+h77Ng=;
+        b=Gwj+lp7adFR/kbVms44riGUemS64d7oBUEBp9UGrxvbJcI7L/V49WU/wPFTkFAVc8R
+         2t7xi6xgie04iuudkjXPSRq/i7Pi0FJj1yBGe7/1g3nui8VoLIAoEbNk2jo7P5VYXpna
+         FFuPURl/U0vGDMH5/cnruyX57EUD9MB8LodNedlG7SJb2YxU0mIkujy6vWMXwztDrPR2
+         vIC5lJcZZnVaEdp6JucvYtNhL4zZUCWQFfT2LRjIKz+s0hTNdDEMDZjrH+Q0kp+FfeG+
+         pm2dVy+KVwKbxGbRgPbTkoc0ZRkmRM3UfTjjJqGC5PK9tXWIA6oYRFVHo7rH8G23bURj
+         7qXQ==
+X-Gm-Message-State: AC+VfDw5S0ib8HP/W52ttaiokLEWw0JxGhb866AHTOoIe29IRYdnayBd
+        lVJAlBmFslLJ6GHAAVScyw==
+X-Google-Smtp-Source: ACHHUZ7X8aQNmpfMIMdOoP0/+wzyXQXke+6RJNTzYtkQr3VDmT0W1LeWUqibheXdp6rvT1lPprIs3w==
+X-Received: by 2002:a05:6870:e28c:b0:187:baaf:fb24 with SMTP id v12-20020a056870e28c00b00187baaffb24mr1409070oad.29.1683318012756;
+        Fri, 05 May 2023 13:20:12 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id p5-20020a056870868500b00172ac40356csm2218324oam.50.2023.05.05.13.20.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 May 2023 13:20:12 -0700 (PDT)
+Received: (nullmailer pid 3501013 invoked by uid 1000);
+        Fri, 05 May 2023 20:20:10 -0000
+Date:   Fri, 5 May 2023 15:20:10 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Artur Weber <aweber.kernel@gmail.com>
+Cc:     Lee Jones <lee@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Helge Deller <deller@gmx.de>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, dri-devel@lists.freedesktop.org,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-tegra@vger.kernel.org, linux-fbdev@vger.kernel.org,
+        linux-pwm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 1/4] dt-bindings: backlight: lp855x: convert to YAML and
+ modernize
+Message-ID: <20230505202010.GA3494651-robh@kernel.org>
+References: <20230429104534.28943-1-aweber.kernel@gmail.com>
+ <20230429104534.28943-2-aweber.kernel@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v10 8/9] arm64: dts: qcom: ipq9574: Add LDO regulator node
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-References: <cover.1683183860.git.quic_varada@quicinc.com>
- <8894bf2c44eaf4959c7a1966b66229e6cf5cda96.1683183860.git.quic_varada@quicinc.com>
- <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230429104534.28943-2-aweber.kernel@gmail.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Apr 29, 2023 at 12:45:31PM +0200, Artur Weber wrote:
+> Notable changes:
+> - ROM child nodes use dashes instead of underscores; the driver
+>   reads all child nodes regardless of their names, so this doesn't
+>   break ABI.
+> - pwm-period argument is deprecated, as it effectively duplicates
+>   the period value provided in pwms. The driver continues to accept
+>   the property, so this should not break ABI.
+> 
+> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+> ---
+>  .../leds/backlight/lp855x-backlight.yaml      | 148 ++++++++++++++++++
+>  .../bindings/leds/backlight/lp855x.txt        |  72 ---------
+>  2 files changed, 148 insertions(+), 72 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/leds/backlight/lp855x-backlight.yaml
+>  delete mode 100644 Documentation/devicetree/bindings/leds/backlight/lp855x.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/leds/backlight/lp855x-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/lp855x-backlight.yaml
+> new file mode 100644
+> index 000000000000..dfe8131d2a32
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/leds/backlight/lp855x-backlight.yaml
+> @@ -0,0 +1,148 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/leds/backlight/lp855x-backlight.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Texas Instruments LP855X backlight controllers
+> +
+> +maintainers:
+> +  - Artur Weber <aweber.kernel@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - ti,lp8550
+> +      - ti,lp8551
+> +      - ti,lp8552
+> +      - ti,lp8553
+> +      - ti,lp8555
+> +      - ti,lp8556
+> +      - ti,lp8557
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  dev-ctrl:
+> +    $ref: /schemas/types.yaml#/definitions/uint8
+> +    description:
+> +      Value of device control register. This is a device-specific value.
+> +
+> +  bl-name:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: Backlight device name.
+> +
+> +  init-brt:
+> +    $ref: /schemas/types.yaml#/definitions/uint8
+> +    description: Initial value of backlight brightness.
+> +
+> +  power-supply:
+> +    description: Regulator which controls the 3V rail.
+> +
+> +  enable-supply:
+> +    description: Regulator which controls the EN/VDDIO input.
+> +
+> +  pwms:
+> +    maxItems: 1
+> +    description: |
+> +      PWM channel to use for controlling the backlight; setting this
+> +      enables the PWM-based backlight control mode.
+> +
+> +  pwm-names: true
+> +
+> +  pwm-period:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      PWM period value. Deprecated; set the period value in the pwms
+> +      property instead.
+> +    deprecated: true
+> +
+> +patternProperties:
+> +  "^rom-[0-9a-f]{2}h$":
+> +    type: object
+> +    description: Nodes containing the values of configuration registers.
 
+       additionalProperties: false
 
-On 5.05.2023 11:29, Dmitry Baryshkov wrote:
-> On Fri, 5 May 2023 at 11:23, Varadarajan Narayanan
-> <quic_varada@quicinc.com> wrote:
->>
->> Add LDO regulator node
-> 
-> As this LDO is provided by the PMIC, it would be nice to know why it
-> is modelled as an always-on regulator instead of the proper PMIC
-> regulator. Up to now we were doing this only for the outstanding power
-> rails like CX/MX or EBI.
-(which we then stopped registering as regulators and started
-to manage through rpm(h)pd drivers and the genpd framework)
+With that,
 
-Konrad
-> 
->>
->> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->> ---
->>  Changes in v10:
->>         - Add LDO regulator node
->> ---
->>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> index bdc1434..1f5d14f 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> @@ -60,6 +60,13 @@
->>                         regulator-min-microvolt = <725000>;
->>                         regulator-max-microvolt = <1075000>;
->>                 };
->> +
->> +               mp5496_l2: l2 {
->> +                       regulator-min-microvolt = <1800000>;
->> +                       regulator-max-microvolt = <1800000>;
->> +                       regulator-boot-on;
->> +                       regulator-always-on;
->> +               };
->>         };
->>  };
->>
->> --
->> 2.7.4
->>
-> 
-> 
+Reviewed-by: Rob Herring <robh@kernel.org>
+
+> +    properties:
+> +      rom-addr:
+> +        $ref: /schemas/types.yaml#/definitions/uint8
+> +        description: Register address of ROM area to be updated.
+> +
+> +      rom-val:
+> +        $ref: /schemas/types.yaml#/definitions/uint8
+> +        description: Value to write to the ROM register.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - dev-ctrl
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        backlight@2c {
+> +            compatible = "ti,lp8555";
+> +            reg = <0x2c>;
+> +
+> +            dev-ctrl = /bits/ 8 <0x00>;
+> +
+> +            pwms = <&pwm 0 10000>;
+> +            pwm-names = "lp8555";
+> +
+> +            /* 4V OV, 4 output LED0 string enabled */
+> +            rom-14h {
+> +              rom-addr = /bits/ 8 <0x14>;
+> +              rom-val = /bits/ 8 <0xcf>;
+> +            };
+> +
+> +            /* Heavy smoothing, 24ms ramp time step */
+> +            rom-15h {
+> +              rom-addr = /bits/ 8 <0x15>;
+> +              rom-val = /bits/ 8 <0xc7>;
+> +            };
+> +
+> +            /* 4 output LED1 string enabled */
+> +            rom-19h {
+> +              rom-addr = /bits/ 8 <0x19>;
+> +              rom-val = /bits/ 8 <0x0f>;
+> +            };
+> +        };
+> +    };
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        backlight@2c {
+> +            compatible = "ti,lp8556";
+> +            reg = <0x2c>;
+> +
+> +            bl-name = "lcd-bl";
+> +            dev-ctrl = /bits/ 8 <0x85>;
+> +            init-brt = /bits/ 8 <0x10>;
+> +        };
+> +      };
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        backlight@2c {
+> +            compatible = "ti,lp8557";
+> +            reg = <0x2c>;
+> +            enable-supply = <&backlight_vddio>;
+> +            power-supply = <&backlight_vdd>;
+> +
+> +            dev-ctrl = /bits/ 8 <0x41>;
+> +            init-brt = /bits/ 8 <0x0a>;
+> +
+> +            /* 4V OV, 4 output LED string enabled */
+> +            rom-14h {
+> +              rom-addr = /bits/ 8 <0x14>;
+> +              rom-val = /bits/ 8 <0xcf>;
+> +            };
+> +        };
+> +    };
