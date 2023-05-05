@@ -2,74 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C79A6F88A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 20:32:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BF466F88C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 20:41:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233268AbjEEScI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 14:32:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44558 "EHLO
+        id S233016AbjEESl2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 14:41:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233234AbjEEScE (ORCPT
+        with ESMTP id S232979AbjEESl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 14:32:04 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A1D1A4AD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 11:32:01 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f1394cb0d1so2429094e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 11:32:01 -0700 (PDT)
+        Fri, 5 May 2023 14:41:26 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D4141436C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 11:41:23 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f122ff663eso2420685e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 11:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683311520; x=1685903520;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=87CO6u55bY9fxbyxmat+MZTuGrG/SzxPjQee+cLjdW0=;
-        b=YRNyeENB2381AgPUSYv2YI3S4aGnh/3v18Pvwom/wQq9GpjdVsZcjbOISNefzw8d7W
-         zcEMvlk2uC+2eqdrwps9VzfdDpt83UpAlVPbaq/2k1VKOvRsvEiq28QxMep38wSeNhk2
-         RP5deirdKVdRIR82PauvjIq1Yi/+MV3Y9xb6hODm/qsWqCah45cqNGDl5CNZAWDOLWgG
-         /TLYz5anfmOM9uwa/9HrfwnHupV5Pd/gTC2E6rK6P4Ru0X0w8BNhi+SKDWqhk+1e9HWg
-         ouihsLE9+xzPwRYn2CUXOlVIY5f4nyWVEJyETfPoCp4s5oAY+H3+6AZVVP8C4ID9oQ8K
-         nnXA==
+        d=linaro.org; s=google; t=1683312082; x=1685904082;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vzPy+iq8a63Uih5V5BHvhkK4VYVy2xJjUkPpIT7jjdE=;
+        b=XfGN3SuTBQF73/rg4jMXOCkVwj/o73CYxcVrt1bHNPbpE3R75EkWCfpr7qdoDTrVTj
+         FkfqTKGQPjz6IMrsPMwpnn73X17vpTwlpPLvnEh9x3Xkej18lML4K8QenunJUjL4h/1S
+         CvSWK92t9aPGRd5NHvKcBPOxZm5rGlVqHIq4r3EvoIUq3dXGu08tbJRHnavOWuNxrLEB
+         I0WgLjCwEfVFUlmo/lo15BH9GO/wpq/gH997LAnNNhoejg/jDYiRWunSdEjF5s0Btvru
+         fHgyHJByVZKxlIF/KlLvobI0TyRLadz8rV3sS28oVtup2n1Ku7/vv2rr32njQevmBw38
+         ogyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683311520; x=1685903520;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683312082; x=1685904082;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=87CO6u55bY9fxbyxmat+MZTuGrG/SzxPjQee+cLjdW0=;
-        b=eu4Fj6X/nxc0qUxVhRvcsuvi07rWiXaiB1ZHzbAj5KeTjn7nI397qPjlNq+7g83LDD
-         VuuvdaQGBBZEYXfC0VCtp5U62RE3W7/ef6IGf7IFzYeOO/57CvzgqK8cGiCVgPCUb4C4
-         uA+7NJAmaB2rb7fOGggZQ2QaeA++LKTnxkYPxF/jQIHKdb361Z5Y6kt5lXi94ct3YxYB
-         GAj4oeie8uLQRQq7C/NQl3QS6Gd8/C5oHEnz9+21LssvgsCohDIcZFU1XL9UushrEYWv
-         GedTKTZvMybq3VCO4eBCNRc5ODbW+44wfYox6Yc4r6ZC6lAUd0pzqQ1EhuQgV+sBCU+E
-         iAVA==
-X-Gm-Message-State: AC+VfDyfg9b6o0GOwqwABSJI9GSFxUDauqAY1j992bq/RS26RokFGOoW
-        5CwGfyXqHEvw/HHvkJZEH6dqvj63yWegTdSw75Y=
-X-Google-Smtp-Source: ACHHUZ6kERLpMlb/soxMCjnOefEKK4kWF0YnHfroc5CDuknCNqEVdtKmvTb0M2jno5Dbp6Y8i13Evw==
-X-Received: by 2002:ac2:52a4:0:b0:4ef:f3bf:93a6 with SMTP id r4-20020ac252a4000000b004eff3bf93a6mr634760lfm.51.1683311519682;
-        Fri, 05 May 2023 11:31:59 -0700 (PDT)
+        bh=vzPy+iq8a63Uih5V5BHvhkK4VYVy2xJjUkPpIT7jjdE=;
+        b=F3PMNNoLviij4q4kgwSRnyLqko5gu+5DVilFTXQEOwNzdBspDyjxqePeoFzaBkNwly
+         7LPM6Ovec270hXzJ1jqt+UFBKusXyY+szmDXFqd31UwAwycAddd8ohAsMFPv+/mciqrr
+         nMR0dJUYsAwtMg95eGAfh8IP86pfF9eD/1e/TFPH/FYwVXx8o2xLPzIsshOec+Zbe6cR
+         tUJ/8MxH/36olyrCWE7Hkf7wq4aiQuZjgttdJL+63oGeakoNp2Ibl8qodB+HpVnaLdJQ
+         VBHshUvNTfX9HQQPpInFWdBqv/eHIn5GVbNqXXvR5/er3wSLGwi/gNWXiF62BSwJ28me
+         OjzA==
+X-Gm-Message-State: AC+VfDzVE2n+i3VdOqd4PZfl3xTdVyijel1xS5Rk+64gLDbU/OePF5yC
+        w1JBGhjuqQ0SVcCZq7nCwRDM/n18ofHWIrcLyVM=
+X-Google-Smtp-Source: ACHHUZ5Kq8DCcFerFvnER6d5bxfAsAulsOWNSVgtTTfvVVk4qhoQlbHeCl701Vi9kVR4uiApSJvUdQ==
+X-Received: by 2002:a19:7412:0:b0:4eb:c12:df1c with SMTP id v18-20020a197412000000b004eb0c12df1cmr695998lfe.65.1683312081866;
+        Fri, 05 May 2023 11:41:21 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id d26-20020ac241da000000b004eb44c2ab6bsm371008lfi.294.2023.05.05.11.31.58
+        by smtp.gmail.com with ESMTPSA id y3-20020a2e95c3000000b002a7a03e1c67sm76154ljh.13.2023.05.05.11.41.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 11:31:59 -0700 (PDT)
-Message-ID: <d4b2b826-27e8-a4e6-1323-6a091111d36f@linaro.org>
-Date:   Fri, 5 May 2023 20:31:57 +0200
+        Fri, 05 May 2023 11:41:21 -0700 (PDT)
+Message-ID: <abae55ef-172b-036f-40a9-b27c38e850ec@linaro.org>
+Date:   Fri, 5 May 2023 20:41:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v4 3/5] usb: misc: eud: Add driver support for SM6115 /
- SM4250
 Content-Language: en-US
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     Dang Huynh <danct12@riseup.net>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, agross@kernel.org, andersson@kernel.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        krzysztof.kozlowski@linaro.org
-References: <20230505064039.1630025-1-bhupesh.sharma@linaro.org>
- <20230505064039.1630025-4-bhupesh.sharma@linaro.org>
- <84dd0aa0-0ee3-fc85-449d-a9509d7bb765@linaro.org>
- <CAH=2NtwbGCFzGNvgNdtTR2h0CWzKtA-_=XimKQECZmf+BrSYQw@mail.gmail.com>
+        linux-kernel@vger.kernel.org
+References: <20230505-fxtec-pro1x-support-v2-0-0ea2378ba9ae@riseup.net>
+ <20230505-fxtec-pro1x-support-v2-1-0ea2378ba9ae@riseup.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAH=2NtwbGCFzGNvgNdtTR2h0CWzKtA-_=XimKQECZmf+BrSYQw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Add Fxtec Pro1X (QX1050) DTS
+In-Reply-To: <20230505-fxtec-pro1x-support-v2-1-0ea2378ba9ae@riseup.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,225 +81,351 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.05.2023 17:50, Bhupesh Sharma wrote:
-> On Fri, 5 May 2023 at 16:35, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 5.05.2023 08:40, Bhupesh Sharma wrote:
->>> Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
->>>
->>> On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
->>> needs to be accessed only via the secure world (through 'scm'
->>> calls).
->>>
->>> Also, the enable bit inside 'tcsr_check_reg' needs to be set
->>> first to set the eud in 'enable' mode on these SoCs.
->>>
->>> Since this difference comes from how the firmware is configured, so
->>> the driver now relies on the presence of an extra boolean DT property
->>> to identify if secure access is needed.
->>>
->>> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
->>> ---
->>>  drivers/usb/misc/Kconfig    |  1 +
->>>  drivers/usb/misc/qcom_eud.c | 74 +++++++++++++++++++++++++++++++++----
->>>  2 files changed, 68 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
->>> index 99b15b77dfd5..fe1b5fec1dfc 100644
->>> --- a/drivers/usb/misc/Kconfig
->>> +++ b/drivers/usb/misc/Kconfig
->>> @@ -147,6 +147,7 @@ config USB_APPLEDISPLAY
->>>  config USB_QCOM_EUD
->>>       tristate "QCOM Embedded USB Debugger(EUD) Driver"
->>>       depends on ARCH_QCOM || COMPILE_TEST
->>> +     select QCOM_SCM
->>>       select USB_ROLE_SWITCH
->>>       help
->>>         This module enables support for Qualcomm Technologies, Inc.
->>> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
->>> index b7f13df00764..18a2dee3b4b9 100644
->>> --- a/drivers/usb/misc/qcom_eud.c
->>> +++ b/drivers/usb/misc/qcom_eud.c
->>> @@ -5,12 +5,14 @@
->>>
->>>  #include <linux/bitops.h>
->>>  #include <linux/err.h>
->>> +#include <linux/firmware/qcom/qcom_scm.h>
->>>  #include <linux/interrupt.h>
->>>  #include <linux/io.h>
->>>  #include <linux/iopoll.h>
->>>  #include <linux/kernel.h>
->>>  #include <linux/module.h>
->>>  #include <linux/of.h>
->>> +#include <linux/of_device.h>
->>>  #include <linux/platform_device.h>
->>>  #include <linux/slab.h>
->>>  #include <linux/sysfs.h>
->>> @@ -22,23 +24,35 @@
->>>  #define EUD_REG_VBUS_INT_CLR 0x0080
->>>  #define EUD_REG_CSR_EUD_EN   0x1014
->>>  #define EUD_REG_SW_ATTACH_DET        0x1018
->>> -#define EUD_REG_EUD_EN2        0x0000
->>> +#define EUD_REG_EUD_EN2              0x0000
->>>
->>>  #define EUD_ENABLE           BIT(0)
->>> -#define EUD_INT_PET_EUD      BIT(0)
->>> +#define EUD_INT_PET_EUD              BIT(0)
->>>  #define EUD_INT_VBUS         BIT(2)
->>>  #define EUD_INT_SAFE_MODE    BIT(4)
->>>  #define EUD_INT_ALL          (EUD_INT_VBUS | EUD_INT_SAFE_MODE)
->>>
->>> +#define EUD_EN2_SECURE_EN    BIT(0)
->>> +#define EUD_EN2_NONSECURE_EN (1)
->> BIT(0) == 1, is that actually a separate register or does it just
->> reflect whether scm_writel is used?
->>
->> If the latter, perhaps it'd be okay to just call it EUD_EN2_EN or
->> something along those lines? Isn't that perhaps what the docs call it?
+On 5.05.2023 19:12, Dang Huynh wrote:
+> The F(x)tec Pro1X is a mobile phone released by FX Technologies Ltd
+> in 2022.
 > 
-> Ok, let's name it as EUD_EN2_ENABLE then.
+> The phone is exactly the same as the Pro1 released in 2019 with some
+> changes:
+> - MSM8998 -> SM6115
+> - Camera button is no longer multistate
+> - Only one 48MP back camera
+> - A new keyboard layout picked by the community.
 > 
->>> +#define EUD_EN2_DISABLE              (0)
->>> +#define TCSR_CHECK_EN                BIT(0)
->>> +
->>> +struct eud_soc_cfg {
->>> +     u32 tcsr_check_offset;
->>> +};
->>> +
->>>  struct eud_chip {
->>>       struct device                   *dev;
->>>       struct usb_role_switch          *role_sw;
->>> +     const struct eud_soc_cfg        *eud_cfg;
->>>       void __iomem                    *base;
->>>       void __iomem                    *mode_mgr;
->>>       unsigned int                    int_status;
->>>       int                             irq;
->>>       bool                            enabled;
->>>       bool                            usb_attached;
->>> +     bool                            secure_mode_enable;
->> Since it's only used in the probe function now, we can get rid
->> of it!
+> This commit has the following features working:
+> - Display (using simplefb)
+> - UFS
+> - Power and volume buttons
+> - Pinctrl
+> - RPM Regulators
+> - USB (Device Mode)
 > 
-> Ok.
+> To get a successful boot run:
 > 
->>> +     phys_addr_t                     secure_mode_mgr;
->>>  };
->>>
->>>  static int enable_eud(struct eud_chip *priv)
->>> @@ -46,7 +60,11 @@ static int enable_eud(struct eud_chip *priv)
->>>       writel(EUD_ENABLE, priv->base + EUD_REG_CSR_EUD_EN);
->>>       writel(EUD_INT_VBUS | EUD_INT_SAFE_MODE,
->>>                       priv->base + EUD_REG_INT1_EN_MASK);
->>> -     writel(1, priv->mode_mgr + EUD_REG_EUD_EN2);
->>> +
->>> +     if (priv->secure_mode_mgr)
->>> +             qcom_scm_io_writel(priv->secure_mode_mgr + EUD_REG_EUD_EN2, EUD_EN2_SECURE_EN);
->>> +     else
->>> +             writel(EUD_EN2_NONSECURE_EN, priv->mode_mgr + EUD_REG_EUD_EN2);
->>>
->>>       return usb_role_switch_set_role(priv->role_sw, USB_ROLE_DEVICE);
->>>  }
->>> @@ -54,7 +72,11 @@ static int enable_eud(struct eud_chip *priv)
->>>  static void disable_eud(struct eud_chip *priv)
->>>  {
->>>       writel(0, priv->base + EUD_REG_CSR_EUD_EN);
->>> -     writel(0, priv->mode_mgr + EUD_REG_EUD_EN2);
->>> +
->>> +     if (priv->secure_mode_mgr)
->>> +             qcom_scm_io_writel(priv->secure_mode_mgr + EUD_REG_EUD_EN2, EUD_EN2_DISABLE);
->>> +     else
->>> +             writel(EUD_EN2_DISABLE, priv->mode_mgr + EUD_REG_EUD_EN2);
->>>  }
->>>
->>>  static ssize_t enable_show(struct device *dev,
->>> @@ -178,6 +200,8 @@ static void eud_role_switch_release(void *data)
->>>  static int eud_probe(struct platform_device *pdev)
->>>  {
->>>       struct eud_chip *chip;
->>> +     struct resource *res;
->>> +     phys_addr_t tcsr_base, tcsr_check;
->>>       int ret;
->>>
->>>       chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
->>> @@ -200,9 +224,40 @@ static int eud_probe(struct platform_device *pdev)
->>>       if (IS_ERR(chip->base))
->>>               return PTR_ERR(chip->base);
->>>
->>> -     chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
->>> -     if (IS_ERR(chip->mode_mgr))
->>> -             return PTR_ERR(chip->mode_mgr);
->>> +     chip->secure_mode_enable = of_property_read_bool(chip->dev->of_node,
->>> +                                             "qcom,secure-mode-enable");
->>> +     /*
->>> +      * EUD block on a few Qualcomm SoCs need secure register access.
->>> +      * Check for the same.
->>> +      */
->>> +     if (chip->secure_mode_enable) {
->> if (of_property_read_bool...)
+> cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
+> sm6115-fxtec-pro1x.dtb  > .Image.gz-dtb
 > 
-> Sure.
+> mkbootimg --kernel .Image.gz-dtb \
+> --ramdisk initrd.img \
+> --base 0x0 \
+> --kernel_offset 0x8000 \
+> --ramdisk_offset 0x1000000 \
+> --second_offset 0xf00000 \
+> --tags_offset 0x100 \
+> --pagesize 4096 \
+> --cmdline "CMDLINE HERE" \
+> -o qx1050-boot.img
 > 
->>> +             res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
->>> +             if (!res)
->>> +                     return dev_err_probe(chip->dev, -ENODEV,
->>> +                                          "failed to get secure_mode_mgr reg base\n");
->>> +
->>> +             chip->secure_mode_mgr = res->start;
->>> +     } else {
->>> +             chip->mode_mgr = devm_platform_ioremap_resource(pdev, 1);
->>> +             if (IS_ERR(chip->mode_mgr))
->>> +                     return PTR_ERR(chip->mode_mgr);
->>> +     }
->>> +
->>> +     /* Check for any SoC specific config data */
->>> +     chip->eud_cfg = of_device_get_match_data(&pdev->dev);
->>> +     if (chip->eud_cfg) {
->>> +             res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "tcsr-base");
->>> +             if (!res)
->>> +                     return dev_err_probe(chip->dev, -ENODEV,
->>> +                                          "failed to get tcsr reg base\n");
->>> +
->>> +             tcsr_base = res->start;
->> This variable does not seem very useful, we can get rid of it.
+> fastboot flash boot qx1050-boot.img
+> fastboot erase dtbo
+> fastboot reboot
 > 
-> Ok.
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile               |   1 +
+>  arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 248 ++++++++++++++++++++++++
+>  2 files changed, 249 insertions(+)
 > 
->>> +             tcsr_check = tcsr_base + chip->eud_cfg->tcsr_check_offset;
->>> +
->>> +             ret = qcom_scm_io_writel(tcsr_check, TCSR_CHECK_EN);
->>> +             if (ret)
->>> +                     return dev_err_probe(chip->dev, ret, "failed to write tcsr check reg\n");
->>> +     }
->>>
->>>       chip->irq = platform_get_irq(pdev, 0);
->>>       ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
->>> @@ -230,8 +285,13 @@ static int eud_remove(struct platform_device *pdev)
->>>       return 0;
->>>  }
->>>
->>> +static const struct eud_soc_cfg sm6115_eud_cfg = {
->> This could be marked __initconst, but I'm not sure if future
->> additions won't need to be accessed after the driver has already
->> gone through its probe function.. Your call!
-> 
-> Like Dmitry also mentioned, I have my apprehensions as well marking this
-> as __initconst, so let's not do that.
-Right, thanks Dmitry for pointing this out, I didn't think of usecases
-where a driver can be removed..
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index d42c59572ace..e311ba675f35 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -174,6 +174,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+> new file mode 100644
+> index 000000000000..a9ff1d9534ae
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+> @@ -0,0 +1,248 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+I'm not a licensing expert, but fyi sm6115.dtsi uses (GPL2+ & BSD3)
+
+> +/*
+> + * Copyright (c) 2023, Dang Huynh <danct12@riseup.net>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sm6115.dtsi"
+> +#include "pm6125.dtsi"
+> +
+> +/ {
+> +	model = "F(x)tec Pro1X (QX1050)";
+> +	compatible = "fxtec,pro1x", "qcom,sm6115";
+> +	chassis-type = "handset";
+> +
+> +	qcom,msm-id = <417 0x10000>, <444 0x10000>;
+Please include include/dt-bindings/arm/qcom,ids.h and use the
+defines.
+
+417 corresponds to the weaker version of this SoC, SM4250. It may
+not necessarily make sense to add it to the list if we know it
+shouldn't be used.
+
+> +	qcom,board-id = <34 0>;
+Does the bootloader refuse to boot without these? Some newer
+ones don't need it.
+
+In case they are compulsory, you'll have to add the pro1x to the
+relevant allOf:if:then: block in bindings.
+
+> +
+> +	chosen {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		framebuffer0: framebuffer@5c000000 {
+> +			compatible = "simple-framebuffer";
+> +			reg = <0 0x5c000000 0 (1080 * 2160 * 4)>;
+Use 0x0 in reg, please.
+
+> +			width = <1080>;
+> +			height = <2160>;
+> +			stride = <(1080 * 4)>;
+> +			format = "a8r8g8b8";
+> +			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&vol_up_n>;
+property-n
+property-names
+
+> +
+> +		key-volume-up {
+> +			label = "Volume Up";
+> +			linux,code = <KEY_VOLUMEUP>;
+> +			gpios = <&pm6125_gpios 5 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +	};
+> +};
+> +
+> +&dispcc {
+> +	/* HACK: disable until a panel driver is ready to retain simplefb */
+> +	status = "disabled";
+> +};
+> +
+> +&pm6125_gpios {
+> +	vol_up_n: vol-up-n-state {
+> +		pins = "gpio5";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +};
+> +
+> +&pon_pwrkey {
+> +	status = "okay";
+> +};
+> +
+> +&pon_resin {
+> +	linux,code = <KEY_VOLUMEDOWN>;
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+> +	pm6125-regulators {
+> +		compatible = "qcom,rpm-pm6125-regulators";
+> +
+> +		vreg_s6a: s6 {
+You can keep the PMIC name apparent by renaming vreg_s6a to
+pm6125_s6 etc.
 
 Konrad
+> +			regulator-min-microvolt = <304000>;
+> +			regulator-max-microvolt = <1456000>;
+> +		};
+> +
+> +		vreg_s7a: s7 {
+> +			regulator-min-microvolt = <1280000>;
+> +			regulator-max-microvolt = <2040000>;
+> +		};
+> +
+> +		vreg_s8a: s8 {
+> +			regulator-min-microvolt = <1064000>;
+> +			regulator-max-microvolt = <1304000>;
+> +		};
+> +
+> +		vreg_l1a: l1 {
+> +			regulator-min-microvolt = <952000>;
+> +			regulator-max-microvolt = <1152000>;
+> +		};
+> +
+> +		vreg_l4a: l4 {
+> +			regulator-min-microvolt = <488000>;
+> +			regulator-max-microvolt = <1000000>;
+> +		};
+> +
+> +		vreg_l5a: l5 {
+> +			regulator-min-microvolt = <1648000>;
+> +			regulator-max-microvolt = <3056000>;
+> +		};
+> +
+> +		vreg_l6a: l6 {
+> +			regulator-min-microvolt = <576000>;
+> +			regulator-max-microvolt = <656000>;
+> +		};
+> +
+> +		vreg_l7a: l7 {
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1304000>;
+> +		};
+> +
+> +		vreg_l8a: l8 {
+> +			regulator-min-microvolt = <400000>;
+> +			regulator-max-microvolt = <728000>;
+> +		};
+> +
+> +		vreg_l9a: l9 {
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2000000>;
+> +		};
+> +
+> +		vreg_l10a: l10 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1904000>;
+> +		};
+> +
+> +		vreg_l11a: l11 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1952000>;
+> +		};
+> +
+> +		vreg_l12a: l12 {
+> +			regulator-min-microvolt = <1624000>;
+> +			regulator-max-microvolt = <1984000>;
+> +		};
+> +
+> +		vreg_l13a: l13 {
+> +			regulator-min-microvolt = <1504000>;
+> +			regulator-max-microvolt = <1952000>;
+> +		};
+> +
+> +		vreg_l14a: l14 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1904000>;
+> +		};
+> +
+> +		vreg_l15a: l15 {
+> +			regulator-min-microvolt = <2920000>;
+> +			regulator-max-microvolt = <3232000>;
+> +		};
+> +
+> +		vreg_l16a: l16 {
+> +			regulator-min-microvolt = <1704000>;
+> +			regulator-max-microvolt = <1904000>;
+> +		};
+> +
+> +		vreg_l17a: l17 {
+> +			regulator-min-microvolt = <1152000>;
+> +			regulator-max-microvolt = <1384000>;
+> +		};
+> +
+> +		vreg_l18a: l18 {
+> +			regulator-min-microvolt = <1104000>;
+> +			regulator-max-microvolt = <1312000>;
+> +		};
+> +
+> +		vreg_l19a: l19 {
+> +			regulator-min-microvolt = <1624000>;
+> +			regulator-max-microvolt = <3304000>;
+> +		};
+> +
+> +		vreg_l20a: l20 {
+> +			regulator-min-microvolt = <1624000>;
+> +			regulator-max-microvolt = <3304000>;
+> +		};
+> +
+> +		vreg_l21a: l21 {
+> +			regulator-min-microvolt = <2400000>;
+> +			regulator-max-microvolt = <3600000>;
+> +		};
+> +
+> +		vreg_l22a: l22 {
+> +			regulator-min-microvolt = <2952000>;
+> +			regulator-max-microvolt = <3304000>;
+> +		};
+> +
+> +		vreg_l23a: l23 {
+> +			regulator-min-microvolt = <3200000>;
+> +			regulator-max-microvolt = <3400000>;
+> +		};
+> +
+> +		vreg_l24a: l24 {
+> +			regulator-min-microvolt = <2704000>;
+> +			regulator-max-microvolt = <3600000>;
+> +		};
+> +	};
+> +};
+> +
+> +&xo_board {
+> +	clock-frequency = <19200000>;
+> +};
+Out of alphabetical order
+
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32764>;
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <0 4>, <14 4>;
+> +};
+> +
+> +&ufs_mem_hc {
+> +	vcc-supply = <&vreg_l24a>;
+> +	vcc-max-microamp = <600000>;
+> +	vccq2-supply = <&vreg_l11a>;
+> +	vccq2-max-microamp = <600000>;
+You need `regulator-allow-set-load` on regulators which
+set current (i.e. sdhci and ufs/phy regulators)
+
+> +	status = "okay";
+> +};
+> +
+> +&ufs_mem_phy {
+> +	vdda-phy-supply = <&vreg_l4a>;
+> +	vdda-pll-supply = <&vreg_l12a>;
+> +	vddp-ref-clk-supply = <&vreg_l18a>;
+> +	status = "okay";
+> +};
+> +
+> +&usb {
+> +	status = "okay";
+> +};
+> +
+> +&usb_dwc3 {
+> +	maximum-speed = "high-speed";
+Do you know whether the phone supports usb3? Usually if that's
+the case, you will get usb3 in fastboot.
+
+You'll need an actual usb3 cable to check that though, many claim
+that but then don't have the necessary wires connected.
+
+Konrad
+> +	dr_mode = "peripheral";
+> +};
+> +
+> +&usb_hsphy {
+> +	vdd-supply = <&vreg_l4a>;
+> +	vdda-pll-supply = <&vreg_l12a>;
+> +	vdda-phy-dpdm-supply = <&vreg_l15a>;
+> +	status = "okay";
+> +};
 > 
-> I will wait for a few more comments and then will send a new version across.
-> 
-> Thanks,
-> Bhupesh
-> 
->>> +     .tcsr_check_offset = 0x25018,
->>> +};
->>> +
->>>  static const struct of_device_id eud_dt_match[] = {
->>>       { .compatible = "qcom,sc7280-eud" },
->>> +     { .compatible = "qcom,sm6115-eud", .data = &sm6115_eud_cfg },
->>>       { }
->>>  };
->>>  MODULE_DEVICE_TABLE(of, eud_dt_match);
