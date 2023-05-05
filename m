@@ -2,150 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A9FC6F7FE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 11:25:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 159D36F7FFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 11:30:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231550AbjEEJZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 05:25:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35284 "EHLO
+        id S231670AbjEEJaJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 05:30:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231702AbjEEJZf (ORCPT
+        with ESMTP id S231485AbjEEJaH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 05:25:35 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A38A19415;
-        Fri,  5 May 2023 02:25:34 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3457sTZk031532;
-        Fri, 5 May 2023 09:25:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=lf38yr2HPtkIr93NPvSpTb0G/h2pVjgRVUdckSYuuQ8=;
- b=ksV0YRNEm/IJt5oD87fCmCGelJT8N9K6tU8BIZxKUKYVz7NQvDh8xiA9T8stqwc/B9m+
- kkTp0/cd0VJ8Qbl0qJxqb5CfU5P6A7NIciFcZOTqn2nAneuwjX7FNSQ5b7QKCr5xuxKy
- n+XleoInRzl0g+YEOWW5N6xU7DkqYM5+9xOk2NfWdMQCfgiR23khVdRC3xbQY463/icl
- UX40oZnu5Vd1PJ0RJpqEYvSZ5fS16z3EoeeX1mTp46icoW4sNxJtu48cdDC6bE8QIg7G
- 1H8RqMDpTELNSXw9srRP4I0c2WTCpULPrdyfivOuNrJHhZEzTI99fsIdgH/5mFRu3kjG WQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qcb24arjd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 05 May 2023 09:25:22 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3459PLC8026884
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 5 May 2023 09:25:21 GMT
-Received: from hazha-gv.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 5 May 2023 02:25:15 -0700
-From:   Hao Zhang <quic_hazha@quicinc.com>
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Paul Walmsley" <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Hao Zhang <quic_hazha@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
-Subject: [PATCH v4 3/3] Documentation: trace: Add documentation for Coresight Dummy Trace
-Date:   Fri, 5 May 2023 17:24:22 +0800
-Message-ID: <20230505092422.32217-4-quic_hazha@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230505092422.32217-1-quic_hazha@quicinc.com>
-References: <20230505092422.32217-1-quic_hazha@quicinc.com>
+        Fri, 5 May 2023 05:30:07 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4982516362
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 02:30:06 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-559debdedb5so21806267b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 02:30:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683279005; x=1685871005;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zKLLprNwaaeZYAnNNb830KY0y4SK3/A2CshWnDDE80w=;
+        b=IyeI2DkciUzyMxxJkZOgS4Wf48xUGAPNC5wvtQocGOSDSNVbotah9q12SzdcdTzC9V
+         B4FURdd4Wz5zfZtAfHXXvHmbVGHNlUf4cuPoQTNG1ifz5zAZzz5JeXrm7227Ir6MR/Lt
+         OFB//+zi1Qea68MpwIASOqpabWg8dBuZqtwUT+QdMQUq1pndBRZVuI60F8nDqIl+zutJ
+         3aJLqWzeYW6045FPK0R4ItYPlTd6iUBzwrSq5nrYZvKP6tVVBhDCmWEc0MYs6L3sxIwJ
+         yhTk5qFg0jHBqLToGH4P9nlWjqpqpkBiZoeOe9hnRkvCcTLS+c3Bx83fiO0Wlfjq4gAp
+         gOHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683279005; x=1685871005;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zKLLprNwaaeZYAnNNb830KY0y4SK3/A2CshWnDDE80w=;
+        b=Wmm+1OGjTbY1dwi7nufBCgD/4clDXxhTbNSWs9kW3za5YVg4fdlJw2tmlMM7bworB3
+         14ADmIdZbn8kWT79oEorIX133B1HqgqqYavlV22BugZnKltZQCS4V+Tp/ZlFF2Jm0d5b
+         UXf05GLh7kCJhAQiwleOLaTEYwkagveAgfPiGe3217Rg1u2YhYSiL3uS2yADSXkQNvv6
+         +jx0NU6GAzYnhgHaonm8cja1oA9t/2qBEB62S/6gd5f4jlSNF7l22kpy7xc7HXIzChlV
+         0IRKHN/pcoomv+TMzq5gbKZygYn1TXvDoTQ9juKKDPx43lVvyGkSFxzg1E2iZVxZsMJ/
+         imvA==
+X-Gm-Message-State: AC+VfDxjIbudvr0b2HoXla/XPr7FDheeZmNID88bc9yZsOK81G/Y7Rkb
+        F0Tgfsqt+rC5+3mMk6T0bptE4wgixpsea+tiYafQVQ==
+X-Google-Smtp-Source: ACHHUZ57uxYbtQ4r7HHvF2CMapziRFJbg7koTCsVXaNSfDQ941AHyjqZmqhvyR2XIphz/G6gzsJpm/RJwQ9QpSVa1P4=
+X-Received: by 2002:a81:4e8a:0:b0:55a:886c:bfc3 with SMTP id
+ c132-20020a814e8a000000b0055a886cbfc3mr999607ywb.7.1683279005467; Fri, 05 May
+ 2023 02:30:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SM7Gnzn-OtCaw7hcWz9pSx3d6kWhIc23
-X-Proofpoint-ORIG-GUID: SM7Gnzn-OtCaw7hcWz9pSx3d6kWhIc23
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-05_15,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=967 phishscore=0
- impostorscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305050077
+References: <cover.1683183860.git.quic_varada@quicinc.com> <8894bf2c44eaf4959c7a1966b66229e6cf5cda96.1683183860.git.quic_varada@quicinc.com>
+In-Reply-To: <8894bf2c44eaf4959c7a1966b66229e6cf5cda96.1683183860.git.quic_varada@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 5 May 2023 12:29:54 +0300
+Message-ID: <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com>
+Subject: Re: [PATCH v10 8/9] arm64: dts: qcom: ipq9574: Add LDO regulator node
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
+        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add documentation for Coresight Dummy Trace under trace/coresight.
+On Fri, 5 May 2023 at 11:23, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
+>
+> Add LDO regulator node
 
-Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
----
- .../trace/coresight/coresight-dummy.rst       | 34 +++++++++++++++++++
- 1 file changed, 34 insertions(+)
- create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
+As this LDO is provided by the PMIC, it would be nice to know why it
+is modelled as an always-on regulator instead of the proper PMIC
+regulator. Up to now we were doing this only for the outstanding power
+rails like CX/MX or EBI.
 
-diff --git a/Documentation/trace/coresight/coresight-dummy.rst b/Documentation/trace/coresight/coresight-dummy.rst
-new file mode 100644
-index 000000000000..7cb59f080c88
---- /dev/null
-+++ b/Documentation/trace/coresight/coresight-dummy.rst
-@@ -0,0 +1,34 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+=============================
-+Coresight Dummy Trace Module
-+=============================
-+
-+    :Author:   Hao Zhang <quic_hazha@quicinc.com>
-+    :Date:     May 2023
-+
-+Introduction
-+---------------------------
-+
-+Coresight Dummy Trace Module is for the specific devices that kernel
-+don't have permission to access or configure, e.g., CoreSight TPDMs
-+on Qualcomm platforms. So there need driver to register dummy devices
-+as Coresight devices. It may also be used to define components that
-+may not have any programming interfaces (e.g, static links), so that
-+paths can be established in the driver. Provide Coresight API for
-+dummy device operations, such as enabling and disabling dummy devices.
-+Build the Coresight path for dummy sink or dummy source for debugging.
-+
-+Config details
-+---------------------------
-+
-+There are two types of nodes, dummy sink and dummy source. The nodes
-+should be observed at the below coresight path::
-+
-+    ``/sys/bus/coresight/devices``.
-+
-+e.g.::
-+
-+    / $ ls -l /sys/bus/coresight/devices | grep dummy
-+    dummy_sink0 -> ../../../devices/platform/soc@0/soc@0:sink/dummy_sink0
-+    dummy_source0 -> ../../../devices/platform/soc@0/soc@0:source/dummy_source0
+>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Changes in v10:
+>         - Add LDO regulator node
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> index bdc1434..1f5d14f 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> @@ -60,6 +60,13 @@
+>                         regulator-min-microvolt = <725000>;
+>                         regulator-max-microvolt = <1075000>;
+>                 };
+> +
+> +               mp5496_l2: l2 {
+> +                       regulator-min-microvolt = <1800000>;
+> +                       regulator-max-microvolt = <1800000>;
+> +                       regulator-boot-on;
+> +                       regulator-always-on;
+> +               };
+>         };
+>  };
+>
+> --
+> 2.7.4
+>
+
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
