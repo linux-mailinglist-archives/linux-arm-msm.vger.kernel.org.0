@@ -2,88 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0927A6F88DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 20:47:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DDB06F88F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 20:49:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233310AbjEESrH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 14:47:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53840 "EHLO
+        id S233311AbjEESs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 14:48:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233155AbjEESrF (ORCPT
+        with ESMTP id S232168AbjEESs5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 14:47:05 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23861D97E
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 11:47:03 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-965d2749e2eso221592566b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 11:47:03 -0700 (PDT)
+        Fri, 5 May 2023 14:48:57 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D35F818859
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 11:48:55 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f1411e8111so2402765e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 11:48:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683312422; x=1685904422;
+        d=linaro.org; s=google; t=1683312534; x=1685904534;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xizeI1xw1N1o1KCR/0d3CEO5HKUJMy4YKMQX1QmsJGU=;
-        b=BYjn7MR+ccvEmSQ0mrXcIifJSGfkZYwfRcTeP0ubpg11K5pBkh3FQ/6t9t7zmM5pm4
-         Nja8mfI6By1KkXVz/cH092kKR4ynt0oIMRA9EoGPv5a12FRs1uVJBLYrM4bHUxtgDewC
-         s6i2bvPJT162ghE3iQXfHMRsqHt1M60kBOIMhqSLJBQubkfYgxx9MmtdI+rcAic5qg0Y
-         8kVtA3EQ8tHR4LmGqfU0bAoM55gZvv7QNCQG5GPVvdPgn6K3WBLOxwec8qDjSsipcG1D
-         XYZLHJu/I9NwxRuoMkTXSMGWDBTLWbrizX8sTIO8d16Ekbmc4PLyX9X8010RAitoXF3s
-         8qpQ==
+        bh=Crh9fzWfq0MD2HA/mWuy3AwSn4MclmdJjDjdEYt9apw=;
+        b=A3BA8gulgqhSMKGoMnA/WTu7e+p1LZh7rNN2V7J17ajT8yI4vic/7rfTY7kHU5eFBe
+         TDtDz1GwFXdZ3Yi+jQhQ0aF7GBzhnj7OthbB058Zc0v9fTU9UlP/QRBvE7HO1cLJLXBE
+         GOZ1D19yuRtlmxowcHUdD8Q9n+mmX8l/28UoM6F4AV3DhCCMWoMeUAScn9GlsQV5K9d8
+         /YnF13t958XSrfgzxJ2OgJBN/FmIM2TiOFYjyezG19sR1Q8XcAoXE9zx/NtMBkaWcB13
+         H0/MF7TbtrZSBjobqxoh9xGdZ/xGI/uMtuavMD6ccjIXQv8gkiZAS6Td3oFjtmhVm192
+         LCYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683312422; x=1685904422;
+        d=1e100.net; s=20221208; t=1683312534; x=1685904534;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xizeI1xw1N1o1KCR/0d3CEO5HKUJMy4YKMQX1QmsJGU=;
-        b=ic6nhVDuYiERTqxsCOz5dSz1G2GjH5cUo7e9SIDMrPN1VwYQH6j6zuRj4LimSCV5ad
-         oJLVJktLO1iDCVCA7jm2ihPm9YqObTiVVf4N0VjwX5j+w2YZhyQz7ZGcS+SmE/v4eBk+
-         LqKivSy3O+hP/hLcgVphVeM9d/OyxhXDoesE/kfYtDQbZeq2gZ/OoG9zdvgxwWOj0+oJ
-         hBAzqQeFgZ0/n/pWrON3ullphKJk+t1W2uzQFuneGjmFSGpFP9yEM+9ZU46umdkEH9O+
-         uoPBsAfr+BfaRfCrh2qsCUXAHcr6u7khiF+NUZWcSfsI/CcaiDTeVxUyEcSJp9p9pDNG
-         FSwg==
-X-Gm-Message-State: AC+VfDzMxkd9u1WeJEgBhaRmXcYhZm3OsMiWmV2HENZ2WTa0dwPMhImk
-        ds1/I/sqOwbC8f114uopZ057KQ==
-X-Google-Smtp-Source: ACHHUZ6EzeWMpBxmWaCjOrtvtyfpMbhXeKnbo8gnWIGqsyLOp/pkuaTAcAyh14W6LDPIk97mCn1Hgw==
-X-Received: by 2002:a17:906:db03:b0:965:4b43:11f1 with SMTP id xj3-20020a170906db0300b009654b4311f1mr1799980ejb.3.1683312422000;
-        Fri, 05 May 2023 11:47:02 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:52e:24ce:bbc1:127d? ([2a02:810d:15c0:828:52e:24ce:bbc1:127d])
-        by smtp.gmail.com with ESMTPSA id n10-20020a1709065daa00b0094edbe5c7ddsm1252130ejv.38.2023.05.05.11.47.00
+        bh=Crh9fzWfq0MD2HA/mWuy3AwSn4MclmdJjDjdEYt9apw=;
+        b=XcK4eY2bcjK8sWYHv/+0u3mLFyyciygAqx2rGHhTsdqUIyEoym8vcydflFAp6vyxiw
+         OWyXbAcgiTsjNJXhLtPpx0Mr4ngYbDhoLQy1W2s3A0KhShVtmasJLaP0HKaEeNW19jzD
+         pXPTIG3smSVhLkcVyE4WpswHTBFlO8oI0MZp4lJgkbzIVun5YIQ2y7pipxEWVffcz82Y
+         NREH6R4w8xcS0x1CcFt+aSmaU9+4acrlQfkMxTrSXr4odY4up9eeuD/WhXLcrvuMX8VF
+         bf6YY/3PBnhSRgAAr3wC+0mSG7neWRPJG8NM7e8EEDOtAZgdEcFmtjM35SrAKSqfRR5a
+         GoCQ==
+X-Gm-Message-State: AC+VfDwLJ3PIn6+hSHLukmd8V2Wn6b0xdwAtLbkg9ZbfgVqG2x5hajQr
+        BjEjVmq8qSZ0bATLQ4GRDzCDAg==
+X-Google-Smtp-Source: ACHHUZ6MB/ZRbiqb+rRR2yJknH8iVNHvoAF46WGJlP3+1O3Eo9MBQbKqyXrbrAEzStwB9WURN0hvvg==
+X-Received: by 2002:a19:f702:0:b0:4f0:c18:5114 with SMTP id z2-20020a19f702000000b004f00c185114mr883037lfe.26.1683312534123;
+        Fri, 05 May 2023 11:48:54 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id i12-20020ac25d2c000000b004e887fd71acsm376929lfb.236.2023.05.05.11.48.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 11:47:01 -0700 (PDT)
-Message-ID: <316e9ee5-fccc-e199-f727-7b8187e965ff@linaro.org>
-Date:   Fri, 5 May 2023 20:47:00 +0200
+        Fri, 05 May 2023 11:48:53 -0700 (PDT)
+Message-ID: <e5f7420c-2e09-8a29-0958-da0a74fc98b4@linaro.org>
+Date:   Fri, 5 May 2023 20:48:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v7 1/3] dt-bindings: ufs: qcom: Add ICE phandle
+Subject: Re: [PATCH v2 02/18] media: venus: hfi_venus: Write to VIDC_CTRL_INIT
+ after unmasking interrupts
 Content-Language: en-US
-To:     Abel Vesa <abel.vesa@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "James E . J . Bottomley" <jejb@linux.ibm.com>,
-        "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        linux-scsi@vger.kernel.org
-References: <20230408214041.533749-1-abel.vesa@linaro.org>
- <20230408214041.533749-2-abel.vesa@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230408214041.533749-2-abel.vesa@linaro.org>
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        stable@vger.kernel.org
+References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
+ <20230228-topic-venus-v2-2-d95d14949c79@linaro.org>
+ <bfda6e09-2674-8ef1-11b2-83f631329c51@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <bfda6e09-2674-8ef1-11b2-83f631329c51@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -94,43 +92,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/04/2023 23:40, Abel Vesa wrote:
-> Starting with SM8550, the ICE will have its own devicetree node
-> so add the qcom,ice property to reference it.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> The v6 is here:
-> https://lore.kernel.org/all/20230407105029.2274111-3-abel.vesa@linaro.org/
-> 
-> Changes since v6:
->  * Dropped the minItems for both the qcom,ice and the reg in the
->    qcom,ice compatile subschema, like Krzysztof suggested
-> 
-> Changes since v5:
->  * dropped the sm8550 specific subschema and replaced it with one that
->    mutually excludes the qcom,ice vs both the ICE specific reg range
->    and the ICE clock
-> 
-> Changes since v4:
->  * Added check for sm8550 compatible w.r.t. qcom,ice in order to enforce
->    it while making sure none of the other platforms are allowed to use it
-> 
-> Changes since v3:
->  * dropped the "and drop core clock" part from subject line
-> 
-> Changes since v2:
->  * dropped all changes except the qcom,ice property
-> 
-> 
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     | 24 +++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
 
-I see dt_binding_check errors after applying this patch. Are you sure
-this was tested?
 
-Best regards,
-Krzysztof
+On 5.05.2023 14:33, Vikash Garodia wrote:
+> 
+> On 5/4/2023 1:30 PM, Konrad Dybcio wrote:
+>> The downstream driver signals the hardware to be enabled only after the
+>> interrupts are unmasked, which... makes sense. Follow suit.
+> 
+> Rephrase the commit text,
+> 
+> 1. No need to mention downstream driver, if something is buggy, fix it.
+Generally I'd agree, however in this specific case the downstream
+driver is the only available source of knowledge about what the correct
+(or at least working) initialization sequence of this hw block is.
 
+> 
+> 2. Avoid "..." and lets make it more formal.
+Ack
+
+Konrad
+> 
+>> Cc: stable@vger.kernel.org # v4.12+
+>> Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_venus.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index bff435abd59b..8fc8f46dc390 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -453,7 +453,6 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
+>>       void __iomem *wrapper_base = hdev->core->wrapper_base;
+>>       int ret = 0;
+>>   -    writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
+>>       if (IS_V6(hdev->core)) {
+>>           mask_val = readl(wrapper_base + WRAPPER_INTR_MASK);
+>>           mask_val &= ~(WRAPPER_INTR_MASK_A2HWD_BASK_V6 |
+>> @@ -464,6 +463,7 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
+>>       writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
+>>       writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
+>>   +    writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
+>>       while (!ctrl_status && count < max_tries) {
+>>           ctrl_status = readl(cpu_cs_base + CPU_CS_SCIACMDARG0);
+>>           if ((ctrl_status & CPU_CS_SCIACMDARG0_ERROR_STATUS_MASK) == 4) {
+> 
+> Above code looks good.
+> 
+> -Vikash
+> 
