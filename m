@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F022E6F8C66
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 00:34:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD6156F8CE5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 01:51:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231282AbjEEWex (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 18:34:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46584 "EHLO
+        id S230272AbjEEXvS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 19:51:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230160AbjEEWex (ORCPT
+        with ESMTP id S229768AbjEEXvR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 18:34:53 -0400
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9EEC2106;
-        Fri,  5 May 2023 15:34:51 -0700 (PDT)
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-392375de3edso872878b6e.2;
-        Fri, 05 May 2023 15:34:51 -0700 (PDT)
+        Fri, 5 May 2023 19:51:17 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A20DD59E8
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 16:51:15 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f0108a7d20so2685041e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 16:51:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1683330674; x=1685922674;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sjqVzDbSdokuJC6mTOMnxxsNtmjmsehygGNPxKGCXGY=;
+        b=hN2qCvmtLCe7wGeckPEGJDHXA6eSq/MigjzbBVVTNQzecbygZIBAGRj7TPE8Fan0xx
+         Y3bUbJQn06wuCVpLSMTx89mJtF7bBAYOGz9SyjR17XmoWaiHJs2EKe+M8F+SNVY8p2sb
+         R7GnNkkvfA51svet8Q+HqsRO1ldkLp9jAwTP4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683326091; x=1685918091;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=x2bjE4y2k/ZRonBr5I4qWlh5CoiWSN7zhAV2pZnn6Zo=;
-        b=JUU8lQpzZwrYgQNp0ogaEXvI2GR5Wa01PrHwoA+87m/7be+xTiwCYIfdFP641Tmodz
-         JfXuDo4EZt03zq1ZbSgyTmow7MuKG+nMs1Dey94nimehdjvqALKCndo51KOUH98OaIdm
-         v2PNb3WXbKgI2kgTdEGiSmYbsTCZwvfBX1b+Ng+eEJiocFrv8qXZnuqLqMA8WfE3AnD2
-         K2PAmZjMDdn31sXmcbIx3seAsAbBo3Xmfa7OIQ30924cHCSRf1k9+v+5fJ7QGfnSsxFV
-         G1SMNz+LpfjCyTpENG3qIgGjeEDLiBtWtbTJ1H2Fk6U+EcwjmrBH5RoRkG37nTgLkwUl
-         D9cw==
-X-Gm-Message-State: AC+VfDwItewOLAXDE9QuocySTSIFdX+FUQJ0zWjCiec6HSdyIqqLfVxd
-        SRoLIrPQcPZ2+OJEgndfdg==
-X-Google-Smtp-Source: ACHHUZ53cI1CM7mECZnA6cYHzHY3nz4n6zr1YDhdJXJbCXDc1XMGMyxqi2QWT5S0Nvb2PxvZUxA5IA==
-X-Received: by 2002:a05:6808:1c4:b0:387:2e2e:7b2 with SMTP id x4-20020a05680801c400b003872e2e07b2mr1330779oic.26.1683326090853;
-        Fri, 05 May 2023 15:34:50 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id j16-20020a9d7690000000b006a6558ef17fsm1404537otl.30.2023.05.05.15.34.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 15:34:50 -0700 (PDT)
-Received: (nullmailer pid 3806405 invoked by uid 1000);
-        Fri, 05 May 2023 22:34:48 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1683330674; x=1685922674;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sjqVzDbSdokuJC6mTOMnxxsNtmjmsehygGNPxKGCXGY=;
+        b=aqAisEw+BGq697hHplPLtUfxGOXqNnNpNctx6iGxNenvWQgMbp6wWBVWD6FaoYVQgi
+         M/Jky7NljosGKgVwSGP2rVz8JV4fVIw0ctSnWl1ajHPULxdxyzehxVORkuYZMIh6qyYj
+         llXFk9CjDY2lJ0tFGimKpgejFjqPI666jTqYsA7b2YlB7EZX238feAg4Q80C/4l/0QP0
+         R+e86qeLrLL1X8zJYUdi8/9Vls5sImW+aErfWxWDawgFivUPRpGa6yscvXl+3CAtnNtf
+         4bRvPskr+OA1MbmV8Cu1ONHlPmw4YQ5M5qs8hrSXpEDg0C93vk9vb4mNEv7s6bJiLmIC
+         QwOA==
+X-Gm-Message-State: AC+VfDx+3EpX/eEwRBij8Y1/dx/16vaQVt8BTTdjWD+7E8qAz6J7Ziku
+        zSRDJEQW6n4xS5Yi94yEOMHm/FobaRfIwnXPhIC4gQ==
+X-Google-Smtp-Source: ACHHUZ5NZfYKYWBQrU0BEtZE7GYJKOY2rbcfUoPtPN7I+zGCcJekGogEeUwQD9Vt9dV7O7vzpBFyhQ+Drw3YQZHK5RY=
+X-Received: by 2002:ac2:51b1:0:b0:4f1:4996:7e84 with SMTP id
+ f17-20020ac251b1000000b004f149967e84mr839109lfk.34.1683330673904; Fri, 05 May
+ 2023 16:51:13 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 5 May 2023 18:51:13 -0500
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        David Airlie <airlied@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, iommu@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        dri-devel@lists.freedesktop.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Joerg Roedel <joro@8bytes.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v3-4-9837d6b3516d@linaro.org>
-References: <20230411-topic-straitlagoon_mdss-v3-0-9837d6b3516d@linaro.org>
- <20230411-topic-straitlagoon_mdss-v3-4-9837d6b3516d@linaro.org>
-Message-Id: <168332608833.3806341.1631479517447632665.robh@kernel.org>
-Subject: Re: [PATCH v3 04/12] dt-bindings: display/msm: Add SM6350 MDSS
-Date:   Fri, 05 May 2023 17:34:48 -0500
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+In-Reply-To: <20230505152301.2181270-1-krzysztof.kozlowski@linaro.org>
+References: <20230505152301.2181270-1-krzysztof.kozlowski@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 5 May 2023 18:51:13 -0500
+Message-ID: <CAE-0n50jZ=EG29Gmr9zvjq0_qEXXSUBA+w65uE-P--+rxYGNiQ@mail.gmail.com>
+Subject: Re: [PATCH] serial: qcom-geni: fix enabling deactivated interrupt
+To:     Akash Asthana <akashast@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+Cc:     stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,43 +76,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Fri, 05 May 2023 23:40:30 +0200, Konrad Dybcio wrote:
-> Document the SM6350 MDSS.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Quoting Krzysztof Kozlowski (2023-05-05 08:23:01)
+> The driver have a race, experienced only with PREEMPT_RT patchset:
+>
+> CPU0                         | CPU1
+> ==================================================================
+> qcom_geni_serial_probe       |
+>   uart_add_one_port          |
+>                              | serdev_drv_probe
+>                              |   qca_serdev_probe
+>                              |     serdev_device_open
+>                              |       uart_open
+>                              |         uart_startup
+>                              |           qcom_geni_serial_startup
+>                              |             enable_irq
+>                              |               __irq_startup
+>                              |                 WARN_ON()
+>                              |                 IRQ not activated
+>   request_threaded_irq       |
+>     irq_domain_activate_irq  |
+>
+> The warning:
+>
+>   894000.serial: ttyHS1 at MMIO 0x894000 (irq = 144, base_baud = 0) is a MSM
+>   serial serial0: tty port ttyHS1 registered
+>   WARNING: CPU: 7 PID: 107 at kernel/irq/chip.c:241 __irq_startup+0x78/0xd8
+>   ...
+>   qcom_geni_serial 894000.serial: serial engine reports 0 RX bytes in!
+>
+> Adding UART port triggers probe of child serial devices - serdev and
+> eventually Qualcomm Bluetooth hci_qca driver.  This opens UART port
+> which enables the interrupt before it got activated in
+> request_threaded_irq().  The issue originates in commit f3974413cf02
+> ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup") and discussion on
+> mailing list [1].  However the above commit does not explain why the
+> uart_add_one_port() is moved above requesting interrupt.
+>
+> [1] https://lore.kernel.org/all/5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com/
+>
+> Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
+> Cc: <stable@vger.kernel.org>
+> Cc: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../bindings/display/msm/qcom,sm6350-mdss.yaml     | 214 +++++++++++++++++++++
->  1 file changed, 214 insertions(+)
-> 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6350-mdss.example.dtb: dsi@ae94000: compatible: 'oneOf' conditional failed, one must be fixed:
-	'qcom,sm6350-dsi-ctrl' is not one of ['qcom,apq8064-dsi-ctrl', 'qcom,msm8916-dsi-ctrl', 'qcom,msm8953-dsi-ctrl', 'qcom,msm8974-dsi-ctrl', 'qcom,msm8996-dsi-ctrl', 'qcom,msm8998-dsi-ctrl', 'qcom,qcm2290-dsi-ctrl', 'qcom,sc7180-dsi-ctrl', 'qcom,sc7280-dsi-ctrl', 'qcom,sdm660-dsi-ctrl', 'qcom,sdm845-dsi-ctrl', 'qcom,sm8150-dsi-ctrl', 'qcom,sm8250-dsi-ctrl', 'qcom,sm8350-dsi-ctrl', 'qcom,sm8450-dsi-ctrl', 'qcom,sm8550-dsi-ctrl']
-	'qcom,sm6350-dsi-ctrl' is not one of ['dsi-ctrl-6g-qcm2290']
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6350-mdss.example.dtb: dsi@ae94000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230411-topic-straitlagoon_mdss-v3-4-9837d6b3516d@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
