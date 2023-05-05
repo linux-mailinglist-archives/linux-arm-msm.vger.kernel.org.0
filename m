@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69CE36F8966
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:15:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B7C76F8979
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:24:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233226AbjEETPw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 15:15:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47888 "EHLO
+        id S233184AbjEETYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 15:24:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233232AbjEETPt (ORCPT
+        with ESMTP id S233075AbjEETYT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 15:15:49 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BAD226B8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:15:48 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4efe9a98736so2503288e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:15:48 -0700 (PDT)
+        Fri, 5 May 2023 15:24:19 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D504EDE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:24:16 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac8ee9cf7aso3900981fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683314146; x=1685906146;
+        d=linaro.org; s=google; t=1683314654; x=1685906654;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wiVwRTZ+QB0butBciUvZ61eG+cEutYbIrZIhBCvhP3o=;
-        b=a1zUZVp7P+Bh2nA8KmCkZNONcnTB4MHeOE46Lo5mSrQI7toRazkTUA/yoQshat7VO+
-         VYhXS2FVhwq4dCXLY7FoPSN4NUQql0J8rOGYLunllmhQINLPecUim+rBM984BeTvyy8P
-         D163wkf4ur+WUeZ+Ed8kkDv4Lv0BjdjLdxgkdLKdKyHgvl/KJjyDIU0gSKLJMd1nVcJO
-         F8yRGaUESmmvlx6cJwB39T+UhQNqJo0NvkrGIllPrtwhYo1dV5HMd6guXUPAE8o+HnPU
-         woDk8YjWyuQxMgG45Cgj+veypYdjUeVuW2unFsFLnIHhVSdF3ifPc9OKTosUsUAADO7B
-         qQGA==
+        bh=WFtYkfF8p6muyP6sCedXWbjjpL9Y5mT+RA/iKNtBB10=;
+        b=VJ3LTdfpRrRm4cs5dtmtqonfhNqUXH23FibixicFrTmZRVei3kjJhYv+BuKziaFbQW
+         KLz5rSjmnkHN22BFCqt400ZTtqtKEvqlqxIlmfE/5DY4kFDiOWtpH/4cUcrPS4E3DX/v
+         8rM7/CU8GhkUd+Ck/CPQ5P8/eecBk/5Q6L6mPfQZY7DmeYjoIb5ChQ72HOtkimkfScXS
+         h7NGPWVK37KTsQfX6kkLJlspagmr0NF/Fvf0CDE/8iEibJ69PL+5VOrNIkKZUWBWp7Sc
+         2GsGFUmlJ9mJo7xLvrUjc+ayGbFOi7UilS0bqbNCrCU6OL1ZRINKl7H4ZqmcCK9dI86c
+         dvZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683314146; x=1685906146;
+        d=1e100.net; s=20221208; t=1683314654; x=1685906654;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wiVwRTZ+QB0butBciUvZ61eG+cEutYbIrZIhBCvhP3o=;
-        b=bQUlPuPNHZENQ3idH17hB1hBjIJgEnG5Cpy4gPateaCNoULOXwU1r/wCuNxyv6QSms
-         ohRcaA+OwFg4K0W4/sTdjfE071S/d3+04jjbJ5ihYXz788QP4iPHcsaoBJW9CnN/ddXE
-         SZ41eYU5/d02iuFjZEJ8c+fuIz4yJTvuHbAq3kcLxPQ+/vPArau7oSt6PLrIky3d2UJx
-         KPT40eH8kyPEeh8H6KtnUKUdDFB8W8dR6Rtt1U2HVc3uXPeYvxw5jfr8vjdidX/e31Lz
-         b+6OSP4Jmp+claewfJJb7pMDMgbI8H5dkSfCut+Kbumf/qp/+SUj2rh35PRKbV3zhIhq
-         Qixg==
-X-Gm-Message-State: AC+VfDzxioyWYrPY/ckCYKz84i6yDONOP6yZGJyHl3C0/YZGn/DicRp2
-        Hljif3G6opicAKzAR+04wiW3Dg==
-X-Google-Smtp-Source: ACHHUZ64wwwFvhhC2i/OrhPzCndZiD4HH05o172Xk4jIKTQodmELoGOw0jIZCLOE94OPowrcDs4dAA==
-X-Received: by 2002:ac2:47ea:0:b0:4e0:fe29:9313 with SMTP id b10-20020ac247ea000000b004e0fe299313mr715981lfp.15.1683314146638;
-        Fri, 05 May 2023 12:15:46 -0700 (PDT)
+        bh=WFtYkfF8p6muyP6sCedXWbjjpL9Y5mT+RA/iKNtBB10=;
+        b=JZlJ3vgc92cq4AhOBsKvZ8dfGcR1FJE2Fckc6Yq+IzIi/R9Z4/nySCNGnA3Th5ZPd4
+         PuduJ0CpVJQdF4f9tP6tjAfkzHX8wQcSMIRfgFLe50KgyI73E2pRQXjmrT6atisvwQ/5
+         6Ojnz0ySLUie+ud1qnMytBBMwFxjndnnSnOCfFlCekRUtcZw/4f9eV+ScGck/wfAgtMI
+         e9KerGplNVA/Uhi1km7n22BdZKij5W3hfIMByd6fWAr3lBx2BpTgOkRwvrxRyfVVojvm
+         F9S1e9SL/TgCnAradjwtjs6P2bqGsyRL4U4IxpfzYxIyVosO7oBt0JRWXxNaixpjNErK
+         CR4A==
+X-Gm-Message-State: AC+VfDx0IopniaxtNANdadbzhy83wEPMPtxde+B6w8fF2eCi+o83bqI1
+        Wb35XQT41L2PiDoovZYvSRe9jA==
+X-Google-Smtp-Source: ACHHUZ54q+neVDa21tI+PCZkTtJCDWQQqHFBfX132vGVIsROm4MXbqMnO9o91Xe4jw6Z90CxQZA62Q==
+X-Received: by 2002:ac2:5a5e:0:b0:4f1:3b3e:2143 with SMTP id r30-20020ac25a5e000000b004f13b3e2143mr693303lfn.38.1683314654273;
+        Fri, 05 May 2023 12:24:14 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id x20-20020ac24894000000b004db0d26adb4sm383136lfc.182.2023.05.05.12.15.44
+        by smtp.gmail.com with ESMTPSA id z28-20020a05651c023c00b002ab59a09d75sm84477ljn.120.2023.05.05.12.24.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 May 2023 12:15:46 -0700 (PDT)
-Message-ID: <0cfbb9ed-1bb0-ea9e-9896-9d3896ae18ff@linaro.org>
-Date:   Fri, 5 May 2023 21:15:44 +0200
+        Fri, 05 May 2023 12:24:13 -0700 (PDT)
+Message-ID: <9acc7001-2b3a-f635-9814-95850a71f142@linaro.org>
+Date:   Fri, 5 May 2023 21:24:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v2 15/18] media: venus: vdec: Fix version check in
- vdec_set_work_route()
+Subject: Re: [PATCH v2 06/18] media: venus: firmware: Leave a clue for
+ homegrown porters
 Content-Language: en-US
 To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
         Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -75,15 +75,16 @@ Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         linux-kernel@vger.kernel.org,
         Marijn Suijten <marijn.suijten@somainline.org>
 References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
- <20230228-topic-venus-v2-15-d95d14949c79@linaro.org>
- <2d1f85f2-42c5-1d88-7f0f-f464babfabbc@quicinc.com>
+ <20230228-topic-venus-v2-6-d95d14949c79@linaro.org>
+ <ef50ac6c-a635-7f83-c484-a4f91b5e5d12@quicinc.com>
+ <579f3480-1cbc-5688-7226-986205b5825e@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2d1f85f2-42c5-1d88-7f0f-f464babfabbc@quicinc.com>
+In-Reply-To: <579f3480-1cbc-5688-7226-986205b5825e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,41 +94,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5.05.2023 16:02, Vikash Garodia wrote:
+On 5.05.2023 15:00, Vikash Garodia wrote:
 > 
-> On 5/4/2023 1:31 PM, Konrad Dybcio wrote:
->> This is not so much V6-dependent as it's IRIS(1|2|2_1). Fix it.
-> Again, why is it marked as fix ?
-It corrects the logic but does not manifest on currently
-supported hardware. I'll reword it and drop the fixes tag.
-
+> On 5/5/2023 6:27 PM, Vikash Garodia wrote:
 >>
->> Fixes: 6483a8cbea54 ("media: venus: vdec: set work route to fw")
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/media/platform/qcom/venus/vdec.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
->> index 51a53bf82bd3..33e3f7208b1a 100644
->> --- a/drivers/media/platform/qcom/venus/vdec.c
->> +++ b/drivers/media/platform/qcom/venus/vdec.c
->> @@ -701,7 +701,7 @@ static int vdec_set_work_route(struct venus_inst *inst)
->>       u32 ptype = HFI_PROPERTY_PARAM_WORK_ROUTE;
->>       struct hfi_video_work_route wr;
->>   -    if (!IS_V6(inst->core))
->> +    if (!(IS_IRIS1(inst->core) || IS_IRIS2(inst->core) || IS_IRIS2_1(inst->core)))
-> 
-> Not a good idea to add IRIS1 just for deciding work route and not at other places in driver. Add IRIS1 relevant
-> 
-> code in other aspects as well, if the patch needs to handle anything w.r.t IRIS1.
-I'd say that correcting this condition is fair regardless. I can
-however delay this patch until IRIS1 enablement if you'd prefer
-that.
+>> On 5/4/2023 1:31 PM, Konrad Dybcio wrote:
+>>> Leave a clue about where the seemingly magic values come from, as it
+>>> is not obvious and requires some digging downstream..
+> Rephrase the commit text.
+Please be more specific, do you want me to use the
+explanations you gave in the previous reply?
 
 Konrad
-> 
->>           return 0;
->>         wr.video_work_route = inst->core->res->num_vpp_pipes;
+>>> Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+>>> ---
+>>>   drivers/media/platform/qcom/venus/firmware.c | 7 +++++++
+>>>   1 file changed, 7 insertions(+)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+>>> index cfb11c551167..a4cd919e1dbe 100644
+>>> --- a/drivers/media/platform/qcom/venus/firmware.c
+>>> +++ b/drivers/media/platform/qcom/venus/firmware.c
+>>> @@ -241,6 +241,13 @@ int venus_boot(struct venus_core *core)
+>>>           return ret;
+>>>         if (core->use_tz && res->cp_size) {
+>>> +        /*
+>>> +         * Clues for porting using downstream data:
+>>> +         * cp_start = 0
+>>> +         * cp_size = venus_ns/virtual-addr-pool[0] (yes, addr not size)
 >>
+>> The field is the start address of ns context bank. Since the cp_start is 0, the start address for (next) non-secure context bank
+>>
+>> is interpreted as size of the (previous) content protection region.
+>>
+>>> +         * cp_nonpixel_start = venus_sec_non_pixel/virtual-addr-pool[0]
+>>> +         * cp_nonpixel_size = venus_sec_non_pixel/virtual-addr-pool[1]
+>>> +         */
+>>>           ret = qcom_scm_mem_protect_video_var(res->cp_start,
+>>>                                res->cp_size,
+>>>                                res->cp_nonpixel_start,
+>>>
