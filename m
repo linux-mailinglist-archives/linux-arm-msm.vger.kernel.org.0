@@ -2,214 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 873916F8943
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:04:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 311AF6F8956
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 21:13:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbjEETER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 15:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40462 "EHLO
+        id S233311AbjEETM4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 15:12:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233443AbjEETEQ (ORCPT
+        with ESMTP id S233573AbjEETMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 15:04:16 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CAC5A245
-        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:04:15 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-b99f0a0052fso2944850276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:04:15 -0700 (PDT)
+        Fri, 5 May 2023 15:12:42 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A5622F59
+        for <linux-arm-msm@vger.kernel.org>; Fri,  5 May 2023 12:12:25 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso2435661e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 May 2023 12:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683313454; x=1685905454;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HWHgcoJmGnAT2F8+CAPhfA6XJlKIdf+siYto+H4BoOo=;
-        b=RKj9nFBpM8fl24aY6oU/FY/1xlAP1+SsMGwUibTPSsbPT/8KXSw/h2ElAME7RBNse0
-         bBpAwD0rtBbaFQpOxucu6V6n4c/F57w91dMUVC09+XPK0BizEaC3SSYvy7fWzCMVNoK9
-         nsf9xAiJ2bUuhl0/rYbWxDSi0SODUQch+2Bu0NY61NstpMjnzJgq+rUUk5Ml3L5Crwta
-         nmsZKB60KAd4CoKonTf9B/5dSb9TDrxTXXE5694b6OMREF7RUjdNLVb2vTMgjs/WxsA5
-         0TCa98t8zqeYR8SndZvO80FEP8j3147Id6IqRhXBuK6V+Bf87sb+JB2hg03NMOZH73mW
-         2wrw==
+        d=linaro.org; s=google; t=1683313944; x=1685905944;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xceCA2XEX2XYZr2wVtYbFEfoG8eDOlxoBa/XP0RVFQY=;
+        b=UhPl2UMUAS7synMssm2Xa7YoI0m0FvxnYT3MEZAmEV9W/N3OoIQL2HogKqaceAiUut
+         46eNYLbhA44jQmzgucA6ZDSzzS3HAIiOrLwVa1loVhY+rfpHmBHSE/wecQv1zHMgL4Am
+         gGJ5Th7rG4ymTi5aBKdZUedFq/bHcoQA4q6Al1Ez4btsoRrxopxe+pDA3IYhBqPgs98Z
+         1RmJM7JuMW1KyNIjVXdbI95sqNrNRdIjEffp07ZMmquvHmzVy2Pavgd61hXtSKMZjwTl
+         vqx6ksmQ6KmNlyvR8oS7iomKC3uLdFSi1YWBCEUnzGKI2CD/YMnpGpjFZPSOBcgsisA3
+         mdXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683313454; x=1685905454;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HWHgcoJmGnAT2F8+CAPhfA6XJlKIdf+siYto+H4BoOo=;
-        b=VDntMG25ToSI5nOpe0/XxRf2hY+KYVGP2eCVDHLtZFMUF6Mu4Giri29frW1TDAxuM5
-         Gv1ByMDy6b7KOvtY31h9m63BG/Rx4Lfu2x1HctAhNWXB4oscE1iVHkVwKJNqEOix23Fm
-         x8wUe/+o3V3NIM+d9Ou+FLCFbYr2OG2zazXCZqoylSCUdn+wqQRyMDcr/m5tj9RBiMhn
-         uigdW0F5ozclN0UxO2P6hAX18H7u5LiizHLpMwAUNiT7fzMTmzyGrZFYc5e01Rzgp9cg
-         efJMWUE3i299Td+74sW0vZglz6hWt7s11IeC+h/vcr0Gt2HuUknEYLDBQeFKin06SVel
-         YTcw==
-X-Gm-Message-State: AC+VfDwOLO1wHJOoyYel1EhzRnN6SqPyxW3YpEFDfg2FJisiyqQt5Wfn
-        LPv3Y5C8ywr7IEWM0912SjfgodQnQ5FNy7VuYOvXJQ==
-X-Google-Smtp-Source: ACHHUZ6TZGYSg82gTSCkzmV3zwK9Az5lq2j0vvfTJk8c7MKh39V2p7t3YO8Jsz+Np4QDnVwguPn/klfVXCEagVKNSZ8=
-X-Received: by 2002:a05:6902:1249:b0:b4c:6d0b:1e99 with SMTP id
- t9-20020a056902124900b00b4c6d0b1e99mr3054551ybu.48.1683313454429; Fri, 05 May
- 2023 12:04:14 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683313944; x=1685905944;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xceCA2XEX2XYZr2wVtYbFEfoG8eDOlxoBa/XP0RVFQY=;
+        b=k1PaNlvPa4rRpv0+q2Vbk8nfTG+cTBUJYfF/9eUtIZJboaTpSOyJC/WszLwr5bkKS6
+         ElqbpqX6T23+JWIBU1ISSVzUoWsQ+7Tl9V4alolnMvgSNp8V4bs+e5zoW/yIQdNSb/7+
+         E4IyFU1dFwWlzauFlXD/v250EqTPSf3ca7OFLK0NNc2b9q7qwtcPvpaj02PgXL31txtt
+         o3+04e8W36q4J6YXf+T8lzhDQ11G56oorc+URlT/WOmmLQ/6WVsf9RRjNEZYMwyugNEi
+         JXQJ+7riJr7O2WCGL2Ni07HfPjJwsyHO2EGixfxeKLwygnZgQI8rcu8dvJrls2TFBphm
+         uN1Q==
+X-Gm-Message-State: AC+VfDx6XCObDXsf102DhPxTheqzV/nsq2P1HETRAu9NU8LtpANUvkHY
+        tTAMPypKC1QRXJdkspg6AIqR0g==
+X-Google-Smtp-Source: ACHHUZ5mD0x/zoLuBQwU8xI4QgCZ1CDVaEBT6+NSbuoLZmgtGhPSO2BKq9FVxSxiEtX0/j9mfsJuDg==
+X-Received: by 2002:a19:f80c:0:b0:4d5:ae35:b221 with SMTP id a12-20020a19f80c000000b004d5ae35b221mr671427lff.34.1683313944137;
+        Fri, 05 May 2023 12:12:24 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id 10-20020ac2568a000000b004e9b307d2c8sm385026lfr.238.2023.05.05.12.12.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 May 2023 12:12:23 -0700 (PDT)
+Message-ID: <2ccb46b8-db1c-5f4e-681c-7b1fe9fa8402@linaro.org>
+Date:   Fri, 5 May 2023 21:12:22 +0200
 MIME-Version: 1.0
-References: <20230502150533.3672840-1-dmitry.baryshkov@linaro.org>
- <20230502150533.3672840-2-dmitry.baryshkov@linaro.org> <e2ddc196-5b12-5e8b-b406-665e2adfef0a@quicinc.com>
-In-Reply-To: <e2ddc196-5b12-5e8b-b406-665e2adfef0a@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 5 May 2023 22:04:03 +0300
-Message-ID: <CAA8EJppyGO6gRFjLFaZaBaipbBptqHVNQqCcczgwKV-v0mGrAQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 1/9] drm/msm/dpu: fix SSPP register definitions
-To:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Content-Language: en-US
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
-        autolearn=no autolearn_force=no version=3.4.6
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
+ <20230228-topic-venus-v2-9-d95d14949c79@linaro.org>
+ <4a95547d-916a-3875-7752-f815429182e5@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 09/18] media: venus: hfi_venus: Fix version checks in
+ venus_halt_axi()
+In-Reply-To: <4a95547d-916a-3875-7752-f815429182e5@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 5 May 2023 at 20:24, Jeykumar Sankaran
-<quic_jeykumar@quicinc.com> wrote:
->
->
->
-> On 5/2/2023 8:05 AM, Dmitry Baryshkov wrote:
-> > Reorder SSPP register definitions to sort them in the ascending order.
-> > Move register bitfields after the register definitions.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 66 +++++++++++----------
-> >   1 file changed, 34 insertions(+), 32 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > index 6b68ec5c7a5a..1bf717290dab 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > @@ -26,45 +26,18 @@
-> >   #define SSPP_SRC_FORMAT                    0x30
-> >   #define SSPP_SRC_UNPACK_PATTERN            0x34
-> >   #define SSPP_SRC_OP_MODE                   0x38
-> > -
-> > -/* SSPP_MULTIRECT*/
-> > -#define SSPP_SRC_SIZE_REC1                 0x16C
-> > -#define SSPP_SRC_XY_REC1                   0x168
-> > -#define SSPP_OUT_SIZE_REC1                 0x160
-> > -#define SSPP_OUT_XY_REC1                   0x164
-> > -#define SSPP_SRC_FORMAT_REC1               0x174
-> > -#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
-> > -#define SSPP_SRC_OP_MODE_REC1              0x17C
-> > -#define SSPP_MULTIRECT_OPMODE              0x170
-> > -#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
-> > -#define SSPP_EXCL_REC_SIZE_REC1            0x184
-> > -#define SSPP_EXCL_REC_XY_REC1              0x188
-> > -
-> > -#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
-> > -#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
-> > -#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
-> > -#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
-> > -#define MDSS_MDP_OP_IGC_EN                 BIT(16)
-> > -#define MDSS_MDP_OP_FLIP_UD                BIT(14)
-> > -#define MDSS_MDP_OP_FLIP_LR                BIT(13)
-> > -#define MDSS_MDP_OP_BWC_EN                 BIT(0)
-> > -#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
-> > -#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
-> > -#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
-> > -#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
-> > -
-> >   #define SSPP_SRC_CONSTANT_COLOR            0x3c
-> >   #define SSPP_EXCL_REC_CTL                  0x40
-> >   #define SSPP_UBWC_STATIC_CTRL              0x44
-> > -#define SSPP_FETCH_CONFIG                  0x048
-> > +#define SSPP_FETCH_CONFIG                  0x48
-> >   #define SSPP_DANGER_LUT                    0x60
-> >   #define SSPP_SAFE_LUT                      0x64
-> >   #define SSPP_CREQ_LUT                      0x68
-> >   #define SSPP_QOS_CTRL                      0x6C
-> > -#define SSPP_DECIMATION_CONFIG             0xB4
-> >   #define SSPP_SRC_ADDR_SW_STATUS            0x70
-> >   #define SSPP_CREQ_LUT_0                    0x74
-> >   #define SSPP_CREQ_LUT_1                    0x78
-> > +#define SSPP_DECIMATION_CONFIG             0xB4
-> >   #define SSPP_SW_PIX_EXT_C0_LR              0x100
-> >   #define SSPP_SW_PIX_EXT_C0_TB              0x104
-> >   #define SSPP_SW_PIX_EXT_C0_REQ_PIXELS      0x108
-> > @@ -81,11 +54,33 @@
-> >   #define SSPP_TRAFFIC_SHAPER_PREFILL        0x150
-> >   #define SSPP_TRAFFIC_SHAPER_REC1_PREFILL   0x154
-> >   #define SSPP_TRAFFIC_SHAPER_REC1           0x158
-> > +#define SSPP_OUT_SIZE_REC1                 0x160
-> > +#define SSPP_OUT_XY_REC1                   0x164
-> > +#define SSPP_SRC_XY_REC1                   0x168
-> > +#define SSPP_SRC_SIZE_REC1                 0x16C
-> > +#define SSPP_MULTIRECT_OPMODE              0x170
-> > +#define SSPP_SRC_FORMAT_REC1               0x174
-> > +#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
-> > +#define SSPP_SRC_OP_MODE_REC1              0x17C
-> > +#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
-> > +#define SSPP_EXCL_REC_SIZE_REC1            0x184
-> > +#define SSPP_EXCL_REC_XY_REC1              0x188
-> >   #define SSPP_EXCL_REC_SIZE                 0x1B4
-> >   #define SSPP_EXCL_REC_XY                   0x1B8
-> > -#define SSPP_VIG_OP_MODE                   0x0
-> > -#define SSPP_VIG_CSC_10_OP_MODE            0x0
-> > -#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
-> > +
-> > +/* SSPP_SRC_OP_MODE & OP_MODE_REC1 */
-> > +#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
-> > +#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
-> > +#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
-> > +#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
-> > +#define MDSS_MDP_OP_IGC_EN                 BIT(16)
-> > +#define MDSS_MDP_OP_FLIP_UD                BIT(14)
-> > +#define MDSS_MDP_OP_FLIP_LR                BIT(13)
-> > +#define MDSS_MDP_OP_BWC_EN                 BIT(0)
-> > +#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
-> > +#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
-> > +#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
-> > +#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
-> >
-> >   /* SSPP_QOS_CTRL */
-> >   #define SSPP_QOS_CTRL_VBLANK_EN            BIT(16)
-> > @@ -96,6 +91,7 @@
-> >   #define SSPP_QOS_CTRL_CREQ_VBLANK_OFF      20
-> >
-> >   /* DPU_SSPP_SCALER_QSEED2 */
-> > +#define SSPP_VIG_OP_MODE                   0x0
-> >   #define SCALE_CONFIG                       0x04
-> >   #define COMP0_3_PHASE_STEP_X               0x10
-> >   #define COMP0_3_PHASE_STEP_Y               0x14
-> > @@ -107,6 +103,12 @@
-> >   #define COMP1_2_INIT_PHASE_Y               0x2C
-> >   #define VIG_0_QSEED2_SHARP                 0x30
-> >
-> > +/* DPU_SSPP_CSC_10BIT space */
-> > +#define SSPP_VIG_CSC_10_OP_MODE            0x0
-> > +
-> There is an existing grouping for CSC 10 bit op modes. You can add to that.
-
-Good idea, thanks!
-
-> > +/* SSPP_TRAFFIC_SHAPER and _REC1 */
-> I dont get the _REC1 comment. How is it relevent for this flag?
-
-Because this define is applicable to the SSPP_T_S and SSPP_T_S_REC1 registers.
-
-> > +#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
-> > +
-> >   /*
-> >    * Definitions for ViG op modes
-> >    */
 
 
+On 5.05.2023 15:21, Vikash Garodia wrote:
+> 
+> On 5/4/2023 1:31 PM, Konrad Dybcio wrote:
+>> Only IRIS2(_1) should enter the until-now-IS_V6() path and the
+>> condition for skipping part of it should be IS_IRIS2_1 and not the
+>> number of VPP pipes. Fix that.
+> 
+> Do not see any issue with existing code. IRIS2 with single pipe is IRIS2_1. This does not
+> 
+> quality as a fix to earlier implementation. Since this series introduces VPU versions,
+> 
+> IRIS2 with 1 pipe is being replaced with IRIS2_1.
+> 
+> -Vikash
+Right, I'll drop the fixes tags.
 
--- 
-With best wishes
-Dmitry
+Also, your email client seems to be inserting 2 newlines instead of 1.
+If you're using thunderbird, you may want to edit:
+
+mail.identity.(default or your mail identity idx).default.compose_html
+
+to `false`
+
+or you can use shift+enter as a half-measure
+
+Konrad
+> 
+>>
+>> Fixes: 4b0b6e147dc9 ("media: venus: hfi: Add 6xx AXI halt logic")
+>> Fixes: 78d434ba8659 ("media: venus: hfi: Skip AON register programming for V6 1pipe")
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>   drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> index 9b840440a115..ca56b1a8eb71 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_venus.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+>> @@ -549,10 +549,10 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
+>>       u32 mask_val;
+>>       int ret;
+>>   -    if (IS_V6(hdev->core)) {
+>> +    if (IS_IRIS2(hdev->core) || IS_IRIS2_1(hdev->core)) {
+>>           writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
+>>   -        if (hdev->core->res->num_vpp_pipes == 1)
+>> +        if (IS_IRIS2_1(hdev->core))
+>>               goto skip_aon_mvp_noc;
+>>             writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+>>
