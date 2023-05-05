@@ -2,116 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 590FA6F7CFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 08:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10E456F7D12
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 08:40:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230402AbjEEGhR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 02:37:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53106 "EHLO
+        id S230320AbjEEGk5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 02:40:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229675AbjEEGhQ (ORCPT
+        with ESMTP id S230473AbjEEGky (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 02:37:16 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8153F9ED0;
-        Thu,  4 May 2023 23:37:15 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34567Dr7026814;
-        Fri, 5 May 2023 06:36:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=s1UdkRzzF8cFAQcoYxajxf72HMv1k5ObWuqkwuK/fiM=;
- b=lD13AUn8nQAnwH9vqOHayl65rJeqVohdmPfJL2Tl5g9vAXAa7YJUew6jRiX9W0izkD9p
- P7vtOqtR0PPGrOSNsphLh1YY8yX3Sy0AagGjlmei0EOTvchqwp3T0V7cxueZgQYdocZ9
- kA7Rk4eMtTh/BWkciRRsWKrds+a9ZueFVjTEU1a4SbyM5uGeW9h5G7I7D8uPQ8maY73Y
- NHdHPGv5GeFGK2tK2LLLAQb4pSyt8lCdTxVA4UgVofIbFh2n9SRnSUnMrZ41gQWR0YSc
- IQLOuN7oVSGQZySctgf3//lCR5aAa3QQDD8pLIsNovjDZLJ5YfKQKsC93AuFau5wq8K5 IQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qctfu897v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 05 May 2023 06:36:58 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3456av1s007763
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 5 May 2023 06:36:57 GMT
-Received: from hu-schowdhu-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 4 May 2023 23:36:56 -0700
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Subject: [PATCH V23 3/3] MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver support
-Date:   Thu, 4 May 2023 23:36:23 -0700
-Message-ID: <ac9186e43afa1334ff54156eeef05e5a95bb93dc.1683265984.git.quic_schowdhu@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <cover.1683265984.git.quic_schowdhu@quicinc.com>
-References: <cover.1683265984.git.quic_schowdhu@quicinc.com>
+        Fri, 5 May 2023 02:40:54 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EA515ED1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  4 May 2023 23:40:48 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1ab0c697c2bso12795075ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 May 2023 23:40:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683268848; x=1685860848;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3boSRNK29dqqYTac8eSxe1gjUYm4xAi8jG9J+p9oaDE=;
+        b=OFGHhovtmhOjP1O8/vsgF3t5DFacPKtQf9gX+WesO89c1qPbQlyCcD8vUyeguYjJMr
+         bETl9CKLYT8jngkNuQe3krbm3aZs4IwlDrUZTBO2b4J7eFp/luIxavQApeRoXDLhQ2U/
+         3eh/mmEJshZxzXwVgbHUXPk+CcmHvaImi9tDa/K/MxVEFZyyfz/XSyGPMQma3nRUbKR5
+         92jjWqLB5tTNSmdo/+Gi8KqjwkULyI/CI5s4mxa10GZ7cSER6sHJKHo1j3qcS6e96CEJ
+         lgFsAfcgULd7LzAZw4Y6T7W0ICoSRe78F3wFYARvIeQAcJufOS8mAF0R2szehjld0pOk
+         SvCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683268848; x=1685860848;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3boSRNK29dqqYTac8eSxe1gjUYm4xAi8jG9J+p9oaDE=;
+        b=iQl8Catinifc1omPJOsHlsRdIOcYk5SMVLqJ/EixRN4GSFPVGmglEaCKWdZdmmmi5r
+         xWEYHp7QOFBxqsxcHElGcTADhSadpuM1618tTdM8yOMLQcOS7K8cdIASYI/53Rn1Fg+9
+         MEwMEZfxq3wNziJIcWDtTqm6fmZEKq1jS6JZKxuKo6Sebu8zJV+ZnhmXxZWFpdLv8MWm
+         KN75oZP2LEqfgJSmFEI/yy7GpK4sOGG40UJ30uj3bN2FFhqsdd+RAg+yXnYZdYGgO6a2
+         F3DrDG8aYNCo/R8LIq7XcOkF1Lb/QBsm12hqnyew/Pfb+BT1EHFVXs/cyxDcux49RNrb
+         868w==
+X-Gm-Message-State: AC+VfDzdUlQg5nC6JVJgk4SbfxWHg9SEbcMUfX1tYB7LYyp37MwnAqjQ
+        86semw78STRxuydtOkeBuYeOwe9TtZK6Tskhj3k=
+X-Google-Smtp-Source: ACHHUZ4nt5L3LYSG9x+kMcvsOsz4iw7yGJs81w3ClNhCYroFcqw2F+Nri86RuSvliMPFWNAd5gqklw==
+X-Received: by 2002:a17:902:ea07:b0:1a9:a408:a502 with SMTP id s7-20020a170902ea0700b001a9a408a502mr628708plg.1.1683268847764;
+        Thu, 04 May 2023 23:40:47 -0700 (PDT)
+Received: from localhost.localdomain ([223.233.65.180])
+        by smtp.gmail.com with ESMTPSA id c4-20020a170902848400b001ab0b2dad2fsm816251plo.211.2023.05.04.23.40.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 May 2023 23:40:47 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
+        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org
+Subject: [PATCH v4 0/5] Add Qualcomm SM6115 / SM4250 EUD dt-bindings & driver support
+Date:   Fri,  5 May 2023 12:10:34 +0530
+Message-Id: <20230505064039.1630025-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dOba35aUKxDYJDAZyitMJ4OKdpyJBOQo
-X-Proofpoint-ORIG-GUID: dOba35aUKxDYJDAZyitMJ4OKdpyJBOQo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-04_15,2023-05-04_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=744 lowpriorityscore=0 malwarescore=0 suspectscore=0
- spamscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305050056
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the entries for all the files added as a part of driver support for
-DCC(Data Capture and Compare).
+Changes since v3:
+----------------
+- v3 can be viewed here: https://www.spinics.net/lists/linux-arm-msm/msg137025.html 
+- Addressed Konrad's review comments regarding mainly the driver code.
+  Also fixed the .dtsi as per his comments.
+- Also collected his R-B for [PATCH 1/5].
 
-Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Changes since v2:
+----------------
+- v2 can be viewed here: https://www.spinics.net/lists/linux-arm-msm/msg137025.html 
+- Addressed Bjorn and Krzysztof's comments.
+- Added [PATCH 1/5] which fixes the 'qcom_eud' sysfs path. 
+- Added [PATCH 5/5] to enable EUD for Qualcomm QRB4210-RB2 boards.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index cb932c6f8959..30b0e23cd31e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -5721,6 +5721,14 @@ W:	http://lists.twibble.org/mailman/listinfo/dc395x/
- F:	Documentation/scsi/dc395x.rst
- F:	drivers/scsi/dc395x.*
- 
-+DCC QTI DRIVER
-+M:	Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/ABI/testing/debugfs-driver-dcc
-+F:	Documentation/devicetree/bindings/misc/qcom,dcc.yaml
-+F:	drivers/misc/qcom-dcc.c
-+
- DCCP PROTOCOL
- L:	dccp@vger.kernel.org
- S:	Orphan
+Changes since v1:
+----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20221231130743.3285664-1-bhupesh.sharma@linaro.org
+- Added Krzysztof in Cc list.
+- Fixed the following issue reported by kernel test bot:
+  >> ERROR: modpost: "qcom_scm_io_writel" [drivers/usb/misc/qcom_eud.ko] undefined!
+
+This series adds the dt-binding and driver support for SM6115 / SM4250
+EUD (Embedded USB Debugger) block available on Qualcomm SoCs.
+
+It also enables the same for QRB4210-RB2 boards by default (the user
+still needs to enable the same via sysfs).
+
+The EUD is a mini-USB hub implemented on chip to support the USB-based debug
+and trace capabilities.
+
+EUD driver listens to events like USB attach or detach and then
+informs the USB about these events via ROLE-SWITCH.
+
+Bhupesh Sharma (5):
+  usb: misc: eud: Fix eud sysfs path (use 'qcom_eud')
+  dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 support
+  usb: misc: eud: Add driver support for SM6115 / SM4250
+  arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector
+  arm64: dts: qcom: qrb4210-rb2: Enable EUD debug peripheral
+
+ Documentation/ABI/testing/sysfs-driver-eud    |  2 +-
+ .../bindings/soc/qcom/qcom,eud.yaml           | 16 ++++
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 27 ++++++-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 51 +++++++++++++
+ drivers/usb/misc/Kconfig                      |  1 +
+ drivers/usb/misc/qcom_eud.c                   | 74 +++++++++++++++++--
+ 6 files changed, 162 insertions(+), 9 deletions(-)
+
 -- 
-2.17.1
+2.38.1
 
