@@ -2,153 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C65F6F86C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 18:33:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D5996F8745
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 May 2023 19:13:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232944AbjEEQdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 12:33:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33152 "EHLO
+        id S231623AbjEERNU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 5 May 2023 13:13:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232583AbjEEQdJ (ORCPT
+        with ESMTP id S229875AbjEERNU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 12:33:09 -0400
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01olkn2075.outbound.protection.outlook.com [40.92.52.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B2614E60;
-        Fri,  5 May 2023 09:33:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PhZVkgy2sajp3ToDjkIjFRcJpsGvObnxOcFzo57e3TmJxFSFd1Qz4nXTk/bv8qJTnOkdhbeG0JIPD3xxOsV63FVrgjBurwEfCj33h394sB0tTiUpdhnk3S/pE7cW/4HYIQuZdy11UoyYmp6cpUQ3YrVV642jy48rC7jmxCI9Db9NkBY26m0/J6T4fpuUsJZGDQ/ec8rh3i6MTFfkmrqpoSTXLjc1QGfmZXXIXBdsTXfiotwjsHbtsQkHiDyioGGx1NuVjxb9fAMqmzZpyubRhzFivxiJUp56h9sPx6ccAUi0wTc2Bs47iWaQi4BaadM5c3yeQ65MTbb04F7S7t9iBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FmmJlFEHkMywz6UToheMMZe15STn7UpGGw4Hfy2dtEw=;
- b=DuZ1xr6VFamizh+m/VJkyvVp7U8fuaFWLUNJJutVIGgerSnWeoDjfVpxKS9y3dj8ay1OM0nW7dTqo6fjHkAaCEwhhXO/LA6fSLdAc4aZQ+UoWoSFeYcDJh0FGB03N6P7sMbAbkQFhPewVkDPhIODiNpBWTotvXGlc1jgmXKJRwHF7RELq34o//kv6+1+swuUdhNK+Z7gutVX8MyKmrCQL7Oo8r7OW/EJpbgMfCbC0EnmXGMt7al17xtcLVnDdTsE+zI3rxnZDo4XYaOUA7UiPhVO4UXSIJCYXfz7Uvj/d7AUgpCPOkdxSLYSmxcFkjZ+QhFuV1C4HzI4/vOajPxBhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FmmJlFEHkMywz6UToheMMZe15STn7UpGGw4Hfy2dtEw=;
- b=M5g6urH4IgRf9CWTKWX+3HWRZQwxNqYR4FgnWipvDm8b9rCA2ebFvacMZfPQpkG63477Kmlv/2WUhD6Xn+qvP0RC3Lw4+8FkN7OvuujWg8ceQTjCPMrYlLjhsIlqfKhHktUZp8sNWxlFvu0SRsyVCc/KOGD1QGds1bPx/RlM2HC/rALG3dM3Dqb3ehM3y5cUC3GLEZPGvUJH7xAjjGe30xF5Ldh0T08yBtYOyG3ZnDZmbkOjDDbsLFOATqND3ed68fx5u6eJcrD3C8achx8cJBZ6Lsu/ji53ZQ/g7HavReG4GTT8VNraa9Bz+CreiV4PNrrxhFX/neNPkUYSpZz78g==
-Received: from TYZPR04MB6321.apcprd04.prod.outlook.com (2603:1096:400:28a::14)
- by TYZPR04MB6150.apcprd04.prod.outlook.com (2603:1096:400:25c::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.21; Fri, 5 May
- 2023 16:33:00 +0000
-Received: from TYZPR04MB6321.apcprd04.prod.outlook.com
- ([fe80::4705:d219:7cf0:46f4]) by TYZPR04MB6321.apcprd04.prod.outlook.com
- ([fe80::4705:d219:7cf0:46f4%3]) with mapi id 15.20.6363.027; Fri, 5 May 2023
- 16:33:00 +0000
-Message-ID: <TYZPR04MB632102315884225B7343533B96729@TYZPR04MB6321.apcprd04.prod.outlook.com>
-Date:   Sat, 6 May 2023 00:32:51 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Content-Language: en-US
-From:   Yang Xiwen <forbidden405@outlook.com>
-Subject: [PATCH] arm64: dts: qcom: msm8916-ufi: make UDC dual mode
+        Fri, 5 May 2023 13:13:20 -0400
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56ACD2D67;
+        Fri,  5 May 2023 10:13:19 -0700 (PDT)
+Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mx1.riseup.net (Postfix) with ESMTPS id 4QCchZ4Rs2zDqTP;
+        Fri,  5 May 2023 17:13:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1683306798; bh=eSi3WUlOLZpOpliG+mKyLLFN8XvqBvBGPK0vZC39QSk=;
+        h=From:Subject:Date:To:Cc:From;
+        b=UrbkyoxCy9pyPx2OZ3RjYXbe3VbPl+/DTdgcQocchkljGKarpk2BUoY7zOW4xsGI6
+         ccEUGoQ/hp1ZQmp7Tll8RqWcvNpcfEZj66CpalfRQtrmAfHvdPApVAurTTjdGEmVrT
+         5v7r4kNpElAHl614xb2TIAXVQLGSDQljbURs4wcc=
+X-Riseup-User-ID: C914164F47E2FF18657AD20A4487CC900B030506F8F0107575D941C66991DA44
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4QCchX1g2MzJn8c;
+        Fri,  5 May 2023 17:13:15 +0000 (UTC)
+From:   Dang Huynh <danct12@riseup.net>
+Subject: [PATCH v2 0/2] Add F(x)tec Pro1X (QX1050) DTS
+Date:   Sat, 06 May 2023 00:12:57 +0700
+Message-Id: <20230505-fxtec-pro1x-support-v2-0-0ea2378ba9ae@riseup.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABk5VWQC/32OzQ6DIBCEX8VwLg0iVu2p79F48GepewGyoKExv
+ nvB9tzM6ZvM7OzOPBCCZ/diZwQberQmgbwUbFoG8wKOc2ImhaxELWquY4CJO7Jl5H51zlLgjW5
+ aqYVqBXQsNcfBAx9pMNOSu9+wgRh+V1QOOQKN8Zx+9okX9MHS+/xkK7P7f3QredLcqaYa1XwD9
+ SD0sLqrgcD64zg+zIAGJdwAAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Nikita Travkin <nikita@trvn.ru>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [Mu4cyeDXvI424nx6WbXR1VAq42WJTvme1cxIQT9Mw3oq+agK60s5Y/HX5Fsha9NM]
-X-ClientProxiedBy: SJ0PR13CA0123.namprd13.prod.outlook.com
- (2603:10b6:a03:2c6::8) To TYZPR04MB6321.apcprd04.prod.outlook.com
- (2603:1096:400:28a::14)
-X-Microsoft-Original-Message-ID: <f853cd21-846b-c78f-a0dd-119c0e26e38c@outlook.com>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR04MB6321:EE_|TYZPR04MB6150:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1e9e391f-ad4c-4022-f8af-08db4d8663d1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Qknd/WSK+nvp0PYn/fsDE4S3gAF8kPPrzzt0tS495i/y8zBEwtps/VHlF8rK8rcKScfB/h++/kfcib1f1C+JOtv+Wok8HJUioV1fp5OCfHZb0X4NZcMUIjPeR32i/wFCWhLZSolRqVQ8l15zPdVVXt3Ly7P2cAxd3QUGQwHR08b062Rb1HQ6QPTpdw9SFDZ/t3f6yXAK4TvlYZB7dWkYsb+yscIFT3sgMmjzWDm6gf6AR3AIpEY6lHuM/JTnapONwkst8K8DZKDLFItPERQkPu06ufczHl9GCHp28NUBn++wFntSXmCUad1YzEbJbRkqiCtZlrtdtLjusd9qaEwbFeFQqJPFyHHfRJWh5xghb7oKZG6/dd3le3fBlet/rQ2qmnwPKXJ7v5bdE6SQzd0gIxcy1PeOdCZGBzOobK4xepRolpF5QLgxqLqB3MVoKBTk2BTBrDhq8MUv+2DwTez/sa0UK0c16O1jVEhFwQ+xjN0xXPfJMzdxtS7VoFqD8/wZrBNyTJeXkqBhxpwbjvdzx6ZN4cmDwqNuwQ0NF717grFyocU1mZuh+E7h+Jo+3HVG
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cVY1ckR3dXpaQ0ZPb0ZJVEtLejF5WmtVL25DKzZoRmZpU2FUVVlPMEVyUVhF?=
- =?utf-8?B?aVp2QzQ2Q3ZjL1ZucEF1TmEveSszbFl1a3BZdG16cGdES3NyeXloc3VDVVNs?=
- =?utf-8?B?VklENy9ReC9sZVBlZ1Q3Mm54ME9hVTdXQWVoeWpBUlNIeDNvcmkvQktiZnQ4?=
- =?utf-8?B?QlF3b09ucDI4NHJ2L3NDYUNxWHNMdEs4WDZiMXplcmpLL1ZyV1h6UkFtMzhK?=
- =?utf-8?B?c3VDWjF6MGQ4OU93b0pwM2xYNU5tMDl0RWg5elBxVmtMNlE3c2E5NW81aFI2?=
- =?utf-8?B?UGVqMmNYdFYwY1dhRDVMWmprYmtoSmM1M1BLdXl4U0Q3MWRHanJxQnJsT0VC?=
- =?utf-8?B?UGlrZVJ0dGZERkZ4N1NaMUEwMUZDbmZlc1pkVExUazA5d0hVRVVSQUE1V2JJ?=
- =?utf-8?B?Rm51bVViYzRDbjhTVzMwYWdPbG1ScllqMjUxRzdha0E4OEtTL0V5cHZjYjdW?=
- =?utf-8?B?aGw1YlJSdnR0eE05KytsL0JjMlEvNkxrWkZsSnhHMW9YeUVYaW56UFBRSzd5?=
- =?utf-8?B?a1owZjNvLzRvQktPTDBaRkhodmNNQk9nWlJuQTNnYUpxc3lteGJ0RzMwcXE4?=
- =?utf-8?B?NncrRTBzNFZTR3JqVyt0OVNkUEdBdWNtcWdWNDRoL2pVOHB1MnJQbStBdUJB?=
- =?utf-8?B?RTliZ1lVUDNQUWppcnFOb0RrVVdMUllHd1dCTlhUS2p1cG1OOGRpQUx4Z21B?=
- =?utf-8?B?eW04bGQya01jMFNjK08yNHplSjkvVlNlOVRmSkJVZHNnY05tNlZvcnU0MWIy?=
- =?utf-8?B?WTREMm96ZVFMWmFiaG5YRXNiUElhQ0xDcXl4OVFrQUpmN1RoVU9EZFhxWm5i?=
- =?utf-8?B?UmMzWFpxQzdtcWMvZlhSYlZBQjQxcUYvUHhFRjlHN1BJTW9sbTR1bHdtbzVx?=
- =?utf-8?B?NkZLb213RklqMmFiK21GWjltb3RhMDJNYzN4U1Q4VnVUYmdTWUo3NEJ1Q1JI?=
- =?utf-8?B?RDA3WStLaXh5ams1V2hiUUJVREVqaDV3bGhVL25zR05sTkhWNW1mc3lZQ3NB?=
- =?utf-8?B?a05FU1JBMy90VWlKVWtTRGlzZWxmWUhDQ2lnY3ZQM3orTjU1MFllOEZrd0h0?=
- =?utf-8?B?UmRaVHh6czNVMkZNTG5LOGVnYjZ4bUNBTFZwNDNqZ2psdWZaZ1Q0a0xSbTNP?=
- =?utf-8?B?cUtpbUkra3lIdTQrSzFEa1Q0dFB2UVN4aHlobVA0bXpEWGt6b3BDUHVIRzh5?=
- =?utf-8?B?dHVuNDRqa0FsUENCcXdwNGFEaTRiMTZremxxNG1NWmw4TUdhZDJCU3VweXJV?=
- =?utf-8?B?VGJiTTE3WGFNUWRkOW1iVXdvcFB6SHQrNHp0Y041RjNZU0dac09ZSXNMZU9Y?=
- =?utf-8?B?YlE1Y3d1cXhaa3dQOGRUbUU3cERUQzBJRFFMaG1FbHpLLzFlb1BYM1poOUpm?=
- =?utf-8?B?Y1djRzhheVFYM3lYMElHT05WZm9ZYTJLQzRUaVhRdnF4ZVovUmRtRHd0ZlFH?=
- =?utf-8?B?cWtxSDRUazdHdnQ3L3lnOXhaRE5vNkRzRVcydVFPWjZFU2ZVbWNBcDExdW9J?=
- =?utf-8?B?NGRWelRSYmRIZElsWjVlTzRPeUU2bDNsSFRxWEJzVm5sdDNEcG1NY29tYms5?=
- =?utf-8?B?RDVDV1JCMzUwaHFsdE1kcDl0WEdhTTR4NXEwVDZxLzNqTTFMSVRuOEx4NGJi?=
- =?utf-8?B?WVBIYlk3SXNRQTkrdlJ0Q3d2RG9LcGkxYUJJRlc1TStVSEpVemExS0pHeVhS?=
- =?utf-8?B?eFRZSkFwZmxKa3pwRHVjcHBWcGJxOTdTVXJNSUNza014Z25Ha25DdGdFM2Rt?=
- =?utf-8?Q?4ef0aisy3tUpPOSr4Y=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e9e391f-ad4c-4022-f8af-08db4d8663d1
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB6321.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2023 16:33:00.2909
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB6150
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_MUA_MOZILLA,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dang Huynh <danct12@riseup.net>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1085; i=danct12@riseup.net;
+ h=from:subject:message-id; bh=eSi3WUlOLZpOpliG+mKyLLFN8XvqBvBGPK0vZC39QSk=;
+ b=owEBbQKS/ZANAwAIAWbKt+qkXdeBAcsmYgBkVTkruTZvUxeaI96TcCRJAlKc0cHR8MgGftFbz
+ N5/5cX9KhuJAjMEAAEIAB0WIQTwmpM8D+AzHlWMpOFmyrfqpF3XgQUCZFU5KwAKCRBmyrfqpF3X
+ gdZSD/wNnXwtsP+hXiWb0W/F3bN24ose2KFQZYETq2C6g5h+DrtzAFuLTidOBSQz9wHaE1hmrKO
+ yKgQmQJi5N2rFUf34s7rG8MKilYRl30aRK18MMuA/k6B/MFjn2uFa4kkvhkHhyVBBNm0MKaxgt1
+ Kp70yN84gQQ0IguktXDhz1OYhTSOIbd8V9wOTpNH3ovRR9Y2Lrh5O5crX0j0vM96ibl3DXEDUAs
+ YENBdBpo7RvJebKpTEfqA9XhuSI+Xf0XMMcHKpzyrORtDa7//H9bej3n4BnKC4uMFJwn4InYpt1
+ GcRcipP4dEMEN65gGgs4aDdUYfC0ZBmCy2GOdZJnkjle5fJQuOGMhK6qNMO6wlTgs0yPyJ/FuoF
+ VjxxyoHXwlwFld/FxsZneiuBrhFND12XJ5sL1NjXcfDCGEk+7SBaxJeXyGwTCymdeI/mKHYARt/
+ yvA63L0gEI+Gl00D7EVUs1cGmfKXqUjPCJXbvpaMGecE0nvvEfp7jBFLeWOhEH4cWI+qktxsSjs
+ Cv+LxaWDTYa5PepXsBUcctb5AExlUF2GPvsXrgu+rL6hD/4OG4BHXZ7igCFN7hLARn/grZL1hg5
+ pFCIgfHcRooHrBG8zsbbIQ10d5MCw4gQ5HzqWq3XILRFW/aiAx2pXBcwIpIvAC4gK2hMBp4so9Q
+ 5jZUyKumpaJk9pA==
+X-Developer-Key: i=danct12@riseup.net; a=openpgp;
+ fpr=F09A933C0FE0331E558CA4E166CAB7EAA45DD781
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-It's possible to use this device with a (non-standard) hub to get USB
-working in host mode, but dr_mode="peripheral" prevents the UDC to
-do so.
-Remove dr_mode="peripheral" and add usb-role-switch so that it defaults
-to otg mode and can be switched to host mode in userspace.
+The F(x)tec Pro1X is a mobile phone released by FX Technologies Ltd
+in 2022.
 
-Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
+The phone is exactly the same as the Pro1 released in 2019 with some
+changes:
+- MSM8998 -> SM6115
+- Camera button is no longer multistate
+- Only one 48MP back camera
+- A new keyboard layout picked by the community.
+
+Signed-off-by: Dang Huynh <danct12@riseup.net>
 ---
- arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v2:
+- Corrected model property in DTS. 
+- Changes requested by Caleb and Krzysztof. 
+- Link to v1: https://lore.kernel.org/r/20230505-fxtec-pro1x-support-v1-1-1d9473b4d6e4@riseup.net
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-index 50bae6f214f1f..08ecd901c1af6 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-@@ -109,7 +109,7 @@ &sdhc_1 {
+---
+Dang Huynh (2):
+      arm64: dts: qcom: Add Fxtec Pro1X (QX1050) DTS
+      dt-bindings: arm: qcom: Add Fxtec Pro1X
 
- &usb {
- 	extcon = <&pm8916_usbin>;
--	dr_mode = "peripheral";
-+	usb-role-switch;
+ Documentation/devicetree/bindings/arm/qcom.yaml |   1 +
+ arch/arm64/boot/dts/qcom/Makefile               |   1 +
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 248 ++++++++++++++++++++++++
+ 3 files changed, 250 insertions(+)
+---
+base-commit: 145e5cddfe8b4bf607510b2dcf630d95f4db420f
+change-id: 20230505-fxtec-pro1x-support-7f782f0480e9
 
- 	status = "okay";
- };
--- 
-2.39.1
-
-
--- 
 Best regards,
-Yang Xiwen
+-- 
+Dang Huynh <danct12@riseup.net>
+
