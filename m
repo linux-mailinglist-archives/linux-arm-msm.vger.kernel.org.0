@@ -2,108 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56C176F91B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 13:50:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EF3396F91C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 14:01:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232397AbjEFLuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 May 2023 07:50:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60882 "EHLO
+        id S232243AbjEFMBR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 May 2023 08:01:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232305AbjEFLuG (ORCPT
+        with ESMTP id S232209AbjEFMBP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 May 2023 07:50:06 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51898A5E
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 04:50:04 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55c939fb24dso25216837b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 04:50:04 -0700 (PDT)
+        Sat, 6 May 2023 08:01:15 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8606A249
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 05:01:13 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4ec8149907aso3193644e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 05:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683373804; x=1685965804;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=W0CQW1o+U6+NILna+LXJ6vdvZ0BkUTno5y+llmnMQyo=;
-        b=dPe2CSLoV7+FcVOrSoBizhbLXI/ZLBJ7RTaokfwOtGBTZeSTeYLGxR5uo9fELcry5s
-         LjhkhKLm24iZteGxoktGLRgmELDQgh5dNlcPeyGuk5sDq1G+uRRCrDjHus72ClJr/jlN
-         Ygj8wwQxJkpI0NiUvyWR8zSEsmn7rI8HLRq7PX54EoRwn1p+A3gFgHEi+yB4uztdr1JV
-         /96WWH4Ph/4/DsPGZSncbenn9NXikntnF6iXN69jEyqz0Zn+JG/vxusicCalOspcWmzA
-         pyHRt+NJNNIdW6RHALL/qgR/rI2RWyrjE1x52v0lj5qHj31p4GSzyvfrDe74ngZyKJ/8
-         RRdg==
+        d=linaro.org; s=google; t=1683374472; x=1685966472;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5Cf5CasgT8e62WAHreBlxmaiulGbi8dcackHO3X1L2I=;
+        b=OTFoc+PzwweLZmpXQgJa+nrtLRrFzuqA94bbUj9IMizuHxapFKgIEeFpAnERD6bodU
+         Y2LVErYXwX7E6/zj5FlXEVQmxdCC5ZjWDNSAihSlTaI64k3abqVj4+yfdCEqPanCLkBU
+         wqmwxYOfquWjZNlZAIdrgENGODFqr9s4WkU1foby8vacwJtPJFhnNAtR0JxvY7sPHjG4
+         NKcHNymHxVp6x57zS22eZAgsepMM+UBo2qvSGzJc0lVxI/DFHXPGDxooiECMKZScpRHK
+         4kAp5W3wj3Mm+1MyX08Trmvcbuhfg2808hfgWkCqpO+vgglL//WMNMxBDe1uMLwxkCUH
+         NMYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683373804; x=1685965804;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W0CQW1o+U6+NILna+LXJ6vdvZ0BkUTno5y+llmnMQyo=;
-        b=dGBaZrE4RSfb1Pd2oTlAOxppOr4IfC4UtQNO4JDvHC9pnnt+0OdmcIE/JitiEd5aCJ
-         A/tneVqIXD14651eOl20j28e1w0G/4h17HFXilHEl6GlF/jddWk3fFlefG8lGF08V+aW
-         GqrrzWOGuwxRFjuLIKihA12a5OlJ8renWc2C0nw37EdquPFsJ1w8PF4BoTN+l+YwICWu
-         F2If+wicp9rDBuckI9f2cs0zvXUOaihoszADlJc9wPsE5m7/0A/4Nj6jPIhIMQYZ05Rf
-         HpojGM4Fu5P2/QvjTzAAPno/aPj05hTy1pTVE7dSIEifaq9icv0c48LfIotUNqRcFLba
-         tK7A==
-X-Gm-Message-State: AC+VfDxzsYk+r3u8SNYvb11tKTarvvkrwCQ880Ou3XktLpjEzal/e1C7
-        L7iVpe0YaLjSKD7MSx+c96S3egFE7sbuP7lCg/UDyA==
-X-Google-Smtp-Source: ACHHUZ4FLSZFOD5iz4AdA7hPnjx4FpdcbO5UyUNag9PEgw0B19CDn88OXA+iOtElC4PtdoFYeYS+cG2LAV28KYiPCHE=
-X-Received: by 2002:a81:6d04:0:b0:55a:abf7:636e with SMTP id
- i4-20020a816d04000000b0055aabf7636emr4510017ywc.24.1683373804150; Sat, 06 May
- 2023 04:50:04 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683374472; x=1685966472;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5Cf5CasgT8e62WAHreBlxmaiulGbi8dcackHO3X1L2I=;
+        b=LZ63HeRuCWTOd74SS0Ghkf2tnUeNJZAhW0oM/gNmzzNInT3JK8qr+vxdZqk6Az+DjZ
+         myD1dV0q6ty3l+sJdzdxj+1pQioGIC1Om5RlY3dGuFpTXKbzVfj2KnhUbHA0RtVimrd2
+         10N0K0+KD1SQbbrAkFW0Wg1djhCq89Bo2BV1+T/GbPLN7a1Wu3JyOalBcStlOMeLFF8v
+         h7jDLUF3C//097LfGu73gzQEvidVeABGUxLWpgP1FJZdysg7HtFzHKSpoN0MoLgmcAUw
+         gFATdzXh2V5LDEt4v9lZCmU/aIbm/9hPLkfmwaTLquTPsjMV/zH2ifo5gpHKIptwAyXk
+         PJvQ==
+X-Gm-Message-State: AC+VfDz12RM+/nMTc6Wt7zuMQFQSv5DqMzzNRb2GNsF6qu3JkaS/C8lx
+        A5FjetSiuRuMtU4KMCN94YswxA==
+X-Google-Smtp-Source: ACHHUZ4ngoZwz6ziSD+8RiL4sMcAOFm+arrurOtssAzn1SCBLoLnT+kIlNyji7UdqaXGMuOzYloffA==
+X-Received: by 2002:a19:c218:0:b0:4ed:b048:b98a with SMTP id l24-20020a19c218000000b004edb048b98amr1162527lfc.6.1683374471976;
+        Sat, 06 May 2023 05:01:11 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id p4-20020a2e7404000000b002ac538a4e6dsm357896ljc.131.2023.05.06.05.01.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 06 May 2023 05:01:11 -0700 (PDT)
+Message-ID: <870ea899-b405-8061-93fe-cf50de595808@linaro.org>
+Date:   Sat, 6 May 2023 15:01:10 +0300
 MIME-Version: 1.0
-References: <20230506111628.712316-1-bhe@redhat.com> <20230506111628.712316-3-bhe@redhat.com>
-In-Reply-To: <20230506111628.712316-3-bhe@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 3/8] PCI: qcom: Do not advertise hotplug capability for
+ IPs v2.7.0 and v1.9.0
+Content-Language: en-GB
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com
+References: <20230506073139.8789-1-manivannan.sadhasivam@linaro.org>
+ <20230506073139.8789-4-manivannan.sadhasivam@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 6 May 2023 14:49:53 +0300
-Message-ID: <CAA8EJppqxN6WktBJYou+xCbb4HOy7=yre5DXkLy9F5AA5_UQzg@mail.gmail.com>
-Subject: Re: [PATCH RESEND 2/2] dmaengine: make QCOM_HIDMA depend on HAS_IOMEM
-To:     Baoquan He <bhe@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        schnelle@linux.ibm.com, linux-s390@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20230506073139.8789-4-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 6 May 2023 at 14:17, Baoquan He <bhe@redhat.com> wrote:
->
-> On s390 systems (aka mainframes), it has classic channel devices for
-> networking and permanent storage that are currently even more common
-> than PCI devices. Hence it could have a fully functional s390 kernel
-> with CONFIG_PCI=n, then the relevant iomem mapping functions
-> [including ioremap(), devm_ioremap(), etc.] are not available.
->
-> Here let QCOM_HIDMA depend on HAS_IOMEM so that it won't be built to
-> cause below compiling error if PCI is unset.
->
-> --------------------------------------------------------
-> ld: drivers/dma/qcom/hidma.o: in function `hidma_probe':
-> hidma.c:(.text+0x4b46): undefined reference to `devm_ioremap_resource'
-> ld: hidma.c:(.text+0x4b9e): undefined reference to `devm_ioremap_resource'
-> make[1]: *** [scripts/Makefile.vmlinux:35: vmlinux] Error 1
-> make: *** [Makefile:1264: vmlinux] Error 2
->
-> Signed-off-by: Baoquan He <bhe@redhat.com>
-> Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dmaengine@vger.kernel.org
+On 06/05/2023 10:31, Manivannan Sadhasivam wrote:
+> SoCs making use of Qcom PCIe controller IPs v2.7.0 and v1.9.0 do not
+> support hotplug functionality. But the hotplug capability bit is set by
+> default in the hardware. This causes the kernel PCI core to register
+> hotplug service for the controller and send hotplug commands to it. But
+> those commands will timeout generating messages as below during boot and
+> suspend/resume.
+> 
+> [    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
+> [    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
+> [    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
+> [    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+> 
+> This not only spams the console output but also induces a delay of a
+> couple of seconds. To fix this issue, let's clear the HPC bit in
+> PCI_EXP_SLTCAP register as a part of the post init sequence to not
+> advertise the hotplug capability for the controller.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/dma/qcom/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
+>   drivers/pci/controller/dwc/pcie-qcom.c | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@gmail.com>
 
 -- 
 With best wishes
 Dmitry
+
