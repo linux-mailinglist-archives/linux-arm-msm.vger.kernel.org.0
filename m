@@ -2,142 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 236E56F9185
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 13:33:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 983C86F91A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 13:44:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231899AbjEFLdZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 May 2023 07:33:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54840 "EHLO
+        id S232125AbjEFLoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 May 2023 07:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231190AbjEFLdY (ORCPT
+        with ESMTP id S232082AbjEFLoB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 May 2023 07:33:24 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D439D3C11
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 04:33:22 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-55a44a2637bso41528127b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 04:33:22 -0700 (PDT)
+        Sat, 6 May 2023 07:44:01 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 805968A5E
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 04:44:00 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so30528081fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 04:44:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683372802; x=1685964802;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MrqXLh+CItgFF8Zvf5m1YwKEXaRzb+PkDECyM11LKHc=;
-        b=MkpaBYkwpacXiQBX9wyxjvYYFhGVLUxRS4ZMAZXGcRR4Luhc/XHR5TCixlZ+4iPdcy
-         08I6/h04LJUx9ANZTDKYso31rEC8zHUN+eWh+w+zXvWsSdzKFKAU44kGggGZ3ExZA3Em
-         hPJvpUvN4N8e7S2oceXGmbgHY9t0KQ+c68+WTq6CDPrcNFWg4BSOETxEi1jkXITVOOlS
-         NkiUIK1GH5LidQIvdm85bwzlz4aDpBuInpuGoeFMEwpoeHcvvUAEaQpIK7srb9HUbuES
-         z+AxvQh6HxFy6TgIntSemLXYwPHU6pgBJtGyWoKpdgptPTpJ1WivKjv7FfWwJ9dMWhf2
-         W/4Q==
+        d=linaro.org; s=google; t=1683373439; x=1685965439;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yXnVhbkITsZMb6O7jTvj7y5cUYSeICU9j0KWRJueFW0=;
+        b=Ohlfs/y70BkHhNgLYwSaIL9tgD/tRK5vPrItQJP4FbKtpfMISkb4mD0JUJzwL88qSp
+         MraBwNqT06c8t20AH9pvaiZlcx11Mh5LIQV1U6CVxO5po2pTGhu5Y4wQkh1S12HSfaFK
+         fy8SnrdPYv2m4O1+8bQYi2bdAwV4BtDKTXErYgy78pkArWLyv7CzdszdBlu4X8gH8kkl
+         tcvRFmepJ5RA3n6kWr2sjSXx2g/dce4oCxoDTPG2NAuKujSxn34MMp8gI2xqzHyjkuBE
+         640/RGNE32g6Awswn/+JXxELPcujC7kHkkvYBXwKGq/xTp/3z5BQQHcxfzXuQtM3gjl2
+         H7hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683372802; x=1685964802;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MrqXLh+CItgFF8Zvf5m1YwKEXaRzb+PkDECyM11LKHc=;
-        b=VItH4/WqHq5BMhtl77KzFfJpFCWBQkczoYCHfU61u616vSARywxLLI3FLSX7wQHLrR
-         0G+T5+w1ukdqe0AjZTtI+e9StuoizMkLpwupu4s1tvqrpf/Py4cy4bBDH4YYkQVjNu1N
-         M7lcU1NCrbyr3P2dslJsbsYSBmmiymJoxYm/fbpv1KtBsPyzLqnnCRfebB1E2Dj8Yjlh
-         c0v20jGmUacfdRzgWzrRuXvATz0APz4OeF4hh0HSMZdMmUJllVn8Nm0zszuntXbHMddH
-         ORcUMBdnoj8jloxKRt9VhDT9T2fgMjfongNwvreyJciCDchUTblpQQUrFSlALgzKSqEE
-         Ze5g==
-X-Gm-Message-State: AC+VfDyn+V8Yzj4cCwwOA+Nx13F9NTxJVYtjNAKJZli16dkhjy98F2do
-        awkhhXJ78MiQ2jaLTvK5AfGi8Pt6ncEWcAj12xKvww==
-X-Google-Smtp-Source: ACHHUZ7fly9ZcKfeuDxgPgDWv+YnXLTE4ah466Q9irFBlHZd5XhcGu/UinZknE20fN8kbaJnxJSwuRR/WUWwRP2VVzc=
-X-Received: by 2002:a0d:d487:0:b0:55a:5dce:aa19 with SMTP id
- w129-20020a0dd487000000b0055a5dceaa19mr4648937ywd.51.1683372802023; Sat, 06
- May 2023 04:33:22 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683373439; x=1685965439;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yXnVhbkITsZMb6O7jTvj7y5cUYSeICU9j0KWRJueFW0=;
+        b=DhIpIhiP/M8SujVbHbjiEibLx/Gq1l2YJ84DFXpKfLl2GbWu+b4jKDtvt8CcW8Bxaz
+         jmlMaQlGdfGqfDXcKgF9cPEJe35ynM1xZdAV2tKZbe173MIGsT+LVzMvwZoRnf94mduu
+         LhSTgfOlOQpbZHo/h9OPDHUA+hm33AGlPiCp0GPgsm68Mvg95i+ueHNkKUXUs2AumxoS
+         3VfgtMqSOt+HJhb8Y02ZVb3LYN3hMqQK+9moTPrvpRfFaV+8nwg0BCZNfsSOqa3BvNt7
+         TsWEn5JGaNvVW6G3SCr+5kxChDwBM+g/OQmAsARSUI3zRsOItv+WIa71kSw/F8gUVoSN
+         PLMg==
+X-Gm-Message-State: AC+VfDxl7EhOpv5bljUjy3oqJQyBq18FRpZcPF02IGtQivBBe+Y5NgRn
+        zJUhBv/fThvzIqnvkz5VteNJGQ==
+X-Google-Smtp-Source: ACHHUZ5/5EDYUJUkzfsme9SuHBYWYzGPiK1u0Djh6K+SKx0nBfzlDz30DyoWVqickjbLfHIDrtmQzA==
+X-Received: by 2002:a2e:8815:0:b0:2a8:bf35:3b7 with SMTP id x21-20020a2e8815000000b002a8bf3503b7mr1167358ljh.32.1683373438740;
+        Sat, 06 May 2023 04:43:58 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id v10-20020a2e924a000000b002a8e48761aesm346518ljg.106.2023.05.06.04.43.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 06 May 2023 04:43:58 -0700 (PDT)
+Message-ID: <81d5643b-3aec-a987-eaf4-e89b0887ce64@linaro.org>
+Date:   Sat, 6 May 2023 14:43:57 +0300
 MIME-Version: 1.0
-References: <cover.1683183860.git.quic_varada@quicinc.com> <8894bf2c44eaf4959c7a1966b66229e6cf5cda96.1683183860.git.quic_varada@quicinc.com>
- <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com> <20230506110918.GC10918@varda-linux.qualcomm.com>
-In-Reply-To: <20230506110918.GC10918@varda-linux.qualcomm.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 1/8] PCI: qcom: Use DWC helpers for modifying the
+ read-only DBI registers
+Content-Language: en-GB
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com
+References: <20230506073139.8789-1-manivannan.sadhasivam@linaro.org>
+ <20230506073139.8789-2-manivannan.sadhasivam@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 6 May 2023 14:33:11 +0300
-Message-ID: <CAA8EJpqg2htfa2QZ7q6SP58N5YAABa8knBn4c5eYqYOU6HQNiA@mail.gmail.com>
-Subject: Re: [PATCH v10 8/9] arm64: dts: qcom: ipq9574: Add LDO regulator node
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, gregkh@linuxfoundation.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_wcheng@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20230506073139.8789-2-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 6 May 2023 at 14:09, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Fri, May 05, 2023 at 12:29:54PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, 5 May 2023 at 11:23, Varadarajan Narayanan
-> > <quic_varada@quicinc.com> wrote:
-> > >
-> > > Add LDO regulator node
-> >
-> > As this LDO is provided by the PMIC, it would be nice to know why it
-> > is modelled as an always-on regulator instead of the proper PMIC
-> > regulator. Up to now we were doing this only for the outstanding power
-> > rails like CX/MX or EBI.
->
-> These are always ON because USB phy doesn't support power
-> collapse, and there is a chance that other IP blocks might be
-> sharing the rail.
+On 06/05/2023 10:31, Manivannan Sadhasivam wrote:
+> DWC core already exposes dw_pcie_dbi_ro_wr_{en/dis} helper APIs for
+> enabling and disabling the write access to read only DBI registers. So
+> let's use them instead of doing it manually.
+> 
+> Also, the existing code doesn't disable the write access when it's done.
+> This is also fixed now.
+> 
+> Fixes: 5d76117f070d ("PCI: qcom: Add support for IPQ8074 PCIe controller")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/pci/controller/dwc/pcie-qcom.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 
-You are describing the software side here. From the hardware point of
-view, it is an I2C regulator, which is probably also exported as an
-SMD_RPM regulator. Unless you have a good reason not to do so, there
-should be a node under rpm-requests, which describes mp5496 regulators
-exported via RPM. then USB should refer to those regulators.
-
->
-> Thanks
-> Varada
->
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > >  Changes in v10:
-> > >         - Add LDO regulator node
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> > > index bdc1434..1f5d14f 100644
-> > > --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> > > @@ -60,6 +60,13 @@
-> > >                         regulator-min-microvolt = <725000>;
-> > >                         regulator-max-microvolt = <1075000>;
-> > >                 };
-> > > +
-> > > +               mp5496_l2: l2 {
-> > > +                       regulator-min-microvolt = <1800000>;
-> > > +                       regulator-max-microvolt = <1800000>;
-> > > +                       regulator-boot-on;
-> > > +                       regulator-always-on;
-> > > +               };
-> > >         };
-> > >  };
-> > >
-> > > --
-> > > 2.7.4
-> > >
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
-
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@gmail.com>
 
 -- 
 With best wishes
 Dmitry
+
