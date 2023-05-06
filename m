@@ -2,117 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11AB36F90C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 11:04:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB4786F915F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 13:08:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231366AbjEFJEB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 May 2023 05:04:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46454 "EHLO
+        id S232145AbjEFLIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 May 2023 07:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231450AbjEFJEA (ORCPT
+        with ESMTP id S231489AbjEFLIJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 May 2023 05:04:00 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4C764EEC
-        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 02:03:51 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f1394cb0d1so3032056e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 02:03:51 -0700 (PDT)
+        Sat, 6 May 2023 07:08:09 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C415A59E2
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 04:08:07 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-559debdedb5so41484747b3.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 04:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683363830; x=1685955830;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SdVNb9Mn581l8lgASjfW3rki8vUOXzSPLGbYRZ2k+z0=;
-        b=cK8dtzvU8R42XfG8GQqIl6uPRxpjRk/CWexR6Ea7VDCnuKJ9TVcuABB18JH+gS9fjn
-         /Qo4gRPlawkMfRBbVprLtt7kiVvOcrdTTMiu38CQY4ur5teDSHO8Rx7uaxKgCpdru6BN
-         dbww/b+wdDhL/zoEKKoVJ/KZAspG7IDPtT8976R90ISEggs8Eg4BNvsZzZhmT7Z2TwsN
-         ly6jBsB0nNFygAfWc3FqyR4hLUzHaaiPLkADkyW5TrpMpUoxss82H2CfXb+71boGJaDj
-         EEPofInHuvMKcBk0yqQy8QFobjXzcgYmj6TZi/Ruy2wyUBN914IoP+PGutV6OFN1a+8q
-         C1wQ==
+        d=linaro.org; s=google; t=1683371287; x=1685963287;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=j5XlcbqFrzQXxIYxdf0VxKIx0ZoUFzqDbvv5tK0E9jE=;
+        b=cNdP/pr/9KcytvLHAV2KR7Egci52zCTCKkiPfBelrMkxfVg2Xrji0fuF9zAV7yv3vg
+         hs5EOpYp+wSYnwJCPDcDdrTmBGWmO+CHCoMHp4mo6VBaFvPm+y/NSFnT6bXajfjMmtuz
+         ojWMmcXun5Fqk94LvGIUcYHfYQRLtXQ2YhVZpXjl9MQmB4w/DAPX0TWFS+tqEs+VIwDQ
+         RVGBIjOgPqNOSXkXTNs7ThOqqZv3rPNZjJhrH6weBkHpICKta7n9r15dF/DsuyhmJoUf
+         2e+2Uqg53HIDmIXS5+OpDq139GlOVBHCnD+yI1MrIu9gCpsjL57l1AKEN7e5JbFRUk+q
+         zNlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683363830; x=1685955830;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SdVNb9Mn581l8lgASjfW3rki8vUOXzSPLGbYRZ2k+z0=;
-        b=Ly4G7zRa5JbcNGxcpKofaawuijvRrT7wmG+tEK9/0Z2oLNBIJxF7KcaBsaG1NIQxXA
-         8VejO6P5khNuHEXtIGyAdb4HliwL+J3JDYvWQHwIp1GSa6SUWYFG1/3Gv5Ci11Z9CVxp
-         z2wwhzZQyxnIVIiAFGen8FdHxcqGod9883vXf9Hz0TRc5zAI1lole5b6Vs4BebwXG2NR
-         fWxOA53G+HmatN23BbX4FOgQ9L0k6aYDkd/lfbvtyjjQTFpqhBJnMG+xAG1Vc4wFzeGo
-         dZObKIFi5Dcvp932fHUOe6ETdWBE6XMGhHkzILXmzL19uei7DkB1OmhoKFgKLxQmj5Ae
-         EzMA==
-X-Gm-Message-State: AC+VfDx7X/z7YVuu83ObzyGsJSUINQZSaRG1I+JUcMV9DnxDqSqh0SXs
-        bQ2jzWzp+JAvqP6h+Fs6eSFnNQ==
-X-Google-Smtp-Source: ACHHUZ5/9stiAnwRBqLEXpr5GKHp8S43F39twqWRZH3/EqfgoK4aqKgC84D0L794DGLoJRZfGKrS7A==
-X-Received: by 2002:a19:7512:0:b0:4eb:3fb2:c56d with SMTP id y18-20020a197512000000b004eb3fb2c56dmr1102078lfe.12.1683363830116;
-        Sat, 06 May 2023 02:03:50 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id o15-20020a05651238af00b004eff1163c37sm581352lft.308.2023.05.06.02.03.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 May 2023 02:03:49 -0700 (PDT)
-Message-ID: <9e48a247-1f2c-795d-3991-f820cf66ee05@linaro.org>
-Date:   Sat, 6 May 2023 11:03:48 +0200
+        d=1e100.net; s=20221208; t=1683371287; x=1685963287;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j5XlcbqFrzQXxIYxdf0VxKIx0ZoUFzqDbvv5tK0E9jE=;
+        b=dvwb7DONGQIvH1CyHy2lPZpIatBZs9AiNYvccA+/J0tFhCTIK/J7pOK4SyQTzUQv2D
+         r+UhuDpGMPWL7e/DQw85lSiBDUn3iUybcTtu2EhNYXBKG/77gHpJf/Rsi9KhAM0RdT5j
+         J8zj+QvNHgcs9a6g2jLicO1Qme3nLDh13Hva5QyPFQxu+byR5SYTQrF6clAKkj/gRLQ3
+         X521TqD5KaM5A27Rcc8so/bcPyl6nCXf3KWAiApA0hJZ08amFMONRznKykQ6U7fsZl8p
+         /nU4ZRQ7rUYhGKh05QEBNyaSvWB5LINxl8/G/h9lu+Alk+COyuug2UuLRcrMfxeu9c0g
+         nKzw==
+X-Gm-Message-State: AC+VfDyLA/XuCb9jnDo1vMXP7vzbzG8GcF8vpJx/oQOjswnCvqnRzynO
+        AEF8iUx90Cghh3BQubWYcqjrT7qCSPKmIKFWXC5NRg==
+X-Google-Smtp-Source: ACHHUZ6iGINkfuXu3mA7YpSLZ0z+S5X733K8fJ48YS7ZTvxkCFk9w0Uq/7dKFQuiu1WU6SIM6RHjU1LUAVNNM2nfp/M=
+X-Received: by 2002:a0d:cc09:0:b0:55a:5870:3d47 with SMTP id
+ o9-20020a0dcc09000000b0055a58703d47mr4375122ywd.26.1683371286931; Sat, 06 May
+ 2023 04:08:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Add Fxtec Pro1X (QX1050) DTS
-To:     Dang Huynh <danct12@riseup.net>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230505-fxtec-pro1x-support-v2-0-0ea2378ba9ae@riseup.net>
- <20230505-fxtec-pro1x-support-v2-1-0ea2378ba9ae@riseup.net>
- <abae55ef-172b-036f-40a9-b27c38e850ec@linaro.org>
- <7894772.GXAFRqVoOG@melttower>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <7894772.GXAFRqVoOG@melttower>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <cover.1683183860.git.quic_varada@quicinc.com> <8894bf2c44eaf4959c7a1966b66229e6cf5cda96.1683183860.git.quic_varada@quicinc.com>
+ <CAA8EJppvj2nzqwdsC+Xct4cJg2-_yPpiGDELjHJG4HyAH3zGMA@mail.gmail.com> <958fec66-2978-1d45-baad-c735fab85108@linaro.org>
+In-Reply-To: <958fec66-2978-1d45-baad-c735fab85108@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 6 May 2023 14:07:56 +0300
+Message-ID: <CAA8EJpqEk=dQkChFh3HaTuTpO3wsebS8_p4RH-1_JrWoS_HbeQ@mail.gmail.com>
+Subject: Re: [PATCH v10 8/9] arm64: dts: qcom: ipq9574: Add LDO regulator node
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 5 May 2023 at 22:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 5.05.2023 11:29, Dmitry Baryshkov wrote:
+> > On Fri, 5 May 2023 at 11:23, Varadarajan Narayanan
+> > <quic_varada@quicinc.com> wrote:
+> >>
+> >> Add LDO regulator node
+> >
+> > As this LDO is provided by the PMIC, it would be nice to know why it
+> > is modelled as an always-on regulator instead of the proper PMIC
+> > regulator. Up to now we were doing this only for the outstanding power
+> > rails like CX/MX or EBI.
+> (which we then stopped registering as regulators and started
+> to manage through rpm(h)pd drivers and the genpd framework)
 
+I mean having regulator-fixed s4a on sm8250 in addition to the CX
+genpd, because some of the parts really expect to have a regulator.
+But anyway, we are getting away from the subj. Let's wait for the
+answer from Varadarajan.
 
-On 6.05.2023 03:42, Dang Huynh wrote:
->>> +	qcom,board-id = <34 0>;
->>
->> Does the bootloader refuse to boot without these? Some newer
->> ones don't need it.
->>
->> In case they are compulsory, you'll have to add the pro1x to the
->> relevant allOf:if:then: block in bindings.
->>
-> Tested, nope.
-> 
->>> +&usb_dwc3 {
->>> +	maximum-speed = "high-speed";
->>
->> Do you know whether the phone supports usb3? Usually if that's
->> the case, you will get usb3 in fastboot.
->>
->> You'll need an actual usb3 cable to check that though, many claim
->> that but then don't have the necessary wires connected.
-> I asked around, they said yes but without anything to test on hand, I'm not 
-> sure.
-> 
-> Should I remove it or something?
-No, you may get weird behavior. Keep it high-speed for now.
+>
+> Konrad
+> >
+> >>
+> >> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> >> ---
+> >>  Changes in v10:
+> >>         - Add LDO regulator node
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 7 +++++++
+> >>  1 file changed, 7 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> >> index bdc1434..1f5d14f 100644
+> >> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+> >> @@ -60,6 +60,13 @@
+> >>                         regulator-min-microvolt = <725000>;
+> >>                         regulator-max-microvolt = <1075000>;
+> >>                 };
+> >> +
+> >> +               mp5496_l2: l2 {
+> >> +                       regulator-min-microvolt = <1800000>;
+> >> +                       regulator-max-microvolt = <1800000>;
+> >> +                       regulator-boot-on;
+> >> +                       regulator-always-on;
+> >> +               };
+> >>         };
+> >>  };
 
-Konrad
-> 
-> Other than that, I've fixed the other issues with the series.
-> 
-> Best regards,
-> Dang
-> 
-> 
+-- 
+With best wishes
+Dmitry
