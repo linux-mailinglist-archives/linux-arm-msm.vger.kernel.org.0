@@ -2,90 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F8BA6F8DAF
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 03:42:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38C236F9002
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 09:31:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231879AbjEFBmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 5 May 2023 21:42:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60656 "EHLO
+        id S229655AbjEFHbx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 6 May 2023 03:31:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbjEFBmT (ORCPT
+        with ESMTP id S229530AbjEFHbw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 5 May 2023 21:42:19 -0400
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3936249CF;
-        Fri,  5 May 2023 18:42:19 -0700 (PDT)
-Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mx1.riseup.net (Postfix) with ESMTPS id 4QCqzt3ZhdzDr2s;
-        Sat,  6 May 2023 01:42:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1683337338; bh=vs2YuPaytKDjBTRynKJpc3Hgi9UoEfaxQaAni4Rf1a8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bgrpnDK+oNRTRzjJ9MeyOLAHcqsuEVKnBsWCjOW6C9vVqiprZYf8szBpM85cY96qy
-         K3Fy35ZfmTWK8akDqqlzuEg+WjttweqqAtPSozoz9avltiGh8ieWLt/hvS9jZDyM/a
-         UmxIaIGs4ekngFkuDpD5pkjH3CBCw+gyPgK82Ook=
-X-Riseup-User-ID: 614E73F19DCF99408E8A608DE2F9D45AABC64D3F62FB10FDA8135F4B5488F1D3
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4QCqzr2WJzzJq6w;
-        Sat,  6 May 2023 01:42:16 +0000 (UTC)
-From:   Dang Huynh <danct12@riseup.net>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: Add Fxtec Pro1X (QX1050) DTS
-Date:   Sat, 06 May 2023 08:42:13 +0700
-Message-ID: <7894772.GXAFRqVoOG@melttower>
-In-Reply-To: <abae55ef-172b-036f-40a9-b27c38e850ec@linaro.org>
-References: <20230505-fxtec-pro1x-support-v2-0-0ea2378ba9ae@riseup.net>
- <20230505-fxtec-pro1x-support-v2-1-0ea2378ba9ae@riseup.net>
- <abae55ef-172b-036f-40a9-b27c38e850ec@linaro.org>
+        Sat, 6 May 2023 03:31:52 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC015FFC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  6 May 2023 00:31:49 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6439d505274so1143304b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 May 2023 00:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683358308; x=1685950308;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZWU7+3l9MN86IsyDHTUEnafJOEk6Gbhr7uhiM01UMBI=;
+        b=zpnHt2Fk931G4JgIg29mWsXwuXBLqfecJPsLVdZbEWj60hUF0ipA+Ha2jQw8FJ0GeM
+         zkWZfQJJkFJ3lT5gsrplSAaaDDNxKT31Uo63FJko1xmkLhCO433j/8d0qEF07Etr8lQn
+         Gh71qD/gEqOtXI+Wzn5FQkPYc2hKdvEM2iGn3fmjxOA8uqhPTXRK/n0K4RZrc7/JV5Ah
+         cdqQNKs5C7FhvRIe/M0OsUdzd//pjo5CweN6cqjwZXv7Y56jboXja0MoCrkAZKo51wRZ
+         FYpr9HJaozjOtzpc50ZOIxk7viGu37YqIRwVWUHj4ejwJe5j6Me6xHy0kETXAs0EcJk5
+         iTiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683358308; x=1685950308;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZWU7+3l9MN86IsyDHTUEnafJOEk6Gbhr7uhiM01UMBI=;
+        b=Qq20TS+iG6zXClgDwFMunpnXYj2ooCTDRqy804FYGG4lsjVVMg7Uwza32T8KNq+EGS
+         e7R8LJxcWKoeHiuJjHDEINdJE8NF1a8fPmf29Xf4ehsLgGqvlYO7a2utqFSKgyq8gEkD
+         LssigyN1FOMVG3qormBhsd22E1Jm9sPvVAPCOG8jNcN94C2bBi6DJf3DR5qTFK8OXVBp
+         fo0tkOCllKdW0+RfFIEVQS96U10bUdSMeg9+ZXziElkrS17fdS+E1cRzBrcatHuOXHGv
+         zvDb8+q1yywe4z4I2T2Zy7oOzK6iwnQeQYGRUzHZxa/k3nUnfHbJcglchIiEc6d0pCvN
+         yX2g==
+X-Gm-Message-State: AC+VfDxbq6XO1Rym15zv8GYCEVnqQ30gZfjeMoPHT8IXESUX/aowo4R/
+        +DvQivzN7pdE0Npov9jXykGa
+X-Google-Smtp-Source: ACHHUZ65d5V+Jqxabv8rKD5glj0EJUE/2Bu6isc1uK/W7BUVySAipuSFuG2RBvz+4QmMoaU292AZEg==
+X-Received: by 2002:a05:6a00:23c3:b0:637:f1ae:d3e with SMTP id g3-20020a056a0023c300b00637f1ae0d3emr5736555pfc.25.1683358308446;
+        Sat, 06 May 2023 00:31:48 -0700 (PDT)
+Received: from localhost.localdomain ([120.138.12.87])
+        by smtp.gmail.com with ESMTPSA id z16-20020aa785d0000000b0062a56e51fd7sm2627373pfn.188.2023.05.06.00.31.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 May 2023 00:31:47 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/8] PCI: qcom: Do not advertise hotplug capability
+Date:   Sat,  6 May 2023 13:01:31 +0530
+Message-Id: <20230506073139.8789-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> > +	qcom,board-id = <34 0>;
-> 
-> Does the bootloader refuse to boot without these? Some newer
-> ones don't need it.
-> 
-> In case they are compulsory, you'll have to add the pro1x to the
-> relevant allOf:if:then: block in bindings.
-> 
-Tested, nope.
+Hi,
 
-> > +&usb_dwc3 {
-> > +	maximum-speed = "high-speed";
-> 
-> Do you know whether the phone supports usb3? Usually if that's
-> the case, you will get usb3 in fastboot.
-> 
-> You'll need an actual usb3 cable to check that though, many claim
-> that but then don't have the necessary wires connected.
-I asked around, they said yes but without anything to test on hand, I'm not 
-sure.
+The SoCs making use of Qualcomm PCIe controllers do not support the PCIe hotplug
+functionality. But the hotplug capability bit is set by default in the hardware.
+This causes the kernel PCI core to register hotplug service for the controller
+and send hotplug commands to it. But those commands will timeout generating
+messages as below during boot and suspend/resume.
+    
+[    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
+[    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
+[    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
+[    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+    
+This not only spams the console output but also induces a delay of a couple of
+seconds. To fix this issue, this series clears the HPC bit in PCI_EXP_SLTCAP
+register as a part of the post init sequence for all IP versions to not
+advertise the hotplug capability for the controller.
 
-Should I remove it or something?
+Testing
+=======
 
-Other than that, I've fixed the other issues with the series.
+This series has been tested on DB845c (SDM845 SoC) and Lenovo Thinkpad X13s
+(SC8280XP SoC).
 
-Best regards,
-Dang
+Thanks,
+Mani
 
+Manivannan Sadhasivam (8):
+  PCI: qcom: Use DWC helpers for modifying the read-only DBI registers
+  PCI: qcom: Disable write access to read only registers for IP v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and
+    v1.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.3.3 and
+    v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.3.2
+  PCI: qcom: Use post init sequence of IP v2.3.2 for v2.4.0
+  PCI: qcom: Do not advertise hotplug capability for IP v1.0.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.1.0
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 97 ++++++++++++++++----------
+ 1 file changed, 60 insertions(+), 37 deletions(-)
+
+-- 
+2.25.1
 
