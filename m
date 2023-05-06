@@ -2,112 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C4EFC6F97E7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 11:13:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A62E76F98E5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 16:20:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230421AbjEGJNJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 05:13:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42024 "EHLO
+        id S231448AbjEGOUG convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Sun, 7 May 2023 10:20:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231335AbjEGJNH (ORCPT
+        with ESMTP id S229446AbjEGOUF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 05:13:07 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E13192;
-        Sun,  7 May 2023 02:13:06 -0700 (PDT)
-Received: from [192.168.178.23] (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id E953CCED46;
-        Sun,  7 May 2023 09:13:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683450783; bh=N+w7jq7XeEONyTDg1iFjOZ+41A3wQL7SjMniFaAAMjs=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc;
-        b=GHogfyBMCuCtPytpym6kxvbfXYmQXgXanqBqynOJVkWth/f4zfqNZbdwzsCG0vjow
-         YrAPawq8dO4j58PRmrEOZ+UiNIwSj8DHMU32w5dnCpsuBzh4wBltuw1eQlWrfjH5hB
-         r8HStf/Y9IB8WR8WerI3QEgxzWAcfHYb5dvbtS/Y=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sun, 07 May 2023 11:12:23 +0200
-Subject: [PATCH 6/6] ARM: dts: qcom: msm8226: Add ocmem
-MIME-Version: 1.0
+        Sun, 7 May 2023 10:20:05 -0400
+Received: from mail.bpip.go.id (unknown [103.166.134.2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C69A4C3E;
+        Sun,  7 May 2023 07:20:01 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.bpip.go.id (Postfix) with ESMTP id 9C32BC0E615;
+        Sun,  7 May 2023 08:39:41 +0700 (WIB)
+Received: from mail.bpip.go.id ([127.0.0.1])
+        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id EMAJhw2w0KZN; Sun,  7 May 2023 08:39:41 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.bpip.go.id (Postfix) with ESMTP id 4D53AB4E83A;
+        Sat,  6 May 2023 21:19:49 +0700 (WIB)
+X-Amavis-Modified: Mail body modified (using disclaimer) - mail.bpip.go.id
+X-Virus-Scanned: amavisd-new at bpip.go.id
+Received: from mail.bpip.go.id ([127.0.0.1])
+        by localhost (mail.bpip.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id NOD4xabUwidS; Sat,  6 May 2023 21:19:49 +0700 (WIB)
+Received: from [103.167.91.37] (unknown [103.167.91.37])
+        by mail.bpip.go.id (Postfix) with ESMTPSA id 7A172BCC753;
+        Sat,  6 May 2023 08:34:27 +0700 (WIB)
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230506-msm8226-ocmem-v1-6-3e24e2724f01@z3ntu.xyz>
-References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
-In-Reply-To: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Brian Masney <masneyb@onstation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=952; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=N+w7jq7XeEONyTDg1iFjOZ+41A3wQL7SjMniFaAAMjs=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkV2ucx1260XKj8iQgsWYL36Tvoz+ZL22ms9O5o
- rVY2Mfy/hKJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZFdrnAAKCRBy2EO4nU3X
- Vn5FD/0fq/DQTw7hQB267BiTXJXPrsDu27z82VephJ8RV7XK0yP8uaNrk81MYLqxVa+pZD3cjY6
- /GdYfgwJ4+rRROyDQZGuEie11ZXeBePhmSosg3yFPwouuHuUJ9HKXjWRXGf1mbU86Ha2zydygMZ
- 4dcRd+Qzf+saRnIWFJYL8/SlQ7sdsp+ce5LcT53wN/3UwAzvuNl2zf+hyAvKKkhaB7pPw3uxsVr
- HC3fSWoFpQax3xLuHLDnMfEDfzwn76NPBHLhVCAI3zbT2CW77jB62Yc49SXt7EuoHeGYWvROaPj
- m+J0haDtJ/tE955gAEpnJ4OlauK4fCcBLf8OR9XP0N2z7JXordyg0zS2QKgnJG6YRs4HbRzPcD6
- SPNxUXS6m7IkdcNd1HEHs5/xDI+F+tPrZdyYlh+aEm+e3pJN5BWbkbIKJGxM7+DyJpYjRdMCERX
- B/C0pVErf0tNi8Lx7U3Q6GXFtpyXDXFRYco7ZbNphr0zwh8/pHDArX5Uo28RzPtZKzJ2/rD6Kbd
- csMDRV6p+gENv0qs22YWy0y3xnhUK/h6qefY+zmkV67KrWMzzcMrtu1EN5R/mzRKbAIny/QpP3W
- rXp9bCZZya4WDcAG0I1HMMMpJbufUIhSGLXjMOVN/IWsZdNLxC7vfefwkq8zrQHzDDCQcmhzw/O
- IEjF8MF8I9YufMg==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Letzte Erinnerung
+To:     Recipients <persuratan@bpip.go.id>
+From:   "Qatar Foundation" <persuratan@bpip.go.id>
+Date:   Fri, 05 May 2023 18:34:23 -0700
+Reply-To: qf.qatarcares.org@gmail.com
+Message-Id: <20230506013427.7A172BCC753@mail.bpip.go.id>
+X-Spam-Status: Yes, score=6.0 required=5.0 tests=BAYES_50,
+        FREEMAIL_FORGED_REPLYTO,NIXSPAM_IXHASH,RCVD_IN_SBL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
         version=3.4.6
+X-Spam-Report: *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+        *      [103.167.91.37 listed in zen.spamhaus.org]
+        *  3.0 NIXSPAM_IXHASH http://www.nixspam.org/
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a node for the ocmem found on msm8226. It contains one region, used
-as gmu_ram.
+Sehr geehrter Begünstigter,
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm/boot/dts/qcom-msm8226.dtsi | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Sie wurden ausgewählt,  (995.000,00 €) von Katar Foundation zu erhalten, antworten Sie bitte mit Ihrem vollständigen Namen und Ihrer Adresse, um weitere Informationen zu erhalten. E-mail:qf.qatarcares.org@gmail.com
 
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index 42acb9ddb8cc..7ad073eb85c8 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -636,6 +636,23 @@ smd-edge {
- 				label = "lpass";
- 			};
- 		};
-+
-+		sram@fdd00000 {
-+			compatible = "qcom,msm8226-ocmem";
-+			reg = <0xfdd00000 0x2000>,
-+			      <0xfec00000 0x20000>;
-+			reg-names = "ctrl", "mem";
-+			ranges = <0 0xfec00000 0x20000>;
-+			clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>;
-+			clock-names = "core";
-+
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			gmu_sram: gmu-sram@0 {
-+				reg = <0x0 0x20000>;
-+			};
-+		};
- 	};
- 
- 	timer {
-
--- 
-2.40.1
-
+Mit Freundlichen Grüßen,
+Herr Rashid Al-Naimi.
+Chief Executive Officer der Qatar Foundation Endowment.
+(null)
