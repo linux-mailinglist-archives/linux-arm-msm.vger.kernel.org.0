@@ -2,194 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88D756F976C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 10:04:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF17B6F9778
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 10:11:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbjEGIEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 04:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49386 "EHLO
+        id S230187AbjEGILa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 04:11:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230451AbjEGIEU (ORCPT
+        with ESMTP id S229986AbjEGIL3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 04:04:20 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E789F1157E
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 01:04:17 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-50bdd7b229cso6542579a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 01:04:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683446656; x=1686038656;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BzBNd9mB5wevctFzDqblL5y/HaLP/sCPOrJ09H89d90=;
-        b=MVCuZl35RQPJZR23/XADAkTbybkeimBpPbbp8bfmqQUcSLKaLhQuJZK302ughK2VIb
-         DFudRcnVlJvbpmMiSjCbF+v0h7V6T8OO7vVtU3SHmAEuprimh+U7b/Yds9oS1ZbK0o/q
-         DNi/lkutV2coLlKQkgwWyKcloMOrme0Eil4ngwyrNn2isXzxQYbE5mTXI9vAwsnQ8Wq5
-         8JTQoVE2357eL6P2AuWcGRSyq3VzGKG1FbrR+Db6W0kFmkSbB+FovQ5FqmJHct/pkZuj
-         YJJS5nx+2+pKo5z5u3Jk4q0EoisFMZ06elsOKvYQUXS0zKokx5ZUt5Xs5gwmIWWT0KoT
-         uaYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683446656; x=1686038656;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BzBNd9mB5wevctFzDqblL5y/HaLP/sCPOrJ09H89d90=;
-        b=jh5AqUN3ca9JMzwel7q1NJ2DfZn51VPuJ6HRhk3HW4yeqq9o6EFfwgwkrEQpMbalqI
-         AtEAXPyy7blwO9uTrsvAYHDNz60uYGF5tFqluYyZ6Uh+Yj3JW93FDpSYpQunrXr+1Pug
-         fMBD6Oqkh5+UoiR+1qWnqp9Wc76BCmsTQJPVXZGSQ4dM5KYarvQeXT+a/eqx193mAXag
-         GM4exmT0nXBF2uRS/kZ8WPLgI6f3buFBEWqIu+zv5OYwIJmb0i1xXmZd3gM250SrVwHm
-         eiV1noZUZZN8LaT91DIsLGfgRcO2vVqNbimyMjehox0BMcjqCXEqH7cc8oFlnqIMrUgv
-         vUBg==
-X-Gm-Message-State: AC+VfDx3lhZGdEBbHltAFhi2GMjE+/ST0kHDTb0wgfKxUmQPyyG5g8Pc
-        6EL43Z6aw5mdx4GEpyFlRGzz8w==
-X-Google-Smtp-Source: ACHHUZ4vXTIy9jC51n4f4/F0174cdi8EwNzCcxOibShQXTs4ABy9qn7IdCrVQ2DUkSbtGpqA2QsFeA==
-X-Received: by 2002:aa7:dd4e:0:b0:50b:fc7f:b281 with SMTP id o14-20020aa7dd4e000000b0050bfc7fb281mr5478735edw.1.1683446656431;
-        Sun, 07 May 2023 01:04:16 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:183b:950f:b4d5:135a? ([2a02:810d:15c0:828:183b:950f:b4d5:135a])
-        by smtp.gmail.com with ESMTPSA id d12-20020a056402516c00b0050bd2f16ef5sm4861843ede.84.2023.05.07.01.04.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 May 2023 01:04:15 -0700 (PDT)
-Message-ID: <99343862-6b6a-30ba-40e5-7f984434b1dc@linaro.org>
-Date:   Sun, 7 May 2023 10:04:13 +0200
+        Sun, 7 May 2023 04:11:29 -0400
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACB4E14345;
+        Sun,  7 May 2023 01:11:20 -0700 (PDT)
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4QDcZD4grkz9sck;
+        Sun,  7 May 2023 10:11:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
+        s=MBO0001; t=1683447076;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=LROmirExRCF+QadD8DHkqyTlH8jb5FTHqGp+6hp6CEs=;
+        b=HVVKcyI2C5IkQSC2nv9TCDI0jpu3fpowQyh2QaIdnwJiQLvcXY2Y8NOebT+lq4ivAwZFbK
+        Hwv/6MS2dSWsL2+xYuyCubxT7NdA1MAL0LQ5AaUhGAs6nVybkTuy4EvRtmhepHY6g7DJAH
+        d3tqBtpdEMcIfi0kUvvbwfp/MBFTMuiQNRzD6Uqzj+3jDClraFHTngyDT8/RC2uYl0uWhI
+        issudTEbo8p4bJWep8aMX9AUEuD2BfvgCGCOs32xKWLMNkatCmuvYRd9z0QaExYSSXVwKD
+        MTYOuqlOUH5vg4gZMWXIsRZDGHSWI47BwCRuSJz16S85olgDAMvW+Wryo52oWw==
+From:   Dylan Van Assche <me@dylanvanassche.be>
+To:     srinivas.kandagatla@linaro.org, amahesh@qti.qualcomm.com,
+        arnd@arndb.de, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Dylan Van Assche <me@dylanvanassche.be>
+Subject: [PATCH v3 0/2] misc: fastrpc: FastRPC reserved memory assignment for SDM845 SLPI
+Date:   Sun,  7 May 2023 10:08:37 +0200
+Message-Id: <20230507080839.37578-1-me@dylanvanassche.be>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v4 2/3] dt-bindings: arm: Add Coresight Dummy Trace
-To:     Hao Zhang <quic_hazha@quicinc.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-doc@vger.kernel.org
-References: <20230505092422.32217-1-quic_hazha@quicinc.com>
- <20230505092422.32217-3-quic_hazha@quicinc.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230505092422.32217-3-quic_hazha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/05/2023 11:24, Hao Zhang wrote:
-> Add new coresight-dummy.yaml file describing the bindings required
-> to define coresight dummy trace in the device trees.
-> 
-> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
-> ---
->  .../bindings/arm/arm,coresight-dummy.yaml     | 102 ++++++++++++++++++
->  1 file changed, 102 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
-> new file mode 100644
-> index 000000000000..126518863eea
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
-> @@ -0,0 +1,102 @@
-> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/arm,coresight-dummy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: ARM Coresight Dummy component
-> +
-> +description: |
-> +  Coresight Dummy Trace Module is for the specific devices that kernel
-> +  don't have permission to access or configure, e.g., CoreSight TPDMs
-> +  on Qualcomm platforms. So there need driver to register dummy devices
-> +  as Coresight devices. It may also be used to define components that
-> +  may not have any programming interfaces (e.g, static links), so that
-> +  paths can be established in the driver. Provide Coresight API for
-> +  dummy device operations, such as enabling and disabling dummy devices.
-> +  Build the Coresight path for dummy sink or dummy source for debugging.
-> +
-> +  The primary use case of the coresight dummy is to build path in kernel
-> +  side for dummy sink and dummy source.
-> +
-> +maintainers:
-> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> +  - Tao Zhang <quic_taozha@quicinc.com>
-> +  - Hao Zhang <quic_hazha@quicinc.com>
-> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> +
-> +properties:
-> +  compatible:
-> +    items:
+* About *
 
-You were asked to drop oneOf, not to replace with items. Drop items.
-Drop oneOf. It's just enum.
+The Qualcomm SDM845 SoC has a separate SLPI (Sensor Low Power Island)
+DSP for sensors connected to the SoC which is responsible for exposing
+sensors to userspace, power saving, and other features. 
+While sensors are connected to GPIOs of the SoC, they cannot be used
+because the hypervisor blocks direct access to the sensors, thus the 
+DSP must be used to access any sensor on this SoC. The SLPI DSP uses a
+GLink edge (dsps) to communicate with the host and has a FastRPC interface
+to load files from the host filesystem such as sensor configuration files.
+The FastRPC interface does not use regular FastRPC Compute Banks
+but instead uses an allocated CMA region through which communication happens.
 
-> +      - enum:
-> +          - arm,coresight-dummy-sink
-> +          - arm,coresight-dummy-source
-> +
-> +  out-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    properties:
-> +      port:
-> +        description: Output connection from the source to Coresight
-> +          Trace bus.
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +  in-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    properties:
-> +      port:
-> +        description: Input connection from the Coresight Trace bus to
-> +          dummy sink, such as Embedded USB debugger(EUD).
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +
-> +if:
-> +  # If the compatible contains the below value
-> +  properties:
-> +    compatible:
-> +      contains:
-> +        const: arm,coresight-dummy-sink
-> +
-> +then:
-> +  required:
-> +    - in-ports
-> +
-> +else:
-> +  required:
-> +    - out-ports
+* Changes *
 
-No improvements. Implement Rob's comments.
+This patchseries add support to the FastRPC for assigning a coherent memory
+region to a DSP via the hypervisor with the correct permissions.
+This is necessary to support the SLPI found in the Qualcomm SDM845 SoC which
+does not have dedicated FastRPC Compute Banks, in contrast to newer SoCs,
+but uses a memory region instead when allocating buffers.
 
-Best regards,
-Krzysztof
+* Related patches *
+
+1. Remoteproc changes to support the SLPI DSP in SDM845 (v3), needs to be applied:
+https://lore.kernel.org/linux-remoteproc/20230330164633.117335-1-me@dylanvanassche.be
+2. DTS changes (v5), already applied:
+https://lore.kernel.org/linux-devicetree/20230406173148.28309-1-me@dylanvanassche.be
+
+This serie does not depend on any serie, but all of them are necessary
+to enable the feature in the end.
+
+* Changelog *
+
+Changes in v3:
+- Dropped debug prints.
+- Added Reviewed-By tags from v2.
+
+Changes in v2:
+
+- Removed double blank lines
+- Dropped dt-bindings property as it is not needed for driver behavior
+- Add additional patch to allocate buffers via CMA memory for DSPs
+  without dedicated FastRPC Compute Banks.
+
+Kind regards,
+Dylan Van Assche
+
+Dylan Van Assche (2):
+  misc: fastrpc: support complete DMA pool access to the DSP
+  misc: fastrpc: use coherent pool for untranslated Compute Banks
+
+ drivers/misc/fastrpc.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+-- 
+2.40.1
 
