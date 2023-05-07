@@ -2,140 +2,207 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FD3E6F9B82
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 22:28:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CC6B6F9B8C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 22:31:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231301AbjEGU2w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 16:28:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37460 "EHLO
+        id S232060AbjEGUbF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 16:31:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232062AbjEGU2u (ORCPT
+        with ESMTP id S231861AbjEGUbE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 16:28:50 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B8A64201
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 13:28:46 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac80da3443so43371731fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 13:28:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683491325; x=1686083325;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2hbb+Gw2CW/HbmhZliVRpGRsPwJqaiAgOusSFBwss6U=;
-        b=LhaHy5o46LDizECgcW3NDO4ChoSF+jVfMHWkOM6/9BLz/LjpwWu1wRhV5eb0xUgLSG
-         JI8Ccfl93neNJMCQ+XFFnHfFG/6wFxCCOccFEWLkDwI3Rj8vJCPGjlmQmvkeqk6WIvyC
-         N5GFuGUe7XyMYCMXXEiqsXPdeeOg7XDR832jeoW3fyzLkv/CS2Rq2ukfGF4srAo2GKaF
-         sPDPHNjtjCwc6Ydt5cojWEYd/iaj81rZrB5+HKEp3ETo0z/mnpsqWh9yhh84zfmL0sjg
-         XKofPsBUmBs46Jcg069/JykjrvHRpNAW6aMtUv6qzSZc89jYxyjHdltnTUeJ97q3ZqSN
-         Duww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683491325; x=1686083325;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2hbb+Gw2CW/HbmhZliVRpGRsPwJqaiAgOusSFBwss6U=;
-        b=jRvfK3FXKuXmj7Iw+38yN/WDSHIo0h+MjqFdX7D743dhQUx96NU9vy8SiUkMSG0V6e
-         vPCQWm7XV88TYrKaWINziMCXtTEMMyAD5PwdRPnkxfg4WtYMebw1Sn0aEr0p4xCeLV6b
-         j2tA8QTHr9QWU+A9RF/5/AOTYKkX8Jd+/AhJGbaOsDeU7v6lol/bID0JJ72jtpoEL9ZB
-         B4GXZa78NZ4YhCw/8XAvZD9+Xz8nGQjss9zS9lvtTgiuwM7MhpugeTrrmUqTPZ7LunkE
-         7lAIt6Tb3LP+eCVbWvVbFcIYIHf4ntTq+yzvPuF8SfzMILt87fHaRgTfu1tQRCm4b5rw
-         Dusg==
-X-Gm-Message-State: AC+VfDz/YmQY+oivNu5TNSSjqr5cJlSqXmo26aNXl/K3WhSmkUCAvnU1
-        h0AzpfivWgMwcDb1KE4lt4ipwg==
-X-Google-Smtp-Source: ACHHUZ7Yw1Dh/Uvxhe8otO9aoqhqpF2X2SkGV+rxNZnajmiPKx/Poiv2C2uF++k1Fio/WtE+SkwuOA==
-X-Received: by 2002:a2e:938c:0:b0:2a7:6fee:2503 with SMTP id g12-20020a2e938c000000b002a76fee2503mr2221516ljh.14.1683491324878;
-        Sun, 07 May 2023 13:28:44 -0700 (PDT)
-Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id f25-20020a2e9199000000b002a8bb52d994sm928043ljg.25.2023.05.07.13.28.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 May 2023 13:28:44 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        Sun, 7 May 2023 16:31:04 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61AE335BF;
+        Sun,  7 May 2023 13:31:03 -0700 (PDT)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id CA3DBCC041;
+        Sun,  7 May 2023 20:31:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1683491461; bh=MIZ1vBEG5eV2XQXddU637jFQ3/w6ZYtze5ewofEx6BE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=MYo9ayUyC5MRGY0rOvExJK8SX4oCSmhf/DJt+aUk3FnSbFNu6UUDNz1hfgTQJU5+8
+         34xi1SPDGuRDhBR8Hr5ZEnQc0Nz4wIU2zUymxIzSMVXOeT2X5+LrIr+GKhrOtJluVU
+         1yHL5T9jL7QHjQ+tZWBT/RRHTJoi6fjH4jHZaXS0=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [RFC PATCH v1 3/3] ARM: dts: qcom: apq8074-dragonboard: enable HDMI output
-Date:   Sun,  7 May 2023 23:28:41 +0300
-Message-Id: <20230507202841.2339127-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230507202841.2339127-1-dmitry.baryshkov@linaro.org>
-References: <20230507202841.2339127-1-dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
+Subject: Re: [PATCH 5/6] ARM: dts: msm8226: Add tsens node and related nvmem cells
+Date:   Sun, 07 May 2023 22:31:01 +0200
+Message-ID: <2503068.irdbgypaU6@z3ntu.xyz>
+In-Reply-To: <20230507201225.89694-6-matti.lehtimaki@gmail.com>
+References: <20230507201225.89694-1-matti.lehtimaki@gmail.com>
+ <20230507201225.89694-6-matti.lehtimaki@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable HDMI output on the APQ8074 dragonboard device.
+On Sonntag, 7. Mai 2023 22:12:23 CEST Matti Lehtim=E4ki wrote:
+> Specify pre-parsed per-sensor calibration nvmem cells in the qfprom
+> device node rather than parsing the whole data blob in the driver.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 30 +++++++++++++++++++
- 1 file changed, 30 insertions(+)
+I haven't double checked all the qfprom offsets but since you verified it
+twice on your side, I believe you ;)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 72f7e09a5bbf..850427bd2f82 100644
---- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -20,6 +20,18 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	hdmi-out {
-+		compatible = "hdmi-connector";
-+		hdmi-pwr-supply = <&pm8941_5vs2>;
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&mdss_hdmi_out>;
-+			};
-+		};
-+	};
-+
- 	reserved-memory {
- 		mpss_region: mpss@ac00000 {
- 			reg = <0x0ac00000 0x2500000>;
-@@ -90,6 +102,24 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_hdmi {
-+	core-vdda-supply = <&pm8941_l12>;
-+	core-vcc-supply = <&pm8941_s3>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_hdmi_out {
-+	remote-endpoint = <&hdmi_con>;
-+};
-+
-+&mdss_hdmi_phy {
-+	core-vdda-supply = <&pm8941_l12>;
-+	vddio-supply = <&pm8941_l12>;
-+
-+	status = "okay";
-+};
-+
- &pm8941_wled {
- 	qcom,cs-out;
- 	qcom,switching-freq = <3200>;
--- 
-2.39.2
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
+
+>=20
+> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+> ---
+>  arch/arm/boot/dts/qcom-msm8226.dtsi | 113 ++++++++++++++++++++++++++++
+>  1 file changed, 113 insertions(+)
+>=20
+> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi
+> b/arch/arm/boot/dts/qcom-msm8226.dtsi index c34b8f3139ae..a0c3d25eea65
+> 100644
+> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
+> @@ -500,6 +500,34 @@ data-pins {
+>  			};
+>  		};
+>=20
+> +		tsens: thermal-sensor@fc4a9000 {
+> +			compatible =3D "qcom,msm8226-tsens", "qcom,tsens-v0_1";
+> +			reg =3D <0xfc4a9000 0x1000>, /* TM */
+> +			      <0xfc4a8000 0x1000>; /* SROT */
+> +			nvmem-cells =3D <&tsens_mode>,
+> +				      <&tsens_base1>, <&tsens_base2>,
+> +				      <&tsens_s0_p1>, <&tsens_s0_p2>,
+> +				      <&tsens_s1_p1>, <&tsens_s1_p2>,
+> +				      <&tsens_s2_p1>, <&tsens_s2_p2>,
+> +				      <&tsens_s3_p1>, <&tsens_s3_p2>,
+> +				      <&tsens_s4_p1>, <&tsens_s4_p2>,
+> +				      <&tsens_s5_p1>, <&tsens_s5_p2>,
+> +				      <&tsens_s6_p1>, <&tsens_s6_p2>;
+> +			nvmem-cell-names =3D "mode",
+> +					   "base1", "base2",
+> +					   "s0_p1", "s0_p2",
+> +					   "s1_p1", "s1_p2",
+> +					   "s2_p1", "s2_p2",
+> +					   "s3_p1", "s3_p2",
+> +					   "s4_p1", "s4_p2",
+> +					   "s5_p1", "s5_p2",
+> +					   "s6_p1", "s6_p2";
+> +			#qcom,sensors =3D <6>;
+> +			interrupts =3D <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names =3D "uplow";
+> +			#thermal-sensor-cells =3D <1>;
+> +		};
+> +
+>  		restart@fc4ab000 {
+>  			compatible =3D "qcom,pshold";
+>  			reg =3D <0xfc4ab000 0x4>;
+> @@ -510,6 +538,91 @@ qfprom: qfprom@fc4bc000 {
+>  			reg =3D <0xfc4bc000 0x1000>;
+>  			#address-cells =3D <1>;
+>  			#size-cells =3D <1>;
+> +
+> +			tsens_base1: base1@1c1 {
+> +				reg =3D <0x1c1 0x2>;
+> +				bits =3D <5 8>;
+> +			};
+> +
+> +			tsens_s0_p1: s0-p1@1c2 {
+> +				reg =3D <0x1c2 0x2>;
+> +				bits =3D <5 6>;
+> +			};
+> +
+> +			tsens_s1_p1: s1-p1@1c4 {
+> +				reg =3D <0x1c4 0x1>;
+> +				bits =3D <0 6>;
+> +			};
+> +
+> +			tsens_s2_p1: s2-p1@1c4 {
+> +				reg =3D <0x1c4 0x2>;
+> +				bits =3D <6 6>;
+> +			};
+> +
+> +			tsens_s3_p1: s3-p1@1c5 {
+> +				reg =3D <0x1c5 0x2>;
+> +				bits =3D <4 6>;
+> +			};
+> +
+> +			tsens_s4_p1: s4-p1@1c6 {
+> +				reg =3D <0x1c6 0x1>;
+> +				bits =3D <2 6>;
+> +			};
+> +
+> +			tsens_s5_p1: s5-p1@1c7 {
+> +				reg =3D <0x1c7 0x1>;
+> +				bits =3D <0 6>;
+> +			};
+> +
+> +			tsens_s6_p1: s6-p1@1ca {
+> +				reg =3D <0x1ca 0x2>;
+> +				bits =3D <4 6>;
+> +			};
+> +
+> +			tsens_base2: base2@1cc {
+> +				reg =3D <0x1cc 0x1>;
+> +				bits =3D <0 8>;
+> +			};
+> +
+> +			tsens_s0_p2: s0-p2@1cd {
+> +				reg =3D <0x1cd 0x1>;
+> +				bits =3D <0 6>;
+> +			};
+> +
+> +			tsens_s1_p2: s1-p2@1cd {
+> +				reg =3D <0x1cd 0x2>;
+> +				bits =3D <6 6>;
+> +			};
+> +
+> +			tsens_s2_p2: s2-p2@1ce {
+> +				reg =3D <0x1ce 0x2>;
+> +				bits =3D <4 6>;
+> +			};
+> +
+> +			tsens_s3_p2: s3-p2@1cf {
+> +				reg =3D <0x1cf 0x1>;
+> +				bits =3D <2 6>;
+> +			};
+> +
+> +			tsens_s4_p2: s4-p2@446 {
+> +				reg =3D <0x446 0x2>;
+> +				bits =3D <4 6>;
+> +			};
+> +
+> +			tsens_s5_p2: s5-p2@447 {
+> +				reg =3D <0x447 0x1>;
+> +				bits =3D <2 6>;
+> +			};
+> +
+> +			tsens_s6_p2: s6-p2@44e {
+> +				reg =3D <0x44e 0x1>;
+> +				bits =3D <1 6>;
+> +			};
+> +
+> +			tsens_mode: mode@44f {
+> +				reg =3D <0x44f 0x1>;
+> +				bits =3D <5 3>;
+> +			};
+>  		};
+>=20
+>  		spmi_bus: spmi@fc4cf000 {
+
+
+
 
