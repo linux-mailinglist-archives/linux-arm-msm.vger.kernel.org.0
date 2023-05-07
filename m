@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E9B86F9B11
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 21:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D5076F9B15
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 21:07:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230099AbjEGTHr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 15:07:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49922 "EHLO
+        id S231644AbjEGTHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 15:07:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230231AbjEGTHp (ORCPT
+        with ESMTP id S231543AbjEGTHq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 15:07:45 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78CF6359C
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 12:07:41 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so4288805e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 12:07:41 -0700 (PDT)
+        Sun, 7 May 2023 15:07:46 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BC735A4
+        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 12:07:42 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f14ec8d72aso2193492e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 12:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683486459; x=1686078459;
+        d=linaro.org; s=google; t=1683486460; x=1686078460;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RSq41UJRxM1Id04+5Bgr5nBkxb99E6+NG+r6r99Xdss=;
-        b=X2UPItrb69Iq2LW98ux7h+6Hr+2d7mH9vholzNqwX/ReqBihFSjzMFZMLxdSBnjwRn
-         1MC5k+sVCusWvTy3FtDGBdNAUqAKG1J/vbflMPMxaiVeWzr482mKTE7pedT4iKGzzF+k
-         K16qIkQ7L4QVvpPa5RvP4vUSzzxRX0rw3XvUidbo64zkaU0OT/K9inIMWZniJ6vjtkIG
-         +TsO/ZAhgNNIDOTIYlJUITc1NEbtaVxCESojBI5/SMabVAgbKGDd3dnSQVVrx+vEA/XO
-         JsxZkCeJX/5K34pK38rz0nlign9+9VX4iISp984hyYQ4SpBxA/0oCUEf3iJ/cZh544Ww
-         Jo5Q==
+        bh=wt+EbN0hwDOiIGnoCwwD0C5MozLHDgMBCyuph5K3wf4=;
+        b=XrhwPCUVXiDVuU/7M84RcriDD+kkz65HdTllc39o/O6IRoRtUaqVF/+7t0SlXrmweS
+         DY7owPJNuDzyZIXCnohLrS6jY77jSoD4eOEvFv9KLAHjwYX+znLCtRGf/+nF9+NNXnsU
+         2S4gD9obfIDG0G5mVh+j1+4RZIFa8CzOKNBaMs1Dpp5WcgLPLWqrlBFxMgi8ruoqjOVM
+         S+k/nZtJqKg6E+/Fb1g3h6YY/tsf/RZUb8sHn4+EQjM/ptlPVbhehP47TKgNuQMBDPld
+         31ojuS4RlEMUVh67KgoO10SuRDLA3NX4flmLUSnN9gpMN7Mwmus02fdkbTb3vaVwtQ1d
+         JvWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683486459; x=1686078459;
+        d=1e100.net; s=20221208; t=1683486460; x=1686078460;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RSq41UJRxM1Id04+5Bgr5nBkxb99E6+NG+r6r99Xdss=;
-        b=YnMXbxYVO3aHeuvFVVLtrbBs0jwUtsnaokbeA5T+qreZukGbbBox0mzWInnzssQXmO
-         RlV09LvGVlTXeUumh+Zz8FkoBgKKtLB8zAb2PIIYIFmFsyLYGGwngTzaTex2kWsbO3vD
-         ERetwan1RoTdEv0JQn0GUuIvnQJtpl/0LwJJzi5uYjpTPqjz7ToC8kvIfDI4UQzLOPja
-         Wma6ZQBhOSl+DELgRFjLKEaI2PwjJBbkwbqn9wOjmC+/bghzFqfnSkOEB41l7klxfhEz
-         gd3Vd2dof5clpICpGYYJk8tktJhqsVYb3BvUvlXKhYN1df+OiCLEtg/LoiodZcrGH52J
-         77og==
-X-Gm-Message-State: AC+VfDzVy9fZs61dnc/NW4PLGl3O12YSO4FWwuhPkZ/ZKeIZf2a+NYqe
-        tWhvO5OIsoCAzGtZe/sCToDAqw==
-X-Google-Smtp-Source: ACHHUZ4cx4F0q2aBgA1kXEmiFrVY2oIHHctVd/EdZd+fb7DC1OKAWyz6Ls/a/OeQXeq5q1HFrW+jXQ==
-X-Received: by 2002:ac2:5542:0:b0:4ec:9e63:6144 with SMTP id l2-20020ac25542000000b004ec9e636144mr1690875lfk.42.1683486459550;
-        Sun, 07 May 2023 12:07:39 -0700 (PDT)
+        bh=wt+EbN0hwDOiIGnoCwwD0C5MozLHDgMBCyuph5K3wf4=;
+        b=BownbB4AS2sOkJKDqIwLF0PDJfc9/a0rxZCl1phQFHNmoxYd/hvq6JtpNYP33q2RS6
+         /q0SNiMXVLg3slfwCLbrC5BSx8gmv5Wr/JE72rz5gHA9ivIBNTtgtNCD5yjODHLZcDtH
+         mriqRfGBlqP+kg6DHOUv/Ghss5cViOdyluu2mtGxt4QxV2BcpaysDstNJOgad6l6S6AV
+         F+sveqdJtngAtyiA4EVbxgYb58WqchrlUGQI+p5Sc0fcW/WJqaO17+pOJs97Ldu/B9kX
+         18XrW9WY/oh6WKL8xGH/Hoq7mZdKGLEnTKGINh8FbLcC2kk6CkgFSIALqDqMXfbX2juu
+         p1AA==
+X-Gm-Message-State: AC+VfDxlMka0HfQghKvXkf6wndlF7gy9YKJedaxzbTiGk0PTRsOORCts
+        vdVqWqNrqJN0ykY316nL3vIh3A==
+X-Google-Smtp-Source: ACHHUZ4HTHySU0+5n1d7HinlNa8FFLgd4USGZRm896mhh/4Ct2YmMYGFo40o7zNESd/6HpO2yCYeIg==
+X-Received: by 2002:ac2:4907:0:b0:4ee:d8f3:1398 with SMTP id n7-20020ac24907000000b004eed8f31398mr1906642lfi.68.1683486460339;
+        Sun, 07 May 2023 12:07:40 -0700 (PDT)
 Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id f8-20020a19ae08000000b004f14ecc03f1sm755841lfc.100.2023.05.07.12.07.38
+        by smtp.gmail.com with ESMTPSA id f8-20020a19ae08000000b004f14ecc03f1sm755841lfc.100.2023.05.07.12.07.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 07 May 2023 12:07:39 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -63,9 +63,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 3/4] ARM: dts: qcom: apq8074-dragonboard: enable adsp and MSS
-Date:   Sun,  7 May 2023 22:07:34 +0300
-Message-Id: <20230507190735.2333145-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 4/4] ARM: dts: qcom: apq8074-dragonboard: enable DSI panel
+Date:   Sun,  7 May 2023 22:07:35 +0300
+Message-Id: <20230507190735.2333145-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230507190735.2333145-1-dmitry.baryshkov@linaro.org>
 References: <20230507190735.2333145-1-dmitry.baryshkov@linaro.org>
@@ -81,73 +81,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable ADSP and Modem DSPs on APQ8074 dragonboard. The MSS region
-differs from the one defined in the msm8974, so it overriden locally.
-
-The modem is specified use mba.mbn instead of mbn.b00 (for the sake of
-similarity with other platforms). This requires a patch for remoteproc
-to be applied [1].
-
-[1] https://lore.kernel.org/all/20230507172041.2320279-1-dmitry.baryshkov@linaro.org/
+Enable MDSS, GPU and DSI panel output on the APQ8074 dragonboard.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 28 +++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 51 +++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 6b047c679370..c893afc00eb4 100644
+index c893afc00eb4..72f7e09a5bbf 100644
 --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
 +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -4,6 +4,8 @@
- #include "qcom-pm8841.dtsi"
- #include "qcom-pm8941.dtsi"
- 
-+/delete-node/ &mpss_region;
-+
- / {
- 	model = "Qualcomm APQ8074 Dragonboard";
- 	compatible = "qcom,apq8074-dragonboard", "qcom,apq8074";
-@@ -17,6 +19,13 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
+@@ -48,6 +48,57 @@ eeprom: eeprom@52 {
  	};
+ };
+ 
++&dsi0 {
++	vdda-supply = <&pm8941_l2>;
++	vdd-supply = <&pm8941_l22>;
++	vddio-supply = <&pm8941_l12>;
 +
-+	reserved-memory {
-+		mpss_region: mpss@ac00000 {
-+			reg = <0x0ac00000 0x2500000>;
-+			no-map;
++	status = "okay";
++
++	panel: panel@0 {
++		compatible = "sharp,ls043t1le01-qhd";
++		reg = <0>;
++
++		avdd-supply = <&pm8941_l22>;
++		backlight = <&pm8941_wled>;
++		reset-gpios = <&pm8941_gpios 19 GPIO_ACTIVE_HIGH>;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&dsi0_out>;
++			};
 +		};
 +	};
- };
- 
- &blsp1_uart2 {
-@@ -39,6 +48,25 @@ eeprom: eeprom@52 {
- 	};
- };
- 
-+&remoteproc_adsp {
-+	cx-supply = <&pm8841_s2>;
++};
 +
-+	firmware-name = "qcom/apq8074/adsp.mbn";
++&dsi0_out {
++	remote-endpoint = <&panel_in>;
++	data-lanes = <0 1 2 3>;
++};
++
++&dsi0_phy {
++	status = "okay";
++
++	vddio-supply = <&pm8941_l12>;
++};
++
++&gpu {
++	status = "okay";
++};
++
++&mdss {
++	status = "okay";
++};
++
++&pm8941_wled {
++	qcom,cs-out;
++	qcom,switching-freq = <3200>;
++	qcom,ovp = <32>;
++	qcom,num-strings = <1>;
 +
 +	status = "okay";
 +};
 +
-+&remoteproc_mss {
-+	cx-supply = <&pm8841_s2>;
-+	mss-supply = <&pm8841_s3>;
-+	mx-supply = <&pm8841_s1>;
-+	pll-supply = <&pm8941_l12>;
-+
-+	firmware-name = "qcom/apq8074/mba.mbn", "qcom/apq8074/modem.mbn";
-+
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators-0 {
- 		compatible = "qcom,rpm-pm8841-regulators";
+ &remoteproc_adsp {
+ 	cx-supply = <&pm8841_s2>;
+ 
 -- 
 2.39.2
 
