@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 221726F9990
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 18:00:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F0196F9996
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 18:07:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjEGQAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 12:00:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43348 "EHLO
+        id S230415AbjEGQG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 12:06:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjEGQAr (ORCPT
+        with ESMTP id S229472AbjEGQG6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 12:00:47 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 540D811639
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 09:00:46 -0700 (PDT)
+        Sun, 7 May 2023 12:06:58 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29CF88A4C;
+        Sun,  7 May 2023 09:06:49 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2C4803F1C4;
-        Sun,  7 May 2023 18:00:44 +0200 (CEST)
-Date:   Sun, 7 May 2023 18:00:42 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 248A23F1F3;
+        Sun,  7 May 2023 18:06:46 +0200 (CEST)
+Date:   Sun, 7 May 2023 18:06:44 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     Rob Clark <robdclark@gmail.com>,
@@ -32,16 +32,15 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature
- flag
-Message-ID: <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
+Subject: Re: [PATCH v2 4/4] drm/msm/dpu: Set DATA_COMPRESS for command mode
+Message-ID: <j5wa45g4v6swvsiakl23azu7qgxtdllf2gav5wdc7s7zukxe4c@jkcu2wnyn6rn>
 References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
- <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
+ <20230405-add-dsc-support-v2-4-1072c70e9786@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+In-Reply-To: <20230405-add-dsc-support-v2-4-1072c70e9786@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -50,81 +49,112 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-05 14:23:50, Jessica Zhang wrote:
-> Add DATA_COMPRESS feature flag to DPU INTF block.
+On 2023-05-05 14:23:51, Jessica Zhang wrote:
+> Add a DPU INTF op to set DATA_COMPRESS register for command mode panels if
+> the DPU_INTF_DATA_COMPRESS feature flag is set. This flag needs to be
+> enabled in order for DSC v1.2 to work.
 > 
-> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
-> PINGPONG to INTF.
-> 
-> As core_rev (and related macros) was removed from the dpu_kms struct, the
-> most straightforward way to indicate the presence of this register would be
-> to have a feature flag.
+> Note: These changes are for command mode only. Video mode changes will
+> be posted along with the DSC v1.2 support for DP.
 
-Irrelevant.  Even though core_rev was still in mainline until recently,
-we always hardcoded the features in the catalog and only used core_rev
-to select a dpu_mdss_cfg catalog entry.  There is no "if version >= X
-then enable feature Y" logic, this manually-enabled feature flag is the
-only, correct way to do it.
+Nit: the "command mode" parts of both paragraphs only apply to the call
+in dpu_encoder_phys_cmd, right?  If so, and the INTF op remains the same
+for video mode (but only the call needs to be added to the
+dpu_encoder_phy_vid), make this a bit more clear in your commit message.
 
 > Changes in v2:
-> - Changed has_data_compress dpu_cap to a DATA_COMPRESS INTF feature flag
+> - Fixed whitespace issue in macro definition
+> - Read INTF_CONFIG2 before writing to DATA_COMPRESS bit
+> - Only set dpu_hw_intf_ops.data_compress if DATA_COMPRESS feature is set
+> - Removed `inline` from dpu_hw_intf_enable_compression declaration
 > 
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
->  2 files changed, 3 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 11 +++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  2 ++
+>  3 files changed, 16 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 7944481d0a33..c74051906d05 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -104,7 +104,7 @@
->  #define INTF_SC7180_MASK \
->  	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index d8ed85a238af..1a4c20f02312 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -68,6 +68,9 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+>  				phys_enc->hw_intf,
+>  				true,
+>  				phys_enc->hw_pp->idx);
+> +
+> +	if (phys_enc->hw_intf->ops.enable_compression)
+> +		phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
+>  }
 >  
-> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
-> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS)
+>  static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> index 6485500eedb8..322c55a5042c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> @@ -91,6 +91,14 @@
+>  
+>  #define INTF_CFG2_DATABUS_WIDEN	BIT(0)
+>  #define INTF_CFG2_DATA_HCTL_EN	BIT(4)
+> +#define INTF_CFG2_DCE_DATA_COMPRESS     BIT(12)
+> +
+> +static void dpu_hw_intf_enable_compression(struct dpu_hw_intf *ctx)
+> +{
+> +	u32 intf_cfg2 = DPU_REG_READ(&ctx->hw, INTF_CONFIG2);
+> +
+> +	DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2 | INTF_CFG2_DCE_DATA_COMPRESS);
 
-Konrad: Your SM6350/SM6375 series v3 [1] switched from INTF_SC7180_MASK
-to INTF_SC7280_MASK to enable HCTL on SM6375, but that will now
-erroneously also receive this feature flag and write the new
-DATA_COMPESS mask even if it's DPU 6.9 (< 7.x where it got added).
+I'm not sure if it's more idiomatic to write:
 
-[1]: https://lore.kernel.org/linux-arm-msm/80b46fcb-d6d0-1998-c273-5401fa924c7d@linaro.org/T/#u
+    intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
 
-Depending on who lands first, this flag should be split.
+On a separate line.
 
-I still see value in inlining and removing these defines, though that
-brings a host of other complexity.
+> +}
+
+Move the function close to the bottom of this file.  Right now all the
+functions are defined approximately in the same order as they're listed
+in the header and assigned in _setup_intf_ops().
+
+>  
+>  static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+>  		const struct intf_timing_params *p,
+> @@ -542,6 +550,9 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
+>  		ops->vsync_sel = dpu_hw_intf_vsync_sel;
+>  		ops->disable_autorefresh = dpu_hw_intf_disable_autorefresh;
+>  	}
+> +
+> +	if (cap & BIT(DPU_INTF_DATA_COMPRESS))
+> +		ops->enable_compression = dpu_hw_intf_enable_compression;
+>  }
+>  
+>  struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> index 73b0885918f8..a8def68a5ec2 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> @@ -70,6 +70,7 @@ struct intf_status {
+>   * @get_autorefresh:            Retrieve autorefresh config from hardware
+>   *                              Return: 0 on success, -ETIMEDOUT on timeout
+>   * @vsync_sel:                  Select vsync signal for tear-effect configuration
+> + * @enable_compression: Enable data compression
+
+Indent to match above.
 
 - Marijn
 
->  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
->  			 BIT(DPU_WB_UBWC) | \
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 4eda2cc847ef..01c65f940f2a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -185,6 +185,7 @@ enum {
->   * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
->   *                                  than video timing
->   * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
-> + * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
->   * @DPU_INTF_MAX
 >   */
->  enum {
-> @@ -192,6 +193,7 @@ enum {
->  	DPU_INTF_TE,
->  	DPU_DATA_HCTL_EN,
->  	DPU_INTF_STATUS_SUPPORTED,
-> +	DPU_INTF_DATA_COMPRESS,
->  	DPU_INTF_MAX
+>  struct dpu_hw_intf_ops {
+>  	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
+> @@ -107,6 +108,7 @@ struct dpu_hw_intf_ops {
+>  	 * Disable autorefresh if enabled
+>  	 */
+>  	void (*disable_autorefresh)(struct dpu_hw_intf *intf, uint32_t encoder_id, u16 vdisplay);
+> +	void (*enable_compression)(struct dpu_hw_intf *intf);
 >  };
 >  
+>  struct dpu_hw_intf {
 > 
 > -- 
 > 2.40.1
