@@ -2,103 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D4686F9981
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 17:48:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 221726F9990
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 18:00:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231654AbjEGPsN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 11:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
+        id S230133AbjEGQAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 12:00:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230231AbjEGPsM (ORCPT
+        with ESMTP id S229472AbjEGQAr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 11:48:12 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E053C03
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 08:48:10 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f139de8cefso23745449e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 08:48:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683474489; x=1686066489;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dvd1wcddDnuI8xDMHy/JBREKoiCmgw2+qPFLe3kD+Sg=;
-        b=kPqgPO0uNRT4ln/P6yjXt/YWIChqAu/dBpyVcn9fV1c3TZDmGMfXsJ1G1Y/95+CIkN
-         8JaB6Ipky4BWZrsTGvdotbye3LnqrBX0BDzSFMXNl0UEg41EFtkxY65qA4waV8r9YzrN
-         ja+NnGW2j1K0OCne9r5fPNqqOBmkfIP4jyz05bW6SV/rGrbagGKuQd/YB5Q7b9DkUrTM
-         ICcsEtGBmNIlLIuw5RuOd3+hgmDdBI8gfl8XW5/RrmsEpbdTOS9CBozFpcgXrzhbpOPU
-         EquZCNJuBI7kvLafbx5RfZtvgaIVpdn9rj7kNyXUHXs2AUN3MtpKtKHQ28K6pw2unpd5
-         I6yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683474489; x=1686066489;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dvd1wcddDnuI8xDMHy/JBREKoiCmgw2+qPFLe3kD+Sg=;
-        b=f1ezaArX8IYxjJiltKijbv6Q5Sx6UHCnzUsTiNs+VGpYVOvNlF5tOIUIYZkGSNDsp6
-         UpvN7caq4+Z/ozpa372tQaXCXtpEPuhqxV8vZeYVjpkheyPB/CY2ipKK69HlUm385vpK
-         0wMj/8ZGkE/VU8x6LmFvJ64M+4lra3Ar8EUK75HvW4ell0cYriqzDv0DceopLKfygL7I
-         b4bQQpF2Mb4CO+RkJzR2zc1bhe+P0wDtQR6GATond6xfloS/kCYUeE0cvnB70CyX8Lm5
-         76LANCVXigkYfTX1xIRZ/SPTbKuHwHdTwwLkaoHwuX2zoM+CKMNgHJerqWCPLPOpZ8si
-         xWJw==
-X-Gm-Message-State: AC+VfDwFhE1CNkRZDhUz+JRBKVYIS0PieIwhBFfDzh8dHBFweLIt0jmk
-        eSOUzoJHbEq9ZtTssNewfbMJ94bJqHOrp41bUHI=
-X-Google-Smtp-Source: ACHHUZ5OQ5tsRZMNgmjb1yUX5x0EN64JfrmwXl9OXuRV+QiEwE1vlP14Rp4K5Z2azPwAMwTiWuLYig==
-X-Received: by 2002:ac2:5215:0:b0:4ef:d567:4854 with SMTP id a21-20020ac25215000000b004efd5674854mr1811635lfl.11.1683474488883;
-        Sun, 07 May 2023 08:48:08 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id u17-20020ac243d1000000b004b40c1f1c70sm1014163lfl.212.2023.05.07.08.48.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 May 2023 08:48:08 -0700 (PDT)
-Message-ID: <de242c1a-9717-ad79-2ed5-7b73cf66f5e2@linaro.org>
-Date:   Sun, 7 May 2023 18:48:07 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH RESEND v3 4/5] iio: adc: qcom-spmi-adc5: Remove
- unnecessary datasheet_name NULL check
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        Sun, 7 May 2023 12:00:47 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 540D811639
+        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 09:00:46 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 2C4803F1C4;
+        Sun,  7 May 2023 18:00:44 +0200 (CEST)
+Date:   Sun, 7 May 2023 18:00:42 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230502-iio-adc-propagate-fw-node-label-v3-0-6be5db6e6b5a@somainline.org>
- <20230502-iio-adc-propagate-fw-node-label-v3-4-6be5db6e6b5a@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230502-iio-adc-propagate-fw-node-label-v3-4-6be5db6e6b5a@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature
+ flag
+Message-ID: <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
+References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
+ <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2023 02:17, Marijn Suijten wrote:
-> datasheet_name is statically filled by a macro for every channel, and is
-> nor should ever be set to NULL.
+On 2023-05-05 14:23:50, Jessica Zhang wrote:
+> Add DATA_COMPRESS feature flag to DPU INTF block.
 > 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
+> PINGPONG to INTF.
+> 
+> As core_rev (and related macros) was removed from the dpu_kms struct, the
+> most straightforward way to indicate the presence of this register would be
+> to have a feature flag.
+
+Irrelevant.  Even though core_rev was still in mainline until recently,
+we always hardcoded the features in the catalog and only used core_rev
+to select a dpu_mdss_cfg catalog entry.  There is no "if version >= X
+then enable feature Y" logic, this manually-enabled feature flag is the
+only, correct way to do it.
+
+> Changes in v2:
+> - Changed has_data_compress dpu_cap to a DATA_COMPRESS INTF feature flag
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
 > ---
->   drivers/iio/adc/qcom-spmi-adc5.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 7944481d0a33..c74051906d05 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -104,7 +104,7 @@
+>  #define INTF_SC7180_MASK \
+>  	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+>  
+> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Konrad: Your SM6350/SM6375 series v3 [1] switched from INTF_SC7180_MASK
+to INTF_SC7280_MASK to enable HCTL on SM6375, but that will now
+erroneously also receive this feature flag and write the new
+DATA_COMPESS mask even if it's DPU 6.9 (< 7.x where it got added).
 
--- 
-With best wishes
-Dmitry
+[1]: https://lore.kernel.org/linux-arm-msm/80b46fcb-d6d0-1998-c273-5401fa924c7d@linaro.org/T/#u
 
+Depending on who lands first, this flag should be split.
+
+I still see value in inlining and removing these defines, though that
+brings a host of other complexity.
+
+- Marijn
+
+>  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
+>  			 BIT(DPU_WB_UBWC) | \
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 4eda2cc847ef..01c65f940f2a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -185,6 +185,7 @@ enum {
+>   * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
+>   *                                  than video timing
+>   * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
+> + * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
+>   * @DPU_INTF_MAX
+>   */
+>  enum {
+> @@ -192,6 +193,7 @@ enum {
+>  	DPU_INTF_TE,
+>  	DPU_DATA_HCTL_EN,
+>  	DPU_INTF_STATUS_SUPPORTED,
+> +	DPU_INTF_DATA_COMPRESS,
+>  	DPU_INTF_MAX
+>  };
+>  
+> 
+> -- 
+> 2.40.1
+> 
