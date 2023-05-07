@@ -2,158 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E4746F97A1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 10:20:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 466736F97E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 11:13:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231450AbjEGIUr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 04:20:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56036 "EHLO
+        id S231245AbjEGJNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 05:13:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbjEGIUn (ORCPT
+        with ESMTP id S229980AbjEGJNF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 04:20:43 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2CE414356
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 01:20:41 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9660af2499dso266624566b.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 01:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683447640; x=1686039640;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=boCU+xSxMYiK4ggeuuLGulnjF6pc3jTc885tMRMvfjE=;
-        b=Sx+sVXCayBmfkCFY/ASVa/jlP+pfxJID9GqE233noKlpxuM+5LgkDNXXz2NYFOYun/
-         8FChtAmAhUuvSBvjqE6h+mmFPtW3GUpXd5XtR1rQew/Lj+O4O9IKtb16ay2HAfluUMf4
-         ebPOn8KSeVN2kBAzO0r2b8TyR18KDOKw4wTPj2E7RCviBLs3Lus2eZ8/qiWkhuErG5Um
-         jftrOCBFYl0AZpo/lJZ6exDM+y3YOKmyNh0FCAxheyXwWHWK3jTrjSqmf2rwTXiLzqvc
-         sTHYkPaKddnPsPOpgKva/MizH0bLJR9PrjZct7A7zzgtl5gBz/hLHWNHH9KOmHs08jal
-         y44A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683447640; x=1686039640;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=boCU+xSxMYiK4ggeuuLGulnjF6pc3jTc885tMRMvfjE=;
-        b=fmLyCTJWWYWdEn4gzXntKekPujcjoYljaUjfA15GlSSdwQviJ7AoM5Qexl+IfwyK9H
-         Ko8aKXbhfDMj0s99ISCKT6EfsDOLxABAByRbcpJvSil3qUmmpNy+u8qfaCz1SdcaWhT1
-         CXsws9+SUO1XthXM9G2RnU3WsYuJjoleVJHiwSu0ZzS6yz+KFShXsQUX3seBwaHTd/Cj
-         /v8jvbzYpKZjTw/SeQzKO3DjTmy5KxAWv256KeE/f6j9Ix0aMB0hMiE7XPyV45XDYup9
-         ow/hiEj917PnKMCIwobRVJ+O3Vy8VYM04E5d8f9EDKW13iKh5eV//Dc/9FmmzytE6DW6
-         ylUQ==
-X-Gm-Message-State: AC+VfDxdb99sot5G0AFzcXVNfgusFwOAR6KtG5Y1F112pMNGj79EvUHH
-        fri4bUrKqpC8XdMhEmIZMjMy0VRFrLVHPOwj8ctUKQ==
-X-Google-Smtp-Source: ACHHUZ53kMjs+EfHzqrUSmeU9Q3E0/ZNi4xRtfsZw2slikzelkYYe+A5d4jvZP+RilK7xojyyhHK0w==
-X-Received: by 2002:a17:907:7204:b0:94f:2bd0:4780 with SMTP id dr4-20020a170907720400b0094f2bd04780mr5910245ejc.58.1683447640154;
-        Sun, 07 May 2023 01:20:40 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:183b:950f:b4d5:135a? ([2a02:810d:15c0:828:183b:950f:b4d5:135a])
-        by smtp.gmail.com with ESMTPSA id lc11-20020a170906f90b00b0096637a19dccsm939236ejb.210.2023.05.07.01.20.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 May 2023 01:20:39 -0700 (PDT)
-Message-ID: <4a563d96-ec59-7db3-d288-1ba3bb9d8eb7@linaro.org>
-Date:   Sun, 7 May 2023 10:20:38 +0200
+        Sun, 7 May 2023 05:13:05 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0274F3AB6;
+        Sun,  7 May 2023 02:13:03 -0700 (PDT)
+Received: from [192.168.178.23] (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 44226C70AF;
+        Sun,  7 May 2023 09:13:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1683450781; bh=jvJNwlKthS3/mkOJOwGgF7mnK8b7h/R3pEVKlDmWcPA=;
+        h=From:Subject:Date:To:Cc;
+        b=GTjPS31zvw/UUzBFfUcjZ9AShGiCivevEjcTWd8p+02P2+vBDOomB4G6Rmviw3hN7
+         xSQ4YmDF+J/JWOLWFG23REBeNQ6tSy6CSydVDkqXQz73U/bkaqQrUUtwJgBqLGPwa0
+         8UgyX85Pylzp6F5Pnkxg/PyZoO25vqSMj0TmaYaI=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/6] Add MSM8226 OCMEM support plus some extra OCMEM driver
+ fixes
+Date:   Sun, 07 May 2023 11:12:17 +0200
+Message-Id: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v3 05/12] dt-bindings: display/msm: Add SM6375 MDSS
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHFrV2QC/x2NzQrCMBAGX6Xs2YUk0h98FfGQxE+70KSSRRFK3
+ 71LjzMwzEaKJlC6dRs1/ERlrQb+0lGeY32D5WlMwYWr693ARcsUwsBrLiicAD/2o8eERNakqOD
+ UYs2zVfW7LCY/DS/5n5P7Y98P/JYXA3QAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Brian Masney <masneyb@onstation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev
-References: <20230411-topic-straitlagoon_mdss-v3-0-9837d6b3516d@linaro.org>
- <20230411-topic-straitlagoon_mdss-v3-5-9837d6b3516d@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v3-5-9837d6b3516d@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1099; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=jvJNwlKthS3/mkOJOwGgF7mnK8b7h/R3pEVKlDmWcPA=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkV2t6Rf/j2PCgD+0bT7X74gHOu71WOltn5mXNo
+ 5cDD40Zbk2JAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZFdregAKCRBy2EO4nU3X
+ VmEKD/9crh4orNCRzsbIgSEvhq44x9UsW4USeE7tbH5lsaZLd46lI2VZ7B6zXPg0CCMLTSHrCy+
+ OuLzAUyOLR/JoYfb99lBG9PK4cwPlbW3iu85SG3qGZwOXnlvEFy9gpEskrB+PPo4NUS74HNU7PD
+ LOff5zYo8OYnJbe0HtTn3C+v62okCerz2sTsq7tQRl/Uv7zmtRt0k25PPYqrCBCepwLUyvQlj86
+ izk3WyG/uAoFpGTKlW7nPKMXWYyD1z7UD1HNUqUk4DPvTEWvMSuI2K7AenFAwqw1RUWpXi0PY1i
+ BNqYTgI15GkfBw9GzeYlWFIjk6AkKqETEKtROltmII4nl0I76V4g9bWDoRMQkpZZ+lpZMpDqzDz
+ R551/h9E/oqTJL8OAnekYaBekFKw3ZBmf9m+zAaQdp2BIxQTW6W3rxRcpSkmEn+78CxYxYEgeFE
+ fd9aTaTHjGZ5zEf+HsLUtcMIM36IXTg1f451CfHVWUwsh+Aim/Kvtp7za8n2Jn0L8u3TErKaIG/
+ TQPROP5odqiJ9JibFRvCincZKMcshYUkcsCiQWEzgtkaZ95loD0qfEnFx5Ztir1zhFl5cKb/Ill
+ 3NBxVvNOIMx/8FsqS302yMiuwPWUdM1pRmtdeSW2eiPmxxCPrKwWNTydzKjhhgRG17nXoygWpCp
+ r/ZRNWnk8WwtBWA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/05/2023 23:40, Konrad Dybcio wrote:
-> Document the SM6375 MDSS.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../bindings/display/msm/qcom,sm6375-mdss.yaml     | 216 +++++++++++++++++++++
->  1 file changed, 216 insertions(+)
-> 
+Like MSM8974 the MSM8226 SoC also contains some OCMEM but it has just
+one region for graphics compared to 8974.
 
-Thank you for your patch. There is something to discuss/improve.
+While adding support I found a bug in the existing driver that is being
+fixed in this series also and the rest of the matches are mostly
+preparations for MSM8226 support.
 
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,rpmcc.h>
-> +    #include <dt-bindings/clock/qcom,sm6375-gcc.h>
-> +    #include <dt-bindings/clock/qcom,sm6375-dispcc.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    display-subsystem@5e00000 {
-> +        compatible = "qcom,sm6375-mdss";
-> +        reg = <0x05e00000 0x1000>;
-> +        reg-names = "mdss";
-> +
-> +        power-domains = <&dispcc MDSS_GDSC>;
-> +
-> +        clocks = <&gcc GCC_DISP_AHB_CLK>,
-> +                 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> +        clock-names = "iface", "ahb", "core";
-> +
-> +        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-controller;
-> +        #interrupt-cells = <1>;
-> +
-> +        iommus = <&apps_smmu 0x820 0x2>;
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges;
-> +
-> +        display-controller@5e01000 {
-> +            compatible = "qcom,sm6375-dpu";
-> +            reg = <0x05e01000 0x8e030>,
-> +                  <0x05eb0000 0x2008>;
-> +            reg-names = "mdp", "vbif";
-> +
-> +            clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +                     <&gcc GCC_DISP_HF_AXI_CLK>,
-> +                     <&dispcc DISP_CC_MDSS_MDP_CLK>,
-> +                     <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-> +                     <&dispcc DISP_CC_MDSS_ROT_CLK>,
-> +                     <&dispcc DISP_CC_MDSS_VSYNC_CLK>,
-> +                     <&gcc GCC_DISP_THROTTLE_CORE_CLK>;
-> +            clock-names = "iface",
-> +                          "bus",
-> +                          "core",
-> +                          "lut",
-> +                          "rot",
-> +                          "vsync",
-> +                          "throttle";
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (6):
+      soc: qcom: ocmem: Fix NUM_PORTS & NUM_MACROS macros
+      soc: qcom: ocmem: Use dev_err_probe where appropriate
+      soc: qcom: ocmem: make iface clock optional
+      dt-bindings: sram: qcom,ocmem: Add msm8226 support
+      soc: qcom: ocmem: Add support for msm8226
+      ARM: dts: qcom: msm8226: Add ocmem
 
-Are you sure you have clocks in correct order? I see warnings...
+ .../devicetree/bindings/sram/qcom,ocmem.yaml       |  6 +-
+ arch/arm/boot/dts/qcom-msm8226.dtsi                | 17 ++++++
+ drivers/soc/qcom/ocmem.c                           | 67 ++++++++++++----------
+ 3 files changed, 58 insertions(+), 32 deletions(-)
+---
+base-commit: 2e210278b67c67e76aeefc1a16d18a692d15c847
+change-id: 20230506-msm8226-ocmem-bee17571e8eb
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca@z3ntu.xyz>
 
