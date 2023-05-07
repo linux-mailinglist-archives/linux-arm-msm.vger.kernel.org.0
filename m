@@ -2,98 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A734D6F9BB5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 23:11:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF07B6F9BE8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 23:25:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231301AbjEGVLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 17:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45618 "EHLO
+        id S230099AbjEGVZx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 17:25:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbjEGVLe (ORCPT
+        with ESMTP id S231863AbjEGVZw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 17:11:34 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DBE5100F2;
-        Sun,  7 May 2023 14:11:33 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ac7707e34fso44529741fa.1;
-        Sun, 07 May 2023 14:11:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683493891; x=1686085891;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NQ4wLJjYk0xbWAICQf5Qqk2+0cmn7o5zLqWACRjv/RE=;
-        b=XuQRMcRHAXVeRo/tjDPQEDrxwmyqSS8ATManSb8DXaEINhjOuaQ+3a8BrPAXc/ZiKE
-         2vFKPoFrwa7vaQ/oBTM6G7CH3BSucIiGohszbMCCwPO8LM6p7vB6P15rwwHP0Y9ezaK3
-         m6JORm22/vbsK3+0I+rllafMb3Z6y0q+W7MttMqADkRiMvAUaus91WN13wjocVkbSc87
-         QPA4XpUs49uUFhoVRtZcyaKleyLJ7JJVAc9jxlowJifbnR1rymolFqwLRZwcpB69riHN
-         HE4MMKrFt03Sc6Sg0tFlKAch22enSc6taV+6HzM5p/IYqNDnmtpID6/2CJz/+GAkyAbL
-         mWSA==
+        Sun, 7 May 2023 17:25:52 -0400
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCB5118C;
+        Sun,  7 May 2023 14:25:50 -0700 (PDT)
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1929818d7faso28259083fac.0;
+        Sun, 07 May 2023 14:25:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683493891; x=1686085891;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NQ4wLJjYk0xbWAICQf5Qqk2+0cmn7o5zLqWACRjv/RE=;
-        b=kB7Chd4hprmLEyYKLhd1rqwGXEqIjjqnA9T3PXSI+pJP33VMr/Eyx7GoU8CqCf5HzE
-         5nNbOnTQhKM4bcSwvK3IVTO06b6FFKQ/marI99KAQyEqhiaxXNFoHlWWkYe1sXqEElFf
-         4d+u6mFP1xwBKLj9OF5CF0L/0DBZH/zPVT7yUclLguCEhHC6bUAWVtyYQDg7ZajbNZRO
-         QQXTl17jU9sxpDHXQNexofk80aZwhMpbYZp2FPFGg4E4KAzjFG1T3XTdMZh2OOjeI3BM
-         NgvqUsfT48UcaJt//GOMqEvQ6Tv4yRdD8zM0hc7+TfPdb1Sb9KXFwiprHMnobay0rF4l
-         nbng==
-X-Gm-Message-State: AC+VfDzE9WtaCQ3zp1vNEEANL4XUIjN5M2IP5JxDwp1B3Zq1UbPTNAEX
-        eYgGx9m52+xgtamOZZyO4ms=
-X-Google-Smtp-Source: ACHHUZ7s0YF8/MfPt0sSPY/bfKSLDUpfncfX3Bo34sClYSBDbaaOiG70+Juh3LYnmMgEhFQIF68p9Q==
-X-Received: by 2002:a2e:b051:0:b0:2ac:8bc1:9cb1 with SMTP id d17-20020a2eb051000000b002ac8bc19cb1mr2349188ljl.42.1683493891055;
-        Sun, 07 May 2023 14:11:31 -0700 (PDT)
-Received: from [192.168.0.108] (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
-        by smtp.googlemail.com with ESMTPSA id q6-20020a2e9686000000b002a9f966f4b3sm930876lji.26.2023.05.07.14.11.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 07 May 2023 14:11:30 -0700 (PDT)
-Message-ID: <1e02c292-f3c6-f67d-0e25-d22a00bcf6ad@gmail.com>
-Date:   Mon, 8 May 2023 00:11:29 +0300
+        d=1e100.net; s=20221208; t=1683494750; x=1686086750;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=G4H0lS7z7vAOo2YLfX+GG/92betZKZyVjDk4/eGDXnU=;
+        b=Y8JUEEwSoBaw9cbvgfMFuChz6L9bQRmGSO9b+arY/s5+VLtFZAorAz4Z9NzsYDSTpp
+         bObiYDgKu+BKXsdeCt73cUnOrNtc7w2hYK8uF11DwuVhP+YWYO5utM3LRHqAOLMOc5hD
+         GdVMSB0czrPgsZ0JdrpIFpi5Ka1+L8f7N+JrwHyKhkni4y0wDCauB7e3MGD8s2tI107U
+         3p34cRdP7Erh4AtjwerBjaj8TEou+UJ8EBwIjM7UXpZoS8nhTFgIadkHzGvadc0gKlBD
+         Qyve8Hs7upuneDqWJq1BSCNG8QF40p/FqALrN9wR0RduFDtOoJpfLUcUFMZqiDwbvFZw
+         b2iA==
+X-Gm-Message-State: AC+VfDxGF3LUokpL2oKUkpKUlytpymyBQfeOvOZ1hMPoSUHDjktjjBA/
+        MYR+tPl/R/89UYsggJ7TEw==
+X-Google-Smtp-Source: ACHHUZ4gsHNvxKBD9mzOHFNcTanhW9KTGUgYOuLCKDZJP9SKuH15OseFLDS1HaSaaFowljHyvQbV+w==
+X-Received: by 2002:aca:d909:0:b0:38d:5336:95c1 with SMTP id q9-20020acad909000000b0038d533695c1mr7034102oig.13.1683494749994;
+        Sun, 07 May 2023 14:25:49 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id m205-20020acabcd6000000b0038de993f3a6sm5243040oif.53.2023.05.07.14.25.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 May 2023 14:25:49 -0700 (PDT)
+Received: (nullmailer pid 3488550 invoked by uid 1000);
+        Sun, 07 May 2023 21:25:44 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/6] thermal/drivers/qcom/tsens-v0_1: Add support for
- MSM8226
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+From:   Rob Herring <robh@kernel.org>
+To:     =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230507201225.89694-2-matti.lehtimaki@gmail.com>
 References: <20230507201225.89694-1-matti.lehtimaki@gmail.com>
- <20230507201225.89694-4-matti.lehtimaki@gmail.com>
- <33d373fa-91cc-2ab6-b59b-34967dff1109@linaro.org>
-Content-Language: en-US
-From:   =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>
-In-Reply-To: <33d373fa-91cc-2ab6-b59b-34967dff1109@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+ <20230507201225.89694-2-matti.lehtimaki@gmail.com>
+Message-Id: <168349474323.3488480.15689407694158704570.robh@kernel.org>
+Subject: Re: [PATCH 1/6] dt-bindings: nvmem: qfprom: Add compatible for
+ MSM8226
+Date:   Sun, 07 May 2023 16:25:44 -0500
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7.5.2023 23.40, Dmitry Baryshkov wrote:
-> On 07/05/2023 23:12, Matti Lehtimäki wrote:
->> The MSM8226 TSENS IP has 6 thermal sensors in a TSENS v0.1 block.
->> The thermal sensors use non-standard slope values.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Note, the driver from 3.10 also provides custom data for non-calibrated mode. We can either ignore that (in the hope that all devices leaving the factory are calibrated), or fix it in the manner close to 8x74.
 
-That is true, 3.10 kernel does support non-calibrated mode. I can add support for that in a new version if that is wanted.
+On Sun, 07 May 2023 23:12:19 +0300, Matti Lehtimäki wrote:
+> Document QFPROM compatible for MSM8226.
+> 
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie-ep.example.dtb: pcie-ep@33800000: Unevaluated properties are not allowed ('assigned-clock-parents', 'assigned-clock-rates', 'assigned-clocks' were unexpected)
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie-ep.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/rockchip-isp1.example.dtb: camera@3c: port:endpoint:data-lanes: [[1]] is too short
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/i2c/ovti,ov2685.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/i2c/ovti,ov2685.example.dtb: camera-sensor@3c: port:endpoint:data-lanes: [[1]] is too short
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/i2c/ovti,ov2685.yaml
+
+doc reference errors (make refcheckdocs):
+Documentation/usb/gadget_uvc.rst: Documentation/userspace-api/media/v4l/pixfmt-packed.yuv.rst
+MAINTAINERS: Documentation/devicetree/bindings/pwm/pwm-apple.yaml
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230507201225.89694-2-matti.lehtimaki@gmail.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
