@@ -2,117 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 607CB6F9426
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 May 2023 23:22:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88D756F976C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 10:04:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229948AbjEFVWi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 6 May 2023 17:22:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45868 "EHLO
+        id S229619AbjEGIEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 04:04:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjEFVWh (ORCPT
+        with ESMTP id S230451AbjEGIEU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 6 May 2023 17:22:37 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F4531491A;
-        Sat,  6 May 2023 14:22:35 -0700 (PDT)
-Received: from [192.168.178.23] (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 3DE85CECA7;
-        Sat,  6 May 2023 21:22:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683408123; bh=Mgla0FqG6s0rTpF9FbXF74aYR+zs9h7SWW7n4ppNO+c=;
-        h=From:Date:Subject:To:Cc;
-        b=vu5rWWRHgQolokSXPm5u5BG9PWOMJ2H/w8f6f4HnEH/M1GxK2YdFW1zveaYeHU0t0
-         mH1bhpJY2qpaTDVo6jQ91RSU4igUFbwEVeNhyXlCjqnQJ03SEU9ERsS/QtVH+rVsap
-         2nNGJue4nE3IDMRIn683Wejv9px/gdF3dzKoHpso=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Sat, 06 May 2023 23:20:05 +0200
-Subject: [PATCH] clk: qcom: mmcc-msm8974: Add OXILICX_GDSC for msm8226
+        Sun, 7 May 2023 04:04:20 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E789F1157E
+        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 01:04:17 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-50bdd7b229cso6542579a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 01:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683446656; x=1686038656;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BzBNd9mB5wevctFzDqblL5y/HaLP/sCPOrJ09H89d90=;
+        b=MVCuZl35RQPJZR23/XADAkTbybkeimBpPbbp8bfmqQUcSLKaLhQuJZK302ughK2VIb
+         DFudRcnVlJvbpmMiSjCbF+v0h7V6T8OO7vVtU3SHmAEuprimh+U7b/Yds9oS1ZbK0o/q
+         DNi/lkutV2coLlKQkgwWyKcloMOrme0Eil4ngwyrNn2isXzxQYbE5mTXI9vAwsnQ8Wq5
+         8JTQoVE2357eL6P2AuWcGRSyq3VzGKG1FbrR+Db6W0kFmkSbB+FovQ5FqmJHct/pkZuj
+         YJJS5nx+2+pKo5z5u3Jk4q0EoisFMZ06elsOKvYQUXS0zKokx5ZUt5Xs5gwmIWWT0KoT
+         uaYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683446656; x=1686038656;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BzBNd9mB5wevctFzDqblL5y/HaLP/sCPOrJ09H89d90=;
+        b=jh5AqUN3ca9JMzwel7q1NJ2DfZn51VPuJ6HRhk3HW4yeqq9o6EFfwgwkrEQpMbalqI
+         AtEAXPyy7blwO9uTrsvAYHDNz60uYGF5tFqluYyZ6Uh+Yj3JW93FDpSYpQunrXr+1Pug
+         fMBD6Oqkh5+UoiR+1qWnqp9Wc76BCmsTQJPVXZGSQ4dM5KYarvQeXT+a/eqx193mAXag
+         GM4exmT0nXBF2uRS/kZ8WPLgI6f3buFBEWqIu+zv5OYwIJmb0i1xXmZd3gM250SrVwHm
+         eiV1noZUZZN8LaT91DIsLGfgRcO2vVqNbimyMjehox0BMcjqCXEqH7cc8oFlnqIMrUgv
+         vUBg==
+X-Gm-Message-State: AC+VfDx3lhZGdEBbHltAFhi2GMjE+/ST0kHDTb0wgfKxUmQPyyG5g8Pc
+        6EL43Z6aw5mdx4GEpyFlRGzz8w==
+X-Google-Smtp-Source: ACHHUZ4vXTIy9jC51n4f4/F0174cdi8EwNzCcxOibShQXTs4ABy9qn7IdCrVQ2DUkSbtGpqA2QsFeA==
+X-Received: by 2002:aa7:dd4e:0:b0:50b:fc7f:b281 with SMTP id o14-20020aa7dd4e000000b0050bfc7fb281mr5478735edw.1.1683446656431;
+        Sun, 07 May 2023 01:04:16 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:183b:950f:b4d5:135a? ([2a02:810d:15c0:828:183b:950f:b4d5:135a])
+        by smtp.gmail.com with ESMTPSA id d12-20020a056402516c00b0050bd2f16ef5sm4861843ede.84.2023.05.07.01.04.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 May 2023 01:04:15 -0700 (PDT)
+Message-ID: <99343862-6b6a-30ba-40e5-7f984434b1dc@linaro.org>
+Date:   Sun, 7 May 2023 10:04:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230506-msm8226-oxilicx-v1-1-52e34b94ff22@z3ntu.xyz>
-X-B4-Tracking: v=1; b=H4sIAITEVmQC/x2NywqDMBAAf0X23IUYrY/+Sukhxo0uxChZWgLiv
- 7v0OAPDnCCUmQRe1QmZfiy8J4X6UYFfXVoIeVYGa2xjnqbDTbbB2g73wpF9wT40wYSB2rGeQav
- JCeGUXfKrdukbo8ojU+Dy37w/13UDLVTSVXYAAAA=
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v4 2/3] dt-bindings: arm: Add Coresight Dummy Trace
+To:     Hao Zhang <quic_hazha@quicinc.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bartosz Dudziak <bartosz.dudziak@snejp.pl>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1373; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=Mgla0FqG6s0rTpF9FbXF74aYR+zs9h7SWW7n4ppNO+c=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkVsT6XiIg7hNY3hv51IzCTbp3r+ZwiSqhd8idr
- 45PSjANRtiJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZFbE+gAKCRBy2EO4nU3X
- VsjID/9SIt93I9xubBMFtSW5Bq3kj2RM/bh2bBsUrE9Z63S0oK2mvT0B6wUo02A9Xij0S5PNu/J
- 5gc6T78kuuM0EtkVz1HiBDfHRvB6TnNAuPu+u7orS/BZeTJdyS+1H8cxXJIdSTRLfxXL0w5gSzw
- 2e9y8glSGaeUTmWjZ2wnpBYDT+mdu2CQ+WbMJbx9eSWnYU/ZRiYHN64zs9QgZyjz+D2S8pOQT3E
- PH2mFgoZGmUmgNgDW8wMNl9r8t3DwpiBqIKQ/5BoJJZa2gHloW/pBOyXipGh52HmyY1jCnVGDFg
- R4u0xhzIP/yEZET0xDT1OCaV+NzZRyEho9Qkqx7INZBRrsv5clkuVD08lYtF/FBfZRZKQnnceYZ
- ynlLd+aYFYcD9z5/5kLyM507UPlBbs4oF5TLoTRT0uIdFoBgX651ViTqaQCijKmR2dK797gVxdv
- 3a1EZKzjuSbsOLQy83g/8DPvbIyLGk8GquSi1MiQZOt/WXWIlPLUQ5nMGHXOwwevYxs0noXZga5
- cc3nDFKM7U3LTuNCvRz49BCe/mGszfEDOL+OZZpn3ur6wKZImr5x4GiladYO/WZ6QOAiOUH+Fwc
- 9uNLWuLH1VUDcl1Bra1c+nw8eBqTJY6WWEUJy7WZ7gGnvX5CLVcn7GI7sgC7vz/Ett40ygbBiYF
- 1M4tyWkA+w8C1gQ==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-doc@vger.kernel.org
+References: <20230505092422.32217-1-quic_hazha@quicinc.com>
+ <20230505092422.32217-3-quic_hazha@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230505092422.32217-3-quic_hazha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On msm8226 we also have OXILICX_GDSC but we need a slighly different
-config, with a .cxcs defined for clock but with no parent.
+On 05/05/2023 11:24, Hao Zhang wrote:
+> Add new coresight-dummy.yaml file describing the bindings required
+> to define coresight dummy trace in the device trees.
+> 
+> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
+> ---
+>  .../bindings/arm/arm,coresight-dummy.yaml     | 102 ++++++++++++++++++
+>  1 file changed, 102 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
+> new file mode 100644
+> index 000000000000..126518863eea
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy.yaml
+> @@ -0,0 +1,102 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/arm,coresight-dummy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: ARM Coresight Dummy component
+> +
+> +description: |
+> +  Coresight Dummy Trace Module is for the specific devices that kernel
+> +  don't have permission to access or configure, e.g., CoreSight TPDMs
+> +  on Qualcomm platforms. So there need driver to register dummy devices
+> +  as Coresight devices. It may also be used to define components that
+> +  may not have any programming interfaces (e.g, static links), so that
+> +  paths can be established in the driver. Provide Coresight API for
+> +  dummy device operations, such as enabling and disabling dummy devices.
+> +  Build the Coresight path for dummy sink or dummy source for debugging.
+> +
+> +  The primary use case of the coresight dummy is to build path in kernel
+> +  side for dummy sink and dummy source.
+> +
+> +maintainers:
+> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> +  - Tao Zhang <quic_taozha@quicinc.com>
+> +  - Hao Zhang <quic_hazha@quicinc.com>
+> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> +
+> +properties:
+> +  compatible:
+> +    items:
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- drivers/clk/qcom/mmcc-msm8974.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+You were asked to drop oneOf, not to replace with items. Drop items.
+Drop oneOf. It's just enum.
 
-diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-index 4273fce9a4a4..39ee3953567c 100644
---- a/drivers/clk/qcom/mmcc-msm8974.c
-+++ b/drivers/clk/qcom/mmcc-msm8974.c
-@@ -2443,6 +2443,16 @@ static struct gdsc oxilicx_gdsc = {
- 	.pwrsts = PWRSTS_OFF_ON,
- };
- 
-+static struct gdsc oxilicx_gdsc_msm8226 = {
-+	.gdscr = 0x4034,
-+	.cxcs = (unsigned int []){ 0x4028 },
-+	.cxc_count = 1,
-+	.pd = {
-+		.name = "oxilicx",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+};
-+
- static struct clk_regmap *mmcc_msm8226_clocks[] = {
- 	[MMSS_AHB_CLK_SRC] = &mmss_ahb_clk_src.clkr,
- 	[MMSS_AXI_CLK_SRC] = &mmss_axi_clk_src.clkr,
-@@ -2533,6 +2543,7 @@ static struct gdsc *mmcc_msm8226_gdscs[] = {
- 	[MDSS_GDSC] = &mdss_gdsc,
- 	[CAMSS_JPEG_GDSC] = &camss_jpeg_gdsc,
- 	[CAMSS_VFE_GDSC] = &camss_vfe_gdsc,
-+	[OXILICX_GDSC] = &oxilicx_gdsc_msm8226,
- };
- 
- static const struct regmap_config mmcc_msm8226_regmap_config = {
+> +      - enum:
+> +          - arm,coresight-dummy-sink
+> +          - arm,coresight-dummy-source
+> +
+> +  out-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    properties:
+> +      port:
+> +        description: Output connection from the source to Coresight
+> +          Trace bus.
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    properties:
+> +      port:
+> +        description: Input connection from the Coresight Trace bus to
+> +          dummy sink, such as Embedded USB debugger(EUD).
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +
+> +if:
+> +  # If the compatible contains the below value
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        const: arm,coresight-dummy-sink
+> +
+> +then:
+> +  required:
+> +    - in-ports
+> +
+> +else:
+> +  required:
+> +    - out-ports
 
----
-base-commit: dd9e11d6477a52ede9ebe575c83285e79e823889
-change-id: 20230506-msm8226-oxilicx-7f3f0f8e491d
+No improvements. Implement Rob's comments.
 
 Best regards,
--- 
-Luca Weiss <luca@z3ntu.xyz>
+Krzysztof
 
