@@ -2,207 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CC6B6F9B8C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 22:31:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F39676F9B91
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 May 2023 22:40:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232060AbjEGUbF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 16:31:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37926 "EHLO
+        id S232124AbjEGUki (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 16:40:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231861AbjEGUbE (ORCPT
+        with ESMTP id S231738AbjEGUkg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 16:31:04 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61AE335BF;
-        Sun,  7 May 2023 13:31:03 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id CA3DBCC041;
-        Sun,  7 May 2023 20:31:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683491461; bh=MIZ1vBEG5eV2XQXddU637jFQ3/w6ZYtze5ewofEx6BE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=MYo9ayUyC5MRGY0rOvExJK8SX4oCSmhf/DJt+aUk3FnSbFNu6UUDNz1hfgTQJU5+8
-         34xi1SPDGuRDhBR8Hr5ZEnQc0Nz4wIU2zUymxIzSMVXOeT2X5+LrIr+GKhrOtJluVU
-         1yHL5T9jL7QHjQ+tZWBT/RRHTJoi6fjH4jHZaXS0=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
+        Sun, 7 May 2023 16:40:36 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38986A7B
+        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 13:40:33 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f137dbaa4fso4360191e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 13:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683492032; x=1686084032;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gEobT5d9kdcRp8dixdijtxMKVPc5uyxDMFTSv3z+3hw=;
+        b=p7wBaVX8KcmhGljoYijHz2tFbfgc/9/cuVs5i5XvZJ65xSOAyJRDxfdEkzpOkEHu8u
+         6cFUuD3L9Yfxks5JSar3QArBkbRyBhgf6mj+fSjcE9kJaFvwchfMC8paEpXk+2I56UyV
+         X7QsSR50fuIYK8ayYmzjXgHqVgVD/5dGkDbAOwDuY1LsTZ8gvpn/GMN4016lPmJ5D72l
+         9nrBW6wKb+yZvbx7W7yCajLozhxs7tozRxhAikQmReAwwv34c4BZceCjccVKqYzsVgD2
+         oKtIqKHWbLpUF+rR681DkcyMOKjklhxkLZpHvLEpI9tIavcrBWjGJ/nl07JszfhX8OJh
+         3Q+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683492032; x=1686084032;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gEobT5d9kdcRp8dixdijtxMKVPc5uyxDMFTSv3z+3hw=;
+        b=PfkQ8VJz8YzGwN9jsDltCjjfpfren4+koSFGONRt72LkfZh40IxqweHlf/jBL+4frw
+         4daF4XV8/wTdkzVvmp07owhqV0CO1l+MghHzLXaU3edcqwwmy28jzvWCbJE0QTIGaz0S
+         IuiAlLfzVAMXpg/hxH7jfTTizOKf79lBsA+VO2mtw5lW9dCwmyms6N42yeAhzdyVhJ9S
+         x57pjonCYtc4u6+ZZZsLdxW0ZepNtRQsyUUVr82PybmaijwHN6Jodjsp2i46hh4f+fGB
+         IBJl4dqAzrXO0+NiyceuQHRVU1QmFMysEIyJiSeYuDBuGZbqljJWqG2JfLJW6Ytni4yP
+         7LFA==
+X-Gm-Message-State: AC+VfDwRD+6bzHWuPV3k6VexPid2lXm0V5EqAh944KRX3sgfHzRmQ4y/
+        6lIrqwJUK83/7ZVIgn7480KHQQ==
+X-Google-Smtp-Source: ACHHUZ6DUWb0v7gajAvrjJqzDjwveiMcMITjQKezCfJuXDL/DxFW+VI2hAem/FWaxmDWdKsNBfoJAg==
+X-Received: by 2002:ac2:558d:0:b0:4e1:36a:eda5 with SMTP id v13-20020ac2558d000000b004e1036aeda5mr2120141lfg.30.1683492032191;
+        Sun, 07 May 2023 13:40:32 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id 10-20020ac2568a000000b004e9b307d2c8sm1073669lfr.238.2023.05.07.13.40.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 07 May 2023 13:40:31 -0700 (PDT)
+Message-ID: <33d373fa-91cc-2ab6-b59b-34967dff1109@linaro.org>
+Date:   Sun, 7 May 2023 23:40:31 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 3/6] thermal/drivers/qcom/tsens-v0_1: Add support for
+ MSM8226
+Content-Language: en-GB
+To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Subject: Re: [PATCH 5/6] ARM: dts: msm8226: Add tsens node and related nvmem cells
-Date:   Sun, 07 May 2023 22:31:01 +0200
-Message-ID: <2503068.irdbgypaU6@z3ntu.xyz>
-In-Reply-To: <20230507201225.89694-6-matti.lehtimaki@gmail.com>
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 References: <20230507201225.89694-1-matti.lehtimaki@gmail.com>
- <20230507201225.89694-6-matti.lehtimaki@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+ <20230507201225.89694-4-matti.lehtimaki@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230507201225.89694-4-matti.lehtimaki@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sonntag, 7. Mai 2023 22:12:23 CEST Matti Lehtim=E4ki wrote:
-> Specify pre-parsed per-sensor calibration nvmem cells in the qfprom
-> device node rather than parsing the whole data blob in the driver.
+On 07/05/2023 23:12, Matti Lehtimäki wrote:
+> The MSM8226 TSENS IP has 6 thermal sensors in a TSENS v0.1 block.
+> The thermal sensors use non-standard slope values.
 
-I haven't double checked all the qfprom offsets but since you verified it
-twice on your side, I believe you ;)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
+Note, the driver from 3.10 also provides custom data for non-calibrated 
+mode. We can either ignore that (in the hope that all devices leaving 
+the factory are calibrated), or fix it in the manner close to 8x74.
 
->=20
-> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+> 
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 > ---
->  arch/arm/boot/dts/qcom-msm8226.dtsi | 113 ++++++++++++++++++++++++++++
->  1 file changed, 113 insertions(+)
->=20
-> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi
-> b/arch/arm/boot/dts/qcom-msm8226.dtsi index c34b8f3139ae..a0c3d25eea65
-> 100644
-> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> @@ -500,6 +500,34 @@ data-pins {
->  			};
->  		};
->=20
-> +		tsens: thermal-sensor@fc4a9000 {
-> +			compatible =3D "qcom,msm8226-tsens", "qcom,tsens-v0_1";
-> +			reg =3D <0xfc4a9000 0x1000>, /* TM */
-> +			      <0xfc4a8000 0x1000>; /* SROT */
-> +			nvmem-cells =3D <&tsens_mode>,
-> +				      <&tsens_base1>, <&tsens_base2>,
-> +				      <&tsens_s0_p1>, <&tsens_s0_p2>,
-> +				      <&tsens_s1_p1>, <&tsens_s1_p2>,
-> +				      <&tsens_s2_p1>, <&tsens_s2_p2>,
-> +				      <&tsens_s3_p1>, <&tsens_s3_p2>,
-> +				      <&tsens_s4_p1>, <&tsens_s4_p2>,
-> +				      <&tsens_s5_p1>, <&tsens_s5_p2>,
-> +				      <&tsens_s6_p1>, <&tsens_s6_p2>;
-> +			nvmem-cell-names =3D "mode",
-> +					   "base1", "base2",
-> +					   "s0_p1", "s0_p2",
-> +					   "s1_p1", "s1_p2",
-> +					   "s2_p1", "s2_p2",
-> +					   "s3_p1", "s3_p2",
-> +					   "s4_p1", "s4_p2",
-> +					   "s5_p1", "s5_p2",
-> +					   "s6_p1", "s6_p2";
-> +			#qcom,sensors =3D <6>;
-> +			interrupts =3D <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names =3D "uplow";
-> +			#thermal-sensor-cells =3D <1>;
-> +		};
+>   drivers/thermal/qcom/tsens-v0_1.c | 27 ++++++++++++++++++++++++++-
+>   drivers/thermal/qcom/tsens.c      |  3 +++
+>   drivers/thermal/qcom/tsens.h      |  2 +-
+>   3 files changed, 30 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-v0_1.c b/drivers/thermal/qcom/tsens-v0_1.c
+> index e89c6f39a3ae..ad57ab94546b 100644
+> --- a/drivers/thermal/qcom/tsens-v0_1.c
+> +++ b/drivers/thermal/qcom/tsens-v0_1.c
+> @@ -243,6 +243,18 @@ static int calibrate_8974(struct tsens_priv *priv)
+>   	return 0;
+>   }
+>   
+> +static int __init init_8226(struct tsens_priv *priv)
+> +{
+> +	priv->sensor[0].slope = 2901;
+> +	priv->sensor[1].slope = 2846;
+> +	priv->sensor[2].slope = 3038;
+> +	priv->sensor[3].slope = 2955;
+> +	priv->sensor[4].slope = 2901;
+> +	priv->sensor[5].slope = 2846;
 > +
->  		restart@fc4ab000 {
->  			compatible =3D "qcom,pshold";
->  			reg =3D <0xfc4ab000 0x4>;
-> @@ -510,6 +538,91 @@ qfprom: qfprom@fc4bc000 {
->  			reg =3D <0xfc4bc000 0x1000>;
->  			#address-cells =3D <1>;
->  			#size-cells =3D <1>;
+> +	return init_common(priv);
+> +}
 > +
-> +			tsens_base1: base1@1c1 {
-> +				reg =3D <0x1c1 0x2>;
-> +				bits =3D <5 8>;
-> +			};
+>   static int __init init_8939(struct tsens_priv *priv) {
+>   	priv->sensor[0].slope = 2911;
+>   	priv->sensor[1].slope = 2789;
+> @@ -258,7 +270,7 @@ static int __init init_8939(struct tsens_priv *priv) {
+>   	return init_common(priv);
+>   }
+>   
+> -/* v0.1: 8916, 8939, 8974, 9607 */
+> +/* v0.1: 8226, 8916, 8939, 8974, 9607 */
+>   
+>   static struct tsens_features tsens_v0_1_feat = {
+>   	.ver_major	= VER_0_1,
+> @@ -313,6 +325,19 @@ static const struct tsens_ops ops_v0_1 = {
+>   	.get_temp	= get_temp_common,
+>   };
+>   
+> +static const struct tsens_ops ops_8226 = {
+> +	.init		= init_8226,
+> +	.calibrate	= tsens_calibrate_common,
+> +	.get_temp	= get_temp_common,
+> +};
 > +
-> +			tsens_s0_p1: s0-p1@1c2 {
-> +				reg =3D <0x1c2 0x2>;
-> +				bits =3D <5 6>;
-> +			};
+> +struct tsens_plat_data data_8226 = {
+> +	.num_sensors	= 6,
+> +	.ops		= &ops_8226,
+> +	.feat		= &tsens_v0_1_feat,
+> +	.fields	= tsens_v0_1_regfields,
+> +};
 > +
-> +			tsens_s1_p1: s1-p1@1c4 {
-> +				reg =3D <0x1c4 0x1>;
-> +				bits =3D <0 6>;
-> +			};
-> +
-> +			tsens_s2_p1: s2-p1@1c4 {
-> +				reg =3D <0x1c4 0x2>;
-> +				bits =3D <6 6>;
-> +			};
-> +
-> +			tsens_s3_p1: s3-p1@1c5 {
-> +				reg =3D <0x1c5 0x2>;
-> +				bits =3D <4 6>;
-> +			};
-> +
-> +			tsens_s4_p1: s4-p1@1c6 {
-> +				reg =3D <0x1c6 0x1>;
-> +				bits =3D <2 6>;
-> +			};
-> +
-> +			tsens_s5_p1: s5-p1@1c7 {
-> +				reg =3D <0x1c7 0x1>;
-> +				bits =3D <0 6>;
-> +			};
-> +
-> +			tsens_s6_p1: s6-p1@1ca {
-> +				reg =3D <0x1ca 0x2>;
-> +				bits =3D <4 6>;
-> +			};
-> +
-> +			tsens_base2: base2@1cc {
-> +				reg =3D <0x1cc 0x1>;
-> +				bits =3D <0 8>;
-> +			};
-> +
-> +			tsens_s0_p2: s0-p2@1cd {
-> +				reg =3D <0x1cd 0x1>;
-> +				bits =3D <0 6>;
-> +			};
-> +
-> +			tsens_s1_p2: s1-p2@1cd {
-> +				reg =3D <0x1cd 0x2>;
-> +				bits =3D <6 6>;
-> +			};
-> +
-> +			tsens_s2_p2: s2-p2@1ce {
-> +				reg =3D <0x1ce 0x2>;
-> +				bits =3D <4 6>;
-> +			};
-> +
-> +			tsens_s3_p2: s3-p2@1cf {
-> +				reg =3D <0x1cf 0x1>;
-> +				bits =3D <2 6>;
-> +			};
-> +
-> +			tsens_s4_p2: s4-p2@446 {
-> +				reg =3D <0x446 0x2>;
-> +				bits =3D <4 6>;
-> +			};
-> +
-> +			tsens_s5_p2: s5-p2@447 {
-> +				reg =3D <0x447 0x1>;
-> +				bits =3D <2 6>;
-> +			};
-> +
-> +			tsens_s6_p2: s6-p2@44e {
-> +				reg =3D <0x44e 0x1>;
-> +				bits =3D <1 6>;
-> +			};
-> +
-> +			tsens_mode: mode@44f {
-> +				reg =3D <0x44f 0x1>;
-> +				bits =3D <5 3>;
-> +			};
->  		};
->=20
->  		spmi_bus: spmi@fc4cf000 {
+>   static const struct tsens_ops ops_8916 = {
+>   	.init		= init_common,
+>   	.calibrate	= calibrate_8916,
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 8020ead2794e..eb33a8bf0488 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -1095,6 +1095,9 @@ static const struct of_device_id tsens_table[] = {
+>   	}, {
+>   		.compatible = "qcom,mdm9607-tsens",
+>   		.data = &data_9607,
+> +	}, {
+> +		.compatible = "qcom,msm8226-tsens",
+> +		.data = &data_8226,
+>   	}, {
+>   		.compatible = "qcom,msm8916-tsens",
+>   		.data = &data_8916,
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index dba9cd38f637..433eba370998 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -635,7 +635,7 @@ int get_temp_common(const struct tsens_sensor *s, int *temp);
+>   extern struct tsens_plat_data data_8960;
+>   
+>   /* TSENS v0.1 targets */
+> -extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+> +extern struct tsens_plat_data data_8226, data_8916, data_8939, data_8974, data_9607;
+>   
+>   /* TSENS v1 targets */
+>   extern struct tsens_plat_data data_tsens_v1, data_8976, data_8956;
 
-
-
+-- 
+With best wishes
+Dmitry
 
