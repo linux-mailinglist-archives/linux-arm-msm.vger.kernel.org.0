@@ -2,76 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 510426FA264
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 10:36:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B6956FA26C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 10:38:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233106AbjEHIgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 04:36:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55922 "EHLO
+        id S233157AbjEHIiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 04:38:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232906AbjEHIgP (ORCPT
+        with ESMTP id S233009AbjEHIiy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 04:36:15 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218439ED6
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 01:36:13 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4efd6e26585so4765690e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 01:36:13 -0700 (PDT)
+        Mon, 8 May 2023 04:38:54 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F315411613
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 01:38:51 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4effb818c37so4802887e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 01:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683534971; x=1686126971;
+        d=linaro.org; s=google; t=1683535130; x=1686127130;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7vOeK6NJXfng1Er3sfGOPlcD75JIf3x+ne87klUAZe8=;
-        b=VjTc2e0tCdENNTGTlYaTu6SbmL+2zAqbhOvhqn8Ke3GrBw0BulOfpPKx61Gnsq+pau
-         M97jxNpDaGyMW/osQhp3kBshxpA+lq1IZikHIjue/85Ye3S+zucnAIriJRfMjfKv91XR
-         LXpKbcxRWPMkjOWfzBeqUKqb7sO5Tha6rVHExUgAiWXPOrk0KZsN1S5+VrT+AcbkXMhC
-         nPuVH3iUsGdjUPSI/8SaEMgn4GZohy/J/J2mdHV6i/+9haCNoFx6/BYxpxKFTdSW8qXJ
-         J/O3SefH9o5JXrkzC7cwR4tc+su3M2iLQcHon98PVnTrwxciiN7ExjmgJRWaQ83ztIYC
-         sBEA==
+        bh=7M+LYvpo0uL6DRxOtraYhuPAgoiRvl+qFGnzZSo79f4=;
+        b=w3GXeMtyzwuRY7sysKSaMD++ZLTRpHQQAxAhiRO+cBGtPVZwBPcfj+CVxdPugtuHtj
+         e0jGozykIPHw5c9oZwVLX8uwlyUdbj2k8HVOcEaKtDonm73JFiFk0vOZ5QpvC/lbEJjZ
+         gNw9+uexlJCgR0LjtLiJy4hcGh2PNmrb91VcwpuP4LKMNMiJTjIdEVIOKJMm7Ah7Vdva
+         UZ0Ukpm0CB3oJ9RMa82eQ8RCq4FLpyjPIy6iF6bXapEF92JcVGEFZY9jpyX5pJVij2h1
+         bwcvGE7KevjjBG1wbaIWnL4K4Hh7bdXdH499QfbJ0qKzJFa/P2oOJye7I9Y1IMX46t/m
+         3GCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683534971; x=1686126971;
+        d=1e100.net; s=20221208; t=1683535130; x=1686127130;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7vOeK6NJXfng1Er3sfGOPlcD75JIf3x+ne87klUAZe8=;
-        b=S9kkDWL4LwtLeQu0hS4LQsbXGzznBLCE8qIPRWAyPGRDW9ZlviVgp/Q7U2KxJzpI+Y
-         bWWDDAu0bcz8zbT7voeAJQT0JW6o2s+Hbb/0RYFMBZlv6kJGBHvC5PdQrLn+7rWZN9iJ
-         bbLNCsoUES2J4aSmsoVlI0cZb/t5zy/aKA7BRGQiuu9vrSmwXSApnLq9A4MDe7Q/JLA5
-         HQOT5NjzcXu+5scRhjeG7HE/I8Cn1/AE8Ly0n+gSVzy6Vwbq0QQZpjs95f+9R0+y1L9h
-         47bAyPy/50M8K6O7VGeYva5DrQhBa787jdQdpC0SsjtqBKVBgxPSpPJTL0GohbtLUT9N
-         gDJg==
-X-Gm-Message-State: AC+VfDzRkSHRtSliv3HZlksl8NbXqzEILKslEivnGaQkoTN7a9FpGsnI
-        Y81cwyFyW3/LhOUz3TDy4bz1bg==
-X-Google-Smtp-Source: ACHHUZ6/bXi/Yh+/jHrYdIbEzAMWQSkOek/BIP7BFnilquyHz/JZcmKS5cfq6hr+S1+7VeyczkzauA==
-X-Received: by 2002:ac2:47e5:0:b0:4ef:ec94:9678 with SMTP id b5-20020ac247e5000000b004efec949678mr2744507lfp.20.1683534971320;
-        Mon, 08 May 2023 01:36:11 -0700 (PDT)
+        bh=7M+LYvpo0uL6DRxOtraYhuPAgoiRvl+qFGnzZSo79f4=;
+        b=iZQIF4I9Tdqq8QkqxzxAHBLbT0lshpcCdjWI1dMXyNR8saUY0GyZpTTJPfaB6iR5sY
+         4NHqXBZAkuoiE4X0GU6zgZqyTb+cOpG7oS2ouqWYqbZE1jvep9ZozR28Ge2oTJA/2UDz
+         9MlIkGctdx4EjWh0VtA2U1pYvstTpCWfKv4P4gsVoehS+CbiTe4ALxKdsLASthUHFuAA
+         K/uqYcE6CHoEni0VI5FP8C5WsutYzM+mOyAkwkjwNJmzx0Ti8+4wBAfWAqiaUPfa8VWv
+         xBmZEN6joT1oNM8AnSS7wMhJfGecM7g4eAtXDQ963HeOr+Dj3L7d1XdaL3khPp5n6B2i
+         9PLw==
+X-Gm-Message-State: AC+VfDzxEYOSpyGuOsr7lJLbztkkpJTO7y4qH0Ffn+eidUR6w+52NUS2
+        UV/VmL46OReUmQOMMzry2//b0Q==
+X-Google-Smtp-Source: ACHHUZ7BOe90sL4z+719tAJbqmfFOlSnY6F/doGifg/JqPAqaNHcSKmqP/u6JkByUE0L1pZ0R1Ag1g==
+X-Received: by 2002:ac2:52a9:0:b0:4f1:4602:fb63 with SMTP id r9-20020ac252a9000000b004f14602fb63mr2201009lfm.41.1683535130246;
+        Mon, 08 May 2023 01:38:50 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id v9-20020ac25609000000b004efee4ff266sm1230248lfd.67.2023.05.08.01.36.10
+        by smtp.gmail.com with ESMTPSA id c5-20020a05651221a500b004f143c11cbcsm1227074lft.51.2023.05.08.01.38.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 01:36:10 -0700 (PDT)
-Message-ID: <6b93e2a9-58aa-bb91-f615-3fdec52596da@linaro.org>
-Date:   Mon, 8 May 2023 10:36:09 +0200
+        Mon, 08 May 2023 01:38:49 -0700 (PDT)
+Message-ID: <faa64d3d-48bd-b6db-535e-05d6d50aebd7@linaro.org>
+Date:   Mon, 8 May 2023 10:38:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH v2 3/4] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature
- flag
+Subject: Re: [PATCH v3 03/12] dt-bindings: display/msm: sc7180-dpu: Describe
+ SM6350 and SM6375
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
- <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
- <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev
+References: <20230411-topic-straitlagoon_mdss-v3-0-9837d6b3516d@linaro.org>
+ <20230411-topic-straitlagoon_mdss-v3-3-9837d6b3516d@linaro.org>
+ <31147c6d-e77a-8abd-0b55-73ead2385bb9@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
+In-Reply-To: <31147c6d-e77a-8abd-0b55-73ead2385bb9@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,89 +94,101 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7.05.2023 18:00, Marijn Suijten wrote:
-> On 2023-05-05 14:23:50, Jessica Zhang wrote:
->> Add DATA_COMPRESS feature flag to DPU INTF block.
+On 7.05.2023 10:14, Krzysztof Kozlowski wrote:
+> On 05/05/2023 23:40, Konrad Dybcio wrote:
+>> SC7180, SM6350 and SM6375 use a rather similar hw setup for DPU, with
+>> the main exception being that the last one requires an additional
+>> throttle clock.
 >>
->> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
->> PINGPONG to INTF.
+>> It is not well understood yet, but failing to toggle it on makes the
+>> display hardware stall and not output any frames.
 >>
->> As core_rev (and related macros) was removed from the dpu_kms struct, the
->> most straightforward way to indicate the presence of this register would be
->> to have a feature flag.
-> 
-> Irrelevant.  Even though core_rev was still in mainline until recently,
-> we always hardcoded the features in the catalog and only used core_rev
-> to select a dpu_mdss_cfg catalog entry.  There is no "if version >= X
-> then enable feature Y" logic, this manually-enabled feature flag is the
-> only, correct way to do it.
-> 
->> Changes in v2:
->> - Changed has_data_compress dpu_cap to a DATA_COMPRESS INTF feature flag
+>> Document SM6350 and SM6375 DPU.
 >>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
->>  2 files changed, 3 insertions(+), 1 deletion(-)
+>>  .../bindings/display/msm/qcom,sc7180-dpu.yaml      | 23 +++++++++++++++++++++-
+>>  1 file changed, 22 insertions(+), 1 deletion(-)
 >>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index 7944481d0a33..c74051906d05 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -104,7 +104,7 @@
->>  #define INTF_SC7180_MASK \
->>  	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+>> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
+>> index 1fb8321d9ee8..630b11480496 100644
+>> --- a/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
+>> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
+>> @@ -13,7 +13,10 @@ $ref: /schemas/display/msm/dpu-common.yaml#
 >>  
->> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
->> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS)
+>>  properties:
+>>    compatible:
+>> -    const: qcom,sc7180-dpu
+>> +    enum:
+>> +      - qcom,sc7180-dpu
+>> +      - qcom,sm6350-dpu
+>> +      - qcom,sm6375-dpu
+>>  
+>>    reg:
+>>      items:
+>> @@ -26,6 +29,7 @@ properties:
+>>        - const: vbif
+>>  
+>>    clocks:
+>> +    minItems: 6
+>>      items:
+>>        - description: Display hf axi clock
+>>        - description: Display ahb clock
+>> @@ -33,8 +37,10 @@ properties:
+>>        - description: Display lut clock
+>>        - description: Display core clock
+>>        - description: Display vsync clock
+>> +      - description: Display core throttle clock
+>>  
+>>    clock-names:
+>> +    minItems: 6
+>>      items:
+>>        - const: bus
+>>        - const: iface
+>> @@ -42,6 +48,7 @@ properties:
+>>        - const: lut
+>>        - const: core
+>>        - const: vsync
+>> +      - const: throttle
+>>  
+>>  required:
+>>    - compatible
+>> @@ -52,6 +59,20 @@ required:
+>>  
+>>  unevaluatedProperties: false
+>>  
+>> +allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          const: qcom,sm6375-dpu
 > 
-> Konrad: Your SM6350/SM6375 series v3 [1] switched from INTF_SC7180_MASK
-> to INTF_SC7280_MASK to enable HCTL on SM6375, but that will now
-> erroneously also receive this feature flag and write the new
-> DATA_COMPESS mask even if it's DPU 6.9 (< 7.x where it got added).
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/80b46fcb-d6d0-1998-c273-5401fa924c7d@linaro.org/T/#u
-> 
-> Depending on who lands first, this flag should be split.
-I'll adapt my patches. Jessica, no changes required on your side.
+> And the two other variants? Is the clock valid there or not? If not
+> really, then you should have else: with maxItems: 6.
+Oh right!
 
 > 
-> I still see value in inlining and removing these defines, though that
-> brings a host of other complexity.
-right, we should totally do it after we settle down from the patch
-flurry
+>> +
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 7
+>> +
+>> +        clock-names:
+>> +          minItems: 7
+> 
+> If there is going new version - put allOf: before
+> unevaluatedProperties:. Otherwise it is fine.
+Thanks!
 
 Konrad
 > 
-> - Marijn
+>> +
+>>  examples:
+>>    - |
+>>      #include <dt-bindings/clock/qcom,dispcc-sc7180.h>
+>>
 > 
->>  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
->>  			 BIT(DPU_WB_UBWC) | \
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> index 4eda2cc847ef..01c65f940f2a 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> @@ -185,6 +185,7 @@ enum {
->>   * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
->>   *                                  than video timing
->>   * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
->> + * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
->>   * @DPU_INTF_MAX
->>   */
->>  enum {
->> @@ -192,6 +193,7 @@ enum {
->>  	DPU_INTF_TE,
->>  	DPU_DATA_HCTL_EN,
->>  	DPU_INTF_STATUS_SUPPORTED,
->> +	DPU_INTF_DATA_COMPRESS,
->>  	DPU_INTF_MAX
->>  };
->>  
->>
->> -- 
->> 2.40.1
->>
+> Best regards,
+> Krzysztof
+> 
