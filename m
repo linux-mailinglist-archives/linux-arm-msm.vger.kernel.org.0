@@ -2,115 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 508C46F9D61
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 03:26:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D851C6F9DA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 04:12:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232238AbjEHB0T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 21:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43144 "EHLO
+        id S229814AbjEHCL6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 22:11:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229757AbjEHB0R (ORCPT
+        with ESMTP id S229744AbjEHCL6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 21:26:17 -0400
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3542E12C;
-        Sun,  7 May 2023 18:26:14 -0700 (PDT)
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6ab087111faso69987a34.3;
-        Sun, 07 May 2023 18:26:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683509173; x=1686101173;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=E0WGVqQd3crr5/xk4aA5GRbZA5RzgIzcfwtNz3kKyK8=;
-        b=i5lHy7cFZsT2/NY/PJhYi7WA1mLt73CE8/CRULYBQoKXMYKNXCKWdXjt/ku909QoBp
-         YLgRxqWthu5uvWirLJ5wiCPYqiujHGURLHJi3qbmE+O+xOWkwJD3vpf0GIySdl9ug5Yj
-         Zp6X5EWROXsf/ooXEesgl8C2cy7Kz00962Ejtx7tuJdMntEJF3l7i75aHPGzbTJOjGns
-         vNXPOy1saILyQbdbjQ4ssnkV0Iu5KdmINCjvrtTtkqFV5ADZiKHCc+xgo5+trN3Z4OU/
-         rVwECx9N5ODSiy6FDck+ghLod9twK5lVQx9OMjoUOTge+fLFsA0n+9OnBbXo4XhXyVqR
-         bfLA==
-X-Gm-Message-State: AC+VfDxwyjJzptc8zaiSZWULu7RY+UaCw+X+DMdKkIF8jQzO+B4/Swhq
-        iRviDSw+8ODnnVGaCesIkg==
-X-Google-Smtp-Source: ACHHUZ6H9eBYio6qGDMOwk8cjb89NYIm3MN/qp2X9z0JKWHk2TFOrWQVDdy1An/FopnsmcrTn/TLiQ==
-X-Received: by 2002:a9d:7acf:0:b0:6aa:e821:88eb with SMTP id m15-20020a9d7acf000000b006aae82188ebmr2194275otn.4.1683509173213;
-        Sun, 07 May 2023 18:26:13 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id t13-20020a05683022ed00b006a4244d2a7asm3592444otc.9.2023.05.07.18.26.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 May 2023 18:26:12 -0700 (PDT)
-Received: (nullmailer pid 3860869 invoked by uid 1000);
-        Mon, 08 May 2023 01:26:11 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Sun, 7 May 2023 22:11:58 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3441982;
+        Sun,  7 May 2023 19:11:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8B96861DF5;
+        Mon,  8 May 2023 02:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4EEC433EF;
+        Mon,  8 May 2023 02:11:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683511915;
+        bh=W+BDWcTwbvNWQBCgt9uZZKh6zOCIi71k2crWd1L3W+k=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=SwpOfcoQzugMTe6nrRk10AeVJ9UQT/ItdgdISy7DTqoikrRz7Vrv19tbRp/olkgV8
+         UBkjm8j7t9GSZPAgHoCls3WCNgnbSQXRf3ZhOdMELvr3rXsYAfpcEYG5Br5ho9atNt
+         Z55/nHxH0BlmftEffctJVa/X4ADi1yAzrawwLAglJRzFJ1EUHjOYOlcV4FxZiBgXjU
+         0q3LdRMHxvI7Yt17Ip2XdG0QclnuZjPEgGo93iPi4NuG6a3nBDbIl/QjhmTvpSv4fa
+         RbizSWsueFK5ilHy2NvIztJrlGKzTk0eSEzrxhiJOKmAOBO7LUTWPxCnr8zjyMscRS
+         2i8vHZAd7BNVw==
+Date:   Sun, 7 May 2023 19:15:36 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Leonard Lausen <leonard@lausen.nl>
+Cc:     regressions@lists.linux.dev,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
+Message-ID: <20230508021536.txtamifw2vkfncnx@ripper>
+References: <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, Sebastian Reichel <sre@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-In-Reply-To: <20230508003309.2363787-2-dmitry.baryshkov@linaro.org>
-References: <20230508003309.2363787-1-dmitry.baryshkov@linaro.org>
- <20230508003309.2363787-2-dmitry.baryshkov@linaro.org>
-Message-Id: <168350917132.3860853.17086591118019075384.robh@kernel.org>
-Subject: Re: [PATCH 1/6] dt-bindings: power: reset: qcom-pon: define
- pm8941-pon
-Date:   Sun, 07 May 2023 20:26:11 -0500
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Mon, 08 May 2023 03:33:04 +0300, Dmitry Baryshkov wrote:
-> On PM8941 pon doesn't store the reset reason. However we still need the
-> wrapping node for pwrkey and resin nodes. Add bindings for pm8941-pon
-> device.
+On Mon, May 08, 2023 at 01:06:13AM +0000, Leonard Lausen wrote:
+> This reverts commit e17af1c9d861dc177e5b56009bd4f71ace688d97.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Removing the delay of 100 units broke hot plug detection for USB-C displays on
+> qcom sc7180 lazor devices. Lazor uses mdss for hot plug detection and declares
+> dp_hot_plug_det in the dts. Other sc7180 based devices like aspire1 were not
+> affected by the regression, as they do not rely on mdss and dp_hot_plug_det for
+> hot plug detection.
+> 
+> Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+> Tested-by: Leonard Lausen <leonard@lausen.nl> # Trogdor (sc7180)
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
 > ---
->  Documentation/devicetree/bindings/power/reset/qcom,pon.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index bde1a7ce442f..db9783ffd5cf 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1506,7 +1506,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+>         dp = container_of(dp_display, struct dp_display_private, dp_display);
+>  
+>         if (!dp_display->is_edp)
+> -               dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
+> +               dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+When booting with the cable connected on my X13s, 100 is long enough for
+my display to time out and require me to disconnect and reconnect the
+cable again.
 
-yamllint warnings/errors:
+Do we have any idea of why the reduction to 0 is causing an issue when
+using the internal HPD?
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/i2c/ovti,ov2685.example.dtb: camera-sensor@3c: port:endpoint:data-lanes: [[1]] is too short
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/i2c/ovti,ov2685.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/rockchip-isp1.example.dtb: camera@3c: port:endpoint:data-lanes: [[1]] is too short
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/i2c/ovti,ov2685.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie-ep.example.dtb: pcie-ep@33800000: Unevaluated properties are not allowed ('assigned-clock-parents', 'assigned-clock-rates', 'assigned-clocks' were unexpected)
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie-ep.yaml
+Regards,
+Bjorn
 
-doc reference errors (make refcheckdocs):
-Documentation/usb/gadget_uvc.rst: Documentation/userspace-api/media/v4l/pixfmt-packed.yuv.rst
-MAINTAINERS: Documentation/devicetree/bindings/pwm/pwm-apple.yaml
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230508003309.2363787-2-dmitry.baryshkov@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+>  }
+>  
+>  bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+> -- 
+> 2.30.2
