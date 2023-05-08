@@ -2,168 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 948FF6FBACD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 00:05:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 055F16FBB46
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 01:09:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233846AbjEHWFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 18:05:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45790 "EHLO
+        id S234060AbjEHXI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 19:08:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbjEHWFN (ORCPT
+        with ESMTP id S234016AbjEHXI6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 18:05:13 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4073F93FE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 15:05:05 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 3C3393F33C;
-        Tue,  9 May 2023 00:05:01 +0200 (CEST)
-Date:   Tue, 9 May 2023 00:04:59 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+        Mon, 8 May 2023 19:08:58 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C28834C03
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 16:08:55 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f14468ef54so5907271e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 16:08:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683587334; x=1686179334;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=b48s8mcAPXAqywC5BMS6eAKj5imZxHgkpEOozlPTbFE=;
+        b=vsiZxbslapGTm+ygq4pII2b5i0YjKhtHvSZzFAomQ5+okHqhOBo/okWenjB1uvO42W
+         rM0irmVWK0ieIkW8r7x2suoHSe77DrQvQ0HEL4bX5q9PyPOKC/43v8U8cH+auDhoL0js
+         LF1XWQf7qDv/Uyai7sJ0VZMYQtRWK3FU3Gr7LDiCQpYFyjcFF3EHILJnoZHGipZKLcTl
+         jCF9T3zjbZnW7XNzg8mVfyOp/C0UOqbtM3c3z0XRvZIAfTOitbhjC70sPKLRrD+UjFqo
+         jHKUy3mWba9bDy853PHOW5Bl9fA/H31yqcl5JjP0KM+FgV+po7OmYe+ZwZmEZF84+mQP
+         RFww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683587334; x=1686179334;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b48s8mcAPXAqywC5BMS6eAKj5imZxHgkpEOozlPTbFE=;
+        b=fmss4+kfvB1XX7qe5NLrDrVHuQY7sVsd5kX9gJvjn3WX7d4xcPGUEfVaFzje0wObdJ
+         QBGJxD9gF0DCdu8Ofodxb81gu+6PHnOOXiRscAnLZuRa/VHCe2l75idGaMrob8bAZ9Yk
+         uI5XCTBnyWDkMKqCLcS/eWrx+fbXHaq2m42rZQvVbTnqbaSzFQIu8ZwCU9HpP/+vICXp
+         chuEyKluvuEKiEEIzuJKWh0tWQteGpwl4I1UJqcW+DjGhNUkUwrOQZcv0G4r3JCdE2V/
+         WxYTznYN5ksKHC7Kgi6mlF5AT+lTaWYXpkJZGxylRcCF/Kcmyzgkonkwz1h6lREiNp67
+         9HmQ==
+X-Gm-Message-State: AC+VfDzxncJ1KQnt7zkscFOqdSPNe/EkBIhqpvvib+bdscQU69z6lo3Y
+        0WH+6AcTNZMxSSOuSctqb3333Q==
+X-Google-Smtp-Source: ACHHUZ4ViOeyL+Un82hufdNmJAboZeTOF6Q6XeG29tPl179/V3Hgsg9bG2GD/UP0jWcWX/Eq8yto7g==
+X-Received: by 2002:ac2:488c:0:b0:4f1:4086:9384 with SMTP id x12-20020ac2488c000000b004f140869384mr153611lfc.61.1683587333966;
+        Mon, 08 May 2023 16:08:53 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id w9-20020ac25989000000b004db3900da02sm125532lfn.73.2023.05.08.16.08.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 May 2023 16:08:53 -0700 (PDT)
+Message-ID: <0aa4130d-bb37-4743-10e5-fd518276f4a2@linaro.org>
+Date:   Tue, 9 May 2023 02:08:52 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v2 3/4] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature
+ flag
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v2 07/13] drm/msm/dpu: Add SM6350 support
-Message-ID: <b5vjrv7vlsdz2yxvv24abqht3q75vyctrjt36yd5s6gguuv5db@tpiulp2uplvt>
-References: <20230411-topic-straitlagoon_mdss-v2-0-5def73f50980@linaro.org>
- <20230411-topic-straitlagoon_mdss-v2-7-5def73f50980@linaro.org>
- <k25jg7cez2kimpxr4ztbdzjr2adq6a2vjknyvfe5frxujtogfg@vhfdyt45unv6>
- <91a390b2-db3d-90f4-a2e2-6ccb75303d04@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <91a390b2-db3d-90f4-a2e2-6ccb75303d04@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
+ <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
+ <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
+ <1d7ccb5f-55c2-3b3a-df97-2c17beffabfc@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1d7ccb5f-55c2-3b3a-df97-2c17beffabfc@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-05 15:11:44, Dmitry Baryshkov wrote:
-> On 27/04/2023 18:37, Marijn Suijten wrote:
-> > On 2023-04-21 00:31:16, Konrad Dybcio wrote:
-> >> Add SM6350 support to the DPU1 driver to enable display output.
-> >>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > 
-> > After addressing the comments from Dmitry (CURSOR0->DMA1 and
-> > CURSOR1->DMA2), this is:
-> > 
-> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > 
-> > See below for some nits.
+On 09/05/2023 00:46, Jessica Zhang wrote:
 > 
-> [...]
 > 
-> >> +static const struct dpu_mdp_cfg sm6350_mdp[] = {
-> >> +	{
-> >> +	.name = "top_0", .id = MDP_TOP,
-> >> +	.base = 0x0, .len = 0x494,
-> >> +	.features = 0,
-> >> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-> >> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-> >> +	.clk_ctrls[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
-> >> +	.clk_ctrls[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
-> >> +	.clk_ctrls[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
-> >> +	},
-> >> +};
-> >> +
-> >> +static const struct dpu_ctl_cfg sm6350_ctl[] = {
-> >> +	{
-> >> +	.name = "ctl_0", .id = CTL_0,
-> >> +	.base = 0x1000, .len = 0x1dc,
-> >> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> >> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-> >> +	},
-> >> +	{
-> >> +	.name = "ctl_1", .id = CTL_1,
-> >> +	.base = 0x1200, .len = 0x1dc,
-> >> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> >> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
-> >> +	},
-> >> +	{
-> >> +	.name = "ctl_2", .id = CTL_2,
-> >> +	.base = 0x1400, .len = 0x1dc,
-> >> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> >> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
-> >> +	},
-> >> +	{
-> >> +	.name = "ctl_3", .id = CTL_3,
-> >> +	.base = 0x1600, .len = 0x1dc,
-> >> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
-> >> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
-> >> +	},
-> >> +};
-> >> +
-> >> +static const struct dpu_sspp_cfg sm6350_sspp[] = {
-> >> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
-> >> +		 sc7180_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
-> >> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
-> >> +		 sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
-> >> +	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000, 0x1f8, DMA_CURSOR_SDM845_MASK,
-> >> +		 sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR0),
-> >> +	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000, 0x1f8, DMA_CURSOR_SDM845_MASK,
-> >> +		 sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_CURSOR1),
-> >> +};
-> >> +
-> >> +static const struct dpu_lm_cfg sm6350_lm[] = {
-> >> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
-> >> +		&sc7180_lm_sblk, PINGPONG_0, LM_1, DSPP_0),
-> >> +	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
-> >> +		&sc7180_lm_sblk, PINGPONG_1, LM_0, 0),
-> > 
-> > These two entries are indented with two tabs and have one character too
-> > many to align with the opening parenthesis on the previous line.  Can we
-> > please settle on a single style, as this commit mostly uses tabs+spaces
-> > to align with the opening parenthesis?
-> > 
-> > Dmitry vouched for `cino=(0` (when in unclosed parenthesis, align next
-> > line with zero extra characters to the opening parenthesis), but I find
-> > double tabs more convenient as it doesn't require reindenting when
-> > changing the name of the macro (which happened too often in my INTF TE
-> > series).
+> On 5/7/2023 9:00 AM, Marijn Suijten wrote:
+>> On 2023-05-05 14:23:50, Jessica Zhang wrote:
+>>> Add DATA_COMPRESS feature flag to DPU INTF block.
+>>>
+>>> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
+>>> PINGPONG to INTF.
+>>>
+>>> As core_rev (and related macros) was removed from the dpu_kms struct, 
+>>> the
+>>> most straightforward way to indicate the presence of this register 
+>>> would be
+>>> to have a feature flag.
+>>
+>> Irrelevant.  Even though core_rev was still in mainline until recently,
+>> we always hardcoded the features in the catalog and only used core_rev
+>> to select a dpu_mdss_cfg catalog entry.  There is no "if version >= X
+>> then enable feature Y" logic, this manually-enabled feature flag is the
+>> only, correct way to do it.
 > 
-> I mainly vote for 'cino=(0' for indenting conditions (where double tab 
-> is confusing) and for function calls. I do not have a strong opinion 
-> about macros expansions. We have been using double-tab there, which is 
-> fine with me.
-
-Agreed on both.  `cino=(0` looks nice but double-tab in the catalog has
-been easier to work with.
-
-> Another option (which I personally find more appealing, but it doesn't 
-> play well with the current guidelines) is to have all macro arguments in 
-> a single line. It makes it easier to compare things.
-
-Single line would be superb especially for current array tables.
+> Hi Marijn,
 > 
-> And another option would be to expand these macros up to some point. 
-> Previous experience with clock and interconnect drivers showed that 
-> expanding such multi-arg acros makes it _easier_ to handle the data. 
-> Counterintuitive, but true.
+> Understood. FWIW, if we do find more register bit-level differences 
+> between HW versions in the future, it might make more sense to keep the 
+> HW catalog small and bring core_rev back, rather than keep adding these 
+> kinds of small differences to caps.
 
-Fully agree, as well as inlining some flag constants.
+Let's see how it goes. Abhinav suggested that there might be feature 
+differences inside the DPU generations (and even inside the single DPU 
+major/minor combo). So I'm not sure what core_rev will bring us.
 
-<snip>
+Let's land the platforms which are ready (or if there is anything close 
+to be submitted). I'll post the next proposal for the catalog cleanups 
+close to -rc4, when the dust settles then we can have one or two weaks 
+for the discussion and polishing.
 
-- Marijn
+I'd like to consider:
+- inlining foo_BLK macros, if that makes adding new features easier
+- reformat of clk_ctrls
+- maybe reintroduction of per-generation feature masks instead of 
+keeping them named after the random SoC
+- maybe a rework of mdss_irqs / INTFn_INTR. We already have this info in 
+hw catalog.
+
+Comments are appreciated.
+
+
+> 
+> Thanks,
+> 
+> Jessica Zhang
+> 
+>>
+>>> Changes in v2:
+>>> - Changed has_data_compress dpu_cap to a DATA_COMPRESS INTF feature flag
+>>>
+>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>
+>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
+>>>   2 files changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> index 7944481d0a33..c74051906d05 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> @@ -104,7 +104,7 @@
+>>>   #define INTF_SC7180_MASK \
+>>>       (BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | 
+>>> BIT(DPU_INTF_STATUS_SUPPORTED))
+>>> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+>>> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | 
+>>> BIT(DPU_INTF_DATA_COMPRESS)
+>>
+>> Konrad: Your SM6350/SM6375 series v3 [1] switched from INTF_SC7180_MASK
+>> to INTF_SC7280_MASK to enable HCTL on SM6375, but that will now
+>> erroneously also receive this feature flag and write the new
+>> DATA_COMPESS mask even if it's DPU 6.9 (< 7.x where it got added).
+>>
+>> [1]: 
+>> https://lore.kernel.org/linux-arm-msm/80b46fcb-d6d0-1998-c273-5401fa924c7d@linaro.org/T/#u
+>>
+>> Depending on who lands first, this flag should be split.
+>>
+>> I still see value in inlining and removing these defines, though that
+>> brings a host of other complexity.
+>>
+>> - Marijn
+>>
+>>>   #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
+>>>                BIT(DPU_WB_UBWC) | \
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> index 4eda2cc847ef..01c65f940f2a 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> @@ -185,6 +185,7 @@ enum {
+>>>    * @DPU_DATA_HCTL_EN                Allows data to be transferred 
+>>> at different rate
+>>>    *                                  than video timing
+>>>    * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS 
+>>> register
+>>> + * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS 
+>>> register
+>>>    * @DPU_INTF_MAX
+>>>    */
+>>>   enum {
+>>> @@ -192,6 +193,7 @@ enum {
+>>>       DPU_INTF_TE,
+>>>       DPU_DATA_HCTL_EN,
+>>>       DPU_INTF_STATUS_SUPPORTED,
+>>> +    DPU_INTF_DATA_COMPRESS,
+>>>       DPU_INTF_MAX
+>>>   };
+>>>
+>>> -- 
+>>> 2.40.1
+>>>
+
+-- 
+With best wishes
+Dmitry
+
