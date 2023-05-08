@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2BE46FBA1F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 23:43:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CE896FBA2D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 23:46:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233688AbjEHVnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 17:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55610 "EHLO
+        id S233952AbjEHVqH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 17:46:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234232AbjEHVn3 (ORCPT
+        with ESMTP id S233888AbjEHVqG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 17:43:29 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 607DB83E3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 14:43:20 -0700 (PDT)
+        Mon, 8 May 2023 17:46:06 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [5.144.164.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF88A10F8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 14:46:04 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id F3DA63F409;
-        Mon,  8 May 2023 23:43:17 +0200 (CEST)
-Date:   Mon, 8 May 2023 23:43:16 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9E47F3F58E;
+        Mon,  8 May 2023 23:46:02 +0200 (CEST)
+Date:   Mon, 8 May 2023 23:46:01 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org,
@@ -32,15 +32,16 @@ Cc:     freedreno@lists.freedesktop.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v6 4/7] drm/msm/dpu: Fix slice_last_group_size calculation
-Message-ID: <g55ej2gfdytjytzr66ngh4sg4yaqb4p6l2qjiqbmlplhz2jx75@sqj5iruga6c2>
+Subject: Re: [PATCH v6 6/7] drm/msm/dsi: update hdisplay calculation for
+ dsi_timing_setup
+Message-ID: <f7ao4r6ciszwslzgosmph5zwtf4adbp6mx35yjgt3fk3ogva7u@4hm2h4b4zyhf>
 References: <20230329-rfc-msm-dsc-helper-v6-0-cb7f59f0f7fb@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v6-4-cb7f59f0f7fb@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v6-6-cb7f59f0f7fb@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v6-4-cb7f59f0f7fb@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v6-6-cb7f59f0f7fb@quicinc.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -49,65 +50,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-04-12 16:25:18, Jessica Zhang wrote:
-> Correct the math for slice_last_group_size so that it matches the
-> calculations downstream.
-> 
+On 2023-04-12 16:25:20, Jessica Zhang wrote:
+> hdisplay for compressed images should be calculated as bytes_per_slice *
+> slice_count. Thus, use MSM DSC helper to calculate hdisplay for
+> dsi_timing_setup instead of directly using mode->hdisplay.
+
+This doesn't really matter in the common case of of bpp=8, as the number
+of horizontal pixels is equal to the number of horizontal slices times
+the width of one horizontal slice.
+
 > Changes in v3:
-> - Reworded slice_last_group_size calculation to
->   `(dsc->slice_width + 2) % 3`
+> - Split from previous patch
+> - Initialized hdisplay as uncompressed pclk per line at the beginning of
+>   dsi_timing_setup as to not break dual DSI calculations
 > 
-> Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
+> Changes in v4:
+> - Moved pclk_per_intf calculations to DSC hdisplay adjustments
+> 
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> index b952f7d2b7f5..ff1c8f92fb20 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
-> @@ -56,9 +56,10 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
->  	if (is_cmd_mode)
->  		initial_lines += 1;
->  
-> -	slice_last_group_size = 3 - (dsc->slice_width % 3);
-> +	slice_last_group_size = (dsc->slice_width + 2) % 3;
-> +
->  	data = (initial_lines << 20);
-> -	data |= ((slice_last_group_size - 1) << 18);
-> +	data |= (slice_last_group_size << 18);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 508577c596ff..ae966d4e349d 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  		 * pulse width same
+>  		 */
+>  		h_total -= hdisplay;
+> -		hdisplay /= 3;
+> +		hdisplay = msm_dsc_get_pclk_per_intf(msm_host->dsc) / 3;
 
-Agreed, this matches the calculation found in newer downstream.  This
-older calculation is only present in an older fbdev driver, and was
-working for the only panel I was able to test because the new and the
-old calculation result in the same value:
-
-    3 - (720 % 3) - 1 = 2
-    (720 + 2) % 3 = 2
-
-The other two outcomes are flipped, and match the downstream switch-case
-on slice_width % 3:
-
-    0 -> 2
-    1 -> 0
-    2 -> 1
-
-More importantly it is one of the fixes necessary to get DSC working on
-my SM8150 and SM8250 devices [1].
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-Thanks!
+This function sounds like it returns bytes_per_line instead, not the
+number of pixels in case bpp!=8.  Should we rename it?
 
 - Marijn
 
-[1]: https://gitlab.freedesktop.org/drm/msm/-/issues/24#note_1899310
-
->  	/* bpp is 6.4 format, 4 LSBs bits are for fractional part */
->  	data |= (dsc->bits_per_pixel << 8);
->  	data |= (dsc->block_pred_enable << 7);
+>  		h_total += hdisplay;
+>  		ha_end = ha_start + hdisplay;
+>  	}
 > 
 > -- 
 > 2.40.0
