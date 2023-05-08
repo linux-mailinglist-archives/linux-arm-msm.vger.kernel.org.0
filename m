@@ -2,87 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8728E6FB62B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 20:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 329BC6FB698
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 21:02:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233565AbjEHSCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 14:02:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53658 "EHLO
+        id S231646AbjEHTCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 15:02:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232779AbjEHSCE (ORCPT
+        with ESMTP id S229452AbjEHTCj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 14:02:04 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C13214692
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 11:02:01 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac90178fdaso31368501fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 11:02:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683568920; x=1686160920;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=srWpSA6PQvFq/EvQhPvuDCfFUZ4yDd/A9FonAYJLAMs=;
-        b=FL0pBNUePly1uVBRYJUl3YDEQQgYqGZRGGcMsTyuQQM4k/z2gNuEdj0UZoeBj+IhcR
-         R5CW1MiG9FVazGG5tD+vnR1LRVbR4OirYz9+xcNMpEk/Bb1xzaFlGPU5Z+hktCyt6cbo
-         6OIXOO1SRKtgxJLFyheHDS94lHMmaI2AWLyE1I/o5UO9gdMdVXXYo76DWOENi7sLq6aQ
-         Bkt31Ln0Zt6Mq3U7d6J1kLjbt9VC9N2hBdHUtI2R44Ss2ODwVelvty604tCwMAES6DSq
-         JS2LTFrjYVm0DuK873z/rYGaPqUZEFJwt49g6YQZlfBEhTnPaC46XUT7S0rEbmph+4DK
-         0iWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683568920; x=1686160920;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=srWpSA6PQvFq/EvQhPvuDCfFUZ4yDd/A9FonAYJLAMs=;
-        b=RADfm/wkyZLFyNZz9f02EEGQtTyMbH7iz3Ws4OiCeHtAWFtqLFAzSpp6zzziTV7jFy
-         EvntlwsXFm8epIO6sSN1oFdb8zVeUNBGC4ZeHm50Hi99ljiuSlQMs8kE/2ELWVNQTO0P
-         eJ0HynonBidkjpI+4K0vOiCW6wdWyfPMV7QOoz53dFcDHKWquDHfQJe5/lKRimCxIzd2
-         le9xLs+0TAA11mLRutRx8lZAs4c9pwNI4eMgvVIe/oTJt4iVoECdpzHGq7W5m8wcItcT
-         8fj/ZTOzgcPnNv9MYxqkGm9DhzfSV9+ArWQchJOJfig243vbzOc0aU/UkT+wTbP7LwdX
-         sGKw==
-X-Gm-Message-State: AC+VfDyszCVIzuXusIppbICKMmHf1La1wl9QG1BG+AxudrfeqnkmjH3P
-        hulNV4ECeHSPnV2B6IiJu22eO24tincw0su2+Xg=
-X-Google-Smtp-Source: ACHHUZ4p/T5nbBw4TPBXo8mN0xn+DPOKvUfI0CuaD8GWmkK6eSAlX2ecNPT6pZCMcAH45YboIyysNA==
-X-Received: by 2002:a2e:9e96:0:b0:2a8:ceef:e6cd with SMTP id f22-20020a2e9e96000000b002a8ceefe6cdmr2818088ljk.52.1683568919824;
-        Mon, 08 May 2023 11:01:59 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8345000000b002ac88e29049sm1265967ljh.43.2023.05.08.11.01.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 11:01:59 -0700 (PDT)
-Message-ID: <c4775bde-9594-ab35-6765-5d2fe3e9f3b3@linaro.org>
-Date:   Mon, 8 May 2023 21:01:58 +0300
+        Mon, 8 May 2023 15:02:39 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 774A730D0
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 12:02:37 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 348HRhn2017970;
+        Mon, 8 May 2023 19:02:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gQYRttf6q+r+8RYiioec/7vo1MmIap20DbAmNLNaTBo=;
+ b=fRiJ7MnJu9DgTDXPJUnIAa2xWPesjRX/pV0V6K+RUeFrIpdSCqD4jeivK3A81mkVU5tv
+ lKW/BAp+jvwx9Hsvr8DnDGUOQMc3OTTZmAdgMtQzUgk645BWWC9ZvbFr2Tc/iE4Pt+cJ
+ Epf5d0o4ILU3d62ez01hUEFHTYRJX8z+ikGio+3XJ3WDvhP7mHzdPuGS6yvX1luEmOK5
+ qsqk6pGqG9lzjVS6BjlVnKUBC16Q7fOqNszcXxf3pn1ITigzoNUaugsj2dNarCqQ/6JN
+ 7Eimbxtqhkz0ohD5v/Mn3rOeFVMmbY9XGJnnJe5+EP8BkEnQdP38orL0LuEZmZt8JIsY iA== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qexpqh8xw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 08 May 2023 19:02:25 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 348J2OSG010685
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 8 May 2023 19:02:24 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
+ 12:02:24 -0700
+Message-ID: <aeb3bd48-34c1-c42a-405b-be6b162bc7f7@quicinc.com>
+Date:   Mon, 8 May 2023 12:02:23 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/4] ARM: dts: qcom: apq8074-dragonboard: enable adsp and
- MSS
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v5 7/8] drm/display/dsc: include the rest of pre-SCR
+ parameters
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230507190735.2333145-1-dmitry.baryshkov@linaro.org>
- <20230507190735.2333145-4-dmitry.baryshkov@linaro.org>
- <a86cfa8b-c205-6887-a64e-d51241b74b15@linaro.org>
- <ca274ec9-81bf-c426-6ad6-93eb34b52b05@linaro.org>
- <11863653-84aa-8edf-676f-e55174fb4539@linaro.org>
- <7b90ed61-7789-275d-a743-6065ab6ecdbb@linaro.org>
-In-Reply-To: <7b90ed61-7789-275d-a743-6065ab6ecdbb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        <dri-devel@lists.freedesktop.org>,
+        <intel-gfx@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
+ <20230504153511.4007320-8-dmitry.baryshkov@linaro.org>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230504153511.4007320-8-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: twPUqeNqojyiN1X_vLWXD9cb34pN3PX1
+X-Proofpoint-ORIG-GUID: twPUqeNqojyiN1X_vLWXD9cb34pN3PX1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-08_13,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ spamscore=0 mlxlogscore=999 priorityscore=1501 suspectscore=0 phishscore=0
+ impostorscore=0 clxscore=1011 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305080125
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,115 +94,122 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/05/2023 13:49, Dmitry Baryshkov wrote:
-> On 08/05/2023 13:38, Konrad Dybcio wrote:
->>
->>
->> On 8.05.2023 12:33, Dmitry Baryshkov wrote:
->>> On 08/05/2023 11:33, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 7.05.2023 21:07, Dmitry Baryshkov wrote:
->>>>> Enable ADSP and Modem DSPs on APQ8074 dragonboard. The MSS region
->>>>> differs from the one defined in the msm8974, so it overriden locally.
->>>>>
->>>>> The modem is specified use mba.mbn instead of mbn.b00 (for the sake of
->>>>> similarity with other platforms). This requires a patch for remoteproc
->>>>> to be applied [1].
->>>>>
->>>>> [1] 
->>>>> https://lore.kernel.org/all/20230507172041.2320279-1-dmitry.baryshkov@linaro.org/
->>>>>
->>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>    .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 28 
->>>>> +++++++++++++++++++
->>>>>    1 file changed, 28 insertions(+)
->>>>>
->>>>> diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts 
->>>>> b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
->>>>> index 6b047c679370..c893afc00eb4 100644
->>>>> --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
->>>>> +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
->>>>> @@ -4,6 +4,8 @@
->>>>>    #include "qcom-pm8841.dtsi"
->>>>>    #include "qcom-pm8941.dtsi"
->>>>>    +/delete-node/ &mpss_region;
->>>>> +
->>>>>    / {
->>>>>        model = "Qualcomm APQ8074 Dragonboard";
->>>>>        compatible = "qcom,apq8074-dragonboard", "qcom,apq8074";
->>>>> @@ -17,6 +19,13 @@ aliases {
->>>>>        chosen {
->>>>>            stdout-path = "serial0:115200n8";
->>>>>        };
->>>>> +
->>>>> +    reserved-memory {
->>>>> +        mpss_region: mpss@ac00000 {
->>>>> +            reg = <0x0ac00000 0x2500000>;
->>>>> +            no-map;
->>>>> +        };
->>>>> +    };
->>>>>    };
->>>>>      &blsp1_uart2 {
->>>>> @@ -39,6 +48,25 @@ eeprom: eeprom@52 {
->>>>>        };
->>>>>    };
->>>>>    +&remoteproc_adsp {
->>>>> +    cx-supply = <&pm8841_s2>;
->>>>> +
->>>>> +    firmware-name = "qcom/apq8074/adsp.mbn";
->>>>> +
->>>>> +    status = "okay";
->>>>> +};
->>>>> +
->>>>> +&remoteproc_mss {
->>>>> +    cx-supply = <&pm8841_s2>;
->>>>> +    mss-supply = <&pm8841_s3>;
->>>>> +    mx-supply = <&pm8841_s1>;
->>>>> +    pll-supply = <&pm8941_l12>;
->>>> High time to move this to rpmpd!
->>>> I won't object to adding this though, as it obviously works
->>>> and is already used on other boards..
->>>
->>> I think the problem is that they are not level-voted on this 
->>> platform, so they are regulators, not PDs.
->> They're corner-voted.
+
+
+On 5/4/2023 8:35 AM, Dmitry Baryshkov wrote:
+> DSC model contains pre-SCR RC parameters for other bpp/bpc combinations,
+> include them here for completeness. The values were generated from the
+> 'pre_scr_cfg_files_for_reference' files found in DSC models 20210623.
+> The same fileset is a part of DSC model 20161212.
 > 
-> Hmm. Indeed. In msm8974-regulators I see both voltage and corner entries 
-> for these regulators.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Checked. Only CX and GFX (yes, MX not included) are enabled as corners 
-in vendor dtsi. So this probably doesn't gain us a lot.
+I checked these pre-SCR values against DSC model 20161212 and they look 
+good to me.
 
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/display/drm_dsc_helper.c | 72 ++++++++++++++++++++++++
+>   1 file changed, 72 insertions(+)
 > 
->>
->> Konrad
->>>
->>>>
->>>>> +
->>>>> +    firmware-name = "qcom/apq8074/mba.mbn", "qcom/apq8074/modem.mbn";
->>>> Could you please keep it one entry per line?
->>>
->>> Sure.
->>>
->>>>
->>>> Otherwise,
->>>>
->>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>
->>>> Konrad
->>>>> +
->>>>> +    status = "okay";
->>>>> +};
->>>>> +
->>>>>    &rpm_requests {
->>>>>        regulators-0 {
->>>>>            compatible = "qcom,rpm-pm8841-regulators";
->>>
+> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+> index 35b39f3109c4..aec6f8c201af 100644
+> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+> @@ -325,6 +325,16 @@ struct rc_parameters_data {
+>   #define DSC_BPP(bpp)	((bpp) << 4)
+>   
+>   static const struct rc_parameters_data rc_parameters_pre_scr[] = {
+> +	{
+> +		.bpp = DSC_BPP(6), .bpc = 8,
+> +		{ 683, 15, 6144, 3, 13, 11, 11, {
+> +			{ 0, 2, 0 }, { 1, 4, -2 }, { 3, 6, -2 }, { 4, 6, -4 },
+> +			{ 5, 7, -6 }, { 5, 7, -6 }, { 6, 7, -6 }, { 6, 8, -8 },
+> +			{ 7, 9, -8 }, { 8, 10, -10 }, { 9, 11, -10 }, { 10, 12, -12 },
+> +			{ 10, 13, -12 }, { 12, 14, -12 }, { 15, 15, -12 }
+> +			}
+> +		}
+> +	},
+>   	{
+>   		.bpp = DSC_BPP(8), .bpc = 8,
+>   		{ 512, 12, 6144, 3, 12, 11, 11, {
+> @@ -360,6 +370,37 @@ static const struct rc_parameters_data rc_parameters_pre_scr[] = {
+>   			}
+>   		}
+>   	},
+> +	{
+> +		.bpp = DSC_BPP(10), .bpc = 8,
+> +		{ 410, 12, 5632, 3, 12, 11, 11, {
+> +			{ 0, 3, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 2, 6, -2 },
+> +			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
+> +			{ 3, 9, -8 }, { 3, 9, -10 }, { 5, 10, -10 }, { 5, 11, -10 },
+> +			{ 5, 12, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+> +			}
+> +		}
+> +	},
+> +	{
+> +		.bpp = DSC_BPP(10), .bpc = 10,
+> +		{ 410, 12, 5632, 7, 16, 15, 15, {
+> +			{ 0, 7, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 6, 10, -2 },
+> +			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
+> +			{ 7, 13, -8 }, { 7, 13, -10 }, { 9, 14, -10 }, { 9, 15, -10 },
+> +			{ 9, 16, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+> +			}
+> +		}
+> +	},
+> +	{
+> +		.bpp = DSC_BPP(10), .bpc = 12,
+> +		{ 410, 12, 5632, 11, 20, 19, 19, {
+> +			{ 0, 11, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 10, 14, -2 },
+> +			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
+> +			{ 11, 17, -8 }, { 11, 17, -10 }, { 13, 18, -10 },
+> +			{ 13, 19, -10 }, { 13, 20, -12 }, { 15, 21, -12 },
+> +			{ 21, 23, -12 }
+> +			}
+> +		}
+> +	},
+>   	{
+>   		.bpp = DSC_BPP(12), .bpc = 8,
+>   		{ 341, 15, 2048, 3, 12, 11, 11, {
+> @@ -391,6 +432,37 @@ static const struct rc_parameters_data rc_parameters_pre_scr[] = {
+>   			}
+>   		}
+>   	},
+> +	{
+> +		.bpp = DSC_BPP(15), .bpc = 8,
+> +		{ 273, 15, 2048, 3, 12, 11, 11, {
+> +			{ 0, 0, 10 }, { 0, 1, 8 }, { 0, 1, 6 }, { 0, 2, 4 },
+> +			{ 1, 2, 2 }, { 1, 3, 0 }, { 1, 4, -2 }, { 2, 4, -4 },
+> +			{ 3, 4, -6 }, { 3, 5, -8 }, { 4, 6, -10 }, { 5, 7, -10 },
+> +			{ 5, 8, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
+> +			}
+> +		}
+> +	},
+> +	{
+> +		.bpp = DSC_BPP(15), .bpc = 10,
+> +		{ 273, 15, 2048, 7, 16, 15, 15, {
+> +			{ 0, 2, 10 }, { 2, 5, 8 }, { 3, 5, 6 }, { 4, 6, 4 },
+> +			{ 5, 6, 2 }, { 5, 7, 0 }, { 5, 8, -2 }, { 6, 8, -4 },
+> +			{ 7, 8, -6 }, { 7, 9, -8 }, { 8, 10, -10 }, { 9, 11, -10 },
+> +			{ 9, 12, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
+> +			}
+> +		}
+> +	},
+> +	{
+> +		.bpp = DSC_BPP(15), .bpc = 12,
+> +		{ 273, 15, 2048, 11, 20, 19, 19, {
+> +			{ 0, 4, 10 }, { 2, 7, 8 }, { 4, 9, 6 }, { 6, 11, 4 },
+> +			{ 9, 11, 2 }, { 9, 11, 0 }, { 9, 12, -2 }, { 10, 12, -4 },
+> +			{ 11, 12, -6 }, { 11, 13, -8 }, { 12, 14, -10 },
+> +			{ 13, 15, -10 }, { 13, 16, -12 }, { 15, 21, -12 },
+> +			{ 21, 23, -12 }
+> +			}
+> +		}
+> +	},
+>   	{ /* sentinel */ }
+>   };
+>   
+> -- 
+> 2.39.2
 > 
-
--- 
-With best wishes
-Dmitry
-
