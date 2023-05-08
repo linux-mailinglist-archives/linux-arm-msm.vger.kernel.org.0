@@ -2,157 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F7B36FAA6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 13:02:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B8546FAA83
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 13:03:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235445AbjEHLCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 07:02:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39528 "EHLO
+        id S232429AbjEHLDu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 07:03:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235451AbjEHLCh (ORCPT
+        with ESMTP id S233626AbjEHLDO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 07:02:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE092E80E;
-        Mon,  8 May 2023 04:01:25 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3486Eqs2025662;
-        Mon, 8 May 2023 11:01:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=30YV3GSfUJH7uuAX8OaPEaPxhsD0B30A4xbCT71CEQo=;
- b=WGHVlF3BsyIuV/3SBrU26+mSJHJfuxCpxS0A4EPFCSIZPqVCmu2edkCUpANl261nQVDH
- IJKmmANwNZ2pWLDEwsGtr4OKjv/o5iPw/wWd56LwUGXjAhHaf5X5IY9GUfxY6ASRZ3m4
- S7VeeZMEx/2JaEV6u7tCLCLPL5fh10l2IXG1QMBk7b7gBL+rWaVfmeyX0jx029Uvhpo2
- oaV9CEdyxq5IbyNTvk1eM7ogRngQ2qIkQtKWrUafeBrHBRF/W8T80mvbJMvq9rFoKIuS
- +4wlbkvPEuvB6I/mHdNz7kKo1Oeaz+uzMy/4CCUpc/frjFVMKz7t+9SHL7Sxln39tOqz Lg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qdf4b3ce1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 08 May 2023 11:01:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 348B1J0P008879
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 8 May 2023 11:01:19 GMT
-Received: from [10.216.33.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
- 04:01:14 -0700
-Message-ID: <62a80dec-91ff-8a07-9818-7207a08a35b3@quicinc.com>
-Date:   Mon, 8 May 2023 16:31:11 +0530
+        Mon, 8 May 2023 07:03:14 -0400
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 119F92BCEC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 04:02:30 -0700 (PDT)
+Received: (qmail 3777 invoked by uid 990); 8 May 2023 11:02:29 -0000
+Authentication-Results: devico.uberspace.de;
+        auth=pass (plain)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 1/4] clk: qcom: branch: Extend the invert logic for
- branch2 clocks
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Richard Cochran <richardcochran@gmail.com>,
-        "Rob Herring" <robh+dt@kernel.org>
-CC:     <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohiagar@quicinc.com>, <netdev@vger.kernel.org>
-References: <20230419133013.2563-1-quic_tdas@quicinc.com>
- <20230419133013.2563-2-quic_tdas@quicinc.com>
- <0dc457cbd13ea76a3aa3c70b2a31a537.sboyd@kernel.org>
-From:   Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <0dc457cbd13ea76a3aa3c70b2a31a537.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kQ3XYs3uLOipgrKCKIHyYStYliBRUIOY
-X-Proofpoint-GUID: kQ3XYs3uLOipgrKCKIHyYStYliBRUIOY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-08_08,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
- mlxscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
- definitions=main-2305080075
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Date:   Mon, 08 May 2023 11:02:28 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From:   "Leonard Lausen" <leonard@lausen.nl>
+Message-ID: <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
+TLS-Required: No
+Subject: Re: [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
+To:     "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+        "Bjorn Andersson" <andersson@kernel.org>
+Cc:     regressions@lists.linux.dev,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Rob Clark" <robdclark@gmail.com>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        "Johan Hovold" <johan+linaro@kernel.org>,
+        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>,
+        "Sean Paul" <sean@poorly.run>, "David Airlie" <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, "Nikita Travkin" <nikita@trvn.ru>
+In-Reply-To: <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
+References: <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
+ <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
+ <20230508021536.txtamifw2vkfncnx@ripper>
+X-Rspamd-Bar: +
+X-Rspamd-Report: MIME_GOOD(-0.1) BAYES_HAM(-0.206001) SUSPICIOUS_RECIPS(1.5)
+X-Rspamd-Score: 1.193998
+Received: from unknown (HELO unkown) (::1)
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Mon, 08 May 2023 13:02:29 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=lausen.nl; s=uberspace;
+        h=from;
+        bh=AUdYfC/8BZ2sDiqNVoYRoy2QzAnTT60/s6WkT4FmufM=;
+        b=h9RKQUmsPd6uNaUCtteD/zTA9tbqUvFxDUJoAiwj6mrtP2hUMdMRNFcaYUzw4I+Om1fyOPtYph
+        ziVOVPFijR8exCJZqAZoE867ZdozilBrdURxrAZYWZaxH+wnknvH/AgHxOClqTmqPSbBRbtvDWpC
+        UrMZAYWXvZ5oRZHKG2ArGpXaI4X6WRnowoqz808Gz2SRvuldDPORgTx/BJ0uUvvqnCKbPBmb9ewT
+        7vpY+kMQK3MwaM/XJ0q+B7dEd2d/6Lf5YZkJrUhmSor36K1qSGSG7+XKaBkK4Nrj6jZa8WYJGz0Y
+        aq88Lk0v2DErb8oaPItKdcIunJD4UdHG0JlQ1EdfAJ7RIz40ffJZxBWdueoi9iZUsNnrvUdqc6Gy
+        KVLQ3SqHInMvgeqaaHcX5V4Y3XTcR2CYXNeyV9xbTTEZISJqMK3lCEqG8DJu51qJVQ9yS/tzMtUe
+        i/FQEZgY2fzFKduaoRoZn8nsqSxw5IrNmLbh1ND5EVk/NjPcCkJPV4Sxy4FL0WZ2P4Tx/CxIPhaY
+        A+sLjsFT1VzdCFcGJB/2RzvvKbffrvp904pyRmFTpcfcc/pzQm3Jftf/R7bOnkewVqFDwWzZ+GLc
+        9qCbLsq+TbhXikgVU5/WIndBQMNPVfcL9xvLw2JJz3QSda9SxyC4qBReQXho2gUrjWZWkt0fnNsn
+        4=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Stephen,
+Abhinav Kumar <quic_abhinavk@quicinc.com> writes:
+> On 5/7/2023 7:15 PM, Bjorn Andersson wrote:
+>> When booting with the cable connected on my X13s, 100 is long enough f=
+or
+>> my display to time out and require me to disconnect and reconnect the
+>> cable again.
+>>=20
+>>=20Do we have any idea of why the reduction to 0 is causing an issue wh=
+en
+>> using the internal HPD?
+>>=20
+>>=20Regards,
+>> Bjorn
+> Yes, we do know why this is causing an issue. The cleaner patch for thi=
+s=20
+>=20will be posted this week.
 
-Thanks for your review.
+Great!
 
-On 4/20/2023 3:07 AM, Stephen Boyd wrote:
-> Quoting Taniya Das (2023-04-19 06:30:10)
->> From: Imran Shaik <quic_imrashai@quicinc.com>
->>
->> Add support to handle the invert logic for branch2 clocks.
->> Invert branch halt would indicate the clock ON when CLK_OFF
->> bit is '1' and OFF when CLK_OFF bit is '0'.
->>
->> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> ---
->>   drivers/clk/qcom/clk-branch.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
->> index f869fc6aaed6..4b24d45be771 100644
->> --- a/drivers/clk/qcom/clk-branch.c
->> +++ b/drivers/clk/qcom/clk-branch.c
->> @@ -48,6 +48,7 @@ static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
->>   {
->>          u32 val;
->>          u32 mask;
->> +       bool invert = (br->halt_check == BRANCH_HALT_ENABLE);
->>   
->>          mask = BRANCH_NOC_FSM_STATUS_MASK << BRANCH_NOC_FSM_STATUS_SHIFT;
->>          mask |= BRANCH_CLK_OFF;
->> @@ -56,9 +57,16 @@ static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
->>   
->>          if (enabling) {
->>                  val &= mask;
->> +
->> +               if (invert)
->> +                       return (val & BRANCH_CLK_OFF) == BRANCH_CLK_OFF;
->> +
->>                  return (val & BRANCH_CLK_OFF) == 0 ||
->>                          val == BRANCH_NOC_FSM_STATUS_ON;
-> 
-> Do these clks have a NOC_FSM_STATUS bit? I think it would be better to
-> make a local variable for the val we're looking for, and then test for
-> that. We may need a mask as well, but the idea is to not duplicate the
-> test and return from multiple places.
-> 
+> There is no need to add the 100ms delay back yet.
+>=20
+>=20thanks for posting this but NAK on this patch till we post the fix th=
+is=20
+>=20week.
+>
+> Appreciate a bit of patience till then.
 
-Clocks which has invert status doesn't have NOC_FSM_STATUS bit.
-Will remove the multiple returns in next patch.
+This regression is already part of the 6.3 stable release series. Will
+the new patch qualify for inclusion in 6.3.y? Or will it be part of 6.4
+and this revert should go into 6.3.y?
 
->>          } else {
->> +               if (invert)
->> +                       return (val & BRANCH_CLK_OFF) == 0;
->> +
->>                  return val & BRANCH_CLK_OFF;
->>          }
-> 
-> While at it, I'd get rid of this else and de-indent the code because if
-> we're 'enabling' we'll return from the function regardless.
+Even with this revert, there are additional regressions in 6.3 causing
+dpu errors and blank external display upon suspending and resuming the
+system while an external display is connected. Will your new patch also
+fix these regressions?
 
+[  275.025497] [drm:dpu_encoder_phys_vid_wait_for_commit_done:488] [dpu e=
+rror]vblank timeout
+[  275.025514] [drm:dpu_kms_wait_for_commit_done:510] [dpu error]wait for=
+ commit done returned -110
+[  275.064141] [drm:dpu_encoder_frame_done_timeout:2382] [dpu error]enc33=
+ frame done timeout
 
-Yes, Stephen, will take care in the next patch.
+followed by a kernel panic if any modification to the display settings
+is done, such as disabling the external display:
 
--- 
-Thanks & Regards,
-Taniya Das.
+[  341.631287] Hardware name: Google Lazor (rev3 - 8) (DT)
+[  341.631290] pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYP=
+E=3D--)
+[  341.631296] pc : do_raw_spin_unlock+0xb8/0xc4
+[  341.631310] lr : do_raw_spin_unlock+0x78/0xc4
+[  341.631315] sp : ffffffc01100b880
+[  341.631317] x29: ffffffc01100b880 x28: 0000000000000028 x27: 000000000=
+0000038
+[  341.631326] x26: ffffff808c89e180 x25: ffffffef33e39920 x24: 000000000=
+0000000
+[  341.631333] x23: ffffffef33e3ca0c x22: 0000000000000002 x21: ffffff808=
+345ded8
+[  341.631339] x20: ffffff808345ded0 x19: 000000000000001e x18: 000000000=
+0000000
+[  341.631345] x17: 0048000000000460 x16: 0441043b04600438 x15: 043800000=
+89807d0
+[  341.631351] x14: 07b0089807800780 x13: 0000000000000068 x12: 000000000=
+0000001
+[  341.631357] x11: ffffffef3413bb76 x10: 0000000000000bb0 x9 : ffffffef3=
+3e3d6bc
+[  341.631363] x8 : ffffff808c89ed90 x7 : ffffff80b1c9f738 x6 : 000000000=
+0000001
+[  341.631370] x5 : 0000000000000000 x4 : 0000000000000000 x3 : ffffff808=
+345def0
+[  341.631375] x2 : 00000000dead4ead x1 : 0000000000000003 x0 : 000000000=
+0000000
+[  341.631383] Kernel panic - not syncing: Asynchronous SError Interrupt
+[  341.631386] CPU: 3 PID: 1520 Comm: kwin_wayland Not tainted 6.3.0-stb-=
+cbq+ #2
+[  341.631390] Hardware name: Google Lazor (rev3 - 8) (DT)
+[  341.631393] Call trace:
+[  341.631395]  dump_backtrace+0xc8/0x104
+[  341.631402]  show_stack+0x20/0x30
+[  341.631407]  dump_stack_lvl+0x48/0x60
+[  341.631414]  dump_stack+0x18/0x24
+[  341.631419]  panic+0x130/0x2fc
+[  341.631425]  nmi_panic+0x54/0x78
+[  341.631428]  arm64_serror_panic+0x74/0x80
+[  341.631434]  arm64_is_fatal_ras_serror+0x6c/0x8c
+[  341.631439]  do_serror+0x48/0x60
+[  341.631444]  el1h_64_error_handler+0x30/0x48
+[  341.631450]  el1h_64_error+0x68/0x6c
+[  341.631455]  do_raw_spin_unlock+0xb8/0xc4
+[  341.631460]  _raw_spin_unlock_irq+0x18/0x38
+[  341.631466]  __wait_for_common+0xb8/0x154
+[  341.631472]  wait_for_completion_timeout+0x28/0x34
+[  341.631477]  dp_ctrl_push_idle+0x3c/0x88
+[  341.631483]  dp_bridge_disable+0x20/0x2c
+[  341.631488]  drm_atomic_bridge_chain_disable+0x8c/0xb8
+[  341.631495]  drm_atomic_helper_commit_modeset_disables+0x198/0x450
+[  341.631501]  msm_atomic_commit_tail+0x1c8/0x36c
+[  341.631507]  commit_tail+0x80/0x108
+[  341.631512]  drm_atomic_helper_commit+0x114/0x118
+[  341.631516]  drm_atomic_commit+0xb4/0xe0
+[  341.631522]  drm_mode_atomic_ioctl+0x6b0/0x890
+[  341.631527]  drm_ioctl_kernel+0xe4/0x164
+[  341.631534]  drm_ioctl+0x35c/0x3bc
+[  341.631539]  vfs_ioctl+0x30/0x50
+[  341.631547]  __arm64_sys_ioctl+0x80/0xb4
+[  341.631552]  invoke_syscall+0x84/0x11c
+[  341.631558]  el0_svc_common.constprop.0+0xc0/0xec
+[  341.631563]  do_el0_svc+0x94/0xa4
+[  341.631567]  el0_svc+0x2c/0x54
+[  341.631570]  el0t_64_sync_handler+0x94/0x100
+[  341.631575]  el0t_64_sync+0x194/0x198
+[  341.631580] SMP: stopping secondary CPUs
+[  341.831615] Kernel Offset: 0x2f2b200000 from 0xffffffc008000000
+[  341.831618] PHYS_OFFSET: 0x80000000
+[  341.831620] CPU features: 0x400000,61500506,3200720b
+[  341.831623] Memory Limit: none
