@@ -2,108 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFD6C6FAA15
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:58:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F7B36FAA6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 13:02:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235349AbjEHK6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 06:58:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33446 "EHLO
+        id S235445AbjEHLCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 07:02:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235416AbjEHK6j (ORCPT
+        with ESMTP id S235451AbjEHLCh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 06:58:39 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1991633FD5
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 03:57:25 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C177D3F1FF;
-        Mon,  8 May 2023 12:57:19 +0200 (CEST)
-Date:   Mon, 8 May 2023 12:57:18 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kalyan Thota <quic_kalyant@quicinc.com>,
-        Shubhashree Dhar <dhar@codeaurora.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Set DPU_DATA_HCTL_EN for in INTF_SC7180_MASK
-Message-ID: <vonnkr34hogk3r54pg5wqw3xv5ood4zkdojehcr5stonvqev6u@nnezyvphwo5k>
-References: <20230508-topic-hctl_en-v1-1-0f8b5df60ed5@linaro.org>
+        Mon, 8 May 2023 07:02:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE092E80E;
+        Mon,  8 May 2023 04:01:25 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3486Eqs2025662;
+        Mon, 8 May 2023 11:01:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=30YV3GSfUJH7uuAX8OaPEaPxhsD0B30A4xbCT71CEQo=;
+ b=WGHVlF3BsyIuV/3SBrU26+mSJHJfuxCpxS0A4EPFCSIZPqVCmu2edkCUpANl261nQVDH
+ IJKmmANwNZ2pWLDEwsGtr4OKjv/o5iPw/wWd56LwUGXjAhHaf5X5IY9GUfxY6ASRZ3m4
+ S7VeeZMEx/2JaEV6u7tCLCLPL5fh10l2IXG1QMBk7b7gBL+rWaVfmeyX0jx029Uvhpo2
+ oaV9CEdyxq5IbyNTvk1eM7ogRngQ2qIkQtKWrUafeBrHBRF/W8T80mvbJMvq9rFoKIuS
+ +4wlbkvPEuvB6I/mHdNz7kKo1Oeaz+uzMy/4CCUpc/frjFVMKz7t+9SHL7Sxln39tOqz Lg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qdf4b3ce1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 08 May 2023 11:01:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 348B1J0P008879
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 8 May 2023 11:01:19 GMT
+Received: from [10.216.33.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
+ 04:01:14 -0700
+Message-ID: <62a80dec-91ff-8a07-9818-7207a08a35b3@quicinc.com>
+Date:   Mon, 8 May 2023 16:31:11 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230508-topic-hctl_en-v1-1-0f8b5df60ed5@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 1/4] clk: qcom: branch: Extend the invert logic for
+ branch2 clocks
+Content-Language: en-US
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Richard Cochran <richardcochran@gmail.com>,
+        "Rob Herring" <robh+dt@kernel.org>
+CC:     <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohiagar@quicinc.com>, <netdev@vger.kernel.org>
+References: <20230419133013.2563-1-quic_tdas@quicinc.com>
+ <20230419133013.2563-2-quic_tdas@quicinc.com>
+ <0dc457cbd13ea76a3aa3c70b2a31a537.sboyd@kernel.org>
+From:   Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <0dc457cbd13ea76a3aa3c70b2a31a537.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kQ3XYs3uLOipgrKCKIHyYStYliBRUIOY
+X-Proofpoint-GUID: kQ3XYs3uLOipgrKCKIHyYStYliBRUIOY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-08_08,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
+ mlxscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303200000
+ definitions=main-2305080075
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-08 12:29:32, Konrad Dybcio wrote:
-> DPU5 and newer targets enable this unconditionally. Move it from the
-> SC7280 mask to the SC7180 one.
+Hello Stephen,
+
+Thanks for your review.
+
+On 4/20/2023 3:07 AM, Stephen Boyd wrote:
+> Quoting Taniya Das (2023-04-19 06:30:10)
+>> From: Imran Shaik <quic_imrashai@quicinc.com>
+>>
+>> Add support to handle the invert logic for branch2 clocks.
+>> Invert branch halt would indicate the clock ON when CLK_OFF
+>> bit is '1' and OFF when CLK_OFF bit is '0'.
+>>
+>> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> ---
+>>   drivers/clk/qcom/clk-branch.c | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
+>> index f869fc6aaed6..4b24d45be771 100644
+>> --- a/drivers/clk/qcom/clk-branch.c
+>> +++ b/drivers/clk/qcom/clk-branch.c
+>> @@ -48,6 +48,7 @@ static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
+>>   {
+>>          u32 val;
+>>          u32 mask;
+>> +       bool invert = (br->halt_check == BRANCH_HALT_ENABLE);
+>>   
+>>          mask = BRANCH_NOC_FSM_STATUS_MASK << BRANCH_NOC_FSM_STATUS_SHIFT;
+>>          mask |= BRANCH_CLK_OFF;
+>> @@ -56,9 +57,16 @@ static bool clk_branch2_check_halt(const struct clk_branch *br, bool enabling)
+>>   
+>>          if (enabling) {
+>>                  val &= mask;
+>> +
+>> +               if (invert)
+>> +                       return (val & BRANCH_CLK_OFF) == BRANCH_CLK_OFF;
+>> +
+>>                  return (val & BRANCH_CLK_OFF) == 0 ||
+>>                          val == BRANCH_NOC_FSM_STATUS_ON;
 > 
-> Fixes: 7bdc0c4b8126 ("msm:disp:dpu1: add support for display for SC7180 target")
-
-The flag only exists since 591e34a091d17 ("drm/msm/disp/dpu1: add
-support for display for SC7280 target"), and I don't know how bad it is
-if it was lacking when SC7180 was added?
-
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-I wonder if this needs any Reported-by/Suggested-by, given that I found
-the DATA_COMPRESS discrepancy for your SM6375 patch (which was using
-SC7280 to have the HCTL mask) and Dmitry pointing out that HCTL needs to
-be in SC7180 entirely.
-
-Fortunately none of this affects cmdmode :)
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-> ---
-> Depends on:
-> https://lore.kernel.org/linux-arm-msm/20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com/
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+> Do these clks have a NOC_FSM_STATUS bit? I think it would be better to
+> make a local variable for the val we're looking for, and then test for
+> that. We may need a mask as well, but the idea is to not duplicate the
+> test and return from multiple places.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 27420fc863d6..7ea8fd69d5fd 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -98,9 +98,12 @@
->  #define INTF_SDM845_MASK (0)
->  
->  #define INTF_SC7180_MASK \
-> -	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
-> +	(BIT(DPU_INTF_INPUT_CTRL) | \
-> +	 BIT(DPU_INTF_TE) | \
-> +	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
-> +	 BIT(DPU_DATA_HCTL_EN))
->  
-> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS)
-> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_INTF_DATA_COMPRESS)
->  
->  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
->  			 BIT(DPU_WB_UBWC) | \
+
+Clocks which has invert status doesn't have NOC_FSM_STATUS bit.
+Will remove the multiple returns in next patch.
+
+>>          } else {
+>> +               if (invert)
+>> +                       return (val & BRANCH_CLK_OFF) == 0;
+>> +
+>>                  return val & BRANCH_CLK_OFF;
+>>          }
 > 
-> ---
-> base-commit: c47189dee0decd9ecc1e65ae376ad6d4b0b7f1f2
-> change-id: 20230508-topic-hctl_en-3abb999a6c99
-> 
-> Best regards,
-> -- 
-> Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
+> While at it, I'd get rid of this else and de-indent the code because if
+> we're 'enabling' we'll return from the function regardless.
+
+
+Yes, Stephen, will take care in the next patch.
+
+-- 
+Thanks & Regards,
+Taniya Das.
