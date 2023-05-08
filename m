@@ -2,280 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C5F56FB089
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 14:47:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD2E36FB1BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 15:37:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234250AbjEHMrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 08:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48092 "EHLO
+        id S234337AbjEHNhi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 09:37:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234223AbjEHMrH (ORCPT
+        with ESMTP id S234304AbjEHNhh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 08:47:07 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA13633844
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 05:47:05 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-b9d7659d89fso6020862276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 05:47:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683550025; x=1686142025;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zasgJqK4/xXN93z/6quZqlnv3qeuCfz7ocg5qzyPXEg=;
-        b=RajjGp62Dz8ojYRdb7Qa+Wgfqgh0PaYifZWF3TTdykBqxGdZt1EVUNJgaYudAdgH0B
-         Xg3JTqbjfMPvBykB3B6dUqxM06VYHhnFiNb3XE/XcC5Ztyh78OLAKhrw8PJejX4YFTTI
-         T+vB1pGR+mi+xkQCqUtCMQ3MiOTb3EVdwWrk+TUiA6ZINQyKLNhD43v6BQQrRv7+JRMi
-         cvCUkWJxZLkwp7i2rmC3lnRSgHo1Rn4cL6SmvIWuptJmL7XUBS9mqJyvHLzQR09YswpU
-         2D5jSNDym1P0IVrN+9et2PxQcAuUbnvM+P999GHkyxqaoLLaOQRZYvQq/YGWMa62+THX
-         hmFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683550025; x=1686142025;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zasgJqK4/xXN93z/6quZqlnv3qeuCfz7ocg5qzyPXEg=;
-        b=R8mjgbSyO6+ExVapJXdJSZ2bApEJhn1K1YYdBhidoedEnx0LwwkiNbBkmarqwvPP+2
-         XggtXRPndkhjD4pRu7q67HkvUnR3zAKhYt3VlOb2Q/FpYqMati7LZGJHE+9jgZ/clhUO
-         t92NvZpBGIB9HBdFvMHIW9qOx6wZRUf82Y2wiUq0NqcXoNPhaayK0xko0mtVlFv97H+U
-         Z0uvljQOqLnSEnu6w3uW3LskCOWiEj4l6YRZN++214jqE0n+FEJfiy2pS9U6NCLuO+qs
-         fEl4VfL35K0sIhul7m356GNngSjjeLq8AuPNqpdG5O6KgZe7fhfaBQYHKd0UFJWzI4yQ
-         B1sQ==
-X-Gm-Message-State: AC+VfDwnqn5bDJQC+CH0nCGsuNYQ3TbJh5lJo9N+yDNRcyMKkn11C91t
-        y2kbkJBdNjqI+gjz29C3s+EyHilfWHGyXvnXi8t5MQ==
-X-Google-Smtp-Source: ACHHUZ53AC1hM60sp7/VCP+nhBtzioSIHDIvS/pGi97VmrDQO+/wKeMaoVDcdKw+DXIsXe0NDeF2BZWop2xGNZr78VA=
-X-Received: by 2002:a25:fc0a:0:b0:b9e:8f7b:5c36 with SMTP id
- v10-20020a25fc0a000000b00b9e8f7b5c36mr10696865ybd.17.1683550024778; Mon, 08
- May 2023 05:47:04 -0700 (PDT)
+        Mon, 8 May 2023 09:37:37 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 127703488B;
+        Mon,  8 May 2023 06:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=Cc:To:Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Message-Id:Date:Subject:From:References:In-Reply-To:Sender:
+        Reply-To:Content-ID:Content-Description;
+        bh=ZiYNyYZW2PX1GsawJ1pBHCOLh0RTEIYbhy7d/KLFVEs=; b=XS1W6sPzQaVo5Lfz5EtL1xaUX2
+        tZ7EapKk+HCmadsMPS0I8CsdL/oFQjRa44ngulQvMOdTa94/73FemElK/o7MyrFYdiSPThIl/Nruf
+        n7onJn8/cJXeu5QM9HzsexpMBGTylIx4QgeB8/dyVgLRb+kTUsnd5zAuGTiVUd17ulQoLU+clQGHo
+        8YF9XK7gj8gj5W9wRAwWz3shTijUQCNwaKXvW2Z3c5RaW20hAvXinPE++TW0t/c+FuvCIzxukL+3m
+        AoDqQRWS2HvfmkRsw1PiJ5goj/MI9GxYDiczdNBnvdhWghYMRlG9OYnNvY9qXcvC2BDR7A1vE0a71
+        oHRjbwCQ==;
+Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.94.2)
+        id 1pw0hF-009LZn-85; Mon, 08 May 2023 15:14:33 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Subject: [PATCH v4 0/6] thermal: qcom: tsens: Fix MDM9607, add MSM8909
+Date:   Mon, 08 May 2023 15:13:37 +0200
+Message-Id: <20230508-msm8909-tsens-v4-0-d9119622cb19@kernkonzept.com>
 MIME-Version: 1.0
-References: <20230421124938.21974-1-quic_devipriy@quicinc.com>
- <20230421124938.21974-7-quic_devipriy@quicinc.com> <20230508122109.GC4190@thinkpad>
-In-Reply-To: <20230508122109.GC4190@thinkpad>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 8 May 2023 15:46:53 +0300
-Message-ID: <CAA8EJppKUwfatdNoQPD4QbEPXyv1cEz3cDLfND+70Veq5Bcf8Q@mail.gmail.com>
-Subject: Re: [PATCH V3 6/6] PCI: qcom: Add support for IPQ9574
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_ipkumar@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIL1WGQC/52Oyw6CMBREf8V0bUlLeYgr/8OwKHClDdCSeytRC
+ f9uYePe5Zlk5szKCNACsetpZQiLJetdhOx8Yq3Rrgduu8gsFakSubjwiaZLJSoeCBzxolRKF10
+ m8wZY7DSagDeoXWtiyz3HMYYzwsO+Dsm9jvxAP/FgEPRvWslcClXlIkmLslKy5JJTgDl+SHpA4
+ 8fuNgC6wbsPzCFp/bT7jKXg8X3cX7Jd8P9cvW3bF1438jcQAQAA
+To:     Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 8 May 2023 at 15:21, Manivannan Sadhasivam <mani@kernel.org> wrote:
->
-> On Fri, Apr 21, 2023 at 06:19:38PM +0530, Devi Priya wrote:
-> > The IPQ9574 platform has 4 Gen3 PCIe controllers: two single-lane
-> > and two dual-lane based on SNPS core 5.70a
-> > The Qcom IP rev is 1.27.0 and Synopsys IP rev is 5.80a
-> > Added a new compatible 'qcom,pcie-ipq9574' and 'ops_1_27_0'
-> > which reuses all the members of 'ops_2_9_0' except for the post_init
-> > as the SLV_ADDR_SPACE_SIZE configuration differs between 2_9_0
-> > and 1_27_0.
-> > Also, modified get_resources of 'ops 2_9_0' to get the clocks
-> > from the device tree and modelled the post init sequence as
-> > a common function to avoid code redundancy.
-> >
-> > Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-> > Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> > Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->
-> One comment below. With that fixed,
->
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
->
-> - Mani
->
-> > ---
-> >  Changes in V3:
-> >       - Rebased on top of linux-next/master
-> >
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 61 ++++++++++++++++++--------
-> >  1 file changed, 43 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/contr=
-oller/dwc/pcie-qcom.c
-> > index 4ab30892f6ef..3682ecdead1f 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -107,6 +107,7 @@
-> >
-> >  /* PARF_SLV_ADDR_SPACE_SIZE register value */
-> >  #define SLV_ADDR_SPACE_SZ                    0x10000000
-> > +#define SLV_ADDR_SPACE_SZ_1_27_0             0x08000000
-> >
-> >  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
-> >  #define AHB_CLK_EN                           BIT(0)
-> > @@ -202,10 +203,10 @@ struct qcom_pcie_resources_2_7_0 {
-> >       struct reset_control *rst;
-> >  };
-> >
-> > -#define QCOM_PCIE_2_9_0_MAX_CLOCKS           5
-> >  struct qcom_pcie_resources_2_9_0 {
-> > -     struct clk_bulk_data clks[QCOM_PCIE_2_9_0_MAX_CLOCKS];
-> > +     struct clk_bulk_data *clks;
-> >       struct reset_control *rst;
-> > +     int num_clks;
-> >  };
-> >
-> >  union qcom_pcie_resources {
-> > @@ -1050,17 +1051,10 @@ static int qcom_pcie_get_resources_2_9_0(struct=
- qcom_pcie *pcie)
-> >       struct qcom_pcie_resources_2_9_0 *res =3D &pcie->res.v2_9_0;
-> >       struct dw_pcie *pci =3D pcie->pci;
-> >       struct device *dev =3D pci->dev;
-> > -     int ret;
-> >
-> > -     res->clks[0].id =3D "iface";
-> > -     res->clks[1].id =3D "axi_m";
-> > -     res->clks[2].id =3D "axi_s";
-> > -     res->clks[3].id =3D "axi_bridge";
-> > -     res->clks[4].id =3D "rchng";
-> > -
-> > -     ret =3D devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
-> > -     if (ret < 0)
-> > -             return ret;
-> > +     res->num_clks =3D devm_clk_bulk_get_all(dev, &res->clks);
-> > +     if (res->clks < 0)
-> > +             return res->num_clks;
->
-> Why not return proper error no?
+Make the MDM9607 thermal sensor support consistent with Qualcomm's
+vendor kernel (msm-3.18) by applying the correct default slope values
+and adding "correction factors" to the factory calibration values in the
+fuses. Use the same functionality to add the very similar MSM8909 SoC to
+the tsens driver.
 
-Instead the question should be, why not the proper condition: it tells
-`if (res->clks < 0)', while it should be `if (res->num_clks < 0)'.
+---
+Changes in v4:
+- Mostly just resend, explicitly initialize zero values for
+  the MSM8909 p1/p2_calib_offset for better clarity (Konrad)
+- Link to v3: https://lore.kernel.org/r/20230315103950.2679317-1-stephan.gerhold@kernkonzept.com
+Changes in v3:
+- Drop now unused definition reported by kernel test robot
+Changes in v2:
+- Rewrite on top of per-sensor nvmem cell changes that landed in 6.3
+- Add patches to fix existing support for MDM9607
 
->
-> >
-> >       res->rst =3D devm_reset_control_array_get_exclusive(dev);
-> >       if (IS_ERR(res->rst))
-> > @@ -1073,7 +1067,7 @@ static void qcom_pcie_deinit_2_9_0(struct qcom_pc=
-ie *pcie)
-> >  {
-> >       struct qcom_pcie_resources_2_9_0 *res =3D &pcie->res.v2_9_0;
-> >
-> > -     clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
-> > +     clk_bulk_disable_unprepare(res->num_clks, res->clks);
-> >  }
-> >
-> >  static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
-> > @@ -1102,19 +1096,16 @@ static int qcom_pcie_init_2_9_0(struct qcom_pci=
-e *pcie)
-> >
-> >       usleep_range(2000, 2500);
-> >
-> > -     return clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
-> > +     return clk_bulk_prepare_enable(res->num_clks, res->clks);
-> >  }
-> >
-> > -static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> > +static int qcom_pcie_post_init(struct qcom_pcie *pcie)
-> >  {
-> >       struct dw_pcie *pci =3D pcie->pci;
-> >       u16 offset =3D dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> >       u32 val;
-> >       int i;
-> >
-> > -     writel(SLV_ADDR_SPACE_SZ,
-> > -             pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> > -
-> >       val =3D readl(pcie->parf + PARF_PHY_CTRL);
-> >       val &=3D ~PHY_TEST_PWR_DOWN;
-> >       writel(val, pcie->parf + PARF_PHY_CTRL);
-> > @@ -1151,6 +1142,26 @@ static int qcom_pcie_post_init_2_9_0(struct qcom=
-_pcie *pcie)
-> >       return 0;
-> >  }
-> >
-> > +static int qcom_pcie_post_init_1_27_0(struct qcom_pcie *pcie)
-> > +{
-> > +     writel(SLV_ADDR_SPACE_SZ_1_27_0,
-> > +            pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> > +
-> > +     qcom_pcie_post_init(pcie);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
-> > +{
-> > +     writel(SLV_ADDR_SPACE_SZ,
-> > +            pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> > +
-> > +     qcom_pcie_post_init(pcie);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >  static int qcom_pcie_link_up(struct dw_pcie *pci)
-> >  {
-> >       u16 offset =3D dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> > @@ -1291,6 +1302,15 @@ static const struct qcom_pcie_ops ops_2_9_0 =3D =
-{
-> >       .ltssm_enable =3D qcom_pcie_2_3_2_ltssm_enable,
-> >  };
-> >
-> > +/* Qcom IP rev.: 1.27.0  Synopsys IP rev.: 5.80a */
-> > +static const struct qcom_pcie_ops ops_1_27_0 =3D {
-> > +     .get_resources =3D qcom_pcie_get_resources_2_9_0,
-> > +     .init =3D qcom_pcie_init_2_9_0,
-> > +     .post_init =3D qcom_pcie_post_init_1_27_0,
-> > +     .deinit =3D qcom_pcie_deinit_2_9_0,
-> > +     .ltssm_enable =3D qcom_pcie_2_3_2_ltssm_enable,
-> > +};
-> > +
-> >  static const struct qcom_pcie_cfg cfg_1_0_0 =3D {
-> >       .ops =3D &ops_1_0_0,
-> >  };
-> > @@ -1323,6 +1343,10 @@ static const struct qcom_pcie_cfg cfg_2_9_0 =3D =
-{
-> >       .ops =3D &ops_2_9_0,
-> >  };
-> >
-> > +static const struct qcom_pcie_cfg cfg_1_27_0 =3D {
-> > +     .ops =3D &ops_1_27_0,
-> > +};
-> > +
-> >  static const struct dw_pcie_ops dw_pcie_ops =3D {
-> >       .link_up =3D qcom_pcie_link_up,
-> >       .start_link =3D qcom_pcie_start_link,
-> > @@ -1607,6 +1631,7 @@ static const struct of_device_id qcom_pcie_match[=
-] =3D {
-> >       { .compatible =3D "qcom,pcie-ipq8064-v2", .data =3D &cfg_2_1_0 },
-> >       { .compatible =3D "qcom,pcie-ipq8074", .data =3D &cfg_2_3_3 },
-> >       { .compatible =3D "qcom,pcie-ipq8074-gen3", .data =3D &cfg_2_9_0 =
-},
-> > +     { .compatible =3D "qcom,pcie-ipq9574", .data =3D &cfg_1_27_0 },
-> >       { .compatible =3D "qcom,pcie-msm8996", .data =3D &cfg_2_3_2 },
-> >       { .compatible =3D "qcom,pcie-qcs404", .data =3D &cfg_2_4_0 },
-> >       { .compatible =3D "qcom,pcie-sa8540p", .data =3D &cfg_1_9_0 },
-> > --
-> > 2.17.1
-> >
->
-> --
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
+---
+Stephan Gerhold (6):
+      thermal: qcom: tsens: Drop unused legacy structs
+      thermal: qcom: tsens-v0_1: Fix mdm9607 slope values
+      thermal: qcom: tsens-v0_1: Add mdm9607 correction offsets
+      dt-bindings: thermal: qcom-tsens: Drop redundant compatibles
+      dt-bindings: thermal: qcom-tsens: Add MSM8909 compatible
+      thermal: qcom: tsens-v0_1: Add MSM8909 data
 
+ .../devicetree/bindings/thermal/qcom-tsens.yaml    | 23 +----
+ drivers/thermal/qcom/tsens-v0_1.c                  | 99 +++++++++++++---------
+ drivers/thermal/qcom/tsens-v1.c                    | 22 -----
+ drivers/thermal/qcom/tsens.c                       | 19 ++++-
+ drivers/thermal/qcom/tsens.h                       |  6 +-
+ 5 files changed, 84 insertions(+), 85 deletions(-)
+---
+base-commit: ac9a78681b921877518763ba0e89202254349d1b
+change-id: 20230508-msm8909-tsens-6733a6d415be
 
+Best regards,
+-- 
+Stephan Gerhold
+Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
 
---=20
-With best wishes
-Dmitry
