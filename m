@@ -2,61 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E77846FA114
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 09:32:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FC2A6FA129
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 09:38:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233456AbjEHHcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 03:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44128 "EHLO
+        id S233381AbjEHHiD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 03:38:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233394AbjEHHcF (ORCPT
+        with ESMTP id S233044AbjEHHiB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 03:32:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B64C5BA2;
-        Mon,  8 May 2023 00:31:56 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0AFEB60A6D;
-        Mon,  8 May 2023 07:31:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFFBC433EF;
-        Mon,  8 May 2023 07:31:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683531115;
-        bh=uFm7amat6u5/NTy02eKQykrRvo7kkoqHKGb741TnEf8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lddSyqHXQphaywKV2TuBbmDUA2mtJJfRsde3Rdqlk1ahvi9QnaIYW/jvcvFb0WzMs
-         qxYcKeHi/GrV9Xg303yXbvHIHpfwivcEdyOwW0xIxW+5q4tr3BAVx/NdNugxfpoS1g
-         32ngqaqWKokfjbxUMS4x3MUKsbBRM2bKzBmWiTitUDiZdxnKfmQQoVjuBav4uWnxaA
-         cX5mvj7h46dOMaRfDgz3s7j8Q9go6LOuXydgcGFp8MV0BhPs9wQW+fNH0B3RGG1lZ9
-         7cKvoyGQK8dHhe04ZQwAbuIyIPTLmd8s5jonU8UCQVdDFRogEVJSHthcCTaZ2mHZso
-         ADV0Nhx+C98Yw==
-Date:   Mon, 8 May 2023 13:01:51 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 8 May 2023 03:38:01 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23345FDE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 00:37:58 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so46157051fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 00:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683531477; x=1686123477;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=igOidM55jTLRiFTsSNNJdbhAlQx6xHp4xjUBma9E7bc=;
+        b=RxJ0Mr/7ZCEaj/z1YJAAkQJlLJKnLkibtNK/TP6P4+vDgz6bsC0JB3+ALVM9/NQD19
+         PtLQX+BAxaXadicFoOx//IHBK5WAHhMQ7xDCP+wsGNWb+dlNVvt46rRyRSCWFYUp9Qu2
+         oQbYN232aa+GokrPYPjiKgNCDLtX23AQaturns9s7pIgHDuW8K2yDNwTrixAjrr+k+qE
+         gwXQwoHkT/GtRsGDGp1BBoz5EarvQN10gXkZ9ed3O9mcSELIBAxr+Z6gmeoq22ss3uQm
+         0SbfrDTiHEQO0apj00Yn2YFxhuuv0BKfi1jXwRtLHtMtWTvq6P+gGegFJnf35s5fwy3k
+         XROg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683531477; x=1686123477;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=igOidM55jTLRiFTsSNNJdbhAlQx6xHp4xjUBma9E7bc=;
+        b=Q2jDA+TDzBifIOWfLWY8q0oM/tjkOfRmBA9EpBaDuvqyrmGiw2an0+cqT2mxVZmDgz
+         OFF36coVcE7D6EqZMI2Hk9LMri010e5IJjW9wcp8/JvgJcGtgDyA6JYp/Oc+cdo3N/Xy
+         1oZ2FLyUXNTskAcgiNzj8n3o4C4ZdZ/bA8jIsWzr3LCzarx2Uhl3XoGD/reUZFb6ga4O
+         jzXgdPGhHMZ1yV2w8ZTQy9BHxHe05m/gZ6HfsLxbi/d0wqTlajL+4xeY0wU+sDw14UEK
+         e+eiKSJ6kVJO4+OYf6bwbD7mE0J2q2q17CZUQdMthSpu1/vskqm+t2/IIDJaaZoEz/TB
+         VqMg==
+X-Gm-Message-State: AC+VfDwh4Ru5KN99ZeqihGFiO/QvBmNAyI4OcOIDkmCGYeSY2aIdZ5m2
+        Q2ldJxGkIGoinfKST9BwKldUMA==
+X-Google-Smtp-Source: ACHHUZ6XMHCTOPTRkqco61kyNi4aDDhkl+zXb5UKpmV5EdMdwy09a+NPnCeGTi4N8zBc6qbuQtpumQ==
+X-Received: by 2002:a2e:8eca:0:b0:2ac:85d7:342b with SMTP id e10-20020a2e8eca000000b002ac85d7342bmr2582044ljl.29.1683531477081;
+        Mon, 08 May 2023 00:37:57 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id l17-20020a05651c10d100b002ab0c9fab23sm1089550ljn.79.2023.05.08.00.37.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 May 2023 00:37:56 -0700 (PDT)
+Message-ID: <4e9275be-c584-8656-2edb-447ab5546e5c@linaro.org>
+Date:   Mon, 8 May 2023 09:37:55 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 3/6] soc: qcom: ocmem: make iface clock optional
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org
-Subject: Re: [PATCH v3 0/7] soundwire: qcom: add support for SM8550
- (Soundwire v2.0.0)
-Message-ID: <ZFilZ9MYdjmjtv0i@matsya>
-References: <20230418095447.577001-1-krzysztof.kozlowski@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230418095447.577001-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
+ <20230506-msm8226-ocmem-v1-3-3e24e2724f01@z3ntu.xyz>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230506-msm8226-ocmem-v1-3-3e24e2724f01@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -65,21 +83,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18-04-23, 11:54, Krzysztof Kozlowski wrote:
-> Hi,
-> 
-> Changes since v2:
-> 1. Use uint16 for qcom,ports-sinterval.
->    DTS will be fixed in separate patchset.
-> 2. Add tags.
-> 
-> Changes since v1:
-> 1. Patch 1: Increase maxItems to 16 for port-related properties.
-> 2. Re-order patch 1 and 2.
-> 3. Patch 3: Drop unneeded semicolon.
-> 4. Patch 5: Fix lang typo in subject.
 
-Applied, thanks
 
--- 
-~Vinod
+On 7.05.2023 11:12, Luca Weiss wrote:
+> Some platforms such as msm8226 do not have an iface clk. Since clk_bulk
+> APIs don't offer to a way to treat some clocks as optional simply add
+> core_clk and iface_clk members to our drvdata.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+I think I don't see anything wrong in here!
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+>  drivers/soc/qcom/ocmem.c | 42 ++++++++++++++++++++++++------------------
+>  1 file changed, 24 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+> index a11a955a1327..6235065d3bc9 100644
+> --- a/drivers/soc/qcom/ocmem.c
+> +++ b/drivers/soc/qcom/ocmem.c
+> @@ -54,6 +54,8 @@ struct ocmem {
+>  	const struct ocmem_config *config;
+>  	struct resource *memory;
+>  	void __iomem *mmio;
+> +	struct clk *core_clk;
+> +	struct clk *iface_clk;
+>  	unsigned int num_ports;
+>  	unsigned int num_macros;
+>  	bool interleaved;
+> @@ -91,16 +93,6 @@ struct ocmem {
+>  #define OCMEM_PSGSC_CTL_MACRO2_MODE(val)	FIELD_PREP(0x00000700, (val))
+>  #define OCMEM_PSGSC_CTL_MACRO3_MODE(val)	FIELD_PREP(0x00007000, (val))
+>  
+> -#define OCMEM_CLK_CORE_IDX			0
+> -static struct clk_bulk_data ocmem_clks[] = {
+> -	{
+> -		.id = "core",
+> -	},
+> -	{
+> -		.id = "iface",
+> -	},
+> -};
+> -
+>  static inline void ocmem_write(struct ocmem *ocmem, u32 reg, u32 data)
+>  {
+>  	writel(data, ocmem->mmio + reg);
+> @@ -316,9 +308,15 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+>  	ocmem->dev = dev;
+>  	ocmem->config = device_get_match_data(dev);
+>  
+> -	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(ocmem_clks), ocmem_clks);
+> -	if (ret)
+> -		return dev_err_probe(dev, ret, "Unable to get clocks\n");
+> +	ocmem->core_clk = devm_clk_get(dev, "core");
+> +	if (IS_ERR(ocmem->core_clk))
+> +		return dev_err_probe(dev, PTR_ERR(ocmem->core_clk),
+> +				     "Unable to get core clock\n");
+> +
+> +	ocmem->iface_clk = devm_clk_get_optional(dev, "iface");
+> +	if (IS_ERR(ocmem->iface_clk))
+> +		return dev_err_probe(dev, PTR_ERR(ocmem->iface_clk),
+> +				     "Unable to get iface clock\n");
+>  
+>  	ocmem->mmio = devm_platform_ioremap_resource_byname(pdev, "ctrl");
+>  	if (IS_ERR(ocmem->mmio))
+> @@ -333,11 +331,15 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	/* The core clock is synchronous with graphics */
+> -	WARN_ON(clk_set_rate(ocmem_clks[OCMEM_CLK_CORE_IDX].clk, 1000) < 0);
+> +	WARN_ON(clk_set_rate(ocmem->core_clk, 1000) < 0);
+> +
+> +	ret = clk_prepare_enable(ocmem->core_clk);
+> +	if (ret)
+> +		return dev_err_probe(ocmem->dev, ret, "Failed to enable core clock\n");
+>  
+> -	ret = clk_bulk_prepare_enable(ARRAY_SIZE(ocmem_clks), ocmem_clks);
+> +	ret = clk_prepare_enable(ocmem->iface_clk);
+>  	if (ret)
+> -		return dev_err_probe(ocmem->dev, ret, "Failed to enable clocks\n");
+> +		return dev_err_probe(ocmem->dev, ret, "Failed to enable iface clock\n");
+>  
+>  	if (qcom_scm_restore_sec_cfg_available()) {
+>  		dev_dbg(dev, "configuring scm\n");
+> @@ -396,13 +398,17 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+>  	return 0;
+>  
+>  err_clk_disable:
+> -	clk_bulk_disable_unprepare(ARRAY_SIZE(ocmem_clks), ocmem_clks);
+> +	clk_disable_unprepare(ocmem->core_clk);
+> +	clk_disable_unprepare(ocmem->iface_clk);
+>  	return ret;
+>  }
+>  
+>  static int ocmem_dev_remove(struct platform_device *pdev)
+>  {
+> -	clk_bulk_disable_unprepare(ARRAY_SIZE(ocmem_clks), ocmem_clks);
+> +	struct ocmem *ocmem = platform_get_drvdata(pdev);
+> +
+> +	clk_disable_unprepare(ocmem->core_clk);
+> +	clk_disable_unprepare(ocmem->iface_clk);
+>  
+>  	return 0;
+>  }
+> 
