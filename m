@@ -2,61 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 967D66FA1A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 09:55:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 053E16FA23A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 10:27:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233614AbjEHHzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 03:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60334 "EHLO
+        id S232904AbjEHI1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 04:27:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233607AbjEHHzX (ORCPT
+        with ESMTP id S232968AbjEHI1f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 03:55:23 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D3EA1BFE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 00:55:22 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f2510b2b98so518680e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 00:55:22 -0700 (PDT)
+        Mon, 8 May 2023 04:27:35 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8EE040DA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 01:27:20 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ac78bb48eeso46867111fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 01:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683532521; x=1686124521;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q2ALHLGEvKmJVohfNvJg1us24FkLGEto5t+03iCusFw=;
-        b=tLTXGa6UnaZthxqnkQq4HYXhlaSRjRUR3QIK3DO/EWNL6Dg63Ddvc9GNrVVswwIaxi
-         rjg9a4c5U7BsDH6FGxXndCrP5TkKankUdemMjNOh5rEQJ93Ju6ut9pQLEzx+O1gD1dBZ
-         2fNc3iZ924yHNZkODXhrrS7GLytn1crRJMGxkXhGmVHln6/T3Uk9m0SmhoQGc6tSR7dO
-         ImA1LXpvCn0x/+8aZPRYHLjRm7VKpAvjKtmO+d1nb7DbeyclvLUu9hlR3it81C2J1m4D
-         zo+1fpsqM7waJnzw4Hkl4pYsjQnRe0iX4zQyd53DGG5hs7Mf9mLpK08sb+ev4JpvJycB
-         nmjA==
+        d=linaro.org; s=google; t=1683534439; x=1686126439;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vzzV7o/cRkyKA4fMWXATwiDXCBGn/V28RB2TejGS6dQ=;
+        b=BOxdMBvp1HrfPZ+qau8r94f0FRFatA17u+z22i0l2fkuKKHAaHiRTrYNuuq4bwxrM1
+         6uQOneD4Kf93zRl1fUQOYNGuC4rRkQuqKbS8sP+CuvPQz/+OlqRZ6VLRjvhQwV4h1Bma
+         3kToglCIn2qNbketePpc6CFP0/HUm/mWRQ+1xtjHZqclDwek5qsiW09dO7cF07eKtUt6
+         hJgSljUmxH/Ew5NiZSIny+/M4A6UANFqIpv2JV0ZsdKH2vZZXeF4iqojRfiA59zNGx9j
+         pN6qeSShY3FB//xOfBfHtTL/JSCHwUDjo9tnpHmrV98a4S/Ghe1ycQIIqkFBFRyNiqCB
+         peWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683532521; x=1686124521;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683534439; x=1686126439;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q2ALHLGEvKmJVohfNvJg1us24FkLGEto5t+03iCusFw=;
-        b=dWUasZWF0fqhdhHwZfMbNpVa6ar1v2UO+wTd7PUn0BwNq06MsEpfN6ywM+UQsCXXDg
-         /fQ7IsrIcjJcephzsNPhSqVA3fV8p5s/DSHp+E3k37ekZPtE9wKb0MIanIEutxlW+0lK
-         Ef3PFRWLXeHCIQqDicKjGOMBb+xaIJZ5BKss193r62IaaLndtSwNqWIE2SvFel+Uxuuh
-         AK/StOspgFuHcFohckKEjljcKCkarjPZ6LQsVmoxw3LYwZV2vheGE/6BY7DSdIkmrsNk
-         PpIv4+MaH8HQJj/f2djjIHd15e+NSq95QXtZav0AD6wRHOKDRw3bF+qWo2BMuUl1CjTg
-         lqtA==
-X-Gm-Message-State: AC+VfDy/BoafLGDfXaYWLS+dMEz2Wlrh9eOHKHj4mj0po+tM5hdLfjOJ
-        jDB4ZbEO4Z2sEtxss5YtWhEfMQ==
-X-Google-Smtp-Source: ACHHUZ62wPngHnjMNGrTLtyaL6+Y0BFQatHP4ZzR8IBJ0Rg2RKczNqRFnEsNJsMHpjthzqJGb59F7w==
-X-Received: by 2002:ac2:521b:0:b0:4eb:43f5:738e with SMTP id a27-20020ac2521b000000b004eb43f5738emr2612353lfl.60.1683532520730;
-        Mon, 08 May 2023 00:55:20 -0700 (PDT)
+        bh=vzzV7o/cRkyKA4fMWXATwiDXCBGn/V28RB2TejGS6dQ=;
+        b=aRMCZASUyQ94WjyckjKUGfy6vcBsKkBJGkSvoVDBPmRo9XXvYmHRBSnHr/gz/H72F7
+         NltcCmXYyvgsvwfzkksl4NUuA1FqdofBm8FpkUef0eItsrbu02DpQeHCOWZUqmi5erQn
+         rxzm3LNnYndKA3qugSBDdT02hNHABMJeO/oC0QJRNE0/bPbWkAFPYsDqbWQgbh5cbgv5
+         n0MeU+9HB8hcdEJc0374DIBimPRzXCF+cmYx0dJu/42fdsdflT1MyLOHmx4R2/8jcGH2
+         I82h6KRUU44xuEZJgcEEuqm/IDI7a013vf7ycH9QXRoQf3BHd1E1DOWz4xLgw0JK780U
+         ex9A==
+X-Gm-Message-State: AC+VfDwLbCefFUmE0BYFYnkZlPa4R++qsk7Eq9kr+j6cj62t6eELIhyS
+        grsLqxLELGyVjECyhYMXeIRP3Q==
+X-Google-Smtp-Source: ACHHUZ5qclbC/4fXs8Csx4zA7yUD6Fxk+2k5Mo6A6zP7h3IIYUYWAQruEGHiOsM/rUZaTmTea8Zq6Q==
+X-Received: by 2002:a2e:2405:0:b0:2a7:73a2:d915 with SMTP id k5-20020a2e2405000000b002a773a2d915mr2448295ljk.5.1683534439064;
+        Mon, 08 May 2023 01:27:19 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id c7-20020ac24147000000b004f13b59307asm1204133lfi.232.2023.05.08.00.55.19
+        by smtp.gmail.com with ESMTPSA id i22-20020a2e9416000000b0029c36ebf89asm1088596ljh.112.2023.05.08.01.27.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 00:55:20 -0700 (PDT)
-Message-ID: <70b06c2a-de21-b14f-b3b2-82e40762f862@linaro.org>
-Date:   Mon, 8 May 2023 09:55:18 +0200
+        Mon, 08 May 2023 01:27:18 -0700 (PDT)
+Message-ID: <e1ee4334-ee99-2495-89b6-6a67f4130747@linaro.org>
+Date:   Mon, 8 May 2023 10:27:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 1/2] clk: qcom: mmcc-msm8974: use clk_rcg2_shared_ops for
- mdp_clk_src clock
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -66,13 +64,15 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Taniya Das <quic_tdas@quicinc.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
 References: <20230507175335.2321503-1-dmitry.baryshkov@linaro.org>
+ <20230507175335.2321503-2-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230507175335.2321503-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 2/2] clk: qcom: mmcc-msm8974: fix MDSS_GDSC power flags
+In-Reply-To: <20230507175335.2321503-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,33 +83,34 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 7.05.2023 19:53, Dmitry Baryshkov wrote:
-> The mdp_clk_src clock should not be turned off. Instead it should be
-> 'parked' to the XO, as most of other mdp_clk_src clocks. Fix that by
-> using the clk_rcg2_shared_ops.
+> Using PWRSTS_RET on msm8974's MDSS_GDSC causes display to stop working.
+> The gdsc doesn't fully come out of retention mode. Change it's pwrsts
+> flags to PWRSTS_OFF_ON.
 > 
-> Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
+> Fixes: d399723950c4 ("clk: qcom: gdsc: Fix the handling of PWRSTS_RET support")
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-I am inclined to think it's true, however I can't see any evidence
-of this being done on the vendor kernel.. I am however not a licensed
-archaeologist so I might have missed it.. Hence I'll do:
+This is a stopgap solution, not exactly a fix, all signs on Heaven and
+Earth say that 8974 should support retention on this GDSC!
 
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+*although*
+
+pre-v2.2 chips don't
 
 Konrad
 >  drivers/clk/qcom/mmcc-msm8974.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
-> index 4273fce9a4a4..aa29c79fcd55 100644
+> index aa29c79fcd55..277ef0065aae 100644
 > --- a/drivers/clk/qcom/mmcc-msm8974.c
 > +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> @@ -485,7 +485,7 @@ static struct clk_rcg2 mdp_clk_src = {
->  		.name = "mdp_clk_src",
->  		.parent_data = mmcc_xo_mmpll0_dsi_hdmi_gpll0,
->  		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_dsi_hdmi_gpll0),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
+> @@ -2401,7 +2401,7 @@ static struct gdsc mdss_gdsc = {
+>  	.pd = {
+>  		.name = "mdss",
 >  	},
+> -	.pwrsts = PWRSTS_RET_ON,
+> +	.pwrsts = PWRSTS_OFF_ON,
 >  };
 >  
+>  static struct gdsc camss_jpeg_gdsc = {
