@@ -2,107 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 101096F9D0B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 02:33:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ABC96F9D32
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 03:06:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232060AbjEHAdW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 7 May 2023 20:33:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51322 "EHLO
+        id S232024AbjEHBGT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 7 May 2023 21:06:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232176AbjEHAdS (ORCPT
+        with ESMTP id S230114AbjEHBGT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 7 May 2023 20:33:18 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A81789ECF
-        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 17:33:16 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f139de8cefso25035932e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 May 2023 17:33:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683505994; x=1686097994;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oEQDCOyFW88AgofKdbGFwc945Q39RQOUdRFCRSDEy4A=;
-        b=y9IkXDsAwbqXPLy4CCV5z82g+CmkqqbXvOuEKwpKwRK26EljXvzOqDXIgiDkIRYKVB
-         0CPVca372LKAWy8VvibYZ8UnwO8DCraceJKCtZsgNmR+uBCtvjeQ8j6spnsblxY22PBu
-         2lblNOJFYLu73gZwBFo+ULelUnDGDSqNnasLrWvaMLgaxja5JwGpgoOc494XSc1mARZ3
-         ndcyA1Hi9AE/aq6sHfjShEplyIZOzRwMH9I7CaK7yHNhq2Ed2dKurudO6OkX9KIMCsYn
-         Xz4Jo3bF+qs/zLAOkzmmRJWheDx8YHQ8kH/VFFYUZEexfUWfw7SEL0WVlquzcMGD+ZNJ
-         dc+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683505994; x=1686097994;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oEQDCOyFW88AgofKdbGFwc945Q39RQOUdRFCRSDEy4A=;
-        b=cK4kSK+wF8i0GmXIe21IjZ3GsUKERnmqmKK+16xRMQ8M+GvxV7M8gkNc0pKBIEr9mC
-         MD+yS72UGUn0YNooej9oWmKkhvPLkbvMPR/nGN7g9nkM0nNWLaXU6jDDzx2dh0YKkbUL
-         CaS885rMAe2bfh2CQTKdTBTdfwx4zbQIIBw9bfkzIGacEmfAJNQZ3b/l1vWSDW6UhKL1
-         0wF4yCS0f8to5INs+BbMgvMEGecmcfd/nmOpfw1qvRW/jvBB7OSbKry6FgrJAZXSs5K9
-         LmicLbqhlmFLCcbvBimAtqeoladcdqny46sU0zT0EU0YuJ+7Nl7zJQ65W/C87J5ewILR
-         jFZQ==
-X-Gm-Message-State: AC+VfDyBuYo1VgrrdMtxqJYjFI0Rd12WGtoZbFj8BZuQ7rPUAVTHDrHj
-        VVshCGO3qenOp3vausNO8SPPQw==
-X-Google-Smtp-Source: ACHHUZ56enFA9XXTyqGS4NKHXMm5OwkUAErfoCMn0N+pG4Pzb5367H6gEqKnmtEID/UCoHRjBDMSuw==
-X-Received: by 2002:a05:6512:3983:b0:4eb:41ac:e33 with SMTP id j3-20020a056512398300b004eb41ac0e33mr4860293lfu.19.1683505994800;
-        Sun, 07 May 2023 17:33:14 -0700 (PDT)
-Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id m22-20020ac24256000000b004eca2b8b6bdsm1114807lfl.4.2023.05.07.17.33.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 May 2023 17:33:14 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 6/6] ARM: dts: qcom: apq8074-dragonboard: enable coincell charger
-Date:   Mon,  8 May 2023 03:33:09 +0300
-Message-Id: <20230508003309.2363787-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230508003309.2363787-1-dmitry.baryshkov@linaro.org>
-References: <20230508003309.2363787-1-dmitry.baryshkov@linaro.org>
+        Sun, 7 May 2023 21:06:19 -0400
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F8D5100C1
+        for <linux-arm-msm@vger.kernel.org>; Sun,  7 May 2023 18:06:16 -0700 (PDT)
+Received: (qmail 8302 invoked by uid 990); 8 May 2023 01:06:14 -0000
+Authentication-Results: devico.uberspace.de;
+        auth=pass (plain)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Date:   Mon, 08 May 2023 01:06:13 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+From:   "Leonard Lausen" <leonard@lausen.nl>
+Message-ID: <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
+TLS-Required: No
+Subject: [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
+To:     regressions@lists.linux.dev,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Rob Clark" <robdclark@gmail.com>,
+        "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        "Johan Hovold" <johan+linaro@kernel.org>,
+        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>
+Cc:     "Sean Paul" <sean@poorly.run>, "David Airlie" <airlied@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, "Nikita Travkin" <nikita@trvn.ru>
+X-Rspamd-Bar: -
+X-Rspamd-Report: MIME_GOOD(-0.1) BAYES_HAM(-2.999968) SUSPICIOUS_RECIPS(1.5)
+X-Rspamd-Score: -1.599968
+Received: from unknown (HELO unkown) (::1)
+        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Mon, 08 May 2023 03:06:13 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=lausen.nl; s=uberspace;
+        h=from;
+        bh=Ew+ga4R4XmyLDd+z40yzIO7CFGKrkhYk+0CcdiQL9Sw=;
+        b=od7KhyxiI988/H0wo80l6KXEewxhiWVhz0SfXY/weB6DUvv7GRv3Rb/20C0sRcopopbYInGJAy
+        u0LpHpGjdT10DN1ywJ9gw54CY4sTZ1EK+qfwoWlK6Lse+2EHQ/egTwgmIjUs+3z5u3Wwgf2Iy6Ov
+        8+JjmHzraSUXx1gN376lVMSrsd5uBADfq6ae0aeSTI+rNg4zf6AV1xa3l5aiQndVbCH6lE0WEeEm
+        zYVDBem9t6Hx3ZS8gyRPqIkcfQbP90eDXu/W0EeiG19jKZPa/Y3Co/7K7W63phd7QdspH60A9w7K
+        VwwVw/VfIp+qZk7/k1/P+Ml6xftCKNVMRj0wvXjVH2HF+ZiYSdtQCAuN2GHBFd/loesiMFjEzv+I
+        0HosD/qeYweyP2l7P8Zo5M9BCVOS5D+sQ7hANY/c0S9Gs+r1qOHyYh7Ao3RIPYs40pW2Dkyg2jEQ
+        aHQ0tdpJavp7CCkSAp/9YrYiLAwe3X5B7EZtR/Ps98/1/vbTd/qmkEGg92iF9QRm/5ksjayNrbY7
+        /bELzo3Iku+i5IQJi3ViM9T2NYaNUCbY2b3VCzRVNM6rEuAIGMOjqs3/oNj+fY9fwnQ54frY+pk0
+        l6ggn2GIbzVozsNkDoO3VfNBRY9HlabFLpLiNVWt7loWZDv2y3sxN83aeCKOHQIdTZq+mLtgvcaJ
+        E=
+X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
+        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable coincell charger for the coin battery which can be installed on
-the APQ8074 dragonboard.
+This reverts commit e17af1c9d861dc177e5b56009bd4f71ace688d97.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Removing the delay of 100 units broke hot plug detection for USB-C displa=
+ys on
+qcom sc7180 lazor devices. Lazor uses mdss for hot plug detection and dec=
+lares
+dp_hot_plug_det in the dts. Other sc7180 based devices like aspire1 were =
+not
+affected by the regression, as they do not rely on mdss and dp_hot_plug_d=
+et for
+hot plug detection.
+
+Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+Tested-by: Leonard Lausen <leonard@lausen.nl> # Trogdor (sc7180)
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 ---
- arch/arm/boot/dts/qcom-apq8074-dragonboard.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 16d609b85dfe..1d1c08674254 100644
---- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -113,6 +113,12 @@ &mdss {
- 	status = "okay";
- };
- 
-+&pm8941_coincell {
-+	qcom,rset-ohms = <2100>;
-+	qcom,vset-millivolts = <3000>;
-+	status = "okay";
-+};
-+
- &pm8941_gpios {
-         msm_keys_default: pm8941-gpio-keys-state {
-                 pinconf {
--- 
-2.39.2
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp=
+/dp_display.c
+index bde1a7ce442f..db9783ffd5cf 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1506,7 +1506,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_displ=
+ay)
+        dp =3D container_of(dp_display, struct dp_display_private, dp_dis=
+play);
+=20
+=20       if (!dp_display->is_edp)
+-               dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 0);
++               dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
+ }
+=20
+=20bool msm_dp_wide_bus_available(const struct msm_dp *dp_display)
+--=20
+2.30.2
