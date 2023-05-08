@@ -2,109 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 202E96FB8C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 22:53:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5749E6FB923
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 23:10:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233808AbjEHUxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 16:53:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45722 "EHLO
+        id S229539AbjEHVKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 17:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233559AbjEHUxp (ORCPT
+        with ESMTP id S229486AbjEHVKQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 16:53:45 -0400
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83E386EA2
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 13:53:36 -0700 (PDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pw7rL-0003sb-TX; Mon, 08 May 2023 22:53:27 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pw7rL-0024tW-78; Mon, 08 May 2023 22:53:27 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1pw7rK-002YYO-BI; Mon, 08 May 2023 22:53:26 +0200
-From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-To:     Andy Gross <agross@kernel.org>,
+        Mon, 8 May 2023 17:10:16 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79FCF76A1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 14:10:14 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7F95C3F409;
+        Mon,  8 May 2023 23:10:11 +0200 (CEST)
+Date:   Mon, 8 May 2023 23:10:09 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Wolfram Sang <wsa@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        kernel@pengutronix.de
-Subject: [PATCH 57/89] i2c: qup: Convert to platform remove callback returning void
-Date:   Mon,  8 May 2023 22:52:34 +0200
-Message-Id: <20230508205306.1474415-58-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de>
-References: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dsi: simplify pixel clk rate handling
+Message-ID: <63xbsz3mcly2nh7zehf7lutfe4i6qux2bqrlmiywr6hevs3rc2@et2kxxj6tqvf>
+References: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1711; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=cMwQaR3102BnJJbTY1nqBGDvoaKHegaeKvyAONHzEFY=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkWWD2dtzOAKKOZtwkHEp5UsFuNUWMlBEhqAHdZ Yh1p+/qgsyJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZFlg9gAKCRCPgPtYfRL+ Tl3XCACO86SfABlvhrBlwYgc6UPKOz+lLT860hSHMrqn5EroX3m/l+o3ZVGk8DCr4ZmEP6l2G8B 5oDHVcgD7fgRZhTYn+B30itPznji50Yv9MEWTTZ06CGqZJVy1u53wex89EKe9quGxrbDYEns0H/ 05uA/xRPrAf+Z2t7r5e+ALAxtFjEe2aT1lvxLY+mQdNAFkWFv/Cgew/xQD//exXFiLku5k57/8I 4bkpgUZzCxCBDKLiUhcoU6Aa719wmivrMFGofusgFYKdg4WHN9Xh7QSGytWQcx/hr7PfJ/GEDxk bOVXeKFrgySc+RcBd1uaMVkFi9YPBst+1u/id2p+UhHo0+oQ
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+On 2023-01-18 15:00:31, Dmitry Baryshkov wrote:
+> Move a call to dsi_calc_pclk() out of calc_clk_rate directly towards
+> msm_dsi_host_get_phy_clk_req(). It is called for both 6g and v2 hosts.
+> 
+> Also, while we are at it, replace another dsi_get_pclk_rate() invocation
+> with using the stored value at msm_host->pixel_clk_rate.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Yes please, this was annoying and confusing to read in one of the recent
+patches to that stray pclk_bpp assignment, thanks for cleaning it up.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/i2c/busses/i2c-qup.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index 2e153f2f71b6..6eef1dbd00de 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -1904,7 +1904,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int qup_i2c_remove(struct platform_device *pdev)
-+static void qup_i2c_remove(struct platform_device *pdev)
- {
- 	struct qup_i2c_dev *qup = platform_get_drvdata(pdev);
- 
-@@ -1918,7 +1918,6 @@ static int qup_i2c_remove(struct platform_device *pdev)
- 	i2c_del_adapter(&qup->adap);
- 	pm_runtime_disable(qup->dev);
- 	pm_runtime_set_suspended(qup->dev);
--	return 0;
- }
- 
- #ifdef CONFIG_PM
-@@ -1978,7 +1977,7 @@ MODULE_DEVICE_TABLE(of, qup_i2c_dt_match);
- 
- static struct platform_driver qup_i2c_driver = {
- 	.probe  = qup_i2c_probe,
--	.remove = qup_i2c_remove,
-+	.remove_new = qup_i2c_remove,
- 	.driver = {
- 		.name = "i2c_qup",
- 		.pm = &qup_i2c_qup_pm_ops,
--- 
-2.39.2
+For the rest of the cleanup, also totally happy to see the duplication
+moved out of the callback.  As Abhinav notes it does make the functions
+a bit lighter, but that's exactly the purpose to make the differences
+more obvious.
 
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi.h      |  4 ++--
+>  drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  2 +-
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 24 ++++++++++++------------
+>  3 files changed, 15 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+> index bd3763a5d723..93ec54478eb6 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
+> @@ -129,8 +129,8 @@ int dsi_dma_base_get_6g(struct msm_dsi_host *msm_host, uint64_t *iova);
+>  int dsi_dma_base_get_v2(struct msm_dsi_host *msm_host, uint64_t *iova);
+>  int dsi_clk_init_v2(struct msm_dsi_host *msm_host);
+>  int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
+> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host);
+> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host);
+>  void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
+>  void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
+>  struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct mipi_dsi_host *host);
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> index 44be4a88aa83..5106e66846c3 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+> @@ -51,7 +51,7 @@ struct msm_dsi_host_cfg_ops {
+>  	void* (*tx_buf_get)(struct msm_dsi_host *msm_host);
+>  	void (*tx_buf_put)(struct msm_dsi_host *msm_host);
+>  	int (*dma_base_get)(struct msm_dsi_host *msm_host, uint64_t *iova);
+> -	int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool is_bonded_dsi);
+> +	int (*calc_clk_rate)(struct msm_dsi_host *msm_host);
+>  };
+>  
+>  struct msm_dsi_cfg_handler {
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 18fa30e1e858..7d99a108bff6 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -616,28 +616,21 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  
+>  }
+>  
+> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host)
+>  {
+> -	if (!msm_host->mode) {
+> -		pr_err("%s: mode not set\n", __func__);
+> -		return -EINVAL;
+> -	}
+> -
+> -	dsi_calc_pclk(msm_host, is_bonded_dsi);
+>  	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
+> +
+>  	return 0;
+>  }
+>  
+> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host)
+>  {
+>  	u32 bpp = dsi_get_bpp(msm_host->format);
+>  	u64 pclk_bpp;
+>  	unsigned int esc_mhz, esc_div;
+>  	unsigned long byte_mhz;
+>  
+> -	dsi_calc_pclk(msm_host, is_bonded_dsi);
+> -
+> -	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
+> +	pclk_bpp = msm_host->pixel_clk_rate * bpp;
+>  	do_div(pclk_bpp, 8);
+>  	msm_host->src_clk_rate = pclk_bpp;
+>  
+> @@ -2292,7 +2285,14 @@ void msm_dsi_host_get_phy_clk_req(struct mipi_dsi_host *host,
+>  	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
+>  	int ret;
+>  
+> -	ret = cfg_hnd->ops->calc_clk_rate(msm_host, is_bonded_dsi);
+> +	if (!msm_host->mode) {
+> +		pr_err("%s: mode not set\n", __func__);
+> +		return;
+> +	}
+> +
+> +	dsi_calc_pclk(msm_host, is_bonded_dsi);
+> +
+> +	ret = cfg_hnd->ops->calc_clk_rate(msm_host);
+>  	if (ret) {
+>  		pr_err("%s: unable to calc clk rate, %d\n", __func__, ret);
+>  		return;
+> -- 
+> 2.39.0
+> 
