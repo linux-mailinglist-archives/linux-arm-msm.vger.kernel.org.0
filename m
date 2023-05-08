@@ -2,76 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6E146FA166
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 09:48:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43EBD6FA17C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 09:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233259AbjEHHsX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 03:48:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55766 "EHLO
+        id S233452AbjEHHuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 03:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232657AbjEHHsX (ORCPT
+        with ESMTP id S229560AbjEHHum (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 03:48:23 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE181171F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 00:48:21 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4eed764a10cso4609950e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 00:48:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683532100; x=1686124100;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kre6qWKGNcjeM+iThCvTDJwFCUHgVmlK0SAmHcQy0AE=;
-        b=hOzGiR18dYlNKOaD0IWoyHPQVtb5yxUQLPG/xCrxGx/JvtgvNH4mIy3oJIncWALBTv
-         N/eFB5Yh79rgBINFL7807kaoQBJhP4axsXBO7H1fv3SOloLDsRL2GfsnwVoS2PRSBLyr
-         kyuRF9n2nbAZixqZa6j6gITS/FMQ0sDaCjxNHcgtmSxTy6+c7p66y9arFJgnIWhXHuIh
-         88G029UcMnh/N0XPxS/mAiaXL0mfNdb9O/Z45OMKalCR1R2NmlkujSv8/EqwqE42S7ZP
-         SMtlVtJRlXcDd1gH7VfntypcVpkyqP5dxrJnjWZgqVCEBd9a6Dl8iwmjJYVeQxQ69mUf
-         4VYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683532100; x=1686124100;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kre6qWKGNcjeM+iThCvTDJwFCUHgVmlK0SAmHcQy0AE=;
-        b=VqZ1NZnphdsl/vi1+EbVudrplIsBGd8nCfqw3lXk+pWg+CUxoPUVltlPbnIZE+xGWn
-         KJs439VUEEuiUwU/QCsQV3Pfvr+2dC37uLVXuBPUls/rQjtdZVpRI2yNBAO4jaZ+OlVm
-         OzMmtexFp65BZ8IP5wieztdg7zUo1Ltjbo6pei/QEH3kEuTPcSQEaAV7w801JpW9nQjW
-         IkBotL/Ptiz1aIjTYTygWZs3A31YLeFxpy9WFoAXtd/uBBio4REZ/eni5Ho7dkx+38U6
-         bmmTHRc0wgYVyNfO0VO3zWnrYXtbRtxrGP6wZx0DQthurLIMcvVR/WjK67w0Wzx+ThJS
-         Mi9Q==
-X-Gm-Message-State: AC+VfDy3UdYHd019tvMNjNpjCtq5wlYuIAZSP43sTw6ZkGMHTrB6HPem
-        Cp6yTr9eyFKgCzmZSmbO9ONwvQ==
-X-Google-Smtp-Source: ACHHUZ4Sy9seY2TUtAfRj+f9YmJ3Jrb1VAY5uFb/4F86HCNYKlD3iDZgKj6hxFBEbyvFrfeXuzCE5w==
-X-Received: by 2002:ac2:54a3:0:b0:4e8:5e39:6238 with SMTP id w3-20020ac254a3000000b004e85e396238mr1990707lfk.42.1683532100166;
-        Mon, 08 May 2023 00:48:20 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id h14-20020ac25d6e000000b004d8546456c6sm1199876lft.195.2023.05.08.00.48.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 00:48:19 -0700 (PDT)
-Message-ID: <7bf5a2c1-ae97-ae8c-5621-25e06d186a65@linaro.org>
-Date:   Mon, 8 May 2023 09:48:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8996: correct MMCC clocks order
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 8 May 2023 03:50:42 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D9B172C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 00:50:41 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pvvdN-000352-R3; Mon, 08 May 2023 09:50:13 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pvvdK-001wDu-Ru; Mon, 08 May 2023 09:50:10 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1pvvdJ-002Kte-5G; Mon, 08 May 2023 09:50:09 +0200
+Date:   Mon, 8 May 2023 09:50:09 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     "James (Qian) Wang" <james.qian.wang@arm.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Mihail Atanassov <mihail.atanassov@arm.com>,
+        Brian Starkey <brian.starkey@arm.com>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Russell King <linux@armlinux.org.uk>,
+        Joel Stanley <joel@jms.id.au>, Sam Ravnborg <sam@ravnborg.org>,
+        Boris Brezillon <bbrezillon@kernel.org>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Rahul T R <r-ravikumar@ti.com>,
+        Jayshri Pawar <jpawar@cadence.com>,
+        Liu Ying <victor.liu@nxp.com>, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Minghao Chi <chi.minghao@zte.com.cn>,
+        Mark Brown <broonie@kernel.org>,
+        Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Stefan Agner <stefan@agner.ch>,
+        Alison Wang <alison.wang@nxp.com>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Danilo Krummrich <dakr@redhat.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Javier Martinez Canillas <javierm@redhat.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Qiang Yu <yuq825@gmail.com>,
+        Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Ricardo Ribalda <ribalda@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Miaoqian Lin <linmq006@gmail.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230507174516.264936-1-krzysztof.kozlowski@linaro.org>
- <20230507174516.264936-2-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230507174516.264936-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Marek Vasut <marex@denx.de>, Ben Skeggs <bskeggs@redhat.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Guo Zhengkui <guozhengkui@vivo.com>,
+        Yuan Can <yuancan@huawei.com>, Arnd Bergmann <arnd@arndb.de>,
+        Liang He <windhl@126.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Deepak R Varma <drv@mailo.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Yannick Fertre <yannick.fertre@foss.st.com>,
+        Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
+        Philippe Cornu <philippe.cornu@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Maxime Ripard <maxime@cerno.tech>,
+        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+        Noralf =?utf-8?Q?Tr=C3=B8nnes?= <noralf@tronnes.org>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Alexey Brodkin <abrodkin@synopsys.com>,
+        Emma Anholt <emma@anholt.net>, Melissa Wen <mwen@igalia.com>,
+        Hyun Kwon <hyun.kwon@xilinx.com>,
+        Michal Simek <michal.simek@xilinx.com>,
+        linux-aspeed@lists.ozlabs.org, nouveau@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, John Stultz <jstultz@google.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        linux-samsung-soc@vger.kernel.org, lima@lists.freedesktop.org,
+        Steven Price <steven.price@arm.com>,
+        linux-rockchip@lists.infradead.org,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Mali DP Maintainers <malidp@foss.arm.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        linux-sunxi@lists.linux.dev, Jonas Karlman <jonas@kwiboo.se>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org, etnaviv@lists.freedesktop.org,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, Sean Paul <sean@poorly.run>,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        kernel@pengutronix.de, Yongqin Liu <yongqin.liu@linaro.org>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 00/53] drm: Convert to platform remove callback returning
+ void
+Message-ID: <20230508075009.4l4ghdrwopfhmcao@pengutronix.de>
+References: <20230507162616.1368908-1-u.kleine-koenig@pengutronix.de>
+ <935faac5-280b-b2e0-3fdb-d0424990e43a@suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3pf3cmic5n6cdkye"
+Content-Disposition: inline
+In-Reply-To: <935faac5-280b-b2e0-3fdb-d0424990e43a@suse.de>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,42 +180,47 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--3pf3cmic5n6cdkye
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 7.05.2023 19:45, Krzysztof Kozlowski wrote:
-> Re-order the clocks for MMCC clock controller node to match the bindings (Linux
-> driver takes by name):
-> 
->   msm8996-mtp.dtb: clock-controller@8c0000: clock-names:1: 'gpll0' was expected
->   msm8996-mtp.dtb: clock-controller@8c0000: clock-names:2: 'gcc_mmss_noc_cfg_ahb_clk' was expected
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[A few addressed bounced and my script to find the recipents for a patch
+series broke and invented some addresses. I fixed all the problem I'm
+aware of in this mail.]
 
-Konrad
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index fe9e1cb12a73..718007cfb10e 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -939,16 +939,16 @@ mmcc: clock-controller@8c0000 {
->  			#power-domain-cells = <1>;
->  			reg = <0x008c0000 0x40000>;
->  			clocks = <&xo_board>,
-> -				 <&gcc GCC_MMSS_NOC_CFG_AHB_CLK>,
->  				 <&gcc GPLL0>,
-> +				 <&gcc GCC_MMSS_NOC_CFG_AHB_CLK>,
->  				 <&dsi0_phy 1>,
->  				 <&dsi0_phy 0>,
->  				 <&dsi1_phy 1>,
->  				 <&dsi1_phy 0>,
->  				 <&hdmi_phy>;
->  			clock-names = "xo",
-> -				      "gcc_mmss_noc_cfg_ahb_clk",
->  				      "gpll0",
-> +				      "gcc_mmss_noc_cfg_ahb_clk",
->  				      "dsi0pll",
->  				      "dsi0pllbyte",
->  				      "dsi1pll",
+On Mon, May 08, 2023 at 09:06:27AM +0200, Thomas Zimmermann wrote:
+> for the whole series:
+>=20
+> Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+>=20
+> Please see my comment on the patches to tiny/.
+>=20
+> Let me know if you want me to merge this patchset into drm-misc-next.
+
+Thanks, I'd wait a bit for more acks/reviews to come in and then plan to
+resend later, also addressing the feedback you sent.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--3pf3cmic5n6cdkye
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmRYqbAACgkQj4D7WH0S
+/k4JeggAnBHUxma4vQ+/T0T9qJC+5c7iGOJ+hg1VKQdu3RFYOsfEdBVHywMuX8Fb
+bkfMbL4jsyN80KX3Sc7XeT0GkuA6n1bkIfJsTz16Dl8pPUTDBLPKYKNT82+brNvg
+XIif/963gu+RJ+x6ME2cdKET84LGmQwhonW2LUxGiRX5JD3FroDO8qaiLtFzkxEg
+zhCTMEQJUy1J6coFLDsxnhLFu4R/6ngT6tZOJfRAB4OiIEFmKVVH0/Y2Ko/ggJ/d
+50TcQO/0MoAzPrToLpaLaT3VtMocbAxQf7XRwpqF4MDvhu7dVfsJIhcWtBYjocz+
+WfD1B59vo0hWYb/QXlkA6OY3tzlBQQ==
+=Fhn+
+-----END PGP SIGNATURE-----
+
+--3pf3cmic5n6cdkye--
