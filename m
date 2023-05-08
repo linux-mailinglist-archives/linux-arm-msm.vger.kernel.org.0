@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6480C6FA25E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 10:35:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 510426FA264
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 10:36:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232580AbjEHIfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 04:35:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55374 "EHLO
+        id S233106AbjEHIgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 04:36:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233505AbjEHIez (ORCPT
+        with ESMTP id S232906AbjEHIgP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 04:34:55 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3668516082
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 01:34:50 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f14ec4efb0so2639999e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 01:34:50 -0700 (PDT)
+        Mon, 8 May 2023 04:36:15 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218439ED6
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 01:36:13 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4efd6e26585so4765690e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 01:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683534888; x=1686126888;
+        d=linaro.org; s=google; t=1683534971; x=1686126971;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qCNtPr0JwlvjsNFu67DIeJ3GgI3iGTtI8/7LXS2wZYk=;
-        b=V5vXNQ5GWe8KUpKdHN0fnMvcPOUhlsyB5PxpWSVkiOpt16uzeZWmHsLIN12yFm+5Yj
-         9MIm4tjLtxmpIa4vJZCHhpYU1SAw5ILnU4tw6oxBcNLR2XsPXy0uXgo9NSn7wfJkk2Ow
-         X5vCImpRhKUZIcCqGjd0x5b9YsU95zpjhUwMx4HBXc8a5Ok1EZ0H3PHD607cWVy/5nCs
-         kJtCl665w2PDl0ZdqYszREFCTMlhJGrbowvUwU96KHkQxrlUh28MfaGvILi34MqpiXV1
-         uEDDPugmFJknA7tZY1GLfcPBRYlxKbDA0uPrUt6kVEEjADNaL2gOs1gz54mM4Zu1s2Zl
-         KvNA==
+        bh=7vOeK6NJXfng1Er3sfGOPlcD75JIf3x+ne87klUAZe8=;
+        b=VjTc2e0tCdENNTGTlYaTu6SbmL+2zAqbhOvhqn8Ke3GrBw0BulOfpPKx61Gnsq+pau
+         M97jxNpDaGyMW/osQhp3kBshxpA+lq1IZikHIjue/85Ye3S+zucnAIriJRfMjfKv91XR
+         LXpKbcxRWPMkjOWfzBeqUKqb7sO5Tha6rVHExUgAiWXPOrk0KZsN1S5+VrT+AcbkXMhC
+         nPuVH3iUsGdjUPSI/8SaEMgn4GZohy/J/J2mdHV6i/+9haCNoFx6/BYxpxKFTdSW8qXJ
+         J/O3SefH9o5JXrkzC7cwR4tc+su3M2iLQcHon98PVnTrwxciiN7ExjmgJRWaQ83ztIYC
+         sBEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683534888; x=1686126888;
+        d=1e100.net; s=20221208; t=1683534971; x=1686126971;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qCNtPr0JwlvjsNFu67DIeJ3GgI3iGTtI8/7LXS2wZYk=;
-        b=IFUGQAjhPBgV6+Q9QPKoNb5UqO8nGDnpcd2v/uKGyONkKC07QpVaTXRBijy3Q/WNjE
-         yVgKLKtKyVI+wqr1YhULPN/QXl+BMgM2b/te2dgaRLzZFjjsGt/338Ar//lsuHW8u61Q
-         V/ijQ8tQdrhfFIRYtrJb7oceC0XGLaj59IfMsqFtMym+vKXOiGaBRj9LW4CdAMkfQNNF
-         d+5s6InsXfkVE/BcqrKYOwjtfu872WkXzoJ81Fq/luUvr2vgcmgFmuOsEq5U2i0uPeEW
-         CsOSJqEP48HEv1h146s5eqJo2o16FhNDEmr5sLcLLCWMhyWMxrdvWmIugiECtv7UDK+P
-         L3Mw==
-X-Gm-Message-State: AC+VfDxuZD1BinPfWZXYHhgvz/BRLfBBzQXub/23aX4S2+lG4jaN9ul7
-        uDo77gcQv9REcGG1aypUNCiPXg==
-X-Google-Smtp-Source: ACHHUZ6PIEja33Tsnyi1eGOgotXjqEbCn17WNyUoqoCXNnTL2k/aocmrdgrbsEBA9RKenXcbUU4CAA==
-X-Received: by 2002:ac2:4d1a:0:b0:4ec:363a:5f24 with SMTP id r26-20020ac24d1a000000b004ec363a5f24mr2443926lfi.23.1683534888453;
-        Mon, 08 May 2023 01:34:48 -0700 (PDT)
+        bh=7vOeK6NJXfng1Er3sfGOPlcD75JIf3x+ne87klUAZe8=;
+        b=S9kkDWL4LwtLeQu0hS4LQsbXGzznBLCE8qIPRWAyPGRDW9ZlviVgp/Q7U2KxJzpI+Y
+         bWWDDAu0bcz8zbT7voeAJQT0JW6o2s+Hbb/0RYFMBZlv6kJGBHvC5PdQrLn+7rWZN9iJ
+         bbLNCsoUES2J4aSmsoVlI0cZb/t5zy/aKA7BRGQiuu9vrSmwXSApnLq9A4MDe7Q/JLA5
+         HQOT5NjzcXu+5scRhjeG7HE/I8Cn1/AE8Ly0n+gSVzy6Vwbq0QQZpjs95f+9R0+y1L9h
+         47bAyPy/50M8K6O7VGeYva5DrQhBa787jdQdpC0SsjtqBKVBgxPSpPJTL0GohbtLUT9N
+         gDJg==
+X-Gm-Message-State: AC+VfDzRkSHRtSliv3HZlksl8NbXqzEILKslEivnGaQkoTN7a9FpGsnI
+        Y81cwyFyW3/LhOUz3TDy4bz1bg==
+X-Google-Smtp-Source: ACHHUZ6/bXi/Yh+/jHrYdIbEzAMWQSkOek/BIP7BFnilquyHz/JZcmKS5cfq6hr+S1+7VeyczkzauA==
+X-Received: by 2002:ac2:47e5:0:b0:4ef:ec94:9678 with SMTP id b5-20020ac247e5000000b004efec949678mr2744507lfp.20.1683534971320;
+        Mon, 08 May 2023 01:36:11 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id d2-20020a05651221c200b004eff66716a6sm1206330lft.113.2023.05.08.01.34.46
+        by smtp.gmail.com with ESMTPSA id v9-20020ac25609000000b004efee4ff266sm1230248lfd.67.2023.05.08.01.36.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 01:34:48 -0700 (PDT)
-Message-ID: <ca09ce7d-b0c4-1544-0c9e-fab823aa79e6@linaro.org>
-Date:   Mon, 8 May 2023 10:34:46 +0200
+        Mon, 08 May 2023 01:36:10 -0700 (PDT)
+Message-ID: <6b93e2a9-58aa-bb91-f615-3fdec52596da@linaro.org>
+Date:   Mon, 8 May 2023 10:36:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 4/4] ARM: dts: qcom: apq8074-dragonboard: enable DSI panel
+Subject: Re: [PATCH v2 3/4] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature
+ flag
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230507190735.2333145-1-dmitry.baryshkov@linaro.org>
- <20230507190735.2333145-5-dmitry.baryshkov@linaro.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
+ <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com>
+ <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230507190735.2333145-5-dmitry.baryshkov@linaro.org>
+In-Reply-To: <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,80 +86,89 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 7.05.2023 21:07, Dmitry Baryshkov wrote:
-> Enable MDSS, GPU and DSI panel output on the APQ8074 dragonboard.
+On 7.05.2023 18:00, Marijn Suijten wrote:
+> On 2023-05-05 14:23:50, Jessica Zhang wrote:
+>> Add DATA_COMPRESS feature flag to DPU INTF block.
+>>
+>> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
+>> PINGPONG to INTF.
+>>
+>> As core_rev (and related macros) was removed from the dpu_kms struct, the
+>> most straightforward way to indicate the presence of this register would be
+>> to have a feature flag.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 51 +++++++++++++++++++
->  1 file changed, 51 insertions(+)
+> Irrelevant.  Even though core_rev was still in mainline until recently,
+> we always hardcoded the features in the catalog and only used core_rev
+> to select a dpu_mdss_cfg catalog entry.  There is no "if version >= X
+> then enable feature Y" logic, this manually-enabled feature flag is the
+> only, correct way to do it.
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-> index c893afc00eb4..72f7e09a5bbf 100644
-> --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-> @@ -48,6 +48,57 @@ eeprom: eeprom@52 {
->  	};
->  };
->  
-> +&dsi0 {
-old junk could use some mdss_ prefixing to keep the nodes together
+>> Changes in v2:
+>> - Changed has_data_compress dpu_cap to a DATA_COMPRESS INTF feature flag
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
+>>  2 files changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> index 7944481d0a33..c74051906d05 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> @@ -104,7 +104,7 @@
+>>  #define INTF_SC7180_MASK \
+>>  	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+>>  
+>> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+>> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS)
+> 
+> Konrad: Your SM6350/SM6375 series v3 [1] switched from INTF_SC7180_MASK
+> to INTF_SC7280_MASK to enable HCTL on SM6375, but that will now
+> erroneously also receive this feature flag and write the new
+> DATA_COMPESS mask even if it's DPU 6.9 (< 7.x where it got added).
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/80b46fcb-d6d0-1998-c273-5401fa924c7d@linaro.org/T/#u
+> 
+> Depending on who lands first, this flag should be split.
+I'll adapt my patches. Jessica, no changes required on your side.
 
-Could you please take care of that?
-
-> +	vdda-supply = <&pm8941_l2>;
-> +	vdd-supply = <&pm8941_l22>;
-> +	vddio-supply = <&pm8941_l12>;
-> +
-> +	status = "okay";
-> +
-> +	panel: panel@0 {
-> +		compatible = "sharp,ls043t1le01-qhd";
-> +		reg = <0>;
-> +
-> +		avdd-supply = <&pm8941_l22>;
-> +		backlight = <&pm8941_wled>;
-> +		reset-gpios = <&pm8941_gpios 19 GPIO_ACTIVE_HIGH>;
-> +
-> +		port {
-> +			panel_in: endpoint {
-> +				remote-endpoint = <&dsi0_out>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&dsi0_out {
-> +	remote-endpoint = <&panel_in>;
-> +	data-lanes = <0 1 2 3>;
-> +};
-> +
-> +&dsi0_phy {
-> +	status = "okay";
-> +
-> +	vddio-supply = <&pm8941_l12>;
-status last
+> 
+> I still see value in inlining and removing these defines, though that
+> brings a host of other complexity.
+right, we should totally do it after we settle down from the patch
+flurry
 
 Konrad
-> +};
-> +
-> +&gpu {
-> +	status = "okay";
-> +};
-> +
-> +&mdss {
-> +	status = "okay";
-> +};
-> +
-> +&pm8941_wled {
-> +	qcom,cs-out;
-> +	qcom,switching-freq = <3200>;
-> +	qcom,ovp = <32>;
-> +	qcom,num-strings = <1>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &remoteproc_adsp {
->  	cx-supply = <&pm8841_s2>;
->  
+> 
+> - Marijn
+> 
+>>  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
+>>  			 BIT(DPU_WB_UBWC) | \
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> index 4eda2cc847ef..01c65f940f2a 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> @@ -185,6 +185,7 @@ enum {
+>>   * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
+>>   *                                  than video timing
+>>   * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
+>> + * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
+>>   * @DPU_INTF_MAX
+>>   */
+>>  enum {
+>> @@ -192,6 +193,7 @@ enum {
+>>  	DPU_INTF_TE,
+>>  	DPU_DATA_HCTL_EN,
+>>  	DPU_INTF_STATUS_SUPPORTED,
+>> +	DPU_INTF_DATA_COMPRESS,
+>>  	DPU_INTF_MAX
+>>  };
+>>  
+>>
+>> -- 
+>> 2.40.1
+>>
