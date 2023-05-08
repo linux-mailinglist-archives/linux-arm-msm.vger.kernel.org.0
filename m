@@ -2,76 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B6EE6FA894
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 471E16FA958
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:50:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234941AbjEHKm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 06:42:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42222 "EHLO
+        id S234968AbjEHKuR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 06:50:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234942AbjEHKmX (ORCPT
+        with ESMTP id S235179AbjEHKtl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 06:42:23 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 128E32C3DE
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 03:41:34 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1aae46e62e9so30523425ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 03:41:34 -0700 (PDT)
+        Mon, 8 May 2023 06:49:41 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2548C29FD9
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 03:49:09 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f13ef4ad91so5003498e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 03:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683542492; x=1686134492;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LeRt9uIBhRc0IzYM4Je8YJbs6yEHyFSlqTzPoluTbQk=;
-        b=zAllV7isaF8QsMiAdjnG+3bMSkb94Omp7PXqGc3tTrBnlYeAJ7TdRXD5DnSYDUYs96
-         JSMIgLpqwdk8E8/sCvTsB7hq+AsYLpo7UlwH6TvKT58geYGh7r2D6RRyAF0vZTt4Rqm7
-         SyojFnkQynQ4GmxY7VNbUaO/t7xFbHCWzxZifCi18ORHHoQF4vPmjbshVRjJIz91eEaK
-         saqK2xFq8q8PrVNxULsBGmqcUg9hT95l6lGoy2Fa1fm9e727VKU7/mOTjTnP3VzmCql+
-         cUkXwvkCShAnnGmiDkpu0YMYNMZiGoPZUAOVf0HIkqjTBVFB0gnu1QpJfr1nP33JDFAs
-         GYew==
+        d=linaro.org; s=google; t=1683542948; x=1686134948;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RXdMsRso+EPSoX8YY6azBZyMDBmxWt4xm3vxGwfWTQY=;
+        b=wKp3ndVrukvtAw0SH+PdVLhZlcNjKc18oRP+1IXN69uXzoFXW2Mwbpfn5GTZN3c1B6
+         yNLSeHKlgrmVLwhOVW0LalhBF/g9flIrFmjfr/DxkLYovekW5HAfyvGtG/HYD9mCKRo3
+         50A7HdoRJ36hqJkFRwdESRJz2ia3nM8yyrKpRVt3dvcpA2ciZaUWWaItLliUpK1UD/36
+         /Agg2glxjXNwINHQbbfGCeWL8qdRUWvkqww3xJYBqb+jqOes1lbS9tPtlp8q2buCsAcb
+         i8vDvT7M2dY+ppYWn+KZCpQw3TEJlp+slyysVOfRGyd4GSZAFoz1Ga/O9PXcQx4DOJNZ
+         e/ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683542492; x=1686134492;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1683542948; x=1686134948;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LeRt9uIBhRc0IzYM4Je8YJbs6yEHyFSlqTzPoluTbQk=;
-        b=EjqtdgFBfqH4vMakECmsePK49Zi9Id1qYQcnZC3Sz2KbYQ8F4xMNt6z27L6cwCF0Tj
-         AVbKX2yFbpjqyyxAohcIYPU367iuM6kPGlQezLn79xSNMVXx32XMmC+jnyT5Pl9Mq6l+
-         NuVBlfiU3tHjKsXDkPdAjmRS5ht3yrDFifWA9yaQn/t8qvddJm+ovlU8Fcg3OJb6wsfh
-         p2DvqU8OK8jgWof8Ud17mBPUbW2O2/t//iKXwJlnNPK7VDEq1JKAhdQs4kEy/uF+MxAT
-         JeAasEVF3uXGzk1s1Cvn+1adMXlImOSuje8Oe42Spn26FGc149HwAbXQ+ExJukcLeVe7
-         ENlg==
-X-Gm-Message-State: AC+VfDwrtj3d5r5NE9BX6/O3YWZ+GuJddrU5ERR+3e8/BNyF1JJqdq+h
-        wjYQl31kvsYiThQ36MU+WHkXlvOej1UjuSl2Tg==
-X-Google-Smtp-Source: ACHHUZ77wjgYAVc0g6+G0s0folTgzK1xWweysONOrE9DaFKntjxyue1aOAMnKmsnmhZ8kntbX9AkRQ==
-X-Received: by 2002:a17:902:e80c:b0:1ab:1dff:9540 with SMTP id u12-20020a170902e80c00b001ab1dff9540mr12713851plg.14.1683542492544;
-        Mon, 08 May 2023 03:41:32 -0700 (PDT)
-Received: from thinkpad ([59.92.97.45])
-        by smtp.gmail.com with ESMTPSA id m1-20020a170902768100b001aaf2e7b06csm6863394pll.132.2023.05.08.03.41.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 03:41:32 -0700 (PDT)
-Date:   Mon, 8 May 2023 16:11:27 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
-        robh@kernel.org, andersson@kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH 5/8] PCI: qcom: Do not advertise hotplug capability for
- IP v2.3.2
-Message-ID: <20230508104127.GB4190@thinkpad>
-References: <20230506073139.8789-1-manivannan.sadhasivam@linaro.org>
- <20230506073139.8789-6-manivannan.sadhasivam@linaro.org>
- <bc3ce44f-745a-bbad-32ac-67f8baa49483@linaro.org>
- <0e5f9f6b-eb67-38f8-2719-06aa8fe296bd@linaro.org>
+        bh=RXdMsRso+EPSoX8YY6azBZyMDBmxWt4xm3vxGwfWTQY=;
+        b=iZtlT3EipaWA2lvVkKyKnAxC08vW2vD+RhWFjtmpbwCAxkcMFQa/QfwEx874SxB7fk
+         bOQe2WjnoGTFA8lNfgDywGb1YQ76SFaUBvG8U3zoZRx4BPa8Vvvk9w/dK4HBRUMUGmTA
+         HhsqGkkUhPU6QKPaXY2f6RfDh7ANRzyEUz2swF0fVNWL3quNWhExwyko/x9A4gNMxCnN
+         OJPHA6jFT3kSLlJO9xIr/m2o/nvRG+KWCSxUH5tQzWfcnF020TpFJO3FZWvtxawBro2l
+         yuXM8bvckhMkQNX/f6hxR8TAL2ZFjiARNgrHsAgQpNo3+1939mkrb83doS9pF1Eyo6Yo
+         pevA==
+X-Gm-Message-State: AC+VfDyo0JWha3KlvAfSK/Tk6UWKQ9hy24qOtlKndCJcJ+4o3ODju93O
+        /oE90Gz3lb/ss5jyt381Vozn3A==
+X-Google-Smtp-Source: ACHHUZ7kUdyG/5vN8yWIbaBSvV6k8WFUd5GtXPP7rwCKkMG3l2F8jyvQ7D4ToZng4qwebsgRzR0qOA==
+X-Received: by 2002:ac2:530a:0:b0:4f1:3d5f:f54e with SMTP id c10-20020ac2530a000000b004f13d5ff54emr2313936lfh.27.1683542948187;
+        Mon, 08 May 2023 03:49:08 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id 19-20020ac24833000000b004f0049433adsm1255552lft.307.2023.05.08.03.49.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 May 2023 03:49:07 -0700 (PDT)
+Message-ID: <7b90ed61-7789-275d-a743-6065ab6ecdbb@linaro.org>
+Date:   Mon, 8 May 2023 13:49:07 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 3/4] ARM: dts: qcom: apq8074-dragonboard: enable adsp and
+ MSS
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230507190735.2333145-1-dmitry.baryshkov@linaro.org>
+ <20230507190735.2333145-4-dmitry.baryshkov@linaro.org>
+ <a86cfa8b-c205-6887-a64e-d51241b74b15@linaro.org>
+ <ca274ec9-81bf-c426-6ad6-93eb34b52b05@linaro.org>
+ <11863653-84aa-8edf-676f-e55174fb4539@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <11863653-84aa-8edf-676f-e55174fb4539@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0e5f9f6b-eb67-38f8-2719-06aa8fe296bd@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,66 +89,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, May 06, 2023 at 04:01:43PM +0200, Konrad Dybcio wrote:
+On 08/05/2023 13:38, Konrad Dybcio wrote:
 > 
 > 
-> On 6.05.2023 14:04, Dmitry Baryshkov wrote:
-> > On 06/05/2023 10:31, Manivannan Sadhasivam wrote:
-> >> SoCs making use of Qcom PCIe controller IP v2.3.2 do not support hotplug
-> >> functionality. But the hotplug capability bit is set by default in the
-> >> hardware. This causes the kernel PCI core to register hotplug service for
-> >> the controller and send hotplug commands to it. But those commands will
-> >> timeout generating messages as below during boot and suspend/resume.
-> >>
-> >> [    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
-> >> [    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
-> >> [    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
-> >> [    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
-> >>
-> >> This not only spams the console output but also induces a delay of a
-> >> couple of seconds. To fix this issue, let's clear the HPC bit in
-> >> PCI_EXP_SLTCAP register as a part of the post init sequence to not
-> >> advertise the hotplug capability for the controller.
-> >>
-> >> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >> ---
-> >>   drivers/pci/controller/dwc/pcie-qcom.c | 10 ++++++++++
-> >>   1 file changed, 10 insertions(+)
-> >>
-> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> index 3d5b3ce9e2da..33353be396ec 100644
-> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> @@ -579,6 +579,8 @@ static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
-> >>     static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
-> >>   {
-> >> +    struct dw_pcie *pci = pcie->pci;
-> >> +    u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> >>       u32 val;
-> >>         /* enable PCIe clocks and resets */
-> >> @@ -602,6 +604,14 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
-> >>       val |= EN;
-> >>       writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-> >>   +    dw_pcie_dbi_ro_wr_en(pci);
-> >> +
-> >> +    val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
-> >> +    val &= ~PCI_EXP_SLTCAP_HPC;
-> >> +    writel(val, pci->dbi_base + offset + PCI_EXP_SLTCAP);
-> >> +
-> >> +    dw_pcie_dbi_ro_wr_dis(pci);
-> >> +
-> > 
-> > Seeing this code again and again makes me wonder if we should have a separate function for this.
-> Moreover, is there no generic rmw type function for readl+writel?
+> On 8.05.2023 12:33, Dmitry Baryshkov wrote:
+>> On 08/05/2023 11:33, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 7.05.2023 21:07, Dmitry Baryshkov wrote:
+>>>> Enable ADSP and Modem DSPs on APQ8074 dragonboard. The MSS region
+>>>> differs from the one defined in the msm8974, so it overriden locally.
+>>>>
+>>>> The modem is specified use mba.mbn instead of mbn.b00 (for the sake of
+>>>> similarity with other platforms). This requires a patch for remoteproc
+>>>> to be applied [1].
+>>>>
+>>>> [1] https://lore.kernel.org/all/20230507172041.2320279-1-dmitry.baryshkov@linaro.org/
+>>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>    .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 28 +++++++++++++++++++
+>>>>    1 file changed, 28 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+>>>> index 6b047c679370..c893afc00eb4 100644
+>>>> --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+>>>> +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+>>>> @@ -4,6 +4,8 @@
+>>>>    #include "qcom-pm8841.dtsi"
+>>>>    #include "qcom-pm8941.dtsi"
+>>>>    +/delete-node/ &mpss_region;
+>>>> +
+>>>>    / {
+>>>>        model = "Qualcomm APQ8074 Dragonboard";
+>>>>        compatible = "qcom,apq8074-dragonboard", "qcom,apq8074";
+>>>> @@ -17,6 +19,13 @@ aliases {
+>>>>        chosen {
+>>>>            stdout-path = "serial0:115200n8";
+>>>>        };
+>>>> +
+>>>> +    reserved-memory {
+>>>> +        mpss_region: mpss@ac00000 {
+>>>> +            reg = <0x0ac00000 0x2500000>;
+>>>> +            no-map;
+>>>> +        };
+>>>> +    };
+>>>>    };
+>>>>      &blsp1_uart2 {
+>>>> @@ -39,6 +48,25 @@ eeprom: eeprom@52 {
+>>>>        };
+>>>>    };
+>>>>    +&remoteproc_adsp {
+>>>> +    cx-supply = <&pm8841_s2>;
+>>>> +
+>>>> +    firmware-name = "qcom/apq8074/adsp.mbn";
+>>>> +
+>>>> +    status = "okay";
+>>>> +};
+>>>> +
+>>>> +&remoteproc_mss {
+>>>> +    cx-supply = <&pm8841_s2>;
+>>>> +    mss-supply = <&pm8841_s3>;
+>>>> +    mx-supply = <&pm8841_s1>;
+>>>> +    pll-supply = <&pm8941_l12>;
+>>> High time to move this to rpmpd!
+>>> I won't object to adding this though, as it obviously works
+>>> and is already used on other boards..
+>>
+>> I think the problem is that they are not level-voted on this platform, so they are regulators, not PDs.
+> They're corner-voted.
+
+Hmm. Indeed. In msm8974-regulators I see both voltage and corner entries 
+for these regulators.
+
 > 
-
-No rmw as of now. But it could be added to reduce boilerplate code. But it
-should be part of separate cleanup series though.
-
-- Mani
-
 > Konrad
-> > 
+>>
+>>>
+>>>> +
+>>>> +    firmware-name = "qcom/apq8074/mba.mbn", "qcom/apq8074/modem.mbn";
+>>> Could you please keep it one entry per line?
+>>
+>> Sure.
+>>
+>>>
+>>> Otherwise,
+>>>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>
+>>> Konrad
+>>>> +
+>>>> +    status = "okay";
+>>>> +};
+>>>> +
+>>>>    &rpm_requests {
+>>>>        regulators-0 {
+>>>>            compatible = "qcom,rpm-pm8841-regulators";
+>>
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
+
