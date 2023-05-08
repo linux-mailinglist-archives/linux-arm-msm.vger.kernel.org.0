@@ -2,56 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F78A6FB16D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 15:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 320D36FB17A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 15:28:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233844AbjEHN1T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 09:27:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44466 "EHLO
+        id S234001AbjEHN2S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 09:28:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233771AbjEHN1Q (ORCPT
+        with ESMTP id S233725AbjEHN2N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 09:27:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B63CD2BCD1;
-        Mon,  8 May 2023 06:27:11 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3AF8963D29;
-        Mon,  8 May 2023 13:27:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCACC433D2;
-        Mon,  8 May 2023 13:27:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683552430;
-        bh=7iCcI0DNvSLl/NTUgHfYpRIkdfoakjSi68PDmFXmJaM=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=ZzYUoCFMA/1U2gEMq+vxbladK1oykOpmEljyNfKOAUEjEYNbMQNQnfJfIEav0mWAx
-         YWUz+OV3d2nzwdtvfH4SqfT5E6eossN9uC8wdTyOYzX8y7FygL8RI9rr2s2zz20EYU
-         J8DExFpyPqp/ZFMijc/RppTDwk36jwUH2tXQnqJNOynmH5PD79dmeHTZRYMPII4B++
-         C2VxKK5UPX5RJkn3UNmI1GX+fE6jnQt+/OSc1jymLp62uGezJV4SKr2jfSkeU1n7yn
-         XtH7YecmkIkCQmI4Ka9qun9haRrRr4o9Ca/sfqdmX6ozf4MYvnI4LRYc7nNGl3Arkh
-         fc0Apu0N6INoQ==
-From:   Mark Brown <broonie@kernel.org>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     quic_msavaliy@quicinc.com, dianders@chromium.org, mka@chromium.org,
-        swboyd@chromium.org, quic_vtanuku@quicinc.com
-In-Reply-To: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
-References: <1682412128-1913-1-git-send-email-quic_vnivarth@quicinc.com>
-Subject: Re: [PATCH] spi: spi-geni-qcom: Correct CS_TOGGLE bit in
- SPI_TRANS_CFG
-Message-Id: <168355242802.260152.2725624088610740089.b4-ty@kernel.org>
-Date:   Mon, 08 May 2023 22:27:08 +0900
+        Mon, 8 May 2023 09:28:13 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45702B434
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 06:27:53 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4eff4ea8e39so5093635e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 06:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683552468; x=1686144468;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r+TBigWM2ehipDbkRUdAuCgzID6oBks8XaTBJDdkWFc=;
+        b=hTWTo7imOys4AFS87cJGEfMIEpOPXd14uhIiXwOPXLeclA6p9XMDcbEasRbbdZPaEV
+         R3aola0CtD9H550QWPPCXOHELxXgmpHin+WlAzlo6mosVOskSksL3/smUcDW18/3ztQk
+         cVySGYoIE15GscAZgT/wJfZwuSl+i2kAKi+rJRea7d40F6wlkhZY0r5JVtmRjLaogpPI
+         Xt9hXit6KOva2ndrVoD0ptwRzyx7hBvcz/UXpkIHRUtLyxv8VMJsFiPDyNCJIAY68X1r
+         gKhQr9jveLvMtvxMrRrRjuZDyUm9rrIYYvddGedDwibG6BpJFY39zRR6yQsjhBzVbujY
+         c0VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683552468; x=1686144468;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r+TBigWM2ehipDbkRUdAuCgzID6oBks8XaTBJDdkWFc=;
+        b=kP2dBS8gAyscAjYIoYhCYpnwoUxTJqiEao+wRVgywmQgE4RtntgQKreYzPj2lxTRSi
+         wRUg5ctnNdES6ibLyMHt1oVog/JONnRzBFfKVR23Luw7bqEjbv6PsxS6vV1XH9n1cVxs
+         yW+ECOoFsZiN7HslIWhZJVwKSTbfAZu+mmENyhlUEMIVKQlA7Uf0ngXTSIuExw3WnOak
+         ezom5Z9tSHYnbe52cLCOiJCI/mZ36fPYpBqT/nnH3D4Upd76rayIgNu6TGNlaY2W6ucf
+         9J6eWzO6y4wWgq6SN8Jlk8LKgn4NORAaimoP17gEfXuS8WwDMhPG7VdTOYUCaz+iQe46
+         49Pg==
+X-Gm-Message-State: AC+VfDyrPQhztdG216SdZETDvrm5tqwfsEIkrM5J2mP8/FYSVR4oEptT
+        aSnUIs0qIMhacxpLEFyiiyR5XA==
+X-Google-Smtp-Source: ACHHUZ6tSkDWh0vYddQ9hk5i8imyUIVF7oZz7m751SD3qNwFBLPxX7uzZ9yTb7bZHmVRYVKPW0RiCQ==
+X-Received: by 2002:a05:6512:38d1:b0:4f1:4468:ee65 with SMTP id p17-20020a05651238d100b004f14468ee65mr2639843lft.30.1683552468354;
+        Mon, 08 May 2023 06:27:48 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id 19-20020ac24833000000b004f0049433adsm1294617lft.307.2023.05.08.06.27.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 May 2023 06:27:47 -0700 (PDT)
+Message-ID: <a4f72011-5505-77c2-da3c-dd4e22a4f8d8@linaro.org>
+Date:   Mon, 8 May 2023 16:27:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 2/6] thermal: qcom: tsens-v0_1: Fix mdm9607 slope
+ values
+Content-Language: en-GB
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230508-msm8909-tsens-v4-0-d9119622cb19@kernkonzept.com>
+ <20230508-msm8909-tsens-v4-2-d9119622cb19@kernkonzept.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230508-msm8909-tsens-v4-2-d9119622cb19@kernkonzept.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-bfdf5
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -59,42 +88,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 25 Apr 2023 14:12:08 +0530, Vijaya Krishna Nivarthi wrote:
-> The CS_TOGGLE bit when set is supposed to instruct FW to
-> toggle CS line between words. The driver with intent of
-> disabling this behaviour has been unsetting BIT(0). This has
-> not caused any trouble so far because the original BIT(1)
-> is untouched and BIT(0) likely wasn't being used.
+On 08/05/2023 16:13, Stephan Gerhold wrote:
+> According to the msm-3.18 vendor kernel from Qualcomm [1], mdm9607 uses
+> a non-standard slope value of 3000 (instead of 3200) for all sensors.
+> Fill it properly similar to the 8939 code added recently.
 > 
-> Correct this to prevent a potential future bug.
+> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.18/-/blob/LE.UM.4.3.2.r1-04200-9x07/arch/arm/boot/dts/qcom/mdm9607.dtsi#L875
 > 
-> [...]
+> Fixes: a2149ab815fc ("thermal/drivers/qcom/tsens-v0_1: Add support for MDM9607")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+>   drivers/thermal/qcom/tsens-v0_1.c | 24 +++++++++++++++++-------
+>   1 file changed, 17 insertions(+), 7 deletions(-)
 
-Applied to
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[1/1] spi: spi-geni-qcom: Correct CS_TOGGLE bit in SPI_TRANS_CFG
-      commit: 5fd7c99ecf45c8ee8a9b1268f0ffc91cc6271da2
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+With best wishes
+Dmitry
 
