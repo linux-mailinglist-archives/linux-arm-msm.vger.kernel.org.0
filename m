@@ -2,212 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C78B6FA9E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:56:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFD6C6FAA15
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:58:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235404AbjEHK44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 06:56:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33454 "EHLO
+        id S235349AbjEHK6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 06:58:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235332AbjEHK43 (ORCPT
+        with ESMTP id S235416AbjEHK6j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 06:56:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2BBD31576;
-        Mon,  8 May 2023 03:55:31 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3489RjBU016799;
-        Mon, 8 May 2023 10:55:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wwGIVflxgcYEbSSfRt33GWz2bAD2ZPta9N/khOZxKJM=;
- b=Jg+uItN/CV+ZivaQF6nmXUHmJ6YoTPJuqQVBOb7VkTTxPzRJDjo2Z94ho0gUFUqJMOMd
- sed0+IOkCIRBk2pW+ikOsC49wmx19h1cU1CqKFRUmLcI9eNTwPY1YKm5qjEN6vcKyKo8
- zBkKb6F5CA7DD2k1XCdeG/pr1hBOdw23nTcsNUFflBfzRIpUr5PthM6a0K7dR6udKtJd
- h2kDEZmRX0e/OOWz7FUwK64+3xIVRkKEPsAASz7TDeMfB4W1hWFguqtlQC4KnkxbkwGq
- OmLegU3j0ohSk3x0dFcBnH/PzPRQjrSYhAkjbrhmYDaJSxjmEtFPPfBW0AYOnGH9+QHc zQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qexf1g5hj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 08 May 2023 10:55:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 348AtLUO010651
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 8 May 2023 10:55:21 GMT
-Received: from [10.216.51.233] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
- 03:55:14 -0700
-Message-ID: <6c962760-d81c-af52-bce2-49090f66f4ee@quicinc.com>
-Date:   Mon, 8 May 2023 16:25:10 +0530
+        Mon, 8 May 2023 06:58:39 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1991633FD5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 03:57:25 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id C177D3F1FF;
+        Mon,  8 May 2023 12:57:19 +0200 (CEST)
+Date:   Mon, 8 May 2023 12:57:18 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Shubhashree Dhar <dhar@codeaurora.org>,
+        Raviteja Tamatam <travitej@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: Set DPU_DATA_HCTL_EN for in INTF_SC7180_MASK
+Message-ID: <vonnkr34hogk3r54pg5wqw3xv5ood4zkdojehcr5stonvqev6u@nnezyvphwo5k>
+References: <20230508-topic-hctl_en-v1-1-0f8b5df60ed5@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V3 5/6] arm64: dts: qcom: ipq9574: Enable PCIe PHYs and
- controllers
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <mani@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_ipkumar@quicinc.com>
-References: <20230421124938.21974-1-quic_devipriy@quicinc.com>
- <20230421124938.21974-6-quic_devipriy@quicinc.com>
- <CAA8EJpqx1jv_xEnS-2rOOGCtEB=1vo477H7XLGGvH=o7NHJD7w@mail.gmail.com>
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <CAA8EJpqx1jv_xEnS-2rOOGCtEB=1vo477H7XLGGvH=o7NHJD7w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zS8fFU3lxbkVpPV_L_0MxgUOIKW40EgJ
-X-Proofpoint-GUID: zS8fFU3lxbkVpPV_L_0MxgUOIKW40EgJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-08_08,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=971 priorityscore=1501 mlxscore=0 suspectscore=0 phishscore=0
- adultscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305080074
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230508-topic-hctl_en-v1-1-0f8b5df60ed5@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2023-05-08 12:29:32, Konrad Dybcio wrote:
+> DPU5 and newer targets enable this unconditionally. Move it from the
+> SC7280 mask to the SC7180 one.
+> 
+> Fixes: 7bdc0c4b8126 ("msm:disp:dpu1: add support for display for SC7180 target")
 
+The flag only exists since 591e34a091d17 ("drm/msm/disp/dpu1: add
+support for display for SC7280 target"), and I don't know how bad it is
+if it was lacking when SC7180 was added?
 
-On 4/22/2023 5:43 AM, Dmitry Baryshkov wrote:
-> On Fri, 21 Apr 2023 at 15:51, Devi Priya <quic_devipriy@quicinc.com> wrote:
->>
->> Enable the PCIe controller and PHY nodes corresponding to
->> RDP 433.
->>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->> ---
->>   Changes in V3:
->>          - No change
->>
->>   arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 62 +++++++++++++++++++++
->>   1 file changed, 62 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> index 7be578017bf7..3ae38cf327ea 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
->> @@ -8,6 +8,7 @@
->>
->>   /dts-v1/;
->>
->> +#include <dt-bindings/gpio/gpio.h>
->>   #include "ipq9574.dtsi"
->>
->>   / {
->> @@ -43,6 +44,42 @@
->>          };
->>   };
->>
->> +&pcie1_phy {
->> +       status = "okay";
->> +};
->> +
->> +&pcie1 {
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&pcie_1_pin>;
->> +
->> +       perst-gpios = <&tlmm 26 GPIO_ACTIVE_LOW>;
-> 
-> Usually qcom PCIe hosts also define wake-gpios.
-In IPQ9574, we do not have hot plug support and host always starts the
-enumeration for the device. Hence no wake pin is required.
-> 
->> +       status = "okay";
->> +};
->> +
->> +&pcie2_phy {
->> +       status = "okay";
->> +};
->> +
->> +&pcie2 {
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&pcie_2_pin>;
->> +
->> +       perst-gpios = <&tlmm 29 GPIO_ACTIVE_LOW>;
->> +       status = "okay";
->> +};
->> +
->> +&pcie3_phy {
->> +       status = "okay";
->> +};
->> +
->> +&pcie3 {
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&pcie_3_pin>;
->> +
->> +       perst-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
->> +       status = "okay";
->> +};
->> +
->>   &sdhc_1 {
->>          pinctrl-0 = <&sdc_default_state>;
->>          pinctrl-names = "default";
->> @@ -60,6 +97,31 @@
->>   };
->>
->>   &tlmm {
->> +
->> +       pcie_1_pin: pcie-1-state {
->> +               pins = "gpio26";
->> +               function = "gpio";
->> +               drive-strength = <8>;
->> +               bias-pull-down;
->> +               output-low;
-> 
-> No clkreq and no wake gpios?
-We do not use any PCIe low power states and link is always in L0.
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Thanks,
-Devi Priya
+I wonder if this needs any Reported-by/Suggested-by, given that I found
+the DATA_COMPRESS discrepancy for your SM6375 patch (which was using
+SC7280 to have the HCTL mask) and Dmitry pointing out that HCTL needs to
+be in SC7180 entirely.
+
+Fortunately none of this affects cmdmode :)
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> ---
+> Depends on:
+> https://lore.kernel.org/linux-arm-msm/20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com/
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
->> +       };
->> +
->> +       pcie_2_pin: pcie-2-state {
->> +               pins = "gpio29";
->> +               function = "gpio";
->> +               drive-strength = <8>;
->> +               bias-pull-down;
->> +               output-low;
->> +       };
->> +
->> +       pcie_3_pin: pcie-3-state {
->> +               pins = "gpio32";
->> +               function = "gpio";
->> +               drive-strength = <8>;
->> +               bias-pull-up;
->> +               output-low;
->> +       };
->> +
->>          sdc_default_state: sdc-default-state {
->>                  clk-pins {
->>                          pins = "gpio5";
->> --
->> 2.17.1
->>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 27420fc863d6..7ea8fd69d5fd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -98,9 +98,12 @@
+>  #define INTF_SDM845_MASK (0)
+>  
+>  #define INTF_SC7180_MASK \
+> -	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+> +	(BIT(DPU_INTF_INPUT_CTRL) | \
+> +	 BIT(DPU_INTF_TE) | \
+> +	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
+> +	 BIT(DPU_DATA_HCTL_EN))
+>  
+> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS)
+> +#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_INTF_DATA_COMPRESS)
+>  
+>  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
+>  			 BIT(DPU_WB_UBWC) | \
 > 
+> ---
+> base-commit: c47189dee0decd9ecc1e65ae376ad6d4b0b7f1f2
+> change-id: 20230508-topic-hctl_en-3abb999a6c99
+> 
+> Best regards,
+> -- 
+> Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
