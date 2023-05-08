@@ -2,83 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1EFF6FA844
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:39:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B6EE6FA894
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 12:43:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234720AbjEHKjF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 06:39:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39020 "EHLO
+        id S234941AbjEHKm7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 06:42:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234851AbjEHKiy (ORCPT
+        with ESMTP id S234942AbjEHKmX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 06:38:54 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B27929453
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 03:38:52 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ac8ee9cf7aso28904171fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 03:38:52 -0700 (PDT)
+        Mon, 8 May 2023 06:42:23 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 128E32C3DE
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 03:41:34 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1aae46e62e9so30523425ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 03:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683542330; x=1686134330;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ioq2SHcYvzdWJgMENWPLRbhibNiRpiB3AcW6l1wBqmo=;
-        b=pPwt2Urq9QTN/xOxlOHg28lV78TNcLYFXCnGQ2ofYbevhZWyzB4u+8K20Tqb2OkdYA
-         3wYrpHTS4dEv3cbSA5EFfNt0tpll3f2nrWSaeqmJaT2EvzCmsU2JK3D3Bwl2WUFNU7MV
-         RjaiPY6hivn2CcXD3gHGE+zU/ZFRtM/8PcTjHBne6CmJLkdXUwd4ISnCQ2cPla80U7zG
-         IJa7XxwwS9bJw8itdMyweLo9q/t8Dvz6JmGaObGVfeY1Vclm4E2byq8A7CdIilMYgZ9d
-         vw4JyGUk8wzXgR00R2es8i5elY8xbkcMcJOdeWliawcyvqEwAP3acJngbUA6ghQK9cBc
-         dCIg==
+        d=linaro.org; s=google; t=1683542492; x=1686134492;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LeRt9uIBhRc0IzYM4Je8YJbs6yEHyFSlqTzPoluTbQk=;
+        b=zAllV7isaF8QsMiAdjnG+3bMSkb94Omp7PXqGc3tTrBnlYeAJ7TdRXD5DnSYDUYs96
+         JSMIgLpqwdk8E8/sCvTsB7hq+AsYLpo7UlwH6TvKT58geYGh7r2D6RRyAF0vZTt4Rqm7
+         SyojFnkQynQ4GmxY7VNbUaO/t7xFbHCWzxZifCi18ORHHoQF4vPmjbshVRjJIz91eEaK
+         saqK2xFq8q8PrVNxULsBGmqcUg9hT95l6lGoy2Fa1fm9e727VKU7/mOTjTnP3VzmCql+
+         cUkXwvkCShAnnGmiDkpu0YMYNMZiGoPZUAOVf0HIkqjTBVFB0gnu1QpJfr1nP33JDFAs
+         GYew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683542330; x=1686134330;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683542492; x=1686134492;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ioq2SHcYvzdWJgMENWPLRbhibNiRpiB3AcW6l1wBqmo=;
-        b=BQIxkb8fJIiyMg7K2Y4JX5ClbSUOcukWTpmBS2D7jRZgOrN1GGZzT+ivMGdB99tmCC
-         cB3KepbH5/B1KvIqXDHPgN3eJMHvP2KUbNgB4lQVfBQr0Aucz3uF94pkB3kYKQxh41oL
-         X4WB7iukM/vEYk2HRnPSRxZFdyWlldwCbanT4eCXCBPMUaWZeSjzT2J/afcLMOq4SbTi
-         awS8YhlF06bCZ6ESwqJChEgxkGGhL6awWY6XUGsNw9hvea92Xy+X82Ivacc7mImyG+ou
-         b//+TxHHuOyZcOS8oHih4Hs5a4y/DPcO7pNQhWG9p9PJa8H+J6khJAMIyAMpKfFQHfiu
-         nWWA==
-X-Gm-Message-State: AC+VfDyMHCTJ+Tf13yEa4RPbGwiu11EH24ku6Ek0XuyVOth97qQTz2cX
-        BF1OOEO5/UbfoSTjwRENFY4XGQ==
-X-Google-Smtp-Source: ACHHUZ7S5zP58g6KXG/JEkUocDxvEXW0bXVKra1pbbx4QdVHZkXdfPz0kZLX00pfASUO8PhnfzUK/g==
-X-Received: by 2002:a2e:8508:0:b0:2a8:b070:c21f with SMTP id j8-20020a2e8508000000b002a8b070c21fmr2466304lji.16.1683542330361;
-        Mon, 08 May 2023 03:38:50 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l2-20020a2e3e02000000b002a6168181d7sm1134847lja.7.2023.05.08.03.38.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 03:38:50 -0700 (PDT)
-Message-ID: <f33f124e-a989-4501-a896-45649297d71c@linaro.org>
-Date:   Mon, 8 May 2023 13:38:49 +0300
+        bh=LeRt9uIBhRc0IzYM4Je8YJbs6yEHyFSlqTzPoluTbQk=;
+        b=EjqtdgFBfqH4vMakECmsePK49Zi9Id1qYQcnZC3Sz2KbYQ8F4xMNt6z27L6cwCF0Tj
+         AVbKX2yFbpjqyyxAohcIYPU367iuM6kPGlQezLn79xSNMVXx32XMmC+jnyT5Pl9Mq6l+
+         NuVBlfiU3tHjKsXDkPdAjmRS5ht3yrDFifWA9yaQn/t8qvddJm+ovlU8Fcg3OJb6wsfh
+         p2DvqU8OK8jgWof8Ud17mBPUbW2O2/t//iKXwJlnNPK7VDEq1JKAhdQs4kEy/uF+MxAT
+         JeAasEVF3uXGzk1s1Cvn+1adMXlImOSuje8Oe42Spn26FGc149HwAbXQ+ExJukcLeVe7
+         ENlg==
+X-Gm-Message-State: AC+VfDwrtj3d5r5NE9BX6/O3YWZ+GuJddrU5ERR+3e8/BNyF1JJqdq+h
+        wjYQl31kvsYiThQ36MU+WHkXlvOej1UjuSl2Tg==
+X-Google-Smtp-Source: ACHHUZ77wjgYAVc0g6+G0s0folTgzK1xWweysONOrE9DaFKntjxyue1aOAMnKmsnmhZ8kntbX9AkRQ==
+X-Received: by 2002:a17:902:e80c:b0:1ab:1dff:9540 with SMTP id u12-20020a170902e80c00b001ab1dff9540mr12713851plg.14.1683542492544;
+        Mon, 08 May 2023 03:41:32 -0700 (PDT)
+Received: from thinkpad ([59.92.97.45])
+        by smtp.gmail.com with ESMTPSA id m1-20020a170902768100b001aaf2e7b06csm6863394pll.132.2023.05.08.03.41.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 03:41:32 -0700 (PDT)
+Date:   Mon, 8 May 2023 16:11:27 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+        robh@kernel.org, andersson@kernel.org, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        steev@kali.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH 5/8] PCI: qcom: Do not advertise hotplug capability for
+ IP v2.3.2
+Message-ID: <20230508104127.GB4190@thinkpad>
+References: <20230506073139.8789-1-manivannan.sadhasivam@linaro.org>
+ <20230506073139.8789-6-manivannan.sadhasivam@linaro.org>
+ <bc3ce44f-745a-bbad-32ac-67f8baa49483@linaro.org>
+ <0e5f9f6b-eb67-38f8-2719-06aa8fe296bd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 2/4] ARM: dts: qcom: apq8074-dragonboard: Set DMA as
- remotely controlled
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230507190735.2333145-1-dmitry.baryshkov@linaro.org>
- <20230507190735.2333145-3-dmitry.baryshkov@linaro.org>
- <f968009f-c52b-5e4c-aa79-01c0ac53b8dc@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <f968009f-c52b-5e4c-aa79-01c0ac53b8dc@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0e5f9f6b-eb67-38f8-2719-06aa8fe296bd@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,64 +80,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/05/2023 11:32, Konrad Dybcio wrote:
+On Sat, May 06, 2023 at 04:01:43PM +0200, Konrad Dybcio wrote:
 > 
 > 
-> On 7.05.2023 21:07, Dmitry Baryshkov wrote:
->> Add the qcom,controlled-remotely property for the blsp2_bam
->> controller node. This board requires this, otherwise the board stalls
->> during the boot for some reason (most probably because TZ mishandles the
->> protection error and keeps on looping somewhere inside).
->>
->> Fixes: 62bc81792223 dts: msm8974: Add blsp2_bam dma node
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
-> Looks like a common theme.. sony-rhine boards also have the DMA
-> enabled *and* need this property.. perhaps it's a SoC-wide (or
-> at least SoC-and-fw-distribution-wide) issue?
-
-This looks like a strange history. Especially granted 338d51889851 
-("Revert "dts: msm8974: Add blsp2_bam dma node"") and d44cbb1e9ca3 
-("Revert "Revert "dts: msm8974: Add blsp2_bam dma node""")
-
-And, of course, 
-https://lore.kernel.org/linux-arm-msm/CAJAp7Oi33=kraAiU337JdFJZbuKZEVoCtY4FfAv_RgiWVmz+sw@mail.gmail.com/
-
-Note, 338d51889851 mentions non-dragonboard boards. This makes me think 
-that for some of the dragonboards/firmware combos this device was 
-working as is, without controlled remotely. I could not get 'the latest 
-bootloader package' (if there was one), so I'm stuck with what I have on 
-my board. However there is no guarantee that it is the latest and 
-greatest stuff.
-
-Thus said, for this patch I decided to follow the rhino example and add 
-this to the board file. Unless Bjorn (or anybody else remembering those 
-times) can advise us.
-
+> On 6.05.2023 14:04, Dmitry Baryshkov wrote:
+> > On 06/05/2023 10:31, Manivannan Sadhasivam wrote:
+> >> SoCs making use of Qcom PCIe controller IP v2.3.2 do not support hotplug
+> >> functionality. But the hotplug capability bit is set by default in the
+> >> hardware. This causes the kernel PCI core to register hotplug service for
+> >> the controller and send hotplug commands to it. But those commands will
+> >> timeout generating messages as below during boot and suspend/resume.
+> >>
+> >> [    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
+> >> [    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
+> >> [    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
+> >> [    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+> >>
+> >> This not only spams the console output but also induces a delay of a
+> >> couple of seconds. To fix this issue, let's clear the HPC bit in
+> >> PCI_EXP_SLTCAP register as a part of the post init sequence to not
+> >> advertise the hotplug capability for the controller.
+> >>
+> >> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> >> ---
+> >>   drivers/pci/controller/dwc/pcie-qcom.c | 10 ++++++++++
+> >>   1 file changed, 10 insertions(+)
+> >>
+> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> index 3d5b3ce9e2da..33353be396ec 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> @@ -579,6 +579,8 @@ static int qcom_pcie_init_2_3_2(struct qcom_pcie *pcie)
+> >>     static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+> >>   {
+> >> +    struct dw_pcie *pci = pcie->pci;
+> >> +    u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> >>       u32 val;
+> >>         /* enable PCIe clocks and resets */
+> >> @@ -602,6 +604,14 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+> >>       val |= EN;
+> >>       writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+> >>   +    dw_pcie_dbi_ro_wr_en(pci);
+> >> +
+> >> +    val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> >> +    val &= ~PCI_EXP_SLTCAP_HPC;
+> >> +    writel(val, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> >> +
+> >> +    dw_pcie_dbi_ro_wr_dis(pci);
+> >> +
+> > 
+> > Seeing this code again and again makes me wonder if we should have a separate function for this.
+> Moreover, is there no generic rmw type function for readl+writel?
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
+
+No rmw as of now. But it could be added to reduce boilerplate code. But it
+should be part of separate cleanup series though.
+
+- Mani
+
 > Konrad
->>   arch/arm/boot/dts/qcom-apq8074-dragonboard.dts | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
->> index 1345df7cbd00..6b047c679370 100644
->> --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
->> +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
->> @@ -23,6 +23,10 @@ &blsp1_uart2 {
->>   	status = "okay";
->>   };
->>   
->> +&blsp2_dma {
->> +	qcom,controlled-remotely;
->> +};
->> +
->>   &blsp2_i2c5 {
->>   	status = "okay";
->>   	clock-frequency = <200000>;
+> > 
 
 -- 
-With best wishes
-Dmitry
-
+மணிவண்ணன் சதாசிவம்
