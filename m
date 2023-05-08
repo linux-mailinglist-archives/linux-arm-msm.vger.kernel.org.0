@@ -2,104 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 212E76FB3B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 17:26:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 261E66FB3E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 17:33:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234511AbjEHP02 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 11:26:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45202 "EHLO
+        id S230263AbjEHPd1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 11:33:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234500AbjEHP0P (ORCPT
+        with ESMTP id S234371AbjEHPd1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 11:26:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D1486B5;
-        Mon,  8 May 2023 08:26:14 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 348EbCnO002036;
-        Mon, 8 May 2023 15:26:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=lh+BIRLaESsRal0lrbpPZMO3xptdBsUFbfqxHhcptc8=;
- b=SahD0KuH8ubfIHKpAOpWebyKCKKjLxx3hkPRoZhLWHxAAK2m5S38aVG0zGMRLrC9MYFq
- nRaj6rtlmgMQATHo+csVF/4S9bFv55JW0wfRNRJOXymwDl5XPw/0sek80m/ZOVTp66+W
- XeQ06z54O6sQoQinGeg3MboyCJ4c4F375KOtAgJV89cENXDtIwZR6dGIBSXJ3mzmP0m5
- aFRVbE6+0zhX9QA5D6lINUbbvH5qDqimHNcXTxTB0a3a7WFg6n82fQrOqHxtzO4/DpVI
- 9E5iz/w2/brvUuv2SSWYZ4e6FrKcH3SPiMme0dNDA48oxr0LAoGkaBagohOn8qhMPCHl Cg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf30j856g-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 08 May 2023 15:26:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 348FQAbL005614
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 8 May 2023 15:26:10 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 8 May 2023 08:26:07 -0700
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH 2/2] soc: qcom: socinfo: Add Soc ID for IPQ5312 and IPQ5302
-Date:   Mon, 8 May 2023 20:55:43 +0530
-Message-ID: <20230508152543.14969-3-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230508152543.14969-1-quic_kathirav@quicinc.com>
-References: <20230508152543.14969-1-quic_kathirav@quicinc.com>
+        Mon, 8 May 2023 11:33:27 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925FB8A50
+        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 08:33:22 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f14ec4efb0so3130316e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 May 2023 08:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683560001; x=1686152001;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JN0718Ijf0M8e5M4RHFLxUvS5jCN6cHoZ+1J4Zo+39Q=;
+        b=QTAI+QeH2IytZzpIW3YFpxyjExDJuWCTc2IxRar4kGuqfqRg7J5qL8EOjK/Zg4HpXg
+         6nC5Fmn/Kfi1W7+6g4pAnY8HBYf4s/p0k5JrF5eAtPgptds94knTDuv7Lg4JUVmYkuid
+         DxgkAuVv4g5TWTMwn6qLYR4RJZAofqR7VTJZq7VlgCTv11znqnKI+CR+jofFIEevWiIv
+         EpNLOpeRXREW0iSwJjSdMi8ZG9/Xzb3/B8FwUAKo32WwOPFOqxs8PhsYd/KQMq8h0kDq
+         wdL7ToXSGL4z3bSe5oKACupRfWvQlFM/elf8VwQV/v+LZZydQHBMGRkVtT52FnTh0JPI
+         b80w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683560001; x=1686152001;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JN0718Ijf0M8e5M4RHFLxUvS5jCN6cHoZ+1J4Zo+39Q=;
+        b=VAl5Fwnt9UOpUo/yblHJxTJEqYUqoZSlMmIdB5Q/+sk3A7F/wkI9UEW/IcnrlG+M3K
+         Ma+sQYAuiKgpGcrpEJq8LO+mJHHaMgGAmnRq+rkaZBPIQjfkRdqJuMR4/vrfh4H3WpLb
+         7zFYOB9co0+KkXlJbVlK1wBrT5icRwCrj5d6RKO/5IvwU0Gde/nyJdZmGofFi5Iw1pQi
+         iTiUV1ehyTkqx56dV5w0kFwKWkb8cdj0/IdwNd00IBch70ox2HqLrW2PyIgBQiCZ5+NI
+         m8iRYohdyQRMT9K3RXnl4WZTXn3/fjs8a9hVHGvRbkq8m4cEKTIE9596iDD14ucxpBYi
+         ug2Q==
+X-Gm-Message-State: AC+VfDzCYyoqv+jBoT1wUe+4EgIQTYYmipZh/uXeZmV4Uf5liPYiyq4p
+        SWopAW0QN9okC1ycLfmfwwNPMA==
+X-Google-Smtp-Source: ACHHUZ51jtBedf/4Ly0u2A7Cr0CAmGLtF6X3iM4jqyXZ+SvM4TZfs1nhabZO7A1q2cVrWvPx7XMUGw==
+X-Received: by 2002:ac2:55a5:0:b0:4ed:b15d:467d with SMTP id y5-20020ac255a5000000b004edb15d467dmr2895247lfg.53.1683560000828;
+        Mon, 08 May 2023 08:33:20 -0700 (PDT)
+Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
+        by smtp.gmail.com with ESMTPSA id o17-20020a056512051100b004eff70e321bsm21865lfb.237.2023.05.08.08.33.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 08:33:20 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: [PATCH] clk: qcom: mmcc-msm8974: remove oxili_ocmemgx_clk
+Date:   Mon,  8 May 2023 18:33:19 +0300
+Message-Id: <20230508153319.2371645-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Yxu-3QVuZV8ufm-Hg28dOEfbbeE-zkMo
-X-Proofpoint-GUID: Yxu-3QVuZV8ufm-Hg28dOEfbbeE-zkMo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-08_11,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 mlxscore=0
- mlxlogscore=855 impostorscore=0 priorityscore=1501 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305080102
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the SoC ID for IPQ5312 and IPQ5302, which are belongs to the family
-of IPQ5332 SoC.
+After the internal discussions, it looks like this clock is managed by
+RPM itself. Linux kernel should not touch it on its own, as this causes
+disagreement with RPM. Shutting down this clock causes the OCMEM<->GPU
+interface to stop working, resulting in GPU hangchecks/timeouts.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock controller (MMCC)")
+Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/soc/qcom/socinfo.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/mmcc-msm8974.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index c2e4a57dd666..608c4f57c6c7 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -466,6 +466,8 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(QRU1062) },
- 	{ qcom_board_id(IPQ5332) },
- 	{ qcom_board_id(IPQ5322) },
-+	{ qcom_board_id(IPQ5312) },
-+	{ qcom_board_id(IPQ5302) },
+diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
+index 277ef0065aae..82f6bad144a9 100644
+--- a/drivers/clk/qcom/mmcc-msm8974.c
++++ b/drivers/clk/qcom/mmcc-msm8974.c
+@@ -2204,23 +2204,6 @@ static struct clk_branch ocmemcx_ocmemnoc_clk = {
+ 	},
  };
  
- static const char *socinfo_machine(struct device *dev, unsigned int id)
+-static struct clk_branch oxili_ocmemgx_clk = {
+-	.halt_reg = 0x402c,
+-	.clkr = {
+-		.enable_reg = 0x402c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "oxili_ocmemgx_clk",
+-			.parent_data = (const struct clk_parent_data[]){
+-				{ .fw_name = "gfx3d_clk_src", .name = "gfx3d_clk_src" },
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch ocmemnoc_clk = {
+ 	.halt_reg = 0x50b4,
+ 	.clkr = {
+@@ -2512,7 +2495,6 @@ static struct clk_regmap *mmcc_msm8226_clocks[] = {
+ 	[MMSS_MMSSNOC_AXI_CLK] = &mmss_mmssnoc_axi_clk.clkr,
+ 	[MMSS_S0_AXI_CLK] = &mmss_s0_axi_clk.clkr,
+ 	[OCMEMCX_AHB_CLK] = &ocmemcx_ahb_clk.clkr,
+-	[OXILI_OCMEMGX_CLK] = &oxili_ocmemgx_clk.clkr,
+ 	[OXILI_GFX3D_CLK] = &oxili_gfx3d_clk.clkr,
+ 	[OXILICX_AHB_CLK] = &oxilicx_ahb_clk.clkr,
+ 	[OXILICX_AXI_CLK] = &oxilicx_axi_clk.clkr,
+@@ -2670,7 +2652,6 @@ static struct clk_regmap *mmcc_msm8974_clocks[] = {
+ 	[MMSS_S0_AXI_CLK] = &mmss_s0_axi_clk.clkr,
+ 	[OCMEMCX_AHB_CLK] = &ocmemcx_ahb_clk.clkr,
+ 	[OCMEMCX_OCMEMNOC_CLK] = &ocmemcx_ocmemnoc_clk.clkr,
+-	[OXILI_OCMEMGX_CLK] = &oxili_ocmemgx_clk.clkr,
+ 	[OCMEMNOC_CLK] = &ocmemnoc_clk.clkr,
+ 	[OXILI_GFX3D_CLK] = &oxili_gfx3d_clk.clkr,
+ 	[OXILICX_AHB_CLK] = &oxilicx_ahb_clk.clkr,
 -- 
-2.17.1
+2.39.2
 
