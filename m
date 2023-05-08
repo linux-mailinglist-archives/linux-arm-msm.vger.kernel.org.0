@@ -2,28 +2,28 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED63B6FB871
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 22:45:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B6B6FB877
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 May 2023 22:48:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232915AbjEHUpQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 16:45:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42098 "EHLO
+        id S229986AbjEHUsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 16:48:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjEHUpM (ORCPT
+        with ESMTP id S229452AbjEHUsa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 16:45:12 -0400
+        Mon, 8 May 2023 16:48:30 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D9F5598;
-        Mon,  8 May 2023 13:45:11 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7799558B;
+        Mon,  8 May 2023 13:48:29 -0700 (PDT)
 Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 842E1C6FC8;
-        Mon,  8 May 2023 20:45:09 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 54251C6FC8;
+        Mon,  8 May 2023 20:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683578709; bh=Mo5AKMAQFcJFxVfmI+EQBz82R/aLkXwA90cLbBSaJjk=;
+        t=1683578878; bh=eL8C+MHKsd/HYelky6jxok9NEsmBztDAwCSfki3LBy0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=xO5hHgkINsadZNreQsKI8jDb2ezLDY/dZ/+A7uFvPDYFzvizw4o5XFgabWIR/NASy
-         e9NSHSk+uEIOCyY0evx/0jew7CiuXqMwp1m7OGWSrcPSNaa40K0SM2NWfnMdLwC9dk
-         IAf0bkUavbruJhqk/mjNEyEICKagAVr/z9mC33nM=
+        b=uekS+g+nG3HG9j2PLdabIcfXfZ4LGTry4GClzI6dokH6O01ebdzvcTcoRyVzP1dJP
+         VbiJ4caM88k/8fXofdwlYqZ93tguaDyKaoK//1vPlmGbTOLSvFxyqVURVUgr9qNeo9
+         ErCpNtaJclpsq03iVkNo90MzEGAZo69C1wndBx+Q=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -32,13 +32,15 @@ To:     Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Taniya Das <quic_tdas@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH 1/2] clk: qcom: mmcc-msm8974: use clk_rcg2_shared_ops for
- mdp_clk_src clock
-Date:   Mon, 08 May 2023 22:45:08 +0200
-Message-ID: <3278412.mvXUDI8C0e@z3ntu.xyz>
-In-Reply-To: <20230507175335.2321503-1-dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH 2/2] clk: qcom: mmcc-msm8974: fix MDSS_GDSC power flags
+Date:   Mon, 08 May 2023 22:47:57 +0200
+Message-ID: <6529911.lOV4Wx5bFT@z3ntu.xyz>
+In-Reply-To: <20230507175335.2321503-2-dmitry.baryshkov@linaro.org>
 References: <20230507175335.2321503-1-dmitry.baryshkov@linaro.org>
+ <20230507175335.2321503-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -51,36 +53,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sonntag, 7. Mai 2023 19:53:34 CEST Dmitry Baryshkov wrote:
-> The mdp_clk_src clock should not be turned off. Instead it should be
-> 'parked' to the XO, as most of other mdp_clk_src clocks. Fix that by
-> using the clk_rcg2_shared_ops.
+On Sonntag, 7. Mai 2023 19:53:35 CEST Dmitry Baryshkov wrote:
+> Using PWRSTS_RET on msm8974's MDSS_GDSC causes display to stop working.
+> The gdsc doesn't fully come out of retention mode. Change it's pwrsts
+> flags to PWRSTS_OFF_ON.
 
-While I don't recall seeing problems with this clock before, with this change 
-it also seems to be work fine on FP2.
++CC Rajendra & Manivannan
+
+Following the mails at [0] this was the suggested fix, which I haven't
+made into a patch myself yet.
+
+With this (and without the revert of the linked patch) panel init is fine
+again on FP2. Thanks!
+
+[0] https://lore.kernel.org/linux-arm-msm/5897497.lOV4Wx5bFT@g550jk/
 
 Tested-by: Luca Weiss <luca@z3ntu.xyz>
 
 > 
-> Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia clock
-> controller (MMCC)") Signed-off-by: Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org>
+> Fixes: d399723950c4 ("clk: qcom: gdsc: Fix the handling of PWRSTS_RET
+> support") Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 >  drivers/clk/qcom/mmcc-msm8974.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/drivers/clk/qcom/mmcc-msm8974.c
-> b/drivers/clk/qcom/mmcc-msm8974.c index 4273fce9a4a4..aa29c79fcd55 100644
+> b/drivers/clk/qcom/mmcc-msm8974.c index aa29c79fcd55..277ef0065aae 100644
 > --- a/drivers/clk/qcom/mmcc-msm8974.c
 > +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> @@ -485,7 +485,7 @@ static struct clk_rcg2 mdp_clk_src = {
->  		.name = "mdp_clk_src",
->  		.parent_data = mmcc_xo_mmpll0_dsi_hdmi_gpll0,
->  		.num_parents = ARRAY_SIZE(mmcc_xo_mmpll0_dsi_hdmi_gpll0),
-> -		.ops = &clk_rcg2_ops,
-> +		.ops = &clk_rcg2_shared_ops,
+> @@ -2401,7 +2401,7 @@ static struct gdsc mdss_gdsc = {
+>  	.pd = {
+>  		.name = "mdss",
 >  	},
+> -	.pwrsts = PWRSTS_RET_ON,
+> +	.pwrsts = PWRSTS_OFF_ON,
 >  };
+> 
+>  static struct gdsc camss_jpeg_gdsc = {
 
 
 
