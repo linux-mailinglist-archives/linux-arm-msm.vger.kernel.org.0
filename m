@@ -2,238 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F02B46FBBBE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 02:00:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 672436FBBE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 02:18:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233559AbjEIAAX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 20:00:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32812 "EHLO
+        id S234056AbjEIASl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 20:18:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229705AbjEIAAW (ORCPT
+        with ESMTP id S229532AbjEIASl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 20:00:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC00110FE;
-        Mon,  8 May 2023 17:00:20 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 348McX2R025295;
-        Tue, 9 May 2023 00:00:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cP644vxFEnuaq+QtuLolN7H6tCQK5Xhu+hJjts/Za70=;
- b=hdNWiJGNumrf+wHcJb0OhWcWCZq4eR7ycDjbYLIttrYycqoTNC9mCem+4EmHsCaks/9T
- CydqkDJEGuaEcAMYEglX9hOn+enbzKp6Pun45Ss+Owi9czJp+RcYw5pa4X3DrSjEF3J8
- uU7HBat/HL8YPJhni1q81QqB9cO2yct37c0MQhPvY1z0wm5qrhVkH9VpYtiVq3JZVB+6
- P6kQxyPr2Pc6kcXAHHyrJZzF5EYyrUfZE8TexwMrl1t1C4lc0D6KIqqHrTBZARQe27bM
- jlG0wF9fG6aqDKhRTOieR21Rv7XJJW2nGy7R3MPDfToUGlfn13myFRXedWvODeQDFpnu 2A== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf7850cfw-1
+        Mon, 8 May 2023 20:18:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A77D40FD;
+        Mon,  8 May 2023 17:18:40 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3490CXJc006550;
+        Tue, 9 May 2023 00:18:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=cbNc63OdKgM2YxbA0LfEgCDznvKGSI28JVDUPdeQrVI=;
+ b=i06mRJcm7bp7vLIVwSrX0mewhGFvGBDA/0k9R6ixlxiqJeo0ZbEj0UYA01hR14pdJXcr
+ +O/qQRyDr7P4msnp6lvs71hO4oYzAPupeip6IqpNK/PX+Fx9aL1RCazKBLJm0oBl04SV
+ kTo1kXpr0LLqC5JwpxQfhShiad4zI4ENZikIBRKlrnHXNWxEAYdHDd3aYj8RmFoXAvt7
+ /Z012oA24xYsMkn/sA4pjns1wMFQzpKn30zb5SX9OS85+SJ4wLnrcLlroov3CFMeWU7x
+ oY9ARscDUbENqf2riLXGQQ3PT0Azq2haWA3t61jG0uUiegOpChxwdmlB3T0Esw/kMhnN XQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77f0dds-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 00:00:14 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34900D9F006263
+        Tue, 09 May 2023 00:18:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3490Ia5R001722
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 00:00:13 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
- 17:00:12 -0700
-Message-ID: <f99c5891-5d46-b39e-929a-00aedb068fb5@quicinc.com>
-Date:   Mon, 8 May 2023 17:00:12 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [Freedreno] [PATCH v2 4/4] drm/msm/dpu: Set DATA_COMPRESS for
- command mode
-Content-Language: en-US
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Tue, 9 May 2023 00:18:36 GMT
+Received: from hu-gokukris-sd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 8 May 2023 17:18:35 -0700
+From:   Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>
-References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
- <20230405-add-dsc-support-v2-4-1072c70e9786@quicinc.com>
- <j5wa45g4v6swvsiakl23azu7qgxtdllf2gav5wdc7s7zukxe4c@jkcu2wnyn6rn>
- <baa25817-4a0d-551d-a351-21cc1525a932@quicinc.com>
-In-Reply-To: <baa25817-4a0d-551d-a351-21cc1525a932@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Satya Durga Srinivasu Prabhala" <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        "Guru Das Srinagesh" <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: [PATCH v6 1/1] soc: qcom: mdt_loader: Enhance split binary detection
+Date:   Mon, 8 May 2023 17:18:21 -0700
+Message-ID: <20230509001821.24010-1-quic_gokukris@quicinc.com>
+X-Mailer: git-send-email 2.40.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QBar3oebH9jA8Nv2xS7BoBDWjAVa9JQO
-X-Proofpoint-GUID: QBar3oebH9jA8Nv2xS7BoBDWjAVa9JQO
+X-Proofpoint-ORIG-GUID: WdvYaK6GtPYgaCsNxJrMc8Z4an6glUkd
+X-Proofpoint-GUID: WdvYaK6GtPYgaCsNxJrMc8Z4an6glUkd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-08_17,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- bulkscore=0 mlxlogscore=999 impostorscore=0 spamscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305080161
-X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+ definitions=2023-05-08_18,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ mlxlogscore=999 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305090000
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+It may be that the offset of the first program header lies inside the mdt's
+filesize, in this case the loader would incorrectly assume that the bins
+were not split and in this scenario the firmware authentication fails.
+This change updates the logic used by the mdt loader to understand whether
+the firmware images are split or not. It figures this out by checking if
+each programs header's segment lies within the file or not.
 
+Co-developed-by: Melody Olvera <quic_molvera@quicinc.com>
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+Signed-off-by: Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
 
-On 5/8/2023 4:17 PM, Jessica Zhang wrote:
-> 
-> 
-> On 5/7/2023 9:06 AM, Marijn Suijten wrote:
->> On 2023-05-05 14:23:51, Jessica Zhang wrote:
->>> Add a DPU INTF op to set DATA_COMPRESS register for command mode 
->>> panels if
->>> the DPU_INTF_DATA_COMPRESS feature flag is set. This flag needs to be
->>> enabled in order for DSC v1.2 to work.
->>>
->>> Note: These changes are for command mode only. Video mode changes will
->>> be posted along with the DSC v1.2 support for DP.
->>
->> Nit: the "command mode" parts of both paragraphs only apply to the call
->> in dpu_encoder_phys_cmd, right?  If so, and the INTF op remains the same
->> for video mode (but only the call needs to be added to the
->> dpu_encoder_phy_vid), make this a bit more clear in your commit message.
+---
+V6: Fixed format error in qcom_mdt_bins_are_split function definition and
+Correcting the s-o-b by keeping Melody as the co-developer.
 
-(Sorry, forgot to address this comment in my initial reply)
+V5: Removes extra empty lines from V4 and fixed the S-o-b by keeping Melody's
+name first.
 
-The op will be available for video mode to use, but most likely video 
-mode will set DATA_COMPRESS (or call dpu_hw_intf_enable_compression()) 
-directly in dpu_hw_intf_setup_timing_engine().
+V4: Change the commit text to include the scenario in which we see the problem.
 
-Thanks,
+V3: separated out from [1] and includes changes addressing comments
+from that patch set: 
+	1. Change the checking condition for non-split firmwares to
+	(phr->p_filesz && !issplit) on line #352 for better readability.
+	2. Removes an unncecessary check for split bins in qcom_mdt_read_metadata()/
 
-Jessica Zhang
+[1] https://lore.kernel.org/all/20230306231202.12223-5-quic_molvera@quicinc.com/
+---
+ drivers/soc/qcom/mdt_loader.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
->>
->>> Changes in v2:
->>> - Fixed whitespace issue in macro definition
->>> - Read INTF_CONFIG2 before writing to DATA_COMPRESS bit
->>> - Only set dpu_hw_intf_ops.data_compress if DATA_COMPRESS feature is set
->>> - Removed `inline` from dpu_hw_intf_enable_compression declaration
->>>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 11 +++++++++++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  2 ++
->>>   3 files changed, 16 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> index d8ed85a238af..1a4c20f02312 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
->>> @@ -68,6 +68,9 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
->>>                   phys_enc->hw_intf,
->>>                   true,
->>>                   phys_enc->hw_pp->idx);
->>> +
->>> +    if (phys_enc->hw_intf->ops.enable_compression)
->>> +        phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
->>>   }
->>>   static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int 
->>> irq_idx)
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> index 6485500eedb8..322c55a5042c 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>> @@ -91,6 +91,14 @@
->>>   #define INTF_CFG2_DATABUS_WIDEN    BIT(0)
->>>   #define INTF_CFG2_DATA_HCTL_EN    BIT(4)
->>> +#define INTF_CFG2_DCE_DATA_COMPRESS     BIT(12)
->>> +
->>> +static void dpu_hw_intf_enable_compression(struct dpu_hw_intf *ctx)
->>> +{
->>> +    u32 intf_cfg2 = DPU_REG_READ(&ctx->hw, INTF_CONFIG2);
->>> +
->>> +    DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2 | 
->>> INTF_CFG2_DCE_DATA_COMPRESS);
->>
->> I'm not sure if it's more idiomatic to write:
->>
->>      intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
->>
->> On a separate line.
-> 
-> Hi Marijn,
-> 
-> Sounds good.
-> 
->>
->>> +}
->>
->> Move the function close to the bottom of this file.  Right now all the
->> functions are defined approximately in the same order as they're listed
->> in the header and assigned in _setup_intf_ops().
-> 
-> Acked.
-> 
->>
->>>   static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
->>>           const struct intf_timing_params *p,
->>> @@ -542,6 +550,9 @@ static void _setup_intf_ops(struct 
->>> dpu_hw_intf_ops *ops,
->>>           ops->vsync_sel = dpu_hw_intf_vsync_sel;
->>>           ops->disable_autorefresh = dpu_hw_intf_disable_autorefresh;
->>>       }
->>> +
->>> +    if (cap & BIT(DPU_INTF_DATA_COMPRESS))
->>> +        ops->enable_compression = dpu_hw_intf_enable_compression;
->>>   }
->>>   struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> index 73b0885918f8..a8def68a5ec2 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>> @@ -70,6 +70,7 @@ struct intf_status {
->>>    * @get_autorefresh:            Retrieve autorefresh config from 
->>> hardware
->>>    *                              Return: 0 on success, -ETIMEDOUT on 
->>> timeout
->>>    * @vsync_sel:                  Select vsync signal for tear-effect 
->>> configuration
->>> + * @enable_compression: Enable data compression
->>
->> Indent to match above.
-> 
-> Sure, is the plan to correct the whitespace in the first half of the 
-> comment block in the future?
-> 
-> Thanks,
-> 
-> Jessica Zhang
-> 
->>
->> - Marijn
->>
->>>    */
->>>   struct dpu_hw_intf_ops {
->>>       void (*setup_timing_gen)(struct dpu_hw_intf *intf,
->>> @@ -107,6 +108,7 @@ struct dpu_hw_intf_ops {
->>>        * Disable autorefresh if enabled
->>>        */
->>>       void (*disable_autorefresh)(struct dpu_hw_intf *intf, uint32_t 
->>> encoder_id, u16 vdisplay);
->>> +    void (*enable_compression)(struct dpu_hw_intf *intf);
->>>   };
->>>   struct dpu_hw_intf {
->>>
->>> -- 
->>> 2.40.1
->>>
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index 3f11554df2f3..0e35d29b4438 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -258,6 +258,26 @@ int qcom_mdt_pas_init(struct device *dev, const struct firmware *fw,
+ }
+ EXPORT_SYMBOL_GPL(qcom_mdt_pas_init);
+ 
++static bool qcom_mdt_bins_are_split(const struct firmware *fw, const char *fw_name)
++{
++	const struct elf32_phdr *phdrs;
++	const struct elf32_hdr *ehdr;
++	uint64_t seg_start, seg_end;
++	int i;
++
++	ehdr = (struct elf32_hdr *)fw->data;
++	phdrs = (struct elf32_phdr *)(ehdr + 1);
++
++	for (i = 0; i < ehdr->e_phnum; i++) {
++		seg_start = phdrs[i].p_offset;
++		seg_end = phdrs[i].p_offset + phdrs[i].p_filesz;
++		if (seg_start > fw->size || seg_end > fw->size)
++			return true;
++	}
++
++	return false;
++}
++
+ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 			   const char *fw_name, int pas_id, void *mem_region,
+ 			   phys_addr_t mem_phys, size_t mem_size,
+@@ -270,6 +290,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 	phys_addr_t min_addr = PHYS_ADDR_MAX;
+ 	ssize_t offset;
+ 	bool relocate = false;
++	bool is_split;
+ 	void *ptr;
+ 	int ret = 0;
+ 	int i;
+@@ -277,6 +298,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 	if (!fw || !mem_region || !mem_phys || !mem_size)
+ 		return -EINVAL;
+ 
++	is_split = qcom_mdt_bins_are_split(fw, fw_name);
+ 	ehdr = (struct elf32_hdr *)fw->data;
+ 	phdrs = (struct elf32_phdr *)(ehdr + 1);
+ 
+@@ -330,8 +352,7 @@ static int __qcom_mdt_load(struct device *dev, const struct firmware *fw,
+ 
+ 		ptr = mem_region + offset;
+ 
+-		if (phdr->p_filesz && phdr->p_offset < fw->size &&
+-		    phdr->p_offset + phdr->p_filesz <= fw->size) {
++		if (phdr->p_filesz && !is_split) {
+ 			/* Firmware is large enough to be non-split */
+ 			if (phdr->p_offset + phdr->p_filesz > fw->size) {
+ 				dev_err(dev, "file %s segment %d would be truncated\n",
+-- 
+2.40.1
+
