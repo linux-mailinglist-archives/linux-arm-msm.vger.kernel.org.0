@@ -2,52 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BA506FC265
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 11:09:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2948C6FC274
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 11:15:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234462AbjEIJJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 05:09:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37058 "EHLO
+        id S234489AbjEIJPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 05:15:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234838AbjEIJJw (ORCPT
+        with ESMTP id S234146AbjEIJO4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 05:09:52 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F19D2;
-        Tue,  9 May 2023 02:09:50 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3497wi1W024934;
-        Tue, 9 May 2023 09:09:46 GMT
+        Tue, 9 May 2023 05:14:56 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19983DC59;
+        Tue,  9 May 2023 02:14:52 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3496sNLM016601;
+        Tue, 9 May 2023 09:14:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2jjYTW2QY7LaQiGHgOA8YEiVll5kvVeAt8E4zatt5z0=;
- b=eymY5OterDkErlO6yOonDwRtpsW6GEqkTWrrZQRaoVOzTed0rdR7xeYOqzjHv19jh5Pb
- ELu+bD9qMd+GtyxMobkGG/mUry0u20Q4v+hNkc9YH35AJHo8ylCEzG2DG4TSuNGVYvg/
- s/zJX60Gv8tQ9YZmcoyWJO1hJO1/8LJsZ66YBFT6w7qPGRmkcrUbCvEpoj0CifPdliWP
- sNZVXV8r6zOGRaJwos1xMDv6rBlyYD/8h5pvRrqlgg7qYGkDukOzgrZWtKEiuTtU3ZbW
- iY7JfrgnWmBvLucSdVgwsiC+zITt+LFfPUq0vIcZKRE8bIGNvVDcpQpSo2VcobqhDBFV 2g== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf78ps80b-1
+ bh=32NsFka5NxTjUhZwkz5YfWn1fveMy+8Ql3+i5UypZIo=;
+ b=Nkq6bqvyeYcevv+EXoTxYa9Y5wAhi6OS9L+Wyz5fgQf3cZG5lyB6386J6UqKYaUo3RH/
+ 7Djpgw7ZraqF+tUff9W3aB8YSrHEShVmJvJxuW+IlK06SORk9NZ+DMW9ov2ZbQwOl1/f
+ SBtr6+rsgYw2l0f0zfnXjFBaMcpY8iVmBcQBNbQF4WYkUblNdpL6A1LdYepNEnPNOJiy
+ G7CcYPzAw7QP+ekDWIYL9cvKYhCTYecpdsqgA14yPdPalsqAosIPCbvmZMhrI6jdbg3I
+ VflaG5fJuuLdipleH/dHVI6nEjrdmwXNy7OiSuv1Pq9bEjirSRq2g/6mb+Ua0PSvrVVS RA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77j191v-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 09:09:45 +0000
+        Tue, 09 May 2023 09:14:46 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34999ihb014166
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3499EkHT005374
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 09:09:44 GMT
+        Tue, 9 May 2023 09:14:46 GMT
 Received: from [10.216.33.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
- 02:09:39 -0700
-Message-ID: <2d60886f-a731-ee29-dd2e-1a1438bd7d03@quicinc.com>
-Date:   Tue, 9 May 2023 14:39:36 +0530
+ 02:14:40 -0700
+Message-ID: <f9a64c13-a8e4-c84d-cf6d-86f4ddf6d288@quicinc.com>
+Date:   Tue, 9 May 2023 14:44:37 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.1
-Subject: Re: [PATCH 2/4] dt-bindings: clock: Add GCC bindings support for
- SDX75
+Subject: Re: [PATCH 4/4] clk: qcom: Add GCC driver support for SDX75
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,195 +60,348 @@ CC:     <quic_skakitap@quicinc.com>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <quic_rohiagar@quicinc.com>, <netdev@vger.kernel.org>
 References: <20230419133013.2563-1-quic_tdas@quicinc.com>
- <20230419133013.2563-3-quic_tdas@quicinc.com>
- <3b7394e1-1be7-ec38-61bd-708a624070ac@linaro.org>
+ <20230419133013.2563-5-quic_tdas@quicinc.com>
+ <af5435c3-b3a4-af46-444e-023d6ee2304a@linaro.org>
 From:   Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <3b7394e1-1be7-ec38-61bd-708a624070ac@linaro.org>
+In-Reply-To: <af5435c3-b3a4-af46-444e-023d6ee2304a@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nzuZDC-rN7_ZBwO-wxLot06H_egbKl9p
-X-Proofpoint-GUID: nzuZDC-rN7_ZBwO-wxLot06H_egbKl9p
+X-Proofpoint-ORIG-GUID: BFzArWZcS3o1RPEdyiyrPO-qLa3W5INw
+X-Proofpoint-GUID: BFzArWZcS3o1RPEdyiyrPO-qLa3W5INw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-09_05,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- bulkscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305090070
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 mlxscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ clxscore=1015 mlxlogscore=887 adultscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305090072
+X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for the review.
+Thanks Dmitry for the review.
 
-On 4/19/2023 11:41 PM, Krzysztof Kozlowski wrote:
-> On 19/04/2023 15:30, Taniya Das wrote:
->> From: Imran Shaik <quic_imrashai@quicinc.com>
->>
+On 4/20/2023 3:40 PM, Dmitry Baryshkov wrote:
+>> +static const struct clk_parent_data gcc_parent_data_5[] = {
+>> +    { .fw_name = "emac0_sgmiiphy_rclk" },
 > 
-> Thank you for your patch. There is something to discuss/improve.
-> 
->> Add support for GCC bindings and update documentation for
->> clock rpmh driver for SDX75.
-> 
-> Subject: drop second/last, redundant "bindings support for". The
-> "dt-bindings" prefix is already stating that these are bindings.
-> But missing vendor name (Qualcomm). Both in subject and commit msg.
-> 
+> So, this looks like a mixture of fw_name and index clocks. Please 
+> migrate all of fw_names to the .index usage.
 > 
 
-All the below comments will be taken care in the next patchset.
+I will take care of it to move to index, but does it not bind us to use 
+the right index always from DT.
+
+The current approach I was thinking to bind the XO clock to 0th index, 
+but we cannot gurantee these external clocks would be placed at the 
+right index.
+
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_6[] = {
+>> +    { P_EMAC0_SGMIIPHY_TCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_6[] = {
+>> +    { .fw_name = "emac0_sgmiiphy_tclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_7[] = {
+>> +    { P_EMAC0_SGMIIPHY_MAC_RCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_7[] = {
+>> +    { .fw_name = "emac0_sgmiiphy_mac_rclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_8[] = {
+>> +    { P_EMAC0_SGMIIPHY_MAC_TCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_8[] = {
+>> +    { .fw_name = "emac0_sgmiiphy_mac_tclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_9[] = {
+>> +    { P_EMAC1_SGMIIPHY_RCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_9[] = {
+>> +    { .fw_name = "emac1_sgmiiphy_rclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_10[] = {
+>> +    { P_EMAC1_SGMIIPHY_TCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_10[] = {
+>> +    { .fw_name = "emac1_sgmiiphy_tclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_11[] = {
+>> +    { P_EMAC1_SGMIIPHY_MAC_RCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_11[] = {
+>> +    { .fw_name = "emac1_sgmiiphy_mac_rclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_12[] = {
+>> +    { P_EMAC1_SGMIIPHY_MAC_TCLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_12[] = {
+>> +    { .fw_name = "emac1_sgmiiphy_mac_tclk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_13[] = {
+>> +    { P_PCIE_1_PIPE_CLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_13[] = {
+>> +    { .fw_name = "pcie_1_pipe_clk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_14[] = {
+>> +    { P_PCIE_2_PIPE_CLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_14[] = {
+>> +    { .fw_name = "pcie_2_pipe_clk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_15[] = {
+>> +    { P_PCIE20_PHY_AUX_CLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_15[] = {
+>> +    { .fw_name = "pcie20_phy_aux_clk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_16[] = {
+>> +    { P_PCIE_PIPE_CLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_16[] = {
+>> +    { .fw_name = "pcie_pipe_clk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_17[] = {
+>> +    { P_BI_TCXO, 0 },
+>> +    { P_GPLL0_OUT_MAIN, 1 },
+>> +    { P_GPLL6_OUT_MAIN, 2 },
+>> +    { P_GPLL0_OUT_EVEN, 6 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_17[] = {
+>> +    { .index = DT_BI_TCXO },
+>> +    { .hw = &gpll0.clkr.hw },
+>> +    { .hw = &gpll6.clkr.hw },
+>> +    { .hw = &gpll0_out_even.clkr.hw },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_18[] = {
+>> +    { P_BI_TCXO, 0 },
+>> +    { P_GPLL0_OUT_MAIN, 1 },
+>> +    { P_GPLL8_OUT_MAIN, 2 },
+>> +    { P_GPLL0_OUT_EVEN, 6 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_18[] = {
+>> +    { .index = DT_BI_TCXO },
+>> +    { .hw = &gpll0.clkr.hw },
+>> +    { .hw = &gpll8.clkr.hw },
+>> +    { .hw = &gpll0_out_even.clkr.hw },
+>> +};
+>> +
+>> +static const struct parent_map gcc_parent_map_19[] = {
+>> +    { P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK, 0 },
+>> +    { P_BI_TCXO, 2 },
+>> +};
+>> +
+>> +static const struct clk_parent_data gcc_parent_data_19[] = {
+>> +    { .fw_name = "usb3_phy_wrapper_gcc_usb30_pipe_clk" },
+>> +    { .index = DT_BI_TCXO },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac0_cc_sgmiiphy_rx_clk_src = {
+>> +    .reg = 0x71060,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_5,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac0_cc_sgmiiphy_rx_clk_src",
+>> +            .parent_data = gcc_parent_data_5,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_5),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac0_cc_sgmiiphy_tx_clk_src = {
+>> +    .reg = 0x71058,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_6,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac0_cc_sgmiiphy_tx_clk_src",
+>> +            .parent_data = gcc_parent_data_6,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_6),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac0_sgmiiphy_mac_rclk_src = {
+>> +    .reg = 0x71098,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_7,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac0_sgmiiphy_mac_rclk_src",
+>> +            .parent_data = gcc_parent_data_7,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_7),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac0_sgmiiphy_mac_tclk_src = {
+>> +    .reg = 0x71094,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_8,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac0_sgmiiphy_mac_tclk_src",
+>> +            .parent_data = gcc_parent_data_8,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_8),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac1_cc_sgmiiphy_rx_clk_src = {
+>> +    .reg = 0x72060,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_9,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac1_cc_sgmiiphy_rx_clk_src",
+>> +            .parent_data = gcc_parent_data_9,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_9),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac1_cc_sgmiiphy_tx_clk_src = {
+>> +    .reg = 0x72058,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_10,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac1_cc_sgmiiphy_tx_clk_src",
+>> +            .parent_data = gcc_parent_data_10,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_10),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac1_sgmiiphy_mac_rclk_src = {
+>> +    .reg = 0x72098,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_11,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac1_sgmiiphy_mac_rclk_src",
+>> +            .parent_data = gcc_parent_data_11,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_11),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_emac1_sgmiiphy_mac_tclk_src = {
+>> +    .reg = 0x72094,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_12,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_emac1_sgmiiphy_mac_tclk_src",
+>> +            .parent_data = gcc_parent_data_12,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_12),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+>> +        },
+>> +    },
+>> +};
+>> +
+>> +static struct clk_regmap_mux gcc_pcie_1_pipe_clk_src = {
+>> +    .reg = 0x67084,
+>> +    .shift = 0,
+>> +    .width = 2,
+>> +    .parent_map = gcc_parent_map_13,
+>> +    .clkr = {
+>> +        .hw.init = &(const struct clk_init_data) {
+>> +            .name = "gcc_pcie_1_pipe_clk_src",
+>> +            .parent_data = gcc_parent_data_13,
+>> +            .num_parents = ARRAY_SIZE(gcc_parent_data_13),
+>> +            .ops = &clk_regmap_mux_closest_ops,
+> 
+> Are these clocks a clk_regmap_mux_closest_ops in reality 
+> clk_regmap_phy_mux_ops?
+
+clk_regmap_phy_mux_ops cannot be used here, as multi parent mux requires 
+the .get_parent ops to be supported.
 
 > 
->>
->> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
->> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->> ---
->>   .../bindings/clock/qcom,gcc-sdx75.yaml        |  69 +++++++
->>   .../bindings/clock/qcom,rpmhcc.yaml           |   1 +
->>   include/dt-bindings/clock/qcom,gcc-sdx75.h    | 193 ++++++++++++++++++
->>   3 files changed, 263 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml
->>   create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx75.h
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml
->> new file mode 100644
->> index 000000000000..6489d857d5c4
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml
-> 
-> All new devices come as SoC-IP, so qcom,sdx75-gcc
-> 
->> @@ -0,0 +1,69 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,gcc-sdx75.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Global Clock & Reset Controller on SDX75
->> +
->> +maintainers:
->> +  - Imran Shaik <quic_imrashai@quicinc.com>
->> +  - Taniya Das <quic_tdas@quicinc.com>
->> +
->> +description: |
->> +  Qualcomm global clock control module provides the clocks, resets and power
->> +  domains on SDX75
->> +
->> +  See also:: include/dt-bindings/clock/qcom,gcc-sdx75.h
-> 
-> Also hee
-> 
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,gcc-sdx75
-> 
-> Also here
-> 
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board XO source
->> +      - description: PCIE20 phy aux clock source
->> +      - description: PCIE_1 Pipe clock source
->> +      - description: PCIE_2 Pipe clock source
->> +      - description: PCIE Pipe clock source
->> +      - description: Sleep clock source
->> +      - description: USB3 phy wrapper pipe clock source
->> +
->> +  clock-names:
->> +    items:
->> +      - const: bi_tcxo
->> +      - const: pcie20_phy_aux_clk
->> +      - const: pcie_1_pipe_clk
->> +      - const: pcie_2_pipe_clk
->> +      - const: pcie_pipe_clk
->> +      - const: sleep_clk
->> +      - const: usb3_phy_wrapper_gcc_usb30_pipe_clk
-> 
-> Drop clock names entirely.
-> 
->> +
->> +required:
->> +  - compatible
->> +  - clocks
->> +  - clock-names
->> +
->> +allOf:
->> +  - $ref: qcom,gcc.yaml#
->> +
->> +unevaluatedProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,rpmh.h>
->> +    clock-controller@80000 {
->> +      compatible = "qcom,gcc-sdx75";
->> +      reg = <0x80000 0x1f7400>;
->> +      clocks = <&rpmhcc RPMH_CXO_CLK>, <&pcie20_phy_aux_clk>, <&pcie_1_pipe_clk>,
->> +               <&pcie_2_pipe_clk>, <&pcie_pipe_clk>, <&sleep_clk>,
->> +               <&usb3_phy_wrapper_gcc_usb30_pipe_clk>;
->> +      clock-names = "bi_tcxo", "pcie20_phy_aux_clk", "pcie_1_pipe_clk",
->> +                    "pcie_2_pipe_clk", "pcie_pipe_clk", "sleep_clk",
->> +                    "usb3_phy_wrapper_gcc_usb30_pipe_clk";
->> +      #clock-cells = <1>;
->> +      #reset-cells = <1>;
->> +      #power-domain-cells = <1>;
->> +    };
->> +...
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
->> index d5a250b7c2af..267cf8c26823 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
->> @@ -27,6 +27,7 @@ properties:
->>         - qcom,sdm845-rpmh-clk
->>         - qcom,sdx55-rpmh-clk
->>         - qcom,sdx65-rpmh-clk
->> +      - qcom,sdx75-rpmh-clk
-> 
-> Separate patch.
-> 
-> 
->>         - qcom,sm6350-rpmh-clk
->>         - qcom,sm8150-rpmh-clk
->>         - qcom,sm8250-rpmh-clk
->> diff --git a/include/dt-bindings/clock/qcom,gcc-sdx75.h b/include/dt-bindings/clock/qcom,gcc-sdx75.h
->> new file mode 100644
->> index 000000000000..a470e8c4fd41
->> --- /dev/null
->> +++ b/include/dt-bindings/clock/qcom,gcc-sdx75.h
-> 
-> qcom,sdx75-gcc
-> 
->> @@ -0,0 +1,193 @@
->> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->> +/*
->> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SDX75_H
->> +#define _DT_BINDINGS_CLK_QCOM_GCC_SDX75_H
->> +
->> +/* GCC clocks */
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+>> +        },
+>> +    },
+
+
 
 -- 
 Thanks & Regards,
