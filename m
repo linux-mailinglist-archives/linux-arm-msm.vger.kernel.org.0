@@ -2,70 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD4A86FC4B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 13:12:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B387F6FC4D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 13:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235366AbjEILMd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 07:12:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34074 "EHLO
+        id S230029AbjEILUy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 07:20:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234981AbjEILM3 (ORCPT
+        with ESMTP id S235490AbjEILUc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 07:12:29 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA474106F8
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 04:12:20 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-b9ef06cb784so7371496276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 04:12:20 -0700 (PDT)
+        Tue, 9 May 2023 07:20:32 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209B35263
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 04:20:18 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-55a5e0f5b1aso54004507b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 04:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683630740; x=1686222740;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=O+AtwPwXPZlp/x5nJkkCBaOlYDV83aySbZPDW4HW+Ks=;
-        b=HOmFRHQ2CGgJGUmh5sxSRX/cHyAlfs0He1YcCwUGt/kvIdjXiZVz7xhA+MnwFqMURm
-         XETqZd8VkjC55dbMw6IcaJGxixIgQL1p9+Cd4Y7GjdlyFLhAwaTVYHZrrRBQZNnY6GRa
-         BEWFlXxrA7LQAvwKR/RwkoPq7S24CBVL/TE48aIROCvrcu0apEzL9KzyhLrvCtgTk7eU
-         GOhZx8fpt9fn7m+Ca8mfsyrbQ5Mdteum0XLGOQAU4bm2M4bmiouLjHma1F1lrbkDhp3m
-         9/fmviKxf3yNj3OoB6y5dTF92i3KSYLxRHnDclg+hbFWH6QqXKutinXVcIzaw7ek7WUJ
-         mCqQ==
+        d=linaro.org; s=google; t=1683631218; x=1686223218;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8nj5ZJfc+Qax9NXCTvd4GxbHCGA/QVBQ8vtIwYId/7g=;
+        b=k0zK5hDFUSQ/nRKX50jjHhsz+OO9rj0nNdJjHZKkoUxISxvovTkZHF2X+kfWWeRdeU
+         tRyYRXD3FpwJz3/cVlKGFa/bQrj4WhlC4EKtjJirwSDuWl0CUANNTMN3SEP5UvUwP+4i
+         4Ae8xT6UnAv6DmN0yj6x8hNwxpOtmynMiOb5+HslR6Nlsl/XKXdariRNG6BvmOPYmPjU
+         NNKUA69JiSr1raZWFek2Ba4PnJY4chTEtVaFBqNn0seGWJ9X3OjlAWdpe2H6hw/w1GDx
+         4zO6oD2dlJ4RH0QyBvSYoaQs1e6y3aoR8nAYkUjVpt8eV3JBAx7XKYJQyqR4YiUAZA+7
+         u9Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683630740; x=1686222740;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=O+AtwPwXPZlp/x5nJkkCBaOlYDV83aySbZPDW4HW+Ks=;
-        b=GB5jNN/xijnc2Kv5ITReZ1MmUowdWRXb8o3qDExpZ9o966rWAl+OPexL4tgCZeGJy2
-         n5ys5PhT57oXsw1ReVeV+v9zM+O1wMtjtFlzvsC4+WSOnOJpLD3Fq/Qt5InyMyFTI0Ry
-         cx/srCU4PmMnv/CM3msboLWigETGxlrkxDb/EAuA0jdqDGsJjmNdKHQNP6C5C1Ixh94B
-         NR+RPHOG7UXZTTnwYf55lxDm+QmKRKCEvnEp8UaOu6Gt3sXL84J2lkKdqW2i2mAM5mAy
-         1S06MM30HFH4EFTHOtdtw10ioid7OJryUiGREbh7Z3Tmqr3LJLkdgRkrtTAXK1pEuU37
-         26uQ==
-X-Gm-Message-State: AC+VfDyLeBxNuVy1zE5md4fSXfTAE28Eyo968a2F6Sk0lquRbuCVQ5XQ
-        1jQXnltzy/EdlwZGy0hwcvdU9PZcJu6AaH3AXf22dg==
-X-Google-Smtp-Source: ACHHUZ7LNWGXsH5ngDCkMQSeQBUdW9HlHh4f1cvgaN8Fn0DQyw7TEC/v0WbmUraisWvo/nYB5xTL7/87v2KHSJ9yXrU=
-X-Received: by 2002:a25:ade5:0:b0:b99:93d5:26dd with SMTP id
- d37-20020a25ade5000000b00b9993d526ddmr14771104ybe.20.1683630739827; Tue, 09
- May 2023 04:12:19 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683631218; x=1686223218;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8nj5ZJfc+Qax9NXCTvd4GxbHCGA/QVBQ8vtIwYId/7g=;
+        b=W33oP7o67P+XZ9dJNFWhX7LAjBHWu/nPFQrAt397J68KNPNhhnmkHrc7y2lZ0RqcFF
+         c7dZEAU2Ui0BBOGLItZYRTuZwYEsc4m1hcp/8l5xsD7WgVzTl+XDQl0XVPu5V4aoWnci
+         ljICD7CdJRLOgkdUwQxpvY5SUu7Mb+9zQcNlro1QOyfm8F8b3VMseKi21axuhdj3AAuY
+         96f14fg4S7aW9JDZze6xC58eqeHMTAdZC8yoqKHJMMffSesv5vsj4G955GN3NxsrUlMs
+         +YEqE2RUMcMT8qxkVtsPjF2NLGXhzANhxyycT1wNSYoBWCPmQCx8gCRPGODKUmTj1nbw
+         1sPQ==
+X-Gm-Message-State: AC+VfDzGoK5l1U33flZN9wM7MkTTs/96bbmNpLS9Zmd7iQCFV1luATbY
+        2WLz8H8EhrLfzgq5MjsGoLfbIKD27aI8Qcvc4LMA0w==
+X-Google-Smtp-Source: ACHHUZ7hnhDsY7WocEpJA8iNH2OWefgS5/6WnH3E1+AHEkvkQnIrG3Hb+xHW6i2F2qtqG/JiRjHJc8DqOPyLu+rJw5g=
+X-Received: by 2002:a0d:e0c5:0:b0:55a:1cb0:7982 with SMTP id
+ j188-20020a0de0c5000000b0055a1cb07982mr15631974ywe.23.1683631218113; Tue, 09
+ May 2023 04:20:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
- <20230405-add-dsc-support-v2-3-1072c70e9786@quicinc.com> <i6i2xj2tuy5mcxsj674d77kfdb3ne6immkmrzw5f6u4bfx2sth@ef7fzrhdyypx>
- <1d7ccb5f-55c2-3b3a-df97-2c17beffabfc@quicinc.com> <0aa4130d-bb37-4743-10e5-fd518276f4a2@linaro.org>
- <chw4jhkwbtml3w3ha6beubvvil4jsr7wuzahfif2mzkcmsqhwj@wgm7axq2o6wk>
-In-Reply-To: <chw4jhkwbtml3w3ha6beubvvil4jsr7wuzahfif2mzkcmsqhwj@wgm7axq2o6wk>
+References: <20230507175335.2321503-1-dmitry.baryshkov@linaro.org>
+ <20230507175335.2321503-2-dmitry.baryshkov@linaro.org> <20230509055044.GA4823@thinkpad>
+In-Reply-To: <20230509055044.GA4823@thinkpad>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 9 May 2023 14:12:08 +0300
-Message-ID: <CAA8EJpoW_rrvTP8kt2gHKZA+0Jez0_dKay3XGs+3_CaHQK7+Wg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature flag
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Date:   Tue, 9 May 2023 14:20:07 +0300
+Message-ID: <CAA8EJpoJr6gK=7fmwmF4+Xi5Ch_-+8L1q1WHkfVOOg+6qj=P3w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] clk: qcom: mmcc-msm8974: fix MDSS_GDSC power flags
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -76,59 +75,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 9 May 2023 at 10:00, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
+On Tue, 9 May 2023 at 08:50, Manivannan Sadhasivam
+<manivannan.sadhasivam@linaro.org> wrote:
 >
-> On 2023-05-09 02:08:52, Dmitry Baryshkov wrote:
-> > On 09/05/2023 00:46, Jessica Zhang wrote:
-> > >
-> > >
-> > > On 5/7/2023 9:00 AM, Marijn Suijten wrote:
-> > >> On 2023-05-05 14:23:50, Jessica Zhang wrote:
-> > >>> Add DATA_COMPRESS feature flag to DPU INTF block.
-> > >>>
-> > >>> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
-> > >>> PINGPONG to INTF.
-> > >>>
-> > >>> As core_rev (and related macros) was removed from the dpu_kms struct,
-> > >>> the
-> > >>> most straightforward way to indicate the presence of this register
-> > >>> would be
-> > >>> to have a feature flag.
-> > >>
-> > >> Irrelevant.  Even though core_rev was still in mainline until recently,
-> > >> we always hardcoded the features in the catalog and only used core_rev
-> > >> to select a dpu_mdss_cfg catalog entry.  There is no "if version >= X
-> > >> then enable feature Y" logic, this manually-enabled feature flag is the
-> > >> only, correct way to do it.
-> > >
-> > > Hi Marijn,
-> > >
-> > > Understood. FWIW, if we do find more register bit-level differences
-> > > between HW versions in the future, it might make more sense to keep the
-> > > HW catalog small and bring core_rev back, rather than keep adding these
-> > > kinds of small differences to caps.
+> On Sun, May 07, 2023 at 08:53:35PM +0300, Dmitry Baryshkov wrote:
+> > Using PWRSTS_RET on msm8974's MDSS_GDSC causes display to stop working.
+> > The gdsc doesn't fully come out of retention mode. Change it's pwrsts
+> > flags to PWRSTS_OFF_ON.
 > >
-> > Let's see how it goes. Abhinav suggested that there might be feature
-> > differences inside the DPU generations (and even inside the single DPU
-> > major/minor combo). So I'm not sure what core_rev will bring us.
+>
+> What does "stop working" implies? Does it work during boot and randomly s=
+topped
+> working or it stopped working after resume from suspend?
+
+It stops working during the boot. I observed the MDP not starting up
+properly. Mea culpa, I did not look deep enough into the details, just
+stomped upon this change which fixes the problem for me.
+
+>
+> Even though reverting to non-retention mode works, I think the issue migh=
+t be
+> somewhere else. Like the vote might be missing to get the GDSC out of ret=
+ention
+> mode.
+
+I don't think there is a vote missing. The driver votes on MDSS_GDSC
+before enabling access to any of the registers from the MDSS region.
+
+>
+> - Mani
+>
+> > Fixes: d399723950c4 ("clk: qcom: gdsc: Fix the handling of PWRSTS_RET s=
+upport")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/clk/qcom/mmcc-msm8974.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > Let's land the platforms which are ready (or if there is anything close
-> > to be submitted).
+> > diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-ms=
+m8974.c
+> > index aa29c79fcd55..277ef0065aae 100644
+> > --- a/drivers/clk/qcom/mmcc-msm8974.c
+> > +++ b/drivers/clk/qcom/mmcc-msm8974.c
+> > @@ -2401,7 +2401,7 @@ static struct gdsc mdss_gdsc =3D {
+> >       .pd =3D {
+> >               .name =3D "mdss",
+> >       },
+> > -     .pwrsts =3D PWRSTS_RET_ON,
+> > +     .pwrsts =3D PWRSTS_OFF_ON,
+> >  };
+> >
+> >  static struct gdsc camss_jpeg_gdsc =3D {
+> > --
+> > 2.39.2
+> >
 >
-> You mean waiting for catalog changes on the list specifically, so the
-> DSC series as well as SM6350/SM6375?  I do intend to send SM6125 now
-> that the INTF TE series (required for it, as well as for SM63**) seems
-> to be generally accepted, but have been quite busy with the DSC series
-> on the list as we're now unblocking many Xperia's to finally have
-> display!
+> --
+> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
 
-Yes, please send it, as you find time. No time pressure.
 
->
-> The catalog addition is "pretty much ready", let me know if you'd like
-> it to be sent in prior to your cleanup.
 
--- 
+--=20
 With best wishes
 Dmitry
