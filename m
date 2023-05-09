@@ -2,65 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5246D6FBCB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 03:51:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DB6E6FBCBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 03:51:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234005AbjEIBvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 21:51:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43546 "EHLO
+        id S233877AbjEIBvg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 21:51:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233867AbjEIBvF (ORCPT
+        with ESMTP id S234085AbjEIBvY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 21:51:05 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F61D056;
-        Mon,  8 May 2023 18:50:50 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id 98e67ed59e1d1-24e09b4153eso3751484a91.2;
-        Mon, 08 May 2023 18:50:49 -0700 (PDT)
+        Mon, 8 May 2023 21:51:24 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE9EA26E;
+        Mon,  8 May 2023 18:50:54 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ab0c697c2bso49726325ad.1;
+        Mon, 08 May 2023 18:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683597049; x=1686189049;
+        d=gmail.com; s=20221208; t=1683597053; x=1686189053;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7zbQywKsauWYv9va8GGE0qTax/82YpmoRVj80/h7hkk=;
-        b=icIui2MU1ql4m1vL7wZDdh6SMZWysVDcJbhMsSWpo47t5+z6KVN5QjRLsl8++RgXEX
-         QytsjgSlOqeiS0dOcUDXXhgQ2GcBZjo4IbmvKGAwultCY5E6kDmPWJHpV4mgjrChdJkw
-         D8/PZX3aZLhD8/EldHVTewAmdEZKRqOaT4KFTBEW0EvdCCBgUkBjUDtiOCWzBqBuUM3z
-         YAg1TAA/AYE/WE2gjJU22YD7MOC3d/ugB7lVEzkZ9wHQ73K8GjHJoJv7hQU+r7BMhuZB
-         iwBMUSX/LQvSg/3TMfyJHTYvq1nqfJEos3laRYtfXOaKAxEZOI+2s9uRQmoS6S+0Cne8
-         rFPA==
+        bh=lP5IaIFdiCV3CLFQyofnNGbKobWaxQ8hETIzTLkOsHM=;
+        b=IuzHeRYk9bZCJjY+c51BTwSfwNB3YJPrwNIPsXNAYGwynBe5GubLNbMQUh3GkPIOx1
+         ABfJV/ZnmRKgJM6p5LnQWxKslcwTg9CUpSJjjkc+11iRUCyaGTcwxShndkiTqlidzp41
+         dVrrF2zYq0a86ifYSpcqfu8MOK6rWMIYJn9suM7zv/mgxVvwCqXCRTDGuaxQuY3FMYe8
+         QAD6dgtLiBySt4uA3CL/zd/ocT5WWm/G6xQ+gqrebAlZvFbAlIiAsWiG4G5bzBQ3BLMr
+         7GKmdD5ou02+spSYoQ7FJjl383SXdeENzKhNCYO/Wd7MbUIwC0BrvRLFZo5zYqo4w9zW
+         486w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683597049; x=1686189049;
+        d=1e100.net; s=20221208; t=1683597053; x=1686189053;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7zbQywKsauWYv9va8GGE0qTax/82YpmoRVj80/h7hkk=;
-        b=KFIHu7vLkOrBbrxy772MEYj8+ctnAXxG4t3e6Y1BRRhMtMi6x3SWP7zm8y2NQelrnC
-         gh5pKVWlRG6hIxBeFAUtwr5l81PksAF9eq7fi60+CLsPQ2pmtiPaLG1vBLVQTtbiGHTU
-         s/NRWj8hlOv7xORN+cVlzYUxJiPdfK6FGjLOYjNi41aXMcRjoDbOW51iOWKStKHfs/Sh
-         T5KmJZ/cUNeyJrgKPMmi/aF/unKZ4XshMBfSkj93WDuBmZ60JRAGqPP/roww0eGkPfEo
-         kmsudEF/Pt0T+50RFwABlSmTkTMx6+Pu5BHjkor408PfFbt89KmYTKKef3diiHfDZXfb
-         L5eA==
-X-Gm-Message-State: AC+VfDxRk6ArawSjStZkp1WSrjU+WA6WGMrmgG9doRwvpMyUT5Revu1C
-        RsoVl/JaKuzgoA9f2R7fnEsOdGMmHSE=
-X-Google-Smtp-Source: ACHHUZ6UcRMVOXU+tk33UckIX6pbPixOyob16tpaXiEiNzYSyb2UY9DfiamVgG+1Yf+N91PkCyAYIQ==
-X-Received: by 2002:a17:90a:4611:b0:23d:3549:82b7 with SMTP id w17-20020a17090a461100b0023d354982b7mr12078229pjg.46.1683597049162;
-        Mon, 08 May 2023 18:50:49 -0700 (PDT)
+        bh=lP5IaIFdiCV3CLFQyofnNGbKobWaxQ8hETIzTLkOsHM=;
+        b=UKu+3zAbhr0PmycHDId26v2RFBG1vUWYca/NwZg/wAqkOvp8j8+8h+ugBGWF9HNaVq
+         eTLg2up3q2dUGctEyNPVxIYjgzTTcEf9UvVsyR9Xd93ia++Lor3z4fJgYQcKxvM5doES
+         y1Fwc2KPeT9Z8ng+4xWngPMZRj6wzOLmFTrBJsbfaT9s1LZZV2tFiOQqe1EbF1bkHYAJ
+         pz8NhsOib37NWm9WEqRnHXHoXXCscQtTf9kdsoi5UUGnOKd2IGsBmLtBXPw2JMyLTQab
+         GdfoJEFg2cNOcpoygyffKqkD2jrrZsTHua1ZOsDZ3UonAhbdIPErnQsXWtmiUQ9dxUT6
+         iV9Q==
+X-Gm-Message-State: AC+VfDzhoYqSj3OlsPANQytFN7NvPLFF6VjYVbo7H896ia3vLDCw8YiP
+        6NELDi2ls7fK25k4P+JZudw=
+X-Google-Smtp-Source: ACHHUZ4ITCiXUXq8qffdksAkMo2gD+tX6SA8ac8w9NL+1hHgfMb58opbrOs2qVpb1OWg5QV+TvJyrg==
+X-Received: by 2002:a17:902:f816:b0:1a9:3916:c2d1 with SMTP id ix22-20020a170902f81600b001a93916c2d1mr13097348plb.54.1683597053120;
+        Mon, 08 May 2023 18:50:53 -0700 (PDT)
 Received: from localhost (2603-800c-1a02-1bae-a7fa-157f-969a-4cde.res6.spectrum.com. [2603:800c:1a02:1bae:a7fa:157f:969a:4cde])
-        by smtp.gmail.com with ESMTPSA id m7-20020a654387000000b0052873a7cecesm160074pgp.0.2023.05.08.18.50.48
+        by smtp.gmail.com with ESMTPSA id bb5-20020a170902bc8500b001ab05aaae2fsm149237plb.107.2023.05.08.18.50.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 May 2023 18:50:48 -0700 (PDT)
+        Mon, 08 May 2023 18:50:52 -0700 (PDT)
 Sender: Tejun Heo <htejun@gmail.com>
 From:   Tejun Heo <tj@kernel.org>
 To:     jiangshanlai@gmail.com
 Cc:     linux-kernel@vger.kernel.org, kernel-team@meta.com,
-        Tejun Heo <tj@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH 07/13] soc: qcom: qmi: Use alloc_ordered_workqueue() to create ordered workqueues
-Date:   Mon,  8 May 2023 15:50:26 -1000
-Message-Id: <20230509015032.3768622-8-tj@kernel.org>
+        Tejun Heo <tj@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: [PATCH 09/13] net: qrtr: Use alloc_ordered_workqueue() to create ordered workqueues
+Date:   Mon,  8 May 2023 15:50:28 -1000
+Message-Id: <20230509015032.3768622-10-tj@kernel.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230509015032.3768622-1-tj@kernel.org>
 References: <20230509015032.3768622-1-tj@kernel.org>
@@ -130,27 +133,30 @@ As there are follow-up workqueue core changes, I'd really appreciate if the
 patch can be routed through the workqueue tree w/ your acks. Thanks.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
 Cc: linux-arm-msm@vger.kernel.org
+Cc: netdev@vger.kernel.org
 ---
- drivers/soc/qcom/qmi_interface.c | 2 +-
+ net/qrtr/ns.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
-index 820bdd9f8e46..78d7361fdcf2 100644
---- a/drivers/soc/qcom/qmi_interface.c
-+++ b/drivers/soc/qcom/qmi_interface.c
-@@ -650,7 +650,7 @@ int qmi_handle_init(struct qmi_handle *qmi, size_t recv_buf_size,
- 	if (!qmi->recv_buf)
- 		return -ENOMEM;
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index 0f25a386138c..0f7a729f1a1f 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -783,7 +783,7 @@ int qrtr_ns_init(void)
+ 		goto err_sock;
+ 	}
  
--	qmi->wq = alloc_workqueue("qmi_msg_handler", WQ_UNBOUND, 1);
-+	qmi->wq = alloc_ordered_workqueue("qmi_msg_handler", 0);
- 	if (!qmi->wq) {
+-	qrtr_ns.workqueue = alloc_workqueue("qrtr_ns_handler", WQ_UNBOUND, 1);
++	qrtr_ns.workqueue = alloc_ordered_workqueue("qrtr_ns_handler", 0);
+ 	if (!qrtr_ns.workqueue) {
  		ret = -ENOMEM;
- 		goto err_free_recv_buf;
+ 		goto err_sock;
 -- 
 2.40.1
 
