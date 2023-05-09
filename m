@@ -2,116 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC49C6FC35C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 12:01:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5C376FC381
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 12:10:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234580AbjEIKBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 06:01:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41490 "EHLO
+        id S234791AbjEIKK2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 06:10:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232299AbjEIKBu (ORCPT
+        with ESMTP id S234629AbjEIKK1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 06:01:50 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D7E2123;
-        Tue,  9 May 2023 03:01:49 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3497fSvT021933;
-        Tue, 9 May 2023 10:01:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=ttHqVUtYxGm2GfLDGfwf/4RVm6rJoKZE1mkkB2ydqig=;
- b=EzekHIz7qw2FbDBDmabdU1gF5gn6+uU6qeDCe7jPBcy1MpvGrrYb96sYHiU5uwZ02TwB
- rH2kq1dKWoot0qn3oyw7SIwVFXUEtMvRWAR19mD6sKv98DF1ZBby3YDBztnsr5KiRXoc
- BgJ4DQD/7cDUgyp4jDpvrBPOj1mndZEyr4WvRjebT4nBDYd/PUlLnZW96S0Vh2WacqzA
- UKu9MQA0JZ69OgOHAgLzE2pQg4fFlrSJu14xWW4A1xLe0HJ7/YjC1MqXXvuF+00KSu4L
- Qby83jOlQSkEhBinLKi5ppxPpCFfsRrlWUixa2UCNtElQwrO+VvZjgO3blKjTherRzHr AA== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf7859b5k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 10:01:45 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 349A1fCF012853;
-        Tue, 9 May 2023 10:01:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3qdy5bg8bm-1;
-        Tue, 09 May 2023 10:01:41 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 349A1eHH012848;
-        Tue, 9 May 2023 10:01:40 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 349A1eKZ012845;
-        Tue, 09 May 2023 10:01:40 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
-        id EC4734A00; Tue,  9 May 2023 15:31:39 +0530 (+0530)
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        broonie@kernel.org, quic_vnivarth@quicinc.com,
-        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com, quic_ptalari@quicinc.com
-Subject: [PATCH] spi: spi-geni-qcom: Select FIFO mode for chip select
-Date:   Tue,  9 May 2023 15:31:36 +0530
-Message-Id: <1683626496-9685-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kC3pOJCSCrGUdeNrfWl7FsaGGE_tnSC9
-X-Proofpoint-GUID: kC3pOJCSCrGUdeNrfWl7FsaGGE_tnSC9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-09_06,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 mlxlogscore=529
- lowpriorityscore=0 malwarescore=0 mlxscore=0 impostorscore=0 clxscore=1011
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305090078
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+        Tue, 9 May 2023 06:10:27 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A01755246
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 03:10:24 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-55a8019379fso51770017b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 03:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683627024; x=1686219024;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rQkbfRIbUJCVqw4JhZ/x8mgAn7rLfZy1brM0sCnVSgw=;
+        b=U1CNfIFlZ/a1WePhr2f4aPDZkCagS2Q5q5SRO7RjjDU2jDZUwcoVsBFqx9cloGIY/v
+         kfVsJo63yMDr2c/jAyx3dvDZI3A5/535YyoDqLTJBa0R9n55KGrxAVK05n56G5erKouc
+         8/5szb42oNcPenusnzqM4m49wyN8bOkTvy+39kUXY2R/9iSUOmQVL7GhtXYVEf+VLFTC
+         rzhHhTaFeS81uybq1ZDPuzz4/7tKc4CWdtVOwsiCgKh5cs2bBfcM5mTEp4lXF677J+tH
+         SjvRpzkqrsC1jHTznwynV7b5svGS85/ACYbXI4PlHzXDvSe+Z1anVO8M1/Sf+GrCztxR
+         QI0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683627024; x=1686219024;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rQkbfRIbUJCVqw4JhZ/x8mgAn7rLfZy1brM0sCnVSgw=;
+        b=j4k89sDSJhVQtcUUbLHc2lefaFBreURSvSYd0MxJpCwyIJjyPewy15ou+HfOPIE4N7
+         uD7GwGl5hgcO/xqZPf8RyvwJkuxcG+Zqhpj+B5AelMIva8qIqzRAkPQpzqPjHpeblqkD
+         1K61TZyh4J2opYcuGSmZtbCLGIJQ+mq0X6EWoanEXTLPpG6dkq9DrJ4ouJA5cam8Ybig
+         Fx8nd8PdpIr5by78EixlAl328XbDkKeVRIXgZ40K2BsIAQf08aLRMQTMPCoJIenknM4y
+         WqhrLjdLh37Q+tOKGBntM77IH2Y0jQ+iiiiFog19NaiRmLzDTvfqINVdct16j6pPjKfT
+         /0/Q==
+X-Gm-Message-State: AC+VfDwTqTI4nQ9Nd+lpr2REx+xBUP8INERz6Ccribcgix5RD3iyzsIV
+        JSEfp3NbuVWu9Bhwp/WpAvR4idTMeqMYxHovg1m8kQ==
+X-Google-Smtp-Source: ACHHUZ7en5HQ9tk8fC7W17P/UB40PYuc/5jwewMS+g/NJbXve0voOVRVYuXomwyHeYVPu4jgr23oEop/AXyacJy+J6o=
+X-Received: by 2002:a81:5404:0:b0:55d:c333:26c4 with SMTP id
+ i4-20020a815404000000b0055dc33326c4mr9833694ywb.0.1683627023804; Tue, 09 May
+ 2023 03:10:23 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230408214041.533749-1-abel.vesa@linaro.org> <20230408214041.533749-4-abel.vesa@linaro.org>
+ <CAPDyKFqMAeKrw1KqhHhdd6U4LUogd6UiiMwe1C2fReSen11A6g@mail.gmail.com>
+In-Reply-To: <CAPDyKFqMAeKrw1KqhHhdd6U4LUogd6UiiMwe1C2fReSen11A6g@mail.gmail.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 9 May 2023 12:09:48 +0200
+Message-ID: <CAPDyKFpwzunLC447WWqPqrMpJRbCFqUoADERU7KG4iorOgADzA@mail.gmail.com>
+Subject: Re: [PATCH v7 3/3] mmc: sdhci-msm: Switch to the new ICE API
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Spi geni driver switches between FIFO and DMA modes based on xfer length.
-FIFO mode relies on M_CMD_DONE_EN interrupt for completion while DMA mode
-relies on XX_DMA_DONE.
-During dynamic switching, if FIFO mode is chosen, FIFO related interrupts
-are enabled and DMA related interrupts are disabled. And viceversa.
-Chip select shares M_CMD_DONE_EN interrupt with FIFO to check completion.
-Now, if a chip select operation is preceded by a DMA xfer, M_CMD_DONE_EN
-interrupt would have been disabled and hence it will never receive one
-resulting in timeout.
+On Mon, 17 Apr 2023 at 10:47, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+>
+> On Sat, 8 Apr 2023 at 23:40, Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > Now that there is a new dedicated ICE driver, drop the sdhci-msm ICE
+> > implementation and use the new ICE api provided by the Qualcomm soc
+> > driver ice. The platforms that already have ICE support will use the
+> > API as library since there will not be a devicetree node, but instead
+> > they have reg range. In this case, the of_qcom_ice_get will return an
+> > ICE instance created for the consumer's device. But if there are
+> > platforms that do not have ice reg in the consumer devicetree node
+> > and instead provide a dedicated ICE devicetree node, theof_qcom_ice_get
+> > will look up the device based on qcom,ice property and will get the ICE
+> > instance registered by the probe function of the ice driver.
+> >
+> > The ICE clock is now handle by the new driver. This is done by enabling
+> > it on the creation of the ICE instance and then enabling/disabling it on
+> > SDCC runtime resume/suspend.
+> >
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>
+> Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+>
+> Bjorn, I think it should be easier if you pick this together with qcom
+> soc driver changes. I don't think there is any conflict with changes
+> in my mmc tree.
+>
+> Otherwise, I will just wait for the next release cycle.
 
-For chip select, in addition to setting the xfer mode to FIFO,
-select_mode() to FIFO so that required interrupts are enabled.
+Okay, it looks like all dependent pieces made it into v6.4-rc1. So,
+applied for next, thanks!
 
-Fixes: e5f0dfa78ac7 ("spi: spi-geni-qcom: Add support for SE DMA mode")
-Suggested-by: Praveen Talari <quic_ptalari@quicinc.com>
-Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
----
- drivers/spi/spi-geni-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+[...]
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 8a7d1c2..e423efc 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -294,6 +294,8 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
- 	mas->cs_flag = set_flag;
- 	/* set xfer_mode to FIFO to complete cs_done in isr */
- 	mas->cur_xfer_mode = GENI_SE_FIFO;
-+	geni_se_select_mode(se, mas->cur_xfer_mode);
-+
- 	reinit_completion(&mas->cs_done);
- 	if (set_flag)
- 		geni_se_setup_m_cmd(se, SPI_CS_ASSERT, 0);
--- 
-Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
-
+Kind regards
+Uffe
