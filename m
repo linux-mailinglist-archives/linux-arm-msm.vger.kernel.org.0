@@ -2,87 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D02556FBE28
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 06:21:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03F4E6FBE45
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 06:37:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbjEIEVL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 00:21:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53364 "EHLO
+        id S229648AbjEIEhQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 00:37:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230258AbjEIEVJ (ORCPT
+        with ESMTP id S234797AbjEIEhI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 00:21:09 -0400
+        Tue, 9 May 2023 00:37:08 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB86B44B4;
-        Mon,  8 May 2023 21:21:03 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3493IgP7026433;
-        Tue, 9 May 2023 04:20:53 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A92AC7AB0;
+        Mon,  8 May 2023 21:37:05 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34940NfP028290;
+        Tue, 9 May 2023 04:36:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pCb1PtWoLh2u32tC53xZV7dT9Q6u+VHvvh5VLNOcoEw=;
- b=fiIT2jI1LxQbkKxT/ViyuwvnN2nZPV6NFIUcIU6jgMkAeaqtzTXSu5rGNiRoDAlX2/MY
- H3HlcMGN/jiO5I8x8ipd3mEJPrVJQNmwuMRGZV1G0gHBxIUnW7v8rsWELorhsSnfBMz9
- Ssf6KySYwgasDra3MQ+S0Ul9/SJZw/OHNdlo3FHduoRTNRB5ruRlIAva+zgsT0esEh5b
- urs/mGsQ32TB0jZ3gAIqBTtgVcTVxAXBesJnjSSu5ZmleEX6OmIe44asD8S78iFZeMIt
- dNjNV1KsBwBjYCFBE5eCq7z3KrT8hV2uSJNQWfl3pJc055GebkIL/NRnGJJqJQtlCeh+ 5Q== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77h8rgm-1
+ bh=tURrAEZas3UPymC/Fmh3j72WpggiO2AEDFkEoL1Os+M=;
+ b=iB0FbQny1OgIMIqigE5/+ixnFsmoWwJ2Y0yux8/5fbAAGmz/z9AjZWIQ1SfI2K2isgkm
+ tAqCpNZ87+JBr5H2APu1Rg7jwhD6+F/iSG+VEdjPKK4Pw82QKLebT3jig1K1c+NTyCHK
+ wCQ39epGF4Ww1QTPhMT/92aefTZE13CAiuWa6OLILLfZPE9L2jaO0n7M4F/4HvBpNWBa
+ BvNcUnt/v0PJKUOO3pUU2ElGFF11pJDTH/7ZdiHlp1Sj9LHF0taS9fEn0tPh/8ZasCYV
+ fbDt6mq/9jsF+6wGoX1FftjegZ1/VxeXEkvC8RnZDP2N5f0lRpZD/C9M/fj3908p4I+6 Hw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77krsgs-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 04:20:53 +0000
+        Tue, 09 May 2023 04:36:58 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3494KqF1009176
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3494avg6015555
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 04:20:52 GMT
-Received: from [10.50.37.86] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Tue, 9 May 2023 04:36:57 GMT
+Received: from [10.110.11.65] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
- 21:20:47 -0700
-Message-ID: <3109fb7a-0050-1b9b-d2aa-e00e26937b72@quicinc.com>
-Date:   Tue, 9 May 2023 09:50:33 +0530
+ 21:36:26 -0700
+Message-ID: <6f5db0c8-8764-534e-497b-b246f1ff99d1@quicinc.com>
+Date:   Mon, 8 May 2023 21:36:25 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH V4 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
- Stats
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1681742910.git.quic_schowdhu@quicinc.com>
- <C1eDJi-H9uWRAtbInRclmCgPb4EcgaeS3sk5FKO9cw8KscgMCH8dxRSvdPGUMwDFKpte7cBVeaqPhlLog-CRrg==@protonmail.internalid>
- <2ef76ce292c059c144e559123a9a54201ae2d0cf.1681742910.git.quic_schowdhu@quicinc.com>
- <575ee047-c6ce-95c3-8781-8c9a78534bb1@linaro.org>
- <f42637c8-400b-e39f-412d-60328e176585@quicinc.com>
- <35ac64ab-512d-1425-7a1b-6e8d3806c8a8@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH 2/4] drm/msm/dsi: Fix compressed word count calculation
 Content-Language: en-US
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <35ac64ab-512d-1425-7a1b-6e8d3806c8a8@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
+ <20230405-add-dsc-support-v1-2-6bc6f03ae735@quicinc.com>
+ <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
+ <32d473a6-f7a5-9aa6-85cf-0f77f1c071ce@quicinc.com>
+ <4cf2e9ab-7e08-fb26-d924-8ea8141d9f58@linaro.org>
+ <e4ebb901-84fd-7e7d-531c-1f8d7fec00f9@quicinc.com>
+ <9e9bbe10-8646-9443-06b2-fa6737d0c267@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <9e9bbe10-8646-9443-06b2-fa6737d0c267@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4kYXeBNHYzYa1-7zJLr8FYOQLBm2cn0d
-X-Proofpoint-ORIG-GUID: 4kYXeBNHYzYa1-7zJLr8FYOQLBm2cn0d
+X-Proofpoint-GUID: YhG8NvuK-1Z92tAcBHmwRUSrMbzp3qoW
+X-Proofpoint-ORIG-GUID: YhG8NvuK-1Z92tAcBHmwRUSrMbzp3qoW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-09_02,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=999
- adultscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305090032
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0
+ phishscore=0 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305090035
 X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -95,113 +93,146 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/4/2023 9:49 PM, Dmitry Baryshkov wrote:
-> On 04/05/2023 09:35, Souradeep Chowdhury wrote:
+On 5/8/2023 5:47 PM, Dmitry Baryshkov wrote:
+> On 09/05/2023 03:45, Abhinav Kumar wrote:
 >>
 >>
->> On 5/4/2023 4:23 AM, Caleb Connolly wrote:
->>>
->>>
->>> On 17/04/2023 16:08, Souradeep Chowdhury wrote:
->>>> All of Qualcomm's proprietary Android boot-loaders capture boot time
->>>> stats, like the time when the bootloader started execution and at what
->>>> point the bootloader handed over control to the kernel etc. in the IMEM
->>>> region. This information is captured in a specific format by this 
->>>> driver
->>>> by mapping a structure to the IMEM memory region and then accessing the
->>>> members of the structure to show the information within debugfs file.
->>>> This information is useful in verifying if the existing boot KPIs have
->>>> regressed or not. The information is shown in milliseconds, a sample
->>>> log from sm8450(waipio) device is as follows:-
+>> On 5/8/2023 4:27 PM, Dmitry Baryshkov wrote:
+>>> On 08/05/2023 23:09, Abhinav Kumar wrote:
 >>>>
->>>> /sys/kernel/debug/146aa6b0.boot_stats # cat abl_time
->>>> 17898 ms
->>>> /sys/kernel/debug/146aa6b0.boot_stats # cat pre_abl_time
->>>> 2879 ms
 >>>>
->>>> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
->>>> stage and the timestamp generated by the sleep counter is logged by
->>>> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
->>>> starts execution which is logged here as "pre_abl_time" and the second
->>>> when it is about to load the kernel logged as "abl_time". Documentation
->>>> details are also added in 
->>>> Documentation/ABI/testing/debugfs-driver-bootstat
+>>>> On 5/3/2023 1:26 AM, Dmitry Baryshkov wrote:
+>>>>> On 03/05/2023 04:19, Jessica Zhang wrote:
+>>>>>> Currently, word count is calculated using slice_count. This is 
+>>>>>> incorrect
+>>>>>> as downstream uses slice per packet, which is different from
+>>>>>> slice_count.
+>>>>>>
+>>>>>> Slice count represents the number of soft slices per interface, 
+>>>>>> and its
+>>>>>> value will not always match that of slice per packet. For example, 
+>>>>>> it is
+>>>>>> possible to have cases where there are multiple soft slices per 
+>>>>>> interface
+>>>>>> but the panel specifies only one slice per packet.
+>>>>>>
+>>>>>> Thus, use the default value of one slice per packet and remove 
+>>>>>> slice_count
+>>>>>> from the word count calculation.
+>>>>>>
+>>>>>> Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to 
+>>>>>> compute word count")
+>>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>>>> ---
+>>>>>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++++++++-
+>>>>>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
+>>>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>>>>>> index 35c69dbe5f6f..b0d448ffb078 100644
+>>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>>>>>> @@ -996,7 +996,14 @@ static void dsi_timing_setup(struct 
+>>>>>> msm_dsi_host *msm_host, bool is_bonded_dsi)
+>>>>>>           if (!msm_host->dsc)
+>>>>>>               wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+>>>>>>           else
+>>>>>> -            wc = msm_host->dsc->slice_chunk_size * 
+>>>>>> msm_host->dsc->slice_count + 1;
+>>>>>> +            /*
+>>>>>> +             * When DSC is enabled, WC = slice_chunk_size * 
+>>>>>> slice_per_packet + 1.
+>>>>>> +             * Currently, the driver only supports default value 
+>>>>>> of slice_per_packet = 1
+>>>>>> +             *
+>>>>>> +             * TODO: Expand drm_panel struct to hold 
+>>>>>> slice_per_packet info
+>>>>>> +             *       and adjust DSC math to account for 
+>>>>>> slice_per_packet.
+>>>>>
+>>>>> slice_per_packet is not a part of the standard DSC, so I'm not sure 
+>>>>> how that can be implemented. And definitely we should not care 
+>>>>> about the drm_panel here. It should be either a part of 
+>>>>> drm_dsc_config, or mipi_dsi_device.
+>>>>>
 >>>>
->>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> This is not correct.
+>>>>
+>>>> It is part of the DSI standard (not DSC standard). Please refer to 
+>>>> Figure 40 "One Line Containing One Packet with Data from One or More 
+>>>> Compressed Slices" and Figure 41 "One Line Containing More than One 
+>>>> Compressed Pixel Stream Packet".
 >>>
->>> Hi,
+>>> I have reviewed section 8.8.24 and Annex D of the DSI standard.
 >>>
->>> [...]
->>>> +
->>>> +static int boot_stats_probe(struct platform_device *pdev)
->>>> +{
->>>> +    struct device *bootstat_dev = &pdev->dev;
->>>> +    struct bs_data *drvdata;
->>>> +
->>>> +    drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), 
->>>> GFP_KERNEL);
->>>> +    platform_set_drvdata(pdev, drvdata);
->>>> +
->>>> +    drvdata->dbg_dir = debugfs_create_dir(dev_name(bootstat_dev), 
->>>> NULL);
+>>> It is not clear to me, if we can get away with always using 
+>>> slice_per_packet = 1. What is the DSI sink's difference between Fig. 
+>>> 40.(b) and Fig 41?
 >>>
->>> This might be better as just "qcom_boot_stats", rather than including
->>> the address.
 >>
->> We usually use the dev_name to represent the one to one correspondence 
+>> The difference is that in fig 40(b) there is only one packet of data 
+>> (check closely, there is only one header).
+>>
+>> In fig 41, there are multiple headers so its showing multiple packets.
 > 
-> Who is "we"?
+> Yes, this is the description of the pictures. I mean what is the 
+> functional difference?
 > 
->> of the debugfs file with the device. Will create the root dir as
->> "qcom_boot_stats" and push the dev_name dir inside it.
-> 
-> No, this doesn't sound logical. Please use just the "qcom_boot_stats" as 
-> Caleb suggested.
 
-Ack
+ From the same section of the spec:
 
-> 
->>
->>>
->>> [...]
->>>> +
->>>> +static const struct of_device_id boot_stats_dt_match[] = {
->>>> +    { .compatible = "qcom,sm8450-bootstats" },
->>>
->>> This driver doesn't only support sm8450, I've tested this on sdm845 and
->>> it works just fine. Can we use a generic compatible here instead?
->>
->> We can add soc specific compatibles here to extend support for other 
->> socs. This also captures the SoCs for which the driver is supported 
->> which won't be the case if we use a generic compatible.
-> 
-> No. If there is no difference between SoCs, please don't add 
-> soc-specific compatibles. They pollute the kernel and provide no 
-> additional benefits. Please use generic compatible and add 
-> platform-specific ones only if you have something to override.
+"This is one method that can segregate slice-widths
+when the receiver has multiple instantiations of decoders and this 
+packet structure is used to identify slice-width boundaries"
 
-Ack
+ From this it seems like when there are multiple decoders then having 
+individual multiple packets helps to identify the boundaries correctly 
+due to the header/checksum boundaries. How exactly this works on the 
+panel side, needs more investigation but outside the boundary of this 
+discussion. But I think overall, unless really requested by the panel 
+one slice_per_pkt is more optimal as it reduces packet overhead.
+
+>>
+>>> Are there are known panels that require slice_per_packet != 1? If so, 
+>>> we will have to implement support for such configurations.
+>>>
+>>
+>> Unless explicitly requested by the panel, we can use 1. From the 
+>> device tree files of the panels we support downstream, I do see 
+>> qcom,mdss-dsc-slice-per-pkt set to 2 for some panels. I dont know 
+>> whether those panels will not work with 1. I really don't think any of 
+>> the DSC panels working with MSM were upstreamed.
+>>
+>> I think the one jessica will be posting (and merging) will be the 
+>> first and that works with 1.
+>>
+>> If there are other panels in the works which require 2 slice_per_pkt, 
+>> I would wait to first see them on the list and if they cannot work 
+>> with 1 slice_per_pkt, add support for that.
 > 
+> If slice_per_pkt change is localized - touching only few lines in DSI or 
+> in msm_helpers. Otherwise we should consider having that from the 
+> beginning (but hardcoded to 1 for now).
+> 
+
+Yes, from what I see downstream it touches only few lines in DSI and MSM 
+helper. So should not be hard from MSM standpoint even in future, but 
+the core changes would need agreement from the core maintainers.
+
 >>
->>
->>>> +    { }
->>>> +};
->>>> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
->>>> +
->>>> +static struct platform_driver boot_stat_driver = {
->>>> +    .probe  = boot_stats_probe,
->>>> +    .remove_new = boot_stats_remove,
->>>> +    .driver = {
->>>> +        .name = "qcom-boot-stats",
->>>> +        .of_match_table = boot_stats_dt_match,
->>>> +    },
->>>> +};
->>>> +module_platform_driver(boot_stat_driver);
->>>> +
->>>> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
->>>> +MODULE_LICENSE("GPL");
->>>> -- 
->>>> 2.7.4
+>>>> This has details about this. So I still stand by my point that this 
+>>>> should be in the drm_panel.
+>>>
+>>> Note, the driver doesn't use drm_panel directly. So slices_per_packet 
+>>> should go to mipi_dsi_device instead (which in turn can be filled 
+>>> from e.g. drm_panel or from any other source).
+>>>
 >>>>
+>>>>>> +             */
+>>>>>> +            wc = msm_host->dsc->slice_chunk_size + 1;
+>>>>>>           dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
+>>>>>>               DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+>>>>>>
+>>>>>
 >>>
 > 
