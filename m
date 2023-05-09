@@ -2,180 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85A786FBC27
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 02:51:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5246D6FBCB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 03:51:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232273AbjEIAvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 8 May 2023 20:51:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47648 "EHLO
+        id S234005AbjEIBvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 8 May 2023 21:51:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjEIAvS (ORCPT
+        with ESMTP id S233867AbjEIBvF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 8 May 2023 20:51:18 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C2CA250
-        for <linux-arm-msm@vger.kernel.org>; Mon,  8 May 2023 17:51:16 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3490jiEv023960;
-        Tue, 9 May 2023 00:51:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cUEebjqm+EV2xT7FXHfuiStCdJK79pH3VQ+P0d2mD68=;
- b=A8KpZUjQoiYFQZ4zhFb8iGa0LTZqre2UbJ9Ym9VrSoAZfSjXQ/InXS9eyMqOCuzZIDZ2
- Oel+GhyNUVOiC6NeLTNtiksXBPB8JXAVACvqHGMXgRHDRpmxbGpJD6ZCpJr2DhjIK7CX
- E9SBKVcxHmcOyppFS8MupTm3aYjr2wjrj/VkgYvvMUd4B8HU3cYUP5IKqehUG20kC9Vo
- 4N25UHuzNcBc4ldruyF5sLLIteWeCph9Rk0RVefiTroMbbX4ocYNogq3YlcEPGJOUYpR
- bNzO8H78/ph5U5u38RbpmP7aDiejbgN3pbusJfUwTSroLz34emLMTTYjYWCpHTM1hdT6 eA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77h8e79-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 00:51:10 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3490p92B012653
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 00:51:09 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 8 May 2023
- 17:51:09 -0700
-Message-ID: <c969a71a-e922-80f3-fce1-a6b469c75ebe@quicinc.com>
-Date:   Mon, 8 May 2023 17:51:08 -0700
+        Mon, 8 May 2023 21:51:05 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F61D056;
+        Mon,  8 May 2023 18:50:50 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id 98e67ed59e1d1-24e09b4153eso3751484a91.2;
+        Mon, 08 May 2023 18:50:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683597049; x=1686189049;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7zbQywKsauWYv9va8GGE0qTax/82YpmoRVj80/h7hkk=;
+        b=icIui2MU1ql4m1vL7wZDdh6SMZWysVDcJbhMsSWpo47t5+z6KVN5QjRLsl8++RgXEX
+         QytsjgSlOqeiS0dOcUDXXhgQ2GcBZjo4IbmvKGAwultCY5E6kDmPWJHpV4mgjrChdJkw
+         D8/PZX3aZLhD8/EldHVTewAmdEZKRqOaT4KFTBEW0EvdCCBgUkBjUDtiOCWzBqBuUM3z
+         YAg1TAA/AYE/WE2gjJU22YD7MOC3d/ugB7lVEzkZ9wHQ73K8GjHJoJv7hQU+r7BMhuZB
+         iwBMUSX/LQvSg/3TMfyJHTYvq1nqfJEos3laRYtfXOaKAxEZOI+2s9uRQmoS6S+0Cne8
+         rFPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683597049; x=1686189049;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7zbQywKsauWYv9va8GGE0qTax/82YpmoRVj80/h7hkk=;
+        b=KFIHu7vLkOrBbrxy772MEYj8+ctnAXxG4t3e6Y1BRRhMtMi6x3SWP7zm8y2NQelrnC
+         gh5pKVWlRG6hIxBeFAUtwr5l81PksAF9eq7fi60+CLsPQ2pmtiPaLG1vBLVQTtbiGHTU
+         s/NRWj8hlOv7xORN+cVlzYUxJiPdfK6FGjLOYjNi41aXMcRjoDbOW51iOWKStKHfs/Sh
+         T5KmJZ/cUNeyJrgKPMmi/aF/unKZ4XshMBfSkj93WDuBmZ60JRAGqPP/roww0eGkPfEo
+         kmsudEF/Pt0T+50RFwABlSmTkTMx6+Pu5BHjkor408PfFbt89KmYTKKef3diiHfDZXfb
+         L5eA==
+X-Gm-Message-State: AC+VfDxRk6ArawSjStZkp1WSrjU+WA6WGMrmgG9doRwvpMyUT5Revu1C
+        RsoVl/JaKuzgoA9f2R7fnEsOdGMmHSE=
+X-Google-Smtp-Source: ACHHUZ6UcRMVOXU+tk33UckIX6pbPixOyob16tpaXiEiNzYSyb2UY9DfiamVgG+1Yf+N91PkCyAYIQ==
+X-Received: by 2002:a17:90a:4611:b0:23d:3549:82b7 with SMTP id w17-20020a17090a461100b0023d354982b7mr12078229pjg.46.1683597049162;
+        Mon, 08 May 2023 18:50:49 -0700 (PDT)
+Received: from localhost (2603-800c-1a02-1bae-a7fa-157f-969a-4cde.res6.spectrum.com. [2603:800c:1a02:1bae:a7fa:157f:969a:4cde])
+        by smtp.gmail.com with ESMTPSA id m7-20020a654387000000b0052873a7cecesm160074pgp.0.2023.05.08.18.50.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 18:50:48 -0700 (PDT)
+Sender: Tejun Heo <htejun@gmail.com>
+From:   Tejun Heo <tj@kernel.org>
+To:     jiangshanlai@gmail.com
+Cc:     linux-kernel@vger.kernel.org, kernel-team@meta.com,
+        Tejun Heo <tj@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH 07/13] soc: qcom: qmi: Use alloc_ordered_workqueue() to create ordered workqueues
+Date:   Mon,  8 May 2023 15:50:26 -1000
+Message-Id: <20230509015032.3768622-8-tj@kernel.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230509015032.3768622-1-tj@kernel.org>
+References: <20230509015032.3768622-1-tj@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v6 6/7] drm/msm/dsi: update hdisplay calculation for
- dsi_timing_setup
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-CC:     Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230329-rfc-msm-dsc-helper-v6-0-cb7f59f0f7fb@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v6-6-cb7f59f0f7fb@quicinc.com>
- <ynr6n5p2envixdn6pycjo4fat6n64xe4pkplhq5c2ukhi2q2tf@hqlsuusl66cl>
- <7ef70055-610c-8ab6-9e3b-515cf3fa542f@quicinc.com>
- <2r5rgl2rxrdognhlisruwgw74stefxmsmmqutz7wd3r4oxy52o@kd4ne4y2dc3u>
- <zuviqzvqnw5cgn3mg7ha55kqggmlxageijryoyv7q4eh3d2h6t@lhegcj7ixd4z>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <zuviqzvqnw5cgn3mg7ha55kqggmlxageijryoyv7q4eh3d2h6t@lhegcj7ixd4z>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pPPgd3QmP3ph-aPKaWuUEt8z8Xl6qX5y
-X-Proofpoint-ORIG-GUID: pPPgd3QmP3ph-aPKaWuUEt8z8Xl6qX5y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-08_17,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 suspectscore=0 phishscore=0 mlxlogscore=999
- adultscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305090006
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+BACKGROUND
+==========
 
+When multiple work items are queued to a workqueue, their execution order
+doesn't match the queueing order. They may get executed in any order and
+simultaneously. When fully serialized execution - one by one in the queueing
+order - is needed, an ordered workqueue should be used which can be created
+with alloc_ordered_workqueue().
 
-On 5/7/2023 11:34 AM, Marijn Suijten wrote:
-> On 2023-05-07 17:27:33, Marijn Suijten wrote:
->> On 2023-05-04 15:05:15, Abhinav Kumar wrote:
->>>
->>>
->>> On 5/4/2023 2:56 PM, Marijn Suijten wrote:
->>>> On 2023-04-12 16:25:20, Jessica Zhang wrote:
->>>>> hdisplay for compressed images should be calculated as bytes_per_slice *
->>>>> slice_count. Thus, use MSM DSC helper to calculate hdisplay for
->>>>> dsi_timing_setup instead of directly using mode->hdisplay.
->>>>>
->>>>> Changes in v3:
->>>>> - Split from previous patch
->>>>> - Initialized hdisplay as uncompressed pclk per line at the beginning of
->>>>>     dsi_timing_setup as to not break dual DSI calculations
->>>>>
->>>>> Changes in v4:
->>>>> - Moved pclk_per_intf calculations to DSC hdisplay adjustments
->>>>>
->>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> index 508577c596ff..ae966d4e349d 100644
->>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>>    		 * pulse width same
->>>>>    		 */
->>>>>    		h_total -= hdisplay;
->>>>> -		hdisplay /= 3;
->>>>> +		hdisplay = msm_dsc_get_pclk_per_intf(msm_host->dsc) / 3;
->>>>
->>>> This patch is unfortunately regressing the Sony Xperia XZ3 (sdm845,
->>>> single DSI), which will only show garbage when it is applied.
->>>>
->>>> Are you sure this is correct, and the helper is returning the right
->>>> values?  I'll see if I can help review and validate those later, and
->>>> debug if necessary.
->>>>
->>>> - Marijn
->>>
->>> To help us debug these kind of issues, can you pls point us to your
->>> panel driver?
->>
->> https://github.com/SoMainline/linux/commit/b154ea72e6c2ca0d4a33a28cc24e3a762dba4948
-> 
-> I found the fix myself after piecing together the hints provided across
-> the many different patch series.  This panel driver assigns
-> slice_count=1 based on downstream's qcom,mdss-dsc-slice-per-pkt = <1>,
-> but as per the many slice_count-related fixes the latter DT parameter is
-> a QCOM-specific hardware feature, whereas slice_count is simply the
-> number of slices per line.
-> 
-> Since a line is a scanline, and that panel has a width of hdisplay=1440
-> and a slice_width of 720, the number of slices spanning a line is simply
-> slice_count=hdisplay/slice_width=2.  This makes the panel work again
-> atop the four-or-so-series without a revert of this patch.
-> 
-> Is it a big ask to request a single, coherent series fixing all uses of
-> slice_count - and implementing support for slice-per-pkt - instead of
-> having the patches spread across multiple series?  That makes it much
-> easier to cover ground here and review this series, as slice_count seems
-> to be used everywhere where downstream used slice_per_pkt - even I
-> mistakenly used it after assuming it was the same based on the original
-> patches.
+However, alloc_ordered_workqueue() was a later addition. Before it, an
+ordered workqueue could be obtained by creating an UNBOUND workqueue with
+@max_active==1. This originally was an implementation side-effect which was
+broken by 4c16bd327c74 ("workqueue: restore WQ_UNBOUND/max_active==1 to be
+ordered"). Because there were users that depended on the ordered execution,
+5c0338c68706 ("workqueue: restore WQ_UNBOUND/max_active==1 to be ordered")
+made workqueue allocation path to implicitly promote UNBOUND workqueues w/
+@max_active==1 to ordered workqueues.
 
-Hi Marijn,
+While this has worked okay, overloading the UNBOUND allocation interface
+this way creates other issues. It's difficult to tell whether a given
+workqueue actually needs to be ordered and users that legitimately want a
+min concurrency level wq unexpectedly gets an ordered one instead. With
+planned UNBOUND workqueue updates to improve execution locality and more
+prevalence of chiplet designs which can benefit from such improvements, this
+isn't a state we wanna be in forever.
 
-Just want to document the changes we agreed on regarding the slice_count 
-fixes:
+This patch series audits all callsites that create an UNBOUND workqueue w/
+@max_active==1 and converts them to alloc_ordered_workqueue() as necessary.
 
-I will move "drm/msm/dsi: Fix calculation for pkt_per_line" to the "Add 
-DSC v1.2 Support for DSI" series so that all the 
-slice_count/slice_per_pkt fixes are consolidated.
+WHAT TO LOOK FOR
+================
 
-In addition I will also add a patch in "Add DSC v1.2 Support for DSI" to 
-remove the incorrect `dsc->slice_count = 1` line in dsi_update_dsc_timing().
+The conversions are from
 
-Thanks,
+  alloc_workqueue(WQ_UNBOUND | flags, 1, args..)
 
-Jessica Zhang
+to
 
-> 
-> - Marijn
+  alloc_ordered_workqueue(flags, args...)
+
+which don't cause any functional changes. If you know that fully ordered
+execution is not ncessary, please let me know. I'll drop the conversion and
+instead add a comment noting the fact to reduce confusion while conversion
+is in progress.
+
+If you aren't fully sure, it's completely fine to let the conversion
+through. The behavior will stay exactly the same and we can always
+reconsider later.
+
+As there are follow-up workqueue core changes, I'd really appreciate if the
+patch can be routed through the workqueue tree w/ your acks. Thanks.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org
+---
+ drivers/soc/qcom/qmi_interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
+index 820bdd9f8e46..78d7361fdcf2 100644
+--- a/drivers/soc/qcom/qmi_interface.c
++++ b/drivers/soc/qcom/qmi_interface.c
+@@ -650,7 +650,7 @@ int qmi_handle_init(struct qmi_handle *qmi, size_t recv_buf_size,
+ 	if (!qmi->recv_buf)
+ 		return -ENOMEM;
+ 
+-	qmi->wq = alloc_workqueue("qmi_msg_handler", WQ_UNBOUND, 1);
++	qmi->wq = alloc_ordered_workqueue("qmi_msg_handler", 0);
+ 	if (!qmi->wq) {
+ 		ret = -ENOMEM;
+ 		goto err_free_recv_buf;
+-- 
+2.40.1
+
