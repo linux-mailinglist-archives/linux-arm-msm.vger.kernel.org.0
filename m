@@ -2,48 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 03E286FCB9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C29306FCBE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234262AbjEIQru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 12:47:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60422 "EHLO
+        id S231467AbjEIQ5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 12:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234098AbjEIQrt (ORCPT
+        with ESMTP id S229648AbjEIQ5G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 12:47:49 -0400
+        Tue, 9 May 2023 12:57:06 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BC2A19B9;
-        Tue,  9 May 2023 09:47:46 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C95E6FA;
+        Tue,  9 May 2023 09:57:04 -0700 (PDT)
 Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 64EAFCCC1C;
-        Tue,  9 May 2023 16:47:44 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 1DD7ECCC1C;
+        Tue,  9 May 2023 16:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683650864; bh=YmGG9f/8rs6Ur5dwQlDvBfm/MjPA8vPjlGeXn8jDq4U=;
+        t=1683651423; bh=I3ePwvXSmImEkgis0VV8gRsOntE/VNU7m0pNxel7O0I=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=C1toL+z2apKYOKaOtjqiM/Qvm+An9ikl14FEZm3O2cP3KsA4eoFCiqR9iricnsJ3Z
-         dgne9CjGFeFX5smuW9AycrFBhjZ8CgvnNe8VxAmEWnxCbOCQDTYA70gBGP8OoSCRAr
-         4Yy80kpczNfND68B/hW+UDVQTlyOPm5Gt+epkr0I=
+        b=ALcJ4cP1cMEftnsVntVXVnAUdYytrvCGqYCs0vH7q0MhfZ3NBiu4QWf/LdODYGPAt
+         Z399Lz/f4WKenkoiKEklLujt2pH9gyodZtMYwFtt5abqGtj9xq42kCzw1aQR0b4Dzh
+         TAk8WFKWdqx3OoxXhBs28N2m/ilerd2lZEo0ZTJw=
 From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Brian Masney <masneyb@onstation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/6] soc: qcom: ocmem: make iface clock optional
-Date:   Tue, 09 May 2023 18:47:43 +0200
-Message-ID: <3479852.e9J7NaK4W3@z3ntu.xyz>
-In-Reply-To: <c9d319a6-36c6-b58c-70ce-65578fd364c3@linaro.org>
-References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
- <20230506-msm8226-ocmem-v1-3-3e24e2724f01@z3ntu.xyz>
- <c9d319a6-36c6-b58c-70ce-65578fd364c3@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: mmcc-msm8974: Add OXILICX_GDSC for msm8226
+Date:   Tue, 09 May 2023 18:57:02 +0200
+Message-ID: <2528191.PYKUYFuaPT@z3ntu.xyz>
+In-Reply-To: <69ec1926-760e-c957-82b5-0c3f48f65dcf@linaro.org>
+References: <20230506-msm8226-oxilicx-v1-1-52e34b94ff22@z3ntu.xyz>
+ <fdb76743-de20-91c5-2edc-19dd5ead33e3@linaro.org>
+ <69ec1926-760e-c957-82b5-0c3f48f65dcf@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -57,151 +55,104 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 8. Mai 2023 13:34:23 CEST Dmitry Baryshkov wrote:
-> On 07/05/2023 12:12, Luca Weiss wrote:
-> > Some platforms such as msm8226 do not have an iface clk. Since clk_bulk
-> > APIs don't offer to a way to treat some clocks as optional simply add
-> > core_clk and iface_clk members to our drvdata.
+On Montag, 8. Mai 2023 13:35:07 CEST Konrad Dybcio wrote:
+> On 8.05.2023 13:32, Dmitry Baryshkov wrote:
+> > On 08/05/2023 10:23, Konrad Dybcio wrote:
+> >> On 6.05.2023 23:20, Luca Weiss wrote:
+> >>> On msm8226 we also have OXILICX_GDSC but we need a slighly different
+> >>> config, with a .cxcs defined for clock but with no parent.
+> >> 
+> >> Hm, on newer (a5xx+) GPUs, CX needs to be turned on first and
+> >> to achieve that, we sometimes define it to be the GX's (also
+> >> implicitly known as "oxili-non-CX" in before-a6xx-times) parent..
+> >> 
+> >> Roughly speaking CX powers the "GPU hardware owned by the broader
+> >> SoC that may not need the GPU core clock to be up" and GX powers
+> >> the "GPU hardware owned strictly by the GPU that needs at least some
+> >> GPU clocks to be enabled"
+> >> 
+> >> Maybe 8974 simply has a bug in the driver that would do the reverse?
+> >> Could you (and perhaps Dmitry on his shiny new 13yo board) test that
+> >> theory, preferably on both SoCs?
+> >> 
+> >> --- a/drivers/clk/qcom/mmcc-msm8974.c
+> >> +++ b/drivers/clk/qcom/mmcc-msm8974.c
+> >> @@ -2431,6 +2431,7 @@ static struct gdsc oxili_gdsc = {
+> >>          .pd = {
+> >>                  .name = "oxili",
+> >>          },
+> >> +       .parent = &oxili_gdsc.pd,
+> >>          .pwrsts = PWRSTS_OFF_ON,
+> >>   };
+> > 
+> > Are you declaring oxili_gdsc to be a parent of itself?
 > 
-> What about using devm_clk_bulk_get_optional()? I think it would be
-> simpler this way.
+> lol.. nice catch of course this line should have been
+> 
+> +       .parent = &oxilicx_gdsc.pd,
+> 
+> and the definitions would need to be swapped
 
-Using that function both clocks would be optional which may or may not be a 
-bad idea. Not sure how much binding yaml and/or driver should try and catch 
-bad usages of the driver.
+The 0x4024 oxili_gdsc (downstream name gdsc_oxili_gx) is disabled in 8226 dts.
 
-But honestly the current usage of the bulk API seems a bit clunky, we have a 
-static array of clocks that we use (not in struct ocmem for some reason) and 
-then we refer to the core clock by index? Feels better to just have the two 
-clock references in the device struct and then we're good.
+Only in downstream msm8974.dtsi this gdsc gets "parent-supply = 
+<&pm8841_s4_corner>;", on 8226 there's no parent-supply. And the gdsc parent 
+doesn't even seem to be described there.
 
-Let me know.
-
-Regards
-Luca
+Should I still try?
 
 > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > 
-> >   drivers/soc/qcom/ocmem.c | 42 ++++++++++++++++++++++++------------------
-> >   1 file changed, 24 insertions(+), 18 deletions(-)
-> > 
-> > diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-> > index a11a955a1327..6235065d3bc9 100644
-> > --- a/drivers/soc/qcom/ocmem.c
-> > +++ b/drivers/soc/qcom/ocmem.c
-> > @@ -54,6 +54,8 @@ struct ocmem {
-> > 
-> >   	const struct ocmem_config *config;
-> >   	struct resource *memory;
-> >   	void __iomem *mmio;
-> > 
-> > +	struct clk *core_clk;
-> > +	struct clk *iface_clk;
-> > 
-> >   	unsigned int num_ports;
-> >   	unsigned int num_macros;
-> >   	bool interleaved;
-> > 
-> > @@ -91,16 +93,6 @@ struct ocmem {
-> > 
-> >   #define OCMEM_PSGSC_CTL_MACRO2_MODE(val)	FIELD_PREP(0x00000700, 
-(val))
-> >   #define OCMEM_PSGSC_CTL_MACRO3_MODE(val)	FIELD_PREP(0x00007000, 
-(val))
-> > 
-> > -#define OCMEM_CLK_CORE_IDX			0
-> > -static struct clk_bulk_data ocmem_clks[] = {
-> > -	{
-> > -		.id = "core",
-> > -	},
-> > -	{
-> > -		.id = "iface",
-> > -	},
-> > -};
-> > -
-> > 
-> >   static inline void ocmem_write(struct ocmem *ocmem, u32 reg, u32 data)
-> >   {
-> >   
-> >   	writel(data, ocmem->mmio + reg);
-> > 
-> > @@ -316,9 +308,15 @@ static int ocmem_dev_probe(struct platform_device
-> > *pdev)> 
-> >   	ocmem->dev = dev;
-> >   	ocmem->config = device_get_match_data(dev);
-> > 
-> > -	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > -	if (ret)
-> > -		return dev_err_probe(dev, ret, "Unable to get clocks\n");
-> > +	ocmem->core_clk = devm_clk_get(dev, "core");
-> > +	if (IS_ERR(ocmem->core_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(ocmem->core_clk),
-> > +				     "Unable to get core clock\n");
-> > +
-> > +	ocmem->iface_clk = devm_clk_get_optional(dev, "iface");
-> > +	if (IS_ERR(ocmem->iface_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(ocmem->iface_clk),
-> > +				     "Unable to get iface clock\n");
-> > 
-> >   	ocmem->mmio = devm_platform_ioremap_resource_byname(pdev, "ctrl");
-> >   	if (IS_ERR(ocmem->mmio))
-> > 
-> > @@ -333,11 +331,15 @@ static int ocmem_dev_probe(struct platform_device
-> > *pdev)> 
-> >   	}
-> >   	
-> >   	/* The core clock is synchronous with graphics */
-> > 
-> > -	WARN_ON(clk_set_rate(ocmem_clks[OCMEM_CLK_CORE_IDX].clk, 1000) < 0);
-> > +	WARN_ON(clk_set_rate(ocmem->core_clk, 1000) < 0);
-> > +
-> > +	ret = clk_prepare_enable(ocmem->core_clk);
-> > +	if (ret)
-> > +		return dev_err_probe(ocmem->dev, ret, "Failed to enable 
-core clock\n");
-> > 
-> > -	ret = clk_bulk_prepare_enable(ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > +	ret = clk_prepare_enable(ocmem->iface_clk);
-> > 
-> >   	if (ret)
-> > 
-> > -		return dev_err_probe(ocmem->dev, ret, "Failed to enable 
-clocks\n");
-> > +		return dev_err_probe(ocmem->dev, ret, "Failed to enable 
-iface
-> > clock\n");
-> > 
-> >   	if (qcom_scm_restore_sec_cfg_available()) {
-> >   	
-> >   		dev_dbg(dev, "configuring scm\n");
-> > 
-> > @@ -396,13 +398,17 @@ static int ocmem_dev_probe(struct platform_device
-> > *pdev)> 
-> >   	return 0;
-> >   
-> >   err_clk_disable:
-> > -	clk_bulk_disable_unprepare(ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > +	clk_disable_unprepare(ocmem->core_clk);
-> > +	clk_disable_unprepare(ocmem->iface_clk);
-> > 
-> >   	return ret;
-> >   
-> >   }
-> >   
-> >   static int ocmem_dev_remove(struct platform_device *pdev)
-> >   {
-> > 
-> > -	clk_bulk_disable_unprepare(ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > +	struct ocmem *ocmem = platform_get_drvdata(pdev);
-> > +
-> > +	clk_disable_unprepare(ocmem->core_clk);
-> > +	clk_disable_unprepare(ocmem->iface_clk);
-> > 
-> >   	return 0;
-> >   
-> >   }
+> Konrad
+> 
+> >>   @@ -2439,7 +2440,6 @@ static struct gdsc oxilicx_gdsc = {
+> >>          .pd = {
+> >>                  .name = "oxilicx",
+> >>          },
+> >> -       .parent = &oxili_gdsc.pd,
+> >>          .pwrsts = PWRSTS_OFF_ON,
+> >>   };
+> >> 
+> >> Konrad
+> >> 
+> >>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> >>> ---
+> >>>   drivers/clk/qcom/mmcc-msm8974.c | 11 +++++++++++
+> >>>   1 file changed, 11 insertions(+)
+> >>> 
+> >>> diff --git a/drivers/clk/qcom/mmcc-msm8974.c
+> >>> b/drivers/clk/qcom/mmcc-msm8974.c index 4273fce9a4a4..39ee3953567c
+> >>> 100644
+> >>> --- a/drivers/clk/qcom/mmcc-msm8974.c
+> >>> +++ b/drivers/clk/qcom/mmcc-msm8974.c
+> >>> @@ -2443,6 +2443,16 @@ static struct gdsc oxilicx_gdsc = {
+> >>>       .pwrsts = PWRSTS_OFF_ON,
+> >>>   };
+> >>>   +static struct gdsc oxilicx_gdsc_msm8226 = {
+> >>> +    .gdscr = 0x4034,
+> >>> +    .cxcs = (unsigned int []){ 0x4028 },
+> >>> +    .cxc_count = 1,
+> >>> +    .pd = {
+> >>> +        .name = "oxilicx",
+> >>> +    },
+> >>> +    .pwrsts = PWRSTS_OFF_ON,
+> >>> +};
+> >>> +
+> >>>   static struct clk_regmap *mmcc_msm8226_clocks[] = {
+> >>>       [MMSS_AHB_CLK_SRC] = &mmss_ahb_clk_src.clkr,
+> >>>       [MMSS_AXI_CLK_SRC] = &mmss_axi_clk_src.clkr,
+> >>> @@ -2533,6 +2543,7 @@ static struct gdsc *mmcc_msm8226_gdscs[] = {
+> >>>       [MDSS_GDSC] = &mdss_gdsc,
+> >>>       [CAMSS_JPEG_GDSC] = &camss_jpeg_gdsc,
+> >>>       [CAMSS_VFE_GDSC] = &camss_vfe_gdsc,
+> >>> +    [OXILICX_GDSC] = &oxilicx_gdsc_msm8226,
+> >>>   };
+> >>>     static const struct regmap_config mmcc_msm8226_regmap_config = {
+> >>> 
+> >>> ---
+> >>> base-commit: dd9e11d6477a52ede9ebe575c83285e79e823889
+> >>> change-id: 20230506-msm8226-oxilicx-7f3f0f8e491d
+> >>> 
+> >>> Best regards,
 
 
 
