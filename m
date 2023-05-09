@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B79F36FC515
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 13:36:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DD5D6FC534
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 13:41:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235053AbjEILgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 07:36:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
+        id S235575AbjEILkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 07:40:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235398AbjEILgW (ORCPT
+        with ESMTP id S234704AbjEILk1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 07:36:22 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D033A9A
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 04:35:53 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-b9e66ce80acso7612792276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 04:35:53 -0700 (PDT)
+        Tue, 9 May 2023 07:40:27 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72E17AAE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 04:40:04 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55a829411b5so52557677b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 04:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683632151; x=1686224151;
+        d=linaro.org; s=google; t=1683632404; x=1686224404;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=v7Pyw5nwHkNnu462qbwGos47j69OLpTlZbNxmPBS04M=;
-        b=KrIh5Hk1NDf7N1L5Q/kIXQoVM/rJOfSZtn5DhWzorecfs4Y86UWthqOKU3cz6NRWfN
-         14DVPJxjxqLySDfnikRT3EB6uvhGfTR5rhRxgLfsH6BhL5yVg7OwrN3BNb2UhX7kT8FJ
-         F8F8R09NEzrb4KCxRzGNoXMichNsn24s57JCZW1stf9BC+WQCFJkYqhvK00rUb24ZdM1
-         F8QZDG44dpCzaR/q7jKIUg1P3TzGnqK2D37Evjd7quQ00ZoUvKV727+L92lCAJM9KIZf
-         SMawUtOh6bY3Qxhjg08P7crImuwFBKfX2Rp4OnYV0s8f1TSygKW4dL7idsm8i3CRWzUM
-         uLEw==
+        bh=bN0WAPIA5nuw/1zElaEn49wysrmGwuQYJKZRalwsUmw=;
+        b=OnVSNJpVblnnwgiSlmyGmsdKuG3dohMYP320MHE3X4o01oIXybQnQM1iy5Ut3lBakK
+         3sZdLsbhCy3/fxaF9IXvbNmvCCaod8xrxQSf9BLysPEd4r7KrC3YZ3ymJzOUKs0ZeJd5
+         /No/u12ExgDFYUuIYO5EZCmpSO5vboCsfrYqCUKqt3NpsRY4+DFEH+qT7yyC+xxbdhOF
+         LiiDYQuoyqRAjKY4lSobsCTS+gpzpv62+kvCw3f1nO5hv7TobOjOnq1cKV2HKQ+yzQ/q
+         I2GC5Pa1x8CA6p5pl9RLVY7T3VYspAWtYu2RBaN74khJoiDF1wutCQWbz8Yp7AREd2Qh
+         bbvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683632151; x=1686224151;
+        d=1e100.net; s=20221208; t=1683632404; x=1686224404;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=v7Pyw5nwHkNnu462qbwGos47j69OLpTlZbNxmPBS04M=;
-        b=NiUX4Epm6LyNkW2dbE77e226hmHTMH9WCnD6GK8xtBtKXH1vqKeEppoMksE46nEwA9
-         t8iQRgraP7B1RakQ3I8JrlftLMOJassHmu4Gn7FAOThQxnVwnpWXBVuYFZJJS22MDLSg
-         Khm3ZjfmDLZImphSu9NGBzX8D/MCA9S4uo2Kq8nsC4vjPRYqsXVFU3Z22867qLN+pRQK
-         Gum8qzt4Tjieo3P7itO1PPL9zGq0TH6y200Vlb/KC76cUHl2cIvdkt8FhFZAQf9VC0Mj
-         WeEgnmo/MrzPQl7UZaWqSZCBi88wIXzYs7CVNKJdK+SiQIm1i+d5CX3q8OJnOPCE5emc
-         P0IA==
-X-Gm-Message-State: AC+VfDzX6q9/7rMiR/zPcLx40quRJvR0j4tgrVIGd93dZYh3bd/m6Mkj
-        VPt9DXggHcMK8rVWihXxvZbvJOmU1dXULWBPg17NkQ==
-X-Google-Smtp-Source: ACHHUZ5pDwhmbQ3yzou/tE8fGJ5nUcd3g6wD19VA1NiYGdmvHTCFdYBNP0eN6CVx1E4EqKnk8LmZaRtu8/gAgSWhsKg=
-X-Received: by 2002:a25:5d6:0:b0:b95:2bd5:8f86 with SMTP id
- 205-20020a2505d6000000b00b952bd58f86mr14675399ybf.26.1683632150830; Tue, 09
- May 2023 04:35:50 -0700 (PDT)
+        bh=bN0WAPIA5nuw/1zElaEn49wysrmGwuQYJKZRalwsUmw=;
+        b=bdJBNuz/pY0MXOiTz6M10cMdYtXmJvz14u7aJ83sdTTZqdyq3srvRXj5Qwh3CLyNYl
+         spFkgrewWskLl9dxWdOWOKX8q0qbPXSoXZhtWUJR8bsri9E2hP/quN089HNY/TE7LEGc
+         ORkmDPSRAqhB2CCOmJFexcOIL3byExjTldjb1LILSFFaIk11s1V3mP0Lo6zj5ShsQC0L
+         68mWnB5hTYeryHTTf0n7gtc1M05r+1RqjHVZB45qxZzEHW34A8I7GPhyiPPyhZ8Hc+Yq
+         E8pwtCcj6SkejWdaao35wRcEzA1BXr1yZIxHZUY2BO3gp15j+pVcXoRV33ra9AkGuKeL
+         y3qw==
+X-Gm-Message-State: AC+VfDyaSOZInV//yIW1EMsdntei+NZF0doGCxZvR/NENcOtob/WOoY3
+        CkbM9Vciywufk4Qo+tiAITcMbYX+Y1TQ73NC68tpOg==
+X-Google-Smtp-Source: ACHHUZ4IK+Xjjbd0RHBKuyhtmQCkhzk0vW6RReCxJjstJev4rrbrHQHu9S/XcMyRbej258JMZDcoQCQLQVx4GF5b0aQ=
+X-Received: by 2002:a25:40d2:0:b0:b9d:b22e:6080 with SMTP id
+ n201-20020a2540d2000000b00b9db22e6080mr14726641yba.7.1683632403741; Tue, 09
+ May 2023 04:40:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com> <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
-In-Reply-To: <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
+References: <cover.1683628357.git.quic_schowdhu@quicinc.com> <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
+In-Reply-To: <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 9 May 2023 14:35:39 +0300
-Message-ID: <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com>
-Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
+Date:   Tue, 9 May 2023 14:39:53 +0300
+Message-ID: <CAA8EJppkqN6cuYUCC-THb8wb=deRv-01pbS0JgSGf-VXnm8qEg@mail.gmail.com>
+Subject: Re: [PATCH V6 2/3] soc: qcom: boot_stat: Add Driver Support for Boot Stats
 To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -78,59 +77,221 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
 <quic_schowdhu@quicinc.com> wrote:
 >
-> All Qualcomm bootloaders log useful timestamp information related
-> to bootloader stats in the IMEM region. Add the child node within
-> IMEM for the boot stat region containing register address and
-> compatible string.
-
-I might have a minor vote here. Is there any reason why you have to
-instantiate the device from DT?
-It looks like a software interface. Ideally software should not be
-described in DT (e.g. this can be instantiated from imem
-driver-to-be).
-Or we can follow the RPM master-stats approach, where the device is a
-top-level device, having handle pointers to the sram regions.
-
+> All of Qualcomm's proprietary Android boot-loaders capture boot time
+> stats, like the time when the bootloader started execution and at what
+> point the bootloader handed over control to the kernel etc. in the IMEM
+> region. This information is captured in a specific format by this driver
+> by mapping a structure to the IMEM memory region and then accessing the
+> members of the structure to show the information within debugfs file.
+> This information is useful in verifying if the existing boot KPIs have
+> regressed or not. The information is shown in milliseconds, a sample
+> log from sm8450(waipio) device is as follows:-
+>
+> /sys/kernel/debug/qcom_boot_stats # cat abl_time
+> 17898 ms
+> /sys/kernel/debug/qcom_boot_stats # cat pre_abl_time
+> 2879 ms
+>
+> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+> stage and the timestamp generated by the sleep counter is logged by
+> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+> starts execution which is logged here as "pre_abl_time" and the second
+> when it is about to load the kernel logged as "abl_time". Documentation
+> details are also added in Documentation/ABI/testing/debugfs-driver-bootstat
 >
 > Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  .../devicetree/bindings/sram/qcom,imem.yaml   | 22 +++++++++++++++++++
->  1 file changed, 22 insertions(+)
+>  .../ABI/testing/debugfs-driver-bootstat       |  17 +++
+>  drivers/soc/qcom/Kconfig                      |  10 ++
+>  drivers/soc/qcom/Makefile                     |   1 +
+>  drivers/soc/qcom/boot_stats.c                 | 100 ++++++++++++++++++
+>  4 files changed, 128 insertions(+)
+>  create mode 100644 Documentation/ABI/testing/debugfs-driver-bootstat
+>  create mode 100644 drivers/soc/qcom/boot_stats.c
 >
-> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> index 0548e8e0d30b..bb884c5c8952 100644
-> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> @@ -50,6 +50,28 @@ patternProperties:
->      $ref: /schemas/remoteproc/qcom,pil-info.yaml#
->      description: Peripheral image loader relocation region
+> diff --git a/Documentation/ABI/testing/debugfs-driver-bootstat b/Documentation/ABI/testing/debugfs-driver-bootstat
+> new file mode 100644
+> index 000000000000..7127d15d9f15
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/debugfs-driver-bootstat
+> @@ -0,0 +1,17 @@
+> +What:          /sys/kernel/debug/qcom_boot_stats/pre_abl_time
+
+Could you please change these bindings to be generic?
+
+s/qcom_boot_stats/boot_stats/
+s/pre_abl_time/pre_bootloader_msec/
+s/abl_time/bootloader_msec/
+
+This way other platforms might also use the same file structure.
+
+> +Date:           May 2023
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +               This file is used to read the KPI value pre abl time.
+> +               It shows the time in milliseconds from the starting
+> +               point of PBL to the point when the control shifted
+> +               to ABL(Qualcomm proprietary bootloader).
+> +
+> +What:           /sys/kernel/debug/qcom_boot_stats/abl_time
+> +Date:           May 2023
+> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> +Description:
+> +               This file is used to read the KPI value abl time.
+> +               It show the duration in milliseconds from the
+> +               time control switched to ABL to the point when
+> +               the linux kernel started getting loaded.
+> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+> index a491718f8064..04141236dcdd 100644
+> --- a/drivers/soc/qcom/Kconfig
+> +++ b/drivers/soc/qcom/Kconfig
+> @@ -16,6 +16,16 @@ config QCOM_AOSS_QMP
+>           subsystems as well as controlling the debug clocks exposed by the Always On
+>           Subsystem (AOSS) using Qualcomm Messaging Protocol (QMP).
 >
-> +  "^stats@[0-9a-f]+$":
-> +    type: object
-> +    description:
-> +      Imem region dedicated for storing timestamps related
-> +      information regarding bootstats.
+> +config QCOM_BOOTSTAT
+> +       tristate "Qualcomm Technologies, Boot Stat driver"
+> +       depends on ARCH_QCOM || COMPILE_TEST
+> +       depends on DEBUG_FS
+> +       help
+> +         This option enables driver support for boot stats. Boot stat driver logs
+> +         the kernel bootloader information by accessing the imem region. These
+> +         information are exposed in the form of debugfs files. This is used to
+> +         determine if there is any regression in boot timings.
 > +
-> +    additionalProperties: false
+>  config QCOM_COMMAND_DB
+>         tristate "Qualcomm Command DB"
+>         depends on ARCH_QCOM || COMPILE_TEST
+> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> index 0f43a88b4894..ae7bda96a539 100644
+> --- a/drivers/soc/qcom/Makefile
+> +++ b/drivers/soc/qcom/Makefile
+> @@ -1,6 +1,7 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  CFLAGS_rpmh-rsc.o := -I$(src)
+>  obj-$(CONFIG_QCOM_AOSS_QMP) += qcom_aoss.o
+> +obj-$(CONFIG_QCOM_BOOTSTAT) += boot_stats.o
+>  obj-$(CONFIG_QCOM_GENI_SE) +=  qcom-geni-se.o
+>  obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
+>  obj-$(CONFIG_QCOM_CPR)         += cpr.o
+> diff --git a/drivers/soc/qcom/boot_stats.c b/drivers/soc/qcom/boot_stats.c
+> new file mode 100644
+> index 000000000000..ca67b6b5d8eb
+> --- /dev/null
+> +++ b/drivers/soc/qcom/boot_stats.c
+> @@ -0,0 +1,100 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2013-2019, 2021 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
 > +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - enum:
-> +              - qcom,sm8450-bootstats
-> +          - const: qcom,imem-bootstats
+> +#include <linux/debugfs.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/init.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_address.h>
+> +#include <linux/platform_device.h>
 > +
-> +      reg:
-> +        maxItems: 1
+> +#define TO_MS(timestamp) ((timestamp * 1000) / 32768)
+
+Quoting v4 question, which got no answer:
+
+Some of the platforms DTs define 32KHz clock instead of 32.768 KHz
+What should be the divisor in this case?
+
 > +
-> +    required:
-> +      - compatible
-> +      - reg
+> +/**
+> + *  struct boot_stats - timestamp information related to boot stats
+> + *  @abl_start: Time for the starting point of the abl
+> + *  @abl_end: Time when the kernel starts loading from abl
+> + */
+> +struct boot_stats {
+> +       u32 abl_start;
+> +       u32 abl_end;
+> +} __packed;
 > +
->  required:
->    - compatible
->    - reg
+> +struct bs_data {
+> +       struct boot_stats __iomem *b_stats;
+> +       struct dentry *dbg_dir;
+> +};
+> +
+> +static void populate_boot_stats(char *abl_str, char *pre_abl_str, struct bs_data *drvdata)
+> +{
+> +        u32 abl_time, pre_abl_time;
+> +
+> +        abl_time = TO_MS(drvdata->b_stats->abl_end) - TO_MS(drvdata->b_stats->abl_start);
+> +        sprintf(abl_str, "%u ms", abl_time);
+> +
+> +        pre_abl_time =  TO_MS(drvdata->b_stats->abl_start);
+> +        sprintf(pre_abl_str, "%u ms", pre_abl_time);
+
+Another point from v4:
+
+It would be better to move the unit to the file name and include just
+the number.
+
+> +}
+> +
+> +static int boot_stats_probe(struct platform_device *pdev)
+> +{
+> +       char abl_str[20], pre_abl_str[20], *abl, *pre_abl;
+> +       struct device *bootstat_dev = &pdev->dev;
+> +       struct bs_data *drvdata;
+> +
+> +       drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
+> +       if (!drvdata)
+> +               return dev_err_probe(bootstat_dev, -ENOMEM, "failed to allocate memory");
+> +       platform_set_drvdata(pdev, drvdata);
+> +
+> +       drvdata->b_stats = devm_of_iomap(bootstat_dev, bootstat_dev->of_node, 0, NULL);
+> +       if (IS_ERR(drvdata->b_stats))
+> +               return dev_err_probe(bootstat_dev, PTR_ERR(drvdata->b_stats),
+> +                                    "failed to map imem region");
+> +
+> +       drvdata->dbg_dir = debugfs_create_dir("qcom_boot_stats", NULL);
+> +       if (IS_ERR(drvdata->dbg_dir))
+> +               return dev_err_probe(bootstat_dev, PTR_ERR(drvdata->dbg_dir),
+> +                                    "failed to create debugfs directory");
+> +
+> +       populate_boot_stats(abl_str, pre_abl_str, drvdata);
+> +       abl = abl_str;
+> +       pre_abl = pre_abl_str;
+> +
+> +       debugfs_create_str("pre_abl_time", 0400, drvdata->dbg_dir, (char **)&pre_abl);
+> +       debugfs_create_str("abl_time", 0400, drvdata->dbg_dir, (char **)&abl);
+> +
+> +       return 0;
+> +}
+> +
+> +void boot_stats_remove(struct platform_device *pdev)
+> +{
+> +       struct bs_data *drvdata = platform_get_drvdata(pdev);
+> +
+> +       debugfs_remove_recursive(drvdata->dbg_dir);
+> +}
+> +
+> +static const struct of_device_id boot_stats_dt_match[] = {
+> +       { .compatible = "qcom,imem-bootstats" },
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
+> +
+> +static struct platform_driver boot_stat_driver = {
+> +       .probe  = boot_stats_probe,
+> +       .remove_new = boot_stats_remove,
+> +       .driver = {
+> +               .name = "qcom-boot-stats",
+> +               .of_match_table = boot_stats_dt_match,
+> +       },
+> +};
+> +module_platform_driver(boot_stat_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
+> +MODULE_LICENSE("GPL");
 > --
 > 2.17.1
 >
