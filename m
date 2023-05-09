@@ -2,77 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69BD36FCEF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 22:00:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B30EA6FCF09
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 22:06:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233678AbjEIUAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 16:00:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42106 "EHLO
+        id S229738AbjEIUGm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 16:06:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229664AbjEIUAJ (ORCPT
+        with ESMTP id S230423AbjEIUGl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 16:00:09 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 884F24498
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 13:00:07 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4eff50911bfso6994414e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 13:00:07 -0700 (PDT)
+        Tue, 9 May 2023 16:06:41 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D372119
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 13:06:39 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2ad89c7a84fso37699721fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 13:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683662406; x=1686254406;
+        d=linaro.org; s=google; t=1683662798; x=1686254798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kVOCE83AC4Gr91kmxIdlrW0vfunolQmhkIU/7LEMiDE=;
-        b=NSrXThnpwz8+ZOFEPNw+j54wWZw7gB2eE9Van5BJqd/Cz3HrmHy0NXEC90QlkYTeS9
-         IcT557kLFTiOkgt/76f+xT/Gg1IZoxLgsK413vjUSU1lioKNML81JYd/yV32t1KS7Dhx
-         iBh+uA7Ftb4Po7J7SSqGIkVbdTfuia5fBt3zpdFV59fO/zKlV8gz24KLcjpVUNx7N665
-         1WoS0kep/R8TGFrknEmtymbEDZ4HnHy1mrUZsJYEkgavgRiOFJQ7sWsc/Z1YcNhY28cq
-         SnImENNqDhvY1gWFH2hmlTCms/bAPLh2qe5pk3PUKJotKFBXVzaJ46GmE1hXeYCTDbM2
-         c6+g==
+        bh=oJ9jtHBo5TjzGlydvjsWKFn9i61qE/XTmR3LKTATkiM=;
+        b=y+/hpJFrUaEohzJzbVB5FdcU9P1W71bN1cj8VPOfmyhYAp5d3/M03P9RK6NviqlqqT
+         m/OufIh1Clj9gAKqFJtfMNsMN/vXOXIXVLz9p5QO1BcqQPqL9zVcbxBm/8n7nKKvG3FR
+         VoPBoRKW3nXIu/1mH+rf022qAQrzlY4DEz6NNp8/x03XXWMnSb28ILfElb32aA2ENIT6
+         2MBnbOEmruS5ZzQ8RdU03PpfhvXGyCiV77QZWchmnKP5dl7mhh4FXFh6OKyJCfXB1Gvc
+         IfO7fo4Gv4Sf6Vzc8OKjerd/tX9gS88wVP1SCfNYLdcdV/qUgYMa6MUI6TPDcGLgDtCx
+         sPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683662406; x=1686254406;
+        d=1e100.net; s=20221208; t=1683662798; x=1686254798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kVOCE83AC4Gr91kmxIdlrW0vfunolQmhkIU/7LEMiDE=;
-        b=LhABuyqnDBInH0VgegZTBjw7P7FtitCFzp70T5gPcpol3iW8e/Kw/d1UP50Q1pJju7
-         qKtutwA/jLNclTtKR+CMtpgkBPvIj2SKIfW1EXfwc1YqGp4DHxMTMTPZy6wsf4EecFIB
-         Cu2reun3qcrbrre+MHPBxd4GfHYqpuXfsysX4gcepDwktpV6FWe9U3V2XAEyWTlitSvc
-         X87JAYsuS0yJjsihByRUUSGJ5Qx0PL0lwcgGg7EElNUoaqnpkKHT+rucgvsiRLWdVYf4
-         iyjFaDn7y5Ebs+emdN719o/cPIbV7ecM6SB7xLeZwUyoUD0Rlvuq8Se+hxGRKjy47WlN
-         3NFQ==
-X-Gm-Message-State: AC+VfDzEB3ZOyHBAeGOqNaiu8jtl3IjlVRoY8yTikfsnaDFFI4XR9aOv
-        IjqOVAE9/evvjJ1ubrU1dbwstg==
-X-Google-Smtp-Source: ACHHUZ6qzrmG/Y537HA1L9EPntjH1URRCnYapiYRs8xzhJtOeE/NQ7s6NscPh1CMAuIhRORb0KHxNw==
-X-Received: by 2002:ac2:5389:0:b0:4e9:afb3:d56a with SMTP id g9-20020ac25389000000b004e9afb3d56amr1216663lfh.7.1683662405724;
-        Tue, 09 May 2023 13:00:05 -0700 (PDT)
+        bh=oJ9jtHBo5TjzGlydvjsWKFn9i61qE/XTmR3LKTATkiM=;
+        b=GvamLrPNBaWVHHPRUL7yfuaNdCkUnU3WeN1OiOCX32/EaY8MUPLCJVR/8HNpst5baa
+         OAqqLjbo6bBqHZI5WxTvPd4lgoLxKHUmUmp59B3SWt/penqSgEvmKHX7zb5EZyW+tY9T
+         hgJjBjoAADAjQ7G5sZeozSB+2wc/lqmvoLOQpXZLYL0M/hiLcFJ4w72tLCSUvQz04SwR
+         8wXegrX148zVrjOvRnJc/PJEJpxSqaW9GiRUfWqF1B4Ak68Bda7JDzW4y4EjBWiBSyBX
+         nzX5i69/m9OTXtDQEg776gFVQwW9YpeB/qwgJCHDpyhyE0YYS68+Rg5f0fujqph/X6BV
+         tTbw==
+X-Gm-Message-State: AC+VfDy9BBgVXJodgQikEADrlGkckBtxUnbogVgGXQx854UUT8f3EhJ+
+        ASt2dyBkrnf3zAwgfhrvbgvwNw==
+X-Google-Smtp-Source: ACHHUZ5W4mKArgYFVe9lrMYtQfrg0Awr3PV3bhXgMJXSzDUzCORFVnZPXJyU5xogGHWZ+TxeWDCZxQ==
+X-Received: by 2002:a2e:9101:0:b0:299:ac61:4e78 with SMTP id m1-20020a2e9101000000b00299ac614e78mr1345994ljg.10.1683662797729;
+        Tue, 09 May 2023 13:06:37 -0700 (PDT)
 Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id c14-20020a19760e000000b004efe6c36135sm444273lff.299.2023.05.09.13.00.04
+        by smtp.gmail.com with ESMTPSA id y22-20020a2e9d56000000b002ac71095b61sm1642177ljj.64.2023.05.09.13.06.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 13:00:05 -0700 (PDT)
-Message-ID: <bac82710-da26-7acf-4375-5c5346c01705@linaro.org>
-Date:   Tue, 9 May 2023 22:00:03 +0200
+        Tue, 09 May 2023 13:06:37 -0700 (PDT)
+Message-ID: <019999fd-3c86-8c85-76c7-8d0206e60f4d@linaro.org>
+Date:   Tue, 9 May 2023 22:06:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 4/6] dt-bindings: sram: qcom,ocmem: Add msm8226 support
+Subject: Re: [PATCH 1/4] clk: qcom: clk-alpha-pll: Add support for lucid ole
+ pll ops
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Brian Masney <masneyb@onstation.org>,
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
- <20230506-msm8226-ocmem-v1-4-3e24e2724f01@z3ntu.xyz>
- <29d1d210-8752-56b4-34be-8b078c639d36@linaro.org>
- <2449951.tdWV9SEqCh@z3ntu.xyz>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230509161218.11979-1-quic_jkona@quicinc.com>
+ <20230509161218.11979-2-quic_jkona@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2449951.tdWV9SEqCh@z3ntu.xyz>
+In-Reply-To: <20230509161218.11979-2-quic_jkona@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,73 +86,72 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9.05.2023 18:44, Luca Weiss wrote:
-> On Montag, 8. Mai 2023 09:39:22 CEST Konrad Dybcio wrote:
->> On 7.05.2023 11:12, Luca Weiss wrote:
->>> Add the compatible for the OCMEM found on msm8226 which compared to
->>> msm8974 only has a core clock and no iface clock.
->>>
->>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
->>> ---
->>>
->>>  Documentation/devicetree/bindings/sram/qcom,ocmem.yaml | 6 +++++-
->>>  1 file changed, 5 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
->>> b/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml index
->>> 4bbf6db0b6bd..515f0d8ec641 100644
->>> --- a/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
->>> +++ b/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
->>> @@ -15,7 +15,9 @@ description: |
->>>
->>>  properties:
->>>    compatible:
->>> -    const: qcom,msm8974-ocmem
->>> +    enum:
->>> +      - qcom,msm8226-ocmem
->>> +      - qcom,msm8974-ocmem
->>
->> Any chance you could read the revision field on both and add comments
->> like:
->>
->> - qcom,msm8974-ocmem # vX.Y
+On 9.05.2023 18:12, Jagadeesh Kona wrote:
+> From: Taniya Das <quic_tdas@quicinc.com>
 > 
-> Do you mean the OCMEM_REG_HW_VERSION register?
-Yep
+> Add support for lucid ole pll ops to configure and control the
+> lucid ole pll. The lucid ole pll has an additional test control
+> register which is required to be programmed, add support to
+> program the same.
+> 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+Isn't this commit "write to PLL_TEST_CTL_U2 on LUCID_EVO" instead?
 
-It's currently not read in the 
-> driver so no idea what the value is - without adding some code.
-Would be appreciated!
+Meaninglessly duplicating ops does not seem useful.
 
 Konrad
+>  drivers/clk/qcom/clk-alpha-pll.c | 2 ++
+>  drivers/clk/qcom/clk-alpha-pll.h | 4 ++++
+>  2 files changed, 6 insertions(+)
 > 
->>
->>>    reg:
->>>      items:
->>> @@ -28,11 +30,13 @@ properties:
->>>        - const: mem
->>>    
->>>    clocks:
->>> +    minItems: 1
->>>
->>>      items:
->>>        - description: Core clock
->>>        - description: Interface clock
->>
->> allOf: if: properties: compatible: 8974 / then: clock(s|-names): minItems: 2
-> 
-> Sure, can update
-> 
->>
->> Konrad
->>
->>>    clock-names:
->>> +    minItems: 1
->>>
->>>      items:
->>>        - const: core
->>>        - const: iface
-> 
-> 
-> 
-> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index b9f6535a7ba7..f81c7c561352 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -55,6 +55,7 @@
+>  #define PLL_TEST_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
+>  #define PLL_TEST_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
+>  #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
+> +#define PLL_TEST_CTL_U2(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U2])
+>  #define PLL_STATUS(p)		((p)->offset + (p)->regs[PLL_OFF_STATUS])
+>  #define PLL_OPMODE(p)		((p)->offset + (p)->regs[PLL_OFF_OPMODE])
+>  #define PLL_FRAC(p)		((p)->offset + (p)->regs[PLL_OFF_FRAC])
+> @@ -2096,6 +2097,7 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
+>  	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
+>  	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
+>  	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U2(pll), config->test_ctl_hi2_val);
+>  
+>  	/* Disable PLL output */
+>  	regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+> index d07b17186b90..4d9b6d5b7062 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.h
+> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+> @@ -125,6 +125,7 @@ struct alpha_pll_config {
+>  	u32 test_ctl_val;
+>  	u32 test_ctl_hi_val;
+>  	u32 test_ctl_hi1_val;
+> +	u32 test_ctl_hi2_val;
+>  	u32 main_output_mask;
+>  	u32 aux_output_mask;
+>  	u32 aux2_output_mask;
+> @@ -171,6 +172,7 @@ extern const struct clk_ops clk_alpha_pll_zonda_ops;
+>  #define clk_alpha_pll_postdiv_zonda_ops clk_alpha_pll_postdiv_fabia_ops
+>  
+>  extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
+> +#define clk_alpha_pll_lucid_ole_ops clk_alpha_pll_lucid_evo_ops
+>  extern const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops;
+>  #define clk_alpha_pll_reset_lucid_ole_ops clk_alpha_pll_reset_lucid_evo_ops
+>  extern const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops;
+> @@ -196,6 +198,8 @@ void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  			     const struct alpha_pll_config *config);
+>  void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  				 const struct alpha_pll_config *config);
+> +#define clk_lucid_ole_pll_configure(pll, regmap, config) \
+> +			clk_lucid_evo_pll_configure(pll, regmap, config)
+>  void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  				  const struct alpha_pll_config *config);
+>  void clk_stromer_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
