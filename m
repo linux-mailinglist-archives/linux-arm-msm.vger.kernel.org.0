@@ -2,406 +2,279 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2948C6FC274
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 11:15:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C19746FC2B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 11:23:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234489AbjEIJPH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 05:15:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38568 "EHLO
+        id S234687AbjEIJXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 05:23:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234146AbjEIJO4 (ORCPT
+        with ESMTP id S234692AbjEIJWl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 05:14:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19983DC59;
-        Tue,  9 May 2023 02:14:52 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3496sNLM016601;
-        Tue, 9 May 2023 09:14:47 GMT
+        Tue, 9 May 2023 05:22:41 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD76106C0;
+        Tue,  9 May 2023 02:21:57 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34960gdo009077;
+        Tue, 9 May 2023 09:21:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=32NsFka5NxTjUhZwkz5YfWn1fveMy+8Ql3+i5UypZIo=;
- b=Nkq6bqvyeYcevv+EXoTxYa9Y5wAhi6OS9L+Wyz5fgQf3cZG5lyB6386J6UqKYaUo3RH/
- 7Djpgw7ZraqF+tUff9W3aB8YSrHEShVmJvJxuW+IlK06SORk9NZ+DMW9ov2ZbQwOl1/f
- SBtr6+rsgYw2l0f0zfnXjFBaMcpY8iVmBcQBNbQF4WYkUblNdpL6A1LdYepNEnPNOJiy
- G7CcYPzAw7QP+ekDWIYL9cvKYhCTYecpdsqgA14yPdPalsqAosIPCbvmZMhrI6jdbg3I
- VflaG5fJuuLdipleH/dHVI6nEjrdmwXNy7OiSuv1Pq9bEjirSRq2g/6mb+Ua0PSvrVVS RA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77j191v-1
+ bh=jtmJ+i5HRbbl60SILuYyyKayi/NHpbtpA/qZRIgVTOE=;
+ b=M+vmu4xLI+hClmS4gImODLNogxYXwFMWwvDKZh+rYvgMqkhqENmZZGmh/a7J13ywZDFI
+ 2n9SqgtUoW5KB5AO7WsOgJKSR5F4j1Ff6nHsBSzGEc/jVtEnju0jmiuvJ3p2u5Bodr40
+ Xtp6hyKLUtO9KkXnZG2TBDC0LBFSYh4X3lX/KcLc5WsCr+vYJCoxgiO+yVuDnoZO00P5
+ rAsf8pJ6m6ILvTLJgyyiZFK/o9QHrQTbq/gt7yI9eTTBmy1fIkqAIBvyv8pDn67/5fRH
+ oRnAwtk+Ar3mzUoDRgUw5ToS8GGmcitXNWLTX2rgevDesdlrKR1CBF6OcDpzWS3v4bf2 FQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf78899hd-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 09:14:46 +0000
+        Tue, 09 May 2023 09:21:33 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3499EkHT005374
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3499LWZm031511
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 09:14:46 GMT
+        Tue, 9 May 2023 09:21:32 GMT
 Received: from [10.216.33.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
- 02:14:40 -0700
-Message-ID: <f9a64c13-a8e4-c84d-cf6d-86f4ddf6d288@quicinc.com>
-Date:   Tue, 9 May 2023 14:44:37 +0530
+ 02:21:28 -0700
+Message-ID: <721ee430-a8d8-eb60-889e-ee28bf179eb8@quicinc.com>
+Date:   Tue, 9 May 2023 14:51:25 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.13.1
-Subject: Re: [PATCH 4/4] clk: qcom: Add GCC driver support for SDX75
+Subject: Re: [PATCH V3 2/3] clk: qcom: videocc-sm8450: Add video clock
+ controller driver for SM8450
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Michael Turquette <mturquette@baylibre.com>
-CC:     <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        "Michael Turquette" <mturquette@baylibre.com>
+CC:     Bjorn Andersson <andersson@kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohiagar@quicinc.com>, <netdev@vger.kernel.org>
-References: <20230419133013.2563-1-quic_tdas@quicinc.com>
- <20230419133013.2563-5-quic_tdas@quicinc.com>
- <af5435c3-b3a4-af46-444e-023d6ee2304a@linaro.org>
+        <quic_skakitap@quicinc.com>, <quic_jkona@quicinc.com>
+References: <20230503105937.24911-1-quic_tdas@quicinc.com>
+ <20230503105937.24911-3-quic_tdas@quicinc.com>
+ <4c09119e-2a18-d98f-d3ee-9b88e1b87d8e@linaro.org>
 From:   Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <af5435c3-b3a4-af46-444e-023d6ee2304a@linaro.org>
+In-Reply-To: <4c09119e-2a18-d98f-d3ee-9b88e1b87d8e@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BFzArWZcS3o1RPEdyiyrPO-qLa3W5INw
-X-Proofpoint-GUID: BFzArWZcS3o1RPEdyiyrPO-qLa3W5INw
+X-Proofpoint-ORIG-GUID: HTDy6mpjawZUzcEqnKBe72Of52L3vk93
+X-Proofpoint-GUID: HTDy6mpjawZUzcEqnKBe72Of52L3vk93
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-09_05,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 mlxscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1015 mlxlogscore=887 adultscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305090072
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0
+ clxscore=1011 priorityscore=1501 mlxscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305090072
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Dmitry for the review.
+Thanks for your review.
 
-On 4/20/2023 3:40 PM, Dmitry Baryshkov wrote:
->> +static const struct clk_parent_data gcc_parent_data_5[] = {
->> +    { .fw_name = "emac0_sgmiiphy_rclk" },
+On 5/4/2023 1:14 PM, Konrad Dybcio wrote:
 > 
-> So, this looks like a mixture of fw_name and index clocks. Please 
-> migrate all of fw_names to the .index usage.
+> 
+> On 3.05.2023 12:59, Taniya Das wrote:
+>> Add support for the video clock controller driver for peripheral clock
+>> clients to be able to request for video cc clocks.
+>>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> ---
+>> Changes since V2:
+>>   - Update the header file name to match the latest upstream header
+>>     files.
+>>
+>> Changes since V1:
+>>   - Use DT indices instead of fw_name.
+>>   - Replace pm_runtime_enable with devm_pm_runtime_enable.
+>>   - Change license to GPL from GPL V2.
+>>
+>>   drivers/clk/qcom/Kconfig          |   9 +
+>>   drivers/clk/qcom/Makefile         |   1 +
+>>   drivers/clk/qcom/videocc-sm8450.c | 459 ++++++++++++++++++++++++++++++
+>>   3 files changed, 469 insertions(+)
+>>   create mode 100644 drivers/clk/qcom/videocc-sm8450.c
+>>
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index 12be3e2371b3..927aa5983464 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -962,4 +962,13 @@ config CLK_GFM_LPASS_SM8250
+>>   	  Support for the Glitch Free Mux (GFM) Low power audio
+>>             subsystem (LPASS) clocks found on SM8250 SoCs.
+>>   
+>> +config SM_VIDEOCC_8450
+>> +	tristate "SM8450 Video Clock Controller"
+>> +	select SM_GCC_8450
+>> +	select QCOM_GDSC
+>> +	help
+>> +	  Support for the video clock controller on Qualcomm Technologies, Inc.
+>> +	  SM8450 devices.
+>> +	  Say Y if you want to support video devices and functionality such as
+>> +	  video encode/decode.
+>>   endif
+>> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+>> index 9ff4c373ad95..1960ad8e8713 100644
+>> --- a/drivers/clk/qcom/Makefile
+>> +++ b/drivers/clk/qcom/Makefile
+>> @@ -127,6 +127,7 @@ obj-$(CONFIG_SM_GPUCC_8350) += gpucc-sm8350.o
+>>   obj-$(CONFIG_SM_TCSRCC_8550) += tcsrcc-sm8550.o
+>>   obj-$(CONFIG_SM_VIDEOCC_8150) += videocc-sm8150.o
+>>   obj-$(CONFIG_SM_VIDEOCC_8250) += videocc-sm8250.o
+>> +obj-$(CONFIG_SM_VIDEOCC_8450) += videocc-sm8450.o
+>>   obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
+>>   obj-$(CONFIG_KPSS_XCC) += kpss-xcc.o
+>>   obj-$(CONFIG_QCOM_HFPLL) += hfpll.o
+>> diff --git a/drivers/clk/qcom/videocc-sm8450.c b/drivers/clk/qcom/videocc-sm8450.c
+>> new file mode 100644
+>> index 000000000000..ce0ab764eb35
+>> --- /dev/null
+>> +++ b/drivers/clk/qcom/videocc-sm8450.c
+>> @@ -0,0 +1,459 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/clk-provider.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/pm_runtime.h>
+>> +#include <linux/regmap.h>
+>> +
+>> +#include <dt-bindings/clock/qcom,sm8450-videocc.h>
+>> +
+>> +#include "clk-alpha-pll.h"
+>> +#include "clk-branch.h"
+>> +#include "clk-rcg.h"
+>> +#include "clk-regmap.h"
+>> +#include "clk-regmap-divider.h"
+>> +#include "common.h"
+>> +#include "gdsc.h"
+>> +#include "reset.h"
+>> +
+>> +enum {
+>> +	DT_BI_TCXO,
+>> +};
+>> +
+>> +enum {
+>> +	P_BI_TCXO,
+>> +	P_VIDEO_CC_PLL0_OUT_MAIN,
+>> +	P_VIDEO_CC_PLL1_OUT_MAIN,
+>> +};
+>> +
+>> +static const struct pll_vco lucid_evo_vco[] = {
+>> +	{ 249600000, 2020000000, 0 },
+>> +};
+>> +
+>> +static const struct alpha_pll_config video_cc_pll0_config = {
+>> +	.l = 0x1E,
+> lowercase hex, please, everywhere
 > 
 
-I will take care of it to move to index, but does it not bind us to use 
-the right index always from DT.
+Sure, will take care.
 
-The current approach I was thinking to bind the XO clock to 0th index, 
-but we cannot gurantee these external clocks would be placed at the 
-right index.
-
->> +    { .index = DT_BI_TCXO },
+>> +	.alpha = 0x0,
+>> +	.config_ctl_val = 0x20485699,
+>> +	.config_ctl_hi_val = 0x00182261,
+>> +	.config_ctl_hi1_val = 0x32AA299C,
+>> +	.user_ctl_val = 0x00000000,
+>> +	.user_ctl_hi_val = 0x00000805,
 >> +};
->> +
->> +static const struct parent_map gcc_parent_map_6[] = {
->> +    { P_EMAC0_SGMIIPHY_TCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_6[] = {
->> +    { .fw_name = "emac0_sgmiiphy_tclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_7[] = {
->> +    { P_EMAC0_SGMIIPHY_MAC_RCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_7[] = {
->> +    { .fw_name = "emac0_sgmiiphy_mac_rclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_8[] = {
->> +    { P_EMAC0_SGMIIPHY_MAC_TCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_8[] = {
->> +    { .fw_name = "emac0_sgmiiphy_mac_tclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_9[] = {
->> +    { P_EMAC1_SGMIIPHY_RCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_9[] = {
->> +    { .fw_name = "emac1_sgmiiphy_rclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_10[] = {
->> +    { P_EMAC1_SGMIIPHY_TCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_10[] = {
->> +    { .fw_name = "emac1_sgmiiphy_tclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_11[] = {
->> +    { P_EMAC1_SGMIIPHY_MAC_RCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_11[] = {
->> +    { .fw_name = "emac1_sgmiiphy_mac_rclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_12[] = {
->> +    { P_EMAC1_SGMIIPHY_MAC_TCLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_12[] = {
->> +    { .fw_name = "emac1_sgmiiphy_mac_tclk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_13[] = {
->> +    { P_PCIE_1_PIPE_CLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_13[] = {
->> +    { .fw_name = "pcie_1_pipe_clk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_14[] = {
->> +    { P_PCIE_2_PIPE_CLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_14[] = {
->> +    { .fw_name = "pcie_2_pipe_clk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_15[] = {
->> +    { P_PCIE20_PHY_AUX_CLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_15[] = {
->> +    { .fw_name = "pcie20_phy_aux_clk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_16[] = {
->> +    { P_PCIE_PIPE_CLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_16[] = {
->> +    { .fw_name = "pcie_pipe_clk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_17[] = {
->> +    { P_BI_TCXO, 0 },
->> +    { P_GPLL0_OUT_MAIN, 1 },
->> +    { P_GPLL6_OUT_MAIN, 2 },
->> +    { P_GPLL0_OUT_EVEN, 6 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_17[] = {
->> +    { .index = DT_BI_TCXO },
->> +    { .hw = &gpll0.clkr.hw },
->> +    { .hw = &gpll6.clkr.hw },
->> +    { .hw = &gpll0_out_even.clkr.hw },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_18[] = {
->> +    { P_BI_TCXO, 0 },
->> +    { P_GPLL0_OUT_MAIN, 1 },
->> +    { P_GPLL8_OUT_MAIN, 2 },
->> +    { P_GPLL0_OUT_EVEN, 6 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_18[] = {
->> +    { .index = DT_BI_TCXO },
->> +    { .hw = &gpll0.clkr.hw },
->> +    { .hw = &gpll8.clkr.hw },
->> +    { .hw = &gpll0_out_even.clkr.hw },
->> +};
->> +
->> +static const struct parent_map gcc_parent_map_19[] = {
->> +    { P_USB3_PHY_WRAPPER_GCC_USB30_PIPE_CLK, 0 },
->> +    { P_BI_TCXO, 2 },
->> +};
->> +
->> +static const struct clk_parent_data gcc_parent_data_19[] = {
->> +    { .fw_name = "usb3_phy_wrapper_gcc_usb30_pipe_clk" },
->> +    { .index = DT_BI_TCXO },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac0_cc_sgmiiphy_rx_clk_src = {
->> +    .reg = 0x71060,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_5,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac0_cc_sgmiiphy_rx_clk_src",
->> +            .parent_data = gcc_parent_data_5,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_5),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac0_cc_sgmiiphy_tx_clk_src = {
->> +    .reg = 0x71058,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_6,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac0_cc_sgmiiphy_tx_clk_src",
->> +            .parent_data = gcc_parent_data_6,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_6),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac0_sgmiiphy_mac_rclk_src = {
->> +    .reg = 0x71098,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_7,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac0_sgmiiphy_mac_rclk_src",
->> +            .parent_data = gcc_parent_data_7,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_7),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac0_sgmiiphy_mac_tclk_src = {
->> +    .reg = 0x71094,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_8,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac0_sgmiiphy_mac_tclk_src",
->> +            .parent_data = gcc_parent_data_8,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_8),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac1_cc_sgmiiphy_rx_clk_src = {
->> +    .reg = 0x72060,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_9,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac1_cc_sgmiiphy_rx_clk_src",
->> +            .parent_data = gcc_parent_data_9,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_9),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac1_cc_sgmiiphy_tx_clk_src = {
->> +    .reg = 0x72058,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_10,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac1_cc_sgmiiphy_tx_clk_src",
->> +            .parent_data = gcc_parent_data_10,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_10),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac1_sgmiiphy_mac_rclk_src = {
->> +    .reg = 0x72098,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_11,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac1_sgmiiphy_mac_rclk_src",
->> +            .parent_data = gcc_parent_data_11,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_11),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_emac1_sgmiiphy_mac_tclk_src = {
->> +    .reg = 0x72094,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_12,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_emac1_sgmiiphy_mac_tclk_src",
->> +            .parent_data = gcc_parent_data_12,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_12),
->> +            .ops = &clk_regmap_mux_closest_ops,
->> +        },
->> +    },
->> +};
->> +
->> +static struct clk_regmap_mux gcc_pcie_1_pipe_clk_src = {
->> +    .reg = 0x67084,
->> +    .shift = 0,
->> +    .width = 2,
->> +    .parent_map = gcc_parent_map_13,
->> +    .clkr = {
->> +        .hw.init = &(const struct clk_init_data) {
->> +            .name = "gcc_pcie_1_pipe_clk_src",
->> +            .parent_data = gcc_parent_data_13,
->> +            .num_parents = ARRAY_SIZE(gcc_parent_data_13),
->> +            .ops = &clk_regmap_mux_closest_ops,
+> [...]
 > 
-> Are these clocks a clk_regmap_mux_closest_ops in reality 
-> clk_regmap_phy_mux_ops?
-
-clk_regmap_phy_mux_ops cannot be used here, as multi parent mux requires 
-the .get_parent ops to be supported.
-
+>> +static int video_cc_sm8450_probe(struct platform_device *pdev)
+>> +{
+>> +	struct regmap *regmap;
+>> +	int ret;
+>> +
+>> +	devm_pm_runtime_enable(&pdev->dev);
+> Please check the return value here and bail out early on failure.
 > 
->> +        },
->> +    },
 
+Will take care in the next patchset.
 
+>> +
+>> +	ret = pm_runtime_resume_and_get(&pdev->dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	regmap = qcom_cc_map(pdev, &video_cc_sm8450_desc);
+>> +	if (IS_ERR(regmap)) {
+>> +		pm_runtime_put(&pdev->dev);
+>> +		return PTR_ERR(regmap);
+>> +	}
+>> +
+>> +	clk_lucid_evo_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
+>> +	clk_lucid_evo_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
+>> +
+>> +	/*
+>> +	 * Keep clocks always enabled:
+>> +	 *	video_cc_ahb_clk
+>> +	 *	video_cc_sleep_clk
+>> +	 *	video_cc_xo_clk
+>> +	 */
+>> +	regmap_update_bits(regmap, 0x80e4, BIT(0), BIT(0));
+>> +	regmap_update_bits(regmap, 0x8130, BIT(0), BIT(0));
+>> +	regmap_update_bits(regmap, 0x8114, BIT(0), BIT(0));
+>> +
+>> +	ret = qcom_cc_really_probe(pdev, &video_cc_sm8450_desc, regmap);
+>> +
+>> +	pm_runtime_put(&pdev->dev);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static struct platform_driver video_cc_sm8450_driver = {
+>> +	.probe = video_cc_sm8450_probe,
+>> +	.driver = {
+>> +		.name = "video_cc-sm8450",
+>> +		.of_match_table = video_cc_sm8450_match_table,
+>> +	},
+>> +};
+>> +
+>> +static int __init video_cc_sm8450_init(void)
+>> +{
+>> +	return platform_driver_register(&video_cc_sm8450_driver);
+>> +}
+>> +subsys_initcall(video_cc_sm8450_init);
+> module_platform_driver?
+> 
+> Venus won't probe earlier
+> 
+
+Clock drivers should be earlier than any consumer drivers.
+
+> Konrad
+>> +
+>> +static void __exit video_cc_sm8450_exit(void)
+>> +{
+>> +	platform_driver_unregister(&video_cc_sm8450_driver);
+>> +}
+>> +module_exit(video_cc_sm8450_exit);
+>> +
+>> +MODULE_DESCRIPTION("QTI VIDEO_CC SM8450 Driver");
+>> +MODULE_LICENSE("GPL");
 
 -- 
 Thanks & Regards,
