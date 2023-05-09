@@ -2,87 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18DBA6FC75F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 15:02:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3C386FC770
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 15:06:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235316AbjEINCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 09:02:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36858 "EHLO
+        id S235322AbjEINGK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 09:06:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235322AbjEINC1 (ORCPT
+        with ESMTP id S235263AbjEINGJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 09:02:27 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E51A59DC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 06:02:23 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-50bc4ba28cbso10654343a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 06:02:23 -0700 (PDT)
+        Tue, 9 May 2023 09:06:09 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 195915592
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 06:06:05 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-b9a6f17f2b6so30307232276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 06:06:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683637342; x=1686229342;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZpIAP3t6RkkpB/dslfsju5UGZqS1fqIKK8wFrjmFBkM=;
-        b=JX02OLLm84X5xmwMza4onDrd6Av1y+XmO6r6t7pnPyEMDyc+Jfi4aLpNO0ef1lhc/Y
-         B9ZJtoP77oI7P7sp+S8/ByxAQALfuO/Dt4EdGID8tZGL/40EUuAGlVbrSAvhfK5QLGQZ
-         90xe/qZZXqfcWVLBATxW3hzQ1p0YQu2e/OFPqKVTap7hdxdJ2GnvF00Att0PnmbA4Une
-         kvNOFdeaHfc/snrF+QDVkvDO4BSVPliZZCaMl33ji2kiZftDFEYkfrvE5MKE4+5T31Ua
-         2yIDfY8D4pNIHGK1d4eVRdzRjzBfdCQ6nVykKLcPer5LQwlQ+fLy4a7z9U7VSJft1TC9
-         DhpA==
+        d=linaro.org; s=google; t=1683637564; x=1686229564;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JCemM+c2qiZ17odPdtzVZ73pLR7n+qmtftHOxm5MbiI=;
+        b=V1JbNGdVpXLpZ2KZMseRk9jn2eT8KTHq+DxTgaeU5yR2zZrXPdsBBAdkYZXV3aMhFK
+         uE8aWXkrVAVrzJN0C+wkyA3lmkuLGN0jF845PaYeGIhNOteK+c5Cw0dZu1AwgRuxSVhz
+         39PuJEsBeya4u6lxYOZFW+fLkZpQGVwjEyJ2lWYQg5Hs46Goo3vAaqFcvpm/LKX/LMHm
+         y8tUdpEpn58DJbIUIOUCiF7EKl67HGp6IXZx/asZO83O+MyE8DHwoRrWkMNY6tTBtdo7
+         S5Lq0vyh58Lwwol4uUzGc0WV4Z2olKNmfbeYkZ9bNI4MtMwhLSj9eMqCgqwqdmoHemA0
+         qIww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683637342; x=1686229342;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZpIAP3t6RkkpB/dslfsju5UGZqS1fqIKK8wFrjmFBkM=;
-        b=lDEkHG26IArwE+Hr2iMbcpKWdhBhvi3RgQNiClY3TZnK5MOtXLu5zspkrX7ESE3JGl
-         48a/CLHkRqhKXtrnvXrefXwqPunFc0q7TCHfPocw2oThUvPSqxtE21dSW/LrCDyFR+5l
-         elTi7dgiuB8gD53c3Fi6ng9qghwrogMQaxfUfUnOw2ijT+8KhLglqDgdIw4b6CGG1fwV
-         TQ0fGQIwV+Wcldfu+7/2kv2kmyBDjBbuJJ8fTbtlbBcpYPIGZNf0DDrKBxdh/GLv48Us
-         27btzyb9VjEveFHKkGDfSByTpfozWTNEZ8d3Ot2J/4rLeDtMVRYEFxBQ3GOsXYEROn1y
-         p0VA==
-X-Gm-Message-State: AC+VfDxKX3DOiZaTSqHDt77AIJmZk2K907Y3oS8TKegMkGHNDlky9V7P
-        A5uymwCnbeKQO+ZZgte++0n5Rg==
-X-Google-Smtp-Source: ACHHUZ70kubx3YLwOp6oEMBYLKUV3iI/XGmMuK2+SaTWFJkqJqP+xeDGaeUe/FM0QwqZbUO6Mp365A==
-X-Received: by 2002:a17:907:9718:b0:966:c09:1c57 with SMTP id jg24-20020a170907971800b009660c091c57mr11019088ejc.65.1683637341701;
-        Tue, 09 May 2023 06:02:21 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:d0d5:7818:2f46:5e76? ([2a02:810d:15c0:828:d0d5:7818:2f46:5e76])
-        by smtp.gmail.com with ESMTPSA id ot3-20020a170906ccc300b0096654eda57csm1308744ejb.75.2023.05.09.06.01.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 06:02:08 -0700 (PDT)
-Message-ID: <c1833e5b-9397-8a87-07c5-1b8bd84bd457@linaro.org>
-Date:   Tue, 9 May 2023 15:01:42 +0200
+        d=1e100.net; s=20221208; t=1683637564; x=1686229564;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JCemM+c2qiZ17odPdtzVZ73pLR7n+qmtftHOxm5MbiI=;
+        b=AT27Oe6t7GILIG/BfGGRjC73q2WR9V0Yw9dzrFPpNACllqpJxTogDxVbY6DIb39XxW
+         d5LAQXvBpxQ9Oz9UFIibN9pSpbvlkVqcHN60sQEtV5OQKb61gIM205Ogf4NisD1DRXT5
+         qmCXmPwrmsKe8dkiiB4FIKPPyD4N5+wwS2MvEbdFgW5yongTxgLgXm+mMjPPcDcyp1ah
+         bKQ1sVpY0NwTnbKdhYP3X01iXXeBw3+Kj1ADrfLNS3+HhJi6xLeuFvIVNoesScMOE69K
+         IO2bk7gzijYWtdDCOPB4j5ORYIztdEp0zCe4x2jKDVeuz63wlWL/BGb/aCY3S9ZlCXc0
+         1VgA==
+X-Gm-Message-State: AC+VfDyYqrUgJq82paOSHcr6fM/OXRA9uc3+UBydPExOCFaa2mf6izh/
+        ZlMsw42mPxO+K2y8O/HdnPf9f3GJL+/t9Sm9t8XBCg==
+X-Google-Smtp-Source: ACHHUZ5Qcc1QJJWsUTSHqWg6N6DB+laxRjd4Y/2fmdyogSaXc1bK6Wa8AkJmG+Z17l3YdO/vGtR5sBB/+6vVHEq0G/s=
+X-Received: by 2002:a81:4895:0:b0:54e:ac2b:8a8c with SMTP id
+ v143-20020a814895000000b0054eac2b8a8cmr15151059ywa.24.1683637564226; Tue, 09
+ May 2023 06:06:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
- multipd model
-Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        jassisinghbrar@gmail.com, mathieu.poirier@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_gurus@quicinc.com,
-        loic.poulain@linaro.org, quic_eberman@quicinc.com,
-        robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
- <38a5a268-7d8a-6e61-4272-8e9155df0034@linaro.org>
- <790496d7-98dc-c92e-dedc-1c89395a1ad8@quicinc.com>
- <e63a3e34-1f73-3661-8655-e34e1e955804@linaro.org>
- <b8b30b77-31df-15c3-3914-1198f90299e6@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <b8b30b77-31df-15c3-3914-1198f90299e6@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
+ <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
+ <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com> <10fa20f9-33d9-a8a8-3fca-f5ff320a6574@quicinc.com>
+In-Reply-To: <10fa20f9-33d9-a8a8-3fca-f5ff320a6574@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 9 May 2023 16:05:53 +0300
+Message-ID: <CAA8EJprJfmtFs1dx0uJw0bi1ig2JsCYzH_4BncPop4aO16D2aA@mail.gmail.com>
+Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
+ within IMEM
+To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,28 +77,90 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/05/2023 12:34, Manikanta Mylavarapu wrote:
->>> Sure, will add.
->>>>> +    description:
->>>>> +      Qualcomm G-Link subnode which represents communication edge, channels
->>>>> +      and devices related to the Modem.
->>>>> +
->>>>> +patternProperties:
->>>>> +  "^remoteproc_pd1|remoteproc_pd2|remoteproc_pd3":
->>>>
->>>> No, underscores are not allowed. Also, what is pd?
->>>>
->>> Sure, will remove underscores.
->>
->> Shouldn't this be just pd-1?
->>
->>
-> I think 'pd-1' not enough. Because child's i.e userpd's also considered
-> as remote processor's, so name should be like "remoteproc-pd1".
+On Tue, 9 May 2023 at 15:21, Souradeep Chowdhury
+<quic_schowdhu@quicinc.com> wrote:
+>
+>
+>
+> On 5/9/2023 5:05 PM, Dmitry Baryshkov wrote:
+> > On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
+> > <quic_schowdhu@quicinc.com> wrote:
+> >>
+> >> All Qualcomm bootloaders log useful timestamp information related
+> >> to bootloader stats in the IMEM region. Add the child node within
+> >> IMEM for the boot stat region containing register address and
+> >> compatible string.
+> >
+> > I might have a minor vote here. Is there any reason why you have to
+> > instantiate the device from DT?
+> > It looks like a software interface. Ideally software should not be
+> > described in DT (e.g. this can be instantiated from imem
+> > driver-to-be).
+> > Or we can follow the RPM master-stats approach, where the device is a
+> > top-level device, having handle pointers to the sram regions.
+>
+> This is a dedicated region of IMEM reserved for storing stats related
+> information. So it is represented as a child of IMEM, please
+> refer to Documentation/devicetree/bindings/sram/sram.yaml which
+> follows a similar philosophy. Also since this is a child of IMEM with
+> a specific purpose, does it not warrant a dedicated driver?
 
-"pd-1" is not enough for what? Why the node name has to be more specific?
+I do not question a dedicated driver. I was asking about the DT node.
+Even the mentioned bindings file describes the SRAM regions inside the
+SRAM, rather than a proper device to be instantiated in the SRAM node.
+I'd point to the boot_stats discussions (present on the list in the
+last several months).
+
+>
+> >
+> >>
+> >> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> >> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >> ---
+> >>   .../devicetree/bindings/sram/qcom,imem.yaml   | 22 +++++++++++++++++++
+> >>   1 file changed, 22 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> >> index 0548e8e0d30b..bb884c5c8952 100644
+> >> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> >> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+> >> @@ -50,6 +50,28 @@ patternProperties:
+> >>       $ref: /schemas/remoteproc/qcom,pil-info.yaml#
+> >>       description: Peripheral image loader relocation region
+> >>
+> >> +  "^stats@[0-9a-f]+$":
+> >> +    type: object
+> >> +    description:
+> >> +      Imem region dedicated for storing timestamps related
+> >> +      information regarding bootstats.
+> >> +
+> >> +    additionalProperties: false
+> >> +
+> >> +    properties:
+> >> +      compatible:
+> >> +        items:
+> >> +          - enum:
+> >> +              - qcom,sm8450-bootstats
+> >> +          - const: qcom,imem-bootstats
+> >> +
+> >> +      reg:
+> >> +        maxItems: 1
+> >> +
+> >> +    required:
+> >> +      - compatible
+> >> +      - reg
+> >> +
+> >>   required:
+> >>     - compatible
+> >>     - reg
+> >> --
+> >> 2.17.1
+> >>
+> >
+> >
 
 
-Best regards,
-Krzysztof
 
+-- 
+With best wishes
+Dmitry
