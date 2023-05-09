@@ -2,249 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C3E26FCA77
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 17:46:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CAB86FCAA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:02:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235802AbjEIPqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 11:46:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55702 "EHLO
+        id S235657AbjEIQCF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 12:02:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231488AbjEIPqF (ORCPT
+        with ESMTP id S233731AbjEIQCE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 11:46:05 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F46110CF;
-        Tue,  9 May 2023 08:46:04 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6435bbedb4fso6530350b3a.3;
-        Tue, 09 May 2023 08:46:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683647164; x=1686239164;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=71PM0c8jNHbE9hDVzelzE+44lPJ6yhnjh+al/DYMEGM=;
-        b=SEA4YE+jIMxurE4v8za3MHr2O6gaolZclraB7UcAIamSS+Dj8yKy0jXrX7aKbd7XqM
-         ODwEULvon/ZHeJlDO0e2X7NsBu3EQ9VjifJNDxJysAg5ImkgjjCBTeJ6aV/SAr+2PnrP
-         r73qgNNowQKOJlzR61Cj6po0v3hMx2fl8dDNacu/Ul+YccRQ6EzlQKoue3Ew4PvJ64e9
-         CvqZRSE4RgeGuuxOY+r+YWXqXDEAKd58vhrbbpGyklzNWQkYD10DyrnkdVVSnasi0q9O
-         3yA4Docte3BTc1xIHgWT7+39MYRFhDvH4p+r7yzJJlKu8w6kZxSHJqhNaPKRBoLRIFjE
-         2fYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683647164; x=1686239164;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=71PM0c8jNHbE9hDVzelzE+44lPJ6yhnjh+al/DYMEGM=;
-        b=FZcL8YF2172WCJ8SW2A+oz5iqIR7xklbEojaXM1KRdq5+8AXOyXjQyeEsaufIvR9lQ
-         txnJejphe+YD3iywews/JcyNfV7thdisO3N3PvdYAO6MiJ438qeBT1/7RGj0ruL6vZ4I
-         5OvgBTIQ/B5EyGYtjdqY/VUhTiyjcd9fwehECWKffsP9F/OuKFLBry0Jtu9TpX1J7pcm
-         af/MzEMxAYHL1a5fJzcL5yCL1puMfWJvDVescbzwShvCYnr/xITk9vfose4YoCXdB0rO
-         6NBU9GIrMbOTOj665my2ZK+4J7CylfwhfgQtinjTKrvlr5vcS/4mlDsJTGSNrwDHF69z
-         s8MA==
-X-Gm-Message-State: AC+VfDwdM6AQhMDYRhzUCktQafOGcm4ydRhun5QQhppVuW9yQ8bVbmMO
-        tWmxV06c/x777tVc2VstzNM=
-X-Google-Smtp-Source: ACHHUZ40OSB3ygellDJMvNryY1OSEE6VRfNqx3TuFWOwXIXAE8QVpIUy0A0EEw+J+Wkbd/hFvnAwEA==
-X-Received: by 2002:a05:6a20:429b:b0:101:4c8c:d1fa with SMTP id o27-20020a056a20429b00b001014c8cd1famr3595014pzj.5.1683647163538;
-        Tue, 09 May 2023 08:46:03 -0700 (PDT)
-Received: from [192.168.50.148] (net-2-32-39-33.cust.vodafonedsl.it. [2.32.39.33])
-        by smtp.gmail.com with ESMTPSA id b30-20020a631b1e000000b0050bd4bb900csm1489844pgb.71.2023.05.09.08.45.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 08:46:02 -0700 (PDT)
-Message-ID: <e59064e1-a826-1b90-fed4-29b0cabb1a87@gmail.com>
-Date:   Tue, 9 May 2023 17:45:54 +0200
+        Tue, 9 May 2023 12:02:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CAED30E4;
+        Tue,  9 May 2023 09:02:01 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349AAeUm002294;
+        Tue, 9 May 2023 16:01:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=7xCSwBXPVE1farGH0bUbo5XmSXZk0/Veybj/1gSN4x8=;
+ b=gWn40oceauVAYnRQS7Lbg1KAMHX7uegvU57xfTI8d5yI+/O4S17G5LxQSjBzsMB2gzzu
+ OiPv7Q7zwd/vQCT2nE/CuJe5f3MbhyMjjfuzKYlR62YbLP2fCPXUn6xaB4Y+iFGCSe4n
+ X3w4K6xrGm27wkf16bNZl4QCIqhnoBmn6pl/krnBc1Or35UcDZJ2QPfeNaVXO/1QRyi8
+ eYFc9NAEwIZsdOWgvbsusgOrb1Uz5Nrghg41hlFulw/jEKMTcXOoJE/wWN4xlA5hDnsq
+ 96mh2PTB9MlBXvYBrwFIKaoUOWguyd+kddUdHnfDLNEFcux7GK+k0TyCCVttBMnh7Tgl yw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77f2976-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 09 May 2023 16:01:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 349G1oA9000954
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 9 May 2023 16:01:50 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 9 May 2023 09:01:47 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/2] Add initial support for RDP442 of IPQ5332 family
+Date:   Tue, 9 May 2023 21:31:31 +0530
+Message-ID: <20230509160133.3794-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 12/18] soc: qcom: Register pstore frontend region with
- minidump
-Content-Language: en-US
-To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
-        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
-        catalin.marinas@arm.com, will@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
-        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
-        srinivas.kandagatla@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
-References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
- <1683133352-10046-13-git-send-email-quic_mojha@quicinc.com>
-From:   Luca Stefani <luca.stefani.ge1@gmail.com>
-In-Reply-To: <1683133352-10046-13-git-send-email-quic_mojha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Ls3o7xa4eKIENStlHIeRQkt1cNUfzgMH
+X-Proofpoint-GUID: Ls3o7xa4eKIENStlHIeRQkt1cNUfzgMH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-09_09,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 phishscore=0
+ mlxlogscore=865 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305090132
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-FYI the following comments also apply to the downstream driver, as the 
-same bogus logic is implemented.
+Add the initial device tree support for the Reference Design
+Platform(RDP) 442 based on IPQ5332 family of SoC. This patch carries
+the support for Console UART, SPI NOR, eMMC and I2C.
 
-On 03/05/23 19:02, Mukesh Ojha wrote:
+Kathiravan T (2):
+  dt-bindings: arm: qcom: document MI01.3 board based on IPQ5332 family
+  arm64: dts: qcom: ipq5332: add support for the RDP442 variant
 
-> Since qcom_pstore_minidump driver creates platform device
-> for qualcomm devices, so it knows the physical addresses
-> of the frontend region now. Let's register the regions
-> with qcom_minidump driver.
->
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->   drivers/soc/qcom/qcom_pstore_minidump.c | 80 ++++++++++++++++++++++++++++++++-
->   1 file changed, 79 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/soc/qcom/qcom_pstore_minidump.c b/drivers/soc/qcom/qcom_pstore_minidump.c
-> index 8d58500..c2bba4e 100644
-> --- a/drivers/soc/qcom/qcom_pstore_minidump.c
-> +++ b/drivers/soc/qcom/qcom_pstore_minidump.c
-> @@ -11,6 +11,8 @@
->   #include <linux/pstore_ram.h>
->   #include <soc/qcom/qcom_minidump.h>
->   
-> +#define QCOM_PSTORE_TYPE_MAX	4
-Unused
-> +
->   struct qcom_ramoops_config {
->   	unsigned long	record_size;
->   	unsigned long	console_size;
-> @@ -24,6 +26,11 @@ struct qcom_ramoops_config {
->   struct qcom_ramoops_dd {
->   	struct ramoops_platform_data qcom_ramoops_pdata;
->   	struct platform_device *ramoops_pdev;
-> +	struct device *dev;
-> +	struct qcom_apss_minidump_region *record_region;
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts   | 117 ++++++++++++++++++
+ 3 files changed, 120 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
 
-In the pstore driver record_size is used to split the KDMESG region into 
-different chunks.
-
-There's no "record" region anywhere in RAM that should be preserved, it 
-should instead be the dmesg_region.
-
-> +	struct qcom_apss_minidump_region *console_region;
-> +	struct qcom_apss_minidump_region *pmsg_region;
-> +	struct qcom_apss_minidump_region *ftrace_region;
->   };
->   
->   static struct qcom_ramoops_config default_ramoops_config = {
-> @@ -35,6 +42,64 @@ static struct qcom_ramoops_config default_ramoops_config = {
->   };
->   
->   static struct qcom_ramoops_dd *qcom_rdd;
-> +
-> +static int
-> +__qcom_ramoops_minidump_region_register(struct qcom_apss_minidump_region *md_region,
-> +					const char *name, phys_addr_t phys_addr,
-> +					unsigned long size)
-> +{
-> +	int ret;
-> +
-> +	if (!size)
-> +		return 0;
-> +
-> +	md_region = devm_kzalloc(qcom_rdd->dev, sizeof(*md_region), GFP_KERNEL);
-> +	if (!md_region)
-> +		return -ENOMEM;
-> +
-> +	strlcpy(md_region->name, name, sizeof(md_region->name));
-> +	md_region->phys_addr = phys_addr;
-> +	md_region->virt_addr = phys_to_virt(phys_addr);
-> +	md_region->size = size;
-> +	ret = qcom_apss_minidump_region_register(md_region);
-> +	if (ret)
-> +		dev_err(qcom_rdd->dev,
-> +			"failed to add %s in minidump: err: %d\n", name, ret);
-> +
-> +	return ret;
-> +}
-> +
-> +static int
-> +qcom_ramoops_minidump_region_register(struct ramoops_platform_data *qcom_ramoops_data)
-> +{
-> +	phys_addr_t phys_addr;
-> +	int ret = 0;
-> +
-> +	phys_addr = qcom_ramoops_data->mem_address;
-> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->record_region,
-> +			"KDMESG", phys_addr, qcom_ramoops_data->record_size);
-
-You can't use record_size here as it's not the actual size of the dmesg 
-region.
-
-The size is calculated in fs/pstore/ram.c as mem_size - console_size - 
-ftrace_size - pmsg_size, where mem_size is the size on the ramoops 
-memory region in the devicetree.
-
-Since the actual size is never exposed by the pstore driver you have to 
-re-purpose the same logic in this driver, hoping it never changes.
-
-> +	if (ret)
-> +		return ret;
-> +
-> +	phys_addr += qcom_ramoops_data->record_size;
-> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->console_region,
-> +			"KCONSOLE", phys_addr, qcom_ramoops_data->console_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	phys_addr += qcom_ramoops_data->console_size;
-> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->pmsg_region,
-> +			"KPMSG", phys_addr, qcom_ramoops_data->pmsg_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	phys_addr += qcom_ramoops_data->pmsg_size;
-> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->ftrace_region,
-> +			"KFTRACE", phys_addr, qcom_ramoops_data->ftrace_size);
-> +
-> +	return ret;
-> +}
-> +
->   static int qcom_ramoops_probe(struct platform_device *pdev)
->   {
->   	struct device_node *of_node = pdev->dev.of_node;
-> @@ -59,6 +124,7 @@ static int qcom_ramoops_probe(struct platform_device *pdev)
->   	if (!qcom_rdd)
->   		return -ENOMEM;
->   
-> +	qcom_rdd->dev = &pdev->dev;
->   	cfg = of_device_get_match_data(&pdev->dev);
->   	if (!cfg) {
->   		dev_err(&pdev->dev, "failed to get supported matched data\n");
-> @@ -81,13 +147,25 @@ static int qcom_ramoops_probe(struct platform_device *pdev)
->   		ret = PTR_ERR(qcom_rdd->ramoops_pdev);
->   		dev_err(&pdev->dev, "could not create platform device: %ld\n", ret);
->   		qcom_rdd->ramoops_pdev = NULL;
-> +		return ret;
->   	}
->   
-> -	return ret;
-> +	return qcom_ramoops_minidump_region_register(pdata);
->   }
->   
->   static int qcom_ramoops_remove(struct platform_device *pdev)
->   {
-> +	struct ramoops_platform_data *pdata;
-> +
-> +	pdata = &qcom_rdd->qcom_ramoops_pdata;
-> +	if (pdata->record_size)
-> +		qcom_apss_minidump_region_unregister(qcom_rdd->record_region);
-> +	if (pdata->console_size)
-> +		qcom_apss_minidump_region_unregister(qcom_rdd->console_region);
-> +	if (pdata->pmsg_size)
-> +		qcom_apss_minidump_region_unregister(qcom_rdd->pmsg_region);
-> +	if (pdata->ftrace_size)
-> +		qcom_apss_minidump_region_unregister(qcom_rdd->ftrace_region);
->   	platform_device_unregister(qcom_rdd->ramoops_pdev);
->   	qcom_rdd->ramoops_pdev = NULL;
->   
-
-Regards,
-
-Luca Stefani
+-- 
+2.17.1
 
