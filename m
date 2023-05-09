@@ -2,195 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6CFB6FCF7D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 22:30:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DCC26FCF8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 22:33:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234931AbjEIUar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 16:30:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58124 "EHLO
+        id S231468AbjEIUdq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 16:33:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjEIUaq (ORCPT
+        with ESMTP id S229543AbjEIUdp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 16:30:46 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A3BF40F6;
-        Tue,  9 May 2023 13:30:45 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-517bdd9957dso4293919a12.1;
-        Tue, 09 May 2023 13:30:45 -0700 (PDT)
+        Tue, 9 May 2023 16:33:45 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2420210FE
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 13:33:40 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-ba5ebdc4156so1500000276.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 13:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683664245; x=1686256245;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q12a5WAfbjE9tI2h9PcKYehgmQ2VIuui/JVi4STZnFM=;
-        b=TiyGvRVlKc2lRSa5ZO/dIelreRCeOR7friP4DKkQISR6S3JHHW9R233VhYOQ7PyyYx
-         rhKy7PGBmN1k9FQXVgvp8ZVUmNXWdVHYKafzSnlPVWhly6lFuonItSi+x2evVxnmbBUE
-         pp9dcAxcsc60Drkxcb7ud/HrucKighPBo+pWUi00mWF/ots3r8HMwUVpz/0zzuZTOE85
-         TJw3z6eGGJDGqjVjbZqLtVrHHB/amzBAxsWeStDq1brOFl5wU5/f/P0Y8SrLutQulFQX
-         MpEODxRlrF0805XGiF0On7JOOki6lFWMgmE9KvaSSnlUdMr1tFKNTQLUSStH6bIf1+ak
-         svog==
+        d=linaro.org; s=google; t=1683664419; x=1686256419;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KP7rmZOvJCmCpfoX+ax0Qp6p7fblxM/RetTiw2ZGEU0=;
+        b=zhDJ8rgk00ZwGuAI3zgrRweoHBmO5cUTD9RRmc5hk+BThEdXbM8yUsUw75Qbr6YQ5T
+         aZiGsapTpjFDhckEGQB/gUB1c7Uc9pzdThgULUKowYzcvvSY5fdUOngR8OGtOUpoeJuq
+         pji77qHC/lWdgdiL3gykZtbP3iL+ZPqvcPLoLPxVwMxGxQneSJLdOMIEeiti9TVZi9JI
+         42wZpWXfXWiCOmJCBO+AH0dIKIQkp10n+M0UUSOEgnq4R+JtwvPVHi1vy+X1/oMX1Qsg
+         pot3LPTWZNONTqkfeD+HUzrYc5cpWJmvsV5qjNtqrOgj06DcGCugfBv+tDAe5OHC5JkU
+         GYiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683664245; x=1686256245;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1683664419; x=1686256419;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Q12a5WAfbjE9tI2h9PcKYehgmQ2VIuui/JVi4STZnFM=;
-        b=WubSgSAEtkmDYJho08ksZe37Ek53NyUf+VZcNVCFEAq3lMSkwGCcX3Os4TjBDNzGIs
-         Jjkg3rqby3DsYXgx0UitwCLyCJgtC7WLz8kLKQZQc8CX2hrw3j28JHiHQ+IK/Eenwxrf
-         QmittjcWCktW6hnfI/jD3n3xjavvgB6qcgTjZdamGrvBMItnSYgUNU5LKSPGaDYZpyhF
-         Dwb+fX5V29XDdo59FQDLpc1qzfdND7AGW6k+y9mjpwwrdXCzRP20A6svCopKoVI2/Omg
-         sx58ZFE0kuPDY+Tsa50HNb5pfwTV9iY/jTTXEvAKTExaJYsGRW4sx3asz3kYRiMaFTmu
-         JiVA==
-X-Gm-Message-State: AC+VfDw7hoq2195Z+laq41z7wRbBvny0y3h0TVWrnCEr+Eyw7zP0+5pG
-        6n8vJ5Vwh0UsS9iblu2ndKRXobUAuqc=
-X-Google-Smtp-Source: ACHHUZ77EKns869ZjZdNydQB7QDHos3f3dAgAlTjEC1RUVhm1f8GZ1v+WcQUl6K/L6lHLkzHUFA3hg==
-X-Received: by 2002:a17:902:d2c6:b0:1ab:16e0:ef49 with SMTP id n6-20020a170902d2c600b001ab16e0ef49mr18761259plc.24.1683664244752;
-        Tue, 09 May 2023 13:30:44 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id f12-20020a170902684c00b001ac69bdc9d1sm2051939pln.156.2023.05.09.13.30.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 13:30:44 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>, pinkperfect2021@gmail.com,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4] drm/msm: Fix submit error-path leaks
-Date:   Tue,  9 May 2023 13:30:41 -0700
-Message-Id: <20230509203041.440619-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.40.1
+        bh=KP7rmZOvJCmCpfoX+ax0Qp6p7fblxM/RetTiw2ZGEU0=;
+        b=fy5KwRWR2W9GXz9Snyn46h33a30ezsoomFeq4sLXqne22Ay3AtgAPMjHPe4ySbzkxc
+         GNnOXq6g5MlvjHrnZZ/Emn9/DfICr4oFFb/Di/E31g0uqQKFDSB2bDWPM/8TPZU1lnSL
+         CMV0I4QXnJfKo6VLd2M88jppu6rcHRTmAalhCHzdvD6UUvTgDZW3FA+49IN0XV0O6KzD
+         UsGP22E34chaGRzcplUkoO4pjDqhMel236qnSwVvfTlmQXBpIIz+DGAi4vVYqBaBTr1L
+         xls65pQXoKcUNPQpHKW5IejbVzlkowzZncoTqxeuVr/GtqbB0bFyj85e//qhwBrjsL89
+         XUMQ==
+X-Gm-Message-State: AC+VfDzsoXlAzYN/GUqHSUPtVNhsMU/7aPe3VNW96zUjmc3C14xX7URp
+        bYhRC8rkSYHAGk1SuN9MXXUI2t8Kh34F585tUbFg2Q==
+X-Google-Smtp-Source: ACHHUZ4neReDgJmqJHC1dgqR5Bnztdbv3WI1a7UYpjdRfBZKXYGprf/4rCj4iie42pvz4dlWsX9YhEYXq7AGH3LbMFM=
+X-Received: by 2002:a25:6943:0:b0:b9d:853e:5cef with SMTP id
+ e64-20020a256943000000b00b9d853e5cefmr19297675ybc.37.1683664419340; Tue, 09
+ May 2023 13:33:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230509172148.7627-1-quic_tdas@quicinc.com> <20230509172148.7627-3-quic_tdas@quicinc.com>
+In-Reply-To: <20230509172148.7627-3-quic_tdas@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 9 May 2023 23:33:28 +0300
+Message-ID: <CAA8EJprHgOaiH2CFKmz_E+NvJpA+DRNE-r1wQXbSfYi+5qoBmA@mail.gmail.com>
+Subject: Re: [PATCH V4 2/3] clk: qcom: videocc-sm8450: Add video clock
+ controller driver for SM8450
+To:     Taniya Das <quic_tdas@quicinc.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_skakitap@quicinc.com, quic_jkona@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue, 9 May 2023 at 20:22, Taniya Das <quic_tdas@quicinc.com> wrote:
+>
+> Add support for the video clock controller driver for peripheral clock
+> clients to be able to request for video cc clocks.
+>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+> Changes since V3:
+>  - Use lower case hex.
+>  - Check the return value here and bail out early on failure in probe.
+>
+> Changes since V2:
+>  - Update the header file name to match the latest upstream header
+>    files.
+>
+> Changes since V1:
+>  - Use DT indices instead of fw_name.
+>  - Replace pm_runtime_enable with devm_pm_runtime_enable.
+>  - Change license to GPL from GPL V2.
+>
+>  drivers/clk/qcom/Kconfig          |   9 +
+>  drivers/clk/qcom/Makefile         |   1 +
+>  drivers/clk/qcom/videocc-sm8450.c | 461 ++++++++++++++++++++++++++++++
+>  3 files changed, 471 insertions(+)
+>  create mode 100644 drivers/clk/qcom/videocc-sm8450.c
 
-For errors after msm_submitqueue_get(), we need to drop the submitqueue
-reference.  Additionally after get_unused_fd() we need to drop the fd.
-The ordering for dropping the queue lock and put_unused_fd() is not
-important, so just move this all into out_post_unlock.
+[skipped]
 
-v2: Only drop queue ref if submit doesn't take it
-v3: Fix unitialized submit ref in error path
-v4: IS_ERR_OR_NULL()
 
-Reported-by: pinkperfect2021@gmail.com
-Fixes: f0de40a131d9 drm/msm: ("Reorder lock vs submit alloc")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+> +static const struct qcom_reset_map video_cc_sm8450_resets[] = {
+> +       [CVP_VIDEO_CC_INTERFACE_BCR] = { 0x80e0 },
+> +       [CVP_VIDEO_CC_MVS0_BCR] = { 0x8098 },
+> +       [CVP_VIDEO_CC_MVS0C_BCR] = { 0x8048 },
+> +       [CVP_VIDEO_CC_MVS1_BCR] = { 0x80bc },
+> +       [CVP_VIDEO_CC_MVS1C_BCR] = { 0x8070 },
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 6c6aefaa72be..8a3c9246ebf7 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -720,21 +720,21 @@ static void msm_process_post_deps(struct msm_submit_post_dep *post_deps,
- 		}
- 	}
- }
- 
- int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 		struct drm_file *file)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct drm_msm_gem_submit *args = data;
- 	struct msm_file_private *ctx = file->driver_priv;
--	struct msm_gem_submit *submit;
-+	struct msm_gem_submit *submit = NULL;
- 	struct msm_gpu *gpu = priv->gpu;
- 	struct msm_gpu_submitqueue *queue;
- 	struct msm_ringbuffer *ring;
- 	struct msm_submit_post_dep *post_deps = NULL;
- 	struct drm_syncobj **syncobjs_to_reset = NULL;
- 	int out_fence_fd = -1;
- 	bool has_ww_ticket = false;
- 	unsigned i;
- 	int ret;
- 
-@@ -767,27 +767,29 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	queue = msm_submitqueue_get(ctx, args->queueid);
- 	if (!queue)
- 		return -ENOENT;
- 
- 	ring = gpu->rb[queue->ring_nr];
- 
- 	if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
- 		out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
- 		if (out_fence_fd < 0) {
- 			ret = out_fence_fd;
--			return ret;
-+			goto out_post_unlock;
- 		}
- 	}
- 
- 	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
--	if (IS_ERR(submit))
--		return PTR_ERR(submit);
-+	if (IS_ERR(submit)) {
-+		ret = PTR_ERR(submit);
-+		goto out_post_unlock;
-+	}
- 
- 	trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
- 		args->nr_bos, args->nr_cmds);
- 
- 	ret = mutex_lock_interruptible(&queue->lock);
- 	if (ret)
- 		goto out_post_unlock;
- 
- 	if (args->flags & MSM_SUBMIT_SUDO)
- 		submit->in_rb = true;
-@@ -962,25 +964,34 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	msm_reset_syncobjs(syncobjs_to_reset, args->nr_in_syncobjs);
- 	msm_process_post_deps(post_deps, args->nr_out_syncobjs,
- 	                      submit->user_fence);
- 
- 
- out:
- 	submit_cleanup(submit, !!ret);
- 	if (has_ww_ticket)
- 		ww_acquire_fini(&submit->ticket);
- out_unlock:
--	if (ret && (out_fence_fd >= 0))
--		put_unused_fd(out_fence_fd);
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
--	msm_gem_submit_put(submit);
-+	if (ret && (out_fence_fd >= 0))
-+		put_unused_fd(out_fence_fd);
-+
-+	if (!IS_ERR_OR_NULL(submit)) {
-+		msm_gem_submit_put(submit);
-+	} else {
-+		/*
-+		 * If the submit hasn't yet taken ownership of the queue
-+		 * then we need to drop the reference ourself:
-+		 */
-+		msm_submitqueue_put(queue);
-+	}
- 	if (!IS_ERR_OR_NULL(post_deps)) {
- 		for (i = 0; i < args->nr_out_syncobjs; ++i) {
- 			kfree(post_deps[i].chain);
- 			drm_syncobj_put(post_deps[i].syncobj);
- 		}
- 		kfree(post_deps);
- 	}
- 
- 	if (!IS_ERR_OR_NULL(syncobjs_to_reset)) {
- 		for (i = 0; i < args->nr_in_syncobjs; ++i) {
+Can we have a common VIDEO_CC prefix here please?
+
+> +       [VIDEO_CC_MVS0C_CLK_ARES] = { 0x8064, 2 },
+> +       [VIDEO_CC_MVS1C_CLK_ARES] = { 0x808c, 2 },
+> +};
+> +
+> +static const struct regmap_config video_cc_sm8450_regmap_config = {
+> +       .reg_bits = 32,
+> +       .reg_stride = 4,
+> +       .val_bits = 32,
+> +       .max_register = 0x9f4c,
+> +       .fast_io = true,
+> +};
+> +
+> +static struct qcom_cc_desc video_cc_sm8450_desc = {
+> +       .config = &video_cc_sm8450_regmap_config,
+> +       .clks = video_cc_sm8450_clocks,
+> +       .num_clks = ARRAY_SIZE(video_cc_sm8450_clocks),
+> +       .resets = video_cc_sm8450_resets,
+> +       .num_resets = ARRAY_SIZE(video_cc_sm8450_resets),
+> +       .gdscs = video_cc_sm8450_gdscs,
+> +       .num_gdscs = ARRAY_SIZE(video_cc_sm8450_gdscs),
+> +};
+> +
+> +static const struct of_device_id video_cc_sm8450_match_table[] = {
+> +       { .compatible = "qcom,sm8450-videocc" },
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, video_cc_sm8450_match_table);
+> +
+> +static int video_cc_sm8450_probe(struct platform_device *pdev)
+> +{
+> +       struct regmap *regmap;
+> +       int ret;
+> +
+> +       ret = devm_pm_runtime_enable(&pdev->dev);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = pm_runtime_resume_and_get(&pdev->dev);
+> +       if (ret)
+> +               return ret;
+> +
+> +       regmap = qcom_cc_map(pdev, &video_cc_sm8450_desc);
+> +       if (IS_ERR(regmap)) {
+> +               pm_runtime_put(&pdev->dev);
+> +               return PTR_ERR(regmap);
+> +       }
+> +
+> +       clk_lucid_evo_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
+> +       clk_lucid_evo_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
+> +
+> +       /*
+> +        * Keep clocks always enabled:
+> +        *      video_cc_ahb_clk
+> +        *      video_cc_sleep_clk
+> +        *      video_cc_xo_clk
+> +        */
+> +       regmap_update_bits(regmap, 0x80e4, BIT(0), BIT(0));
+> +       regmap_update_bits(regmap, 0x8130, BIT(0), BIT(0));
+> +       regmap_update_bits(regmap, 0x8114, BIT(0), BIT(0));
+> +
+> +       ret = qcom_cc_really_probe(pdev, &video_cc_sm8450_desc, regmap);
+> +
+> +       pm_runtime_put(&pdev->dev);
+> +
+> +       return ret;
+> +}
+> +
+> +static struct platform_driver video_cc_sm8450_driver = {
+> +       .probe = video_cc_sm8450_probe,
+> +       .driver = {
+> +               .name = "video_cc-sm8450",
+> +               .of_match_table = video_cc_sm8450_match_table,
+> +       },
+> +};
+> +
+> +static int __init video_cc_sm8450_init(void)
+> +{
+> +       return platform_driver_register(&video_cc_sm8450_driver);
+> +}
+> +subsys_initcall(video_cc_sm8450_init);
+> +
+> +static void __exit video_cc_sm8450_exit(void)
+> +{
+> +       platform_driver_unregister(&video_cc_sm8450_driver);
+> +}
+> +module_exit(video_cc_sm8450_exit);
+
+module_platform_driver() ?
+
+> +
+> +MODULE_DESCRIPTION("QTI VIDEO_CC SM8450 Driver");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.17.1
+>
+
+
 -- 
-2.40.1
-
+With best wishes
+Dmitry
