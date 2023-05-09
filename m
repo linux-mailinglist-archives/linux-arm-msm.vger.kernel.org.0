@@ -2,81 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65A276FC026
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 09:08:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D73E16FC033
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 09:11:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235219AbjEIHIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 03:08:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38686 "EHLO
+        id S235022AbjEIHLi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 03:11:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234694AbjEIHIU (ORCPT
+        with ESMTP id S234757AbjEIHLh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 03:08:20 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A910F659F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 00:08:18 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-50bc37e1525so10643025a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 00:08:18 -0700 (PDT)
+        Tue, 9 May 2023 03:11:37 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42EDC659F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 00:11:36 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-50bc570b4a3so10291566a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 00:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683616097; x=1686208097;
+        d=linaro.org; s=google; t=1683616295; x=1686208295;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ijqKQLeIRjvBb3i4iB7l0bYhwmssEZf0GIGJ6UemaFA=;
-        b=NAPiPEacVNMeV/8T7Qyn/B67Q3fDRfn+csLq9mfxJU+3v/exzCRl2ZV0FUDgEArjvC
-         P9hFE8Vp+LTTGw6f/wwv/GeeHYvqO4GzBD4l2W07YBZ9PmzFyBwyXHzhSD3GUrKXFfO2
-         zGwxQHwOgvcB6uBMR2jKiDMPRSDpmm3AK5f8CflcVFNQc8XeCXcT7yLb9/ulSg1+OdMo
-         B/DxccJiNrvy6rq7XvZu20gyrwmxFQ3vIXxSxMHVZ079ahKrB5D1+i0N+txwzNKVLyGH
-         KUjwLbdCfRILMBV0duoIQ0MV+FBjvMpG1XVa2MZu7hfsw6rvPFHyfkzCbrQ1UWDm2ugV
-         xanw==
+        bh=APH4uf0HQ8cOpTtx4oEH1mlDXvsjwJke9jk7vwtuN80=;
+        b=e7j6qkllm/T/2M2c1EkqE/Qd/638PextIBR0EfhntkXwIPUhY6InG0cTEP19Pl6rJX
+         tzpjvB4ljG1Wpv06IP8v0iJEsTwM4pF4IdAbZvRdo2cjs5Wv4t8ffGIy4i89YSSwoyZY
+         QIWbShgowuM5OzwGJdJ1FxIYWJO8yENJsZnyGyyMcDCnf5X/AfB0a4iDpCyXAzK5kv83
+         YhQ2A8UNHBgzd9cPjbCi7+0ZFJkOowMKZg7uOa2zCrr9/kDcXodhAZYIk727px/1eZA4
+         D+/Wf5n6mnlx2gWnDoJQyYp8xv+TH0psqoE9I70jPYNednkYtru0ZwjFHM60MdO5DDQg
+         WJ8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683616097; x=1686208097;
+        d=1e100.net; s=20221208; t=1683616295; x=1686208295;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ijqKQLeIRjvBb3i4iB7l0bYhwmssEZf0GIGJ6UemaFA=;
-        b=cTtHrw13qNBzB9opmEnGqzU1GwiHW9A66h7Ue3uLLuTuUEY2Pjighe15xXVRnWnNoS
-         B1AFa1RHHFNHQJRSiXHoy5cosAgCl8T6CM/sPwvmLNZ4TwSOSvb6H5UtxiQM8PhYY65D
-         kut5VeW+iJa6y+b8a7PucpD2Umf9ziQUFY4w6Ua4jW+rFoNLlDsrOMYXRQr9Yan1jDTK
-         yfFnI4LtraTJu4Z2aWFWFmgply4+E+JFqKVAuzfAvOMcE0gxgECZj93CTzAjHxcwsQ1t
-         vWbcJdIP4kaRCgPqCF2yB+GaP/6YXTvulozI8h/kLKojWNKSH28jeF1G5OkDCF5v3iOg
-         GepA==
-X-Gm-Message-State: AC+VfDxwMftt/ssSteSVqzzcPg2YNTx8i3IrLvaQf0b3oApoOXDlIhcv
-        ECFeb74ivi6ac1fUl+3jHQn5wA==
-X-Google-Smtp-Source: ACHHUZ6oKQbYJQadciEcI19zNNY1h9h3yTo1GwrdDAWBngJN5RZQsYi/bp6k+xH6GRfHLRlP5gCkCA==
-X-Received: by 2002:aa7:d382:0:b0:50b:c3b1:9790 with SMTP id x2-20020aa7d382000000b0050bc3b19790mr10628592edq.16.1683616097109;
-        Tue, 09 May 2023 00:08:17 -0700 (PDT)
+        bh=APH4uf0HQ8cOpTtx4oEH1mlDXvsjwJke9jk7vwtuN80=;
+        b=bwo/BlsuYzyTl43YjjtiRF4zqruzVJYOYKee+i5crBTB4h9lDpnVpeAas27qgqhint
+         8gD3vs6M1fVXm3fX9T4YaOD8bHmH1T4uZL+0MjgMXstLMZRzh7tXL3CbkCDOnSM1B6DF
+         gN1Ztohbdmb9gDpoYDSqXLB9g7lUKvgLMdDy/sMSO8k7eB0NKOxYfc129Hgv03p1MEa0
+         rOaWOZpNsIa9e+WJx3ALhFMDjNFqZZmwoHU2QtMhWdKYYN6s61VpF1uJwvXetv9LIPfm
+         8RBZU7K9hrP3oQeVUipRCPNkZSwBGOg2nm/LSFZ97/pZVLzY4CTzZL10V0AtH830TVad
+         B0Vg==
+X-Gm-Message-State: AC+VfDyh4eyUqJX8z8wHyEiftz51IHC11sbHHnJ+VhsyJ68njA2Hm8AB
+        rJM6UTrnpuSXUio3o2cIny96EA==
+X-Google-Smtp-Source: ACHHUZ4NTgyfxBlvxeFNFcg9A0+pojhfwrdDKrGACJsSCpzT73/PLN82DOw9k/K7FMCu1mximsVIng==
+X-Received: by 2002:a05:6402:8c3:b0:506:7d3e:ade5 with SMTP id d3-20020a05640208c300b005067d3eade5mr9710332edz.33.1683616294764;
+        Tue, 09 May 2023 00:11:34 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:d0d5:7818:2f46:5e76? ([2a02:810d:15c0:828:d0d5:7818:2f46:5e76])
-        by smtp.gmail.com with ESMTPSA id z24-20020aa7d418000000b0050bfa1905f6sm424071edq.30.2023.05.09.00.08.15
+        by smtp.gmail.com with ESMTPSA id n7-20020aa7d047000000b004fbdfbb5acesm415192edo.89.2023.05.09.00.11.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 00:08:16 -0700 (PDT)
-Message-ID: <e63a3e34-1f73-3661-8655-e34e1e955804@linaro.org>
-Date:   Tue, 9 May 2023 09:08:15 +0200
+        Tue, 09 May 2023 00:11:34 -0700 (PDT)
+Message-ID: <7777c016-4875-a6c9-cd5e-78c2ac686448@linaro.org>
+Date:   Tue, 9 May 2023 09:11:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
- multipd model
+Subject: Re: [PATCH v3 04/18] soc: qcom: Add Qualcomm minidump kernel driver
 Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        jassisinghbrar@gmail.com, mathieu.poirier@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, quic_gurus@quicinc.com,
-        loic.poulain@linaro.org, quic_eberman@quicinc.com,
-        robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
- <38a5a268-7d8a-6e61-4272-8e9155df0034@linaro.org>
- <790496d7-98dc-c92e-dedc-1c89395a1ad8@quicinc.com>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-5-git-send-email-quic_mojha@quicinc.com>
+ <c6f730b6-f702-91d4-4abd-71546e02f869@linaro.org>
+ <23b493f4-1a01-8d03-fc12-d588b2c6fd74@quicinc.com>
+ <575a422d-6224-06b7-628c-8487b47882e9@linaro.org>
+ <500e5abc-fb71-8468-a6b0-3ced2676b57c@linaro.org>
+ <e714566e-39b7-d46b-13bd-3c0e20e9f944@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <790496d7-98dc-c92e-dedc-1c89395a1ad8@quicinc.com>
+In-Reply-To: <e714566e-39b7-d46b-13bd-3c0e20e9f944@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,100 +88,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/05/2023 15:45, Manikanta Mylavarapu wrote:
+On 08/05/2023 09:10, Mukesh Ojha wrote:
 > 
 > 
-> On 3/7/2023 8:47 PM, Krzysztof Kozlowski wrote:
->> On 07/03/2023 05:41, Manikanta Mylavarapu wrote:
->>> Add new binding document for multipd model remoteproc.
->>> IPQ5018, IPQ9574 follows multipd model.
+> On 5/4/2023 10:04 PM, Krzysztof Kozlowski wrote:
+>> On 04/05/2023 17:21, Krzysztof Kozlowski wrote:
+>>>>>
+>>>>>> +	ret = qcom_minidump_init_apss_subsystem(md);
+>>>>>> +	if (ret) {
+>>>>>> +		dev_err(&pdev->dev, "apss minidump initialization failed: %d\n", ret);
+>>>>>> +		goto unlock;
+>>>>>> +	}
+>>>>>> +
+>>>>>> +	__md = md;
+>>>>>
+>>>>> No. This is a platform device, so it can have multiple instances.
+>>>>
+>>>> It can have only one instance that is created from SMEM driver probe.
 >>>
->>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->>> ---
->>>   .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
->>>   1 file changed, 282 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->>> new file mode 100644
->>> index 000000000000..b788607f5abd
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->>> @@ -0,0 +1,282 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/remoteproc/qcom,multipd-pil.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm Multipd Secure Peripheral Image Loader
->>> +
->>> +maintainers:
->>> +  - Bjorn Andersson <andersson@kernel.org>
->>> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
->>> +
->>> +description:
->>> +  Multipd Peripheral Image Loader loads firmware and boots Q6 pd, WCSS pd
->>> +  remoteproc's on the Qualcomm IPQ5018, IPQ9574 SoC.
+>>> Anyone can instantiate more of them.... how did you solve it?
 >>
->> What is a "pd"?
+>> To clarify - sprinkling more of singletons makes everything tightly
+>> coupled, difficult to debug and non-portable. You cannot have two
+>> instances, you have to control concurrent initialization by yourself in
+>> each of such singletons.
 >>
-> Pd means protection domain.
-> It's similar to process in Linux. Here QDSP6 processor runs each wifi 
-> radio functionality on a separate process. One process can't access 
-> other process resources, so this is termed as PD i.e protection domain.
-> Here we have two pd's called root and user pd. We can correlate Root pd
-> as root and user pd as user in linux. Root pd has more privileges than
-> user pd.
->  From remoteproc driver perspective, root pd corresponds to QDSP6 
-> processor bring up and user pd corresponds to Wifi radio (WCSS) bring up.
+>> I understand sometimes they are unavoidable, for example when this does
+>> not map to hardware property. However here you have the parent - smem -
+>> which can return you valid instance. Thus you avoid entire problem of
+>> file-scope variables.
+> 
+> I get your point, why one's should avoid file scope variables.
+> 
+> 
+> This is infrastructure driver and will not have multiple instances and 
+> even if it happens could be avoided with with the help of global mutex 
+> and protect below function which i am already doing at the moment and 
 
-Parts of it should be in description. And definitely "pd" should be
-explained.
+But we do not want global mutexes... so incorrect design is being
+improved by more incorrect design.
 
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - qcom,ipq5018-q6-mpd
->>> +      - qcom,ipq9574-q6-mpd
->>> +
->>> +  '#address-cells': true
->>> +
->>> +  '#size-cells': true
+> fail the other probe if it is already initialized with proper logging..e.g
+> 
+> "already initialized..."
+> 
+> 
+> ret = qcom_minidump_init_apss_subsystem(md);
+> 
+> 
+> And this will be in-lined with
+> 
+> /* Pointer to the one and only smem handle */
+> static struct qcom_smem *__smem;
+> 
+> Let me know if you still disagree...and have some other way ?
 
-...
-
->>
-> Sure, will add.
->>> +    description:
->>> +      Qualcomm G-Link subnode which represents communication edge, channels
->>> +      and devices related to the Modem.
->>> +
->>> +patternProperties:
->>> +  "^remoteproc_pd1|remoteproc_pd2|remoteproc_pd3":
->>
->> No, underscores are not allowed. Also, what is pd?
->>
-> Sure, will remove underscores.
-
-Shouldn't this be just pd-1?
-
-
->>> +    type: object
->>> +    description:
->>> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
->>> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
->>> +      device node.
->>> +
->>> +    properties:
->>> +      compatible:
->>> +        enum:
->>> +          - "qcom,ipq5018-wcss-ahb-mpd"
->>> +          - "qcom,ipq9574-wcss-ahb-mpd"
->>> +          - "qcom,ipq5018-wcss-pcie-mpd"
-
-
+Why the parent - smem - cannot return every consumer the instance it
+has? There will be one smem having only one minidump, so all problems
+solved?
 
 Best regards,
 Krzysztof
