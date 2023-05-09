@@ -2,51 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAF026FC31D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 11:51:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC49C6FC35C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 12:01:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235027AbjEIJue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 05:50:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60692 "EHLO
+        id S234580AbjEIKBv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 06:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234809AbjEIJuP (ORCPT
+        with ESMTP id S232299AbjEIKBu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 05:50:15 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9E95BE7;
-        Tue,  9 May 2023 02:50:14 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CA1EA106F;
-        Tue,  9 May 2023 02:50:58 -0700 (PDT)
-Received: from e127643.arm.com (unknown [10.57.83.64])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 3C32C3F67D;
-        Tue,  9 May 2023 02:50:10 -0700 (PDT)
-From:   James Clark <james.clark@arm.com>
-To:     linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org
-Cc:     linux@roeck-us.net, michal.simek@amd.com,
-        Jonathan.Cameron@huawei.com, James Clark <james.clark@arm.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jean Delvare <jdelvare@suse.com>,
-        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: [PATCH v4 4/4] serial: qcom_geni: Comment use of devm_krealloc rather than devm_krealloc_array
-Date:   Tue,  9 May 2023 10:49:41 +0100
-Message-Id: <20230509094942.396150-5-james.clark@arm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230509094942.396150-1-james.clark@arm.com>
-References: <20230509094942.396150-1-james.clark@arm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Tue, 9 May 2023 06:01:50 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4D7E2123;
+        Tue,  9 May 2023 03:01:49 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3497fSvT021933;
+        Tue, 9 May 2023 10:01:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=ttHqVUtYxGm2GfLDGfwf/4RVm6rJoKZE1mkkB2ydqig=;
+ b=EzekHIz7qw2FbDBDmabdU1gF5gn6+uU6qeDCe7jPBcy1MpvGrrYb96sYHiU5uwZ02TwB
+ rH2kq1dKWoot0qn3oyw7SIwVFXUEtMvRWAR19mD6sKv98DF1ZBby3YDBztnsr5KiRXoc
+ BgJ4DQD/7cDUgyp4jDpvrBPOj1mndZEyr4WvRjebT4nBDYd/PUlLnZW96S0Vh2WacqzA
+ UKu9MQA0JZ69OgOHAgLzE2pQg4fFlrSJu14xWW4A1xLe0HJ7/YjC1MqXXvuF+00KSu4L
+ Qby83jOlQSkEhBinLKi5ppxPpCFfsRrlWUixa2UCNtElQwrO+VvZjgO3blKjTherRzHr AA== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf7859b5k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 09 May 2023 10:01:45 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 349A1fCF012853;
+        Tue, 9 May 2023 10:01:41 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3qdy5bg8bm-1;
+        Tue, 09 May 2023 10:01:41 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 349A1eHH012848;
+        Tue, 9 May 2023 10:01:40 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-vnivarth-hyd.qualcomm.com [10.213.111.166])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 349A1eKZ012845;
+        Tue, 09 May 2023 10:01:40 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3994820)
+        id EC4734A00; Tue,  9 May 2023 15:31:39 +0530 (+0530)
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        broonie@kernel.org, quic_vnivarth@quicinc.com,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com, quic_ptalari@quicinc.com
+Subject: [PATCH] spi: spi-geni-qcom: Select FIFO mode for chip select
+Date:   Tue,  9 May 2023 15:31:36 +0530
+Message-Id: <1683626496-9685-1-git-send-email-quic_vnivarth@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kC3pOJCSCrGUdeNrfWl7FsaGGE_tnSC9
+X-Proofpoint-GUID: kC3pOJCSCrGUdeNrfWl7FsaGGE_tnSC9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-09_06,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ bulkscore=0 adultscore=0 priorityscore=1501 mlxlogscore=529
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 impostorscore=0 clxscore=1011
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305090078
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -54,32 +79,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that devm_krealloc_array is available, add a comment justifying not
-changing this occurrence to avoid any future auto fixups.
+Spi geni driver switches between FIFO and DMA modes based on xfer length.
+FIFO mode relies on M_CMD_DONE_EN interrupt for completion while DMA mode
+relies on XX_DMA_DONE.
+During dynamic switching, if FIFO mode is chosen, FIFO related interrupts
+are enabled and DMA related interrupts are disabled. And viceversa.
+Chip select shares M_CMD_DONE_EN interrupt with FIFO to check completion.
+Now, if a chip select operation is preceded by a DMA xfer, M_CMD_DONE_EN
+interrupt would have been disabled and hence it will never receive one
+resulting in timeout.
 
-Link: https://lore.kernel.org/all/20230318173402.20a4f60d@jic23-huawei/
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: James Clark <james.clark@arm.com>
+For chip select, in addition to setting the xfer mode to FIFO,
+select_mode() to FIFO so that required interrupts are enabled.
+
+Fixes: e5f0dfa78ac7 ("spi: spi-geni-qcom: Add support for SE DMA mode")
+Suggested-by: Praveen Talari <quic_ptalari@quicinc.com>
+Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-geni-qcom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 08dc3e2a729c..3a6cf762449f 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1053,6 +1053,11 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
- 		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
- 
- 	if (port->rx_buf && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
-+		/*
-+		 * Use krealloc rather than krealloc_array because rx_buf is
-+		 * accessed as 1 byte entries as well as 4 byte entries so it's
-+		 * not necessarily an array.
-+		 */
- 		port->rx_buf = devm_krealloc(uport->dev, port->rx_buf,
- 					     port->rx_fifo_depth * sizeof(u32),
- 					     GFP_KERNEL);
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index 8a7d1c2..e423efc 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -294,6 +294,8 @@ static void spi_geni_set_cs(struct spi_device *slv, bool set_flag)
+ 	mas->cs_flag = set_flag;
+ 	/* set xfer_mode to FIFO to complete cs_done in isr */
+ 	mas->cur_xfer_mode = GENI_SE_FIFO;
++	geni_se_select_mode(se, mas->cur_xfer_mode);
++
+ 	reinit_completion(&mas->cs_done);
+ 	if (set_flag)
+ 		geni_se_setup_m_cmd(se, SPI_CS_ASSERT, 0);
 -- 
-2.34.1
+Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, hosted by the Linux Foundation.
 
