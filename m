@@ -2,70 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DD5D6FC534
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 13:41:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7ADC46FC539
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 13:42:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235575AbjEILkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 07:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55752 "EHLO
+        id S235011AbjEILmK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 07:42:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234704AbjEILk1 (ORCPT
+        with ESMTP id S234764AbjEILmH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 07:40:27 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72E17AAE
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 04:40:04 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55a829411b5so52557677b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 04:40:04 -0700 (PDT)
+        Tue, 9 May 2023 07:42:07 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3054210
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 04:42:04 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2acb6571922so37665031fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 04:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683632404; x=1686224404;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bN0WAPIA5nuw/1zElaEn49wysrmGwuQYJKZRalwsUmw=;
-        b=OnVSNJpVblnnwgiSlmyGmsdKuG3dohMYP320MHE3X4o01oIXybQnQM1iy5Ut3lBakK
-         3sZdLsbhCy3/fxaF9IXvbNmvCCaod8xrxQSf9BLysPEd4r7KrC3YZ3ymJzOUKs0ZeJd5
-         /No/u12ExgDFYUuIYO5EZCmpSO5vboCsfrYqCUKqt3NpsRY4+DFEH+qT7yyC+xxbdhOF
-         LiiDYQuoyqRAjKY4lSobsCTS+gpzpv62+kvCw3f1nO5hv7TobOjOnq1cKV2HKQ+yzQ/q
-         I2GC5Pa1x8CA6p5pl9RLVY7T3VYspAWtYu2RBaN74khJoiDF1wutCQWbz8Yp7AREd2Qh
-         bbvw==
+        d=linaro.org; s=google; t=1683632523; x=1686224523;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9pl1V+sF83nw4jwYsmPa2jKKW5gdsa5ODMEKYo1fFAM=;
+        b=LQxNW0yHGaTmdH+eDy4hgR9cO7qNKTV4OXMOOT21I/r4dPd7cll2R5GHhECVI8Cnqv
+         Kep71GiRBdga58oD2UxP/oTQhmHWlqzemABoLdVysD4DHXSnkQukzmxGb6f3FSqJXfkB
+         rIeWeS6ogVfo168XH9A/q3ZE+DCBZmkNbQ++iKB05KwLVafAui8q0HYStT8G5ui3qMPf
+         08On4KNSKQVQOGz26EXQvhiaQlq2/HaNNa3YnDSngLOfeHioQyh00o/jW9ohVjosYlsQ
+         S0YoJCa7iizameoJR3FQtlUqPngVONeCxFjjEu2COFdE9rNuCEpoJyEBXXxu6dxmn1iY
+         9s5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683632404; x=1686224404;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bN0WAPIA5nuw/1zElaEn49wysrmGwuQYJKZRalwsUmw=;
-        b=bdJBNuz/pY0MXOiTz6M10cMdYtXmJvz14u7aJ83sdTTZqdyq3srvRXj5Qwh3CLyNYl
-         spFkgrewWskLl9dxWdOWOKX8q0qbPXSoXZhtWUJR8bsri9E2hP/quN089HNY/TE7LEGc
-         ORkmDPSRAqhB2CCOmJFexcOIL3byExjTldjb1LILSFFaIk11s1V3mP0Lo6zj5ShsQC0L
-         68mWnB5hTYeryHTTf0n7gtc1M05r+1RqjHVZB45qxZzEHW34A8I7GPhyiPPyhZ8Hc+Yq
-         E8pwtCcj6SkejWdaao35wRcEzA1BXr1yZIxHZUY2BO3gp15j+pVcXoRV33ra9AkGuKeL
-         y3qw==
-X-Gm-Message-State: AC+VfDyaSOZInV//yIW1EMsdntei+NZF0doGCxZvR/NENcOtob/WOoY3
-        CkbM9Vciywufk4Qo+tiAITcMbYX+Y1TQ73NC68tpOg==
-X-Google-Smtp-Source: ACHHUZ4IK+Xjjbd0RHBKuyhtmQCkhzk0vW6RReCxJjstJev4rrbrHQHu9S/XcMyRbej258JMZDcoQCQLQVx4GF5b0aQ=
-X-Received: by 2002:a25:40d2:0:b0:b9d:b22e:6080 with SMTP id
- n201-20020a2540d2000000b00b9db22e6080mr14726641yba.7.1683632403741; Tue, 09
- May 2023 04:40:03 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683632523; x=1686224523;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9pl1V+sF83nw4jwYsmPa2jKKW5gdsa5ODMEKYo1fFAM=;
+        b=XlQvBUrQzgNGnidJSmXa3+l9CibeqlbUm/6a+BFIboXqdKTVHy2voRLY2j7/jNMEW5
+         FD2KSsoIfwq4XY8jfgIsY5CL6+RIFAkPWr+T0SLyddLBeL1HAMLEDhK16+EBhlmZJxXw
+         4y+iu3ead9KkCbJJnyqUjggCk+hA47wef/dsJSDk/QXkVeIckD2C0yWLHKTWM3g2602E
+         pYMOZoz9k7e5xdI/MzULlrZCZvq94MG9VNABceUPpxJBnGHNHjrkqwD3CrTkrGpdHLGH
+         owPMsIOEv9AR5952ZC3EsUbCGz/Qz7H9blOM03WBp4/loDaE0LJpD4woxtgPy0JBfWJE
+         i3Ig==
+X-Gm-Message-State: AC+VfDxJQcRe2RJoMuKhojXVGQqvj9naLtL3jFokOw5WANoh1+UEjJCp
+        tDIQzaz4lCnBhD+NrXxsKggFNQ==
+X-Google-Smtp-Source: ACHHUZ677yF0j6L9wDMCT+AqFIVJ8oMMpSOLMCU82Rxd1DFuJyXAtxGrYscgN90CzYZ8VSgI+lqctg==
+X-Received: by 2002:ac2:5fa6:0:b0:4f2:520e:f865 with SMTP id s6-20020ac25fa6000000b004f2520ef865mr637666lfe.16.1683632522700;
+        Tue, 09 May 2023 04:42:02 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id k2-20020ac24562000000b004eb0c51780bsm322168lfm.29.2023.05.09.04.42.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 May 2023 04:42:02 -0700 (PDT)
+Message-ID: <5f069b2c-d1b1-e489-7494-67ef395437bc@linaro.org>
+Date:   Tue, 9 May 2023 14:42:01 +0300
 MIME-Version: 1.0
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com> <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
-In-Reply-To: <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 2/4] drm/msm/dsi: Fix compressed word count calculation
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        neil.armstrong@linaro.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
+ <20230405-add-dsc-support-v1-2-6bc6f03ae735@quicinc.com>
+ <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
+ <32d473a6-f7a5-9aa6-85cf-0f77f1c071ce@quicinc.com>
+ <4cf2e9ab-7e08-fb26-d924-8ea8141d9f58@linaro.org>
+ <44c47800-0913-b122-77ae-5ce0e5d4b443@linaro.org>
+ <cd8cfbd5-1bde-08d8-dbb5-5489820d6a45@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 9 May 2023 14:39:53 +0300
-Message-ID: <CAA8EJppkqN6cuYUCC-THb8wb=deRv-01pbS0JgSGf-VXnm8qEg@mail.gmail.com>
-Subject: Re: [PATCH V6 2/3] soc: qcom: boot_stat: Add Driver Support for Boot Stats
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <cd8cfbd5-1bde-08d8-dbb5-5489820d6a45@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,229 +88,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
-<quic_schowdhu@quicinc.com> wrote:
->
-> All of Qualcomm's proprietary Android boot-loaders capture boot time
-> stats, like the time when the bootloader started execution and at what
-> point the bootloader handed over control to the kernel etc. in the IMEM
-> region. This information is captured in a specific format by this driver
-> by mapping a structure to the IMEM memory region and then accessing the
-> members of the structure to show the information within debugfs file.
-> This information is useful in verifying if the existing boot KPIs have
-> regressed or not. The information is shown in milliseconds, a sample
-> log from sm8450(waipio) device is as follows:-
->
-> /sys/kernel/debug/qcom_boot_stats # cat abl_time
-> 17898 ms
-> /sys/kernel/debug/qcom_boot_stats # cat pre_abl_time
-> 2879 ms
->
-> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
-> stage and the timestamp generated by the sleep counter is logged by
-> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
-> starts execution which is logged here as "pre_abl_time" and the second
-> when it is about to load the kernel logged as "abl_time". Documentation
-> details are also added in Documentation/ABI/testing/debugfs-driver-bootstat
->
-> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> ---
->  .../ABI/testing/debugfs-driver-bootstat       |  17 +++
->  drivers/soc/qcom/Kconfig                      |  10 ++
->  drivers/soc/qcom/Makefile                     |   1 +
->  drivers/soc/qcom/boot_stats.c                 | 100 ++++++++++++++++++
->  4 files changed, 128 insertions(+)
->  create mode 100644 Documentation/ABI/testing/debugfs-driver-bootstat
->  create mode 100644 drivers/soc/qcom/boot_stats.c
->
-> diff --git a/Documentation/ABI/testing/debugfs-driver-bootstat b/Documentation/ABI/testing/debugfs-driver-bootstat
-> new file mode 100644
-> index 000000000000..7127d15d9f15
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/debugfs-driver-bootstat
-> @@ -0,0 +1,17 @@
-> +What:          /sys/kernel/debug/qcom_boot_stats/pre_abl_time
+On 09/05/2023 11:54, Konrad Dybcio wrote:
+> 
+> 
+> On 9.05.2023 10:23, Neil Armstrong wrote:
+>> On 09/05/2023 01:27, Dmitry Baryshkov wrote:
+>>> On 08/05/2023 23:09, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 5/3/2023 1:26 AM, Dmitry Baryshkov wrote:
+>>>>> On 03/05/2023 04:19, Jessica Zhang wrote:
+>>>>>> Currently, word count is calculated using slice_count. This is incorrect
+>>>>>> as downstream uses slice per packet, which is different from
+>>>>>> slice_count.
+>>>>>>
+>>>>>> Slice count represents the number of soft slices per interface, and its
+>>>>>> value will not always match that of slice per packet. For example, it is
+>>>>>> possible to have cases where there are multiple soft slices per interface
+>>>>>> but the panel specifies only one slice per packet.
+>>>>>>
+>>>>>> Thus, use the default value of one slice per packet and remove slice_count
+>>>>>> from the word count calculation.
+>>>>>>
+>>>>>> Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to compute word count")
+>>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>>>> ---
+>>>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++++++++-
+>>>>>>    1 file changed, 8 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>>>>>> index 35c69dbe5f6f..b0d448ffb078 100644
+>>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>>>>>> @@ -996,7 +996,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>>>>>>            if (!msm_host->dsc)
+>>>>>>                wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+>>>>>>            else
+>>>>>> -            wc = msm_host->dsc->slice_chunk_size * msm_host->dsc->slice_count + 1;
+>>>>>> +            /*
+>>>>>> +             * When DSC is enabled, WC = slice_chunk_size * slice_per_packet + 1.
+>>>>>> +             * Currently, the driver only supports default value of slice_per_packet = 1
+>>>>>> +             *
+>>>>>> +             * TODO: Expand drm_panel struct to hold slice_per_packet info
+>>>>>> +             *       and adjust DSC math to account for slice_per_packet.
+>>>>>
+>>>>> slice_per_packet is not a part of the standard DSC, so I'm not sure how that can be implemented. And definitely we should not care about the drm_panel here. It should be either a part of drm_dsc_config, or mipi_dsi_device.
+>>>>>
+>>>>
+>>>> This is not correct.
+>>>>
+>>>> It is part of the DSI standard (not DSC standard). Please refer to Figure 40 "One Line Containing One Packet with Data from One or More Compressed Slices" and Figure 41 "One Line Containing More than One Compressed Pixel Stream Packet".
+>>>
+>>> I have reviewed section 8.8.24 and Annex D of the DSI standard.
+>>>
+>>> It is not clear to me, if we can get away with always using slice_per_packet = 1. What is the DSI sink's difference between Fig. 40.(b) and Fig 41?
+>>>
+>>> Are there are known panels that require slice_per_packet != 1? If so, we will have to implement support for such configurations.
+>>>
+>>>> This has details about this. So I still stand by my point that this should be in the drm_panel.
+>>>
+>>> Note, the driver doesn't use drm_panel directly. So slices_per_packet should go to mipi_dsi_device instead (which in turn can be filled from e.g. drm_panel or from any other source).
+>>
+>> This is a big question, where should we set those parameters ?
+>>
+>> It's an even bigger questions for panels optionally supporting DSC in Video or Command mode (like the vtdr6130),
+>> how to select DSC or not ? DT is not an option.
+> Compressed vs uncompressed modes, maybe? Would be nice to make this
+> togglable from userspace.. But then it may not scale for panels with e.g.
+> 10 resolutions, all cmd/vid/dsc/nodsc
 
-Could you please change these bindings to be generic?
+Currently the panel/panel-bridge make decision on command vs video mode. 
+We have no way to influence that decision. If you want to make that 
+negotiable, I'd start with adding 
+'cmd_supported/video_supported/dsc_supported' flags to struct 
+mipi_dsi_hosts.
 
-s/qcom_boot_stats/boot_stats/
-s/pre_abl_time/pre_bootloader_msec/
-s/abl_time/bootloader_msec/
-
-This way other platforms might also use the same file structure.
-
-> +Date:           May 2023
-> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> +Description:
-> +               This file is used to read the KPI value pre abl time.
-> +               It shows the time in milliseconds from the starting
-> +               point of PBL to the point when the control shifted
-> +               to ABL(Qualcomm proprietary bootloader).
-> +
-> +What:           /sys/kernel/debug/qcom_boot_stats/abl_time
-> +Date:           May 2023
-> +Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> +Description:
-> +               This file is used to read the KPI value abl time.
-> +               It show the duration in milliseconds from the
-> +               time control switched to ABL to the point when
-> +               the linux kernel started getting loaded.
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index a491718f8064..04141236dcdd 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -16,6 +16,16 @@ config QCOM_AOSS_QMP
->           subsystems as well as controlling the debug clocks exposed by the Always On
->           Subsystem (AOSS) using Qualcomm Messaging Protocol (QMP).
->
-> +config QCOM_BOOTSTAT
-> +       tristate "Qualcomm Technologies, Boot Stat driver"
-> +       depends on ARCH_QCOM || COMPILE_TEST
-> +       depends on DEBUG_FS
-> +       help
-> +         This option enables driver support for boot stats. Boot stat driver logs
-> +         the kernel bootloader information by accessing the imem region. These
-> +         information are exposed in the form of debugfs files. This is used to
-> +         determine if there is any regression in boot timings.
-> +
->  config QCOM_COMMAND_DB
->         tristate "Qualcomm Command DB"
->         depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index 0f43a88b4894..ae7bda96a539 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -1,6 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0
->  CFLAGS_rpmh-rsc.o := -I$(src)
->  obj-$(CONFIG_QCOM_AOSS_QMP) += qcom_aoss.o
-> +obj-$(CONFIG_QCOM_BOOTSTAT) += boot_stats.o
->  obj-$(CONFIG_QCOM_GENI_SE) +=  qcom-geni-se.o
->  obj-$(CONFIG_QCOM_COMMAND_DB) += cmd-db.o
->  obj-$(CONFIG_QCOM_CPR)         += cpr.o
-> diff --git a/drivers/soc/qcom/boot_stats.c b/drivers/soc/qcom/boot_stats.c
-> new file mode 100644
-> index 000000000000..ca67b6b5d8eb
-> --- /dev/null
-> +++ b/drivers/soc/qcom/boot_stats.c
-> @@ -0,0 +1,100 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2013-2019, 2021 The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/debugfs.h>
-> +#include <linux/err.h>
-> +#include <linux/io.h>
-> +#include <linux/init.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_address.h>
-> +#include <linux/platform_device.h>
-> +
-> +#define TO_MS(timestamp) ((timestamp * 1000) / 32768)
-
-Quoting v4 question, which got no answer:
-
-Some of the platforms DTs define 32KHz clock instead of 32.768 KHz
-What should be the divisor in this case?
-
-> +
-> +/**
-> + *  struct boot_stats - timestamp information related to boot stats
-> + *  @abl_start: Time for the starting point of the abl
-> + *  @abl_end: Time when the kernel starts loading from abl
-> + */
-> +struct boot_stats {
-> +       u32 abl_start;
-> +       u32 abl_end;
-> +} __packed;
-> +
-> +struct bs_data {
-> +       struct boot_stats __iomem *b_stats;
-> +       struct dentry *dbg_dir;
-> +};
-> +
-> +static void populate_boot_stats(char *abl_str, char *pre_abl_str, struct bs_data *drvdata)
-> +{
-> +        u32 abl_time, pre_abl_time;
-> +
-> +        abl_time = TO_MS(drvdata->b_stats->abl_end) - TO_MS(drvdata->b_stats->abl_start);
-> +        sprintf(abl_str, "%u ms", abl_time);
-> +
-> +        pre_abl_time =  TO_MS(drvdata->b_stats->abl_start);
-> +        sprintf(pre_abl_str, "%u ms", pre_abl_time);
-
-Another point from v4:
-
-It would be better to move the unit to the file name and include just
-the number.
-
-> +}
-> +
-> +static int boot_stats_probe(struct platform_device *pdev)
-> +{
-> +       char abl_str[20], pre_abl_str[20], *abl, *pre_abl;
-> +       struct device *bootstat_dev = &pdev->dev;
-> +       struct bs_data *drvdata;
-> +
-> +       drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
-> +       if (!drvdata)
-> +               return dev_err_probe(bootstat_dev, -ENOMEM, "failed to allocate memory");
-> +       platform_set_drvdata(pdev, drvdata);
-> +
-> +       drvdata->b_stats = devm_of_iomap(bootstat_dev, bootstat_dev->of_node, 0, NULL);
-> +       if (IS_ERR(drvdata->b_stats))
-> +               return dev_err_probe(bootstat_dev, PTR_ERR(drvdata->b_stats),
-> +                                    "failed to map imem region");
-> +
-> +       drvdata->dbg_dir = debugfs_create_dir("qcom_boot_stats", NULL);
-> +       if (IS_ERR(drvdata->dbg_dir))
-> +               return dev_err_probe(bootstat_dev, PTR_ERR(drvdata->dbg_dir),
-> +                                    "failed to create debugfs directory");
-> +
-> +       populate_boot_stats(abl_str, pre_abl_str, drvdata);
-> +       abl = abl_str;
-> +       pre_abl = pre_abl_str;
-> +
-> +       debugfs_create_str("pre_abl_time", 0400, drvdata->dbg_dir, (char **)&pre_abl);
-> +       debugfs_create_str("abl_time", 0400, drvdata->dbg_dir, (char **)&abl);
-> +
-> +       return 0;
-> +}
-> +
-> +void boot_stats_remove(struct platform_device *pdev)
-> +{
-> +       struct bs_data *drvdata = platform_get_drvdata(pdev);
-> +
-> +       debugfs_remove_recursive(drvdata->dbg_dir);
-> +}
-> +
-> +static const struct of_device_id boot_stats_dt_match[] = {
-> +       { .compatible = "qcom,imem-bootstats" },
-> +       { }
-> +};
-> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
-> +
-> +static struct platform_driver boot_stat_driver = {
-> +       .probe  = boot_stats_probe,
-> +       .remove_new = boot_stats_remove,
-> +       .driver = {
-> +               .name = "qcom-boot-stats",
-> +               .of_match_table = boot_stats_dt_match,
-> +       },
-> +};
-> +module_platform_driver(boot_stat_driver);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
-> +MODULE_LICENSE("GPL");
-> --
-> 2.17.1
->
-
+> 
+> 
+> Konrad
+>>
+>> Those should tied to a panel+controller tuple.
+>>
+>> Neil
+>>
+>>>
+>>>>
+>>>>>> +             */
+>>>>>> +            wc = msm_host->dsc->slice_chunk_size + 1;
+>>>>>>            dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
+>>>>>>                DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
+>>>>>>
+>>>>>
+>>>
+>>
 
 -- 
 With best wishes
 Dmitry
+
