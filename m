@@ -2,70 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3C386FC770
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 15:06:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6F416FC77B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 15:08:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235322AbjEINGK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 09:06:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39612 "EHLO
+        id S235369AbjEINII (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 09:08:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235263AbjEINGJ (ORCPT
+        with ESMTP id S230088AbjEINIG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 09:06:09 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 195915592
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 06:06:05 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-b9a6f17f2b6so30307232276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 06:06:05 -0700 (PDT)
+        Tue, 9 May 2023 09:08:06 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C0AE3C0B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 06:08:05 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-b99efd7c335so7528658276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 06:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683637564; x=1686229564;
+        d=linaro.org; s=google; t=1683637684; x=1686229684;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JCemM+c2qiZ17odPdtzVZ73pLR7n+qmtftHOxm5MbiI=;
-        b=V1JbNGdVpXLpZ2KZMseRk9jn2eT8KTHq+DxTgaeU5yR2zZrXPdsBBAdkYZXV3aMhFK
-         uE8aWXkrVAVrzJN0C+wkyA3lmkuLGN0jF845PaYeGIhNOteK+c5Cw0dZu1AwgRuxSVhz
-         39PuJEsBeya4u6lxYOZFW+fLkZpQGVwjEyJ2lWYQg5Hs46Goo3vAaqFcvpm/LKX/LMHm
-         y8tUdpEpn58DJbIUIOUCiF7EKl67HGp6IXZx/asZO83O+MyE8DHwoRrWkMNY6tTBtdo7
-         S5Lq0vyh58Lwwol4uUzGc0WV4Z2olKNmfbeYkZ9bNI4MtMwhLSj9eMqCgqwqdmoHemA0
-         qIww==
+        bh=alSD/LYUTqJfX0eULQ7Dos6x9QJDjuDbku/vaMMg2mM=;
+        b=eSRY/H9cGw+xOv99Rkt9fVU+GIk/nTmztiI7WoSbsTTf/eDvBNBdRblaLuHP9Dumis
+         CnqmkXrk83jWJIezxiE3JuCtLIokdpZnOdKkqTsCDSFr/huG19nMF7ZqCW2UIS3F7Ejy
+         Fq9cpUtgkD6BJnLlFt6aCCM0ik1dikFPhdzOnsixORrJsEyUqewgnoyy51Pa1A3UXggW
+         9EVrEJHHBIXbp0A5YLcOQcb7Vnnzgmx9U7uPTAPZbCUVLT51BTvRRll2zJ7n/gEBP3go
+         MxNccG06M8zNnVZfqVyzOr6J7+TJQASrDX6ZsO3lJT4yhvtcqKaENJq7ozY+w1URHyf2
+         RRGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683637564; x=1686229564;
+        d=1e100.net; s=20221208; t=1683637684; x=1686229684;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JCemM+c2qiZ17odPdtzVZ73pLR7n+qmtftHOxm5MbiI=;
-        b=AT27Oe6t7GILIG/BfGGRjC73q2WR9V0Yw9dzrFPpNACllqpJxTogDxVbY6DIb39XxW
-         d5LAQXvBpxQ9Oz9UFIibN9pSpbvlkVqcHN60sQEtV5OQKb61gIM205Ogf4NisD1DRXT5
-         qmCXmPwrmsKe8dkiiB4FIKPPyD4N5+wwS2MvEbdFgW5yongTxgLgXm+mMjPPcDcyp1ah
-         bKQ1sVpY0NwTnbKdhYP3X01iXXeBw3+Kj1ADrfLNS3+HhJi6xLeuFvIVNoesScMOE69K
-         IO2bk7gzijYWtdDCOPB4j5ORYIztdEp0zCe4x2jKDVeuz63wlWL/BGb/aCY3S9ZlCXc0
-         1VgA==
-X-Gm-Message-State: AC+VfDyYqrUgJq82paOSHcr6fM/OXRA9uc3+UBydPExOCFaa2mf6izh/
-        ZlMsw42mPxO+K2y8O/HdnPf9f3GJL+/t9Sm9t8XBCg==
-X-Google-Smtp-Source: ACHHUZ5Qcc1QJJWsUTSHqWg6N6DB+laxRjd4Y/2fmdyogSaXc1bK6Wa8AkJmG+Z17l3YdO/vGtR5sBB/+6vVHEq0G/s=
-X-Received: by 2002:a81:4895:0:b0:54e:ac2b:8a8c with SMTP id
- v143-20020a814895000000b0054eac2b8a8cmr15151059ywa.24.1683637564226; Tue, 09
- May 2023 06:06:04 -0700 (PDT)
+        bh=alSD/LYUTqJfX0eULQ7Dos6x9QJDjuDbku/vaMMg2mM=;
+        b=cmaiLU3uMvH6hRXOiAo09/WpXNZRV+sbMGakP1cu/DMME3scet+vyE6EVkAP9ic2Sk
+         OzSTJJRl8OYi3g6LwFS4lmfLMnB7aEqlCzYrzWmWa8jmc6XyuZM3Z9/V99N4CY55PJ9g
+         onK1RYCHDEI9yRvFPOjpMQnvYnG23Qv6aqhgzfdty+CWecYi+NOmsuljeb9ZtXcB8x+J
+         svlqA25vWFuR8EukYmF82tsTQCM+P1he6h1R6pv3iCWp/fiiPH6lrTg2fo7p7qh4oDGd
+         3y2sN9wz7WQjG+kZGwfLPHl0LyMvFFWKlKWOs8gRTPIANI05pkNkiTvHmBUj50mVQv7n
+         eKgg==
+X-Gm-Message-State: AC+VfDzW4AINVz9v4M6AgemWCGmwaA8Ve335V0t1Nu7WPNOs23zjc/Lw
+        xRZ0j1CdGM9GaZMHcFtwuN3CiyvtyecgHIfHLe1G6w==
+X-Google-Smtp-Source: ACHHUZ7eHh7oUs55p4PsRymZEwkOfiBBPgxu/ifd0C50xzBovPjQu9PPhdwLcNa1wVqEsXJ8GAAB1RYUv4jPFo6R1HI=
+X-Received: by 2002:a25:6943:0:b0:b9d:853e:5cef with SMTP id
+ e64-20020a256943000000b00b9d853e5cefmr17476795ybc.37.1683637684177; Tue, 09
+ May 2023 06:08:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
- <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com> <10fa20f9-33d9-a8a8-3fca-f5ff320a6574@quicinc.com>
-In-Reply-To: <10fa20f9-33d9-a8a8-3fca-f5ff320a6574@quicinc.com>
+References: <cover.1683630932.git.quic_varada@quicinc.com> <1691872a83758cb65053dce7001e96e88dbeed2a.1683630932.git.quic_varada@quicinc.com>
+In-Reply-To: <1691872a83758cb65053dce7001e96e88dbeed2a.1683630932.git.quic_varada@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 9 May 2023 16:05:53 +0300
-Message-ID: <CAA8EJprJfmtFs1dx0uJw0bi1ig2JsCYzH_4BncPop4aO16D2aA@mail.gmail.com>
-Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
-To:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
+Date:   Tue, 9 May 2023 16:07:53 +0300
+Message-ID: <CAA8EJppDtY=Q5oOvXG+pE_+KAk59TPauabUav1f0=eggmLULYA@mail.gmail.com>
+Subject: Re: [PATCH v11 9/9] arm64: dts: qcom: ipq9574: Enable USB
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        vkoul@kernel.org, kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -77,89 +73,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 9 May 2023 at 15:21, Souradeep Chowdhury
-<quic_schowdhu@quicinc.com> wrote:
+On Tue, 9 May 2023 at 14:56, Varadarajan Narayanan
+<quic_varada@quicinc.com> wrote:
 >
+> Turn on USB related nodes
+> Provide vdd info
 >
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Changes in v11:
+>         - Rename dwc_0 -> usb_0_dwc3
+>         - Maintain sorted order for the usb nodes
 >
-> On 5/9/2023 5:05 PM, Dmitry Baryshkov wrote:
-> > On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
-> > <quic_schowdhu@quicinc.com> wrote:
-> >>
-> >> All Qualcomm bootloaders log useful timestamp information related
-> >> to bootloader stats in the IMEM region. Add the child node within
-> >> IMEM for the boot stat region containing register address and
-> >> compatible string.
-> >
-> > I might have a minor vote here. Is there any reason why you have to
-> > instantiate the device from DT?
-> > It looks like a software interface. Ideally software should not be
-> > described in DT (e.g. this can be instantiated from imem
-> > driver-to-be).
-> > Or we can follow the RPM master-stats approach, where the device is a
-> > top-level device, having handle pointers to the sram regions.
+>  Changes in v10:
+>         - Provide vdd info
 >
-> This is a dedicated region of IMEM reserved for storing stats related
-> information. So it is represented as a child of IMEM, please
-> refer to Documentation/devicetree/bindings/sram/sram.yaml which
-> follows a similar philosophy. Also since this is a child of IMEM with
-> a specific purpose, does it not warrant a dedicated driver?
+>  Changes in v5:
+>         - Move "host" mode specification to board dts
+>         - Due to dependency with earlier patches board dts
+>           filename changed ipq9574-al02-c7.dts -> ipq9574-rdp433.dts
+>
+>  Changes in v2:
+>         - Fix node placement and coding style
+>         - "ok" -> "okay"
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 
-I do not question a dedicated driver. I was asking about the DT node.
-Even the mentioned bindings file describes the SRAM regions inside the
-SRAM, rather than a proper device to be instantiated in the SRAM node.
-I'd point to the boot_stats discussions (present on the list in the
-last several months).
-
->
-> >
-> >>
-> >> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> >> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> ---
-> >>   .../devicetree/bindings/sram/qcom,imem.yaml   | 22 +++++++++++++++++++
-> >>   1 file changed, 22 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> >> index 0548e8e0d30b..bb884c5c8952 100644
-> >> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> >> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
-> >> @@ -50,6 +50,28 @@ patternProperties:
-> >>       $ref: /schemas/remoteproc/qcom,pil-info.yaml#
-> >>       description: Peripheral image loader relocation region
-> >>
-> >> +  "^stats@[0-9a-f]+$":
-> >> +    type: object
-> >> +    description:
-> >> +      Imem region dedicated for storing timestamps related
-> >> +      information regarding bootstats.
-> >> +
-> >> +    additionalProperties: false
-> >> +
-> >> +    properties:
-> >> +      compatible:
-> >> +        items:
-> >> +          - enum:
-> >> +              - qcom,sm8450-bootstats
-> >> +          - const: qcom,imem-bootstats
-> >> +
-> >> +      reg:
-> >> +        maxItems: 1
-> >> +
-> >> +    required:
-> >> +      - compatible
-> >> +      - reg
-> >> +
-> >>   required:
-> >>     - compatible
-> >>     - reg
-> >> --
-> >> 2.17.1
-> >>
-> >
-> >
-
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
