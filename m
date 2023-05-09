@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7016E6FD2A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 00:31:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D0756FD2B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 00:32:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235541AbjEIWbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 18:31:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60458 "EHLO
+        id S234964AbjEIWcW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 18:32:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235471AbjEIWbU (ORCPT
+        with ESMTP id S235277AbjEIWcV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 18:31:20 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D73D26BC
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 15:31:18 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f42ba32e24so9495915e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 15:31:18 -0700 (PDT)
+        Tue, 9 May 2023 18:32:21 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 397C72D62
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 15:32:13 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f41dceb9c9so26632105e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 15:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683671476; x=1686263476;
+        d=linaro.org; s=google; t=1683671531; x=1686263531;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=H+e/daKX9drvWfcCFRUKynPMFbFB2xNv5pizYcQC/Ps=;
-        b=GFKH2bIxWke50r1pk7SF3vM1y+2UUkocKOj6AaVv+BIbIfPb50J4niBeH1qWBCHgYn
-         pMhPqIqQDEDD+sPbCSttytseujK0mOooNf2ruJHaG29ec55LjHb0G2J+HEq5FzmvvBp0
-         36d7RVt4jcPGXnfNoReBUhTuSBiVFtHWQ5yoGoRTRce32Mfu9+o1ydhhQHD8tlLMkmK3
-         4CO3f3u0TLd1Eke1T5U/18ADKLGOZowqrg8mCMirvnC+NslO3BpmNQVi7rNa4vAHzXJ2
-         0rrUakHbjlgSUan4I1Om8PTRhYDXNkfSDTSScef8xYGdK9XcxQrVhfmrxBdG9Js19fVk
-         Ozkg==
+        bh=Vf2w+03BSCOP6r1cRizX6iGMWy1Ixd9xnBiskm0VO5I=;
+        b=BaEiCloTlLMgeA+infWj+9LILWoW7KxzKnuCegCmLWsAKExFZaDE/XVQiD2Xtj/eh4
+         xpGEMVIp26w/ldkzeeiRchy2jCLeEqjW0Yj+TYgzA9p8KWAHj0eZrhNmXHRf1hv2+7i0
+         gz3Go+8ewST7Q1qvOu8SZCLk4MIGluqe4BfmeSDEMxJ8MrCVXEqMQjUhUYaQfdYz+jXX
+         eRUgVPfBzw4kbe4YBiFw/ociSz0jthUvzQL8SdwmCRJZQANz9lgX2d6AePHEwS+AaxSe
+         jo+d75WlpfM7M8iz8zU2U9LlmRBsyoaN5qpT5hUFomJqIP1H+40BCatVaz1ll9J6OpqK
+         royg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683671476; x=1686263476;
+        d=1e100.net; s=20221208; t=1683671531; x=1686263531;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H+e/daKX9drvWfcCFRUKynPMFbFB2xNv5pizYcQC/Ps=;
-        b=cajrxJRLCt3apLbddGJqorAbzdpJitgviiSfeyrIWEb9xq0kcg7YW+amD7ayCGq/WW
-         6AGg9GSwPLUxLK42fHhtM54KpF+GrXqvECt5pJsaGSm6fE+7RsnMz2PNtU7zIAu+Lxjl
-         fUY1aUAmTsWcHtiQnElzGBECsvZa/OMmJq9QAVqpdUAug55voJM/AE4ncDFVjjQGL11H
-         rOwtAjU6X2DuT4GmYh/xRYm6gf3qA3YnFBgFISlD0e4DpEDpAqnmJLdZzarnZzJjNEQ7
-         KKccIqmp5sxvBeu89EWESQVBMMXjVGfPOl3aPcpn/sBMYTI52OpCiwqP4If2Z5stcAl8
-         OTaw==
-X-Gm-Message-State: AC+VfDxPC87nJ3HNPSjfhwG16hOC1kTHsk7L4Py7NPNu0D2IlnMzoq+s
-        T7QwlyfAq5/X2Dofs1Willxz8E2QSFx7qSxKeKm9GQ==
-X-Google-Smtp-Source: ACHHUZ6si+b8+Ej7zsK3mGDrXpwwIIjfiDltVqOh0t/imBMJJulNtoJoVip+zo8oVrlJXojtlzg4yg==
-X-Received: by 2002:a05:600c:29a:b0:3f4:2973:b8c8 with SMTP id 26-20020a05600c029a00b003f42973b8c8mr3730808wmk.26.1683671476656;
-        Tue, 09 May 2023 15:31:16 -0700 (PDT)
+        bh=Vf2w+03BSCOP6r1cRizX6iGMWy1Ixd9xnBiskm0VO5I=;
+        b=fQJU0uiWPuOMnYCE6wf76WXo6+aCbbfOT5e8lxC9bJJjskTEiZuvJvKElJXQp8A1VX
+         nD2K/TPdKCBunDnmc8jaKULsIV0lqvld1tU5cM/bDHSdTxAzzUdJnF94zoJxrHR69aKY
+         xMuWAHP2eNk3ilehXMRGHObaF5Soj8R1n6S3pT3GvhmicIkEHGDCB+CjLTq+MmHHfHs0
+         lJsJcT8CntuCU1c574pT8OB+HRVPS01BQbeyO46uIKO+1HLeKjDVXh6YF5MfGtSChr4u
+         4jVXxkAMtNWw9+t5TcOj4BikZCbmKp6MM9/t0q/3STfLHL/ONZbhfJDJn8XRpyFiyzmu
+         hqfQ==
+X-Gm-Message-State: AC+VfDz/+89DNlzmPyk9g4Dv9UicOIVQ5EP0fhiEuNA2mzg5OQ4gkXZN
+        P+Q/UR9hMEl4q5pqhONnvAvDMA==
+X-Google-Smtp-Source: ACHHUZ7YnTCKxhlxi6auAU1rer1yNJnPEtCNoPrm8phQHi1jU6zcsj2xBl8SoQRjqCEi5DI1dXU8CA==
+X-Received: by 2002:a7b:cd08:0:b0:3f4:27ff:7d48 with SMTP id f8-20020a7bcd08000000b003f427ff7d48mr4235219wmj.19.1683671531733;
+        Tue, 09 May 2023 15:32:11 -0700 (PDT)
 Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id z10-20020a05600c220a00b003f17122587bsm21203561wml.36.2023.05.09.15.31.15
+        by smtp.gmail.com with ESMTPSA id m21-20020a7bca55000000b003f4285629casm5490392wml.42.2023.05.09.15.32.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 15:31:16 -0700 (PDT)
-Message-ID: <53f6e9c7-26e2-94be-fa02-0c3cbb65372b@linaro.org>
-Date:   Tue, 9 May 2023 23:31:15 +0100
+        Tue, 09 May 2023 15:32:11 -0700 (PDT)
+Message-ID: <aab042f3-46e3-cf44-fead-6d1afd432558@linaro.org>
+Date:   Tue, 9 May 2023 23:32:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 1/6] soc: qcom: ocmem: Fix NUM_PORTS & NUM_MACROS macros
+Subject: Re: [PATCH 2/6] soc: qcom: ocmem: Use dev_err_probe where appropriate
 Content-Language: en-US
 To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
         phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
@@ -69,9 +69,9 @@ To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
- <20230506-msm8226-ocmem-v1-1-3e24e2724f01@z3ntu.xyz>
+ <20230506-msm8226-ocmem-v1-2-3e24e2724f01@z3ntu.xyz>
 From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20230506-msm8226-ocmem-v1-1-3e24e2724f01@z3ntu.xyz>
+In-Reply-To: <20230506-msm8226-ocmem-v1-2-3e24e2724f01@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,41 +87,65 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 07/05/2023 10:12, Luca Weiss wrote:
-> Since we're using these two macros to read a value from a register, we
-> need to use the FIELD_GET instead of the FIELD_PREP macro, otherwise
-> we're getting wrong values.
+> Use dev_err_probe in the driver probe function where useful, to simplify
+> getting PTR_ERR and to ensure the underlying errors are included in the
+> error message.
 > 
-> So instead of:
-> 
->   [    3.111779] ocmem fdd00000.sram: 2 ports, 1 regions, 512 macros, not interleaved
-> 
-> we now get the correct value of:
-> 
->   [    3.129672] ocmem fdd00000.sram: 2 ports, 1 regions, 2 macros, not interleaved
-> 
-> Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
 > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  drivers/soc/qcom/ocmem.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  drivers/soc/qcom/ocmem.c | 23 ++++++++---------------
+>  1 file changed, 8 insertions(+), 15 deletions(-)
 > 
 > diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-> index 199fe9872035..c3e78411c637 100644
+> index c3e78411c637..a11a955a1327 100644
 > --- a/drivers/soc/qcom/ocmem.c
 > +++ b/drivers/soc/qcom/ocmem.c
-> @@ -76,8 +76,8 @@ struct ocmem {
->  #define OCMEM_REG_GFX_MPU_START			0x00001004
->  #define OCMEM_REG_GFX_MPU_END			0x00001008
+> @@ -317,18 +317,13 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+>  	ocmem->config = device_get_match_data(dev);
 >  
-> -#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_PREP(0x0000000f, (val))
-> -#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_PREP(0x00003f00, (val))
-> +#define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
-> +#define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
+>  	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(ocmem_clks), ocmem_clks);
+> -	if (ret) {
+> -		if (ret != -EPROBE_DEFER)
+> -			dev_err(dev, "Unable to get clocks\n");
+> -
+> -		return ret;
+> -	}
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Unable to get clocks\n");
 >  
->  #define OCMEM_HW_PROFILE_LAST_REGN_HALFSIZE	0x00010000
->  #define OCMEM_HW_PROFILE_INTERLEAVING		0x00020000
+>  	ocmem->mmio = devm_platform_ioremap_resource_byname(pdev, "ctrl");
+> -	if (IS_ERR(ocmem->mmio)) {
+> -		dev_err(&pdev->dev, "Failed to ioremap ocmem_ctrl resource\n");
+> -		return PTR_ERR(ocmem->mmio);
+> -	}
+> +	if (IS_ERR(ocmem->mmio))
+> +		return dev_err_probe(&pdev->dev, PTR_ERR(ocmem->mmio),
+> +				     "Failed to ioremap ocmem_ctrl resource\n");
+>  
+>  	ocmem->memory = platform_get_resource_byname(pdev, IORESOURCE_MEM,
+>  						     "mem");
+> @@ -341,16 +336,14 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+>  	WARN_ON(clk_set_rate(ocmem_clks[OCMEM_CLK_CORE_IDX].clk, 1000) < 0);
+>  
+>  	ret = clk_bulk_prepare_enable(ARRAY_SIZE(ocmem_clks), ocmem_clks);
+> -	if (ret) {
+> -		dev_info(ocmem->dev, "Failed to enable clocks\n");
+> -		return ret;
+> -	}
+> +	if (ret)
+> +		return dev_err_probe(ocmem->dev, ret, "Failed to enable clocks\n");
+>  
+>  	if (qcom_scm_restore_sec_cfg_available()) {
+>  		dev_dbg(dev, "configuring scm\n");
+>  		ret = qcom_scm_restore_sec_cfg(QCOM_SCM_OCMEM_DEV_ID, 0);
+>  		if (ret) {
+> -			dev_err(dev, "Could not enable secure configuration\n");
+> +			dev_err_probe(dev, ret, "Could not enable secure configuration\n");
+>  			goto err_clk_disable;
+>  		}
+>  	}
 > 
 
 -- 
