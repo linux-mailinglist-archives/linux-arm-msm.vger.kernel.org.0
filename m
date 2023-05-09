@@ -2,93 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B9A26FCE5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 21:16:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69BD36FCEF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 22:00:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229664AbjEITP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 15:15:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46446 "EHLO
+        id S233678AbjEIUAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 16:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjEITP7 (ORCPT
+        with ESMTP id S229664AbjEIUAJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 15:15:59 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FA1E0;
-        Tue,  9 May 2023 12:15:57 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349IGSXv016010;
-        Tue, 9 May 2023 19:15:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=NEwpD0MHi33YJ73MMvOp8SyW+BSA/M2HMWq8AH4/Gz4=;
- b=eNx2lY+nZyq47BdcsdSRKJ/X/hADn5p2WgusHUHpPCD+PserzeClowvDp6JFm1JBxj+u
- QVr+SDVLFGpgY2q4jYqp9aVr32zhxNguSqdRak0Q/r4+IRlqNacGwxIcYXVvUAOiGbPO
- ZUpZWopgjPy+InsKq7QtSaFsV4JAXTcvjD7BgMCYuOIaWEH2kHf0XnwVL28KGu7uyaZx
- A8uz5JH6ZpqJ+q6CKKYT/Tt8tCCjJIvfLm8GNK+oTJdFnVk7r5vQK2y6hcP3BN4n0Nal
- VrwtwOM6u29WZTMrmc7eYmargHSPRuzowMWkN5GDGzoqUSV82+X6tlnYuY7P4leWkn/1 3w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77ktnyn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 19:15:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 349JFITQ018728
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 19:15:19 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
- 12:15:18 -0700
-Message-ID: <1345a125-f745-4fe3-0f5e-bfe84225958d@quicinc.com>
-Date:   Tue, 9 May 2023 12:15:17 -0700
+        Tue, 9 May 2023 16:00:09 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 884F24498
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 13:00:07 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4eff50911bfso6994414e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 13:00:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683662406; x=1686254406;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kVOCE83AC4Gr91kmxIdlrW0vfunolQmhkIU/7LEMiDE=;
+        b=NSrXThnpwz8+ZOFEPNw+j54wWZw7gB2eE9Van5BJqd/Cz3HrmHy0NXEC90QlkYTeS9
+         IcT557kLFTiOkgt/76f+xT/Gg1IZoxLgsK413vjUSU1lioKNML81JYd/yV32t1KS7Dhx
+         iBh+uA7Ftb4Po7J7SSqGIkVbdTfuia5fBt3zpdFV59fO/zKlV8gz24KLcjpVUNx7N665
+         1WoS0kep/R8TGFrknEmtymbEDZ4HnHy1mrUZsJYEkgavgRiOFJQ7sWsc/Z1YcNhY28cq
+         SnImENNqDhvY1gWFH2hmlTCms/bAPLh2qe5pk3PUKJotKFBXVzaJ46GmE1hXeYCTDbM2
+         c6+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683662406; x=1686254406;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kVOCE83AC4Gr91kmxIdlrW0vfunolQmhkIU/7LEMiDE=;
+        b=LhABuyqnDBInH0VgegZTBjw7P7FtitCFzp70T5gPcpol3iW8e/Kw/d1UP50Q1pJju7
+         qKtutwA/jLNclTtKR+CMtpgkBPvIj2SKIfW1EXfwc1YqGp4DHxMTMTPZy6wsf4EecFIB
+         Cu2reun3qcrbrre+MHPBxd4GfHYqpuXfsysX4gcepDwktpV6FWe9U3V2XAEyWTlitSvc
+         X87JAYsuS0yJjsihByRUUSGJ5Qx0PL0lwcgGg7EElNUoaqnpkKHT+rucgvsiRLWdVYf4
+         iyjFaDn7y5Ebs+emdN719o/cPIbV7ecM6SB7xLeZwUyoUD0Rlvuq8Se+hxGRKjy47WlN
+         3NFQ==
+X-Gm-Message-State: AC+VfDzEB3ZOyHBAeGOqNaiu8jtl3IjlVRoY8yTikfsnaDFFI4XR9aOv
+        IjqOVAE9/evvjJ1ubrU1dbwstg==
+X-Google-Smtp-Source: ACHHUZ6qzrmG/Y537HA1L9EPntjH1URRCnYapiYRs8xzhJtOeE/NQ7s6NscPh1CMAuIhRORb0KHxNw==
+X-Received: by 2002:ac2:5389:0:b0:4e9:afb3:d56a with SMTP id g9-20020ac25389000000b004e9afb3d56amr1216663lfh.7.1683662405724;
+        Tue, 09 May 2023 13:00:05 -0700 (PDT)
+Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
+        by smtp.gmail.com with ESMTPSA id c14-20020a19760e000000b004efe6c36135sm444273lff.299.2023.05.09.13.00.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 May 2023 13:00:05 -0700 (PDT)
+Message-ID: <bac82710-da26-7acf-4375-5c5346c01705@linaro.org>
+Date:   Tue, 9 May 2023 22:00:03 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 4/6] dt-bindings: sram: qcom,ocmem: Add msm8226 support
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Leonard Lausen <leonard@lausen.nl>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     <regressions@lists.linux.dev>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Nikita Travkin <nikita@trvn.ru>
-References: <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
- <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
- <20230508021536.txtamifw2vkfncnx@ripper>
- <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
- <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CUQmunFR2A588q0l-jFDQdWMkkhVJJSt
-X-Proofpoint-ORIG-GUID: CUQmunFR2A588q0l-jFDQdWMkkhVJJSt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-09_12,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- suspectscore=0 adultscore=0 mlxlogscore=934 lowpriorityscore=0
- phishscore=0 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305090159
-X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        Brian Masney <masneyb@onstation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
+ <20230506-msm8226-ocmem-v1-4-3e24e2724f01@z3ntu.xyz>
+ <29d1d210-8752-56b4-34be-8b078c639d36@linaro.org>
+ <2449951.tdWV9SEqCh@z3ntu.xyz>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <2449951.tdWV9SEqCh@z3ntu.xyz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -97,140 +87,73 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/8/2023 4:30 AM, Dmitry Baryshkov wrote:
-> On 08/05/2023 14:02, Leonard Lausen wrote:
->> Abhinav Kumar <quic_abhinavk@quicinc.com> writes:
->>> On 5/7/2023 7:15 PM, Bjorn Andersson wrote:
->>>> When booting with the cable connected on my X13s, 100 is long enough 
->>>> for
->>>> my display to time out and require me to disconnect and reconnect the
->>>> cable again.
->>>>
->>>> Do we have any idea of why the reduction to 0 is causing an issue when
->>>> using the internal HPD?
->>>>
->>>> Regards,
->>>> Bjorn
->>> Yes, we do know why this is causing an issue. The cleaner patch for this
->>> will be posted this week.
->>
->> Great!
->>
->>> There is no need to add the 100ms delay back yet.
+On 9.05.2023 18:44, Luca Weiss wrote:
+> On Montag, 8. Mai 2023 09:39:22 CEST Konrad Dybcio wrote:
+>> On 7.05.2023 11:12, Luca Weiss wrote:
+>>> Add the compatible for the OCMEM found on msm8226 which compared to
+>>> msm8974 only has a core clock and no iface clock.
 >>>
->>> thanks for posting this but NAK on this patch till we post the fix this
->>> week.
+>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>>> ---
 >>>
->>> Appreciate a bit of patience till then.
+>>>  Documentation/devicetree/bindings/sram/qcom,ocmem.yaml | 6 +++++-
+>>>  1 file changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+>>> b/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml index
+>>> 4bbf6db0b6bd..515f0d8ec641 100644
+>>> --- a/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+>>> +++ b/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+>>> @@ -15,7 +15,9 @@ description: |
+>>>
+>>>  properties:
+>>>    compatible:
+>>> -    const: qcom,msm8974-ocmem
+>>> +    enum:
+>>> +      - qcom,msm8226-ocmem
+>>> +      - qcom,msm8974-ocmem
 >>
->> This regression is already part of the 6.3 stable release series. Will
->> the new patch qualify for inclusion in 6.3.y? Or will it be part of 6.4
->> and this revert should go into 6.3.y?
+>> Any chance you could read the revision field on both and add comments
+>> like:
+>>
+>> - qcom,msm8974-ocmem # vX.Y
 > 
-> This is a tough situation, as landing a revert will break x13s, as noted 
-> by Bjorn. Given that the workaround is known at this moment, I would 
-> like to wait for the patch from Abhinav to appear, then we can decide 
-> which of the fixes should go to the stable kernel.
+> Do you mean the OCMEM_REG_HW_VERSION register?
+Yep
+
+It's currently not read in the 
+> driver so no idea what the value is - without adding some code.
+Would be appreciated!
+
+Konrad
 > 
 >>
->> Even with this revert, there are additional regressions in 6.3 causing
->> dpu errors and blank external display upon suspending and resuming the
->> system while an external display is connected. Will your new patch also
->> fix these regressions?
+>>>    reg:
+>>>      items:
+>>> @@ -28,11 +30,13 @@ properties:
+>>>        - const: mem
+>>>    
+>>>    clocks:
+>>> +    minItems: 1
+>>>
+>>>      items:
+>>>        - description: Core clock
+>>>        - description: Interface clock
 >>
->> [  275.025497] [drm:dpu_encoder_phys_vid_wait_for_commit_done:488] 
->> [dpu error]vblank timeout
->> [  275.025514] [drm:dpu_kms_wait_for_commit_done:510] [dpu error]wait 
->> for commit done returned -110
->> [  275.064141] [drm:dpu_encoder_frame_done_timeout:2382] [dpu 
->> error]enc33 frame done timeout
->>
->> followed by a kernel panic if any modification to the display settings
->> is done, such as disabling the external display:
+>> allOf: if: properties: compatible: 8974 / then: clock(s|-names): minItems: 2
 > 
-> Interesting crash, thank you for the report.
+> Sure, can update
 > 
-
-This is a different crash but the root-cause of both the issues is the 
-bridge hpd_enable/disable series.
-
-https://patchwork.freedesktop.org/patch/514414/
-
-This is breaking the sequence and logic of internal hpd as per my 
-discussion with kuogee.
-
-We are analyzing the issue and the fix internally first and once we 
-figure out all the details will post it.
-
 >>
->> [  341.631287] Hardware name: Google Lazor (rev3 - 8) (DT)
->> [  341.631290] pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS 
->> BTYPE=--)
->> [  341.631296] pc : do_raw_spin_unlock+0xb8/0xc4
->> [  341.631310] lr : do_raw_spin_unlock+0x78/0xc4
->> [  341.631315] sp : ffffffc01100b880
->> [  341.631317] x29: ffffffc01100b880 x28: 0000000000000028 x27: 
->> 0000000000000038
->> [  341.631326] x26: ffffff808c89e180 x25: ffffffef33e39920 x24: 
->> 0000000000000000
->> [  341.631333] x23: ffffffef33e3ca0c x22: 0000000000000002 x21: 
->> ffffff808345ded8
->> [  341.631339] x20: ffffff808345ded0 x19: 000000000000001e x18: 
->> 0000000000000000
->> [  341.631345] x17: 0048000000000460 x16: 0441043b04600438 x15: 
->> 04380000089807d0
->> [  341.631351] x14: 07b0089807800780 x13: 0000000000000068 x12: 
->> 0000000000000001
->> [  341.631357] x11: ffffffef3413bb76 x10: 0000000000000bb0 x9 : 
->> ffffffef33e3d6bc
->> [  341.631363] x8 : ffffff808c89ed90 x7 : ffffff80b1c9f738 x6 : 
->> 0000000000000001
->> [  341.631370] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 
->> ffffff808345def0
->> [  341.631375] x2 : 00000000dead4ead x1 : 0000000000000003 x0 : 
->> 0000000000000000
->> [  341.631383] Kernel panic - not syncing: Asynchronous SError Interrupt
->> [  341.631386] CPU: 3 PID: 1520 Comm: kwin_wayland Not tainted 
->> 6.3.0-stb-cbq+ #2
->> [  341.631390] Hardware name: Google Lazor (rev3 - 8) (DT)
->> [  341.631393] Call trace:
->> [  341.631395]  dump_backtrace+0xc8/0x104
->> [  341.631402]  show_stack+0x20/0x30
->> [  341.631407]  dump_stack_lvl+0x48/0x60
->> [  341.631414]  dump_stack+0x18/0x24
->> [  341.631419]  panic+0x130/0x2fc
->> [  341.631425]  nmi_panic+0x54/0x78
->> [  341.631428]  arm64_serror_panic+0x74/0x80
->> [  341.631434]  arm64_is_fatal_ras_serror+0x6c/0x8c
->> [  341.631439]  do_serror+0x48/0x60
->> [  341.631444]  el1h_64_error_handler+0x30/0x48
->> [  341.631450]  el1h_64_error+0x68/0x6c
->> [  341.631455]  do_raw_spin_unlock+0xb8/0xc4
->> [  341.631460]  _raw_spin_unlock_irq+0x18/0x38
->> [  341.631466]  __wait_for_common+0xb8/0x154
->> [  341.631472]  wait_for_completion_timeout+0x28/0x34
->> [  341.631477]  dp_ctrl_push_idle+0x3c/0x88
->> [  341.631483]  dp_bridge_disable+0x20/0x2c
->> [  341.631488]  drm_atomic_bridge_chain_disable+0x8c/0xb8
->> [  341.631495]  drm_atomic_helper_commit_modeset_disables+0x198/0x450
->> [  341.631501]  msm_atomic_commit_tail+0x1c8/0x36c
->> [  341.631507]  commit_tail+0x80/0x108
->> [  341.631512]  drm_atomic_helper_commit+0x114/0x118
->> [  341.631516]  drm_atomic_commit+0xb4/0xe0
->> [  341.631522]  drm_mode_atomic_ioctl+0x6b0/0x890
->> [  341.631527]  drm_ioctl_kernel+0xe4/0x164
->> [  341.631534]  drm_ioctl+0x35c/0x3bc
->> [  341.631539]  vfs_ioctl+0x30/0x50
->> [  341.631547]  __arm64_sys_ioctl+0x80/0xb4
->> [  341.631552]  invoke_syscall+0x84/0x11c
->> [  341.631558]  el0_svc_common.constprop.0+0xc0/0xec
->> [  341.631563]  do_el0_svc+0x94/0xa4
->> [  341.631567]  el0_svc+0x2c/0x54
->> [  341.631570]  el0t_64_sync_handler+0x94/0x100
->> [  341.631575]  el0t_64_sync+0x194/0x198
->> [  341.631580] SMP: stopping secondary CPUs
->> [  341.831615] Kernel Offset: 0x2f2b200000 from 0xffffffc008000000
->> [  341.831618] PHYS_OFFSET: 0x80000000
->> [  341.831620] CPU features: 0x400000,61500506,3200720b
->> [  341.831623] Memory Limit: none
+>> Konrad
+>>
+>>>    clock-names:
+>>> +    minItems: 1
+>>>
+>>>      items:
+>>>        - const: core
+>>>        - const: iface
+> 
+> 
+> 
 > 
