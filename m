@@ -2,193 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35D9A6FCCA5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 19:23:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7BA66FCCC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 19:32:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbjEIRXW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 13:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
+        id S229600AbjEIRcD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 13:32:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjEIRXV (ORCPT
+        with ESMTP id S233354AbjEIRcC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 13:23:21 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 010424EC5;
-        Tue,  9 May 2023 10:22:57 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-6439b410679so3867917b3a.0;
-        Tue, 09 May 2023 10:22:57 -0700 (PDT)
+        Tue, 9 May 2023 13:32:02 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB26B40C3
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 10:31:59 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-50bdd7b229cso11552653a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 10:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683652977; x=1686244977;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=h8H4gLY9QD6JR3rBgoCS4vvXjxVaagMATkBih9kNdRg=;
-        b=EMBC+q+FGd7Q3uU5/5oV3B6UZEISuagmTJ9Cx076RXqV8Ik2Zb9HknVj5oCHgmH3Ug
-         RFVHxwYh58xvNHtou7+BfSvFF5zxGKfwDARu9iF/4Cd5yr2prKfvY9M0/QdmyCqtYotM
-         3+6sXXNvM90RXZ+b2227fnKcHESoJ6NGaKMkEPROokGe8Gx3YIrBCsKUWgBAptXVqE9G
-         fC6DUtFjBKNBe7Y1UhZj1+NrmwGoSE0D25r0zsLKAzktvG/P3xNq9gPJiiaQYP/cNKgK
-         sv+wVvIzvrBU/0O1jFgrffWR38BDiAR+J1MTKRd5QtP73pVqtfJNT8L+Z42izNjuwM0y
-         rpdQ==
+        d=linaro.org; s=google; t=1683653518; x=1686245518;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CgudkpE/XXuEJbi6kVtZntpRgZwfZvwHa+KTpRSfG84=;
+        b=qi5aQvnnWPOLinC/jLCZf13CBVkM6FG3QOcdLfbuvwQP4XQbi7o7O9GhxbouDNwiRe
+         myoPeE50qKEbJpB6arQ+03tEkTQeoceaqezgivj7x5hWepxoTWm+eEbJtW18WDF+Alxb
+         R6TreSItd4esRPPLxX9Lm9M8AdHnW1hEwZRvQY+MSkzn1NQl6fzMJF6Trng6CcdBemqI
+         BvodfS5PH6gEiGqgwEi7qDi4coExA1XOvLPNiySbDiva15i38Z/EldMz1n7Up9ju7fY8
+         AIpwLJkgz6fyHqLSgZCFNAF12KnTYrdpHnwYDRP028+TVb5/WGuE6ds3VzuOlXRw3tAw
+         ixFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683652977; x=1686244977;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h8H4gLY9QD6JR3rBgoCS4vvXjxVaagMATkBih9kNdRg=;
-        b=TDCUFbpCW1QN87GPX8dTRRUeHn/oVzc1WVXXXhBQ2efgirhwXGnUH8FE1VZtDa9Xq+
-         CbywlCIGHq4OW0e9M/SulUDJn2Ru9f4QM3PXF0bAnHiR6S8AkPbrRoYJMh+rW+dVmGSY
-         eSZvu/bB99IlbrmRYc2csGzLq74EKfwp1a5+Y0gpgWbNWR/cB5+zGBZfDAEh6T8U5+TG
-         bXx3vIrraRhPPtMfceAcm2Wwd7n7j1Sg3I8oskTCUXByv2UR6G+LPUeVDKgJm+a1XdUm
-         GNQbGMYufziZ0s2Psd1Wbjy+vKWjC4hJBM54uyE82XHkk6i3nN6r9bjh4uL/YIFJzsQW
-         b4yA==
-X-Gm-Message-State: AC+VfDySgEyrFMgSz+f9GnTs0KSdvrUWY3ZNllYPscEL5TgWH09bwANV
-        6gjwFCKmcY9XKxX2sAYh72I=
-X-Google-Smtp-Source: ACHHUZ7n2ye/CuTjs4se99yvH8Xq0S3axmyWPzeGYkUleujVONQhA3IefUZmticF0BdwwXUn6OV+xw==
-X-Received: by 2002:a05:6a21:920d:b0:eb:69b3:116c with SMTP id tl13-20020a056a21920d00b000eb69b3116cmr17192888pzb.52.1683652977404;
-        Tue, 09 May 2023 10:22:57 -0700 (PDT)
-Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
-        by smtp.gmail.com with ESMTPSA id e5-20020aa78c45000000b00639fc7124c2sm2072001pfd.148.2023.05.09.10.22.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 10:22:57 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>, pinkperfect2021@gmail.com,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3] drm/msm: Fix submit error-path leaks
-Date:   Tue,  9 May 2023 10:22:53 -0700
-Message-Id: <20230509172253.383964-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.40.1
+        d=1e100.net; s=20221208; t=1683653518; x=1686245518;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CgudkpE/XXuEJbi6kVtZntpRgZwfZvwHa+KTpRSfG84=;
+        b=dygh2sxImChhN3sZX9zCzl46kRA2u+0FkSf+VMc3/KsMQ7GSKGoBLoY8WHQ+8sLc4s
+         /PpCcUBnmWLj3VteEw4pCoHGWAPdbvIwTq1JJjm/I+ibHf8DULIMji5uRhQYR0uGuWRt
+         VsolTgaohfA60DtGybfucFER3NDXVXCg2zWfSJFrFXwse8m6ZDO8hKGVO+0dvoOO1hKc
+         1YI4Odb0CywAnrqqqOZZ38K3JWftyWO7w5tLZ39vDiKGDDZcE9D6MDjYORguS6lt40oH
+         +9pqU628ulGitDUc4QannGltBilAqM3QkXd4H5Q/pMxJNikzMOG9aq1wPSdE6MmPyfWK
+         pNfA==
+X-Gm-Message-State: AC+VfDyWk+QLL/R6ktVrR4Knixg8iQsfSeFgY11ARF7r9JAfCHYCpmTS
+        fjAJh4PFfQtghDE+gP7GWruPtw==
+X-Google-Smtp-Source: ACHHUZ6xfvURHYmwCA0rkcPEIbdWHaDDrsTw1yTug0O3WbxYCOy7Dpv+vT71lqkBRT29ssdlLeZXqw==
+X-Received: by 2002:aa7:c24c:0:b0:50b:c582:7be2 with SMTP id y12-20020aa7c24c000000b0050bc5827be2mr12287972edo.29.1683653518253;
+        Tue, 09 May 2023 10:31:58 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:d0d5:7818:2f46:5e76? ([2a02:810d:15c0:828:d0d5:7818:2f46:5e76])
+        by smtp.gmail.com with ESMTPSA id v17-20020aa7cd51000000b0050daa883545sm976490edw.64.2023.05.09.10.31.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 May 2023 10:31:57 -0700 (PDT)
+Message-ID: <75e66496-6a54-1430-7344-fa816400fa7c@linaro.org>
+Date:   Tue, 9 May 2023 19:31:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v11 2/9] dt-bindings: phy: qcom,qmp-usb: Add IPQ9574 USB3
+ PHY
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
+        kishon@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        gregkh@linuxfoundation.org, mturquette@baylibre.com,
+        sboyd@kernel.org, quic_wcheng@quicinc.com,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-clk@vger.kernel.org
+References: <cover.1683630932.git.quic_varada@quicinc.com>
+ <064614c5b28f6d813634ad14a59b0bf94ac334b7.1683630932.git.quic_varada@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <064614c5b28f6d813634ad14a59b0bf94ac334b7.1683630932.git.quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 09/05/2023 13:54, Varadarajan Narayanan wrote:
+> * Add dt-bindings for USB3 PHY found on Qualcomm IPQ9574
+> 
+> * Making power-domains as optional since IPQ9574 doesn't have GDSCs
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  Changes in v11:
+> 	- Have power-domains as required for non ipq9574 SoCs
 
-For errors after msm_submitqueue_get(), we need to drop the submitqueue
-reference.  Additionally after get_unused_fd() we need to drop the fd.
-The ordering for dropping the queue lock and put_unused_fd() is not
-important, so just move this all into out_post_unlock.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-v2: Only drop queue ref if submit doesn't take it
-v3: Fix unitialized submit ref in error path
-
-Reported-by: pinkperfect2021@gmail.com
-Fixes: f0de40a131d9 drm/msm: ("Reorder lock vs submit alloc")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 6c6aefaa72be..c994d4a13580 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -720,21 +720,21 @@ static void msm_process_post_deps(struct msm_submit_post_dep *post_deps,
- 		}
- 	}
- }
- 
- int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 		struct drm_file *file)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct drm_msm_gem_submit *args = data;
- 	struct msm_file_private *ctx = file->driver_priv;
--	struct msm_gem_submit *submit;
-+	struct msm_gem_submit *submit = NULL;
- 	struct msm_gpu *gpu = priv->gpu;
- 	struct msm_gpu_submitqueue *queue;
- 	struct msm_ringbuffer *ring;
- 	struct msm_submit_post_dep *post_deps = NULL;
- 	struct drm_syncobj **syncobjs_to_reset = NULL;
- 	int out_fence_fd = -1;
- 	bool has_ww_ticket = false;
- 	unsigned i;
- 	int ret;
- 
-@@ -767,27 +767,29 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	queue = msm_submitqueue_get(ctx, args->queueid);
- 	if (!queue)
- 		return -ENOENT;
- 
- 	ring = gpu->rb[queue->ring_nr];
- 
- 	if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
- 		out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
- 		if (out_fence_fd < 0) {
- 			ret = out_fence_fd;
--			return ret;
-+			goto out_post_unlock;
- 		}
- 	}
- 
- 	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
--	if (IS_ERR(submit))
--		return PTR_ERR(submit);
-+	if (IS_ERR(submit)) {
-+		ret = PTR_ERR(submit);
-+		goto out_post_unlock;
-+	}
- 
- 	trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
- 		args->nr_bos, args->nr_cmds);
- 
- 	ret = mutex_lock_interruptible(&queue->lock);
- 	if (ret)
- 		goto out_post_unlock;
- 
- 	if (args->flags & MSM_SUBMIT_SUDO)
- 		submit->in_rb = true;
-@@ -962,25 +964,33 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	msm_reset_syncobjs(syncobjs_to_reset, args->nr_in_syncobjs);
- 	msm_process_post_deps(post_deps, args->nr_out_syncobjs,
- 	                      submit->user_fence);
- 
- 
- out:
- 	submit_cleanup(submit, !!ret);
- 	if (has_ww_ticket)
- 		ww_acquire_fini(&submit->ticket);
- out_unlock:
--	if (ret && (out_fence_fd >= 0))
--		put_unused_fd(out_fence_fd);
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
--	msm_gem_submit_put(submit);
-+	if (ret && (out_fence_fd >= 0))
-+		put_unused_fd(out_fence_fd);
-+	if (submit) {
-+		msm_gem_submit_put(submit);
-+	} else {
-+		/*
-+		 * If the submit hasn't yet taken ownership of the queue
-+		 * then we need to drop the reference ourself:
-+		 */
-+		msm_submitqueue_put(queue);
-+	}
- 	if (!IS_ERR_OR_NULL(post_deps)) {
- 		for (i = 0; i < args->nr_out_syncobjs; ++i) {
- 			kfree(post_deps[i].chain);
- 			drm_syncobj_put(post_deps[i].syncobj);
- 		}
- 		kfree(post_deps);
- 	}
- 
- 	if (!IS_ERR_OR_NULL(syncobjs_to_reset)) {
- 		for (i = 0; i < args->nr_in_syncobjs; ++i) {
--- 
-2.40.1
+Best regards,
+Krzysztof
 
