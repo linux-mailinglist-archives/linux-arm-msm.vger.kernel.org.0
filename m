@@ -2,43 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A17F6FCB88
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:43:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3DDB6FCB90
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:45:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbjEIQn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 12:43:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57440 "EHLO
+        id S230029AbjEIQpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 12:45:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbjEIQn2 (ORCPT
+        with ESMTP id S229489AbjEIQpW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 12:43:28 -0400
+        Tue, 9 May 2023 12:45:22 -0400
 Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D4B91BD3;
-        Tue,  9 May 2023 09:43:26 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 814A81BD3;
+        Tue,  9 May 2023 09:45:21 -0700 (PDT)
 Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 17950CED0E;
-        Tue,  9 May 2023 16:42:55 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id D871ACED0E;
+        Tue,  9 May 2023 16:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683650575; bh=QzWQiK/lo9dKK9ebOYbmAkyu7a6xBAB9as4jzTnky/Y=;
+        t=1683650690; bh=6jShHaL5Bxrkqcx7amecTm8ijF8yqLIpR690Y68mxYA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=kgqDGXSl1jGdD8LujnoqBM43/s7L/U8DRahMWbu39i0LmMTa+2G4JrrosB6TLhoKD
-         DSZ3EEtVPIs373T6Y08a3KmQJUnZw1Ndr3dQChEHDukxjDmo6IoE45H5/peRggN4Qx
-         XFeIwEDQ77EDuRsNOoiffUCIDbBdrgKB7WGQ3Z0A=
+        b=oY6birehiAO16hvkqDpR9EjJcuBAJMudXoAQD6T0CrXuusB10+hfH9dYFb0pOhtVY
+         zql0oo+JWog3pmO8EJuYL+tCbQuggxUhgUM88KsEue4K3/UEGXjRuX2EgCHuE/EyjT
+         kHchJcZ2u2vutda8g3egxFLyMNuVsTrl8sA6qnHw=
 From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Brian Masney <masneyb@onstation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: mmcc-msm8974: remove oxili_ocmemgx_clk
-Date:   Tue, 09 May 2023 18:42:54 +0200
-Message-ID: <2880099.ElGaqSPkdT@z3ntu.xyz>
-In-Reply-To: <033952d2-af42-3980-95ab-1aea158f60f1@linaro.org>
-References: <20230508153319.2371645-1-dmitry.baryshkov@linaro.org>
- <033952d2-af42-3980-95ab-1aea158f60f1@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/6] dt-bindings: sram: qcom,ocmem: Add msm8226 support
+Date:   Tue, 09 May 2023 18:44:49 +0200
+Message-ID: <2449951.tdWV9SEqCh@z3ntu.xyz>
+In-Reply-To: <29d1d210-8752-56b4-34be-8b078c639d36@linaro.org>
+References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
+ <20230506-msm8226-ocmem-v1-4-3e24e2724f01@z3ntu.xyz>
+ <29d1d210-8752-56b4-34be-8b078c639d36@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -52,98 +56,65 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Montag, 8. Mai 2023 18:39:24 CEST Konrad Dybcio wrote:
-> On 8.05.2023 17:33, Dmitry Baryshkov wrote:
-> > After the internal discussions, it looks like this clock is managed by
-> > RPM itself. Linux kernel should not touch it on its own, as this causes
-> > disagreement with RPM. Shutting down this clock causes the OCMEM<->GPU
-> > interface to stop working, resulting in GPU hangchecks/timeouts.
+On Montag, 8. Mai 2023 09:39:22 CEST Konrad Dybcio wrote:
+> On 7.05.2023 11:12, Luca Weiss wrote:
+> > Add the compatible for the OCMEM found on msm8226 which compared to
+> > msm8974 only has a core clock and no iface clock.
 > > 
-> > Fixes: d8b212014e69 ("clk: qcom: Add support for MSM8974's multimedia
-> > clock controller (MMCC)")
-> Feels good to fix 9 year old code!
-> 
-> > Suggested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > > ---
+> > 
+> >  Documentation/devicetree/bindings/sram/qcom,ocmem.yaml | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+> > b/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml index
+> > 4bbf6db0b6bd..515f0d8ec641 100644
+> > --- a/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+> > +++ b/Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
+> > @@ -15,7 +15,9 @@ description: |
+> > 
+> >  properties:
+> >    compatible:
+> > -    const: qcom,msm8974-ocmem
+> > +    enum:
+> > +      - qcom,msm8226-ocmem
+> > +      - qcom,msm8974-ocmem
 > 
-> +CC Luca please give it a spin on your smartwatch
+> Any chance you could read the revision field on both and add comments
+> like:
 > 
-> (fun to say isn't it)
+> - qcom,msm8974-ocmem # vX.Y
 
-You didn't actually CC me here but appears to work fine on apq8026-lg-lenok 
-with GPU. Ocmem inits fine and GPU runs fine also. No change in behavior 
-observed.
-
-Tested-by: Luca Weiss <luca@z3ntu.xyz>
-
-(didn't try on msm8974 but should hopefully be fine there also)
+Do you mean the OCMEM_REG_HW_VERSION register? It's currently not read in the 
+driver so no idea what the value is - without adding some code.
 
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >    reg:
+> >      items:
+> > @@ -28,11 +30,13 @@ properties:
+> >        - const: mem
+> >    
+> >    clocks:
+> > +    minItems: 1
+> > 
+> >      items:
+> >        - description: Core clock
+> >        - description: Interface clock
+> 
+> allOf: if: properties: compatible: 8974 / then: clock(s|-names): minItems: 2
+
+Sure, can update
+
 > 
 > Konrad
 > 
-> >  drivers/clk/qcom/mmcc-msm8974.c | 19 -------------------
-> >  1 file changed, 19 deletions(-)
+> >    clock-names:
+> > +    minItems: 1
 > > 
-> > diff --git a/drivers/clk/qcom/mmcc-msm8974.c
-> > b/drivers/clk/qcom/mmcc-msm8974.c index 277ef0065aae..82f6bad144a9 100644
-> > --- a/drivers/clk/qcom/mmcc-msm8974.c
-> > +++ b/drivers/clk/qcom/mmcc-msm8974.c
-> > @@ -2204,23 +2204,6 @@ static struct clk_branch ocmemcx_ocmemnoc_clk = {
-> > 
-> >  	},
-> >  
-> >  };
-> > 
-> > -static struct clk_branch oxili_ocmemgx_clk = {
-> > -	.halt_reg = 0x402c,
-> > -	.clkr = {
-> > -		.enable_reg = 0x402c,
-> > -		.enable_mask = BIT(0),
-> > -		.hw.init = &(struct clk_init_data){
-> > -			.name = "oxili_ocmemgx_clk",
-> > -			.parent_data = (const struct clk_parent_data[]){
-> > -				{ .fw_name = "gfx3d_clk_src", .name = 
-"gfx3d_clk_src" },
-> > -			},
-> > -			.num_parents = 1,
-> > -			.flags = CLK_SET_RATE_PARENT,
-> > -			.ops = &clk_branch2_ops,
-> > -		},
-> > -	},
-> > -};
-> > -
-> > 
-> >  static struct clk_branch ocmemnoc_clk = {
-> >  
-> >  	.halt_reg = 0x50b4,
-> >  	.clkr = {
-> > 
-> > @@ -2512,7 +2495,6 @@ static struct clk_regmap *mmcc_msm8226_clocks[] = {
-> > 
-> >  	[MMSS_MMSSNOC_AXI_CLK] = &mmss_mmssnoc_axi_clk.clkr,
-> >  	[MMSS_S0_AXI_CLK] = &mmss_s0_axi_clk.clkr,
-> >  	[OCMEMCX_AHB_CLK] = &ocmemcx_ahb_clk.clkr,
-> > 
-> > -	[OXILI_OCMEMGX_CLK] = &oxili_ocmemgx_clk.clkr,
-> > 
-> >  	[OXILI_GFX3D_CLK] = &oxili_gfx3d_clk.clkr,
-> >  	[OXILICX_AHB_CLK] = &oxilicx_ahb_clk.clkr,
-> >  	[OXILICX_AXI_CLK] = &oxilicx_axi_clk.clkr,
-> > 
-> > @@ -2670,7 +2652,6 @@ static struct clk_regmap *mmcc_msm8974_clocks[] = {
-> > 
-> >  	[MMSS_S0_AXI_CLK] = &mmss_s0_axi_clk.clkr,
-> >  	[OCMEMCX_AHB_CLK] = &ocmemcx_ahb_clk.clkr,
-> >  	[OCMEMCX_OCMEMNOC_CLK] = &ocmemcx_ocmemnoc_clk.clkr,
-> > 
-> > -	[OXILI_OCMEMGX_CLK] = &oxili_ocmemgx_clk.clkr,
-> > 
-> >  	[OCMEMNOC_CLK] = &ocmemnoc_clk.clkr,
-> >  	[OXILI_GFX3D_CLK] = &oxili_gfx3d_clk.clkr,
-> >  	[OXILICX_AHB_CLK] = &oxilicx_ahb_clk.clkr,
+> >      items:
+> >        - const: core
+> >        - const: iface
 
 
 
