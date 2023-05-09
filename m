@@ -2,117 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D3CF6FD2B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 00:34:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 849C96FD2D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 00:53:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbjEIWeO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 18:34:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34942 "EHLO
+        id S230199AbjEIWxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 18:53:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229765AbjEIWeN (ORCPT
+        with ESMTP id S230064AbjEIWxL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 18:34:13 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B709B272C
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 15:34:10 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f00d41df22so37615561e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 15:34:10 -0700 (PDT)
+        Tue, 9 May 2023 18:53:11 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6435FCD;
+        Tue,  9 May 2023 15:53:09 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-50bc4bc2880so10321619a12.2;
+        Tue, 09 May 2023 15:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683671649; x=1686263649;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ghW5vltMZXjSfeDxEJLxZOUf0D60VisWjpkd71SdvXo=;
-        b=q+yGg4d7M1SlrLzdQB+czRHZ45pNL9WHuloHvI6JSRptGyTwbtPaDgdwFrSYttMuhd
-         TMTZQhSTFCOKdcEDwRGtQ0kqVUaKTgenN0XVdVgRsgXTKdOhx6VRSyOi22RBu6ppOY3X
-         jclo5kl96FZJLwNsLuLVfkmGONMXUyD1UH456soXYFF9SvlB4DHUv6iK4eDPMW7INUvk
-         9PJL428UgCm3aA97T44ZFxGiN8PMjD08kwXUQFB3e4i3tMUmVqrFAXsht9ep/DAlP7Oo
-         1fFQUcuBb2SDNusZntWDHgjGjYZoyHRrxTGpkNpqX9hBrwkqqAa4whzmaR4ktaUoTd1M
-         w2jQ==
+        d=gmail.com; s=20221208; t=1683672788; x=1686264788;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xK5ASXc7Qk5k53BZegLrLl/LXq90ba90dKCrcJloGco=;
+        b=B6CGl1a7QJIoBWOzbZ1AK71oscdzTgkCseNZl2SM/l2v03d1z+uAqyyfcvFpne5IFF
+         IKyV4J0UXmpTH1ABNNmXXAkwkro6AYCNgeF37HZHrDKRI7XbZk5tePVrDDpIj4a54Mh8
+         zz3G4kyxzzm/l+8gfkUKvl3gnj/a/2qmAFNCAyHS78y5KY/c2OhHMs7mZgw2Utd0KJ3A
+         oEDz6GilQtm3yhrA7OrACPbmyACYAJrg5Mtvpbks+CGq4/6WDFJ+RQqX3/3P6osN3Sn6
+         fcvOmqV4rpPWeipKjYW0b8SYAwy/eErVyQ6P3jaMviq/aDOW7iBhIIjb/tuWfKPH04sM
+         sdBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683671649; x=1686263649;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ghW5vltMZXjSfeDxEJLxZOUf0D60VisWjpkd71SdvXo=;
-        b=O82pQ83SxcgVe3Wyh6m/PpbQIHR6agVUs8PMsQKAbOv4zsnT1qz0giI1Pp3/yQlAa+
-         qZrimcugvyVkvqZcCi/yu4dPc/bRw2LR+boxhs5uve9dGkqeABO7emVYS4ydYDZtrZXf
-         iQVbEFciFzAyY4EL8p8xcXbbkShPfN9XpGveuk41Ple4yj4b78mTYwj7uS/49wgYx2jF
-         VO5gvFvXO9oEwC15Zd/iRTLv2WDPTzMuzDo0E6QiERMj6T0txIHwdmXehcwnUYWgmSmn
-         z4sVlG8cjp1K4lXC4cXwZcplKlLjL5Koi3iiuVeHU2m+0Y79qh+uH7FNZh83OzUUaVMK
-         6Q4Q==
-X-Gm-Message-State: AC+VfDyA0LwyYm3hGsZszoJlUi01CaThMO8h1xbRhUpgb8NL968bf1cp
-        DBLyVlOWsSF0eX4JWxgaC24C4g==
-X-Google-Smtp-Source: ACHHUZ6HNaO9P9vecPck86yuri45f4VC94oQ4YXOlnDmvG4RjOYcc9dZHkChO70PivZB3n6nntlDpg==
-X-Received: by 2002:a05:6512:b95:b0:4f1:4a14:d97c with SMTP id b21-20020a0565120b9500b004f14a14d97cmr1366194lfv.16.1683671649007;
-        Tue, 09 May 2023 15:34:09 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id c2-20020a197602000000b004d023090504sm483255lff.84.2023.05.09.15.34.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 15:34:08 -0700 (PDT)
-Message-ID: <42b9728c-2eba-89bf-d4ff-b9aec5067f84@linaro.org>
-Date:   Wed, 10 May 2023 00:34:07 +0200
+        d=1e100.net; s=20221208; t=1683672788; x=1686264788;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xK5ASXc7Qk5k53BZegLrLl/LXq90ba90dKCrcJloGco=;
+        b=NHcGq59r3CrsKN7Mvq2jcdolhRovSj7Becn8zicfw2xTecOSx142YCT8V5rv6GaFdR
+         p99d36TasPzoybG+Wa8llhs7AGiXccVOUE4Nrx6x0mkSXs6yiSBpDyzUJC9b3OIDvw8+
+         PtiC/wZY2aoSsVxv27xvjF41xgDBje6IAKeQzeLFAf7g3G4BbZbMBflaY8qb6/omgYMl
+         eRxkEQwtTQsPva6oc3DxWIGhjOUn9UYFg05V+/Qwhba1dQf7NO+A+90PoxpqTA9N+ayt
+         f0hc0h2CIQLv80apnChPFSu1+jQKXroEH8XXb+n67iNkChTOxG6Z9HH9ucaA1nXpT2zF
+         pVIw==
+X-Gm-Message-State: AC+VfDw1bYlC8UlserojwLfKDYE2vHWA4pvTQcOtzx2Qmif2h2IVsYfq
+        57eMt6jPHHgMtTORL3nPsuct47IYPxSLU99saOM=
+X-Google-Smtp-Source: ACHHUZ4BIByOTQ+nZnZj6wMwAWaIjxIQtjE6aNXjYPCQmOchF0FzZGy4iRz1xrpYTOQE6G38v049dtcQ6UDwQjkIrbg=
+X-Received: by 2002:a17:906:4fcf:b0:94e:1764:b09b with SMTP id
+ i15-20020a1709064fcf00b0094e1764b09bmr14500489ejw.45.1683672787994; Tue, 09
+ May 2023 15:53:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH] soc: qcom: ocmem: Add OCMEM hardware version print
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+References: <20230424231558.70911-1-quic_eberman@quicinc.com>
+ <20230424231558.70911-7-quic_eberman@quicinc.com> <CABb+yY3ojsGNm1w+QSn2BnbOMdcQZAV+=UYiMiBrs=jujP=pSg@mail.gmail.com>
+ <b4fa7ae9-da5e-7a94-3b82-00d9200aa67e@quicinc.com>
+In-Reply-To: <b4fa7ae9-da5e-7a94-3b82-00d9200aa67e@quicinc.com>
+From:   Jassi Brar <jassisinghbrar@gmail.com>
+Date:   Tue, 9 May 2023 17:52:56 -0500
+Message-ID: <CABb+yY2Pr30uhQzAdd=G2w=_pYYN926dMMAEgmJ436ZxVjziAQ@mail.gmail.com>
+Subject: Re: [PATCH v12 06/25] mailbox: Add Gunyah message queue mailbox
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Brian Masney <masneyb@onstation.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230509-ocmem-hwver-v1-1-b83ece3f2168@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230509-ocmem-hwver-v1-1-b83ece3f2168@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, May 9, 2023 at 3:52=E2=80=AFPM Elliot Berman <quic_eberman@quicinc.=
+com> wrote:
+>
+> Hi Jassi,
+>
+> On 5/3/2023 11:21 PM, Jassi Brar wrote:
+> > On Mon, Apr 24, 2023 at 6:16=E2=80=AFPM Elliot Berman <quic_eberman@qui=
+cinc.com> wrote:
+> >>
+> >> Gunyah message queues are a unidirectional inter-VM pipe for messages =
+up
+> >> to 1024 bytes. This driver supports pairing a receiver message queue a=
+nd
+> >> a transmitter message queue to expose a single mailbox channel.
+> >>
+> >> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> >> ---
+> >>   Documentation/virt/gunyah/message-queue.rst |   8 +
+> >>   drivers/mailbox/Makefile                    |   2 +
+> >>   drivers/mailbox/gunyah-msgq.c               | 210 ++++++++++++++++++=
+++
+> >>   include/linux/gunyah.h                      |  57 ++++++
+> >>
+> > include/linux/gunyah.h  and
+> > Documentation/virt/gunyah/message-queue.rst would need to exist for
+> > this patch to apply.
+> > If you made this patch as the first in series, then I could apply.
+> >
+>
+> The mailbox driver is dependent on patches 3-5. Could [1] be picked up
+> in meantime?
+>
+[1] is already upstream.
 
+> I'll talk with QC Landing team folks about strategies to
+> merge once they finish review.
+>
+OK.
 
-On 9.05.2023 23:26, Luca Weiss wrote:
-> It might be useful to know what hardware version of the OCMEM block the
-> SoC contains. Add a debug print for that.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  drivers/soc/qcom/ocmem.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-> index 199fe9872035..aa9b3c2c1322 100644
-> --- a/drivers/soc/qcom/ocmem.c
-> +++ b/drivers/soc/qcom/ocmem.c
-> @@ -355,6 +355,10 @@ static int ocmem_dev_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> +	reg = ocmem_read(ocmem, OCMEM_REG_HW_VERSION);
-> +	dev_dbg(dev, "OCMEM hardware version: %ld.%ld.%ld\n",
-> +		(reg >> 28) & 0x0F, (reg >> 16) & 0xFFF, reg & 0xFFFF);
-Would you mind wrapping this into
-
-#define REG_HW_VERSION_MAJ(ver) FIELD_GET(GENMASK(31, 28), ver)
-
-etc.?
-
-Konrad
-> +
->  	reg = ocmem_read(ocmem, OCMEM_REG_HW_PROFILE);
->  	ocmem->num_ports = OCMEM_HW_PROFILE_NUM_PORTS(reg);
->  	ocmem->num_macros = OCMEM_HW_PROFILE_NUM_MACROS(reg);
-> 
-> ---
-> base-commit: ac9a78681b921877518763ba0e89202254349d1b
-> change-id: 20230509-ocmem-hwver-99bcb33b028b
-> 
-> Best regards,
+cheers.
