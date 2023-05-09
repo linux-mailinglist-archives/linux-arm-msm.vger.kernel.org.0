@@ -2,268 +2,249 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0940E6FC99D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 16:54:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C3E26FCA77
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 17:46:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235952AbjEIOy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 10:54:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55926 "EHLO
+        id S235802AbjEIPqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 11:46:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235412AbjEIOy2 (ORCPT
+        with ESMTP id S231488AbjEIPqF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 10:54:28 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F2D35BF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 07:54:26 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-b9a6d9dcbebso5250526276.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 07:54:26 -0700 (PDT)
+        Tue, 9 May 2023 11:46:05 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F46110CF;
+        Tue,  9 May 2023 08:46:04 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6435bbedb4fso6530350b3a.3;
+        Tue, 09 May 2023 08:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683644065; x=1686236065;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OMoWAG5YcLWd7jHxPm4FwUTroek8lWQak19WkRdudgo=;
-        b=Io/MN5XgfwjV4qEXrXT32vfMuqvum8Uppk+n3hqfOVTQ1gxgSj1XFABZv0bPjPfx2f
-         zTw2QtEud5iDlPYOrkN4FfLhE63KI5GegvMmc0IJsLD57pEOdUUy1Ti4BygSEbQFg6Ox
-         Y80vZPlPGVwTBUR2qjtAfCSMLLYSvLAnvRYXWPrud4kxDexFthHqWcydfo402zB4N1/c
-         /EEDSSb4xG5/+qa8inlFTddjIMuXINnnhVfcZdRmk24Oakw89tXkYGpuROtu+AyviUFH
-         7NB2jj9ldu3myKEheVxcuNALFIAKmIlNyn+PEbJVbGGZDQ4euzXQDFTzxRlEaBIWdL/X
-         JQTA==
+        d=gmail.com; s=20221208; t=1683647164; x=1686239164;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=71PM0c8jNHbE9hDVzelzE+44lPJ6yhnjh+al/DYMEGM=;
+        b=SEA4YE+jIMxurE4v8za3MHr2O6gaolZclraB7UcAIamSS+Dj8yKy0jXrX7aKbd7XqM
+         ODwEULvon/ZHeJlDO0e2X7NsBu3EQ9VjifJNDxJysAg5ImkgjjCBTeJ6aV/SAr+2PnrP
+         r73qgNNowQKOJlzR61Cj6po0v3hMx2fl8dDNacu/Ul+YccRQ6EzlQKoue3Ew4PvJ64e9
+         CvqZRSE4RgeGuuxOY+r+YWXqXDEAKd58vhrbbpGyklzNWQkYD10DyrnkdVVSnasi0q9O
+         3yA4Docte3BTc1xIHgWT7+39MYRFhDvH4p+r7yzJJlKu8w6kZxSHJqhNaPKRBoLRIFjE
+         2fYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683644065; x=1686236065;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OMoWAG5YcLWd7jHxPm4FwUTroek8lWQak19WkRdudgo=;
-        b=lkMtu1q3oFDO2QLMW5YK4qkjDvCzG5LYmKxFmUsH37cHIMyub0KmGGGrk7PF0HDuYg
-         7+W9qFAU7CaZfeMj4eevbZ+dhd55kVkMAl5iOAJO0ss+TtQEIcG6XfPTPMndls4OnP+t
-         n8ByPKiuqaEiOr7BbMouKTRD+vQMQld2xZzF72+DXMOh63NpkVq1LmWlpTLO8XWQJVMe
-         sw+5qAKS/VCEcrFaUz8d1kTtnMLUc++F+rL+Fm1TQ7VNuiK3as5d2Yiyji4UsYsQWbwF
-         KVvFEEpKv7bG7rZoYDOtFiOy1rNMPM2Ukx1bk78f5FBkBjh94nDqVMuwxbX71K/jC31G
-         lINw==
-X-Gm-Message-State: AC+VfDyTmrmHZwwKrt8xzjiZkvoMPboffNyfd6ITEetRTxpF0zBG/gdB
-        ctuMc+M3HcJnB9CF081oK4NTzJ3Tj/X9QdVVOHOSdg==
-X-Google-Smtp-Source: ACHHUZ6XS+Ciur4SJIYYmUxd/gl1SYLo4597xYrxEiSUH/3NIDIuEChvMl/HS9/Wg+rGPbQFz9pgMzgViPVv95JQEcI=
-X-Received: by 2002:a25:15ca:0:b0:b9e:2697:9d96 with SMTP id
- 193-20020a2515ca000000b00b9e26979d96mr13164782ybv.3.1683644065358; Tue, 09
- May 2023 07:54:25 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683647164; x=1686239164;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=71PM0c8jNHbE9hDVzelzE+44lPJ6yhnjh+al/DYMEGM=;
+        b=FZcL8YF2172WCJ8SW2A+oz5iqIR7xklbEojaXM1KRdq5+8AXOyXjQyeEsaufIvR9lQ
+         txnJejphe+YD3iywews/JcyNfV7thdisO3N3PvdYAO6MiJ438qeBT1/7RGj0ruL6vZ4I
+         5OvgBTIQ/B5EyGYtjdqY/VUhTiyjcd9fwehECWKffsP9F/OuKFLBry0Jtu9TpX1J7pcm
+         af/MzEMxAYHL1a5fJzcL5yCL1puMfWJvDVescbzwShvCYnr/xITk9vfose4YoCXdB0rO
+         6NBU9GIrMbOTOj665my2ZK+4J7CylfwhfgQtinjTKrvlr5vcS/4mlDsJTGSNrwDHF69z
+         s8MA==
+X-Gm-Message-State: AC+VfDwdM6AQhMDYRhzUCktQafOGcm4ydRhun5QQhppVuW9yQ8bVbmMO
+        tWmxV06c/x777tVc2VstzNM=
+X-Google-Smtp-Source: ACHHUZ40OSB3ygellDJMvNryY1OSEE6VRfNqx3TuFWOwXIXAE8QVpIUy0A0EEw+J+Wkbd/hFvnAwEA==
+X-Received: by 2002:a05:6a20:429b:b0:101:4c8c:d1fa with SMTP id o27-20020a056a20429b00b001014c8cd1famr3595014pzj.5.1683647163538;
+        Tue, 09 May 2023 08:46:03 -0700 (PDT)
+Received: from [192.168.50.148] (net-2-32-39-33.cust.vodafonedsl.it. [2.32.39.33])
+        by smtp.gmail.com with ESMTPSA id b30-20020a631b1e000000b0050bd4bb900csm1489844pgb.71.2023.05.09.08.45.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 May 2023 08:46:02 -0700 (PDT)
+Message-ID: <e59064e1-a826-1b90-fed4-29b0cabb1a87@gmail.com>
+Date:   Tue, 9 May 2023 17:45:54 +0200
 MIME-Version: 1.0
-References: <20230505150241.3469424-1-abel.vesa@linaro.org> <20230505150241.3469424-3-abel.vesa@linaro.org>
-In-Reply-To: <20230505150241.3469424-3-abel.vesa@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 9 May 2023 16:53:49 +0200
-Message-ID: <CAPDyKFrphhrA5a5NBVji6p_w8=acjgZhvL=HeOtqsng+MVdxhQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 2/2] PM: domains: Skip disabling unused until sync state
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     "Rafael J . Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Matthias Kaehlcke <mka@chromium.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 12/18] soc: qcom: Register pstore frontend region with
+ minidump
+Content-Language: en-US
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
+        keescook@chromium.org, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
+References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
+ <1683133352-10046-13-git-send-email-quic_mojha@quicinc.com>
+From:   Luca Stefani <luca.stefani.ge1@gmail.com>
+In-Reply-To: <1683133352-10046-13-git-send-email-quic_mojha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 5 May 2023 at 17:02, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> By storing the status of the domain at boot, specified by the provider,
-> we can decide to skip powering 'off' the domain on the late initcall,
-> strictly based on the status boot being 'on' or 'unknown', and then
-> assume the provider will disable it from its sync state callback.
-> Also, provide a generic genpd sync state callback for those providers
-> that only need that when they state synced.
+FYI the following comments also apply to the downstream driver, as the 
+same bogus logic is implemented.
 
-If I understand correctly, this means that providers that don't use
-the sync state callback, will be kept powered-on until the late
-initcall, even if those could be turned off at an earlier point. Is
-this really what we want?
+On 03/05/23 19:02, Mukesh Ojha wrote:
 
+> Since qcom_pstore_minidump driver creates platform device
+> for qualcomm devices, so it knows the physical addresses
+> of the frontend region now. Let's register the regions
+> with qcom_minidump driver.
 >
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
->  drivers/base/power/domain.c | 51 +++++++++++++++++++++++++++++++++++--
->  include/linux/pm_domain.h   |  5 ++++
->  2 files changed, 54 insertions(+), 2 deletions(-)
+>   drivers/soc/qcom/qcom_pstore_minidump.c | 80 ++++++++++++++++++++++++++++++++-
+>   1 file changed, 79 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> index 33a3945c023e..9cc0ce43b47b 100644
-> --- a/drivers/base/power/domain.c
-> +++ b/drivers/base/power/domain.c
-> @@ -125,6 +125,7 @@ static const struct genpd_lock_ops genpd_spin_ops = {
->  #define genpd_unlock(p)                        p->lock_ops->unlock(p)
->
->  #define genpd_status_on(genpd)         (genpd->status == GENPD_STATE_ON)
-> +#define genpd_boot_keep_on(genpd)      (!(genpd->boot_status == GENPD_STATE_OFF))
+> diff --git a/drivers/soc/qcom/qcom_pstore_minidump.c b/drivers/soc/qcom/qcom_pstore_minidump.c
+> index 8d58500..c2bba4e 100644
+> --- a/drivers/soc/qcom/qcom_pstore_minidump.c
+> +++ b/drivers/soc/qcom/qcom_pstore_minidump.c
+> @@ -11,6 +11,8 @@
+>   #include <linux/pstore_ram.h>
+>   #include <soc/qcom/qcom_minidump.h>
+>   
+> +#define QCOM_PSTORE_TYPE_MAX	4
+Unused
+> +
+>   struct qcom_ramoops_config {
+>   	unsigned long	record_size;
+>   	unsigned long	console_size;
+> @@ -24,6 +26,11 @@ struct qcom_ramoops_config {
+>   struct qcom_ramoops_dd {
+>   	struct ramoops_platform_data qcom_ramoops_pdata;
+>   	struct platform_device *ramoops_pdev;
+> +	struct device *dev;
+> +	struct qcom_apss_minidump_region *record_region;
 
-This seems a bit unnecessarily complicated. Can't we just use bool in
-the genpd struct, to track whether we should allow powering off or
-not, based upon the boot condition.
+In the pstore driver record_size is used to split the KDMESG region into 
+different chunks.
 
->  #define genpd_is_irq_safe(genpd)       (genpd->flags & GENPD_FLAG_IRQ_SAFE)
->  #define genpd_is_always_on(genpd)      (genpd->flags & GENPD_FLAG_ALWAYS_ON)
->  #define genpd_is_active_wakeup(genpd)  (genpd->flags & GENPD_FLAG_ACTIVE_WAKEUP)
-> @@ -654,6 +655,29 @@ static void genpd_queue_power_off_work(struct generic_pm_domain *genpd)
->         queue_work(pm_wq, &genpd->power_off_work);
->  }
->
-> +/**
-> + * pm_genpd_power_off_unused_sync_state - Power off all domains for provider.
-> + * @dev: Provider's device.
-> + *
-> + * Request power off for all unused domains of the provider.
-> + * This should be used exclusively as sync state callback for genpd providers.
-> + */
-> +void pm_genpd_power_off_unused_sync_state(struct device *dev)
+There's no "record" region anywhere in RAM that should be preserved, it 
+should instead be the dmesg_region.
+
+> +	struct qcom_apss_minidump_region *console_region;
+> +	struct qcom_apss_minidump_region *pmsg_region;
+> +	struct qcom_apss_minidump_region *ftrace_region;
+>   };
+>   
+>   static struct qcom_ramoops_config default_ramoops_config = {
+> @@ -35,6 +42,64 @@ static struct qcom_ramoops_config default_ramoops_config = {
+>   };
+>   
+>   static struct qcom_ramoops_dd *qcom_rdd;
+> +
+> +static int
+> +__qcom_ramoops_minidump_region_register(struct qcom_apss_minidump_region *md_region,
+> +					const char *name, phys_addr_t phys_addr,
+> +					unsigned long size)
 > +{
-> +       struct generic_pm_domain *genpd;
+> +	int ret;
 > +
-> +       mutex_lock(&gpd_list_lock);
+> +	if (!size)
+> +		return 0;
 > +
-> +       list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-
-It looks like we need the of_genpd_mutex here as well, as it's really
-the list of providers that we want to protect too.
-
-> +               if (genpd->provider->dev == dev && genpd_boot_keep_on(genpd)) {
-> +                       genpd->boot_status = GENPD_STATE_OFF;
-
-This needs to be done while holding the genpd's lock.
-
-> +                       genpd_queue_power_off_work(genpd);
-> +               }
+> +	md_region = devm_kzalloc(qcom_rdd->dev, sizeof(*md_region), GFP_KERNEL);
+> +	if (!md_region)
+> +		return -ENOMEM;
 > +
-> +       mutex_unlock(&gpd_list_lock);
+> +	strlcpy(md_region->name, name, sizeof(md_region->name));
+> +	md_region->phys_addr = phys_addr;
+> +	md_region->virt_addr = phys_to_virt(phys_addr);
+> +	md_region->size = size;
+> +	ret = qcom_apss_minidump_region_register(md_region);
+> +	if (ret)
+> +		dev_err(qcom_rdd->dev,
+> +			"failed to add %s in minidump: err: %d\n", name, ret);
+> +
+> +	return ret;
 > +}
-> +EXPORT_SYMBOL_GPL(pm_genpd_power_off_unused_sync_state);
 > +
->  /**
->   * genpd_power_off - Remove power from a given PM domain.
->   * @genpd: PM domain to power down.
-> @@ -674,6 +698,12 @@ static int genpd_power_off(struct generic_pm_domain *genpd, bool one_dev_on,
->         unsigned int not_suspended = 0;
->         int ret;
->
-> +       /*
-> +        * If the domain was left enabled at boot stage,
-> +        * abort power off until sync state is reached.
-> +        */
-> +       if (genpd_boot_keep_on(genpd))
-> +               return -EBUSY;
->         /*
->          * Do not try to power off the domain in the following situations:
->          * (1) The domain is already in the "power off" state.
-> @@ -763,6 +793,12 @@ static int genpd_power_on(struct generic_pm_domain *genpd, unsigned int depth)
->         struct gpd_link *link;
->         int ret = 0;
->
-> +       /*
-> +        * Just in case this is the first power on request, mark the boot
-> +        * status of it as 'off'.
-> +        */
-> +       genpd->boot_status = GENPD_STATE_OFF;
+> +static int
+> +qcom_ramoops_minidump_region_register(struct ramoops_platform_data *qcom_ramoops_data)
+> +{
+> +	phys_addr_t phys_addr;
+> +	int ret = 0;
 > +
->         if (genpd_status_on(genpd))
->                 return 0;
->
-> @@ -1095,8 +1131,16 @@ static int __init genpd_power_off_unused(void)
->
->         mutex_lock(&gpd_list_lock);
->
-> +       /*
-> +        * If the provider has registered a 'sync state' callback,
-> +        * assume that callback will power off its registered unused domains,
-> +        * otherwise we power them off from here.
-> +        */
->         list_for_each_entry(genpd, &gpd_list, gpd_list_node)
-> -               genpd_queue_power_off_work(genpd);
-> +               if (!dev_has_sync_state(&genpd->dev)) {
+> +	phys_addr = qcom_ramoops_data->mem_address;
+> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->record_region,
+> +			"KDMESG", phys_addr, qcom_ramoops_data->record_size);
 
-The genpd->dev isn't really the one that is used by the genpd provider
-driver, hence this doesn't work.
+You can't use record_size here as it's not the actual size of the dmesg 
+region.
 
-In the code you introduced above, you used the "genpd->provider->dev",
-which is probably what we want here too, right?
+The size is calculated in fs/pstore/ram.c as mem_size - console_size - 
+ftrace_size - pmsg_size, where mem_size is the size on the ramoops 
+memory region in the devicetree.
 
-> +                       genpd->boot_status = GENPD_STATE_OFF;
+Since the actual size is never exposed by the pstore driver you have to 
+re-purpose the same logic in this driver, hoping it never changes.
 
-Updating this needs to be protected by the genpd's lock.
-
-> +                       genpd_queue_power_off_work(genpd);
-> +               }
-
-The above said - I am concerned about having to hold each genpd's lock
-in this path.
-
-I realize that we need to update the genpd->boot_status at some point,
-but let me think a bit if we can do that in a slightly better way,
-without holding all the locks.
-
->
->         mutex_unlock(&gpd_list_lock);
->
-> @@ -1124,6 +1168,9 @@ static void genpd_sync_power_off(struct generic_pm_domain *genpd, bool use_lock,
->  {
->         struct gpd_link *link;
->
-> +       if (genpd_boot_keep_on(genpd))
-> +               return;
+> +	if (ret)
+> +		return ret;
 > +
->         if (!genpd_status_on(genpd) || genpd_is_always_on(genpd))
->                 return;
->
-> @@ -2064,7 +2111,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
->         genpd->gov = gov;
->         INIT_WORK(&genpd->power_off_work, genpd_power_off_work_fn);
->         atomic_set(&genpd->sd_count, 0);
-> -       genpd->status = boot_status;
-> +       genpd->status = genpd->boot_status = boot_status;
->         genpd->device_count = 0;
->         genpd->provider = NULL;
->         genpd->has_provider = false;
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index c545e44ee52b..86bb531a319c 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -132,6 +132,7 @@ struct generic_pm_domain {
->         const char *name;
->         atomic_t sd_count;      /* Number of subdomains with power "on" */
->         enum gpd_status status; /* Current state of the domain */
-> +       enum gpd_status boot_status;    /* Boot state of the domain */
->         unsigned int device_count;      /* Number of devices */
->         unsigned int suspended_count;   /* System suspend device counter */
->         unsigned int prepared_count;    /* Suspend counter of prepared devices */
-> @@ -233,6 +234,7 @@ int pm_genpd_init(struct generic_pm_domain *genpd,
->                   struct dev_power_governor *gov,
->                   enum gpd_status boot_status);
->  int pm_genpd_remove(struct generic_pm_domain *genpd);
-> +void pm_genpd_power_off_unused_sync_state(struct device *dev);
->  int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state);
->  int dev_pm_genpd_add_notifier(struct device *dev, struct notifier_block *nb);
->  int dev_pm_genpd_remove_notifier(struct device *dev);
-> @@ -281,6 +283,9 @@ static inline int pm_genpd_remove(struct generic_pm_domain *genpd)
->         return -EOPNOTSUPP;
->  }
->
-> +static inline void pm_genpd_power_off_unused_sync_state(struct device *dev)
-> +{ }
+> +	phys_addr += qcom_ramoops_data->record_size;
+> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->console_region,
+> +			"KCONSOLE", phys_addr, qcom_ramoops_data->console_size);
+> +	if (ret)
+> +		return ret;
 > +
->  static inline int dev_pm_genpd_set_performance_state(struct device *dev,
->                                                      unsigned int state)
->  {
+> +	phys_addr += qcom_ramoops_data->console_size;
+> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->pmsg_region,
+> +			"KPMSG", phys_addr, qcom_ramoops_data->pmsg_size);
+> +	if (ret)
+> +		return ret;
+> +
+> +	phys_addr += qcom_ramoops_data->pmsg_size;
+> +	ret = __qcom_ramoops_minidump_region_register(qcom_rdd->ftrace_region,
+> +			"KFTRACE", phys_addr, qcom_ramoops_data->ftrace_size);
+> +
+> +	return ret;
+> +}
+> +
+>   static int qcom_ramoops_probe(struct platform_device *pdev)
+>   {
+>   	struct device_node *of_node = pdev->dev.of_node;
+> @@ -59,6 +124,7 @@ static int qcom_ramoops_probe(struct platform_device *pdev)
+>   	if (!qcom_rdd)
+>   		return -ENOMEM;
+>   
+> +	qcom_rdd->dev = &pdev->dev;
+>   	cfg = of_device_get_match_data(&pdev->dev);
+>   	if (!cfg) {
+>   		dev_err(&pdev->dev, "failed to get supported matched data\n");
+> @@ -81,13 +147,25 @@ static int qcom_ramoops_probe(struct platform_device *pdev)
+>   		ret = PTR_ERR(qcom_rdd->ramoops_pdev);
+>   		dev_err(&pdev->dev, "could not create platform device: %ld\n", ret);
+>   		qcom_rdd->ramoops_pdev = NULL;
+> +		return ret;
+>   	}
+>   
+> -	return ret;
+> +	return qcom_ramoops_minidump_region_register(pdata);
+>   }
+>   
+>   static int qcom_ramoops_remove(struct platform_device *pdev)
+>   {
+> +	struct ramoops_platform_data *pdata;
+> +
+> +	pdata = &qcom_rdd->qcom_ramoops_pdata;
+> +	if (pdata->record_size)
+> +		qcom_apss_minidump_region_unregister(qcom_rdd->record_region);
+> +	if (pdata->console_size)
+> +		qcom_apss_minidump_region_unregister(qcom_rdd->console_region);
+> +	if (pdata->pmsg_size)
+> +		qcom_apss_minidump_region_unregister(qcom_rdd->pmsg_region);
+> +	if (pdata->ftrace_size)
+> +		qcom_apss_minidump_region_unregister(qcom_rdd->ftrace_region);
+>   	platform_device_unregister(qcom_rdd->ramoops_pdev);
+>   	qcom_rdd->ramoops_pdev = NULL;
+>   
 
-Kind regards
-Uffe
+Regards,
+
+Luca Stefani
+
