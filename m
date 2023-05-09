@@ -2,166 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BBCF6FC1A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 10:23:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B5036FC1D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 10:37:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234427AbjEIIXg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 04:23:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40038 "EHLO
+        id S234427AbjEIIhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 04:37:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235002AbjEIIXU (ORCPT
+        with ESMTP id S232838AbjEIIhy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 04:23:20 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90B06469D
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 01:23:09 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f41dceb93bso19630685e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 01:23:09 -0700 (PDT)
+        Tue, 9 May 2023 04:37:54 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50BFE55B8
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 01:37:52 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f42c86543bso1942225e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 01:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683620588; x=1686212588;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=j9JYCKCf1vXfiWnciejpaoAckqnOG85wqGdoyhe4Y6g=;
-        b=a/kSkitMC1bsP3pwDE+s05+7P5ZumP5gM3wQUb1kFeg1m6KY2HyeIn2ADTpXMf6SnQ
-         4vDa3njYrxESupeKPSN8v5QOWoTFu2oo2N1IJ0sELwcpo3N3NojCfjPH8oALMonKTep5
-         w7qRq5CJFmZK93k453qDCQ3h+QKcKqLp0QGJMDqhxVsCjuZ+Pr9dNRl6/gpSM8HPUMVw
-         ivdA+hgL0B+FI/xXOemTY3Lp8Fd4rI7vYacRnDJnGwtElycBwYRQxhp1/mhxZs7CD0Xq
-         HllSICr0ukwg/e9A9K3JxVpz7buDVIvq0s+l4YgtHJmAYfoGcY03KJBWJUy70I9jkG7C
-         oLYw==
+        d=linaro.org; s=google; t=1683621471; x=1686213471;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oaH5bMyyF/pRBIEeFPGeW8T3yMB7Pu8EJCEKG63OvYQ=;
+        b=OivsJeqlYDQKXvjGnGzWbFoyvy4TxHfVcnOhnrQ4+WfFGt0Rolo4waPg8tkZnR9B1L
+         SHzR++dleWUsyYZi9aqrvdv89xfLYQOY1I+fS0NCwqJvnOM929eh1hrEwiAvSJJuzFYO
+         Yo/GTqy7E3VMjEqrQQ0gGaSn2q+lZRtjS2D+yV1IUFbjjc22mJp5WclnIQrZB0+ltSU5
+         SFXRqSYrC4KUSRYpeOSpmAVUhElcoLTDAZ/A9et9sFGCzUnpSesJV8qV5ADYoTbxVYZ4
+         ZWaynBbhmu3AH5ClKb0QcSEobnSfZXesTBL/lyXqg+0dtuEV1RGy+CF/XBN+A5M9K8P2
+         xpKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683620588; x=1686212588;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j9JYCKCf1vXfiWnciejpaoAckqnOG85wqGdoyhe4Y6g=;
-        b=XCPhr6lw9BR4eTvYi8AxyuysZAq8G2O4imzl5tAvjNbfG9DS2tywZbpqCFdLL/9Ujg
-         Ht6G6N9OrZpuezwdKKgULI6EqIn0m9ywhKNzqBEAkE1VpN+yPA1izw8mXEM2QW2ZFU4Q
-         vvNrHEkRGwQ+E6E8s64D09iVoxz17CVL4X3lkpj9mlsmFtYgqPwWxNuqDw4WjjZHNuoD
-         ZJ5AC0gtxVrpm0ZL7cT5NcF3otn3MoNXip7EkFzQXYRbbum2p4DoM/5FtE9fUPWaSjNX
-         SS9b+6YWp3bVDdBq283HvxbEWJjVsyo/LgvhS3/MicVCPpU3akpZZP+DogpjzNSYQjRO
-         fdwA==
-X-Gm-Message-State: AC+VfDzHWaSPhWH1kIdqpoZAsANiMtlS/UbC0eyuv6xi6O61cMYX0vTE
-        aEGGXkZM2rJirYNzKIUTbDLPNw==
-X-Google-Smtp-Source: ACHHUZ54f2i9McLhYrAjMcUVxDpqqTAmjHfyYouggBiIHlZFhtc+t/XPoQYc8FODcWIsZ0xzURMJ8g==
-X-Received: by 2002:a1c:f615:0:b0:3f1:952c:3c70 with SMTP id w21-20020a1cf615000000b003f1952c3c70mr8125203wmc.40.1683620587575;
-        Tue, 09 May 2023 01:23:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:79ab:8da0:d16d:9990? ([2a01:e0a:982:cbb0:79ab:8da0:d16d:9990])
-        by smtp.gmail.com with ESMTPSA id r9-20020a5d4e49000000b003047ea78b42sm13401361wrt.43.2023.05.09.01.23.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 01:23:07 -0700 (PDT)
-Message-ID: <44c47800-0913-b122-77ae-5ce0e5d4b443@linaro.org>
-Date:   Tue, 9 May 2023 10:23:06 +0200
+        d=1e100.net; s=20221208; t=1683621471; x=1686213471;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oaH5bMyyF/pRBIEeFPGeW8T3yMB7Pu8EJCEKG63OvYQ=;
+        b=WnDpnabuHozTBwxGAQnpWto8gpG4dH2PKOvW8HfAXzR1bn0vanKd1HVUO/bnVhbCbc
+         Ic/aOrWumh9FMQonRM1uZBya4VJ+ZYzlgUhp6FBOaQNx3kaPcrcoebwx5t+6ez/KmuUV
+         lo3tIMDUZzQnEiolwYeOGYd+LfBQAUT1byxygOuUK02B1kiWJ7UnRmeZEAg0q7yg/TrC
+         Lw7k0zWvvCBfNhWyZm5pUpNuYOCAtzazcz9HY/+ykuMcJC7WnmKCTARZ4XOh81gxXd4s
+         ZUFokp6uSOalDaGvynLc5EIYrSxW453Dbc+0wZQNxol4oI5uXlHLG4MdKLr0QifYX83s
+         oCZw==
+X-Gm-Message-State: AC+VfDyhgBFFtUV4QpO6FnzXgnzgHA9Y5u1hvfysWSOVJsACJFLizVK5
+        jmcAtt0+ICivjXxW3TFyX7Gz4J6lNl8T8vK//tk/5Mw8bYcFlEmx7V8=
+X-Google-Smtp-Source: ACHHUZ6t1Dtc91VFmGEDmqG1U5Gv9JfMO9EgpE482ZrIfsgizHH8p9LdXOKrvqucABNkj0B5Ae0xikR2XNzeSiSGUFM=
+X-Received: by 2002:a1c:f209:0:b0:3f1:92aa:4eb8 with SMTP id
+ s9-20020a1cf209000000b003f192aa4eb8mr8835278wmc.16.1683621470712; Tue, 09 May
+ 2023 01:37:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/4] drm/msm/dsi: Fix compressed word count calculation
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-2-6bc6f03ae735@quicinc.com>
- <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
- <32d473a6-f7a5-9aa6-85cf-0f77f1c071ce@quicinc.com>
- <4cf2e9ab-7e08-fb26-d924-8ea8141d9f58@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <4cf2e9ab-7e08-fb26-d924-8ea8141d9f58@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230509030136.1524860-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20230509030136.1524860-1-quic_bjorande@quicinc.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Tue, 9 May 2023 14:07:39 +0530
+Message-ID: <CAH=2NtzV8JYAGvHgpimjFuGvB2TTXMvhjoAvR5hJ7ma_ZG35CA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: mmc: sdhci-msm: Document SC8280XP SDHCI
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/05/2023 01:27, Dmitry Baryshkov wrote:
-> On 08/05/2023 23:09, Abhinav Kumar wrote:
->>
->>
->> On 5/3/2023 1:26 AM, Dmitry Baryshkov wrote:
->>> On 03/05/2023 04:19, Jessica Zhang wrote:
->>>> Currently, word count is calculated using slice_count. This is incorrect
->>>> as downstream uses slice per packet, which is different from
->>>> slice_count.
->>>>
->>>> Slice count represents the number of soft slices per interface, and its
->>>> value will not always match that of slice per packet. For example, it is
->>>> possible to have cases where there are multiple soft slices per interface
->>>> but the panel specifies only one slice per packet.
->>>>
->>>> Thus, use the default value of one slice per packet and remove slice_count
->>>> from the word count calculation.
->>>>
->>>> Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to compute word count")
->>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>> ---
->>>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++++++++-
->>>>   1 file changed, 8 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>> index 35c69dbe5f6f..b0d448ffb078 100644
->>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>> @@ -996,7 +996,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>           if (!msm_host->dsc)
->>>>               wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
->>>>           else
->>>> -            wc = msm_host->dsc->slice_chunk_size * msm_host->dsc->slice_count + 1;
->>>> +            /*
->>>> +             * When DSC is enabled, WC = slice_chunk_size * slice_per_packet + 1.
->>>> +             * Currently, the driver only supports default value of slice_per_packet = 1
->>>> +             *
->>>> +             * TODO: Expand drm_panel struct to hold slice_per_packet info
->>>> +             *       and adjust DSC math to account for slice_per_packet.
->>>
->>> slice_per_packet is not a part of the standard DSC, so I'm not sure how that can be implemented. And definitely we should not care about the drm_panel here. It should be either a part of drm_dsc_config, or mipi_dsi_device.
->>>
->>
->> This is not correct.
->>
->> It is part of the DSI standard (not DSC standard). Please refer to Figure 40 "One Line Containing One Packet with Data from One or More Compressed Slices" and Figure 41 "One Line Containing More than One Compressed Pixel Stream Packet".
-> 
-> I have reviewed section 8.8.24 and Annex D of the DSI standard.
-> 
-> It is not clear to me, if we can get away with always using slice_per_packet = 1. What is the DSI sink's difference between Fig. 40.(b) and Fig 41?
-> 
-> Are there are known panels that require slice_per_packet != 1? If so, we will have to implement support for such configurations.
-> 
->> This has details about this. So I still stand by my point that this should be in the drm_panel.
-> 
-> Note, the driver doesn't use drm_panel directly. So slices_per_packet should go to mipi_dsi_device instead (which in turn can be filled from e.g. drm_panel or from any other source).
+On Tue, 9 May 2023 at 08:31, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
+> Add compatible for the SDHCI block found in SC8280XP.
+>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index 4f2d9e8127dd..9a87c03937c7 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -41,6 +41,7 @@ properties:
+>                - qcom,qcs404-sdhci
+>                - qcom,sc7180-sdhci
+>                - qcom,sc7280-sdhci
+> +              - qcom,sc8280xp-sdhci
+>                - qcom,sdm630-sdhci
+>                - qcom,sdm670-sdhci
+>                - qcom,sdm845-sdhci
+> --
+> 2.25.1
 
-This is a big question, where should we set those parameters ?
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
-It's an even bigger questions for panels optionally supporting DSC in Video or Command mode (like the vtdr6130),
-how to select DSC or not ? DT is not an option.
-
-Those should tied to a panel+controller tuple.
-
-Neil
-
-> 
->>
->>>> +             */
->>>> +            wc = msm_host->dsc->slice_chunk_size + 1;
->>>>           dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->>>>               DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
->>>>
->>>
-> 
-
+Thanks.
