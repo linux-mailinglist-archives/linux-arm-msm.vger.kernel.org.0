@@ -2,173 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3B3D6FC21E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 10:55:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BA506FC265
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 11:09:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234772AbjEIIzG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 04:55:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57740 "EHLO
+        id S234462AbjEIJJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 05:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234156AbjEIIzE (ORCPT
+        with ESMTP id S234838AbjEIJJw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 04:55:04 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EE781BC6
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 01:55:03 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f13dafd5dcso6164114e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 01:55:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683622501; x=1686214501;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4YxxQK+wiM5yVyNgpMSG0TOEJ7YD/+lVYXEmRXzy+30=;
-        b=ZkXjB1V/I/WymHc2O3RDo+lAYrY4Wwc/jzzWCequ7uArQ0y9Ye3NvI3nA23y+IvEqh
-         9bM7sqdkfFEc7mcHfWOgc4K58gM0Zc3spzyrnqSX06pKjJ0NozMQffftFI+yQurYagsJ
-         DW68CBmIs05+dYyqglEtgHn9roqdTX9VlvzzYuL5UfsnMJ0BLhVihikHvI6y6yjCtpBt
-         4MkYAT++4CQNyFv3zacRh88YzVlBZCfMVd5G/1lszMQEmYuykHjvvj408T5fQt9at6+3
-         ymhppjNkxd0zKsR9dHx5FFnonNBP/zBnamsFTcMCmCy/Cn6kcFBUG4yRe6VCtS3pw77M
-         GGvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683622501; x=1686214501;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4YxxQK+wiM5yVyNgpMSG0TOEJ7YD/+lVYXEmRXzy+30=;
-        b=HEoT0POPeW+Cwq3uxsHRCkKuSbqf/IfBPcSbwKVaY+b+NPAZk11t24MBGlK7fetbBP
-         nAFGk1JODKDcHzPFhJXbAlJ4TIFJkyauqki1kMPN3+WMIgANLhtbc6VCcJESJ8PmhmhG
-         bUTSEpsRIrHfuD67s6U3IbgQqGtDK2N/lJ/h3OCmvd7pegIyHvYdIzvP7IoCtDgtZsmw
-         ITZ+ImgIsW2QAaqKZZNImxMx3oea4V9LhvleDHuSLAFQtsPwAc2RSivgjTdHWKW7bjq8
-         vJJh1Tb9ChAta1dtvdF8n1tsYQ5PVsBZhCd2LenEUGb74dxHgVj5JAX2KLB1Bwli8h38
-         hOgg==
-X-Gm-Message-State: AC+VfDyItpJQzjO4umR9qx9Ekss38UeYhlq9zTrGjx88v2MNFVucwkFP
-        +pzy66i0p+S+ULqh5OUu2wBu8w==
-X-Google-Smtp-Source: ACHHUZ5U2haqvrGbrOgHYCkNQpbTQe9E93ardKbOmdf6oDwOCZB7eVND5mvGrgfShBowxHJLzQQTqg==
-X-Received: by 2002:a05:6512:484:b0:4cb:280b:33c9 with SMTP id v4-20020a056512048400b004cb280b33c9mr645975lfq.24.1683622501072;
-        Tue, 09 May 2023 01:55:01 -0700 (PDT)
-Received: from [192.168.1.101] (abyl248.neoplus.adsl.tpnet.pl. [83.9.31.248])
-        by smtp.gmail.com with ESMTPSA id q22-20020ac24a76000000b004f13bc97b00sm272740lfp.119.2023.05.09.01.54.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 01:55:00 -0700 (PDT)
-Message-ID: <cd8cfbd5-1bde-08d8-dbb5-5489820d6a45@linaro.org>
-Date:   Tue, 9 May 2023 10:54:59 +0200
+        Tue, 9 May 2023 05:09:52 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F19D2;
+        Tue,  9 May 2023 02:09:50 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3497wi1W024934;
+        Tue, 9 May 2023 09:09:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2jjYTW2QY7LaQiGHgOA8YEiVll5kvVeAt8E4zatt5z0=;
+ b=eymY5OterDkErlO6yOonDwRtpsW6GEqkTWrrZQRaoVOzTed0rdR7xeYOqzjHv19jh5Pb
+ ELu+bD9qMd+GtyxMobkGG/mUry0u20Q4v+hNkc9YH35AJHo8ylCEzG2DG4TSuNGVYvg/
+ s/zJX60Gv8tQ9YZmcoyWJO1hJO1/8LJsZ66YBFT6w7qPGRmkcrUbCvEpoj0CifPdliWP
+ sNZVXV8r6zOGRaJwos1xMDv6rBlyYD/8h5pvRrqlgg7qYGkDukOzgrZWtKEiuTtU3ZbW
+ iY7JfrgnWmBvLucSdVgwsiC+zITt+LFfPUq0vIcZKRE8bIGNvVDcpQpSo2VcobqhDBFV 2g== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf78ps80b-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 09 May 2023 09:09:45 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34999ihb014166
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 9 May 2023 09:09:44 GMT
+Received: from [10.216.33.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
+ 02:09:39 -0700
+Message-ID: <2d60886f-a731-ee29-dd2e-1a1438bd7d03@quicinc.com>
+Date:   Tue, 9 May 2023 14:39:36 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 2/4] drm/msm/dsi: Fix compressed word count calculation
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 2/4] dt-bindings: clock: Add GCC bindings support for
+ SDX75
 Content-Language: en-US
-To:     neil.armstrong@linaro.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-2-6bc6f03ae735@quicinc.com>
- <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
- <32d473a6-f7a5-9aa6-85cf-0f77f1c071ce@quicinc.com>
- <4cf2e9ab-7e08-fb26-d924-8ea8141d9f58@linaro.org>
- <44c47800-0913-b122-77ae-5ce0e5d4b443@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <44c47800-0913-b122-77ae-5ce0e5d4b443@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Michael Turquette <mturquette@baylibre.com>
+CC:     <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_rohiagar@quicinc.com>, <netdev@vger.kernel.org>
+References: <20230419133013.2563-1-quic_tdas@quicinc.com>
+ <20230419133013.2563-3-quic_tdas@quicinc.com>
+ <3b7394e1-1be7-ec38-61bd-708a624070ac@linaro.org>
+From:   Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <3b7394e1-1be7-ec38-61bd-708a624070ac@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: nzuZDC-rN7_ZBwO-wxLot06H_egbKl9p
+X-Proofpoint-GUID: nzuZDC-rN7_ZBwO-wxLot06H_egbKl9p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-09_05,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
+ bulkscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0
+ impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305090070
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Thanks for the review.
 
+On 4/19/2023 11:41 PM, Krzysztof Kozlowski wrote:
+> On 19/04/2023 15:30, Taniya Das wrote:
+>> From: Imran Shaik <quic_imrashai@quicinc.com>
+>>
+> 
+> Thank you for your patch. There is something to discuss/improve.
+> 
+>> Add support for GCC bindings and update documentation for
+>> clock rpmh driver for SDX75.
+> 
+> Subject: drop second/last, redundant "bindings support for". The
+> "dt-bindings" prefix is already stating that these are bindings.
+> But missing vendor name (Qualcomm). Both in subject and commit msg.
+> 
+> 
 
-On 9.05.2023 10:23, Neil Armstrong wrote:
-> On 09/05/2023 01:27, Dmitry Baryshkov wrote:
->> On 08/05/2023 23:09, Abhinav Kumar wrote:
->>>
->>>
->>> On 5/3/2023 1:26 AM, Dmitry Baryshkov wrote:
->>>> On 03/05/2023 04:19, Jessica Zhang wrote:
->>>>> Currently, word count is calculated using slice_count. This is incorrect
->>>>> as downstream uses slice per packet, which is different from
->>>>> slice_count.
->>>>>
->>>>> Slice count represents the number of soft slices per interface, and its
->>>>> value will not always match that of slice per packet. For example, it is
->>>>> possible to have cases where there are multiple soft slices per interface
->>>>> but the panel specifies only one slice per packet.
->>>>>
->>>>> Thus, use the default value of one slice per packet and remove slice_count
->>>>> from the word count calculation.
->>>>>
->>>>> Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size to compute word count")
->>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>> ---
->>>>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++++++++-
->>>>>   1 file changed, 8 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> index 35c69dbe5f6f..b0d448ffb078 100644
->>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>> @@ -996,7 +996,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>>           if (!msm_host->dsc)
->>>>>               wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
->>>>>           else
->>>>> -            wc = msm_host->dsc->slice_chunk_size * msm_host->dsc->slice_count + 1;
->>>>> +            /*
->>>>> +             * When DSC is enabled, WC = slice_chunk_size * slice_per_packet + 1.
->>>>> +             * Currently, the driver only supports default value of slice_per_packet = 1
->>>>> +             *
->>>>> +             * TODO: Expand drm_panel struct to hold slice_per_packet info
->>>>> +             *       and adjust DSC math to account for slice_per_packet.
->>>>
->>>> slice_per_packet is not a part of the standard DSC, so I'm not sure how that can be implemented. And definitely we should not care about the drm_panel here. It should be either a part of drm_dsc_config, or mipi_dsi_device.
->>>>
->>>
->>> This is not correct.
->>>
->>> It is part of the DSI standard (not DSC standard). Please refer to Figure 40 "One Line Containing One Packet with Data from One or More Compressed Slices" and Figure 41 "One Line Containing More than One Compressed Pixel Stream Packet".
->>
->> I have reviewed section 8.8.24 and Annex D of the DSI standard.
->>
->> It is not clear to me, if we can get away with always using slice_per_packet = 1. What is the DSI sink's difference between Fig. 40.(b) and Fig 41?
->>
->> Are there are known panels that require slice_per_packet != 1? If so, we will have to implement support for such configurations.
->>
->>> This has details about this. So I still stand by my point that this should be in the drm_panel.
->>
->> Note, the driver doesn't use drm_panel directly. So slices_per_packet should go to mipi_dsi_device instead (which in turn can be filled from e.g. drm_panel or from any other source).
-> 
-> This is a big question, where should we set those parameters ?
-> 
-> It's an even bigger questions for panels optionally supporting DSC in Video or Command mode (like the vtdr6130),
-> how to select DSC or not ? DT is not an option.
-Compressed vs uncompressed modes, maybe? Would be nice to make this
-togglable from userspace.. But then it may not scale for panels with e.g.
-10 resolutions, all cmd/vid/dsc/nodsc
+All the below comments will be taken care in the next patchset.
 
+> 
+>>
+>> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> ---
+>>   .../bindings/clock/qcom,gcc-sdx75.yaml        |  69 +++++++
+>>   .../bindings/clock/qcom,rpmhcc.yaml           |   1 +
+>>   include/dt-bindings/clock/qcom,gcc-sdx75.h    | 193 ++++++++++++++++++
+>>   3 files changed, 263 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml
+>>   create mode 100644 include/dt-bindings/clock/qcom,gcc-sdx75.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml
+>> new file mode 100644
+>> index 000000000000..6489d857d5c4
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sdx75.yaml
+> 
+> All new devices come as SoC-IP, so qcom,sdx75-gcc
+> 
+>> @@ -0,0 +1,69 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/clock/qcom,gcc-sdx75.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Global Clock & Reset Controller on SDX75
+>> +
+>> +maintainers:
+>> +  - Imran Shaik <quic_imrashai@quicinc.com>
+>> +  - Taniya Das <quic_tdas@quicinc.com>
+>> +
+>> +description: |
+>> +  Qualcomm global clock control module provides the clocks, resets and power
+>> +  domains on SDX75
+>> +
+>> +  See also:: include/dt-bindings/clock/qcom,gcc-sdx75.h
+> 
+> Also hee
+> 
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,gcc-sdx75
+> 
+> Also here
+> 
+>> +
+>> +  clocks:
+>> +    items:
+>> +      - description: Board XO source
+>> +      - description: PCIE20 phy aux clock source
+>> +      - description: PCIE_1 Pipe clock source
+>> +      - description: PCIE_2 Pipe clock source
+>> +      - description: PCIE Pipe clock source
+>> +      - description: Sleep clock source
+>> +      - description: USB3 phy wrapper pipe clock source
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: bi_tcxo
+>> +      - const: pcie20_phy_aux_clk
+>> +      - const: pcie_1_pipe_clk
+>> +      - const: pcie_2_pipe_clk
+>> +      - const: pcie_pipe_clk
+>> +      - const: sleep_clk
+>> +      - const: usb3_phy_wrapper_gcc_usb30_pipe_clk
+> 
+> Drop clock names entirely.
+> 
+>> +
+>> +required:
+>> +  - compatible
+>> +  - clocks
+>> +  - clock-names
+>> +
+>> +allOf:
+>> +  - $ref: qcom,gcc.yaml#
+>> +
+>> +unevaluatedProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,rpmh.h>
+>> +    clock-controller@80000 {
+>> +      compatible = "qcom,gcc-sdx75";
+>> +      reg = <0x80000 0x1f7400>;
+>> +      clocks = <&rpmhcc RPMH_CXO_CLK>, <&pcie20_phy_aux_clk>, <&pcie_1_pipe_clk>,
+>> +               <&pcie_2_pipe_clk>, <&pcie_pipe_clk>, <&sleep_clk>,
+>> +               <&usb3_phy_wrapper_gcc_usb30_pipe_clk>;
+>> +      clock-names = "bi_tcxo", "pcie20_phy_aux_clk", "pcie_1_pipe_clk",
+>> +                    "pcie_2_pipe_clk", "pcie_pipe_clk", "sleep_clk",
+>> +                    "usb3_phy_wrapper_gcc_usb30_pipe_clk";
+>> +      #clock-cells = <1>;
+>> +      #reset-cells = <1>;
+>> +      #power-domain-cells = <1>;
+>> +    };
+>> +...
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+>> index d5a250b7c2af..267cf8c26823 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+>> @@ -27,6 +27,7 @@ properties:
+>>         - qcom,sdm845-rpmh-clk
+>>         - qcom,sdx55-rpmh-clk
+>>         - qcom,sdx65-rpmh-clk
+>> +      - qcom,sdx75-rpmh-clk
+> 
+> Separate patch.
+> 
+> 
+>>         - qcom,sm6350-rpmh-clk
+>>         - qcom,sm8150-rpmh-clk
+>>         - qcom,sm8250-rpmh-clk
+>> diff --git a/include/dt-bindings/clock/qcom,gcc-sdx75.h b/include/dt-bindings/clock/qcom,gcc-sdx75.h
+>> new file mode 100644
+>> index 000000000000..a470e8c4fd41
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,gcc-sdx75.h
+> 
+> qcom,sdx75-gcc
+> 
+>> @@ -0,0 +1,193 @@
+>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>> +/*
+>> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SDX75_H
+>> +#define _DT_BINDINGS_CLK_QCOM_GCC_SDX75_H
+>> +
+>> +/* GCC clocks */
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Konrad
-> 
-> Those should tied to a panel+controller tuple.
-> 
-> Neil
-> 
->>
->>>
->>>>> +             */
->>>>> +            wc = msm_host->dsc->slice_chunk_size + 1;
->>>>>           dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->>>>>               DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
->>>>>
->>>>
->>
-> 
+-- 
+Thanks & Regards,
+Taniya Das.
