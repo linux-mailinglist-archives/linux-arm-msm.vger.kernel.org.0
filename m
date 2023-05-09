@@ -2,442 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C64996FCB19
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:18:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE9EE6FCB6F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 18:37:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231467AbjEIQSc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 12:18:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43738 "EHLO
+        id S232313AbjEIQhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 12:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbjEIQSb (ORCPT
+        with ESMTP id S231228AbjEIQhU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 12:18:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3090646A2;
-        Tue,  9 May 2023 09:18:29 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349BW8Vj032004;
-        Tue, 9 May 2023 16:18:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=C1yltITvHm6+V9sJou1VjBUdYHedvQ1G0Q45b7NVnN4=;
- b=iW04eozuKAMYFsyEcx3PK+l4lX64sVZe+egaVePgpbC33cSMqzR3a+zPNYMAc02d7Xal
- rt1I59PPcbg5sJsub/7Eotaq4jupBvFOn5CW7CSfBc+9d/+MakQndKllSAg2zlsLxE7a
- A33udQweWnWorzpuomnpzYD/BVaaS8UYDCmDHpV0LIocCe4dv/Txo9ravtWhPhylvc2f
- rw4Vh/T9fqkvPMBv1+iqLJ6L8R9jM37I18+a/xyHM+G7pb//9GB+HfFkBQIKZVSaXME9
- ntuzG2wWnrmHNaS+lNQT2dAKBJvpxPfMR8dz415bIDG61irLgQXjIPgzC+yDFVHvhGqN uQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf781jb76-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 16:18:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 349GILj4021857
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 16:18:22 GMT
-Received: from [10.216.5.187] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
- 09:17:59 -0700
-Message-ID: <1ddb9ff9-2284-1f8b-69cc-e8d041a29ca1@quicinc.com>
-Date:   Tue, 9 May 2023 21:47:54 +0530
+        Tue, 9 May 2023 12:37:20 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7507240C9;
+        Tue,  9 May 2023 09:37:18 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-643bb9cdd6eso3660452b3a.1;
+        Tue, 09 May 2023 09:37:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683650238; x=1686242238;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TaDF8zy4btueLBSrY9dwMuQHd4N85rvewa4k8qv4+LA=;
+        b=j14RYjsAZP/vRadBipwj+/IsyNXcsgsIAhyw919XbStBA4kce3hQvKJ+cfxL4B2Fyk
+         xDslF7jbK8TYBzo3nv3M5tNKeJjYsIhGrvrv0UPaY8Lqtwx8ww8oFWZxQ5STMCvjOzoo
+         FdS2t9RdlZKcaR+m5JNWNFHI3+/DXPWurM/sx0TXEvdgNiU7+V1XnZ3pLh50ogSibyKq
+         OP+GfeN+rwBzfoUUSKlt5Frrt2rm4uGh7guDSGSq/qLjrguJp2+RNuCGEYuoQXZQ+t2q
+         im4ETpEyj3JKyhI6ChXApXKixbt+M5tce/JMfZdqk/T60jKy6V59XI1JaDR0WK9eW9N0
+         UtvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683650238; x=1686242238;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TaDF8zy4btueLBSrY9dwMuQHd4N85rvewa4k8qv4+LA=;
+        b=CqQfVHzJi3V1zFCGYq3Y8vsBvapDrFD+i0hsp1y5AjYo2FLFTO0Ff9/U5SuEKHZuwj
+         EFmjuZc135YCrvibNXUcR47MeilTv6hOZNGuv2DePl6gjdP0WzCSFtHafL913QGlFsca
+         vLCMBhb+YMuSA3vfrjxDXl7aP5qJwIHtfMpAyin8mpVXmeS9akL1RQKyGxspzJz7aRfn
+         rA94xJl6ahobdrLKL5Jy5TWVo9xx7sIQhidch8F6e66wExD6eOlQkwSmLqvssV2tjGGK
+         mFSZttcj/UoDfArt4g7VZG9pamYc0hjtJSwePZq5FqdeFI+ycQ1FjUouYgr312GadQsW
+         cyoQ==
+X-Gm-Message-State: AC+VfDzwVdelED4vy8/dgXT9hIUiw60rNhehCms183mmc4N0Cuup5aHX
+        RnIf1BWxRThKvxsDu8i5a9s=
+X-Google-Smtp-Source: ACHHUZ4Fw2eEX9sgR3Z4fMrQfqI4ebENqvBJull5h+TO+c/ePom2r4665yNHkpO6ibZvUcr5PA5kEQ==
+X-Received: by 2002:a05:6a21:6d88:b0:f2:fd1e:efc9 with SMTP id wl8-20020a056a216d8800b000f2fd1eefc9mr19258556pzb.5.1683650237508;
+        Tue, 09 May 2023 09:37:17 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id y9-20020a63de49000000b0051b7bcb6162sm1547873pgi.81.2023.05.09.09.37.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 May 2023 09:37:17 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Lepton Wu <lepton@chromium.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Emma Anholt <emma@anholt.net>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+        iommu@lists.linux.dev (open list:IOMMU SUBSYSTEM),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
+Date:   Tue,  9 May 2023 09:37:10 -0700
+Message-Id: <20230509163712.376117-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
- multipd model
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_gurus@quicinc.com>, <loic.poulain@linaro.org>,
-        <quic_eberman@quicinc.com>, <robimarko@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <quic_srichara@quicinc.com>,
-        <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
-References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
- <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
- <20230307142614.GA2742-robh@kernel.org>
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <20230307142614.GA2742-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WxJlulJhVGuV9feqI3M2tz29GapSrcu_
-X-Proofpoint-ORIG-GUID: WxJlulJhVGuV9feqI3M2tz29GapSrcu_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-09_09,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- suspectscore=0 clxscore=1015 mlxlogscore=999 malwarescore=0 mlxscore=0
- impostorscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305090133
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
+When the special handling of qcom,adreno-smmu was moved into
+qcom_smmu_create(), it was overlooked that we didn't have all the
+required entries in qcom_smmu_impl_of_match.  So we stopped getting
+adreno_smmu_priv on sc7180, breaking per-process pgtables.
 
-On 3/7/2023 7:56 PM, Rob Herring wrote:
-> On Tue, Mar 07, 2023 at 10:11:27AM +0530, Manikanta Mylavarapu wrote:
->> Add new binding document for multipd model remoteproc.
->> IPQ5018, IPQ9574 follows multipd model.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->>   .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
->>   1 file changed, 282 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->> new file mode 100644
->> index 000000000000..b788607f5abd
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->> @@ -0,0 +1,282 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/remoteproc/qcom,multipd-pil.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Multipd Secure Peripheral Image Loader
->> +
->> +maintainers:
->> +  - Bjorn Andersson <andersson@kernel.org>
->> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
->> +
->> +description:
->> +  Multipd Peripheral Image Loader loads firmware and boots Q6 pd, WCSS pd
->> +  remoteproc's on the Qualcomm IPQ5018, IPQ9574 SoC.
-> 
-> What is PD? I don't see it defined anywhere.
-> 
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,ipq5018-q6-mpd
->> +      - qcom,ipq9574-q6-mpd
->> +
->> +  '#address-cells': true
-> 
-> Need to define the size.
-> 
->> +
->> +  '#size-cells': true
-> 
-> ditto
-> 
->> +
->> +  'ranges': true
-> 
-> Don't need quotes
-> 
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  interrupts-extended:
-> 
-> Just 'interrupts'. Both forms are always supported.
-> 
->> +    items:
->> +      - description: Watchdog interrupt
->> +      - description: Fatal interrupt
->> +      - description: Ready interrupt
->> +      - description: Handover interrupt
->> +      - description: Stop acknowledge interrupt
->> +
->> +  interrupt-names:
->> +    items:
->> +      - const: wdog
->> +      - const: fatal
->> +      - const: ready
->> +      - const: handover
->> +      - const: stop-ack
->> +
->> +  clocks:
->> +    minItems: 25
->> +    maxItems: 25
-> 
-> You need to list out what the clocks are.
-> 
->> +
->> +  clock-names:
->> +    minItems: 25
->> +    maxItems: 25
->> +
->> +  assigned-clocks:
-> 
-> You can drop this. Implicitly supported.
->
-Clocks in multipd architecture will be handled by QDSP6 firmware.
-So i am going to remove clock handling.
+Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
+Suggested-by: Lepton Wu <lepton@chromium.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
->> +    minItems: 13
->> +    maxItems: 13
->> +
->> +  assigned-clock-rates:
->> +    minItems: 13
->> +    maxItems: 13
->> +
->> +  qcom,smem-states:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> 
-> I believe this already has a type. It should be defined in a common
-> schema if not already and then included in this schema.
-> 
->> +    description: States used by the AP to signal the remoteprocessor
->> +    items:
->> +      - description: Shutdown Q6
->> +      - description: Stop Q6
->> +
->> +  qcom,smem-state-names:
->> +    description:
->> +      Names of the states used by the AP to signal the remoteprocessor
->> +    items:
->> +      - const: shutdown
->> +      - const: stop
->> +
->> +  memory-region:
->> +    items:
->> +      - description: Q6 pd reserved region
->> +
->> +  glink-edge:
->> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
->> +    description:
->> +      Qualcomm G-Link subnode which represents communication edge, channels
->> +      and devices related to the Modem.
->> +
->> +patternProperties:
->> +  "^remoteproc_pd1|remoteproc_pd2|remoteproc_pd3":
->> +    type: object
->> +    description:
->> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
->> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
->> +      device node.
->> +
->> +    properties:
->> +      compatible:
->> +        enum:
->> +          - "qcom,ipq5018-wcss-ahb-mpd"
-> 
-> Don't need quotes.
-> 
->> +          - "qcom,ipq9574-wcss-ahb-mpd"
->> +          - "qcom,ipq5018-wcss-pcie-mpd"
->> +
->> +      interrupts-extended:
-> 
-> Just interrupts
-> 
->> +        items:
->> +          - description: Fatal interrupt
->> +          - description: Ready interrupt
->> +          - description: Spawn acknowledge interrupt
->> +          - description: Stop acknowledge interrupt
->> +
->> +      interrupt-names:
->> +        items:
->> +          - const: fatal
->> +          - const: ready
->> +          - const: spawn-ack
->> +          - const: stop-ack
->> +
->> +      qcom,smem-states:
->> +        $ref: /schemas/types.yaml#/definitions/phandle-array
->> +        description: States used by the AP to signal the remoteprocessor
->> +        items:
->> +          - description: Shutdown WCSS pd
->> +          - description: Stop WCSS pd
->> +          - description: Spawn WCSS pd
->> +
->> +      qcom,smem-state-names:
->> +        description:
->> +          Names of the states used by the AP to signal the remoteprocessor
->> +        items:
->> +          - const: shutdown
->> +          - const: stop
->> +          - const: spawn
->> +
->> +    required:
->> +      - compatible
->> +
->> +    additionalProperties: false
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts-extended
->> +  - interrupt-names
->> +  - qcom,smem-states
->> +  - qcom,smem-state-names
->> +  - memory-region
->> +
->> +additionalProperties: false
->> +
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          enum:
->> +            - qcom,ipq9574-q6-mpd
->> +    then:
->> +      properties:
->> +        assigned-clocks:
-> 
-> Don't need to define assigned-clocks
-> 
-Clocks in multipd architecture will be handled by QDSP6 firmware.
-So i am going to remove clock handling.
->> +          items:
->> +            - description: Phandle, clock specifier of GCC_ANOC_WCSS_AXI_M_CLK
->> +            - description: Phandle, clock specifier of GCC_WCSS_AHB_S_CLK
->> +            - description: Phandle, clock specifier of GCC_WCSS_ECAHB_CLK
->> +            - description: Phandle, clock specifier of GCC_WCSS_ACMT_CLK
->> +            - description: Phandle, clock specifier of GCC_WCSS_AXI_M_CLK
->> +            - description: Phandle, clock specifier of GCC_Q6_AXIM_CLK
->> +            - description: Phandle, clock specifier of GCC_Q6_AXIM2_CLK
->> +            - description: Phandle, clock specifier of GCC_Q6_AHB_CLK
->> +            - description: Phandle, clock specifier of GCC_Q6_AHB_S_CLK
->> +            - description: Phandle, clock specifier of GCC_Q6SS_BOOT_CLK
->> +            - description: Phandle, clock specifier of GCC_MEM_NOC_Q6_AXI_CLK
->> +            - description: Phandle, clock specifier of GCC_WCSS_Q6_TBU_CLK
->> +            - description: Phandle, clock specifier of GCC_SYS_NOC_WCSS_AHB_CLK
->> +        assigned-clock-rates:
->> +          items:
->> +            - description: Must be 266666667 HZ
->> +            - description: Must be 133333333 HZ
->> +            - description: Must be 133333333 HZ
->> +            - description: Must be 133333333 HZ
->> +            - description: Must be 266666667 HZ
->> +            - description: Must be 533000000 HZ
->> +            - description: Must be 342857143 HZ
->> +            - description: Must be 133333333 HZ
->> +            - description: Must be 133333333 HZ
->> +            - description: Must be 342857143 HZ
->> +            - description: Must be 533000000 HZ
->> +            - description: Must be 533000000 HZ
->> +            - description: Must be 133333333 HZ
->> +
->> +examples:
->> +  - |
->> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +        #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
->> +        #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
->> +
->> +        q6v5_wcss: remoteproc@cd00000 {
->> +                compatible = "qcom,ipq5018-q6-mpd";
->> +                #address-cells = <1>;
->> +                #size-cells = <1>;
->> +                ranges;
->> +                reg = <0x0cd00000 0x4040>;
->> +                interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
->> +                                <&wcss_smp2p_in 0 0>,
->> +                                <&wcss_smp2p_in 1 0>,
->> +                                <&wcss_smp2p_in 2 0>,
->> +                                <&wcss_smp2p_in 3 0>;
->> +                interrupt-names = "wdog",
->> +                                  "fatal",
->> +                                  "ready",
->> +                                  "handover",
->> +                                  "stop-ack";
->> +
->> +                qcom,smem-states = <&wcss_smp2p_out 0>,
->> +                                   <&wcss_smp2p_out 1>;
->> +                qcom,smem-state-names = "shutdown",
->> +                                        "stop";
->> +
->> +                memory-region = <&q6_region>;
->> +
->> +                glink-edge {
->> +                        interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
->> +                        label = "rtr";
->> +                        qcom,remote-pid = <1>;
->> +                        mboxes = <&apcs_glb 8>;
->> +                };
->> +
->> +                q6_wcss_pd1: remoteproc_pd1 {
->> +                        compatible = "qcom,ipq5018-wcss-ahb-mpd";
->> +                        interrupts-extended = <&wcss_smp2p_in 8 0>,
->> +                                        <&wcss_smp2p_in 9 0>,
->> +                                        <&wcss_smp2p_in 12 0>,
->> +                                        <&wcss_smp2p_in 11 0>;
->> +                        interrupt-names = "fatal",
->> +                                          "ready",
->> +                                          "spawn-ack",
->> +                                          "stop-ack";
->> +                        qcom,smem-states = <&wcss_smp2p_out 8>,
->> +                                           <&wcss_smp2p_out 9>,
->> +                                           <&wcss_smp2p_out 10>;
->> +                        qcom,smem-state-names = "shutdown",
->> +                                                "stop",
->> +                                                "spawn";
->> +                };
->> +
->> +                q6_wcss_pd2: remoteproc_pd2 {
->> +                        compatible = "qcom,ipq5018-wcss-pcie-mpd";
->> +                        interrupts-extended = <&wcss_smp2p_in 16 0>,
->> +                                        <&wcss_smp2p_in 17 0>,
->> +                                        <&wcss_smp2p_in 20 0>,
->> +                                        <&wcss_smp2p_in 19 0>;
->> +                        interrupt-names = "fatal",
->> +                                          "ready",
->> +                                          "spawn-ack",
->> +                                          "stop-ack";
->> +
->> +                        qcom,smem-states = <&wcss_smp2p_out 16>,
->> +                                           <&wcss_smp2p_out 17>,
->> +                                           <&wcss_smp2p_out 18>;
->> +                        qcom,smem-state-names = "shutdown",
->> +                                                "stop",
->> +                                                "spawn";
->> +                        status = "okay";
-> 
-> Don't need status in examples.
-> 
->> +                };
->> +
->> +                q6_wcss_pd3: remoteproc_pd3 {
->> +                        compatible = "qcom,ipq5018-wcss-pcie-mpd";
->> +                        interrupts-extended = <&wcss_smp2p_in 24 0>,
->> +                                        <&wcss_smp2p_in 25 0>,
->> +                                        <&wcss_smp2p_in 28 0>,
->> +                                        <&wcss_smp2p_in 27 0>;
->> +                        interrupt-names = "fatal",
->> +                                          "ready",
->> +                                          "spawn-ack",
->> +                                          "stop-ack";
->> +
->> +                        qcom,smem-states = <&wcss_smp2p_out 24>,
->> +                                           <&wcss_smp2p_out 25>,
->> +                                           <&wcss_smp2p_out 26>;
->> +                        qcom,smem-state-names = "shutdown",
->> +                                                "stop",
->> +                                                "spawn";
->> +                        status = "okay";
->> +                };
->> +        };
->> -- 
->> 2.34.1
->>
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index d1b296b95c86..760d9c43dbd2 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -496,20 +496,21 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+ /*
+  * Do not add any more qcom,SOC-smmu-500 entries to this list, unless they need
+  * special handling and can not be covered by the qcom,smmu-500 entry.
+  */
+ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+ 	{ .compatible = "qcom,msm8996-smmu-v2", .data = &msm8996_smmu_data },
+ 	{ .compatible = "qcom,msm8998-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,qcm2290-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_500_impl0_data  },
+ 	{ .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_500_impl0_data },
++	{ .compatible = "qcom,sc7180-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
+ 	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
+ 	{ .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm6350-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+@@ -540,12 +541,14 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ 		/* Match platform for ACPI boot */
+ 		if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
+ 			return qcom_smmu_create(smmu, &qcom_smmu_500_impl0_data);
+ 	}
+ #endif
+ 
+ 	match = of_match_node(qcom_smmu_impl_of_match, np);
+ 	if (match)
+ 		return qcom_smmu_create(smmu, match->data);
+ 
++	WARN_ON(of_device_is_compatible(np, "qcom,adreno-smmu"));
++
+ 	return smmu;
+ }
+-- 
+2.40.1
 
-Thanks & Regards,
-Manikanta.
