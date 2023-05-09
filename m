@@ -2,71 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 416F86FCD27
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 20:02:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B9A26FCE5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 21:16:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjEISCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 14:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60386 "EHLO
+        id S229664AbjEITP7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 15:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229738AbjEISCt (ORCPT
+        with ESMTP id S229498AbjEITP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 14:02:49 -0400
+        Tue, 9 May 2023 15:15:59 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7223448D;
-        Tue,  9 May 2023 11:02:47 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349Gg72H027919;
-        Tue, 9 May 2023 18:02:40 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31FA1E0;
+        Tue,  9 May 2023 12:15:57 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349IGSXv016010;
+        Tue, 9 May 2023 19:15:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=m5YYQNFMFcx+27YXz/ngiPPxOgcwkirsOJ9lHLR7kQA=;
- b=MWluBRIS4p4rsyno8B8qssSM28kP5WHetuqCX/wfKQUfSvPJS97pYJGHrdk0NMvkyNzD
- StcyJTZs/tmJYAIB4CkzQlz89LNzpc0BpXcN75tt9E/A1LmDSKFsvcM6KmqCIXsy4GUg
- BqDgAdDfswcNt25Ypfse6o3FFO0V30TQX/oqQOT2Ltqmm88OQvPn+wGeih5qKB/g9frj
- MHaWr+cmoP0zuG0hfMSdCvIytZAMQ91fbKY6royGt1vIG5PgU5UiFbmjsncw8h9/doGL
- j2wMresfu/DLnrwjnlrhVreGV7FEewbcJawmUEwXhCQ0E+BbYRJX/Buh+BhC+MdPXQaJ mQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qfr508h28-1
+ bh=NEwpD0MHi33YJ73MMvOp8SyW+BSA/M2HMWq8AH4/Gz4=;
+ b=eNx2lY+nZyq47BdcsdSRKJ/X/hADn5p2WgusHUHpPCD+PserzeClowvDp6JFm1JBxj+u
+ QVr+SDVLFGpgY2q4jYqp9aVr32zhxNguSqdRak0Q/r4+IRlqNacGwxIcYXVvUAOiGbPO
+ ZUpZWopgjPy+InsKq7QtSaFsV4JAXTcvjD7BgMCYuOIaWEH2kHf0XnwVL28KGu7uyaZx
+ A8uz5JH6ZpqJ+q6CKKYT/Tt8tCCjJIvfLm8GNK+oTJdFnVk7r5vQK2y6hcP3BN4n0Nal
+ VrwtwOM6u29WZTMrmc7eYmargHSPRuzowMWkN5GDGzoqUSV82+X6tlnYuY7P4leWkn/1 3w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qf77ktnyn-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 09 May 2023 18:02:39 +0000
+        Tue, 09 May 2023 19:15:19 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 349I2cHe016199
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 349JFITQ018728
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 9 May 2023 18:02:38 GMT
+        Tue, 9 May 2023 19:15:19 GMT
 Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
- 11:02:38 -0700
-Message-ID: <d42839ed-1c3a-c7ce-ec72-4a9d1e5723d3@quicinc.com>
-Date:   Tue, 9 May 2023 11:02:31 -0700
+ 12:15:18 -0700
+Message-ID: <1345a125-f745-4fe3-0f5e-bfe84225958d@quicinc.com>
+Date:   Tue, 9 May 2023 12:15:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: [Freedreno] [PATCH 2/4] drm/msm/dsi: Fix compressed word count
- calculation
+Subject: Re: [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <neil.armstrong@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@gmail.com>,
+        Leonard Lausen <leonard@lausen.nl>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     <regressions@lists.linux.dev>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
-References: <20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com>
- <20230405-add-dsc-support-v1-2-6bc6f03ae735@quicinc.com>
- <a60a9f37-bb43-6e2b-2535-995e9fae250a@linaro.org>
- <32d473a6-f7a5-9aa6-85cf-0f77f1c071ce@quicinc.com>
- <4cf2e9ab-7e08-fb26-d924-8ea8141d9f58@linaro.org>
- <44c47800-0913-b122-77ae-5ce0e5d4b443@linaro.org>
- <cd8cfbd5-1bde-08d8-dbb5-5489820d6a45@linaro.org>
- <5f069b2c-d1b1-e489-7494-67ef395437bc@linaro.org>
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Nikita Travkin <nikita@trvn.ru>
+References: <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
+ <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
+ <20230508021536.txtamifw2vkfncnx@ripper>
+ <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
+ <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
 From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <5f069b2c-d1b1-e489-7494-67ef395437bc@linaro.org>
+In-Reply-To: <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -74,17 +75,16 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JrLTldyWT2VorLZThbbApxULoyJsdVQF
-X-Proofpoint-ORIG-GUID: JrLTldyWT2VorLZThbbApxULoyJsdVQF
+X-Proofpoint-GUID: CUQmunFR2A588q0l-jFDQdWMkkhVJJSt
+X-Proofpoint-ORIG-GUID: CUQmunFR2A588q0l-jFDQdWMkkhVJJSt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-09_11,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 mlxscore=0 mlxlogscore=999 bulkscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- adultscore=0 phishscore=0 suspectscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305090150
+ definitions=2023-05-09_12,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 mlxlogscore=934 lowpriorityscore=0
+ phishscore=0 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305090159
 X-Spam-Status: No, score=-3.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -97,144 +97,140 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/9/2023 4:42 AM, Dmitry Baryshkov wrote:
-> On 09/05/2023 11:54, Konrad Dybcio wrote:
+On 5/8/2023 4:30 AM, Dmitry Baryshkov wrote:
+> On 08/05/2023 14:02, Leonard Lausen wrote:
+>> Abhinav Kumar <quic_abhinavk@quicinc.com> writes:
+>>> On 5/7/2023 7:15 PM, Bjorn Andersson wrote:
+>>>> When booting with the cable connected on my X13s, 100 is long enough 
+>>>> for
+>>>> my display to time out and require me to disconnect and reconnect the
+>>>> cable again.
+>>>>
+>>>> Do we have any idea of why the reduction to 0 is causing an issue when
+>>>> using the internal HPD?
+>>>>
+>>>> Regards,
+>>>> Bjorn
+>>> Yes, we do know why this is causing an issue. The cleaner patch for this
+>>> will be posted this week.
 >>
+>> Great!
 >>
->> On 9.05.2023 10:23, Neil Armstrong wrote:
->>> On 09/05/2023 01:27, Dmitry Baryshkov wrote:
->>>> On 08/05/2023 23:09, Abhinav Kumar wrote:
->>>>>
->>>>>
->>>>> On 5/3/2023 1:26 AM, Dmitry Baryshkov wrote:
->>>>>> On 03/05/2023 04:19, Jessica Zhang wrote:
->>>>>>> Currently, word count is calculated using slice_count. This is 
->>>>>>> incorrect
->>>>>>> as downstream uses slice per packet, which is different from
->>>>>>> slice_count.
->>>>>>>
->>>>>>> Slice count represents the number of soft slices per interface, 
->>>>>>> and its
->>>>>>> value will not always match that of slice per packet. For 
->>>>>>> example, it is
->>>>>>> possible to have cases where there are multiple soft slices per 
->>>>>>> interface
->>>>>>> but the panel specifies only one slice per packet.
->>>>>>>
->>>>>>> Thus, use the default value of one slice per packet and remove 
->>>>>>> slice_count
->>>>>>> from the word count calculation.
->>>>>>>
->>>>>>> Fixes: bc6b6ff8135c ("drm/msm/dsi: Use DSC slice(s) packet size 
->>>>>>> to compute word count")
->>>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>>>> ---
->>>>>>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++++++++-
->>>>>>>    1 file changed, 8 insertions(+), 1 deletion(-)
->>>>>>>
->>>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->>>>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>> index 35c69dbe5f6f..b0d448ffb078 100644
->>>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>>> @@ -996,7 +996,14 @@ static void dsi_timing_setup(struct 
->>>>>>> msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>>>>            if (!msm_host->dsc)
->>>>>>>                wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 
->>>>>>> + 1;
->>>>>>>            else
->>>>>>> -            wc = msm_host->dsc->slice_chunk_size * 
->>>>>>> msm_host->dsc->slice_count + 1;
->>>>>>> +            /*
->>>>>>> +             * When DSC is enabled, WC = slice_chunk_size * 
->>>>>>> slice_per_packet + 1.
->>>>>>> +             * Currently, the driver only supports default value 
->>>>>>> of slice_per_packet = 1
->>>>>>> +             *
->>>>>>> +             * TODO: Expand drm_panel struct to hold 
->>>>>>> slice_per_packet info
->>>>>>> +             *       and adjust DSC math to account for 
->>>>>>> slice_per_packet.
->>>>>>
->>>>>> slice_per_packet is not a part of the standard DSC, so I'm not 
->>>>>> sure how that can be implemented. And definitely we should not 
->>>>>> care about the drm_panel here. It should be either a part of 
->>>>>> drm_dsc_config, or mipi_dsi_device.
->>>>>>
->>>>>
->>>>> This is not correct.
->>>>>
->>>>> It is part of the DSI standard (not DSC standard). Please refer to 
->>>>> Figure 40 "One Line Containing One Packet with Data from One or 
->>>>> More Compressed Slices" and Figure 41 "One Line Containing More 
->>>>> than One Compressed Pixel Stream Packet".
->>>>
->>>> I have reviewed section 8.8.24 and Annex D of the DSI standard.
->>>>
->>>> It is not clear to me, if we can get away with always using 
->>>> slice_per_packet = 1. What is the DSI sink's difference between Fig. 
->>>> 40.(b) and Fig 41?
->>>>
->>>> Are there are known panels that require slice_per_packet != 1? If 
->>>> so, we will have to implement support for such configurations.
->>>>
->>>>> This has details about this. So I still stand by my point that this 
->>>>> should be in the drm_panel.
->>>>
->>>> Note, the driver doesn't use drm_panel directly. So 
->>>> slices_per_packet should go to mipi_dsi_device instead (which in 
->>>> turn can be filled from e.g. drm_panel or from any other source).
+>>> There is no need to add the 100ms delay back yet.
 >>>
->>> This is a big question, where should we set those parameters ?
+>>> thanks for posting this but NAK on this patch till we post the fix this
+>>> week.
 >>>
->>> It's an even bigger questions for panels optionally supporting DSC in 
->>> Video or Command mode (like the vtdr6130),
->>> how to select DSC or not ? DT is not an option.
->> Compressed vs uncompressed modes, maybe? Would be nice to make this
->> togglable from userspace.. But then it may not scale for panels with e.g.
->> 10 resolutions, all cmd/vid/dsc/nodsc
+>>> Appreciate a bit of patience till then.
+>>
+>> This regression is already part of the 6.3 stable release series. Will
+>> the new patch qualify for inclusion in 6.3.y? Or will it be part of 6.4
+>> and this revert should go into 6.3.y?
 > 
-> Currently the panel/panel-bridge make decision on command vs video mode. 
-> We have no way to influence that decision. If you want to make that 
-> negotiable, I'd start with adding 
-> 'cmd_supported/video_supported/dsc_supported' flags to struct 
-> mipi_dsi_hosts.
+> This is a tough situation, as landing a revert will break x13s, as noted 
+> by Bjorn. Given that the workaround is known at this moment, I would 
+> like to wait for the patch from Abhinav to appear, then we can decide 
+> which of the fixes should go to the stable kernel.
+> 
+>>
+>> Even with this revert, there are additional regressions in 6.3 causing
+>> dpu errors and blank external display upon suspending and resuming the
+>> system while an external display is connected. Will your new patch also
+>> fix these regressions?
+>>
+>> [  275.025497] [drm:dpu_encoder_phys_vid_wait_for_commit_done:488] 
+>> [dpu error]vblank timeout
+>> [  275.025514] [drm:dpu_kms_wait_for_commit_done:510] [dpu error]wait 
+>> for commit done returned -110
+>> [  275.064141] [drm:dpu_encoder_frame_done_timeout:2382] [dpu 
+>> error]enc33 frame done timeout
+>>
+>> followed by a kernel panic if any modification to the display settings
+>> is done, such as disabling the external display:
+> 
+> Interesting crash, thank you for the report.
 > 
 
-Right. Isn't that issue there even today that if a panel supports DSC in 
-only one of the modes, we have no way to tell that as we have not 
-encountered such a panel in upstream yet.
+This is a different crash but the root-cause of both the issues is the 
+bridge hpd_enable/disable series.
 
-Also, fundamental question to folks who had panels requiring 
-slice_per_pkt as 2,
+https://patchwork.freedesktop.org/patch/514414/
 
-if you had some panels which need a slice_per_pkt as 2, this support 
-could have been added even earlier by someone who had these panels even 
-in DSC 1.1.
+This is breaking the sequence and logic of internal hpd as per my 
+discussion with kuogee.
 
-If these panels are not yet upstreamed, may i please know why this is 
-considered as a "breakage"? If they were working "somehow" due to 
-incorrect math / panel settings /  DPU calculations, unfortunately we 
-have to work towards bringing up these panels properly and upstreaming 
-them rather than saying "oh, these panels were working somehow and now 
-we need to keep it working".
+We are analyzing the issue and the fix internally first and once we 
+figure out all the details will post it.
 
 >>
->>
->> Konrad
->>>
->>> Those should tied to a panel+controller tuple.
->>>
->>> Neil
->>>
->>>>
->>>>>
->>>>>>> +             */
->>>>>>> +            wc = msm_host->dsc->slice_chunk_size + 1;
->>>>>>>            dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
->>>>>>>                DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
->>>>>>>
->>>>>>
->>>>
->>>
+>> [  341.631287] Hardware name: Google Lazor (rev3 - 8) (DT)
+>> [  341.631290] pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS 
+>> BTYPE=--)
+>> [  341.631296] pc : do_raw_spin_unlock+0xb8/0xc4
+>> [  341.631310] lr : do_raw_spin_unlock+0x78/0xc4
+>> [  341.631315] sp : ffffffc01100b880
+>> [  341.631317] x29: ffffffc01100b880 x28: 0000000000000028 x27: 
+>> 0000000000000038
+>> [  341.631326] x26: ffffff808c89e180 x25: ffffffef33e39920 x24: 
+>> 0000000000000000
+>> [  341.631333] x23: ffffffef33e3ca0c x22: 0000000000000002 x21: 
+>> ffffff808345ded8
+>> [  341.631339] x20: ffffff808345ded0 x19: 000000000000001e x18: 
+>> 0000000000000000
+>> [  341.631345] x17: 0048000000000460 x16: 0441043b04600438 x15: 
+>> 04380000089807d0
+>> [  341.631351] x14: 07b0089807800780 x13: 0000000000000068 x12: 
+>> 0000000000000001
+>> [  341.631357] x11: ffffffef3413bb76 x10: 0000000000000bb0 x9 : 
+>> ffffffef33e3d6bc
+>> [  341.631363] x8 : ffffff808c89ed90 x7 : ffffff80b1c9f738 x6 : 
+>> 0000000000000001
+>> [  341.631370] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 
+>> ffffff808345def0
+>> [  341.631375] x2 : 00000000dead4ead x1 : 0000000000000003 x0 : 
+>> 0000000000000000
+>> [  341.631383] Kernel panic - not syncing: Asynchronous SError Interrupt
+>> [  341.631386] CPU: 3 PID: 1520 Comm: kwin_wayland Not tainted 
+>> 6.3.0-stb-cbq+ #2
+>> [  341.631390] Hardware name: Google Lazor (rev3 - 8) (DT)
+>> [  341.631393] Call trace:
+>> [  341.631395]  dump_backtrace+0xc8/0x104
+>> [  341.631402]  show_stack+0x20/0x30
+>> [  341.631407]  dump_stack_lvl+0x48/0x60
+>> [  341.631414]  dump_stack+0x18/0x24
+>> [  341.631419]  panic+0x130/0x2fc
+>> [  341.631425]  nmi_panic+0x54/0x78
+>> [  341.631428]  arm64_serror_panic+0x74/0x80
+>> [  341.631434]  arm64_is_fatal_ras_serror+0x6c/0x8c
+>> [  341.631439]  do_serror+0x48/0x60
+>> [  341.631444]  el1h_64_error_handler+0x30/0x48
+>> [  341.631450]  el1h_64_error+0x68/0x6c
+>> [  341.631455]  do_raw_spin_unlock+0xb8/0xc4
+>> [  341.631460]  _raw_spin_unlock_irq+0x18/0x38
+>> [  341.631466]  __wait_for_common+0xb8/0x154
+>> [  341.631472]  wait_for_completion_timeout+0x28/0x34
+>> [  341.631477]  dp_ctrl_push_idle+0x3c/0x88
+>> [  341.631483]  dp_bridge_disable+0x20/0x2c
+>> [  341.631488]  drm_atomic_bridge_chain_disable+0x8c/0xb8
+>> [  341.631495]  drm_atomic_helper_commit_modeset_disables+0x198/0x450
+>> [  341.631501]  msm_atomic_commit_tail+0x1c8/0x36c
+>> [  341.631507]  commit_tail+0x80/0x108
+>> [  341.631512]  drm_atomic_helper_commit+0x114/0x118
+>> [  341.631516]  drm_atomic_commit+0xb4/0xe0
+>> [  341.631522]  drm_mode_atomic_ioctl+0x6b0/0x890
+>> [  341.631527]  drm_ioctl_kernel+0xe4/0x164
+>> [  341.631534]  drm_ioctl+0x35c/0x3bc
+>> [  341.631539]  vfs_ioctl+0x30/0x50
+>> [  341.631547]  __arm64_sys_ioctl+0x80/0xb4
+>> [  341.631552]  invoke_syscall+0x84/0x11c
+>> [  341.631558]  el0_svc_common.constprop.0+0xc0/0xec
+>> [  341.631563]  do_el0_svc+0x94/0xa4
+>> [  341.631567]  el0_svc+0x2c/0x54
+>> [  341.631570]  el0t_64_sync_handler+0x94/0x100
+>> [  341.631575]  el0t_64_sync+0x194/0x198
+>> [  341.631580] SMP: stopping secondary CPUs
+>> [  341.831615] Kernel Offset: 0x2f2b200000 from 0xffffffc008000000
+>> [  341.831618] PHYS_OFFSET: 0x80000000
+>> [  341.831620] CPU features: 0x400000,61500506,3200720b
+>> [  341.831623] Memory Limit: none
 > 
