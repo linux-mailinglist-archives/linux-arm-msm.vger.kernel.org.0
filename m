@@ -2,51 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B512E6FD18E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 May 2023 23:41:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 779BB6FD21B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 00:07:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235669AbjEIVlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 17:41:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38294 "EHLO
+        id S235535AbjEIWHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 18:07:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235626AbjEIVlG (ORCPT
+        with ESMTP id S235123AbjEIWHP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 17:41:06 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68EFF83;
-        Tue,  9 May 2023 14:41:05 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 833BDCECA8;
-        Tue,  9 May 2023 21:41:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683668463; bh=gsYPDBwIud9iyVw2mn3lgwZmX4+b0Pkui6afxVuIAkE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=wfTf1Hp/uDeEtmiNGTNwffR8LgKAqpcApdi6SjbAHH2NDKLXRT0tGDxiP4d0WMAVw
-         au9Euc+w41Hruk65kpbH8X5hCOL3pGvG6a9C5Yr1d1cMXq8zweit/eTksj2D32VpGx
-         npqoMnPD2Ra3Y+PBz/p9p2C6cL4lGMzj6cbn0Wcg=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Brian Masney <masneyb@onstation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/6] soc: qcom: ocmem: make iface clock optional
-Date:   Tue, 09 May 2023 23:41:02 +0200
-Message-ID: <4094905.iIbC2pHGDl@z3ntu.xyz>
-In-Reply-To: <CAA8EJpo_x=q8yBSUV=owYvQqD30YQbhU51iKHUjr-_doLk6HPw@mail.gmail.com>
-References: <20230506-msm8226-ocmem-v1-0-3e24e2724f01@z3ntu.xyz>
- <3479852.e9J7NaK4W3@z3ntu.xyz>
- <CAA8EJpo_x=q8yBSUV=owYvQqD30YQbhU51iKHUjr-_doLk6HPw@mail.gmail.com>
+        Tue, 9 May 2023 18:07:15 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7B844AF
+        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 15:07:12 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349Lo23r029095;
+        Tue, 9 May 2023 22:07:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=NijSfvYw2N1/BtuVMqFD6XMT5gEDoB5zHb1k2J+HnAA=;
+ b=EpsIGy3Bg1VfoacrJHp89oE/5nJaLKxAxpt6H3DVIpiz54hVKE+XzGS/pK5Sl7NHqJv5
+ hST8N3YVSURiRjQxi0ipWwVf2nLo8k3t9SMaLppOiRc3a00QF8QBeHTyjcCJ7oGrD98B
+ Su+Jn4FSfM7W3ZtvdjdJHD4+tA9JN2tQuanEfQvo7hFitlvEObELFmc/v0yUpQ5uMEjE
+ 4lUdRs59bhxsjm1D1q2Jt6TsE63CTW87eB04umuaR5avNih0MUtCcQnJSjQGxyn7N7Hq
+ NFRYl+7M77FTGxT+viipIZpfD+Qb1aSEEjKr3liltFnZOlo1b9LOq7h4/kM//8Kd7HXH Hg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qfw3d05e5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 09 May 2023 22:07:05 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 349M7406027535
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 9 May 2023 22:07:04 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 9 May 2023 15:07:04 -0700
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v7 0/8] Introduce MSM-specific DSC helpers
+Date:   Tue, 9 May 2023 15:06:46 -0700
+Message-ID: <20230329-rfc-msm-dsc-helper-v7-0-df48a2c54421@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPfDWmQC/4XQTUvEMBAG4L+y5GwkH82XJ0HYg0ePiodkMrEB2
+ +4mWpSl/910b1qwxzfM+8yQC6lYMlZyd7iQgnOueRpbMDcHAr0f35Dm2DIRTEgmhaMlAR3qQGM
+ F2uP7CQt1lnunMKYQGWnF4CvSUPwI/Vp9fP5beDo+rHOngil/XZe/vLbc5/oxle/rLTNfX/9dO
+ 3PKaJLYGZeUCzrenz8z5BFuYRrICs5iHxENkcAlYFRSB7FF5D4iG6IDAovCGG/lFun2ka4hPBg
+ HxgbJotkiah9RDWGc2Y7xaKzVW0TvI7ohEEz71cSSSeE3sizLDzQ06mI3AgAA
+To:     <freedreno@lists.freedesktop.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Jessica Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.13-dev-bfdf5
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1683670024; l=6239;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=8eXZkiVgxP7phhDHFzSDQNtu2lDhXTL/jAi3Sefg1QM=;
+ b=Dy0OXkBQ8hRS1kYj1bcjFjgls8uGpeXQtePhF86xSezT9palXC5y6gcDqtAro8Dtrb+nv5Xx/
+ Hw/YsmqCEmkArzClVoOJy/Kp4oVe/5nduthdYgPQFg0WF7/PBTuqU7V
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CWMiX_G2H0uRNCPLq9bRGXMTacAef3Ob
+X-Proofpoint-GUID: CWMiX_G2H0uRNCPLq9bRGXMTacAef3Ob
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-09_14,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 suspectscore=0 phishscore=0
+ spamscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305090180
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -57,187 +94,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Dienstag, 9. Mai 2023 19:08:50 CEST Dmitry Baryshkov wrote:
-> On Tue, 9 May 2023 at 19:47, Luca Weiss <luca@z3ntu.xyz> wrote:
-> > On Montag, 8. Mai 2023 13:34:23 CEST Dmitry Baryshkov wrote:
-> > > On 07/05/2023 12:12, Luca Weiss wrote:
-> > > > Some platforms such as msm8226 do not have an iface clk. Since
-> > > > clk_bulk
-> > > > APIs don't offer to a way to treat some clocks as optional simply add
-> > > > core_clk and iface_clk members to our drvdata.
-> > > 
-> > > What about using devm_clk_bulk_get_optional()? I think it would be
-> > > simpler this way.
-> > 
-> > Using that function both clocks would be optional which may or may not be
-> > a
-> > bad idea. Not sure how much binding yaml and/or driver should try and
-> > catch
-> > bad usages of the driver.
-> 
-> The generic rule is that we should not validate the DT unless required
-> (e.g. because of the possibility of legacy DT which used other
-> bindings or contained less information).
+There are some overlap in calculations for MSM-specific DSC variables
+between DP and DSI. In addition, the calculations for initial_scale_value
+and det_thresh_flatness that are defined within the DSC 1.2 specifications,
+but aren't yet included in drm_dsc_helper.c.
 
-Got it.
+This series moves these calculations to a shared msm_dsc_helper.c file and
+defines drm_dsc_helper methods for initial_scale_value and
+det_thresh_flatness.
 
-But since in this driver we use one of the clocks for setting clock rate I'd
-keep using the two separate struct clk as I've done in this patch if you don't
-mind too much.
+Note: For now, the MSM specific helper methods are only called for the DSI
+path, but will called for DP once DSC 1.2 support for DP has been added.
 
-Regards
-Luca
+Depends on: "drm/i915: move DSC RC tables to drm_dsc_helper.c" [1]
 
-> 
-> > But honestly the current usage of the bulk API seems a bit clunky, we have
-> > a static array of clocks that we use (not in struct ocmem for some
-> > reason) and then we refer to the core clock by index? Feels better to
-> > just have the two clock references in the device struct and then we're
-> > good.
-> > 
-> > Let me know.
-> > 
-> > Regards
-> > Luca
-> > 
-> > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > ---
-> > > > 
-> > > >   drivers/soc/qcom/ocmem.c | 42
-> > > >   ++++++++++++++++++++++++------------------
-> > > >   1 file changed, 24 insertions(+), 18 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-> > > > index a11a955a1327..6235065d3bc9 100644
-> > > > --- a/drivers/soc/qcom/ocmem.c
-> > > > +++ b/drivers/soc/qcom/ocmem.c
-> > > > @@ -54,6 +54,8 @@ struct ocmem {
-> > > > 
-> > > >     const struct ocmem_config *config;
-> > > >     struct resource *memory;
-> > > >     void __iomem *mmio;
-> > > > 
-> > > > +   struct clk *core_clk;
-> > > > +   struct clk *iface_clk;
-> > > > 
-> > > >     unsigned int num_ports;
-> > > >     unsigned int num_macros;
-> > > >     bool interleaved;
-> > > > 
-> > > > @@ -91,16 +93,6 @@ struct ocmem {
-> > > > 
-> > > >   #define OCMEM_PSGSC_CTL_MACRO2_MODE(val)  FIELD_PREP(0x00000700,
-> > 
-> > (val))
-> > 
-> > > >   #define OCMEM_PSGSC_CTL_MACRO3_MODE(val)  FIELD_PREP(0x00007000,
-> > 
-> > (val))
-> > 
-> > > > -#define OCMEM_CLK_CORE_IDX                 0
-> > > > -static struct clk_bulk_data ocmem_clks[] = {
-> > > > -   {
-> > > > -           .id = "core",
-> > > > -   },
-> > > > -   {
-> > > > -           .id = "iface",
-> > > > -   },
-> > > > -};
-> > > > -
-> > > > 
-> > > >   static inline void ocmem_write(struct ocmem *ocmem, u32 reg, u32
-> > > >   data)
-> > > >   {
-> > > >   
-> > > >     writel(data, ocmem->mmio + reg);
-> > > > 
-> > > > @@ -316,9 +308,15 @@ static int ocmem_dev_probe(struct platform_device
-> > > > *pdev)>
-> > > > 
-> > > >     ocmem->dev = dev;
-> > > >     ocmem->config = device_get_match_data(dev);
-> > > > 
-> > > > -   ret = devm_clk_bulk_get(dev, ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > > > -   if (ret)
-> > > > -           return dev_err_probe(dev, ret, "Unable to get clocks\n");
-> > > > +   ocmem->core_clk = devm_clk_get(dev, "core");
-> > > > +   if (IS_ERR(ocmem->core_clk))
-> > > > +           return dev_err_probe(dev, PTR_ERR(ocmem->core_clk),
-> > > > +                                "Unable to get core clock\n");
-> > > > +
-> > > > +   ocmem->iface_clk = devm_clk_get_optional(dev, "iface");
-> > > > +   if (IS_ERR(ocmem->iface_clk))
-> > > > +           return dev_err_probe(dev, PTR_ERR(ocmem->iface_clk),
-> > > > +                                "Unable to get iface clock\n");
-> > > > 
-> > > >     ocmem->mmio = devm_platform_ioremap_resource_byname(pdev, "ctrl");
-> > > >     if (IS_ERR(ocmem->mmio))
-> > > > 
-> > > > @@ -333,11 +331,15 @@ static int ocmem_dev_probe(struct
-> > > > platform_device
-> > > > *pdev)>
-> > > > 
-> > > >     }
-> > > >     
-> > > >     /* The core clock is synchronous with graphics */
-> > > > 
-> > > > -   WARN_ON(clk_set_rate(ocmem_clks[OCMEM_CLK_CORE_IDX].clk, 1000) <
-> > > > 0);
-> > > > +   WARN_ON(clk_set_rate(ocmem->core_clk, 1000) < 0);
-> > > > +
-> > > > +   ret = clk_prepare_enable(ocmem->core_clk);
-> > > > +   if (ret)
-> > > > +           return dev_err_probe(ocmem->dev, ret, "Failed to enable
-> > 
-> > core clock\n");
-> > 
-> > > > -   ret = clk_bulk_prepare_enable(ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > > > +   ret = clk_prepare_enable(ocmem->iface_clk);
-> > > > 
-> > > >     if (ret)
-> > > > 
-> > > > -           return dev_err_probe(ocmem->dev, ret, "Failed to enable
-> > 
-> > clocks\n");
-> > 
-> > > > +           return dev_err_probe(ocmem->dev, ret, "Failed to enable
-> > 
-> > iface
-> > 
-> > > > clock\n");
-> > > > 
-> > > >     if (qcom_scm_restore_sec_cfg_available()) {
-> > > >     
-> > > >             dev_dbg(dev, "configuring scm\n");
-> > > > 
-> > > > @@ -396,13 +398,17 @@ static int ocmem_dev_probe(struct
-> > > > platform_device
-> > > > *pdev)>
-> > > > 
-> > > >     return 0;
-> > > >   
-> > > >   err_clk_disable:
-> > > > -   clk_bulk_disable_unprepare(ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > > > +   clk_disable_unprepare(ocmem->core_clk);
-> > > > +   clk_disable_unprepare(ocmem->iface_clk);
-> > > > 
-> > > >     return ret;
-> > > >   
-> > > >   }
-> > > >   
-> > > >   static int ocmem_dev_remove(struct platform_device *pdev)
-> > > >   {
-> > > > 
-> > > > -   clk_bulk_disable_unprepare(ARRAY_SIZE(ocmem_clks), ocmem_clks);
-> > > > +   struct ocmem *ocmem = platform_get_drvdata(pdev);
-> > > > +
-> > > > +   clk_disable_unprepare(ocmem->core_clk);
-> > > > +   clk_disable_unprepare(ocmem->iface_clk);
-> > > > 
-> > > >     return 0;
-> > > >   
-> > > >   }
+[1] https://patchwork.freedesktop.org/series/114472/
 
+---
+Changes in v7:
+- Renamed msm_dsc_get_pclk_per_intf to msm_dsc_get_bytes_per_line
+- Removed duplicate msm_dsc_get_dce_bytes_per_line
+- Reworded commit message for "drm/msm/dpu: Use DRM DSC helper for
+  det_thresh_flatness"
+- Dropped slice_per_pkt change (it will be included in the later
+  "Add DSC v1.2 Support for DSI" series)
+- Picked up "drm/display/dsc: Add flatness and initial scale value
+  calculations" and "drm/display/dsc: add helper to set semi-const
+  parameters", which were dropped from "drm/i915: move DSC RC tables to
+  drm_dsc_helper.c" series
+- Picked up "Reviewed-by" tags
+- Removed changelog in individual patches
+- Link to v6: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v6-0-cb7f59f0f7fb@quicinc.com
 
+Changes in v6:
+- Documented return values for MSM DSC helpers
+- Fixed dependency issue in msm_dsc_helper.c
+- Link to v5: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v5-0-0108401d7886@quicinc.com
 
+Changes in v5:
+- Added extra line at end of msm_dsc_helper.h
+- Simplified msm_dsc_get_bytes_per_soft_slice() math
+- Simplified and inlined msm_dsc_get_pclk_per_intf() math
+- "Fix calculations pkt_per_line" --> "... Fix calculation for pkt_per_line"
+- Split dsc->slice_width check into a separate patch
+- Picked up Dmitry's msm/dsi patch ("drm/msm/dsi: use new helpers for
+  DSC setup")
+- Removed unused headers in MSM DSC helper files
+- Picked up Reviewed-by tags
+- Link to v4: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v4-0-1b79c78b30d7@quicinc.com
+
+Changes in v4:
+- Changed msm_dsc_get_uncompressed_pclk_per_intf to msm_dsc_get_pclk_per_intf
+- Moved pclk_per_intf calculation for dsi_timing_setup to `if
+  (msm_host->dsc)` block
+- Link to v3: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v3-0-6bec0d277a83@quicinc.com
+
+Changes in v3:
+- Dropped src_bpp parameter from all methods -- src_bpp can be
+  calculated as dsc->bits_per_component * 3- Cleaned up unused parameters
+- Dropped intf_width parameter from get_bytes_per_soft_slice()
+- Moved dsc->bits_per_component to numerator calculation in
+  get_bytes_per_soft_slice()
+- Made get_bytes_per_soft_slice() a public method (this will be called
+  later to help calculate DP pclk params)- Added comment documentation to
+  MSM DSC helpers
+- Renamed msm_dsc_get_uncompressed_pclk_per_line to
+  *_get_uncompressed_pclk_per_intf()
+- Removed dsc->slice_width check from msm_dsc_get_uncompressed_pclk_per_intf()
+- Added documentation in comments
+- Moved extra_eol_bytes math out of msm_dsc_get_eol_byte_num()
+- Renamed msm_dsc_get_eol_byte_num to *_get_bytes_per_intf.
+- Reworded slice_last_group_size calculation to `(dsc->slice_width + 2) % 3`
+- Used MSM DSC helper to calculate total_bytes_per_intf
+- Initialized hdisplay as uncompressed pclk per line at the beginning of
+  dsi_timing_setup as to not break dual DSI calculations
+- Added slice_width check to dsi_timing_setup
+- Dropped 78c8b81d57d8 ("drm/display/dsc: Add flatness and initial scale
+  value calculations") patch as it was absorbed in Dmitry's DSC series [1]
+- Split dsi_timing_setup() hdisplay calculation to a separate patch
+- Link to v2: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v2-0-3c13ced536b2@quicinc.com
+
+Changes in v2:
+- Changed det_thresh_flatness to flatness_det_thresh
+- Set initial_scale_value directly in helper
+- Moved msm_dsc_helper files to msm/ directory
+- Dropped get_comp_ratio() helper
+- Used drm_int2fixp() to convert to integers to fp
+- Fixed type mismatch issues in MSM DSC helpers
+- Changed DSC_BPP macro to drm_dsc_get_bpp_int() helper method
+- Style changes to improve readability
+- Dropped last division step of msm_dsc_get_pclk_per_line() and changed
+  method name accordingly
+- Dropped unused bpp variable in msm_dsc_get_dce_bytes_per_line()
+- Changed msm_dsc_get_slice_per_intf() to a static inline method
+- Split eol_byte_num and pkt_per_line calculation into a separate patch
+- Moved pclk_per_line calculation into `if (dsc)` block in
+  dsi_timing_setup()
+- *_calculate_initial_scale_value --> *_set_initial_scale_value
+- Picked up Fixes tags for patches 3/5 and 4/5
+- Picked up Reviewed-by for patch 4/5
+- Link to v1: https://lore.kernel.org/r/20230329-rfc-msm-dsc-helper-v1-0-f3e479f59b6d@quicinc.com
+
+---
+Dmitry Baryshkov (2):
+      drm/display/dsc: add helper to set semi-const parameters
+      drm/msm/dsi: use DRM DSC helpers for DSC setup
+
+Jessica Zhang (6):
+      drm/display/dsc: Add flatness and initial scale value calculations
+      drm/msm: Add MSM-specific DSC helper methods
+      drm/msm/dpu: Use DRM DSC helper for det_thresh_flatness
+      drm/msm/dpu: Fix slice_last_group_size calculation
+      drm/msm/dsi: Use MSM and DRM DSC helper methods
+      drm/msm/dsi: update hdisplay calculation for dsi_timing_setup
+
+ drivers/gpu/drm/display/drm_dsc_helper.c   | 22 ++++++++++
+ drivers/gpu/drm/msm/Makefile               |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c |  9 ++--
+ drivers/gpu/drm/msm/dsi/dsi_host.c         | 70 ++++++------------------------
+ drivers/gpu/drm/msm/msm_dsc_helper.c       | 26 +++++++++++
+ drivers/gpu/drm/msm/msm_dsc_helper.h       | 69 +++++++++++++++++++++++++++++
+ include/drm/display/drm_dsc_helper.h       | 12 +++++
+ 7 files changed, 149 insertions(+), 60 deletions(-)
+---
+base-commit: 5526fe03b40ca1cc72c7b4e97f28d3bbfaa0ded9
+change-id: 20230329-rfc-msm-dsc-helper-981a95edfbd0
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
 
