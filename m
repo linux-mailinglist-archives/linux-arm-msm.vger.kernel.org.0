@@ -2,89 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EACF26FD3F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 04:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6C186FD421
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 05:20:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbjEJC4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 9 May 2023 22:56:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
+        id S235584AbjEJDUX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 9 May 2023 23:20:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjEJC4w (ORCPT
+        with ESMTP id S235627AbjEJDTw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 9 May 2023 22:56:52 -0400
+        Tue, 9 May 2023 23:19:52 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DB4DE50;
-        Tue,  9 May 2023 19:56:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F9C40F6;
+        Tue,  9 May 2023 20:19:43 -0700 (PDT)
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34A2nom7012962;
-        Wed, 10 May 2023 02:56:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=5PaovbFPkUXu9CXh3RS3wff+n3ZPxaT3fURnkyi9IY0=;
- b=LawoLhj4FIG5lHwPFCgHRc0RpRMrzZfw8495xpRlNQ7uDcRQoAVaaikMcXDXxBZOGrdM
- DjdeDuZ7BpsquvTt8/q7aH2YNpNIpUMsLoaCLCbyZqZY1ju84NzCmlj8L4Tean2vnT5N
- WlM5OvuHW2AATXRw0kjPQ8h7f8kJLOEesBQ5nbQo3DGcKIw74QtEIxlQJ0zNhHRrsJIS
- TU00WclhnvS8lP4+P4IMglnWvodGU8GUPpu6pynmkAjg+1jI3siIfUNJajjHCmcROxWl
- sJEQ5IYMO/XXgUv58nVIIc1tQvcjXTMwqoDGrA/37vGNo2zLj9q7Gsdp2U4vp6fNHRxc Aw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qfyx089a3-1
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34A0LURK012311;
+        Wed, 10 May 2023 03:19:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=4Gvnm6KDHSPLSIkX9eKbidvrh/yuJS1nU0dJAJo1N4g=;
+ b=HKdUXIIi0NT797TZe8sNyT11ALTk1fcW+/NPQ2bEPgBXSG++w7VMIUVNV7JbUlXxVMVK
+ 7GVYmmG/L/BY7munKzvon+qRtflMkJOMtqlJg1cge74305JPwxDQ/63bWVE4pA/jhLbC
+ ThDhQDnSNJxRq3LXaPvHb+KxSEaii4XuUV/mpbXsm6oaF+GwaaYDuBvtveMtkkl7fEIT
+ wK1/IheQ+ZM0+dNqCRQPb0Gk6qmI0LDookPRfv1yzcYTfXSVvAnSdyEWGj0egMDsrgMi
+ BNePMTK0FdMRkWc7dQmg7miZeP7Xh05GYtHTgWzjWxYfFgRPaNJqVugczEHAZwYJvcHK /Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qfyx08adx-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 May 2023 02:56:30 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34A2uSl4011686
+        Wed, 10 May 2023 03:19:36 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34A3JZYo022810
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 May 2023 02:56:28 GMT
-Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 9 May 2023
- 19:56:22 -0700
-Message-ID: <c815d436-85aa-be07-e224-4d5d042c847d@quicinc.com>
-Date:   Wed, 10 May 2023 10:56:20 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v4 1/3] Coresight: Add coresight dummy driver
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
+        Wed, 10 May 2023 03:19:35 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 9 May 2023 20:19:35 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Johan Hovold <johan@kernel.org>
+CC:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Paul Walmsley" <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20230505092422.32217-1-quic_hazha@quicinc.com>
- <20230505092422.32217-2-quic_hazha@quicinc.com>
- <2b02fc8e-4234-30d2-a8dc-3847c574655f@arm.com>
-Content-Language: en-US
-From:   Hao Zhang <quic_hazha@quicinc.com>
-In-Reply-To: <2b02fc8e-4234-30d2-a8dc-3847c574655f@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v2 0/8] phy: qcom-qmp-combo: Support orientation switching
+Date:   Tue, 9 May 2023 20:19:22 -0700
+Message-ID: <20230510031930.1996020-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JEKF4hXVbz_dGz9ovZAGZz4xEbbzYHRT
-X-Proofpoint-GUID: JEKF4hXVbz_dGz9ovZAGZz4xEbbzYHRT
+X-Proofpoint-ORIG-GUID: XzSguFU4m7ee0vvZ4hfZKFFWJPBPAiTi
+X-Proofpoint-GUID: XzSguFU4m7ee0vvZ4hfZKFFWJPBPAiTi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-09_16,2023-05-05_01,2023-02-09_01
@@ -92,222 +70,40 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultsc
  priorityscore=1501 malwarescore=0 phishscore=0 mlxlogscore=999
  clxscore=1015 impostorscore=0 suspectscore=0 spamscore=0 bulkscore=0
  lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305100020
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305100023
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Suzuki,
+This adds support for USB and DisplayPort orientation switching to the
+QMP combo PHY, as well as updating the sc8280xp devices to include the
+QMP in the SuperSpeed graph.
 
-On 5/5/2023 5:57 PM, Suzuki K Poulose wrote:
-> On 05/05/2023 10:24, Hao Zhang wrote:
->> Some Coresight devices that kernel don't have permission to access or
->> configure. So there need driver to register dummy devices as Coresight
->> devices. It may also be used to define components that may not have
->> any programming interfaces (e.g, static links), so that paths can be
->> established in the driver. Provide Coresight API for dummy device
->> operations, such as enabling and disabling dummy devices. Build the
->> Coresight path for dummy sink or dummy source for debugging.
->>
->> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
->> ---
->>   drivers/hwtracing/coresight/Kconfig           |  11 ++
->>   drivers/hwtracing/coresight/Makefile          |   1 +
->>   drivers/hwtracing/coresight/coresight-dummy.c | 171 ++++++++++++++++++
->>   include/linux/coresight.h                     |   1 +
->>   4 files changed, 184 insertions(+)
->>   create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
->>
->> diff --git a/drivers/hwtracing/coresight/Kconfig 
->> b/drivers/hwtracing/coresight/Kconfig
->> index 2b5bbfffbc4f..06f0a7594169 100644
->> --- a/drivers/hwtracing/coresight/Kconfig
->> +++ b/drivers/hwtracing/coresight/Kconfig
->> @@ -236,4 +236,15 @@ config CORESIGHT_TPDA
->>         To compile this driver as a module, choose M here: the module 
->> will be
->>         called coresight-tpda.
->> +
->> +config CORESIGHT_DUMMY
->> +    tristate "Dummy driver support"
->> +    help
->> +      Enables support for dummy driver. Dummy driver can be used for
->> +      CoreSight sources/sinks that are owned and configured by some
->> +      other subsystem and use Linux drivers to configure rest of trace
->> +      path > +
->> +      To compile this driver as a module, choose M here: the module 
->> will be
->> +      called coresight-dummy.
->>   endif
->> diff --git a/drivers/hwtracing/coresight/Makefile 
->> b/drivers/hwtracing/coresight/Makefile
->> index 33bcc3f7b8ae..995d3b2c76df 100644
->> --- a/drivers/hwtracing/coresight/Makefile
->> +++ b/drivers/hwtracing/coresight/Makefile
->> @@ -30,3 +30,4 @@ obj-$(CONFIG_CORESIGHT_TPDA) += coresight-tpda.o
->>   coresight-cti-y := coresight-cti-core.o    coresight-cti-platform.o \
->>              coresight-cti-sysfs.o
->>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
->> +obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
->> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c 
->> b/drivers/hwtracing/coresight/coresight-dummy.c
->> new file mode 100644
->> index 000000000000..ee9881ff4754
->> --- /dev/null
->> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
->> @@ -0,0 +1,171 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + */
->> +
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/coresight.h>
->> +#include <linux/of.h>
->> +#include <linux/pm_runtime.h>
-> 
-> Please follow the alphabetical order for the header files ^
-> 
-Sure, I will update this in the next patch series.
+Bjorn Andersson (8):
+  dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Add ports and
+    orientation-switch
+  phy: qcom-qmp-combo: Move phy_mutex out of com_init/exit
+  phy: qcom-qmp-combo: Extend phy_mutex to all phy_ops
+  phy: qcom-qmp-combo: Introduce orientation variable
+  phy: qcom-qmp-combo: Introduce orientation switching
+  phy: qcom-qmp-combo: Introduce drm_bridge
+  arm64: dts: qcom: sc8280xp-crd: Add QMP to SuperSpeed graph
+  arm64: dts: qcom: sc8280xp-x13s: Add QMP to SuperSpeed graph
 
->> +
->> +#include "coresight-priv.h"
->> +
->> +struct dummy_drvdata {
->> +    struct device            *dev;
-> 
-> nit: We don't need this really. And that completely removes the need for
-> drvdata too. See below.
-> 
->> +    struct coresight_device        *csdev;
->> +};
->> +
->> +DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
->> +DEFINE_CORESIGHT_DEVLIST(sink_devs, "dummy_sink");
->> +
->> +static int dummy_source_enable(struct coresight_device *csdev,
->> +                   struct perf_event *event, u32 mode)
->> +{
->> +    struct dummy_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> +
->> +    dev_dbg(drvdata->dev, "Dummy source enabled\n");
-> 
->      dev_dbg(csdev->dev.parent, ..");
-> 
-> Similarly for all instances below.
-> 
->> +
->> +    return 0;
->> +}
->> +
->> +static void dummy_source_disable(struct coresight_device *csdev,
->> +                 struct perf_event *event)
->> +{
->> +    struct dummy_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> +
->> +    dev_dbg(drvdata->dev, "Dummy source disabled\n");
->> +}
->> +
->> +static int dummy_sink_enable(struct coresight_device *csdev, u32 mode,
->> +                void *data)
->> +{
->> +    struct dummy_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> +
->> +    dev_dbg(drvdata->dev, "Dummy sink enabled\n");
->> +
->> +    return 0;
->> +}
->> +
->> +static int dummy_sink_disable(struct coresight_device *csdev)
->> +{
->> +    struct dummy_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
->> +
->> +    dev_dbg(drvdata->dev, "Dummy sink disabled\n");
->> +
->> +    return 0;
->> +}
->> +
->> +static const struct coresight_ops_source dummy_source_ops = {
->> +    .enable    = dummy_source_enable,
->> +    .disable = dummy_source_disable,
->> +};
->> +
->> +static const struct coresight_ops dummy_source_cs_ops = {
->> +    .source_ops = &dummy_source_ops,
->> +};
->> +
->> +static const struct coresight_ops_sink dummy_sink_ops = {
->> +    .enable    = dummy_sink_enable,
->> +    .disable = dummy_sink_disable,
->> +};
->> +
->> +static const struct coresight_ops dummy_sink_cs_ops = {
->> +    .sink_ops = &dummy_sink_ops,
->> +};
->> +
->> +static int dummy_probe(struct platform_device *pdev)
->> +{
->> +    struct device *dev = &pdev->dev;
->> +    struct device_node *node = dev->of_node;
->> +    struct coresight_platform_data *pdata;
->> +    struct dummy_drvdata *drvdata;
->> +    struct coresight_desc desc = { 0 };
->> +
->> +    if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
->> +
->> +        desc.name = coresight_alloc_device_name(&source_devs, dev);
->> +        if (!desc.name)
->> +            return -ENOMEM;
->> +
->> +        desc.type = CORESIGHT_DEV_TYPE_SOURCE;
->> +        desc.subtype.source_subtype =
->> +                    CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
->> +        desc.ops = &dummy_source_cs_ops;
->> +    } else if (of_device_is_compatible(node, 
->> "arm,coresight-dummy-sink")) {
->> +        desc.name = coresight_alloc_device_name(&sink_devs, dev);
->> +        if (!desc.name)
->> +            return -ENOMEM;
->> +
->> +        desc.type = CORESIGHT_DEV_TYPE_SINK;
->> +        desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_DUMMY;
->> +        desc.ops = &dummy_sink_cs_ops;
->> +    } else {
->> +        dev_err(dev, "Device type not set\n");
->> +        return -EINVAL;
->> +    }
->> +
->> +    pdata = coresight_get_platform_data(dev);
->> +    if (IS_ERR(pdata))
->> +        return PTR_ERR(pdata);
->> +    pdev->dev.platform_data = pdata;
->> +
->> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
->> +    if (!drvdata)
->> +        return -ENOMEM; > +
->> +    drvdata->dev = &pdev->dev;
->> +    platform_set_drvdata(pdev, drvdata);
-> 
-> As above, you may remove the drvdata entirely.
-> 
-For some dummy sources, it's needed to allocate traceid for them in 
-kernel driver, so this struct would be useful for that case.
+ .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  51 ++++
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     |  28 +-
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  28 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  34 +++
+ drivers/phy/qualcomm/Kconfig                  |   3 +
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 255 ++++++++++++++----
+ 6 files changed, 340 insertions(+), 59 deletions(-)
 
-I will remove it now and upstream it in the further.
+-- 
+2.39.2
 
-Thanks,
-Hao
-
-> Otherwise looks good to me
-> 
-> Suzuki
-> 
