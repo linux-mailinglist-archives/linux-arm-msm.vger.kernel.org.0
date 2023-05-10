@@ -2,105 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA1256FE043
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 16:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C3D46FE049
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 16:31:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237394AbjEJOab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 10:30:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34124 "EHLO
+        id S237244AbjEJObK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 10:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237072AbjEJOaa (ORCPT
+        with ESMTP id S237012AbjEJObJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 10:30:30 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE9CF5B89
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 07:30:25 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f22908a082so5152703e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 07:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683729024; x=1686321024;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3lfKRKCVA6ub+6ekqvom3uIKjLzZacdhUnlykA5A60I=;
-        b=Z2A25jCFbE+7HrnPweXb3+gxnyH4702b0nssKURS6ETLWoV9wfad4egBcg96wrTo4J
-         9h4dmIZerWpErsyG6/41nxRyubFmh+S7YueYLmcKsMI2Is42k9ZuBbyrbXEKOeui3/WY
-         gzrDiq/IG7CUj4z/gBdoUHRh/cjngAxyBZN4ve/nGI1FdmIhHVjIu8rauHtTsca3M7MP
-         9wK7BBpuxPSdzgyAN+ZVvsVGFcjV9GPhdcsZX/ZHMA6/QCgYjIU54kx+ObleXZdjl/X/
-         IX85KhNlFdT9lI/stnmwJ4gi7Qp3EsiAzxEKw6Yb3Ws9teomUH/vLEURkZAqSQg1g4qW
-         tp8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683729024; x=1686321024;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3lfKRKCVA6ub+6ekqvom3uIKjLzZacdhUnlykA5A60I=;
-        b=LpSJIkHifBK9OU0j0rMM8UR8zbvF1GaETxLLx4ZXjsVFIRtRVNf31SmfcRqilVH2fS
-         2eu4EQbRn652kQP38aBdistyfmX0KohsExJMJtU9CYrnkBCjsaByJmfZcYOKDuJOxG27
-         /aK50OQJI5VR3sw9Z0kfShMkmPsAB0yqcj+4H2trI1OjLtm0qqz010ULUuu4NYH6S32b
-         lLYoD7bLaxBGRldQa2s/FM1YXbd4CmWauNqUatIx4j41RZ2HjlZk6YQkZYXJtLrNYy4G
-         nHFliou92pDSVcPJ27aVML1T6GqJYzP30oTaBR9UF7lrF6A1DPE9voBP7lofTfVLHQIK
-         RfEQ==
-X-Gm-Message-State: AC+VfDz83JhmbvN7kpLxZNg4NCZfri+CxFStkQUZA1oqZ2dqh8Q82MwK
-        j6BL4zU+hcqpX2EGMa52TJ5zfw==
-X-Google-Smtp-Source: ACHHUZ4xlCeZkQvYcwbdSDxDS5TJL6kPkeiBHT0SHAsmUAKLdfQcXrvKjJcWuGLebXvS1ppEu/8fJw==
-X-Received: by 2002:a19:a406:0:b0:4f2:5c2a:19ba with SMTP id q6-20020a19a406000000b004f25c2a19bamr1337069lfc.46.1683729024141;
-        Wed, 10 May 2023 07:30:24 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:c175:a0f9:6928:8c9d? ([2a02:810d:15c0:828:c175:a0f9:6928:8c9d])
-        by smtp.gmail.com with ESMTPSA id e28-20020ac2547c000000b004f13634da05sm751594lfn.180.2023.05.10.07.30.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 May 2023 07:30:23 -0700 (PDT)
-Message-ID: <1a2612ff-b228-8fbe-e513-8449e4bd36f6@linaro.org>
-Date:   Wed, 10 May 2023 16:30:21 +0200
+        Wed, 10 May 2023 10:31:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CF6F3C3A;
+        Wed, 10 May 2023 07:31:07 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34AEDOC5025734;
+        Wed, 10 May 2023 14:31:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=qvkap/Y4TOHNL07iP0yA+DU+o2en3bsNw5khWwqRep4=;
+ b=JuT76hqv1dTTTGM76rlFed3VtXYMk2irmt6VJdHtnvsN5wZcF8hR+OwIPFhyALcA2Ieo
+ Ybp0EgABwL+5A9PBhmmsXjvxIqdLZIJ5mLSIleJfUF4CekpqsCazCt9EaHGwrYA9R1EH
+ cxKaJXE9g13Q6ho50ktGu4kPm4w8+F9M2OcZUCzN8xJ/TfyNm6y8kebxcQhldOPjycdL
+ NEHvTGzO1ngIYaBQ7lZdToIDdvPtgzPk3i4gjSXRN1RUktpb5pnowZMBXq+0Vfm5xjin
+ UgjhVwYnoVwnsX6OUa+4rHUqaG6h6m1g8Kx4NVOg3dFObLiNY9iUkmQbIymobUmmCp+t zQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qg6u0gs6r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 May 2023 14:31:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34AEV0nH016864
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 May 2023 14:31:00 GMT
+Received: from [10.216.41.111] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 10 May
+ 2023 07:30:54 -0700
+Message-ID: <1ffc9474-0a05-44d8-0cc0-24a065443b18@quicinc.com>
+Date:   Wed, 10 May 2023 20:00:50 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 7/8] arm64: dts: Add ipq5018 SoC and rdp432-c2 board
- support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v6 4/4] pinctrl: qcom: Add SDX75 pincontrol driver
 Content-Language: en-US
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230510134121.1232286-1-quic_srichara@quicinc.com>
- <20230510134121.1232286-8-quic_srichara@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230510134121.1232286-8-quic_srichara@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     <andy.shevchenko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <richardcochran@gmail.com>, <manivannan.sadhasivam@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <netdev@vger.kernel.org>
+References: <1683718725-14869-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1683718725-14869-5-git-send-email-quic_rohiagar@quicinc.com>
+ <ZFun8m5y-r0yUHhq@surfacebook>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <ZFun8m5y-r0yUHhq@surfacebook>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: J_TKjw0X-VTOUwa6NEhUNkLYpk-zGXbJ
+X-Proofpoint-ORIG-GUID: J_TKjw0X-VTOUwa6NEhUNkLYpk-zGXbJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=844 clxscore=1015 priorityscore=1501 mlxscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305100117
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/05/2023 15:41, Sricharan Ramabadhran wrote:
-> Add initial device tree support for the Qualcomm IPQ5018 SoC and
-> rdp432-c2 board.
-> 
-> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [v4] Fixed the address range for intc v2m nodes
->       Fixed all schema check warnings
->       Added cache-unified and cache-size property for l2 cache node
-> 
+
+On 5/10/2023 7:49 PM, andy.shevchenko@gmail.com wrote:
+> Wed, May 10, 2023 at 05:08:45PM +0530, Rohit Agarwal kirjoitti:
+>> Add initial Qualcomm SDX75 pinctrl driver to support pin configuration
+>> with pinctrl framework for SDX75 SoC.
+>> While at it, reordering the SDX65 entry.
+> ...
+>
+>> +#define FUNCTION(n)							\
+>> +	[msm_mux_##n] = {						\
+>> +			.func = PINCTRL_PINFUNCTION(#n,			\
+>> +					n##_groups,			\
+>> +					ARRAY_SIZE(n##_groups))		\
+>> +			}
+> But don't you now have MSM_PIN_FUNCTION() macro?
+
+So Sorry, a mistake from my end. Will immediately update.
+
+Thanks for reviewing.
+Rohit.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+>
