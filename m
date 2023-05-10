@@ -2,123 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E856A6FD94A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 10:28:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFD436FD966
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 10:32:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236336AbjEJI2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 04:28:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42840 "EHLO
+        id S236659AbjEJIcR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 04:32:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236574AbjEJI2C (ORCPT
+        with ESMTP id S236598AbjEJIb4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 04:28:02 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D37772A0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 01:27:37 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3063433fa66so4457393f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 01:27:37 -0700 (PDT)
+        Wed, 10 May 2023 04:31:56 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5E381FF9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 01:31:47 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f450815d02so4761375e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 01:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683707253; x=1686299253;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uPBd46P80xS+1BUZgM17eMA1eHmm2ZyT8Ja38yzUEik=;
-        b=pzYAdw/RJTLKmnRzX4+7lubU3LWDAxa5+l44vDwNA9SGIoyXLTfnVwSV4LSwaae0+9
-         kephxKkSQCqAjknrIauxsfpdE8fNj+09d4ls8Nis2z/gHHzmPpvFCRVQ74h5X2Mt+gPs
-         +HdgABSH3VXmuKmygyYSXNKKCG0SbVBqLT5z4MQcEjUKaIHfIYO39ekkqXWQ9auBIB5r
-         wSVoNwHytJt5BUpzAOTGdmpRmZdQn5X6xNdkG/alLLU3EuS+qwkPPXyo1WP6EJ3OElNL
-         zoeihS5rH3VQvGk+QPappaabMCuZSj7M8+sUD1V5WqBZGaQ9twgzEkEu1UHDA+pZsjvs
-         zFCA==
+        d=linaro.org; s=google; t=1683707506; x=1686299506;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y6/8dciljmKXjO5B/G4gS/fyc4Xic7p1ydUeagA+MqQ=;
+        b=OUhXzgJ1bt6NDAd1klWenZ1K7TEF6xZa21lYvBajP59vB15PYazc5hmq4AoDVYUJT6
+         uAmjvq/NWMdOLmCf1wpiEgdRPCALHL//7ZWfN+kjz6HuMe7ZmgO5/osMd1FjjcAEcDKp
+         TK6hcUU/S/xIRg2EtBIgdvSae1FCQefFOrXtWLfCMe0+6LV9N6KkjlF1BAJyy+Ie1rON
+         A507wodroEXZAy561XNqchYdG1WdRWRdGRWE2JZyL2N+frYDHkQXpG1yU5p8/A9S++WC
+         TxbTu9cDeKjYBJUkrIS4hmCKJN4LsXivPbQ2dqfHunh68sqCck6l7O6BRncOBDhut7YD
+         whnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683707253; x=1686299253;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1683707506; x=1686299506;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uPBd46P80xS+1BUZgM17eMA1eHmm2ZyT8Ja38yzUEik=;
-        b=NjBkzjQozq+FrF1wLcLEEUTBVXMnj652koUtK/PdF9sfBpi2kHenP50AlJ50uLu8YB
-         fEeR9rWbaVSKge8RxwxxuLZolJ/tPyTOt64Qi9GAHXcyAWQm3NZ+/JpduSSRL4aMcJcu
-         sF6TE8HiPLS6o408NYHbv5tuNXAhmWLy/IaVplcCJvVArZXzF6XhE8PMbDBOYP19Cg4U
-         LQi3SbZSisLOXHijwstXlcr+Rv+TdfiN+GIWhn/NVyBCnExXf4vPK6nvLEND2Q1aLy82
-         qr273wHUK1X51KcOruewuPKGAUfnSc1wJVTmp8SK+QVd0UTUOQWUb78EW4+JLj2xVRlB
-         o0og==
-X-Gm-Message-State: AC+VfDwexMLpXj/Fz6FZluxoVe/sI2qujOEPuVFv99OQDqMhundqQJRO
-        9/YF7/3H/eGVUpc+wxMu08/KJQ==
-X-Google-Smtp-Source: ACHHUZ6KS7DW60kwwwP8RWl3e+ZKtGLcOSPzzkgaLvkfNOp++qhotSxxpgH6E/NbtWeAWkYn9cyzwQ==
-X-Received: by 2002:a5d:46cc:0:b0:307:1bba:ea61 with SMTP id g12-20020a5d46cc000000b003071bbaea61mr11535704wrs.44.1683707253154;
-        Wed, 10 May 2023 01:27:33 -0700 (PDT)
-Received: from hackbox.lan ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id n10-20020a5d400a000000b00307a3045d65sm4593939wrp.46.2023.05.10.01.27.31
+        bh=y6/8dciljmKXjO5B/G4gS/fyc4Xic7p1ydUeagA+MqQ=;
+        b=IDUv9DuBN+TN/z8/3Jmw9vuBiGU61Yqzoe7YQcnVrceStfpRF9Lu7zSsQS1aFBTkF6
+         SZ25i1/zrgFle1eCmEfPCI81b0BUoLxRe7jg1uph121IC6sj0V80niD0CCZtmL0C81e9
+         KnQKEmaEoAKVU9LNA4EKp67tpXkrJZbko10WTVYW9gIwPwY7EcjTj54a3i1vE8CB9+m4
+         Zegd4jtMNcPNZF9sEnGBkZ+Z2x/R3J+ZRRuj+lSfGBRQQJwJg9LtNv3hhe6JbSVpIe0y
+         wlBUbQ1jVYHQlsoirfnv5kNNEoGfQ9R6HCy8Bby7S+DXGMNRAKL1C7PSixn+KSuwjvYs
+         fBPg==
+X-Gm-Message-State: AC+VfDyed1tIdDboRWa3bPxq5CorIh2XVYDZZEPOlgiMg7kAtbTmWWh4
+        1HQRWc+SloETlmPGO8rsr87FkHCjU8WJtvsfYlStXg==
+X-Google-Smtp-Source: ACHHUZ7z7VIXhIhWsH7MtjcPdFGM0TKW1D0IQrZ6MAVNrXddhYlCDe/SJBW3zbnfJLt11Zj2urBakA==
+X-Received: by 2002:a05:600c:20c:b0:3f1:812d:1da3 with SMTP id 12-20020a05600c020c00b003f1812d1da3mr11591599wmi.0.1683707506033;
+        Wed, 10 May 2023 01:31:46 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id n23-20020a7bc5d7000000b003ee74c25f12sm22108737wmk.35.2023.05.10.01.31.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 01:27:32 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
+        Wed, 10 May 2023 01:31:45 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/6] arm64: qcom: sm84[34]50: enable DP altmode on USB-C
+ Connector
+Date:   Wed, 10 May 2023 10:31:38 +0200
+Message-Id: <20230503-topic-sm8450-graphics-dp-next-v2-0-8acbbe1e9d14@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGpWW2QC/42OQQ6CMBBFr2K6dkwpAuLKexgWpR3oJNg2UyQYw
+ t2tnMDle4v//iYSMmES99MmGBdKFHwGdT4J47QfEchmFkqqUlayhDlEMpBet2slYWQdHZkENoL
+ HdYbC6r6tlca6sSJv9Doh9Ky9cXnFv6cpy8g40HpEn11mR2kO/Dk+LMXP/ptbCpBgC8S2bJtB6
+ foxkdccLoFH0e37/gUc6MwZ4AAAAA==
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        ob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Lee Jones <lee@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v6] dt-bindings: mfd: qcom,spmi-pmic: Add pattern property for phy
-Date:   Wed, 10 May 2023 11:27:25 +0300
-Message-Id: <20230510082725.3612903-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2304;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=ttEQEsjvPQWp2h4M0SrBo7wcXJP9LjcD2YCXbuw2NgE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkW1Zuy32NdfAaC6MBhzZMzrMIbEA34eA6urz6qlTx
+ 01g0ksaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZFtWbgAKCRB33NvayMhJ0ZCoD/
+ kBEAP3RBdMYhvQnR8B+MJrrgU7fR0fLNbVwRp/bB5Q4tBC/sGgvWSbKjDWQWH99ObURIgWvbEMGLL7
+ qcogjTj1DE2Lo7C//uvq3zqixfG+MbyqOofjt2RNSr57SldF6xt7qxexCKWeTJf4iUjBHHW81voHk9
+ eXl83pOxXKxJX4IJoCUXzvg6NJ/v2kEypQ4jLsaNwBp+tGVgQamvQbhv2Lz6bwDvTN+B5yt/7Adijd
+ qTqDjlvb7Qi4VAKhNjki0vOLL2Z2Kbwm+x1Eq4+9NrdvmdJD3uyTktwKqD9NFXxzg7hww3fUQPlDyS
+ /A9GzLYdRq3dQc768pCB32DGIEwsAtx2t/ofNDvfmVAbArzGapFtcS/bWUgrUlSb97Uv6EGDM+R4DK
+ QZRAOuac14GzyztPDntqLaKQpl9uScIgqPUgY+OPqHUpVRi1gXKTiJNaN9Wy0Ct+KqfQ+mDCE3dws2
+ L6QXYQl2lsrcbBKZ30GeHtTxi3tnMN4zupwBeh3dZk1hCuzobJqhQBhSTDHdqyzJw2UcjAukaW/smX
+ y/dOXX1XWBwgE8J/t4O/zuDZyrNcu6TbIyF5INvqYuooBruxBDKM1ZZUtai/66DDBP8EpI+Ym1/5Cq
+ CnBOwC/2o7wyf1j1v+ulCSHTtUPRnUsLkhfmZuQ9j1+1x/H8Ol3dL2kHtAdg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The phy pattern property will be used for providing eUSB2 repeater
-functionality. This will be modelled as a Qualcomm PHY driver.
+This is the final step to achieve USB-C Altmode on the HDK8350
+and HDK8450 now DP controller support, USB3+DP Combo PHY and
+pmic glink support have been merged for those platforms.
 
-Acked-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+This patchset depends on the QMP Combo USB3+DP PHY orientation
+support at [1].
+
+The following has been successfully tested:
+- USB-C PD Power Role, reported status are coherent
+- USB-C dual-role data
+  - USB2.0 only (no-PD) as DFP or UFP
+  - USB2.0 + USB SuperSpeed as DFP or UFP & in both orientations
+  - USB2.0 + USB SuperSpeed + DisplayPort Altmode in both orientations
+  - DisplayPort-only Altmode in both orientations
+
+Data role and SuperSpeed lanes were correctly switched on the PHY
+side after USB-C removal/insertion.
+
+[1] https://lore.kernel.org/all/20230510031930.1996020-1-quic_bjorande@quicinc.com
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
+Changes in v2:
+- rebased on next-230510 + orientation patchset v2
+- define port@2 in patches 1 & 2
+- Add reviewed tags
+- Renamed fsa4480 node name
+- Added missing blank line
+- Moved status at last position
+- Re-ordered node ref
+- Fixed commit message of last patch
+- Link to v1: https://lore.kernel.org/r/20230503-topic-sm8450-graphics-dp-next-v1-0-d1ee9397f2a6@linaro.org
 
-The v5 (resend) is here:
-https://lore.kernel.org/all/20230320150617.1824465-1-abel.vesa@linaro.org/
+---
+Neil Armstrong (6):
+      arm64: dts: qcom: sm8350: add ports subnodes in usb1 qmpphy node
+      arm64: dts: qcom: sm8450: add ports subnodes in usb1 qmpphy node
+      arm64: dts: qcom: sm8350-hdk: Add QMP & DP to SuperSpeed graph
+      arm64: dts: qcom: sm8450-hdk: Add QMP & DP to SuperSpeed graph
+      arm64: defconfig: enable FSA4480 driver as module
+      qcom: pmic_glink: enable altmode for SM8450
 
-All other patches have been merged already. This is the only one left.
+ arch/arm64/boot/dts/qcom/sm8350-hdk.dts | 76 ++++++++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi    | 26 +++++++++++
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 73 ++++++++++++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi    | 26 +++++++++++
+ arch/arm64/configs/defconfig            |  1 +
+ drivers/soc/qcom/pmic_glink.c           |  8 +++-
+ 6 files changed, 204 insertions(+), 6 deletions(-)
+---
+base-commit: 4f3cab37420881679d82cecb21f18bc7d88fdd83
+change-id: 20230503-topic-sm8450-graphics-dp-next-1dab962ae67d
 
-Changes since v5:
- * rebased on top of -next
- * added Krzysztof's R-b tag
- * added Lee's A-b tag
-
-Changes since v4:
- * none
-
-Changes since v3:
- * made this the second patch rather than the first in the series
-
- Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 36de335a33aa..abcdc0dd4aba 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -146,6 +146,10 @@ patternProperties:
-     type: object
-     $ref: /schemas/nvmem/qcom,spmi-sdam.yaml#
- 
-+  "phy@[0-9a-f]+$":
-+    type: object
-+    $ref: /schemas/phy/qcom,snps-eusb2-repeater.yaml#
-+
-   "pon@[0-9a-f]+$":
-     type: object
-     $ref: /schemas/power/reset/qcom,pon.yaml#
+Best regards,
 -- 
-2.34.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
