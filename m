@@ -2,192 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7B976FE6F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 00:09:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2612E6FE747
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 00:35:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236629AbjEJWIX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 18:08:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57880 "EHLO
+        id S230004AbjEJWfj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 18:35:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236402AbjEJWIN (ORCPT
+        with ESMTP id S229500AbjEJWfi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 18:08:13 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ECA07AB7;
-        Wed, 10 May 2023 15:08:09 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34ALs5kM025508;
-        Wed, 10 May 2023 22:08:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=XkMrtmyUEKRdFexfmsGEwKOjh/CODN9Tj0aZrMVXXRk=;
- b=cujQg5FGFHiRiVpKopHP3OraGyk/4RX0h9Yhbxta7TfiNRAKInvhCa36Eljvss0zvTRu
- uOBbKhairtq3DaHkm/4IOex0F4DLxULVGxrOSl1sHp10WACVtFMxYhcAxvbBgJebMwMU
- e9SnCKY8GEhmPHRb3BxZXG5m30vT8V27zDc3/jEB3G++LGSxPl9iSfRCvacE6cZD7zqG
- buFroRCbDzEIspu1Izvsw2WrT7oFChxkckyS1OeogUiIoVwQ8mIZZhNp++2nBhnS4pPd
- rCv6NxxuuGDh8OVeyPPTd2ccINypPXQd7lCNmfbK/RNSeskmFfWAMf1p9HbM67wOLA+D Pg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qged2gnsw-1
+        Wed, 10 May 2023 18:35:38 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45512121
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 15:35:36 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34AMKmEk013886;
+        Wed, 10 May 2023 22:35:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xZbuByYVk9HqmU6RT+EkIoUYWKwcElDJWynY8YMTrDE=;
+ b=lfxiYo/JxT5b2I+39XHIUYp+Q2BozT2jIpteNrcKOmo6YueXuS9WDjjyYRpkqlRo7JER
+ zLyCkQSZk06RvsWFr1MxE0HhyaK6iJRJrQt3SNZcRJB81JY5w8OzGQepmn9OtRlTLD4B
+ FYRcljBqwmM7Oc3zX+lVwHDEmkB2ED54HudU5XL9pnHSOrDNxjlU6oju8W1rjT6BZzDs
+ VaASz96JESuQjm9BVB5MLYoFsOHW0Wj2KJ7D0cubIxMlia0Vz8QVM47UfIRDcpylj/M7
+ n9dn+2DkFBSVwbfkiPw9++t6jRstBNTJ9t7bxz3Hj3gc4XEBd1wbxX1JzuFGk+LH2NzQ 8g== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qg5mpsv48-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 May 2023 22:08:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34AM80fR032050
+        Wed, 10 May 2023 22:35:30 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34AMZTNl009190
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 May 2023 22:08:00 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 10 May 2023 15:07:59 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 8/8] drm/msm/dpu: tear down DSC data path when DSC disabled
-Date:   Wed, 10 May 2023 15:07:33 -0700
-Message-ID: <1683756453-22050-9-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1683756453-22050-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1683756453-22050-1-git-send-email-quic_khsieh@quicinc.com>
+        Wed, 10 May 2023 22:35:29 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 10 May
+ 2023 15:35:28 -0700
+Message-ID: <05021e78-6c1a-b4b1-6312-4dd3f1647074@quicinc.com>
+Date:   Wed, 10 May 2023 15:35:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v7 2/8] drm/display/dsc: add helper to set semi-const
+ parameters
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v7-0-df48a2c54421@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v7-2-df48a2c54421@quicinc.com>
+ <tl5zijcxx7326jdgr6lyjptvvvyxosoupz3vekvhex3vnviw5t@3vswzg244tme>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <tl5zijcxx7326jdgr6lyjptvvvyxosoupz3vekvhex3vnviw5t@3vswzg244tme>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: C5HiiyzIGQFEkeL3WSUAWXlF6HMTbxbJ
-X-Proofpoint-GUID: C5HiiyzIGQFEkeL3WSUAWXlF6HMTbxbJ
+X-Proofpoint-ORIG-GUID: _UNKHk6bxrIlUffp5g54piGQNe_AKAJj
+X-Proofpoint-GUID: _UNKHk6bxrIlUffp5g54piGQNe_AKAJj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 impostorscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
- phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=884 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305100182
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=999 clxscore=1015
+ suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305100187
+X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unset DSC_ACTIVE bit at dpu_hw_ctl_reset_intf_cfg_v1(),
-dpu_encoder_unprep_dsc() and dpu_encoder_dsc_pipe_clr() functions
-to tear down DSC data path if DSC data path was setup previous.
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 44 +++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  |  7 +++++
- 2 files changed, 51 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 94b805b..6500589 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1214,6 +1214,45 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
- 	mutex_unlock(&dpu_enc->enc_lock);
- }
- 
-+static void dpu_encoder_dsc_pipe_clr(struct dpu_encoder_virt *dpu_enc,
-+                                     struct dpu_hw_dsc *hw_dsc,
-+                                     struct dpu_hw_pingpong *hw_pp)
-+{
-+	struct dpu_encoder_phys *cur_master = dpu_enc->cur_master;
-+	struct dpu_hw_ctl *ctl;
-+
-+	ctl = cur_master->hw_ctl;
-+
-+	if (hw_dsc->ops.dsc_disable)
-+		hw_dsc->ops.dsc_disable(hw_dsc);
-+
-+	if (hw_pp->ops.disable_dsc)
-+		hw_pp->ops.disable_dsc(hw_pp);
-+
-+	if (hw_dsc->ops.dsc_bind_pingpong_blk)
-+		hw_dsc->ops.dsc_bind_pingpong_blk(hw_dsc, PINGPONG_NONE);
-+
-+	if (ctl->ops.update_pending_flush_dsc)
-+		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
-+}
-+
-+static void dpu_encoder_unprep_dsc(struct dpu_encoder_virt *dpu_enc)
-+{
-+	/* coding only for 2LM, 2enc, 1 dsc config */
-+	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-+	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-+	int i;
-+
-+	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-+		hw_pp[i] = dpu_enc->hw_pp[i];
-+		hw_dsc[i] = dpu_enc->hw_dsc[i];
-+
-+		if (hw_pp[i] && hw_dsc[i])
-+			dpu_encoder_dsc_pipe_clr(dpu_enc, hw_dsc[i], hw_pp[i]);
-+	}
-+
-+}
-+
- static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
- 					struct drm_atomic_state *state)
- {
-@@ -2090,6 +2129,9 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 					phys_enc->hw_pp->merge_3d->idx);
- 	}
- 
-+	if (dpu_enc->dsc)
-+		dpu_encoder_unprep_dsc(dpu_enc);
-+
- 	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
- 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
- 
-@@ -2101,6 +2143,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 	if (phys_enc->hw_pp->merge_3d)
- 		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
- 
-+	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
-+
- 	if (ctl->ops.reset_intf_cfg)
- 		ctl->ops.reset_intf_cfg(ctl, &intf_cfg);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index 832a6a7..b34dac5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -577,6 +577,7 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 	u32 intf_active = 0;
- 	u32 wb_active = 0;
- 	u32 merge3d_active = 0;
-+	u32 dsc_active;
- 
- 	/*
- 	 * This API resets each portion of the CTL path namely,
-@@ -606,6 +607,12 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 		wb_active &= ~BIT(cfg->wb - WB_0);
- 		DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
- 	}
-+
-+	if (cfg->dsc) {
-+		dsc_active = DPU_REG_READ(c, CTL_DSC_ACTIVE);
-+		dsc_active &= ~cfg->dsc;
-+		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
-+	}
- }
- 
- static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+On 5/9/2023 11:29 PM, Marijn Suijten wrote:
+> On 2023-05-09 15:06:48, Jessica Zhang wrote:
+>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>
+>> Add a helper setting config values which are typically constant across
+>> operating modes (table E-4 of the standard) and mux_word_size (which is
+>> a const according to 3.5.2).
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> 
+> Same question about ordering.
 
+Hi Marijn,
+
+This patch was authored by Dmitry and originally part of his DRM DSC 
+helpers series [1], but was removed from that series for mergeability 
+reasons.
+
+Looking over the kernel documentation, the last Signed-off-by should be 
+from the patch submitter [2], so I think my s-o-b tag should be at the 
+bottom.
+
+As for the order in the previous patch, I can add a duplicate s-o-b 
+before Dmitry's so that it reflects the history of the patch.
+
+Thanks,
+
+Jessica Zhang
+
+[1] https://patchwork.freedesktop.org/patch/530512/?series=114472&rev=4
+[2] 
+https://www.kernel.org/doc/html/latest/process/submitting-patches.html#when-to-use-acked-by-cc-and-co-developed-by
+
+> 
+> Reviewed-by:  Marijn Suijten <marijn.suijten@somainline.org>
+> 
+>> ---
+>>   drivers/gpu/drm/display/drm_dsc_helper.c | 22 ++++++++++++++++++++++
+>>   include/drm/display/drm_dsc_helper.h     |  1 +
+>>   2 files changed, 23 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+>> index 65e810a54257..b9c4e10ced41 100644
+>> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+>> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+>> @@ -270,6 +270,28 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
+>>   }
+>>   EXPORT_SYMBOL(drm_dsc_pps_payload_pack);
+>>   
+>> +/**
+>> + * drm_dsc_set_const_params() - Set DSC parameters considered typically
+>> + * constant across operation modes
+>> + *
+>> + * @vdsc_cfg:
+>> + * DSC Configuration data partially filled by driver
+>> + */
+>> +void drm_dsc_set_const_params(struct drm_dsc_config *vdsc_cfg)
+>> +{
+>> +	if (!vdsc_cfg->rc_model_size)
+>> +		vdsc_cfg->rc_model_size = DSC_RC_MODEL_SIZE_CONST;
+>> +	vdsc_cfg->rc_edge_factor = DSC_RC_EDGE_FACTOR_CONST;
+>> +	vdsc_cfg->rc_tgt_offset_high = DSC_RC_TGT_OFFSET_HI_CONST;
+>> +	vdsc_cfg->rc_tgt_offset_low = DSC_RC_TGT_OFFSET_LO_CONST;
+>> +
+>> +	if (vdsc_cfg->bits_per_component <= 10)
+>> +		vdsc_cfg->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+>> +	else
+>> +		vdsc_cfg->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
+>> +}
+>> +EXPORT_SYMBOL(drm_dsc_set_const_params);
+>> +
+>>   /* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
+>>   static const u16 drm_dsc_rc_buf_thresh[] = {
+>>   	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
+>> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+>> index 422135a33d65..bfa7f3acafcb 100644
+>> --- a/include/drm/display/drm_dsc_helper.h
+>> +++ b/include/drm/display/drm_dsc_helper.h
+>> @@ -21,6 +21,7 @@ void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
+>>   int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
+>>   void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+>>   			      const struct drm_dsc_config *dsc_cfg);
+>> +void drm_dsc_set_const_params(struct drm_dsc_config *vdsc_cfg);
+>>   void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+>>   int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
+>>   int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+>>
+>> -- 
+>> 2.40.1
+>>
