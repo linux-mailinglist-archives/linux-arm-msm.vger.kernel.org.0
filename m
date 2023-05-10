@@ -2,134 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13B6C6FD7EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 09:13:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 659E26FD872
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 09:44:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236455AbjEJHNI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 03:13:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43808 "EHLO
+        id S229506AbjEJHoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 03:44:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236457AbjEJHNG (ORCPT
+        with ESMTP id S236226AbjEJHoR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 03:13:06 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE4565A4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:13:03 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-966287b0f72so791007966b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:13:03 -0700 (PDT)
+        Wed, 10 May 2023 03:44:17 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5B430CB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:44:16 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f41d087b24so29137675e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683702782; x=1686294782;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0zYCKWsfnxi/fMQaNP95jNUwShMn3UuUKrQkbxNuAUc=;
-        b=B2yQAEPaadWCszIh2qfAkHbBbh54nDXcamotBGjnsu4NTRxofx07A0J6bcr9gPbH7Y
-         8IF4hWFF0l4Bej94pX+Sec9m1EjRhxMOKIFdVnAL678DCQtpa4aKNPpk823J/bRzQo8s
-         8u/4e493BuC17dhup/fygVQSVneQ6SHqaUjGjYyUj66SJtaVS4IFBx40fsmr/4+142Gf
-         smQZMdtvScKtXqk+scK8XdYttOrM0unPWv8hJezCVJ5bd17fVrjZvnuiU6tY0KAkhRAb
-         AZZ++pTxh7riwjaw9myoMEnmCeXGGeFjUXds3EUu4Ubiocx2qNoveWsCkXd5a+lcXoFp
-         snIA==
+        d=linaro.org; s=google; t=1683704655; x=1686296655;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BtQPFlqDJgsJOhJjphtgO9KU3wqmiLaUjxsYgolmkNY=;
+        b=QmFEIJOHl50deNQSptWiiSgu6+lK0ojb2twXb2fNfhePK6cEQ7kFaCNqJ1hdmbE7L2
+         l0yYrDfBefzqo90kb1jTg+4kdBDIU/IU6+vqPQkDA5WD8luFJJNjEjMhPW9GxjN0xzmE
+         gW5MiB+sgw1BtTI2qPK7Y2tKcu+897yB8NuQ8b+YhqnZ+QkNYnVVr5YZH7SuzbILaGyF
+         IM8orS0BqOTDyk8uHW8DajyR92lsao4HNqlXNUAZV6VAyZ+G6z0t4t+cpqr3EIJNiVYC
+         Lb2ov029rl3Pt0ZeLKYZ66po39iWUjfQOdbLa1k1QoRt8isQeO4P5XIrLXoW2hG18FkY
+         UY9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683702782; x=1686294782;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0zYCKWsfnxi/fMQaNP95jNUwShMn3UuUKrQkbxNuAUc=;
-        b=jKRipnrJkBMHGrC588uPzW2V2L8Yv/DwG/tZ0HKy+4wWdAq25mWca0wEcLHy80C5zC
-         i9+meNuRzADnBK4Q5JrjHu5an2lb1iJT5QafZBpnmypahN11RAVnXl1TqqH5LxIFvjja
-         ZkFWf947RM8eXJiEIYQ/Km9jSudxH1/mMS2b9AWkrdEQNIB2ZA35nlwcLRGRVBr+VYW+
-         15ASC4YaQso5SRtiSXDd2UmVdWKqTlg4ptpLzjtceRHfI0csGv8wlLWL5/UdcS7Wyv5l
-         ZyA8BBiC8+ArTiZfq4rKBl5valsXYUT/YcFARSO4QAqUn6YpArjkslrq8zger+wHvseN
-         rfsA==
-X-Gm-Message-State: AC+VfDwefOPpEf/sTUU/gW/EqTPiM0djm0yiQZ90fODbSmXexil+NKxx
-        /hH/BJ5yseI6WNAAQBIyMfmMsw==
-X-Google-Smtp-Source: ACHHUZ73lltVGSVflUN3AR7vtW31X5vop/ZCpl71mxGhEbCxGOWBjcw46dmCTSVAKpvTX4NtsuXk6w==
-X-Received: by 2002:a17:907:3686:b0:94a:56ec:7f12 with SMTP id bi6-20020a170907368600b0094a56ec7f12mr15345280ejc.30.1683702782235;
-        Wed, 10 May 2023 00:13:02 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:c175:a0f9:6928:8c9d? ([2a02:810d:15c0:828:c175:a0f9:6928:8c9d])
-        by smtp.gmail.com with ESMTPSA id lt14-20020a170906fa8e00b0094efdfe60dcsm2240768ejb.206.2023.05.10.00.13.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 May 2023 00:13:01 -0700 (PDT)
-Message-ID: <d48ded3e-7a14-e859-f330-dfffe103eb56@linaro.org>
-Date:   Wed, 10 May 2023 09:13:00 +0200
+        d=1e100.net; s=20221208; t=1683704655; x=1686296655;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BtQPFlqDJgsJOhJjphtgO9KU3wqmiLaUjxsYgolmkNY=;
+        b=KJ0Wp2JWSD/zeB4Hp6A0CSU9mVX5pHKGoxNOKmaYAoERmTnXdNAR0g6RrqYkCkwkeK
+         A3OZjXkQF5JrOoaQ5LmWzj9TWPy4HElW42YS3x+ky/nVg4bFhjO1lcDNWg2rQ+9pjEFs
+         1cYBJTlqN78LMnt51aSdygAajrhahp59pqAKM7yq8gbHlfuNKonrUve18kjCTweyelM3
+         Z0iwAOmmZCoOVfyA3J9NsL0FmeK+L2eiJy0AWhH5hyLpm2YFYugZIgwdrCpmhnRKjEZ8
+         eKZhpgSXUGPFXsw+vDNXOc4N5xDIsMt52eJNGZgBWWtLG6KgQCKAn65eFv6wcNynXLMg
+         OYYA==
+X-Gm-Message-State: AC+VfDwX9LCeF1FFzxmEOeYM2yFkkT9JMOrjytJnKasPlZx7cIMq8Rsj
+        cA/StAcRPPa6+q3JJ2kTJ/irYA==
+X-Google-Smtp-Source: ACHHUZ65q8nnPXwnXG297J3KAXm87os0LF1VqdeR3GC8I3QkknH+TG+s0Li9tmLG1xcRm5IYMYXh3g==
+X-Received: by 2002:a7b:c40f:0:b0:3f4:2300:e015 with SMTP id k15-20020a7bc40f000000b003f42300e015mr7651495wmi.5.1683704654737;
+        Wed, 10 May 2023 00:44:14 -0700 (PDT)
+Received: from hackbox.lan ([86.121.163.20])
+        by smtp.gmail.com with ESMTPSA id p5-20020a7bcc85000000b003f4dde07956sm261653wma.42.2023.05.10.00.44.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 May 2023 00:44:14 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Eric Biggers <ebiggers@kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: [PATCH] soc: qcom: Rename ice to qcom-ice to avoid module name conflict
+Date:   Wed, 10 May 2023 10:44:04 +0300
+Message-Id: <20230510074404.3520340-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/4] dt-bindings: clock: qcom: Add SM8550 video clock
- controller
-Content-Language: en-US
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230509161218.11979-1-quic_jkona@quicinc.com>
- <20230509161218.11979-3-quic_jkona@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230509161218.11979-3-quic_jkona@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/05/2023 18:12, Jagadeesh Kona wrote:
-> Add device tree bindings for the video clock controller on Qualcomm
-> SM8550 platform.
-> 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
->  .../bindings/clock/qcom,sm8550-videocc.yaml   | 77 +++++++++++++++++++
->  .../dt-bindings/clock/qcom,sm8550-videocc.h   | 38 +++++++++
->  2 files changed, 115 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-videocc.yaml
->  create mode 100644 include/dt-bindings/clock/qcom,sm8550-videocc.h
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-videocc.yaml
-> new file mode 100644
-> index 000000000000..107af5e9af89
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-videocc.yaml
-> @@ -0,0 +1,77 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sm8550-videocc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Video Clock & Reset Controller on SM8550
-> +
-> +maintainers:
-> +  - Jagadeesh Kona <quic_jkona@quicinc.com>
-> +  - Taniya Das <quic_tdas@quicinc.com>
-> +
-> +description: |
-> +  Qualcomm video clock control module provides the clocks, resets and power
-> +  domains on SM8550.
-> +
-> +  See also:: include/dt-bindings/clock/qcom,videocc-sm8550.h
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm8550-videocc
+The following error was reported when building x86_64 allmodconfig:
 
-Nope, looks 100% the same as sm8450, put it there.
+error: the following would cause module name conflict:
+  drivers/soc/qcom/ice.ko
+  drivers/net/ethernet/intel/ice/ice.ko
 
-https://lore.kernel.org/all/20230509172148.7627-2-quic_tdas@quicinc.com/
+Seems the 'ice' module name is already used by some Intel ethernet
+driver, so lets rename the Qualcomm Inline Crypto Engine (ICE) from
+'ice' to 'qcom-ice' to avoid any kind of errors/confusions.
 
-Best regards,
-Krzysztof
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+
+The build failure was reported here:
+https://lore.kernel.org/all/20230510111833.17810885@canb.auug.org.au/
+
+ drivers/soc/qcom/Makefile              | 2 +-
+ drivers/soc/qcom/{ice.c => qcom-ice.c} | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename drivers/soc/qcom/{ice.c => qcom-ice.c} (100%)
+
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index 0f43a88b4894..30219c164cb0 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -32,4 +32,4 @@ obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
+ obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+ obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+ obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+-obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
++obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom-ice.o
+diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/qcom-ice.c
+similarity index 100%
+rename from drivers/soc/qcom/ice.c
+rename to drivers/soc/qcom/qcom-ice.c
+-- 
+2.34.1
 
