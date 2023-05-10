@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 421946FE58A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 22:50:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A6526FE596
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 22:51:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236991AbjEJUur (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 16:50:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41548 "EHLO
+        id S236946AbjEJUvd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 16:51:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236858AbjEJUu1 (ORCPT
+        with ESMTP id S236972AbjEJUvL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 16:50:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 858DF7DBC;
-        Wed, 10 May 2023 13:49:56 -0700 (PDT)
+        Wed, 10 May 2023 16:51:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C5439010;
+        Wed, 10 May 2023 13:50:39 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A2ABD64082;
-        Wed, 10 May 2023 20:49:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1A7C4339B;
-        Wed, 10 May 2023 20:49:43 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9FD1964A48;
+        Wed, 10 May 2023 20:50:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CA4C4339E;
+        Wed, 10 May 2023 20:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683751784;
-        bh=YwAHb3c2fnvhtHgWSN5cGx9OZ3Pa0sDg8y7y4tvcDFQ=;
+        s=k20201202; t=1683751802;
+        bh=zllB5VXpd+eWpeBlgpDYyxAKvxEVFy7Vku8yr9o/fNA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=baIqtgMA7cx2mOIvvUK1kAaauAd82rpYasAf65d8ek8uie8+LYwanwk/pAOugjzMm
-         Q6GkJNtxXQ0eZbonx4n8FERAcZ6a8QWcE5RN1nC0KuCtNL76fnNErbZVZ5waYAa6xu
-         WQaRxC5+rC6HcLRAg3eBIz6LDPwmN/e/upxOEpejogNops1nyzaQhoN2sPXDQ9QlFJ
-         eRTbETkYqiM38sW5sOpvMo57BGp6k1w2YoLJSFc1+Qf1xFZfyTWLuI752uY/i1fpvf
-         2GHNjYSJsmzFDZmfhIDiF26mEmPZK23a2VMc0ptvCpLupfRS2ExKdHl1mKT3qVek5D
-         d6Taf8NV4k2Ig==
+        b=qY59tETHe8EKiit/C1w7zEt84/5UpPuS3K6z/Rk63kZKUMt1s3HFlp+wbmlfTd4Tg
+         O4n6SkhMyB+CsIxevr2Kd1Zw1a/dvsBdkuEce3n6UXydFAWt1yjByI4Gqkoa75+rQU
+         ESCOfubJnyvDUb5lgRoKhXFSPBegYMuUi9VHRs5DkNZa1ER4IFY6O6cNCONIgFZXop
+         uT4lq0VYJwjwEAclIXaoPYKT9laWE1ckUJsjfGe5+OQ1yRxjRcIPZjGkxomRfhU2+O
+         CrseAuKAS2LxbQa2xKWPzz7OU9HYTyPdMuoLkYkDpAntluooiD2dvxCX+y4tS3vHi8
+         rarM2xa/lKLhQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -41,18 +41,18 @@ Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         agross@kernel.org, andersson@kernel.org,
         yung-chuan.liao@linux.intel.com, linux-arm-msm@vger.kernel.org,
         alsa-devel@alsa-project.org
-Subject: [PATCH AUTOSEL 6.2 4/9] soundwire: qcom: gracefully handle too many ports in DT
-Date:   Wed, 10 May 2023 16:49:21 -0400
-Message-Id: <20230510204926.104747-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 3/8] soundwire: qcom: gracefully handle too many ports in DT
+Date:   Wed, 10 May 2023 16:49:44 -0400
+Message-Id: <20230510204950.104873-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230510204926.104747-1-sashal@kernel.org>
-References: <20230510204926.104747-1-sashal@kernel.org>
+In-Reply-To: <20230510204950.104873-1-sashal@kernel.org>
+References: <20230510204950.104873-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,10 +90,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 3354248702900..3e80a4d388cbb 100644
+index cee2b22231410..c535da166ca1d 100644
 --- a/drivers/soundwire/qcom.c
 +++ b/drivers/soundwire/qcom.c
-@@ -1217,6 +1217,9 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+@@ -1209,6 +1209,9 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
  	ctrl->num_dout_ports = val;
  
  	nports = ctrl->num_dout_ports + ctrl->num_din_ports;
